@@ -241,7 +241,19 @@ class ApiClient
 
         // Handle the response
         if ($response_info['http_code'] == 0) {
-            throw new ApiException("API call to $url timed out: ".serialize($response_info), 0, null, null);
+            $curl_error_message = curl_error($curl);
+
+            // curl_exec can sometimes fail but still return a blank message from curl_error().
+            if (!empty($curl_error_message)) {
+                $error_message = "API call to $url failed: $curl_error_message";
+            } else {
+                $error_message = "API call to $url failed, but for an unknown reason. " .
+                    "This could happen if you are disconnected from the network.";
+            }
+
+            $exception = new ApiException($error_message, 0, null, null);
+            $exception->setResponseObject($response_info);
+            throw $exception;
         } elseif ($response_info['http_code'] >= 200 && $response_info['http_code'] <= 299) {
             // return raw body if response is a file
             if ($responseType == '\SplFileObject' || $responseType == 'string') {
@@ -275,7 +287,7 @@ class ApiClient
      *
      * @return string Accept (e.g. application/json)
      */
-    static public function selectHeaderAccept($accept)
+    public function selectHeaderAccept($accept)
     {
         if (count($accept) === 0 or (count($accept) === 1 and $accept[0] === '')) {
             return null;
@@ -293,7 +305,7 @@ class ApiClient
      *
      * @return string Content-Type (e.g. application/json)
      */
-    static public function selectHeaderContentType($content_type)
+    public function selectHeaderContentType($content_type)
     {
         if (count($content_type) === 0 or (count($content_type) === 1 and $content_type[0] === '')) {
             return 'application/json';

@@ -10,12 +10,12 @@ define('ext.wikia.recirculation.utils', [
 	// returns a gaussian random function with the given mean and stdev.
 	function gaussian(mean, stdev) {
 		var y2,
-			use_last = false;
+			useLast = false;
 		return function() {
 			var y1;
-			if (use_last) {
+			if (useLast) {
 				y1 = y2;
-				use_last = false;
+				useLast = false;
 			} else {
 				var x1, x2, w;
 
@@ -28,7 +28,7 @@ define('ext.wikia.recirculation.utils', [
 				w = Math.sqrt((-2.0 * Math.log(w))/w);
 				y1 = x1 * w;
 				y2 = x2 * w;
-				use_last = true;
+				useLast = true;
 			}
 
 			var retval = mean + stdev * y1;
@@ -36,7 +36,7 @@ define('ext.wikia.recirculation.utils', [
 	   };
 	}
 
-	function Result (item, score) {
+	function createResult (item, score) {
 		return {
 			item: item,
 			score: score
@@ -47,7 +47,7 @@ define('ext.wikia.recirculation.utils', [
 		var standardDeviation = (epsilon > 1) ? Math.sqrt(Math.log(epsilon)) : Math.exp(1e-10),
 			distribution = gaussian(0, standardDeviation);
 
-		return results.map(Result)
+		return results.map(createResult)
 			.map(function(result, index) {
 				result.score = Math.log(index + 1) + distribution();
 				return result;
@@ -55,7 +55,7 @@ define('ext.wikia.recirculation.utils', [
 				return a.score - b.score;
 			}).map(function(result, index) {
 				result.item.index = index;
-				return result.item
+				return result.item;
 			});
 	}
 
@@ -63,10 +63,15 @@ define('ext.wikia.recirculation.utils', [
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
 	 * @returns {$.Deferred}
 	 */
-	function loadTemplate(templateLocation) {
+	function loadTemplate(templateName) {
 		var dfd = new $.Deferred(),
+			templateLocation = 'extensions/wikia/Recirculation/templates/client/' + templateName,
 			cacheKey = 'RecirculationAssets_' + templateLocation,
 			template = cache.getVersioned(cacheKey);
+
+		if (!templateName) {
+			return dfd.reject('Invalid template name');
+		}
 
 		if (template) {
 			dfd.resolve(template);
@@ -81,7 +86,8 @@ define('ext.wikia.recirculation.utils', [
 
 				dfd.resolve(template);
 
-				cache.setVersioned(cacheKey, template, 86400); //1 days
+				// 1 day
+				cache.setVersioned(cacheKey, template, 86400);
 			});
 		}
 
@@ -89,8 +95,6 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function renderTemplate(templateName, data) {
-		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
-
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -100,14 +104,11 @@ define('ext.wikia.recirculation.utils', [
 	function buildLabel(element, label) {
 		var $parent = $(element).parent(),
 			slot = $parent.data('index') + 1,
-			source = $parent.data('source');
+			source = $parent.data('source') || 'undefined',
+			isVideo = $parent.hasClass('is-video') ? 'video' : 'not-video',
+			parts = [label, 'slot-' + slot, source, isVideo];
 
-		label = label + '=slot-' + slot;
-		if (source) {
-			label = label + '=' + source;
-		}
-
-		return label;
+		return parts.join('=');
 	}
 
 	function addUtmTracking(items, placement) {
@@ -152,6 +153,18 @@ define('ext.wikia.recirculation.utils', [
 		return deferred.promise();
 	}
 
+	function sortThumbnails(a, b) {
+		if (a.thumbnail && !b.thumbnail) {
+			return -1;
+		}
+
+		if (!a.thumbnail && b.thumbnail) {
+			return 1;
+		}
+
+		return 0;
+	}
+
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
@@ -159,6 +172,7 @@ define('ext.wikia.recirculation.utils', [
 		addUtmTracking: addUtmTracking,
 		afterRailLoads: afterRailLoads,
 		waitForRail: waitForRail,
-		ditherResults: ditherResults
+		ditherResults: ditherResults,
+		sortThumbnails: sortThumbnails
 	};
 });

@@ -1,28 +1,10 @@
 <?php
-
-/**
- * WhereIsExtension
- *
- * A WhereIsExtension extension for MediaWiki
- * Provides a list of wikis with enabled selected extension
- *
- * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
- * @date 2008-07-02
- * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia, Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @package MediaWiki
- * @subpackage SpecialPage
- *
- * To activate this functionality, place this file in your extensions/
- * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php");
- */
-
+/** Internationalization file for /extensions/wikia/WhereIsExtension/SpecialWhereIsExtension extension. */
 $messages = [];
 
 $messages['en'] = [
 	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
-	'whereisextension' => 'Where is extension',    //the name displayed on Special:SpecialPages
+	'whereisextension' => 'Where is extension',
 	'whereisextension-submit' => 'Search',
 	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
 	'whereisextension-isset' => 'is set to',
@@ -39,10 +21,6 @@ $messages['en'] = [
 	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 ];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Siebrand
- */
 $messages['qqq'] = [
 	'whereisextension-desc' => '{{desc}}',
 	'whereisextension-submit' => '{{Identical|Search}}',
@@ -54,44 +32,28 @@ $messages['qqq'] = [
 	'whereisextension-deselect-all' => 'A link to deselect all wikis on a list with a given variable.',
 ];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = [
 	'whereisextension' => 'Waar is die uitbreiding',
 	'whereisextension-submit' => 'Soek',
-	'whereisextension-list' => "Lys van wiki's wat aan die kriteria voldoen",
+	'whereisextension-list' => 'Lys van wiki\'s wat aan die kriteria voldoen',
 	'whereisextension-isset' => 'is gestel na',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alle groepe',
 	'whereisextension-name-contains' => 'veranderlike-naam bevat',
 ];
 
-/** Aragonese (aragonés)
- * @author Juanpabl
- */
 $messages['an'] = [
 	'whereisextension-filter' => 'Filtrar',
 ];
 
-/** Arabic (العربية)
- * @author OsamaK
- */
 $messages['ar'] = [
 	'whereisextension-filter' => 'مُرشِّح',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = [
 	'whereisextension-submit' => 'Axtar',
 ];
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = [
 	'whereisextension' => 'Дзе пашырэньне',
 	'whereisextension-submit' => 'Шукаць',
@@ -106,22 +68,14 @@ $messages['be-tarask'] = [
 	'whereisextension-search-type-full' => 'Падобна',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'whereisextension-submit' => 'Търсене',
 	'whereisextension-all-groups' => 'Всички групи',
 	'whereisextension-search-type' => 'Тип:',
 ];
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = [
-	'whereisextension' => "Pelec'h emañ an astenn",
+	'whereisextension' => 'Pelec\'h emañ an astenn',
 	'whereisextension-submit' => 'Klask',
 	'whereisextension-list' => 'Roll ar wikioù a glot gant an dezverkoù',
 	'whereisextension-isset' => 'zo termenet e',
@@ -134,15 +88,11 @@ $messages['br'] = [
 	'whereisextension-search-type-full' => 'Evel',
 ];
 
-/** Catalan (català)
- * @author Gemmaa
- * @author Paucabot
- */
 $messages['ca'] = [
-	'whereisextension' => "Extensió ''Where is''",
+	'whereisextension' => 'Extensió \'\'Where is\'\'',
 	'whereisextension-submit' => 'Cerca',
 	'whereisextension-list' => 'Llista dels wikis amb criteris coincident',
-	'whereisextension-isset' => "s'estableix a",
+	'whereisextension-isset' => 's\'estableix a',
 	'whereisextension-filter' => 'Filtre',
 	'whereisextension-all-groups' => 'Tots els grups',
 	'whereisextension-name-contains' => 'nom de la variable conté',
@@ -152,14 +102,10 @@ $messages['ca'] = [
 	'whereisextension-search-type-full' => 'Com',
 ];
 
-/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = [
 	'whereisextension-submit' => 'گەڕان',
 ];
 
-/** Czech (česky)
- * @author Dontlietome7
- */
 $messages['cs'] = [
 	'whereisextension' => 'Rozšíření Kde je',
 	'whereisextension-submit' => 'Hledání',
@@ -174,10 +120,6 @@ $messages['cs'] = [
 	'whereisextension-search-type-full' => 'Jako',
 ];
 
-/** German (Deutsch)
- * @author LWChris
- * @author Laximilian scoken
- */
 $messages['de'] = [
 	'whereisextension' => 'Wo ist die Erweiterung',
 	'whereisextension-submit' => 'Suchen',
@@ -192,9 +134,6 @@ $messages['de'] = [
 	'whereisextension-search-type-full' => 'Wie',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
 $messages['diq'] = [
 	'whereisextension-submit' => 'Cı geyre',
 	'whereisextension-isset' => 'Saz kerdiya',
@@ -206,17 +145,10 @@ $messages['diq'] = [
 	'whereisextension-search-type-full' => 'Rındeni',
 ];
 
-/** Ewe (eʋegbe) */
 $messages['ee'] = [
 	'whereisextension-submit' => 'Dii',
 ];
 
-/** Spanish (español)
- * @author Absay
- * @author Crazymadlover
- * @author Pertile
- * @author Peter17
- */
 $messages['es'] = [
 	'whereisextension' => 'Dónde está la extensión',
 	'whereisextension-submit' => 'Buscar',
@@ -231,9 +163,6 @@ $messages['es'] = [
 	'whereisextension-search-type-full' => 'Semejante a',
 ];
 
-/** Basque (euskara)
- * @author An13sa
- */
 $messages['eu'] = [
 	'whereisextension' => 'Non dagoen zehazteko luzapena',
 	'whereisextension-submit' => 'Bilatu',
@@ -248,11 +177,6 @@ $messages['eu'] = [
 	'whereisextension-search-type-full' => 'Honen antzekoa:',
 ];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- * @author Ilkea
- */
 $messages['fi'] = [
 	'whereisextension' => 'Missä on laajennus',
 	'whereisextension-submit' => 'Haku',
@@ -267,13 +191,8 @@ $messages['fi'] = [
 	'whereisextension-search-type-full' => 'Kuten',
 ];
 
-/** French (français)
- * @author IAlex
- * @author Peter17
- * @author Slamduck
- */
 $messages['fr'] = [
-	'whereisextension' => "Où se trouve l'extension",
+	'whereisextension' => 'Où se trouve l\'extension',
 	'whereisextension-submit' => 'Rechercher',
 	'whereisextension-list' => 'Liste des wikis qui correspondent aux critères',
 	'whereisextension-isset' => 'est définie à',
@@ -286,9 +205,6 @@ $messages['fr'] = [
 	'whereisextension-search-type-full' => 'Comme',
 ];
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = [
 	'whereisextension' => 'Onde está a extensión',
 	'whereisextension-submit' => 'Procurar',
@@ -303,15 +219,10 @@ $messages['gl'] = [
 	'whereisextension-search-type-full' => 'Semellante a',
 ];
 
-/** Hausa (هَوُسَ) */
 $messages['ha'] = [
 	'whereisextension-submit' => 'Nema',
 ];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Glanthor Reviol
- */
 $messages['hu'] = [
 	'whereisextension' => '„Hol van” kiterjesztés',
 	'whereisextension-submit' => 'Keresés',
@@ -324,9 +235,6 @@ $messages['hu'] = [
 	'whereisextension-search-type-bool' => 'Logikai érték',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'whereisextension' => 'Ubi es le extension',
 	'whereisextension-submit' => 'Cercar',
@@ -341,11 +249,6 @@ $messages['ia'] = [
 	'whereisextension-search-type-full' => 'Como',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Farras
- * @author Irwangatot
- * @author Kenrick95
- */
 $messages['id'] = [
 	'whereisextension' => 'Di mana ekstensi',
 	'whereisextension-submit' => 'Cari',
@@ -360,24 +263,15 @@ $messages['id'] = [
 	'whereisextension-search-type-full' => 'Seperti',
 ];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = [
 	'whereisextension-submit' => 'Chọwa',
 ];
 
-/** Italian (italiano) */
 $messages['it'] = [
 	'whereisextension-submit' => 'Ricerca',
 	'whereisextension-all-groups' => 'Tutti i gruppi',
 ];
 
-/** Japanese (日本語)
- * @author Naohiro19
- * @author Schu
- * @author Yanajin66
- */
 $messages['ja'] = [
 	'whereisextension' => '拡張子の場所',
 	'whereisextension-submit' => '検索',
@@ -392,48 +286,30 @@ $messages['ja'] = [
 	'whereisextension-search-type-full' => 'Like演算子:',
 ];
 
-/** Kalaallisut (kalaallisut)
- * @author Qaqqalik
- */
 $messages['kl'] = [
 	'whereisextension-submit' => 'Ujarlerit',
 ];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
 $messages['kn'] = [
 	'whereisextension-submit' => 'ಹುಡುಕು',
 ];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = [
 	'whereisextension-search-type' => 'Tüp:',
 ];
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
 $messages['ku-latn'] = [
 	'whereisextension-submit' => 'Lêbigere',
 	'whereisextension-filter' => 'Fîltre',
 	'whereisextension-search-type' => 'Cure:',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = [
 	'whereisextension-submit' => 'Sichen',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'All Gruppen',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = [
 	'whereisextension' => 'Каде е додатокот',
 	'whereisextension-submit' => 'Пребарај',
@@ -448,9 +324,6 @@ $messages['mk'] = [
 	'whereisextension-search-type-full' => 'Како',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
 	'whereisextension' => 'Sambungan di Mana',
 	'whereisextension-submit' => 'Cari',
@@ -465,18 +338,12 @@ $messages['ms'] = [
 	'whereisextension-search-type-full' => 'Seperti',
 ];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = [
 	'whereisextension-submit' => 'ရှာ​ဖွေ​ရန်​',
 	'whereisextension-filter' => 'စိစစ်မှု',
 	'whereisextension-search-type' => 'အမျိုးအစား :',
 ];
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Nghtwlkr
- */
 $messages['nb'] = [
 	'whereisextension' => 'Hvor er utvidelsen',
 	'whereisextension-submit' => 'Søk',
@@ -491,20 +358,14 @@ $messages['nb'] = [
 	'whereisextension-search-type-full' => 'Lik',
 ];
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
 $messages['ne'] = [
 	'whereisextension-submit' => 'खोज्नुहोस्',
 ];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
 $messages['nl'] = [
 	'whereisextension' => 'Waar is de uitbreiding',
 	'whereisextension-submit' => 'Zoeken',
-	'whereisextension-list' => "Lijst met wiki's die aan de voorwaarden voldoen",
+	'whereisextension-list' => 'Lijst met wiki\'s die aan de voorwaarden voldoen',
 	'whereisextension-isset' => 'is ingesteld op',
 	'whereisextension-filter' => 'Filteren',
 	'whereisextension-all-groups' => 'Alle groepen',
@@ -515,11 +376,8 @@ $messages['nl'] = [
 	'whereisextension-search-type-full' => 'Zoals',
 ];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = [
-	'whereisextension' => "Ont se tròba l'extension",
+	'whereisextension' => 'Ont se tròba l\'extension',
 	'whereisextension-submit' => 'Recercar',
 	'whereisextension-list' => 'Lista dels wikis que correspondon als critèris',
 	'whereisextension-isset' => 'es definida a',
@@ -528,19 +386,12 @@ $messages['oc'] = [
 	'whereisextension-name-contains' => 'lo nom de la variabla conten',
 ];
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = [
 	'whereisextension-submit' => 'Uffgucke',
 ];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sp5uhe
- */
 $messages['pl'] = [
-	'whereisextension' => 'Rozszerzenie do wyszukiwania',
+	'whereisextension' => 'Wyszukiwanie rozszerzeń',
 	'whereisextension-submit' => 'Szukaj',
 	'whereisextension-list' => 'Lista wiki, które odpowiadają kryteriom',
 	'whereisextension-isset' => 'jest ustawiona na',
@@ -553,15 +404,11 @@ $messages['pl'] = [
 	'whereisextension-search-type-full' => 'Podobnie do',
 ];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = [
-	'whereisextension' => "Anté ch'a l'é l'estension",
+	'whereisextension' => 'Anté ch\'a l\'é l\'estension',
 	'whereisextension-submit' => 'Serca',
 	'whereisextension-list' => 'Lista ëd wiki con criteri spetà',
-	'whereisextension-isset' => "a l'é ampostà a",
+	'whereisextension-isset' => 'a l\'é ampostà a',
 	'whereisextension-filter' => 'Filtr',
 	'whereisextension-all-groups' => 'Tute le partìe',
 	'whereisextension-name-contains' => 'ël nòm ëd variàbil a conten',
@@ -571,18 +418,12 @@ $messages['pms'] = [
 	'whereisextension-search-type-full' => 'Com',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = [
 	'whereisextension-submit' => 'پلټنه',
 	'whereisextension-filter' => 'چاڼګر',
 	'whereisextension-all-groups' => 'ټولې ډلې',
 ];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- */
 $messages['pt'] = [
 	'whereisextension' => 'Onde está a extensão',
 	'whereisextension-submit' => 'Pesquisar',
@@ -597,11 +438,6 @@ $messages['pt'] = [
 	'whereisextension-search-type-full' => 'Semelhante a',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Daemorris
- * @author Giro720
- * @author McDutchie
- */
 $messages['pt-br'] = [
 	'whereisextension' => 'Extensão onde está',
 	'whereisextension-submit' => 'Pesquisar',
@@ -616,11 +452,6 @@ $messages['pt-br'] = [
 	'whereisextension-search-type-full' => 'Semelhante a',
 ];
 
-/** Russian (русский)
- * @author Eleferen
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = [
 	'whereisextension' => 'Где расширение',
 	'whereisextension-submit' => 'Искать',
@@ -635,14 +466,10 @@ $messages['ru'] = [
 	'whereisextension-search-type-full' => 'Подобно',
 ];
 
-/** Sinhala (සිංහල) */
 $messages['si'] = [
 	'whereisextension-submit' => 'සොයන්න',
 ];
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = [
 	'whereisextension' => 'Kje je razširitev',
 	'whereisextension-submit' => 'Išči',
@@ -657,11 +484,6 @@ $messages['sl'] = [
 	'whereisextension-search-type-full' => 'Kot',
 ];
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Charmed94
- * @author Rancher
- * @author Verlor
- */
 $messages['sr-ec'] = [
 	'whereisextension' => 'Где је проширење',
 	'whereisextension-submit' => 'Претражи',
@@ -676,10 +498,6 @@ $messages['sr-ec'] = [
 	'whereisextension-search-type-full' => 'Како',
 ];
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = [
 	'whereisextension' => 'Var är tillägg',
 	'whereisextension-submit' => 'Sök',
@@ -694,17 +512,11 @@ $messages['sv'] = [
 	'whereisextension-search-type-full' => 'Gilla',
 ];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = [
 	'whereisextension-submit' => 'వెతుకు',
 	'whereisextension-all-groups' => 'అన్ని గుంపులు',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'whereisextension' => 'Dugtong na nasaan',
 	'whereisextension-submit' => 'Hanapin',
@@ -719,9 +531,6 @@ $messages['tl'] = [
 	'whereisextension-search-type-full' => 'Wangis',
 ];
 
-/** Ukrainian (українська)
- * @author Тест
- */
 $messages['uk'] = [
 	'whereisextension-submit' => 'Шукати',
 	'whereisextension-filter' => 'Фільтр',
@@ -729,10 +538,6 @@ $messages['uk'] = [
 	'whereisextension-search-type' => 'Тип:',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
 $messages['vi'] = [
 	'whereisextension' => 'Đâu là phần mở rộng',
 	'whereisextension-submit' => 'Tìm kiếm',
@@ -747,12 +552,26 @@ $messages['vi'] = [
 	'whereisextension-search-type-full' => 'Giống như',
 ];
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Hydra
- */
 $messages['zh-hans'] = [
 	'whereisextension-submit' => '搜寻',
 	'whereisextension-search-type' => '类型：',
 	'whereisextension-search-type-full' => '喜欢',
+	'whereisextension' => '扩展功能位置',
+];
+
+$messages['zh'] = [
+	'whereisextension' => '扩展功能位置',
+];
+
+$messages['zh-hant'] = [
+	'whereisextension' => '擴展功能位置',
+];
+
+$messages['zh-hk'] = [
+	'whereisextension' => '擴展功能位置',
+];
+
+$messages['zh-tw'] = [
+	'whereisextension' => '擴展功能位置',
 ];
 

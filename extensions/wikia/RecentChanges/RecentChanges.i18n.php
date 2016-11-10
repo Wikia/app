@@ -1,18 +1,18 @@
 <?php
-/**
-* Internationalisation file for the RecentChanges extension.
-*
-* @addtogroup Languages
-*/
+/** Internationalization file for /extensions/wikia/RecentChanges/RecentChanges extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'recentchanges-desc' => 'Recent changes - Wikia implementation',
 	'recentchanges-dropdown-select-all' => 'Select All',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'recentchanges-desc' => '{{desc}}',
 	'recentchanges-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.',
-);
+];
+
+$messages['fr'] = [
+	'recentchanges-desc' => 'Liste des modifications récentes',
+];
+

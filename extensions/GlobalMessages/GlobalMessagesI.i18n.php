@@ -1,18 +1,12 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
-$messages = array();
+/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesI extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'index-category' => 'Indexed pages',
 	'internalerror' => 'Internal error',
 	'internalerror_info' => 'Internal error: $1',
-	'invalidemailaddress' => 'The e-mail address cannot be accepted as it appears to have an invalid format.
-Please enter a well-formatted address or empty that field.',
+	'invalidemailaddress' => 'Please enter a valid e-mail address.',
 	'italic_sample' => 'Italic text',
 	'italic_tip' => 'Italic text',
 	'image_sample' => 'Example.jpg',
@@ -41,8 +35,8 @@ For optimal security, img_auth.php is disabled.',
 	'img-auth-noread' => 'User does not have access to read "$1".',
 	'imgfile' => 'file',
 	'imagelinks' => 'File usage',
-	'iteminvalidname' => "Problem with item '$1', invalid name...",
-	'invert' => 'Invert selection',
+	'iteminvalidname' => 'Problem with item \'$1\', invalid name...',
+	'invert' => 'Exclude namespace',
 	'isredirect' => 'redirect page',
 	'istemplate' => 'transclusion',
 	'isimage' => 'file link',
@@ -64,11 +58,11 @@ For optimal security, img_auth.php is disabled.',
 	'ipbenableautoblock' => 'Automatically block the last IP address used by this user, and any subsequent IP addresses they try to edit from',
 	'ipbsubmit' => 'Block this user',
 	'ipbother' => 'Other time:',
-	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,indefinite:infinite',
+	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year',
 	'ipbotheroption' => 'other',
 	'ipbotherreason' => 'Other/additional reason:',
 	'ipbhidename' => 'Hide username from edits and lists',
-	'ipbwatchuser' => "Watch this user's user and talk pages",
+	'ipbwatchuser' => 'Watch this user\'s user and talk pages',
 	'ipb-disableusertalk' => 'Prevent this user from editing their own talk page while blocked',
 	'ipb-change-block' => 'Re-block the user with these settings',
 	'ipb-confirm' => 'Confirm block',
@@ -111,9 +105,9 @@ It is, however, blocked as part of the range $2, which can be unblocked.',
 	'imageinvalidfilename' => 'The target filename is invalid',
 	'import' => 'Import pages',
 	'importinterwiki' => 'Transwiki import',
-	'import-interwiki-text' => "Select a wiki and page title to import.
-Revision dates and editors' names will be preserved.
-All transwiki import actions are logged at the [[Special:Log/import|import log]].",
+	'import-interwiki-text' => 'Select a wiki and page title to import.
+Revision dates and editors\' names will be preserved.
+All transwiki import actions are logged at the [[Special:Log/import|import log]].',
 	'import-interwiki-source' => 'Source wiki/page:',
 	'import-interwiki-history' => 'Copy all history revisions for this page',
 	'import-interwiki-templates' => 'Include all templates',
@@ -160,8 +154,8 @@ Please try again.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revision|revisions}}',
 	'import-logentry-interwiki' => 'transwikied $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revision|revisions}} from $2',
-	'imagemaxsize' => "Image size limit:<br />''(for file description pages)''",
-	'imagelisttext' => "Below is a list of '''$1''' {{PLURAL:$1|file|files}} sorted $2.",
+	'imagemaxsize' => 'Image size limit: (for file description pages)',
+	'imagelisttext' => '<div style="margin-top: -1px;" class="emptymwmsg mediawiki_imagelisttext"></div>',
 	'ilsubmit' => 'Search',
 	'invalidateemail' => 'Cancel email confirmation',
 	'imgmultipageprev' => '← previous page',
@@ -184,17 +178,17 @@ Please try again.',
 	'imagereverted' => 'Revert to earlier version was successful. <strong>This change may take up to 2 minutes to be visible.</strong>',
 	'irc' => 'Live wiki help',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => 'Insert image',
-	'its_easy' => "...it's easy and free",
+	'insertimage' => 'Insert photo',
+	'its_easy' => '...it\'s easy and free',
 	'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
 	'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
 	'import-article-missing-more-single' => '(and one more article)',
 	'import-article-missing-more-multiple' => '(and $1 more articles)',
-	'import-article-not-js-single' => "$1 was not loaded as it's not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.",
-	'import-article-not-js-multiple' => "$1 $2 were not loaded as they're not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.",
-);
+	'import-article-not-js-single' => '$1 was not loaded as it\'s not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.',
+	'import-article-not-js-multiple' => '$1 $2 were not loaded as they\'re not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'index-category' => 'Name of the category where pages with the <nowiki>__INDEX__</nowiki> behaviour switch are listed. For description of this behaviour switch see [http://www.mediawiki.org/wiki/Help:Magic_words#Behavior_switches mediawiki].',
 	'info_short' => '{{Identical|Information}}',
 	'internalerror' => '{{Identical|Internal error}}',
@@ -246,11 +240,11 @@ Displayed in Special:WhatLinksHere (see [[Special:WhatLinksHere/Template:New por
 	'ipbenableautoblock' => '{{Identical|Automatically block ...}}',
 	'ipbsubmit' => '{{Identical|Block this user}}',
 	'ipbother' => '{{Identical|Other time}}',
-	'ipboptions' => "* Description: Options for the duration of the block.
-* <font color=\"red\">Be careful:</font> '''1 translation:1 english''', so the first part is the translation and the second part should stay in English.
-* Example: See e.g. [[MediaWiki:Ipboptions/nl]] if you still don't know how to do it.
+	'ipboptions' => '* Description: Options for the duration of the block.
+* <font color="red">Be careful:</font> \'\'\'1 translation:1 english\'\'\', so the first part is the translation and the second part should stay in English.
+* Example: See e.g. [[MediaWiki:Ipboptions/nl]] if you still don\'t know how to do it.
 
-{{Identical|Infinite}}",
+{{Identical|Infinite}}',
 	'ipbotheroption' => '{{Identical|Other}}',
 	'ipbotherreason' => '{{Identical|Other/additional reason}}',
 	'ipbhidename' => 'This is the label for a checkbox in the user block form on [[Special:Block]].',
@@ -277,19 +271,19 @@ Displayed in Special:WhatLinksHere (see [[Special:WhatLinksHere/Template:New por
 Used on [[Special:IPBlockList]] as header when global blocks exists too.',
 	'ipblocklist-otherblocks' => '[[File:Special IPBlockList new.png|thumb|Example]]
 Used on [[Special:IPBlockList]] as header for other blocks, i.e. from GlobalBlocking or TorBlocks.',
-	'infiniteblock' => "* contents of $4 in {{msg-mw|Blocklistline|notext=1}}: (''{{int:Blocklistline}}'')
+	'infiniteblock' => '* contents of $4 in {{msg-mw|Blocklistline|notext=1}}: (\'\'{{int:Blocklistline}}\'\')
 * contents of $4 in {{msg-mw|Globalblocking-blocked|notext=1}}:
-<blockquote>''{{int:Globalblocking-blocked}}''</blockquote>
+<blockquote>\'\'{{int:Globalblocking-blocked}}\'\'</blockquote>
 *See also {{msg-mw|Expiringblock}}
 
-{{Identical|Infinite}}",
+{{Identical|Infinite}}',
 	'ipb_expiry_temp' => 'Warning message displayed on [[Special:BlockIP]] if the option "hide username" is selected but the expiry time is not infinite.',
 	'ipb_already_blocked' => '{{Identical|$1 is already blocked}}',
 	'ipb-otherblocks-header' => '[[File:Special.Block with other blocks from GlobalBlocking and TorBlocks.png|thumb|Example]]
 Used on [[Special:Block]] as header for other blocks, i.e. from GlobalBlocking or TorBlocks',
-	'immobile-target-namespace-iw' => "This message appears when attempting to move a page, if a person has typed an interwiki link as a namespace prefix in the input box labelled 'To new title'.  The special page 'Movepage' cannot be used to move a page to another wiki.
+	'immobile-target-namespace-iw' => 'This message appears when attempting to move a page, if a person has typed an interwiki link as a namespace prefix in the input box labelled \'To new title\'.  The special page \'Movepage\' cannot be used to move a page to another wiki.
 
-'Destination' can be used instead of 'target' in this message.",
+\'Destination\' can be used instead of \'target\' in this message.',
 	'import' => 'The title of the special page [[Special:Import]];',
 	'import-interwiki-history' => 'This is an option on [[Special:Import]]. Usually, when unchecked, only the first version of a page is imported. When you check the option, all versions are imported. This is important often to check for licensing reasons.',
 	'import-interwiki-submit' => '{{Identical|Import}}',
@@ -304,7 +298,7 @@ Related messages: {{msg|right-importupload|pl=yes}} (the user right for this).',
 	'imagelisttext' => 'This is text on [[Special:NewImages]]. $1 is the number of files. $2 is the message {{msg-mw|Bydate}}.',
 	'ilsubmit' => '{{Identical|Search}}',
 	'imagelistall' => '{{Identical|All}}',
-	'invalidateemail' => "This is the '''name of the special page''' where user goes if he chooses the cancel e-mail confirmation link from the confirmation e-mail.",
+	'invalidateemail' => 'This is the \'\'\'name of the special page\'\'\' where user goes if he chooses the cancel e-mail confirmation link from the confirmation e-mail.',
 	'imgmultipageprev' => '{{Identical|Previous page}}',
 	'imgmultipagenext' => '{{Identical|Next page}}',
 	'imgmultigo' => '{{Identical|Go}}',
@@ -335,17 +329,17 @@ Name of month in Iranian calender.',
 	'intentionallyblankpage' => 'Text displayed in [[Special:BlankPage]].',
 	'import-article-missing-single' => 'Message displayed on banner notification, visible only for technical users that can edit JavaScript pages when script file they requested via import method was not found. $1 is JavaScript file name.',
 	'import-article-missing-multiple' => 'Message displayed on banner notification, visible only for technical users that can edit JavaScript pages when more than one script file they requested were not found. $1 is JavaScript file name. $2 is message generated by one of import-article-missing-more-* messages.',
-	'import-article-missing-more-single' => "Message passed as a parameter to import-article-missing-multiple message when there is one more file that wasn't found.",
-	'import-article-missing-more-multiple' => "Message passed as a parameter to import-article-missing-multiple message when there are more than two files that weren't found. $2 is number of missing files minus 1 (that is already mentioned by import-article-missing-multiple message.",
+	'import-article-missing-more-single' => 'Message passed as a parameter to import-article-missing-multiple message when there is one more file that wasn\'t found.',
+	'import-article-missing-more-multiple' => 'Message passed as a parameter to import-article-missing-multiple message when there are more than two files that weren\'t found. $2 is number of missing files minus 1 (that is already mentioned by import-article-missing-multiple message.',
 	'import-article-not-js-single' => 'Message displayed on banner notification, visible only for technical users that can edit JavaScript pages when script file they requested via import method was not identified as JavaScript page. $1 is JavaScript file name.',
 	'import-article-not-js-multiple' => 'Message displayed on banner notification, visible only for technical users that can edit JavaScript pages when more than one script file they requested were not identified as JavaScript page. $1 is file name. $2 is message generated by one of import-article-missing-more-* messages.',
-);
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'ilsubmit' => 'Аҧшаара',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'italic_sample' => 'Citak singèt naseukah nyoë',
 	'italic_tip' => 'Citak singèt',
 	'image_tip' => 'Pasoë beureukah',
@@ -359,14 +353,14 @@ $messages['ace'] = array(
 	'ipblocklist-submit' => 'Mita',
 	'importlogpage' => 'Log impor',
 	'ilsubmit' => 'Mita',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'index-category' => 'Geïndekseerde bladsye',
 	'internalerror' => 'Interne fout',
 	'internalerror_info' => 'Interne fout: $1',
-	'invalidemailaddress' => "Die e-posadres is nie aanvaar nie, aangesien dit 'n ongeldige formaat blyk te hê.
-Voer asseblief 'n geldige e-posadres in, of laat die veld leeg.",
+	'invalidemailaddress' => 'Die e-posadres is nie aanvaar nie, aangesien dit \'n ongeldige formaat blyk te hê.
+Voer asseblief \'n geldige e-posadres in, of laat die veld leeg.',
 	'italic_sample' => 'Skuinsgedrukte teks',
 	'italic_tip' => 'Skuinsdruk',
 	'image_sample' => 'Voorbeeld.jpg',
@@ -388,14 +382,14 @@ Miskien gebruik dit CGI, waartydens img_auth nie ondersteun word nie.
 	'img-auth-isdir' => 'U probeer om toegang na gids "$1" te kry.
 Slegs toegang tot lêers word toegelaat.',
 	'img-auth-streaming' => 'Besig met die stoom van "$1".',
-	'img-auth-public' => "Die doel van img_auth.php is die afvoer van lêers vanaf 'n privaat wiki.
-Hierdie wiki is opgestel as 'n publieke wiki.
-Vir veiligheidsredes is img_auth.php gedeaktiveer.",
+	'img-auth-public' => 'Die doel van img_auth.php is die afvoer van lêers vanaf \'n privaat wiki.
+Hierdie wiki is opgestel as \'n publieke wiki.
+Vir veiligheidsredes is img_auth.php gedeaktiveer.',
 	'img-auth-noread' => 'Gebruiker het nie toegang om "$1" te lees nie.',
 	'img-auth-bad-query-string' => 'Die URL het \'n ongeldige navraagstring ("query string").',
 	'imgfile' => 'lêer',
 	'imagelinks' => 'Lêergebruik',
-	'iteminvalidname' => "Probleem met item '$1', ongeldige naam...",
+	'iteminvalidname' => 'Probleem met item \'$1\', ongeldige naam...',
 	'invert' => 'Omgekeerde seleksie',
 	'isredirect' => 'aanstuurblad',
 	'istemplate' => 'insluiting',
@@ -430,12 +424,12 @@ Vir veiligheidsredes is img_auth.php gedeaktiveer.",
 	'ipb-confirmhideuser' => 'U staan op die punt om \'n "versteekte gebruiker" te blokkeer. Dit sal die gebruiker se naam vanaf alle lyste en logboeke onderdruk. Is u seker u wil om dit te doen?',
 	'ipb-edit-dropdown' => 'Werk lys van redes by',
 	'ipb-unblock-addr' => 'Deblokkeer $1',
-	'ipb-unblock' => "Deblokkeer 'n gebruiker of IP-adres",
+	'ipb-unblock' => 'Deblokkeer \'n gebruiker of IP-adres',
 	'ipb-blocklist' => 'Wys bestaande blokkades',
 	'ipb-blocklist-contribs' => 'Bydraes van $1',
 	'ipusubmit' => 'Hef blokkade op',
 	'ipblocklist' => 'Geblokkeerde IP-adresse en gebruikers',
-	'ipblocklist-legend' => "Soek 'n geblokkeerde gebruiker",
+	'ipblocklist-legend' => 'Soek \'n geblokkeerde gebruiker',
 	'ipblocklist-submit' => 'Soek',
 	'ipblocklist-localblock' => 'Lokale blokkade',
 	'ipblocklist-otherblocks' => 'Ander {{PLURAL:$1|blokkade|blokkades}}',
@@ -451,25 +445,25 @@ Wil u die instellings wysig?',
 	'ipb-otherblocks-header' => 'Ander {{PLURAL:$1|blokkade|blokkades}}',
 	'ipb_cant_unblock' => 'Fout: Blokkade-ID $1 kan nie gevind word nie.
 Die blokkade is moontlik reeds opgehef.',
-	'ipb_blocked_as_range' => "Fout: die IP-adres $1 is nie direk geblokkeer nie en die blokkade kan nie opgehef word nie.
-Die blokkade is 'n onderdeel van die reeks $2, waarvan die blokkade wel opgehef kan word.",
+	'ipb_blocked_as_range' => 'Fout: die IP-adres $1 is nie direk geblokkeer nie en die blokkade kan nie opgehef word nie.
+Die blokkade is \'n onderdeel van die reeks $2, waarvan die blokkade wel opgehef kan word.',
 	'ip_range_invalid' => 'Ongeldige IP waardegebied.',
 	'ip_range_toolarge' => 'Reeks-blokkades groter as /$1 word nie toegelaat nie.',
 	'ipbblocked' => 'U kan nie ander gebruikers (de)blokkeer nie, omdat u self geblokkeer is',
 	'ipbnounblockself' => 'U mag uself nie deblokkeer nie',
 	'immobile-source-namespace' => 'Bladsye in naamruimte "$1" kan nie geskuif word nie',
 	'immobile-target-namespace' => 'Bladsye kan nie na naamruimte "$1" geskuif word nie',
-	'immobile-target-namespace-iw' => "'n Interwiki-skakel is nie 'n geldige bestemming vir die skuif van die bladsy nie.",
+	'immobile-target-namespace-iw' => '\'n Interwiki-skakel is nie \'n geldige bestemming vir die skuif van die bladsy nie.',
 	'immobile-source-page' => 'Die bladsy kan nie geskuif word nie.',
 	'immobile-target-page' => 'Dit is nie moontlik om na die titel toe te skuif nie.',
-	'imagenocrossnamespace' => "'n Medialêer kan nie na 'n ander naamruimte geskuif word nie",
+	'imagenocrossnamespace' => '\'n Medialêer kan nie na \'n ander naamruimte geskuif word nie',
 	'imagetypemismatch' => 'Die nuwe lêer se uitbreiding pas nie by die lêertipe nie',
 	'imageinvalidfilename' => 'Die nuwe lêernaam is ongeldig',
 	'import' => 'Voer bladsye in',
 	'importinterwiki' => 'Transwiki-importeer',
-	'import-interwiki-text' => "Kies 'n wiki en bladsynaam om te importeer.
+	'import-interwiki-text' => 'Kies \'n wiki en bladsynaam om te importeer.
 Weergawe- en outeursinligting word sodoende bewaar.
-Alle transwiki-laaie word opgeteken in die [[Special:Log/import|invoer-logboek]].",
+Alle transwiki-laaie word opgeteken in die [[Special:Log/import|invoer-logboek]].',
 	'import-interwiki-source' => 'Bronwiki/bladsy:',
 	'import-interwiki-history' => 'Kopieer ook volledige geskiedenis van hierdie bladsy',
 	'import-interwiki-templates' => 'Sluit alle sjablone in',
@@ -496,8 +490,8 @@ Stoor die afvoer op u eie rekenaar, en laai dit hier op.',
 Die lêer is groter as die toelaatbare limiet.',
 	'importuploaderrorpartial' => 'Oplaai van invoer-lêer het misluk.
 Die lêer is slegs gedeeltelik opgelaai.',
-	'importuploaderrortemp' => "Oplaai van invoer-lêer het misluk.
-'n Tydelike gids bestaan nie.",
+	'importuploaderrortemp' => 'Oplaai van invoer-lêer het misluk.
+\'n Tydelike gids bestaan nie.',
 	'import-parse-failure' => 'Fout met die verwerking van die XML-invoer',
 	'import-noarticle' => 'Geen bladsye om te importeer nie!',
 	'import-nonewrevisions' => 'Alle weergawes was voorheen ingevoer.',
@@ -507,13 +501,13 @@ Die lêer is slegs gedeeltelik opgelaai.',
 	'import-error-edit' => 'Die bladsy "$1" is nie geïmporteer nie omdat u nie die regte het om dit te wysig nie.',
 	'import-error-create' => 'Die bladsy "$1" is nie geïmporteer nie omdat u nie die regte het om dit te skep nie.',
 	'importlogpage' => 'Invoer logboek',
-	'importlogpagetext' => "Administratiewe invoere van bladsye met geskiedenis van ander wiki's.",
-	'import-logentry-upload' => "[[$1]] ingevoer deur 'n lêer op te laai",
+	'importlogpagetext' => 'Administratiewe invoere van bladsye met geskiedenis van ander wiki\'s.',
+	'import-logentry-upload' => '[[$1]] ingevoer deur \'n lêer op te laai',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|weergawe|weergawes}}',
 	'import-logentry-interwiki' => 'importeer $1 via transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|weergawe|weergawes}} vanaf $2',
-	'imagemaxsize' => "Beperk beeldgrootte tot:<br />''(vir lêerbeskrywingsbladsye)''",
-	'imagelisttext' => "Hier onder is a lys van '''$1''' {{PLURAL:$1|lêer|lêers}}, $2 gesorteer.",
+	'imagemaxsize' => 'Beperk beeldgrootte tot:<br />\'\'(vir lêerbeskrywingsbladsye)\'\'',
+	'imagelisttext' => 'Hier onder is a lys van \'\'\'$1\'\'\' {{PLURAL:$1|lêer|lêers}}, $2 gesorteer.',
 	'ilsubmit' => 'Soek',
 	'invalidateemail' => 'Kanselleer e-pos bevestiging',
 	'imgmultipageprev' => '← vorige bladsy',
@@ -521,9 +515,9 @@ Die lêer is slegs gedeeltelik opgelaai.',
 	'imgmultigo' => 'Laat waai!',
 	'imgmultigoto' => 'Gaan na bladsy $1',
 	'intentionallyblankpage' => 'Die bladsy is bewustelik leeg gelaat',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'index-category' => 'Faqe e indeksume',
 	'internalerror' => 'Gabim i mbrendshëm',
 	'internalerror_info' => 'Gabimi i mbrendshëm: $1',
@@ -540,9 +534,9 @@ Ju lutemi jepeni nji adresë të formatueme mirë ose leni atë fushë të shpra
 	'isimage' => 'vegëz në figurë',
 	'ipboptions' => '2 orë:2 hours,1 ditë:1 day,3 ditë:3 days,1 javë:1 week,2 javë:2 weeks,1 muej:1 month,3 muej:3 months,6 muej:6 months,1 vjet:1 year,pa kufi:infinite',
 	'ipblocklist' => 'Përdoruesit dhe adresat IP të bllokueme',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'index-category' => 'Faqe e indeksume',
 	'internalerror' => 'Gabim i mbrendshëm',
 	'internalerror_info' => 'Gabimi i mbrendshëm: $1',
@@ -559,9 +553,9 @@ Ju lutemi jepeni nji adresë të formatueme mirë ose leni atë fushë të shpra
 	'isimage' => 'vegëz në figurë',
 	'ipboptions' => '2 orë:2 hours,1 ditë:1 day,3 ditë:3 days,1 javë:1 week,2 javë:2 weeks,1 muej:1 month,3 muej:3 months,6 muej:6 months,1 vjet:1 year,pa kufi:infinite',
 	'ipblocklist' => 'Përdoruesit dhe adresat IP të bllokueme',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'index-category' => ' ማውጫው ላይ የተመዘገብ ገጾች',
 	'internalerror' => 'የውስጥ ስህተት',
 	'internalerror_info' => 'የውስጥ ስህተት፦ $1',
@@ -582,14 +576,14 @@ $messages['am'] = array(
 	'ipbexpiry' => 'የሚያልቅበት፦',
 	'ipbreason' => 'ምክንያቱ፦',
 	'ipbreasonotherlist' => 'ሌላ ምክንያት',
-	'ipbreason-dropdown' => "*ተራ የማገጃ ምክንያቶች
+	'ipbreason-dropdown' => '*ተራ የማገጃ ምክንያቶች
 ** የሀሠት መረጃ መጨምር
 ** ከገጾች ይዞታውን መደምሰስ
-** የ'ስፓም' ማያያዣ ማብዛት
+** የ\'ስፓም\' ማያያዣ ማብዛት
 ** እንቶ ፈንቶ መጨምር
 ** ዛቻ ማብዛት
 ** በአድራሻዎች ብዛት መተንኮል
-** የማይገባ ብዕር ስም",
+** የማይገባ ብዕር ስም',
 	'ipbcreateaccount' => 'ብዕር ስም እንዳያውጣ ለመከልከል',
 	'ipbemailban' => 'ተጠቃሚው ኢ-ሜል ከመላክ ይከለከል',
 	'ipbenableautoblock' => 'በተጠቃሚው መጨረሻ ቁ.# እና ካሁን ወዲያ በሚጠቀመው አድራሻ ላይ ማገጃ ይጣል።',
@@ -598,7 +592,7 @@ $messages['am'] = array(
 	'ipboptions' => '2 ሰዓቶች:2 hours,1 ቀን:1 day,3 ቀን:3 days,1 ሳምንት:1 week,2 ሳምንት:2 weeks,1 ወር:1 month,3 ወር:3 months,6 ወር:6 months,1 አመት:1 year,ዘላለም:infinite',
 	'ipbotheroption' => 'ሌላ',
 	'ipbotherreason' => 'ሌላ/ተጨማሪ ምክንያት፦',
-	'ipb-edit-dropdown' => "'ተራ የማገጃ ምክንያቶች' ለማስተካከል",
+	'ipb-edit-dropdown' => '\'ተራ የማገጃ ምክንያቶች\' ለማስተካከል',
 	'ipb-unblock-addr' => 'ከ$1 መገጃ ለማንሣት',
 	'ipb-unblock' => 'ከብዕር ስም ወይም ከቁ. አድራሻ ማገጃ ለማንሣት',
 	'ipb-blocklist' => 'አሁን ያሉትን ማገጃዎች ለመመልከት',
@@ -648,27 +642,27 @@ $messages['am'] = array(
 	'imgmultipagenext' => 'የሚቀጥለው ገጽ →',
 	'imgmultigo' => 'ሂድ!',
 	'imgmultigoto' => 'ወደ ገጽ# $1 ለመሄድ',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'index-category' => 'Pachinas indexadas',
 	'internalerror' => 'Error interna',
 	'internalerror_info' => 'Error interna: $1',
-	'invalidemailaddress' => "No se puet acceptar l'adreza de correu-e pues pareix que tien un formato no conforme. Escriba una adreza bien formateyata, u deixe buedo ixe campo.",
+	'invalidemailaddress' => 'No se puet acceptar l\'adreza de correu-e pues pareix que tien un formato no conforme. Escriba una adreza bien formateyata, u deixe buedo ixe campo.',
 	'italic_sample' => 'Texto en cursiva',
 	'italic_tip' => 'Texto en cursiva',
 	'image_sample' => 'Exemplo.jpg',
 	'image_tip' => 'Imachen incorporada',
-	'ignorewarning' => "Ignorar l'aviso y alzar o fichero en qualsiquier caso",
+	'ignorewarning' => 'Ignorar l\'aviso y alzar o fichero en qualsiquier caso',
 	'ignorewarnings' => 'Ignorar qualsiquier aviso',
-	'illegalfilename' => "O nombre de fichero «$1» tiene carácters no premititos en títols de pachinas. Por favor, cambee o nombre d'o fichero y mire de tornar a cargarlo.",
+	'illegalfilename' => 'O nombre de fichero «$1» tiene carácters no premititos en títols de pachinas. Por favor, cambee o nombre d\'o fichero y mire de tornar a cargarlo.',
 	'illegal-filename' => 'O nombre de fichero no ye premitiu.',
-	'invalid-chunk-offset' => "Desplazamiento invalido d'o fragmento",
+	'invalid-chunk-offset' => 'Desplazamiento invalido d\'o fragmento',
 	'img-auth-accessdenied' => 'Acceso refusau',
-	'img-auth-nopathinfo' => "Falta PATH_INFO.
+	'img-auth-nopathinfo' => 'Falta PATH_INFO.
  O suyo servidor no ye configurau ta pasar ista información.
 Puet que siga basau en CGI y no siga compatible con img_auth.
-Se veiga l'autorización d'a imachen en https://www.mediawiki.org/wiki/Manual:Image_Authorization",
+Se veiga l\'autorización d\'a imachen en https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'img-auth-notindir' => 'A rota solicitada no ye en o directorio de cargas configurau',
 	'img-auth-badtitle' => 'No s\'ha puesto construyir un títol valito dende "$1".',
 	'img-auth-nologinnWL' => 'No ha encetau sesión y "$1" no ye en a lista blanca.',
@@ -676,47 +670,47 @@ Se veiga l'autorización d'a imachen en https://www.mediawiki.org/wiki/Manual:Im
 	'img-auth-isdir' => 'Ye mirando d\'acceder ta un directorio "$1".
 Nomás ye premitito l\'acceso ta os fichers.',
 	'img-auth-streaming' => 'Streaming (lectura contina) "$1".',
-	'img-auth-public' => "A función de img_auth.php ye amostrar archivos dende una wiki privada.
+	'img-auth-public' => 'A función de img_auth.php ye amostrar archivos dende una wiki privada.
 Ista wiki ye configurada como wiki publica.
-Por seguridat, s'ha desactivau img_auth.php.",
+Por seguridat, s\'ha desactivau img_auth.php.',
 	'img-auth-noread' => 'L\'usuario no tien acceso de lectura ta "$1".',
-	'img-auth-bad-query-string' => "L'adreza URL tiene una cadena de consulta no valida.",
+	'img-auth-bad-query-string' => 'L\'adreza URL tiene una cadena de consulta no valida.',
 	'imgfile' => 'fichero',
-	'imagelinks' => "Uso d'o fichero",
-	'iteminvalidname' => "Bi ha un problema con l'articlo '$1', o nombre no ye conforme...",
+	'imagelinks' => 'Uso d\'o fichero',
+	'iteminvalidname' => 'Bi ha un problema con l\'articlo \'$1\', o nombre no ye conforme...',
 	'invert' => 'Contornar selección',
 	'isredirect' => 'pachina reendrezata',
 	'istemplate' => 'incluyida',
 	'isimage' => 'Vinclo ta un fichero',
-	'ipadressorusername' => "Adreza IP u nombre d'usuario",
+	'ipadressorusername' => 'Adreza IP u nombre d\'usuario',
 	'ipbexpiry' => 'Circumducción:',
 	'ipbreason' => 'Razón:',
 	'ipbreasonotherlist' => 'Atra razón',
-	'ipbreason-dropdown' => "*Razons comuns de bloqueyo
+	'ipbreason-dropdown' => '*Razons comuns de bloqueyo
 ** Meter información falsa
-** Borrar conteniu d'as pachinas
+** Borrar conteniu d\'as pachinas
 ** Fer publicidat ficando vinclos con atras pachinas web
 ** Meter sinconisions u vasuera en as pachinas
 ** Portar-se de traza intimidatoria u violenta / atosegar
 ** Abusar de multiples cuentas
-** Nombre d'usuario inacceptable",
+** Nombre d\'usuario inacceptable',
 	'ipb-hardblock' => 'Privar que os usuarios identificaus editen dende ista adreza IP',
-	'ipbcreateaccount' => "Aprevenir a creyación de cuentas d'usuario.",
+	'ipbcreateaccount' => 'Aprevenir a creyación de cuentas d\'usuario.',
 	'ipbemailban' => 'Privar que os usuarios ninvíen correus electronicos',
-	'ipbenableautoblock' => "bloqueyar automaticament l'adreza IP emplegata por iste usuario, y qualsiquier IP posterior dende a que prebe d'editar",
+	'ipbenableautoblock' => 'bloqueyar automaticament l\'adreza IP emplegata por iste usuario, y qualsiquier IP posterior dende a que prebe d\'editar',
 	'ipbsubmit' => 'bloqueyar a iste usuario',
 	'ipbother' => 'Especificar atro periodo',
 	'ipboptions' => '2 horas:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 anyo:1 year,ta cutio:infinite',
 	'ipbotheroption' => 'un atra',
 	'ipbotherreason' => 'Razons diferens u adicionals',
-	'ipbhidename' => "Amagar o nombre d'usuario en edicions y listas",
-	'ipbwatchuser' => "Cosirar as pachinas d'usuario y de descusión d'iste usuario",
+	'ipbhidename' => 'Amagar o nombre d\'usuario en edicions y listas',
+	'ipbwatchuser' => 'Cosirar as pachinas d\'usuario y de descusión d\'iste usuario',
 	'ipb-disableusertalk' => 'Privar que iste usuario edite a suya propia pachina de discusión entre que sía bloqueyau',
-	'ipb-change-block' => "Rebloqueyear a l'usuario con istas condicions",
+	'ipb-change-block' => 'Rebloqueyear a l\'usuario con istas condicions',
 	'ipb-confirm' => 'Confirmar bloqueyo',
 	'ipb-blockingself' => 'Ye en momentos de bloqueyar-se vusté mesmo!  Ye seguro de querer fer ixo?',
-	'ipb-confirmhideuser' => "Yes en momentos de bloqueyar a un usuario con a opción de supresión activada. Isto borrará o nombre d'usuario en todas as listas y dentradas de rechistro. Ye seguro de querer fer ixo?",
-	'ipb-edit-dropdown' => "Editar as razons d'o bloqueyo",
+	'ipb-confirmhideuser' => 'Yes en momentos de bloqueyar a un usuario con a opción de supresión activada. Isto borrará o nombre d\'usuario en todas as listas y dentradas de rechistro. Ye seguro de querer fer ixo?',
+	'ipb-edit-dropdown' => 'Editar as razons d\'o bloqueyo',
 	'ipb-unblock-addr' => 'Desbloqueyar $1',
 	'ipb-unblock' => 'Desbloqueyar un usuario u una IP',
 	'ipb-blocklist' => 'Amostrar bloqueyos actuals',
@@ -729,16 +723,16 @@ Por seguridat, s'ha desactivau img_auth.php.",
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Atro bloqueyo|Atros bloqueyos}}',
 	'infiniteblock' => 'infinito',
 	'ipblocklist-empty' => 'A lista de bloqueyos ye bueda.',
-	'ipblocklist-no-results' => "A cuenta d'usuario u adreza IP indicata no ye bloqueyata.",
+	'ipblocklist-no-results' => 'A cuenta d\'usuario u adreza IP indicata no ye bloqueyata.',
 	'ipb_expiry_invalid' => 'O tiempo de circumducción no ye conforme.',
-	'ipb_expiry_temp' => "Os bloqueyos con nombre d'usuario amagato habría d'estar ta cutio.",
-	'ipb_hide_invalid' => "No s'ha puesto eliminar a cuenta; talment tiene masiadas edicions.",
+	'ipb_expiry_temp' => 'Os bloqueyos con nombre d\'usuario amagato habría d\'estar ta cutio.',
+	'ipb_hide_invalid' => 'No s\'ha puesto eliminar a cuenta; talment tiene masiadas edicions.',
 	'ipb_already_blocked' => '"$1" ya yera bloqueyato',
-	'ipb-needreblock' => "$1 ya ye bloqueyato. Quiere cambiar as condicions d'o bloqueyo?",
+	'ipb-needreblock' => '$1 ya ye bloqueyato. Quiere cambiar as condicions d\'o bloqueyo?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Atro bloqueyo|Atros bloqueyos}}',
-	'ipb_cant_unblock' => "'''Error''': no s'ha trobato o ID de bloqueyo $1. Talment sía ya desbloqueyato.",
-	'ipb_blocked_as_range' => "Error: L'adreza IP $1 no s'ha bloqueyato dreitament y por ixo no se puede desbloqueyar. Manimenos, ye bloqueyata por estar parte d'o rango $2, que sí puede desbloqueyar-se de conchunta.",
-	'ip_range_invalid' => "O rango d'adrezas IP no ye conforme.",
+	'ipb_cant_unblock' => '\'\'\'Error\'\'\': no s\'ha trobato o ID de bloqueyo $1. Talment sía ya desbloqueyato.',
+	'ipb_blocked_as_range' => 'Error: L\'adreza IP $1 no s\'ha bloqueyato dreitament y por ixo no se puede desbloqueyar. Manimenos, ye bloqueyata por estar parte d\'o rango $2, que sí puede desbloqueyar-se de conchunta.',
+	'ip_range_invalid' => 'O rango d\'adrezas IP no ye conforme.',
 	'ip_range_toolarge' => 'No se permiten os bloqueyos de rangos más grans que /$1.',
 	'ipbblocked' => 'No puede bloqueyar ni desbloqueyar atros usuarios porque ya ye bloqueyau.',
 	'ipbnounblockself' => 'No tiene permiso ta sacar o suyo propio bloqueyo',
@@ -749,66 +743,66 @@ Por seguridat, s'ha desactivau img_auth.php.",
 	'immobile-target-page' => 'No se puet tresladar ta ixe títol.',
 	'imagenocrossnamespace' => 'No se puede tresladar un fichero ta un espacio de nombres que no sía fichers',
 	'imagetypemismatch' => 'A nueva estensión no concuerda con o tipo de fichero',
-	'imageinvalidfilename' => "O nombre d'o fichero obchectivo no ye conforme",
+	'imageinvalidfilename' => 'O nombre d\'o fichero obchectivo no ye conforme',
 	'import' => 'Importar pachinas',
 	'importinterwiki' => 'Importación interwiki',
-	'import-interwiki-text' => "Trigue un wiki y un títol de pachina ta importar.
-As calendatas d'as versions y os nombres d'os editors se preservarán.
-Todas as importacions interwiki se rechistran en o [[Special:Log/import|rechistro d'importacions]].",
+	'import-interwiki-text' => 'Trigue un wiki y un títol de pachina ta importar.
+As calendatas d\'as versions y os nombres d\'os editors se preservarán.
+Todas as importacions interwiki se rechistran en o [[Special:Log/import|rechistro d\'importacions]].',
 	'import-interwiki-source' => 'Wiki/pachina fuent:',
-	'import-interwiki-history' => "Copiar todas as versions de l'historial d'ista pachina",
+	'import-interwiki-history' => 'Copiar todas as versions de l\'historial d\'ista pachina',
 	'import-interwiki-templates' => 'Incluir-ie todas as las plantillas',
 	'import-interwiki-submit' => 'Importar',
 	'import-interwiki-namespace' => 'Espacio de nombres de destín:',
 	'import-upload-filename' => 'Nombre de fichero:',
 	'import-comment' => 'Comentario:',
-	'importtext' => "Por favor, exporte o fichero dende o wiki d'orichen fendo servir a [[Special:Export|ferramienta d'exportación]].
-Alce-lo en o suyo ordenador y cargue-lo aquí.",
+	'importtext' => 'Por favor, exporte o fichero dende o wiki d\'orichen fendo servir a [[Special:Export|ferramienta d\'exportación]].
+Alce-lo en o suyo ordenador y cargue-lo aquí.',
 	'importstart' => 'Importando pachinas...',
 	'import-revision-count' => '$1 {{PLURAL:$1|versión|versions}}',
 	'importnopages' => 'No bi ha garra pachina ta importar.',
-	'imported-log-entries' => "S'ha importau {{PLURAL:$1|una dentrada d'o rechistro|S'han importau $1 dentradas d'o rechistro}}.",
+	'imported-log-entries' => 'S\'ha importau {{PLURAL:$1|una dentrada d\'o rechistro|S\'han importau $1 dentradas d\'o rechistro}}.',
 	'importfailed' => 'Ha fallato a importación: $1',
-	'importunknownsource' => "O tipo de fuent d'a importación ye esconoixito",
-	'importcantopen' => "No s'ha puesto importar iste fichero",
+	'importunknownsource' => 'O tipo de fuent d\'a importación ye esconoixito',
+	'importcantopen' => 'No s\'ha puesto importar iste fichero',
 	'importbadinterwiki' => 'vinclo interwiki incorrecto',
 	'importnotext' => 'Buendo y sin de texto',
-	'importsuccess' => "S'ha rematato a importación!",
-	'importhistoryconflict' => "Bi ha un conflicto de versions en o historial (talment ista pachina s'haiga importato denantes)",
-	'importnosources' => "No bi ha fuents d'importación interwiki y no ye premitito cargar o historial dreitament.",
-	'importnofile' => "No s'ha cargato os fichers d'importación.",
-	'importuploaderrorsize' => "Ha fallato a carga d'o fichero importato. O fichero brinca d'a grandaria de carga premitita.",
-	'importuploaderrorpartial' => "Ha fallato a carga d'o fichero importato. Sólo una parte d'o fichero s'ha cargato.",
-	'importuploaderrortemp' => "Ha fallato a carga d'o fichero importato. No se troba o directorio temporal.",
-	'import-parse-failure' => "Fallo en o parseyo d'a importación XML",
+	'importsuccess' => 'S\'ha rematato a importación!',
+	'importhistoryconflict' => 'Bi ha un conflicto de versions en o historial (talment ista pachina s\'haiga importato denantes)',
+	'importnosources' => 'No bi ha fuents d\'importación interwiki y no ye premitito cargar o historial dreitament.',
+	'importnofile' => 'No s\'ha cargato os fichers d\'importación.',
+	'importuploaderrorsize' => 'Ha fallato a carga d\'o fichero importato. O fichero brinca d\'a grandaria de carga premitita.',
+	'importuploaderrorpartial' => 'Ha fallato a carga d\'o fichero importato. Sólo una parte d\'o fichero s\'ha cargato.',
+	'importuploaderrortemp' => 'Ha fallato a carga d\'o fichero importato. No se troba o directorio temporal.',
+	'import-parse-failure' => 'Fallo en o parseyo d\'a importación XML',
 	'import-noarticle' => 'No bi ha garra pachina ta importar!',
-	'import-nonewrevisions' => "Ya s'heban importato denantes todas as versions.",
+	'import-nonewrevisions' => 'Ya s\'heban importato denantes todas as versions.',
 	'import-upload' => 'Datos XML cargatos',
-	'import-token-mismatch' => "S'han perdito os datos d'a sesión. Por favor, prebe unatra vegada.",
+	'import-token-mismatch' => 'S\'han perdito os datos d\'a sesión. Por favor, prebe unatra vegada.',
 	'import-invalid-interwiki' => 'No se puet importar dende o wiki especificato.',
 	'import-error-edit' => 'A pachina "$1" no s\'ha importau porque vusté no tiene permisos ta editar-la.',
 	'import-error-create' => 'A pachina "$1" no s\'ha importau porque vusté no tiene permisos ta creyar-la.',
 	'import-error-interwiki' => 'A pachina "$1" no s\'ha importau porque o suyo nombre ye reservau ta vinclos externos (interwiki).',
 	'import-error-special' => 'A pachina "$1" no s\'ha importau porque perteneix a un espacio de nombres especial que no permite pachinas.',
 	'import-error-invalid' => 'A pachina "$1" no s\'ha importau porque o suyo nombre ye invalido.',
-	'importlogpage' => "Rechistro d'importacions",
+	'importlogpage' => 'Rechistro d\'importacions',
 	'importlogpagetext' => 'Importacions almenistrativas de pachinas con historial dende atros wikis.',
 	'import-logentry-upload' => 'importata [[$1]] cargando un fichero',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versión|versions}}',
 	'import-logentry-interwiki' => 'Importata $1 entre wikis',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versión|versions}} dende $2',
-	'imagemaxsize' => "Limite de grandaria d'as imáchens:<br />''(ta pachinas de descripción de fichers)''",
-	'imagelisttext' => "Contino bi ha una lista de '''$1''' {{PLURAL:$1|imachen ordenata|imachens ordenatas}} $2.",
+	'imagemaxsize' => 'Limite de grandaria d\'as imáchens:<br />\'\'(ta pachinas de descripción de fichers)\'\'',
+	'imagelisttext' => 'Contino bi ha una lista de \'\'\'$1\'\'\' {{PLURAL:$1|imachen ordenata|imachens ordenatas}} $2.',
 	'ilsubmit' => 'Mirar',
 	'invalidateemail' => 'Anular a confirmación de correu-e',
 	'imgmultipageprev' => '← pachina anterior',
 	'imgmultipagenext' => 'pachina siguient →',
 	'imgmultigo' => 'Ir-ie!',
-	'imgmultigoto' => "Ir t'a pachina $1",
-	'intentionallyblankpage' => "Esta pachina s'ha deixato en blanco aldredes y se fa servir ta fer prebatinas, ezt.",
-);
+	'imgmultigoto' => 'Ir t\'a pachina $1',
+	'intentionallyblankpage' => 'Esta pachina s\'ha deixato en blanco aldredes y se fa servir ta fer prebatinas, ezt.',
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'index-category' => 'Ȝebēacniende trametas',
 	'internalerror' => 'Innan ƿōh',
 	'internalerror_info' => 'Innan ƿōh: $1',
@@ -851,9 +845,9 @@ $messages['ang'] = array(
 	'imagelisttext' => 'Under is getalu $1 biliða gedæfted $2.',
 	'ilsubmit' => 'Sēċan',
 	'imgmultigo' => 'Gān!',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'italic_sample' => 'तिरछा अक्षर',
 	'italic_tip' => 'तिरछा अक्षर',
 	'image_tip' => 'संलग्न संचिका',
@@ -864,9 +858,9 @@ $messages['anp'] = array(
 	'isimage' => 'तस्वीर लिंक',
 	'ipboptions' => '२ घंटा:2 hours,१ दिन:1 day,३ दिन:3 days,१ हफ्ता:1 week,२ हफ्ता:2 weeks,१ महिना:1 month,३ महिना:3 months,६ महिना:6 months,१ साल:1 year,अनंत:infinite',
 	'ipblocklist' => 'अवरोधित आईपी पता व सदस्यनाम',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'index-category' => 'صفحات مفهرسة',
 	'internalerror' => 'خطأ داخلي',
 	'internalerror_info' => 'خطأ داخلي: $1',
@@ -899,7 +893,7 @@ $messages['ar'] = array(
 	'img-auth-bad-query-string' => 'يحتوي المسار عبارة استعلام غير صالحة.',
 	'imgfile' => 'ملف',
 	'imagelinks' => 'استخدام الملف',
-	'iteminvalidname' => "مشكلة في المدخل '$1'، اسم غير صحيح...",
+	'iteminvalidname' => 'مشكلة في المدخل \'$1\'، اسم غير صحيح...',
 	'invert' => 'اعكس الاختيار',
 	'isredirect' => 'صفحة تحويل',
 	'istemplate' => 'مضمن',
@@ -1014,8 +1008,8 @@ $messages['ar'] = array(
 	'import-logentry-upload-detail' => '{{PLURAL:$1|لا مراجعات|مراجعة واحدة|مراجعتان|$1 مراجعات|$1 مراجعة}}',
 	'import-logentry-interwiki' => 'استورد عبر الويكي $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1||مراجعة واحدة|مراجعتان|$1 مراجعات|$1 مراجعة}} من $2',
-	'imagemaxsize' => "حد حجم الصور:<br />''(لصفحات وصف الملفات)''",
-	'imagelisttext' => "فيما يلي قائمة تحوي '''$1''' {{PLURAL:$1|ملف|ملفات}} مرتبة $2.",
+	'imagemaxsize' => 'حد حجم الصور:<br />\'\'(لصفحات وصف الملفات)\'\'',
+	'imagelisttext' => 'فيما يلي قائمة تحوي \'\'\'$1\'\'\' {{PLURAL:$1|ملف|ملفات}} مرتبة $2.',
 	'ilsubmit' => 'ابحث',
 	'invalidateemail' => 'إلغاء تأكيد البريد الإلكتروني',
 	'imgmultipageprev' => '→ الصفحة السابقة',
@@ -1035,9 +1029,9 @@ $messages['ar'] = array(
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'إسفند',
 	'intentionallyblankpage' => 'هذه الصفحة تركت فارغة عن قصد',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'internalerror' => 'ܦܘܕܐ ܓܘܝܐ',
 	'internalerror_info' => 'ܦܘܕܐ ܓܘܝܐ: $1',
 	'italic_sample' => 'ܟܬܒܬܐ ܦܠܝܡܬܐ',
@@ -1090,9 +1084,9 @@ Do you want to change the settings?',
 	'imgmultipagenext' => '← ܫܘܚܠܦܐ ܚܕܬܐ',
 	'imgmultigo' => 'ܙܠ!',
 	'imgmultigoto' => 'ܙܠ ܠܦܐܬܐ $1',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'index-category' => 'Wülngiñ mülelu wif mew',
 	'italic_sample' => 'Küllüke wirin',
 	'italic_tip' => 'Küllüke wirin',
@@ -1112,9 +1106,9 @@ $messages['arn'] = array(
 	'ilsubmit' => 'Kintu',
 	'imgmultigo' => 'Amun!',
 	'imgmultigoto' => 'Amun pakina $1 mew',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'index-category' => 'sfahi mfhrssa',
 	'internalerror' => 'khataaa dakhili',
 	'internalerror_info' => 'khataaa dakhili : $1',
@@ -1123,7 +1117,7 @@ kṫeb ċi ĝonwan moṣaġ mzian wlla mseḫ dakċi lli kṫbṫi.',
 	'italic_sample' => 'Kṫaba mayla',
 	'italic_tip' => 'Kṫaba mayla',
 	'image_sample' => 'Example.jpg',
-	'image_tip' => "Fiċyé m'inséré",
+	'image_tip' => 'Fiċyé m\'inséré',
 	'ignorewarning' => 'ṫjahl ṫ-ṫḫdir o-ġi sjjel l-milef',
 	'ignorewarnings' => 'tjahl thdirat',
 	'illegal-filename' => 'had smiyt lmillaf mamnoaa',
@@ -1135,8 +1129,8 @@ kṫeb ċi ĝonwan moṣaġ mzian wlla mseḫ dakċi lli kṫbṫi.',
 	'img-auth-noread' => 'l-mosṫĥdim ma ĝndo-ċ ṣ-ṣalaḫiyya baċ yqṛa "$1".',
 	'imgfile' => 'mileff',
 	'imagelinks' => 'wṣlaṫ l-milef',
-	'iteminvalidname' => "moċkil mĝa l-madda '$1', smia ma ṣḫiḫa-ċ...",
-	'invert' => "Qleb 's-séléksyon",
+	'iteminvalidname' => 'moċkil mĝa l-madda \'$1\', smia ma ṣḫiḫa-ċ...',
+	'invert' => 'Qleb \'s-séléksyon',
 	'isredirect' => 'Ṫeḫwil ṣ-ṣefḫa',
 	'istemplate' => 'Daĥel',
 	'isimage' => 'wṣlṫ l-milef',
@@ -1154,7 +1148,7 @@ kṫeb ċi ĝonwan moṣaġ mzian wlla mseḫ dakċi lli kṫbṫi.',
 	'ipbotherreason' => 'Sabab weḫdaĥor/zayed:',
 	'ipbhidename' => 'Ĥebbi smiyṫ l-mosṫeĥdim men ṫ-ṫeġyiraṫ o men l-listaṫ',
 	'ipbwatchuser' => 'Ṫbeĝ ṣ-ṣefḫaṫ dyal l-mosṫeḫdim o de n-niqaċ dyal had l-mosṫeĥdim',
-	'ipb-change-block' => "Ĝawed bloki had l-mosṫeĥdim be had l-'iĝdadaṫ",
+	'ipb-change-block' => 'Ĝawed bloki had l-mosṫeĥdim be had l-\'iĝdadaṫ',
 	'ipb-edit-dropdown' => 'Beddel asbab l-blokaj',
 	'ipb-unblock-addr' => 'Débloki $1',
 	'ipb-unblock' => 'Débloki ċi ḫsab dyal l-mosṫeĥdim ola ĝonwan IP',
@@ -1189,18 +1183,18 @@ kṫeb ċi ĝonwan moṣaġ mzian wlla mseḫ dakċi lli kṫbṫi.',
 	'importbadinterwiki' => 'wṣla dl-interwiki ĥayba',
 	'importnotext' => 'ĥawi wlla ma fih naṣṣ',
 	'import-noarticle' => 'ḫṫṫa ṣfḫa baċ djab!',
-	'importlogpage' => "sijjil dyal l'import",
+	'importlogpage' => 'sijjil dyal l\'import',
 	'import-logentry-interwiki' => 'importé blwiki $1',
 	'ilsubmit' => 'Qelleb',
-	'invalidateemail' => "lghi lkofirmasyon dyal l'email",
+	'invalidateemail' => 'lghi lkofirmasyon dyal l\'email',
 	'imgmultipageprev' => 'sfha li sbqat',
 	'imgmultipagenext' => 'sfha jaya →',
 	'imgmultigo' => 'sir !',
 	'imgmultigoto' => 'sir lsfha $1',
 	'intentionallyblankpage' => 'had sfha trkat fargh a anwa',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'index-category' => 'صفحات متفهرسه',
 	'internalerror' => 'غلط جوّانى',
 	'internalerror_info' => 'غلط جوّانى: $1',
@@ -1231,7 +1225,7 @@ $messages['arz'] = array(
 	'img-auth-noread' => 'اليوزر معندوش صلاحية قرايه "$1".',
 	'imgfile' => 'ملف',
 	'imagelinks' => 'لينكات الفايل',
-	'iteminvalidname' => "مشكلة فى '$1'، اسم مش صحيح...",
+	'iteminvalidname' => 'مشكلة فى \'$1\'، اسم مش صحيح...',
 	'invert' => 'عكس الاختيار',
 	'isredirect' => 'صفحة تحويل',
 	'istemplate' => 'متضمن',
@@ -1337,7 +1331,7 @@ $messages['arz'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|تعديل واحد|تعديل}}',
 	'import-logentry-interwiki' => 'استيراد ويكى $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|تعديل واحد|تعديل}} من $2',
-	'imagemaxsize' => "حد حجم الصوره:<br />''(لصفحات الوصف بتاع الملفات)''",
+	'imagemaxsize' => 'حد حجم الصوره:<br />\'\'(لصفحات الوصف بتاع الملفات)\'\'',
 	'imagelisttext' => 'دى لستة بـ$1 {{PLURAL:$1|ملف|ملفات}} مترتبة $2.',
 	'ilsubmit' => 'تدوير',
 	'invalidateemail' => 'إلغى تأكيد الايميل',
@@ -1358,9 +1352,9 @@ $messages['arz'] = array(
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'إسفند',
 	'intentionallyblankpage' => 'الصفحة دى متسابة فاضية بالقصد',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'index-category' => 'সূচীকৃত পৃষ্ঠাসমূহ',
 	'internalerror' => 'ভিতৰুৱা ত্ৰুটি',
 	'internalerror_info' => 'ভিতৰুৱা ত্ৰুটি: $1',
@@ -1376,10 +1370,10 @@ $messages['as'] = array(
 	'illegal-filename' => 'ফাইলৰ এই নামটো গ্ৰহনযোগ্য নহয় ।',
 	'invalid-chunk-offset' => 'অবৈধ চাঙ্ক অফছেট্‌',
 	'img-auth-accessdenied' => 'প্ৰৱেশাধিকাৰ নাই',
-	'img-auth-nopathinfo' => "সন্ধানহীন PATH_INFO।
+	'img-auth-nopathinfo' => 'সন্ধানহীন PATH_INFO।
 আপোনাৰ চাৰ্ভাৰ এই তথ্য প্ৰেৰণ কৰিবলে প্ৰস্তুত নহয়।
-ই CGI-ভিত্তিক হ'ব পাৰে img_auth সমৰ্থন কৰিব নোৱাৰে।
-https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
+ই CGI-ভিত্তিক হ\'ব পাৰে img_auth সমৰ্থন কৰিব নোৱাৰে।
+https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।',
 	'img-auth-notindir' => 'সজা হোৱা আপল’ড ডিৰেক্টৰিত অনুৰোধ কৰা পথটো নাই ।',
 	'img-auth-badtitle' => '"$1" ৰ পৰা কোনো বৈধ শিৰোনামা তৈয়াৰ কৰিব পৰা নগ’ল ।',
 	'img-auth-nologinnWL' => 'আপুনি প্ৰৱেশ কৰা নাই আৰু চকু ৰখা ৰখা পৃষ্ঠাতালিকাত "$1" নাই ।',
@@ -1387,14 +1381,14 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
 	'img-auth-isdir' => 'আপুনি "$1" ডিৰেক্টৰিত প্ৰৱেশ কৰিবলৈ বিচাৰিছে ।
 কেৱল ফাইলতহে প্ৰৱেশ কৰিব পাৰিব ।',
 	'img-auth-streaming' => '"$1" স্ট্ৰিম হৈ আছে ।',
-	'img-auth-public' => "img_auth.phpৰ কাম হৈছে ব্যক্তিগত ৱিকিৰ পৰা ফাইল বাহিৰলৈ পঠোৱা ।
+	'img-auth-public' => 'img_auth.phpৰ কাম হৈছে ব্যক্তিগত ৱিকিৰ পৰা ফাইল বাহিৰলৈ পঠোৱা ।
 এই ৱিকিক ৰাজহুৱা ৱিকিৰূপে কনফিগাৰ কৰা হৈছে ।
-সুৰক্ষাৰ বাবে img_auth.php নিষ্ক্ৰিয় কৰা হ'ল ।",
+সুৰক্ষাৰ বাবে img_auth.php নিষ্ক্ৰিয় কৰা হ\'ল ।',
 	'img-auth-noread' => 'সদস্যৰ "$1" ত প্ৰৱেশাধিকাৰ নাই ।',
 	'img-auth-bad-query-string' => 'এই ইউ.আৰ.এল.-ত অযুক্তিসংগত কুৱেৰী ষ্ট্ৰিং আছে ।',
 	'imgfile' => 'ফাইল',
 	'imagelinks' => 'ফাইল ব্যৱহাৰ',
-	'iteminvalidname' => "'$1' আইটেমটোৰ লগত সমস্যা হৈছে, অবৈধ নাম...",
+	'iteminvalidname' => '\'$1\' আইটেমটোৰ লগত সমস্যা হৈছে, অবৈধ নাম...',
 	'invert' => 'নিৰ্বাচন ওলোটা কৰক',
 	'isredirect' => 'পুনঃনিৰ্দেশনা পৃষ্ঠা',
 	'istemplate' => 'অন্তৰ্ভুক্ত কৰক',
@@ -1464,9 +1458,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
 	'imageinvalidfilename' => 'লক্ষ্য ফাইল নামটো অবৈধ',
 	'import' => 'পৃষ্ঠা আমদানি কৰক',
 	'importinterwiki' => 'আন্তঃৱিকি আমদানি',
-	'import-interwiki-text' => "আমদানি কৰিবলৈ এটা ৱিকি বা পৃষ্ঠাৰ শিৰোনামা নিৰ্বাচন কৰক ।
-সংশোধনৰ তাৰিখ আৰু সম্পাদকৰ নাম সংৰক্ষণ কৰা হ'ব ।
-সকলো আন্তঃৱিকি আমদানি [[Special:Log/import|আমদানি ল'গ]]ত লিপিবদ্ধ আছে ।",
+	'import-interwiki-text' => 'আমদানি কৰিবলৈ এটা ৱিকি বা পৃষ্ঠাৰ শিৰোনামা নিৰ্বাচন কৰক ।
+সংশোধনৰ তাৰিখ আৰু সম্পাদকৰ নাম সংৰক্ষণ কৰা হ\'ব ।
+সকলো আন্তঃৱিকি আমদানি [[Special:Log/import|আমদানি ল\'গ]]ত লিপিবদ্ধ আছে ।',
 	'import-interwiki-source' => 'উৎস ৱিকি/পৃষ্ঠা:',
 	'import-interwiki-history' => 'এই পৃষ্ঠাৰ সকলো সংশোধনৰ ইতিহাস কপী কৰক',
 	'import-interwiki-templates' => 'সকলো সাঁচ অন্তৰ্ভুক্ত কৰক',
@@ -1474,27 +1468,27 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
 	'import-interwiki-namespace' => 'গন্তব্য নামস্থান:',
 	'import-upload-filename' => 'ফাইলনাম:',
 	'import-comment' => 'মন্তব্য:',
-	'importtext' => "অনুগ্ৰহ কৰি [[Special:Export|ৰপ্তানি সুবিধা]] ব্যৱহাৰ কৰি উৎস ৱিকিৰ পৰা ফাইলটো ৰপ্তানি কৰক।
-আপোনাৰ কম্পিউটাৰত সাঁচি ৰাখক আৰু ইয়াত আপল'ড কৰক।",
+	'importtext' => 'অনুগ্ৰহ কৰি [[Special:Export|ৰপ্তানি সুবিধা]] ব্যৱহাৰ কৰি উৎস ৱিকিৰ পৰা ফাইলটো ৰপ্তানি কৰক।
+আপোনাৰ কম্পিউটাৰত সাঁচি ৰাখক আৰু ইয়াত আপল\'ড কৰক।',
 	'importstart' => 'পৃষ্ঠা আমদানি কৰা হৈছে...',
 	'import-revision-count' => '$1 {{PLURAL:$1|টা সংশোধন|টা সংশোধন}}',
 	'importnopages' => 'আমদানি কৰিবলৈ কোনো পৃষ্ঠা নাই ।',
-	'imported-log-entries' => "$1 {{PLURAL:$1|টা ল'গ ভৰ্তি|টা ল'গ ভৰ্তি}} আমদানি কৰা হ'ল ।",
+	'imported-log-entries' => '$1 {{PLURAL:$1|টা ল\'গ ভৰ্তি|টা ল\'গ ভৰ্তি}} আমদানি কৰা হ\'ল ।',
 	'importfailed' => 'আমদানি ব্যৰ্থ হৈছে: <nowiki>$1</nowiki>',
 	'importunknownsource' => 'অজ্ঞাত আমদানি উৎসৰ প্ৰকাৰ',
-	'importcantopen' => "আমদানি ফাইল খুলিব পৰা নগ'ল",
+	'importcantopen' => 'আমদানি ফাইল খুলিব পৰা নগ\'ল',
 	'importbadinterwiki' => 'আন্ত:ৱিকি সংযোগ বেয়া',
 	'importnotext' => 'খালী বা পাঠ বিহীন',
 	'importsuccess' => 'আমদানি সমাপ্ত !',
-	'importhistoryconflict' => "পৰস্পৰবিৰোধী ইতিহাস সংশোধনী আছে (এই পৃষ্ঠা আগতেও আমদানি কৰা হ'ব পাৰে)",
-	'importnosources' => "কোনো আন্তঃৱিকি আমদানি উৎসৰ সংজ্ঞা দিয়া হোৱা নাই আৰু প্ৰত্যক্ষ ইতিহাস আপল'ড নিষ্ক্ৰিয় কৰা হৈছে ।",
-	'importnofile' => "কোনো আমদানি ফাইল আপল'ড কৰা হোৱা নাই ।",
-	'importuploaderrorsize' => "আমদানি ফাইলৰ আপল'ড ব্যৰ্থ হৈছে ।
-অনুমোদিত আপল'ড ফাইলতকৈ এই ফাইলৰ আকাৰ ডাঙৰ ।",
-	'importuploaderrorpartial' => "আমদানি ফাইলৰ আপল'ড ব্যৰ্থ হৈছে ।
-ফাইলটো কেৱল আংশিকভাৱে আপল'ড কৰা হৈছে ।",
-	'importuploaderrortemp' => "আমদানি ফাইলৰ আপল'ড ব্যৰ্থ হৈছে ।
-এটা অস্থায়ী ফ'ল্ডাৰ হেৰাইছে ।",
+	'importhistoryconflict' => 'পৰস্পৰবিৰোধী ইতিহাস সংশোধনী আছে (এই পৃষ্ঠা আগতেও আমদানি কৰা হ\'ব পাৰে)',
+	'importnosources' => 'কোনো আন্তঃৱিকি আমদানি উৎসৰ সংজ্ঞা দিয়া হোৱা নাই আৰু প্ৰত্যক্ষ ইতিহাস আপল\'ড নিষ্ক্ৰিয় কৰা হৈছে ।',
+	'importnofile' => 'কোনো আমদানি ফাইল আপল\'ড কৰা হোৱা নাই ।',
+	'importuploaderrorsize' => 'আমদানি ফাইলৰ আপল\'ড ব্যৰ্থ হৈছে ।
+অনুমোদিত আপল\'ড ফাইলতকৈ এই ফাইলৰ আকাৰ ডাঙৰ ।',
+	'importuploaderrorpartial' => 'আমদানি ফাইলৰ আপল\'ড ব্যৰ্থ হৈছে ।
+ফাইলটো কেৱল আংশিকভাৱে আপল\'ড কৰা হৈছে ।',
+	'importuploaderrortemp' => 'আমদানি ফাইলৰ আপল\'ড ব্যৰ্থ হৈছে ।
+এটা অস্থায়ী ফ\'ল্ডাৰ হেৰাইছে ।',
 	'import-parse-failure' => 'XML আমদানি পাৰ্চ বিফলতা',
 	'import-noarticle' => 'আমদানি কৰিবলৈ কোনো পৃষ্ঠা নাই !',
 	'import-nonewrevisions' => 'সকলো সংশোধনী পূৰ্বে আমদানি কৰা হৈছে ।',
@@ -1504,14 +1498,14 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
 	'import-invalid-interwiki' => 'নিৰ্ধাৰিত ৱিকিৰ পৰা আমদানি কৰিব নোৱাৰি ।',
 	'import-error-edit' => '"$1" পৃষ্ঠাখন আমদানি কৰা নহ\'ল কাৰণ ইয়াক সম্পাদনা কৰিবলৈ আপোনাৰ অনুমতি নাই।',
 	'import-error-create' => '"$1" পৃষ্ঠাখন আমদানি কৰা নহ\'ল কাৰণ ইয়াক সৃষ্টি কৰিবলৈ আপোনাৰ অনুমতি নাই।',
-	'importlogpage' => "আমদানি ল'গ",
+	'importlogpage' => 'আমদানি ল\'গ',
 	'importlogpagetext' => 'আন ৱিকিৰ পৰা সম্পাদনা ইতিহাস সহ প্ৰশাসনীয় পৃষ্ঠা আমদানি ।',
-	'import-logentry-upload' => "ফাইল আপল'ডৰ মাধ্যমেৰে [[$1]] আমদানি কৰা হ'ল",
+	'import-logentry-upload' => 'ফাইল আপল\'ডৰ মাধ্যমেৰে [[$1]] আমদানি কৰা হ\'ল',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|টা সংশোধন|টা সংশোধন}}',
 	'import-logentry-interwiki' => 'আন্তঃৱিকি-স্থানান্তৰিত $1',
 	'import-logentry-interwiki-detail' => '$2ৱে কৰা $1 {{PLURAL:$1|টা সংশোধন|টা সংশোধন}}',
-	'imagemaxsize' => "ছবিৰ আকাৰৰ সীমা: <br />''(নথিপত্ৰ বিৱৰণ পৃষ্ঠাসমূহৰ বাবে)''",
-	'imagelisttext' => "তলত '''$1''' {{PLURAL:$1|file|files}} সজোঁৱা $2 -ৰ এটা তালিকা দিয়া আছে।",
+	'imagemaxsize' => 'ছবিৰ আকাৰৰ সীমা: <br />\'\'(নথিপত্ৰ বিৱৰণ পৃষ্ঠাসমূহৰ বাবে)\'\'',
+	'imagelisttext' => 'তলত \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} সজোঁৱা $2 -ৰ এটা তালিকা দিয়া আছে।',
 	'ilsubmit' => 'সন্ধান কৰক',
 	'invalidateemail' => 'ই-মেইল নিশ্চিতকৰণ বাতিল কৰক',
 	'imgmultipageprev' => '← পূৰ্ববৰ্তী পৃষ্ঠা',
@@ -1519,19 +1513,19 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization চাওক।",
 	'imgmultigo' => 'যাওক',
 	'imgmultigoto' => '$1 পৃষ্ঠালৈ যাওক',
 	'intentionallyblankpage' => 'এই পৃষ্ঠা ইচ্ছাকৃতভাৱে খালী ৰখা হৈছে ।',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'index-category' => 'Páxines indexaes',
 	'internalerror' => 'Error internu',
 	'internalerror_info' => 'Error internu: $1',
-	'invalidemailaddress' => "La direición de corréu nun se pue aceutar yá que paez tener un formatu non válidu.
-Por favor escribi una direición con formatu afayadizu o dexa vaciu'l campu.",
+	'invalidemailaddress' => 'La direición de corréu nun se pue aceutar yá que paez tener un formatu non válidu.
+Por favor escribi una direición con formatu afayadizu o dexa vaciu\'l campu.',
 	'italic_sample' => 'Testu en cursiva',
 	'italic_tip' => 'Testu en cursiva',
 	'image_sample' => 'Exemplu.jpg',
 	'image_tip' => 'Ficheru incrustáu',
-	'ignorewarning' => "Inorar l'avisu y grabar l'archivu de toes formes",
+	'ignorewarning' => 'Inorar l\'avisu y grabar l\'archivu de toes formes',
 	'ignorewarnings' => 'Inorar tolos avisos',
 	'illegalfilename' => 'El nome d\'archivu "$1" contién carauteres non permitíos en títulos de páxina. Por favor renoma l\'archivu y xúbilu otra vuelta.',
 	'illegal-filename' => 'El nome de ficheru nun ta permitíu.',
@@ -1548,49 +1542,49 @@ Ver https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'img-auth-isdir' => 'Tas tentando acceder al direutoriu "$1".
 Namái se permite l\'accesu a ficheros.',
 	'img-auth-streaming' => 'Unviando "$1".',
-	'img-auth-public' => "La función de img_auth.php ye sacar ficheros d'una wiki privada.
+	'img-auth-public' => 'La función de img_auth.php ye sacar ficheros d\'una wiki privada.
 Esta wiki ta configurada como wiki pública.
-Pa una meyor seguridá, img_auth.php ta desactiváu.",
+Pa una meyor seguridá, img_auth.php ta desactiváu.',
 	'img-auth-noread' => 'L\'usuariu nun tien accesu pa lleer "$1".',
 	'img-auth-bad-query-string' => 'La URL tien una cadena de consulta inválida.',
 	'imgfile' => 'archivu',
 	'imagelinks' => 'Usu del ficheru',
-	'iteminvalidname' => "Problema col elementu '$1', nome non válidu...",
+	'iteminvalidname' => 'Problema col elementu \'$1\', nome non válidu...',
 	'invert' => 'Invertir seleición',
 	'isredirect' => 'páxina redirixida',
 	'istemplate' => 'tresclusión',
 	'isimage' => 'enllaz al ficheru',
-	'ipadressorusername' => "Direición IP o nome d'usuariu:",
+	'ipadressorusername' => 'Direición IP o nome d\'usuariu:',
 	'ipbexpiry' => 'Caducidá:',
 	'ipbreason' => 'Motivu:',
 	'ipbreasonotherlist' => 'Otru motivu',
-	'ipbreason-dropdown' => "*Motivos comunes de bloquéu
-** Enxertamientu d'información falso
+	'ipbreason-dropdown' => '*Motivos comunes de bloquéu
+** Enxertamientu d\'información falso
 ** Dexar les páxines en blanco
 ** Enllaces spam a páxines esternes
 ** Enxertamientu de babayaes/enguedeyos nes páxines
-** Comportamientu intimidatoriu o d'acosu
+** Comportamientu intimidatoriu o d\'acosu
 ** Abusu de cuentes múltiples
-** Nome d'usuariu inaceutable",
+** Nome d\'usuariu inaceutable',
 	'ipb-hardblock' => 'Torgar que los usuarios coneutaos editen dende esta direición IP',
 	'ipbcreateaccount' => 'Evitar creación de cuentes',
-	'ipbemailban' => "Torgar al usuariu l'unviu de corréu electrónicu",
-	'ipbenableautoblock' => "Bloquiar automáticamente la cabera direición IP usada por esti usuariu y toles IP posteriores dende les qu'intente editar",
+	'ipbemailban' => 'Torgar al usuariu l\'unviu de corréu electrónicu',
+	'ipbenableautoblock' => 'Bloquiar automáticamente la cabera direición IP usada por esti usuariu y toles IP posteriores dende les qu\'intente editar',
 	'ipbsubmit' => 'Bloquiar esti usuariu',
 	'ipbother' => 'Otru periodu:',
 	'ipboptions' => '2 hores:2 hours,1 día:1 day,3 díes:3 days,1 selmana:1 week,2 selmanes:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 añu:1 year,pa siempre:infinite',
 	'ipbotheroption' => 'otru',
 	'ipbotherreason' => 'Motivu distintu/adicional:',
-	'ipbhidename' => "Anubrir el nome d'usuariu d'ediciones y llistes",
-	'ipbwatchuser' => "Vixilar les páxines d'usuariu y d'alderique d'esti usuariu",
-	'ipb-disableusertalk' => "Torgar qu'esti usuariu edite la so páxina d'alderique mentanto tea bloquiáu",
-	'ipb-change-block' => "Volver a bloquiar l'usuariu con estos parámetros",
+	'ipbhidename' => 'Anubrir el nome d\'usuariu d\'ediciones y llistes',
+	'ipbwatchuser' => 'Vixilar les páxines d\'usuariu y d\'alderique d\'esti usuariu',
+	'ipb-disableusertalk' => 'Torgar qu\'esti usuariu edite la so páxina d\'alderique mentanto tea bloquiáu',
+	'ipb-change-block' => 'Volver a bloquiar l\'usuariu con estos parámetros',
 	'ipb-confirm' => 'Confirmar bloquéu',
 	'ipb-blockingself' => '¡Tas a piques de bloquiate tú mesmu! ¿Tas seguru de que quies facer eso?',
 	'ipb-confirmhideuser' => 'Tas a piques de bloquiar un usuariu con "anubrir usuariu" activao. Esto desaniciará el nome del usuariu de tolos llistaos y entraes de los rexistros. ¿De xuro quies facer eso?',
 	'ipb-edit-dropdown' => 'Editar motivos de bloquéu',
 	'ipb-unblock-addr' => 'Desbloquiar $1',
-	'ipb-unblock' => "Desbloquiar un nome d'usuariu o direición IP",
+	'ipb-unblock' => 'Desbloquiar un nome d\'usuariu o direición IP',
 	'ipb-blocklist' => 'Ver los bloqueos esistentes',
 	'ipb-blocklist-contribs' => 'Contribuciones de $1',
 	'ipusubmit' => 'Desaniciar esti bloquéu',
@@ -1601,14 +1595,14 @@ Pa una meyor seguridá, img_auth.php ta desactiváu.",
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Otru bloquéu|Otros bloqueos}}',
 	'infiniteblock' => 'pa siempre',
 	'ipblocklist-empty' => 'La llista de bloqueos ta vacia.',
-	'ipblocklist-no-results' => "La direición IP o nome d'usuariu solicitáu nun ta bloquiáu.",
+	'ipblocklist-no-results' => 'La direición IP o nome d\'usuariu solicitáu nun ta bloquiáu.',
 	'ipb_expiry_invalid' => 'Tiempu incorrectu.',
-	'ipb_expiry_temp' => "Los bloqueos de nome d'usuariu escondíos han ser permanentes.",
+	'ipb_expiry_temp' => 'Los bloqueos de nome d\'usuariu escondíos han ser permanentes.',
 	'ipb_hide_invalid' => 'Nun se pue desaniciar esta cuenta; seique tenga demasiaes ediciones.',
 	'ipb_already_blocked' => '"$1" yá ta bloquiáu',
 	'ipb-needreblock' => '$1 yá ta bloquiáu. ¿Quies camudar los parámetros?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Otru bloquéu|Otros bloqueos}}',
-	'ipb_cant_unblock' => "Error: Nun s'atopó'l bloquéu númberu $1. Seique yá fuera desbloquiáu.",
+	'ipb_cant_unblock' => 'Error: Nun s\'atopó\'l bloquéu númberu $1. Seique yá fuera desbloquiáu.',
 	'ipb_blocked_as_range' => 'Error: La IP $1 nun ta bloquiada direutamente, polo que nun pue ser desloquiada. Sicasí, foi bloquiada como parte del intervalu $2, que pue ser desbloquiáu.',
 	'ip_range_invalid' => 'Rangu IP non válidu.',
 	'ip_range_toolarge' => 'Nun se permiten bloqueos mayores de /$1.',
@@ -1616,61 +1610,61 @@ Pa una meyor seguridá, img_auth.php ta desactiváu.",
 	'ipbnounblockself' => 'Nun tienes permisu pa desbloquiate tu mesmu',
 	'immobile-source-namespace' => 'Nun se puen treslladar páxines nel espaciu de nomes "$1"',
 	'immobile-target-namespace' => 'Nun se puen treslladar páxines al espaciu de nomes "$1"',
-	'immobile-target-namespace-iw' => "Nun puedes mover una páxina a un enllaz d'Interwiki.",
+	'immobile-target-namespace-iw' => 'Nun puedes mover una páxina a un enllaz d\'Interwiki.',
 	'immobile-source-page' => 'Esta páxina nun ye treslladable.',
 	'immobile-target-page' => 'Nun se pue treslladar a esi títulu de destín.',
-	'imagenocrossnamespace' => "Nun se pue treslladar una imaxe a nun espaciu de nomes que nun ye d'imáxenes",
+	'imagenocrossnamespace' => 'Nun se pue treslladar una imaxe a nun espaciu de nomes que nun ye d\'imáxenes',
 	'imagetypemismatch' => 'La estensión nueva del archivu nun concueya cola so mena',
 	'imageinvalidfilename' => 'El nome del archivu oxetivu nun ye válidu',
 	'import' => 'Importar páxines',
 	'importinterwiki' => 'Importación treswiki',
-	'import-interwiki-text' => "Seleiciona una wiki y un títulu de páxina pa importar.
+	'import-interwiki-text' => 'Seleiciona una wiki y un títulu de páxina pa importar.
 Les feches de revisión y los nomes de los editores caltendránse.
-Toles aiciones d'importación treswiki queden rexistraes nel [[Special:Log/import|rexistru d'importaciones]].",
+Toles aiciones d\'importación treswiki queden rexistraes nel [[Special:Log/import|rexistru d\'importaciones]].',
 	'import-interwiki-source' => 'Códigu wiki/páxina:',
-	'import-interwiki-history' => "Copiar toles versiones d'historial d'esta páxina",
+	'import-interwiki-history' => 'Copiar toles versiones d\'historial d\'esta páxina',
 	'import-interwiki-templates' => 'Incluyir toles plantíes',
 	'import-interwiki-submit' => 'Importar',
 	'import-interwiki-namespace' => 'Espaciu de nomes de destín:',
 	'import-upload-filename' => 'Nome del ficheru:',
 	'import-comment' => 'Comentariu:',
-	'importtext' => "Por favor, esporta'l ficheru dende la wiki d'orixe usando la [[Special:Export|ferramienta d'esportación]].
-Guárdalu nel ordenador y xúbilu equí.",
+	'importtext' => 'Por favor, esporta\'l ficheru dende la wiki d\'orixe usando la [[Special:Export|ferramienta d\'esportación]].
+Guárdalu nel ordenador y xúbilu equí.',
 	'importstart' => 'Importando les páxines...',
 	'import-revision-count' => '$1 {{PLURAL:$1|revisión|revisiones}}',
 	'importnopages' => 'Nun hai páxines pa importar.',
 	'imported-log-entries' => 'Importao $1 {{PLURAL:$1|entrada del rexistru|entraes del rexistru}}.',
 	'importfailed' => 'Falló la importación: $1',
-	'importunknownsource' => "Triba d'orixe d'importación desconocida",
-	'importcantopen' => "Nun se pudo abrir el ficheru d'importación",
+	'importunknownsource' => 'Triba d\'orixe d\'importación desconocida',
+	'importcantopen' => 'Nun se pudo abrir el ficheru d\'importación',
 	'importbadinterwiki' => 'Enllaz interwiki incorreutu',
 	'importnotext' => 'Vaciu o ensin testu',
 	'importsuccess' => '¡Importación finalizada!',
 	'importhistoryconflict' => 'Existe un conflictu na revisión del historial (seique esta páxina fuera importada previamente)',
-	'importnosources' => "Nun se definió l'orixe de la importación treswiki y les xubíes direutes del historial tán deshabilitaes.",
-	'importnofile' => "Nun se xubió nengún archivu d'importación.",
-	'importuploaderrorsize' => "Falló la xubida del archivu d'importación. L'archivu ye más grande que'l tamañu permitíu de xubida.",
-	'importuploaderrorpartial' => "Falló la xubida del archivu d'importación. L'archivu xubióse solo parcialmente.",
-	'importuploaderrortemp' => "Falló la xubida del archivu d'importación. Falta una carpeta temporal.",
-	'import-parse-failure' => "Fallu nel análisis d'importación XML",
+	'importnosources' => 'Nun se definió l\'orixe de la importación treswiki y les xubíes direutes del historial tán deshabilitaes.',
+	'importnofile' => 'Nun se xubió nengún archivu d\'importación.',
+	'importuploaderrorsize' => 'Falló la xubida del archivu d\'importación. L\'archivu ye más grande que\'l tamañu permitíu de xubida.',
+	'importuploaderrorpartial' => 'Falló la xubida del archivu d\'importación. L\'archivu xubióse solo parcialmente.',
+	'importuploaderrortemp' => 'Falló la xubida del archivu d\'importación. Falta una carpeta temporal.',
+	'import-parse-failure' => 'Fallu nel análisis d\'importación XML',
 	'import-noarticle' => '¡Nun hai páxina pa importar!',
 	'import-nonewrevisions' => 'Toles revisiones fueran importaes previamente.',
 	'import-upload' => 'Xubir datos XML',
 	'import-token-mismatch' => 'Perdiéronse los datos de la sesión. Intentalo otra vuelta.',
-	'import-invalid-interwiki' => "Nun se puede importar d'esi wiki.",
-	'import-error-edit' => "La páxina $1 nun s'importó porque nun tienes permisu pa editala.",
-	'import-error-create' => "La páxina $1 nun s'importó porque nun tienes permisu pa creala.",
-	'import-error-interwiki' => "La páxina «$1» nun s'importó porque'l so nome ta acutáu pa enllaces esternos (interwiki).",
-	'import-error-special' => "La páxina «$1» nun s'importó porque pertenez a un espaciu de nomes especial que nun permite les páxines.",
-	'import-error-invalid' => "La páxina «$1» nun s'importó porque tien un nome inválidu.",
-	'importlogpage' => "Rexistru d'importaciones",
-	'importlogpagetext' => "Importaciones alministrativas de páxines con historial d'ediciones d'otres wikis.",
-	'import-logentry-upload' => "importada [[$1]] per aciu d'una xuba d'archivu",
+	'import-invalid-interwiki' => 'Nun se puede importar d\'esi wiki.',
+	'import-error-edit' => 'La páxina $1 nun s\'importó porque nun tienes permisu pa editala.',
+	'import-error-create' => 'La páxina $1 nun s\'importó porque nun tienes permisu pa creala.',
+	'import-error-interwiki' => 'La páxina «$1» nun s\'importó porque\'l so nome ta acutáu pa enllaces esternos (interwiki).',
+	'import-error-special' => 'La páxina «$1» nun s\'importó porque pertenez a un espaciu de nomes especial que nun permite les páxines.',
+	'import-error-invalid' => 'La páxina «$1» nun s\'importó porque tien un nome inválidu.',
+	'importlogpage' => 'Rexistru d\'importaciones',
+	'importlogpagetext' => 'Importaciones alministrativas de páxines con historial d\'ediciones d\'otres wikis.',
+	'import-logentry-upload' => 'importada [[$1]] per aciu d\'una xuba d\'archivu',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisión|revisiones}}',
 	'import-logentry-interwiki' => 'treswikificada $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisión|revisiones}} dende $2',
-	'imagemaxsize' => "Llende del tamañu d'imaxe: <br />''(pa les páxines de descripción de ficheru)''",
-	'imagelisttext' => "Embaxo ta la llista {{PLURAL:$1|d'un archivu ordenáu|de '''$1''' archivos ordenaos}} $2.",
+	'imagemaxsize' => 'Llende del tamañu d\'imaxe: <br />\'\'(pa les páxines de descripción de ficheru)\'\'',
+	'imagelisttext' => 'Embaxo ta la llista {{PLURAL:$1|d\'un archivu ordenáu|de \'\'\'$1\'\'\' archivos ordenaos}} $2.',
 	'ilsubmit' => 'Guetar',
 	'invalidateemail' => 'Cancelar confirmación de corréu electrónicu',
 	'imgmultipageprev' => '← páxina anterior',
@@ -1678,13 +1672,13 @@ Guárdalu nel ordenador y xúbilu equí.",
 	'imgmultigo' => '¡Dir!',
 	'imgmultigoto' => 'Dir a la páxina $1',
 	'intentionallyblankpage' => 'Esta páxina ta en blanco arrémente',
-);
+];
 
-$messages['av'] = array(
+$messages['av'] = [
 	'internalerror' => 'Жанисеб гъалатl',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'info_short' => 'Givara',
 	'internalerror' => 'Koefa rokla',
 	'internalerror_info' => 'Koefa rokla : $1',
@@ -1729,7 +1723,7 @@ $messages['avk'] = array(
 	'infiniteblock' => 'parmaf',
 	'ipblocklist-empty' => 'Meka elekara.',
 	'ipblocklist-no-results' => 'Erune IP mane ok favesikyolt me tid elekayan.',
-	'ipb_expiry_invalid' => "temps d'expiration invalide.",
+	'ipb_expiry_invalid' => 'temps d\'expiration invalide.',
 	'ipb_already_blocked' => '"$1" ixam tir elekan',
 	'ip_range_invalid' => 'IP elega mewadafa.',
 	'imageinvalidfilename' => 'Jalaf iyeltakyolt tir meenaf',
@@ -1751,7 +1745,7 @@ $messages['avk'] = array(
 	'importbadinterwiki' => 'Interwiki gluyasikiji',
 	'importnotext' => 'Vlardaf ok krentiskaf',
 	'importsuccess' => 'Koburenhera !',
-	'importhistoryconflict' => "Il y a un conflit dans l'historique des versions (cette page à peut être déjà été importée avant)",
+	'importhistoryconflict' => 'Il y a un conflit dans l\'historique des versions (cette page à peut être déjà été importée avant)',
 	'importnofile' => 'Mek iyeltak al zo kalvajar.',
 	'importuploaderrorsize' => 'Kalvajara va iyeltak al rodjer. Bat iyeltak tir logijaf dam rictan kalvajaralum.',
 	'importuploaderrorpartial' => 'Kalvajara va iyeltak al rodjer. Iyeltak anton pakon al zo kalvajar.',
@@ -1761,22 +1755,22 @@ $messages['avk'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|betaks|betaks}}',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|betaks|betaks}} male $2',
 	'infosubtitle' => 'Bugiva',
-	'imagelisttext' => "Tir vexala dem '''$1''' {{PLURAL:$1|iyeltak|iyeltak}} $2 pulana.",
+	'imagelisttext' => 'Tir vexala dem \'\'\'$1\'\'\' {{PLURAL:$1|iyeltak|iyeltak}} $2 pulana.',
 	'ilsubmit' => 'Aneyara',
 	'imagelistall' => 'kot',
-	'invalidateemail' => "Kuidera va 'email' gruyera",
+	'invalidateemail' => 'Kuidera va \'email\' gruyera',
 	'imgmultipageprev' => '← abduebu',
 	'imgmultipagenext' => 'radimebu →',
 	'imgmultigo' => 'Askí !',
 	'imgmultigoto' => 'Grablera kal $1 bu',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'ipblocklist-submit' => 'Thaqaña',
 	'imgmultigo' => '¡Saraña!',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'index-category' => 'İndeksləşdirilmiş səhifələr',
 	'internalerror' => 'Daxili xəta',
 	'internalerror_info' => 'Daxili xəta: $1',
@@ -1796,7 +1790,7 @@ Xahiş edirik düzgün formatlı ünvan daxil edin və ya bu sahəni boş qoyun.
 	'img-auth-noread' => 'İstifadəçinin "$1"i oxumaq hüququ yoxdur.',
 	'imgfile' => 'fayl',
 	'imagelinks' => 'Fayl keçidləri',
-	'iteminvalidname' => "'$1' ilə bağlı problem, adı düzgün deyil...",
+	'iteminvalidname' => '\'$1\' ilə bağlı problem, adı düzgün deyil...',
 	'invert' => 'Seçilən xaricindəkiləri',
 	'isredirect' => 'İstiqamətləndirmə səhifəsi',
 	'istemplate' => 'daxil olmuş',
@@ -1883,7 +1877,7 @@ Bloklama şərtlərini dəyişmək istəyirsiniz?',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revision|dəyişiklik}}',
 	'import-logentry-interwiki' => 'vikilərarası idxal $1',
 	'import-logentry-interwiki-detail' => '$2-dən $1 {{PLURAL:$1|dəyişiklik|dəyişikliklər}}',
-	'imagemaxsize' => "Şəkilin maksimal tutumu:<br />''(faylın təsviri səhifələri üçün)''",
+	'imagemaxsize' => 'Şəkilin maksimal tutumu:<br />\'\'(faylın təsviri səhifələri üçün)\'\'',
 	'ilsubmit' => 'Axtar',
 	'invalidateemail' => 'E-mail təsdiqlənməsindən imtina',
 	'imgmultipageprev' => '&larr; əvvəlki səhifə',
@@ -1891,9 +1885,9 @@ Bloklama şərtlərini dəyişmək istəyirsiniz?',
 	'imgmultigo' => 'Seç!',
 	'imgmultigoto' => '$1 səhifəyə get',
 	'intentionallyblankpage' => 'Bu səhifə xüsusilə boşdur.',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'index-category' => 'Индексланған биттәр',
 	'internalerror' => 'Эске хата',
 	'internalerror_info' => 'Эске хата: $1',
@@ -2045,8 +2039,8 @@ $messages['ba'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|өлгө|өлгө}}',
 	'import-logentry-interwiki' => '$1 битен вики проекттары-ара тейәгән',
 	'import-logentry-interwiki-detail' => '$2 өлгөнән $1 {{PLURAL:$1|өлгө|өлгө}}',
-	'imagemaxsize' => "Рәсем дәүмәле өсөн сик: <br />''(файл тасуирламаһы биттәре өсөн)''",
-	'imagelisttext' => "Түбәндә — '''$1''' {{PLURAL:$1|файлдан}} торған һәм $2 тәртипкә килтерелгән исемлек.",
+	'imagemaxsize' => 'Рәсем дәүмәле өсөн сик: <br />\'\'(файл тасуирламаһы биттәре өсөн)\'\'',
+	'imagelisttext' => 'Түбәндә — \'\'\'$1\'\'\' {{PLURAL:$1|файлдан}} торған һәм $2 тәртипкә килтерелгән исемлек.',
 	'ilsubmit' => 'Эҙләү',
 	'invalidateemail' => 'Электрон почта адресын раҫлауҙы туҡтатыу',
 	'imgmultipageprev' => '← алдағы бит',
@@ -2054,16 +2048,16 @@ $messages['ba'] = array(
 	'imgmultigo' => 'Күсеү!',
 	'imgmultigoto' => '$1 биткә күсеү',
 	'intentionallyblankpage' => 'Был бит аңлы рәүештә буш ҡалдырылған.',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'index-category' => 'Indizirde Seiten',
 	'internalerror' => 'Interner Feeler',
 	'internalerror_info' => 'Interner Feeler: $1',
 	'italic_sample' => 'Kursiaver Text',
 	'italic_tip' => 'Kursiaver Text',
 	'image_tip' => 'Daateilink',
-	'ignorewarning' => "D' Warnung ignoriern und d' Daatei speichern",
+	'ignorewarning' => 'D\' Warnung ignoriern und d\' Daatei speichern',
 	'ignorewarnings' => 'Warnung ignoriern',
 	'img-auth-accessdenied' => 'Zuagrieff vaweigerd',
 	'imgfile' => 'Daatei',
@@ -2086,9 +2080,9 @@ $messages['bar'] = array(
 ** Missbrauch mid mererne Benutzerkontós
 ** néd geigneter Benutzernåm',
 	'ipb-hardblock' => 'Auhgmödte Benutzer dodrauh hindern, daas Beorweitungen unter derer IP-Adress vurgnummer wern',
-	'ipbcreateaccount' => "D' Erstöung voh Benutzerkóntós vahindern",
+	'ipbcreateaccount' => 'D\' Erstöung voh Benutzerkóntós vahindern',
 	'ipbemailban' => 'E-Mail-Vasånd sperrn',
-	'ipbenableautoblock' => "Sperr dé aktuö voh dém Benutzer gnutzde IP-Adress sówia autómaatisch olle fóiganden, voh dénen aus er Beorweitungen óder 's Auhléng voh Benutzerkóntós vasuacht.",
+	'ipbenableautoblock' => 'Sperr dé aktuö voh dém Benutzer gnutzde IP-Adress sówia autómaatisch olle fóiganden, voh dénen aus er Beorweitungen óder \'s Auhléng voh Benutzerkóntós vasuacht.',
 	'ipbsubmit' => 'IP-Adress/Benutzer sperrn',
 	'ipbother' => 'Åndre Dauer (auf englisch):',
 	'ipboptions' => '2 Stund:2 hours,1 Dog:1 day,3 Dog:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Monad:1 month,3 Monad:3 months,6 Monad:6 months,1 Jor:1 year, Leemslång:infinite',
@@ -2096,7 +2090,7 @@ $messages['bar'] = array(
 	'ipbotherreason' => 'Ånderner/ergenznder Grund:',
 	'ipbhidename' => 'An Benytzernåmen in Beorwaitungen und Linsten vastecken',
 	'ipbwatchuser' => 'De Benytzer(diskussions)saiten beowochten',
-	'ipb-change-block' => "D' Sperrn mid de Sperrparameter danaiern",
+	'ipb-change-block' => 'D\' Sperrn mid de Sperrparameter danaiern',
 	'ipb-edit-dropdown' => 'Sperrgrynd beorwaiten',
 	'ipb-unblock-addr' => '„$1“ fraigeem',
 	'ipb-unblock' => 'IP-Adress/Benytzer fraigeem',
@@ -2113,16 +2107,16 @@ $messages['bar'] = array(
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gee zua Seiten $1',
 	'intentionallyblankpage' => 'Dé Seiten is obsichtlich óne an Inhoid. Sie werd fyr Benchmarks vawendt',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'index-category' => 'Indizirde Seiten',
 	'internalerror' => 'Interner Feeler',
 	'internalerror_info' => 'Interner Feeler: $1',
 	'italic_sample' => 'Kursiaver Text',
 	'italic_tip' => 'Kursiaver Text',
 	'image_tip' => 'Daateilink',
-	'ignorewarning' => "D' Warnung ignoriern und d' Daatei speichern",
+	'ignorewarning' => 'D\' Warnung ignoriern und d\' Daatei speichern',
 	'ignorewarnings' => 'Warnung ignoriern',
 	'img-auth-accessdenied' => 'Zuagrieff vaweigerd',
 	'imgfile' => 'Daatei',
@@ -2145,9 +2139,9 @@ $messages['bat-smg'] = array(
 ** Missbrauch mid mererne Benutzerkontós
 ** néd geigneter Benutzernåm',
 	'ipb-hardblock' => 'Auhgmödte Benutzer dodrauh hindern, daas Beorweitungen unter derer IP-Adress vurgnummer wern',
-	'ipbcreateaccount' => "D' Erstöung voh Benutzerkóntós vahindern",
+	'ipbcreateaccount' => 'D\' Erstöung voh Benutzerkóntós vahindern',
 	'ipbemailban' => 'E-Mail-Vasånd sperrn',
-	'ipbenableautoblock' => "Sperr dé aktuö voh dém Benutzer gnutzde IP-Adress sówia autómaatisch olle fóiganden, voh dénen aus er Beorweitungen óder 's Auhléng voh Benutzerkóntós vasuacht.",
+	'ipbenableautoblock' => 'Sperr dé aktuö voh dém Benutzer gnutzde IP-Adress sówia autómaatisch olle fóiganden, voh dénen aus er Beorweitungen óder \'s Auhléng voh Benutzerkóntós vasuacht.',
 	'ipbsubmit' => 'IP-Adress/Benutzer sperrn',
 	'ipbother' => 'Åndre Dauer (auf englisch):',
 	'ipboptions' => '2 Stund:2 hours,1 Dog:1 day,3 Dog:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Monad:1 month,3 Monad:3 months,6 Monad:6 months,1 Jor:1 year, Leemslång:infinite',
@@ -2155,7 +2149,7 @@ $messages['bat-smg'] = array(
 	'ipbotherreason' => 'Ånderner/ergenznder Grund:',
 	'ipbhidename' => 'An Benytzernåmen in Beorwaitungen und Linsten vastecken',
 	'ipbwatchuser' => 'De Benytzer(diskussions)saiten beowochten',
-	'ipb-change-block' => "D' Sperrn mid de Sperrparameter danaiern",
+	'ipb-change-block' => 'D\' Sperrn mid de Sperrparameter danaiern',
 	'ipb-edit-dropdown' => 'Sperrgrynd beorwaiten',
 	'ipb-unblock-addr' => '„$1“ fraigeem',
 	'ipb-unblock' => 'IP-Adress/Benytzer fraigeem',
@@ -2172,9 +2166,9 @@ $messages['bat-smg'] = array(
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gee zua Seiten $1',
 	'intentionallyblankpage' => 'Dé Seiten is obsichtlich óne an Inhoid. Sie werd fyr Benchmarks vawendt',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'internalerror' => 'حطادرونی',
 	'internalerror_info' => 'حطا درونی: $1',
 	'invalidemailaddress' => 'آدرس ایمیل قبول نه بیت چوش که جاه کیت یک فرمت نامعتبری هست.
@@ -2188,7 +2182,7 @@ $messages['bcc'] = array(
 لطفا نام فایل بدل کنیت و دگه آپلود آزمایش کنیت.',
 	'imgfile' => 'فایل',
 	'imagelinks' => 'لینک فایل',
-	'iteminvalidname' => "مشکل گون آیتم  '$1', نامعتبر  این نام",
+	'iteminvalidname' => 'مشکل گون آیتم  \'$1\', نامعتبر  این نام',
 	'invert' => 'برگردینگ انتخاب',
 	'isredirect' => 'صفحه غیر مستقیم',
 	'istemplate' => 'همراهی',
@@ -2285,8 +2279,8 @@ $messages['bcc'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|بازبینی|بازبینی ان}}',
 	'import-logentry-interwiki' => 'بین ویکی بوت $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|بازبینی|بازبینی ان}} چه $2',
-	'imagemaxsize' => "محدودیت تصاویر: <br />''(په صفحات توضیح فایل)''",
-	'imagelisttext' => "جهل یک لیستی چه  '''$1''' {{PLURAL:$1|فایل|فایلان}} هست که ترتیبنت $2.",
+	'imagemaxsize' => 'محدودیت تصاویر: <br />\'\'(په صفحات توضیح فایل)\'\'',
+	'imagelisttext' => 'جهل یک لیستی چه  \'\'\'$1\'\'\' {{PLURAL:$1|فایل|فایلان}} هست که ترتیبنت $2.',
 	'ilsubmit' => 'گردگ',
 	'invalidateemail' => 'کنسل کن تایید ایمیلء',
 	'imgmultipageprev' => '← پیشگین صفحه',
@@ -2306,22 +2300,22 @@ $messages['bcc'] = array(
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'اسفند',
 	'intentionallyblankpage' => 'ای صفحه عمدا هالیک هلگ بوتت و په محک زتن ویا دگه چیز.',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'internalerror' => 'Panlaog na salâ',
 	'internalerror_info' => 'Panlaog na salâ: $1',
-	'invalidemailaddress' => "Dai matogotan ining ''e''-surat ta garo salâ an ''format'' kaini. Magkaag tabî nin tamâ o dai pagkaagan.",
+	'invalidemailaddress' => 'Dai matogotan ining \'\'e\'\'-surat ta garo salâ an \'\'format\'\' kaini. Magkaag tabî nin tamâ o dai pagkaagan.',
 	'italic_sample' => 'Tekstong Itáliko',
 	'italic_tip' => 'Tekstong patagilíd',
 	'image_sample' => 'Halimbawa.jpg',
 	'image_tip' => 'Nakaturay na file',
 	'ignorewarning' => 'Dai pagintiendehon an mga patanid asin itagama pa man an file',
 	'ignorewarnings' => 'Paliman-limanon an mga tanid',
-	'illegalfilename' => "An ''filename'' na \"\$1\" igwang mga ''character'' na dai pwede sa mga titulo nin páhina. Tâwan tabî nin bâgong pangaran an ''file'' asin probaran na ikarga giraray.",
+	'illegalfilename' => 'An \'\'filename\'\' na "$1" igwang mga \'\'character\'\' na dai pwede sa mga titulo nin páhina. Tâwan tabî nin bâgong pangaran an \'\'file\'\' asin probaran na ikarga giraray.',
 	'imgfile' => 'dokumento',
 	'imagelinks' => 'Mga takód',
-	'iteminvalidname' => "May problema sa bagay na '$1', salâ an pangaran...",
+	'iteminvalidname' => 'May problema sa bagay na \'$1\', salâ an pangaran...',
 	'invert' => 'Pabaliktadón an pinili',
 	'isredirect' => 'ilikay an pahina',
 	'istemplate' => 'kabali',
@@ -2329,14 +2323,14 @@ $messages['bcl'] = array(
 	'ipbexpiry' => 'Pasó:',
 	'ipbreason' => 'Rason:',
 	'ipbreasonotherlist' => 'Ibang rason',
-	'ipbreason-dropdown' => "*Mga komon na rason sa pagbagat
+	'ipbreason-dropdown' => '*Mga komon na rason sa pagbagat
 ** Nagkakaag nin salang impormasyon
 ** Naghahalî nin mga laog kan páhina
-** Nagkakaag nin mga takod na ''spam'' kan mga panluwas na ''site''
+** Nagkakaag nin mga takod na \'\'spam\'\' kan mga panluwas na \'\'site\'\'
 ** Nagkakaag nin kalokohan/ringaw sa mga pahina
 ** Gawî-gawing makatakót/makauyám
-** Nag-aabuso nin mga lain-lain na ''account''
-** Dai akong ngaran nin parágamit",
+** Nag-aabuso nin mga lain-lain na \'\'account\'\'
+** Dai akong ngaran nin parágamit',
 	'ipbcreateaccount' => 'Pugulon an pagibo nin kuenta.',
 	'ipbemailban' => 'Pugolan ining paragamit na magpadara nin e-surat',
 	'ipbenableautoblock' => 'Enseguidang bagaton an huring direccion nin  IP na ginamit kaining paragamit, asin kon ano pang ibang IP na proprobaran nindang gamiton',
@@ -2367,32 +2361,32 @@ $messages['bcl'] = array(
 	'import-interwiki-submit' => 'Ipalaog',
 	'import-interwiki-namespace' => 'Ibalyó an mga pahina sa ngaran-espacio:',
 	'import-comment' => 'Komento:',
-	'importtext' => "Ipadara tabì an ''file'' hali sa ginikanan na wiki gamit an Special:Export utility, itagama ini sa saimong disk dangan ikarga iyan digdi.",
+	'importtext' => 'Ipadara tabì an \'\'file\'\' hali sa ginikanan na wiki gamit an Special:Export utility, itagama ini sa saimong disk dangan ikarga iyan digdi.',
 	'importstart' => 'Piglalaog an mga páhina...',
 	'import-revision-count' => '$1 {{PLURAL:$1|pagpakarhay|mga pagpakarhay}}',
 	'importnopages' => 'Mayong mga páhinang ipapadara.',
 	'importfailed' => 'Bakong matriumpo an pagpadara: $1',
 	'importunknownsource' => 'Dai aram an tipo kan gigikanan kan ipapadara',
-	'importcantopen' => "Dai mabukasan an pigpadarang ''file''",
+	'importcantopen' => 'Dai mabukasan an pigpadarang \'\'file\'\'',
 	'importbadinterwiki' => 'Salâ an takod na interwiki',
 	'importnotext' => 'Mayong laog o mayong teksto',
 	'importsuccess' => 'Matriumpo an pagpadara!',
-	'importnofile' => "Mayong ipinadarang ''file'' an naikarga.",
+	'importnofile' => 'Mayong ipinadarang \'\'file\'\' an naikarga.',
 	'importlogpage' => 'Usip nin pagpalaog',
-	'import-logentry-upload' => "pigpadara an [[$1]] kan pagkarga nin ''file''",
+	'import-logentry-upload' => 'pigpadara an [[$1]] kan pagkarga nin \'\'file\'\'',
 	'import-logentry-upload-detail' => '$1 mga pagpakarháy',
 	'import-logentry-interwiki' => 'na-transwiki an $1',
 	'import-logentry-interwiki-detail' => '$1 mga pagpakarháy halì sa $2',
 	'imagemaxsize' => 'Limitaran an mga ladawan sa mga páhinang deskripsyon kan ladawan sa:',
-	'imagelisttext' => "Mahihiling sa baba an lista nin mga  '''$1''' {{PLURAL:$1|file|files}} na linain $2.",
+	'imagelisttext' => 'Mahihiling sa baba an lista nin mga  \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} na linain $2.',
 	'ilsubmit' => 'Hanápon',
 	'imgmultipageprev' => '← nakaaging pahina',
 	'imgmultipagenext' => 'sunod na pahina →',
 	'imgmultigo' => 'Dumanán!',
 	'intentionallyblankpage' => 'Pigtuyong blangko an pahinang ini',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'index-category' => 'Індэксаваныя старонкі',
 	'internalerror' => 'Унутраная памылка',
 	'internalerror_info' => 'Унутраная памылка: $1',
@@ -2415,14 +2409,14 @@ $messages['be'] = array(
 	'img-auth-isdir' => 'Вы спрабуеце атрымаць доступ да каталога "$1"
 Дазволены доступ толькі да файлаў.',
 	'img-auth-streaming' => 'Патокавая перадача «$1».',
-	'img-auth-public' => "Прызначэннем img_auth.php з'яўляецца вывад файлаў з закрытай вікі.
+	'img-auth-public' => 'Прызначэннем img_auth.php з\'яўляецца вывад файлаў з закрытай вікі.
 Гэтая вікі настроена як агульнадаступная.
-Для аптымізацыі бяспекі img_auth.php адключаная.",
+Для аптымізацыі бяспекі img_auth.php адключаная.',
 	'img-auth-noread' => 'Удзельнік не мае доступу на чытанне да «$1».',
 	'img-auth-bad-query-string' => 'URL-адрас ўтрымлівае няправільны радок запыту.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Выкарыстанне файла',
-	'iteminvalidname' => "Праблема са складнікам '$1', недапушчальная назва...",
+	'iteminvalidname' => 'Праблема са складнікам \'$1\', недапушчальная назва...',
 	'invert' => 'Пазначыць наадварот',
 	'isredirect' => 'старонка-перасылка',
 	'istemplate' => 'уключэнне',
@@ -2501,8 +2495,8 @@ $messages['be'] = array(
 	'import-interwiki-namespace' => 'У прастору назваў:',
 	'import-upload-filename' => 'Назва файла:',
 	'import-comment' => 'Каментарый:',
-	'importtext' => "Калі ласка, экспартуйце файл з крынічнай вікі з дапамогай [[Special:Export|прылады экспарту]].
-Захавайце яго на свой камп'ютар, а потым загрузіце сюды.",
+	'importtext' => 'Калі ласка, экспартуйце файл з крынічнай вікі з дапамогай [[Special:Export|прылады экспарту]].
+Захавайце яго на свой камп\'ютар, а потым загрузіце сюды.',
 	'importstart' => 'Імпартаванне старонак...',
 	'import-revision-count' => '$1 {{PLURAL:$1|версія|версій}}',
 	'importnopages' => 'Няма старонак для імпартавання.',
@@ -2516,7 +2510,7 @@ $messages['be'] = array(
 	'importhistoryconflict' => 'Ёсць спрэчныя версіі ў гісторыі (магчыма, гэтую старонку імпартавалі раней)',
 	'importnosources' => 'Няма вызначаных крыніц дзеля транс-вікавага імпарту, і забаронены наўпростныя ўкладанні гісторый.',
 	'importnofile' => 'Ніякія файлы для імпартавання не былі ўкладзены.',
-	'importuploaderrorsize' => "Не ўдалося атрымаць файл дзеля імпартавання. Аб'ём файла занадта вялікі.",
+	'importuploaderrorsize' => 'Не ўдалося атрымаць файл дзеля імпартавання. Аб\'ём файла занадта вялікі.',
 	'importuploaderrorpartial' => 'Не ўдалося атрымаць файл дзеля імпартавання. Атрыманы файл няпоўны.',
 	'importuploaderrortemp' => 'Не ўдалося атрымаць файл дзеля імпартавання. Няма тымчасовага каталога.',
 	'import-parse-failure' => 'Памылка разбірання XML пры імпартаванні',
@@ -2536,8 +2530,8 @@ $messages['be'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|версія|версій}}',
 	'import-logentry-interwiki' => 'транс-вікавана $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|версія|версій}} з $2',
-	'imagemaxsize' => "Мяжа памеру выяваў:<br />''(на тлумачальных старонках)''",
-	'imagelisttext' => "Ніжэй даецца спіс з '''$1''' {{PLURAL:$1|файла|файлаў}} у парадку $2.",
+	'imagemaxsize' => 'Мяжа памеру выяваў:<br />\'\'(на тлумачальных старонках)\'\'',
+	'imagelisttext' => 'Ніжэй даецца спіс з \'\'\'$1\'\'\' {{PLURAL:$1|файла|файлаў}} у парадку $2.',
 	'ilsubmit' => 'Знайсці',
 	'invalidateemail' => 'Адмовіцца ад пацверджання эл.пошты',
 	'imgmultipageprev' => '← папярэдняя старонка',
@@ -2545,9 +2539,9 @@ $messages['be'] = array(
 	'imgmultigo' => 'Пераход!',
 	'imgmultigoto' => 'На старонку $1',
 	'intentionallyblankpage' => 'Старонка наўмысна пакінута пустой, і ўжываецца для вымярэння хуткасці і падобнага.',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'index-category' => 'Індэксаваныя старонкі',
 	'internalerror' => 'Унутраная памылка',
 	'internalerror_info' => 'Унутраная памылка: $1',
@@ -2699,8 +2693,8 @@ $messages['be-tarask'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|вэрсія|вэрсіі|вэрсій}}',
 	'import-logentry-interwiki' => 'імпартавана зь іншай вікі $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|вэрсія|вэрсіі|вэрсій}} з $2',
-	'imagemaxsize' => "Абмежаваньне памеру выяваў: <br />''(для старонак апісаньня файлаў)''",
-	'imagelisttext' => "Ніжэй пададзены сьпіс з '''$1''' {{PLURAL:$1|файла|файлаў|файлаў}}, адсартаваных $2.",
+	'imagemaxsize' => 'Абмежаваньне памеру выяваў: <br />\'\'(для старонак апісаньня файлаў)\'\'',
+	'imagelisttext' => 'Ніжэй пададзены сьпіс з \'\'\'$1\'\'\' {{PLURAL:$1|файла|файлаў|файлаў}}, адсартаваных $2.',
 	'ilsubmit' => 'Шукаць',
 	'invalidateemail' => 'Скасаваць пацьверджаньне адрасу электроннай пошты',
 	'imgmultipageprev' => '← папярэдняя старонка',
@@ -2708,9 +2702,9 @@ $messages['be-tarask'] = array(
 	'imgmultigo' => 'Перайсьці!',
 	'imgmultigoto' => 'Перайсьці на старонку $1',
 	'intentionallyblankpage' => 'Гэтая старонка наўмысна пакінутая пустой',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'index-category' => 'Індэксаваныя старонкі',
 	'internalerror' => 'Унутраная памылка',
 	'internalerror_info' => 'Унутраная памылка: $1',
@@ -2862,8 +2856,8 @@ $messages['be-x-old'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|вэрсія|вэрсіі|вэрсій}}',
 	'import-logentry-interwiki' => 'імпартавана зь іншай вікі $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|вэрсія|вэрсіі|вэрсій}} з $2',
-	'imagemaxsize' => "Абмежаваньне памеру выяваў: <br />''(для старонак апісаньня файлаў)''",
-	'imagelisttext' => "Ніжэй пададзены сьпіс з '''$1''' {{PLURAL:$1|файла|файлаў|файлаў}}, адсартаваных $2.",
+	'imagemaxsize' => 'Абмежаваньне памеру выяваў: <br />\'\'(для старонак апісаньня файлаў)\'\'',
+	'imagelisttext' => 'Ніжэй пададзены сьпіс з \'\'\'$1\'\'\' {{PLURAL:$1|файла|файлаў|файлаў}}, адсартаваных $2.',
 	'ilsubmit' => 'Шукаць',
 	'invalidateemail' => 'Скасаваць пацьверджаньне адрасу электроннай пошты',
 	'imgmultipageprev' => '← папярэдняя старонка',
@@ -2871,9 +2865,165 @@ $messages['be-x-old'] = array(
 	'imgmultigo' => 'Перайсьці!',
 	'imgmultigoto' => 'Перайсьці на старонку $1',
 	'intentionallyblankpage' => 'Гэтая старонка наўмысна пакінутая пустой',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
+	'index-category' => 'Индексирани страници',
+	'internalerror' => 'Вътрешна грешка',
+	'internalerror_info' => 'Вътрешна грешка: $1',
+	'invalidemailaddress' => 'Въведеният адрес не може да бъде приет, тъй като не съответства на формата на адрес за електронна поща. Въведете коректен адрес или оставете полето празно.',
+	'italic_sample' => 'Курсивен текст',
+	'italic_tip' => 'Курсивен (наклонен) текст',
+	'image_sample' => 'Пример.jpg',
+	'image_tip' => 'Вмъкване на картинка',
+	'ignorewarning' => 'Пренебрегване на предупреждението и качване на файла.',
+	'ignorewarnings' => 'Пренебрегване на всякакви предупреждения',
+	'illegalfilename' => 'Името на файла „$1“ съдържа знаци, които не са позволени в заглавия на страници. Преименувайте файла и се опитайте да го качите отново.',
+	'illegal-filename' => 'Непозволено файлово име.',
+	'img-auth-accessdenied' => 'Достъпът е отказан',
+	'img-auth-nopathinfo' => 'Липсва PATH_INFO.
+Вашият сървър не е конфигуриран да предава тази информация.
+Той може да е базиран на CGI и да не може да поддържа img_auth.
+Вижте https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
+	'img-auth-notindir' => 'Търсеният път не е в настроената директория за качвания.',
+	'img-auth-badtitle' => 'Грешка при изграждането на валидно заглавие от "$1".',
+	'img-auth-nologinnWL' => 'Не сте влезли в системата и „$1“ не е в белия списък.',
+	'img-auth-nofile' => 'Файлът „$1“ не съществува.',
+	'img-auth-isdir' => 'Опитвате се да осъществите достъп до директорията „$1“.
+Разрешен е само достъп до файловете.',
+	'img-auth-streaming' => 'Излъчване "$1"',
+	'img-auth-public' => 'Функцията img_auth.php е да извлича файлове от частни уикита.
+Това уики е конфигурирано като публично.
+С цел оптимална сигурност, функцията img_auth.php е деактивирана.',
+	'img-auth-noread' => 'Потребителят няма достъп за четене на „$1“.',
+	'imgfile' => 'файл',
+	'imagelinks' => 'Използване на файла',
+	'iteminvalidname' => 'Проблем с „$1“, грешно име…',
+	'invert' => 'Обръщане на избора',
+	'isredirect' => 'пренасочваща страница',
+	'istemplate' => 'включване',
+	'isimage' => 'препратка към файла',
+	'ipadressorusername' => 'IP-адрес или потребител:',
+	'ipbexpiry' => 'Срок:',
+	'ipbreason' => 'Причина:',
+	'ipbreasonotherlist' => 'Друга причина',
+	'ipbreason-dropdown' => '* Общи причини за блокиране
+** Въвеждане на невярна информация
+** Премахване на съдържание от страниците
+** Добавяне на спам/нежелани външни препратки
+** Въвеждане на безсмислици в страниците
+** Заплашително поведение/тормоз
+** Злупотреба с няколко потребителски сметки
+** Неприемливо потребителско име',
+	'ipb-hardblock' => 'Спиране на възможността влезли потребители да редактират от този IP адрес',
+	'ipbcreateaccount' => 'Забрана за създаване на потребителски сметки',
+	'ipbemailban' => 'Забрана на потребителя да праща е-поща',
+	'ipbenableautoblock' => 'Автоматично блокиране на последния IP-адрес, използван от потребителя, както и на всички останали адреси, от които се опита да редактира',
+	'ipbsubmit' => 'Блокиране на потребителя',
+	'ipbother' => 'Друг срок:',
+	'ipboptions' => 'два часа:2 hours,един ден:1 day,три дни:3 days,една седмица:1 week,две седмици:2 weeks,един месец:1 month,три месеца:3 months,шест месеца:6 months,една година:1 year,безсрочно:infinite',
+	'ipbotheroption' => 'друг',
+	'ipbotherreason' => 'Друга/допълнителна причина:',
+	'ipbhidename' => 'Скриване на потребителското име/IP-адреса от редакциите и дневниците',
+	'ipbwatchuser' => 'Наблюдаване на потребителската страница и беседата на този потребител',
+	'ipb-disableusertalk' => 'Спиране на възможността този потребител да редактира беседата си докато е блокиран',
+	'ipb-change-block' => 'Повторно блокиране на потребителя с тези настройки',
+	'ipb-confirm' => 'Потвърждаване на блокирането',
+	'ipb-blockingself' => 'На път сте да блокирате себе си! Наистина ли желаете да извършите това действие?',
+	'ipb-confirmhideuser' => 'На път сте да блокирате потребител, който е "скрит потребител". Това действие ще заличи потребителското име от всички списъци и дневници. Наистина ли желаете да направите това?',
+	'ipb-edit-dropdown' => 'Причини за блокиране',
+	'ipb-unblock-addr' => 'Отблокиране на $1',
+	'ipb-unblock' => 'Отблокиране на потребителско име IP-адрес',
+	'ipb-blocklist' => 'Преглед на текущите блокирания',
+	'ipb-blocklist-contribs' => 'Приноси на $1',
+	'ipusubmit' => 'Сваляне на блокирането',
+	'ipblocklist' => 'Блокирани потребители',
+	'ipblocklist-legend' => 'Откриване на блокиран потребител',
+	'ipblocklist-submit' => 'Търсене',
+	'ipblocklist-localblock' => 'Локално блокиране',
+	'ipblocklist-otherblocks' => '{{PLURAL:$1|Друго блокиране|Други блокирания}}',
+	'infiniteblock' => 'неограничено',
+	'ipblocklist-empty' => 'Списъкът на блокиранията е празен.',
+	'ipblocklist-no-results' => 'Указаният IP-адрес или потребител не е блокиран.',
+	'ipb_expiry_invalid' => 'Невалиден срок на изтичане.',
+	'ipb_expiry_temp' => 'Скритите потребителски имена трябва да се блокират безсрочно.',
+	'ipb_hide_invalid' => 'Тази потребителска сметка не може да бъде прикрита; може би с нея да са правени твърде много редакции.',
+	'ipb_already_blocked' => '„$1“ е вече блокиран',
+	'ipb-needreblock' => '$1 е вече блокиран. Желаете ли да промените настройките?',
+	'ipb-otherblocks-header' => '{{PLURAL:$1|Друго блокиране|Други блокирания}}',
+	'ipb_cant_unblock' => 'Грешка: Не е намерен блок с номер $1. Вероятно потребителят е вече отблокиран.',
+	'ipb_blocked_as_range' => 'Грешка: IP-адресът $1 не може да бъде разблокиран, тъй като е част от блокирания регистър $2. Можете да разблокирате адреса, като разблокирате целия регистър.',
+	'ip_range_invalid' => 'Невалиден интервал за IP-адреси.',
+	'ip_range_toolarge' => 'Забранено е блокиране на диапазони от IP адреси по-големи от /$1.',
+	'ipbblocked' => 'Не можете да блокирате и разблокирате други потребители, защото вие самият (самата) сте блокиран(а).',
+	'ipbnounblockself' => 'Нямате право да се разблокирате сам(а).',
+	'immobile-source-namespace' => 'Не могат да се местят страници в именно пространство „$1“',
+	'immobile-target-namespace' => 'Не е възможно преместването на страници в именното пространство „$1“',
+	'immobile-target-namespace-iw' => 'Страницата не може да бъде преместена под заглавие, оформено като междууики препратка.',
+	'immobile-source-page' => 'Тази страница не може да бъде премествана.',
+	'immobile-target-page' => 'Не може да се извърши преместване върху това целево заглавие.',
+	'imagenocrossnamespace' => 'Невъзможно е да се преместват картинки извън това именно пространство',
+	'imagetypemismatch' => 'Новото разширение на файла не съвпада с типа му',
+	'imageinvalidfilename' => 'Целевото име на файл е невалидно',
+	'import' => 'Внасяне на страници',
+	'importinterwiki' => 'Внасяне чрез Трансуики',
+	'import-interwiki-text' => 'Изберете уики и име на страницата.
+Датите на редакциите и имената на авторите ще бъдат запазени.
+Всички операции при внасянето от друго уики се записват в [[Special:Log/import|дневника на внасянията]].',
+	'import-interwiki-source' => 'Изходно уики/страница:',
+	'import-interwiki-history' => 'Копиране на всички версии на страницата',
+	'import-interwiki-templates' => 'Включване на всички шаблони',
+	'import-interwiki-submit' => 'Внасяне',
+	'import-interwiki-namespace' => 'Целево именно пространство:',
+	'import-upload-filename' => 'Име на файл:',
+	'import-comment' => 'Коментар:',
+	'importtext' => 'Изнесете файла от изходното уики чрез „[[Special:Export|инструмента за изнасяне]]“. Съхранете го на твърдия диск на компютъра си и го качете тук.',
+	'importstart' => 'Внасяне на страници…',
+	'import-revision-count' => '$1 {{PLURAL:$1|версия|версии}}',
+	'importnopages' => 'Няма страници за внасяне.',
+	'imported-log-entries' => '{{PLURAL:$1|Внесен е $1 запис|Внесени са $1 записа}} в дневника.',
+	'importfailed' => 'Внасянето беше неуспешно: $1',
+	'importunknownsource' => 'Непознат тип файл',
+	'importcantopen' => 'Не е възможно да се отвори файла за внасяне',
+	'importbadinterwiki' => 'Невалидна уики препратка',
+	'importnotext' => 'Празно',
+	'importsuccess' => 'Внасянето беше успешно!',
+	'importhistoryconflict' => 'Съществува версия от историята, която си противоречи с тази (възможно е страницата да е била вече внесена)',
+	'importnosources' => 'Не са посочени източници за внасяне чрез Трансуики. Прякото качване на версионни истории не е позволено.',
+	'importnofile' => 'Файлът за внасяне не беше качен.',
+	'importuploaderrorsize' => 'Качването на файла за внасяне беше неуспешно. Файлът е по-голям от максималната допустима за качване големина.',
+	'importuploaderrorpartial' => 'Качването на файла за внасяне беше неуспешно. Файлът беше качен частично.',
+	'importuploaderrortemp' => 'Качването на файла за внасяне беше неуспешно. Временната директория липсва.',
+	'import-parse-failure' => 'Грешка в разбора при внасяне на XML',
+	'import-noarticle' => 'Няма страници, които да бъдат внесени!',
+	'import-nonewrevisions' => 'Всички версии са били внесени преди.',
+	'import-upload' => 'Качване на XML данни',
+	'import-token-mismatch' => 'Загубени са данните за сесията. Опитайте отново.',
+	'import-invalid-interwiki' => 'Не може да бъде извършено внасяне от посоченото уики.',
+	'import-error-edit' => 'Страницата „$1“ не беше внесена, тъй като нямате права да я редактирате.',
+	'import-error-create' => 'Страницата „$1“ не беше внесена, тъй като нямате права да я създадете.',
+	'import-error-interwiki' => 'Страницата „$1“ не беше внесена, тъй като името ѝ е запазено за външно свързване (междууики).',
+	'import-error-special' => 'Страницата „$1“ не беше внесена, тъй като принадлежи към специално именно пространство, което не позволява страници.',
+	'import-error-invalid' => 'Страницата „$1“ не беше внесена, тъй като името ѝ е невалидно.',
+	'importlogpage' => 'Дневник на внасянията',
+	'importlogpagetext' => 'Административни внасяния на страници с редакционна история от други уикита.',
+	'import-logentry-upload' => '[[$1]] беше внесена от файл',
+	'import-logentry-upload-detail' => '{{PLURAL:$1|една версия|$1 версии}}',
+	'import-logentry-interwiki' => '$1 беше внесена от друго уики',
+	'import-logentry-interwiki-detail' => '{{PLURAL:$1|една версия|$1 версии}} на $2 бяха внесени',
+	'imagemaxsize' => 'Ограничение на размерите на картинките:<br />\'\'(само за описателните страници)\'\'',
+	'imagelisttext' => 'Списък от {{PLURAL:$1|един файл|\'\'\'$1\'\'\' файла, сортирани $2}}.',
+	'ilsubmit' => 'Търсене',
+	'invalidateemail' => 'Отмяна на потвърждението за електронна поща',
+	'imgmultipageprev' => '← предишна страница',
+	'imgmultipagenext' => 'следваща страница →',
+	'imgmultigo' => 'Отваряне',
+	'imgmultigoto' => 'Отиване на страница $1',
+	'intentionallyblankpage' => 'Тази страница умишлено е оставена празна',
+	'irc' => 'Помощ в IRC',
+];
+
+$messages['bh'] = [
 	'index-category' => 'Индексирани страници',
 	'internalerror' => 'Вътрешна грешка',
 	'internalerror_info' => 'Вътрешна грешка: $1',
@@ -3017,8 +3167,8 @@ $messages['bg'] = array(
 	'import-logentry-upload-detail' => '{{PLURAL:$1|една версия|$1 версии}}',
 	'import-logentry-interwiki' => '$1 беше внесена от друго уики',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|една версия|$1 версии}} на $2 бяха внесени',
-	'imagemaxsize' => "Ограничение на размерите на картинките:<br />''(само за описателните страници)''",
-	'imagelisttext' => "Списък от {{PLURAL:$1|един файл|'''$1''' файла, сортирани $2}}.",
+	'imagemaxsize' => 'Ограничение на размерите на картинките:<br />\'\'(само за описателните страници)\'\'',
+	'imagelisttext' => 'Списък от {{PLURAL:$1|един файл|\'\'\'$1\'\'\' файла, сортирани $2}}.',
 	'ilsubmit' => 'Търсене',
 	'invalidateemail' => 'Отмяна на потвърждението за електронна поща',
 	'imgmultipageprev' => '← предишна страница',
@@ -3026,164 +3176,9 @@ $messages['bg'] = array(
 	'imgmultigo' => 'Отваряне',
 	'imgmultigoto' => 'Отиване на страница $1',
 	'intentionallyblankpage' => 'Тази страница умишлено е оставена празна',
-);
+];
 
-$messages['bh'] = array(
-	'index-category' => 'Индексирани страници',
-	'internalerror' => 'Вътрешна грешка',
-	'internalerror_info' => 'Вътрешна грешка: $1',
-	'invalidemailaddress' => 'Въведеният адрес не може да бъде приет, тъй като не съответства на формата на адрес за електронна поща. Въведете коректен адрес или оставете полето празно.',
-	'italic_sample' => 'Курсивен текст',
-	'italic_tip' => 'Курсивен (наклонен) текст',
-	'image_sample' => 'Пример.jpg',
-	'image_tip' => 'Вмъкване на картинка',
-	'ignorewarning' => 'Съхраняване на файла въпреки предупреждението.',
-	'ignorewarnings' => 'Пренебрегване на всякакви предупреждения',
-	'illegalfilename' => 'Името на файла „$1“ съдържа знаци, които не са позволени в заглавия на страници. Преименувайте файла и се опитайте да го качите отново.',
-	'illegal-filename' => 'Непозволено файлово име.',
-	'img-auth-accessdenied' => 'Достъпът е отказан',
-	'img-auth-nopathinfo' => 'Липсва PATH_INFO.
-Вашият сървър не е конфигуриран да предава тази информация.
-Той може да е базиран на CGI и да не може да поддържа img_auth.
-Вижте https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
-	'img-auth-notindir' => 'Търсеният път не е в настроената директория за качвания.',
-	'img-auth-badtitle' => 'Грешка при изграждането на валидно заглавие от "$1".',
-	'img-auth-nologinnWL' => 'Не сте влезли в системата и „$1“ не е в белия списък.',
-	'img-auth-nofile' => 'Файлът „$1“ не съществува.',
-	'img-auth-isdir' => 'Опитвате се да осъществите достъп до директорията „$1“.
-Разрешен е само достъп до файловете.',
-	'img-auth-streaming' => 'Излъчване "$1"',
-	'img-auth-public' => 'Функцията img_auth.php е да извлича файлове от частни уикита.
-Това уики е конфигурирано като публично.
-С цел оптимална сигурност, функцията img_auth.php е деактивирана.',
-	'img-auth-noread' => 'Потребителят няма достъп за четене на „$1“.',
-	'imgfile' => 'файл',
-	'imagelinks' => 'Използване на файла',
-	'iteminvalidname' => 'Проблем с „$1“, грешно име…',
-	'invert' => 'Обръщане на избора',
-	'isredirect' => 'пренасочваща страница',
-	'istemplate' => 'включване',
-	'isimage' => 'препратка към файла',
-	'ipadressorusername' => 'IP-адрес или потребител:',
-	'ipbexpiry' => 'Срок:',
-	'ipbreason' => 'Причина:',
-	'ipbreasonotherlist' => 'Друга причина',
-	'ipbreason-dropdown' => '* Общи причини за блокиране
-** Въвеждане на невярна информация
-** Премахване на съдържание от страниците
-** Добавяне на спам/нежелани външни препратки
-** Въвеждане на безсмислици в страниците
-** Заплашително поведение/тормоз
-** Злупотреба с няколко потребителски сметки
-** Неприемливо потребителско име',
-	'ipb-hardblock' => 'Спиране на възможността влезли потребители да редактират от този IP адрес',
-	'ipbcreateaccount' => 'Забрана за създаване на потребителски сметки',
-	'ipbemailban' => 'Забрана на потребителя да праща е-поща',
-	'ipbenableautoblock' => 'Автоматично блокиране на последния IP-адрес, използван от потребителя, както и на всички останали адреси, от които се опита да редактира',
-	'ipbsubmit' => 'Блокиране на потребителя',
-	'ipbother' => 'Друг срок:',
-	'ipboptions' => 'два часа:2 hours,един ден:1 day,три дни:3 days,една седмица:1 week,две седмици:2 weeks,един месец:1 month,три месеца:3 months,шест месеца:6 months,една година:1 year,безсрочно:infinite',
-	'ipbotheroption' => 'друг',
-	'ipbotherreason' => 'Друга/допълнителна причина:',
-	'ipbhidename' => 'Скриване на потребителското име/IP-адреса от редакциите и дневниците',
-	'ipbwatchuser' => 'Наблюдаване на потребителската страница и беседата на този потребител',
-	'ipb-disableusertalk' => 'Спиране на възможността този потребител да редактира беседата си докато е блокиран',
-	'ipb-change-block' => 'Повторно блокиране на потребителя с тези настройки',
-	'ipb-confirm' => 'Потвърждаване на блокирането',
-	'ipb-blockingself' => 'На път сте да блокирате себе си! Наистина ли желаете да извършите това действие?',
-	'ipb-confirmhideuser' => 'На път сте да блокирате потребител, който е "скрит потребител". Това действие ще заличи потребителското име от всички списъци и дневници. Наистина ли желаете да направите това?',
-	'ipb-edit-dropdown' => 'Причини за блокиране',
-	'ipb-unblock-addr' => 'Отблокиране на $1',
-	'ipb-unblock' => 'Отблокиране на потребителско име IP-адрес',
-	'ipb-blocklist' => 'Преглед на текущите блокирания',
-	'ipb-blocklist-contribs' => 'Приноси на $1',
-	'ipusubmit' => 'Сваляне на блокирането',
-	'ipblocklist' => 'Блокирани потребители',
-	'ipblocklist-legend' => 'Откриване на блокиран потребител',
-	'ipblocklist-submit' => 'Търсене',
-	'ipblocklist-localblock' => 'Локално блокиране',
-	'ipblocklist-otherblocks' => '{{PLURAL:$1|Друго блокиране|Други блокирания}}',
-	'infiniteblock' => 'неограничено',
-	'ipblocklist-empty' => 'Списъкът на блокиранията е празен.',
-	'ipblocklist-no-results' => 'Указаният IP-адрес или потребител не е блокиран.',
-	'ipb_expiry_invalid' => 'Невалиден срок на изтичане.',
-	'ipb_expiry_temp' => 'Скритите потребителски имена трябва да се блокират безсрочно.',
-	'ipb_hide_invalid' => 'Тази потребителска сметка не може да бъде прикрита; може би с нея да са правени твърде много редакции.',
-	'ipb_already_blocked' => '„$1“ е вече блокиран',
-	'ipb-needreblock' => '$1 е вече блокиран. Желаете ли да промените настройките?',
-	'ipb-otherblocks-header' => '{{PLURAL:$1|Друго блокиране|Други блокирания}}',
-	'ipb_cant_unblock' => 'Грешка: Не е намерен блок с номер $1. Вероятно потребителят е вече отблокиран.',
-	'ipb_blocked_as_range' => 'Грешка: IP-адресът $1 не може да бъде разблокиран, тъй като е част от блокирания регистър $2. Можете да разблокирате адреса, като разблокирате целия регистър.',
-	'ip_range_invalid' => 'Невалиден интервал за IP-адреси.',
-	'ip_range_toolarge' => 'Забранено е блокиране на диапазони от IP адреси по-големи от /$1.',
-	'ipbblocked' => 'Не можете да блокирате и разблокирате други потребители, защото вие самият (самата) сте блокиран(а).',
-	'ipbnounblockself' => 'Нямате право да се разблокирате сам(а).',
-	'immobile-source-namespace' => 'Не могат да се местят страници в именно пространство „$1“',
-	'immobile-target-namespace' => 'Не е възможно преместването на страници в именното пространство „$1“',
-	'immobile-target-namespace-iw' => 'Страницата не може да бъде преместена под заглавие, оформено като междууики препратка.',
-	'immobile-source-page' => 'Тази страница не може да бъде премествана.',
-	'immobile-target-page' => 'Не може да се извърши преместване върху това целево заглавие.',
-	'imagenocrossnamespace' => 'Невъзможно е да се преместват картинки извън това именно пространство',
-	'imagetypemismatch' => 'Новото разширение на файла не съвпада с типа му',
-	'imageinvalidfilename' => 'Целевото име на файл е невалидно',
-	'import' => 'Внасяне на страници',
-	'importinterwiki' => 'Внасяне чрез Трансуики',
-	'import-interwiki-text' => 'Изберете уики и име на страницата.
-Датите на редакциите и имената на авторите ще бъдат запазени.
-Всички операции при внасянето от друго уики се записват в [[Special:Log/import|дневника на внасянията]].',
-	'import-interwiki-source' => 'Изходно уики/страница:',
-	'import-interwiki-history' => 'Копиране на всички версии на страницата',
-	'import-interwiki-templates' => 'Включване на всички шаблони',
-	'import-interwiki-submit' => 'Внасяне',
-	'import-interwiki-namespace' => 'Целево именно пространство:',
-	'import-upload-filename' => 'Име на файл:',
-	'import-comment' => 'Коментар:',
-	'importtext' => 'Изнесете файла от изходното уики чрез „[[Special:Export|инструмента за изнасяне]]“. Съхранете го на твърдия диск на компютъра си и го качете тук.',
-	'importstart' => 'Внасяне на страници…',
-	'import-revision-count' => '$1 {{PLURAL:$1|версия|версии}}',
-	'importnopages' => 'Няма страници за внасяне.',
-	'imported-log-entries' => '{{PLURAL:$1|Внесен е $1 запис|Внесени са $1 записа}} в дневника.',
-	'importfailed' => 'Внасянето беше неуспешно: $1',
-	'importunknownsource' => 'Непознат тип файл',
-	'importcantopen' => 'Не е възможно да се отвори файла за внасяне',
-	'importbadinterwiki' => 'Невалидна уики препратка',
-	'importnotext' => 'Празно',
-	'importsuccess' => 'Внасянето беше успешно!',
-	'importhistoryconflict' => 'Съществува версия от историята, която си противоречи с тази (възможно е страницата да е била вече внесена)',
-	'importnosources' => 'Не са посочени източници за внасяне чрез Трансуики. Прякото качване на версионни истории не е позволено.',
-	'importnofile' => 'Файлът за внасяне не беше качен.',
-	'importuploaderrorsize' => 'Качването на файла за внасяне беше неуспешно. Файлът е по-голям от максималната допустима за качване големина.',
-	'importuploaderrorpartial' => 'Качването на файла за внасяне беше неуспешно. Файлът беше качен частично.',
-	'importuploaderrortemp' => 'Качването на файла за внасяне беше неуспешно. Временната директория липсва.',
-	'import-parse-failure' => 'Грешка в разбора при внасяне на XML',
-	'import-noarticle' => 'Няма страници, които да бъдат внесени!',
-	'import-nonewrevisions' => 'Всички версии са били внесени преди.',
-	'import-upload' => 'Качване на XML данни',
-	'import-token-mismatch' => 'Загубени са данните за сесията. Опитайте отново.',
-	'import-invalid-interwiki' => 'Не може да бъде извършено внасяне от посоченото уики.',
-	'import-error-edit' => 'Страницата „$1“ не беше внесена, тъй като нямате права да я редактирате.',
-	'import-error-create' => 'Страницата „$1“ не беше внесена, тъй като нямате права да я създадете.',
-	'import-error-interwiki' => 'Страницата „$1“ не беше внесена, тъй като името ѝ е запазено за външно свързване (междууики).',
-	'import-error-special' => 'Страницата „$1“ не беше внесена, тъй като принадлежи към специално именно пространство, което не позволява страници.',
-	'import-error-invalid' => 'Страницата „$1“ не беше внесена, тъй като името ѝ е невалидно.',
-	'importlogpage' => 'Дневник на внасянията',
-	'importlogpagetext' => 'Административни внасяния на страници с редакционна история от други уикита.',
-	'import-logentry-upload' => '[[$1]] беше внесена от файл',
-	'import-logentry-upload-detail' => '{{PLURAL:$1|една версия|$1 версии}}',
-	'import-logentry-interwiki' => '$1 беше внесена от друго уики',
-	'import-logentry-interwiki-detail' => '{{PLURAL:$1|една версия|$1 версии}} на $2 бяха внесени',
-	'imagemaxsize' => "Ограничение на размерите на картинките:<br />''(само за описателните страници)''",
-	'imagelisttext' => "Списък от {{PLURAL:$1|един файл|'''$1''' файла, сортирани $2}}.",
-	'ilsubmit' => 'Търсене',
-	'invalidateemail' => 'Отмяна на потвърждението за електронна поща',
-	'imgmultipageprev' => '← предишна страница',
-	'imgmultipagenext' => 'следваща страница →',
-	'imgmultigo' => 'Отваряне',
-	'imgmultigoto' => 'Отиване на страница $1',
-	'intentionallyblankpage' => 'Тази страница умишлено е оставена празна',
-);
-
-$messages['bho'] = array(
+$messages['bho'] = [
 	'italic_sample' => 'इटालिक पाठ्य',
 	'italic_tip' => 'इटालिक पाठ्य',
 	'image_sample' => 'उदाहरण.jpg',
@@ -3191,9 +3186,9 @@ $messages['bho'] = array(
 	'invert' => 'चयनित पलटीं',
 	'isredirect' => 'पुन: निर्दिष्ट पन्ना',
 	'isimage' => 'तस्वीर लिंक',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'index-category' => 'Tungkaran tasusun bapadalakan kata',
 	'internalerror' => 'Kasalahan di dalam',
 	'internalerror_info' => 'Kasalahan di dalam: $1',
@@ -3201,7 +3196,7 @@ $messages['bjn'] = array(
 Muhun buati sabuah alamat suril nang bujur pormatnya atawa kusungakan haja isian itu.',
 	'italic_sample' => 'Naskah hiring',
 	'italic_tip' => 'Naskah hiring',
-	'image_tip' => "Maktub'akan barakas",
+	'image_tip' => 'Maktub\'akan barakas',
 	'ignorewarning' => 'Kada mahuwal paringatan wan simpan haja barakas langsung.',
 	'ignorewarnings' => 'Kada mahuwal apapun paringatan',
 	'illegalfilename' => 'Ngaran barakas "$1" mangandung karaktir nang kada dibulihakan dalam tungkaran jujudul.
@@ -3213,7 +3208,7 @@ Muhan ganti ngaran barakas wan cubai mahunggah pulang.',
 Server Pian kada disetel hagan malimpatakan panjalasan ngini.
 Ngini karana CGI-based wan kada manyukung img_auth.
 Janaki https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
-	'img-auth-notindir' => "Jalur nang diminta kada ta'atur lawan direktori hunggahan.",
+	'img-auth-notindir' => 'Jalur nang diminta kada ta\'atur lawan direktori hunggahan.',
 	'img-auth-badtitle' => 'Kada kawa mambangun sabuah judul sah matan "$1".',
 	'img-auth-nologinnWL' => 'Pian kada kawa babuat log wan \'$1" kadada dalam daptar putih.',
 	'img-auth-nofile' => 'Barakas "$1" kadada.',
@@ -3227,7 +3222,7 @@ Gasan kaamanan baik, img_auth.php dipajahakan.',
 	'img-auth-bad-query-string' => 'URL baisi sabuah string kueri kada sah.',
 	'imgfile' => 'barakas',
 	'imagelinks' => 'Tautan barakas',
-	'iteminvalidname' => "Masalah awan barang '$1', bangaran kada sah...",
+	'iteminvalidname' => 'Masalah awan barang \'$1\', bangaran kada sah...',
 	'invert' => 'Bulikakan pilihan',
 	'isredirect' => 'tungkaran paugahan',
 	'istemplate' => 'transklusi',
@@ -3343,22 +3338,22 @@ Muhun cubai pulang.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ralatan|raralatan}}',
 	'import-logentry-interwiki' => 'ditranswiki $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ralatan|raralatan}} matan $2',
-	'imagemaxsize' => "Watas takaran gambar: <br />''(gasan barakas tutungkaran diskripsi)''",
-	'imagelisttext' => "Di bawah ngini adalah daptar '''$1''' {{PLURAL:$1|barakas|babarakas}} diurutakan $2.",
+	'imagemaxsize' => 'Watas takaran gambar: <br />\'\'(gasan barakas tutungkaran diskripsi)\'\'',
+	'imagelisttext' => 'Di bawah ngini adalah daptar \'\'\'$1\'\'\' {{PLURAL:$1|barakas|babarakas}} diurutakan $2.',
 	'ilsubmit' => 'Gagai',
 	'invalidateemail' => 'Walangi suril payakinan',
 	'imgmultipageprev' => '← tungkaran sabalumnya',
 	'imgmultipagenext' => 'tungkaran barikutnya →',
 	'imgmultigo' => 'Tulak!',
 	'imgmultigoto' => 'Tulak ka tungkaran $1',
-	'intentionallyblankpage' => "Tungkaran ini kurinah dibiarakan puang wan diguna'akan di antaranya gasan paukuran kinerja, wan lain-lain.",
-);
+	'intentionallyblankpage' => 'Tungkaran ini kurinah dibiarakan puang wan diguna\'akan di antaranya gasan paukuran kinerja, wan lain-lain.',
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'ilsubmit' => 'Nyini',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'index-category' => 'নির্ঘণ্ট পাতা',
 	'internalerror' => 'আভ্যন্তরীণ ত্রুটি',
 	'internalerror_info' => 'আভ্যন্তরীণ ত্রুটি: $1',
@@ -3377,7 +3372,7 @@ $messages['bn'] = array(
 	'img-auth-noread' => 'ব্যবহারকারীর "$1" পড়ার প্রবেশাধিকার নাই।',
 	'imgfile' => 'ফাইল',
 	'imagelinks' => 'ফাইলের ব্যবহার',
-	'iteminvalidname' => "'$1'নং আইটেমে সমস্যা, অবৈধ নাম...",
+	'iteminvalidname' => '\'$1\'নং আইটেমে সমস্যা, অবৈধ নাম...',
 	'invert' => 'ব্যুত্ক্রমে নির্বাচন',
 	'isredirect' => 'পুনর্নির্দেশ',
 	'istemplate' => 'অন্তর্ভুক্তি',
@@ -3469,7 +3464,7 @@ $messages['bn'] = array(
 	'import-logentry-interwiki' => '$1 উইকি-স্থানান্তরিত',
 	'import-logentry-interwiki-detail' => '$2-এর করা $1 {{PLURAL:$1|সংশোধন|টি সংশোধন}}',
 	'imagemaxsize' => 'ছবির বিবরণ পাতায় প্রদর্শিত ছবির আকারের সর্বোচ্চ সীমা:',
-	'imagelisttext' => "নিচে '''$1''' {{PLURAL:$1|ফাইলের|ফাইলের}} একটি তালিকা যা $2 এ সংরক্ষিত রয়েছে।",
+	'imagelisttext' => 'নিচে \'\'\'$1\'\'\' {{PLURAL:$1|ফাইলের|ফাইলের}} একটি তালিকা যা $2 এ সংরক্ষিত রয়েছে।',
 	'ilsubmit' => 'অনুসন্ধান',
 	'invalidateemail' => 'ইমেইল নিশ্চিতকরণ বাতিল করুন',
 	'imgmultipageprev' => '← পূর্ববর্তী পাতা',
@@ -3477,9 +3472,9 @@ $messages['bn'] = array(
 	'imgmultigo' => 'চলো!',
 	'imgmultigoto' => '$1 পাতায় চলো',
 	'intentionallyblankpage' => 'এই পাতাটি ইচ্ছা করে খালি রাখা হয়েছে',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'internalerror' => 'ནང་ལོག་ནོར་སྐྱོན།',
 	'internalerror_info' => 'ནང་ལོགས་ནོར་སྐྱོན། $1',
 	'italic_sample' => 'ཡིག་གཟུགས་གསེག་མ།',
@@ -3495,9 +3490,9 @@ $messages['bo'] = array(
 	'ipblocklist-submit' => 'འཚོལ།',
 	'ilsubmit' => 'འཚོལ།',
 	'imgmultigo' => 'སོང་།!',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'index-category' => 'ইনডেক্স করিসি পাতাহানি',
 	'internalerror' => 'বিতরর লাল',
 	'internalerror_info' => 'ভিতরর লাল: $1',
@@ -3549,9 +3544,9 @@ $messages['bpy'] = array(
 	'imgmultipagenext' => 'থাঙনার পাতাহান →',
 	'imgmultigo' => 'হাত!',
 	'imgmultigoto' => '$1 পাতাহাত যাগা',
-);
+];
 
-$messages['bqi'] = array(
+$messages['bqi'] = [
 	'italic_sample' => 'متن شکسته',
 	'italic_tip' => 'متن شکسته',
 	'image_tip' => 'فایل محاط وابید',
@@ -3562,107 +3557,107 @@ $messages['bqi'] = array(
 	'ipboptions' => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌نهایت:infinite',
 	'ipblocklist' => 'آدرسهای  آی پی وکاربران بسته وابیدند',
 	'importlogpage' => 'داخل نمایه کردن',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'index-category' => 'Pajennoù menegeret',
 	'internalerror' => 'Fazi diabarzh',
 	'internalerror_info' => 'Fazi diabarzh : $1',
-	'invalidemailaddress' => "N'haller ket degemer ar chomlec'h postel-mañ rak faziek eo e furmad evit doare.
-Merkit ur chomlec'h reizh pe goullonderit ar vaezienn-mañ.",
+	'invalidemailaddress' => 'N\'haller ket degemer ar chomlec\'h postel-mañ rak faziek eo e furmad evit doare.
+Merkit ur chomlec\'h reizh pe goullonderit ar vaezienn-mañ.',
 	'italic_sample' => 'Testenn italek',
 	'italic_tip' => 'Testenn italek',
 	'image_sample' => 'Skouer.jpg',
 	'image_tip' => 'Skeudenn enframmet',
 	'ignorewarning' => 'Na ober van ouzh an evezhiadenn hag enrollañ ar restr forzh penaos',
-	'ignorewarnings' => "Na ober van ouzh ar c'hemennoù diwall",
-	'illegalfilename' => "Lakaet ez eus bet er restr « $1 » arouezennoù n'int ket aotreet evit titl ur bajenn. Mar plij, adanvit ar restr hag adkasit anezhi.",
-	'illegal-filename' => "N'eo ket aotreet anv ar restr.",
+	'ignorewarnings' => 'Na ober van ouzh ar c\'hemennoù diwall',
+	'illegalfilename' => 'Lakaet ez eus bet er restr « $1 » arouezennoù n\'int ket aotreet evit titl ur bajenn. Mar plij, adanvit ar restr hag adkasit anezhi.',
+	'illegal-filename' => 'N\'eo ket aotreet anv ar restr.',
 	'invalid-chunk-offset' => 'Direizh eo offset ar rannad',
-	'img-auth-accessdenied' => "Moned nac'het",
-	'img-auth-nopathinfo' => "Mankout a ra ar PATH_INFO.
-N'eo ket kefluniet ho servijer evit reiñ an titour-mañ.
-Marteze eo diazezet war CGI ha n'hall ket skorañ img_auth.
-Gwelet https://www.mediawiki.org/wiki/Manual:Image_Authorization",
-	'img-auth-notindir' => "N'emañ ket an hent merket er c'havlec'h enporzhiañ kefluniet.",
+	'img-auth-accessdenied' => 'Moned nac\'het',
+	'img-auth-nopathinfo' => 'Mankout a ra ar PATH_INFO.
+N\'eo ket kefluniet ho servijer evit reiñ an titour-mañ.
+Marteze eo diazezet war CGI ha n\'hall ket skorañ img_auth.
+Gwelet https://www.mediawiki.org/wiki/Manual:Image_Authorization',
+	'img-auth-notindir' => 'N\'emañ ket an hent merket er c\'havlec\'h enporzhiañ kefluniet.',
 	'img-auth-badtitle' => 'Dibosupl krouiñ un titl reizh adalek "$1".',
 	'img-auth-nologinnWL' => 'N\'oc\'h ket kevreet ha n\'emañ ket "$1" war ar roll gwenn',
 	'img-auth-nofile' => 'n\'eus ket eus ar restr "$1".',
-	'img-auth-isdir' => "Klakset hoc'h eus monet d'ar c'havlec'h \"\$1\".
-N'haller monet nemet d'ar restroù.",
+	'img-auth-isdir' => 'Klakset hoc\'h eus monet d\'ar c\'havlec\'h "$1".
+N\'haller monet nemet d\'ar restroù.',
 	'img-auth-streaming' => 'O lenn en ur dremen "$1"',
-	'img-auth-public' => "Talvezout a ra an arc'hwel img_auth.php da ezvont restroù adalek ur wiki prevez.
+	'img-auth-public' => 'Talvezout a ra an arc\'hwel img_auth.php da ezvont restroù adalek ur wiki prevez.
 Kefluniet eo bet ar wiki-mañ evel ur wiki foran.
-Diweredekaet eo bet img_auth.php evit ur surentez eus ar gwellañ",
+Diweredekaet eo bet img_auth.php evit ur surentez eus ar gwellañ',
 	'img-auth-noread' => 'N\'eo ket aotreet an implijer da lenn "$1"',
 	'img-auth-bad-query-string' => 'Un neudennad goulenn direizh zo gant an URL.',
 	'imgfile' => 'restr',
 	'imagelinks' => 'Implij ar restr',
-	'iteminvalidname' => "Ur gudenn zo gant ar pennad « $1 » : n'eo ket mat e anv...",
+	'iteminvalidname' => 'Ur gudenn zo gant ar pennad « $1 » : n\'eo ket mat e anv...',
 	'invert' => 'Eilpennañ an dibab',
 	'isredirect' => 'pajenn adkas',
 	'istemplate' => 'enframmet',
 	'isimage' => 'Liamm war-zu ar restr',
-	'ipadressorusername' => "Chomlec'h IP pe anv implijer",
+	'ipadressorusername' => 'Chomlec\'h IP pe anv implijer',
 	'ipbexpiry' => 'Pad ar stankadenn',
 	'ipbreason' => 'Abeg :',
 	'ipbreasonotherlist' => 'Abeg all',
-	'ipbreason-dropdown' => "*Abegoù stankañ boutinañ
+	'ipbreason-dropdown' => '*Abegoù stankañ boutinañ
 ** Degas titouroù faos
 ** Tennañ danvez eus ar pajennoù
-** Degas liammoù Strobus war-du lec'hiennoù diavaez
+** Degas liammoù Strobus war-du lec\'hiennoù diavaez
 ** Degas danvez diboell/dizoare er pajennoù
-** Emzalc'h hegazus/handeus betek re
+** Emzalc\'h hegazus/handeus betek re
 ** Mont re bell gant implij meur a gont
-** Anv implijer n'eo ket aotreet",
-	'ipb-hardblock' => "Mirout a ra ouzh an implijerien kevreet da zegas kemmoù adalek ar c'homlec'h IP-mañ",
+** Anv implijer n\'eo ket aotreet',
+	'ipb-hardblock' => 'Mirout a ra ouzh an implijerien kevreet da zegas kemmoù adalek ar c\'homlec\'h IP-mañ',
 	'ipbcreateaccount' => 'Mirout ouzh an implijer da grouiñ kontoù',
 	'ipbemailban' => 'Mirout ouzh an implijer da gas posteloù',
-	'ipbenableautoblock' => "Stankañ war-eeun ar chomlec'h IP diwezhañ implijet gant an den-mañ hag an holl chomlec'hioù a c'hallfe klask kemmañ traoù drezo drezo diwezhatoc'h",
+	'ipbenableautoblock' => 'Stankañ war-eeun ar chomlec\'h IP diwezhañ implijet gant an den-mañ hag an holl chomlec\'hioù a c\'hallfe klask kemmañ traoù drezo drezo diwezhatoc\'h',
 	'ipbsubmit' => 'Stankañ an implijer-mañ',
 	'ipbother' => 'Prantad all',
 	'ipboptions' => '2 eurvezh:2 hours,1 devezh:1 day,3 devezh:3 days,1 sizhunvezh:1 week,2 sizhunvezh:2 weeks,1 mizvezh:1 month,3 mizvezh:3 months,6 mizvezh:6 months,1 bloaz:1 year,da viken:infinite',
 	'ipbotheroption' => 'prantad all',
 	'ipbotherreason' => 'Abeg all/ouzhpenn',
-	'ipbhidename' => "Kuzhat anv an implijer er rolloù hag er c'hemmoù",
+	'ipbhidename' => 'Kuzhat anv an implijer er rolloù hag er c\'hemmoù',
 	'ipbwatchuser' => 'Evezhiañ pajennoù implijer ha kaozeal an implijer-mañ',
 	'ipb-disableusertalk' => 'Mirout ouzh an implijer-mañ da implijout e bajenn gaozeal dezhañ e-unan e-keit hag emañ stanket',
 	'ipb-change-block' => 'Adstankañ an implijer-mañ gant an hevelep arventennoù',
 	'ipb-confirm' => 'Kadarnaat ar stankadenn',
-	'ipb-blockingself' => "Emaoc'h war-nes stankañ ac'hanoc'h hoc'h-unan ! Ha sur oc'h eo se a fell deoc'h ober ?",
+	'ipb-blockingself' => 'Emaoc\'h war-nes stankañ ac\'hanoc\'h hoc\'h-unan ! Ha sur oc\'h eo se a fell deoc\'h ober ?',
 	'ipb-confirmhideuser' => 'Emaoc\'h war-nes stankañ un implijer ha gweredekaet hoc\'h eus "kuzhat an implijer". Diverkañ a ra an dra-se anv an implijer en holl rolloù ha monedoù ar marilh.',
 	'ipb-edit-dropdown' => 'Kemmañ an abegoù stankañ',
 	'ipb-unblock-addr' => 'Distankañ $1',
-	'ipb-unblock' => "Distankañ un implijer pe ur chomlec'h IP",
+	'ipb-unblock' => 'Distankañ un implijer pe ur chomlec\'h IP',
 	'ipb-blocklist' => 'Teuler ur sell ouzh roll an dud stanket evit poent',
 	'ipb-blocklist-contribs' => 'Degasadennoù evit $1',
 	'ipusubmit' => 'Paouez gant ar stankadenn-mañ',
 	'ipblocklist' => 'Implijerien stanket',
 	'ipblocklist-legend' => 'Kavout un implijer stanket',
 	'ipblocklist-submit' => 'Klask',
-	'ipblocklist-localblock' => "Stankadenn lec'hel",
+	'ipblocklist-localblock' => 'Stankadenn lec\'hel',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Stankadenn|Stankadennoù}} all',
 	'infiniteblock' => 'da viken',
 	'ipblocklist-empty' => 'Goullo eo roll ar stankadennoù.',
-	'ipblocklist-no-results' => "An anv implijer pe ar chomlec'h IP goulennet n'eo ket stanket anezhañ.",
+	'ipblocklist-no-results' => 'An anv implijer pe ar chomlec\'h IP goulennet n\'eo ket stanket anezhañ.',
 	'ipb_expiry_invalid' => 'amzer termen direizh.',
-	'ipb_expiry_temp' => "Peurbadus e rank bezañ bloc'hadoù an implijerien guzh.",
+	'ipb_expiry_temp' => 'Peurbadus e rank bezañ bloc\'hadoù an implijerien guzh.',
 	'ipb_hide_invalid' => 'Dibosupl diverkañ ar gont-mañ; evit doare ez eus bet graet re a gemmoù enni.',
 	'ipb_already_blocked' => 'Stanket eo "$1" dija',
-	'ipb-needreblock' => "Stanket eo $1 c'hoazh. Kemmañ an arventennoù a fell deoc'h ?",
+	'ipb-needreblock' => 'Stanket eo $1 c\'hoazh. Kemmañ an arventennoù a fell deoc\'h ?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Stankadenn|Stankadnenoù}} all',
-	'ipb_cant_unblock' => "Fazi: N'eo ket stanket an ID $1. Moarvat eo bet distanket c'hoazh.",
-	'ipb_blocked_as_range' => "Fazi : N'eo ket bet stanket ar chomlec'h IP $1 war-eeun, setu n'hall ket bezañ distanket. Stanket eo bet dre al live $2 avat, hag a c'hall bezañ distanket.",
+	'ipb_cant_unblock' => 'Fazi: N\'eo ket stanket an ID $1. Moarvat eo bet distanket c\'hoazh.',
+	'ipb_blocked_as_range' => 'Fazi : N\'eo ket bet stanket ar chomlec\'h IP $1 war-eeun, setu n\'hall ket bezañ distanket. Stanket eo bet dre al live $2 avat, hag a c\'hall bezañ distanket.',
 	'ip_range_invalid' => 'Stankañ IP direizh.',
-	'ip_range_toolarge' => "N'eo ket aotreet stankañ pajennoù brasoc'h evit /$1.",
-	'ipbblocked' => "Ne c'hellit ket stankañ pe distankañ implijerien all, dre ma 'z oc'h stanket",
-	'ipbnounblockself' => "N'oc'h ket aotreet d'en em zistankañ ho unan",
+	'ip_range_toolarge' => 'N\'eo ket aotreet stankañ pajennoù brasoc\'h evit /$1.',
+	'ipbblocked' => 'Ne c\'hellit ket stankañ pe distankañ implijerien all, dre ma \'z oc\'h stanket',
+	'ipbnounblockself' => 'N\'oc\'h ket aotreet d\'en em zistankañ ho unan',
 	'immobile-source-namespace' => 'n\'haller kas ar pajennoù war-du an esaouenn anv "$1"',
 	'immobile-target-namespace' => 'N\'hallit ket adenvel pajennoù war-du an esaouenn anv "$1"',
-	'immobile-target-namespace-iw' => "N'eo ket ur pal mat al liammoù Interwiki evit adenvel pajennoù.",
-	'immobile-source-page' => "N'haller ket adenvel ar bajenn-mañ.",
-	'immobile-target-page' => "N'haller ket kas ar bajenn-mañ war-du an titl-se.",
-	'imagenocrossnamespace' => "N'haller ket dilec'hiañ ur skeudenn war-du un esaouenn anv n'eo ket hini ur skeudenn.",
+	'immobile-target-namespace-iw' => 'N\'eo ket ur pal mat al liammoù Interwiki evit adenvel pajennoù.',
+	'immobile-source-page' => 'N\'haller ket adenvel ar bajenn-mañ.',
+	'immobile-target-page' => 'N\'haller ket kas ar bajenn-mañ war-du an titl-se.',
+	'imagenocrossnamespace' => 'N\'haller ket dilec\'hiañ ur skeudenn war-du un esaouenn anv n\'eo ket hini ur skeudenn.',
 	'imagetypemismatch' => 'Ne glot ket astenn nevez ar restr gant ar furmad-mañ.',
 	'imageinvalidfilename' => 'Fall eo anv ar restr tal',
 	'import' => 'Enporzhiañ pajennoù',
@@ -3677,29 +3672,29 @@ Miret eo an holl enporzhiadennoù etrewiki e-barzh [[Special:Log/import|log an e
 	'import-interwiki-namespace' => 'Esaouenn anv ar pal :',
 	'import-upload-filename' => 'Anv ar restr :',
 	'import-comment' => 'Notenn :',
-	'importtext' => "Ezporzhiit ar restr adal ar wiki orin en ur ober gant an arc'hwel [[Special:Export|ezporzhiañ]].
-Enrollit ar bajenn war hoc'h urzhiataer ha kargit anezhi amañ.",
-	'importstart' => "Oc'h enporzhiañ pajennoù...",
+	'importtext' => 'Ezporzhiit ar restr adal ar wiki orin en ur ober gant an arc\'hwel [[Special:Export|ezporzhiañ]].
+Enrollit ar bajenn war hoc\'h urzhiataer ha kargit anezhi amañ.',
+	'importstart' => 'Oc\'h enporzhiañ pajennoù...',
 	'import-revision-count' => '$1 {{PLURAL:$1|stumm|stumm}}',
 	'importnopages' => 'Pajenn ebet da enporzhiañ.',
 	'imported-log-entries' => '$1 moned{{PLURAL:$1||}} eus ar marilh enporzhiet{{PLURAL:$1||}}.',
-	'importfailed' => "C'hwitet eo an enporzhiadenn: $1",
+	'importfailed' => 'C\'hwitet eo an enporzhiadenn: $1',
 	'importunknownsource' => 'Dianav eo seurt ar vammenn enporzhiañ',
-	'importcantopen' => "N'eus ket bet gallet digeriñ ar restr enporzhiet",
+	'importcantopen' => 'N\'eus ket bet gallet digeriñ ar restr enporzhiet',
 	'importbadinterwiki' => 'Liamm etrewiki fall',
 	'importnotext' => 'Goullo pe hep tamm testenn ebet',
 	'importsuccess' => 'Deuet eo an enporzhiadenn da benn vat!',
-	'importhistoryconflict' => "Divankadennoù zo er pennad istor ha tabut zo gant se (marteze eo bet enporzhiet ar bajenn araozoc'h)",
-	'importnosources' => "N'eus bet spisaet tamm mammenn etrewiki ebet ha diweredekaet eo enporzhiañ an Istor war-eeun.",
-	'importnofile' => "N'eus bet enporzhiet restr ebet.",
-	'importuploaderrorsize' => "C'hwitet eo bet enporzhiañ ar restr. Brasoc'h eo ar restr eget ar vent aotreet.",
-	'importuploaderrorpartial' => "C'hwitet eo vet enporzhiañ ar restr. Enporzhiet evit darn eo bet hepken.",
-	'importuploaderrortemp' => "C'hwitet eo bet enporzhiañ ar restr. Mankout a ra ur restr badennek.",
-	'import-parse-failure' => "Troc'h e dielfennadenn an enporzh XML",
+	'importhistoryconflict' => 'Divankadennoù zo er pennad istor ha tabut zo gant se (marteze eo bet enporzhiet ar bajenn araozoc\'h)',
+	'importnosources' => 'N\'eus bet spisaet tamm mammenn etrewiki ebet ha diweredekaet eo enporzhiañ an Istor war-eeun.',
+	'importnofile' => 'N\'eus bet enporzhiet restr ebet.',
+	'importuploaderrorsize' => 'C\'hwitet eo bet enporzhiañ ar restr. Brasoc\'h eo ar restr eget ar vent aotreet.',
+	'importuploaderrorpartial' => 'C\'hwitet eo vet enporzhiañ ar restr. Enporzhiet evit darn eo bet hepken.',
+	'importuploaderrortemp' => 'C\'hwitet eo bet enporzhiañ ar restr. Mankout a ra ur restr badennek.',
+	'import-parse-failure' => 'Troc\'h e dielfennadenn an enporzh XML',
 	'import-noarticle' => 'Pajenn ebet da enporzhiañ !',
-	'import-nonewrevisions' => "Enporzhiet eo bet an holl degasadennoù c'hoazh.",
+	'import-nonewrevisions' => 'Enporzhiet eo bet an holl degasadennoù c\'hoazh.',
 	'import-upload' => 'Enporzhiañ roadennoù XML',
-	'import-token-mismatch' => "Kollet eo bet roadennoù an dalc'h. Klaskit en-dro.",
+	'import-token-mismatch' => 'Kollet eo bet roadennoù an dalc\'h. Klaskit en-dro.',
 	'import-invalid-interwiki' => 'Dibosupl enporzhiañ adal ar wiki spisaet.',
 	'import-error-edit' => 'N\'eo ket bet enporzhiet ar bajenn "$1" peogwir n\'oc\'h ket aotreet da zegas kemmoù enni.',
 	'import-error-create' => 'N\'eo ket bet enporzhiet ar bajenn "$1" peogwir n\'oc\'h ket aotreet da grouiñ anezhi.',
@@ -3707,19 +3702,19 @@ Enrollit ar bajenn war hoc'h urzhiataer ha kargit anezhi amañ.",
 	'import-error-special' => 'Ne vez ket enporzhiet ar bajenn "$1" rak stag eo ouzh un esaouenn anv dibar na aotre ket pajennoù.',
 	'import-error-invalid' => 'Ne vez ket enporzhiet ar bajenn "$1" rak direizh eo hec\'h anv.',
 	'importlogpage' => 'Log an enporzhiadennoù',
-	'importlogpagetext' => "Enporzhiadennoù melestradurel eus pajennoù adal wikioù all gant istor ar c'hemmadennoù degaset enno.",
+	'importlogpagetext' => 'Enporzhiadennoù melestradurel eus pajennoù adal wikioù all gant istor ar c\'hemmadennoù degaset enno.',
 	'import-logentry-upload' => 'en/he deus enporzhiet (pellgarget) [[$1]]',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|stumm|stumm}}',
 	'import-logentry-interwiki' => 'treuzwikiet $1',
-	'import-logentry-interwiki-detail' => "$1 {{PLURAL:$1|c'hemm|kemm}} abaoe $2",
-	'imagemaxsize' => "Bevenn ment vrasañ ar skeudennoù :<br />''(evit ar pajennoù deskrivañ)''",
-	'imagelisttext' => "Setu aze ur roll '''$1''' {{PLURAL:$1|file|files}} rummet $2.",
+	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|c\'hemm|kemm}} abaoe $2',
+	'imagemaxsize' => 'Bevenn ment vrasañ ar skeudennoù :<br />\'\'(evit ar pajennoù deskrivañ)\'\'',
+	'imagelisttext' => 'Setu aze ur roll \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} rummet $2.',
 	'ilsubmit' => 'Klask',
 	'invalidateemail' => 'Nullañ kadarnaat ar postel',
 	'imgmultipageprev' => '&larr; pajenn gent',
-	'imgmultipagenext' => "pajenn war-lerc'h &rarr;",
+	'imgmultipagenext' => 'pajenn war-lerc\'h &rarr;',
 	'imgmultigo' => 'Mont !',
-	'imgmultigoto' => "Mont d'ar bajenn $1",
+	'imgmultigoto' => 'Mont d\'ar bajenn $1',
 	'iranian-calendar-m1' => '1añ miz Jalāli',
 	'iranian-calendar-m2' => '2l miz Jalāli',
 	'iranian-calendar-m3' => '3e miz Jalāli',
@@ -3733,9 +3728,9 @@ Enrollit ar bajenn war hoc'h urzhiataer ha kargit anezhi amañ.",
 	'iranian-calendar-m11' => '11vet miz Jalāli',
 	'iranian-calendar-m12' => '12vet miz Jalāli',
 	'intentionallyblankpage' => 'A-ratozh e leusker gwenn ar bajenn-mañ',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'italic_sample' => 'Coŧ nivişt',
 	'italic_tip' => 'Coŧ nivişt',
 	'image_tip' => 'Liccok fáil',
@@ -3746,9 +3741,9 @@ $messages['brh'] = array(
 	'isimage' => 'fáil gańđ',
 	'ipboptions' => '2 ganŧa:2 hours,1 de:1 day,3 de:3 days,1 afta:1 week,2 afta:2 weeks,1 tú:1 month,3 tú:3 months,6 tú:6 months,1 sál:1 year,be kacc:infinite',
 	'ipblocklist' => 'IP pajjár o kárbandpin ák ki rok laggok e iyá tá',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'index-category' => 'Indeksirane stranice',
 	'internalerror' => 'Unutrašnja greška',
 	'internalerror_info' => 'Interna greška: $1',
@@ -3782,7 +3777,7 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'img-auth-bad-query-string' => 'URL ima nevaljan izraz upita.',
 	'imgfile' => 'datoteka',
 	'imagelinks' => 'Upotreba datoteke',
-	'iteminvalidname' => "Problem sa '$1', neispravno ime...",
+	'iteminvalidname' => 'Problem sa \'$1\', neispravno ime...',
 	'invert' => 'Sve osim odabranog',
 	'isredirect' => 'preusmjerivač',
 	'istemplate' => 'kao šablon',
@@ -3814,7 +3809,7 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'ipb-change-block' => 'Ponovno blokiraj korisnika sa novim postavkama',
 	'ipb-confirm' => 'Potvrdite blokiranje',
 	'ipb-blockingself' => 'Ovom akcijom ćete blokirati sebe! Da li ste sigurni da to želite?',
-	'ipb-confirmhideuser' => "Upravo ćete blokirati korisnika sa uključenom opcijom ''sakrij korisnika''. Ovim će korisničko ime biti sakriveno u svim spiskovima i stavkama zapisnika. Da li ste sigurni da to želite?",
+	'ipb-confirmhideuser' => 'Upravo ćete blokirati korisnika sa uključenom opcijom \'\'sakrij korisnika\'\'. Ovim će korisničko ime biti sakriveno u svim spiskovima i stavkama zapisnika. Da li ste sigurni da to želite?',
 	'ipb-edit-dropdown' => 'Uredi razloge blokiranja',
 	'ipb-unblock-addr' => 'Deblokiraj $1',
 	'ipb-unblock' => 'Deblokiraj korisničko ime ili IP adresu',
@@ -3894,10 +3889,10 @@ Nedostaje privremeni folder.',
 	'importlogpagetext' => 'Administrativni uvozi stranica sa historijom izmjena sa drugih wikija.',
 	'import-logentry-upload' => 'uvezena stranica [[$1]] putem postavljanja datoteke',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revizija|revizije|revizija}}',
-	'import-logentry-interwiki' => "uveženo (''transwikied'') $1",
+	'import-logentry-interwiki' => 'uveženo (\'\'transwikied\'\') $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revizija|revizije|revizija}} od $2',
-	'imagemaxsize' => "Ograničenje veličine slike:<br />''(za stranice opisa datoteke)''",
-	'imagelisttext' => "Ispod je spisak od '''$1''' {{PLURAL:$1|datoteke|datoteke|datoteka}} poredanih $2.",
+	'imagemaxsize' => 'Ograničenje veličine slike:<br />\'\'(za stranice opisa datoteke)\'\'',
+	'imagelisttext' => 'Ispod je spisak od \'\'\'$1\'\'\' {{PLURAL:$1|datoteke|datoteke|datoteka}} poredanih $2.',
 	'ilsubmit' => 'Traži',
 	'invalidateemail' => 'Odustani od e-mail potvrde',
 	'imgmultipageprev' => '← prethodna stranica',
@@ -3917,28 +3912,28 @@ Nedostaje privremeni folder.',
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
 	'intentionallyblankpage' => 'Ova stranica je namjerno ostavljena prazna',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'internalerror' => 'Éro internal',
 	'internalerror_info' => 'Éro internal: $1',
 	'italic_tip' => 'Teks Italik',
 	'imagelinks' => 'Liŋke',
 	'ipblocklist-submit' => 'Sappa',
 	'immobile-source-namespace' => 'Leppa-leppa rilaleŋna namespace "$1"ë de\'na ullé ripaleccé',
-	'immobile-source-page' => "Iyyedé leppaë de'na ullé ripaleccé.",
+	'immobile-source-page' => 'Iyyedé leppaë de\'na ullé ripaleccé.',
 	'imagemaxsize' => 'Gangkai rapang pada keterangan rapang ri halamang hingga:',
 	'ilsubmit' => 'Sappa',
 	'imgmultigo' => 'Lao!',
 	'imgmultigoto' => 'Lao ri leppa $1',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'index-category' => 'Pàgines indexades',
 	'internalerror' => 'Error intern',
 	'internalerror_info' => 'Error intern: $1',
-	'invalidemailaddress' => "No es pot acceptar l'adreça electrònica perquè sembla que té un format no vàlid.
-Introduïu una adreça amb un format adequat o bé buideu el camp.",
+	'invalidemailaddress' => 'No es pot acceptar l\'adreça electrònica perquè sembla que té un format no vàlid.
+Introduïu una adreça amb un format adequat o bé buideu el camp.',
 	'italic_sample' => 'Text en cursiva',
 	'italic_tip' => 'Text en cursiva',
 	'image_sample' => 'Exemple.jpg',
@@ -3953,52 +3948,52 @@ Introduïu una adreça amb un format adequat o bé buideu el camp.",
 El servidor no està configurat per passar aquesta informació.
 Pot estar basat en CGI i no ser compatible amb img_auth.
 Consulteu https://www.mediawiki.org/wiki/Manual:Image_Authorization',
-	'img-auth-notindir' => "No s'ha trobat la ruta sol·licitada al directori de càrrega configurat.",
+	'img-auth-notindir' => 'No s\'ha trobat la ruta sol·licitada al directori de càrrega configurat.',
 	'img-auth-badtitle' => 'No s\'ha pogut construir un títol vàlid a partir de "$1".',
 	'img-auth-nologinnWL' => 'No has iniciat sessió i "$1" no està a la llista blanca.',
 	'img-auth-nofile' => 'No existeix el fitxer "$1".',
-	'img-auth-isdir' => "Estàs intentant accedir al directori $1.
-Només està permès l'accés a arxius.",
+	'img-auth-isdir' => 'Estàs intentant accedir al directori $1.
+Només està permès l\'accés a arxius.',
 	'img-auth-streaming' => 'Lectura corrent de "$1".',
-	'img-auth-public' => "La funció de img_auth.php és de sortida de fitxers d'un lloc wiki privat.
+	'img-auth-public' => 'La funció de img_auth.php és de sortida de fitxers d\'un lloc wiki privat.
 Aquest wiki està configurat com a wiki públic.
-Per seguretat, img_auth.php està desactivat.",
+Per seguretat, img_auth.php està desactivat.',
 	'img-auth-noread' => 'L\'usuari no té accés a la lectura de "$1".',
 	'imgfile' => 'fitxer',
 	'imagelinks' => 'Ús del fitxer',
-	'iteminvalidname' => "Hi ha un problema amb l'element '$1': el nom no és vàlid...",
+	'iteminvalidname' => 'Hi ha un problema amb l\'element \'$1\': el nom no és vàlid...',
 	'invert' => 'Inverteix la selecció',
 	'isredirect' => 'pàgina redirigida',
 	'istemplate' => 'inclosa',
 	'isimage' => 'enllaç a fitxer',
-	'ipadressorusername' => "Adreça IP o nom de l'usuari",
+	'ipadressorusername' => 'Adreça IP o nom de l\'usuari',
 	'ipbexpiry' => 'Venciment',
 	'ipbreason' => 'Motiu:',
 	'ipbreasonotherlist' => 'Un altre motiu',
-	'ipbreason-dropdown' => "*Motius de bloqueig més freqüents
-** Inserció d'informació falsa
+	'ipbreason-dropdown' => '*Motius de bloqueig més freqüents
+** Inserció d\'informació falsa
 ** Supressió de contingut sense justificació
-** Inserció d'enllaços promocionals (spam)
+** Inserció d\'enllaços promocionals (spam)
 ** Inserció de contingut sense cap sentit
 ** Conducta intimidatòria o hostil
-** Abús de comptes d'usuari múltiples
-** Nom d'usuari no acceptable",
-	'ipb-hardblock' => "Impedeix que els usuaris registrats puguin editar des d'aquesta adreça IP",
+** Abús de comptes d\'usuari múltiples
+** Nom d\'usuari no acceptable',
+	'ipb-hardblock' => 'Impedeix que els usuaris registrats puguin editar des d\'aquesta adreça IP',
 	'ipbcreateaccount' => 'Evita la creació de comptes',
-	'ipbemailban' => "Evita que l'usuari enviï correu electrònic",
-	'ipbenableautoblock' => "Bloca l'adreça IP d'aquest usuari, i totes les subseqüents adreces des de les quals intenti registrar-se",
+	'ipbemailban' => 'Evita que l\'usuari enviï correu electrònic',
+	'ipbenableautoblock' => 'Bloca l\'adreça IP d\'aquest usuari, i totes les subseqüents adreces des de les quals intenti registrar-se',
 	'ipbsubmit' => 'Bloqueja aquesta adreça',
 	'ipbother' => 'Un altre termini',
 	'ipboptions' => '2 hores:2 hours,1 dia:1 day,3 dies:3 days,1 setmana:1 week,2 setmanes:2 weeks,1 mes:1 month,3 mesos:3 months,6 mesos:6 months,1 any:1 year,infinit:infinite',
 	'ipbotheroption' => 'un altre',
 	'ipbotherreason' => 'Altres motius o addicionals:',
-	'ipbhidename' => "Amaga el nom d'usuari de les edicions i llistes",
-	'ipbwatchuser' => "Vigila les pàgines d'usuari i de discussió de l'usuari",
+	'ipbhidename' => 'Amaga el nom d\'usuari de les edicions i llistes',
+	'ipbwatchuser' => 'Vigila les pàgines d\'usuari i de discussió de l\'usuari',
 	'ipb-disableusertalk' => 'Impedeix que aquest usuari pugui modificar la seva pàgina de discussió mentre dura el blocatge',
-	'ipb-change-block' => "Torna a blocar l'usuari amb aquests paràmetres",
+	'ipb-change-block' => 'Torna a blocar l\'usuari amb aquests paràmetres',
 	'ipb-confirm' => 'Confirma el blocatge',
 	'ipb-blockingself' => 'Esteu a punt de blocar-vos a vós mateix! Esteu segurs de voler-ho fer?',
-	'ipb-confirmhideuser' => "Esteu a punt de bloquejar un usuari que està marcat amb l'opció «amaga l'usuari». Això suprimirà el seu nom a totes les llistes i registres. Esteu segurs de voler-ho fer?",
+	'ipb-confirmhideuser' => 'Esteu a punt de bloquejar un usuari que està marcat amb l\'opció «amaga l\'usuari». Això suprimirà el seu nom a totes les llistes i registres. Esteu segurs de voler-ho fer?',
 	'ipb-edit-dropdown' => 'Edita les raons per a blocar',
 	'ipb-unblock-addr' => 'Desbloca $1',
 	'ipb-unblock' => 'Desbloca un usuari o una adreça IP',
@@ -4012,22 +4007,22 @@ Per seguretat, img_auth.php està desactivat.",
 	'ipblocklist-otherblocks' => 'Altres {{PLURAL:$1|bloquejos|bloquejos}}',
 	'infiniteblock' => 'infinit',
 	'ipblocklist-empty' => 'La llista de bloqueig està buida.',
-	'ipblocklist-no-results' => "L'adreça IP o nom d'usuari soŀlicitat no està bloquejat.",
-	'ipb_expiry_invalid' => "Data d'acabament no vàlida.",
-	'ipb_expiry_temp' => "Els blocatges amb ocultació de nom d'usuari haurien de ser permanents.",
-	'ipb_hide_invalid' => "No s'ha pogut eliminar el compte; potser té massa edicions.",
+	'ipblocklist-no-results' => 'L\'adreça IP o nom d\'usuari soŀlicitat no està bloquejat.',
+	'ipb_expiry_invalid' => 'Data d\'acabament no vàlida.',
+	'ipb_expiry_temp' => 'Els blocatges amb ocultació de nom d\'usuari haurien de ser permanents.',
+	'ipb_hide_invalid' => 'No s\'ha pogut eliminar el compte; potser té massa edicions.',
 	'ipb_already_blocked' => '«$1» ja està blocat',
-	'ipb-needreblock' => "L'usuari $1 ja està blocat. Voleu canviar-ne els paràmetres del blocatge?",
+	'ipb-needreblock' => 'L\'usuari $1 ja està blocat. Voleu canviar-ne els paràmetres del blocatge?',
 	'ipb-otherblocks-header' => 'Altres {{PLURAL:$1|bloquejos|bloquejos}}',
-	'ipb_cant_unblock' => "Errada: No s'ha trobat el núm. ID de bloqueig $1. És possible que ja s'haguera desblocat.",
-	'ipb_blocked_as_range' => "Error: L'adreça IP $1 no està blocada directament i per tant no pot ésser desbloquejada. Ara bé, sí que ho està per formar part del rang $2 que sí que pot ser desblocat.",
+	'ipb_cant_unblock' => 'Errada: No s\'ha trobat el núm. ID de bloqueig $1. És possible que ja s\'haguera desblocat.',
+	'ipb_blocked_as_range' => 'Error: L\'adreça IP $1 no està blocada directament i per tant no pot ésser desbloquejada. Ara bé, sí que ho està per formar part del rang $2 que sí que pot ser desblocat.',
 	'ip_range_invalid' => 'Rang de IP no vàlid.',
 	'ip_range_toolarge' => 'No estan permesos el bloquejos de rangs més grans que /$1.',
 	'ipbblocked' => 'No podeu blocar o desblocar altres usuaris, perquè vós {{GENDER:|mateix|mateixa|mateix}} esteu {{GENDER:|blocat|blocada|blocat}}.',
 	'ipbnounblockself' => 'No teniu permís per a treure el vostre bloqueig',
 	'immobile-source-namespace' => 'No es poden moure pàgines de l\'espai de noms "$1"',
 	'immobile-target-namespace' => 'No es poden moure pàgines cap a l\'espai de noms "$1"',
-	'immobile-target-namespace-iw' => "No es poden moure pàgines a l'enllaç interwiki",
+	'immobile-target-namespace-iw' => 'No es poden moure pàgines a l\'enllaç interwiki',
 	'immobile-source-page' => 'Aquesta pàgina no es pot moure.',
 	'immobile-target-page' => 'No es pot moure cap a una destinació amb aquest títol.',
 	'imagenocrossnamespace' => 'No es pot moure la imatge a un espai de noms on no li correspon',
@@ -4035,63 +4030,63 @@ Per seguretat, img_auth.php està desactivat.",
 	'imageinvalidfilename' => 'El nom de fitxer indicat no és vàlid',
 	'import' => 'Importa les pàgines',
 	'importinterwiki' => 'Importa interwiki',
-	'import-interwiki-text' => "Trieu un web basat en wiki i un títol de pàgina per a importar.
+	'import-interwiki-text' => 'Trieu un web basat en wiki i un títol de pàgina per a importar.
 Es conservaran les dates de les versions i els noms dels editors.
-Totes les accions d'importació interwiki es conserven al [[Special:Log/import|registre d'importacions]].",
-	'import-interwiki-source' => "Pàgina/wiki d'origen:",
-	'import-interwiki-history' => "Copia totes les versions de l'historial d'aquesta pàgina",
+Totes les accions d\'importació interwiki es conserven al [[Special:Log/import|registre d\'importacions]].',
+	'import-interwiki-source' => 'Pàgina/wiki d\'origen:',
+	'import-interwiki-history' => 'Copia totes les versions de l\'historial d\'aquesta pàgina',
 	'import-interwiki-templates' => 'Inclou totes les plantilles',
 	'import-interwiki-submit' => 'Importa',
 	'import-interwiki-namespace' => 'Espai de noms de destinació:',
 	'import-upload-filename' => 'Nom de fitxer:',
 	'import-comment' => 'Comentari:',
-	'importtext' => "Exporteu el fitxer des del wiki d'origen utilitzant l'[[Special:Export|eina d'exportació]].
-Deseu-lo al vostre ordinador i carregueu-ne una còpia ací.",
-	'importstart' => "S'estan important pàgines...",
+	'importtext' => 'Exporteu el fitxer des del wiki d\'origen utilitzant l\'[[Special:Export|eina d\'exportació]].
+Deseu-lo al vostre ordinador i carregueu-ne una còpia ací.',
+	'importstart' => 'S\'estan important pàgines...',
 	'import-revision-count' => '$1 {{PLURAL:$1|revisió|revisions}}',
 	'importnopages' => 'No hi ha cap pàgina per importar.',
-	'imported-log-entries' => "{{PLURAL:$1|S'ha importat una entrada del registre|S'han importat $1 entrades del registre}}.",
+	'imported-log-entries' => '{{PLURAL:$1|S\'ha importat una entrada del registre|S\'han importat $1 entrades del registre}}.',
 	'importfailed' => 'La importació ha fallat: $1',
-	'importunknownsource' => "No es reconeix el tipus de la font d'importació",
-	'importcantopen' => "No ha estat possible d'obrir el fitxer a importar",
-	'importbadinterwiki' => "Enllaç d'interwiki incorrecte",
+	'importunknownsource' => 'No es reconeix el tipus de la font d\'importació',
+	'importcantopen' => 'No ha estat possible d\'obrir el fitxer a importar',
+	'importbadinterwiki' => 'Enllaç d\'interwiki incorrecte',
 	'importnotext' => 'Buit o sense text',
-	'importsuccess' => "S'ha acabat d'importar.",
-	'importhistoryconflict' => "Hi ha un conflicte de versions en l'historial (la pàgina podria haver sigut importada abans)",
-	'importnosources' => "No s'ha definit cap font d'origen interwiki i s'ha inhabilitat la càrrega directa d'una còpia de l'historial",
-	'importnofile' => "No s'ha pujat cap fitxer d'importació.",
-	'importuploaderrorsize' => "La càrrega del fitxer d'importació ha fallat. El fitxer és més gran que la mida de càrrega permesa.",
-	'importuploaderrorpartial' => "La càrrega del fitxer d'importació ha fallat. El fitxer s'ha penjat només parcialment.",
-	'importuploaderrortemp' => "La càrrega del fitxer d'importació ha fallat. Manca una carpeta temporal.",
-	'import-parse-failure' => "error a en importar l'XML",
+	'importsuccess' => 'S\'ha acabat d\'importar.',
+	'importhistoryconflict' => 'Hi ha un conflicte de versions en l\'historial (la pàgina podria haver sigut importada abans)',
+	'importnosources' => 'No s\'ha definit cap font d\'origen interwiki i s\'ha inhabilitat la càrrega directa d\'una còpia de l\'historial',
+	'importnofile' => 'No s\'ha pujat cap fitxer d\'importació.',
+	'importuploaderrorsize' => 'La càrrega del fitxer d\'importació ha fallat. El fitxer és més gran que la mida de càrrega permesa.',
+	'importuploaderrorpartial' => 'La càrrega del fitxer d\'importació ha fallat. El fitxer s\'ha penjat només parcialment.',
+	'importuploaderrortemp' => 'La càrrega del fitxer d\'importació ha fallat. Manca una carpeta temporal.',
+	'import-parse-failure' => 'error a en importar l\'XML',
 	'import-noarticle' => 'No hi ha cap pàgina per importar!',
-	'import-nonewrevisions' => "Totes les revisions s'havien importat abans.",
+	'import-nonewrevisions' => 'Totes les revisions s\'havien importat abans.',
 	'import-upload' => 'Carrega dades XML',
 	'import-token-mismatch' => 'Pèrdua de dades de sessió. Torneu-ho a intentar.',
 	'import-invalid-interwiki' => 'No es pot importar des del wiki especificat.',
-	'import-error-edit' => "La pàgina «$1» no s'ha importat perquè no teniu permís per modificar-la.",
-	'import-error-create' => "La pàgina «$1» no s'ha importat perquè no teniu permís per crear-la.",
-	'import-error-interwiki' => "No s'importa la pàgina «$1» perquè el seu nom està reservat a l'enllaçament extern (interwiki).",
-	'import-error-special' => "No s'importa la pàgina «$1» perquè el seu nom pertany a l'espai de noms especial que no permet pàgines.",
-	'import-error-invalid' => "No s'importa la pàgina «$1» perquè el seu nom no és vàlid.",
-	'importlogpage' => "Registre d'importació",
-	'importlogpagetext' => "Importacions administratives de pàgines amb l'historial des d'altres wikis.",
-	'import-logentry-upload' => "s'ha importat [[$1]] per càrrega de fitxers",
+	'import-error-edit' => 'La pàgina «$1» no s\'ha importat perquè no teniu permís per modificar-la.',
+	'import-error-create' => 'La pàgina «$1» no s\'ha importat perquè no teniu permís per crear-la.',
+	'import-error-interwiki' => 'No s\'importa la pàgina «$1» perquè el seu nom està reservat a l\'enllaçament extern (interwiki).',
+	'import-error-special' => 'No s\'importa la pàgina «$1» perquè el seu nom pertany a l\'espai de noms especial que no permet pàgines.',
+	'import-error-invalid' => 'No s\'importa la pàgina «$1» perquè el seu nom no és vàlid.',
+	'importlogpage' => 'Registre d\'importació',
+	'importlogpagetext' => 'Importacions administratives de pàgines amb l\'historial des d\'altres wikis.',
+	'import-logentry-upload' => 's\'ha importat [[$1]] per càrrega de fitxers',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisió|revisions}}',
-	'import-logentry-interwiki' => "s'ha importat $1 via interwiki",
+	'import-logentry-interwiki' => 's\'ha importat $1 via interwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisió|revisions}} de $2',
-	'imagemaxsize' => "Límit de mida d'imatges:<br />''(per a pàgines de descripció de fitxers)''",
-	'imagelisttext' => "Llista {{PLURAL:$1|d'un sol fitxer|de '''$1''' fitxers ordenats $2}}.",
+	'imagemaxsize' => 'Límit de mida d\'imatges:<br />\'\'(per a pàgines de descripció de fitxers)\'\'',
+	'imagelisttext' => 'Llista {{PLURAL:$1|d\'un sol fitxer|de \'\'\'$1\'\'\' fitxers ordenats $2}}.',
 	'ilsubmit' => 'Cerca',
-	'invalidateemail' => "Canceŀlació d'adreça electrònica",
+	'invalidateemail' => 'Canceŀlació d\'adreça electrònica',
 	'imgmultipageprev' => '← pàgina anterior',
 	'imgmultipagenext' => 'pàgina següent →',
 	'imgmultigo' => 'Vés-hi!',
 	'imgmultigoto' => 'Vés a la pàgina $1',
 	'intentionallyblankpage' => 'Pàgina intencionadament en blanc',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'ignorewarning' => 'Mò̤ sê̤ṳ gīng-gó̤ bō̤-còng ùng-giông.',
 	'ignorewarnings' => 'Mò̤ sê̤ṳ gīng-gó̤',
 	'imgfile' => 'ùng-giông',
@@ -4134,9 +4129,9 @@ $messages['cdo'] = array(
 	'imgmultipageprev' => '← sèng 1 hiĕk',
 	'imgmultipagenext' => 'â 1 hiĕk →',
 	'imgmultigo' => 'Kó̤!',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'index-category' => 'Меттигтерахьйо агlонаш',
 	'internalerror' => 'Чоьхьара гlалат',
 	'internalerror_info' => 'Чоьхьара гlалат: $1',
@@ -4165,9 +4160,9 @@ $messages['ce'] = array(
 	'imgmultipagenext' => 'тlаьхьара агlо →',
 	'imgmultigo' => 'Дехьавала!',
 	'imgmultigoto' => 'Дехьавала агlончу $1',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'internalerror' => 'Internal nga sayop',
 	'internalerror_info' => 'Internal nga sayop: $1',
 	'italic_sample' => 'Gitakilid nga teksto',
@@ -4180,30 +4175,30 @@ $messages['ceb'] = array(
 	'isimage' => 'sumpay nga imahen',
 	'ipboptions' => '2 ka oras:2 hours,1 ka adlaw:1 day,3 ka adlaw:3 days,1 ka semana:1 week,2 ka semana:2 weeks,1 ka buwan:1 month,3 ka buwan:3 months,6 ka buwan:6 months,1 ka tuig:1 year,hangtod-sa-hangtod:infinite',
 	'ipblocklist' => 'Na-block nga mga adres sa IP ug username',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'internalerror' => 'Linachi sanhalom',
-	'italic_sample' => "Tinige' mana'echong",
-	'italic_tip' => "Tinige' mana'echong",
-	'image_tip' => "Mana'halom na atkibu",
+	'italic_sample' => 'Tinige\' mana\'echong',
+	'italic_tip' => 'Tinige\' mana\'echong',
+	'image_tip' => 'Mana\'halom na atkibu',
 	'imagelinks' => 'Inachetton dokumento',
 	'invert' => 'Bira i sileksion',
 	'isredirect' => 'dirihi i påhina',
 	'istemplate' => 'sinaonao',
-	'ipboptions' => "2 oras:2 hours,1 diha:1 day,3 na diha siha:3 days,1 simana:1 week,2 na simana siha:2 weeks,1 mes:1 month,3 na mes siha:3 months,6 na mes siha:6 months,1 sakkan:1 year,taifinakpo':infinite",
-	'ipblocklist' => "IP yan na'an muna'sesetbi ni manmachomma' siha",
+	'ipboptions' => '2 oras:2 hours,1 diha:1 day,3 na diha siha:3 days,1 simana:1 week,2 na simana siha:2 weeks,1 mes:1 month,3 na mes siha:3 months,6 na mes siha:6 months,1 sakkan:1 year,taifinakpo\':infinite',
+	'ipblocklist' => 'IP yan na\'an muna\'sesetbi ni manmachomma\' siha',
 	'ipblocklist-submit' => 'Aligao',
 	'importlogpage' => 'Impotta i log',
 	'ilsubmit' => 'Aligao',
 	'imgmultigo' => 'Hånao!',
-);
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'ilsubmit' => 'ᎠᏯᏍᏗ',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'info_short' => 'زانیاری',
 	'internalerror' => 'ھەڵەی ناوخۆیی',
 	'internalerror_info' => 'هه‌ڵه‌ی ناوخۆیی: $1',
@@ -4222,7 +4217,7 @@ $messages['ckb'] = array(
 	'img-auth-isdir' => 'هه‌وڵ ده‌ده‌ی بۆ کردنه‌وه‌ی بوخچه‌ی "$1" له‌ کاتێکدا ته‌نیا کردنه‌وه‌ی فایل رێپێدراوه‌',
 	'imgfile' => 'پەڕگە',
 	'imagelinks' => 'بەستەرەکانی پەڕگە',
-	'iteminvalidname' => "ھەڵە لەگەڵ بابەتی '$1'، ناوی نادروست...",
+	'iteminvalidname' => 'ھەڵە لەگەڵ بابەتی \'$1\'، ناوی نادروست...',
 	'invert' => 'ھەڵبژاردەکان پێچەوانە بکە',
 	'isredirect' => 'پەڕە ڕەوان بکە',
 	'istemplate' => 'بەکارھێنراو',
@@ -4248,7 +4243,7 @@ $messages['ckb'] = array(
 	'ipbother' => 'کاتی‌ دیکە:',
 	'ipboptions' => '2 کاتژمێر:2 hours,1 ڕۆژ:1 day,3 ڕۆژ:3 days,1 ھەفتە:1 week,2 ھەفتە:2 weeks,1 مانگ:1 month,3 مانگ:3 months,6 مانگ:6 months,1 ساڵ:1 year,بێ سنوور:infinite',
 	'ipbotheroption' => 'دیکە',
-	'ipbotherreason' => 'هۆکاری زیادکراو\\دیکە:',
+	'ipbotherreason' => 'هۆکاری زیادکراو\دیکە:',
 	'ipbhidename' => 'شاردنەوەی ناوی‌ بەکارهێنەر لە دەستکاری و لیستەکان',
 	'ipbwatchuser' => 'دیتنی لاپەڕەی بەکارهێنەر و وتووێژی ئەم بەکارهێنەرە',
 	'ipballowusertalk' => 'ڕێگەدان بە ئەم بەکارهێنەرە کە لاپەڕەی وتووێژی خۆی دەستکاری بکات، کاتێ بەربەست‌کراوە',
@@ -4267,7 +4262,7 @@ $messages['ckb'] = array(
 	'ipblocklist-sh-tempblocks' => '$1 بەربەستی کاتی',
 	'ipblocklist-sh-addressblocks' => '$1 بەربەستی تاکە ئای‌پی',
 	'ipblocklist-submit' => 'گەڕان',
-	'infiniteblock' => 'زۆر\\نەپێوراو',
+	'infiniteblock' => 'زۆر\نەپێوراو',
 	'ipblocklist-empty' => 'لیستی بەربەستەکان بەتاڵە',
 	'ipblocklist-no-results' => 'ئای‌پی ئەدرەس یان ناوی‌ بەکارهێنەری داواکراو بەربەست نەکراوە.',
 	'ipb_expiry_invalid' => 'کاتی بەسەرچوونی نەگونجاو.',
@@ -4295,7 +4290,7 @@ $messages['ckb'] = array(
 	'import-interwiki-text' => 'بۆ هێنانە‌ناوە ویکی‌یەک و سەردێڕێکی لاپەڕە هەڵبژێرە.
 ڕێکەوتەکانی پێداچوونەوە و ناوی دەستکاری‌کەرەکان دەپارێزدرێت.
 هەموو کردوەکانی هێنانەناوەی ترانس‌ویکی لە [[Special:Log/import|لۆگی هێنانەناوە]] لۆگ دەکرێت.',
-	'import-interwiki-source' => 'سەرچاوەی ویکی\\لاپەڕە :',
+	'import-interwiki-source' => 'سەرچاوەی ویکی\لاپەڕە :',
 	'import-interwiki-history' => 'ڕوونووس‌کردنی هەموو مێژووی پێداچوونەوەکانی ئەم لاپەڕە',
 	'import-interwiki-templates' => 'لەخۆگرتنی هەموو داڕێژەکان',
 	'import-interwiki-submit' => 'هاوردن',
@@ -4350,9 +4345,9 @@ $messages['ckb'] = array(
 	'iranian-calendar-m5' => 'گەلاوێژ',
 	'iranian-calendar-m6' => 'خەرمانان',
 	'intentionallyblankpage' => 'ئەم لاپەڕە بەقەستی بەتاڵ هێڵراوەتەوە',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'internalerror' => 'Errore internu',
 	'image_sample' => 'Esempiu.jpg',
 	'imgfile' => 'schedariu',
@@ -4367,9 +4362,9 @@ $messages['co'] = array(
 	'importlogpage' => 'Importu log',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisione|revisione}}',
 	'ilsubmit' => 'Ricerca',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'index-category' => 'Na-index nga mga pahina',
 	'internalerror' => 'Pangsulodlon nga diperensiya',
 	'internalerror_info' => 'Pangsulodlon nga diperensiya:  $1',
@@ -4383,9 +4378,9 @@ $messages['cps'] = array(
 	'isimage' => 'Link sang litrato',
 	'ipboptions' => '2 oras:2 hours,1 adlaw:1 day,3 adlaw:3 days,1 semana:1 week,2 semana:2 weeks,1 bulan:1 month,3 bulan:3 months,6 bulan:6 months,1 tu-ig:1 year,wala katapusan:infinite',
 	'ipblocklist' => 'Napunggan nga mga IP Address kag mga bansag (usernames)',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'index-category' => 'Na-index nga mga pahina',
 	'internalerror' => 'Pangsulodlon nga diperensiya',
 	'internalerror_info' => 'Pangsulodlon nga diperensiya:  $1',
@@ -4399,9 +4394,9 @@ $messages['crh'] = array(
 	'isimage' => 'Link sang litrato',
 	'ipboptions' => '2 oras:2 hours,1 adlaw:1 day,3 adlaw:3 days,1 semana:1 week,2 semana:2 weeks,1 bulan:1 month,3 bulan:3 months,6 bulan:6 months,1 tu-ig:1 year,wala katapusan:infinite',
 	'ipblocklist' => 'Napunggan nga mga IP Address kag mga bansag (usernames)',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'index-category' => 'Индексли саифелер',
 	'internalerror' => 'Ички хата',
 	'internalerror_info' => 'Ички хата: $1',
@@ -4436,8 +4431,8 @@ $messages['crh-cyrl'] = array(
 	'ip_range_invalid' => 'Рухсетсиз IP аралыгъы.',
 	'import-comment' => 'Изаат:',
 	'importlogpage' => 'Импорт журналы',
-	'imagemaxsize' => "Ресим ольчюси сынъыры:<br />''(файл малюмат саифелери ичюн)''",
-	'imagelisttext' => "Ашагъыдаки джедвельде $2 коре тизильген {{PLURAL:$1|'''1''' файлдыр|'''$1''' файлдыр}}.",
+	'imagemaxsize' => 'Ресим ольчюси сынъыры:<br />\'\'(файл малюмат саифелери ичюн)\'\'',
+	'imagelisttext' => 'Ашагъыдаки джедвельде $2 коре тизильген {{PLURAL:$1|\'\'\'1\'\'\' файлдыр|\'\'\'$1\'\'\' файлдыр}}.',
 	'ilsubmit' => 'Къыдыр',
 	'invalidateemail' => 'E-mail адресининъ тасдыкъы лягъу эт',
 	'imgmultipageprev' => '← эвельки саифе',
@@ -4445,9 +4440,9 @@ $messages['crh-cyrl'] = array(
 	'imgmultigo' => 'Бар',
 	'imgmultigoto' => '$1 саифесине бар',
 	'intentionallyblankpage' => 'Бу саифе аселет бош къалдырылгъан',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'index-category' => 'İndeksli saifeler',
 	'internalerror' => 'İçki hata',
 	'internalerror_info' => 'İçki hata: $1',
@@ -4482,8 +4477,8 @@ $messages['crh-latn'] = array(
 	'ip_range_invalid' => 'Ruhsetsiz IP aralığı.',
 	'import-comment' => 'İzaat:',
 	'importlogpage' => 'İmport jurnalı',
-	'imagemaxsize' => "Resim ölçüsi sıñırı:<br />''(fayl malümat saifeleri içün)''",
-	'imagelisttext' => "Aşağıdaki cedvelde $2 köre tizilgen {{PLURAL:$1|'''1''' fayldır|'''$1''' fayldır}}.",
+	'imagemaxsize' => 'Resim ölçüsi sıñırı:<br />\'\'(fayl malümat saifeleri içün)\'\'',
+	'imagelisttext' => 'Aşağıdaki cedvelde $2 köre tizilgen {{PLURAL:$1|\'\'\'1\'\'\' fayldır|\'\'\'$1\'\'\' fayldır}}.',
 	'ilsubmit' => 'Qıdır',
 	'invalidateemail' => 'E-mail adresiniñ tasdıqı lâğu et',
 	'imgmultipageprev' => '← evelki saife',
@@ -4491,9 +4486,9 @@ $messages['crh-latn'] = array(
 	'imgmultigo' => 'Bar',
 	'imgmultigoto' => '$1 saifesine bar',
 	'intentionallyblankpage' => 'Bu saife aselet boş qaldırılğan',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'index-category' => 'Indexované stránky',
 	'internalerror' => 'Vnitřní chyba',
 	'internalerror_info' => 'Vnitřní chyba: $1',
@@ -4640,9 +4635,9 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revizi|revize|revizí}}',
 	'import-logentry-interwiki' => 'přenesl $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revizi|revize|revizí}} z $2',
-	'imagemaxsize' => "Maximální velikost obrázku:<br />
-''(na stránce s popisem souboru)''",
-	'imagelisttext' => "Níže je {{plural:$1|jeden soubor|seznam '''$1'''&nbsp;souborů seřazených $2|seznam '''$1'''&nbsp;souborů seřazených $2}}.",
+	'imagemaxsize' => 'Maximální velikost obrázku:<br />
+\'\'(na stránce s popisem souboru)\'\'',
+	'imagelisttext' => 'Níže je {{plural:$1|jeden soubor|seznam \'\'\'$1\'\'\'&nbsp;souborů seřazených $2|seznam \'\'\'$1\'\'\'&nbsp;souborů seřazených $2}}.',
 	'ilsubmit' => 'Hledat',
 	'invalidateemail' => 'Zrušit potvrzení e-mailové adresy',
 	'imgmultipageprev' => '← předchozí stránka',
@@ -4659,9 +4654,9 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 	'iranian-calendar-m10' => 'Dej',
 	'iranian-calendar-m11' => 'Bahmán',
 	'intentionallyblankpage' => 'Tato stránka je úmyslně prázdná. Používá se na měření výkonnosti atd.',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'internalerror' => 'Bënowô fela',
 	'italic_sample' => 'Ùchëłi tekst',
 	'italic_tip' => 'Ùchëłi tekst (italic)',
@@ -4683,9 +4678,9 @@ $messages['csb'] = array(
 	'imagemaxsize' => 'Ògrańczë na starnie òpisënkù òbrôzków jich miarã do:',
 	'ilsubmit' => 'Szëkôj',
 	'imgmultigo' => 'Biéj!',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'imgfile' => 'дѣло',
 	'imagelinks' => 'дѣла польꙃєваниѥ',
 	'isredirect' => 'прѣнаправлѥниѥ',
@@ -4696,9 +4691,9 @@ $messages['cu'] = array(
 	'ipblocklist-submit' => 'исканиѥ',
 	'ilsubmit' => 'ищи',
 	'imgmultigo' => 'прѣиди',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'internalerror' => 'Шалти йăнăш',
 	'internalerror_info' => 'Шалти йăнăш: $1',
 	'italic_sample' => 'Тайлăк текст',
@@ -4728,9 +4723,9 @@ $messages['cv'] = array(
 	'imgmultipageprev' => '← малтанхи страница',
 	'imgmultipagenext' => 'тепĕр страница →',
 	'imgmultigo' => 'Куç!',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'index-category' => 'Tudalennau wedi eu mynegeio',
 	'internalerror' => 'Gwall mewnol',
 	'internalerror_info' => 'Gwall mewnol: $1',
@@ -4739,32 +4734,32 @@ $messages['cy'] = array(
 	'italic_tip' => 'Testun italig',
 	'image_sample' => 'Enghraifft.jpg',
 	'image_tip' => 'Ffeil mewnosodol',
-	'ignorewarning' => "Anwybydder y rhybudd, a rhoi'r dudalen ar gadw beth bynnag",
+	'ignorewarning' => 'Anwybydder y rhybudd, a rhoi\'r dudalen ar gadw beth bynnag',
 	'ignorewarnings' => 'Anwybydder pob rhybudd',
 	'illegalfilename' => 'Mae\'r enw ffeil "$1" yn cynnwys nodau sydd wedi\'u gwahardd mewn teitlau tudalennau. Ail-enwch y ffeil ac uwchlwythwch hi eto os gwelwch yn dda.',
-	'illegal-filename' => "Nid yw'r enw ffeil hwn yn cael ei ganiatáu.",
-	'invalid-chunk-offset' => "Atred annilys i'r talpiau",
+	'illegal-filename' => 'Nid yw\'r enw ffeil hwn yn cael ei ganiatáu.',
+	'invalid-chunk-offset' => 'Atred annilys i\'r talpiau',
 	'img-auth-accessdenied' => 'Ni chaniatawyd mynediad',
-	'img-auth-nopathinfo' => "PATH_INFO yn eisiau.
-Nid yw'ch gweinydd wedi ei osod i fedru pasio'r wybodaeth hon.
+	'img-auth-nopathinfo' => 'PATH_INFO yn eisiau.
+Nid yw\'ch gweinydd wedi ei osod i fedru pasio\'r wybodaeth hon.
 Efallai ei fod wedi ei seilio ar CGI, ac heb fod yn gallu cynnal img_auth.
-Gweler https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
-	'img-auth-notindir' => "Nid yw'r llwybr y gwneuthpwyd cais amdano yn y cyfeiriadur uwchlwytho ffurfweddedig.",
+Gweler https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
+	'img-auth-notindir' => 'Nid yw\'r llwybr y gwneuthpwyd cais amdano yn y cyfeiriadur uwchlwytho ffurfweddedig.',
 	'img-auth-badtitle' => 'Ddim yn gallu gwneud teitl dilys o "$1".',
 	'img-auth-nologinnWL' => 'Nid ydych wedi mewngofnodi ac nid yw "$1" ar y rhestr wen.',
 	'img-auth-nofile' => 'Nid oes ffeil a\'r enw "$1" ar gael.',
 	'img-auth-isdir' => 'Rydych yn ceisio cyrchu cyfeiriadur o\'r enw "$1".
 Dim ond ffeiliau y cewch eu cyrchu.',
 	'img-auth-streaming' => 'Wrthi\'n llifo "$1".',
-	'img-auth-public' => "Gwaith img_auth.php yw allbynnu ffeiliau o wici preifat.
-Mae'r wici hwn wedi ei osod yn wici gyhoeddus.
-Er mwyn sicrhau'r diogelwch gorau posib, analluogwyd img_auth.php.",
+	'img-auth-public' => 'Gwaith img_auth.php yw allbynnu ffeiliau o wici preifat.
+Mae\'r wici hwn wedi ei osod yn wici gyhoeddus.
+Er mwyn sicrhau\'r diogelwch gorau posib, analluogwyd img_auth.php.',
 	'img-auth-noread' => 'Nid yw\'r gallu gan y defnyddiwr hwn i gyrchu\'r ffeil "$1" i\'w ddarllen.',
 	'img-auth-bad-query-string' => 'Mae llinyn ymholi annilys gan yr URL.',
 	'imgfile' => 'ffeil',
 	'imagelinks' => 'Defnydd y ffeil',
-	'iteminvalidname' => "Problem gyda'r eitem '$1', enw annilys...",
-	'invert' => "Gwrthdroi'r dewis",
+	'iteminvalidname' => 'Problem gyda\'r eitem \'$1\', enw annilys...',
+	'invert' => 'Gwrthdroi\'r dewis',
 	'isredirect' => 'tudalen ailgyfeirio',
 	'istemplate' => 'cynhwysiad',
 	'isimage' => 'cyswllt ffeil',
@@ -4772,124 +4767,124 @@ Er mwyn sicrhau'r diogelwch gorau posib, analluogwyd img_auth.php.",
 	'ipbexpiry' => 'Am gyfnod:',
 	'ipbreason' => 'Rheswm:',
 	'ipbreasonotherlist' => 'Rheswm arall',
-	'ipbreason-dropdown' => "*Rhesymau cyffredin dros flocio
+	'ipbreason-dropdown' => '*Rhesymau cyffredin dros flocio
 ** Gosod gwybodaeth anghywir
 ** Dileu cynnwys tudalennau
 ** Gosod cysylltiadau sbam i wefannau eraill
 ** Gosod dwli/lol ar dudalennau
-** Ymddygiad sy'n dychrynu neu'n aflonyddu
+** Ymddygiad sy\'n dychrynu neu\'n aflonyddu
 ** Camddefnyddio nifer o gyfrifon
-** Enw defnyddiwr annerbyniol",
-	'ipb-hardblock' => "Atal defnyddwyr mewngofnodedig rhag golygu o'r cyfeiriad IP hwn",
+** Enw defnyddiwr annerbyniol',
+	'ipb-hardblock' => 'Atal defnyddwyr mewngofnodedig rhag golygu o\'r cyfeiriad IP hwn',
 	'ipbcreateaccount' => 'Atal y gallu i greu cyfrif',
 	'ipbemailban' => 'Atal y defnyddiwr rhag anfon e-bost',
-	'ipbenableautoblock' => "Rhwystro'n awtomatig y cyfeiriad IP diwethaf a ddefnyddiodd y defnyddiwr hwn, ac unrhyw gyfeiriad IP arall y bydd yn ceisio'i ddefnyddio i olygu ohono.",
-	'ipbsubmit' => "Rhwystro'r defnyddiwr hwn",
+	'ipbenableautoblock' => 'Rhwystro\'n awtomatig y cyfeiriad IP diwethaf a ddefnyddiodd y defnyddiwr hwn, ac unrhyw gyfeiriad IP arall y bydd yn ceisio\'i ddefnyddio i olygu ohono.',
+	'ipbsubmit' => 'Rhwystro\'r defnyddiwr hwn',
 	'ipbother' => 'Cyfnod arall:',
 	'ipboptions' => '2 awr:2 hours,ddiwrnod:1 day,3 diwrnod:3 days,wythnos:1 week,bythefnos:2 weeks,fis:1 month,3 mis:3 months,6 mis:6 months,flwyddyn:1 year,amhenodol:infinite',
 	'ipbotheroption' => 'arall',
 	'ipbotherreason' => 'Rheswm arall/ychwanegol:',
-	'ipbhidename' => "Cuddio'r enw defnyddiwr rhag ymddangos ar restri a golygiadau",
+	'ipbhidename' => 'Cuddio\'r enw defnyddiwr rhag ymddangos ar restri a golygiadau',
 	'ipbwatchuser' => 'Gwylio tudalen defnyddiwr a thudalen sgwrs y defnyddiwr hwn',
-	'ipb-disableusertalk' => "Atal y defnyddiwr hwn rhag golygu ei dudalen/ei thudalen sgwrs ei hunan wrth i'r bloc fod yn weithredol",
-	'ipb-change-block' => "Ailflocio'r defnyddiwr hwn gyda'r gosodiadau hyn",
-	'ipb-confirm' => "Cadarnhau'r rhwystr",
-	'ipb-blockingself' => "Rydych ar rwystro'ch hunan! A ydych yn siŵr eich bod chi am wneud hyn?",
+	'ipb-disableusertalk' => 'Atal y defnyddiwr hwn rhag golygu ei dudalen/ei thudalen sgwrs ei hunan wrth i\'r bloc fod yn weithredol',
+	'ipb-change-block' => 'Ailflocio\'r defnyddiwr hwn gyda\'r gosodiadau hyn',
+	'ipb-confirm' => 'Cadarnhau\'r rhwystr',
+	'ipb-blockingself' => 'Rydych ar rwystro\'ch hunan! A ydych yn siŵr eich bod chi am wneud hyn?',
 	'ipb-confirmhideuser' => 'Rydych ar rwystro defnyddiwr sydd yn "guddiedig." Bydd hyn yn atal enw\'r defnyddiwr ym mhob rhestr a chofnod lòg. A ydych yn siŵr eich bod chi am wneud hyn?',
-	'ipb-edit-dropdown' => "Golygu'r rhesymau dros flocio",
+	'ipb-edit-dropdown' => 'Golygu\'r rhesymau dros flocio',
 	'ipb-unblock-addr' => 'Dadflocio $1',
 	'ipb-unblock' => 'Dadflocio enw defnyddiwr neu gyfeiriad IP',
 	'ipb-blocklist' => 'Dangos y blociau cyfredol',
 	'ipb-blocklist-contribs' => 'Cyfraniadau $1',
-	'ipusubmit' => "Tynnu'r rhwystr hwn",
+	'ipusubmit' => 'Tynnu\'r rhwystr hwn',
 	'ipblocklist' => 'Defnyddwyr a rwystrwyd',
 	'ipblocklist-legend' => 'Dod o hyd i ddefnyddiwr a rwystrwyd',
 	'ipblocklist-submit' => 'Chwilier',
 	'ipblocklist-localblock' => 'Rhwystr lleol',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Rhwystr arall|Rhwystr arall|Rhwystrau eraill|Rhwystrau eraill|Rhwystrau eraill|Rhwystrau eraill}}',
 	'infiniteblock' => 'amhenodol',
-	'ipblocklist-empty' => "Mae'r rhestr rwystrau'n wag.",
-	'ipblocklist-no-results' => "Nid yw cyfeiriad IP neu enw defnyddiwr yr ymholiad wedi'i rwystro.",
+	'ipblocklist-empty' => 'Mae\'r rhestr rwystrau\'n wag.',
+	'ipblocklist-no-results' => 'Nid yw cyfeiriad IP neu enw defnyddiwr yr ymholiad wedi\'i rwystro.',
 	'ipb_expiry_invalid' => 'Amser terfynu yn annilys.',
-	'ipb_expiry_temp' => "Mae'n rhaid i rwystr ar ddefnyddiwr fod yn barhaus os am guddio'r enw.",
-	'ipb_hide_invalid' => "Ddim yn gallu cuddio'r cyfrif hwn; efallai bod ganddo ormod o olygiadau.",
+	'ipb_expiry_temp' => 'Mae\'n rhaid i rwystr ar ddefnyddiwr fod yn barhaus os am guddio\'r enw.',
+	'ipb_hide_invalid' => 'Ddim yn gallu cuddio\'r cyfrif hwn; efallai bod ganddo ormod o olygiadau.',
 	'ipb_already_blocked' => 'Mae "$1" eisoes wedi\'i rwystro',
-	'ipb-needreblock' => "Mae $1 wedi' rwystro'n barod. A ydych am newid y gosodiadau?",
+	'ipb-needreblock' => 'Mae $1 wedi\' rwystro\'n barod. A ydych am newid y gosodiadau?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Rhwystr|Rhwystr|Rhwystrau|Rhwystrau|Rhwystrau|Rhwystrau}} eraill',
-	'ipb_cant_unblock' => "Gwall: Ni chafwyd hyd i'r rhwystr a'r ID $1. Efallai ei fod e wedi cael ei ddadrwystro'n barod.",
-	'ipb_blocked_as_range' => "Gwall: Nid yw'r cyfeiriad IP $1 wedi'n rwystro'n uniongyrchol ac felly ni ellir ei ddadrwystro. Wedi dweud hynny, y mae'n rhan o'r amrediad $2 sydd wedi'i rwystro; gellir dadrwystro'r amrediad.",
+	'ipb_cant_unblock' => 'Gwall: Ni chafwyd hyd i\'r rhwystr a\'r ID $1. Efallai ei fod e wedi cael ei ddadrwystro\'n barod.',
+	'ipb_blocked_as_range' => 'Gwall: Nid yw\'r cyfeiriad IP $1 wedi\'n rwystro\'n uniongyrchol ac felly ni ellir ei ddadrwystro. Wedi dweud hynny, y mae\'n rhan o\'r amrediad $2 sydd wedi\'i rwystro; gellir dadrwystro\'r amrediad.',
 	'ip_range_invalid' => 'Ystod IP annilys.',
-	'ip_range_toolarge' => "Ni chaniateir rhwystrau ystod sy'n fwy na /$1.",
+	'ip_range_toolarge' => 'Ni chaniateir rhwystrau ystod sy\'n fwy na /$1.',
 	'ipbblocked' => 'Ni allwch rwystro na dadrwystro defnyddwyr eraill, oherwydd eich bod chi eich hunan wedi eich rhwystro',
-	'ipbnounblockself' => "Nid yw'r hawl gennych ddadrwystro'ch hunan",
+	'ipbnounblockself' => 'Nid yw\'r hawl gennych ddadrwystro\'ch hunan',
 	'immobile-source-namespace' => 'Ni ellir symud tudalennau yn y parth "$1".',
 	'immobile-target-namespace' => 'Ni ellir symud tudalennau i\'r parth "$1".',
 	'immobile-target-namespace-iw' => 'Nid yw cyswllt rhyngwici yn nod dilys wrth symud tudalen.',
 	'immobile-source-page' => 'Ni ellir symud y dudalen hon.',
-	'immobile-target-page' => "Ddim yn gallu symud i'r teitl newydd hwn.",
+	'immobile-target-page' => 'Ddim yn gallu symud i\'r teitl newydd hwn.',
 	'imagenocrossnamespace' => 'Ni ellir symud ffeil i barth arall',
-	'imagetypemismatch' => "Nid yw'r estyniad ffeil newydd yn cyfateb i'r math o ffeil",
-	'imageinvalidfilename' => "Mae enw'r ffeil darged yn annilys",
+	'imagetypemismatch' => 'Nid yw\'r estyniad ffeil newydd yn cyfateb i\'r math o ffeil',
+	'imageinvalidfilename' => 'Mae enw\'r ffeil darged yn annilys',
 	'import' => 'Mewnforio tudalennau',
 	'importinterwiki' => 'Mewnforiad traws-wici',
-	'import-interwiki-text' => "Dewiswch wici a thudalen i'w mewnforio.
-Fe gedwir dyddiadau ac enwau'r golygwyr ar gyfer y diwygiadau i'r dudalen.
-Mae cofnod o bob weithred o fewnforio i'w gweld ar y [[Special:Log/import|lòg mewnforio]].",
+	'import-interwiki-text' => 'Dewiswch wici a thudalen i\'w mewnforio.
+Fe gedwir dyddiadau ac enwau\'r golygwyr ar gyfer y diwygiadau i\'r dudalen.
+Mae cofnod o bob weithred o fewnforio i\'w gweld ar y [[Special:Log/import|lòg mewnforio]].',
 	'import-interwiki-source' => 'Wici/tudalen y gwreiddiol:',
 	'import-interwiki-history' => 'Copïer yr holl fersiynau yn hanes y dudalen hon',
 	'import-interwiki-templates' => 'Cynhwyser pob nodyn',
 	'import-interwiki-submit' => 'Mewnforio',
 	'import-interwiki-namespace' => 'Parth y cyrchir ato:',
-	'import-upload-filename' => "Enw'r ffeil:",
+	'import-upload-filename' => 'Enw\'r ffeil:',
 	'import-comment' => 'Sylw:',
-	'importtext' => "Allforiwch y ffeil o'r wici gwreiddiol trwy ddefnyddio'r [[Special:Export|nodwedd allforio]]. Rhowch hi ar gadw ar eich cyfrifiadur, ac wedyn ei huwchlwytho fan hyn.",
-	'importstart' => "Wrthi'n mewnforio...",
+	'importtext' => 'Allforiwch y ffeil o\'r wici gwreiddiol trwy ddefnyddio\'r [[Special:Export|nodwedd allforio]]. Rhowch hi ar gadw ar eich cyfrifiadur, ac wedyn ei huwchlwytho fan hyn.',
+	'importstart' => 'Wrthi\'n mewnforio...',
 	'import-revision-count' => '$1 {{PLURAL:$1|diwygiad|diwygiad|ddiwygiad|diwygiad|diwygiad|diwygiad}}',
-	'importnopages' => "Dim tudalennau i gael i'w mewnforio.",
+	'importnopages' => 'Dim tudalennau i gael i\'w mewnforio.',
 	'imported-log-entries' => 'Mewnforiwyd $1 {{PLURAL:$1|cofnod|cofnod|gofnod|cofnod|cofnod|o gofnodion}} lòg.',
 	'importfailed' => 'Y mewnforio wedi methu: <nowiki>$1</nowiki>',
-	'importunknownsource' => "Y gwreiddiol i'w fewnforio o fath anhysbys",
-	'importcantopen' => "Ni ellid agor y ffeil i'w fewnforio",
+	'importunknownsource' => 'Y gwreiddiol i\'w fewnforio o fath anhysbys',
+	'importcantopen' => 'Ni ellid agor y ffeil i\'w fewnforio',
 	'importbadinterwiki' => 'Cyswllt rhyngwici gwallus',
 	'importnotext' => 'Gwag, neu heb destun',
 	'importsuccess' => 'Y mewnforio wedi llwyddo!',
-	'importhistoryconflict' => "Mae adolygiadau yn yr hanes yn croesgyffwrdd (efallai eich bod chi wedi mewnforio'r dudalen o'r blaen)",
-	'importnosources' => "Ni ddiffiniwyd unrhyw ffynonellau mewnforio traws-wici, ac mae uwchlwytho hanesion yn uniongyrchol wedi'i analluogi.",
+	'importhistoryconflict' => 'Mae adolygiadau yn yr hanes yn croesgyffwrdd (efallai eich bod chi wedi mewnforio\'r dudalen o\'r blaen)',
+	'importnosources' => 'Ni ddiffiniwyd unrhyw ffynonellau mewnforio traws-wici, ac mae uwchlwytho hanesion yn uniongyrchol wedi\'i analluogi.',
 	'importnofile' => 'Ni uwchlwythwyd unrhyw ffeil mewnforio.',
-	'importuploaderrorsize' => "Methodd yr uwchlwytho.
-Mae'r ffeil yn fwy na'r maint y gellir ei uwchlwytho.",
-	'importuploaderrorpartial' => "Methodd yr uwchlwytho.
-Dim ond rhan o'r ffeil sydd wedi ei huwchlwytho.",
+	'importuploaderrorsize' => 'Methodd yr uwchlwytho.
+Mae\'r ffeil yn fwy na\'r maint y gellir ei uwchlwytho.',
+	'importuploaderrorpartial' => 'Methodd yr uwchlwytho.
+Dim ond rhan o\'r ffeil sydd wedi ei huwchlwytho.',
 	'importuploaderrortemp' => 'Methodd yr uwchlwytho.
 Mae ffolder dros dro yn eisiau.',
-	'import-parse-failure' => "Wedi methu dosrannu'r mewnforiad XML",
-	'import-noarticle' => "Ni chafwyd tudalen i'w mewnforio!",
-	'import-nonewrevisions' => "Mae'r holl ddiwygiadau eisoes wedi eu mewnforio.",
+	'import-parse-failure' => 'Wedi methu dosrannu\'r mewnforiad XML',
+	'import-noarticle' => 'Ni chafwyd tudalen i\'w mewnforio!',
+	'import-nonewrevisions' => 'Mae\'r holl ddiwygiadau eisoes wedi eu mewnforio.',
 	'import-upload' => 'Uwchlwytho data XML',
-	'import-token-mismatch' => "Collwyd data'r sesiwn. Ceisiwch eto.",
-	'import-invalid-interwiki' => "Ni ellir uwchlwytho o'r wici dewisedig.",
+	'import-token-mismatch' => 'Collwyd data\'r sesiwn. Ceisiwch eto.',
+	'import-invalid-interwiki' => 'Ni ellir uwchlwytho o\'r wici dewisedig.',
 	'import-error-edit' => 'Ni fewnforiwyd y dudalen "$1" oherwydd nad yw\'r gallu i\'w golygu gennych.',
 	'import-error-create' => 'Ni fewnforiwyd y dudalen "$1" oherwydd nad yw\'r gallu i\'w chreu gennych.',
 	'import-error-interwiki' => 'Ni fewnforwyd y dudalen "$1" oherwydd bod yr enw arni wedi ei neilltuo at ddiben cysylltu\'n allanol (rhyngwici).',
 	'import-error-invalid' => 'Ni fewnforwyd y dudalen "$1" oherwydd bod yr enw arni yn annilys.',
 	'importlogpage' => 'Lòg mewnforio',
-	'importlogpagetext' => "Cofnodion mewnforio tudalennau ynghyd â'u hanes golygu oddi ar wicïau eraill, gan weinyddwyr.",
+	'importlogpagetext' => 'Cofnodion mewnforio tudalennau ynghyd â\'u hanes golygu oddi ar wicïau eraill, gan weinyddwyr.',
 	'import-logentry-upload' => 'wedi mewnforio [[$1]] trwy uwchlwytho ffeil',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|diwygiad|diwygiad|ddiwygiad|diwygiad|diwygiad|diwygiad}}',
 	'import-logentry-interwiki' => 'wedi symud $1 (traws-wici)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|diwygiad|diwygiad|ddiwygiad|diwygiad|diwygiad|diwygiad}} o $2',
-	'imagemaxsize' => "Maint mwyaf y delweddau:<br />''(ar y tudalennau disgrifiad)''",
-	'imagelisttext' => "Isod mae rhestr {{PLURAL:$1|gwag o ffeiliau|o '''$1''' ffeil|o '''$1''' ffeil wedi'u trefnu $2|o '''$1''' ffeil wedi'u trefnu $2|o '''$1''' o ffeiliau wedi'u trefnu $2|o '''$1''' o ffeiliau wedi'u trefnu $2|}}.",
+	'imagemaxsize' => 'Maint mwyaf y delweddau:<br />\'\'(ar y tudalennau disgrifiad)\'\'',
+	'imagelisttext' => 'Isod mae rhestr {{PLURAL:$1|gwag o ffeiliau|o \'\'\'$1\'\'\' ffeil|o \'\'\'$1\'\'\' ffeil wedi\'u trefnu $2|o \'\'\'$1\'\'\' ffeil wedi\'u trefnu $2|o \'\'\'$1\'\'\' o ffeiliau wedi\'u trefnu $2|o \'\'\'$1\'\'\' o ffeiliau wedi\'u trefnu $2|}}.',
 	'ilsubmit' => 'Chwilio',
 	'invalidateemail' => 'Diddymu cadarnhad y cyfeiriad e-bost.',
-	'imgmultipageprev' => "← i'r dudalen gynt",
-	'imgmultipagenext' => "i'r dudalen nesaf →",
+	'imgmultipageprev' => '← i\'r dudalen gynt',
+	'imgmultipagenext' => 'i\'r dudalen nesaf →',
 	'imgmultigo' => 'Eler!',
-	'imgmultigoto' => "Mynd i'r dudalen $1",
+	'imgmultigoto' => 'Mynd i\'r dudalen $1',
 	'intentionallyblankpage' => 'Gadawyd y dudalen hon yn wag o fwriad',
-);
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'index-category' => 'Indekserede sider',
 	'internalerror' => 'Intern fejl',
 	'internalerror_info' => 'Internal fejl: $1',
@@ -4915,14 +4910,14 @@ Se https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-isdir' => 'Du forsøger at få adgang til kataloget "$1".
 Kun adgang til filer tillades.',
 	'img-auth-streaming' => 'Sender "$1".',
-	'img-auth-public' => "img_auth.php's funktion er at sende filer fra en privat wiki.
+	'img-auth-public' => 'img_auth.php\'s funktion er at sende filer fra en privat wiki.
 Denne wiki er konfigureret som en offentlig wiki.
-For optimal sikkerhed er img_auth.php deaktiveret.",
+For optimal sikkerhed er img_auth.php deaktiveret.',
 	'img-auth-noread' => 'Brugeren har ikke rettigheder til at læse "$1".',
 	'img-auth-bad-query-string' => 'URL-adressen har en ugyldig forespørgselsstreng.',
 	'imgfile' => 'Fil',
 	'imagelinks' => 'Filanvendelse',
-	'iteminvalidname' => "Problem med '$1', ugyldigt navn...",
+	'iteminvalidname' => 'Problem med \'$1\', ugyldigt navn...',
 	'invert' => 'Udeluk valgt navnerum',
 	'isredirect' => 'omdirigeringsside',
 	'istemplate' => 'indlejring',
@@ -5001,7 +4996,7 @@ Alle Transwiki import-aktioner protokolleres i [[Special:Log/import|import-logge
 	'import-interwiki-namespace' => 'Importer til navnerum:',
 	'import-upload-filename' => 'Filnavn:',
 	'import-comment' => 'Kommentar:',
-	'importtext' => "Eksportér filen fra kilde-wiki'en ved hjælp af [[Special:Export|eksporterings værktøjet]], gem den på din harddisk og upload den her.",
+	'importtext' => 'Eksportér filen fra kilde-wiki\'en ved hjælp af [[Special:Export|eksporterings værktøjet]], gem den på din harddisk og upload den her.',
 	'importstart' => 'Importerer sider …',
 	'import-revision-count' => '– {{PLURAL:$1|1 version|$1 versioner}}',
 	'importnopages' => 'Ingen sider fundet til import.',
@@ -5035,7 +5030,7 @@ Alle Transwiki import-aktioner protokolleres i [[Special:Log/import|import-logge
 	'import-logentry-upload-detail' => '{{PLURAL:$1|1 version|$1 versioner}}',
 	'import-logentry-interwiki' => '$1 blev importeret (Transwiki)',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|1 version|$1 versioner}} af $2 importeret',
-	'imagemaxsize' => "Maksimal billedstørrelse<br />''(på filbeskrivelsessider)''",
+	'imagemaxsize' => 'Maksimal billedstørrelse<br />\'\'(på filbeskrivelsessider)\'\'',
 	'imagelisttext' => 'Herunder er en liste med $1 {{PLURAL:$1|billede|billeder}} sorteret $2.',
 	'ilsubmit' => 'Søg',
 	'invalidateemail' => 'Cancel e-mail confirmation',
@@ -5044,13 +5039,13 @@ Alle Transwiki import-aktioner protokolleres i [[Special:Log/import|import-logge
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gå til side $1',
 	'intentionallyblankpage' => 'Denne side er bevidst uden indhold.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'index-category' => 'Indizierte Seiten',
 	'internalerror' => 'Interner Fehler',
 	'internalerror_info' => 'Interner Fehler: $1',
-	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein oder leere das Feld.',
+	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein.',
 	'italic_sample' => 'Kursiver Text',
 	'italic_tip' => 'Kursiver Text',
 	'image_sample' => 'Beispiel.jpg',
@@ -5089,13 +5084,17 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 	'ipbreason' => 'Grund:',
 	'ipbreasonotherlist' => 'Anderer Grund',
 	'ipbreason-dropdown' => '* Allgemeine Sperrgründe
-** Einfügen falscher Informationen
-** Leeren von Seiten
-** Massenweises Einfügen externer Links
-** Einstellen unsinniger Inhalte in Seiten
-** Ungebührliches Verhalten
-** Missbrauch mit mehreren Benutzerkonten
-** Ungeeigneter Benutzername',
+** Vandalismus
+** Löschen von Seiten
+** Einstellen unsinniger Seiten
+** Fortgesetzte Verstöße gegen die Richtlinien für Weblinks
+** Verstoß gegen den Grundsatz „Keine persönlichen Angriffe“
+** Erstellen von Spam
+* Benutzerspezifische Sperrgründe
+** Ungeeigneter Benutzername
+** Neuanmeldung eines unbeschränkt gesperrten Benutzers
+* IP-spezifische Sperrgründe
+** Proxy, wegen Vandalismus einzelner Benutzer längerfristig gesperrt',
 	'ipb-hardblock' => 'Angemeldete Benutzer daran hindern, Bearbeitungen unter dieser IP-Adresse vorzunehmen',
 	'ipbcreateaccount' => 'Erstellung von Benutzerkonten verhindern',
 	'ipbemailban' => 'E-Mail-Versand sperren',
@@ -5157,10 +5156,10 @@ Alle Transwiki-Import-Aktionen werden im [[Special:Log/import|Import-Logbuch]] p
 	'import-interwiki-submit' => 'Import',
 	'import-interwiki-namespace' => 'Zielnamensraum:',
 	'import-upload-filename' => 'Dateiname:',
-	'import-comment' => 'Grund:',
+	'import-comment' => 'Herkunft:',
 	'importtext' => 'Bitte die Datei über die Spezialseite [[Special:Export|Exportfunktion]] aus dem Quellwiki exportieren.
 Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
-	'importstart' => 'Importiere Seite …',
+	'importstart' => 'Importiere Seite…',
 	'import-revision-count' => '– {{PLURAL:$1|1 Version|$1 Versionen}}',
 	'importnopages' => 'Keine Seite zum Importieren vorhanden.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|lLogbucheintrag|Logbucheinträge}} importiert.',
@@ -5180,7 +5179,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'import-noarticle' => 'Es wurde keine zu importierende Seite angegeben!',
 	'import-nonewrevisions' => 'Es sind keine neuen Versionen zum Import vorhanden, alle Versionen wurden bereits früher importiert.',
 	'import-upload' => 'XML-Daten importieren',
-	'import-token-mismatch' => 'Verlust der Sessiondaten. Bitte versuche es erneut.',
+	'import-token-mismatch' => 'Verlust der Sitzungsdaten. Bitte versuche es erneut.',
 	'import-invalid-interwiki' => 'Aus dem angegebenen Wiki ist kein Import möglich.',
 	'import-error-edit' => 'Die Seite „$1“ wurde nicht importiert, da du nicht berechtigt bist, sie zu bearbeiten.',
 	'import-error-create' => 'Die Seite „$1“ wurde nicht importiert, da du nicht berechtigt bist, sie zu erstellen.',
@@ -5190,11 +5189,11 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'importlogpage' => 'Import-Logbuch',
 	'importlogpagetext' => 'Administrativer Import von Seiten mit Versionsgeschichte von anderen Wikis.',
 	'import-logentry-upload' => 'importierte „[[$1]]“ von einer Datei',
-	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Version|Versionen}}',
+	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Version|Versionen}} importiert',
 	'import-logentry-interwiki' => 'importierte „$1“ (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Version|Versionen}} von $2',
-	'imagemaxsize' => "Maximale Bildgröße:<br />''(für Dateibeschreibungsseiten)''",
-	'imagelisttext' => "Hier ist eine Liste von '''$1''' {{PLURAL:$1|Datei|Dateien}}, sortiert $2.",
+	'imagemaxsize' => 'Maximale Bildgröße: (für Dateibeschreibungsseiten)',
+	'imagelisttext' => 'Hier ist eine Liste von \'\'\'$1\'\'\' {{PLURAL:$1|Datei|Dateien}}, sortiert $2.',
 	'ilsubmit' => 'Suchen',
 	'invalidateemail' => 'E-Mail-Adressbestätigung abbrechen',
 	'imgmultipageprev' => '← vorherige Seite',
@@ -5202,17 +5201,21 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gehe zu Seite $1',
 	'intentionallyblankpage' => 'Diese Seite ist absichtlich ohne Inhalt. Sie wird für Benchmarks verwendet.',
-);
+	'imagereverted' => 'Das Zurücksetzen auf eine vorherige Version war erfolgreich. <strong>Es kann einige Minuten dauern, bis die Änderung sichtbar wird.</strong>',
+	'insertimage' => 'Bild einfügen',
+	'irc' => 'Echtzeit-Hilfe',
+	'its_easy' => '...einfach und kostenlos',
+];
 
-$messages['de-ch'] = array(
+$messages['de-ch'] = [
 	'img-auth-nologinnWL' => 'Du bist nicht angemeldet und „$1“ ist nicht in der weissen Liste.',
 	'ip_range_toolarge' => 'Adressbereiche, die größer als /$1 sind, sind nicht erlaubt.',
 	'import-interwiki-templates' => 'Alle Vorlagen einschliessen',
 	'importuploaderrorsize' => 'Das Hochladen der Importdatei ist fehlgeschlagen. Die Datei ist grösser als die maximal erlaubte Dateigrösse.',
-	'imagemaxsize' => "Maximale Bildgrösse:<br />''(für Dateibeschreibungsseiten)''",
-);
+	'imagemaxsize' => 'Maximale Bildgrösse:<br />\'\'(für Dateibeschreibungsseiten)\'\'',
+];
 
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte geben Sie eine korrekte Adresse ein oder leeren Sie das Feld.',
 	'illegalfilename' => 'Der Dateiname „$1“ enthält mindestens ein nicht erlaubtes Zeichen. Bitte benennen Sie die Datei um und versuchen Sie sie erneut hochzuladen.',
 	'img-auth-nopathinfo' => 'PATH_INFO fehlt.
@@ -5228,9 +5231,9 @@ Nur Dateizugriff ist erlaubt.',
 Die Versionsdaten und Benutzernamen bleiben dabei erhalten.
 Alle Transwiki-Import-Aktionen werden im [[Special:Log/import|Import-Logbuch]] protokolliert.',
 	'import-token-mismatch' => 'Verlust der Sessiondaten. Bitte versuchen Sie es erneut.',
-);
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'info_short' => 'Inwormasion',
 	'internalerror' => 'Indernes Wehl',
 	'internalerror_info' => 'Indernes Wehl: $1',
@@ -5294,7 +5297,7 @@ $messages['de-weigsbrag'] = array(
 	'ipblocklist' => 'Lisd won geschberdes Benudses/IB-Adreses',
 	'ipblocklist-legend' => 'Sug nag eines geschberdes Benuds',
 	'ipblocklist-username' => 'Benudsesnam od IB-Adres:',
-	'ipblocklist-summary' => "Dose Schbesialseid wührdar – ergänsendes su dose [[Special:Log/block|Benudsesschber-Logbug]], wo ales (End-)Schberes brodogolär wo haddar manueles mag – dose '''agdueles''' geschberdes Benudses und IB-Adreses auw, einschliesliges audomadisches geschberdes IB-Adreses in anonymisärdes Worm.",
+	'ipblocklist-summary' => 'Dose Schbesialseid wührdar – ergänsendes su dose [[Special:Log/block|Benudsesschber-Logbug]], wo ales (End-)Schberes brodogolär wo haddar manueles mag – dose \'\'\'agdueles\'\'\' geschberdes Benudses und IB-Adreses auw, einschliesliges audomadisches geschberdes IB-Adreses in anonymisärdes Worm.',
 	'ipblocklist-submit' => 'Sug',
 	'infiniteblock' => 'noggsbegrensdes',
 	'ipblocklist-empty' => 'Dose Lisd haddar noggs Eindräges drin.',
@@ -5344,7 +5347,7 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Wersion|Wersiones}} won $2',
 	'infosubtitle' => 'Seidesinwormasion',
 	'imagemaxsize' => 'Magsimales Bildgrös auw Bildbeschreibseides:',
-	'imagelisttext' => "Da haddar eines Lisd won '''$1''' {{PLURAL:$1|Dadei|Dadeies}}, sordärdes $2.",
+	'imagelisttext' => 'Da haddar eines Lisd won \'\'\'$1\'\'\' {{PLURAL:$1|Dadei|Dadeies}}, sordärdes $2.',
 	'ilsubmit' => 'Sug',
 	'imagelistall' => 'ales',
 	'invalidateemail' => 'I-Mehl-Adresbeschdäd abbreg',
@@ -5353,9 +5356,9 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 	'imgmultigo' => 'SOCK',
 	'imgmultigoto' => 'Geddar su Seid $1',
 	'intentionallyblankpage' => 'Dose Seid absigdliges haddar noggs Inhald. Dose wür Benschmargs werwend.',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'index-category' => 'Pelê endeksıni',
 	'internalerror' => 'Xeta zerreki',
 	'internalerror_info' => 'Xeta zerreki: $1',
@@ -5376,17 +5379,17 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization Selahiyetê resımi b�
 	'img-auth-notindir' => 'Patikayê ke ti wazeno direktorê bar biyayişî de çin o.',
 	'img-auth-badtitle' => '"$1" ra nieşkeno yew seroğê raştî virazî.',
 	'img-auth-nologinnWL' => 'Ti cikewte ni yo u "$1" listeyo sipê de çin o.',
-	'img-auth-nofile' => "Dosyayê ''$1''î çin o.",
+	'img-auth-nofile' => 'Dosyayê \'\'$1\'\'î çin o.',
 	'img-auth-isdir' => '"$1" şıma gêrenî bıresî tiya.
 şıma têna eşkenî bıresi dosya.',
 	'img-auth-streaming' => '"$1" stream keno.',
-	'img-auth-public' => "img_auth.php'nin fonksiyonê ney; wiki ra dosyaya xususiyan vetışo.
+	'img-auth-public' => 'img_auth.php\'nin fonksiyonê ney; wiki ra dosyaya xususiyan vetışo.
 no wiki bı umumi eyar biyo.
-qey pawıtışi, img_auth.php battal verdiyayo.",
+qey pawıtışi, img_auth.php battal verdiyayo.',
 	'img-auth-noread' => 'Heqqa karberanî çino ke "$1" biwendi',
 	'imgfile' => 'dosya',
 	'imagelinks' => 'Gurenayışê dosya',
-	'iteminvalidname' => "pê no '$1' unsuri problem bı, nameyo nemeqbul...",
+	'iteminvalidname' => 'pê no \'$1\' unsuri problem bı, nameyo nemeqbul...',
 	'invert' => 'seleksiyon peyser biya',
 	'isredirect' => 'pele redireksiyon',
 	'istemplate' => 'transklusyon',
@@ -5476,8 +5479,8 @@ karê zerredayişê benateyê wikiyani[[Special:Log/import|zerreyê rocaneyê k�
 	'importhistoryconflict' => 'verê revizyon ê ke pêverdiyaye yê tiya de mewcud o (no pel, belka cıwa ver kırışiyayo zerreyi)',
 	'importnosources' => 'çımeyê kırıştışê zerredayişi nidiyo şınasnayişi u barbiyayişê verıni battal verdiyo.',
 	'importnofile' => 'Yew zi dosyayê împortî bar nibiyo.',
-	'importuploaderrorsize' => "barbiyayişê kırıştışê zerredayişi nibı.
-gırdiyê dosyayi, gırdî yo ke musa'ade biyo ıney gırdıyî ra gırd o.",
+	'importuploaderrorsize' => 'barbiyayişê kırıştışê zerredayişi nibı.
+gırdiyê dosyayi, gırdî yo ke musa\'ade biyo ıney gırdıyî ra gırd o.',
 	'importuploaderrorpartial' => 'barbiyayişê kırıştışê zerredayişi nibı.
 têna yew qısımê dosyayi ey bar bı',
 	'importuploaderrortemp' => 'barbiyayişê kırıştışê zerredayişi nibı.
@@ -5486,7 +5489,7 @@ dosyaya emaneti vindbiyo',
 	'import-noarticle' => 'Pel çino ke împort bike!',
 	'import-nonewrevisions' => 'Revizyonê hemi vernî de împort biyê.',
 	'import-upload' => 'Dosyayê XML bar bike',
-	'import-token-mismatch' => "vindibiyayişê ma'lumatê hesabi. kerem kerê newe ra tesel/cereb bıkerê.",
+	'import-token-mismatch' => 'vindibiyayişê ma\'lumatê hesabi. kerem kerê newe ra tesel/cereb bıkerê.',
 	'import-invalid-interwiki' => 'Eya wîkî ra nieşkenî împort bike.',
 	'importlogpage' => 'Logê împortî',
 	'importlogpagetext' => 'wiki yo ke nişane biyo tera kırıştışê zerredayişi nêbeno.',
@@ -5494,8 +5497,8 @@ dosyaya emaneti vindbiyo',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revizyon|revizyonî}}',
 	'import-logentry-interwiki' => '$1 transwiki biyo',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revizyon|revizyonî}} $2 ra',
-	'imagemaxsize' => "Limitê ebat ê resimi:<br />''(qe pela deskripsiyonê dosyayan)''",
-	'imagelisttext' => "Cêr de yew listeyê '''$1''' esto {{PLURAL:$1|dosya|dosyayi}} veçiniya $2.",
+	'imagemaxsize' => 'Limitê ebat ê resimi:<br />\'\'(qe pela deskripsiyonê dosyayan)\'\'',
+	'imagelisttext' => 'Cêr de yew listeyê \'\'\'$1\'\'\' esto {{PLURAL:$1|dosya|dosyayi}} veçiniya $2.',
 	'ilsubmit' => 'Cıgeyre',
 	'invalidateemail' => 'confirmasyonê e-maili iptal bik',
 	'imgmultipageprev' => 'peleyê verin',
@@ -5503,9 +5506,9 @@ dosyaya emaneti vindbiyo',
 	'imgmultigo' => 'Şı!',
 	'imgmultigoto' => 'Şi pel $1',
 	'intentionallyblankpage' => 'Ena pel bi zanayişî weng mendo.',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'index-category' => 'Indicěrowane boki',
 	'internalerror' => 'Interna zmólka',
 	'internalerror_info' => 'Interna zmólka: $1',
@@ -5653,8 +5656,8 @@ Wšykne transwiki-importowe akcije protokolěruju se w [[Special:Log/import|log-
 	'import-logentry-upload-detail' => '{{PLURAL:$1|$1 wersija|$1 wersiji|$1 wersije}}',
 	'import-logentry-interwiki' => 'Dataja $1 jo se importěrowała (transwiki).',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|$1 wersija|$1 wersiji|$1 wersije}} wót $2',
-	'imagemaxsize' => "Maksimalna wobrazowa wjelikosć:<br />'' (za boki datajowego wopisanja)''",
-	'imagelisttext' => "How jo lisćina '''$1''' {{PLURAL:$1|dataje|datajowu|datajow}}, sortěrowane $2.",
+	'imagemaxsize' => 'Maksimalna wobrazowa wjelikosć:<br />\'\' (za boki datajowego wopisanja)\'\'',
+	'imagelisttext' => 'How jo lisćina \'\'\'$1\'\'\' {{PLURAL:$1|dataje|datajowu|datajow}}, sortěrowane $2.',
 	'ilsubmit' => 'Pytaś',
 	'invalidateemail' => 'Emailowe wobkšuśenje pśetergnuś',
 	'imgmultipageprev' => '← slědny bok',
@@ -5674,9 +5677,9 @@ Wšykne transwiki-importowe akcije protokolěruju se w [[Special:Log/import|log-
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
 	'intentionallyblankpage' => 'Toś ten bok jo z wótglědom prozny.',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'index-category' => 'Bolikon naka-abisi',
 	'internalerror' => 'Kinosilapan poinsuang',
 	'internalerror_info' => 'Kinosilapan poinsuang: $1',
@@ -5696,18 +5699,18 @@ Maai posuango nuludan tosonong do kinoyonon toi pologoson do ingaa suang dilo po
 	'ipblocklist' => 'Antabai momomoguno',
 	'ipblocklist-legend' => 'Ihumo momomoguno naantaban',
 	'ipblocklist-submit' => 'Ihumo',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'italic_sample' => 'ކަތި އިބާރާތް',
 	'italic_tip' => 'ކަތި އިބާރާތް',
 	'imagelinks' => 'ފާލަންތައް',
 	'ipbreason' => 'ސަބަބު',
 	'ipbsubmit' => 'މި މެމްބަރާއި މެދު ފިޔަވަޅު އަޅުއްވާ!',
 	'ilsubmit' => 'ހޯއްދަވާ',
-);
+];
 
-$messages['dz'] = array(
+$messages['dz'] = [
 	'italic_sample' => 'ཨའི་ཊ་ལིཀ་ཚིག་ཡིག།',
 	'italic_tip' => 'ཨའི་ཊ་ལིཀ་ཚིག་ཡིག།',
 	'image_tip' => 'གནས་འདྲེན་ཡིག་སྣོད།',
@@ -5718,9 +5721,9 @@ $messages['dz'] = array(
 	'ipboptions' => 'ཆུ་ཚོད་ ༢:2 hours,ཉིནམ་ ༡:1 day,ཉིནམ་ ༣:3 days,བདུན་ཕྲག་ ༡:1 week,བདུན་ཕྲག་ ༢:2 weeks,ཟླཝ་ ༡:1 month,ཟླཝ་ ༣:3 months,ཟླཝ་ ༦:6 months,ལོ་ ༡:1 year,ཚད་ལས་འདས་པ་:infinite',
 	'ipblocklist' => 'བཀག་ཆ་འབད་ཡོད་པའི ཨའི་པི་ཁ་བྱང་དང་ལག་ལེན་པའི་མིང།',
 	'importlogpage' => 'ལོག་ ནང་འདྲེན་འབད།',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'invert' => 'Trɔ tatiawo tu',
 	'ipbexpiry' => 'Nuwuwu:',
 	'ipboptions' => 'gaƒoƒo 2:2 hours,ŋkeke 1:1 day,ŋkeke 3:3 days,kɔsiɖa 1:1 week,kɔsiɖa 2:2 weeks,ɣleti 1:1 month,ɣleti 3:3 months,ɣleti 6:6 months,ƒe 1:1 year,tegbe:infinite',
@@ -5734,9 +5737,9 @@ $messages['ee'] = array(
 	'imgmultipagenext' => 'axa yometɔ',
 	'imgmultigo' => 'Yi!',
 	'imgmultigoto' => 'Yi axa $1',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'index-category' => 'Συντεταγμένες σελίδες',
 	'internalerror' => 'Εσωτερικό σφάλμα',
 	'internalerror_info' => 'Εσωτερικό σφάλμα: $1',
@@ -5795,7 +5798,7 @@ $messages['el'] = array(
 	'ipbotheroption' => 'άλλη',
 	'ipbotherreason' => 'Άλλος/επιπλέον λόγος:',
 	'ipbhidename' => 'Απόκρυψη ονόματος χρήστη από επεξεργασίες και καταλόγους',
-	'ipbwatchuser' => "Παρακολούθηση των σελίδων 'χρήστη' και 'συζήτησης χρήστη' αυτού του χρήστη",
+	'ipbwatchuser' => 'Παρακολούθηση των σελίδων \'χρήστη\' και \'συζήτησης χρήστη\' αυτού του χρήστη',
 	'ipb-disableusertalk' => 'Αποτρέψτε αυτό το χρήστη από την επεξεργασία της δική του σελίδας συζήτησης, ενώ είναι αποκλεισμένος',
 	'ipb-change-block' => 'Επαναφραγή του χρήστη με αυτές τις ρυθμίσεις',
 	'ipb-confirm' => 'Επιβεβαίωση φραγής',
@@ -5878,8 +5881,8 @@ $messages['el'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|αναθεώρηση|αναθεωρήσεις}}',
 	'import-logentry-interwiki' => 'η σελίδα $1 εισάχθηκε μεταξύ wiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|αναθεώρηση|αναθεωρήσεις}} από $2',
-	'imagemaxsize' => "Όριο μεγέθους εικόνων:<br />''(στις σελίδες περιγραφής εικόνων)''",
-	'imagelisttext' => "Ακολουθεί κατάλογος '''$1''' {{PLURAL:$1|αρχείου|αρχείων}} ταξινομημένων κατά σειρά $2.",
+	'imagemaxsize' => 'Όριο μεγέθους εικόνων:<br />\'\'(στις σελίδες περιγραφής εικόνων)\'\'',
+	'imagelisttext' => 'Ακολουθεί κατάλογος \'\'\'$1\'\'\' {{PLURAL:$1|αρχείου|αρχείων}} ταξινομημένων κατά σειρά $2.',
 	'ilsubmit' => 'Αναζήτηση',
 	'invalidateemail' => 'Ακύρωση επιβεβαίωσης της διεύθυνσης e-mail',
 	'imgmultipageprev' => '← προηγούμενη σελίδα',
@@ -5887,13 +5890,13 @@ $messages['el'] = array(
 	'imgmultigo' => 'Πήγαινε!',
 	'imgmultigoto' => 'Μετάβαση στη σελίδα $1',
 	'intentionallyblankpage' => 'Αυτή η σελίδα έχει αφεθεί σκοπίμως κενή',
-);
+];
 
-$messages['eml'] = array(
+$messages['eml'] = [
 	'ilsubmit' => 'Zerca',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'index-category' => 'Indeksitaj paĝoj',
 	'internalerror' => 'Interna eraro',
 	'internalerror_info' => 'Interna eraro: $1',
@@ -6039,8 +6042,8 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versio|versioj}}',
 	'import-logentry-interwiki' => 'transvikiigita $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versio|versioj}} de $2',
-	'imagemaxsize' => "Limo por bildoj:<br />''(por dosieraj priskribo-paĝoj)''",
-	'imagelisttext' => "Jen listo de '''$1''' {{PLURAL:$1|dosiero|dosieroj}}, ordigitaj laŭ $2.",
+	'imagemaxsize' => 'Limo por bildoj:<br />\'\'(por dosieraj priskribo-paĝoj)\'\'',
+	'imagelisttext' => 'Jen listo de \'\'\'$1\'\'\' {{PLURAL:$1|dosiero|dosieroj}}, ordigitaj laŭ $2.',
 	'ilsubmit' => 'Serĉi',
 	'invalidateemail' => 'Nuligi konfirmadon de retadreso',
 	'imgmultipageprev' => '← antaŭa paĝo',
@@ -6048,14 +6051,14 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 	'imgmultigo' => 'Ek!',
 	'imgmultigoto' => 'Iri al paĝo $1',
 	'intentionallyblankpage' => 'Ĉi tiu paĝo intencie estas malplena kaj estas uzata por testado, ktp.',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'index-category' => 'Páginas indexadas',
 	'internalerror' => 'Error interno',
 	'internalerror_info' => 'Error interno: $1',
-	'invalidemailaddress' => 'La dirección electrónica no puede ser aceptada, pues parece que tiene un formato no válido.
-Por favor, escribe una dirección en el formato adecuado o deja el campo en blanco.',
+	'invalidemailaddress' => 'La dirección de correo electrónico no puede ser aceptada, ya que no tiene un formato válido.
+Por favor, introduzca una dirección válida.',
 	'italic_sample' => 'Texto en cursiva',
 	'italic_tip' => 'Texto en cursiva',
 	'image_sample' => 'Ejemplo.jpg',
@@ -6077,14 +6080,14 @@ Consulte https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-isdir' => 'Estás tratando de acceder a un directorio «$1».
 Solo se permite el acceso a los archivos.',
 	'img-auth-streaming' => 'Streaming «$1».',
-	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde una wiki privada.
-Esta wiki está configurada como pública.
-Para óptima seguridad, img_auth.php está desactivado.',
+	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde un wiki privado.
+Este wiki está configurado como wiki público.
+Para optima seguridad, img_auth.php está deshabilitado.',
 	'img-auth-noread' => 'El usuario no tiene acceso para leer «$1».',
 	'img-auth-bad-query-string' => 'La dirección URL tiene una cadena de consulta no válida.',
 	'imgfile' => 'archivo',
 	'imagelinks' => 'Usos del archivo',
-	'iteminvalidname' => "Problema con el artículo '$1', nombre inválido...",
+	'iteminvalidname' => 'Problema con el artículo \'$1\', nombre inválido...',
 	'invert' => 'Invertir selección',
 	'isredirect' => 'página redirigida',
 	'istemplate' => 'inclusión',
@@ -6093,13 +6096,18 @@ Para óptima seguridad, img_auth.php está desactivado.',
 	'ipbexpiry' => 'Caduca dentro de',
 	'ipbreason' => 'Motivo:',
 	'ipbreasonotherlist' => 'Otra razón',
-	'ipbreason-dropdown' => '*Motivos comunes de bloqueo
+	'ipbreason-dropdown' => '* Relacionado con la edición de paginas
 ** Añadir información falsa
 ** Eliminar contenido de las páginas
-** Publicitar enlaces a otras páginas web
+** Poner publicidad con enlaces a otras páginas web
 ** Añadir basura a las páginas
-** Comportamiento intimidatorio u hostil
+* Comportamiento del usuario
+** Comportamiento intimidatorio
+** Acoso sexual hacia otros usuarios
+** Insultos o ataques contra otros usuarios
+* Aspectos técnicos
 ** Abusar de múltiples cuentas
+** Ser menor de 13 años y no disponer de autorización
 ** Nombre de usuario inaceptable',
 	'ipb-hardblock' => 'Impedir que los usuarios identificados editen desde esta dirección IP',
 	'ipbcreateaccount' => 'Prevenir la creación de cuentas de usuario',
@@ -6137,18 +6145,18 @@ Para óptima seguridad, img_auth.php está desactivado.',
 	'ipb_already_blocked' => '"$1" ya se encuentra bloqueado.',
 	'ipb-needreblock' => '$1 ya está bloqueado. ¿Quieres cambiar el bloqueo?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Otro bloqueo|Otros bloqueos}}',
-	'ipb_cant_unblock' => "'''Error''': Número ID $1 de bloqueo no encontrado. Pudo haber sido desbloqueado ya.",
+	'ipb_cant_unblock' => '\'\'\'Error\'\'\': Número ID $1 de bloqueo no encontrado. Pudo haber sido desbloqueado ya.',
 	'ipb_blocked_as_range' => 'Error: la dirección IP $1 no está bloqueada directamente y no puede ser desbloqueada.
 Sin embargo, está bloqueada como parte del rango $2, que puede ser desbloqueado.',
 	'ip_range_invalid' => 'El rango de IP no es válido.',
 	'ip_range_toolarge' => 'Los bloqueos de rango superiores a /$1 no están permitidos.',
 	'ipbblocked' => 'No puedes bloquear o desbloquear a otros usuarios porque estás bloqueado',
 	'ipbnounblockself' => 'No puedes desbloquearte',
-	'immobile-source-namespace' => 'No se pueden trasladar páginas en el espacio de nombres «$1»',
-	'immobile-target-namespace' => 'No se puede trasladar páginas al espacio de nombres «$1»',
-	'immobile-target-namespace-iw' => 'Un enlace interwiki no es un destino válido para trasladar una página.',
+	'immobile-source-namespace' => 'No se pueden renombrar páginas en el espacio de nombres «$1»',
+	'immobile-target-namespace' => 'No se puede renombrar páginas al espacio de nombres «$1»',
+	'immobile-target-namespace-iw' => 'Un enlace interwiki no es un destino válido para renombrar una página.',
 	'immobile-source-page' => 'Esta página no se puede renombrar.',
-	'immobile-target-page' => 'No se puede trasladar a tal título.',
+	'immobile-target-page' => 'No se puede renombrar a tal título.',
 	'imagenocrossnamespace' => 'No se puede trasladar el fichero a otro espacio de nombres',
 	'imagetypemismatch' => 'La nueva extensión de archivo no corresponde con su tipo',
 	'imageinvalidfilename' => 'El nombre del fichero de destino no es válido',
@@ -6189,7 +6197,7 @@ No hay un directorio temporal.',
 	'import-nonewrevisions' => 'Todas las revisiones fueron previamente importadas.',
 	'import-upload' => 'Subir datos XML',
 	'import-token-mismatch' => 'Pérdida de datos de sesión. Por favor, inténtalo de nuevo.',
-	'import-invalid-interwiki' => 'No se puede importar de la wiki especificada.',
+	'import-invalid-interwiki' => 'No se puede importar desde el wiki especificado.',
 	'import-error-edit' => 'La página $1 no se importó porque no tienes permisos para editarla.',
 	'import-error-create' => 'La página «$1» no se importó porque no tienes permisos para crearla.',
 	'import-error-interwiki' => 'La página "$1" no se ha importado porque su nombre está reservado para la vinculación externa (interwikis).',
@@ -6201,8 +6209,8 @@ No hay un directorio temporal.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisión|revisiones}}',
 	'import-logentry-interwiki' => 'transwikificada $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisión|revisiones}} desde $2',
-	'imagemaxsize' => "Límite de tamaño de imagen:<br />''(para páginas de descripción de archivo)''",
-	'imagelisttext' => "Debajo hay una lista de '''$1''' {{PLURAL:$1|imagen|imágenes}} ordenadas $2.",
+	'imagemaxsize' => 'Límite de tamaño de imagen: (para páginas de descripción de archivo)',
+	'imagelisttext' => 'Debajo hay una lista de \'\'\'$1\'\'\' {{PLURAL:$1|imagen|imágenes}} ordenadas $2.',
 	'ilsubmit' => 'Buscar',
 	'invalidateemail' => 'Cancelar confirmación de correo electrónico',
 	'imgmultipageprev' => '← página anterior',
@@ -6210,9 +6218,10 @@ No hay un directorio temporal.',
 	'imgmultigo' => '¡Ir!',
 	'imgmultigoto' => 'Ir a la página $1',
 	'intentionallyblankpage' => 'Esta pagina está en blanco de manera intencionada.',
-);
+	'its_easy' => '...es fácil y gratis',
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'index-category' => 'Indeksiga leheküljed',
 	'internalerror' => 'Sisemine viga',
 	'internalerror_info' => 'Sisemine viga: $1',
@@ -6247,7 +6256,7 @@ Turvakaalutlustel on img_auth.php kasutus keelatud.',
 	'img-auth-bad-query-string' => 'URL-is on vigane päringusõne.',
 	'imgfile' => 'fail',
 	'imagelinks' => 'Failikasutus',
-	'iteminvalidname' => "Probleem üksusega '$1'. Selle nimes on viga.",
+	'iteminvalidname' => 'Probleem üksusega \'$1\'. Selle nimes on viga.',
 	'invert' => 'Näita kõiki peale valitud nimeruumi',
 	'isredirect' => 'ümbersuunamislehekülg',
 	'istemplate' => 'kasutamine mallina',
@@ -6368,9 +6377,9 @@ Palun ürita uuesti.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|redaktsioon|redaktsiooni}}',
 	'import-logentry-interwiki' => 'importis teisest vikist lehekülje $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|redaktsioon|redaktsiooni}} asukohast $2',
-	'imagemaxsize' => "Pildi suuruse ülemmäär:<br />''(faili kirjeldusleheküljel)''",
-	'imagelisttext' => "
-Järgnevas loendis, mis on sorteeritud $2, on '''$1''' {{PLURAL:$1|fail|faili}}.",
+	'imagemaxsize' => 'Pildi suuruse ülemmäär:<br />\'\'(faili kirjeldusleheküljel)\'\'',
+	'imagelisttext' => '
+Järgnevas loendis, mis on sorteeritud $2, on \'\'\'$1\'\'\' {{PLURAL:$1|fail|faili}}.',
 	'ilsubmit' => 'Otsi',
 	'invalidateemail' => 'E-posti aadressi kinnituse tühistamine',
 	'imgmultipageprev' => '← eelmine lehekülg',
@@ -6378,9 +6387,9 @@ Järgnevas loendis, mis on sorteeritud $2, on '''$1''' {{PLURAL:$1|fail|faili}}.
 	'imgmultigo' => 'Mine!',
 	'imgmultigoto' => 'Mine leheküljele $1',
 	'intentionallyblankpage' => 'See lehekülg on sihilikult tühjaks jäetud.',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'index-category' => 'Indexatutako orrialdeak',
 	'internalerror' => 'Barne errorea',
 	'internalerror_info' => 'Barne errorea: $1',
@@ -6410,7 +6419,7 @@ Fitxategien sarbidea baino ez da onartzen.',
 	'img-auth-noread' => 'Erabiltzaileak ez du "$1" irakurtzeko sarbiderik.',
 	'imgfile' => 'fitxategia',
 	'imagelinks' => 'Fitxategiaren erabilera',
-	'iteminvalidname' => "Arazoa '$1' elementuarekin, baliogabeko izena...",
+	'iteminvalidname' => 'Arazoa \'$1\' elementuarekin, baliogabeko izena...',
 	'invert' => 'Hautapena alderanztu',
 	'isredirect' => 'birzuzenketa orrialdea',
 	'istemplate' => 'erabilpena',
@@ -6513,8 +6522,8 @@ Fitxategiaren atal bat baino ez zen igo.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|berrikuspen|berrikuspen}}',
 	'import-logentry-interwiki' => '$1 wiki artean mugitu da',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|berrikuspen|berrikuspen}} $2-(e)tik',
-	'imagemaxsize' => "Irudiaren tamainaren muga:<br />''(fitxategi deskribapen-orrietarako)''",
-	'imagelisttext' => "Jarraian duzu $2(e)z ordenatutako {{PLURAL:$1|fitxategi baten|'''$1''' fitxategiren}} zerrenda.",
+	'imagemaxsize' => 'Irudiaren tamainaren muga:<br />\'\'(fitxategi deskribapen-orrietarako)\'\'',
+	'imagelisttext' => 'Jarraian duzu $2(e)z ordenatutako {{PLURAL:$1|fitxategi baten|\'\'\'$1\'\'\' fitxategiren}} zerrenda.',
 	'ilsubmit' => 'Bilatu',
 	'invalidateemail' => 'E-mail bidezko ziurtatzea deuseztu',
 	'imgmultipageprev' => '&larr; aurreko orrialdea',
@@ -6522,12 +6531,12 @@ Fitxategiaren atal bat baino ez zen igo.',
 	'imgmultigo' => 'Joan!',
 	'imgmultigoto' => '$1 orrialdera joan',
 	'intentionallyblankpage' => 'Orri hau nahita utzi da hutsik',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'internalerror' => 'Marru entelnu',
 	'internalerror_info' => 'Marru entelnu: $1',
-	'invalidemailaddress' => "Nu es possibri acetal la tu direción d'email ebiu a que paci tenel un jolmatu nu premitiu. Pol favol, escrebi una direción con algotru jolmatu, u quea en brancu el cuairu.",
+	'invalidemailaddress' => 'Nu es possibri acetal la tu direción d\'email ebiu a que paci tenel un jolmatu nu premitiu. Pol favol, escrebi una direción con algotru jolmatu, u quea en brancu el cuairu.',
 	'italic_sample' => 'Testu en letra "Itálica"',
 	'italic_tip' => 'Testu en letra "Itálica"',
 	'image_sample' => 'Sabulugal.jpg',
@@ -6537,7 +6546,7 @@ $messages['ext'] = array(
 	'illegalfilename' => 'El nombri "$1" tiini carateris que nu están premitius enus entítulus de páhinas. Pol favol, ponli otru nombri al archivu i preba a empuntalu e nuevu.',
 	'imgfile' => 'archivu',
 	'imagelinks' => 'Atihus',
-	'iteminvalidname' => "Pobrema con el artículu '$1', nombri nu premitiu...",
+	'iteminvalidname' => 'Pobrema con el artículu \'$1\', nombri nu premitiu...',
 	'invert' => 'Invertil seleción',
 	'isredirect' => 'Rederihil páhina',
 	'istemplate' => 'inclusión',
@@ -6556,21 +6565,21 @@ $messages['ext'] = array(
 ** Nombris d´usuárius enacetabris',
 	'ipbcreateaccount' => 'Atarugal el criaeru e cuentas',
 	'ipbemailban' => 'Atarugal al usuáriu envial emails',
-	'ipbenableautoblock' => "Atarugal autumáticamenti la direción IP gastá pol esti usuáriu, i cualisquiel IP posteriol endi la cual trati d'eital",
+	'ipbenableautoblock' => 'Atarugal autumáticamenti la direción IP gastá pol esti usuáriu, i cualisquiel IP posteriol endi la cual trati d\'eital',
 	'ipbsubmit' => 'Atarugal a esti usuáriu',
 	'ipbother' => 'Otra ora:',
 	'ipboptions' => '2 oras:2 hours,1 dia:1 day,3 dias:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 mesis:3 months,6 mesis:6 months,1 añu:1 year,enfinitu:infinite',
 	'ipbotheroption' => 'otru',
 	'ipbotherreason' => 'Anguna otra razón?:',
 	'ipbhidename' => 'Açonchal nombri d\'usuáriu nel "rustrihu e tarugus", "lista e tarugus ativus" i "lista d\'usuárius"',
-	'ipbwatchuser' => "Visoreal la páhina d'usuáriu i la caraba d'esti usuáriu.",
+	'ipbwatchuser' => 'Visoreal la páhina d\'usuáriu i la caraba d\'esti usuáriu.',
 	'ipb-edit-dropdown' => 'Eital las razonis el tarugu',
 	'ipb-unblock-addr' => 'Desatarugal $1',
 	'ipb-unblock' => 'Desatarugal un nombri d´usuáriu u direción IP',
 	'ipb-blocklist' => 'Vel tarugus desistentis',
 	'ipb-blocklist-contribs' => 'Contribucionis de $1',
 	'ipusubmit' => 'Esborral esti tarugu',
-	'ipblocklist' => "Lista de IP i nombris d'usuárius atarugaus",
+	'ipblocklist' => 'Lista de IP i nombris d\'usuárius atarugaus',
 	'ipblocklist-legend' => 'Landeal a un usuáriu atarugau',
 	'ipblocklist-submit' => 'Landeal',
 	'infiniteblock' => 'enfinitu',
@@ -6578,16 +6587,16 @@ $messages['ext'] = array(
 	'ipblocklist-no-results' => 'Esta direción IP/nombri d´usuáriu nu está atarugau.',
 	'ipb_expiry_invalid' => 'Tiempu encorretu.',
 	'ipb_already_blocked' => '"$1" ya está atarugau',
-	'ipb_cant_unblock' => "Marru: Nu s'á alcuentrau el tarugu con ID $1. Es posibri que ya aiga siu desatarugau.",
-	'ipb_blocked_as_range' => "Marru: La IP $1 nu s'alcuentra atarugá diretamenti, polo que nu puei sel desatarugá. Nu ostanti, hue atarugá cumu parti el intervalu $2, que puei sel desatarugau.",
-	'ip_range_invalid' => "Rangu d'IP nu premitiu.",
+	'ipb_cant_unblock' => 'Marru: Nu s\'á alcuentrau el tarugu con ID $1. Es posibri que ya aiga siu desatarugau.',
+	'ipb_blocked_as_range' => 'Marru: La IP $1 nu s\'alcuentra atarugá diretamenti, polo que nu puei sel desatarugá. Nu ostanti, hue atarugá cumu parti el intervalu $2, que puei sel desatarugau.',
+	'ip_range_invalid' => 'Rangu d\'IP nu premitiu.',
 	'immobile-source-page' => 'Nu es possibri mual esta página.',
 	'import' => 'Emporteal páhinas',
 	'importinterwiki' => 'Emporteaeru trasgüiqui',
-	'import-interwiki-text' => "Aseñala un güiqui i el entítulu la páhina que quieas emporteal.
+	'import-interwiki-text' => 'Aseñala un güiqui i el entítulu la páhina que quieas emporteal.
 Las fechas las revisionis i los nombris los eitoris se mantendrán.
-Tolas acionis d'emporteau transwiki se rustrin nel [[Special:Log/import|rustrihu d'emporteau]].",
-	'import-interwiki-history' => "Copial tolas velsionis estóricas d'esta páhina",
+Tolas acionis d\'emporteau transwiki se rustrin nel [[Special:Log/import|rustrihu d\'emporteau]].',
+	'import-interwiki-history' => 'Copial tolas velsionis estóricas d\'esta páhina',
 	'import-interwiki-templates' => 'Encruil tolos cuairus',
 	'import-interwiki-submit' => 'Emporteal',
 	'import-interwiki-namespace' => 'Movel páginas al espáciu nombris:',
@@ -6602,19 +6611,19 @@ Tolas acionis d'emporteau transwiki se rustrin nel [[Special:Log/import|rustrihu
 	'importnotext' => 'Vaciu u sin testu',
 	'importsuccess' => 'Archivu emporteau!',
 	'importnofile' => 'Dengún archivu emporteau hue empuntau.',
-	'import-parse-failure' => "Marru nel análisis d'emporteación XML",
+	'import-parse-failure' => 'Marru nel análisis d\'emporteación XML',
 	'import-noarticle' => 'Nu ai páhinas pa emporteal!',
 	'import-nonewrevisions' => 'Ya án siu emporteás tolas revisionis.',
 	'import-upload' => 'Empuntal datus XML',
 	'importlogpage' => 'Emporteal rustrihu',
-	'importlogpagetext' => "Emporteacionis alministrativas de páhinas con estorial d'edicionis d'otras güiquis.",
-	'import-logentry-upload' => "á emporteau [[$1]] pol empuntu d'archivu",
+	'importlogpagetext' => 'Emporteacionis alministrativas de páhinas con estorial d\'edicionis d\'otras güiquis.',
+	'import-logentry-upload' => 'á emporteau [[$1]] pol empuntu d\'archivu',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisión|revisionis}}',
 	'import-logentry-interwiki' => 'trasgüiquipeau $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisión|revisionis}} dendi $2',
-	'imagelisttext' => "Embahu ai una lista con '''$1''' {{PLURAL:$1|archivu|archivus}} ordenaus $2.",
+	'imagelisttext' => 'Embahu ai una lista con \'\'\'$1\'\'\' {{PLURAL:$1|archivu|archivus}} ordenaus $2.',
 	'ilsubmit' => 'Landeal',
-	'invalidateemail' => "Cancelal el confirmaeru d'email",
+	'invalidateemail' => 'Cancelal el confirmaeru d\'email',
 	'imgmultipageprev' => '← páhina anteriol',
 	'imgmultipagenext' => 'páhina siguienti →',
 	'imgmultigo' => 'Dil!',
@@ -6631,9 +6640,9 @@ Tolas acionis d'emporteau transwiki se rustrin nel [[Special:Log/import|rustrihu
 	'iranian-calendar-m10' => '10 mes Jalāli',
 	'iranian-calendar-m11' => '11 mes Jalāli',
 	'iranian-calendar-m12' => '12 mes Jalāli',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'index-category' => 'صفحه‌های نمایه شده',
 	'internalerror' => 'خطای داخلی',
 	'internalerror_info' => 'خطای داخلی: $1',
@@ -6785,7 +6794,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|نسخه|نسخه}}',
 	'import-logentry-interwiki' => '$1 را تراویکی کرد',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|نسخه|نسخه}} از $2',
-	'imagemaxsize' => "محدودیت ابعاد تصویر:<br />''(برای صفحه‌های توصیف پرونده)''",
+	'imagemaxsize' => 'محدودیت ابعاد تصویر:<br />\'\'(برای صفحه‌های توصیف پرونده)\'\'',
 	'imagelisttext' => 'در زیر فهرست $1 {{PLURAL:$1|تصویری|تصویری}} که $2 مرتب شده است آمده است.',
 	'ilsubmit' => 'جستجو',
 	'invalidateemail' => 'لغو کردن تأیید نشانی پست الکترونیکی',
@@ -6806,24 +6815,26 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'اسفند',
 	'intentionallyblankpage' => 'این صفحه به طور عمدی خالی گذاشته شده است.',
-);
+	'insertimage' => 'درج‌کردن تصویر',
+	'its_easy' => '...این کار ساده و مجانی است',
+];
 
-$messages['ff'] = array(
+$messages['ff'] = [
 	'ilsubmit' => 'Yiilaade',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'index-category' => 'Indeksoidut sivut',
 	'internalerror' => 'Sisäinen virhe',
 	'internalerror_info' => 'Sisäinen virhe: $1',
-	'invalidemailaddress' => 'Sähköpostiosoitetta ei voida hyväksyä, koska se ei ole oikeassa muodossa. Ole hyvä ja anna oikea sähköpostiosoite tai jätä kenttä tyhjäksi.',
+	'invalidemailaddress' => 'Ole hyvä ja laita toiminnassa oleva sähköpostiosoite.',
 	'italic_sample' => 'Kursivoitu teksti',
 	'italic_tip' => 'Kursivointi',
 	'image_sample' => 'Esimerkki.jpg',
 	'image_tip' => 'Tallennettu tiedosto',
 	'ignorewarning' => 'Tallenna tiedosto varoituksesta huolimatta.',
 	'ignorewarnings' => 'Ohita kaikki varoitukset',
-	'illegalfilename' => "Tiedoston nimessä '''$1''' on merkkejä, joita ei sallita sivujen nimissä. Vaihda tiedoston nimeä, ja yritä lähettämistä uudelleen.",
+	'illegalfilename' => 'Tiedoston nimessä \'\'\'$1\'\'\' on merkkejä, joita ei sallita sivujen nimissä. Vaihda tiedoston nimeä, ja yritä lähettämistä uudelleen.',
 	'illegal-filename' => 'Tiedostonimi ei ole sallittu.',
 	'invalid-chunk-offset' => 'Kelpaamaton siirtymä lohkoissa',
 	'img-auth-accessdenied' => 'Pääsy estetty',
@@ -6963,9 +6974,13 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'imgmultigo' => 'Siirry',
 	'imgmultigoto' => 'Sivu $1',
 	'intentionallyblankpage' => 'Tämä sivu on tarkoituksellisesti tyhjä.',
-);
+	'imagereverted' => 'Palautus aiempaan versioon onnistui. <strong>Tällä muutoksella voi kestää jopa 2 minuuttia näkyä.</strong>',
+	'insertimage' => 'Sisällytä kuva',
+	'irc' => 'Reaaliaikaista wikiapua',
+	'its_easy' => '...se on helppoa ja ilmaista',
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'index-category' => 'Indeksoidut sivut',
 	'internalerror' => 'Sisäinen virhe',
 	'internalerror_info' => 'Sisäinen virhe: $1',
@@ -6976,7 +6991,7 @@ $messages['fiu-vro'] = array(
 	'image_tip' => 'Tallennettu tiedosto',
 	'ignorewarning' => 'Tallenna tiedosto varoituksesta huolimatta.',
 	'ignorewarnings' => 'Ohita kaikki varoitukset',
-	'illegalfilename' => "Tiedoston nimessä '''$1''' on merkkejä, joita ei sallita sivujen nimissä. Vaihda tiedoston nimeä, ja yritä lähettämistä uudelleen.",
+	'illegalfilename' => 'Tiedoston nimessä \'\'\'$1\'\'\' on merkkejä, joita ei sallita sivujen nimissä. Vaihda tiedoston nimeä, ja yritä lähettämistä uudelleen.',
 	'illegal-filename' => 'Tiedostonimi ei ole sallittu.',
 	'invalid-chunk-offset' => 'Kelpaamaton siirtymä lohkoissa',
 	'img-auth-accessdenied' => 'Pääsy estetty',
@@ -7116,15 +7131,15 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'imgmultigo' => 'Siirry',
 	'imgmultigoto' => 'Sivu $1',
 	'intentionallyblankpage' => 'Tämä sivu on tarkoituksellisesti tyhjä.',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'ipbreason' => 'Vuna',
 	'ilsubmit' => 'Vaqaqara',
 	'imgmultigo' => 'Lako!',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'index-category' => 'Indekseraðar síður',
 	'internalerror' => 'Innvortis brek',
 	'internalerror_info' => 'Innanhýsis villa: $1',
@@ -7140,7 +7155,7 @@ Vinarliga skriva t-post bústað í røttum formati ella lat handa teigin vera t
 Vinarliga gev fíluni nýtt navn og royn at senda hana upp (uploada) enn einaferð.',
 	'illegal-filename' => 'Hetta fílunavnið er ikki loyvt.',
 	'img-auth-noread' => 'Brúkarin hevur ikki rættindi til at lesa "$1".',
-	'img-auth-bad-query-string' => "URL'urin hevur ein ikki galdandi fyrispurning strong.",
+	'img-auth-bad-query-string' => 'URL\'urin hevur ein ikki galdandi fyrispurning strong.',
 	'imagelinks' => 'Nýtsla av fílu',
 	'invert' => 'Umvend val',
 	'isredirect' => 'ávísingarsíða',
@@ -7162,26 +7177,25 @@ Vinarliga gev fíluni nýtt navn og royn at senda hana upp (uploada) enn einafer
 	'import-interwiki-submit' => 'Innflyta',
 	'importfailed' => 'Innflutningur miseydnaður: $1',
 	'importsuccess' => 'Innflutningur er liðugur!',
-	'imagemaxsize' => "Stødd á mynd er avmarkað:<br />''(fyri frágreiðingar síður hjá fílum)''",
+	'imagemaxsize' => 'Stødd á mynd er avmarkað:<br />\'\'(fyri frágreiðingar síður hjá fílum)\'\'',
 	'ilsubmit' => 'Leita',
 	'imgmultipageprev' => '← fyrrverandi síða',
 	'imgmultipagenext' => 'næsta síða →',
 	'imgmultigo' => 'Far!',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'index-category' => 'Pages indexées',
 	'internalerror' => 'Erreur interne',
 	'internalerror_info' => 'Erreur interne : $1',
-	'invalidemailaddress' => 'Cette adresse courriel ne peut pas être acceptée car elle semble avoir un format incorrect.
-Entrez une adresse bien formatée ou laissez ce champ vide.',
+	'invalidemailaddress' => 'Veuillez saisir une adresse e-mail valide.',
 	'italic_sample' => 'Texte italique',
 	'italic_tip' => 'Texte italique',
 	'image_sample' => 'Exemple.jpg',
 	'image_tip' => 'Fichier inséré',
 	'ignorewarning' => 'Ignorer l’avertissement et sauvegarder le fichier quand même',
 	'ignorewarnings' => 'Ignorer les avertissements',
-	'illegalfilename' => "Le nom de fichier « $1 » contient des caractères interdits dans les titres de pages. Merci de le renommer et de l'importer à nouveau.",
+	'illegalfilename' => 'Le nom de fichier « $1 » contient des caractères interdits dans les titres de pages. Merci de le renommer et de l\'importer à nouveau.',
 	'illegal-filename' => 'Le nom du fichier n’est pas autorisé.',
 	'invalid-chunk-offset' => 'Offset de segment non valide',
 	'img-auth-accessdenied' => 'Accès refusé',
@@ -7189,7 +7203,7 @@ Entrez une adresse bien formatée ou laissez ce champ vide.',
 Votre serveur n’est pas paramétré pour passer cette information.
 Il fonctionne peut-être en CGI et ne supporte pas img_auth.
 Voyez https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
-	'img-auth-notindir' => "Le chemin demandé n’est pas le répertoire d'import configuré.",
+	'img-auth-notindir' => 'Le chemin demandé n’est pas le répertoire d\'import configuré.',
 	'img-auth-badtitle' => 'Impossible de construire un titre valide à partir de « $1 ».',
 	'img-auth-nologinnWL' => 'Vous n’êtes pas connecté et « $1 » n’est pas dans la liste blanche.',
 	'img-auth-nofile' => 'Le fichier « $1 » n’existe pas.',
@@ -7200,7 +7214,7 @@ Seul l’accès aux fichiers est permis.',
 Ce wiki est configuré comme un wiki public.
 Pour une sécurité optimale, img_auth.php est désactivé.',
 	'img-auth-noread' => 'L’utilisateur n’a pas le droit en lecture sur « $1 ».',
-	'img-auth-bad-query-string' => "L'URL a une chaîne de requête invalide.",
+	'img-auth-bad-query-string' => 'L\'URL a une chaîne de requête invalide.',
 	'imgfile' => 'fichier',
 	'imagelinks' => 'Utilisation du fichier',
 	'iteminvalidname' => 'Problème avec l’élément « $1 » : le nom est invalide.',
@@ -7220,9 +7234,9 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 ** Tentative d’intimidation ou harcèlement
 ** Abus d’utilisation de comptes multiples
 ** Nom d’utilisateur inacceptable, injurieux ou diffamant',
-	'ipb-hardblock' => 'Empêche les modifications des utilisateurs enregistrés utilisant cette adresse IP',
+	'ipb-hardblock' => 'Empêcher les utilisateurs connectés de modifier en utilisant cette adresse IP',
 	'ipbcreateaccount' => 'Empêcher la création de compte',
-	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des courriels',
+	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des e-mails',
 	'ipbenableautoblock' => 'Bloquer automatiquement la dernière adresse IP utilisée par l’utilisateur et toutes ses IPs ultérieures qu’il pourrait essayer',
 	'ipbsubmit' => 'Bloquer cet utilisateur',
 	'ipbother' => 'Autre durée :',
@@ -7231,7 +7245,7 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 	'ipbotherreason' => 'Motif différent ou supplémentaire :',
 	'ipbhidename' => 'Masquer le nom d’utilisateur des modifications et des listes',
 	'ipbwatchuser' => 'Suivre les pages utilisateur et de discussion de cet utilisateur',
-	'ipb-disableusertalk' => 'Empêche cet utilisateur de modifier sa propre page de discussion pendant la durée de son blocage',
+	'ipb-disableusertalk' => 'Empêcher l’utilisateur de modifier sa page de discussion pendant le blocage',
 	'ipb-change-block' => 'Bloquer à nouveau cet utilisateur avec ces paramètres',
 	'ipb-confirm' => 'Confirmer le blocage',
 	'ipb-blockingself' => 'Vous êtes sur le point de bloquer votre propre compte ! Êtes-vous certain de vouloir faire cela ?',
@@ -7297,14 +7311,14 @@ Sauvegardez-le sur votre disque dur puis importez-le ici.',
 	'importnotext' => 'Vide ou sans texte',
 	'importsuccess' => 'L’importation a réussi !',
 	'importhistoryconflict' => 'Un conflit a été détecté dans l’historique des versions (cette page a pu être importée auparavant).',
-	'importnosources' => "Aucune source d’importation inter-wiki n’a été définie et l'import direct d’historiques est désactivé.",
+	'importnosources' => 'Aucune source d’importation inter-wiki n’a été définie et l\'import direct d’historiques est désactivé.',
 	'importnofile' => 'Aucun fichier d’importation n’a été envoyé.',
-	'importuploaderrorsize' => "L'import du fichier a échoué.
-Sa taille est supérieure au maximum autorisé pour l'import de fichier.",
-	'importuploaderrorpartial' => "L'import du fichier échoué.
-Son contenu n’a été transféré que partiellement.",
-	'importuploaderrortemp' => "L'import du fichier a échoué.
-Un dossier temporaire est manquant.",
+	'importuploaderrorsize' => 'L\'import du fichier a échoué.
+Sa taille est supérieure au maximum autorisé pour l\'import de fichier.',
+	'importuploaderrorpartial' => 'L\'import du fichier échoué.
+Son contenu n’a été transféré que partiellement.',
+	'importuploaderrortemp' => 'L\'import du fichier a échoué.
+Un dossier temporaire est manquant.',
 	'import-parse-failure' => 'Échec lors de l’analyse du XML à importer',
 	'import-noarticle' => 'Aucune page à importer !',
 	'import-nonewrevisions' => 'Toutes les versions ont été importées auparavant.',
@@ -7313,7 +7327,7 @@ Un dossier temporaire est manquant.",
 	'import-invalid-interwiki' => 'Impossible d’importer depuis le wiki spécifié.',
 	'import-error-edit' => 'La page « $1 » n’a pas été importée parce que vous n’êtes pas autorisés à la modifier.',
 	'import-error-create' => 'La page « $1 » n’a pas été importée parce que vous n’êtes pas autorisés à la créer.',
-	'import-error-interwiki' => "La page « $1 » n'est pas importée parce que son nom est réservé pour un lien externe (interwiki).",
+	'import-error-interwiki' => 'La page « $1 » n\'est pas importée parce que son nom est réservé pour un lien externe (interwiki).',
 	'import-error-special' => 'La page " $1 " n\'est pas importée parce qu\'elle appartient à un espace de noms special qui n’en autorise aucune.',
 	'import-error-invalid' => 'Page « $1 » n’est pas importée parce que son nom n’est pas valide.',
 	'importlogpage' => 'Journal des importations',
@@ -7322,29 +7336,31 @@ Un dossier temporaire est manquant.",
 	'import-logentry-upload-detail' => '$1 version{{PLURAL:$1||s}}',
 	'import-logentry-interwiki' => 'a importé $1 d’un wiki à l’autre',
 	'import-logentry-interwiki-detail' => '$1 version{{PLURAL:$1||s}} depuis $2',
-	'imagemaxsize' => "Taille maximale des images :<br />''(pour les pages de description de fichier)''",
-	'imagelisttext' => "Voici une liste de '''$1''' fichier{{PLURAL:$1||s}} classée $2.",
+	'imagemaxsize' => 'Taille maximale des images :<br />\'\'(pour les pages de description de fichier)\'\'',
+	'imagelisttext' => 'Voici une liste de \'\'\'$1\'\'\' fichier{{PLURAL:$1||s}} classée $2.',
 	'ilsubmit' => 'Rechercher',
-	'invalidateemail' => 'Annuler la confirmation de l’adresse de courriel',
+	'invalidateemail' => 'Annuler la confirmation de l’adresse e-mail',
 	'imgmultipageprev' => '← page précédente',
 	'imgmultipagenext' => 'page suivante →',
 	'imgmultigo' => 'Accéder !',
 	'imgmultigoto' => 'Aller à la page $1',
 	'intentionallyblankpage' => 'Cette page est laissée intentionellement vide.',
-);
+	'irc' => 'Aide en ligne',
+	'its_easy' => '...c\'est facile et gratuit',
+];
 
-$messages['frc'] = array(
+$messages['frc'] = [
 	'internalerror' => 'Erreur internelle',
 	'internalerror_info' => 'Erreur intérieur: $1',
-	'invalidemailaddress' => "L'adresse e-mail peut pas être acceptée parce que c'est pas bien écrit.  Mettez donc une bonne adresse ou laissez-lé vide.",
+	'invalidemailaddress' => 'L\'adresse e-mail peut pas être acceptée parce que c\'est pas bien écrit.  Mettez donc une bonne adresse ou laissez-lé vide.',
 	'italic_sample' => 'Italique',
 	'italic_tip' => 'Italique',
 	'image_sample' => 'Exemple.jpg',
 	'image_tip' => 'Mettez un portrait',
 	'ipblocklist' => 'Useurs bloqués',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'index-category' => 'Pâges endèxâs',
 	'internalerror' => 'Èrror de dedens',
 	'internalerror_info' => 'Èrror de dedens : $1',
@@ -7497,8 +7513,8 @@ Volyéd tornar èprovar.',
 	'import-logentry-upload-detail' => '$1 vèrsion{{PLURAL:$1||s}}',
 	'import-logentry-interwiki' => 'at importâ $1 per entèrvouiqui',
 	'import-logentry-interwiki-detail' => '$1 vèrsion{{PLURAL:$1||s}} dês $2',
-	'imagemaxsize' => "Format lo ples grant de les émâges :<br />''(por les pâges de dèscripcion d’émâges)''",
-	'imagelisttext' => "Vê-que una lista de '''$1''' {{PLURAL:$1|fichiér rengiê|fichiérs rengiês}} $2.",
+	'imagemaxsize' => 'Format lo ples grant de les émâges :<br />\'\'(por les pâges de dèscripcion d’émâges)\'\'',
+	'imagelisttext' => 'Vê-que una lista de \'\'\'$1\'\'\' {{PLURAL:$1|fichiér rengiê|fichiérs rengiês}} $2.',
 	'ilsubmit' => 'Rechèrchiér',
 	'invalidateemail' => 'Anular la confirmacion de l’adrèce èlèctronica',
 	'imgmultipageprev' => '← pâge devant',
@@ -7518,9 +7534,9 @@ Volyéd tornar èprovar.',
 	'iranian-calendar-m11' => 'de bahmane',
 	'iranian-calendar-m12' => 'd’èsfande',
 	'intentionallyblankpage' => 'Ceta pâge est lèssiê èxprès voueda.',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'index-category' => 'Indisiirde side',
 	'internalerror' => 'Intärn fäägel',
 	'internalerror_info' => 'Intärne fäägel: $1',
@@ -7543,9 +7559,9 @@ Wees sü gödj än jeef en koräkt adräs önj unti mäág dåt fäalj lääsi.'
 	'import' => 'Side importiire',
 	'importinterwiki' => 'Transwiki import',
 	'import-interwiki-submit' => 'Import',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'invalidemailaddress' => 'La direzion email no pues jessi acetade parcè che no samee intun formât valit. Inserìs par plasê une direzion ben formatade o disvuede chest cjamp.',
 	'italic_sample' => 'Test in corsîf',
 	'italic_tip' => 'Test in corsîf',
@@ -7584,13 +7600,13 @@ $messages['fur'] = array(
 	'imgmultipagenext' => 'pagjine sucessive →',
 	'imgmultigo' => 'Va!',
 	'imgmultigoto' => 'Va ae pagjine $1',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'internalerror' => 'Ynterne fout',
 	'internalerror_info' => 'Ynterne fout: $1',
-	'invalidemailaddress' => "It e-mailadres is net akseptearre om't it in ûnjildige opmaak hat.
-Jou beleaven in jildich e-mailadres op of lit it fjild leech.",
+	'invalidemailaddress' => 'It e-mailadres is net akseptearre om\'t it in ûnjildige opmaak hat.
+Jou beleaven in jildich e-mailadres op of lit it fjild leech.',
 	'italic_sample' => 'Skeane tekst',
 	'italic_tip' => 'Skeane tekst',
 	'image_tip' => 'Mediatriem',
@@ -7618,7 +7634,7 @@ Jou de triem in oare namme en besykje him dan op\'e nij heech te laden.',
 ** Misbrûk troch meardere brûkers
 ** Unakseptabele brûkersnamme',
 	'ipbcreateaccount' => 'Blokkearje it oanmeitsjen fan in nij profyl',
-	'ipbenableautoblock' => "Automatysk de lêste IP adressen útslute dy't troch dizze meidogger brûkt binne.",
+	'ipbenableautoblock' => 'Automatysk de lêste IP adressen útslute dy\'t troch dizze meidogger brûkt binne.',
 	'ipbsubmit' => 'Slút dizze meidogger út',
 	'ipbother' => 'In oare tiid:',
 	'ipboptions' => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moanne:3 months,6 moanne:6 months,1 jier:1 year,ûnbeheind:infinite',
@@ -7654,15 +7670,15 @@ Jou de triem in oare namme en besykje him dan op\'e nij heech te laden.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ferzje|ferzjes}}',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ferzje|ferzjes}} fan $2',
 	'imagemaxsize' => 'Behein ôfmjittings fan ôfbyld op beskriuwingsside ta:',
-	'imagelisttext' => "Dit is in list fan '''$1''' {{PLURAL:$1|triem|triemen}}, op $2.",
+	'imagelisttext' => 'Dit is in list fan \'\'\'$1\'\'\' {{PLURAL:$1|triem|triemen}}, op $2.',
 	'ilsubmit' => 'Sykje',
 	'imgmultipagenext' => 'folgjende side →',
 	'imgmultigo' => 'Los!',
 	'imgmultigoto' => 'Gean nei side $1',
 	'intentionallyblankpage' => 'Dizze side is bewust leech lizzen en wurdt brûkt foar benchmarks, ensfh.',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'index-category' => 'Leathanaigh innéacsaithe',
 	'internalerror' => 'Earráid inmhéanach',
 	'internalerror_info' => 'Earráid inmhéanach: $1',
@@ -7678,7 +7694,7 @@ Iontráil seoladh dea-fhormáidte le do thoil, nó glan an réimse sin.',
 an comhad agus déan athiarracht, más é do thoil é.',
 	'imgfile' => 'comhad',
 	'imagelinks' => 'Naisc comhaid',
-	'iteminvalidname' => "Fadhb leis an mír '$1', ainm neamhbhailí...",
+	'iteminvalidname' => 'Fadhb leis an mír \'$1\', ainm neamhbhailí...',
 	'invert' => 'Iompaigh rogha bunoscionn',
 	'isredirect' => 'Leathanach athsheolaidh',
 	'istemplate' => 'iniamh',
@@ -7719,24 +7735,24 @@ an comhad agus déan athiarracht, más é do thoil é.',
 	'importnopages' => 'Níl aon leathanaigh chun iompórtáil',
 	'importfailed' => 'Theip ar an iompórtáil: $1',
 	'importnotext' => 'Folamh nó gan téacs',
-	'importsuccess' => "D'eirigh leis an iompórtáil!",
+	'importsuccess' => 'D\'eirigh leis an iompórtáil!',
 	'importhistoryconflict' => 'Tá stair athraithe contrártha ann cheana féin (is dócha go
 uaslódáladh an leathanach seo roimh ré)',
-	'importnosources' => "Níl aon fhoinse curtha i leith d'iompórtáil trasna vicíonna, agus
-ní féidir uaslódála staire díreacha a dhéanamh faoi láthair.",
+	'importnosources' => 'Níl aon fhoinse curtha i leith d\'iompórtáil trasna vicíonna, agus
+ní féidir uaslódála staire díreacha a dhéanamh faoi láthair.',
 	'import-upload' => 'Uaslódaigh sonraí XML',
 	'import-token-mismatch' => 'Sonraí seisiún a bheith caillte. Déan iarracht arís.',
 	'importlogpage' => 'Log iompórtáil',
 	'import-logentry-interwiki' => 'traisvicithe $1',
-	'imagemaxsize' => "Teorainn mhéid íomhá:<br />''(leathanaigh thuarascáil chomhaid)''",
+	'imagemaxsize' => 'Teorainn mhéid íomhá:<br />\'\'(leathanaigh thuarascáil chomhaid)\'\'',
 	'imagelisttext' => 'Tá liosta thíos de {{PLURAL:$1|comhad amháin|$1 comhaid $2}}.',
 	'ilsubmit' => 'Cuardaigh',
-	'imgmultipageprev' => "'← leathanach roimhe sin",
+	'imgmultipageprev' => '\'← leathanach roimhe sin',
 	'imgmultipagenext' => 'leathanach a leanas →',
 	'imgmultigoto' => 'Téigh go leathanach $1',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'internalerror' => 'İç yannış',
 	'internalerror_info' => 'İç yannış: $1',
 	'italic_sample' => 'İtalik tekst',
@@ -7750,9 +7766,9 @@ $messages['gag'] = array(
 	'ipboptions' => '2 saat:2 hours,1 gün:1 day,3 gün:3 days, 1 afta:1 week, 2 afta:2 weeks, 1 ay:1 month, 3 ay:3 months, 6 ay:6 months, 1 yıl:1 year, zamansız:infinite',
 	'ipblocklist' => 'Köstekli kullanıcılar hem IP adresleri listası',
 	'importlogpage' => 'Fayl aktarmaa jurnalı',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'index-category' => '做正索引𠮶页面',
 	'internalerror' => '内部错误',
 	'internalerror_info' => '内部错误: $1',
@@ -7765,7 +7781,7 @@ $messages['gan-hans'] = array(
 	'illegalfilename' => '档案名"$1"有页面标题伓容许𠮶字符。请改吖名再上传过。',
 	'imgfile' => '档案',
 	'imagelinks' => '档案使用',
-	'iteminvalidname' => "页面'$1'出错，无效命名...",
+	'iteminvalidname' => '页面\'$1\'出错，无效命名...',
 	'invert' => '反选',
 	'isredirect' => '重定向页',
 	'istemplate' => '含到',
@@ -7844,9 +7860,9 @@ $messages['gan-hans'] = array(
 	'imgmultipageprev' => '← 上页',
 	'imgmultipagenext' => '下页 →',
 	'imgmultigo' => '确定！',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'index-category' => '做正索引嗰頁面',
 	'internalerror' => '內部錯誤',
 	'internalerror_info' => '內部錯誤: $1',
@@ -7859,7 +7875,7 @@ $messages['gan-hant'] = array(
 	'illegalfilename' => '檔案名"$1"有頁面標題伓容許嗰字元。請改吖名再上傳過。',
 	'imgfile' => '檔案',
 	'imagelinks' => '檔案使用',
-	'iteminvalidname' => "頁面'$1'出錯，無效命名...",
+	'iteminvalidname' => '頁面\'$1\'出錯，無效命名...',
 	'invert' => '倒得選',
 	'isredirect' => '重定向頁',
 	'istemplate' => '含到',
@@ -7938,14 +7954,14 @@ $messages['gan-hant'] = array(
 	'imgmultipageprev' => '← 上頁',
 	'imgmultipagenext' => '下頁 →',
 	'imgmultigo' => '確定！',
-);
+];
 
-$messages['gd'] = array(
-	'index-category' => "Duilleagan air a' chlàr-innse",
+$messages['gd'] = [
+	'index-category' => 'Duilleagan air a\' chlàr-innse',
 	'internalerror' => 'Ion-mhearachd',
 	'internalerror_info' => 'Ion-mhearachd: $1',
-	'invalidemailaddress' => "Chan urrainn dhuinn gabhail ris an t-seòladh seo a chionn 's gu bheil coltas cearr air.
-Cuir a-steach seòladh san fhòrmat cheart no falamhaich an raon sin.",
+	'invalidemailaddress' => 'Chan urrainn dhuinn gabhail ris an t-seòladh seo a chionn \'s gu bheil coltas cearr air.
+Cuir a-steach seòladh san fhòrmat cheart no falamhaich an raon sin.',
 	'italic_sample' => 'Teacsa Eadailteach',
 	'italic_tip' => 'Teacsa Eadailteach',
 	'image_sample' => 'Eisimpleir.jpg',
@@ -7965,9 +7981,9 @@ Cuir a-steach seòladh san fhòrmat cheart no falamhaich an raon sin.",
 	'ip_range_invalid' => 'Raon IP neo-iomchaidh.',
 	'importnotext' => 'Falamh no gun teacsa',
 	'ilsubmit' => 'Rannsaich',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'index-category' => 'Páxinas indexadas',
 	'internalerror' => 'Erro interno',
 	'internalerror_info' => 'Erro interno: $1',
@@ -8116,8 +8132,8 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisión|revisións}}',
 	'import-logentry-interwiki' => 'importou "$1"',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisión|revisións}} de $2',
-	'imagemaxsize' => "Límite de tamaño das imaxes:<br />''(nas páxinas de descrición de ficheiros)''",
-	'imagelisttext' => "A continuación móstrase unha lista de '''$1''' {{PLURAL:$1|ficheiro|ficheiros}} ordenados $2.",
+	'imagemaxsize' => 'Límite de tamaño das imaxes:<br />\'\'(nas páxinas de descrición de ficheiros)\'\'',
+	'imagelisttext' => 'A continuación móstrase unha lista de \'\'\'$1\'\'\' {{PLURAL:$1|ficheiro|ficheiros}} ordenados $2.',
 	'ilsubmit' => 'Procurar',
 	'invalidateemail' => 'Cancelar a confirmación do correo electrónico',
 	'imgmultipageprev' => '← páxina anterior',
@@ -8125,23 +8141,23 @@ Gárdeo no seu disco duro e cárgueo aquí.',
 	'imgmultigo' => 'Ir!',
 	'imgmultigoto' => 'Ir á páxina $1',
 	'intentionallyblankpage' => 'Esta páxina foi baleirada intencionadamente',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'italic_sample' => 'Haipyre ikarẽva',
 	'italic_tip' => 'Haipyre ikarẽva',
-	'image_tip' => "Ta'ãnga moĩngepyréva",
+	'image_tip' => 'Ta\'ãnga moĩngepyréva',
 	'imagelinks' => 'Joajukuéra',
-	'invert' => "Toñembo'ovývo mba'eporavopyre",
+	'invert' => 'Toñembo\'ovývo mba\'eporavopyre',
 	'ipblocklist' => 'IP mbohape rysýi imbotypyréva',
 	'ipblocklist-submit' => 'Heka',
 	'import-revision-count' => '$1 revisiones',
 	'import-logentry-upload-detail' => '$1 revisiones',
 	'import-logentry-interwiki-detail' => '$1 revisiones desde $2',
 	'ilsubmit' => 'Jeheka',
-);
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'italic_sample' => 'Wráiqs waúrda',
 	'italic_tip' => 'Driuso boka',
 	'imgfile' => 'Feilans',
@@ -8155,9 +8171,9 @@ $messages['got'] = array(
 	'infiniteblock' => 'ajukduþs',
 	'ilsubmit' => 'Sokeiþ',
 	'imgmultigo' => 'Afgaggan!',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'index-category' => 'Δέλτοι μετὰ δεικτῶν',
 	'info_short' => 'Μάθησις',
 	'internalerror' => 'Ἐσώτερον σφάλμα',
@@ -8172,7 +8188,7 @@ $messages['grc'] = array(
 	'img-auth-streaming' => 'Συνεχὴς ἀνάγνωσις "$1".',
 	'imgfile' => 'ἀρχεῖον',
 	'imagelinks' => 'Σύνδεσμοι ἀρχείων',
-	'iteminvalidname' => "Πρόβλημα τεμαχἰου '$1', ἄκυρον ὄνομα...",
+	'iteminvalidname' => 'Πρόβλημα τεμαχἰου \'$1\', ἄκυρον ὄνομα...',
 	'invert' => 'Ἀντιστρέφειν ἐπιλογήν',
 	'isredirect' => 'ἀναδιευθύνειν δέλτον',
 	'istemplate' => 'περίκλεισις',
@@ -8276,8 +8292,8 @@ $messages['grc'] = array(
 	'import-logentry-interwiki' => 'ὑπερδιαβικιπεποιημένη $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ἀναθεώρησις|ἀναθεωρήσεις}} ἐκ τοῦ $2',
 	'infosubtitle' => 'Πληροφορίαι περὶ τῆς δἐλτου',
-	'imagemaxsize' => "Ὅριον μεγέθους εἰκόνος:<br />''(ἐν περιπτώσει δέλτων περιγραφῆς ἀρχείων)''",
-	'imagelisttext' => "Κάτωθι κατάλογός ἐστιν '''$1''' {{PLURAL:$1|ἀρχείου|ἀρχείων}} ταξινομημέν-ου/-ων κατὰ σειρὰν $2.",
+	'imagemaxsize' => 'Ὅριον μεγέθους εἰκόνος:<br />\'\'(ἐν περιπτώσει δέλτων περιγραφῆς ἀρχείων)\'\'',
+	'imagelisttext' => 'Κάτωθι κατάλογός ἐστιν \'\'\'$1\'\'\' {{PLURAL:$1|ἀρχείου|ἀρχείων}} ταξινομημέν-ου/-ων κατὰ σειρὰν $2.',
 	'ilsubmit' => 'Ζητεῖν',
 	'imagelistall' => 'Πᾶσαι',
 	'invalidateemail' => 'Ἀκυρώσειν τὴν ἐπιβεβαίωσιν ἠλ-διευθύνσεως',
@@ -8286,9 +8302,9 @@ $messages['grc'] = array(
 	'imgmultigo' => 'Ἰέναι!',
 	'imgmultigoto' => 'Μεταβαίνειν εἰς δέλτον $1',
 	'intentionallyblankpage' => 'Ἥδε ἡ δέλτος ἀφίεται ἐσκεμμένως κενὴ οὖσα χρήσιμος ὡς σημεῖον ἀναφορᾶς, κτλ.',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'index-category' => 'Verzeichneti Syte',
 	'internalerror' => 'Interner Fähler',
 	'internalerror_info' => 'Interne Fähler: $1',
@@ -8434,8 +8450,8 @@ Die uf em lokale Rächner spychere un derno do uffelade.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Vérsion|Vérsiona}}',
 	'import-logentry-interwiki' => '„$1“ isch importiert worde (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Version|Versione}} vo $2',
-	'imagemaxsize' => "Maximali Gressi vu Bilder :<br />'' (uf Bildbschrybigs-Syte)''",
-	'imagelisttext' => "Hie isch e Lischte vo '''$1''' {{PLURAL:$1|Datei|Dateie}}, sortiert $2.",
+	'imagemaxsize' => 'Maximali Gressi vu Bilder :<br />\'\' (uf Bildbschrybigs-Syte)\'\'',
+	'imagelisttext' => 'Hie isch e Lischte vo \'\'\'$1\'\'\' {{PLURAL:$1|Datei|Dateie}}, sortiert $2.',
 	'ilsubmit' => 'Suech',
 	'invalidateemail' => 'S Bestätige vo dr E-Mail-Adress abbreche',
 	'imgmultipageprev' => '← vorderi Syte',
@@ -8443,9 +8459,9 @@ Die uf em lokale Rächner spychere un derno do uffelade.',
 	'imgmultigo' => 'Gang!',
 	'imgmultigoto' => 'Gang uf Syte $1',
 	'intentionallyblankpage' => 'Die Syte isch absichtlich leer. Si wird für Benchmarks bruucht.',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'index-category' => 'અનુક્રમણિકા બનાવેલા પાનાં',
 	'internalerror' => 'આંતરિક ત્રુટિ',
 	'internalerror_info' => 'આંતરિક ત્રુટિ: $1',
@@ -8479,7 +8495,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 	'img-auth-bad-query-string' => 'આ URL માં અમાન્ય ક્વેરી શબ્દમાળા છે',
 	'imgfile' => 'ફાઇલ',
 	'imagelinks' => 'ફાઇલનો વપરાશ',
-	'iteminvalidname' => "વસ્તુ '$1' સાથે ગડબડ, અવૈધ નામ...",
+	'iteminvalidname' => 'વસ્તુ \'$1\' સાથે ગડબડ, અવૈધ નામ...',
 	'invert' => 'પસંદગી ઉલટાવો',
 	'isredirect' => 'પાનું અહીં વાળો',
 	'istemplate' => 'સમાવેશ',
@@ -8601,8 +8617,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|પુનરાવર્તન|પુનરાવર્તનો}}',
 	'import-logentry-interwiki' => 'આંતરવિકિ  $1',
 	'import-logentry-interwiki-detail' => '$2 થી $1 {{PLURAL:$1|પુનરાવર્તન|પુનરાવર્તનો}}',
-	'imagemaxsize' => "ચિત્રના કદની મર્યાદા:<br />''(for file description pages)''",
-	'imagelisttext' => "નીચે '''$1''' ની યાદિ આપી છે  {{PLURAL:$1|ફાઇલ|ફાઇલો}}  $2માં સંગ્રહીત.",
+	'imagemaxsize' => 'ચિત્રના કદની મર્યાદા:<br />\'\'(for file description pages)\'\'',
+	'imagelisttext' => 'નીચે \'\'\'$1\'\'\' ની યાદિ આપી છે  {{PLURAL:$1|ફાઇલ|ફાઇલો}}  $2માં સંગ્રહીત.',
 	'ilsubmit' => 'શોધો',
 	'invalidateemail' => 'ઇ-મેલ બહાલી રદ્દ કરો',
 	'imgmultipageprev' => '← પાછલું પાનું',
@@ -8610,9 +8626,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 	'imgmultigo' => 'જાઓ!',
 	'imgmultigoto' => 'પાના  $1 પર જાવ',
 	'intentionallyblankpage' => 'આપાનું જાણે કરીને કોરું રખાયું છે',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'info_short' => 'Oayllys',
 	'internalerror' => 'Marranys ynveanagh',
 	'internalerror_info' => 'Marranys ynveanagh: $1',
@@ -8659,9 +8675,9 @@ $messages['gv'] = array(
 	'ilsubmit' => 'Ronsaghey',
 	'imagelistall' => 'yn clane',
 	'imgmultigo' => 'Gow!',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'italic_sample' => 'Rubutun tsutsa',
 	'italic_tip' => 'Rubutun tsutsa',
 	'image_tip' => 'Ƙumsashen fayil',
@@ -8673,12 +8689,12 @@ $messages['ha'] = array(
 	'ipbreason' => 'Dalili:',
 	'ipbreasonotherlist' => 'Wani dalili',
 	'ipboptions' => 'awa 2:2 hours,kwana 1:1 day,kwana 3:3 days,mako 1:1 week,mako 2:2 weeks,wata 1:1 month,wata 3:3 months,wata 6:6 months,shekara 1:1 year,illa masha allahu:infinite',
-	'ipblocklist' => "Adireshin IP da ma'aikatan da aka hana",
+	'ipblocklist' => 'Adireshin IP da ma\'aikatan da aka hana',
 	'ipblocklist-submit' => 'Nema',
 	'ilsubmit' => 'Nema',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'internalerror' => 'Nui-phu chho-ngu',
 	'internalerror_info' => 'Nui-phu tsho-ngu: $1',
 	'invalidemailaddress' => 'Email thi-tiám kak-sṳt put chṳn-khok, chhiáng sû-ngi̍p chṳn-khok ke email chhai-vi fe̍t-chá chhîn-khûng ke-sû-ngi̍p  khiông.',
@@ -8690,7 +8706,7 @@ $messages['hak'] = array(
 	'illegalfilename' => 'Tóng-on miàng "$1" pâu-hàm yû hong-mien phêu-thì só kim-chṳ́ ke sṳ-fù. Chhiáng kói-miàng-heu chhùng-sîn song-chhòn.',
 	'imgfile' => 'tóng-on',
 	'imagelinks' => 'Tóng-on lièn-kiet',
-	'iteminvalidname' => "Hong-mien '$1' chho-ngu, mò-háu min-miàng...",
+	'iteminvalidname' => 'Hong-mien \'$1\' chho-ngu, mò-háu min-miàng...',
 	'invert' => 'Fán-hiong sién-chet',
 	'isredirect' => 'chhùng-thin vùn-chông',
 	'istemplate' => 'pâu-hàm',
@@ -8760,9 +8776,9 @@ $messages['hak'] = array(
 	'imgmultipageprev' => '← sông yit-chông',
 	'imgmultipagenext' => 'hâ yit-chông →',
 	'imgmultigo' => 'Khok-thin!',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'italic_sample' => 'Ho‘ohiō',
 	'italic_tip' => 'Ho‘ohiō',
 	'imagelinks' => 'Nā loulou faila',
@@ -8777,9 +8793,9 @@ $messages['haw'] = array(
 	'ilsubmit' => 'Huli',
 	'imgmultipageprev' => '← mea ma mua aʻe',
 	'imgmultipagenext' => 'mea aʻe →',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'index-category' => 'דפים המופיעים במנועי חיפוש',
 	'internalerror' => 'שגיאה פנימית',
 	'internalerror_info' => 'שגיאה פנימית: $1',
@@ -8824,14 +8840,14 @@ $messages['he'] = array(
 	'ipbexpiry' => 'פקיעה:',
 	'ipbreason' => 'סיבה:',
 	'ipbreasonotherlist' => 'סיבה אחרת',
-	'ipbreason-dropdown' => "* סיבות חסימה נפוצות
+	'ipbreason-dropdown' => '* סיבות חסימה נפוצות
 ** הוספת מידע שגוי
 ** הסרת תוכן מדפים
 ** הצפת קישורים לאתרים חיצוניים
-** הוספת שטויות/ג'יבריש לדפים
+** הוספת שטויות/ג\'יבריש לדפים
 ** התנהגות מאיימת/הטרדה
 ** שימוש לרעה בחשבונות מרובים
-** שם משתמש בעייתי",
+** שם משתמש בעייתי',
 	'ipb-hardblock' => 'ביטול האפשרות של משתמשים רשומים לערוך מכתובת IP זו',
 	'ipbcreateaccount' => 'חסימה של יצירת חשבונות',
 	'ipbemailban' => 'חסימה של שליחת דואר אלקטרוני',
@@ -8951,9 +8967,9 @@ $messages['he'] = array(
 	'iranian-calendar-m11' => 'בהמן',
 	'iranian-calendar-m12' => 'אספנד',
 	'intentionallyblankpage' => 'דף זה הושאר ריק במכוון.',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'index-category' => 'सूचीबद्ध पन्ने',
 	'info_short' => 'जानकारी',
 	'internalerror' => 'आन्तरिक गलती',
@@ -8986,7 +9002,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization को देखें�
 	'img-auth-noread' => 'प्रयोक्ता को "$1" पढ़ने का अधिकार नहीं है।',
 	'imgfile' => 'फ़ाईल',
 	'imagelinks' => 'संचिका की कड़ियाँ',
-	'iteminvalidname' => "'$1' के साथ समस्या, अवैध नाम...",
+	'iteminvalidname' => '\'$1\' के साथ समस्या, अवैध नाम...',
 	'invert' => 'विपरीत प्रवरण',
 	'isredirect' => 'पुनर्निर्देशन पन्ना',
 	'istemplate' => 'मिलाईयें',
@@ -9098,8 +9114,8 @@ $1 पहले ही अवरोधित है।
 	'import-logentry-interwiki' => 'ट्रान्सविकि कर दिया $1',
 	'import-logentry-interwiki-detail' => '$2 से $1 {{PLURAL:$1|अवतरण|अवतरण}}',
 	'infosubtitle' => 'पन्नेके बारे में ज़ानकारी',
-	'imagemaxsize' => "छवि आकार सीमा:<br />''(संचिका वर्णन पन्नों के लिए)''",
-	'imagelisttext' => "नीचे $2 के नुसार '''$1''' {{PLURAL:$1|फ़ाईल दी है।|फ़ाईलें दी हुईं हैं।}}",
+	'imagemaxsize' => 'छवि आकार सीमा:<br />\'\'(संचिका वर्णन पन्नों के लिए)\'\'',
+	'imagelisttext' => 'नीचे $2 के नुसार \'\'\'$1\'\'\' {{PLURAL:$1|फ़ाईल दी है।|फ़ाईलें दी हुईं हैं।}}',
 	'ilsubmit' => 'खोज',
 	'imagelistall' => 'सभी',
 	'invalidateemail' => 'इ-मेल प्रमाणिकरण रद्द करें',
@@ -9120,9 +9136,9 @@ $1 पहले ही अवरोधित है।
 	'iranian-calendar-m11' => 'बाहमान',
 	'iranian-calendar-m12' => 'एसफण्ड (Esfand)',
 	'intentionallyblankpage' => 'यह पन्ना जानबूझ कर खाली छोड़ा गया है।',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'index-category' => 'सूचीबद्ध पन्ने',
 	'info_short' => 'जानकारी',
 	'internalerror' => 'आन्तरिक गलती',
@@ -9155,7 +9171,7 @@ http://www.mediawiki.org/wiki/Manual:Image_Authorization को देखें�
 	'img-auth-noread' => 'प्रयोक्ता को "$1" पढ़ने का अधिकार नहीं है।',
 	'imgfile' => 'फ़ाईल',
 	'imagelinks' => 'संचिका की कड़ियाँ',
-	'iteminvalidname' => "'$1' के साथ समस्या, अवैध नाम...",
+	'iteminvalidname' => '\'$1\' के साथ समस्या, अवैध नाम...',
 	'invert' => 'विपरीत प्रवरण',
 	'isredirect' => 'पुनर्निर्देशन पन्ना',
 	'istemplate' => 'मिलाईयें',
@@ -9267,8 +9283,8 @@ $1 पहले ही अवरोधित है।
 	'import-logentry-interwiki' => 'ट्रान्सविकि कर दिया $1',
 	'import-logentry-interwiki-detail' => '$2 से $1 {{PLURAL:$1|अवतरण|अवतरण}}',
 	'infosubtitle' => 'पन्नेके बारे में ज़ानकारी',
-	'imagemaxsize' => "छवि आकार सीमा:<br />''(संचिका वर्णन पन्नों के लिए)''",
-	'imagelisttext' => "नीचे $2 के नुसार '''$1''' {{PLURAL:$1|फ़ाईल दी है।|फ़ाईलें दी हुईं हैं।}}",
+	'imagemaxsize' => 'छवि आकार सीमा:<br />\'\'(संचिका वर्णन पन्नों के लिए)\'\'',
+	'imagelisttext' => 'नीचे $2 के नुसार \'\'\'$1\'\'\' {{PLURAL:$1|फ़ाईल दी है।|फ़ाईलें दी हुईं हैं।}}',
 	'ilsubmit' => 'खोज',
 	'imagelistall' => 'सभी',
 	'invalidateemail' => 'इ-मेल प्रमाणिकरण रद्द करें',
@@ -9289,9 +9305,9 @@ $1 पहले ही अवरोधित है।
 	'iranian-calendar-m11' => 'बाहमान',
 	'iranian-calendar-m12' => 'एसफण्ड (Esfand)',
 	'intentionallyblankpage' => 'यह पन्ना जानबूझ कर खाली छोड़ा गया है।',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'index-category' => 'Indexed panna',
 	'info_short' => 'Jankari',
 	'internalerror' => 'Bhitri galti',
@@ -9323,7 +9339,7 @@ Puura surakchha ke khatir, img_auth.php ke band kar dewa gais hae.',
 	'img-auth-noread' => 'Sadasya ke "$1" parrhe ke ijajat nai hae.',
 	'imgfile' => 'file',
 	'imagelinks' => 'File ke jorr',
-	'iteminvalidname' => "'$1' chij se kuchh garrbarr hai, galat naam...",
+	'iteminvalidname' => '\'$1\' chij se kuchh garrbarr hai, galat naam...',
 	'invert' => 'Selection ke ulto',
 	'isredirect' => 'panna ke redirect karo',
 	'istemplate' => 'milao',
@@ -9441,8 +9457,8 @@ Meharbani kar ke, fir se kosis karo.',
 	'import-logentry-interwiki' => 'transwikied $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|badlao|badlao}} $2 se',
 	'infosubtitle' => 'Panna ke baare me jaankari',
-	'imagemaxsize' => "Chapa jaada se jaada ketnaa barraahoe sake hai:<br />''(file ke baare me panna)''",
-	'imagelisttext' => "Niche ek suchi hai '''$1''' ke {{PLURAL:$1|file|files}} sorted $2.",
+	'imagemaxsize' => 'Chapa jaada se jaada ketnaa barraahoe sake hai:<br />\'\'(file ke baare me panna)\'\'',
+	'imagelisttext' => 'Niche ek suchi hai \'\'\'$1\'\'\' ke {{PLURAL:$1|file|files}} sorted $2.',
 	'ilsubmit' => 'Khojo',
 	'imagelistall' => 'sab',
 	'imgmultipageprev' => '← pahile waala panna',
@@ -9450,9 +9466,9 @@ Meharbani kar ke, fir se kosis karo.',
 	'imgmultigo' => 'Jaao!',
 	'imgmultigoto' => '$1 panna pe jaao',
 	'intentionallyblankpage' => 'Ii panna ke jaan ke khaliya chhorraa gais hae.',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'index-category' => 'Naka-index nga mga panid',
 	'internalerror' => 'Pangsulod nga sala',
 	'internalerror_info' => 'Pangsulod nga sala: $1',
@@ -9472,9 +9488,9 @@ Palihog butang sang ginplastar sing maayo nga adres ukon panason nal lang ang lu
 	'ipblocklist-submit' => 'Pangita-a',
 	'ilsubmit' => 'Pangita-a',
 	'imgmultigo' => 'Lakat',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'index-category' => 'Indeksirane stranice',
 	'internalerror' => 'Pogreška sustava',
 	'internalerror_info' => 'Interna pogreška: $1',
@@ -9508,7 +9524,7 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'img-auth-bad-query-string' => 'URL ima nevažeći izraz upita.',
 	'imgfile' => 'datoteka',
 	'imagelinks' => 'Upotreba datoteke',
-	'iteminvalidname' => "Problem s izborom '$1', ime nije valjano...",
+	'iteminvalidname' => 'Problem s izborom \'$1\', ime nije valjano...',
 	'invert' => 'Sve osim odabranog',
 	'isredirect' => 'stranica za preusmjeravanje',
 	'istemplate' => 'kao predložak',
@@ -9517,14 +9533,14 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'ipbexpiry' => 'Rok (na engleskom)',
 	'ipbreason' => 'Razlog:',
 	'ipbreasonotherlist' => 'Drugi razlog',
-	'ipbreason-dropdown' => "*Najčešći razlozi za blokiranje
+	'ipbreason-dropdown' => '*Najčešći razlozi za blokiranje
 ** Netočne informacije
 ** Uklanjanje sadržaja stranica
-** Postavljanje ''spam'' vanjskih poveznica
+** Postavljanje \'\'spam\'\' vanjskih poveznica
 ** Grafiti
 ** Osobni napadi (ili napadačko ponašanje)
 ** Čarapare (zloporaba više suradničkih računa)
-** Neprihvatljivo suradničko ime",
+** Neprihvatljivo suradničko ime',
 	'ipb-hardblock' => 'Onemogući prijavljene suradnike uređivati s ove IP adrese',
 	'ipbcreateaccount' => 'Spriječi otvaranje suradničkih računa',
 	'ipbemailban' => 'Onemogući blokiranom suradniku slanje e-mailova',
@@ -9619,7 +9635,7 @@ Snimite je na svoje računalo i postavite je ovdje.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|izmjena|izmjene|izmjena}}',
 	'import-logentry-interwiki' => 'transwiki uvezeno $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|promjena|promjene|promjena}} od $2',
-	'imagemaxsize' => "Ograniči veličinu slike:<br />''(za stranicu s opisom datoteke)''",
+	'imagemaxsize' => 'Ograniči veličinu slike:<br />\'\'(za stranicu s opisom datoteke)\'\'',
 	'imagelisttext' => 'Ispod je popis {{PLURAL:$1|$1 slike|$1 slike|$1 slika}} složen $2.',
 	'ilsubmit' => 'Traži',
 	'invalidateemail' => 'Poništi potvrđivanje elektroničke pošte',
@@ -9640,9 +9656,9 @@ Snimite je na svoje računalo i postavite je ovdje.',
 	'iranian-calendar-m11' => 'bahmana',
 	'iranian-calendar-m12' => 'asfanda',
 	'intentionallyblankpage' => 'Ova stranica je namjerno ostavljena praznom',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'index-category' => 'Indicěrowane strony',
 	'internalerror' => 'Znutřkowny zmylk',
 	'internalerror_info' => 'Znutřkowny zmylk: $1',
@@ -9787,8 +9803,8 @@ Za optimalnu wěstotu je img_auth.php znjemóžnjeny.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|wersija|wersiji|wersije|wersijow}}',
 	'import-logentry-interwiki' => 'je stronu $1 z druheho wikija přenjesł',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|wersija|wersiji|wersije|wersijow}} z $2 {{PLURAL:$1|importowana|importowanej|importowane|importowane}}',
-	'imagemaxsize' => "Maksimalna wobrazowa wulkosć:<br />''(za strony datajoweho wopisanja)''",
-	'imagelisttext' => "Deleka je lisćina '''$1''' {{PLURAL:$1|dataje|datajow|datajow|datajow}}, kotraž je po $2 sortěrowana.",
+	'imagemaxsize' => 'Maksimalna wobrazowa wulkosć:<br />\'\'(za strony datajoweho wopisanja)\'\'',
+	'imagelisttext' => 'Deleka je lisćina \'\'\'$1\'\'\' {{PLURAL:$1|dataje|datajow|datajow|datajow}}, kotraž je po $2 sortěrowana.',
 	'ilsubmit' => 'Pytać',
 	'invalidateemail' => 'E-mejlowe potwjerdźenje přetorhnyć',
 	'imgmultipageprev' => '← předchadna strona',
@@ -9797,9 +9813,9 @@ Za optimalnu wěstotu je img_auth.php znjemóžnjeny.',
 	'imgmultigoto' => 'Dźi k stronje $1',
 	'iranian-calendar-m2' => 'Ordibehešt',
 	'intentionallyblankpage' => 'Tuta strona je z wotpohladom prózdna.',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'index-category' => 'Paj endèkse yo',
 	'internalerror' => 'Erè nan sistèm la.',
 	'internalerror_info' => 'Erè nan sistèm la : $1',
@@ -9815,9 +9831,9 @@ $messages['ht'] = array(
 	'ipboptions' => '2 èdtan:2 hours,1 jou:1 day,3 jou:3 days,1 semèn:1 week,2 semèn:2 weeks,1 mwa:1 month,3 mwa:3 months,6 mwa:6 months,1 lane:1 year,ki pap janm fini:infinite',
 	'ipblocklist' => 'Lis IP ak itilizatè yo ki bloke',
 	'importlogpage' => 'Jounal pou enpòtasyon yo',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'index-category' => 'Indexelt lapok',
 	'internalerror' => 'Belső hiba',
 	'internalerror_info' => 'Belső hiba: $1',
@@ -9848,7 +9864,7 @@ Ez a wiki publikus, így a biztonság miatt az img_auth.php ki van kapcsolva.',
 	'img-auth-bad-query-string' => 'Az URL-cím érvénytelen lekérdezést tartalmaz.',
 	'imgfile' => 'fájl',
 	'imagelinks' => 'Fájlhasználat',
-	'iteminvalidname' => "Probléma a '$1' elemmel: érvénytelen név...",
+	'iteminvalidname' => 'Probléma a \'$1\' elemmel: érvénytelen név...',
 	'invert' => 'Kijelölés megfordítása',
 	'isredirect' => 'átirányítás',
 	'istemplate' => 'beillesztve',
@@ -9962,8 +9978,8 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|egy|$1}} változat',
 	'import-logentry-interwiki' => '$1 más wikiből áthozva',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|egy|$1}} változat innen: $2',
-	'imagemaxsize' => "A képek mérete, legfeljebb:<br />''(a leírólapokon)''",
-	'imagelisttext' => "Lentebb '''{{PLURAL:$1|egy|$1}}''' kép látható, $2 rendezve.",
+	'imagemaxsize' => 'A képek mérete, legfeljebb:<br />\'\'(a leírólapokon)\'\'',
+	'imagelisttext' => 'Lentebb \'\'\'{{PLURAL:$1|egy|$1}}\'\'\' kép látható, $2 rendezve.',
 	'ilsubmit' => 'Keresés',
 	'invalidateemail' => 'E-mail-cím megerősíthetőségének visszavonása',
 	'imgmultipageprev' => '← előző oldal',
@@ -9971,9 +9987,9 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 	'imgmultigo' => 'Menj',
 	'imgmultigoto' => 'Ugrás a(z) $1. oldalra',
 	'intentionallyblankpage' => 'Ez a lap szándékosan maradt üresen',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'index-category' => 'Ինդեքսավորված էջեր',
 	'internalerror' => 'Ներքին սխալ',
 	'internalerror_info' => 'Ներքին սխալ. $1',
@@ -10057,15 +10073,15 @@ $messages['hy'] = array(
 	'import-logentry-interwiki' => '«$1»՝ միջվիքի ներմուծմամբ',
 	'import-logentry-interwiki-detail' => '$1 տարբերակ $2-ից',
 	'imagemaxsize' => 'Պատկերի էջում պատկերի չափի սահմանափակում.',
-	'imagelisttext' => "Ստորև բերված է '''$1''' {{PLURAL:$1|նիշքի}} ցանկ՝ դասավորված ըստ $2։",
+	'imagelisttext' => 'Ստորև բերված է \'\'\'$1\'\'\' {{PLURAL:$1|նիշքի}} ցանկ՝ դասավորված ըստ $2։',
 	'ilsubmit' => 'Որոնել',
 	'imgmultipageprev' => '← նախորդ էջ',
 	'imgmultipagenext' => 'հաջորդ էջ →',
 	'imgmultigo' => 'Անցնե՜լ',
 	'intentionallyblankpage' => 'Այս էջը միտումնավոր դատարկ է թողված։',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'index-category' => 'Paginas indexate',
 	'internalerror' => 'Error interne',
 	'internalerror_info' => 'Error interne: $1',
@@ -10100,7 +10116,7 @@ Pro securitate optimal, img_auth.php es disactivate.',
 	'img-auth-bad-query-string' => 'Le URL include un consulta con formato invalide.',
 	'imgfile' => 'file',
 	'imagelinks' => 'Uso de iste file',
-	'iteminvalidname' => "Problema con entrata '$1', nomine invalide...",
+	'iteminvalidname' => 'Problema con entrata \'$1\', nomine invalide...',
 	'invert' => 'Inverter selection',
 	'isredirect' => 'pagina de redirection',
 	'istemplate' => 'transclusion',
@@ -10109,14 +10125,14 @@ Pro securitate optimal, img_auth.php es disactivate.',
 	'ipbexpiry' => 'Expiration:',
 	'ipbreason' => 'Motivo:',
 	'ipbreasonotherlist' => 'Altere motivo',
-	'ipbreason-dropdown' => "*Motivos frequente pro blocar
+	'ipbreason-dropdown' => '*Motivos frequente pro blocar
 ** Insertion de informationes false
 ** Elimination de contento de paginas
-** Ligamines ''spam'' verso sitos externe
+** Ligamines \'\'spam\'\' verso sitos externe
 ** Insertion de nonsenso/absurditates in paginas
 ** Comportamento intimidatori/molestation
 ** Abuso de contos multiple
-** Nomine de usator inacceptabile",
+** Nomine de usator inacceptabile',
 	'ipb-hardblock' => 'Impedir le usatores authenticate de facer modificationes ab iste adresse IP',
 	'ipbcreateaccount' => 'Impedir creation de contos',
 	'ipbemailban' => 'Impedir que le usator invia e-mail',
@@ -10215,8 +10231,8 @@ Salveguarda lo in tu computator e incarga lo hic.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|version|versiones}}',
 	'import-logentry-interwiki' => 'importava $1 transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|version|versiones}} desde $2',
-	'imagemaxsize' => "Dimension maxime de imagines:<br />''(pro paginas de description de files)''",
-	'imagelisttext' => "Infra es un lista de '''$1''' {{PLURAL:$1|imagine|imagines}} ordinate $2.",
+	'imagemaxsize' => 'Dimension maxime de imagines:<br />\'\'(pro paginas de description de files)\'\'',
+	'imagelisttext' => 'Infra es un lista de \'\'\'$1\'\'\' {{PLURAL:$1|imagine|imagines}} ordinate $2.',
 	'ilsubmit' => 'Cercar',
 	'invalidateemail' => 'Cancellar confirmation del adresse de e-mail',
 	'imgmultipageprev' => '← precedente pagina',
@@ -10224,9 +10240,9 @@ Salveguarda lo in tu computator e incarga lo hic.',
 	'imgmultigo' => 'Ir!',
 	'imgmultigoto' => 'Visitar pagina $1',
 	'intentionallyblankpage' => 'Iste pagina es intentionalmente vacue',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'index-category' => 'Halaman yang diindeks',
 	'internalerror' => 'Kesalahan internal',
 	'internalerror_info' => 'Kesalahan internal: $1',
@@ -10258,7 +10274,7 @@ Untuk pilihan keamanan, img_auth.php dinonaktifkan.',
 	'img-auth-noread' => 'Pengguna tidak memiliki akses untuk membaca "$1".',
 	'imgfile' => 'berkas',
 	'imagelinks' => 'Pranala berkas',
-	'iteminvalidname' => "Ada masalah dengan '$1', namanya tidak sah...",
+	'iteminvalidname' => 'Ada masalah dengan \'$1\', namanya tidak sah...',
 	'invert' => 'Balikkan pilihan',
 	'isredirect' => 'halaman pengalihan',
 	'istemplate' => 'dengan templat',
@@ -10370,8 +10386,8 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisi|revisi}}',
 	'import-logentry-interwiki' => 'men-transwiki $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisi}} dari $2',
-	'imagemaxsize' => "Batas ukuran gambar:<br />''(untuk halaman deskripsi berkas)''",
-	'imagelisttext' => "Di bawah ini adalah daftar '''$1''' {{PLURAL:$1|berkas|berkas}} diurutkan $2.",
+	'imagemaxsize' => 'Batas ukuran gambar:<br />\'\'(untuk halaman deskripsi berkas)\'\'',
+	'imagelisttext' => 'Di bawah ini adalah daftar \'\'\'$1\'\'\' {{PLURAL:$1|berkas|berkas}} diurutkan $2.',
 	'ilsubmit' => 'Cari',
 	'invalidateemail' => 'Batalkan konfirmasi surel',
 	'imgmultipageprev' => '&larr; halaman sebelumnya',
@@ -10379,9 +10395,9 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 	'imgmultigo' => 'Cari!',
 	'imgmultigoto' => 'Pergi ke halaman $1',
 	'intentionallyblankpage' => 'Halaman ini sengaja dibiarkan kosong dan digunakan di antaranya untuk pengukuran kinerja, dan lain-lain.',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'italic_sample' => 'Textu cursivmen',
 	'italic_tip' => 'Textu cursivmen',
 	'image_tip' => 'File fixat',
@@ -10399,9 +10415,9 @@ $messages['ie'] = array(
 	'infiniteblock' => 'infinit',
 	'ilsubmit' => 'Serchar',
 	'imgmultigo' => 'Ear!',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'index-category' => 'Ẹdẹle Ihü',
 	'internalerror' => 'Nsogbu ime ime',
 	'internalerror_info' => 'Nsogbu ime ime: $1',
@@ -10414,17 +10430,17 @@ $messages['ig'] = array(
 	'isredirect' => 'ihü nke nkúfù',
 	'istemplate' => 'ọ jè ákwúkwó usòrò',
 	'isimage' => 'jikodo nnunuuche',
-	'ipadressorusername' => "IP mà ọ bu áhà ọ'bànifé:",
+	'ipadressorusername' => 'IP mà ọ bu áhà ọ\'bànifé:',
 	'ipbexpiry' => 'Gbá okà:',
 	'ipbreason' => 'Mgbághapụtà:',
 	'ipbreasonotherlist' => 'Mgbághàpụtá ozor',
-	'ipbsubmit' => "Kwàchí ọ'bànifé nkèá",
+	'ipbsubmit' => 'Kwàchí ọ\'bànifé nkèá',
 	'ipbother' => 'Ógẹ ozor',
 	'ipboptions' => 'àmànì 2:2 hours,chi 1:1 day,chi 3:3 days,izù 1:1 week,izù 2:2 weeks,önwa1:1 month,önwa 3:3 months,önwa 6:6 months,afọr 1:1 year,ógè énwéghị ùbe:infinite',
 	'ipbotheroption' => 'nke ozor',
 	'ipb-unblock-addr' => 'Ákwàchịrị $1',
-	'ipb-unblock' => "Ákwàchịrị áhà ọ'bànifé ma IP",
-	'ipblocklist' => "Ọ'bànifé kwáchírí",
+	'ipb-unblock' => 'Ákwàchịrị áhà ọ\'bànifé ma IP',
+	'ipblocklist' => 'Ọ\'bànifé kwáchírí',
 	'ipblocklist-submit' => 'Chọwa',
 	'infiniteblock' => 'etemete',
 	'immobile-source-page' => 'Enwerịkị puzie ihüá.',
@@ -10446,9 +10462,9 @@ Biko meríáríá ozor.',
 	'imgmultipagenext' => 'ihü nke di nso →',
 	'imgmultigo' => 'Gá!',
 	'imgmultigoto' => 'Gá na ihü $1',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'isredirect' => 'ᑕᐱᑕᕇᒃ ᐅᖅᓯᖅ ᒪᑉᐱᑕᖅ',
 	'ipblocklist-submit' => 'ᐃᕚᖅᐳᖅ',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ᑎᑎᕋᖅᑕᐅᒋᐊᕐᖓᕈᑦ|ᑎᑎᕋᖅᑕᐅᒋᐊᕐᖓᕈᑦ}}',
@@ -10457,9 +10473,9 @@ $messages['ike-cans'] = array(
 	'imgmultipageprev' => '← ᑐᓄᓪᓕᐹᖅ  ᒪᑉᐱᑕᖅ',
 	'imgmultipagenext' => 'ᑕᒡᒐ ᒪᑉᐱᑕᖅ →',
 	'imgmultigo' => 'ᐊᐃᕗᖅ!',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'isredirect' => 'tapitariik uqsaq mappitaq',
 	'ipblocklist-submit' => 'ivaaqpuq',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|titiraqtaugiarngarut|titiraqtaugiarngarut}}',
@@ -10468,9 +10484,9 @@ $messages['ike-latn'] = array(
 	'imgmultipageprev' => '← tunullipaaq mappitaq',
 	'imgmultipagenext' => 'tagga mappitaq →',
 	'imgmultigo' => 'aivuq!',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'index-category' => 'Dagiti pagsurutan a panid',
 	'internalerror' => 'Akin-uneg a biddut',
 	'internalerror_info' => 'Akin-uneg a biddut: $1',
@@ -10503,7 +10519,7 @@ Para iti kangatuan a talinaay, nabaldado ti img_auth.php.',
 	'img-auth-bad-query-string' => 'Ti URL ket addan ti imbalido a panagbiruk.',
 	'imgfile' => 'papeles',
 	'imagelinks' => 'Panagusar iti daytoy a papeles',
-	'iteminvalidname' => "Parikut iti banag '$1', imbalido a nagan...",
+	'iteminvalidname' => 'Parikut iti banag \'$1\', imbalido a nagan...',
 	'invert' => 'Baliktaden ti napili',
 	'isredirect' => 'ibaw-ing ti panid',
 	'istemplate' => 'mairaman',
@@ -10547,7 +10563,7 @@ Para iti kangatuan a talinaay, nabaldado ti img_auth.php.',
 	'ipblocklist-submit' => 'Biruken',
 	'ipblocklist-localblock' => 'Serra a lokal',
 	'ipblocklist-otherblocks' => 'Sabali {{PLURAL:$1|serra|dagiti serra}}',
-	'infiniteblock' => "inggana't inggana",
+	'infiniteblock' => 'inggana\'t inggana',
 	'ipblocklist-empty' => 'Awan nagyan ti listaan ti serra.',
 	'ipblocklist-no-results' => 'Ti kiniddaw nga IP a pagtaengan wenno nagan ti agar-aramat ket saan a naserraan',
 	'ipb_expiry_invalid' => 'Imbalido ti oras a panagpaso.',
@@ -10621,8 +10637,8 @@ Pangngaasi ta padasem manen.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|pinagbaliwan|dagiti pinagbaliwan}}',
 	'import-logentry-interwiki' => 'nai-transwiki ti $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|pinagbaliwan|dagiti pinagbaliwan}} manipud iti $2',
-	'imagemaxsize' => "Ti patingga a kadakkel ti papeles:<br />''(para dagiti pagpalpalawag ti papeles a panid)''",
-	'imagelisttext' => "Adda dita baba ti listaan ti ''$1''' {{PLURAL:$1|a papeles|dagiti papeles}} a nailasin a kas $2.",
+	'imagemaxsize' => 'Ti patingga a kadakkel ti papeles:<br />\'\'(para dagiti pagpalpalawag ti papeles a panid)\'\'',
+	'imagelisttext' => 'Adda dita baba ti listaan ti \'\'$1\'\'\' {{PLURAL:$1|a papeles|dagiti papeles}} a nailasin a kas $2.',
 	'ilsubmit' => 'Biruken',
 	'invalidateemail' => 'Ukasen ti pasingkedan ti e-surat',
 	'imgmultipageprev' => '← napalabas a panid',
@@ -10630,9 +10646,9 @@ Pangngaasi ta padasem manen.',
 	'imgmultigo' => 'Inkan!',
 	'imgmultigoto' => 'Mapan iti panid $1',
 	'intentionallyblankpage' => 'Daytoy a panid  ket naikaro a blanko.',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'internalerror' => 'Чура гӀалат',
 	'internalerror_info' => 'Чура гӀалат: $1',
 	'italic_sample' => 'Кулга яздам',
@@ -10650,9 +10666,9 @@ $messages['inh'] = array(
 	'ilsubmit' => 'Лаха',
 	'imgmultigo' => 'Дехьавала!',
 	'imgmultigoto' => '$1 оагIув тIа дехьавала',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'internalerror' => 'Interna eroro',
 	'internalerror_info' => 'Interna eroro: $1',
 	'italic_sample' => 'Kursiva literi',
@@ -10662,7 +10678,7 @@ $messages['io'] = array(
 	'ignorewarning' => 'Ignorar la averto e gardar la arkivo irgakaze.',
 	'imgfile' => 'arkivo',
 	'imagelinks' => 'Ligili al arkivo',
-	'iteminvalidname' => "Problemo en la artiklo '$1', nevalida nomo...",
+	'iteminvalidname' => 'Problemo en la artiklo \'$1\', nevalida nomo...',
 	'invert' => 'Inversigar selektajo',
 	'isredirect' => 'ridirektanta pagino',
 	'istemplate' => 'inkluzo',
@@ -10698,15 +10714,15 @@ $messages['io'] = array(
 	'importnotext' => 'Vakua o sentexta',
 	'importsuccess' => 'Importaco sucesoza!',
 	'importhistoryconflict' => 'Existas versionaro konfliktiva (Ica pagino povus importacesir antee)',
-	'imagelisttext' => "Infre esas listo di '''$1''' {{PLURAL:$1|arkivo|arkivi}} rangizita $2.",
+	'imagelisttext' => 'Infre esas listo di \'\'\'$1\'\'\' {{PLURAL:$1|arkivo|arkivi}} rangizita $2.',
 	'ilsubmit' => 'Serchar',
 	'imgmultipageprev' => '← antea pagino',
 	'imgmultipagenext' => 'sequanta pagino →',
 	'imgmultigo' => 'Irez!',
 	'imgmultigoto' => 'Irez a pagino $1',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'index-category' => 'Raðaðar skrár',
 	'internalerror' => 'Kerfisvilla',
 	'internalerror_info' => 'Innri villa: $1',
@@ -10847,7 +10863,7 @@ Vinsamlegast reyndu aftur.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|breyting|breytingar}}',
 	'import-logentry-interwiki' => 'flutti inn $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|breyting|breytingar}} frá $2',
-	'imagemaxsize' => "Takmarka myndastærð:<br />''(fyrir skráarsíður)''",
+	'imagemaxsize' => 'Takmarka myndastærð:<br />\'\'(fyrir skráarsíður)\'\'',
 	'imagelisttext' => 'Hér fyrir neðan er {{PLURAL:$1|einni skrá|$1 skrám}} raðað $2.',
 	'ilsubmit' => 'Leita',
 	'invalidateemail' => 'Hætta við staðfestingu netfangs',
@@ -10856,18 +10872,18 @@ Vinsamlegast reyndu aftur.',
 	'imgmultigo' => 'Áfram!',
 	'imgmultigoto' => 'Fara á síðu $1',
 	'intentionallyblankpage' => 'Þessi síða er viljandi höfð tóm.',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'index-category' => 'Pagine indicizzate',
 	'internalerror' => 'Errore interno',
 	'internalerror_info' => 'Errore interno: $1',
-	'invalidemailaddress' => "L'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido o svuotare la casella.",
+	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido.',
 	'italic_sample' => 'Corsivo',
 	'italic_tip' => 'Corsivo',
 	'image_sample' => 'Esempio.jpg',
 	'image_tip' => 'Incorpora file',
-	'ignorewarning' => "Ignora l'avviso e salva comunque il file",
+	'ignorewarning' => 'Ignora l\'avviso e salva comunque il file',
 	'ignorewarnings' => 'Ignora i messaggi di avvertimento del sistema',
 	'illegalfilename' => 'Il nome "$1" contiene dei caratteri non ammessi nei titoli delle pagine. Dare al file un nome diverso e provare a caricarlo di nuovo.',
 	'illegal-filename' => 'Il nome del file non è ammesso.',
@@ -10888,10 +10904,10 @@ Solo l\'accesso ai file è consentito.',
 Questo sito è configurato come un wiki pubblico.
 Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'img-auth-noread' => 'L\'utente non ha accesso alla lettura di "$1".',
-	'img-auth-bad-query-string' => "L'URL contiene una stringa di query non valida.",
+	'img-auth-bad-query-string' => 'L\'URL contiene una stringa di query non valida.',
 	'imgfile' => 'file',
 	'imagelinks' => 'Uso del file',
-	'iteminvalidname' => "Problemi con la pagina '$1', nome non valido...",
+	'iteminvalidname' => 'Problemi con la pagina \'$1\', nome non valido...',
 	'invert' => 'inverti la selezione',
 	'isredirect' => 'redirect',
 	'istemplate' => 'inclusione',
@@ -10910,9 +10926,9 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 ** Nome utente non consono',
 	'ipb-hardblock' => 'Impedisci agli utenti registrati di contribuire da questo indirizzo IP',
 	'ipbcreateaccount' => 'Impedisci la creazione di altri account',
-	'ipbemailban' => "Impedisci all'utente l'invio di e-mail",
-	'ipbenableautoblock' => "Blocca automaticamente l'ultimo indirizzo IP usato dall'utente e i successivi con cui vengono tentate modifiche",
-	'ipbsubmit' => "Blocca l'utente",
+	'ipbemailban' => 'Impedisci all\'utente l\'invio di e-mail',
+	'ipbenableautoblock' => 'Blocca automaticamente l\'ultimo indirizzo IP usato dall\'utente e i successivi con cui vengono tentate modifiche',
+	'ipbsubmit' => 'Blocca l’utente',
 	'ipbother' => 'Durata non in elenco:',
 	'ipboptions' => '2 ore:2 hours,1 giorno:1 day,3 giorni:3 days,1 settimana:1 week,2 settimane:2 weeks,1 mese:1 month,3 mesi:3 months,6 mesi:6 months,1 anno:1 year,infinito:infinite',
 	'ipbotheroption' => 'altro',
@@ -10920,7 +10936,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbhidename' => 'Nascondi il nome utente dalle modifiche e dagli elenchi.',
 	'ipbwatchuser' => 'Segui le pagine e le discussioni utente di questo utente',
 	'ipb-disableusertalk' => 'Impedisci a questo utente di modificare la propria pagina di discussioni mentre è bloccato',
-	'ipb-change-block' => "Ri-blocca l'utente con queste impostazioni",
+	'ipb-change-block' => 'Ri-blocca l’utente con queste impostazioni',
 	'ipb-confirm' => 'Conferma il blocco',
 	'ipb-blockingself' => 'Stai per bloccare te stesso! Sei sicuro di volerlo fare?',
 	'ipb-confirmhideuser' => 'Si sta per bloccare un utente con l\'opzione "Nascondi utente" abilitata.
@@ -10938,16 +10954,16 @@ Sei sicuro di voler continuare?',
 	'ipblocklist-localblock' => 'Blocchi locali',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Altro blocco|Altri blocchi}}',
 	'infiniteblock' => 'infinito',
-	'ipblocklist-empty' => "L'elenco dei blocchi è vuoto.",
-	'ipblocklist-no-results' => "L'indirizzo IP o nome utente richiesto non è bloccato.",
+	'ipblocklist-empty' => 'L\'elenco dei blocchi è vuoto.',
+	'ipblocklist-no-results' => 'L\'indirizzo IP o nome utente richiesto non è bloccato.',
 	'ipb_expiry_invalid' => 'Durata o scadenza del blocco non valida.',
 	'ipb_expiry_temp' => 'I blocchi dei nomi utenti nascosti dovrebbero essere infiniti',
-	'ipb_hide_invalid' => "Impossibile cancellare l'account; potrebbe avere troppe modifiche.",
+	'ipb_hide_invalid' => 'Impossibile cancellare l\'account; potrebbe avere troppe modifiche.',
 	'ipb_already_blocked' => 'L\'utente "$1" è già bloccato',
-	'ipb-needreblock' => "L'utente $1 è già bloccato. Modificare le impostazioni?",
+	'ipb-needreblock' => 'L\'utente $1 è già bloccato. Modificare le impostazioni?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Altro blocco|Altri blocchi}}',
 	'ipb_cant_unblock' => 'Errore: Impossibile trovare il blocco con ID $1. Il blocco potrebbe essere già stato rimosso.',
-	'ipb_blocked_as_range' => "Errore: L'indirizzo IP $1 non è soggetto a blocco individuale e non può essere sbloccato. Il blocco è invece attivo a livello dell'intervallo $2, che può essere sbloccato.",
+	'ipb_blocked_as_range' => 'Errore: L\'indirizzo IP $1 non è soggetto a blocco individuale e non può essere sbloccato. Il blocco è invece attivo a livello dell\'intervallo $2, che può essere sbloccato.',
 	'ip_range_invalid' => 'Intervallo di indirizzi IP non valido.',
 	'ip_range_toolarge' => 'Non è possibile bloccare range superiori al /$1',
 	'ipbblocked' => 'Non puoi bloccare o sbloccare altri utenti, perché tu stesso sei bloccato',
@@ -10959,14 +10975,14 @@ Sei sicuro di voler continuare?',
 	'immobile-target-page' => 'Non è possibile spostare sul titolo indicato.',
 	'imagenocrossnamespace' => 'Non è possibile spostare un file fuori dal relativo namespace.',
 	'imagetypemismatch' => 'La nuova estensione del file non corrisponde al tipo dello stesso',
-	'imageinvalidfilename' => "Il nome dell'immagine non è valido",
+	'imageinvalidfilename' => 'Il nome dell\'immagine non è valido',
 	'import' => 'Importa pagine',
 	'importinterwiki' => 'Importazione transwiki',
 	'import-interwiki-text' => 'Selezionare un progetto wiki e il titolo della pagina da importare.
 Le date di pubblicazione e i nomi degli autori delle varie versioni saranno conservati.
 Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log/import|log di importazione]].',
 	'import-interwiki-source' => 'Sorgente wiki/pagina:',
-	'import-interwiki-history' => "Copia l'intera cronologia di questa pagina",
+	'import-interwiki-history' => 'Copia l\'intera cronologia di questa pagina',
 	'import-interwiki-templates' => 'Includi tutti i template',
 	'import-interwiki-submit' => 'Importa',
 	'import-interwiki-namespace' => 'Namespace di destinazione:',
@@ -10978,18 +10994,18 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'importnopages' => 'Nessuna pagina da importare.',
 	'imported-log-entries' => 'Importat{{PLURAL:$1|o|i}} $1 {{PLURAL:$1|evento|eventi}} di log.',
 	'importfailed' => 'Importazione non riuscita: <nowiki>$1</nowiki>',
-	'importunknownsource' => "Tipo di origine sconosciuto per l'importazione",
+	'importunknownsource' => 'Tipo di origine sconosciuto per l\'importazione',
 	'importcantopen' => 'Impossibile aprire il file di importazione',
 	'importbadinterwiki' => 'Collegamento inter-wiki errato',
 	'importnotext' => 'Testo vuoto o mancante',
 	'importsuccess' => 'Importazione riuscita.',
 	'importhistoryconflict' => 'La cronologia contiene delle versioni in conflitto (questa pagina potrebbe essere già stata importata)',
-	'importnosources' => "Non è stata definita una fonte per l'importazione transwiki; l'importazione diretta della cronologia non è attiva.",
-	'importnofile' => "Non è stato caricato nessun file per l'importazione.",
-	'importuploaderrorsize' => "Caricamento del file per l'importazione non riuscito. Il file supera le dimensioni massime consentite per l'upload.",
-	'importuploaderrorpartial' => "Caricamento del file per l'importazione non riuscito. Il file è stato caricato solo in parte.",
-	'importuploaderrortemp' => "Caricamento del file per l'importazione non riuscito. Manca una cartella temporanea.",
-	'import-parse-failure' => "Errore di analisi nell'importazione XML",
+	'importnosources' => 'Non è stata definita una fonte per l\'importazione transwiki; l\'importazione diretta della cronologia non è attiva.',
+	'importnofile' => 'Non è stato caricato nessun file per l\'importazione.',
+	'importuploaderrorsize' => 'Caricamento del file per l\'importazione non riuscito. Il file supera le dimensioni massime consentite per l\'upload.',
+	'importuploaderrorpartial' => 'Caricamento del file per l\'importazione non riuscito. Il file è stato caricato solo in parte.',
+	'importuploaderrortemp' => 'Caricamento del file per l\'importazione non riuscito. Manca una cartella temporanea.',
+	'import-parse-failure' => 'Errore di analisi nell\'importazione XML',
 	'import-noarticle' => 'Nessuna pagina da importare.',
 	'import-nonewrevisions' => 'Tutte le revisioni sono già state importate in precedenza.',
 	'import-upload' => 'Carica dati XML',
@@ -11006,8 +11022,8 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'import-logentry-upload-detail' => '{{PLURAL:$1|una revisione importata|$1 revisioni importate}}',
 	'import-logentry-interwiki' => 'ha trasferito da altra wiki la pagina $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|una revisione importata|$1 revisioni importate}} da $2',
-	'imagemaxsize' => "Dimensione massima delle immagini:<br />''(per le pagine di descrizione del file)''",
-	'imagelisttext' => "La lista presentata di seguito, costituita da {{PLURAL:$1|un file|'''$1''' file}}, è ordinata $2.",
+	'imagemaxsize' => 'Dimensione massima delle immagini:<br />\'\'(per le pagine di descrizione del file)\'\'',
+	'imagelisttext' => 'La lista presentata di seguito, costituita da {{PLURAL:$1|un file|\'\'\'$1\'\'\' file}}, è ordinata $2.',
 	'ilsubmit' => 'Ricerca',
 	'invalidateemail' => 'Annulla richiesta di conferma e-mail',
 	'imgmultipageprev' => '← pagina precedente',
@@ -11015,18 +11031,18 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'imgmultigo' => 'Vai',
 	'imgmultigoto' => 'Vai alla pagina $1',
 	'intentionallyblankpage' => 'Questa pagina è lasciata volutamente vuota ed è usata per benchmark, ecc.',
-);
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'index-category' => 'Pagine indicizzate',
 	'internalerror' => 'Errore interno',
 	'internalerror_info' => 'Errore interno: $1',
-	'invalidemailaddress' => "L'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido o svuotare la casella.",
+	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido o svuotare la casella.',
 	'italic_sample' => 'Corsivo',
 	'italic_tip' => 'Corsivo',
 	'image_sample' => 'Esempio.jpg',
 	'image_tip' => 'Incorpora file',
-	'ignorewarning' => "Ignora l'avviso e salva comunque il file",
+	'ignorewarning' => 'Ignora l\'avviso e salva comunque il file',
 	'ignorewarnings' => 'Ignora i messaggi di avvertimento del sistema',
 	'illegalfilename' => 'Il nome "$1" contiene dei caratteri non ammessi nei titoli delle pagine. Dare al file un nome diverso e provare a caricarlo di nuovo.',
 	'illegal-filename' => 'Il nome del file non è ammesso.',
@@ -11047,10 +11063,10 @@ Solo l\'accesso ai file è consentito.',
 Questo sito è configurato come un wiki pubblico.
 Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'img-auth-noread' => 'L\'utente non ha accesso alla lettura di "$1".',
-	'img-auth-bad-query-string' => "L'URL contiene una stringa di query non valida.",
+	'img-auth-bad-query-string' => 'L\'URL contiene una stringa di query non valida.',
 	'imgfile' => 'file',
 	'imagelinks' => 'Uso del file',
-	'iteminvalidname' => "Problemi con la pagina '$1', nome non valido...",
+	'iteminvalidname' => 'Problemi con la pagina \'$1\', nome non valido...',
 	'invert' => 'inverti la selezione',
 	'isredirect' => 'redirect',
 	'istemplate' => 'inclusione',
@@ -11069,9 +11085,9 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 ** Nome utente non consono',
 	'ipb-hardblock' => 'Impedisci agli utenti registrati di contribuire da questo indirizzo IP',
 	'ipbcreateaccount' => 'Impedisci la creazione di altri account',
-	'ipbemailban' => "Impedisci all'utente l'invio di e-mail",
-	'ipbenableautoblock' => "Blocca automaticamente l'ultimo indirizzo IP usato dall'utente e i successivi con cui vengono tentate modifiche",
-	'ipbsubmit' => "Blocca l'utente",
+	'ipbemailban' => 'Impedisci all\'utente l\'invio di e-mail',
+	'ipbenableautoblock' => 'Blocca automaticamente l\'ultimo indirizzo IP usato dall\'utente e i successivi con cui vengono tentate modifiche',
+	'ipbsubmit' => 'Blocca l\'utente',
 	'ipbother' => 'Durata non in elenco:',
 	'ipboptions' => '2 ore:2 hours,1 giorno:1 day,3 giorni:3 days,1 settimana:1 week,2 settimane:2 weeks,1 mese:1 month,3 mesi:3 months,6 mesi:6 months,1 anno:1 year,infinito:infinite',
 	'ipbotheroption' => 'altro',
@@ -11079,7 +11095,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbhidename' => 'Nascondi il nome utente dalle modifiche e dagli elenchi.',
 	'ipbwatchuser' => 'Segui le pagine e le discussioni utente di questo utente',
 	'ipb-disableusertalk' => 'Impedisci a questo utente di modificare la propria pagina di discussioni mentre è bloccato',
-	'ipb-change-block' => "Ri-blocca l'utente con queste impostazioni",
+	'ipb-change-block' => 'Ri-blocca l\'utente con queste impostazioni',
 	'ipb-confirm' => 'Conferma il blocco',
 	'ipb-blockingself' => 'Stai per bloccare te stesso! Sei sicuro di volerlo fare?',
 	'ipb-confirmhideuser' => 'Si sta per bloccare un utente con l\'opzione "Nascondi utente" abilitata.
@@ -11097,16 +11113,16 @@ Sei sicuro di voler continuare?',
 	'ipblocklist-localblock' => 'Blocchi locali',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Altro blocco|Altri blocchi}}',
 	'infiniteblock' => 'infinito',
-	'ipblocklist-empty' => "L'elenco dei blocchi è vuoto.",
-	'ipblocklist-no-results' => "L'indirizzo IP o nome utente richiesto non è bloccato.",
+	'ipblocklist-empty' => 'L\'elenco dei blocchi è vuoto.',
+	'ipblocklist-no-results' => 'L\'indirizzo IP o nome utente richiesto non è bloccato.',
 	'ipb_expiry_invalid' => 'Durata o scadenza del blocco non valida.',
 	'ipb_expiry_temp' => 'I blocchi dei nomi utenti nascosti dovrebbero essere infiniti',
-	'ipb_hide_invalid' => "Impossibile cancellare l'account; potrebbe avere troppe modifiche.",
+	'ipb_hide_invalid' => 'Impossibile cancellare l\'account; potrebbe avere troppe modifiche.',
 	'ipb_already_blocked' => 'L\'utente "$1" è già bloccato',
-	'ipb-needreblock' => "L'utente $1 è già bloccato. Modificare le impostazioni?",
+	'ipb-needreblock' => 'L\'utente $1 è già bloccato. Modificare le impostazioni?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Altro blocco|Altri blocchi}}',
 	'ipb_cant_unblock' => 'Errore: Impossibile trovare il blocco con ID $1. Il blocco potrebbe essere già stato rimosso.',
-	'ipb_blocked_as_range' => "Errore: L'indirizzo IP $1 non è soggetto a blocco individuale e non può essere sbloccato. Il blocco è invece attivo a livello dell'intervallo $2, che può essere sbloccato.",
+	'ipb_blocked_as_range' => 'Errore: L\'indirizzo IP $1 non è soggetto a blocco individuale e non può essere sbloccato. Il blocco è invece attivo a livello dell\'intervallo $2, che può essere sbloccato.',
 	'ip_range_invalid' => 'Intervallo di indirizzi IP non valido.',
 	'ip_range_toolarge' => 'Non è possibile bloccare range superiori al /$1',
 	'ipbblocked' => 'Non puoi bloccare o sbloccare altri utenti, perché tu stesso sei bloccato',
@@ -11118,14 +11134,14 @@ Sei sicuro di voler continuare?',
 	'immobile-target-page' => 'Non è possibile spostare sul titolo indicato.',
 	'imagenocrossnamespace' => 'Non è possibile spostare un file fuori dal relativo namespace.',
 	'imagetypemismatch' => 'La nuova estensione del file non corrisponde al tipo dello stesso',
-	'imageinvalidfilename' => "Il nome dell'immagine non è valido",
+	'imageinvalidfilename' => 'Il nome dell\'immagine non è valido',
 	'import' => 'Importa pagine',
 	'importinterwiki' => 'Importazione transwiki',
 	'import-interwiki-text' => 'Selezionare un progetto wiki e il titolo della pagina da importare.
 Le date di pubblicazione e i nomi degli autori delle varie versioni saranno conservati.
 Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log/import|log di importazione]].',
 	'import-interwiki-source' => 'Sorgente wiki/pagina:',
-	'import-interwiki-history' => "Copia l'intera cronologia di questa pagina",
+	'import-interwiki-history' => 'Copia l\'intera cronologia di questa pagina',
 	'import-interwiki-templates' => 'Includi tutti i template',
 	'import-interwiki-submit' => 'Importa',
 	'import-interwiki-namespace' => 'Namespace di destinazione:',
@@ -11137,18 +11153,18 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'importnopages' => 'Nessuna pagina da importare.',
 	'imported-log-entries' => 'Importat{{PLURAL:$1|o|i}} $1 {{PLURAL:$1|evento|eventi}} di log.',
 	'importfailed' => 'Importazione non riuscita: <nowiki>$1</nowiki>',
-	'importunknownsource' => "Tipo di origine sconosciuto per l'importazione",
+	'importunknownsource' => 'Tipo di origine sconosciuto per l\'importazione',
 	'importcantopen' => 'Impossibile aprire il file di importazione',
 	'importbadinterwiki' => 'Collegamento inter-wiki errato',
 	'importnotext' => 'Testo vuoto o mancante',
 	'importsuccess' => 'Importazione riuscita.',
 	'importhistoryconflict' => 'La cronologia contiene delle versioni in conflitto (questa pagina potrebbe essere già stata importata)',
-	'importnosources' => "Non è stata definita una fonte per l'importazione transwiki; l'importazione diretta della cronologia non è attiva.",
-	'importnofile' => "Non è stato caricato nessun file per l'importazione.",
-	'importuploaderrorsize' => "Caricamento del file per l'importazione non riuscito. Il file supera le dimensioni massime consentite per l'upload.",
-	'importuploaderrorpartial' => "Caricamento del file per l'importazione non riuscito. Il file è stato caricato solo in parte.",
-	'importuploaderrortemp' => "Caricamento del file per l'importazione non riuscito. Manca una cartella temporanea.",
-	'import-parse-failure' => "Errore di analisi nell'importazione XML",
+	'importnosources' => 'Non è stata definita una fonte per l\'importazione transwiki; l\'importazione diretta della cronologia non è attiva.',
+	'importnofile' => 'Non è stato caricato nessun file per l\'importazione.',
+	'importuploaderrorsize' => 'Caricamento del file per l\'importazione non riuscito. Il file supera le dimensioni massime consentite per l\'upload.',
+	'importuploaderrorpartial' => 'Caricamento del file per l\'importazione non riuscito. Il file è stato caricato solo in parte.',
+	'importuploaderrortemp' => 'Caricamento del file per l\'importazione non riuscito. Manca una cartella temporanea.',
+	'import-parse-failure' => 'Errore di analisi nell\'importazione XML',
 	'import-noarticle' => 'Nessuna pagina da importare.',
 	'import-nonewrevisions' => 'Tutte le revisioni sono già state importate in precedenza.',
 	'import-upload' => 'Carica dati XML',
@@ -11165,8 +11181,8 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'import-logentry-upload-detail' => '{{PLURAL:$1|una revisione importata|$1 revisioni importate}}',
 	'import-logentry-interwiki' => 'ha trasferito da altra wiki la pagina $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|una revisione importata|$1 revisioni importate}} da $2',
-	'imagemaxsize' => "Dimensione massima delle immagini:<br />''(per le pagine di descrizione del file)''",
-	'imagelisttext' => "La lista presentata di seguito, costituita da {{PLURAL:$1|un file|'''$1''' file}}, è ordinata $2.",
+	'imagemaxsize' => 'Dimensione massima delle immagini:<br />\'\'(per le pagine di descrizione del file)\'\'',
+	'imagelisttext' => 'La lista presentata di seguito, costituita da {{PLURAL:$1|un file|\'\'\'$1\'\'\' file}}, è ordinata $2.',
 	'ilsubmit' => 'Ricerca',
 	'invalidateemail' => 'Annulla richiesta di conferma e-mail',
 	'imgmultipageprev' => '← pagina precedente',
@@ -11174,19 +11190,18 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 	'imgmultigo' => 'Vai',
 	'imgmultigoto' => 'Vai alla pagina $1',
 	'intentionallyblankpage' => 'Questa pagina è lasciata volutamente vuota ed è usata per benchmark, ecc.',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'index-category' => '検索エンジンに収集されるページ',
 	'internalerror' => '内部エラー',
 	'internalerror_info' => '内部エラー：$1',
-	'invalidemailaddress' => '入力されたメールアドレスが正しい形式に従っていないため、受け付けられません。
-正しい形式で入力し直すか、メールアドレス欄を空にしておいてください。',
+	'invalidemailaddress' => '有効なメールアドレスを入力してください。',
 	'italic_sample' => '斜体',
 	'italic_tip' => '斜体',
 	'image_sample' => 'サンプル.jpg',
 	'image_tip' => 'ファイルの埋め込み',
-	'ignorewarning' => '警告を無視し、ファイルを保存してしまう',
+	'ignorewarning' => '警告を無視し、ファイルの保存を強制的に行う',
 	'ignorewarnings' => '警告を無視',
 	'illegalfilename' => 'ファイル名「$1」にページ名として許可されていない文字が含まれています。
 ファイル名を変更してからもう一度アップロードしてください。',
@@ -11233,7 +11248,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'ipbenableautoblock' => 'この利用者が最後に使用したIPアドレスと、後に編集しようとしたIPアドレスを自動的にブロック',
 	'ipbsubmit' => 'この利用者をブロック',
 	'ipbother' => 'その他の期間：',
-	'ipboptions' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
+	'ipboptions' => '15分:15 minutes,30分:30 minutes,2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1ヶ月:1 month,3ヶ月:3 months,6ヶ月:6 months,1年:1 year,無期限:infinite',
 	'ipbotheroption' => 'その他',
 	'ipbotherreason' => '他の、または追加の理由：',
 	'ipbhidename' => '利用者名を編集履歴や各種一覧から秘匿する',
@@ -11289,7 +11304,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'import-interwiki-history' => 'このページのすべての版を複製する',
 	'import-interwiki-templates' => 'すべてのテンプレートを含める',
 	'import-interwiki-submit' => '取り込み',
-	'import-interwiki-namespace' => '目的の名前空間：',
+	'import-interwiki-namespace' => '次の名前空間に取り込む:',
 	'import-upload-filename' => 'ファイルの名前：',
 	'import-comment' => 'コメント：',
 	'importtext' => '書き出し元となるウィキから[[Special:Export|書き出し用機能]]を使ってファイルを書き出してください。
@@ -11328,8 +11343,8 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'import-logentry-upload-detail' => '$1版',
 	'import-logentry-interwiki' => '$1をウィキ間移動しました',
 	'import-logentry-interwiki-detail' => '$2の$1版',
-	'imagemaxsize' => "画像のサイズ制限：<br />''（ファイルページに対する）''",
-	'imagelisttext' => "以下は、$2で並び替えられた'''$1'''ファイルの一覧です。",
+	'imagemaxsize' => '画像のサイズ制限：<br />\'\'（ファイルページに対する）\'\'',
+	'imagelisttext' => '以下は、$2で並び替えられた\'\'\'$1\'\'\'ファイルの一覧です。',
 	'ilsubmit' => '検索',
 	'invalidateemail' => 'メールアドレスの認証中止',
 	'imgmultipageprev' => '&larr;前ページ',
@@ -11349,13 +11364,13 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'iranian-calendar-m11' => 'バフマン',
 	'iranian-calendar-m12' => 'エスファンド',
 	'intentionallyblankpage' => 'このページは意図的に白紙にされています。',
-	'irc' => 'IRCにるヘルプ',
+	'irc' => 'IRCによるヘルプ',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => '画像を挿入する',
+	'insertimage' => '画像をインポートする',
 	'its_easy' => '簡単、無料',
-);
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'index-category' => 'Index piej',
 	'internalerror' => 'Intoernal era',
 	'internalerror_info' => 'Intoernal era: $1',
@@ -11371,9 +11386,9 @@ Begyu enta a wel-faamat ajres ar emti dat fiil.',
 	'isimage' => 'imij lingk',
 	'ipboptions' => '2 owa:2 hours,1 die:1 day,3 die:3 days,1 wiik:1 week,2 wiik:2 weeks,1 mont:1 month,3 mont:3 months,6 mont:6 months,1 ier:1 year,infinet:infinite',
 	'ipblocklist' => 'IP ajres and yuuzaniem dem wa blak',
-);
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'internalerror' => 'Intern fejl',
 	'internalerror_info' => 'Intern fejl: $1',
 	'italic_sample' => 'Skyn skrevselenger',
@@ -11386,9 +11401,9 @@ $messages['jut'] = array(
 	'ipboptions' => '1 tême:1 hour,2 têmer:2 hours,6 têmer:6 hours,1 dåĝ:1 day,3 dåĝ:3 days,1 uge:1 week,2 uger:2 weeks,1 måned:1 month,3 måneder:3 months,1 år:1 year,ubegrænset:indefinite',
 	'ipblocklist' => 'Blokerede IP-adresser og brugernave',
 	'importlogpage' => 'Importlog',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'index-category' => 'Kaca sing diindhèks',
 	'info_short' => 'Informasi',
 	'internalerror' => 'Kasalahan internal',
@@ -11404,7 +11419,7 @@ $messages['jv'] = array(
 	'img-auth-accessdenied' => 'Aksès ditulak',
 	'imgfile' => 'gambar',
 	'imagelinks' => 'Pranala gambar',
-	'iteminvalidname' => "Ana masalah karo '$1', jenengé ora absah...",
+	'iteminvalidname' => 'Ana masalah karo \'$1\', jenengé ora absah...',
 	'invert' => 'Balèkna pilihan',
 	'isredirect' => 'kaca pangalihan',
 	'istemplate' => 'karo cithakan',
@@ -11482,8 +11497,8 @@ Kabèh aktivitas impor transwiki bakal dilog ing [[Special:Log/import|log impor]
 	'import-interwiki-namespace' => 'Bilik jeneng tujuan:',
 	'import-upload-filename' => 'Jeneng berkas:',
 	'import-comment' => 'Komentar:',
-	'importtext' => "Mangga ngèkspor berkas saka wiki sumber nganggo [[Special:Export|piranti èkspor]].
-Simpenen ing cakram padhet (''harddisk'') panjenengan lan unggahna ing kéné.",
+	'importtext' => 'Mangga ngèkspor berkas saka wiki sumber nganggo [[Special:Export|piranti èkspor]].
+Simpenen ing cakram padhet (\'\'harddisk\'\') panjenengan lan unggahna ing kéné.',
 	'importstart' => 'Ngimpor kaca...',
 	'import-revision-count' => '$1 {{PLURAL:$1|révisi|révisi-révisi}}',
 	'importnopages' => 'Ora ana kaca kanggo diimpor.',
@@ -11512,8 +11527,8 @@ Simpenen ing cakram padhet (''harddisk'') panjenengan lan unggahna ing kéné.",
 	'import-logentry-interwiki' => 'wis nge-transwiki $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|révisi}} saka $2',
 	'infosubtitle' => 'Informasi kanggo kaca',
-	'imagemaxsize' => "Wates ukuran gambar:<br />''(kanggo kaca dhèskripsi berkas)''",
-	'imagelisttext' => "Ing ngisor iki kapacak daftar '''$1''' {{PLURAL:$1|berkas|berkas}} sing diurutaké $2.",
+	'imagemaxsize' => 'Wates ukuran gambar:<br />\'\'(kanggo kaca dhèskripsi berkas)\'\'',
+	'imagelisttext' => 'Ing ngisor iki kapacak daftar \'\'\'$1\'\'\' {{PLURAL:$1|berkas|berkas}} sing diurutaké $2.',
 	'ilsubmit' => 'Golek',
 	'imagelistall' => 'kabèh',
 	'invalidateemail' => 'Batalna pandhedhesan (konfirmasi) e-mail',
@@ -11522,9 +11537,9 @@ Simpenen ing cakram padhet (''harddisk'') panjenengan lan unggahna ing kéné.",
 	'imgmultigo' => 'Golèk!',
 	'imgmultigoto' => 'Lungaa menyang kaca $1',
 	'intentionallyblankpage' => 'Kaca iki disengajakaké kosong',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'index-category' => 'გვერდების ინდექსაცია',
 	'info_short' => 'ინფორმაცია',
 	'internalerror' => 'შიდა შეცდომა',
@@ -11556,7 +11571,7 @@ $messages['ka'] = array(
 	'img-auth-noread' => 'მომხმარებელს არა აქვს ნებართვა "$1"-ის წასაკითხად.',
 	'imgfile' => 'ფაილი',
 	'imagelinks' => 'ფაილების ბმულები',
-	'iteminvalidname' => "'$1' - პრობლემა აქვს, სახელი არასწორია...",
+	'iteminvalidname' => '\'$1\' - პრობლემა აქვს, სახელი არასწორია...',
 	'invert' => 'ყველა, მონიშნულის გარდა',
 	'isredirect' => 'გადამისამართების გვერდი',
 	'istemplate' => 'ჩართვა',
@@ -11667,8 +11682,8 @@ $messages['ka'] = array(
 	'import-logentry-interwiki' => '«$1» — ტრანსვიკი იმპორტი',
 	'import-logentry-interwiki-detail' => '$1 ცვლილება $2-დან',
 	'infosubtitle' => 'გვერდის ინფორმაცია',
-	'imagemaxsize' => "სურათის მაქსიმალური ზომა <br />''აღწერილობის გვერდზე:''",
-	'imagelisttext' => "ქვემოთ მოცემულია '''$1''' ფაილის სია დახარისხებული მომხმარებლის $2 მიერ.",
+	'imagemaxsize' => 'სურათის მაქსიმალური ზომა <br />\'\'აღწერილობის გვერდზე:\'\'',
+	'imagelisttext' => 'ქვემოთ მოცემულია \'\'\'$1\'\'\' ფაილის სია დახარისხებული მომხმარებლის $2 მიერ.',
 	'ilsubmit' => 'ძიება',
 	'imagelistall' => 'ყველა',
 	'invalidateemail' => 'ელ-ფოსტის დადასტურების გაუქმება',
@@ -11677,64 +11692,64 @@ $messages['ka'] = array(
 	'imgmultigo' => 'გადასვლა',
 	'imgmultigoto' => 'გადასვლა გვერდზე $1',
 	'intentionallyblankpage' => 'ეს გვერდი სპეციალურად დარჩა ცარიელი',
-);
+];
 
-$messages['kaa'] = array(
-	'internalerror' => "İshki qa'telik",
-	'internalerror_info' => "İshki qa'telik: $1",
-	'invalidemailaddress' => "E-mail adresin'iz nadurıs formatta bolg'anı ushın qabıl etile almaydı.
-Durıs formattag'ı adresin'izdi ko'rsetin', yamasa qatardı bos qaldırın'.",
+$messages['kaa'] = [
+	'internalerror' => 'İshki qa\'telik',
+	'internalerror_info' => 'İshki qa\'telik: $1',
+	'invalidemailaddress' => 'E-mail adresin\'iz nadurıs formatta bolg\'anı ushın qabıl etile almaydı.
+Durıs formattag\'ı adresin\'izdi ko\'rsetin\', yamasa qatardı bos qaldırın\'.',
 	'italic_sample' => 'Kursiv tekst',
 	'italic_tip' => 'Kursiv tekst',
-	'image_tip' => "Jaylastırılg'an fayl",
+	'image_tip' => 'Jaylastırılg\'an fayl',
 	'ignorewarning' => 'Eskertiwlerdi esapqa almay fayldı saqla',
 	'ignorewarnings' => 'Hesh qanday eskertiwdi esapqa alma',
 	'imgfile' => 'fayl',
-	'imagelinks' => "Fayldın' paydalanılıwı",
-	'invert' => "Saylaw ta'rtibin almastırıw",
+	'imagelinks' => 'Fayldın\' paydalanılıwı',
+	'invert' => 'Saylaw ta\'rtibin almastırıw',
 	'isredirect' => 'burıwshı bet',
 	'istemplate' => 'qosıw',
 	'isimage' => 'fayl siltewi',
 	'ipadressorusername' => 'IP Adres yamasa paydalanıwshı atı:',
-	'ipbexpiry' => "Ku'shin joytıw waqtı:",
+	'ipbexpiry' => 'Ku\'shin joytıw waqtı:',
 	'ipbreason' => 'Sebep:',
 	'ipbreasonotherlist' => 'Basqa sebep',
-	'ipbcreateaccount' => "Akkaunt jaratıwdı qadag'an etiw",
-	'ipbemailban' => "Paydalanıwshını e-mail jiberiwden qadag'alaw",
+	'ipbcreateaccount' => 'Akkaunt jaratıwdı qadag\'an etiw',
+	'ipbemailban' => 'Paydalanıwshını e-mail jiberiwden qadag\'alaw',
 	'ipbsubmit' => 'Bul paydalanıwshını bloklaw',
 	'ipbother' => 'Basqa waqıt:',
-	'ipboptions' => "2 saat:2 hours,1 ku'n:1 day,3 ku'n:3 days,1 ha'pte:1 week,2 h'apte:2 weeks,1 ay:1 month,3 ay:3 months,6 ay:6 months,1 jil:1 year,sheksiz:infinite",
+	'ipboptions' => '2 saat:2 hours,1 ku\'n:1 day,3 ku\'n:3 days,1 ha\'pte:1 week,2 h\'apte:2 weeks,1 ay:1 month,3 ay:3 months,6 ay:6 months,1 jil:1 year,sheksiz:infinite',
 	'ipbotheroption' => 'basqa',
 	'ipbotherreason' => 'Basqa/qosımsha sebep:',
-	'ipb-edit-dropdown' => "Bloklaw sebeplerin o'zgertiw",
+	'ipb-edit-dropdown' => 'Bloklaw sebeplerin o\'zgertiw',
 	'ipb-unblock-addr' => '$1 degennin qulpın sheshiw',
-	'ipb-unblock' => "Paydalanıwshının' yamasa IP adrestin' qulpın shesh",
+	'ipb-unblock' => 'Paydalanıwshının\' yamasa IP adrestin\' qulpın shesh',
 	'ipusubmit' => 'Bul bloklawdı biykar etiw',
-	'ipblocklist' => "Bloklang'an paydalanıwshılar",
-	'ipblocklist-legend' => "Bloklang'an paydalanıwshını tabıw",
+	'ipblocklist' => 'Bloklang\'an paydalanıwshılar',
+	'ipblocklist-legend' => 'Bloklang\'an paydalanıwshını tabıw',
 	'ipblocklist-submit' => 'İzle',
 	'infiniteblock' => 'sheksiz',
 	'ipblocklist-empty' => 'Bloklaw dizimi bos.',
-	'ipb_expiry_invalid' => "Ku'shin joytıw waqtı nadurıs.",
+	'ipb_expiry_invalid' => 'Ku\'shin joytıw waqtı nadurıs.',
 	'ipb_already_blocked' => '"$1" a\'lle qashan bloklang\'an',
 	'import' => 'Betlerdi import qılıw',
 	'import-interwiki-submit' => 'Import',
 	'import-comment' => 'Kommentariy:',
 	'importstart' => 'Betler import qılınbaqta...',
 	'import-revision-count' => '{{PLURAL:$1|1 nusqa|$1 nusqa}}',
-	'importnopages' => "Import qılınatug'ın betler joq.",
-	'importunknownsource' => "Import qılıw derek tu'ri belgisiz",
+	'importnopages' => 'Import qılınatug\'ın betler joq.',
+	'importunknownsource' => 'Import qılıw derek tu\'ri belgisiz',
 	'importnotext' => 'Bos yamasa tekstsiz',
 	'importlogpage' => 'Import qılıw jurnalı',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|1 nusqa|$1 nusqa}}',
 	'import-logentry-interwiki-detail' => '$2 degennen {{PLURAL:$1|1 nusqa|$1 nusqa}}',
 	'ilsubmit' => 'İzle',
-	'imgmultipageprev' => "← aldıng'ı bet",
+	'imgmultipageprev' => '← aldıng\'ı bet',
 	'imgmultipagenext' => 'keyingi bet →',
-	'imgmultigo' => "O'tin'!",
-);
+	'imgmultigo' => 'O\'tin\'!',
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'internalerror' => 'Agul zdaxel',
 	'invalidemailaddress' => 'Tansa e-mail-agi ur telhi, ur tesɛi ara taseddast n lɛali. Ssekcem tansa e-mail s taseddast n lɛali neɣ ur tefkiḍ acemma.',
 	'italic_sample' => 'Aḍris aṭalyani',
@@ -11746,7 +11761,7 @@ $messages['kab'] = array(
 	'illegalfilename' => 'Isem n ufaylu "$1" yesɛa isekkilen ur tettalaseḍ ara a ten-tesseqdceḍ deg yizwal n isebtar. G leɛnayek beddel isem n ufaylu u azen-it tikkelt nniḍen.',
 	'imgfile' => 'afaylu',
 	'imagelinks' => 'Izdayen',
-	'iteminvalidname' => "Agnu akk d uferdis '$1', isem mačči ṣaḥiḥ...",
+	'iteminvalidname' => 'Agnu akk d uferdis \'$1\', isem mačči ṣaḥiḥ...',
 	'invert' => 'Snegdam ayen textareḍ',
 	'isredirect' => 'Asebter n usemmimeḍ',
 	'istemplate' => 'asekcam',
@@ -11779,14 +11794,14 @@ $messages['kab'] = array(
 	'import-logentry-interwiki' => '$1 s transwiki',
 	'import-logentry-interwiki-detail' => '$1 tasiwelt(tisiwal) seg $2',
 	'imagemaxsize' => 'Ḥedded tiddi n tugniwin deg yiglamen n tugniwim i:',
-	'imagelisttext' => "Deg ukessar yella wumuɣ n '''$1''' {{PLURAL:$1|ufaylu|yifayluwen}} $2.",
+	'imagelisttext' => 'Deg ukessar yella wumuɣ n \'\'\'$1\'\'\' {{PLURAL:$1|ufaylu|yifayluwen}} $2.',
 	'ilsubmit' => 'Nadi',
 	'imgmultipageprev' => '← asebter ssabeq',
 	'imgmultipagenext' => 'asebter ameḍfir →',
 	'imgmultigo' => 'Ruḥ!',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'internalerror' => 'Agul zdaxel',
 	'invalidemailaddress' => 'Tansa e-mail-agi ur telhi, ur tesɛi ara taseddast n lɛali. Ssekcem tansa e-mail s taseddast n lɛali neɣ ur tefkiḍ acemma.',
 	'italic_sample' => 'Aḍris aṭalyani',
@@ -11798,7 +11813,7 @@ $messages['kbd'] = array(
 	'illegalfilename' => 'Isem n ufaylu "$1" yesɛa isekkilen ur tettalaseḍ ara a ten-tesseqdceḍ deg yizwal n isebtar. G leɛnayek beddel isem n ufaylu u azen-it tikkelt nniḍen.',
 	'imgfile' => 'afaylu',
 	'imagelinks' => 'Izdayen',
-	'iteminvalidname' => "Agnu akk d uferdis '$1', isem mačči ṣaḥiḥ...",
+	'iteminvalidname' => 'Agnu akk d uferdis \'$1\', isem mačči ṣaḥiḥ...',
 	'invert' => 'Snegdam ayen textareḍ',
 	'isredirect' => 'Asebter n usemmimeḍ',
 	'istemplate' => 'asekcam',
@@ -11831,14 +11846,14 @@ $messages['kbd'] = array(
 	'import-logentry-interwiki' => '$1 s transwiki',
 	'import-logentry-interwiki-detail' => '$1 tasiwelt(tisiwal) seg $2',
 	'imagemaxsize' => 'Ḥedded tiddi n tugniwin deg yiglamen n tugniwim i:',
-	'imagelisttext' => "Deg ukessar yella wumuɣ n '''$1''' {{PLURAL:$1|ufaylu|yifayluwen}} $2.",
+	'imagelisttext' => 'Deg ukessar yella wumuɣ n \'\'\'$1\'\'\' {{PLURAL:$1|ufaylu|yifayluwen}} $2.',
 	'ilsubmit' => 'Nadi',
 	'imgmultipageprev' => '← asebter ssabeq',
 	'imgmultipagenext' => 'asebter ameḍfir →',
 	'imgmultigo' => 'Ruḥ!',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'index-category' => 'Индекс зырат напэкӀуэцӀхэр',
 	'internalerror' => 'И кӀуэцӀ щыуагъэ',
 	'internalerror_info' => 'И кӀуэцӀ щыуагъэ: $1',
@@ -11856,9 +11871,9 @@ $messages['kbd-cyrl'] = array(
 	'ipblocklist' => 'IP-адресрэ аккаунт зэтеубыдахэр',
 	'imgmultipageprev' => 'япэрыт напэкӀуэцӀыр',
 	'imgmultipagenext' => 'къыкӀэлъыкуэ напэкӀуэцӀыр',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'index-category' => 'نو انڈیکس صفحات',
 	'internalerror' => 'خطائے اندرونی',
 	'internalerror_info' => 'خطائے اندرونی: $1',
@@ -11871,9 +11886,9 @@ $messages['khw'] = array(
 	'istemplate' => 'ٹرانسکلوژن',
 	'isimage' => 'ھوٹوان لنک',
 	'ipblocklist' => 'داخلہ ممنوع براۓ صارف',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'index-category' => 'Pelê endeksıni',
 	'internalerror' => 'Xeta zerrey',
 	'internalerror_info' => 'Xeta zerrey: $1',
@@ -11892,9 +11907,9 @@ $messages['kiu'] = array(
 	'infiniteblock' => 'bêmıdet',
 	'ipblocklist-empty' => 'Lista kilıtkerdişi thala.',
 	'ipb_expiry_invalid' => 'Xêlê zeman nêvêreno.',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'internalerror' => 'ىشكى قاتە',
 	'internalerror_info' => 'ىشكى قاتەسى: $1',
 	'invalidemailaddress' => 'وسى ە-پوشتا مەكەنجايىندا جارامسىز ٴپىشىم بولعان, قابىل ەتىلمەيدى.
@@ -11908,7 +11923,7 @@ $messages['kk-arab'] = array(
 فايلدى قايتا اتاڭىز دا بۇنى قوتارىپ بەرۋدى قايتا بايقاپ كورىڭىز.',
 	'imgfile' => 'فايل',
 	'imagelinks' => 'سىلتەمەلەر',
-	'iteminvalidname' => "'$1' دانادا اقاۋ بار — جارامسىز اتاۋ…",
+	'iteminvalidname' => '\'$1\' دانادا اقاۋ بار — جارامسىز اتاۋ…',
 	'invert' => 'بولەكتەۋدى كەرىلەۋ',
 	'isredirect' => 'ايداتۋ بەتى',
 	'istemplate' => 'كىرىكبەت',
@@ -11991,7 +12006,7 @@ $messages['kk-arab'] = array(
 	'import-logentry-interwiki' => 'ۋىيكىي-اپارىلعان $1',
 	'import-logentry-interwiki-detail' => '$2 دەگەننەن $1 تۇزەتۋ',
 	'imagemaxsize' => 'سىيپاتتاماسى بەتىندەگى سۋرەتتىڭ مولشەرىن شەكتەۋى:',
-	'imagelisttext' => "تومەندە $2 سۇرىپتالعان '''$1''' فايل ٴتىزىمى.",
+	'imagelisttext' => 'تومەندە $2 سۇرىپتالعان \'\'\'$1\'\'\' فايل ٴتىزىمى.',
 	'ilsubmit' => 'ىزدە',
 	'invalidateemail' => 'ە-پوشتا مەكەنجايىن قۇپتاۋى بولدىرماۋ',
 	'imgmultipageprev' => '← الدىڭعى بەتكە',
@@ -12010,9 +12025,9 @@ $messages['kk-arab'] = array(
 	'iranian-calendar-m10' => 'دىي',
 	'iranian-calendar-m11' => 'بەمىن',
 	'iranian-calendar-m12' => 'اسپاند',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'internalerror' => 'ىشكى قاتە',
 	'internalerror_info' => 'ىشكى قاتەسى: $1',
 	'invalidemailaddress' => 'وسى ە-پوشتا مەكەنجايىندا جارامسىز ٴپىشىم بولعان, قابىل ەتىلمەيدى.
@@ -12026,7 +12041,7 @@ $messages['kk-cn'] = array(
 فايلدى قايتا اتاڭىز دا بۇنى قوتارىپ بەرۋدى قايتا بايقاپ كورىڭىز.',
 	'imgfile' => 'فايل',
 	'imagelinks' => 'سىلتەمەلەر',
-	'iteminvalidname' => "'$1' دانادا اقاۋ بار — جارامسىز اتاۋ…",
+	'iteminvalidname' => '\'$1\' دانادا اقاۋ بار — جارامسىز اتاۋ…',
 	'invert' => 'بولەكتەۋدى كەرىلەۋ',
 	'isredirect' => 'ايداتۋ بەتى',
 	'istemplate' => 'كىرىكبەت',
@@ -12109,7 +12124,7 @@ $messages['kk-cn'] = array(
 	'import-logentry-interwiki' => 'ۋىيكىي-اپارىلعان $1',
 	'import-logentry-interwiki-detail' => '$2 دەگەننەن $1 تۇزەتۋ',
 	'imagemaxsize' => 'سىيپاتتاماسى بەتىندەگى سۋرەتتىڭ مولشەرىن شەكتەۋى:',
-	'imagelisttext' => "تومەندە $2 سۇرىپتالعان '''$1''' فايل ٴتىزىمى.",
+	'imagelisttext' => 'تومەندە $2 سۇرىپتالعان \'\'\'$1\'\'\' فايل ٴتىزىمى.',
 	'ilsubmit' => 'ىزدە',
 	'invalidateemail' => 'ە-پوشتا مەكەنجايىن قۇپتاۋى بولدىرماۋ',
 	'imgmultipageprev' => '← الدىڭعى بەتكە',
@@ -12128,9 +12143,9 @@ $messages['kk-cn'] = array(
 	'iranian-calendar-m10' => 'دىي',
 	'iranian-calendar-m11' => 'بەمىن',
 	'iranian-calendar-m12' => 'اسپاند',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'index-category' => 'Индекстелген беттер',
 	'internalerror' => 'Ішкі қате',
 	'internalerror_info' => 'Ішкі қатесі: $1',
@@ -12145,7 +12160,7 @@ $messages['kk-cyrl'] = array(
 Файлды қайта атаңыз да бұны қотарып беруді қайта байқап көріңіз.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Сілтемелер',
-	'iteminvalidname' => "'$1' данада ақау бар — жарамсыз атау…",
+	'iteminvalidname' => '\'$1\' данада ақау бар — жарамсыз атау…',
 	'invert' => 'Таңдалғанды жасыру',
 	'isredirect' => 'айдату беті',
 	'istemplate' => 'кірікбет',
@@ -12230,7 +12245,7 @@ $messages['kk-cyrl'] = array(
 	'import-logentry-interwiki' => 'уики-апарылған $1',
 	'import-logentry-interwiki-detail' => '$2 дегеннен $1 түзету',
 	'imagemaxsize' => 'Сипаттамасы бетіндегі суреттің мөлшерін шектеуі:',
-	'imagelisttext' => "Төменде $2 сұрыпталған '''$1''' файл тізімі.",
+	'imagelisttext' => 'Төменде $2 сұрыпталған \'\'\'$1\'\'\' файл тізімі.',
 	'ilsubmit' => 'Ізде',
 	'invalidateemail' => 'Е-пошта мекенжайын құптауы болдырмау',
 	'imgmultipageprev' => '← алдыңғы бетке',
@@ -12250,9 +12265,9 @@ $messages['kk-cyrl'] = array(
 	'iranian-calendar-m11' => 'бемін',
 	'iranian-calendar-m12' => 'аспанд',
 	'intentionallyblankpage' => 'Бұл бет әдейі бос қалдырылған',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'index-category' => 'Индекстелген беттер',
 	'internalerror' => 'Ішкі қате',
 	'internalerror_info' => 'Ішкі қатесі: $1',
@@ -12267,7 +12282,7 @@ $messages['kk-kz'] = array(
 Файлды қайта атаңыз да бұны қотарып беруді қайта байқап көріңіз.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Сілтемелер',
-	'iteminvalidname' => "'$1' данада ақау бар — жарамсыз атау…",
+	'iteminvalidname' => '\'$1\' данада ақау бар — жарамсыз атау…',
 	'invert' => 'Таңдалғанды жасыру',
 	'isredirect' => 'айдату беті',
 	'istemplate' => 'кірікбет',
@@ -12352,7 +12367,7 @@ $messages['kk-kz'] = array(
 	'import-logentry-interwiki' => 'уики-апарылған $1',
 	'import-logentry-interwiki-detail' => '$2 дегеннен $1 түзету',
 	'imagemaxsize' => 'Сипаттамасы бетіндегі суреттің мөлшерін шектеуі:',
-	'imagelisttext' => "Төменде $2 сұрыпталған '''$1''' файл тізімі.",
+	'imagelisttext' => 'Төменде $2 сұрыпталған \'\'\'$1\'\'\' файл тізімі.',
 	'ilsubmit' => 'Ізде',
 	'invalidateemail' => 'Е-пошта мекенжайын құптауы болдырмау',
 	'imgmultipageprev' => '← алдыңғы бетке',
@@ -12372,9 +12387,9 @@ $messages['kk-kz'] = array(
 	'iranian-calendar-m11' => 'бемін',
 	'iranian-calendar-m12' => 'аспанд',
 	'intentionallyblankpage' => 'Бұл бет әдейі бос қалдырылған',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'internalerror' => 'İşki qate',
 	'internalerror_info' => 'İşki qatesi: $1',
 	'invalidemailaddress' => 'Osı e-poşta mekenjaýında jaramsız pişim bolğan, qabıl etilmeýdi.
@@ -12388,7 +12403,7 @@ Durıs pişimdelgen mekenjaýdı engiziñiz, ne awmaqtı bos qaldırıñız.',
 Faýldı qaýta atañız da bunı qotarıp berwdi qaýta baýqap köriñiz.',
 	'imgfile' => 'faýl',
 	'imagelinks' => 'Siltemeler',
-	'iteminvalidname' => "'$1' danada aqaw bar — jaramsız ataw…",
+	'iteminvalidname' => '\'$1\' danada aqaw bar — jaramsız ataw…',
 	'invert' => 'Bölektewdi kerilew',
 	'isredirect' => 'aýdatw beti',
 	'istemplate' => 'kirikbet',
@@ -12471,7 +12486,7 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 	'import-logentry-interwiki' => 'wïkï-aparılğan $1',
 	'import-logentry-interwiki-detail' => '$2 degennen $1 tüzetw',
 	'imagemaxsize' => 'Sïpattaması betindegi swrettiñ mölşerin şektewi:',
-	'imagelisttext' => "Tömende $2 surıptalğan '''$1''' faýl tizimi.",
+	'imagelisttext' => 'Tömende $2 surıptalğan \'\'\'$1\'\'\' faýl tizimi.',
 	'ilsubmit' => 'İzde',
 	'invalidateemail' => 'E-poşta mekenjaýın quptawı boldırmaw',
 	'imgmultipageprev' => '← aldıñğı betke',
@@ -12490,9 +12505,9 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 	'iranian-calendar-m10' => 'dï',
 	'iranian-calendar-m11' => 'bemin',
 	'iranian-calendar-m12' => 'aspand',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'internalerror' => 'İşki qate',
 	'internalerror_info' => 'İşki qatesi: $1',
 	'invalidemailaddress' => 'Osı e-poşta mekenjaýında jaramsız pişim bolğan, qabıl etilmeýdi.
@@ -12506,7 +12521,7 @@ Durıs pişimdelgen mekenjaýdı engiziñiz, ne awmaqtı bos qaldırıñız.',
 Faýldı qaýta atañız da bunı qotarıp berwdi qaýta baýqap köriñiz.',
 	'imgfile' => 'faýl',
 	'imagelinks' => 'Siltemeler',
-	'iteminvalidname' => "'$1' danada aqaw bar — jaramsız ataw…",
+	'iteminvalidname' => '\'$1\' danada aqaw bar — jaramsız ataw…',
 	'invert' => 'Bölektewdi kerilew',
 	'isredirect' => 'aýdatw beti',
 	'istemplate' => 'kirikbet',
@@ -12589,7 +12604,7 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 	'import-logentry-interwiki' => 'wïkï-aparılğan $1',
 	'import-logentry-interwiki-detail' => '$2 degennen $1 tüzetw',
 	'imagemaxsize' => 'Sïpattaması betindegi swrettiñ mölşerin şektewi:',
-	'imagelisttext' => "Tömende $2 surıptalğan '''$1''' faýl tizimi.",
+	'imagelisttext' => 'Tömende $2 surıptalğan \'\'\'$1\'\'\' faýl tizimi.',
 	'ilsubmit' => 'İzde',
 	'invalidateemail' => 'E-poşta mekenjaýın quptawı boldırmaw',
 	'imgmultipageprev' => '← aldıñğı betke',
@@ -12608,9 +12623,9 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 	'iranian-calendar-m10' => 'dï',
 	'iranian-calendar-m11' => 'bemin',
 	'iranian-calendar-m12' => 'aspand',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'imagelinks' => 'Innersuutit',
 	'invert' => 'Quppernerup ilusia qinernagu',
 	'ipadressorusername' => 'IP adresse imalt. atuisoq:',
@@ -12618,9 +12633,9 @@ $messages['kl'] = array(
 	'ipblocklist-submit' => 'Ujarlerit',
 	'infiniteblock' => 'killeqanngitsoq',
 	'ilsubmit' => 'Ujarlerit',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'index-category' => 'ទំព័រដែលបានធ្វើលិបិក្រម',
 	'internalerror' => 'បញ្ហាផ្នែកខាងក្នុង',
 	'internalerror_info' => 'បញ្ហាផ្នែកខាងក្នុង៖ $1',
@@ -12642,7 +12657,7 @@ $messages['km'] = array(
 	'img-auth-noread' => 'អ្នកប្រើប្រាស់មិនមានសិទ្ធិចូលអាន "$1" ទេ។',
 	'imgfile' => 'ឯកសារ',
 	'imagelinks' => 'បំរើបំរាស់ឯកសារ',
-	'iteminvalidname' => "មានបញ្ហាជាមួយនឹង'$1'​។ ឈ្មោះគឺមិនត្រឹមត្រូវ...",
+	'iteminvalidname' => 'មានបញ្ហាជាមួយនឹង\'$1\'​។ ឈ្មោះគឺមិនត្រឹមត្រូវ...',
 	'invert' => 'ក្រៅពីនោះ',
 	'isredirect' => 'ទំព័របញ្ជូនបន្ត',
 	'istemplate' => 'ការដាក់បញ្ចូល',
@@ -12732,8 +12747,8 @@ $messages['km'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|កំណែ}}',
 	'import-logentry-interwiki' => 'បាននាំចូល$1ពីវិគីផ្សេងទៀត',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|កំណែ}} ពី $2',
-	'imagemaxsize' => "កំណត់ទំហំរូបភាព៖<br />''(លើទំព័រពិពណ៌នារូបភាព)''",
-	'imagelisttext' => "ខាងក្រោមនេះជាបញ្ជី'''$1'''{{PLURAL:$1|ឯកសារ|ឯកសារ}}បានរៀបតាមលំដាប់$2។",
+	'imagemaxsize' => 'កំណត់ទំហំរូបភាព៖<br />\'\'(លើទំព័រពិពណ៌នារូបភាព)\'\'',
+	'imagelisttext' => 'ខាងក្រោមនេះជាបញ្ជី\'\'\'$1\'\'\'{{PLURAL:$1|ឯកសារ|ឯកសារ}}បានរៀបតាមលំដាប់$2។',
 	'ilsubmit' => 'ស្វែងរក',
 	'invalidateemail' => 'បោះបង់ចោលការបញ្ជាក់ទទួលស្គាល់អ៊ីមែល',
 	'imgmultipageprev' => '← ទំព័រមុន',
@@ -12741,9 +12756,9 @@ $messages['km'] = array(
 	'imgmultigo' => 'ទៅ!',
 	'imgmultigoto' => 'ទៅកាន់ទំព័រ$1',
 	'intentionallyblankpage' => 'ទំព័រនេះត្រូវបានទុកចោលឱ្យនៅទំនេរដោយចេតនា',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'index-category' => 'ಸೂಚಿನಾಮದ ಪುತಗಳು',
 	'internalerror' => 'ಆಂತರಿಕ ದೋಷ',
 	'internalerror_info' => 'ಆಂತರಿಕ ದೋಷ: $1',
@@ -12812,15 +12827,15 @@ $messages['kn'] = array(
 	'importlogpage' => 'ಆಮದುಗಳ ದಾಖಲೆ',
 	'import-logentry-upload' => 'ಫೈಲು ಅಪ್ಲೋಡ್ ಮೂಲಕ [[$1]] ಅನ್ನು ಆಮದು ಮಾಡಲಾಗಿದೆ',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ಬದಲಾವಣೆ|ಬದಲಾವಣೆಗಳು}}',
-	'imagelisttext' => "ಕೆಳಗೆ ಇರುವುದು '''$1''' {{PLURAL:$1|ಫೈಲಿನ|ಫೈಲುಗಳ}} ಪಟ್ಟಿ, $2 ಏರ್ಪಾಟಾಗಿದೆ.",
+	'imagelisttext' => 'ಕೆಳಗೆ ಇರುವುದು \'\'\'$1\'\'\' {{PLURAL:$1|ಫೈಲಿನ|ಫೈಲುಗಳ}} ಪಟ್ಟಿ, $2 ಏರ್ಪಾಟಾಗಿದೆ.',
 	'ilsubmit' => 'ಹುಡುಕು',
 	'invalidateemail' => 'ಇ-ಅಂಚೆ ಧೃಡೀಕರಣವನ್ನು ರದ್ದು ಮಾಡಿ',
 	'imgmultipageprev' => '← ಹಿಂದಿನ ಪುಟ',
 	'imgmultipagenext' => 'ಮುಂದಿನ ಪುಟ →',
 	'imgmultigo' => 'ಹೋಗು!',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'index-category' => '색인된 문서',
 	'internalerror' => '내부 오류',
 	'internalerror_info' => '내부 오류: $1',
@@ -12969,8 +12984,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization 을 참고하십시오
 	'import-logentry-upload-detail' => '판 $1개',
 	'import-logentry-interwiki' => '$1 문서를 다른 위키에서 가져왔습니다.',
 	'import-logentry-interwiki-detail' => '$2에서 판 $1개를 가져옴',
-	'imagemaxsize' => "그림 최대 크기:<br />''(파일 문서에 적용되는 기능)''",
-	'imagelisttext' => "파일 '''$1'''개를 $2 순으로 정렬한 목록입니다.",
+	'imagemaxsize' => '그림 최대 크기:<br />\'\'(파일 문서에 적용되는 기능)\'\'',
+	'imagelisttext' => '파일 \'\'\'$1\'\'\'개를 $2 순으로 정렬한 목록입니다.',
 	'ilsubmit' => '찾기',
 	'invalidateemail' => '이메일 확인 취소',
 	'imgmultipageprev' => '← 이전 페이지',
@@ -12978,9 +12993,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization 을 참고하십시오
 	'imgmultigo' => '이동',
 	'imgmultigoto' => '$1 페이지로 가기',
 	'intentionallyblankpage' => '일부러 비워 둔 문서입니다.',
-);
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'index-category' => '색인된 문서',
 	'internalerror' => '내부 오류',
 	'internalerror_info' => '내부 오류: $1',
@@ -13129,8 +13144,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization 을 참고하십시오
 	'import-logentry-upload-detail' => '판 $1개',
 	'import-logentry-interwiki' => '$1 문서를 다른 위키에서 가져왔습니다.',
 	'import-logentry-interwiki-detail' => '$2에서 판 $1개를 가져옴',
-	'imagemaxsize' => "그림 최대 크기:<br />''(파일 문서에 적용되는 기능)''",
-	'imagelisttext' => "파일 '''$1'''개를 $2 순으로 정렬한 목록입니다.",
+	'imagemaxsize' => '그림 최대 크기:<br />\'\'(파일 문서에 적용되는 기능)\'\'',
+	'imagelisttext' => '파일 \'\'\'$1\'\'\'개를 $2 순으로 정렬한 목록입니다.',
 	'ilsubmit' => '찾기',
 	'invalidateemail' => '이메일 확인 취소',
 	'imgmultipageprev' => '← 이전 페이지',
@@ -13138,9 +13153,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization 을 참고하십시오
 	'imgmultigo' => '이동',
 	'imgmultigoto' => '$1 페이지로 가기',
 	'intentionallyblankpage' => '일부러 비워 둔 문서입니다.',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'internalerror' => 'Пытшкас сорасьöм',
 	'internalerror_info' => 'Пытшкас сорасьöм: $1',
 	'italic_sample' => 'Курсивöн гижан',
@@ -13153,9 +13168,9 @@ $messages['koi'] = array(
 	'isimage' => 'серпас вылö ыстiсян',
 	'ipboptions' => '2 час:2 hours,1 лун:1 day,3 лун:3 days,1 недель:1 week,2 недель:2 weeks,1 тöлiсь:1 month,3 тöлiсь:3 months,6 тöлiсь:6 months,1 во:1 year, пыр:infinite',
 	'ipblocklist' => 'Падмöтöм IP-адрессэз да уджкериссезлöн ниммез',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'index-category' => 'Индексленнген бетле',
 	'internalerror' => 'Ич халат',
 	'internalerror_info' => 'Ич халат: $1',
@@ -13187,7 +13202,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization бетге къара.
 	'img-auth-noread' => 'Къоушулуучуну «$1» файлыны окъургъа эркинлиги джокъду.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Файлгъа джибериуле',
-	'iteminvalidname' => "'$1' элемент бла проблемала, джараусуз ат...",
+	'iteminvalidname' => '\'$1\' элемент бла проблемала, джараусуз ат...',
 	'invert' => 'Сайланнганны айландыр',
 	'isredirect' => 'джибериу бет',
 	'istemplate' => 'къошуу',
@@ -13296,8 +13311,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization бетге къара.
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|версия|версия}}',
 	'import-logentry-interwiki' => '$1 трансвикиленди',
 	'import-logentry-interwiki-detail' => '$2 бетден  $1 {{PLURAL:$1|весрия|версия}}',
-	'imagemaxsize' => "Суратны ёлчемини чеги:<br />''(файлны ангылытыу бетле ючюн)''",
-	'imagelisttext' => "Тюбюрекде $2 кёре тизилген '''$1''' {{PLURAL:$1|файл|файл}} кёрюнеди.",
+	'imagemaxsize' => 'Суратны ёлчемини чеги:<br />\'\'(файлны ангылытыу бетле ючюн)\'\'',
+	'imagelisttext' => 'Тюбюрекде $2 кёре тизилген \'\'\'$1\'\'\' {{PLURAL:$1|файл|файл}} кёрюнеди.',
 	'ilsubmit' => 'Таб',
 	'invalidateemail' => 'Электрон почтаны адресин мюкюл этиуюн тый',
 	'imgmultipageprev' => '← аллындыгъы бет',
@@ -13317,17 +13332,17 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization бетге къара.
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Эсфанд',
 	'intentionallyblankpage' => 'Бу бет, иш этиб, бош къоюлгъанды.',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'imagelinks' => 'Fail yusej',
 	'isimage' => 'Fail link',
 	'ipblocklist-submit' => 'Luk foh am',
 	'ilsubmit' => 'Luk foh am',
 	'imgmultigo' => 'Go to am!',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'internalerror' => 'Sayup internal',
 	'internalerror_info' => 'Sayup internal: $1',
 	'imgfile' => 'inayap',
@@ -13335,9 +13350,9 @@ $messages['krj'] = array(
 	'ipblocklist-submit' => 'Sagap',
 	'ilsubmit' => 'Sagap',
 	'imgmultigo' => 'Agto!',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'index-category' => 'Sigge, di de Söhkmaschine opnämme sulle',
 	'internalerror' => 'De Wiki-Soffwär hät ene Fähler jefunge',
 	'internalerror_info' => 'Enne ennere Fäähler en de ẞoffwäer es opjetrodde: $1',
@@ -13494,7 +13509,7 @@ Bes esu joot, un versök et noch ens.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|ein Version|$1 Versione|kein Version}} emporteet',
 	'import-logentry-interwiki' => 'hät tirek vum ander Wiki emporteet: „$1“',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|ein Version|$1 Versione|kein Version}} vun „$2“',
-	'imagemaxsize' => "Belder nit jrößer maache wie:<br /> ''(op dä Sigge, wo se beschrevve wääde)''",
+	'imagemaxsize' => 'Belder nit jrößer maache wie:<br /> \'\'(op dä Sigge, wo se beschrevve wääde)\'\'',
 	'imagelisttext' => 'Heh küt en Liss vun <strong>$1</strong> Datei{{PLURAL:$1||e}}, zoteet $2.',
 	'ilsubmit' => 'Söhk',
 	'invalidateemail' => 'E-Mail-Adress nit bestätich',
@@ -13503,9 +13518,9 @@ Bes esu joot, un versök et noch ens.',
 	'imgmultigo' => 'Lohß Jonn!',
 	'imgmultigoto' => 'Jang noh de Sigg „$1“',
 	'intentionallyblankpage' => 'Op dä Sigg es med Afseesh nix drop.',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'index-category' => 'Sigge, di de Söhkmaschine opnämme sulle',
 	'internalerror' => 'De Wiki-Soffwär hät ene Fähler jefunge',
 	'internalerror_info' => 'Enne ennere Fäähler en de ẞoffwäer es opjetrodde: $1',
@@ -13662,7 +13677,7 @@ Bes esu joot, un versök et noch ens.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|ein Version|$1 Versione|kein Version}} emporteet',
 	'import-logentry-interwiki' => 'hät tirek vum ander Wiki emporteet: „$1“',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|ein Version|$1 Versione|kein Version}} vun „$2“',
-	'imagemaxsize' => "Belder nit jrößer maache wie:<br /> ''(op dä Sigge, wo se beschrevve wääde)''",
+	'imagemaxsize' => 'Belder nit jrößer maache wie:<br /> \'\'(op dä Sigge, wo se beschrevve wääde)\'\'',
 	'imagelisttext' => 'Heh küt en Liss vun <strong>$1</strong> Datei{{PLURAL:$1||e}}, zoteet $2.',
 	'ilsubmit' => 'Söhk',
 	'invalidateemail' => 'E-Mail-Adress nit bestätich',
@@ -13671,9 +13686,9 @@ Bes esu joot, un versök et noch ens.',
 	'imgmultigo' => 'Lohß Jonn!',
 	'imgmultigoto' => 'Jang noh de Sigg „$1“',
 	'intentionallyblankpage' => 'Op dä Sigg es med Afseesh nix drop.',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'internalerror' => 'Çewtiyeke navxweyî',
 	'internalerror_info' => 'Çewtiya navxweyî: $1',
 	'invalidemailaddress' => 'Adresa e-nameyan yê te ne tê qebûlkirin, ji ber ku formata xwe qedexe ye (belkî nîşanên qedexe). Xêra xwe adreseka serrast binivisîne ya vê derê vala bêle.',
@@ -13690,7 +13705,7 @@ $messages['ku-latn'] = array(
 	'isredirect' => 'rûpelê beralî bike',
 	'istemplate' => 'tê bikaranîn',
 	'isimage' => 'lînka wêneyê',
-	'ipadressorusername' => "adresê IP'yekê ya navekî bikarhênerekî",
+	'ipadressorusername' => 'adresê IP\'yekê ya navekî bikarhênerekî',
 	'ipbexpiry' => 'Dem:',
 	'ipbreason' => 'Sedem',
 	'ipbreasonotherlist' => 'Sedemekî din',
@@ -13705,7 +13720,7 @@ $messages['ku-latn'] = array(
 ** navekî ku nayê pejirandin',
 	'ipbcreateaccount' => 'Çêkirina hesaban qedexe bike',
 	'ipbemailban' => 'Ji bo şandina e-nameyan qedexe bike.',
-	'ipbenableautoblock' => "Otomatîk IP'yên niha û yên nuh yê vê bikarhênerê astengbike.",
+	'ipbenableautoblock' => 'Otomatîk IP\'yên niha û yên nuh yê vê bikarhênerê astengbike.',
 	'ipbsubmit' => 'Vê bikarhêner asteng bike',
 	'ipbother' => 'Demekî din:',
 	'ipboptions' => '1 seet:1 hour,2 seet:2 hours,6 seet:6 hours,1 roj:1 day,3 roj:3 days,1 hefte:1 week,2 hefte:2 weeks,1 mihe:1 month,3 mihe:3 months,1 sal:1 year,ji her demê ra:infinite',
@@ -13716,22 +13731,22 @@ $messages['ku-latn'] = array(
 	'ipb-confirm' => 'Astengkirinê piştrast bike',
 	'ipb-edit-dropdown' => 'Sedemên astengkirinê',
 	'ipb-unblock-addr' => 'Astengkirinê $1 rake',
-	'ipb-unblock' => "Astengkirina bikarhênerekî ya adrêsa IP'yekê rake",
+	'ipb-unblock' => 'Astengkirina bikarhênerekî ya adrêsa IP\'yekê rake',
 	'ipb-blocklist' => 'Astengkirinên niha bibîne',
 	'ipb-blocklist-contribs' => 'Beşdariyên ji bo $1',
 	'ipusubmit' => 'Astengkirina vê adrêsê rake',
-	'ipblocklist' => "Listek ji adresên IP'yan û bikarhêneran yê hatine astengkirin",
+	'ipblocklist' => 'Listek ji adresên IP\'yan û bikarhêneran yê hatine astengkirin',
 	'ipblocklist-legend' => 'Bikarhênerekî astengkirî bibîne',
 	'ipblocklist-submit' => 'Lêbigere',
 	'ipblocklist-localblock' => 'Astengkirina herêmî',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Astengkirin|Astengkirinên}} din',
 	'infiniteblock' => 'ji her demê ra',
 	'ipblocklist-empty' => 'Lîsteya astengkirinê vala ye.',
-	'ipblocklist-no-results' => "Ew IP'ya ya bikarhênera nehatîye astengkirin.",
+	'ipblocklist-no-results' => 'Ew IP\'ya ya bikarhênera nehatîye astengkirin.',
 	'ipb_expiry_invalid' => 'Dem ne serrast e.',
 	'ipb_already_blocked' => '"$1" berê hatîye astengkirin',
 	'ipb-needreblock' => '$1 berê hatiye astengkirin. Tu dixwazî eyaran biguherînî?',
-	'ipb_cant_unblock' => "Şaşbûn: ID'ya astengkirinê $1 nehate dîtin. Astengkirinê xwe niha belkî hatîye rakirin.",
+	'ipb_cant_unblock' => 'Şaşbûn: ID\'ya astengkirinê $1 nehate dîtin. Astengkirinê xwe niha belkî hatîye rakirin.',
 	'immobile-source-page' => 'Navê vê rûpelê nikare were guherandin.',
 	'import' => 'Rûpelan wîne (import)',
 	'import-interwiki-submit' => 'Tevlî bike',
@@ -13745,15 +13760,15 @@ $messages['ku-latn'] = array(
 	'importnotext' => 'Vala an nivîs tune',
 	'importsuccess' => 'Împort çêbû!',
 	'importlogpage' => 'Têketina tevlîkirinê',
-	'imagelisttext' => "Jêr lîsteyek ji $1 file'an heye, duxrekirin $2.",
+	'imagelisttext' => 'Jêr lîsteyek ji $1 file\'an heye, duxrekirin $2.',
 	'ilsubmit' => 'Lêbigere',
 	'imgmultipageprev' => '← rûpela berî vê',
 	'imgmultipagenext' => 'rûpela din →',
 	'imgmultigo' => 'Here!',
 	'imgmultigoto' => 'Here rûpela $1',
-);
+];
 
-$messages['kw'] = array(
+$messages['kw'] = [
 	'internalerror' => 'Gwall a-bervedh',
 	'internalerror_info' => 'Gwall a-bervedh: $1',
 	'italic_sample' => 'Text italek',
@@ -13779,9 +13794,9 @@ $messages['kw'] = array(
 	'imgmultipageprev' => '← folen kens',
 	'imgmultipagenext' => 'folen nessa →',
 	'imgmultigo' => 'Ke!',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'italic_sample' => 'Жантык тамга',
 	'italic_tip' => 'Жантык тамга',
 	'image_tip' => 'Кыстарылган файл',
@@ -13795,9 +13810,9 @@ $messages['ky'] = array(
 	'ipbotheroption' => 'башка',
 	'ipblocklist' => 'Тосмолонгон колдонуучулар',
 	'ilsubmit' => 'Издөө',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'internalerror' => 'Erratum internum',
 	'internalerror_info' => 'Erratum internum: $1',
 	'italic_sample' => 'Textus litteris Italicis scriptus',
@@ -13808,7 +13823,7 @@ $messages['la'] = array(
 	'ignorewarnings' => 'Ignorare monita omnia',
 	'imgfile' => 'fasciculus',
 	'imagelinks' => 'Nexus ad fasciculum',
-	'iteminvalidname' => "Aerumna cum pagina '$1', nomen non est rectum...",
+	'iteminvalidname' => 'Aerumna cum pagina \'$1\', nomen non est rectum...',
 	'invert' => 'Selectionem invertere',
 	'isredirect' => 'pagina redirectionis',
 	'istemplate' => 'inclusio',
@@ -13869,18 +13884,18 @@ $messages['la'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|emendatio|emendationes}}',
 	'import-logentry-interwiki' => 'adportavit transvici $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|emendatio|emendationes}} ex $2',
-	'imagemaxsize' => "Magnitudo maxima fasciculorum:<br />
-''(in pagina descriptionis fasciculi)''",
-	'imagelisttext' => "Subter est index {{PLURAL:$1|'''unius''' fasciculi|'''$1''' fasciculorum}} digestus $2.",
+	'imagemaxsize' => 'Magnitudo maxima fasciculorum:<br />
+\'\'(in pagina descriptionis fasciculi)\'\'',
+	'imagelisttext' => 'Subter est index {{PLURAL:$1|\'\'\'unius\'\'\' fasciculi|\'\'\'$1\'\'\' fasciculorum}} digestus $2.',
 	'ilsubmit' => 'Quaerere',
 	'invalidateemail' => 'Adfimationem inscriptionis electronicae abrogare',
 	'imgmultipageprev' => '← pagina superior',
 	'imgmultipagenext' => 'pagina proxima →',
 	'imgmultigo' => 'I!',
 	'imgmultigoto' => 'Ire ad paginam $1',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'index-category' => 'Hojas arregladas en lista',
 	'italic_sample' => 'Teksto cursivo',
 	'italic_tip' => 'Teksto en cursiva',
@@ -13895,9 +13910,9 @@ $messages['lad'] = array(
 	'imgmultipageprev' => '← pajina anterior',
 	'imgmultipagenext' => 'siguiente pajina →',
 	'imgmultigo' => 'Ir!',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'index-category' => 'Indexéiert Säiten',
 	'internalerror' => 'Interne Feeler',
 	'internalerror_info' => 'Interne Feeler: $1',
@@ -13923,14 +13938,14 @@ Kuckt  https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'img-auth-isdir' => 'Dir versicht op de Repertoire "$1" zouzegräifen.
 Nèemmen Datenofruff ass erlaabt.',
 	'img-auth-streaming' => '"$1" lueden.',
-	'img-auth-public' => "D'Fonctioun img_auth.php erlaabt et fir Fichieren vun enger privater Wiki erauszeginn.
+	'img-auth-public' => 'D\'Fonctioun img_auth.php erlaabt et fir Fichieren vun enger privater Wiki erauszeginn.
 Dës Wiki ass als ëffentlech Wiki configuréiert.
-Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.",
+Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.',
 	'img-auth-noread' => 'De Benotzer hut keen Zougang fir "$1" ze liesen',
-	'img-auth-bad-query-string' => "D'URL huet eng net valabel Rei vun Zeechen.",
+	'img-auth-bad-query-string' => 'D\'URL huet eng net valabel Rei vun Zeechen.',
 	'imgfile' => 'Fichier',
 	'imagelinks' => 'Benotze vu Fichieren',
-	'iteminvalidname' => "Problem mat dem Objet '$1', ongëltegen Numm ...",
+	'iteminvalidname' => 'Problem mat dem Objet \'$1\', ongëltegen Numm ...',
 	'invert' => 'Auswiel ëmdréinen',
 	'isredirect' => 'Viruleedung',
 	'istemplate' => 'an dëser Säit dran',
@@ -13939,14 +13954,14 @@ Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.",
 	'ipbexpiry' => 'Gültegkeet:',
 	'ipbreason' => 'Grond:',
 	'ipbreasonotherlist' => 'Anere Grond',
-	'ipbreason-dropdown' => "*Heefeg Ursaache fir Benotzer ze spären:
+	'ipbreason-dropdown' => '*Heefeg Ursaache fir Benotzer ze spären:
 **Bewosst falsch Informatiounen an eng oder méi Säite gesat
 **Ouni Grond Inhalt vu Säite geläscht
 **Spam-Verknëppunge mat externe Säiten
-**Topereien an d'Säite gesat
+**Topereien an d\'Säite gesat
 **Beleidegt oder bedréit aner Mataarbechter
 **Mëssbrauch vu verschiddene Benotzernimm
-**Net akzeptabele Benotzernumm",
+**Net akzeptabele Benotzernumm',
 	'ipb-hardblock' => 'Verhënneren datt ageloggte Benotzer vun dëser IP-Adress aus Ännerunge maache kënnen',
 	'ipbcreateaccount' => 'Opmaache vun engem Benotzerkont verhënneren',
 	'ipbemailban' => 'Verhënneren datt de Benotzer E-Maile verschéckt',
@@ -13958,7 +13973,7 @@ Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.",
 	'ipbotherreason' => 'Aneren oder zousätzleche Grond:',
 	'ipbhidename' => 'Benotzernumm op Lëschten a bei Ännerunge verstoppen',
 	'ipbwatchuser' => 'Dësem Benotzer seng Benotzer- an Diskussiouns-Säit iwwerwaachen',
-	'ipb-disableusertalk' => "Dëse Benotzer dorun hënnere fir seng eegen Diskussiounssäit z'änneren esou laang wéi et gespaart ass",
+	'ipb-disableusertalk' => 'Dëse Benotzer dorun hënnere fir seng eegen Diskussiounssäit z\'änneren esou laang wéi et gespaart ass',
 	'ipb-change-block' => 'De Benotzer mat dese Parameteren nees spären',
 	'ipb-confirm' => 'Spär confirméieren',
 	'ipb-blockingself' => 'Dir sidd am gaang Iech selwer ze spären! Sidd Dir sécher datt Dir dat maache wëllt?',
@@ -13975,17 +13990,17 @@ Fir eng oprimal Sécherheet ass img_auth.php ausgeschalt.",
 	'ipblocklist-localblock' => 'Lokal Spär',
 	'ipblocklist-otherblocks' => 'Aner {{PLURAL:$1|Spär|Spären}}',
 	'infiniteblock' => 'onbegrenzt',
-	'ipblocklist-empty' => "D'Spärlëscht ass eidel.",
+	'ipblocklist-empty' => 'D\'Spärlëscht ass eidel.',
 	'ipblocklist-no-results' => 'Déi gesichten IP-Adress respektiv de gesichte Benotzer ass net gespaart.',
-	'ipb_expiry_invalid' => "D'Dauer déi Dir uginn hutt ass ongülteg.",
+	'ipb_expiry_invalid' => 'D\'Dauer déi Dir uginn hutt ass ongülteg.',
 	'ipb_expiry_temp' => 'Verstoppte Späre vu Benotzernimm solle permanent sinn.',
 	'ipb_hide_invalid' => 'Dëse Benotzerkont kann net geläscht ginn; et ka sinn datt zevill Ännerunge vun deem Benotzer gemaach goufen.',
 	'ipb_already_blocked' => '"$1" ass scho gespaart.',
-	'ipb-needreblock' => "$1 ass scho gespaart. Wëllt Dir d'Parametere vun der Spär änneren?",
+	'ipb-needreblock' => '$1 ass scho gespaart. Wëllt Dir d\'Parametere vun der Spär änneren?',
 	'ipb-otherblocks-header' => 'Aner  {{PLURAL:$1|Spär|Spären}}',
-	'ipb_cant_unblock' => "Feeler: D'Nummer vun der Spär $1 gouf net fonnt. D'Spär gouf waarscheinlech schonn opgehuewen.",
-	'ipb_blocked_as_range' => "Feeler: D'IP-Adress $1 gouf net direkt gespaart an déi Spär kann dofir och net opghuewe ginn.
-Si ass awer als Deel vun der Rei $2 gespaart, an dës Spär kann opgehuewe ginn.",
+	'ipb_cant_unblock' => 'Feeler: D\'Nummer vun der Spär $1 gouf net fonnt. D\'Spär gouf waarscheinlech schonn opgehuewen.',
+	'ipb_blocked_as_range' => 'Feeler: D\'IP-Adress $1 gouf net direkt gespaart an déi Spär kann dofir och net opghuewe ginn.
+Si ass awer als Deel vun der Rei $2 gespaart, an dës Spär kann opgehuewe ginn.',
 	'ip_range_invalid' => 'Ongëltegen IP Block.',
 	'ip_range_toolarge' => 'Späre vu Beräicher déi méi grouss wéi /$1 si sinn net erlaabt.',
 	'ipbblocked' => 'Dir kënnt keng aner Benotzer spären oder hir Spär ophiewen well Dir selwer gespaart sidd',
@@ -14000,11 +14015,11 @@ Si ass awer als Deel vun der Rei $2 gespaart, an dës Spär kann opgehuewe ginn.
 	'imageinvalidfilename' => 'Den Numm vum Zil-Fichier ass ongëlteg',
 	'import' => 'Säiten importéieren',
 	'importinterwiki' => 'Transwiki-Import',
-	'import-interwiki-text' => "Sicht eng Wiki an e Säitentitel eraus fir z'importéieren.
-D'Versiounsdatumen an d'Benotzernimm bleiwen dobäi erhalen.
-All Transwiki-Import-Aktioune ginn am [[Special:Log/import|Import-Logbuch]] protokolléiert.",
+	'import-interwiki-text' => 'Sicht eng Wiki an e Säitentitel eraus fir z\'importéieren.
+D\'Versiounsdatumen an d\'Benotzernimm bleiwen dobäi erhalen.
+All Transwiki-Import-Aktioune ginn am [[Special:Log/import|Import-Logbuch]] protokolléiert.',
 	'import-interwiki-source' => 'Quelle Wiki/Säit:',
-	'import-interwiki-history' => "Importéier all d'Versioune vun dëser Säit",
+	'import-interwiki-history' => 'Importéier all d\'Versioune vun dëser Säit',
 	'import-interwiki-templates' => 'Mat alle Schablounen',
 	'import-interwiki-submit' => 'Import',
 	'import-interwiki-namespace' => 'Zil-Nummraum:',
@@ -14014,8 +14029,8 @@ All Transwiki-Import-Aktioune ginn am [[Special:Log/import|Import-Logbuch]] prot
 Späichert en op Ärem Computer of a luet en hei nees erop.',
 	'importstart' => 'Importéier Säiten …',
 	'import-revision-count' => '$1 {{PLURAL:$1|Versioun|Versiounen}}',
-	'importnopages' => "Et gëtt keng Säiten fir z'importéieren.",
-	'imported-log-entries' => "$1 {{PLURAL:$1|Entrée|Entréeën}} an d'Logbuch importéiert.",
+	'importnopages' => 'Et gëtt keng Säiten fir z\'importéieren.',
+	'imported-log-entries' => '$1 {{PLURAL:$1|Entrée|Entréeën}} an d\'Logbuch importéiert.',
 	'importfailed' => 'Importatioun huet net fonctionnéiert: $1',
 	'importunknownsource' => 'Onbekannt Importquell',
 	'importcantopen' => 'De Fichier dee sollt importéiert gi konnt net opgemaach ginn',
@@ -14025,14 +14040,14 @@ Späichert en op Ärem Computer of a luet en hei nees erop.',
 	'importhistoryconflict' => 'Et gëtt Konflikter am Historique vun de Versiounen, (méiglecherweis gouf dës Säit virdrun importéiert).',
 	'importnosources' => 'Fir den Transwiki-Import si keng Quellen definéiert an et ass net méiglech fir Säite mat alle Versiounen aus dem Transwiki-Tëschespäicher eropzelueden.',
 	'importnofile' => 'Et gouf keen importéierte Fichier eropgelueden',
-	'importuploaderrorsize' => "D'Eropluede vum importéierte Fichier huet net fonctionnéiert. De Fichier ass méi grouss wéi maximal erlaabt.",
-	'importuploaderrorpartial' => "D'Eropluede vum Fichier huet net geklappt. De Fichier gouf nëmmen deelweis eropgelueden.",
-	'importuploaderrortemp' => "D'Eropluede vum Fichier huet net fonctionnéiert. En temporäre Repertoire feelt.",
+	'importuploaderrorsize' => 'D\'Eropluede vum importéierte Fichier huet net fonctionnéiert. De Fichier ass méi grouss wéi maximal erlaabt.',
+	'importuploaderrorpartial' => 'D\'Eropluede vum Fichier huet net geklappt. De Fichier gouf nëmmen deelweis eropgelueden.',
+	'importuploaderrortemp' => 'D\'Eropluede vum Fichier huet net fonctionnéiert. En temporäre Repertoire feelt.',
 	'import-parse-failure' => 'Feeler bei engem XML-Import',
-	'import-noarticle' => "Keng Säit fir z'importéieren!",
-	'import-nonewrevisions' => "All d'Versioune goufe scho virdrunn importéiert.",
+	'import-noarticle' => 'Keng Säit fir z\'importéieren!',
+	'import-nonewrevisions' => 'All d\'Versioune goufe scho virdrunn importéiert.',
 	'import-upload' => 'XML-Daten importéieren',
-	'import-token-mismatch' => "D'Date vun ärer Sessioun si verluer gaang. Versicht et w.e.g. nach eemol.",
+	'import-token-mismatch' => 'D\'Date vun ärer Sessioun si verluer gaang. Versicht et w.e.g. nach eemol.',
 	'import-invalid-interwiki' => 'Aus der Wiki déi Dir uginn hutt kann näischt importéiert ginn.',
 	'import-error-edit' => 'D\'Säit "$1" gouf net importéiert well Dir se net änneren däerft.',
 	'import-error-create' => 'D\'Säit "$1" gouf net importéiert well Dir se net uleeën däerft.',
@@ -14045,18 +14060,18 @@ Späichert en op Ärem Computer of a luet en hei nees erop.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Versioun|Versiounen}}',
 	'import-logentry-interwiki' => 'huet $1 importéiert (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Versioun|Versioune}} vum $2',
-	'imagemaxsize' => "Maximal Gréisst fir Biller:<br />''(fir Billerbeschreiwungssäiten)''",
-	'imagelisttext' => "Hei ass eng Lëscht vu(n) '''$1''' {{PLURAL:$1|Fichier|Fichieren}}, zortéiert $2.",
+	'imagemaxsize' => 'Maximal Gréisst fir Biller:<br />\'\'(fir Billerbeschreiwungssäiten)\'\'',
+	'imagelisttext' => 'Hei ass eng Lëscht vu(n) \'\'\'$1\'\'\' {{PLURAL:$1|Fichier|Fichieren}}, zortéiert $2.',
 	'ilsubmit' => 'Sichen',
-	'invalidateemail' => "Annulléier d'E-Mailconfirmation",
+	'invalidateemail' => 'Annulléier d\'E-Mailconfirmation',
 	'imgmultipageprev' => '← Vireg Säit',
 	'imgmultipagenext' => 'nächst Säit →',
 	'imgmultigo' => 'Lass!',
-	'imgmultigoto' => "Géi op d'Säit $1",
+	'imgmultigoto' => 'Géi op d\'Säit $1',
 	'intentionallyblankpage' => 'Dës Säit ass absichtlech eidel. Si gëtt fir Benchmarking an Ähnleches benotzt.',
-);
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'index-category' => 'Индексавунвай ччинар',
 	'italic_sample' => 'Курсивдин текст',
 	'italic_tip' => 'Курсивдин текст',
@@ -14070,9 +14085,9 @@ $messages['lez'] = array(
 	'ipblocklist' => 'Блокарнавай иштиракчияр',
 	'import-upload-filename' => 'Шикилдинтlар:',
 	'imgmultigo' => 'Ша!',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'internalerror' => 'Era interna',
 	'internalerror_info' => 'Era interna: $1',
 	'italic_sample' => 'Testo en leteras italica',
@@ -14093,17 +14108,17 @@ $messages['lfn'] = array(
 	'import' => 'Emporta pajes',
 	'importlogpage' => 'Importa arcivo',
 	'ilsubmit' => 'Xerca',
-);
+];
 
-$messages['lg'] = array(
-	'index-category' => "Empapula ezikkirizidwa okuteekebwa ku nkalala z'enfo ezinoonyesebwa",
-	'internalerror' => "Puloguramu ey'oku wiki efunye kirimya munda mwayo",
-	'internalerror_info' => "Puloguramu ey'oku wiki efunye kirimya munda mwayo: $1",
-	'invalidemailaddress' => "Empandika ey'endagiriro eya E-mail gy'otaddewo yandibaamu ensobi.<br />
-Gigolole oba lekawo nga w'ereere.",
-	'italic_sample' => "Ennukuta z'owandika wano zonna ziba za italiki",
-	'italic_tip' => "Bw'onyiga ku kano, ennukuta z'oddako okuwandika ziba za italiki (ez'esurise). Okuddamu okufuna ennukuta eza bulijjo, ddamu okukanyiga ko.",
-	'image_tip' => "Bw'onyiga ku kano, we wakomye okuwandika wajjawo enyunzi eteekawo ekifaananyi",
+$messages['lg'] = [
+	'index-category' => 'Empapula ezikkirizidwa okuteekebwa ku nkalala z\'enfo ezinoonyesebwa',
+	'internalerror' => 'Puloguramu ey\'oku wiki efunye kirimya munda mwayo',
+	'internalerror_info' => 'Puloguramu ey\'oku wiki efunye kirimya munda mwayo: $1',
+	'invalidemailaddress' => 'Empandika ey\'endagiriro eya E-mail gy\'otaddewo yandibaamu ensobi.<br />
+Gigolole oba lekawo nga w\'ereere.',
+	'italic_sample' => 'Ennukuta z\'owandika wano zonna ziba za italiki',
+	'italic_tip' => 'Bw\'onyiga ku kano, ennukuta z\'oddako okuwandika ziba za italiki (ez\'esurise). Okuddamu okufuna ennukuta eza bulijjo, ddamu okukanyiga ko.',
+	'image_tip' => 'Bw\'onyiga ku kano, we wakomye okuwandika wajjawo enyunzi eteekawo ekifaananyi',
 	'imagelinks' => 'Empapula eziriko enyunzi ezigguka ku kifaananyi kino',
 	'invert' => 'Kola ku byonna ebitali ekyo ekirondedwa',
 	'isredirect' => 'lupapula olukutwalabutwazi ku lunnaalwo',
@@ -14114,17 +14129,17 @@ Gigolole oba lekawo nga w'ereere.",
 	'ipblocklist-submit' => 'Noonya',
 	'ilsubmit' => 'Noonya',
 	'imgmultigo' => 'Nona!',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'index-category' => 'Geïndexeerde paazjes',
 	'internalerror' => 'Interne fout',
 	'internalerror_info' => 'Interne fout: $1',
-	'invalidemailaddress' => "'t E-mailadres is neet geaccepteerd omdet 't 'n ongeldige opmaak haet. Gaef a.u.b. 'n geldig e-mailadres op of laot 't veld laeg.",
+	'invalidemailaddress' => '\'t E-mailadres is neet geaccepteerd omdet \'t \'n ongeldige opmaak haet. Gaef a.u.b. \'n geldig e-mailadres op of laot \'t veld laeg.',
 	'italic_sample' => 'Sjuunsen tèks',
 	'italic_tip' => 'Sjuunsen tèks',
 	'image_tip' => 'Mediabesjtandj',
-	'ignorewarning' => "Negeer deze waarsjuwing en slao 't bestandj toch op",
+	'ignorewarning' => 'Negeer deze waarsjuwing en slao \'t bestandj toch op',
 	'ignorewarnings' => 'Negeer alle waarsjuwinge',
 	'illegalfilename' => 'De bestandjsnaam "$1" bevat ongeldige karakters. Gaef \'t bestandj \'ne angere naam, en probeer \'t dan opnuuj te uploade.',
 	'illegal-filename' => 'Deze bestandjsnaam is neet toegelaote.',
@@ -14134,27 +14149,27 @@ $messages['li'] = array(
 Diene server is neet ingesteld om dees informatie door te gaeve.
 Misjien gebroek deze CGI, en dan wört img_auth neet ongersteund.
 Zuuch https://www.mediawiki.org/wiki/Manual:Image_Authorization aafbeildingsrechte veur mee informatie.',
-	'img-auth-notindir' => "'t Ópgevraogdje paad is neet de ingestelde uploadmap.",
+	'img-auth-notindir' => '\'t Ópgevraogdje paad is neet de ingestelde uploadmap.',
 	'img-auth-badtitle' => 'Kèn geine geldige paginanaam make van "$1".',
 	'img-auth-nologinnWL' => 'Doe bös neet aangemeld en "$1" steit neet op de witte lies.',
 	'img-auth-nofile' => 'Bestandj "$1" besteit neet.',
 	'img-auth-isdir' => 'Doe probeers de map "$1" te benadere.
 Allein toegank toet bestenj is toegestange.',
 	'img-auth-streaming' => '"$1" stroumendj.',
-	'img-auth-public' => "'t Doel van img_auth.php is de oetvour van bestenj van 'ne beslaote wiki.
+	'img-auth-public' => '\'t Doel van img_auth.php is de oetvour van bestenj van \'ne beslaote wiki.
 Deze wiki is ingesteldj es publieke wiki.
-Om beveiligingsrede is img_auth.php oetgesjakeld.",
+Om beveiligingsrede is img_auth.php oetgesjakeld.',
 	'img-auth-noread' => 'De gebroeker haet geine laestoegank toet "$1".',
-	'img-auth-bad-query-string' => "De URL haet 'n óngeljige querystring.",
+	'img-auth-bad-query-string' => 'De URL haet \'n óngeljige querystring.',
 	'imgfile' => 'bestandj',
 	'imagelinks' => 'Bestandjsbroek',
-	'iteminvalidname' => "Probleem mit object '$1', ongeljige naam...",
+	'iteminvalidname' => 'Probleem mit object \'$1\', ongeljige naam...',
 	'invert' => 'Ómgedriejde selectie',
 	'isredirect' => 'redirect pazjena',
 	'istemplate' => 'ingevoog es sjabloon',
 	'isimage' => 'bestandjslink',
 	'ipadressorusername' => 'IP-adres of gebroekersnaam',
-	'ipbexpiry' => "Verlöp (maak 'n keuze)",
+	'ipbexpiry' => 'Verlöp (maak \'n keuze)',
 	'ipbreason' => 'Reeje:',
 	'ipbreasonotherlist' => 'Angere reje',
 	'ipbreason-dropdown' => '*Väöl veurkommende rejer veur blokkaazjes
@@ -14167,7 +14182,7 @@ Om beveiligingsrede is img_auth.php oetgesjakeld.",
 ** Onacceptabele gebroekersnaam',
 	'ipb-hardblock' => 'Veurkóm det aangemèldje gebroekers vanaaf dit IP-adres kinne bewèrke',
 	'ipbcreateaccount' => 'Blokkeer aanmake gebroekers',
-	'ipbemailban' => "Haoj de gebrorker van 't sture van e-mail",
+	'ipbemailban' => 'Haoj de gebrorker van \'t sture van e-mail',
 	'ipbenableautoblock' => 'Automatisch de IP-adresse van deze gebroeker blokkere',
 	'ipbsubmit' => 'Blokkeer dit IP-adres',
 	'ipbother' => 'Anger verloup',
@@ -14179,16 +14194,16 @@ Om beveiligingsrede is img_auth.php oetgesjakeld.",
 	'ipb-disableusertalk' => 'Veurkóm det deze gebroeker tiedes de blok de eige euverlègkpagina kin bewirke',
 	'ipb-change-block' => 'De gebroeker opnuuj blokke met deze instellinge',
 	'ipb-confirm' => 'Bevestig blok',
-	'ipb-blockingself' => "Doe steis óp 't pöntj dichzelf te blokke! Wèts se zeker desse det wils doon?",
-	'ipb-confirmhideuser' => "Doe steis óp 't pöntj 'ne verbórge gebroeker te blokke. Hieveur waere gebroekersname in alle liesre en logbookregels verbórge. Wèts se zeker desse door wils gaon?",
+	'ipb-blockingself' => 'Doe steis óp \'t pöntj dichzelf te blokke! Wèts se zeker desse det wils doon?',
+	'ipb-confirmhideuser' => 'Doe steis óp \'t pöntj \'ne verbórge gebroeker te blokke. Hieveur waere gebroekersname in alle liesre en logbookregels verbórge. Wèts se zeker desse door wils gaon?',
 	'ipb-edit-dropdown' => 'Bewerk lies van rejer',
 	'ipb-unblock-addr' => 'Ónblokkeer $1',
-	'ipb-unblock' => "Ónblokkeer 'ne gebroeker of IP-adres",
+	'ipb-unblock' => 'Ónblokkeer \'ne gebroeker of IP-adres',
 	'ipb-blocklist' => 'Bekiek bestaonde blokkades',
 	'ipb-blocklist-contribs' => 'Biedraag ven $1',
 	'ipusubmit' => 'Deblokkeer dit.',
 	'ipblocklist' => 'Geblokkerde gebroekers',
-	'ipblocklist-legend' => "'ne Geblokkeerde gebroeker zeuke",
+	'ipblocklist-legend' => '\'ne Geblokkeerde gebroeker zeuke',
 	'ipblocklist-submit' => 'Zeuk',
 	'ipblocklist-localblock' => 'Lokale blok',
 	'ipblocklist-otherblocks' => 'Anger {{PLURAL:$1|blokkaad|blokkades}}',
@@ -14197,30 +14212,30 @@ Om beveiligingsrede is img_auth.php oetgesjakeld.",
 	'ipblocklist-no-results' => 'Dit IP-adres of deze gebroekersnaam is neet geblokkeerd.',
 	'ipb_expiry_invalid' => 'Ongeldig verloup.',
 	'ipb_expiry_temp' => 'Blokkaasj veur verbórge gebroekers mótte permanent zeen.',
-	'ipb_hide_invalid' => "Kinne gebroeker neet verbèrge; d'r haet te väöl angeringe.",
+	'ipb_hide_invalid' => 'Kinne gebroeker neet verbèrge; d\'r haet te väöl angeringe.',
 	'ipb_already_blocked' => '"$1" is al geblokkeerd',
 	'ipb-needreblock' => '$1 is al geblokkeerd.
 Wils se de instellinge wiezige?',
 	'ipb-otherblocks-header' => 'Anger {{PLURAL:$1|blokkaad|blokkades}}',
 	'ipb_cant_unblock' => 'Fout: Blokkadenummer $1 neet gevonje. Mesjiens is de blokkade al opgeheve.',
-	'ipb_blocked_as_range' => "Fout: 't IP-adres $1 is neet direct geblokkeerd en de blokkade kan neet opgeheve waere. De blokkade is ongerdeil van de reeks $2, wovan de blokkade waal opgeheve kan waere.",
+	'ipb_blocked_as_range' => 'Fout: \'t IP-adres $1 is neet direct geblokkeerd en de blokkade kan neet opgeheve waere. De blokkade is ongerdeil van de reeks $2, wovan de blokkade waal opgeheve kan waere.',
 	'ip_range_invalid' => 'Ongeldige IP-reeks',
 	'ip_range_toolarge' => 'Reeksblokkades groeater es /$1 kènne neet.',
 	'ipbblocked' => 'Doe kèns gein anger gebroekers (ónt)blokke, ómdet se zèlf geblók bös.',
 	'ipbnounblockself' => 'Doe moogs dichzèlf neet óntblokke.',
 	'immobile-source-namespace' => 'Pagina\'s in de naamruumde "$1" kinne nwet hernump waere',
 	'immobile-target-namespace' => 'Pagina\'s kinne neet hernömp waere nao de naamruumde "$1"',
-	'immobile-target-namespace-iw' => "'n Interwikiverwiezing is gein geldige bestumming veur 't hernömme van 'n pagina.",
+	'immobile-target-namespace-iw' => '\'n Interwikiverwiezing is gein geldige bestumming veur \'t hernömme van \'n pagina.',
 	'immobile-source-page' => 'Deze pagina kin neet hernömp waere.',
-	'immobile-target-page' => "'t Is neet meugelik te hernömmen nao die paginanaam.",
-	'imagenocrossnamespace' => "'n Mediabestand kin neet nao 'n anger naamruumde verplaats waere",
-	'imagetypemismatch' => "De nuje bestandjsextensie is neet gliek aan 't bestandjstype.",
+	'immobile-target-page' => '\'t Is neet meugelik te hernömmen nao die paginanaam.',
+	'imagenocrossnamespace' => '\'n Mediabestand kin neet nao \'n anger naamruumde verplaats waere',
+	'imagetypemismatch' => 'De nuje bestandjsextensie is neet gliek aan \'t bestandjstype.',
 	'imageinvalidfilename' => 'De nuje bestandsnaam is ongeldig',
-	'import' => "Pazjena's importere",
+	'import' => 'Pazjena\'s importere',
 	'importinterwiki' => 'Transwiki-import',
-	'import-interwiki-text' => "Selecteer 'ne wiki en pazjenanaam om te importere.
+	'import-interwiki-text' => 'Selecteer \'ne wiki en pazjenanaam om te importere.
 Versie- en auteursgegaeves blieve hiej bie bewaard.
-Alle transwiki-importhanjelinge waere opgeslage in 't [[Special:Log/import|importlogbook]].",
+Alle transwiki-importhanjelinge waere opgeslage in \'t [[Special:Log/import|importlogbook]].',
 	'import-interwiki-source' => 'Bronwiki/pagina:',
 	'import-interwiki-history' => 'Volledige gesjiedenis van deze pazjena ouch kopiëre',
 	'import-interwiki-templates' => 'Alle sjablone opnaeme',
@@ -14230,41 +14245,41 @@ Alle transwiki-importhanjelinge waere opgeslage in 't [[Special:Log/import|impor
 	'import-comment' => 'Opmèrking:',
 	'importtext' => 'Gebroek de functie [[Special:Export|export]] in de wiki wo de informatie vanaaf kömp.
 Slaon de oetveur op dien eige systeem op, en voeg dae dao nao hiej toe.',
-	'importstart' => "Pazjena's aan 't importere ...",
+	'importstart' => 'Pazjena\'s aan \'t importere ...',
 	'import-revision-count' => '$1 {{PLURAL:$1|versie|versies}}',
-	'importnopages' => "Gein pazjena's te importere.",
+	'importnopages' => 'Gein pazjena\'s te importere.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|logbookregel|logbookregele}} ingeveurdj.',
 	'importfailed' => 'Import is misluk: $1',
 	'importunknownsource' => 'Ónbekindj importbróntype',
-	'importcantopen' => "Kós 't importbestandj neet äöpene",
+	'importcantopen' => 'Kós \'t importbestandj neet äöpene',
 	'importbadinterwiki' => 'Verkeerde interwikilink',
 	'importnotext' => 'Laeg of geine teks',
 	'importsuccess' => 'Import geslaag!',
-	'importhistoryconflict' => "d'r Zeen conflicte in de gesjiedenis van de pazjena (is mesjiens eerder geïmporteerd)",
-	'importnosources' => "d'r Zeen gein transwiki-importbrónne gedefinieerd en directe gesjiedenis-uploads zeen oetgezat.",
-	'importnofile' => "d'r Is gein importbestandj geüpload.",
-	'importuploaderrorsize' => "Upload van 't importbestandj is misluk. 't Bestand is groter es de ingesteldje limiet.",
-	'importuploaderrorpartial' => "Upload van 't importbestandj is misluk. 't Bestandj is slechs gedeiltelik aangekómme.",
-	'importuploaderrortemp' => "Upload van 't importbestandj is misluk. De tiedelike map is neet aanwezig.",
-	'import-parse-failure' => "Fout bie 't verwerke van de XML-import",
-	'import-noarticle' => "d'r Zeen gein importeerbaar pazjena's!",
+	'importhistoryconflict' => 'd\'r Zeen conflicte in de gesjiedenis van de pazjena (is mesjiens eerder geïmporteerd)',
+	'importnosources' => 'd\'r Zeen gein transwiki-importbrónne gedefinieerd en directe gesjiedenis-uploads zeen oetgezat.',
+	'importnofile' => 'd\'r Is gein importbestandj geüpload.',
+	'importuploaderrorsize' => 'Upload van \'t importbestandj is misluk. \'t Bestand is groter es de ingesteldje limiet.',
+	'importuploaderrorpartial' => 'Upload van \'t importbestandj is misluk. \'t Bestandj is slechs gedeiltelik aangekómme.',
+	'importuploaderrortemp' => 'Upload van \'t importbestandj is misluk. De tiedelike map is neet aanwezig.',
+	'import-parse-failure' => 'Fout bie \'t verwerke van de XML-import',
+	'import-noarticle' => 'd\'r Zeen gein importeerbaar pazjena\'s!',
 	'import-nonewrevisions' => 'Alle versies zeen al eerder geïmporteerd.',
 	'import-upload' => 'XML-gegaeves uploade',
-	'import-token-mismatch' => "De sessiegegaeves zeen verlaore gegange. Perbeer 't opnuuj.",
-	'import-invalid-interwiki' => "'t Is neet mäögelik van de aangegeve wiki te importere.",
+	'import-token-mismatch' => 'De sessiegegaeves zeen verlaore gegange. Perbeer \'t opnuuj.',
+	'import-invalid-interwiki' => '\'t Is neet mäögelik van de aangegeve wiki te importere.',
 	'import-error-edit' => 'De pagina "$1" is neet geïmporteerd omdes se neet de rechte hes óm dees te bewèrke.',
 	'import-error-create' => 'De pagina "$1" is neet geïmporteerd omdes se neet de rechte hes óm dees aan te make.',
 	'import-error-interwiki' => 'De pagina "$1" is neet geïmporteerd omdet deze naam is gereserveerd veur extern verwiezinge (interwiki).',
 	'import-error-special' => 'Pagina "$1" is neet geïmporteerd omdet deze is geplaats in \'n speciaal naamruumdje wo gein pagina\'s in geplaats kinne waere.',
 	'import-error-invalid' => 'De pagina" "$1" is neet geïmporteerd omdet de naam óngeljig is.',
 	'importlogpage' => 'Importlogbook',
-	'importlogpagetext' => "Administratieve import van pazjena's mit gesjiedenis van anger wiki's.",
-	'import-logentry-upload' => "[[$1]] geïmporteerd via 'ne bestandjsupload",
+	'importlogpagetext' => 'Administratieve import van pazjena\'s mit gesjiedenis van anger wiki\'s.',
+	'import-logentry-upload' => '[[$1]] geïmporteerd via \'ne bestandjsupload',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versie|versies}}',
 	'import-logentry-interwiki' => 'transwiki veur $1 geslaag',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versie|versies}} van $2',
-	'imagemaxsize' => "Meximale aafbeildjingsaafmaeting:<b r/>''(veur besjrievingspaasj)''",
-	'imagelisttext' => "Hie volg 'n lies mit $1 {{PLURAL:$1|aafbeilding|aafbeildinge}} geordend $2.",
+	'imagemaxsize' => 'Meximale aafbeildjingsaafmaeting:<b r/>\'\'(veur besjrievingspaasj)\'\'',
+	'imagelisttext' => 'Hie volg \'n lies mit $1 {{PLURAL:$1|aafbeilding|aafbeildinge}} geordend $2.',
 	'ilsubmit' => 'Zeuk',
 	'invalidateemail' => 'E-mailbevestiging annulere',
 	'imgmultipageprev' => '← veurige pazjena',
@@ -14272,16 +14287,16 @@ Slaon de oetveur op dien eige systeem op, en voeg dae dao nao hiej toe.',
 	'imgmultigo' => 'Gank!',
 	'imgmultigoto' => 'Gank naor pazjena $1',
 	'intentionallyblankpage' => 'Deze pagina is bewus laeg gelaote en wurt gebroek veur benchmarks, enzovoort.',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'internalerror' => 'Errô interno',
 	'italic_sample' => 'Testo in corsciva',
 	'italic_tip' => 'Corscivo',
 	'image_sample' => 'Exempio.jpg',
 	'image_tip' => 'Inmàgine caregâ',
 	'imgfile' => 'papê',
-	'imagelinks' => "Ûzo de l'archivio",
+	'imagelinks' => 'Ûzo de l\'archivio',
 	'invert' => 'Invertî a seleçión',
 	'isredirect' => 'redirect',
 	'istemplate' => 'Incluxon',
@@ -14289,15 +14304,15 @@ $messages['lij'] = array(
 	'ipbreason' => 'Raxon:',
 	'ipboptions' => '2 ôe:2 hours,1 giorno:1 day,3 giorni:3 days,1 settemann-a:1 week,2 settemann-e:2 weeks,1 meise:1 month,3 meixi:3 months,6 meixi:6 months,1 anno:1 year,infinîo:infinite',
 	'ipblocklist' => 'Utenti blocæ',
-	'ipblocklist-empty' => "A lista de e affermaçioin a l'è veua.",
+	'ipblocklist-empty' => 'A lista de e affermaçioin a l\'è veua.',
 	'importlogpage' => 'Importassioîn',
 	'ilsubmit' => 'Çerca',
 	'imgmultipageprev' => '← Pagina de primma',
 	'imgmultipagenext' => 'Proscima pagina →',
 	'imgmultigo' => 'Vanni!',
-);
+];
 
-$messages['liv'] = array(
+$messages['liv'] = [
 	'italic_sample' => 'Slīp kēra',
 	'italic_tip' => 'Slīp kēra',
 	'image_tip' => 'Sidtõb bildā',
@@ -14308,9 +14323,9 @@ $messages['liv'] = array(
 	'isimage' => 'Siḑīm fail jūrõ',
 	'ipboptions' => ' 2 stuņdõ:2 hours,1 pǟva:1 day,3 päuvõ:3 days,1 nädīļ:1 week,2 nädīļt:2 weeks,1 kū:1 month,3 kūdõ:3 months,6 kūdõ:6 months,1 āigast:1 year,iggi:infinite',
 	'ipblocklist' => 'Jarā kīeldtõd kȭlbatijizt',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'index-category' => 'Paginn indicizaa',
 	'internalerror' => 'Erur in del sistema',
 	'internalerror_info' => 'Erur intern: $1',
@@ -14328,40 +14343,40 @@ $messages['lmo'] = array(
 	'ipbexpiry' => 'Fina al:',
 	'ipbreason' => 'Reson:',
 	'ipbreasonotherlist' => 'Alter mutiv',
-	'ipbreason-dropdown' => "*Mutiv püssee cumün per i blòch
+	'ipbreason-dropdown' => '*Mutiv püssee cumün per i blòch
 ** Avè caregaa di infurmazión fals
 ** Avè töt via del cuntegnüü dai paginn
 ** Avè giuntaa di ereclam a di sit da föra
 ** Avè giuntaa de la ratatuja int i paginn
 ** Cumpurtament intimidatori
 ** Avè druvaa püssee dun cünt in manera abüsiva
-** El nom del druvàt l'è inacetabil",
+** El nom del druvàt l\'è inacetabil',
 	'ipbcreateaccount' => 'Lassegh mia creà di alter cünt',
-	'ipbemailban' => "Fà in manera che quel druvàt chì 'l poda mia spedì di messagg e-mail",
-	'ipbenableautoblock' => "Bloca in manera utumatega l'ültim indirizz IP druvaa da 'stu druvadur chì, e qualsessìa olter indirizz IP cun al qual el cerca de fà di mudifegh.",
+	'ipbemailban' => 'Fà in manera che quel druvàt chì \'l poda mia spedì di messagg e-mail',
+	'ipbenableautoblock' => 'Bloca in manera utumatega l\'ültim indirizz IP druvaa da \'stu druvadur chì, e qualsessìa olter indirizz IP cun al qual el cerca de fà di mudifegh.',
 	'ipbsubmit' => 'Blòca quel druvàt chì',
 	'ipbother' => 'Altra dürada:',
 	'ipboptions' => '2 ur:2 hours,1 dì:1 day,3 dì:3 days,1 semana:1 week,2 semann:2 weeks,1 mes:1 month,3 mes:3 months,6 mes:6 months,1 ann:1 year,infinii:infinite',
 	'ipbotheroption' => 'Alter',
 	'ipbotherreason' => 'Alter resón/spiegazión',
-	'ipbhidename' => "Scund 'l nom del druvat dai mudifegh e da i list.",
-	'ipbwatchuser' => "Tegn d'ögg i paginn duvrat e de discüssión de quel duvrat chì",
+	'ipbhidename' => 'Scund \'l nom del druvat dai mudifegh e da i list.',
+	'ipbwatchuser' => 'Tegn d\'ögg i paginn duvrat e de discüssión de quel duvrat chì',
 	'ipb-change-block' => 'Blocà ancamò el duvrat cun quij impustazión chì',
 	'ipb-edit-dropdown' => 'Resón del bloch',
 	'ipb-unblock-addr' => 'Desblòca $1',
 	'ipb-unblock' => 'Desbloca un duvrat o un adress IP',
 	'ipb-blocklist' => 'Vardee i blòch ativ',
 	'ipb-blocklist-contribs' => 'Cuntribüzión de $1',
-	'ipusubmit' => "Tö via 'stu bloch chì",
+	'ipusubmit' => 'Tö via \'stu bloch chì',
 	'ipblocklist' => 'Adrèss IP e druvàt blucaa',
 	'infiniteblock' => 'per semper',
-	'ipblocklist-empty' => "El register di bloch l'è vöj.",
+	'ipblocklist-empty' => 'El register di bloch l\'è vöj.',
 	'import' => 'Impurtá di pagin',
 	'imagemaxsize' => 'Limitá i imagin süi pagin da descrizziún dii imagin a:',
 	'ilsubmit' => 'Truvá',
-);
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'internalerror' => 'Zíko ya káti',
 	'internalerror_info' => 'Zíko ya káti: $1',
 	'italic_sample' => 'Nkomá ya kotɛ́ngama',
@@ -14375,9 +14390,9 @@ $messages['ln'] = array(
 	'import' => 'koútisa...',
 	'ilsubmit' => 'Boluki',
 	'imgmultigo' => 'Kɛndɛ́!',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'internalerror' => 'ມີຄວາມຜິດພາດພາຍໃນ',
 	'italic_sample' => 'ໂຕເນີ້ງ',
 	'italic_tip' => 'ໂຕເນີ້ງ',
@@ -14390,9 +14405,9 @@ $messages['lo'] = array(
 	'imagemaxsize' => 'ກຳນົດຄວາມໃຫຍ່ຂອງ ຮູບ ຫຼື ໜ້າອະທິບາຍຮູບ ບໍ່ໃຫ້ກາຍ:',
 	'ilsubmit' => 'ຄົ້ນຫາ',
 	'imgmultigo' => 'ໄປ!',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'internalerror' => 'Interni bufosi',
 	'internalerror_info' => 'Interni bufosi: $1',
 	'italic_sample' => 'Selt itali',
@@ -14400,10 +14415,10 @@ $messages['loz'] = array(
 	'image_sample' => 'Kamukile.jpg',
 	'image_tip' => 'Kamukile imegi',
 	'imgfile' => 'imegi',
-	'imagelinks' => "Ling'kina",
-	'invert' => "Fatukile efro ye ng'i",
+	'imagelinks' => 'Ling\'kina',
+	'invert' => 'Fatukile efro ye ng\'i',
 	'isredirect' => 'petulo abezi',
-	'istemplate' => "yang'idole",
+	'istemplate' => 'yang\'idole',
 	'ipadressorusername' => 'IP/sebelu:',
 	'ipboptions' => '2 ora:2 hours,1 dia:1 day,3 dia:3 days,1 wiki:1 week,2 wiki:2 weeks,1 muna:1 month,3 muna:3 months,6 muna:6 months,1 anu:1 year,di simuluzi:infinite',
 	'ipblocklist' => 'Mukoloko di IP e sebelu bye sa bolok',
@@ -14416,9 +14431,9 @@ $messages['loz'] = array(
 	'imgmultipageprev' => '← kona petulo',
 	'imgmultipagenext' => 'lila petulo →',
 	'imgmultigo' => 'Afi!',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'index-category' => 'Indeksuoti puslapiai',
 	'internalerror' => 'Vidinė klaida',
 	'internalerror_info' => 'Vidinė klaida: $1',
@@ -14565,8 +14580,8 @@ Išsaugokite jį savo kompiuteryje ir įkelkite jį čia.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|keitimas|keitimai|keitimų}}',
 	'import-logentry-interwiki' => 'tarpprojektinis $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|keitimas|keitimai|keitimų}} iš $2',
-	'imagemaxsize' => "Riboti paveikslėlių dydį:<br />''(failų aprašymo puslapiuose)''",
-	'imagelisttext' => "Žemiau yra '''$1''' {{PLURAL:$1|failo|failų|failų}} sąrašas, surūšiuotas $2.",
+	'imagemaxsize' => 'Riboti paveikslėlių dydį:<br />\'\'(failų aprašymo puslapiuose)\'\'',
+	'imagelisttext' => 'Žemiau yra \'\'\'$1\'\'\' {{PLURAL:$1|failo|failų|failų}} sąrašas, surūšiuotas $2.',
 	'ilsubmit' => 'Ieškoti',
 	'invalidateemail' => 'El. pašto patvirtinimo atšaukimas',
 	'imgmultipageprev' => '← ankstesnis puslapis',
@@ -14574,9 +14589,9 @@ Išsaugokite jį savo kompiuteryje ir įkelkite jį čia.',
 	'imgmultigo' => 'Eiti!',
 	'imgmultigoto' => 'Eitį į puslapį $1',
 	'intentionallyblankpage' => 'Šis puslapis specialiai paliktas tuščias',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'italic_sample' => 'Sleipais roksts',
 	'italic_tip' => 'Sleipais roksts',
 	'image_sample' => 'Paraugs.jpg',
@@ -14594,9 +14609,9 @@ $messages['ltg'] = array(
 	'import-upload-filename' => 'Faila pasauka:',
 	'import-comment' => 'Komentars:',
 	'ilsubmit' => 'Meklēt',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'index-category' => 'Indeksētās lapas',
 	'internalerror' => 'Iekšēja kļūda',
 	'internalerror_info' => 'Iekšējā kļūda: $1',
@@ -14620,7 +14635,7 @@ Skatīt https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 Atļauta ir tikai failu piekļuve.',
 	'imgfile' => 'fails',
 	'imagelinks' => 'Faila lietojums',
-	'iteminvalidname' => "Problēma ar '$1' vienību, nederīgs nosaukums...",
+	'iteminvalidname' => 'Problēma ar \'$1\' vienību, nederīgs nosaukums...',
 	'invert' => 'Izvēlēties pretēji',
 	'isredirect' => 'pāradresācijas lapa',
 	'istemplate' => 'izsaukts',
@@ -14645,7 +14660,7 @@ Atļauta ir tikai failu piekļuve.',
 	'ipboptions' => '2 stundas:2 hours,1 diena:1 day,3 dienas:3 days,1 nedēļa:1 week,2 nedēļas:2 weeks,1 mēnesis:1 month,3 mēneši:3 months,6 mēneši:6 months,1 gads:1 year,uz nenoteiktu laiku:infinite',
 	'ipbotheroption' => 'cits',
 	'ipbotherreason' => 'Cits/papildu iemesls:',
-	'ipbhidename' => "Slēpt lietot'javārdu no labojumiem un sarakstiem",
+	'ipbhidename' => 'Slēpt lietot\'javārdu no labojumiem un sarakstiem',
 	'ipbwatchuser' => 'Uzraudzīt šī lietotāja lietotāja un lietotāja diskusijas lapas',
 	'ipb-change-block' => 'Pārbloķēt ar šiem uzstādījumiem',
 	'ipb-confirm' => 'Apstiprināt bloķēšanu',
@@ -14702,7 +14717,7 @@ Tā ir bloķēta kā daļa no IP adrešu diapazona $2, kuru var atbloķēt.',
 	'importbadinterwiki' => 'Slikta starpviki saite',
 	'importnotext' => 'Tukšs vai nav teksta',
 	'importsuccess' => 'Importēšana pabeigta!',
-	'importnosources' => "Tiešā hronoloģijas augšuplāde ir atslēgta. Nav definēts neviens ''Transwiki'' importa avots (''source'').",
+	'importnosources' => 'Tiešā hronoloģijas augšuplāde ir atslēgta. Nav definēts neviens \'\'Transwiki\'\' importa avots (\'\'source\'\').',
 	'importnofile' => 'Neviens importējamais fails netika augšupielādēts.',
 	'importuploaderrorsize' => 'Augšupielādēt importējamo failu neizdevās.
 Šis fails ir lielāks par atļauto augšupielādes lielumu.',
@@ -14732,9 +14747,9 @@ Lūdzu, mēģiniet vēlreiz.',
 	'imgmultigo' => 'Aiziet!',
 	'imgmultigoto' => 'Iet uz lapu $1',
 	'intentionallyblankpage' => 'Šī lapa ar nodomu ir atstāta tukša.',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'index-category' => '已索之頁',
 	'internalerror' => '家誤',
 	'internalerror_info' => '家誤：$1',
@@ -14764,7 +14779,7 @@ $messages['lzh'] = array(
 	'img-auth-noread' => '簿無權讀「$1」也。',
 	'imgfile' => '檔',
 	'imagelinks' => '檔所繫者',
-	'iteminvalidname' => "'$1'謬名。",
+	'iteminvalidname' => '\'$1\'謬名。',
 	'invert' => '反相',
 	'isredirect' => '渡',
 	'istemplate' => '含',
@@ -14865,8 +14880,8 @@ $messages['lzh'] = array(
 	'import-logentry-upload-detail' => '有審$1',
 	'import-logentry-interwiki' => '互匯$1',
 	'import-logentry-interwiki-detail' => '$1審自$2',
-	'imagemaxsize' => "述檔頁惟列：<br />''（用於檔）''",
-	'imagelisttext' => "下表乃按$2排之的'''$1'''檔。",
+	'imagemaxsize' => '述檔頁惟列：<br />\'\'（用於檔）\'\'',
+	'imagelisttext' => '下表乃按$2排之的\'\'\'$1\'\'\'檔。',
 	'ilsubmit' => '尋檔',
 	'invalidateemail' => '消核郵驛',
 	'imgmultipageprev' => '←前頁',
@@ -14874,10 +14889,10 @@ $messages['lzh'] = array(
 	'imgmultigo' => '往',
 	'imgmultigoto' => '往頁$1',
 	'intentionallyblankpage' => '此頁為白也，試速之用',
-);
+];
 
-$messages['lzz'] = array(
-	'index-category' => "Indexi na uğun but'k'ape",
+$messages['lzz'] = [
+	'index-category' => 'Indexi na uğun but\'k\'ape',
 	'italic_sample' => 'Elakteri nçʼara',
 	'italic_tip' => 'Elakteri nçʼara',
 	'image_tip' => 'Doxveri dosya',
@@ -14888,9 +14903,9 @@ $messages['lzz'] = array(
 	'isimage' => 'dosyaşi kʼontʼaktʼi',
 	'ipboptions' => '2 saatʼi:2 hours,1 ndğa:1 day,3 ndğa:3 days,1 doloni:1 week,2 doloni:2 weeks,1 tuta:1 month,3 tuta:3 months,6 tuta:6 months,1 3ʼana:1 year,pʼanda:infinite',
 	'ipblocklist' => 'Bloği xveneri na renan IP adresepe do maxmareş coxope',
-);
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'index-category' => 'क्रम कएल पन्ना सभ',
 	'internalerror' => 'आन्तरिक भ्रम',
 	'internalerror_info' => 'आन्तरिक भ्रम: $1',
@@ -14925,7 +14940,7 @@ $messages['mai'] = array(
 	'img-auth-bad-query-string' => 'सार्वत्रिक विभव संकेत मे एकटा अमान्य अभ्यर्थना डरीड़ अछि।',
 	'imgfile' => 'संचिका',
 	'imagelinks' => 'फाइलक उपयोग',
-	'iteminvalidname' => "'$1' क संग समस्या, अमान्य नाम ...",
+	'iteminvalidname' => '\'$1\' क संग समस्या, अमान्य नाम ...',
 	'invert' => 'उनटा चयन',
 	'isredirect' => 'पन्नाकेँ घुराउ',
 	'istemplate' => 'परागत',
@@ -15041,8 +15056,8 @@ $messages['mai'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|सुधार|सुधार सभ}}',
 	'import-logentry-interwiki' => '$1 क विकीअन्तरण',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|सुधार|सुधार सभ}} $2 सँ',
-	'imagemaxsize' => "चित्र आकारक सीमा:<br />''(संचिका वर्णन पन्ना लेल)''",
-	'imagelisttext' => "नीचाँ '''$1''' क सूची अछि {{PLURAL:$1|संचिका|संचिका सभ}} छाँटल $2।",
+	'imagemaxsize' => 'चित्र आकारक सीमा:<br />\'\'(संचिका वर्णन पन्ना लेल)\'\'',
+	'imagelisttext' => 'नीचाँ \'\'\'$1\'\'\' क सूची अछि {{PLURAL:$1|संचिका|संचिका सभ}} छाँटल $2।',
 	'ilsubmit' => 'ताकू',
 	'invalidateemail' => 'ई-मेल प्रमाणिकरण रद्द करू',
 	'imgmultipageprev' => 'पहिलुका पृष्ठ',
@@ -15050,9 +15065,9 @@ $messages['mai'] = array(
 	'imgmultigo' => 'जाऊ',
 	'imgmultigoto' => '$1 पृष्ठ पर जाऊ',
 	'intentionallyblankpage' => 'ई पन्ना पलानि कऽ खाली छोड़ल गेल।',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'index-category' => 'Kaca sing diindhèks',
 	'internalerror' => 'Kasalahan internal',
 	'internalerror_info' => 'Kasalahan internal: $1',
@@ -15076,9 +15091,9 @@ Monggo lebokna alamat imel nganggo format sing bener utawa dikosongna baen isian
 	'immobile-source-page' => 'Kaca kiye ora teyeng dipindahna.',
 	'immobile-target-page' => 'Ora teyeng mindahna maring judul tujuan kuwe.',
 	'imagenocrossnamespace' => 'Ora teyeng mindahna berkas ming bilik jeneng dudu-berkas',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'internalerror' => 'Потмонь эльбятькс',
 	'internalerror_info' => 'Потмонь эльбятькс: $1',
 	'invalidemailaddress' => 'Электрононь адресть аф пьрьняндави сяс сонь аф кондясти электрононь адресоц. Путт кондясти электрононь адресонц эли катк тя паксянять шавакс.',
@@ -15090,7 +15105,7 @@ $messages['mdf'] = array(
 	'illegalfilename' => 'Файлонь лемса "$1" улихть тяштькст конат лувовихть аф мярьговикс лопань конякснонды. Тик иля файлонь лем, меле тонк сонь тага весть.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Файл сюлмафкст',
-	'iteminvalidname' => "Прябала '$1'-ть мархть, лемоц аф кондясти...",
+	'iteminvalidname' => 'Прябала \'$1\'-ть мархть, лемоц аф кондясти...',
 	'invert' => 'Валхтомс кочкама',
 	'isredirect' => 'умборондафтф лопа',
 	'istemplate' => 'сувафтома',
@@ -15185,8 +15200,8 @@ $messages['mdf'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|илякстоптома|илякстоптомат}}',
 	'import-logentry-interwiki' => 'шашфтф Викитнень ёткса $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|илякстоптома|илякстоптомат}} $2-ста',
-	'imagemaxsize' => "Архтофкснень келеснон оторсна:<br />''(файлонь шарьхкотьфтема лопатненди)''",
-	'imagelisttext' => "Ала'''$1''' {{PLURAL:$1|файлонь|файлхнень}} лувомась кочкаф $2.",
+	'imagemaxsize' => 'Архтофкснень келеснон оторсна:<br />\'\'(файлонь шарьхкотьфтема лопатненди)\'\'',
+	'imagelisttext' => 'Ала\'\'\'$1\'\'\' {{PLURAL:$1|файлонь|файлхнень}} лувомась кочкаф $2.',
 	'ilsubmit' => 'Вешендемс',
 	'invalidateemail' => 'Валхтомс электрононь кемокстамать',
 	'imgmultipageprev' => '← сядынгольдень лопась',
@@ -15194,11 +15209,11 @@ $messages['mdf'] = array(
 	'imgmultigo' => 'Аре!',
 	'imgmultigoto' => 'Архт $1 лопас',
 	'intentionallyblankpage' => 'Тя лопать арьсезефоль кадомс шавакс',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'index-category' => 'pejy voasokajy',
-	'internalerror' => "Tsy fetezana anatin'ny rindrankajy",
+	'internalerror' => 'Tsy fetezana anatin\'ny rindrankajy',
 	'internalerror_info' => 'Tsy fetezana ety anatiny : $1',
 	'invalidemailaddress' => 'Tsy mety io imailaka nalefanao io satria tsy manaraka ny firafitra tokony ho izy.
 Azafady manomeza adiresy voasoratra tsara na avelao ho banga io toerana io.',
@@ -15209,29 +15224,29 @@ Azafady manomeza adiresy voasoratra tsara na avelao ho banga io toerana io.',
 	'ignorewarning' => 'Aza mihaino fampitandremana fa tehirizo foana ny rakitra.',
 	'ignorewarnings' => 'Aza mihaino fampitandremana',
 	'illegalfilename' => 'Misy litera tsy mety amin\'ny lohateny ny anaran\'ilay rakita "$1". Azafady soloy ny anaran\'ny rakitra dia andramo alefa indray.',
-	'illegal-filename' => "Tsy nahazoan-dàlana ny anaran'io rakitra io.",
+	'illegal-filename' => 'Tsy nahazoan-dàlana ny anaran\'io rakitra io.',
 	'img-auth-accessdenied' => 'Tsy afa-mankao',
-	'img-auth-nopathinfo' => "Tsy misy ny PATH_INFO.
+	'img-auth-nopathinfo' => 'Tsy misy ny PATH_INFO.
 Tsy voaparametatra ny lohamilinao hampita io fampahalalàna io.
-Mety mifototra amin'ny CGI izy ka mety tsy mahazaka img_auth
-Vangio ny https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
+Mety mifototra amin\'ny CGI izy ka mety tsy mahazaka img_auth
+Vangio ny https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-notindir' => 'Ny lalana nangatahana dia tsy ny petra-drakitra nokaonfigiorena.',
-	'img-auth-badtitle' => "Tsy afaka mamorona lohateny azo ampiasaina avy amin'ny « $1 ».",
-	'img-auth-nologinnWL' => "Tsy mbola niditra ianao ary tsy ao amin'ny lisitra fotsy « $1 ».",
+	'img-auth-badtitle' => 'Tsy afaka mamorona lohateny azo ampiasaina avy amin\'ny « $1 ».',
+	'img-auth-nologinnWL' => 'Tsy mbola niditra ianao ary tsy ao amin\'ny lisitra fotsy « $1 ».',
 	'img-auth-nofile' => 'Tsy misy ny rakitra « $1 ».',
-	'img-auth-isdir' => "Nanandrana nakao amin'ny petra-drakitra « $1 » ianao.
-Ny petra-drakitra misy rakitra ihany no azo aleha.",
+	'img-auth-isdir' => 'Nanandrana nakao amin\'ny petra-drakitra « $1 » ianao.
+Ny petra-drakitra misy rakitra ihany no azo aleha.',
 	'img-auth-streaming' => 'Vaky streaming « $1 ».',
-	'img-auth-public' => "Ny asa ataon'i img_auth.php dia maneho ny rakitry ny wiki an'olona.
-ity wiki ity dia no-regler-na ho sarababem-bahoaka.",
-	'img-auth-noread' => "Tsy manana ny alalam-pamakiana ilay mpikambana eo amin'ny « $1 ».",
+	'img-auth-public' => 'Ny asa ataon\'i img_auth.php dia maneho ny rakitry ny wiki an\'olona.
+ity wiki ity dia no-regler-na ho sarababem-bahoaka.',
+	'img-auth-noread' => 'Tsy manana ny alalam-pamakiana ilay mpikambana eo amin\'ny « $1 ».',
 	'imgfile' => 'rakitra',
-	'imagelinks' => "Fampiasana an'io rakitra io",
-	'iteminvalidname' => "Olana amin'ny zavatra « $1 » : tsy ara-dalàna ny anarana...",
+	'imagelinks' => 'Fampiasana an\'io rakitra io',
+	'iteminvalidname' => 'Olana amin\'ny zavatra « $1 » : tsy ara-dalàna ny anarana...',
 	'invert' => 'Ampifamadiho ny safidy',
 	'isredirect' => 'pejina redirekta',
 	'istemplate' => 'fanometrahany',
-	'isimage' => "rohy mankany amin'ilay sary",
+	'isimage' => 'rohy mankany amin\'ilay sary',
 	'ipadressorusername' => 'Adiresy IP na solonanarana',
 	'ipbexpiry' => 'Fahataperana',
 	'ipbreason' => 'Antony :',
@@ -15239,23 +15254,23 @@ ity wiki ity dia no-regler-na ho sarababem-bahoaka.",
 	'ipb-hardblock' => 'Hanakana ny mpikambana nisoratra anarana mampiasa ity adiresy IP ity',
 	'ipbcreateaccount' => 'Hanakana ny fanokafana kaonty',
 	'ipbemailban' => 'Hanakana ny fandefasana imailaka',
-	'ipbenableautoblock' => "Manakana ny IP farany ampiasain'ity mpikambana ity, ary ny IP-ny taloha mety ho andramnay",
+	'ipbenableautoblock' => 'Manakana ny IP farany ampiasain\'ity mpikambana ity, ary ny IP-ny taloha mety ho andramnay',
 	'ipbsubmit' => 'Sakano',
 	'ipbother' => 'Hafa',
 	'ipboptions' => '2 ora:2 hours,1 andro:1 day,3 andro:3 days,1 herinandro:1 week,2 herinandro:2 weeks,1 volana:1 month,3 volana:3 months,6 volana:6 months,1 taona:1 year,mandrakizay:infinite',
 	'ipbotheroption' => 'hafa',
 	'ipbotherreason' => 'Antony hafa na fanampiny :',
-	'ipbhidename' => "Hanitrika ny anaram-pikambana anatin'ny fanovana sy anaty lisitra",
-	'ipbwatchuser' => "Hanaraka ny pejim-pikambana sy pejin-dresak'ity mpikambana ity",
+	'ipbhidename' => 'Hanitrika ny anaram-pikambana anatin\'ny fanovana sy anaty lisitra',
+	'ipbwatchuser' => 'Hanaraka ny pejim-pikambana sy pejin-dresak\'ity mpikambana ity',
 	'ipb-disableusertalk' => 'Manakana ilay mpikambana hanova ny pejin-dresany mandritry ny sakana',
-	'ipb-change-block' => "Hanakana io mpikambana io amin'ireto parametatra ireto.",
+	'ipb-change-block' => 'Hanakana io mpikambana io amin\'ireto parametatra ireto.',
 	'ipb-confirm' => 'Sakanana marina',
 	'ipb-blockingself' => 'Hanakana ny kaontinao ianao ! Tena hanao izany ve ?',
 	'ipb-edit-dropdown' => 'Hanova ny antony fanakanana tsipalotra',
-	'ipb-unblock-addr' => "Hanala ny sakan' i $1",
-	'ipb-unblock' => "Hanala ny sakan'ny mpikambana na adiresy IP",
+	'ipb-unblock-addr' => 'Hanala ny sakan\' i $1',
+	'ipb-unblock' => 'Hanala ny sakan\'ny mpikambana na adiresy IP',
 	'ipb-blocklist' => 'Hijery ny sakana efa misy',
-	'ipb-blocklist-contribs' => "Fandraisan'anjaran'i $1",
+	'ipb-blocklist-contribs' => 'Fandraisan\'anjaran\'i $1',
 	'ipusubmit' => 'Esory ny sakana',
 	'ipblocklist' => 'Lisitry ny adiresy IP sy mpikambana voasakana',
 	'ipblocklist-legend' => 'Hitady mpikambana voasakana',
@@ -15265,7 +15280,7 @@ ity wiki ity dia no-regler-na ho sarababem-bahoaka.",
 	'infiniteblock' => 'mandrakizay',
 	'ipblocklist-empty' => 'Ny lisitra ny IP voasakana dia tsy misy votoatiny ankehitriny.',
 	'ipblocklist-no-results' => 'Ilay adiresy IP na ilay mpikambana dia mbola tsy voasakana.',
-	'ipb_expiry_invalid' => "Tsy mety ilay fotoana hahataperan'ny sakana.",
+	'ipb_expiry_invalid' => 'Tsy mety ilay fotoana hahataperan\'ny sakana.',
 	'ipb_expiry_temp' => 'tsy maintsy lalandava ny fanakanana anaram-pikambana nasitrika.',
 	'ipb_hide_invalid' => 'Tsy afaka fafana io kaonty io ; hoatra ny manana fanovana maro loatra izy.',
 	'ipb_already_blocked' => 'Efa voasakana « $1 »',
@@ -15275,23 +15290,23 @@ ity wiki ity dia no-regler-na ho sarababem-bahoaka.",
 Mety efa natao angamba ny fanalana sakana.',
 	'ip_range_invalid' => 'Tsy mety io IP io.',
 	'ip_range_toolarge' => 'Ny fanidiana laharana IP ngeza nohonny /$1 dia tsy azo atao.',
-	'ipbblocked' => "Tsy afaka manala ny sakan'ny mpikambana hafa ianao, satria voasakana koa ianao",
+	'ipbblocked' => 'Tsy afaka manala ny sakan\'ny mpikambana hafa ianao, satria voasakana koa ianao',
 	'ipbnounblockself' => 'Tsy afaka manala ny sakanao ianao',
-	'immobile-source-namespace' => "Tsy afaka ovaina anarana ny pejy ao amin'ny anaran-tsehatra « $1 »",
-	'immobile-target-namespace' => "Tsy afaka ovainao ny pejy makany amin'ny anaran-sehatra « $1 »",
-	'immobile-target-namespace-iw' => "Ny rohy interwiki dia tanjona tsy mety ho an'ny fanetsehana pejy.",
+	'immobile-source-namespace' => 'Tsy afaka ovaina anarana ny pejy ao amin\'ny anaran-tsehatra « $1 »',
+	'immobile-target-namespace' => 'Tsy afaka ovainao ny pejy makany amin\'ny anaran-sehatra « $1 »',
+	'immobile-target-namespace-iw' => 'Ny rohy interwiki dia tanjona tsy mety ho an\'ny fanetsehana pejy.',
 	'immobile-source-page' => 'Tsy azo ovaina anarana ity pejy ity.',
-	'immobile-target-page' => "Tsy afaka ovaina anarana makany amin'io lohateny io ilay pejy.",
+	'immobile-target-page' => 'Tsy afaka ovaina anarana makany amin\'io lohateny io ilay pejy.',
 	'imagenocrossnamespace' => 'Tsy mety ovaina anarana makany amina anaran-tsehatra hafa afatsy rakitra ihany ny rakitra.',
-	'imagetypemismatch' => "Tsy mifanaraka amin'ny karazany ny fanitaran'ity rakitra ity.",
+	'imagetypemismatch' => 'Tsy mifanaraka amin\'ny karazany ny fanitaran\'ity rakitra ity.',
 	'imageinvalidfilename' => 'Diso ny anaran-drakitra tanjona',
 	'import' => 'Hampidi-pejy',
 	'importinterwiki' => 'fampidirana interwiki',
-	'import-interwiki-text' => "Safidio wiki loharano iray ary ny lohatenin'ilay pejy ho ampidirina eto.
-Ho voatazona ao amin'ny tantara ny datin'ny santiôna sy ny anaran'ny mpandray anjara.
-Ho voasoratra ao amin'ny [[Special:Log/import|laogim-pampidirana]] ny tao rehetra mikasika ny fampidirana pejy interwiki",
+	'import-interwiki-text' => 'Safidio wiki loharano iray ary ny lohatenin\'ilay pejy ho ampidirina eto.
+Ho voatazona ao amin\'ny tantara ny datin\'ny santiôna sy ny anaran\'ny mpandray anjara.
+Ho voasoratra ao amin\'ny [[Special:Log/import|laogim-pampidirana]] ny tao rehetra mikasika ny fampidirana pejy interwiki',
 	'import-interwiki-source' => 'Wiki sy pejy fango :',
-	'import-interwiki-history' => "Handika ny santiônan'ny tantaran'ity pejy ity",
+	'import-interwiki-history' => 'Handika ny santiônan\'ny tantaran\'ity pejy ity',
 	'import-interwiki-templates' => 'Ataovy ao ny endrika rehetra',
 	'import-interwiki-submit' => 'Hampiditra',
 	'import-interwiki-namespace' => 'Anaran-tsehatra tanjona :',
@@ -15300,17 +15315,17 @@ Ho voasoratra ao amin'ny [[Special:Log/import|laogim-pampidirana]] ny tao rehetr
 	'importstart' => 'Am-pampidirana ny pejy…',
 	'import-revision-count' => '$1 santiôna{{PLURAL:$1||}}',
 	'importnopages' => 'Tsy misy pejy ho ampidirana.',
-	'importfailed' => "Tsy fetezan' ilay fampidirana : <nowiki>$1</nowiki>",
-	'importunknownsource' => "Karazana tsy fantatra an'ilay fango ho ampidirina",
+	'importfailed' => 'Tsy fetezan\' ilay fampidirana : <nowiki>$1</nowiki>',
+	'importunknownsource' => 'Karazana tsy fantatra an\'ilay fango ho ampidirina',
 	'importcantopen' => 'Tsy mety sokafana ilay rakitra ho ampidirina',
 	'importbadinterwiki' => 'Rohy interwiki tsy izy',
 	'importnotext' => 'Tsy misy votoatiny',
 	'importsuccess' => 'Tafiditra soa aman-tsara !',
-	'importhistoryconflict' => "Misy ady hita ao amin'y tantaran-tsantiôna (nety nalefa io pejy io taloha).",
+	'importhistoryconflict' => 'Misy ady hita ao amin\'y tantaran-tsantiôna (nety nalefa io pejy io taloha).',
 	'importnosources' => 'Mbola tsy voatono ny loharano interwiki fampidiram-pejy ary mbola tsy mandeha ny fandefasana tantaram-pejy.',
 	'importnofile' => 'Tsy nisy rakitra fandefasana nalefa.',
-	'importuploaderrorsize' => "Tsy tafiditra soa aman-tsara ilay rakitra.
-Ambony nohon'ny lanja ahazoan-dalana ny lanjany.",
+	'importuploaderrorsize' => 'Tsy tafiditra soa aman-tsara ilay rakitra.
+Ambony nohon\'ny lanja ahazoan-dalana ny lanjany.',
 	'importuploaderrorpartial' => 'Tsy tafiditra tato ilay rakitra.
 Singam-botoatiny fotsiny no nalefa.',
 	'importuploaderrortemp' => 'Ny fandefasana ilay rakitra dia tsy nety.
@@ -15321,23 +15336,23 @@ Tsy hita ny rakitra miserana.',
 	'import-upload' => 'Fandrefasana data XML',
 	'import-token-mismatch' => 'Very ny fampahalalàna momba ny kaonty.
 Avereno fanindroany.',
-	'import-invalid-interwiki' => "Tsy afaka mampiditra avy any amin'ilay wiki nofidiana.",
-	'importlogpage' => "laogin'ny fampidirana",
-	'importlogpagetext' => "Fampidirana ara-pandraharahana ny pejy miaraka amin'ny tantaram-panvany avy any amin'ny wiki hafa.",
-	'import-logentry-upload' => "nampiditra [[$1]] tamin'ny fampidiran-drakitra",
-	'import-logentry-interwiki' => "nampiditra $1 tamin'ny transwiki",
-	'imagemaxsize' => "Ferana ny haben'ny sary ao amin'ny pejy famaritana ho:",
-	'imagelisttext' => "{{PLURAL:}}Eto ambany ny lisitran'ny rakitra $1 milahatra araka ny $2.",
+	'import-invalid-interwiki' => 'Tsy afaka mampiditra avy any amin\'ilay wiki nofidiana.',
+	'importlogpage' => 'laogin\'ny fampidirana',
+	'importlogpagetext' => 'Fampidirana ara-pandraharahana ny pejy miaraka amin\'ny tantaram-panvany avy any amin\'ny wiki hafa.',
+	'import-logentry-upload' => 'nampiditra [[$1]] tamin\'ny fampidiran-drakitra',
+	'import-logentry-interwiki' => 'nampiditra $1 tamin\'ny transwiki',
+	'imagemaxsize' => 'Ferana ny haben\'ny sary ao amin\'ny pejy famaritana ho:',
+	'imagelisttext' => '{{PLURAL:}}Eto ambany ny lisitran\'ny rakitra $1 milahatra araka ny $2.',
 	'ilsubmit' => 'Karohy',
 	'invalidateemail' => 'Manajanona ny fanamarinana ny adiresy imailaka',
 	'imgmultipageprev' => '← pejy nialoha',
 	'imgmultipagenext' => 'pejy manaraka →',
 	'imgmultigo' => 'Andao !',
-	'imgmultigoto' => "Handeha any amin'ny pejy $1",
+	'imgmultigoto' => 'Handeha any amin\'ny pejy $1',
 	'intentionallyblankpage' => 'Avela fananiana ho fotsy ity pejy ity.',
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'internalerror' => 'Кӧргысӧ йоҥылыш',
 	'internalerror_info' => 'Кӧргысӧ йоҥылыш: $1',
 	'italic_sample' => 'Шӧрын текст',
@@ -15358,9 +15373,9 @@ $messages['mhr'] = array(
 	'ilsubmit' => 'Кычал',
 	'imgmultipageprev' => '← ончычсо лаштык',
 	'imgmultipagenext' => 'вес лаштык →',
-);
+];
 
-$messages['min'] = array(
+$messages['min'] = [
 	'index-category' => 'Laman nan diindeks',
 	'internalerror' => 'Kasalahan internal',
 	'internalerror_info' => 'Kasalahan internal: $1',
@@ -15376,9 +15391,9 @@ Harap masuakan alamaik surel dalam format nan batua atau kosoangan isian tasabui
 	'isimage' => 'tautan berkas',
 	'ipboptions' => '2 jam:2 hours,1 hari:1 day,3 hari:3 days,1 minggu:1 week,2 minggu:2 weeks,1 bulan:1 month,3 bulan:3 months,6 bulan:6 months,1 tahun:1 year,salamonyo:infinite',
 	'ipblocklist' => 'Pangguno tablokir',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'index-category' => 'Индексирани страници',
 	'internalerror' => 'Внатрешна грешка',
 	'internalerror_info' => 'Внатрешна грешка: $1',
@@ -15413,7 +15428,7 @@ $messages['mk'] = array(
 	'img-auth-bad-query-string' => 'URL-адресата има неважечка низа за барање.',
 	'imgfile' => 'податотека',
 	'imagelinks' => 'Употреба на податотеката',
-	'iteminvalidname' => "Проблем со елементот '$1', неважечко име...",
+	'iteminvalidname' => 'Проблем со елементот \'$1\', неважечко име...',
 	'invert' => 'Обратен избор',
 	'isredirect' => 'пренасочувачка страница',
 	'istemplate' => 'превметнување',
@@ -15532,8 +15547,8 @@ $messages['mk'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ревизија|ревизии}}',
 	'import-logentry-interwiki' => 'трансвикифиран $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ревизија|ревизии}} од $2',
-	'imagemaxsize' => "Ограничување на големина на слика:<br />''(на нивните описни страници)''",
-	'imagelisttext' => "Следи список на '''$1''' {{PLURAL:$1|податотека|податотеки}} подредени $2.",
+	'imagemaxsize' => 'Ограничување на големина на слика:<br />\'\'(на нивните описни страници)\'\'',
+	'imagelisttext' => 'Следи список на \'\'\'$1\'\'\' {{PLURAL:$1|податотека|податотеки}} подредени $2.',
 	'ilsubmit' => 'Барај',
 	'invalidateemail' => 'Откажување на потврда на е-пошта',
 	'imgmultipageprev' => '&larr; претходна страница',
@@ -15553,9 +15568,9 @@ $messages['mk'] = array(
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Есфанд',
 	'intentionallyblankpage' => 'Оваа страница намерно е оставена празна',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'index-category' => 'വർഗ്ഗീകരിക്കപ്പെട്ട താളുകൾ',
 	'internalerror' => 'ആന്തരികപ്രശ്നം',
 	'internalerror_info' => 'ആന്തരികപ്രശ്നം: $1',
@@ -15587,7 +15602,7 @@ $messages['ml'] = array(
 	'img-auth-bad-query-string' => 'യൂ.ആർ.എല്ലിൽ അസാധുവായ ക്വറി പദം ഉണ്ട്.',
 	'imgfile' => 'പ്രമാണം',
 	'imagelinks' => 'പ്രമാണത്തിന്റെ ഉപയോഗം',
-	'iteminvalidname' => "ഇനം '$1' ൽ പിഴവ്, അസാധുവായ പേര്‌...",
+	'iteminvalidname' => 'ഇനം \'$1\' ൽ പിഴവ്, അസാധുവായ പേര്‌...',
 	'invert' => 'വിപരീതം തിരഞ്ഞെടുക്കുക',
 	'isredirect' => 'തിരിച്ചുവിടൽ താൾ',
 	'istemplate' => 'ഉൾപ്പെടുത്തൽ',
@@ -15703,7 +15718,7 @@ $messages['ml'] = array(
 	'import-logentry-upload-detail' => '{{PLURAL:$1|ഒരു പതിപ്പ്|$1 പതിപ്പുകൾ}}',
 	'import-logentry-interwiki' => 'അന്തർവിക്കി ഇറക്കുമതി $1',
 	'import-logentry-interwiki-detail' => '$2 എന്നതിൽ നിന്ന് {{PLURAL:$1|ഒരു പതിപ്പ്|$1 പതിപ്പുകൾ}}',
-	'imagemaxsize' => "ചിത്രത്തിന്റെ വലിപ്പം:<br />''(പ്രമാണത്തിന്റെ വിവരണ താളുകളിൽ)''",
+	'imagemaxsize' => 'ചിത്രത്തിന്റെ വലിപ്പം:<br />\'\'(പ്രമാണത്തിന്റെ വിവരണ താളുകളിൽ)\'\'',
 	'imagelisttext' => '$2 നൽകിയിട്ടുള്ള {{PLURAL:$1|പ്രമാണത്തിന്റെ|$1 പ്രമാണങ്ങളുടെ}} പട്ടിക താഴെ കാണാം.',
 	'ilsubmit' => 'തിരയൂ',
 	'invalidateemail' => 'ഇ-മെയിൽ വിലാസ സ്ഥിരീകരണം റദ്ദാക്കുക',
@@ -15712,9 +15727,9 @@ $messages['ml'] = array(
 	'imgmultigo' => 'പോകൂ!',
 	'imgmultigoto' => '$1 താളിലേക്ക് പോകുക',
 	'intentionallyblankpage' => 'ഈ താൾ മനഃപൂർവ്വം ശൂന്യമായി ഇട്ടിരിക്കുന്നതാണ്‌.',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'index-category' => 'Индекслэгдсэн хуудсууд',
 	'internalerror' => 'Дотоод алдаа',
 	'internalerror_info' => 'Дотоод алдаа: $1',
@@ -15746,7 +15761,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization -г харна уу.',
 	'img-auth-noread' => '"$1"-г унших эрх хэрэглэгчид байхгүй байна.',
 	'imgfile' => 'файл',
 	'imagelinks' => 'Файлын хэрэглээ',
-	'iteminvalidname' => "'$1' зүйлд асуудал гарлаа, хүчингүй нэр...",
+	'iteminvalidname' => '\'$1\' зүйлд асуудал гарлаа, хүчингүй нэр...',
 	'invert' => 'Эсрэгээр нь болгох',
 	'isredirect' => 'чиглүүлэгч',
 	'istemplate' => 'оруулалт',
@@ -15855,7 +15870,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization -г харна уу.',
 	'import-logentry-interwiki' => '$1-г транс-викидлээ',
 	'import-logentry-interwiki-detail' => '$2-с авсан $1 засвар',
 	'imagemaxsize' => 'Доорх шаардлагын дагуу зургын хуудсанд хязгаарлалт хийлээ:',
-	'imagelisttext' => "Доорх нь $2-р ангилсан '''$1''' файлын жагсаалт юм.",
+	'imagelisttext' => 'Доорх нь $2-р ангилсан \'\'\'$1\'\'\' файлын жагсаалт юм.',
 	'ilsubmit' => 'Хайлт',
 	'invalidateemail' => 'Мэйл хаягыг баталгаажуулах явдлыг цуцлах',
 	'imgmultipageprev' => '← өмнөх хуудас',
@@ -15863,9 +15878,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization -г харна уу.',
 	'imgmultigo' => 'Явах',
 	'imgmultigoto' => '$1 хуудас руу явах',
 	'intentionallyblankpage' => 'Энэхүү хуудсыг албаар хоосон үлдээв.',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'italic_sample' => 'Текст курсив',
 	'italic_tip' => 'Текст курсив',
 	'image_tip' => 'Фишиер инсерат',
@@ -15875,9 +15890,9 @@ $messages['mo'] = array(
 	'istemplate' => 'трансклудере',
 	'isimage' => 'легэтура фишиерулуй',
 	'ipboptions' => '2 оре:2 hours,1 зи:1 day,3 зиле:3 days,1 сэптэмынэ:1 week,2 сэптэмынь:2 weeks,1 лунэ:1 month,3 лунь:3 months,6 лунь:6 months,1 ан:1 year,инфинит:infinite',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'index-category' => 'अनुक्रमित पाने',
 	'internalerror' => 'अंतर्गत त्रुटी',
 	'internalerror_info' => 'अंतर्गत त्रुटी: $1',
@@ -15909,7 +15924,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization कृपया हे
 	'img-auth-bad-query-string' => 'या दुव्यामध्ये (URL) अवैध query string आहे.',
 	'imgfile' => 'संचिका',
 	'imagelinks' => 'संचिका दुवे',
-	'iteminvalidname' => "'$1'बाबीस समस्या, अमान्य नाव...",
+	'iteminvalidname' => '\'$1\'बाबीस समस्या, अमान्य नाव...',
 	'invert' => 'निवडीचा क्रम उलटा करा',
 	'isredirect' => 'पुनर्निर्देशित पान',
 	'istemplate' => 'मिळवा',
@@ -16024,7 +16039,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization कृपया हे
 	'import-logentry-interwiki' => 'आंतरविकिकरण $1',
 	'import-logentry-interwiki-detail' => '$2 पासून $1 {{PLURAL:$1|आवर्तन|आवर्तने}}',
 	'imagemaxsize' => 'संचिका वर्णन पानांवरील चित्रांना मर्यादा घाला:',
-	'imagelisttext' => "खाली '''$1''' संचिका {{PLURAL:$1|दिली आहे.|$2 क्रमाने दिल्या आहेत.}}",
+	'imagelisttext' => 'खाली \'\'\'$1\'\'\' संचिका {{PLURAL:$1|दिली आहे.|$2 क्रमाने दिल्या आहेत.}}',
 	'ilsubmit' => 'शोधा',
 	'invalidateemail' => 'इ-मेल तपासणी रद्द करा',
 	'imgmultipageprev' => '← मागील पान',
@@ -16032,9 +16047,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization कृपया हे
 	'imgmultigo' => 'चला!',
 	'imgmultigoto' => '$1 पानावर जा',
 	'intentionallyblankpage' => 'हे पान मुद्दाम कोरे सोडण्यात आले आहे.',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'italic_sample' => 'Пылен сирӹмӹ',
 	'italic_tip' => 'Пылен сирӹмы',
 	'image_tip' => 'Кӧргӹш пыртен шӹндӹмӹ файл',
@@ -16045,9 +16060,9 @@ $messages['mrj'] = array(
 	'isimage' => 'изображени докы ажедмӓш',
 	'ipboptions' => '2 часеш:2 hours,1 кечеш:1 day,3 кечеш:3 days,1 ӓрняэш:1 week,2 ӓрняэш:2 weeks,1 тӹлзеш:1 month,3 тӹлзеш:3 months,6 тӹлзеш:6 months,1 иэш:1 year, соэшок:infinite',
 	'ipblocklist' => 'Блокируйымы IP-адресвлӓ дон шотыш нӓлмӹ сирӹмӓшвлӓ',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'index-category' => 'Laman terindeks',
 	'internalerror' => 'Ralat dalaman',
 	'internalerror_info' => 'Ralat dalaman: $1',
@@ -16079,7 +16094,7 @@ Untuk keselamatan optimum, img_auth.php telah dilumpuhkan.',
 	'img-auth-bad-query-string' => 'URL ini ada rentetan pertanyaan yang tidak sah.',
 	'imgfile' => 'fail',
 	'imagelinks' => 'Penggunaan fail',
-	'iteminvalidname' => "Terdapat masalah dengan item '$1', nama tidak sah...",
+	'iteminvalidname' => 'Terdapat masalah dengan item \'$1\', nama tidak sah...',
 	'invert' => 'Kecualikan pilihan',
 	'isredirect' => 'laman lencongan',
 	'istemplate' => 'penyertaan',
@@ -16193,8 +16208,8 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 	'import-logentry-upload-detail' => '$1 semakan',
 	'import-logentry-interwiki' => '$1 dipindahkan ke wiki lain',
 	'import-logentry-interwiki-detail' => '$1 semakan daripada $2',
-	'imagemaxsize' => "Had saiz imej:<br />''(untuk laman keterangan fail)''",
-	'imagelisttext' => "Yang berikut ialah senarai bagi '''$1''' fail yang disusun secara $2.",
+	'imagemaxsize' => 'Had saiz imej:<br />\'\'(untuk laman keterangan fail)\'\'',
+	'imagelisttext' => 'Yang berikut ialah senarai bagi \'\'\'$1\'\'\' fail yang disusun secara $2.',
 	'ilsubmit' => 'Cari',
 	'invalidateemail' => 'Batalkan pengesahan e-mel',
 	'imgmultipageprev' => '← halaman sebelumnya',
@@ -16202,9 +16217,9 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 	'imgmultigo' => 'Pergi!',
 	'imgmultigoto' => 'Pergi ke halaman $1',
 	'intentionallyblankpage' => 'Laman ini sengaja dibiarkan kosong dan digunakan untuk kerja-kerja ujian dan sebagainya.',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'index-category' => 'Paġni indiċjati',
 	'internalerror' => 'Problema interna',
 	'internalerror_info' => 'Problema interna: $1',
@@ -16219,43 +16234,43 @@ Jekk jogħġbok daħħal indirizz validu jew inkella ħassru.',
 	'illegalfilename' => 'L-Isem tal-fajl "$1" għandu karattri li mhux permessi fit-titli ta\' paġna. Jekk jogħġbok agħti isem ġdid lil fajl u prova tellgħu mill-ġdid.',
 	'illegal-filename' => 'L-isem tal-fajl mhuwiex permess.',
 	'img-auth-accessdenied' => 'Aċċess miċħud',
-	'img-auth-nopathinfo' => "PATH_INFO nieqes.
+	'img-auth-nopathinfo' => 'PATH_INFO nieqes.
 Is-server tiegħek mhuwiex issettjat sabiex jgħaddi din l-informazzjoni.
-Jista' jkun ibbażat fuq CGI u ma jistax isostni img_auth.
-Ikkonsulta lil https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
+Jista\' jkun ibbażat fuq CGI u ma jistax isostni img_auth.
+Ikkonsulta lil https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-notindir' => 'Id-destinazzjoni rikjesta mhijiex fid-direttorju tat-tlugħ konfigurat.',
 	'img-auth-badtitle' => 'Ma setax jinbena titlu validu minn "$1".',
 	'img-auth-nologinnWL' => 'M\'intix fil-kont tiegħek u "$1" mhuwiex fil-lista l-bajda.',
 	'img-auth-nofile' => 'Il-fajl "$1" ma jeżistix.',
 	'img-auth-isdir' => 'Qiegħed tipprova taċċessa direttorju "$1".
 Huwa permess biss l-aċċess għal fajls.',
-	'img-auth-streaming' => "\"\$1\" qiegħed fi ''streaming''.",
-	'img-auth-public' => "Il-funzjoni ta' img_auth.php huwa li tagħti lura fajls minn wiki privat.
+	'img-auth-streaming' => '"$1" qiegħed fi \'\'streaming\'\'.',
+	'img-auth-public' => 'Il-funzjoni ta\' img_auth.php huwa li tagħti lura fajls minn wiki privat.
 Din il-wiki hija konfigurata bħala wiki pubblika.
-Għal sigurtà ottimali, img_auth.php hija diżattivata.",
+Għal sigurtà ottimali, img_auth.php hija diżattivata.',
 	'img-auth-noread' => 'L-utent m\'għandux aċċess biex jaqra "$1".',
-	'img-auth-bad-query-string' => "Il-URL għandha ''query string'' invalida.",
+	'img-auth-bad-query-string' => 'Il-URL għandha \'\'query string\'\' invalida.',
 	'imgfile' => 'fajl',
 	'imagelinks' => 'Użu tal-fajl',
-	'iteminvalidname' => "Problema bil-paġna'$1', l-isem mhux validu...",
+	'iteminvalidname' => 'Problema bil-paġna\'$1\', l-isem mhux validu...',
 	'invert' => 'Inverti l-għażla',
-	'isredirect' => "paġna ta' rindirizz",
+	'isredirect' => 'paġna ta\' rindirizz',
 	'istemplate' => 'inklużjoni',
 	'isimage' => 'ħolqa lejn il-fajl',
 	'ipadressorusername' => 'Indirizz tal-IP jew isem tal-utent:',
 	'ipbexpiry' => 'Skadenza tal-imblokk:',
 	'ipbreason' => 'Raġuni:',
 	'ipbreasonotherlist' => 'Raġuni oħra',
-	'ipbreason-dropdown' => "*Raġunijiet komuni dwar blokki
+	'ipbreason-dropdown' => '*Raġunijiet komuni dwar blokki
 ** Iddaħħal informazzjoni falza
 ** Tneħħi kontenut mill-paġni
-** Links kummerċjali ma' siti esterni
+** Links kummerċjali ma\' siti esterni
 ** Iddaħal kontenut bla sens
 ** Komportament intimidanti jew molestiku
 ** Abbuż minn aktar minn kont wieħed
-** isem ta' utent mhux aċċettabli",
+** isem ta\' utent mhux aċċettabli',
 	'ipb-hardblock' => 'Ipprevjeni utenti reġistri li jikkontribwixxu minn dan l-indirizz IP',
-	'ipbcreateaccount' => "Impedixxi ħolqien ta' kontijiet oħrajn",
+	'ipbcreateaccount' => 'Impedixxi ħolqien ta\' kontijiet oħrajn',
 	'ipbemailban' => 'Impedixxi utenti milli jkunu jistgħu jibgħatu posta elettronika',
 	'ipbenableautoblock' => 'Awtomatikament blokka l-aħħar indirizz tal-IP użat minn dan l-utent, u IP suċċessivi li jipprovaw jagħmlu modifiki',
 	'ipbsubmit' => 'Imblokk lil dan l-utent',
@@ -16264,9 +16279,9 @@ Għal sigurtà ottimali, img_auth.php hija diżattivata.",
 	'ipbotheroption' => 'ieħor',
 	'ipbotherreason' => 'Raġunijiet oħra/addizzjonali:',
 	'ipbhidename' => 'Aħbi l-isem tal-utent mill-modifiki u mill-elenki.',
-	'ipbwatchuser' => "Osserva l-paġni u d-diskussjonijiet ta' dan l-utent",
-	'ipb-disableusertalk' => "Ipprevjeni dan l-utent milli jimmodifika l-paġna ta' diskussjoni personali waqt li hu mblukkat.",
-	'ipb-change-block' => "Erġa' mblokka lil dan l-utent b'dawn l-għażliet",
+	'ipbwatchuser' => 'Osserva l-paġni u d-diskussjonijiet ta\' dan l-utent',
+	'ipb-disableusertalk' => 'Ipprevjeni dan l-utent milli jimmodifika l-paġna ta\' diskussjoni personali waqt li hu mblukkat.',
+	'ipb-change-block' => 'Erġa\' mblokka lil dan l-utent b\'dawn l-għażliet',
 	'ipb-confirm' => 'Ikkonferma l-blokk',
 	'ipb-blockingself' => 'Inti se timblokka lilek innifsek! Inti ċert li trid tagħmel dan?',
 	'ipb-confirmhideuser' => 'Inti se timblokka utent bl-opzjoni "Aħbi l-utent" magħżula. B\'dan il-mod jiġi evitat li jidher l-isem tal-utent fl-elenki u fid-daħliet rar-reġistri kollha. Inti ċert li trid tagħmel dan?',
@@ -16274,7 +16289,7 @@ Għal sigurtà ottimali, img_auth.php hija diżattivata.",
 	'ipb-unblock-addr' => 'Żblokkja $1',
 	'ipb-unblock' => 'Żblokka isem tal-utent jew indirizz IP',
 	'ipb-blocklist' => 'Uri l-blokki eżistenti',
-	'ipb-blocklist-contribs' => "Kontribuzzjonijiet ta' $1",
+	'ipb-blocklist-contribs' => 'Kontribuzzjonijiet ta\' $1',
 	'ipusubmit' => 'Żblokkja dan l-indirizz',
 	'ipblocklist' => 'Utenti mblukkati',
 	'ipblocklist-legend' => 'Fittex utent ibblokkjat',
@@ -16284,31 +16299,31 @@ Għal sigurtà ottimali, img_auth.php hija diżattivata.",
 	'infiniteblock' => 'infinit',
 	'ipblocklist-empty' => 'Il-Lista tal-blokki hija vojta.',
 	'ipblocklist-no-results' => 'L-indirizz IP jew isem tal-utent rikjest mhuwiex imblukkat.',
-	'ipb_expiry_invalid' => "Il-ħin ta' skadenza huwa invalidu.",
-	'ipb_expiry_temp' => "Blokkijiet ta' ismijiet ta' l-utent moħbija jridu jkunu permanenti.",
-	'ipb_hide_invalid' => "Ma jistax jitneħħa l-kont; jista' jkun li għandu ħafna modifiki.",
+	'ipb_expiry_invalid' => 'Il-ħin ta\' skadenza huwa invalidu.',
+	'ipb_expiry_temp' => 'Blokkijiet ta\' ismijiet ta\' l-utent moħbija jridu jkunu permanenti.',
+	'ipb_hide_invalid' => 'Ma jistax jitneħħa l-kont; jista\' jkun li għandu ħafna modifiki.',
 	'ipb_already_blocked' => 'L-utent "$1" diġà imblukkat',
 	'ipb-needreblock' => 'L-utent $1 hu diġà imblukkat. Trid tbiddel l-impostazzjonijet?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Blokk ieħor|Blokki oħra}}',
 	'ipb_cant_unblock' => 'Problema: Impossibli ssib il-blokk bl-ID $1. L-Imblokk setgħa jkun ġa sblokkat.',
-	'ipb_blocked_as_range' => "Problema: L-Indirizz tal-IP $1 ma jistax jiġi blokkat waħdu u ma jistax jiġi sblokkat. L-Imblokk huwa attiv però f'livell ta' interval $2, li jista' jkun sblokkat.",
-	'ip_range_invalid' => "Interval ta' indirizzi ta' IP mhux validi.",
-	'ip_range_toolarge' => "Mhumiex permessi firxa ta' blokki ikbar minn /$1.",
+	'ipb_blocked_as_range' => 'Problema: L-Indirizz tal-IP $1 ma jistax jiġi blokkat waħdu u ma jistax jiġi sblokkat. L-Imblokk huwa attiv però f\'livell ta\' interval $2, li jista\' jkun sblokkat.',
+	'ip_range_invalid' => 'Interval ta\' indirizzi ta\' IP mhux validi.',
+	'ip_range_toolarge' => 'Mhumiex permessi firxa ta\' blokki ikbar minn /$1.',
 	'ipbblocked' => 'Ma tistax timblokka jew tiżblokka utenti oħra, minħabba li inti stess tinsab imblukkat',
-	'ipbnounblockself' => "M'għandekx il-permess li tiżblokka lilek innifsek",
+	'ipbnounblockself' => 'M\'għandekx il-permess li tiżblokka lilek innifsek',
 	'immobile-source-namespace' => 'Mhuwiex possibbli li tmexxi paġni fl-ispazju tal-isem "$1"',
 	'immobile-target-namespace' => 'Mhuwiex possibbli li tmexxi paġni fl-ispazju tal-isem "$1"',
 	'immobile-target-namespace-iw' => 'Il-ħolqa interwiki mhijiex destinazzjoni valida biex tmexxi l-paġna.',
 	'immobile-source-page' => 'Din il-paġna ma tistax tiġi mmexxiha.',
 	'immobile-target-page' => 'Ma jistax jitmexxa lejn it-titlu indikat.',
-	'imagenocrossnamespace' => "Ma tistax iċaqlaq fajl f'namespace mhux tal-fajls.",
+	'imagenocrossnamespace' => 'Ma tistax iċaqlaq fajl f\'namespace mhux tal-fajls.',
 	'imagetypemismatch' => 'L-Estenżjoni l-ġdida tal-fajl ma taqbilx mat-tip tagħha.',
 	'imageinvalidfilename' => 'L-Isem tal-fajl destinat mhux validu',
 	'import' => 'Importa paġni',
 	'importinterwiki' => 'Importazzjoni transwiki',
-	'import-interwiki-text' => "Agħżel wiki u titlu ta' paġna li se timporta.
-Dati ta' reviżjonijiet u ismijiet tal-modifikaturi jiġu preservati.
-Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special:Log/import|log ta' importazzjoni]].",
+	'import-interwiki-text' => 'Agħżel wiki u titlu ta\' paġna li se timporta.
+Dati ta\' reviżjonijiet u ismijiet tal-modifikaturi jiġu preservati.
+Kull azzjonijiet ta\' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special:Log/import|log ta\' importazzjoni]].',
 	'import-interwiki-source' => 'Sors tal-wiki/paġna:',
 	'import-interwiki-history' => 'Kopja l-verżjonijiet tal-kronoloġija kollha għal din il-paġna',
 	'import-interwiki-templates' => 'Inkludi l-mudelli kollha',
@@ -16316,42 +16331,42 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 	'import-interwiki-namespace' => 'Ittrasferixxi l-paġni fl-ispazju tal-isem:',
 	'import-upload-filename' => 'Isem tal-fajl:',
 	'import-comment' => 'Kumment:',
-	'importtext' => "Jekk jogħġbok esporta l-fajl mis-sit wiki tal-oriġini bil-funzjoni [[Special:Export|funzjoni ta' esportazzjoni]], salvah fuq id-diska tiegħek u imbagħad tellgħu hawn.",
+	'importtext' => 'Jekk jogħġbok esporta l-fajl mis-sit wiki tal-oriġini bil-funzjoni [[Special:Export|funzjoni ta\' esportazzjoni]], salvah fuq id-diska tiegħek u imbagħad tellgħu hawn.',
 	'importstart' => 'Paġni qegħdin jiġu importati...',
 	'import-revision-count' => '{{PLURAL:$1|reviżjoni|$1 reviżjonijiet}}',
 	'importnopages' => 'L-Ebda paġna li għanda tiġi importata.',
 	'imported-log-entries' => '{{PLURAL:$1|Ġie importat daħla waħda|Ġew importati $1 daħliet}} tar-reġistru.',
 	'importfailed' => 'Importazzjoni ma rnexxiex: <nowiki>$1</nowiki>',
-	'importunknownsource' => "Tip ta' oriġini mhux magħruf għall-importazzjoni",
+	'importunknownsource' => 'Tip ta\' oriġini mhux magħruf għall-importazzjoni',
 	'importcantopen' => 'Impossibli tiftaħ il-fajl tal-importazzjoni',
 	'importbadinterwiki' => 'Link interwiki mhux tajjeb',
 	'importnotext' => 'Test vojt jew nieqes',
 	'importsuccess' => 'L-Importazzjoni rnexxiet!',
-	'importhistoryconflict' => "Il-Kronoloġija fija verżjonijiet f'kunflitt (dan il-paġna setgħet tiġi ġiet importata qabel)",
-	'importnosources' => "Ma ġie definit ebda sors ta' importazzjoni transwiki; l-importazzjoni diretta tal-kronoloġija mhix attivata.",
-	'importnofile' => "L-Ebda fajl tal-importazzjoni itella'.",
+	'importhistoryconflict' => 'Il-Kronoloġija fija verżjonijiet f\'kunflitt (dan il-paġna setgħet tiġi ġiet importata qabel)',
+	'importnosources' => 'Ma ġie definit ebda sors ta\' importazzjoni transwiki; l-importazzjoni diretta tal-kronoloġija mhix attivata.',
+	'importnofile' => 'L-Ebda fajl tal-importazzjoni itella\'.',
 	'importuploaderrorsize' => 'Il-Fajl ma itellax. Il-Fajl huwa akbar mid-daqs massimu permessa.',
-	'importuploaderrorpartial' => "Upload tal-fajl għall-importazzjoni ma rnexxiex. Il-Fajl itella' parzjalment.",
-	'importuploaderrortemp' => "Upload tal-fajl ta' importazzjoni ma rnexxiex. Folder temporanju huwa nieqes.",
+	'importuploaderrorpartial' => 'Upload tal-fajl għall-importazzjoni ma rnexxiex. Il-Fajl itella\' parzjalment.',
+	'importuploaderrortemp' => 'Upload tal-fajl ta\' importazzjoni ma rnexxiex. Folder temporanju huwa nieqes.',
 	'import-parse-failure' => 'Problema fl-analiżi fl-importazzjoni XML',
 	'import-noarticle' => 'L-Ebda paġna li għandha tiġi importata!',
 	'import-nonewrevisions' => 'Ir-Reviżjonijiet kollha kienu importati preċedentament.',
-	'import-upload' => "Tella' data XML",
-	'import-token-mismatch' => "Telfien tad-dati tas-sessjoni. Jekk jogħġbok erġa' pprova.",
+	'import-upload' => 'Tella\' data XML',
+	'import-token-mismatch' => 'Telfien tad-dati tas-sessjoni. Jekk jogħġbok erġa\' pprova.',
 	'import-invalid-interwiki' => 'Ma jistax jiġi importat mill-wiki indikata.',
 	'import-error-edit' => 'Il-paġna "$1" ma ġietx  impurtata minħabba li mintix awtorizzat li timmodifikaha.',
 	'import-error-create' => 'Il-paġna "$1" ma ġietx  impurtata minħabba li mintix awtorizzat li toħloqha.',
 	'importlogpage' => 'Importazzjoni',
-	'importlogpagetext' => "Importi amministrativi ta' paġni b'kronoloġiji ta' modifiki minn wikis oħrajn.",
-	'import-logentry-upload' => "importajt [[$1]] bl-użu ta' upload.",
+	'importlogpagetext' => 'Importi amministrativi ta\' paġni b\'kronoloġiji ta\' modifiki minn wikis oħrajn.',
+	'import-logentry-upload' => 'importajt [[$1]] bl-użu ta\' upload.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|reviżjoni|$1 reviżjonijiet}}',
 	'import-logentry-interwiki' => 'Trasferixxejt minn wiki ieħor il-paġna $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|reviżjoni|$1 reviżjonijiet}} minn $2',
-	'imagemaxsize' => "Daqs massimu tal-istampa:<br />''(għall-paġni ta' deskrizzjoni tal-fajl)''",
-	'imagelisttext' => "Il-Lista t'hawn taħt ta' '''$1''' {{PLURAL:$1|fajl|fajls}} irranġati $2.",
+	'imagemaxsize' => 'Daqs massimu tal-istampa:<br />\'\'(għall-paġni ta\' deskrizzjoni tal-fajl)\'\'',
+	'imagelisttext' => 'Il-Lista t\'hawn taħt ta\' \'\'\'$1\'\'\' {{PLURAL:$1|fajl|fajls}} irranġati $2.',
 	'ilsubmit' => 'Fittex',
 	'invalidateemail' => 'Ħassar il-konfermazzjoni tal-posta elettronika',
-	'imgmultipageprev' => "← il-paġna ta' qabel",
+	'imgmultipageprev' => '← il-paġna ta\' qabel',
 	'imgmultipagenext' => 'il-paġna li jmiss →',
 	'imgmultigo' => 'Mur!',
 	'imgmultigoto' => 'Mur għal paġna $1',
@@ -16366,9 +16381,9 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 	'iranian-calendar-m9' => 'Azar',
 	'iranian-calendar-m10' => 'Dey',
 	'intentionallyblankpage' => 'Din il-paġna tħalliet vojta ataposta',
-);
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'internalerror' => 'Erro anterno',
 	'internalerror_info' => 'Erro anterno: $1',
 	'italic_sample' => 'Testo eitálico',
@@ -16380,7 +16395,7 @@ $messages['mwl'] = array(
 	'invert' => 'Amberter scuolha',
 	'isredirect' => 'páigina de ancaminamiento',
 	'istemplate' => 'ancluson',
-	'isimage' => "lhigaçon d'eimaige",
+	'isimage' => 'lhigaçon d\'eimaige',
 	'ipboptions' => '2 horas:2 hours,1 die:1 day,3 dias:3 days,1 sumana:1 week,2 sumanas:2 weeks,1 més:1 month,3 meses:3 months,6 meses:6 months,1 anho:1 year,anfenito:infinite',
 	'ipblocklist' => 'IPs i outelizadores bloquiados',
 	'importlogpage' => 'Registro de amportaçones',
@@ -16389,9 +16404,9 @@ $messages['mwl'] = array(
 	'imgmultipagenext' => 'páigina seguinte →',
 	'imgmultigo' => 'Bota!',
 	'imgmultigoto' => 'Ir pa páigina $1',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'index-category' => 'အက္ခရာစဉ် စာမျက်နှာများ',
 	'internalerror' => 'အတွင်းပိုင်းအမှား',
 	'internalerror_info' => 'အတွင်းပိုင်းအမှား - $1',
@@ -16455,9 +16470,9 @@ $messages['my'] = array(
 	'imgmultigo' => 'သွား​ပါ!',
 	'imgmultigoto' => 'စာမျက်နှာ $1 ကို သွားရန်',
 	'intentionallyblankpage' => 'ဤစာမျက်နှာသည် တမင်ရည်ရွယ်ချက်ရှိရှိ ဗလာထားခဲ့ခြင်း ဖြစ်သည်။',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'index-category' => 'Индекс марто лопатне',
 	'internalerror' => 'Потмонь ильведькс',
 	'internalerror_info' => 'Потмонь ильведькс: $1',
@@ -16521,9 +16536,9 @@ $messages['myv'] = array(
 	'imgmultigo' => 'Адя!',
 	'imgmultigoto' => 'Молемс $1 лопантень',
 	'intentionallyblankpage' => 'Те лопась арьсезь-содазь чавосто кадозь',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'index-category' => 'صفحه‌ئون نمایه بَیی',
 	'internalerror' => 'خطای دله‌یی',
 	'internalerror_info' => 'خطای دله‌یی: $1',
@@ -16537,14 +16552,14 @@ $messages['mzn'] = array(
 	'imagelisttext' => 'فهرست بن $1 {{PLURAL:$1|عکسی|عکسی}} که $2 مرتب بیی‌یه بموئه.',
 	'ilsubmit' => 'بگردستن',
 	'imgmultigo' => 'بور!',
-);
+];
 
-$messages['na'] = array(
+$messages['na'] = [
 	'image_sample' => 'Ekar.jpg',
 	'ilsubmit' => 'Anani ko',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'internalerror' => 'Ahcuallōtl tlahtic',
 	'internalerror_info' => 'Ahcuallōtl tlahtic: $1',
 	'italic_sample' => 'Cōliuhqui tlahcuilōliztli',
@@ -16581,15 +16596,15 @@ $messages['nah'] = array(
 	'importnotext' => 'Ahtlein ahnozo ahtlahtōl',
 	'import-upload' => 'Tiquinquetzāz XML tlahcuilōlli',
 	'importlogpage' => 'Tiquincōhuāz tlahcuilōlloh',
-	'imagelisttext' => "Nicān {{PLURAL:$1|mopiya|mopiyah}} '''$1''' īxiptli $2 iuhcopa.",
+	'imagelisttext' => 'Nicān {{PLURAL:$1|mopiya|mopiyah}} \'\'\'$1\'\'\' īxiptli $2 iuhcopa.',
 	'ilsubmit' => 'Tlatēmōz',
 	'imgmultipageprev' => '← achto zāzanilli',
 	'imgmultipagenext' => 'niman zāzanilli →',
 	'imgmultigo' => '¡Yāuh!',
 	'imgmultigoto' => 'Yāuh $1 zāzanilhuīc',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'index-category' => 'Ū sik-ín ê ia̍h',
 	'internalerror' => 'Loē-pō͘ ê chhò-ngō͘',
 	'internalerror_info' => 'Loē-pō͘ ê chhò-ngō͘: $1',
@@ -16641,28 +16656,28 @@ $messages['nan'] = array(
 	'import' => 'Su-ji̍p ia̍h',
 	'import-upload-filename' => '檔案名稱：',
 	'imagemaxsize' => 'Iáⁿ-siōng biô-su̍t-ia̍h ê tô· ke̍k-ke hián-sī jōa tōa tiuⁿ:',
-	'imagelisttext' => "Í-hā sī '''$1''' tiuⁿ iáⁿ-siōng ê lia̍t-toaⁿ, $2 pâi-lia̍t.",
+	'imagelisttext' => 'Í-hā sī \'\'\'$1\'\'\' tiuⁿ iáⁿ-siōng ê lia̍t-toaⁿ, $2 pâi-lia̍t.',
 	'ilsubmit' => 'Kiám-sek',
 	'invalidateemail' => '取消電子批的確認。',
 	'imgmultigo' => '來去',
 	'imgmultigoto' => '來去$1這頁',
 	'intentionallyblankpage' => '這頁是刁持留空的。',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'image_sample' => 'Essempio.jpg',
 	'image_tip' => 'Fiura ncuorporata',
 	'imagelinks' => 'Jonte ê ffiure',
-	'invert' => "abbarruca 'a sceveta",
+	'invert' => 'abbarruca \'a sceveta',
 	'ipadressorusername' => 'Nnerizzo IP o nomme utente',
 	'ipboptions' => '2 ore:2 hours,1 juorno:1 day,3 juorne:3 days,1 semmana:1 week,2 semmane:2 weeks,1 mise:1 month,3 mese:3 months,6 mese:6 months,1 anno:1 year,infinito:infinite',
 	'import' => 'Mpurta paggene',
 	'import-interwiki-submit' => 'Mpurta',
 	'import-logentry-upload' => 'ha mpurtato [[$1]] trammeto upload',
 	'ilsubmit' => 'Truova',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'index-category' => 'Indekserte sider',
 	'internalerror' => 'Intern feil',
 	'internalerror_info' => 'Intern feil: $1',
@@ -16808,8 +16823,8 @@ Lagre den på din egen datamaskin og last den opp her.',
 	'import-logentry-upload-detail' => 'Importerte {{PLURAL:$1|én revisjon|$1 revisjoner}}',
 	'import-logentry-interwiki' => 'transwikiimporterte $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|Én revisjon|$1 revisjoner}} fra $2',
-	'imagemaxsize' => "Bildestørrelsesgrense:<br />''(for filbeskrivelsessider)''",
-	'imagelisttext' => "Dette er en liste med '''$1''' {{PLURAL:$1|fil|filer}} sortert $2.",
+	'imagemaxsize' => 'Bildestørrelsesgrense:<br />\'\'(for filbeskrivelsessider)\'\'',
+	'imagelisttext' => 'Dette er en liste med \'\'\'$1\'\'\' {{PLURAL:$1|fil|filer}} sortert $2.',
 	'ilsubmit' => 'Søk',
 	'invalidateemail' => 'Avbryt bekreftelse av e-postadresse',
 	'imgmultipageprev' => '← forrige side',
@@ -16817,9 +16832,9 @@ Lagre den på din egen datamaskin og last den opp her.',
 	'imgmultigo' => 'Gå!',
 	'imgmultigoto' => 'Gå til siden $1',
 	'intentionallyblankpage' => 'Denne siden er tom med vilje',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'index-category' => 'indexeerte Sieden',
 	'internalerror' => 'Internen Fehler',
 	'internalerror_info' => 'Internen Fehler: $1',
@@ -16833,7 +16848,7 @@ $messages['nds'] = array(
 	'illegalfilename' => 'In den Dateinaam „$1“ snd Teken in, de nich de Naams vun Sieden nich verlööft sünd. Söök di en annern Naam ut un denn versöök de Datei noch wedder hoochtoladen.',
 	'imgfile' => 'Datei',
 	'imagelinks' => 'Dateiverwiesen',
-	'iteminvalidname' => "Problem mit den Indrag '$1', ungülligen Naam...",
+	'iteminvalidname' => 'Problem mit den Indrag \'$1\', ungülligen Naam...',
 	'invert' => 'Utwahl ümkehren',
 	'isredirect' => 'Wiederleiden',
 	'istemplate' => 'inbunnen dör Vörlaag',
@@ -16937,10 +16952,10 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 	'imgmultigo' => 'Los!',
 	'imgmultigoto' => 'Gah na de Siet $1',
 	'intentionallyblankpage' => 'Disse Sied is mit Afsicht leddig.',
-);
+];
 
-$messages['nds-nl'] = array(
-	'index-category' => "Pagina's die indexeerd bin",
+$messages['nds-nl'] = [
+	'index-category' => 'Pagina\'s die indexeerd bin',
 	'internalerror' => 'Interne fout',
 	'internalerror_info' => 'Interne fout: $1',
 	'invalidemailaddress' => 't Netpostadres kon niet aksepteerd wörden umdat de opmaak ongeldig is.
@@ -16973,7 +16988,7 @@ Um beveiligingsredens is img_auth.php uuteschakeld.',
 	'img-auth-bad-query-string' => 'In t webadres steet n ongeldige zeukopdrachte.',
 	'imgfile' => 'bestaand',
 	'imagelinks' => 'Bestaandsgebruuk',
-	'iteminvalidname' => "Verkeerde naam '$1'",
+	'iteminvalidname' => 'Verkeerde naam \'$1\'',
 	'invert' => 'seleksie ummekeren',
 	'isredirect' => 'deurverwiezing',
 	'istemplate' => 'in-evoegd as mal',
@@ -16982,14 +16997,14 @@ Um beveiligingsredens is img_auth.php uuteschakeld.',
 	'ipbexpiry' => 'Verlöp nao',
 	'ipbreason' => 'Reden:',
 	'ipbreasonotherlist' => 'aandere reden',
-	'ipbreason-dropdown' => "*Algemene redens veur t blokkeren
+	'ipbreason-dropdown' => '*Algemene redens veur t blokkeren
 ** valse informasie invoeren
-** pagina's leegmaken
+** pagina\'s leegmaken
 ** ongewunste verwiezingen plaotsen
 ** onzinteksten schrieven
 ** targerieje of naor gedrag
 ** misbruuk vanaof meerdere profielen
-** ongewunste gebrukersnaam",
+** ongewunste gebrukersnaam',
 	'ipb-hardblock' => 'Veurkoemen dat an-emelde gebrukers vanaof dit IP-adres kunnen bewarken',
 	'ipbcreateaccount' => 'Veurkom t anmaken van gebrukersprofielen',
 	'ipbemailban' => 'Veurkom dat bepaolde gebrukers berichten versturen',
@@ -17004,8 +17019,8 @@ Um beveiligingsredens is img_auth.php uuteschakeld.',
 	'ipb-disableusertalk' => 'Veurkoemen dat disse gebruker tiejens de blokkering de eigen overlegpagina kan bewarken',
 	'ipb-change-block' => 'De gebruker opniej blokkeren mit disse instellingen',
 	'ipb-confirm' => 'Blokkering bevestigen',
-	'ipb-blockingself' => "Hiermee blokkeer je je eigen. Wi'j dat?",
-	'ipb-confirmhideuser' => "Hiermee blokkeer je n verbörgen gebruker. Hierveur wörden gebrukersnamen in alle liesten en logboekregels verbörgen. Wi'j dat?",
+	'ipb-blockingself' => 'Hiermee blokkeer je je eigen. Wi\'j dat?',
+	'ipb-confirmhideuser' => 'Hiermee blokkeer je n verbörgen gebruker. Hierveur wörden gebrukersnamen in alle liesten en logboekregels verbörgen. Wi\'j dat?',
 	'ipb-edit-dropdown' => 'Blokkeerredens bewarken',
 	'ipb-unblock-addr' => 'Deblokkeer $1',
 	'ipb-unblock' => 'Deblokkeer n gebruker of IP-adres',
@@ -17024,15 +17039,15 @@ Um beveiligingsredens is img_auth.php uuteschakeld.',
 	'ipb_expiry_temp' => 'Blokkeringen veur verbörgen gebrukers mutten permanent ween.',
 	'ipb_hide_invalid' => 'Kan disse gebruker niet verbargen; warschienlik hef e al te veule bewarkingen emaakt.',
 	'ipb_already_blocked' => '"$1" is al eblokkeerd',
-	'ipb-needreblock' => "$1 is al eblokkeerd.
-Wi'j de instellingen wiezigen?",
+	'ipb-needreblock' => '$1 is al eblokkeerd.
+Wi\'j de instellingen wiezigen?',
 	'ipb-otherblocks-header' => 'Aandere {{PLURAL:$1|blokkering|blokkeringen}}',
 	'ipb_cant_unblock' => 'Foutmelding: blokkerings-ID $1 niet evunnen, t is misschien al edeblokkeerd.',
 	'ipb_blocked_as_range' => 'Fout: t IP-adres $1 is niet drek eblokkeerd en de blokkering kan niet op-eheven wörden.
 De blokkering is onderdeel van de reeks $2, waorvan de blokkering wel op-eheven kan wörden.',
 	'ip_range_invalid' => 'Ongeldige IP-reeks',
 	'ip_range_toolarge' => 'Groeps-IP-adressen die groter bin as /$1, bin niet toe-estaon.',
-	'ipbblocked' => "Je kunnen gien aandere gebrukers (de)blokkeren, umda'j zelf eblokkeerd bin",
+	'ipbblocked' => 'Je kunnen gien aandere gebrukers (de)blokkeren, umda\'j zelf eblokkeerd bin',
 	'ipbnounblockself' => 'Je maggen je eigen niet deblokkeren',
 	'immobile-source-namespace' => 'Pagina\'s in de naamruumte "$1" kunnen niet herneumd wörden',
 	'immobile-target-namespace' => 'Pagina\'s kunnen niet herneumd wörden naor de naamruumte "$1"',
@@ -17042,7 +17057,7 @@ De blokkering is onderdeel van de reeks $2, waorvan de blokkering wel op-eheven 
 	'imagenocrossnamespace' => 'n Mediabestaand kan niet naor n aandere naamruumte verplaots wörden',
 	'imagetypemismatch' => 'De nieje bestaandsextensie is niet gelieke an t bestaandstype',
 	'imageinvalidfilename' => 'De nieje bestaandsnaam is ongeldig',
-	'import' => "Pagina's invoeren",
+	'import' => 'Pagina\'s invoeren',
 	'importinterwiki' => 'Transwiki-invoer',
 	'import-interwiki-text' => 'Kies n wiki en paginanaam um in te voeren.
 Versie- en auteursgegevens blieven hierbie beweerd.
@@ -17056,9 +17071,9 @@ Alle transwiki-invoerhaandelingen wörden op-esleugen in t [[Special:Log/import|
 	'import-comment' => 'Opmarkingen:',
 	'importtext' => 'Gebruuk de [[Special:Export|uutvoerfunksie]] in de wiki waor de informasie vandaon kump.
 Slao t op joew eigen systeem op, en stuur t daornao hier op.',
-	'importstart' => "Pagina's an t invoeren...",
+	'importstart' => 'Pagina\'s an t invoeren...',
 	'import-revision-count' => '$1 {{PLURAL:$1|versie|versies}}',
-	'importnopages' => "Der bin gien pagina's um in te voeren.",
+	'importnopages' => 'Der bin gien pagina\'s um in te voeren.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|logboekregel|logboekregels}} in-evoerd.',
 	'importfailed' => 'Invoeren is mislokt: $1',
 	'importunknownsource' => 'Onbekend invoerbrontype',
@@ -17076,7 +17091,7 @@ t Bestaand is mer gedeeltelik an-ekeumen.',
 	'importuploaderrortemp' => 't Opsturen van t invoerbestaand is mislokt.
 De tiedelike map is niet anwezig.',
 	'import-parse-failure' => 'Fout bie t verwarken van de XML-invoer',
-	'import-noarticle' => "Der bin gien pagina's um in te voeren!",
+	'import-noarticle' => 'Der bin gien pagina\'s um in te voeren!',
 	'import-nonewrevisions' => 'Alle versies bin al eerder in-evoerd.',
 	'import-upload' => 'XML-gegevens derbie doon',
 	'import-token-mismatch' => 'De sessiegegevens bin verleuren egaon. Probeer t opniej.',
@@ -17087,14 +17102,14 @@ De tiedelike map is niet anwezig.',
 	'import-error-special' => 'Pagina "$1" is niet in-evoerd umdat t eplaotst is in n spesiale naamruumte waor gien pagina\'s in eplaotst kunnen wörden.',
 	'import-error-invalid' => 'De pagina" "$1" is niet in-evoerd umdat de naam ongeldig is.',
 	'importlogpage' => 'Invoerlogboek',
-	'importlogpagetext' => "Administratieve invoer van pagina's mit geschiedenisse van aandere wiki's.",
+	'importlogpagetext' => 'Administratieve invoer van pagina\'s mit geschiedenisse van aandere wiki\'s.',
 	'import-logentry-upload' => 'hef [[$1]] in-evoerd',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versie|versies}}',
 	'import-logentry-interwiki' => 'transwiki $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versie|versies}} van $2',
-	'imagemaxsize' => "Maximale aofmetingen van aofbeeldingen:<br />
-''(veur op de beschrievingspagina)''",
-	'imagelisttext' => "Hier volgt n lieste mit '''$1''' {{PLURAL:$1|bestaand|bestaanden}} esorteerd $2.",
+	'imagemaxsize' => 'Maximale aofmetingen van aofbeeldingen:<br />
+\'\'(veur op de beschrievingspagina)\'\'',
+	'imagelisttext' => 'Hier volgt n lieste mit \'\'\'$1\'\'\' {{PLURAL:$1|bestaand|bestaanden}} esorteerd $2.',
 	'ilsubmit' => 'Zeuk',
 	'invalidateemail' => 'Netpostbevestiging ofbreken',
 	'imgmultipageprev' => '&larr; veurige',
@@ -17102,9 +17117,9 @@ De tiedelike map is niet anwezig.',
 	'imgmultigo' => 'Oké',
 	'imgmultigoto' => 'Gao naor de pagina $1',
 	'intentionallyblankpage' => 'Disse pagina is bewust leeg eleuten.',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'index-category' => 'सुचिकृत पृष्ठ',
 	'info_short' => 'जानकारी',
 	'internalerror' => 'आन्तरिक त्रुटि',
@@ -17173,7 +17188,7 @@ $messages['ne'] = array(
 	'ipb_already_blocked' => '"$1" पहिले नै रोक लगाइएको छ',
 	'ip_range_invalid' => 'IP क्षेत्र अमान्य ।',
 	'immobile-source-page' => 'यो शैली परिमार्जनयोग्य होइन !',
-	'imageinvalidfilename' => "फाइल नाम '%.50s...' धेरै लामो छ",
+	'imageinvalidfilename' => 'फाइल नाम \'%.50s...\' धेरै लामो छ',
 	'import' => 'पृष्ठहरु आयात गर्नुहोस्',
 	'importinterwiki' => 'Transwiki आयात',
 	'import-interwiki-source' => 'स्रोत विकि/ पृष्ठ :',
@@ -17217,21 +17232,21 @@ $messages['ne'] = array(
 	'imgmultipagenext' => 'पछिल्लो पृष्ठ →',
 	'imgmultigo' => 'जानुहोस्!',
 	'imgmultigoto' => 'पृष्ठ $1 मा जाने',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'internalerror' => 'इन्तरनल इरर',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'ipbreason' => 'Kakano:',
 	'ipblocklist-submit' => 'Kumi',
 	'ilsubmit' => 'Kumi',
 	'imgmultigo' => 'Fano!',
-);
+];
 
-$messages['nl'] = array(
-	'index-category' => "Te indexeren pagina's",
+$messages['nl'] = [
+	'index-category' => 'Te indexeren pagina\'s',
 	'internalerror' => 'Interne fout',
 	'internalerror_info' => 'Interne fout: $1',
 	'invalidemailaddress' => 'Het e-mailadres is niet aanvaard, omdat het een ongeldige opmaak heeft.
@@ -17248,14 +17263,14 @@ Geef het bestand een andere naam, en probeer het dan opnieuw te uploaden.',
 	'invalid-chunk-offset' => 'Ongeldige chunkoffset',
 	'img-auth-accessdenied' => 'Toegang geweigerd',
 	'img-auth-nopathinfo' => 'PATH_INFO mist.
-Uw server is niet ingesteld om deze gegevens door te geven.
+Je server is niet ingesteld om deze informatie door te geven.
 Misschien gebruikt deze CGI, en dan wordt img_auth niet ondersteund.
-Zie https://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
+Zie http://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
 	'img-auth-notindir' => 'Het opgevraagde pad is niet de ingestelde uploadmap.',
 	'img-auth-badtitle' => 'Het was niet mogelijk een geldige paginanaam te maken van "$1".',
-	'img-auth-nologinnWL' => 'U bent niet aangemeld en "$1" staat niet op de witte lijst.',
+	'img-auth-nologinnWL' => 'Je bent niet aangemeld en "$1" staat niet op de witte lijst.',
 	'img-auth-nofile' => 'Bestand "$1" bestaat niet.',
-	'img-auth-isdir' => 'U probeert de map "$1" te benaderen.
+	'img-auth-isdir' => 'Je probeert de map "$1" te benaderen.
 Alleen toegang tot bestanden is toegestaan.',
 	'img-auth-streaming' => 'Bezig met het streamen van "$1".',
 	'img-auth-public' => 'Het doel van img_auth.php is de uitvoer van bestanden van een besloten wiki.
@@ -17265,7 +17280,7 @@ Om beveiligingsreden is img_auth.php uitgeschakeld.',
 	'img-auth-bad-query-string' => 'De URL bevat een ongeldige querystring.',
 	'imgfile' => 'bestand',
 	'imagelinks' => 'Bestandsgebruik',
-	'iteminvalidname' => "Probleem met object '$1', ongeldige naam…",
+	'iteminvalidname' => 'Probleem met object \'$1\', ongeldige naam…',
 	'invert' => 'Omgekeerde selectie',
 	'isredirect' => 'doorverwijspagina',
 	'istemplate' => 'ingevoegd als sjabloon',
@@ -17274,14 +17289,14 @@ Om beveiligingsreden is img_auth.php uitgeschakeld.',
 	'ipbexpiry' => 'Vervalt (maak een keuze):',
 	'ipbreason' => 'Reden:',
 	'ipbreasonotherlist' => 'Andere reden',
-	'ipbreason-dropdown' => "*Veel voorkomende redenen voor blokkades
+	'ipbreason-dropdown' => '*Veel voorkomende redenen voor blokkades
 ** Foutieve informatie invoeren
-** Verwijderen van informatie uit pagina's
+** Verwijderen van informatie uit pagina\'s
 ** Spamverwijzing naar externe websites
-** Invoegen van nonsens in pagina's
+** Invoegen van nonsens in pagina\'s
 ** Intimiderend gedrag
 ** Misbruik door meerdere gebruikers
-** Onaanvaardbare gebruikersnaam",
+** Onaanvaardbare gebruikersnaam',
 	'ipb-hardblock' => 'Voorkomen dat aangemelde gebruikers vanaf dit IP-adres kunnen bewerken',
 	'ipbcreateaccount' => 'Registreren gebruikers blokkeren',
 	'ipbemailban' => 'Gebruiker weerhouden van het sturen van e-mail',
@@ -17317,7 +17332,7 @@ Om beveiligingsreden is img_auth.php uitgeschakeld.',
 	'ipb_hide_invalid' => 'Het is niet mogelijk deze gebruiker te verbergen; mogelijk heeft deze te veel bewerkingen gemaakt.',
 	'ipb_already_blocked' => '"$1" is al geblokkeerd',
 	'ipb-needreblock' => '$1 is al geblokkeerd.
-Wilt u de instellingen wijzigen?',
+Wil je de instellingen wijzigen?',
 	'ipb-otherblocks-header' => 'Andere {{PLURAL:$1|blokkade|blokkades}}',
 	'ipb_cant_unblock' => 'Fout: blokkadenummer $1 is niet gevonden.
 Misschien is de blokkade al opgeheven.',
@@ -17325,8 +17340,8 @@ Misschien is de blokkade al opgeheven.',
 De blokkade is onderdeel van de reeks $2, waarvan de blokkade wel opgeheven kan worden.',
 	'ip_range_invalid' => 'Ongeldige IP-reeks.',
 	'ip_range_toolarge' => 'Reeksblokkades groter dan /$1 zijn niet toegestaan.',
-	'ipbblocked' => 'U kunt geen andere gebruikers (de)blokkeren, omdat u zelf geblokkeerd bent',
-	'ipbnounblockself' => 'U mag uzelf niet deblokkeren',
+	'ipbblocked' => 'Je kunt geen andere gebruikers (de)blokkeren, omdat je zelf geblokkeerd bent',
+	'ipbnounblockself' => 'Je mag jezelf niet deblokkeren',
 	'immobile-source-namespace' => 'Pagina\'s in de naamruimte "$1" kunnen niet hernoemd worden',
 	'immobile-target-namespace' => 'Pagina\'s kunnen niet hernoemd worden naar de naamruimte "$1"',
 	'immobile-target-namespace-iw' => 'Een interwikiverwijzing is geen geldige bestemming voor het hernoemen van een pagina.',
@@ -17335,7 +17350,7 @@ De blokkade is onderdeel van de reeks $2, waarvan de blokkade wel opgeheven kan 
 	'imagenocrossnamespace' => 'Een mediabestand kan niet naar een andere naamruimte verplaatst worden',
 	'imagetypemismatch' => 'De nieuwe bestandsextensie is niet gelijk aan het bestandstype',
 	'imageinvalidfilename' => 'De nieuwe bestandsnaam is ongeldig',
-	'import' => "Pagina's importeren",
+	'import' => 'Pagina\'s importeren',
 	'importinterwiki' => 'Transwiki-import',
 	'import-interwiki-text' => 'Selecteer een wiki en paginanaam om te importeren.
 Versie- en auteursgegevens blijven hierbij bewaard.
@@ -17347,11 +17362,10 @@ Alle transwiki-importhandelingen worden opgeslagen in het [[Special:Log/import|i
 	'import-interwiki-namespace' => 'Doelnaamruimte:',
 	'import-upload-filename' => 'Bestandsnaam:',
 	'import-comment' => 'Opmerking:',
-	'importtext' => 'Gebruik de [[Special:Export|exportfunctie]] in de wiki waar de informatie vandaan komt.
-Sla de uitvoer op uw eigen computer op, en voeg die daarna hier toe.',
-	'importstart' => "Pagina's aan het importeren…",
+	'importtext' => 'Gebruik de [[Special:Export|exportfunctie]] in de wiki waar de informatie vandaan komt, sla de uitvoer op je eigen systeem op, en voeg die daarna hier toe.',
+	'importstart' => 'Pagina\'s aan het importeren…',
 	'import-revision-count' => '$1 {{PLURAL:$1|versie|versies}}',
-	'importnopages' => "Geen pagina's te importeren.",
+	'importnopages' => 'Geen pagina\'s te importeren.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|logboekregel|logboekregels}} geïmporteerd.',
 	'importfailed' => 'Import is mislukt: $1',
 	'importunknownsource' => 'Onbekend importbrontype',
@@ -17369,7 +17383,7 @@ Het bestand is slechts gedeeltelijk aangekomen.',
 	'importuploaderrortemp' => 'Upload van het importbestand in mislukt.
 Een tijdelijke map is niet aanwezig.',
 	'import-parse-failure' => 'Fout bij het verwerken van de XML-import',
-	'import-noarticle' => "Er zijn geen te importeren pagina's!",
+	'import-noarticle' => 'Er zijn geen te importeren pagina\'s!',
 	'import-nonewrevisions' => 'Alle versies zijn al eerder geïmporteerd.',
 	'import-upload' => 'XML-gegevens uploaden',
 	'import-token-mismatch' => 'De sessiegegevens zijn verloren gegaan. Probeer het opnieuw.',
@@ -17380,14 +17394,14 @@ Een tijdelijke map is niet aanwezig.',
 	'import-error-special' => 'Pagina "$1" is niet geïmporteerd omdat deze is geplaatst in een speciale naamruimte waar geen pagina\'s in geplaatst kunnen worden.',
 	'import-error-invalid' => 'De pagina" "$1" is niet geïmporteerd omdat de naam ongeldig is.',
 	'importlogpage' => 'Importlogboek',
-	'importlogpagetext' => "Administratieve import van pagina's met geschiedenis van andere wiki's.",
+	'importlogpagetext' => 'Administratieve import van pagina\'s met geschiedenis van andere wiki\'s.',
 	'import-logentry-upload' => 'importeerde [[$1]] via een bestandsupload',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versie|versies}}',
 	'import-logentry-interwiki' => 'importeerde $1 via transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versie|versies}} van $2',
-	'imagemaxsize' => "Maximale afmetingen van afbeeldingen:<br />
-''(voor op de beschrijvingspagina)''",
-	'imagelisttext' => "Hier volgt een lijst met '''$1''' {{PLURAL:$1|bestand|bestanden}} gesorteerd $2.",
+	'imagemaxsize' => 'Maximale afmetingen van afbeeldingen:<br />
+\'\'(voor op de beschrijvingspagina)\'\'',
+	'imagelisttext' => 'Hier volgt een lijst met \'\'\'$1\'\'\' {{PLURAL:$1|bestand|bestanden}} gesorteerd $2.',
 	'ilsubmit' => 'Zoeken',
 	'invalidateemail' => 'E-mailbevestiging annuleren',
 	'imgmultipageprev' => '← vorige pagina',
@@ -17407,9 +17421,9 @@ Een tijdelijke map is niet aanwezig.',
 	'iranian-calendar-m11' => 'Elfde Perzische maand',
 	'iranian-calendar-m12' => 'Twaalfde Perzische maand',
 	'intentionallyblankpage' => 'Deze pagina is bewust leeg gelaten en wordt gebruikt voor benchmarks, enzovoort.',
-);
+];
 
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'img-auth-nopathinfo' => 'PATH_INFO mist.
 Je server is niet ingesteld om deze informatie door te geven.
 Misschien gebruikt deze CGI, en dan wordt img_auth niet ondersteund.
@@ -17422,9 +17436,9 @@ Wil je de instellingen wijzigen?',
 	'ipbblocked' => 'Je kunt geen andere gebruikers (de)blokkeren, omdat je zelf geblokkeerd bent',
 	'ipbnounblockself' => 'Je mag jezelf niet deblokkeren',
 	'importtext' => 'Gebruik de [[Special:Export|exportfunctie]] in de wiki waar de informatie vandaan komt, sla de uitvoer op je eigen systeem op, en voeg die daarna hier toe.',
-);
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'index-category' => 'Indekserte sider',
 	'internalerror' => 'Intern feil',
 	'internalerror_info' => 'Intern feil: $1',
@@ -17562,7 +17576,7 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|Éin versjon|$1 versjonar}}',
 	'import-logentry-interwiki' => 'overførte $1 mellom wikiar',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|Éin versjon|$1 versjonar}} frå $2',
-	'imagemaxsize' => "Avgrens storleiken for bilete:<br />''(for sider som skildrar filer)''",
+	'imagemaxsize' => 'Avgrens storleiken for bilete:<br />\'\'(for sider som skildrar filer)\'\'',
 	'imagelisttext' => 'Her er ei liste med {{PLURAL:$1|éi fil sortert|$1 filer sorterte}} $2.',
 	'ilsubmit' => 'Søk',
 	'invalidateemail' => 'Avbryt stadfestinga av e-postadressa',
@@ -17571,9 +17585,9 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'imgmultigo' => 'Gå!',
 	'imgmultigoto' => 'Gå til sida $1',
 	'intentionallyblankpage' => 'Denne sida er tom med vilje',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'index-category' => 'Indekserte sider',
 	'internalerror' => 'Intern feil',
 	'internalerror_info' => 'Intern feil: $1',
@@ -17711,7 +17725,7 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|Éin versjon|$1 versjonar}}',
 	'import-logentry-interwiki' => 'overførte $1 mellom wikiar',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|Éin versjon|$1 versjonar}} frå $2',
-	'imagemaxsize' => "Avgrens storleiken for bilete:<br />''(for sider som skildrar filer)''",
+	'imagemaxsize' => 'Avgrens storleiken for bilete:<br />\'\'(for sider som skildrar filer)\'\'',
 	'imagelisttext' => 'Her er ei liste med {{PLURAL:$1|éi fil sortert|$1 filer sorterte}} $2.',
 	'ilsubmit' => 'Søk',
 	'invalidateemail' => 'Avbryt stadfestinga av e-postadressa',
@@ -17720,27 +17734,31 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'imgmultigo' => 'Gå!',
 	'imgmultigoto' => 'Gå til sida $1',
 	'intentionallyblankpage' => 'Denne sida er tom med vilje',
-);
+	'imagereverted' => 'Tilbakestilling til tidligere versjon var vellykket. <strong>Denne endring kan ta opp til to mintter før den er synlig.</strong>',
+	'insertimage' => 'Sett inn bilde',
+	'irc' => 'Live wiki-hjelp',
+	'its_easy' => '...det er enkelt og gratis',
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'image_sample' => 'Exemple.jpg',
 	'imagelinks' => 'Linkes',
 	'ipbreason' => 'Resone:',
 	'ilsubmit' => 'Sercha',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'info_short' => 'Sedi',
 	'internalerror' => 'Phošo ya ka gare',
 	'internalerror_info' => 'Phošo ya ka gare :$1',
 	'italic_sample' => 'Ditlhaka tše Italic',
 	'italic_tip' => 'Mongwala wa Italic',
 	'image_sample' => 'Mohlala.jpg',
-	'image_tip' => "Seswantšho/Faele yago dikanelwa (''embedded'')",
+	'image_tip' => 'Seswantšho/Faele yago dikanelwa (\'\'embedded\'\')',
 	'imgfile' => 'faele',
 	'imagelinks' => 'Dihlamaganyago tša matlakala',
 	'invert' => 'Fetola kgetho',
-	'isredirect' => "''redirect'' letlakala",
+	'isredirect' => '\'\'redirect\'\' letlakala',
 	'istemplate' => 'tsentšho',
 	'isimage' => 'hlomaganyo ya seswantšho',
 	'ipaddress' => 'IP Atrese:',
@@ -17751,33 +17769,33 @@ $messages['nso'] = array(
 	'ipbother' => 'Nako yengwe:',
 	'ipboptions' => '2 diiri:2 hours,1 letšatši:1 day,3 matšatši:3 days,1 beke:1 week,2 dibeke:2 weeks,1 kgwedi:1 month,3 digkwedi:3 months,6 dikgwedi:6 months,1 ngwaga:1 year,ga efele:infinite',
 	'ipbotheroption' => 'yengwe',
-	'ipblocklist' => "Lenano la IP le bašumiši bao bathibilwego(''blocked'')",
+	'ipblocklist' => 'Lenano la IP le bašumiši bao bathibilwego(\'\'blocked\'\')',
 	'ipblocklist-submit' => 'Fetleka',
 	'import-comment' => 'Ahlaahla:',
 	'import-revision-count' => '$1 {{PLURAL:$1|poeletšo|dipoeletšo}}',
-	'importlogpage' => "''Log'' yago lokela",
+	'importlogpage' => '\'\'Log\'\' yago lokela',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|poeletšo|dipoeletšo}}',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|poeletšo|dipoeletšo}} gotšwa go $2',
 	'ilsubmit' => 'Fetleka',
 	'imagelistall' => 'ka moka',
 	'imgmultipageprev' => '← letlakala la go feta',
 	'imgmultipagenext' => 'letlakala lago latela →',
-);
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'imagelinks' => 'naaltsoos díí kweʼé eʼelyaaígíí chodayoołʼįįhígíí',
 	'invert' => 'binaashii',
 	'isredirect' => 'dah astsihígíí',
 	'istemplate' => 'bee álnééhí',
 	'isimage' => 'eʼelyaaígíí',
-);
+];
 
-$messages['oc'] = array(
+$messages['oc'] = [
 	'index-category' => 'Paginas indexadas',
 	'internalerror' => 'Error intèrna',
 	'internalerror_info' => 'Error intèrna: $1',
-	'invalidemailaddress' => "Aquesta adreça de corrièr electronic pòt pas èsser acceptada perque sembla qu'a un format incorrècte.
-Picatz una adreça plan formatada o daissatz aqueste camp void.",
+	'invalidemailaddress' => 'Aquesta adreça de corrièr electronic pòt pas èsser acceptada perque sembla qu\'a un format incorrècte.
+Picatz una adreça plan formatada o daissatz aqueste camp void.',
 	'italic_sample' => 'Tèxte en italica',
 	'italic_tip' => 'Tèxte en italica',
 	'image_sample' => 'Exemple.jpg',
@@ -17795,16 +17813,16 @@ Consultatz https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-badtitle' => 'Impossible de construire un títol valid a partir de « $1 ».',
 	'img-auth-nologinnWL' => 'Sètz pas connectat e « $1 » es pas dins la lista blanca.',
 	'img-auth-nofile' => 'Lo fichièr « $1 » existís pas.',
-	'img-auth-isdir' => "Ensajatz d'accedir al repertòri « $1 ».
-Sol l'accès als fichièrs es permesa.",
+	'img-auth-isdir' => 'Ensajatz d\'accedir al repertòri « $1 ».
+Sol l\'accès als fichièrs es permesa.',
 	'img-auth-streaming' => 'Lectura en continú de « $1 ».',
-	'img-auth-public' => "La foncion d'img_auth.php es d'afichar de fichièrs d'un wiki privat.
+	'img-auth-public' => 'La foncion d\'img_auth.php es d\'afichar de fichièrs d\'un wiki privat.
 Aqueste wiki es configurat coma un wiki public.
-Per una seguretat optimala, img_auth.php es desactivat.",
-	'img-auth-noread' => "L'utilizaire a pas lo drech en lectura sus « $1 ».",
+Per una seguretat optimala, img_auth.php es desactivat.',
+	'img-auth-noread' => 'L\'utilizaire a pas lo drech en lectura sus « $1 ».',
 	'imgfile' => 'fichièr',
 	'imagelinks' => 'Paginas que contenon lo fichièr',
-	'iteminvalidname' => "Problèma amb l'article « $1 » : lo nom es invalid...",
+	'iteminvalidname' => 'Problèma amb l\'article « $1 » : lo nom es invalid...',
 	'invert' => 'Inversar la seleccion',
 	'isredirect' => 'pagina de redireccion',
 	'istemplate' => 'inclusion',
@@ -17831,12 +17849,12 @@ Per una seguretat optimala, img_auth.php es desactivat.",
 	'ipbotheroption' => 'autre',
 	'ipbotherreason' => 'Motiu diferent o suplementari',
 	'ipbhidename' => 'Amagar lo nom d’utilizaire de las modificacions e de las listas',
-	'ipbwatchuser' => "Seguir las paginas d'utilizaire e de discussion d'aqueste utilizaire",
+	'ipbwatchuser' => 'Seguir las paginas d\'utilizaire e de discussion d\'aqueste utilizaire',
 	'ipb-change-block' => 'Tornar blocar aqueste utilizaire amb aquestes paramètres',
 	'ipb-confirm' => 'Confirmar lo blocatge',
 	'ipb-edit-dropdown' => 'Modificar los motius de blocatge per defaut',
 	'ipb-unblock-addr' => 'Desblocar $1',
-	'ipb-unblock' => "Desblocar un compte d'utilizaire o una adreça IP",
+	'ipb-unblock' => 'Desblocar un compte d\'utilizaire o una adreça IP',
 	'ipb-blocklist' => 'Vejatz los blocatges existents',
 	'ipb-blocklist-contribs' => 'Contribucions per $1',
 	'ipusubmit' => 'Suprimir aqueste blocatge',
@@ -17850,31 +17868,31 @@ Per una seguretat optimala, img_auth.php es desactivat.",
 	'ipblocklist-no-results' => 'L’adreça IP o l’utilizaire es pas esta blocat.',
 	'ipb_expiry_invalid' => 'Temps d’expiracion invalid.',
 	'ipb_expiry_temp' => 'Las plajas dels utilizaires amagats deurián èsser permanentas.',
-	'ipb_hide_invalid' => "Impossible de suprimir aqueste compte ; sembla qu'a tròp de modificacions.",
+	'ipb_hide_invalid' => 'Impossible de suprimir aqueste compte ; sembla qu\'a tròp de modificacions.',
 	'ipb_already_blocked' => '« $1 » ja es blocat',
 	'ipb-needreblock' => '$1 ja es blocat. Volètz modificar los paramètres ?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Autre blocatge|Autres blocatges}}',
 	'ipb_cant_unblock' => 'Error : Lo blocatge d’ID $1 existís pas. Es possible qu’un desblocatge ja siá estat efectuat.',
-	'ipb_blocked_as_range' => "Error : L'adreça IP $1 es pas estada blocada dirèctament e doncas pòt pas èsser deblocada. Çaquelà, es estada blocada per la plaja $2 la quala pòt èsser deblocada.",
+	'ipb_blocked_as_range' => 'Error : L\'adreça IP $1 es pas estada blocada dirèctament e doncas pòt pas èsser deblocada. Çaquelà, es estada blocada per la plaja $2 la quala pòt èsser deblocada.',
 	'ip_range_invalid' => 'Plaja IP incorrècta.',
 	'ip_range_toolarge' => 'Los blocatges de plajas mai grandas que /$1 son pas autorizadas.',
-	'ipbblocked' => "Podètz pas blocar o desblocar d'autres utilizaire, perque vos {{GENDER:|meteis|meteissa|meteis}} sètz {{GENDER:|blocat|blocada|blocat}}.",
+	'ipbblocked' => 'Podètz pas blocar o desblocar d\'autres utilizaire, perque vos {{GENDER:|meteis|meteissa|meteis}} sètz {{GENDER:|blocat|blocada|blocat}}.',
 	'ipbnounblockself' => 'Sètz pas autorizat a vos desblocar vos meteis',
-	'immobile-source-namespace' => "Podètz pas tornar nomenar de paginas dins l'espaci de noms « $1 »",
-	'immobile-target-namespace' => "Podètz pas desplaçar de paginas cap a l'espaci de noms « $1 »",
+	'immobile-source-namespace' => 'Podètz pas tornar nomenar de paginas dins l\'espaci de noms « $1 »',
+	'immobile-target-namespace' => 'Podètz pas desplaçar de paginas cap a l\'espaci de noms « $1 »',
 	'immobile-target-namespace-iw' => 'Los ligams interwikis son pas una cibla valida pels cambiaments de nom.',
 	'immobile-source-page' => 'Aquesta pagina se pòt pas tornar nomenar.',
 	'immobile-target-page' => 'Es pas possible de desplaçar la pagina cap a aqueste títol.',
 	'imagenocrossnamespace' => 'Pòt pas desplaçar un imatge cap a un espaci de nomenatge que siá pas un imatge.',
-	'imagetypemismatch' => "L'extension novèla d'aqueste fichièr reconeis pas aqueste format.",
+	'imagetypemismatch' => 'L\'extension novèla d\'aqueste fichièr reconeis pas aqueste format.',
 	'imageinvalidfilename' => 'Lo nom del fichièr cibla es incorrècte',
 	'import' => 'Importar de paginas',
 	'importinterwiki' => 'Impòrt interwiki',
-	'import-interwiki-text' => "Seleccionatz un wiki e un títol de pagina d'importar.
+	'import-interwiki-text' => 'Seleccionatz un wiki e un títol de pagina d\'importar.
 Las datas de las versions e los noms dels editors seràn preservats.
-Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Log/import|jornal d’impòrt]].",
+Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Log/import|jornal d’impòrt]].',
 	'import-interwiki-source' => 'Wiki e pagina font :',
-	'import-interwiki-history' => "Copiar totas las versions de l'istoric d'aquesta pagina",
+	'import-interwiki-history' => 'Copiar totas las versions de l\'istoric d\'aquesta pagina',
 	'import-interwiki-templates' => 'Enclure totes los modèls',
 	'import-interwiki-submit' => 'Importar',
 	'import-interwiki-namespace' => 'Espaci de noms de destinacion :',
@@ -17883,34 +17901,34 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 	'importtext' => 'Exportatz lo fichièr dempuèi lo wiki d’origina en utilizant l’esplech Special:Export, salvatz-lo sus vòstre disc dur e copiatz-lo aicí.',
 	'importstart' => 'Impòrt de las paginas...',
 	'import-revision-count' => '$1 {{PLURAL:$1|version|versions}}',
-	'importnopages' => "Cap de pagina d'importar.",
+	'importnopages' => 'Cap de pagina d\'importar.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|entrada|entradas}} del jornal {{PLURAL:$1|importada|importadas}}.',
 	'importfailed' => 'Fracàs de l’impòrt : $1',
 	'importunknownsource' => 'Tipe de la font d’impòrt desconegut',
-	'importcantopen' => "Impossible de dobrir lo fichièr d'importar",
+	'importcantopen' => 'Impossible de dobrir lo fichièr d\'importar',
 	'importbadinterwiki' => 'Ligam interwiki marrit',
 	'importnotext' => 'Void o sens tèxte',
-	'importsuccess' => "L'impòrt a capitat !",
-	'importhistoryconflict' => "I a un conflicte dins l'istoric de las versions (aquesta pagina a pogut èsser importada de per abans).",
+	'importsuccess' => 'L\'impòrt a capitat !',
+	'importhistoryconflict' => 'I a un conflicte dins l\'istoric de las versions (aquesta pagina a pogut èsser importada de per abans).',
 	'importnosources' => 'Cap de font interwiki es pas estada definida e la còpia dirècta d’istoric es desactivada.',
 	'importnofile' => 'Cap de fichièr es pas estat importat.',
-	'importuploaderrorsize' => "Lo telecargament del fichièr d'importar a pas capitat. Sa talha es mai granda que la autorizada.",
-	'importuploaderrorpartial' => "Lo telecargament del fichièr d'importar a pas capitat. Aqueste o es pas estat que parcialament.",
-	'importuploaderrortemp' => "Lo telecargament del fichièr d'importar a pas capitat. Un dorsièr temporari es mancant.",
-	'import-parse-failure' => "Ruptura dins l'analisi de l'impòrt XML",
-	'import-noarticle' => "Pas de pagina d'importar !",
+	'importuploaderrorsize' => 'Lo telecargament del fichièr d\'importar a pas capitat. Sa talha es mai granda que la autorizada.',
+	'importuploaderrorpartial' => 'Lo telecargament del fichièr d\'importar a pas capitat. Aqueste o es pas estat que parcialament.',
+	'importuploaderrortemp' => 'Lo telecargament del fichièr d\'importar a pas capitat. Un dorsièr temporari es mancant.',
+	'import-parse-failure' => 'Ruptura dins l\'analisi de l\'impòrt XML',
+	'import-noarticle' => 'Pas de pagina d\'importar !',
 	'import-nonewrevisions' => 'Totas las revisions son estadas importadas deperabans.',
-	'import-upload' => "Impòrt d'un fichier XML",
+	'import-upload' => 'Impòrt d\'un fichier XML',
 	'import-token-mismatch' => 'Pèrda de las donadas de sesilha. Tornatz ensajar.',
-	'import-invalid-interwiki' => "Impossible d'importar dempuèi lo wiki especificat.",
+	'import-invalid-interwiki' => 'Impossible d\'importar dempuèi lo wiki especificat.',
 	'importlogpage' => 'Istoric de las importacions de paginas',
 	'importlogpagetext' => 'Impòrts administratius de paginas amb l’istoric a partir dels autres wikis.',
 	'import-logentry-upload' => 'a importat (telecargament) [[$1]]',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|version|versions}}',
 	'import-logentry-interwiki' => 'a importat (transwiki) $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|version|versions}} dempuèi $2',
-	'imagemaxsize' => "Format maximal dels imatges :<br />''(per las paginas de descripcion d’imatges)''",
-	'imagelisttext' => "Vaquí una lista de '''$1''' {{PLURAL:$1|fichièr|fichièrs}} classats $2.",
+	'imagemaxsize' => 'Format maximal dels imatges :<br />\'\'(per las paginas de descripcion d’imatges)\'\'',
+	'imagelisttext' => 'Vaquí una lista de \'\'\'$1\'\'\' {{PLURAL:$1|fichièr|fichièrs}} classats $2.',
 	'ilsubmit' => 'Cercar',
 	'invalidateemail' => 'Anullar la confirmacion del corrièr electronic',
 	'imgmultipageprev' => '← pagina precedenta',
@@ -17918,13 +17936,13 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 	'imgmultigo' => 'Accedir !',
 	'imgmultigoto' => 'Anar a la pagina $1',
 	'intentionallyblankpage' => 'Aquesta pagina es intencionalament voida e es utilizada coma un tèst de performància, eca.',
-);
+];
 
-$messages['om'] = array(
+$messages['om'] = [
 	'ipbreason' => 'Sababa:',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'index-category' => 'ସୂଚୀଥିବା ପୃଷ୍ଠାସବୁ',
 	'internalerror' => 'ଭିତରର ଭୁଲ',
 	'internalerror_info' => 'ଭିତରର ଭୁଲ : $1',
@@ -17958,7 +17976,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization ଦେଖନ୍ତୁ 
 	'img-auth-bad-query-string' => 'URL ଟିର ଖୋଜାଯିବା ପ୍ରଶ୍ନଟି ଅଚଳ ଅଟେ ।',
 	'imgfile' => 'ଫାଇଲ',
 	'imagelinks' => 'ଫାଇଲ ବ୍ୟବହାର',
-	'iteminvalidname' => "'$1' ଯୋଗୁଁ କିଛି ଅସୁବିଧା ହେଉଅଛି, ଭୁଲ ନାମ...",
+	'iteminvalidname' => '\'$1\' ଯୋଗୁଁ କିଛି ଅସୁବିଧା ହେଉଅଛି, ଭୁଲ ନାମ...',
 	'invert' => 'ବଛାଯାଇଥିବା ଲେଖାକୁ ଓଲଟାଇଦେବେ',
 	'isredirect' => 'ଆଉଥରେ ଫେରିବା ପୃଷ୍ଠା',
 	'istemplate' => 'ଆଧାର ସହ ଭିତରେ ରଖିବା',
@@ -18074,8 +18092,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization ଦେଖନ୍ତୁ 
 	'import-logentry-upload-detail' => '$1 ଗୋଟି {{PLURAL:$1|ସଂସ୍କରଣ|ସଂସ୍କରଣ}}',
 	'import-logentry-interwiki' => '$1 କୁ ଟ୍ରାନ୍ସଉଇକି କରାଗଲା',
 	'import-logentry-interwiki-detail' => '$2 ଭିତରୁ $1 ଗୋଟି {{PLURAL:$1|ସଂସ୍କରଣ|ସଂସ୍କରଣ}}',
-	'imagemaxsize' => "ଛବି ଆକାର ସୀମା:<br />''(ଫାଇଲ ବିବରଣୀ ପୃଷ୍ଠାମାନଙ୍କ ନିମନ୍ତେ)''",
-	'imagelisttext' => "ତଳେ '''$1''' ଗୋଟି {{PLURAL:$1|ଫାଇଲ|ଫାଇଲ}}ର ତାଲିକା $2 ରେ ଦିଆଯାଇଛି ।",
+	'imagemaxsize' => 'ଛବି ଆକାର ସୀମା:<br />\'\'(ଫାଇଲ ବିବରଣୀ ପୃଷ୍ଠାମାନଙ୍କ ନିମନ୍ତେ)\'\'',
+	'imagelisttext' => 'ତଳେ \'\'\'$1\'\'\' ଗୋଟି {{PLURAL:$1|ଫାଇଲ|ଫାଇଲ}}ର ତାଲିକା $2 ରେ ଦିଆଯାଇଛି ।',
 	'ilsubmit' => 'ଖୋଜିବା',
 	'invalidateemail' => 'ଇ-ମେଲ ଠିକଣା ଥୟ କରିବା',
 	'imgmultipageprev' => 'ଆଗ ପୃଷ୍ଠା',
@@ -18083,9 +18101,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization ଦେଖନ୍ତୁ 
 	'imgmultigo' => 'ଯିବା!',
 	'imgmultigoto' => '$1 ପୃଷ୍ଠାକୁ ଯିବେ',
 	'intentionallyblankpage' => 'ଏହି ପୃଷ୍ଠାଟିକୁ ଜାଣିଶୁଣି ଫାଙ୍କା ଛଡା ଯାଇଛି ।',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'index-category' => 'Индексгонд фæрстæ',
 	'internalerror' => 'Мидæг рæдыд',
 	'internalerror_info' => 'Мидæг рæдыд: $1',
@@ -18112,9 +18130,9 @@ $messages['os'] = array(
 	'imgmultipageprev' => '← раздæры фарс',
 	'imgmultipagenext' => 'фæдылдзог фарс →',
 	'imgmultigo' => 'Афтæ бакæн!',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'internalerror' => 'ਅੰਦਰੂਨੀ ਗਲਤੀ',
 	'internalerror_info' => 'ਅੰਦਰੂਨੀ ਗਲਤੀ: $1',
 	'invalidemailaddress' => 'ਈਮੇਲ ਐਡਰੈੱਸ ਮਨਜ਼ੂਰ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ ਕਿਉਂਕਿ ਇਹ ਠੀਕ ਫਾਰਮੈਟ ਨਹੀਂ ਜਾਪਦਾ ਹੈ। ਇੱਕ ਠੀਕ ਫਾਰਮੈਟ ਵਿੱਚ ਦਿਓ ਜਾਂ ਇਹ ਖੇਤਰ ਖਾਲੀ ਛੱਡ ਦਿਓ।',
@@ -18153,9 +18171,9 @@ $messages['pa'] = array(
 	'imgmultipagenext' => 'ਅਗਲਾ ਪੇਜ →',
 	'imgmultigo' => 'ਜਾਓ!',
 	'imgmultigoto' => '$1 ਸਫ਼ੇ ਉੱਤੇ ਜਾਓ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'imagelinks' => 'Saray Gawing',
 	'ipbreason' => 'Katonongan',
 	'ipbreasonotherlist' => 'Arom ya katonongan',
@@ -18167,9 +18185,9 @@ $messages['pag'] = array(
 	'ilsubmit' => 'Anapen',
 	'imgmultipagenext' => 'ontombok ya bolong →',
 	'imgmultigo' => 'Ula!',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'internalerror' => 'Mali king kilub (internal error)',
 	'internalerror_info' => 'Mali king kilub: $1',
 	'invalidemailaddress' => 'E malyaring matanggap ining e-mail address uling balamu e ustu ing kayang ayus (format).
@@ -18181,8 +18199,8 @@ Pakisulat me ing metung a address a masalese panga-ayus (panga-format) o lako me
 	'ignorewarnings' => 'Paburen mo reng babala',
 	'illegalfilename' => 'Maki kulit (character) yang e maliari kareng pamagat da reng bulung ing lagyungsimpan (filename) a "$1". Pakiyalilan me lagyu ing simpan at subukan meng ilulan pasibayu.',
 	'imgfile' => 'simpan',
-	'imagelinks' => "Suglung kareng simpan (''file links'')",
-	'iteminvalidname' => "Maki prublema king '$1', e maliari ing lagyu...",
+	'imagelinks' => 'Suglung kareng simpan (\'\'file links\'\')',
+	'iteminvalidname' => 'Maki prublema king \'$1\', e maliari ing lagyu...',
 	'invert' => 'Ibaligtad la pamitukituki',
 	'isredirect' => 'Bulung ning pamanaliling direksiun',
 	'istemplate' => 'misingit',
@@ -18213,7 +18231,7 @@ Pakisulat me ing metung a address a masalese panga-ayus (panga-format) o lako me
 	'ipb-unblock' => 'Ilako ya pangasabat ing lagyungtalagamit (username) o IP address',
 	'ipb-blocklist' => 'Lon la reng kasalungsungang makasabat',
 	'ipusubmit' => 'Ilako ya pangasabat ing address a ini',
-	'ipblocklist' => "Deng IP address ampong lagiungtalagamit (''username'') a makasabat",
+	'ipblocklist' => 'Deng IP address ampong lagiungtalagamit (\'\'username\'\') a makasabat',
 	'ipblocklist-legend' => 'Maintun talagamit a makasabat',
 	'ipblocklist-submit' => 'Manintun',
 	'infiniteblock' => 'alang kapupusan',
@@ -18257,24 +18275,24 @@ Maka-login la reng eganaganang pamaglub a transwiki (transwiki import actions) k
 	'import-nonewrevisions' => 'Mipalub (imported) nong sadia deng mangalating pamagbayu.',
 	'importlogpage' => 'Tala da reng mipalub (import log)',
 	'importlogpagetext' => 'Pamaniubuk ding talapanibalang maglub bulung a maki amlat ding mibayu ibat kareng aliwang wiki.',
-	'import-logentry-upload' => "milub ya ing [[$1]] kapamilata'ning pamaglulan simpan (file upload)",
+	'import-logentry-upload' => 'milub ya ing [[$1]] kapamilata\'ning pamaglulan simpan (file upload)',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|pamagbayu|pamagbayu}}',
 	'import-logentry-interwiki' => 'me-transwiking $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|pamagbayu|pamagbayu}} ibat $2',
 	'imagemaxsize' => 'E la dapat migit king bilang a iti deng larawan kareng bulung pamilarawan simpan (file description pages):',
-	'imagelisttext' => "Ing makatuki tala yang '''$1''' {{PLURAL:$1|simpan|simpan}} a misamasan $2.",
+	'imagelisttext' => 'Ing makatuki tala yang \'\'\'$1\'\'\' {{PLURAL:$1|simpan|simpan}} a misamasan $2.',
 	'ilsubmit' => 'Manintun',
 	'imgmultipageprev' => '← minunang bulung',
 	'imgmultipagenext' => 'tutuking bulung →',
 	'imgmultigo' => 'Sulung!',
-);
+];
 
-$messages['pap'] = array(
+$messages['pap'] = [
 	'internalerror' => 'Eror interno',
 	'invert' => 'Invertí selekshon',
-);
+];
 
-$messages['pcd'] = array(
+$messages['pcd'] = [
 	'internalerror' => 'Bérlurache intérne',
 	'internalerror_info' => 'Bérlurache intérne: $1',
 	'italic_sample' => 'Teske italique',
@@ -18284,14 +18302,14 @@ $messages['pcd'] = array(
 	'invert' => 'Invérser el sélékchon',
 	'isredirect' => 'pache érdirigée',
 	'istemplate' => 'transclusion',
-	'isimage' => "Loïen aveuc l'imache",
+	'isimage' => 'Loïen aveuc l\'imache',
 	'ipboptions' => '2 heures:2 hours,1 jour:1 day,3 jours:3 days,1 ésminne:1 week,2 ésminnes:2 weeks,1 moés:1 month,3 moés:3 months,6 moés:6 months,1 an:1 year,infini:infinite',
 	'ipbotheroption' => 'eute',
 	'ipblocklist' => 'Uzeus blotchés',
 	'imgmultipageprev' => '← pache édvant',
-);
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'info_short' => 'Information',
 	'image_sample' => 'Beeschpiel.jpg',
 	'img-auth-nofile' => 'Feil „$1“ gebt es net.',
@@ -18318,17 +18336,17 @@ $messages['pdc'] = array(
 	'imgmultipagenext' => 'neegschtes Blatt →',
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Geh zu Blatt $1',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'imagelinks' => 'Links',
 	'isredirect' => 'Wiedaleid-Sied',
 	'istemplate' => 'Vealoag-Enbinje (Inklusioon)',
 	'isimage' => 'Dotei-Link',
 	'ipboptions' => '2 Stunde:2 hours,1 Dach:1 day,3 Doag:3 days,1 Wäakj:1 week,2 Wäakje:2 weeks,1 Moonat:1 month,3 Moonate:3 months,6 Moonate:6 months,1 Joa:1 year,one Enj:infinite',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'italic_sample' => 'Kursive Schrift',
 	'italic_tip' => 'Kursive Schrift',
 	'image_tip' => 'Bildverwais',
@@ -18343,9 +18361,9 @@ $messages['pfl'] = array(
 	'ipblocklist' => 'Gsperrte IP-Adresse un Benutzername',
 	'import-interwiki-submit' => 'Impordiere',
 	'ilsubmit' => 'Such',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'index-category' => 'Strony indeksowane',
 	'internalerror' => 'Błąd wewnętrzny',
 	'internalerror_info' => 'Błąd wewnętrzny – $1',
@@ -18354,8 +18372,8 @@ Wpisz poprawny adres e‐mail lub wyczyść pole.',
 	'italic_sample' => 'Tekst pochyłą czcionką',
 	'italic_tip' => 'Tekst pochyłą czcionką',
 	'image_sample' => 'Przykład.jpg',
-	'image_tip' => 'Grafika lub inny plik osadzony w stronie',
-	'ignorewarning' => 'Zignoruj ostrzeżenia i wymuś zapisanie pliku.',
+	'image_tip' => 'Obraz lub inny plik osadzony na stronie',
+	'ignorewarning' => 'Zignoruj ostrzeżenia i wymuś zapisanie pliku',
 	'ignorewarnings' => 'Ignoruj wszystkie ostrzeżenia',
 	'illegalfilename' => 'Nazwa pliku „$1” zawiera znaki niedozwolone w tytułach stron.
 Zmień nazwę pliku i prześlij go ponownie.',
@@ -18445,7 +18463,7 @@ Należy on do zablokowanego zakresu adresów $2. Odblokować można tylko cały 
 	'immobile-target-namespace-iw' => 'Link interwiki jest nieprawidłowym tytułem, pod który miałaby być przeniesiona strona.',
 	'immobile-source-page' => 'Tej strony nie można przenieść.',
 	'immobile-target-page' => 'Nie można przenieść pod wskazany tytuł.',
-	'imagenocrossnamespace' => 'Nie można przenieść grafiki do przestrzeni nazw nie przeznaczonej dla grafik',
+	'imagenocrossnamespace' => 'Nie można przenieść pliku do przestrzeni nazw nie przeznaczonej dla plików',
 	'imagetypemismatch' => 'Nowe rozszerzenie nazwy pliku jest innego typu niż zawartość',
 	'imageinvalidfilename' => 'Nazwa pliku docelowego jest nieprawidłowa',
 	'import' => 'Import stron',
@@ -18495,8 +18513,8 @@ Brak katalogu dla plików tymczasowych.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|wersja|wersje|wersji}}',
 	'import-logentry-interwiki' => 'zaimportował $1 używając transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|wersja|wersje|wersji}} z $2',
-	'imagemaxsize' => "Ograniczenie wielkości obrazków<br />''(na stronach opisu plików)''",
-	'imagelisttext' => "Poniżej na {{PLURAL:$1||posortowanej $2}} liście {{PLURAL:$1|znajduje|znajdują|znajduje}} się '''$1''' {{PLURAL:$1|plik|pliki|plików}}.",
+	'imagemaxsize' => 'Ograniczenie wielkości obrazków<br />\'\'(na stronach opisu plików)\'\'',
+	'imagelisttext' => 'Poniżej na {{PLURAL:$1||posortowanej $2}} liście {{PLURAL:$1|znajduje|znajdują|znajduje}} się \'\'\'$1\'\'\' {{PLURAL:$1|plik|pliki|plików}}.',
 	'ilsubmit' => 'Szukaj',
 	'invalidateemail' => 'Anulowanie potwierdzenia adresu e‐mail',
 	'imgmultipageprev' => '← poprzednia strona',
@@ -18512,114 +18530,115 @@ Brak katalogu dla plików tymczasowych.',
 	'iranian-calendar-m9' => 'Āsar',
 	'iranian-calendar-m10' => 'Déi',
 	'intentionallyblankpage' => 'Ta strona umyślnie pozostała pusta',
-);
+	'irc' => 'Wikia - kanał IRC',
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'index-category' => 'Pàgine indicisà',
 	'internalerror' => 'Eror intern',
 	'internalerror_info' => 'Eror antern: $1',
-	'invalidemailaddress' => "Costa adrëssa ëd pòsta eletrònica-sì as peul nen pijesse përchè a l'ha na forma nen bon-a.
-Për piasì che a buta n'adrëssa scrita giusta ò che a lassa ël camp veujd.",
+	'invalidemailaddress' => 'Costa adrëssa ëd pòsta eletrònica-sì as peul nen pijesse përchè a l\'ha na forma nen bon-a.
+Për piasì che a buta n\'adrëssa scrita giusta ò che a lassa ël camp veujd.',
 	'italic_sample' => 'Test an corsiv',
 	'italic_tip' => 'Test an corsiv',
 	'image_sample' => 'Esempi.jpg',
 	'image_tip' => 'Figura anglobà ant ël test',
-	'ignorewarning' => "Lassé perde j'avis e salvé an tute le manere",
-	'ignorewarnings' => "Lassé perde j'avis",
+	'ignorewarning' => 'Lassé perde j\'avis e salvé an tute le manere',
+	'ignorewarnings' => 'Lassé perde j\'avis',
 	'illegalfilename' => 'Ël nòm d\'archivi "$1" a l\'ha andrinta dij caràter che as peulo pa dovresse ant ij tìtoj dle pàgine. Për piasì che a-j cangia \'d nòm e peui che a torna a carielo.',
-	'illegal-filename' => "Ël nòm dl'archivi a l'é nen consentì.",
+	'illegal-filename' => 'Ël nòm dl\'archivi a l\'é nen consentì.',
 	'invalid-chunk-offset' => 'Inissi dël segment pa bon',
 	'img-auth-accessdenied' => 'Acess negà',
-	'img-auth-nopathinfo' => "PATH_INFO mancant.
-Sò servent a l'é nen ampostà për passé costa anformassion.
-Peul desse ch'a sia basà an sij CGI e a peul pa mantnì img_auth.
-Varda https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
-	'img-auth-notindir' => "Ël senté ciamà a l'é pa ant ël dossié configurà për carié.",
+	'img-auth-nopathinfo' => 'PATH_INFO mancant.
+Sò servent a l\'é nen ampostà për passé costa anformassion.
+Peul desse ch\'a sia basà an sij CGI e a peul pa mantnì img_auth.
+Varda https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
+	'img-auth-notindir' => 'Ël senté ciamà a l\'é pa ant ël dossié configurà për carié.',
 	'img-auth-badtitle' => 'As peul pa fesse un tìtol bon për "$1".',
 	'img-auth-nologinnWL' => 'A l\'é pa intrà ant ël sistema e "$1" a l\'é pa ant la lista bianca.',
 	'img-auth-nofile' => 'L\'archivi "$1" a esist pa.',
 	'img-auth-isdir' => 'A l\'é an camin ch\'a preuve a intré ant un dossié "$1".
 As peul mach avèj acess a j\'archivi.',
 	'img-auth-streaming' => 'Letura an continuà ëd "$1".',
-	'img-auth-public' => "La funsion d'img_auth.php a l'é dë smone dj'archivi da na wiki privà.
-Sta wiki-sì a l'é configurà com na wiki pùblica.
-Për na sicurëssa otimal, img_auth.php a l'é disabilità.",
+	'img-auth-public' => 'La funsion d\'img_auth.php a l\'é dë smone dj\'archivi da na wiki privà.
+Sta wiki-sì a l\'é configurà com na wiki pùblica.
+Për na sicurëssa otimal, img_auth.php a l\'é disabilità.',
 	'img-auth-noread' => 'L\'utent a l\'ha pa ij privilegi për lese "$1".',
-	'img-auth-bad-query-string' => "L'anliura a l'ha na stringa d'arcesta pa bon-a.",
+	'img-auth-bad-query-string' => 'L\'anliura a l\'ha na stringa d\'arcesta pa bon-a.',
 	'imgfile' => 'archivi',
-	'imagelinks' => "Usagi dl'archivi",
-	'iteminvalidname' => "Problema con l'element '$1', nòm nen vàlid...",
+	'imagelinks' => 'Usagi dl\'archivi',
+	'iteminvalidname' => 'Problema con l\'element \'$1\', nòm nen vàlid...',
 	'invert' => 'Anvertì la selession',
 	'isredirect' => 'ridiression',
 	'istemplate' => 'inclusion',
-	'isimage' => "anliura a l'archivi",
+	'isimage' => 'anliura a l\'archivi',
 	'ipadressorusername' => 'Adrëssa IP ò stranòm',
 	'ipbexpiry' => 'Fin-a al',
 	'ipbreason' => 'Rason:',
 	'ipbreasonotherlist' => 'Àotr motiv',
-	'ipbreason-dropdown' => "*Motiv sòlit për ij blocagi
-** Avej butà d'anformassion fàosse
-** Avej gavà dël contnù da 'nt le pàgine
-** Avèj butà dla rumenta porcherìa coma anliure d'areclam
+	'ipbreason-dropdown' => '*Motiv sòlit për ij blocagi
+** Avej butà d\'anformassion fàosse
+** Avej gavà dël contnù da \'nt le pàgine
+** Avèj butà dla rumenta porcherìa coma anliure d\'areclam
 ** Avèj butà test sensa sust ant le pàgine
 ** Avèj un deuit da bërsach con la gent
 ** Avèj dovrà vàire cont fòra dij deuit
-** Stranòm ch'as peul nen acetesse",
-	'ipb-hardblock' => "Proibì a j'utent intrà ant ël sistema ëd modifiché da cost'adrëssa IP",
+** Stranòm ch\'as peul nen acetesse',
+	'ipb-hardblock' => 'Proibì a j\'utent intrà ant ël sistema ëd modifiché da cost\'adrëssa IP',
 	'ipbcreateaccount' => 'Lassé pa pi creé dij cont neuv',
-	'ipbemailban' => "Nen lassé che l'utent a peula mandé ëd mëssagi ëd pòsta eletrònica",
-	'ipbenableautoblock' => "Bloché an automàtich la dariera adrëssa IP dovrà da l'utent e tute cole dont peuj cheidun as preuva a fé dle modìfiche",
-	'ipbsubmit' => "Bloché st'utent-sì",
-	'ipbother' => "N'àutra durà",
-	'ipboptions' => "2 ore:2 hours,1 di:1 day,3 di:3 days,na sman-a:1 week,2 sman-e:2 weeks,1 mèis:1 month,3 mèis:3 months,6 mèis:6 months,n'ann:1 year,për sempe:infinite",
-	'ipbotheroption' => "d'àutr",
+	'ipbemailban' => 'Nen lassé che l\'utent a peula mandé ëd mëssagi ëd pòsta eletrònica',
+	'ipbenableautoblock' => 'Bloché an automàtich la dariera adrëssa IP dovrà da l\'utent e tute cole dont peuj cheidun as preuva a fé dle modìfiche',
+	'ipbsubmit' => 'Bloché st\'utent-sì',
+	'ipbother' => 'N\'àutra durà',
+	'ipboptions' => '2 ore:2 hours,1 di:1 day,3 di:3 days,na sman-a:1 week,2 sman-e:2 weeks,1 mèis:1 month,3 mèis:3 months,6 mèis:6 months,n\'ann:1 year,për sempe:infinite',
+	'ipbotheroption' => 'd\'àutr',
 	'ipbotherreason' => 'Àotri motiv/spiegon',
-	'ipbhidename' => "Stërmé lë stranòm da 'nt le modìfiche e da 'nt j'elench",
-	'ipbwatchuser' => "Ten-e d'euj le pàgine utent e ëd discussion dë st'utent-sì",
-	'ipb-disableusertalk' => "Proibì a st'utent ëd modifiché soa pàgina ëd discussion quand a l'é blocà",
-	'ipb-change-block' => "Bloché l'utent con coste ampostassion",
+	'ipbhidename' => 'Stërmé lë stranòm da \'nt le modìfiche e da \'nt j\'elench',
+	'ipbwatchuser' => 'Ten-e d\'euj le pàgine utent e ëd discussion dë st\'utent-sì',
+	'ipb-disableusertalk' => 'Proibì a st\'utent ëd modifiché soa pàgina ëd discussion quand a l\'é blocà',
+	'ipb-change-block' => 'Bloché l\'utent con coste ampostassion',
 	'ipb-confirm' => 'Confermé ël blocagi',
-	'ipb-blockingself' => "A l'é an camin ch'as blòca chiel-midem! É-lo sigur ëd vorèj fé lòn?",
-	'ipb-confirmhideuser' => "A l'é an camin ch'a blòca n'utent con «stërmé l'utent» abilità. Sòn a gaverà lë stranòm ëd l'utent da tute le liste e le vos ëd registr. É-lo sigur ëd vorèj fé lòn?",
+	'ipb-blockingself' => 'A l\'é an camin ch\'as blòca chiel-midem! É-lo sigur ëd vorèj fé lòn?',
+	'ipb-confirmhideuser' => 'A l\'é an camin ch\'a blòca n\'utent con «stërmé l\'utent» abilità. Sòn a gaverà lë stranòm ëd l\'utent da tute le liste e le vos ëd registr. É-lo sigur ëd vorèj fé lòn?',
 	'ipb-edit-dropdown' => 'Modifiché le rason dël blocagi',
 	'ipb-unblock-addr' => 'Dësbloché $1',
-	'ipb-unblock' => "Dësbloché n'utent ò n'adrëssa IP",
+	'ipb-unblock' => 'Dësbloché n\'utent ò n\'adrëssa IP',
 	'ipb-blocklist' => 'Vardé ij blocagi ativ',
 	'ipb-blocklist-contribs' => 'Contribussion për $1',
 	'ipusubmit' => 'Gavé ës blocagi',
 	'ipblocklist' => 'Adrësse IP e utent blocà',
-	'ipblocklist-legend' => "Trové n'utent blocà",
+	'ipblocklist-legend' => 'Trové n\'utent blocà',
 	'ipblocklist-submit' => 'Arserché',
 	'ipblocklist-localblock' => 'Blocagi local',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Àutr blocagi|Àutri blocagi}}',
 	'infiniteblock' => 'për sempe',
-	'ipblocklist-empty' => "La lista dij blocagi a l'é veujda.",
-	'ipblocklist-no-results' => "L'adrëssa IP ò lë stranòm ch'a l'ha ciamà a l'é pa blocà.",
+	'ipblocklist-empty' => 'La lista dij blocagi a l\'é veujda.',
+	'ipblocklist-no-results' => 'L\'adrëssa IP ò lë stranòm ch\'a l\'ha ciamà a l\'é pa blocà.',
 	'ipb_expiry_invalid' => 'Temp dë scadensa nen bon.',
 	'ipb_expiry_temp' => 'Ij blocagi djë stranòm ëstërmà a devo esse përmanent.',
 	'ipb_hide_invalid' => 'Impossìbil scancelé ës cont; a podrìa avèj tròpe modìfiche.',
-	'ipb_already_blocked' => "«$1» a l'é già blocà",
-	'ipb-needreblock' => "$1 a l'é già blocà. Veul-lo cambié j'ampostassion?",
+	'ipb_already_blocked' => '«$1» a l\'é già blocà',
+	'ipb-needreblock' => '$1 a l\'é già blocà. Veul-lo cambié j\'ampostassion?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Àutr|Àutri}} blocagi',
 	'ipb_cant_unblock' => 'Eror: As treuva nen ël blocagi con identificativ $1. A peul esse che a sia un blocagi già gavà via.',
-	'ipb_blocked_as_range' => "Eror: L'adrëssa IP $1 a l'ha gnun blocagi diret ansima e donca a peul pa esse dësblocà. A resta blocà mach për via ch'a l'é ciapà andrinta al ragg $2, e lolì as peul pa dësblochesse.",
+	'ipb_blocked_as_range' => 'Eror: L\'adrëssa IP $1 a l\'ha gnun blocagi diret ansima e donca a peul pa esse dësblocà. A resta blocà mach për via ch\'a l\'é ciapà andrinta al ragg $2, e lolì as peul pa dësblochesse.',
 	'ip_range_invalid' => 'Nùmer IP nen bon.',
-	'ip_range_toolarge' => "Ij blocagi d'antërvaj pi gròss che /$1 a son pa përmëttù.",
-	'ipbblocked' => "A peul pa bloché o dësbloché d'àutri utent, përchè a l'é blocà chiel-midem",
+	'ip_range_toolarge' => 'Ij blocagi d\'antërvaj pi gròss che /$1 a son pa përmëttù.',
+	'ipbblocked' => 'A peul pa bloché o dësbloché d\'àutri utent, përchè a l\'é blocà chiel-midem',
 	'ipbnounblockself' => 'It peule pa dësbloché ti midem',
 	'immobile-source-namespace' => 'As peul pa tramudé ëd pàgine ant ël namespace "$1"',
 	'immobile-target-namespace' => 'As peul pa tramudé ëd pàgine ant ël namespace "$1"',
-	'immobile-target-namespace-iw' => "Un colegament interwiki a l'é pa na destinassion vàlida për tramudé na pàgina.",
+	'immobile-target-namespace-iw' => 'Un colegament interwiki a l\'é pa na destinassion vàlida për tramudé na pàgina.',
 	'immobile-source-page' => 'Sta pàgina-sì as peul pa tramudesse.',
 	'immobile-target-page' => 'As peul pa tramudess al tìtol dë sta destinassion-sì.',
 	'imagenocrossnamespace' => 'As peul pa tramudé un file fòra dal sò namespace',
 	'imagetypemismatch' => 'La neuva estension dël file a corispond pa a sò tipo',
-	'imageinvalidfilename' => "Ël nòm dël file pontà a l'é pa vàlid",
+	'imageinvalidfilename' => 'Ël nòm dël file pontà a l\'é pa vàlid',
 	'import' => 'Amportassion ëd pàgine',
 	'importinterwiki' => 'Amportassion da wiki diferente',
-	'import-interwiki-text' => "Che a selession-a na wiki e ël tìtol dla pàgina da amporté.
-Date dle revision e stranòm dj'editor a resteran piajit sù 'cò lor.
-Tute le amportassion antra wiki diferente a resto marcà ant ël [[Special:Log/import|Registr dj'amportassion]].",
+	'import-interwiki-text' => 'Che a selession-a na wiki e ël tìtol dla pàgina da amporté.
+Date dle revision e stranòm dj\'editor a resteran piajit sù \'cò lor.
+Tute le amportassion antra wiki diferente a resto marcà ant ël [[Special:Log/import|Registr dj\'amportassion]].',
 	'import-interwiki-source' => 'Sorziss wiki/pàgina:',
 	'import-interwiki-history' => 'Còpia tute le version stòriche dë sta pàgina-sì',
 	'import-interwiki-templates' => 'Ansëriss tùit jë stamp',
@@ -18627,46 +18646,46 @@ Tute le amportassion antra wiki diferente a resto marcà ant ël [[Special:Log/i
 	'import-interwiki-namespace' => 'Spassi nominal ëd destinassion:',
 	'import-upload-filename' => 'Nòm dël file:',
 	'import-comment' => 'Oget:',
-	'importtext' => "Për piasì, che as espòrta l'archivi da 'nt la sorgiss wiki ën dovrand l'[[Special:Export|utiss d'esportassion]].
-Che as lo salva ansima a sò ordinator e peui che a lo caria ambelessì.",
+	'importtext' => 'Për piasì, che as espòrta l\'archivi da \'nt la sorgiss wiki ën dovrand l\'[[Special:Export|utiss d\'esportassion]].
+Che as lo salva ansima a sò ordinator e peui che a lo caria ambelessì.',
 	'importstart' => 'I soma antramentr che amportoma le pàgine...',
 	'import-revision-count' => '{{PLURAL:$1|Na|$1}} revision',
 	'importnopages' => 'Pa gnun-a pàgina da amporté',
 	'imported-log-entries' => 'Amportà $1 {{PLURAL:$1|vos ëd registr|vos ëd registr}}.',
 	'importfailed' => 'Amportassion falìa: $1',
-	'importunknownsource' => "Sorgiss d'amportassion ëd na sòrt nen conossùa",
-	'importcantopen' => "L'archivi da amporté a l'é pa podusse deurbe",
+	'importunknownsource' => 'Sorgiss d\'amportassion ëd na sòrt nen conossùa',
+	'importcantopen' => 'L\'archivi da amporté a l\'é pa podusse deurbe',
 	'importbadinterwiki' => 'Anliura antra wiki diferente malfaita',
 	'importnotext' => 'Veujd ò sensa pa gnun test',
 	'importsuccess' => 'Amportassion andaita a bon fin!',
-	'importhistoryconflict' => "A-i son dle stòrie dë sta pàgina-sì che as contradisso un-a con l'àutra (a peul esse che sta pàgina-sì a l'avèissa già amportala)",
-	'importnosources' => "A l'é pa staita definìa gnun-a sorgiss d'amportassion da na wiki diferenta, e carié mach le stòrie as peul nen.",
-	'importnofile' => "Pa gnun archivi d'amportassion carià.",
-	'importuploaderrorsize' => "A l'é falìe la caria dl'archivi d'amporté. L'archivi a resta pì gròss che lòn ch'as peul cariesse.",
-	'importuploaderrorpartial' => "A l'é falìe la caria dl'archivi d'amporté. L'archivi a resta carià mach për un tòch.",
-	'importuploaderrortemp' => "A l'é falìe la caria dl'archivi d'amporté. A-i manca un dossié provisòri.",
-	'import-parse-failure' => "Eror dë scomposission XML ant l'amportassion",
-	'import-noarticle' => "Pa gnun-a pàgina d'amporté.",
-	'import-nonewrevisions' => "Tute le revision a l'ero già stàite amportà.",
+	'importhistoryconflict' => 'A-i son dle stòrie dë sta pàgina-sì che as contradisso un-a con l\'àutra (a peul esse che sta pàgina-sì a l\'avèissa già amportala)',
+	'importnosources' => 'A l\'é pa staita definìa gnun-a sorgiss d\'amportassion da na wiki diferenta, e carié mach le stòrie as peul nen.',
+	'importnofile' => 'Pa gnun archivi d\'amportassion carià.',
+	'importuploaderrorsize' => 'A l\'é falìe la caria dl\'archivi d\'amporté. L\'archivi a resta pì gròss che lòn ch\'as peul cariesse.',
+	'importuploaderrorpartial' => 'A l\'é falìe la caria dl\'archivi d\'amporté. L\'archivi a resta carià mach për un tòch.',
+	'importuploaderrortemp' => 'A l\'é falìe la caria dl\'archivi d\'amporté. A-i manca un dossié provisòri.',
+	'import-parse-failure' => 'Eror dë scomposission XML ant l\'amportassion',
+	'import-noarticle' => 'Pa gnun-a pàgina d\'amporté.',
+	'import-nonewrevisions' => 'Tute le revision a l\'ero già stàite amportà.',
 	'import-upload' => 'Carìa dat XML',
 	'import-token-mismatch' => 'Perdù ij dat ëd session.
 Për piasì preuva torna.',
 	'import-invalid-interwiki' => 'As peul pa amportesse da la wiki spessificà.',
-	'import-error-edit' => "La pàgina «$1» a l'é pa amportà përchè a peul pa modifichela.",
-	'import-error-create' => "La pàgina «$1» a l'é pa amportà përchè a peul pa creela.",
+	'import-error-edit' => 'La pàgina «$1» a l\'é pa amportà përchè a peul pa modifichela.',
+	'import-error-create' => 'La pàgina «$1» a l\'é pa amportà përchè a peul pa creela.',
 	'import-error-interwiki' => 'La pàgina "$1" a l\'é pa amportà përchè sò nòm a l\'é arzervà për na liura esterna (antërwiki).',
 	'import-error-special' => 'La pàgina "$1" a l\'é pa amportà përchè a ponta a në spassi nominal ch\'a përmët pa dle pàgine.',
-	'import-error-invalid' => "La pàgina «$1» a l'é pa amportà përchè sò nòm a l'é pa bon.",
-	'importlogpage' => "Registr dj'amportassion",
-	'importlogpagetext' => "Amportassion aministrative ëd pàgine e ëd soa stòria da dj'àutre wiki.",
-	'import-logentry-upload' => "amportà [[$1]] con un càrich d'archivi",
+	'import-error-invalid' => 'La pàgina «$1» a l\'é pa amportà përchè sò nòm a l\'é pa bon.',
+	'importlogpage' => 'Registr dj\'amportassion',
+	'importlogpagetext' => 'Amportassion aministrative ëd pàgine e ëd soa stòria da dj\'àutre wiki.',
+	'import-logentry-upload' => 'amportà [[$1]] con un càrich d\'archivi',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revision|revision}}',
-	'import-logentry-interwiki' => "Amportà da n'àutra wiki $1",
+	'import-logentry-interwiki' => 'Amportà da n\'àutra wiki $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revision|revision}} da $2',
-	'imagemaxsize' => "Lìmit ëd la dimension ëd la figura:<br /> ''(për pàgine ëd descrission dij file)''",
-	'imagelisttext' => "Ambelessì sota a-i é {{PLURAL:$1|l'ùnica figura che a-i sia|na lista ëd '''$1''' figure, ordinà për $2}}.",
+	'imagemaxsize' => 'Lìmit ëd la dimension ëd la figura:<br /> \'\'(për pàgine ëd descrission dij file)\'\'',
+	'imagelisttext' => 'Ambelessì sota a-i é {{PLURAL:$1|l\'ùnica figura che a-i sia|na lista ëd \'\'\'$1\'\'\' figure, ordinà për $2}}.',
 	'ilsubmit' => 'Sërca',
-	'invalidateemail' => "Scansela l'e-mail ëd conferma",
+	'invalidateemail' => 'Scansela l\'e-mail ëd conferma',
 	'imgmultipageprev' => '← pàgina andré',
 	'imgmultipagenext' => 'pàgina anans →',
 	'imgmultigo' => 'Va',
@@ -18676,17 +18695,17 @@ Për piasì preuva torna.',
 	'iranian-calendar-m3' => 'Tèrs mèis Jalāli',
 	'iranian-calendar-m4' => 'Quart mèis Jalāli',
 	'iranian-calendar-m5' => 'Quint mèis Jalāli',
-	'iranian-calendar-m6' => "Mèis Jalāli ch'a fa ses",
-	'iranian-calendar-m7' => "Mèis Jalāli ch'a fa set",
-	'iranian-calendar-m8' => "Mèis Jalāli ch'a fa eut",
-	'iranian-calendar-m9' => "Mèis Jalāli ch'a fa neuv",
-	'iranian-calendar-m10' => "Mèis Jalāli ch'a fa des",
-	'iranian-calendar-m11' => "Mèis Jalāli ch'a fa óndes",
-	'iranian-calendar-m12' => "Meis Jalāli ch'a fa dódes",
-	'intentionallyblankpage' => "Sta pàgina-sì a l'é lassà antensionalment an bianch.",
-);
+	'iranian-calendar-m6' => 'Mèis Jalāli ch\'a fa ses',
+	'iranian-calendar-m7' => 'Mèis Jalāli ch\'a fa set',
+	'iranian-calendar-m8' => 'Mèis Jalāli ch\'a fa eut',
+	'iranian-calendar-m9' => 'Mèis Jalāli ch\'a fa neuv',
+	'iranian-calendar-m10' => 'Mèis Jalāli ch\'a fa des',
+	'iranian-calendar-m11' => 'Mèis Jalāli ch\'a fa óndes',
+	'iranian-calendar-m12' => 'Meis Jalāli ch\'a fa dódes',
+	'intentionallyblankpage' => 'Sta pàgina-sì a l\'é lassà antensionalment an bianch.',
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'index-category' => 'انڈیکسڈ صفے',
 	'internalerror' => 'اندر دا مسئلا',
 	'internalerror_info' => 'اندر دا مسئلا: $1',
@@ -18720,7 +18739,7 @@ $messages['pnb'] = array(
 	'img-auth-bad-query-string' => 'ایس یوآرایل چ اک ناں منی جان والی کویری سٹرنگ اے۔',
 	'imgfile' => 'فائل',
 	'imagelinks' => 'فائل ورتن',
-	'iteminvalidname' => "'$1' نال رپھڑ، ناں غلط",
+	'iteminvalidname' => '\'$1\' نال رپھڑ، ناں غلط',
 	'invert' => 'وچوں چناؤ',
 	'isredirect' => 'ریڈائرکٹ صفہ',
 	'istemplate' => 'ملن',
@@ -18752,7 +18771,7 @@ $messages['pnb'] = array(
 	'ipb-change-block' => 'ایناں تبدیلیاں نال ایس ورتن والے نوں فیر روکو',
 	'ipb-confirm' => 'روک پکی کرو',
 	'ipb-blockingself' => 'تسیں اپنے آپ تے آپ روک لان والے او! توانوں یقین اے جے تسیں ایہ کرنا جاندے او؟',
-	'ipb-confirmhideuser' => "تسیں اک ورتن والے تے روک لان لگے 'لکیا ورتن والا' نال۔ ایہ ایس ورتن والے دا ناں ساریاں لسٹاں تے لاگاں چوں دبالوے گا۔ کیا توانوں یقین اے جے تسیں ایہو ای کرنا چاندے او۔",
+	'ipb-confirmhideuser' => 'تسیں اک ورتن والے تے روک لان لگے \'لکیا ورتن والا\' نال۔ ایہ ایس ورتن والے دا ناں ساریاں لسٹاں تے لاگاں چوں دبالوے گا۔ کیا توانوں یقین اے جے تسیں ایہو ای کرنا چاندے او۔',
 	'ipb-edit-dropdown' => 'روک دی وجہ تبدیل کرو',
 	'ipb-unblock-addr' => '$1 توں روک ہٹاؤ',
 	'ipb-unblock' => 'ورتن والا یا آئی پی پتہ کھولو',
@@ -18838,8 +18857,8 @@ $messages['pnb'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ریوین|ریویناں}}',
 	'import-logentry-interwiki' => 'ٹرانسوکیڈ  $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ریوین|ریویناں }} $2 توں',
-	'imagemaxsize' => "مورت ناپ حد:<br />''(دسن والیاں فائل صفیاں لئی)''",
-	'imagelisttext' => "تھلے اک لسٹ دتی گئی اے '''$1''' {{PLURAL:$1|فائل|فائلاں}} وکھریاں کیتیاں $2.",
+	'imagemaxsize' => 'مورت ناپ حد:<br />\'\'(دسن والیاں فائل صفیاں لئی)\'\'',
+	'imagelisttext' => 'تھلے اک لسٹ دتی گئی اے \'\'\'$1\'\'\' {{PLURAL:$1|فائل|فائلاں}} وکھریاں کیتیاں $2.',
 	'ilsubmit' => 'کھوجو',
 	'invalidateemail' => 'ای-میل پکا کرنا واپس کرو',
 	'imgmultipageprev' => '← پچھلا صفحہ',
@@ -18847,9 +18866,9 @@ $messages['pnb'] = array(
 	'imgmultigo' => 'جاؤ!',
 	'imgmultigoto' => '$1 تے جاؤ',
 	'intentionallyblankpage' => 'اے صفہ جان بج اے خالی رکھیا گیا اے۔',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'index-category' => 'Συντεταγμένα σελίδας',
 	'internalerror' => 'Σφάλμαν απές μερέαν',
 	'internalerror_info' => 'Σφάλμαν απές μερέαν: $1',
@@ -18858,7 +18877,7 @@ $messages['pnt'] = array(
 	'image_tip' => 'Ενσωματωμένον εικόνα',
 	'imgfile' => 'αρχείον',
 	'imagelinks' => 'Συνδέσμ αρχείων',
-	'invert' => "Αντιστροφή τ' επιλογής",
+	'invert' => 'Αντιστροφή τ\' επιλογής',
 	'isredirect' => 'σελίδαν διπλού σύνδεσμονος',
 	'istemplate' => 'ενσωμάτωση',
 	'isimage' => 'σύνδεσμον εικόνας',
@@ -18868,7 +18887,7 @@ $messages['pnt'] = array(
 	'ipbsubmit' => 'Ασπάλισον τον χρήστεν',
 	'ipbother' => 'Άλλον ώρα:',
 	'ipboptions' => '2 ώρας:2 hours,1 ημέρα:1 day,3 ημέρας:3 days,1 εβδομάδα:1 week,2 εβδομάδας:2 weeks,1 μήνα:1 month,3 μήνας:3 months,6 μήνας:6 months,1 χρόνο:1 year,αόριστα:infinite',
-	'ipbotheroption' => "άλλ'",
+	'ipbotheroption' => 'άλλ\'',
 	'ipbotherreason' => 'Άλλον/κιάλλον αιτία:',
 	'ipb-edit-dropdown' => 'Άλλαξον αιτίας ασπαλιγματί',
 	'ipblocklist' => 'Ασπαλιγμένα IP και λογαρίας',
@@ -18878,7 +18897,7 @@ $messages['pnt'] = array(
 	'import-interwiki-submit' => 'Έμπαζμαν',
 	'import-comment' => 'Σχόλιον:',
 	'importstart' => 'Έμπαζμαν σελιδίων...',
-	'import-noarticle' => "'Κ εχ' σελίδαν για έμπαζμαν!",
+	'import-noarticle' => '\'Κ εχ\' σελίδαν για έμπαζμαν!',
 	'importlogpage' => 'Αρχείον εμπαζματίων',
 	'import-logentry-interwiki' => 'εγέντον εισαγωγήν transwiki σην σελίδαν $1',
 	'ilsubmit' => 'Αράεμαν',
@@ -18886,9 +18905,9 @@ $messages['pnt'] = array(
 	'imgmultipagenext' => 'επόμενον σελίδα →',
 	'imgmultigo' => 'Δέβα!',
 	'imgmultigoto' => 'Δέβα σην σελίδαν $1',
-);
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'index-category' => 'Indicīntai pāusai',
 	'internalerror' => 'Ēntrewingi blānda',
 	'internalerror_info' => 'Ēntrewingi blānda: $1',
@@ -19002,8 +19021,8 @@ Madli bandais etkūmps.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|wersiōni|wersiōnis}}',
 	'import-logentry-interwiki' => '$1 impōrtitan pra transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|wersiōni|wersiōnis}} iz $2',
-	'imagemaxsize' => "Arāikinais bildin debban:<br />''(per zūrbrukes ebpeisāsenes pāusans)''",
-	'imagelisttext' => "En zemmaišai listin ast '''$1''' {{PLURAL:$1|zūrbrukis rikaūts|zūrbrukei rikaūtai}} $2.",
+	'imagemaxsize' => 'Arāikinais bildin debban:<br />\'\'(per zūrbrukes ebpeisāsenes pāusans)\'\'',
+	'imagelisttext' => 'En zemmaišai listin ast \'\'\'$1\'\'\' {{PLURAL:$1|zūrbrukis rikaūts|zūrbrukei rikaūtai}} $2.',
 	'ilsubmit' => 'Laukīs',
 	'invalidateemail' => 'Naikinnais e-mail padrūktinsnan',
 	'imgmultipageprev' => '← ānkstaisin pāusan',
@@ -19011,9 +19030,9 @@ Madli bandais etkūmps.',
 	'imgmultigo' => 'Ēis!',
 	'imgmultigoto' => 'Ēis en pāusan $1',
 	'intentionallyblankpage' => 'Šin pāusan ast aumenewīngi palaīstan pāustan.',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'index-category' => 'ليکلړلرونکي مخونه',
 	'internalerror' => 'کورنۍ تېروتنه',
 	'internalerror_info' => 'کورنۍ تېروتنه: $1',
@@ -19079,7 +19098,7 @@ $messages['ps'] = array(
 	'import-upload-filename' => 'د دوتنې نوم:',
 	'import-comment' => 'تبصره:',
 	'importlogpage' => 'د واردولو يادښت',
-	'imagelisttext' => "دلته لاندې د '''$1''' {{PLURAL:$1|دوتنه|دوتنې}} يو لړليک دی چې اوډل شوي $2.",
+	'imagelisttext' => 'دلته لاندې د \'\'\'$1\'\'\' {{PLURAL:$1|دوتنه|دوتنې}} يو لړليک دی چې اوډل شوي $2.',
 	'ilsubmit' => 'پلټل',
 	'imgmultipageprev' => '← پخوانی مخ',
 	'imgmultipagenext' => 'راتلونکی مخ →',
@@ -19098,9 +19117,9 @@ $messages['ps'] = array(
 	'iranian-calendar-m11' => 'سلواغه',
 	'iranian-calendar-m12' => 'کب',
 	'intentionallyblankpage' => 'همدا مخ په لوی لاس تش پرېښودل شوی دی',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'index-category' => 'Páginas indexadas',
 	'internalerror' => 'Erro interno',
 	'internalerror_info' => 'Erro interno: $1',
@@ -19126,7 +19145,7 @@ Consulte a documentação em [//www.mediawiki.org/wiki/Manual:Image_Authorizatio
 	'img-auth-nofile' => 'O ficheiro "$1" não existe.',
 	'img-auth-isdir' => 'Está tentando aceder ao directório "$1".
 Só é permitido o acesso a ficheiros.',
-	'img-auth-streaming' => "A fazer o ''streaming'' de \"\$1\".",
+	'img-auth-streaming' => 'A fazer o \'\'streaming\'\' de "$1".',
 	'img-auth-public' => 'A função do img_auth.php é produzir ficheiros a partir de uma wiki privada.
 Esta wiki está configurada como uma wiki pública.
 Para optimizar a segurança, o img_auth.php está impossibilitado de executar.',
@@ -19134,7 +19153,7 @@ Para optimizar a segurança, o img_auth.php está impossibilitado de executar.',
 	'img-auth-bad-query-string' => 'A URL tem um texto de consulta inválido.',
 	'imgfile' => 'ficheiro',
 	'imagelinks' => 'Uso do ficheiro',
-	'iteminvalidname' => "Problema com item '$1', nome inválido...",
+	'iteminvalidname' => 'Problema com item \'$1\', nome inválido...',
 	'invert' => 'Inverter selecção',
 	'isredirect' => 'página de redireccionamento',
 	'istemplate' => 'inclusão',
@@ -19251,8 +19270,8 @@ Não há um directório temporário.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|uma edição|$1 edições}}',
 	'import-logentry-interwiki' => 'transwikis $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|$1 edição|$1 edições}} de $2',
-	'imagemaxsize' => "Limite de tamanho de imagens:<br />''(para páginas de descrição)''",
-	'imagelisttext' => "Abaixo é apresentada uma lista {{PLURAL:$1|de '''um''' ficheiro, organizado|de '''$1''' ficheiros, organizados}} $2.",
+	'imagemaxsize' => 'Limite de tamanho de imagens:<br />\'\'(para páginas de descrição)\'\'',
+	'imagelisttext' => 'Abaixo é apresentada uma lista {{PLURAL:$1|de \'\'\'um\'\'\' ficheiro, organizado|de \'\'\'$1\'\'\' ficheiros, organizados}} $2.',
 	'ilsubmit' => 'Procurar',
 	'invalidateemail' => 'Cancelar confirmação de correio electrónico',
 	'imgmultipageprev' => '← página anterior',
@@ -19260,15 +19279,15 @@ Não há um directório temporário.',
 	'imgmultigo' => 'Ir!',
 	'imgmultigoto' => 'Ir para a página $1',
 	'intentionallyblankpage' => 'Esta página foi intencionalmente deixada em branco',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'index-category' => 'Páginas indexadas',
 	'internalerror' => 'Erro interno',
 	'internalerror_info' => 'Erro interno: $1',
 	'invalidtitle-knownnamespace' => 'Título inválido para o espaço nominal "$2" e texto "$3"',
 	'invalidtitle-unknownnamespace' => 'Título inválido para o espaço nominal de número desconhecido ($1) e texto "$2"',
-	'invalidemailaddress' => "O endereço de ''e-mail'' não pode ser aceite devido a talvez possuir um formato inválido. Por favor, introduza um endereço bem formatado ou esvazie o campo.",
+	'invalidemailaddress' => 'O endereço de \'\'e-mail\'\' não pode ser aceite devido a talvez possuir um formato inválido. Por favor, introduza um endereço bem formatado ou esvazie o campo.',
 	'italic_sample' => 'Texto em itálico',
 	'italic_tip' => 'Texto em itálico',
 	'image_sample' => 'Exemplo.jpg',
@@ -19289,7 +19308,7 @@ Consulte a documentação em [//www.mediawiki.org/wiki/Manual:Image_Authorizatio
 	'img-auth-nofile' => 'Arquivo "$1" não existe.',
 	'img-auth-isdir' => 'Você está tentando acessar o diretório "$1".
 Somente acesso ao arquivo é permitido.',
-	'img-auth-streaming' => "Realizando ''streaming'' de \"\$1\".",
+	'img-auth-streaming' => 'Realizando \'\'streaming\'\' de "$1".',
 	'img-auth-public' => 'A img_auth.php produz arquivos a partir de um wiki privado.
 Este wiki está configurado como um wiki público.
 Para melhor segurança, o img_auth.php está desativado.',
@@ -19297,7 +19316,7 @@ Para melhor segurança, o img_auth.php está desativado.',
 	'img-auth-bad-query-string' => 'A URL tem um texto de consulta inválido.',
 	'imgfile' => 'arquivo',
 	'imagelinks' => 'Uso do arquivo',
-	'iteminvalidname' => "Problema com item '$1', nome inválido...",
+	'iteminvalidname' => 'Problema com item \'$1\', nome inválido...',
 	'invert' => 'Inverter seleção',
 	'isredirect' => 'página de redirecionamento',
 	'istemplate' => 'transclusão',
@@ -19411,8 +19430,8 @@ Salve o arquivo no seu computador e importe-o aqui.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|uma edição|$1 edições}}',
 	'import-logentry-interwiki' => 'transwiki $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|$1 edição|$1 edições}} de $2',
-	'imagemaxsize' => "Limite de tamanho de imagem:<br />''(para páginas de descrição de arquivos)''",
-	'imagelisttext' => "É exibida a seguir uma listagem {{PLURAL:$1|de '''um''' arquivo organizado|de '''$1''' arquivos organizados}} por $2.",
+	'imagemaxsize' => 'Limite de tamanho de imagem:<br />\'\'(para páginas de descrição de arquivos)\'\'',
+	'imagelisttext' => 'É exibida a seguir uma listagem {{PLURAL:$1|de \'\'\'um\'\'\' arquivo organizado|de \'\'\'$1\'\'\' arquivos organizados}} por $2.',
 	'ilsubmit' => 'Pesquisar',
 	'invalidateemail' => 'Cancelar confirmação de e-mail',
 	'imgmultipageprev' => '← página anterior',
@@ -19420,29 +19439,29 @@ Salve o arquivo no seu computador e importe-o aqui.',
 	'imgmultigo' => 'Ir!',
 	'imgmultigoto' => 'Ir para a página $1',
 	'intentionallyblankpage' => 'Esta página foi intencionalmente deixada em branco e é usada para medições de performance, etc.',
-);
+];
 
-$messages['qu'] = array(
-	'index-category' => "Yuyarinachasqa p'anqakuna",
+$messages['qu'] = [
+	'index-category' => 'Yuyarinachasqa p\'anqakuna',
 	'internalerror' => 'Ukhu pantasqa',
 	'internalerror_info' => 'Ukhu pantasqa: $1',
 	'invalidtitle-knownnamespace' => '"$2" sutisuyu, "$3" qillqasqayuq mana allin kaq qillqa suti',
 	'invalidtitle-unknownnamespace' => 'Mana riqsisqa $1 kaq sutisuyu yupay, "$2" qillqasqayuq mana allin kaq qillqa suti',
-	'invalidemailaddress' => "E-chaski imamaytaykiqa manam allinchu, manachá allinta qillqasqa. Ama hina kaspa, musuq allin sananchayuq imamaytaykita qillqamuy icha k'itichata ch'usaqchay.",
+	'invalidemailaddress' => 'E-chaski imamaytaykiqa manam allinchu, manachá allinta qillqasqa. Ama hina kaspa, musuq allin sananchayuq imamaytaykita qillqamuy icha k\'itichata ch\'usaqchay.',
 	'italic_sample' => 'Wiksu qillqa',
 	'italic_tip' => 'Wiksu qillqa',
 	'image_sample' => 'Qhawarichiy.jpg',
-	'image_tip' => "Ch'aqtasqa rikcha",
+	'image_tip' => 'Ch\'aqtasqa rikcha',
 	'ignorewarning' => 'Paqtataq waqyayta qhawarparispa waqaychay',
 	'ignorewarnings' => 'Ima paqtataq waqyaytapas qhawarpariy',
-	'illegalfilename' => "«$1» nisqa williñiqip sutinqa p'anqa umallipaq mana allin sananchayuqmi. Ama hina kaspa, williñiqita sutincharaspa musuqmanta churkuykachay.",
+	'illegalfilename' => '«$1» nisqa williñiqip sutinqa p\'anqa umallipaq mana allin sananchayuqmi. Ama hina kaspa, williñiqita sutincharaspa musuqmanta churkuykachay.',
 	'illegal-filename' => 'Kay willañiqi sutiqa manam saqillasqachu.',
 	'invalid-chunk-offset' => 'Mana allin willañiqi raki churkuy',
 	'img-auth-accessdenied' => 'Manam chayman saqisqachu',
-	'img-auth-nopathinfo' => "Manam kanchu PATH_INFO.
+	'img-auth-nopathinfo' => 'Manam kanchu PATH_INFO.
 Sirwiqniykiqa manam churasqachu kaymanta willananpaq.
-CGI nisqawanchá tiksichasqa, chayrayku manachá img_auth nisqata q'imiyta atinchu.
-https://www.mediawiki.org/wiki/Manual:Image_Authorization nisqata qhaway.",
+CGI nisqawanchá tiksichasqa, chayrayku manachá img_auth nisqata q\'imiyta atinchu.
+https://www.mediawiki.org/wiki/Manual:Image_Authorization nisqata qhaway.',
 	'img-auth-notindir' => 'Mañakusqa ñanqa manam churaykusqa churkuna churanapi kachkanchu.',
 	'img-auth-badtitle' => 'Manam atinichu "$1" nisqamanta chaniyuq sutita rurayta.',
 	'img-auth-nologinnWL' => 'Manam yaykusqa kachkankichu, "$1" nisqataq manam yuraq sutisuyupi kachkanchu.',
@@ -19456,105 +19475,105 @@ Lliwmanta aswan alliku kanapaqqa, img_auth.php manam atinchu.',
 	'img-auth-noread' => 'Ruraqqa "$1" nisqata ñawiriyta manam saqillasqachu.',
 	'img-auth-bad-query-string' => 'URL tiyaypa maskana qillqaqa manam allinchu.',
 	'imgfile' => 'willañiqi',
-	'imagelinks' => "Maypim willañiqita llamk'achinku",
-	'iteminvalidname' => "'$1' nisqa qillqaqa sasachakunmi, sutinqa manam allinchu...",
-	'invert' => "Akllasqantinta t'ikrachiy",
-	'isredirect' => "pusapusqa p'anqa",
-	'istemplate' => "ch'aqtasqa",
-	'isimage' => "willañiqi t'inki",
+	'imagelinks' => 'Maypim willañiqita llamk\'achinku',
+	'iteminvalidname' => '\'$1\' nisqa qillqaqa sasachakunmi, sutinqa manam allinchu...',
+	'invert' => 'Akllasqantinta t\'ikrachiy',
+	'isredirect' => 'pusapusqa p\'anqa',
+	'istemplate' => 'ch\'aqtasqa',
+	'isimage' => 'willañiqi t\'inki',
 	'ipadressorusername' => 'IP huchha icha ruraqpa sutin',
-	'ipbexpiry' => "Hark'ay kaykama:",
+	'ipbexpiry' => 'Hark\'ay kaykama:',
 	'ipbreason' => 'Kayrayku:',
 	'ipbreasonotherlist' => 'Huk rayku',
-	'ipbreason-dropdown' => "*Hark'anapaq sapsi raykukuna
+	'ipbreason-dropdown' => '*Hark\'anapaq sapsi raykukuna
 ** Llulla willayta qillqamuy
-** P'anqata samiqninmanta ch'usaqchay
-** ''Spam'' nisqa millay t'inkikunata yapay
-** Q'upata, mana ima chaniyuqtapas yapay
-** Huk ruraqkunata manchachiy icha k'amiy
+** P\'anqata samiqninmanta ch\'usaqchay
+** \'\'Spam\'\' nisqa millay t\'inkikunata yapay
+** Q\'upata, mana ima chaniyuqtapas yapay
+** Huk ruraqkunata manchachiy icha k\'amiy
 ** Achka rakiqunakunawan millayta ruray
-** Mana chaskinalla ruraqpa sutin",
-	'ipb-hardblock' => "Yaykusqa ruraqkuna kay IP huchhayuq tiyaymanta ama llamk'apuchunchu",
-	'ipbcreateaccount' => "Rakiquna kichariyta hark'ay",
-	'ipbemailban' => "Ruraqta e-chaski kachaymanta hark'ay",
-	'ipbenableautoblock' => "Kay ruraqpa llamk'achisqan IP huchhata kikinmanta hark'ay, hinallataq ima qatiqlla llamk'achisqan IP huchhatapas",
-	'ipbsubmit' => "Kay ruraqta hark'ay",
+** Mana chaskinalla ruraqpa sutin',
+	'ipb-hardblock' => 'Yaykusqa ruraqkuna kay IP huchhayuq tiyaymanta ama llamk\'apuchunchu',
+	'ipbcreateaccount' => 'Rakiquna kichariyta hark\'ay',
+	'ipbemailban' => 'Ruraqta e-chaski kachaymanta hark\'ay',
+	'ipbenableautoblock' => 'Kay ruraqpa llamk\'achisqan IP huchhata kikinmanta hark\'ay, hinallataq ima qatiqlla llamk\'achisqan IP huchhatapas',
+	'ipbsubmit' => 'Kay ruraqta hark\'ay',
 	'ipbother' => 'Huk puchukana pacha:',
-	'ipboptions' => "2 ura:2 hours,1 p'unchaw:1 day,3 p'unchaw:3 days,1 simana:1 week,2 simana:2 weeks,1 killa:1 month,3 killa:3 months,6 killa:6 months,1 wata:1 year,Wiña-wiñaypaq:infinite",
+	'ipboptions' => '2 ura:2 hours,1 p\'unchaw:1 day,3 p\'unchaw:3 days,1 simana:1 week,2 simana:2 weeks,1 killa:1 month,3 killa:3 months,6 killa:6 months,1 wata:1 year,Wiña-wiñaypaq:infinite',
 	'ipbotheroption' => 'huk',
 	'ipbotherreason' => 'Huk/aswan rayku:',
-	'ipbhidename' => "Ruraqpa sutinta llamk'apusqakunamanta, sutisuyukunamantapas pakay",
-	'ipbwatchuser' => "Kay ruraqpa p'anqanta rimachinantapas watiqay",
-	'ipb-disableusertalk' => "Kay ruraq hark'asqa kaspa kikinpa rimanakuy p'anqanta ama llamk'apuchunchu",
-	'ipb-change-block' => "Ruraqta musuqmanta hark'ay kay allinchanakunata churaspa",
-	'ipb-confirm' => "Hark'ayta takyachiy",
-	'ipb-blockingself' => "Kikiykitam hark'aykachachkanki!  Chiqapta kayta rurayta munankichu?",
+	'ipbhidename' => 'Ruraqpa sutinta llamk\'apusqakunamanta, sutisuyukunamantapas pakay',
+	'ipbwatchuser' => 'Kay ruraqpa p\'anqanta rimachinantapas watiqay',
+	'ipb-disableusertalk' => 'Kay ruraq hark\'asqa kaspa kikinpa rimanakuy p\'anqanta ama llamk\'apuchunchu',
+	'ipb-change-block' => 'Ruraqta musuqmanta hark\'ay kay allinchanakunata churaspa',
+	'ipb-confirm' => 'Hark\'ayta takyachiy',
+	'ipb-blockingself' => 'Kikiykitam hark\'aykachachkanki!  Chiqapta kayta rurayta munankichu?',
 	'ipb-confirmhideuser' => 'Ruraqta hark\'aykachachkanki, payman "Ruraqta pakay" nisqam.  Chaywanqa manam pipas chay ruraqpa sutinta ima sutisuyupipas hallch\'apipas rikunqachu.  Chiqapta kayta rurayta munankichu?',
-	'ipb-edit-dropdown' => "Hark'aypa hamunta llamk'apuy",
-	'ipb-unblock-addr' => "Hark'asqa $1-ta qispichiy",
-	'ipb-unblock' => "Hark'asqa ruraqta icha IP huchhata qispichiy",
-	'ipb-blocklist' => "Kachkaq hark'asqakunata qhaway",
-	'ipb-blocklist-contribs' => "$1-paq llamk'apusqakuna",
-	'ipusubmit' => "Kay hark'asqata qispichiy",
-	'ipblocklist' => "Hark'asqa ruraqkuna",
-	'ipblocklist-legend' => "Hark'asqa ruraqta tariy",
+	'ipb-edit-dropdown' => 'Hark\'aypa hamunta llamk\'apuy',
+	'ipb-unblock-addr' => 'Hark\'asqa $1-ta qispichiy',
+	'ipb-unblock' => 'Hark\'asqa ruraqta icha IP huchhata qispichiy',
+	'ipb-blocklist' => 'Kachkaq hark\'asqakunata qhaway',
+	'ipb-blocklist-contribs' => '$1-paq llamk\'apusqakuna',
+	'ipusubmit' => 'Kay hark\'asqata qispichiy',
+	'ipblocklist' => 'Hark\'asqa ruraqkuna',
+	'ipblocklist-legend' => 'Hark\'asqa ruraqta tariy',
 	'ipblocklist-submit' => 'Maskay',
-	'ipblocklist-localblock' => "Kayllapi hark'ay",
-	'ipblocklist-otherblocks' => "Huk {{PLURAL:$1|hark'ay|hark'aykuna}}",
+	'ipblocklist-localblock' => 'Kayllapi hark\'ay',
+	'ipblocklist-otherblocks' => 'Huk {{PLURAL:$1|hark\'ay|hark\'aykuna}}',
 	'infiniteblock' => 'wiñaypaq',
-	'ipblocklist-empty' => "Mana pipas hark'asqachu kachkan.",
-	'ipblocklist-no-results' => "Kay ruraqqa/IP huchhaqa manam hark'asqachu kachkan.",
+	'ipblocklist-empty' => 'Mana pipas hark\'asqachu kachkan.',
+	'ipblocklist-no-results' => 'Kay ruraqqa/IP huchhaqa manam hark\'asqachu kachkan.',
 	'ipb_expiry_invalid' => 'Puchukana pachaqa manam allinchu.',
-	'ipb_expiry_temp' => "Pakasqa ruraqpa sutin hark'aykunaqa tiyaqllam kachun.",
-	'ipb_hide_invalid' => "Manam atinichu kay rakiqunata ñit'ipayta; nisyu llamk'apusqayuqñachá.",
+	'ipb_expiry_temp' => 'Pakasqa ruraqpa sutin hark\'aykunaqa tiyaqllam kachun.',
+	'ipb_hide_invalid' => 'Manam atinichu kay rakiqunata ñit\'ipayta; nisyu llamk\'apusqayuqñachá.',
 	'ipb_already_blocked' => '"$1" sutiyuqqa hark\'asqañam kachkan.',
-	'ipb-needreblock' => "$1 sutiyuqqa hark'asqañam. Allinchanakunata hukchayta munankichu?",
-	'ipb-otherblocks-header' => "Huk {{PLURAL:$1|hark'ay|hark'aykuna}}",
-	'ipb_cant_unblock' => "'''Pantasqa''': Manam tarinichu ID $1 hark'ay huchhata. Qispisqañachá.",
-	'ipb_blocked_as_range' => "Pantasqa: IP $1 huchhaqa manam chiqallachu hark'asqa kaptinmi manam paskanallachu. Chaywanpas, $2 patayayku kaspataq hark'asqam kachkan. Chay patayaykuqa hark'asqamanta paskanallam.",
-	'ip_range_invalid' => "IP huchha k'itiqa manam chanichkanchu.",
-	'ip_range_toolarge' => "/$1-manta aswan hatun k'iti hark'aykunaqa manam saqillasqachu.",
-	'ipbblocked' => "Kikiyki hark'asqa kaspaykim, manam hukkunata hark'ayta icha hark'asqa kaymanta qispichiyta atinkichu",
-	'ipbnounblockself' => "Kikiykitaqa manam hark'asqa kaymanta qispikuyta atinkichu",
-	'immobile-source-namespace' => "Manam atinichu «$1» suti k'itipi p'anqakunata astayta",
-	'immobile-target-namespace' => "Manam atinichu p'anqakunata «$1» suti k'itiman astayta",
-	'immobile-target-namespace-iw' => "Wikipura t'inkiqa p'anqa astanapaq manam allin taripanachu.",
-	'immobile-source-page' => "Kay p'anqaqa manam astanallachu.",
+	'ipb-needreblock' => '$1 sutiyuqqa hark\'asqañam. Allinchanakunata hukchayta munankichu?',
+	'ipb-otherblocks-header' => 'Huk {{PLURAL:$1|hark\'ay|hark\'aykuna}}',
+	'ipb_cant_unblock' => '\'\'\'Pantasqa\'\'\': Manam tarinichu ID $1 hark\'ay huchhata. Qispisqañachá.',
+	'ipb_blocked_as_range' => 'Pantasqa: IP $1 huchhaqa manam chiqallachu hark\'asqa kaptinmi manam paskanallachu. Chaywanpas, $2 patayayku kaspataq hark\'asqam kachkan. Chay patayaykuqa hark\'asqamanta paskanallam.',
+	'ip_range_invalid' => 'IP huchha k\'itiqa manam chanichkanchu.',
+	'ip_range_toolarge' => '/$1-manta aswan hatun k\'iti hark\'aykunaqa manam saqillasqachu.',
+	'ipbblocked' => 'Kikiyki hark\'asqa kaspaykim, manam hukkunata hark\'ayta icha hark\'asqa kaymanta qispichiyta atinkichu',
+	'ipbnounblockself' => 'Kikiykitaqa manam hark\'asqa kaymanta qispikuyta atinkichu',
+	'immobile-source-namespace' => 'Manam atinichu «$1» suti k\'itipi p\'anqakunata astayta',
+	'immobile-target-namespace' => 'Manam atinichu p\'anqakunata «$1» suti k\'itiman astayta',
+	'immobile-target-namespace-iw' => 'Wikipura t\'inkiqa p\'anqa astanapaq manam allin taripanachu.',
+	'immobile-source-page' => 'Kay p\'anqaqa manam astanallachu.',
 	'immobile-target-page' => 'Manam atinichu chay taripana sutiman astayta.',
-	'imagenocrossnamespace' => "Manam atinichu p'anqata astayta mana willañiqipaq suti k'itiman",
-	'imagetypemismatch' => "Willañiqip musuq mast'arinanqa kay layapaq manam allinchu",
+	'imagenocrossnamespace' => 'Manam atinichu p\'anqata astayta mana willañiqipaq suti k\'itiman',
+	'imagetypemismatch' => 'Willañiqip musuq mast\'arinanqa kay layapaq manam allinchu',
 	'imageinvalidfilename' => 'Taripana willañiqip sutinqa manam allinchu',
-	'import' => "P'anqakunata hawamanta chaskiy",
-	'importinterwiki' => "Huk wikimanta p'anqakunata chaskiy",
-	'import-interwiki-text' => "Huk wikita p'anqap sutintapas akllay hawamanta chaskinapaq.
-Llamk'apusqap pachankunaqa ruraqpa sutinkunapas kakuspa hallch'asqam kanqa.
-Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hallch'api]] hallch'asqam kanqa.",
-	'import-interwiki-source' => "Qallariy wiki icha p'anqa:",
-	'import-interwiki-history' => "Kay p'anqapaq tukuy wiñay kawsaynintinta iskaychay",
+	'import' => 'P\'anqakunata hawamanta chaskiy',
+	'importinterwiki' => 'Huk wikimanta p\'anqakunata chaskiy',
+	'import-interwiki-text' => 'Huk wikita p\'anqap sutintapas akllay hawamanta chaskinapaq.
+Llamk\'apusqap pachankunaqa ruraqpa sutinkunapas kakuspa hallch\'asqam kanqa.
+Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hallch\'api]] hallch\'asqam kanqa.',
+	'import-interwiki-source' => 'Qallariy wiki icha p\'anqa:',
+	'import-interwiki-history' => 'Kay p\'anqapaq tukuy wiñay kawsaynintinta iskaychay',
 	'import-interwiki-templates' => 'Tukuy plantillakunapas',
 	'import-interwiki-submit' => 'Hawamanta chaskiy',
-	'import-interwiki-namespace' => "Kay suti k'itiman churay:",
+	'import-interwiki-namespace' => 'Kay suti k\'itiman churay:',
 	'import-upload-filename' => 'Willañiqip sutin:',
 	'import-comment' => 'Willayniyki:',
-	'importtext' => "Ama hina kaspa, willañiqita qallariy wikimanta [[Special:Export|hawaman quna llamk'anawan]] hawaman quy antañiqiqniykipi waqaychaspa, chaymantataq kaypi churkuy.",
-	'importstart' => "P'anqakunatam hawamanta chaskichkani...",
-	'import-revision-count' => "$1 {{PLURAL:$1|llamk'apusqa|llamk'apusqakuna}}",
-	'importnopages' => "Manam kanchu hawamanta chaskina p'anqakuna.",
-	'imported-log-entries' => "$1 {{PLURAL:$1|hallch'a yaykuchisqa|hallch'a yaykuchisqa}} hawamanta chaskisqam.",
+	'importtext' => 'Ama hina kaspa, willañiqita qallariy wikimanta [[Special:Export|hawaman quna llamk\'anawan]] hawaman quy antañiqiqniykipi waqaychaspa, chaymantataq kaypi churkuy.',
+	'importstart' => 'P\'anqakunatam hawamanta chaskichkani...',
+	'import-revision-count' => '$1 {{PLURAL:$1|llamk\'apusqa|llamk\'apusqakuna}}',
+	'importnopages' => 'Manam kanchu hawamanta chaskina p\'anqakuna.',
+	'imported-log-entries' => '$1 {{PLURAL:$1|hallch\'a yaykuchisqa|hallch\'a yaykuchisqa}} hawamanta chaskisqam.',
 	'importfailed' => 'Manam atinichu hawamanta chaskiy: $1',
 	'importunknownsource' => 'Hawamanta chaskina pukyu layaqa manam riqsisqachu',
 	'importcantopen' => 'Manam atinichu kay willañiqita hawamanta chaskiyta',
-	'importbadinterwiki' => "Interwiki t'inkiqa manam allinchu",
-	'importnotext' => "Ch'usaqmi",
+	'importbadinterwiki' => 'Interwiki t\'inkiqa manam allinchu',
+	'importnotext' => 'Ch\'usaqmi',
 	'importsuccess' => 'Aypalla hawamanta chaskisqañam!',
-	'importhistoryconflict' => "Wiñay kawsaypiqa hayunakuqmi llamk'apusqakuna (ñawpaqtaña hawamanta chaskisqachá karqan)",
+	'importhistoryconflict' => 'Wiñay kawsaypiqa hayunakuqmi llamk\'apusqakuna (ñawpaqtaña hawamanta chaskisqachá karqan)',
 	'importnosources' => 'Manam qusqachu hawamanta chaskina pukyukuna, wiñay kawsayta chiqalla churkuymantaq ama nisqam.',
 	'importnofile' => 'Manam ima chaskina willañiqi churkusqachu.',
 	'importuploaderrorsize' => 'Manam atinichu hawamanta chaskina willañiqita churkuyta, saqillasqamanta aswan hatun kaptinmi.',
 	'importuploaderrorpartial' => 'Manam atinichu hawamanta chaskina willañiqita churkuyta, rakillam churkusqa.',
-	'importuploaderrortemp' => "Manam atinichu hawamanta chaskina willañiqita churkuyta, mit'alla willañiqi churana mana kaptinmi.",
-	'import-parse-failure' => "Manam atinichu XML qillqata t'ikraspa hawamanta chaskiyta",
-	'import-noarticle' => "Manam hawamanta chaskina p'anqachu!",
+	'importuploaderrortemp' => 'Manam atinichu hawamanta chaskina willañiqita churkuyta, mit\'alla willañiqi churana mana kaptinmi.',
+	'import-parse-failure' => 'Manam atinichu XML qillqata t\'ikraspa hawamanta chaskiyta',
+	'import-noarticle' => 'Manam hawamanta chaskina p\'anqachu!',
 	'import-nonewrevisions' => 'Tukuy musuqchasqakunaqa ñawpaqtañam hawamanta chaskisqa.',
 	'import-upload' => 'XML willakunata churkuy',
 	'import-token-mismatch' => 'Tiyay ruraymanta willakunaqa chinkasqam. Ama hina kaspa, musuqmanta ruraykachay.',
@@ -19564,24 +19583,24 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 	'import-error-interwiki' => '"$1" sutiyuq p\'anqaqa hawamanta manam chaskisqachu, sutin wikipura (interwiki) nisqapaq hallch\'asqa kaptinmi.',
 	'import-error-special' => '"$1" sutiyuq p\'anqaqa hawamanta manam chaskisqachu, mana p\'anqapaq kaq sapaq suti k\'itiman kapuspanmi.',
 	'import-error-invalid' => '"$1" sutiyuq p\'anqaqa hawamanta manam chaskisqachu, sutin mana allin kaptinmi.',
-	'importlogpage' => "Hawamanta chaskiy hallch'a",
-	'importlogpagetext' => "Huk wikikunamanta wiñay kawsayniyuq p'anqakunata kamachina chaskiykuna.",
+	'importlogpage' => 'Hawamanta chaskiy hallch\'a',
+	'importlogpagetext' => 'Huk wikikunamanta wiñay kawsayniyuq p\'anqakunata kamachina chaskiykuna.',
 	'import-logentry-upload' => 'hawamanta chaskisqa [[$1]] willañiqita churkuspa',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|hukchasqa|hukchasqakuna}}',
 	'import-logentry-interwiki' => 'huk wikimanta chaskisqa $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|hukchasqa|hukchasqakuna}} $2-manta',
-	'imagemaxsize' => "Rikchap chhikan kayninta kaykama saywachay:<br />''(willañiqi ch'uyanchana p'anqakunapaq)''",
-	'imagelisttext' => "Kay qatiqpiqa '''$1''' {{PLURAL:$1|rikchatam|rikchakunatam}} rikunki, $2-kama ñiqichasqa.",
+	'imagemaxsize' => 'Rikchap chhikan kayninta kaykama saywachay:<br />\'\'(willañiqi ch\'uyanchana p\'anqakunapaq)\'\'',
+	'imagelisttext' => 'Kay qatiqpiqa \'\'\'$1\'\'\' {{PLURAL:$1|rikchatam|rikchakunatam}} rikunki, $2-kama ñiqichasqa.',
 	'ilsubmit' => 'Maskay',
 	'invalidateemail' => 'E-chaski takyachinaman ama niy',
-	'imgmultipageprev' => "← ñawpaq p'anqa",
-	'imgmultipagenext' => "qatiq p'anqa →",
+	'imgmultipageprev' => '← ñawpaq p\'anqa',
+	'imgmultipagenext' => 'qatiq p\'anqa →',
 	'imgmultigo' => 'Riy!',
-	'imgmultigoto' => "$1 sutiyuq p'anqaman riy",
-	'intentionallyblankpage' => "Kay p'anqaqa munaylla ch'usaqmi kachun",
-);
+	'imgmultigoto' => '$1 sutiyuq p\'anqaman riy',
+	'intentionallyblankpage' => 'Kay p\'anqaqa munaylla ch\'usaqmi kachun',
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'internalerror' => 'Antawa ukupi pantay tiyarka',
 	'internalerror_info' => 'Antawa ukupi pantay tiyarka: $1',
 	'italic_sample' => 'Wiksu killka',
@@ -19590,17 +19609,17 @@ $messages['qug'] = array(
 	'imagelinks' => 'Archivu churapaykuna',
 	'invert' => 'akllayta tikrachina',
 	'isredirect' => 'pushashka panka',
-	'istemplate' => "Ukupi tiyak panka (''inclusión'')",
+	'istemplate' => 'Ukupi tiyak panka (\'\'inclusión\'\')',
 	'isimage' => 'rikcha tinki',
 	'ipboptions' => '2 pacha:2 hours, 1 puncha:1 day, 3 puncha:3 days, 1 simana:1 week, 2 simana:2 weeks, 1 killa:1 month, 3 killa:3 months, 6 killa:6 months,1 pacha:1 year,Tukuy kawsayman:infinite',
 	'ipblocklist' => 'Wichkashka rurakkuna',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'index-category' => 'Pàgina indicizëda',
 	'italic_sample' => 'Pàroli in cursiv',
 	'italic_tip' => 'Pàroli in cursìv',
-	'image_tip' => "Figura ch'la sta insèn a e' scrètt",
+	'image_tip' => 'Figura ch\'la sta insèn a e\' scrètt',
 	'imagelinks' => 'I culegamént a ste file',
 	'invert' => 'Torna indrì cun la seleziòn',
 	'isredirect' => 'Re-indirèzza',
@@ -19608,9 +19627,9 @@ $messages['rgn'] = array(
 	'isimage' => 'culegamént a una figura',
 	'ipboptions' => '2 ór:2 hours,2 dè:1 day,3 dè:3 days,1 smana:1 week,2 smani:2 weeks,1 mês:1 month,3 mis:3 months,6 mîs:6 months,1 àn:1 year,par sempar:infinite',
 	'ipblocklist' => 'Soranom e indirezz IP bluché',
-);
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'italic_sample' => 'Tirra titalyanin',
 	'italic_tip' => 'Tira ifrghn.',
 	'image_tip' => 'Afaylu war-itmesebḍi',
@@ -19625,64 +19644,64 @@ $messages['rif'] = array(
 	'importlogpage' => 'Siri-d aɣmis',
 	'ilsubmit' => 'Tarzzut',
 	'imgmultigo' => 'Raḥ ɣa!',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'index-category' => 'Paginas inditgadas',
 	'internalerror' => 'Errur interna',
 	'internalerror_info' => 'Errur interna: $1',
-	'invalidemailaddress' => "L'adressa dad e-mail na po betg vegnir acceptada perquai ch'ella para dad avair in format nunvalid.
-Endatescha per plaschair ina adressa formatada correctamain u svida cumplettamain il champ.",
+	'invalidemailaddress' => 'L\'adressa dad e-mail na po betg vegnir acceptada perquai ch\'ella para dad avair in format nunvalid.
+Endatescha per plaschair ina adressa formatada correctamain u svida cumplettamain il champ.',
 	'italic_sample' => 'Text cursiv',
 	'italic_tip' => 'Text cursiv',
 	'image_sample' => 'Exempel.jpg',
 	'image_tip' => 'Integrar ina datoteca',
-	'ignorewarning' => "Ignorar l'avertiment e memorisar la datoteca",
+	'ignorewarning' => 'Ignorar l\'avertiment e memorisar la datoteca',
 	'ignorewarnings' => 'Ignorar tut ils avertiments (Warnung)',
 	'illegalfilename' => 'Il num da datoteca "$1" cuntegna almain in segn betg lubì. Endatescha in\'auter num ed emprova danovamain da chargiar si la datoteca.',
-	'illegal-filename' => "Il num da datoteca n'è betg lubì.",
-	'img-auth-accessdenied' => "Refusà l'access",
-	'img-auth-nopathinfo' => "PATH_INFO manca.
-Tes server n'è betg configurà per surdar questa infurmaziun.
+	'illegal-filename' => 'Il num da datoteca n\'è betg lubì.',
+	'img-auth-accessdenied' => 'Refusà l\'access',
+	'img-auth-nopathinfo' => 'PATH_INFO manca.
+Tes server n\'è betg configurà per surdar questa infurmaziun.
 I basa forsa sin CGI è na sustegna betg img_auth.
-Consultescha https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
+Consultescha https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-nologinnWL' => 'Ti n\'ès betg t\'annunzia ed "$1" n\'è betg sin la glista alva.',
 	'img-auth-nofile' => 'Datoteca "$1" n\'exista betg.',
 	'imgfile' => 'datoteca',
 	'imagelinks' => 'Utilisaziun da la datoteca',
-	'iteminvalidname' => "Problem cun endataziun '$1', num nunvalid...",
+	'iteminvalidname' => 'Problem cun endataziun \'$1\', num nunvalid...',
 	'invert' => 'invertar la selecziun',
 	'isredirect' => 'Pagina che renviescha',
 	'istemplate' => 'Integraziun da models',
 	'isimage' => 'colliaziun da datoteca',
-	'ipadressorusername' => "Adressa IP u num d'utilisader:",
+	'ipadressorusername' => 'Adressa IP u num d\'utilisader:',
 	'ipbexpiry' => 'Bloccà enfin:',
 	'ipbreason' => 'Motiv:',
 	'ipbreasonotherlist' => 'Auter motiv',
-	'ipbreason-dropdown' => "*Motivs generals per bloccar
+	'ipbreason-dropdown' => '*Motivs generals per bloccar
 ** Inserir infurmaziuns faussas
 ** Stizzar cuntegn da paginas
 ** Inserir colliaziuns da spam a paginas externas
 ** Inserir nonsens en paginas
 ** Sedepurtar nunconvegnent u mulestant
 ** Abus da plirs contos
-** Num d'utilisader nunacceptabel",
-	'ipbcreateaccount' => "Impedir la creaziun da contos d'utilisader",
+** Num d\'utilisader nunacceptabel',
+	'ipbcreateaccount' => 'Impedir la creaziun da contos d\'utilisader',
 	'ipbemailban' => 'Bloccar la funcziun da trametter e-mails',
-	'ipbenableautoblock' => "Bloccar automaticamain l'ultima adressa IP che quest utilisader ha utilisà e mintga adressa IP che succeda da la quala el emprova da far modificaziuns",
+	'ipbenableautoblock' => 'Bloccar automaticamain l\'ultima adressa IP che quest utilisader ha utilisà e mintga adressa IP che succeda da la quala el emprova da far modificaziuns',
 	'ipbsubmit' => 'Bloccar quest utilisader',
 	'ipbother' => 'Auter temp:',
 	'ipboptions' => '2 uras:2 hours,1 di:1 day,3 dis:3 days,1 emna:1 week,2 emnas:2 weeks,1 mais:1 month,3 mais:3 months,6 mais:6 months,1 onn:1 year,permanent:infinite',
 	'ipbotheroption' => 'auter',
 	'ipbotherreason' => 'Auter/ulteriur motiv:',
-	'ipbhidename' => "Zuppentar il num d'utilisader en las modicaziuns e glistas",
-	'ipbwatchuser' => "Observar las paginas d'utilisader e da discussiun da quest utilisader",
-	'ipb-change-block' => "Re-bloccar l'utilisader cun las medemas configuraziuns",
+	'ipbhidename' => 'Zuppentar il num d\'utilisader en las modicaziuns e glistas',
+	'ipbwatchuser' => 'Observar las paginas d\'utilisader e da discussiun da quest utilisader',
+	'ipb-change-block' => 'Re-bloccar l\'utilisader cun las medemas configuraziuns',
 	'ipb-edit-dropdown' => 'Modifitgar ils motivs per bloccar',
 	'ipb-unblock-addr' => 'Debloccar $1',
 	'ipb-unblock' => 'Debloccar in utilisader u ina adressa IP',
 	'ipb-blocklist' => 'Mussar tut las bloccadas activas',
-	'ipb-blocklist-contribs' => "Contribuziuns d'utilisader da $1",
+	'ipb-blocklist-contribs' => 'Contribuziuns d\'utilisader da $1',
 	'ipusubmit' => 'Allontanar questa bloccada',
 	'ipblocklist' => 'Utilisaders bloccads',
 	'ipblocklist-legend' => 'Tschertgar in utilisader bloccà',
@@ -19691,24 +19710,24 @@ Consultescha https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Autra bloccada|Autras bloccadas}}',
 	'infiniteblock' => 'permanent',
 	'ipblocklist-empty' => 'la glista da bloccadas è vida.',
-	'ipblocklist-no-results' => "La adressa IP u l'utilisader dumandà n'è betg bloccà.",
+	'ipblocklist-no-results' => 'La adressa IP u l\'utilisader dumandà n\'è betg bloccà.',
 	'ipb_expiry_invalid' => 'La durada da la bloccada inditgada è nunvalaivla.',
-	'ipb_expiry_temp' => "Bloccadas cun zuppentar il num d'utilisader sont esser permanentas.",
+	'ipb_expiry_temp' => 'Bloccadas cun zuppentar il num d\'utilisader sont esser permanentas.',
 	'ipb_already_blocked' => '"$1" è gia bloccà',
 	'ipb-needreblock' => '$1 è gia bloccà.
 Vuls ti midar las opziuns da la bloccada?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Autra bloccada|Autras bloccadas}}',
-	'ipb_cant_unblock' => "Errur: La bloccada cun lÎD $1 n'è betg vegnida chattada.
-Eventualmain è ella gia vegnida annulada.",
-	'ipb_blocked_as_range' => "Errur: L'adressa IP $1 n'è betg bloccada directamain e na po betg vegnir debloccada.
-Ella e bloccada en la zona d'adressas IP $2 che po vegnir debloccà.",
-	'ip_range_invalid' => "Zona d'adressas IP nunvalida.",
-	'ip_range_toolarge' => "Zonas da bloccadas pli grondas che /$1 n'èn betg lubidas.",
+	'ipb_cant_unblock' => 'Errur: La bloccada cun lÎD $1 n\'è betg vegnida chattada.
+Eventualmain è ella gia vegnida annulada.',
+	'ipb_blocked_as_range' => 'Errur: L\'adressa IP $1 n\'è betg bloccada directamain e na po betg vegnir debloccada.
+Ella e bloccada en la zona d\'adressas IP $2 che po vegnir debloccà.',
+	'ip_range_invalid' => 'Zona d\'adressas IP nunvalida.',
+	'ip_range_toolarge' => 'Zonas da bloccadas pli grondas che /$1 n\'èn betg lubidas.',
 	'ipbblocked' => 'Ti na pos betg bloccar u debloccar auters utilisaders perquai che ti es sez bloccà',
 	'ipbnounblockself' => 'Ti na bos betg debloccar tai sez',
 	'immobile-source-namespace' => 'Paginas dal tip da pagina "$1" na pon betg vegnir spustadas',
 	'immobile-target-namespace' => 'Betg pussaivel da spustar paginas en il tip da pagina "$1"',
-	'immobile-target-namespace-iw' => "Ina colliaziun dad interwiki n'è betg ina destinaziun valida per spustar.",
+	'immobile-target-namespace-iw' => 'Ina colliaziun dad interwiki n\'è betg ina destinaziun valida per spustar.',
 	'immobile-source-page' => 'Questa pagina na po betg vegnir spustada.',
 	'immobile-target-page' => 'Betg pussaivel da spustar a quest titel da destinaziun.',
 	'imagenocrossnamespace' => 'Betg pussaivel da spustar ina datoteca ad in tip da pagina betg da datoteca',
@@ -19716,38 +19735,38 @@ Ella e bloccada en la zona d'adressas IP $2 che po vegnir debloccà.",
 	'imageinvalidfilename' => 'Il num da datoteca da destinaziun è nunvalid',
 	'import' => 'Impurtar paginas',
 	'importinterwiki' => 'Import transwiki',
-	'import-interwiki-text' => "Tscherna ina wiki ed in titel da pagina per importar.
+	'import-interwiki-text' => 'Tscherna ina wiki ed in titel da pagina per importar.
 Las datas da las versiuns ed ils nums dals contribuents vegnan mantegnids.
-Tut ils imports transwiki vegnan registrads en il [[Special:Log/import|log d'importar]].",
+Tut ils imports transwiki vegnan registrads en il [[Special:Log/import|log d\'importar]].',
 	'import-interwiki-source' => 'Wiki/pagina da funtauna:',
-	'import-interwiki-history' => "Copiar l'entira cronologia da questa pagina",
+	'import-interwiki-history' => 'Copiar l\'entira cronologia da questa pagina',
 	'import-interwiki-templates' => 'Includer tut ils models',
 	'import-interwiki-submit' => 'Importar',
 	'import-interwiki-namespace' => 'Tip da pagina da destinaziun:',
 	'import-upload-filename' => 'Num da datoteca:',
 	'import-comment' => 'Commentari:',
-	'importtext' => "Exportescha la datoteca da la wiki da funtauna cun agid da la [[Special:Export|funcziun d'export]].
-La memorisescha sin tes computer e chargia si ella qua.",
+	'importtext' => 'Exportescha la datoteca da la wiki da funtauna cun agid da la [[Special:Export|funcziun d\'export]].
+La memorisescha sin tes computer e chargia si ella qua.',
 	'importstart' => 'Importar paginas…',
 	'import-revision-count' => '{{PLURAL:$1|Ina versiun|$1 versiuns}}',
 	'importnopages' => 'Nagina pagina per importar.',
 	'imported-log-entries' => 'Importà $1 {{PLURAL:$1|endataziun dal log|endataziuns dal log}}.',
-	'importfailed' => "Betg reussì d'importar: <nowiki>$1</nowiki>",
-	'importunknownsource' => "Funtauna d'import nunenconuschenta",
-	'importcantopen' => "Betg pussaivel dad avrir la datoteca d'import",
+	'importfailed' => 'Betg reussì d\'importar: <nowiki>$1</nowiki>',
+	'importunknownsource' => 'Funtauna d\'import nunenconuschenta',
+	'importcantopen' => 'Betg pussaivel dad avrir la datoteca d\'import',
 	'importbadinterwiki' => 'Colliaziun interwiki nunvalida',
 	'importnotext' => 'Vid u nagin text',
-	'importsuccess' => "Terminà l'import!",
+	'importsuccess' => 'Terminà l\'import!',
 	'importhistoryconflict' => 'La cronologia cuntegna versiuns che stattan en conflict (eventualmain è questa pagina gia vegnida importada ina giada)',
-	'importnosources' => "Naginas funtaunas per l'import transwiki èn vegnidas definidas e la funcziun da chargiar si directamain la coronologia è deactivada.",
-	'importnofile' => "Nagina datoteca d'import è vegnida chargiada si.",
-	'importuploaderrorsize' => "Betg reussì da chargiar si la datoteca d'import.
-La datoteca è pli gronda che la grondezza maximala per chargiar si.",
-	'importuploaderrorpartial' => "Betg reussì da chargiar si la datoteca d'import.
-La datoteca è be vegnida chargiada si parzialmain.",
-	'importuploaderrortemp' => "Betg reussì da chargiar si la datoteca d'import.
-In ordinatur temporar manca.",
-	'import-parse-failure' => "Errur cun elavurar l'import da XML",
+	'importnosources' => 'Naginas funtaunas per l\'import transwiki èn vegnidas definidas e la funcziun da chargiar si directamain la coronologia è deactivada.',
+	'importnofile' => 'Nagina datoteca d\'import è vegnida chargiada si.',
+	'importuploaderrorsize' => 'Betg reussì da chargiar si la datoteca d\'import.
+La datoteca è pli gronda che la grondezza maximala per chargiar si.',
+	'importuploaderrorpartial' => 'Betg reussì da chargiar si la datoteca d\'import.
+La datoteca è be vegnida chargiada si parzialmain.',
+	'importuploaderrortemp' => 'Betg reussì da chargiar si la datoteca d\'import.
+In ordinatur temporar manca.',
+	'import-parse-failure' => 'Errur cun elavurar l\'import da XML',
 	'import-noarticle' => 'Nagina pagina per importar!',
 	'import-nonewrevisions' => 'Tut las versiuns èn gia vegnidas impotadas pli baud.',
 	'import-upload' => 'Chargiar si datas XML',
@@ -19760,18 +19779,18 @@ Emprova danovamain.',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|Ina versiun|$1 versiuns}}',
 	'import-logentry-interwiki' => 'ha importà $1 (transwiki)',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|Ina versiun|$1 versiuns}} da $2',
-	'imagemaxsize' => "Grondezza maximala da maletgs:<br />''(per paginas da descripziun da datotecas)''",
-	'imagelisttext' => "Sutvart è ina glista da '''$1''' {{PLURAL:$1|datoteca|datotecas}} zavrdas $2.",
+	'imagemaxsize' => 'Grondezza maximala da maletgs:<br />\'\'(per paginas da descripziun da datotecas)\'\'',
+	'imagelisttext' => 'Sutvart è ina glista da \'\'\'$1\'\'\' {{PLURAL:$1|datoteca|datotecas}} zavrdas $2.',
 	'ilsubmit' => 'Tschertgar',
-	'invalidateemail' => "Stizzar la confermaziun da l'adressa dad e-mail",
+	'invalidateemail' => 'Stizzar la confermaziun da l\'adressa dad e-mail',
 	'imgmultipageprev' => '← ultima pagina',
 	'imgmultipagenext' => 'proxima pagina →',
 	'imgmultigo' => 'Dai!',
 	'imgmultigoto' => 'Ir a la pagina $1',
 	'intentionallyblankpage' => 'Questa pagina è aposta vida.',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'invalidemailaddress' => 'Le e-maileski adresa nas lino anda kodoya ke nas lake ekh lachhi forma. Si mishto te thos ekh e-mail le lachhe formasa vai te khoses so lekhvdyas pe kodo than.',
 	'image_sample' => 'Misal.jpg',
 	'imagelinks' => 'Chitroske phandimata',
@@ -19780,9 +19799,9 @@ $messages['rmy'] = array(
 	'ipusubmit' => 'Na mai brakh i adresa',
 	'import-interwiki-submit' => 'Le andre',
 	'ilsubmit' => 'Rod',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'index-category' => 'Pagini indexate',
 	'internalerror' => 'Eroare internă',
 	'internalerror_info' => 'Eroare internă: $1',
@@ -19815,7 +19834,7 @@ Pentru securitate optimă, img_auth.php este dezactivat.',
 	'img-auth-bad-query-string' => 'Adresa URL are un șir de interogare invalid.',
 	'imgfile' => 'fișier',
 	'imagelinks' => 'Utilizarea fișierului',
-	'iteminvalidname' => "E o problemă cu elementul '$1', numele este invalid...",
+	'iteminvalidname' => 'E o problemă cu elementul \'$1\', numele este invalid...',
 	'invert' => 'Inversează selecția',
 	'isredirect' => 'pagină de redirecționare',
 	'istemplate' => 'prin includerea formatului',
@@ -19931,8 +19950,8 @@ Un dosar temporar lipsește.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|versiune|versiuni|de versiuni}}',
 	'import-logentry-interwiki' => 'transwikificat $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|versiune|versiuni|de versiuni}} de la $2',
-	'imagemaxsize' => "Limita mărimii imaginilor:<br />''(pentru paginile de descriere)''",
-	'imagelisttext' => "Mai jos se află lista a '''$1''' {{PLURAL:$1|fișier ordonat|fișiere ordonate|de fișiere ordonate}} $2.",
+	'imagemaxsize' => 'Limita mărimii imaginilor:<br />\'\'(pentru paginile de descriere)\'\'',
+	'imagelisttext' => 'Mai jos se află lista a \'\'\'$1\'\'\' {{PLURAL:$1|fișier ordonat|fișiere ordonate|de fișiere ordonate}} $2.',
 	'ilsubmit' => 'Caută',
 	'invalidateemail' => 'Anulează confirmarea adresei de e-mail',
 	'imgmultipageprev' => '← pagina anterioară',
@@ -19940,174 +19959,174 @@ Un dosar temporar lipsește.',
 	'imgmultigo' => 'Du-te!',
 	'imgmultigoto' => 'Du-te la pagina $1',
 	'intentionallyblankpage' => 'Această pagină este goală în mod intenționat',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'ipbreason' => 'Itia:',
 	'ipblocklist-submit' => 'Caftã',
 	'ilsubmit' => 'Caftã',
 	'imgmultigo' => 'Du-vã!',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'index-category' => 'Pàggene indicizzate',
 	'internalerror' => 'Errore inderne',
 	'internalerror_info' => 'Errore inderne: $1',
-	'invalidemailaddress' => "L'indirizze e-mail non ge pò essere accettete cumme l'è scritte purcè tène 'nu formete invalide.
-Pe piacere mitte l'indirizze a cumme criste cumanne, ce nò no 'u scè mettènne proprie.",
+	'invalidemailaddress' => 'L\'indirizze e-mail non ge pò essere accettete cumme l\'è scritte purcè tène \'nu formete invalide.
+Pe piacere mitte l\'indirizze a cumme criste cumanne, ce nò no \'u scè mettènne proprie.',
 	'italic_sample' => 'Teste corsive',
 	'italic_tip' => 'Scritte in corsivo',
 	'image_sample' => 'Esembie.jpg',
 	'image_tip' => 'File ingapsulete',
-	'ignorewarning' => "Futtetene de l'avvertimende e reggistre 'u file",
-	'ignorewarnings' => "No scè penzanne a tutte l'avvise",
-	'illegalfilename' => "'U nome d'u file \"\$1\" tène carattere ca non ge sonde conzendite jndr'à le titele de le pàggene.
-Pe piacere vide ce renomene 'u file e pruève a carecarle 'n'otra vote.",
-	'illegal-filename' => "'U nome d'u file non g'è permesse.",
-	'invalid-chunk-offset' => "distanze d'u chunk invalide",
+	'ignorewarning' => 'Futtetene de l\'avvertimende e reggistre \'u file',
+	'ignorewarnings' => 'No scè penzanne a tutte l\'avvise',
+	'illegalfilename' => '\'U nome d\'u file "$1" tène carattere ca non ge sonde conzendite jndr\'à le titele de le pàggene.
+Pe piacere vide ce renomene \'u file e pruève a carecarle \'n\'otra vote.',
+	'illegal-filename' => '\'U nome d\'u file non g\'è permesse.',
+	'invalid-chunk-offset' => 'distanze d\'u chunk invalide',
 	'img-auth-accessdenied' => 'Accesse negate',
-	'img-auth-nopathinfo' => "No se iacchie PATH_INFO.
-'U server tune non g'è 'mbostate o non ge passe st'mbormazione.
-Pò essere ca jè basate sus a 'u CGI e non ge pò supportà img_auth.
-[https://www.mediawiki.org/wiki/Manual:Image_Authorization Vide autorizzazzione de le immaggine.]",
-	'img-auth-notindir' => "'U percorse richieste non ge stè jndr'à cartelle de carecamende configurate",
+	'img-auth-nopathinfo' => 'No se iacchie PATH_INFO.
+\'U server tune non g\'è \'mbostate o non ge passe st\'mbormazione.
+Pò essere ca jè basate sus a \'u CGI e non ge pò supportà img_auth.
+[https://www.mediawiki.org/wiki/Manual:Image_Authorization Vide autorizzazzione de le immaggine.]',
+	'img-auth-notindir' => '\'U percorse richieste non ge stè jndr\'à cartelle de carecamende configurate',
 	'img-auth-badtitle' => 'Non ge se pò costruì \'nu titele valide da "$1".',
 	'img-auth-nologinnWL' => 'Tu non ge sì collegate e "$1" non ge stè jndr\'à lista vianghe.',
 	'img-auth-nofile' => 'File "$1" non g\'esiste.',
 	'img-auth-isdir' => 'Tu ste ppruève a trasè jndr\'à cartelle "$1".
 Sulamende le file ponne trasè.',
 	'img-auth-streaming' => 'Streaming "$1".',
-	'img-auth-public' => "'A funziona de img_auth.php jè 'u resultate de le file da 'na Uicchi private.
-Sta Uicchi jè configurate cumme a 'na Uicchi pubbleche.
-Pe 'na securezze a uerre proprie, img_auth.php jè disabbilitate.",
+	'img-auth-public' => '\'A funziona de img_auth.php jè \'u resultate de le file da \'na Uicchi private.
+Sta Uicchi jè configurate cumme a \'na Uicchi pubbleche.
+Pe \'na securezze a uerre proprie, img_auth.php jè disabbilitate.',
 	'img-auth-noread' => 'L\'utende non ge tène l\'accesse pe leggere "$1".',
-	'img-auth-bad-query-string' => "L'URL tène 'na stringhe de inderrogazione invalide",
+	'img-auth-bad-query-string' => 'L\'URL tène \'na stringhe de inderrogazione invalide',
 	'imgfile' => 'file',
-	'imagelinks' => "Ause d'u file",
-	'iteminvalidname' => "Probbleme cu 'a vosce '$1', nome invalide...",
-	'invert' => "Selezione 'a smerse",
+	'imagelinks' => 'Ause d\'u file',
+	'iteminvalidname' => 'Probbleme cu \'a vosce \'$1\', nome invalide...',
+	'invert' => 'Selezione \'a smerse',
 	'isredirect' => 'pàgene de ridirezionamende',
 	'istemplate' => 'inclusione',
-	'isimage' => "collegamende a 'u file",
-	'ipadressorusername' => "Indirizze IP o nome de l'utende:",
+	'isimage' => 'collegamende a \'u file',
+	'ipadressorusername' => 'Indirizze IP o nome de l\'utende:',
 	'ipbexpiry' => 'More:',
 	'ipbreason' => 'Mutive:',
 	'ipbreasonotherlist' => 'Otre mutive',
-	'ipbreason-dropdown' => "*Mutive comune de blocche
-** Inzerimende de 'mbormaziune fause
+	'ipbreason-dropdown' => '*Mutive comune de blocche
+** Inzerimende de \'mbormaziune fause
 ** Scangellamende de condenute da le vôsce
 ** Collegaminde pubblecetarie a site fore de Uicchipèdie
-** Inzerimende de studecarie jndr'à le vôsce
+** Inzerimende de studecarie jndr\'à le vôsce
 ** Menacce e intimidaziune
 ** Abbuse de cunde utende multiple
-** Nome de l'utende inaccettabbele",
-	'ipb-hardblock' => "Non ge face cangià l'utinde reggistrate da stu 'ndirizze IP",
+** Nome de l\'utende inaccettabbele',
+	'ipb-hardblock' => 'Non ge face cangià l\'utinde reggistrate da stu \'ndirizze IP',
 	'ipbcreateaccount' => 'No fà ccrejà le cunde utinde',
-	'ipbemailban' => "No fà mannà email a l'utinde",
-	'ipbenableautoblock' => "Automaticamende blocche l'urteme indirizze IP ausate da stu utende e tutte le sottosequenze de le IP ca onne state ausate pe cangià",
-	'ipbsubmit' => "Blocche st'utende",
+	'ipbemailban' => 'No fà mannà email a l\'utinde',
+	'ipbenableautoblock' => 'Automaticamende blocche l\'urteme indirizze IP ausate da stu utende e tutte le sottosequenze de le IP ca onne state ausate pe cangià',
+	'ipbsubmit' => 'Blocche st\'utende',
 	'ipbother' => 'Otre orarie:',
 	'ipboptions' => '2 ore:2 hours,1 giurne:1 day,3 giurne:3 days,1 sumane:1 week,2 sumane:2 weeks,1 mese:1 month,3 mise:3 months,6 mise:6 months,1 anne:1 year,infinite:infinite',
 	'ipbotheroption' => 'otre',
 	'ipbotherreason' => 'Otre mutive:',
 	'ipbhidename' => 'Scunne le nome utinde da le cangiaminde e da le liste',
-	'ipbwatchuser' => "Vide a pàgena utende e quedde de le 'ngazzaminde de stu utende",
-	'ipb-disableusertalk' => "Non ge face cangià a stu utende 'a pàgena de le 'ngazzaminde sue fine ca jè bloccate",
-	'ipb-change-block' => "Blocche 'n'otra vote l'utende cu ste 'mbostaziune",
-	'ipb-confirm' => "Conferme 'u blocche",
-	'ipb-blockingself' => "Te stè bluecche da sule, si secure ca 'u vuè ccu face?",
-	'ipb-confirmhideuser' => "Tu ste bluècche 'n'utende cu l'opzione \"scunne utende\" abbilitate. St'operazione pò leve 'u nome de l'utende jndr'à tutte l'elenghe e le vôsce de l'archivije. Tu si secure ca 'u vuè ccu face?",
-	'ipb-edit-dropdown' => "Cange le mutive d'u blocche",
+	'ipbwatchuser' => 'Vide a pàgena utende e quedde de le \'ngazzaminde de stu utende',
+	'ipb-disableusertalk' => 'Non ge face cangià a stu utende \'a pàgena de le \'ngazzaminde sue fine ca jè bloccate',
+	'ipb-change-block' => 'Blocche \'n\'otra vote l\'utende cu ste \'mbostaziune',
+	'ipb-confirm' => 'Conferme \'u blocche',
+	'ipb-blockingself' => 'Te stè bluecche da sule, si secure ca \'u vuè ccu face?',
+	'ipb-confirmhideuser' => 'Tu ste bluècche \'n\'utende cu l\'opzione "scunne utende" abbilitate. St\'operazione pò leve \'u nome de l\'utende jndr\'à tutte l\'elenghe e le vôsce de l\'archivije. Tu si secure ca \'u vuè ccu face?',
+	'ipb-edit-dropdown' => 'Cange le mutive d\'u blocche',
 	'ipb-unblock-addr' => 'Sblocche $1',
 	'ipb-unblock' => 'Sblocche nome utende o indirizze IP',
 	'ipb-blocklist' => 'Vide le blocche ca esistene',
 	'ipb-blocklist-contribs' => 'Condrebbute pe $1',
 	'ipusubmit' => 'Live stu blocche',
 	'ipblocklist' => 'Utinde bloccate',
-	'ipblocklist-legend' => "Iacchije 'n'utende blocchete",
+	'ipblocklist-legend' => 'Iacchije \'n\'utende blocchete',
 	'ipblocklist-submit' => 'Cirche',
 	'ipblocklist-localblock' => 'Blocche locale',
 	'ipblocklist-otherblocks' => 'Otre {{PLURAL:$1|blocche|blocche}}',
 	'infiniteblock' => 'quanne pisce a iaddine',
-	'ipblocklist-empty' => "'A liste de le blocche jè vacande.",
-	'ipblocklist-no-results' => "L'indirizze IP ca è cerchete o 'u nome utende non ge sonde blocchete.",
-	'ipb_expiry_invalid' => "L'orarije de scadenze non g'è valide.",
-	'ipb_expiry_temp' => "Le blocche sus a le nome de l'utinde scunnute onna essere permanende.",
+	'ipblocklist-empty' => '\'A liste de le blocche jè vacande.',
+	'ipblocklist-no-results' => 'L\'indirizze IP ca è cerchete o \'u nome utende non ge sonde blocchete.',
+	'ipb_expiry_invalid' => 'L\'orarije de scadenze non g\'è valide.',
+	'ipb_expiry_temp' => 'Le blocche sus a le nome de l\'utinde scunnute onna essere permanende.',
 	'ipb_hide_invalid' => 'Non ge se pò scangellà stu cunde utende; tène troppe cangiaminde.',
 	'ipb_already_blocked' => '"$1" jè ggià blocchete',
-	'ipb-needreblock' => "$1 ha state già blocchete. Vuè cu cange le 'mbostaziune?",
+	'ipb-needreblock' => '$1 ha state già blocchete. Vuè cu cange le \'mbostaziune?',
 	'ipb-otherblocks-header' => 'Otre {{PLURAL:$1|blocche|blocche}}',
-	'ipb_cant_unblock' => "Errore: L'ID $1 d'u blocche non ge se iacchie.
-Pò essere ca ha state già sbloccate.",
-	'ipb_blocked_as_range' => "Errore: l'IP $1 non g'à state bloccate direttamende e non ge pò essere sbloccate.
-Jidde ha state bloccate cumme parte de l'indervalle $2, ca pò essere sbloccate.",
-	'ip_range_invalid' => "L'indervalle de l'IP non g'è valide.",
+	'ipb_cant_unblock' => 'Errore: L\'ID $1 d\'u blocche non ge se iacchie.
+Pò essere ca ha state già sbloccate.',
+	'ipb_blocked_as_range' => 'Errore: l\'IP $1 non g\'à state bloccate direttamende e non ge pò essere sbloccate.
+Jidde ha state bloccate cumme parte de l\'indervalle $2, ca pò essere sbloccate.',
+	'ip_range_invalid' => 'L\'indervalle de l\'IP non g\'è valide.',
 	'ip_range_toolarge' => 'Le indervalle de le blocche cchiù larie de /$1 non ge sonde permesse.',
 	'ipbblocked' => 'Tu non ge puè bloccà o sbloccà otre utinde, purcé tu sì ppure bloccate',
-	'ipbnounblockself' => "Non ge t'è permesse de sbloccarte da sule",
+	'ipbnounblockself' => 'Non ge t\'è permesse de sbloccarte da sule',
 	'immobile-source-namespace' => 'Non ge pozze spustà le pàggene da \'u namespace "$1"',
 	'immobile-target-namespace' => 'Non ge pozze spustà le pàggene jndr\'à \'u namespace "$1"',
-	'immobile-target-namespace-iw' => "'U collegamende InderUicchi non ge tène 'na destinaziona valide purcè 'a pàgene ha state spustate.",
+	'immobile-target-namespace-iw' => '\'U collegamende InderUicchi non ge tène \'na destinaziona valide purcè \'a pàgene ha state spustate.',
 	'immobile-source-page' => 'Sta pàgene non ge se pò spustà.',
 	'immobile-target-page' => 'Non ge puè spustà sus a stu titele de destinazione.',
-	'imagenocrossnamespace' => "Non ge pozze spustà 'nu file jndr'à 'nu namespace senza file",
-	'imagetypemismatch' => "L'estenziona nove d'u file non ge se accocchie cu 'u tipe sue",
-	'imageinvalidfilename' => "'U nome d'u file de destinazzione jè invalide",
-	'import' => "Pàggene 'mbortete",
-	'importinterwiki' => "'Mborte da Transuicchi",
-	'import-interwiki-text' => "Schacchie 'na Uicchi e 'nu titele de pàgene da 'mbortà.
-Le date d'a revisione e 'u nome de le cangiature avènene preservate.
-Tutte le aziune de 'mbortaziune 'mbrà le Uicchi sonde reggistrate jndr'à l'[[Special:Log/import|archivije de le 'mbortaziune]].",
+	'imagenocrossnamespace' => 'Non ge pozze spustà \'nu file jndr\'à \'nu namespace senza file',
+	'imagetypemismatch' => 'L\'estenziona nove d\'u file non ge se accocchie cu \'u tipe sue',
+	'imageinvalidfilename' => '\'U nome d\'u file de destinazzione jè invalide',
+	'import' => 'Pàggene \'mbortete',
+	'importinterwiki' => '\'Mborte da Transuicchi',
+	'import-interwiki-text' => 'Schacchie \'na Uicchi e \'nu titele de pàgene da \'mbortà.
+Le date d\'a revisione e \'u nome de le cangiature avènene preservate.
+Tutte le aziune de \'mbortaziune \'mbrà le Uicchi sonde reggistrate jndr\'à l\'[[Special:Log/import|archivije de le \'mbortaziune]].',
 	'import-interwiki-source' => 'Sorgende Uicchi/vosce:',
-	'import-interwiki-history' => "Copie tutte 'a sotrie de le versiune de sta pàgene",
+	'import-interwiki-history' => 'Copie tutte \'a sotrie de le versiune de sta pàgene',
 	'import-interwiki-templates' => 'Inglude tutte le template',
-	'import-interwiki-submit' => "'Mborte",
+	'import-interwiki-submit' => '\'Mborte',
 	'import-interwiki-namespace' => 'Namespace de destinazione:',
-	'import-upload-filename' => "Nome d'u file:",
+	'import-upload-filename' => 'Nome d\'u file:',
 	'import-comment' => 'Commende:',
-	'importtext' => "Pe piacere esporte 'u file da 'a Uicchi sorgende ausanne l'[[Special:Export|utilità de esportazione]].
-Reggistrele sus a 'u combiuter tune e carechele aqquà.",
-	'importstart' => "'Mbortazione de le pàggene...",
+	'importtext' => 'Pe piacere esporte \'u file da \'a Uicchi sorgende ausanne l\'[[Special:Export|utilità de esportazione]].
+Reggistrele sus a \'u combiuter tune e carechele aqquà.',
+	'importstart' => '\'Mbortazione de le pàggene...',
 	'import-revision-count' => '$1 {{PLURAL:$1|revisione|revisiune}}',
-	'importnopages' => "Nisciuna pàgene da 'mbortà.",
-	'imported-log-entries' => "'Mbortate $1 {{PLURAL:$1|vôsce de l'archivije|vôsce de l'archivije}}.",
-	'importfailed' => "'Mbortaziona fallite: <nowiki>$1</nowiki>",
-	'importunknownsource' => "Tipe de sorgende de 'mbortaziona scanusciute",
-	'importcantopen' => "Non ge puè aprè 'u file 'mbortete",
+	'importnopages' => 'Nisciuna pàgene da \'mbortà.',
+	'imported-log-entries' => '\'Mbortate $1 {{PLURAL:$1|vôsce de l\'archivije|vôsce de l\'archivije}}.',
+	'importfailed' => '\'Mbortaziona fallite: <nowiki>$1</nowiki>',
+	'importunknownsource' => 'Tipe de sorgende de \'mbortaziona scanusciute',
+	'importcantopen' => 'Non ge puè aprè \'u file \'mbortete',
 	'importbadinterwiki' => 'collegamende interuicchi errete',
 	'importnotext' => 'Vacande o senza teste',
-	'importsuccess' => "'Mbortaziona spicciete!",
-	'importhistoryconflict' => "Esiste 'nu conflitte 'brà revisiune d'u cunde d'a pàgene (ponne avè 'mbortate sta pàgene apprime)",
-	'importnosources' => "Nisciuna 'mbortazione 'mbrà Uicchi ha state definite e le carecaminde dirette d'a storie onne state disabbilitate.",
-	'importnofile' => "Nisciune file de 'mbortazione ha state carecate.",
-	'importuploaderrorsize' => "'U carecamende d'u file 'mbortate ha fallite.
-'U file ète troppe granne respette a 'a dimenziona massime de carecamende.",
-	'importuploaderrorpartial' => "'U carecamende d'u file 'mbortate ha fallite.
-'U file ha state carecate sulamende in parte.",
-	'importuploaderrortemp' => "'U carecamende d'u file 'mbortate ha fallite.
-'A cartelle temboranèe non ge se iacchie.",
-	'import-parse-failure' => "Analizzatore de 'mbortaziune de l'XML ha fallite",
-	'import-noarticle' => "Nisciuna pàgene 'mbortete!",
-	'import-nonewrevisions' => "Tutte le revisiune avèrene già state 'mbortate.",
+	'importsuccess' => '\'Mbortaziona spicciete!',
+	'importhistoryconflict' => 'Esiste \'nu conflitte \'brà revisiune d\'u cunde d\'a pàgene (ponne avè \'mbortate sta pàgene apprime)',
+	'importnosources' => 'Nisciuna \'mbortazione \'mbrà Uicchi ha state definite e le carecaminde dirette d\'a storie onne state disabbilitate.',
+	'importnofile' => 'Nisciune file de \'mbortazione ha state carecate.',
+	'importuploaderrorsize' => '\'U carecamende d\'u file \'mbortate ha fallite.
+\'U file ète troppe granne respette a \'a dimenziona massime de carecamende.',
+	'importuploaderrorpartial' => '\'U carecamende d\'u file \'mbortate ha fallite.
+\'U file ha state carecate sulamende in parte.',
+	'importuploaderrortemp' => '\'U carecamende d\'u file \'mbortate ha fallite.
+\'A cartelle temboranèe non ge se iacchie.',
+	'import-parse-failure' => 'Analizzatore de \'mbortaziune de l\'XML ha fallite',
+	'import-noarticle' => 'Nisciuna pàgene \'mbortete!',
+	'import-nonewrevisions' => 'Tutte le revisiune avèrene già state \'mbortate.',
 	'import-upload' => 'Careche le date in XML',
-	'import-token-mismatch' => "S'à perse 'a sessione de le date. Pruève 'n'otra vote.",
-	'import-invalid-interwiki' => "Non ge pozze 'mbortà da 'a Uicchi specificate.",
+	'import-token-mismatch' => 'S\'à perse \'a sessione de le date. Pruève \'n\'otra vote.',
+	'import-invalid-interwiki' => 'Non ge pozze \'mbortà da \'a Uicchi specificate.',
 	'import-error-edit' => 'Pàgene "$1" non g\' \'mbortate purcé tu non ge tìne le permesse pe cangiarle.',
 	'import-error-create' => 'Pàgene "$1" non g\' \'mbortate purcé tu non ge tìne le permesse pe ccrejarle.',
-	'importlogpage' => "Archivie de le 'mbortaziune",
-	'importlogpagetext' => "'Mbortaziune amministrative de pàggene cu 'a storie de le cangiaminde da otre Uicchi.",
-	'import-logentry-upload' => "'mbortete [[$1]] da 'u fail carechete",
+	'importlogpage' => 'Archivie de le \'mbortaziune',
+	'importlogpagetext' => '\'Mbortaziune amministrative de pàggene cu \'a storie de le cangiaminde da otre Uicchi.',
+	'import-logentry-upload' => '\'mbortete [[$1]] da \'u fail carechete',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisione|revisiune}}',
 	'import-logentry-interwiki' => 'transuicchied $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisione|revisiune}} da $2',
-	'imagemaxsize' => "Limite d'a dimenzione e l'immaggine:<br />''(pe le pàggene de descrizione d'u file)''",
-	'imagelisttext' => "Sotte stè 'na liste de '''$1''' {{PLURAL:$1|file|file}} arrénghete $2.",
+	'imagemaxsize' => 'Limite d\'a dimenzione e l\'immaggine:<br />\'\'(pe le pàggene de descrizione d\'u file)\'\'',
+	'imagelisttext' => 'Sotte stè \'na liste de \'\'\'$1\'\'\' {{PLURAL:$1|file|file}} arrénghete $2.',
 	'ilsubmit' => 'Cirche',
-	'invalidateemail' => "Scangille 'a conferme de l'e-mail",
+	'invalidateemail' => 'Scangille \'a conferme de l\'e-mail',
 	'imgmultipageprev' => '← pàgena precedende',
 	'imgmultipagenext' => 'pàgena successive →',
 	'imgmultigo' => 'Veje!',
-	'imgmultigoto' => "Veje 'a pàgene $1",
+	'imgmultigoto' => 'Veje \'a pàgene $1',
 	'iranian-calendar-m1' => 'Farvardin',
 	'iranian-calendar-m2' => 'Ordibehesht',
 	'iranian-calendar-m3' => 'Khordad',
@@ -20121,9 +20140,9 @@ Reggistrele sus a 'u combiuter tune e carechele aqquà.",
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
 	'intentionallyblankpage' => 'Sta pàgene ha state lassete vianghe apposte',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'index-category' => 'Индексируемые страницы',
 	'internalerror' => 'Внутренняя ошибка',
 	'internalerror_info' => 'Внутренняя ошибка: $1',
@@ -20269,8 +20288,8 @@ $messages['ru'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|версия|версии|версий}}',
 	'import-logentry-interwiki' => '«$1» — межвики импорт',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|версия|версии|версий}} из $2',
-	'imagemaxsize' => "Ограничение на размер изображения:<br />''(для страницы описания файла)''",
-	'imagelisttext' => "Ниже представлен список из '''$1''' {{PLURAL:$1|файла|файлов|файлов}}, отсортированных $2.",
+	'imagemaxsize' => 'Ограничение на размер изображения:<br />\'\'(для страницы описания файла)\'\'',
+	'imagelisttext' => 'Ниже представлен список из \'\'\'$1\'\'\' {{PLURAL:$1|файла|файлов|файлов}}, отсортированных $2.',
 	'ilsubmit' => 'Найти',
 	'invalidateemail' => 'Отменить подтверждение адреса эл. почты',
 	'imgmultipageprev' => '← предыдущая страница',
@@ -20290,9 +20309,11 @@ $messages['ru'] = array(
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Эсфанд',
 	'intentionallyblankpage' => 'Эта страница намеренно оставлена пустой',
-);
+	'insertimage' => 'Вставить фото',
+	'its_easy' => '...это просто и бесплатно',
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'index-category' => 'Індексованы сторінкы',
 	'internalerror' => 'Інтерна хыба',
 	'internalerror_info' => 'Інтерна хыба: $1',
@@ -20431,9 +20452,9 @@ $messages['rue'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|ревізія|ревізії|ревізій}}',
 	'import-logentry-interwiki' => 'міджівікі імпорт $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|ревізія|ревізії|ревізій}} з $2',
-	'imagemaxsize' => "Максімалный розмір образку:<br />
-''(на сторінцї з пописом файлу)''",
-	'imagelisttext' => "Ниже є {{plural:$1|єден файл|список '''$1'''&nbsp;файлів сортованых $2|список '''$1'''&nbsp;файлів сортованых $2}}.",
+	'imagemaxsize' => 'Максімалный розмір образку:<br />
+\'\'(на сторінцї з пописом файлу)\'\'',
+	'imagelisttext' => 'Ниже є {{plural:$1|єден файл|список \'\'\'$1\'\'\'&nbsp;файлів сортованых $2|список \'\'\'$1\'\'\'&nbsp;файлів сортованых $2}}.',
 	'ilsubmit' => 'Глядати',
 	'invalidateemail' => 'Зрушыти підтверджіня адресы електронічной пошты',
 	'imgmultipageprev' => '← попередня сторінка',
@@ -20441,41 +20462,41 @@ $messages['rue'] = array(
 	'imgmultigo' => 'Перейти!',
 	'imgmultigoto' => 'Перейти на сторінку $1',
 	'intentionallyblankpage' => 'Тота сторінка є порожня нароком.',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'ipbreason' => 'Itia:',
 	'ipblocklist-submit' => 'Caftã',
 	'ilsubmit' => 'Caftã',
 	'imgmultigo' => 'Du-vã!',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'ipbreason' => 'Itia:',
 	'ipblocklist-submit' => 'Caftã',
 	'ilsubmit' => 'Caftã',
 	'imgmultigo' => 'Du-vã!',
-);
+];
 
-$messages['ruq-cyrl'] = array(
+$messages['ruq-cyrl'] = [
 	'italic_sample' => 'Ескрире курсиве',
 	'italic_tip' => 'Ескрире курсиве',
 	'image_tip' => 'Сантигул инсерат',
 	'imagelinks' => 'Легајтул фиширул де медиа',
 	'invert' => 'Ќсклуда спаћул',
 	'istemplate' => 'викулабе',
-);
+];
 
-$messages['ruq-latn'] = array(
+$messages['ruq-latn'] = [
 	'italic_sample' => 'Eskrire kursive',
 	'italic_tip' => 'Eskrire kursive',
 	'image_tip' => 'Santigul inserat',
 	'imagelinks' => 'Legătul fişirul de media',
 	'invert' => 'Ķskluda spaţul',
 	'istemplate' => 'vikulabe',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'index-category' => 'सूचकांकितानि पृष्ठानि',
 	'internalerror' => 'आन्तरिकः दोषः',
 	'internalerror_info' => 'आन्तरिकः दोषः: $1',
@@ -20501,9 +20522,9 @@ $messages['sa'] = array(
 	'imgmultigo' => 'गम्यताम् !',
 	'imgmultigoto' => '$1 पृष्ठं गम्यताम्',
 	'intentionallyblankpage' => 'इदं पृष्ठं बुद्ध्या एव रिक्तं रक्षितमस्ति ।',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'index-category' => 'Индекстаммыт сирэйдэр',
 	'internalerror' => 'Ис алҕас (внутренняя ошибка)',
 	'internalerror_info' => 'Ис алҕас: $1',
@@ -20536,7 +20557,7 @@ $messages['sah'] = array(
 	'img-auth-bad-query-string' => 'URL алҕастаах',
 	'imgfile' => 'билэ',
 	'imagelinks' => 'Билэни туттуу',
-	'iteminvalidname' => "'$1' моһуогурда, аата сатаммата...",
+	'iteminvalidname' => '\'$1\' моһуогурда, аата сатаммата...',
 	'invert' => 'Бэлиэтэниллибити таҥнары тут',
 	'isredirect' => 'көлбөрүтэр сирэй',
 	'istemplate' => 'иһинээҕи',
@@ -20650,8 +20671,8 @@ $messages['sah'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|барыл|барыл баар}}',
 	'import-logentry-interwiki' => 'биикилэр ыккардыларынааҕы $1',
 	'import-logentry-interwiki-detail' => 'барыта $2 барылтан $1 барыл',
-	'imagemaxsize' => "Ойуу улаханын хааччахтааһын:<br />''(билэ туһунан сирэйгэ аналлаах)''",
-	'imagelisttext' => "Манна {{PLURAL:$1|билэ|билэлэр}} испииһэктэрэ ('''$1''') көстөр, суортаммыт: $2.",
+	'imagemaxsize' => 'Ойуу улаханын хааччахтааһын:<br />\'\'(билэ туһунан сирэйгэ аналлаах)\'\'',
+	'imagelisttext' => 'Манна {{PLURAL:$1|билэ|билэлэр}} испииһэктэрэ (\'\'\'$1\'\'\') көстөр, суортаммыт: $2.',
 	'ilsubmit' => 'Көрдөт',
 	'invalidateemail' => 'Эл. почта бигэргэтээһинин араарга',
 	'imgmultipageprev' => '← инники сирэй',
@@ -20659,9 +20680,9 @@ $messages['sah'] = array(
 	'imgmultigo' => 'Көс!',
 	'imgmultigoto' => 'Бу сирэйгэ көс $1',
 	'intentionallyblankpage' => 'Бу сирэй соруйан кураанах хаалларыллыбыт',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'index-category' => 'Pàginas indicizadas',
 	'internalerror' => 'Faddina interna',
 	'internalerror_info' => 'Faddina interna: $1',
@@ -20694,15 +20715,15 @@ $messages['sc'] = array(
 	'import-interwiki-namespace' => 'Nùmene-logu de destinatzione:',
 	'import-upload-filename' => 'Nùmene file:',
 	'import-comment' => 'Cummentu:',
-	'imagelisttext' => "Innoe sighendi du est una lista de '''$1''' {{PLURAL:$1|file|files}} ordinada $2.",
+	'imagelisttext' => 'Innoe sighendi du est una lista de \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} ordinada $2.',
 	'ilsubmit' => 'Chirca',
 	'imgmultipageprev' => '← pàgina in antis',
 	'imgmultipagenext' => 'pàgina in fatu →',
 	'imgmultigo' => 'Bae!',
 	'imgmultigoto' => 'Bae a sa pàgina $1',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'index-category' => 'Pàggini nnicizzati',
 	'internalerror' => 'Erruri nternu',
 	'internalerror_info' => 'Erruri nternu: $1',
@@ -20712,13 +20733,13 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 	'italic_tip' => 'Cursivu',
 	'image_sample' => 'Asempiu.jpg',
 	'image_tip' => 'Mmàggini ncurpurata',
-	'ignorewarning' => "Gnora l'avvisu e sarva comu è gghiè lu file. La virsioni asistenti veni suvrascritta.",
-	'ignorewarnings' => "Gnora li missaggi d'avvirtimentu dû sistema",
+	'ignorewarning' => 'Gnora l\'avvisu e sarva comu è gghiè lu file. La virsioni asistenti veni suvrascritta.',
+	'ignorewarnings' => 'Gnora li missaggi d\'avvirtimentu dû sistema',
 	'illegalfilename' => 'Lu nomu "$1" cunteni dî caràttiri nun ammessi ntê tìtuli dî pàggini. Dari a lu file un nomu diversu e pruvari a carricàrilu di novu.',
 	'img-auth-accessdenied' => 'Nun pò trasiri',
 	'imgfile' => 'file',
-	'imagelinks' => "Pàggini c'ùsanu sta mmàggini",
-	'iteminvalidname' => "Prubbremi cu la pàggina '$1', nomu nun vàlidu...",
+	'imagelinks' => 'Pàggini c\'ùsanu sta mmàggini',
+	'iteminvalidname' => 'Prubbremi cu la pàggina \'$1\', nomu nun vàlidu...',
 	'invert' => 'scancia la silizzioni',
 	'isredirect' => 'pàggina di rinnirizzamentu',
 	'istemplate' => 'nchiusioni',
@@ -20736,31 +20757,31 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 ** Usu ndebitu di cchiù cunti
 ** Nomu utenti nun accittabbili',
 	'ipbcreateaccount' => 'Mpidisci la criazzioni di àutri account',
-	'ipbemailban' => "Mpedisci a l'utenti l'inviu di email",
-	'ipbenableautoblock' => "Blocca automaticamenti l'ùrtimu ndirizzu IP usatu di l'utenti e li succissivi cu cui vèninu tintati canciamenti",
-	'ipbsubmit' => "Blocca st'utenti",
+	'ipbemailban' => 'Mpedisci a l\'utenti l\'inviu di email',
+	'ipbenableautoblock' => 'Blocca automaticamenti l\'ùrtimu ndirizzu IP usatu di l\'utenti e li succissivi cu cui vèninu tintati canciamenti',
+	'ipbsubmit' => 'Blocca st\'utenti',
 	'ipbother' => 'Durata nun n alencu',
 	'ipboptions' => '2 uri:2 hours,1 jornu:1 day,3 jorna:3 days,1 simana:1 week,2 simani:2 weeks,1 misi:1 month,3 misi:3 months,6 misi:6 months,1 annu:1 year,nfinitu:infinite',
 	'ipbotheroption' => 'àutru',
 	'ipbotherreason' => 'Àutri mutivi/dittagghi:',
 	'ipbhidename' => 'Ammuccia lu nomu utenti dê canciamenti e dê listi',
-	'ipbwatchuser' => "Talìa li pàggini e li discussioni utenti di st'utenti",
-	'ipb-change-block' => "Ri-blocca l'utilizzaturi cu sti mpustazzioni",
+	'ipbwatchuser' => 'Talìa li pàggini e li discussioni utenti di st\'utenti',
+	'ipb-change-block' => 'Ri-blocca l\'utilizzaturi cu sti mpustazzioni',
 	'ipb-edit-dropdown' => 'Mutivi pô bloccu',
 	'ipb-unblock-addr' => 'Sblocca $1',
-	'ipb-unblock' => "Sblocca n'utenti o nu ndirizzu IP",
+	'ipb-unblock' => 'Sblocca n\'utenti o nu ndirizzu IP',
 	'ipb-blocklist' => 'Alenca li blocchi attivi',
 	'ipb-blocklist-contribs' => 'Cuntribbuti di $1',
 	'ipusubmit' => 'Leva stu bloccu',
 	'ipblocklist' => 'Utenti e nnirizzi IP bluccati',
-	'ipblocklist-legend' => "Atrova n'utenti bluccatu",
+	'ipblocklist-legend' => 'Atrova n\'utenti bluccatu',
 	'ipblocklist-submit' => 'Ricerca',
 	'infiniteblock' => 'nfinitu',
-	'ipblocklist-empty' => "L'alencu dî blocchi è vacanti.",
+	'ipblocklist-empty' => 'L\'alencu dî blocchi è vacanti.',
 	'ipblocklist-no-results' => 'Lu nnirizzu IP o nomu utenti richiestu nun è bluccatu.',
 	'ipb_expiry_invalid' => 'Durata o scadenza dû bloccu nun vàlida.',
 	'ipb_expiry_temp' => 'Li blocchi dê nomi utenti ammucciati avìssiru èssiri nfiniti',
-	'ipb_hide_invalid' => "Impussibili cancillari l'account; putissi aviri troppi canciamenti.",
+	'ipb_hide_invalid' => 'Impussibili cancillari l\'account; putissi aviri troppi canciamenti.',
 	'ipb_already_blocked' => 'L\'utenti "$1" è già bluccatu',
 	'ipb-needreblock' => '$1 è già bluccatu. Vòi caciari li mpustazzioni?',
 	'ipb_cant_unblock' => 'Erruri: Mpussìbbili attruvari lu bloccu cu ID $1. Putissi aviri già statu sbluccatu.',
@@ -20768,7 +20789,7 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 	'ip_range_invalid' => 'Ntervallu di ndirizzi IP nun vàlidu.',
 	'immobile-source-namespace' => 'Non pòi spustari li pàggini nto namespace "$1"',
 	'immobile-target-namespace' => 'Nun pòi spustari li pàggini ntô namespace "$1"',
-	'immobile-target-namespace-iw' => "L'interwiki link nun è n'ubbiettivu bonu pi spustari la pòggina.",
+	'immobile-target-namespace-iw' => 'L\'interwiki link nun è n\'ubbiettivu bonu pi spustari la pòggina.',
 	'immobile-source-page' => 'Sta pàggina nun pò èssiri spustata.',
 	'immobile-target-page' => 'Nun pòi spustari nti stu tìtulu.',
 	'imagenocrossnamespace' => 'Nun pòi spustari na mmàggini fora dû namespace Mmàggini.',
@@ -20776,7 +20797,7 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 	'imageinvalidfilename' => 'Lu nomu dû file di distinazzioni nun è validu',
 	'import' => 'Mporta pàggini',
 	'importinterwiki' => 'Mpurtazzioni transwiki',
-	'import-interwiki-text' => "Silizziunari un pruggettu wiki e lu tìtulu dâ pàggina a mpurtari. Li dati di pubbricazzioni e li noma di l'autura dî vari virsioni sunnu sarvati. Tutti l'opirazzioni di mpurtazzioni trans-wiki sunnu riggistrati ntô [[Special:Log/import|log di mpurtazzioni]].",
+	'import-interwiki-text' => 'Silizziunari un pruggettu wiki e lu tìtulu dâ pàggina a mpurtari. Li dati di pubbricazzioni e li noma di l\'autura dî vari virsioni sunnu sarvati. Tutti l\'opirazzioni di mpurtazzioni trans-wiki sunnu riggistrati ntô [[Special:Log/import|log di mpurtazzioni]].',
 	'import-interwiki-source' => 'Surgenti wiki/pàggina:',
 	'import-interwiki-history' => 'Copia la ntera cronoluggìa di sta pàggina',
 	'import-interwiki-templates' => 'Includi tutti li template',
@@ -20784,12 +20805,12 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 	'import-interwiki-namespace' => 'Trasfirisci li pàggini ntô namespace:',
 	'import-upload-filename' => 'Nomu file:',
 	'import-comment' => 'Oggettu:',
-	'importtext' => "Pi favuri, esporta lu file dâ wiki d'orìggini usannu l'utility Speciale:Export, sàrvalu supra lu tò discu e carrìcalu ccà",
+	'importtext' => 'Pi favuri, esporta lu file dâ wiki d\'orìggini usannu l\'utility Speciale:Export, sàrvalu supra lu tò discu e carrìcalu ccà',
 	'importstart' => 'Mpurtazzioni dî pàggini n cursu...',
 	'import-revision-count' => '{{PLURAL:$1|na rivisioni mpurtata|$1 rivisioni mpurtati}}',
 	'importnopages' => 'Nudda pàggina a mpurtari.',
 	'importfailed' => 'Mpurtazzioni nun arrinisciuta: $1',
-	'importunknownsource' => "Tipu d'orìggini scanusciutu pi la mpurtazzioni",
+	'importunknownsource' => 'Tipu d\'orìggini scanusciutu pi la mpurtazzioni',
 	'importcantopen' => 'Mpussìbbili grapiri lu file di mpurtazzioni',
 	'importbadinterwiki' => 'Culligamentu inter-wiki erratu',
 	'importnotext' => 'Testu vacanti o mancanti',
@@ -20797,36 +20818,36 @@ Pi favuri nziriti nu nnirizzu vàlidu o svacantati la casella.',
 	'importhistoryconflict' => 'Asìstinu rivisioni dâ cronoluggìa n cunflittu (sta pàggina putissi aviri già statu mpurtata)',
 	'importnosources' => 'Nun hà statu difinita na fonti pi la mpurtazzioni transwiki; la mpurtazzioni diretta dâ cronoluggìa nun è attiva.',
 	'importnofile' => 'Nun hà statu carrcatu nuddu file pi la mpurtazzioni.',
-	'importuploaderrorsize' => "Caricamentu dû file pi la mpurtazzioni non arrinisciutu. Lu file è cchiù granni di li diminzioni màssimi cunzentiti pi l'upload.",
+	'importuploaderrorsize' => 'Caricamentu dû file pi la mpurtazzioni non arrinisciutu. Lu file è cchiù granni di li diminzioni màssimi cunzentiti pi l\'upload.',
 	'importuploaderrorpartial' => 'Caricamentu dû file pi la mpurtazzioni non arrinisciutu. Sulamenti na parti dû file vinni caricatu.',
 	'importuploaderrortemp' => 'Caricamentu dû file pi la mpurtazzioni non arrinisciutu. Manca na cartedda timpurània.',
-	'import-parse-failure' => "Sbagghiu d'anàlisi ntâ mpurtazzioni XML",
+	'import-parse-failure' => 'Sbagghiu d\'anàlisi ntâ mpurtazzioni XML',
 	'import-noarticle' => 'Nudda pàggina di mpurtari.',
 	'import-nonewrevisions' => 'Tutti li rivisioni già foru mpurtati apprima.',
 	'import-upload' => 'Càrrica dati XML',
-	'import-token-mismatch' => "Si pèrsiru li dati rilativi a la sissioni. Pi piaciri, prova n'àutra vota.",
-	'import-invalid-interwiki' => "E' mpussìbbili mpurtari dû pruggettu wiki nnicatu.",
+	'import-token-mismatch' => 'Si pèrsiru li dati rilativi a la sissioni. Pi piaciri, prova n\'àutra vota.',
+	'import-invalid-interwiki' => 'E\' mpussìbbili mpurtari dû pruggettu wiki nnicatu.',
 	'importlogpage' => 'Mpurtazzioni',
-	'importlogpagetext' => "Riggistru dî mpurtazzioni d'ufficiu di pàggini pruvinenti d'àutri wiki, cumpleti di cronoluggìa.",
+	'importlogpagetext' => 'Riggistru dî mpurtazzioni d\'ufficiu di pàggini pruvinenti d\'àutri wiki, cumpleti di cronoluggìa.',
 	'import-logentry-upload' => 'hà mpurtatu $1 tràmiti upload',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|na rivisioni mpurtata|$1 rivisioni mpurtati}}',
 	'import-logentry-interwiki' => 'hà trasfiritu di àutra wiki la pàggina $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|na rivisioni mpurtata|$1 rivisioni mpurtati}} di $2',
-	'imagemaxsize' => "Diminzioni màssima dî mmàggini:<br />''(pi li pàggini di discrizzioni dô file)''",
-	'imagelisttext' => "Di sèquitu veni prisintata na lista di '''$1''' file urdinat{{PLURAL:$1|u|i}} pi $2.",
-	'ilsubmit' => "Va' cerca",
+	'imagemaxsize' => 'Diminzioni màssima dî mmàggini:<br />\'\'(pi li pàggini di discrizzioni dô file)\'\'',
+	'imagelisttext' => 'Di sèquitu veni prisintata na lista di \'\'\'$1\'\'\' file urdinat{{PLURAL:$1|u|i}} pi $2.',
+	'ilsubmit' => 'Va\' cerca',
 	'invalidateemail' => 'Scancella la dumanna di cunferma e-mail',
 	'imgmultipageprev' => '← pàggina pricidenti',
 	'imgmultipagenext' => 'pàggina siquenti →',
-	'imgmultigo' => "Va'",
+	'imgmultigo' => 'Va\'',
 	'imgmultigoto' => 'Vai a pàggina $1',
 	'iranian-calendar-m1' => 'Farvardin',
 	'iranian-calendar-m2' => 'Ordibehesht',
 	'iranian-calendar-m3' => 'Khordad',
 	'intentionallyblankpage' => 'Sta pàggina è lassata vacanti apposta e è usata pi benchmark, ecc.',
-);
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'internalerror' => 'Internal mishanter',
 	'internalerror_info' => 'Internal error: $1',
 	'invalidemailaddress' => 'The email address canna be acceptit syne it seems tae be formattit wrang.
@@ -20840,7 +20861,7 @@ Please enter a weel-formattit address or mak that field tuim.',
 	'illegalfilename' => 'The filename "$1" haes characters that isna alloud in page teitles. Please rename the file an gie uplaidin it anither shot.',
 	'imgfile' => 'file',
 	'imagelinks' => 'File airtins',
-	'iteminvalidname' => "Trouble wi eitem '$1', invalid name...",
+	'iteminvalidname' => 'Trouble wi eitem \'$1\', invalid name...',
 	'invert' => 'Invert selection',
 	'isredirect' => 'reguidal page',
 	'istemplate' => 'transclusion',
@@ -20862,9 +20883,9 @@ Please enter a weel-formattit address or mak that field tuim.',
 	'imagelisttext' => 'Ablo is a leet o $1 {{PLURAL:$1|eimage|eimages}} sortit $2.',
 	'ilsubmit' => 'Rake',
 	'imgmultigo' => 'Gang!',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'internalerror' => 'اندروني خرابي',
 	'internalerror_info' => 'داخلي چُڪَ: $1',
 	'italic_sample' => 'ترڇي لکت',
@@ -20878,96 +20899,96 @@ $messages['sd'] = array(
 	'ipblocklist' => 'بندشيل يوزرنانءُ ۽ آءِ پي پتا',
 	'infiniteblock' => 'لامحدود',
 	'importlogpage' => 'درآمد لاگ',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'internalerror' => 'Errori internu',
 	'internalerror_info' => 'Errori internu: $1',
-	'invalidemailaddress' => "L'indirizzu di postha erettrònica indicaddu à un fuimmaddu nò vàriddu.
-Insirì un'indirizzu vàriddu o ibbiudà la casella.",
+	'invalidemailaddress' => 'L\'indirizzu di postha erettrònica indicaddu à un fuimmaddu nò vàriddu.
+Insirì un\'indirizzu vàriddu o ibbiudà la casella.',
 	'italic_sample' => 'Cursibu',
 	'italic_tip' => 'Cursibu',
 	'image_sample' => 'Esempiu.jpg',
 	'image_tip' => 'File incoipuraddu',
-	'ignorewarning' => "Ignora l'avvirthimentu e saivva cumenti si sia lu file",
+	'ignorewarning' => 'Ignora l\'avvirthimentu e saivva cumenti si sia lu file',
 	'ignorewarnings' => 'Ignora li imbasciaddi di avvirthimentu di lu sisthema',
 	'illegalfilename' => 'L\'innòmmu "$1" cunteni caràtteri nò primmissi i\' li tìturi di li pàgini. Dà a lu file un\'innòmmu dibessu e prubà a carriggarlu di nobu.',
 	'imgfile' => 'file',
 	'imagelinks' => 'Cullegamenti a lu file',
-	'iteminvalidname' => "Probremi cu' la pàgina '$1', innòmmu nò vàriddu...",
+	'iteminvalidname' => 'Probremi cu\' la pàgina \'$1\', innòmmu nò vàriddu...',
 	'invert' => 'invirthi la isciubaradda',
 	'isredirect' => 'rinviu',
 	'istemplate' => 'incrusioni',
-	'isimage' => "cullegamentu a l'immàgina",
+	'isimage' => 'cullegamentu a l\'immàgina',
 	'ipadressorusername' => 'Indirizzu IP o innòmu utenti:',
 	'ipbexpiry' => 'Ischadènzia di lu broccu:',
 	'ipbreason' => 'Mutibu di lu broccu:',
 	'ipbreasonotherlist' => 'Althra mutibazioni',
-	'ipbcreateaccount' => "Impidisci la criazioni d'althri registhrazioni",
-	'ipbemailban' => "Impidisci a l'utenti l'inviu di postha erettrònica",
-	'ipbenableautoblock' => "Brocca automatiggamenti l'ulthimu indirizzu IP usaddu da l'utenti e l'althri chi zerchani di fà mudìfigghi",
-	'ipbsubmit' => "Brocca l'utenti",
+	'ipbcreateaccount' => 'Impidisci la criazioni d\'althri registhrazioni',
+	'ipbemailban' => 'Impidisci a l\'utenti l\'inviu di postha erettrònica',
+	'ipbenableautoblock' => 'Brocca automatiggamenti l\'ulthimu indirizzu IP usaddu da l\'utenti e l\'althri chi zerchani di fà mudìfigghi',
+	'ipbsubmit' => 'Brocca l\'utenti',
 	'ipbother' => 'Duradda nò in erencu:',
 	'ipboptions' => '2 ori:2 hours,1 dì:1 day,3 dì:3 days,1 chedda:1 week,2 cheddi:2 weeks,1 mesi:1 month,3 mesi:3 months,6 mesi:6 months,1 anni:1 year,infiniddu:infinite',
 	'ipbotheroption' => 'althru',
 	'ipbotherreason' => 'Althri dettàgli/rasgioni aggiuntiba:',
-	'ipbhidename' => "Cua l'innòmu utenti da lu rigisthru di li brocchi, da l'erencu di li brocci attibi e da l'erencu utenti.",
+	'ipbhidename' => 'Cua l\'innòmu utenti da lu rigisthru di li brocchi, da l\'erencu di li brocci attibi e da l\'erencu utenti.',
 	'ipb-edit-dropdown' => 'Mutibi pa lu broccu',
 	'ipb-unblock-addr' => 'Ibbrucca $1',
-	'ipb-unblock' => "Ibbrucca un'utenti o un'indirizzu IP",
+	'ipb-unblock' => 'Ibbrucca un\'utenti o un\'indirizzu IP',
 	'ipb-blocklist' => 'Erenca i brocchi attibi',
-	'ipusubmit' => "Ibbrucca chisth'indirizzu",
+	'ipusubmit' => 'Ibbrucca chisth\'indirizzu',
 	'ipblocklist' => 'Utenti e indirizzi IP broccaddi',
-	'ipblocklist-legend' => "Acciappa un'utenti broccaddu",
+	'ipblocklist-legend' => 'Acciappa un\'utenti broccaddu',
 	'ipblocklist-submit' => 'Zercha',
 	'infiniteblock' => 'chena ischadènzia',
-	'ipblocklist-empty' => "L'erencu di li brocchi è bioddu.",
-	'ipblocklist-no-results' => "L'indirizzu IP o innòmmu utenti ciamaddu nò è broccaddu.",
+	'ipblocklist-empty' => 'L\'erencu di li brocchi è bioddu.',
+	'ipblocklist-no-results' => 'L\'indirizzu IP o innòmmu utenti ciamaddu nò è broccaddu.',
 	'ipb_expiry_invalid' => 'Duradda o ischadènzia di lu broccu nò vàridda.',
 	'ipb_already_blocked' => '"$1" è già broccaddu',
 	'ipb_cant_unblock' => 'Errori: Impussìbiri acciappà lu broccu cun ID $1. Lu broccu pudia assé già isthaddu buggaddu.',
-	'ipb_blocked_as_range' => "Errori: L'indirizzu IP $1 nò è broccaddu individuaimmenti e nò pó assé ibbruccaddu. Lu broccu è inveci attibu a libellu di l'intervallu  $2, chi pó assé ibbruccaddu.",
-	'ip_range_invalid' => "Intervallu d'indirizzi ip nò vàriddu.",
+	'ipb_blocked_as_range' => 'Errori: L\'indirizzu IP $1 nò è broccaddu individuaimmenti e nò pó assé ibbruccaddu. Lu broccu è inveci attibu a libellu di l\'intervallu  $2, chi pó assé ibbruccaddu.',
+	'ip_range_invalid' => 'Intervallu d\'indirizzi ip nò vàriddu.',
 	'import' => 'Impurtha pàgini',
 	'importinterwiki' => 'Impurthazioni transwiki',
-	'import-interwiki-text' => "Sciubarà un prugettu wiki e lu tìturu di la pàgina d'impurthà.
-Li dati di prubbiggazioni e l'innòmmi di l'autori di li vàri versioni sarani cunseivaddi.
-Tutti l'operazioni d'impurthazioni trans-wiki so rigisthraddi i' lu [[Special:Log/import|rigisthru d'impurthazioni]].",
-	'import-interwiki-history' => "Cupia l'intrea cronologia di chistha pàgina",
+	'import-interwiki-text' => 'Sciubarà un prugettu wiki e lu tìturu di la pàgina d\'impurthà.
+Li dati di prubbiggazioni e l\'innòmmi di l\'autori di li vàri versioni sarani cunseivaddi.
+Tutti l\'operazioni d\'impurthazioni trans-wiki so rigisthraddi i\' lu [[Special:Log/import|rigisthru d\'impurthazioni]].',
+	'import-interwiki-history' => 'Cupia l\'intrea cronologia di chistha pàgina',
 	'import-interwiki-submit' => 'Impurtha',
 	'import-interwiki-namespace' => 'Tipu di pagina di disthinazioni:',
 	'import-comment' => 'Oggettu:',
-	'importtext' => "Pa piazeri ippurthà lu file da lu situ wiki d'origini cu' la funzioni Special:Export utility, saivvàllu i' lu propriu dischu e daboi carriggallu inogghi.",
+	'importtext' => 'Pa piazeri ippurthà lu file da lu situ wiki d\'origini cu\' la funzioni Special:Export utility, saivvàllu i\' lu propriu dischu e daboi carriggallu inogghi.',
 	'importstart' => 'Impurthendi li pàgini...',
 	'import-revision-count' => '{{PLURAL:$1|una ribisioni impurthadda|$1 ribisioni impurthaddi}}',
 	'importnopages' => 'Nisciuna pàgina da impurthà.',
 	'importfailed' => 'Impurthazioni nò ridiscidda: $1',
-	'importunknownsource' => "Tipu d'orìgini ischunisciddu pa l'impurthazioni",
-	'importcantopen' => "Impussìbiri abbrì lu file d'impurthazioni",
+	'importunknownsource' => 'Tipu d\'orìgini ischunisciddu pa l\'impurthazioni',
+	'importcantopen' => 'Impussìbiri abbrì lu file d\'impurthazioni',
 	'importbadinterwiki' => 'Cullegamentu interwiki ibbagliaddu',
 	'importnotext' => 'Testhu bioddu o mancanti',
 	'importsuccess' => 'Impurthazioni finidda!',
 	'importhistoryconflict' => 'La cronologia cunteni di li versioni in cuntrasthu (chistha pàgina pudia assé già isthadda impurthadda)',
-	'importnosources' => "Nò è isthadda difinidda un'origini pa l'impurthazioni transwiki; l'impurthazioni diretta di la cronologia nò è attiba.",
-	'importnofile' => "Nò è isthaddu cariggaddu nisciun file pa l'impurthazioni.",
-	'importuploaderrorsize' => "Carriggamentu di file pa l'impurthazioni nò ridisciddu. Lu file supara li misuri massimi cunsintiddi pa lu carriggamentu.",
-	'importuploaderrorpartial' => "Carriggamentu di file pa l'impurthazioni nò ridisciddu. Lu file è isthaddu cariggaddu soru in parthi.",
-	'importuploaderrortemp' => "Carriggamentu di file pa l'impurthazioni nò ridisciddu. Manca una carhella timpurania.",
+	'importnosources' => 'Nò è isthadda difinidda un\'origini pa l\'impurthazioni transwiki; l\'impurthazioni diretta di la cronologia nò è attiba.',
+	'importnofile' => 'Nò è isthaddu cariggaddu nisciun file pa l\'impurthazioni.',
+	'importuploaderrorsize' => 'Carriggamentu di file pa l\'impurthazioni nò ridisciddu. Lu file supara li misuri massimi cunsintiddi pa lu carriggamentu.',
+	'importuploaderrorpartial' => 'Carriggamentu di file pa l\'impurthazioni nò ridisciddu. Lu file è isthaddu cariggaddu soru in parthi.',
+	'importuploaderrortemp' => 'Carriggamentu di file pa l\'impurthazioni nò ridisciddu. Manca una carhella timpurania.',
 	'importlogpage' => 'Impurthazioni',
-	'importlogpagetext' => "Rigisthru di l'impurthazioni di pàgini d'althri wiki, cumpreti di cronologia.",
+	'importlogpagetext' => 'Rigisthru di l\'impurthazioni di pàgini d\'althri wiki, cumpreti di cronologia.',
 	'import-logentry-upload' => 'à impurthaddu [[$1]] attrabessu lu carriggamentu',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|una ribisioni impurthadda|$1 ribisioni impurthaddi}}',
-	'import-logentry-interwiki' => "ha traiffiriddu da un'althra wiki la pàgina $1",
+	'import-logentry-interwiki' => 'ha traiffiriddu da un\'althra wiki la pàgina $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|una ribisioni impurthadda|$1 ribisioni impurthaddi}} da $2',
-	'imagemaxsize' => "Misura màssima di l'immàgini i'li reratibi pàgini di dischussioni:",
-	'imagelisttext' => "Inogghi una listha di '''$1''' {{PLURAL:$1|file|file}} ordhinaddi pa $2.",
+	'imagemaxsize' => 'Misura màssima di l\'immàgini i\'li reratibi pàgini di dischussioni:',
+	'imagelisttext' => 'Inogghi una listha di \'\'\'$1\'\'\' {{PLURAL:$1|file|file}} ordhinaddi pa $2.',
 	'ilsubmit' => 'Zercha',
 	'imgmultipageprev' => '← pàgina prizzidenti',
 	'imgmultipagenext' => 'pàgina sighenti →',
 	'imgmultigo' => 'Vai',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'internalerror' => 'Siskkaldas feaila',
 	'internalerror_info' => 'Siskkaldas feaila: $1',
 	'invalidemailaddress' => 'E-poastačujuhusa ii sáhte dohkehit, daningo dat ii leat rivttes hámis. Leage buorre ja adde rivttes e-poastačujuhusa dahje gurre dan.',
@@ -21009,14 +21030,14 @@ $messages['se'] = array(
 	'import-comment' => 'Sivva',
 	'import-revision-count' => '$1 {{PLURAL:$1|veršuvdna|veršuvnna}}',
 	'import-logentry-upload-detail' => '$1 veršuvdna/veršuvnna',
-	'imagelisttext' => "Vuolábealde lea '''$1''' fiilla ordnejuvvon $2.",
+	'imagelisttext' => 'Vuolábealde lea \'\'\'$1\'\'\' fiilla ordnejuvvon $2.',
 	'ilsubmit' => 'Oza',
 	'imgmultipageprev' => '← ovddit siidu',
 	'imgmultipagenext' => 'čuovvovaš siidu →',
 	'imgmultigo' => 'Mana!',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'internalerror' => 'Römj internal',
 	'internalerror_info' => 'Römj internal: $1',
 	'invalidemailaddress' => 'Adressade e-iitom zo necoccebj acceptom, zo apparde pos-coccebj format invalidat pac. Enter adressa formatan correctan pac jöx zéro jan space.',
@@ -21030,11 +21051,11 @@ $messages['sei'] = array(
 	'istemplate' => 'incluciónaj',
 	'ipadressorusername' => 'Addressade IP jöx caitom ID:',
 	'ipbreason' => 'Ra:',
-	'ipbreasonotherlist' => "Ra pac'de",
+	'ipbreasonotherlist' => 'Ra pac\'de',
 	'ipbsubmit' => 'Block jan caitom',
-	'ipbother' => "Pac'de xepe:",
-	'ipbotheroption' => "pac'de",
-	'ipbotherreason' => "Pac'de rae (addicionale):",
+	'ipbother' => 'Pac\'de xepe:',
+	'ipbotheroption' => 'pac\'de',
+	'ipbotherreason' => 'Pac\'de rae (addicionale):',
 	'ipb-edit-dropdown' => 'Blockde ticpatlöx rá',
 	'ipb-unblock-addr' => 'Diiblockom $1',
 	'ipb-unblock' => 'Diiblockom caitom ID zo jöx adressade iP zo',
@@ -21048,13 +21069,13 @@ $messages['sei'] = array(
 	'importfailed' => 'Römjde import: $1',
 	'ilsubmit' => 'Yahöx',
 	'imgmultigo' => 'Caátemöx!',
-);
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'index-category' => 'Âlêmbëtï sô akpo nî',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'internalerror' => 'Vėdėnė klaida',
 	'internalerror_info' => 'Vėdėnė klaida: $1',
 	'italic_sample' => 'Teksts kursīvu',
@@ -21113,16 +21134,16 @@ $messages['sgs'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|keitims|keitimā|keitimu}}',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|keitims|keitimā|keitimu}} ėš $2',
 	'imagemaxsize' => 'Rėbuotė abruozdieliu dėdoma anū aprašīma poslapī lėgė:',
-	'imagelisttext' => "Žemiau īr '''$1''' failu sārašos, sorūšiouts $2.",
+	'imagelisttext' => 'Žemiau īr \'\'\'$1\'\'\' failu sārašos, sorūšiouts $2.',
 	'ilsubmit' => 'Ėiškoutė',
 	'invalidateemail' => 'El. pašta patvirtėnėma atšaukėms',
 	'imgmultipageprev' => '← unkstesnis poslapis',
 	'imgmultipagenext' => 'kėts poslapis →',
 	'imgmultigo' => 'Ētė!',
 	'imgmultigoto' => 'Ētė i poslapi $1',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'index-category' => 'Indeksirane stranice',
 	'internalerror' => 'Interna pogreška',
 	'internalerror_info' => 'Interna greška: $1',
@@ -21156,7 +21177,7 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'img-auth-bad-query-string' => 'URL ima nevaljan izraz upita.',
 	'imgfile' => 'datoteka',
 	'imagelinks' => 'Upotreba datoteke',
-	'iteminvalidname' => "Problem sa '$1', neispravno ime...",
+	'iteminvalidname' => 'Problem sa \'$1\', neispravno ime...',
 	'invert' => 'Sve osim odabranog',
 	'isredirect' => 'preusmjeri stranicu',
 	'istemplate' => 'kao šablon',
@@ -21188,7 +21209,7 @@ Za optimalnu sigurnost, img_auth.php je onemogućena.',
 	'ipb-change-block' => 'Ponovno blokiraj korisnika sa ovim postavkama',
 	'ipb-confirm' => 'Potvrdite blokiranje',
 	'ipb-blockingself' => 'Ovom akcijom ćete blokirati sebe! Da li ste sigurni da to želite?',
-	'ipb-confirmhideuser' => "Upravo ćete blokirati korisnika sa uključenom opcijom ''sakrij korisnika''. Ovim će korisničko ime biti sakriveno u svim spiskovima i stavkama zapisnika. Da li ste sigurni da to želite?",
+	'ipb-confirmhideuser' => 'Upravo ćete blokirati korisnika sa uključenom opcijom \'\'sakrij korisnika\'\'. Ovim će korisničko ime biti sakriveno u svim spiskovima i stavkama zapisnika. Da li ste sigurni da to želite?',
 	'ipb-edit-dropdown' => 'Uredi razloge blokiranja',
 	'ipb-unblock-addr' => 'Deblokiraj $1',
 	'ipb-unblock' => 'Deblokiraj korisničko ime ili IP adresu',
@@ -21277,8 +21298,8 @@ Molimo pokušajte ponovno.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revizija|revizije|revizija}}',
 	'import-logentry-interwiki' => 'uveženo ("transwikied") $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revizija|revizije|revizija}} sa $2',
-	'imagemaxsize' => "Ograničenje veličine slike:<br />''(za stranice opisa datoteke)''",
-	'imagelisttext' => "Ispod je spisak od '''$1''' {{PLURAL:$1|datoteke|datoteke|datoteka}} poredanih $2.",
+	'imagemaxsize' => 'Ograničenje veličine slike:<br />\'\'(za stranice opisa datoteke)\'\'',
+	'imagelisttext' => 'Ispod je spisak od \'\'\'$1\'\'\' {{PLURAL:$1|datoteke|datoteke|datoteka}} poredanih $2.',
 	'ilsubmit' => 'Traži',
 	'invalidateemail' => 'Odustani od e-mail potvrde',
 	'imgmultipageprev' => '← prethodna stranica',
@@ -21286,9 +21307,9 @@ Molimo pokušajte ponovno.',
 	'imgmultigo' => 'Idi!',
 	'imgmultigoto' => 'Idi na stranicu $1',
 	'intentionallyblankpage' => 'Ova je stranica namjerno ostavljena praznom.',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'index-category' => 'Tisniwin su umatar',
 	'info_short' => 'Inɣmisn',
 	'internalerror' => 'khata ghogns',
@@ -21309,9 +21330,9 @@ $messages['shi'] = array(
 	'ipblocklist' => '↓ Tansa IP d imsqdacn ttuẓnin',
 	'imagelistall' => 'Kullu',
 	'imgmultigo' => 'ballak !',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'index-category' => 'සූචිගත පිටු',
 	'internalerror' => 'අභ්‍යන්තර දෝෂය',
 	'internalerror_info' => 'අභ්‍යන්තර දෝෂය: $1',
@@ -21346,7 +21367,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 	'img-auth-bad-query-string' => 'URL සතුව වලංගු නොවන ප්‍රශ්නාර්ථ ලකුණක් ඇත.',
 	'imgfile' => 'ගොනුව',
 	'imagelinks' => 'ගොනු භාවිතය',
-	'iteminvalidname' => "'$1' අයිතමය පිළිබඳ ගැටළුවක් ඇත, අනීතික නමකි...",
+	'iteminvalidname' => '\'$1\' අයිතමය පිළිබඳ ගැටළුවක් ඇත, අනීතික නමකි...',
 	'invert' => 'තෝරාගැනුම ප්‍රතිලෝම කරන්න',
 	'isredirect' => 'පිටුව යළි-යොමුකරන්න',
 	'istemplate' => 'අන්තහ්කරණය',
@@ -21463,8 +21484,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 	'import-logentry-upload-detail' => ' {{PLURAL:$1|සංශෝධනය|සංශෝධන $1 ක්}}',
 	'import-logentry-interwiki' => '$1 අන්තර්විකීකරණය කරන ලදි',
 	'import-logentry-interwiki-detail' => '$2 වෙතින් {{PLURAL:$1|එක් සංශෝධනයක්|සංශෝධන $1 ක්}}',
-	'imagemaxsize' => "රූප ප්‍රමාණ සීමාව:<br />''(ගොනු විස්තර පිටු සඳහා)''",
-	'imagelisttext' => "පහත දැක්වෙන්නේ  $2 අනුව සුබෙදුනු {{PLURAL:$1|ගොනුවක|ගොනු '''$1''' ක}} ලැයිස්තුවකි.",
+	'imagemaxsize' => 'රූප ප්‍රමාණ සීමාව:<br />\'\'(ගොනු විස්තර පිටු සඳහා)\'\'',
+	'imagelisttext' => 'පහත දැක්වෙන්නේ  $2 අනුව සුබෙදුනු {{PLURAL:$1|ගොනුවක|ගොනු \'\'\'$1\'\'\' ක}} ලැයිස්තුවකි.',
 	'ilsubmit' => 'ගවේෂණය',
 	'invalidateemail' => 'විද්‍යුත්-තැපැල් තහවුරුකිරීම අවලංගු කරන්න',
 	'imgmultipageprev' => '← පෙර පිටුව',
@@ -21484,9 +21505,9 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization බලන්න.',
 	'iranian-calendar-m11' => 'බාහ්මාන්',
 	'iranian-calendar-m12' => 'එස්ෆාන්ඩ්',
 	'intentionallyblankpage' => 'මෙම පිටුව අභිප්‍රේතව හිස්ව තබන ලදි',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'index-category' => 'Indexované stránky',
 	'internalerror' => 'Vnútorná chyba',
 	'internalerror_info' => 'Vnútorná chyba: $1',
@@ -21634,8 +21655,8 @@ Uložte ho na svoj disk a nahrajte sem.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revízia|revízie|revízií}}',
 	'import-logentry-interwiki' => 'Transwiki import $1 úspešný',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revízia|revízie|revízií}} z $2',
-	'imagemaxsize' => "Obmedziť veľkosť obrázka:<br />''(na popisnej stránke súboru)''",
-	'imagelisttext' => "Tu je zoznam {{PLURAL:$1|jedného súboru|'''$1''' súborov|'''$1''' súborov}} zoradený $2.",
+	'imagemaxsize' => 'Obmedziť veľkosť obrázka:<br />\'\'(na popisnej stránke súboru)\'\'',
+	'imagelisttext' => 'Tu je zoznam {{PLURAL:$1|jedného súboru|\'\'\'$1\'\'\' súborov|\'\'\'$1\'\'\' súborov}} zoradený $2.',
 	'ilsubmit' => 'Hľadať',
 	'invalidateemail' => 'Zrušiť potvrdenie emailovej adresy',
 	'imgmultipageprev' => '&larr; predošlá stránka',
@@ -21644,9 +21665,9 @@ Uložte ho na svoj disk a nahrajte sem.',
 	'imgmultigoto' => 'Prejsť na stránku $1',
 	'iranian-calendar-m1' => 'Farvardín',
 	'intentionallyblankpage' => 'Táto stránka je zámerne prázdna. Používa sa na meranie výkonnosti atď.',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'index-category' => 'Indeksirane strani',
 	'internalerror' => 'Notranja napaka',
 	'internalerror_info' => 'Notranja napaka: $1',
@@ -21800,7 +21821,7 @@ Prosimo, poskusite znova.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|redakcija|redakciji|redakcije|redakcij|redakcij}}',
 	'import-logentry-interwiki' => 'prenesel $1 med wikiji',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|redakcija|redakciji|redakcije|redakcij}} uporabnika $2',
-	'imagemaxsize' => "Omejitev velikosti slik:<br />''(za opisne strani datotek)''",
+	'imagemaxsize' => 'Omejitev velikosti slik:<br />\'\'(za opisne strani datotek)\'\'',
 	'imagelisttext' => 'Prikazujem $1 $2 {{PLURAL:$1|razvrščeno datoteko|razvrščeni datoteki|razvrščene datoteke|razvrščenih datotek|razvrščenih datotek}}.',
 	'ilsubmit' => 'Išči',
 	'invalidateemail' => 'Prekliči potrditev e-poštnega naslova',
@@ -21809,9 +21830,9 @@ Prosimo, poskusite znova.',
 	'imgmultigo' => 'Pojdi!',
 	'imgmultigoto' => 'Pojdi na stran $1',
 	'intentionallyblankpage' => 'Ta stran je namenoma prazna.',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'index-category' => 'Indizierte Seyta',
 	'invalidemailaddress' => 'De E-Mail-Atresse werd ne akzeptiert, weil se a ungiltiges Furmat (eventuell ungiltige Zeecha) zu hoan scheint. Bitte gib anne korrekte Atresse a oder laare doas Feld.',
 	'italic_sample' => 'Kursiver Text',
@@ -21822,7 +21843,7 @@ $messages['sli'] = array(
 	'img-auth-nofile' => 'Datei „$1“ existiert ne.',
 	'img-auth-streaming' => 'Loade „$1“.',
 	'imagelinks' => 'Dateiverwendung',
-	'iteminvalidname' => "Problem mi'm Eintrag „$1“, ungiltiger Noame.",
+	'iteminvalidname' => 'Problem mi\'m Eintrag „$1“, ungiltiger Noame.',
 	'invert' => 'Oauswoahl imkehra',
 	'isredirect' => 'Weiterleitungsseyte',
 	'istemplate' => 'Vorlageneinbindung',
@@ -21856,7 +21877,7 @@ $messages['sli'] = array(
 	'ipb-blocklist-contribs' => 'Nutzerbeiträge fier „$1“',
 	'ipusubmit' => 'Freigahn',
 	'ipblocklist' => 'Gesperrte Benutzer',
-	'ipblocklist-legend' => "Suche noach a'm gesperrta Nutzer",
+	'ipblocklist-legend' => 'Suche noach a\'m gesperrta Nutzer',
 	'ipblocklist-submit' => 'Sucha',
 	'ipblocklist-otherblocks' => 'Andere {{PLURAL:$1|Sperre|Sperra}}',
 	'ipblocklist-empty' => 'De Liste enthält kenne Eenträge.',
@@ -21894,38 +21915,38 @@ Olle Transwiki-Import-Aksjonna waan eim [[Special:Log/import|Import-Logbuch]] pr
 	'importbadinterwiki' => 'Foalscher Interwiki-Link',
 	'importnotext' => 'Laar oder kee Text',
 	'importsuccess' => 'Import obgeschlossa.',
-	'importhistoryconflict' => "'S existieren bereits ältere Versionen, welche miet diesen kollidieren. Meegliecherweise wurde de Seite bereits vorher importiert.",
+	'importhistoryconflict' => '\'S existieren bereits ältere Versionen, welche miet diesen kollidieren. Meegliecherweise wurde de Seite bereits vorher importiert.',
 	'importnosources' => 'Fier dann Transwiki-Import sein kenne Quellen definiert. Doas direkte Huchloada vu Versionen ies gesperrt.',
 	'importnofile' => 'Is ies kenne Importdatei ausgewählt worden.',
 	'importuploaderrorsize' => 'Doas Huchloada dar Importdatei ies fahlgeschlaga. De Datei ies grißer ols de maximal erlaubte Dateigriße.',
 	'importuploaderrorpartial' => 'Doas Huchloada dar Importdatei ies fehlgeschlagen. De Datei wurde ock teelweise huchgeloada.',
 	'importuploaderrortemp' => 'Doas Huchloada dar Importdatei ies fahlgeschlaga. A temporäres Verzeichnis fahlt.',
 	'import-parse-failure' => 'Fahler beim XML-Import:',
-	'import-noarticle' => "'S wurde kenne zu importierende Seite oagegahn!",
+	'import-noarticle' => '\'S wurde kenne zu importierende Seite oagegahn!',
 	'import-nonewrevisions' => 'Is sein kenne neua Versiona zum Import vorhanden, olle Versiona wurden bereits frieher importiert.',
 	'import-upload' => 'XML-Daten importiera',
 	'import-token-mismatch' => 'Verlust dar Sessiondaten. Bitte versuche is erneut.',
-	'import-invalid-interwiki' => "Aus damm oagegahn'n Wiki ies kee Import meeglich.",
+	'import-invalid-interwiki' => 'Aus damm oagegahn\'n Wiki ies kee Import meeglich.',
 	'importlogpagetext' => 'Administrativer Import vu Seyta miet Versionsgeschichte vu andern Wikis.',
-	'import-logentry-upload' => "hoot „[[$1]]“ vu a'r Datei importiert",
+	'import-logentry-upload' => 'hoot „[[$1]]“ vu a\'r Datei importiert',
 	'import-logentry-interwiki' => 'hoot „$1“ importiert (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Version|Versiona}} vun $2',
-	'imagemaxsize' => "Maximale Bildgrieße:<br />''(fier Dateibeschreibungsseyta)''",
-	'imagelisttext' => "Hier ies anne Liste vu '''$1''' {{PLURAL:$1|Datei|Dateien}}, sortiert $2.",
+	'imagemaxsize' => 'Maximale Bildgrieße:<br />\'\'(fier Dateibeschreibungsseyta)\'\'',
+	'imagelisttext' => 'Hier ies anne Liste vu \'\'\'$1\'\'\' {{PLURAL:$1|Datei|Dateien}}, sortiert $2.',
 	'ilsubmit' => 'Sucha',
 	'invalidateemail' => 'E-Mail-Atressbestätigung obbrecha',
 	'imgmultipageprev' => '← vurherige Seite',
 	'imgmultipagenext' => 'nächste Seite →',
 	'imgmultigoto' => 'Gieh zo Seite $1',
 	'intentionallyblankpage' => 'Diese Seite ies obsichtlich ohne Inhalt. Se werd fier Benchmarks verwendet.',
-);
+];
 
-$messages['sm'] = array(
-	'ilsubmit' => "Su'e",
+$messages['sm'] = [
+	'ilsubmit' => 'Su\'e',
 	'imgmultigo' => 'Alu!',
-);
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'internalerror' => 'Sjisjnjie båajhtede',
 	'internalerror_info' => 'Sjisjnjie båajhtede: $1',
 	'italic_sample' => 'Kursiive tjaalege',
@@ -21955,19 +21976,19 @@ $messages['sma'] = array(
 	'imgmultipageprev' => '← övtebe bielie',
 	'imgmultipagenext' => 'minngebe bielie →',
 	'imgmultigo' => 'Vaadtsa!',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'info_short' => 'Warbixin',
 	'ignorewarning' => 'Iska dhagooley digniinta ee faylka keedi',
 	'ignorewarnings' => 'Iska dhagooley digkiinwalba',
 	'invert' => 'Dabagedi dalabka',
-	'imagelisttext' => "Hoos waxaa yaala liiska '''$1''' {{PLURAL:$1|file|faylalka}} oo u kala soocan $2.",
+	'imagelisttext' => 'Hoos waxaa yaala liiska \'\'\'$1\'\'\' {{PLURAL:$1|file|faylalka}} oo u kala soocan $2.',
 	'imagelistall' => 'dhamaan',
 	'imgmultigo' => 'Soco!',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'index-category' => 'Faqe të indeksuara',
 	'internalerror' => 'Gabim i brendshëm',
 	'internalerror_info' => 'Gabim i brendshëm: $1',
@@ -22000,7 +22021,7 @@ Për siguri optimale, img_auth.php është çaktivizuar.',
 	'img-auth-bad-query-string' => 'URL ka një varg të pavlefshme pyetje.',
 	'imgfile' => 'skeda',
 	'imagelinks' => 'Përdorimi i skedës',
-	'iteminvalidname' => "Problem me artikullin '$1', titull jo i saktë...",
+	'iteminvalidname' => 'Problem me artikullin \'$1\', titull jo i saktë...',
 	'invert' => 'Kundër zgjedhjes',
 	'isredirect' => 'faqe përcjellëse',
 	'istemplate' => 'përfshirë',
@@ -22051,8 +22072,8 @@ Për siguri optimale, img_auth.php është çaktivizuar.',
 	'ipb_expiry_temp' => 'Bllokimet e përdoruesve të fshehur duhet të jenë të përhershme.',
 	'ipb_hide_invalid' => 'Nuk mund ta prishni këtë llogari; mund të ketë shumë redaktime.',
 	'ipb_already_blocked' => '"$1" është i bllokuar',
-	'ipb-needreblock' => "$1 është i bllokuar.
-Dëshironi t'i ndryshoni parametrat?",
+	'ipb-needreblock' => '$1 është i bllokuar.
+Dëshironi t\'i ndryshoni parametrat?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Bllokim tjetër|Bllokime të tjera}}',
 	'ipb_cant_unblock' => 'Gabim: Bllokimi ID $1 nuk u gjet.
 Mund të jetë zhbllokuar.',
@@ -22085,7 +22106,7 @@ Të gjitha veprimet e importit transwiki janë të regjistruara tek [[Special:Lo
 	'importtext' => 'Ju lutem eksportoni këtë skedë nga burimi wiki duke përdorur  [[Special:Export|export utility]].! XAU Save atë në kompjuterin tuaj dhe ngarkoni këtu.',
 	'importstart' => 'Duke importuar faqet...',
 	'import-revision-count' => '$1 {{PLURAL:$1|version|versione}}',
-	'importnopages' => "S'ka faqe për tu importuar.",
+	'importnopages' => 'S\'ka faqe për tu importuar.',
 	'imported-log-entries' => 'Importuar $1 {{PLURAL:$1|hyrje|hyrje}}',
 	'importfailed' => 'Importimi dështoi: $1',
 	'importunknownsource' => 'Lloj burimi importi i panjohur',
@@ -22103,7 +22124,7 @@ Skeda u ngarkua vetëm pjesërisht.',
 	'importuploaderrortemp' => 'Ngarkimi ose importimi i skedës dështoi.
 Një dosje e përkohëshme mungon.',
 	'import-parse-failure' => 'Dështim i analizës së importit XML',
-	'import-noarticle' => "S'ka faqe për tu importuar!",
+	'import-noarticle' => 'S\'ka faqe për tu importuar!',
 	'import-nonewrevisions' => 'Të gjitha versionet kanë qenë të importuara më parë.',
 	'import-upload' => 'Ngarko të dhëna XML',
 	'import-token-mismatch' => 'Humbje e të dhënave të sesionit.
@@ -22117,7 +22138,7 @@ Ju lutemi provoni përsëri.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|version|versione}}',
 	'import-logentry-interwiki' => 'transwikoji $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$!1|version|versione}} nga $2',
-	'imagemaxsize' => "Kufizoni madhësinë e fotos:<br />''(për faqet e përshkrimit të skedave)''",
+	'imagemaxsize' => 'Kufizoni madhësinë e fotos:<br />\'\'(për faqet e përshkrimit të skedave)\'\'',
 	'imagelisttext' => 'Më poshtë është një listë e $1 {{PLURAL:$1|skedës të renditur|skedave të renditura}} sipas $2.',
 	'ilsubmit' => 'Kërko',
 	'invalidateemail' => 'Tërhiq vërtetimin e email-it',
@@ -22126,9 +22147,9 @@ Ju lutemi provoni përsëri.',
 	'imgmultigo' => 'Shko!',
 	'imgmultigoto' => 'Shko tek faqja $1',
 	'intentionallyblankpage' => 'Kjo faqe me qëllim është lënë e zbrazët',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'index-category' => 'Faqe të indeksuara',
 	'internalerror' => 'Gabim i brendshëm',
 	'internalerror_info' => 'Gabim i brendshëm: $1',
@@ -22161,7 +22182,7 @@ Për siguri optimale, img_auth.php është çaktivizuar.',
 	'img-auth-bad-query-string' => 'URL ka një varg të pavlefshme pyetje.',
 	'imgfile' => 'skeda',
 	'imagelinks' => 'Përdorimi i skedës',
-	'iteminvalidname' => "Problem me artikullin '$1', titull jo i saktë...",
+	'iteminvalidname' => 'Problem me artikullin \'$1\', titull jo i saktë...',
 	'invert' => 'Kundër zgjedhjes',
 	'isredirect' => 'faqe përcjellëse',
 	'istemplate' => 'përfshirë',
@@ -22212,8 +22233,8 @@ Për siguri optimale, img_auth.php është çaktivizuar.',
 	'ipb_expiry_temp' => 'Bllokimet e përdoruesve të fshehur duhet të jenë të përhershme.',
 	'ipb_hide_invalid' => 'Nuk mund ta prishni këtë llogari; mund të ketë shumë redaktime.',
 	'ipb_already_blocked' => '"$1" është i bllokuar',
-	'ipb-needreblock' => "$1 është i bllokuar.
-Dëshironi t'i ndryshoni parametrat?",
+	'ipb-needreblock' => '$1 është i bllokuar.
+Dëshironi t\'i ndryshoni parametrat?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Bllokim tjetër|Bllokime të tjera}}',
 	'ipb_cant_unblock' => 'Gabim: Bllokimi ID $1 nuk u gjet.
 Mund të jetë zhbllokuar.',
@@ -22246,7 +22267,7 @@ Të gjitha veprimet e importit transwiki janë të regjistruara tek [[Special:Lo
 	'importtext' => 'Ju lutem eksportoni këtë skedë nga burimi wiki duke përdorur  [[Special:Export|export utility]].! XAU Save atë në kompjuterin tuaj dhe ngarkoni këtu.',
 	'importstart' => 'Duke importuar faqet...',
 	'import-revision-count' => '$1 {{PLURAL:$1|version|versione}}',
-	'importnopages' => "S'ka faqe për tu importuar.",
+	'importnopages' => 'S\'ka faqe për tu importuar.',
 	'imported-log-entries' => 'Importuar $1 {{PLURAL:$1|hyrje|hyrje}}',
 	'importfailed' => 'Importimi dështoi: $1',
 	'importunknownsource' => 'Lloj burimi importi i panjohur',
@@ -22264,7 +22285,7 @@ Skeda u ngarkua vetëm pjesërisht.',
 	'importuploaderrortemp' => 'Ngarkimi ose importimi i skedës dështoi.
 Një dosje e përkohëshme mungon.',
 	'import-parse-failure' => 'Dështim i analizës së importit XML',
-	'import-noarticle' => "S'ka faqe për tu importuar!",
+	'import-noarticle' => 'S\'ka faqe për tu importuar!',
 	'import-nonewrevisions' => 'Të gjitha versionet kanë qenë të importuara më parë.',
 	'import-upload' => 'Ngarko të dhëna XML',
 	'import-token-mismatch' => 'Humbje e të dhënave të sesionit.
@@ -22278,7 +22299,7 @@ Ju lutemi provoni përsëri.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|version|versione}}',
 	'import-logentry-interwiki' => 'transwikoji $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$!1|version|versione}} nga $2',
-	'imagemaxsize' => "Kufizoni madhësinë e fotos:<br />''(për faqet e përshkrimit të skedave)''",
+	'imagemaxsize' => 'Kufizoni madhësinë e fotos:<br />\'\'(për faqet e përshkrimit të skedave)\'\'',
 	'imagelisttext' => 'Më poshtë është një listë e $1 {{PLURAL:$1|skedës të renditur|skedave të renditura}} sipas $2.',
 	'ilsubmit' => 'Kërko',
 	'invalidateemail' => 'Tërhiq vërtetimin e email-it',
@@ -22287,9 +22308,9 @@ Ju lutemi provoni përsëri.',
 	'imgmultigo' => 'Shko!',
 	'imgmultigoto' => 'Shko tek faqja $1',
 	'intentionallyblankpage' => 'Kjo faqe me qëllim është lënë e zbrazët',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'index-category' => 'Пописане странице',
 	'internalerror' => 'Унутрашња грешка',
 	'internalerror_info' => 'Унутрашња грешка: $1',
@@ -22443,8 +22464,8 @@ $messages['sr-ec'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|измена|измене|измена}}',
 	'import-logentry-interwiki' => 'премештено с другог викија: $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|измена|измене|измена}} од $2',
-	'imagemaxsize' => "Ограничење величине слике:<br />''(на страницама за опис датотека)''",
-	'imagelisttext' => "Испод је списак од '''$1''' {{PLURAL:$1|датотеке|датотеке|датотека}} поређаних $2.",
+	'imagemaxsize' => 'Ограничење величине слике:<br />\'\'(на страницама за опис датотека)\'\'',
+	'imagelisttext' => 'Испод је списак од \'\'\'$1\'\'\' {{PLURAL:$1|датотеке|датотеке|датотека}} поређаних $2.',
 	'ilsubmit' => 'Претражи',
 	'invalidateemail' => 'Отказивање потврде е-поште',
 	'imgmultipageprev' => '← претходна страница',
@@ -22464,9 +22485,9 @@ $messages['sr-ec'] = array(
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Есфанд',
 	'intentionallyblankpage' => 'Ова страница је намерно остављена празном.',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'index-category' => 'Indeksirane stranice',
 	'info_short' => 'Informacije',
 	'internalerror' => 'Interna greška',
@@ -22484,7 +22505,7 @@ Molimo unesite dobro-formatiranu adresu ili ispraznite to polje.',
 	'img-auth-nofile' => 'Fajl "$1" ne postoji.',
 	'imgfile' => 'fajl',
 	'imagelinks' => 'Veze ka fajlu',
-	'iteminvalidname' => "Problem sa stavkom '$1', neispravno ime...",
+	'iteminvalidname' => 'Problem sa stavkom \'$1\', neispravno ime...',
 	'invert' => 'Obrni selekciju',
 	'isredirect' => 'preusmerivač',
 	'istemplate' => 'uključivanje',
@@ -22596,8 +22617,8 @@ Molimo Vas da opet pokušate.',
 	'import-logentry-interwiki' => 'premestio sa drugog vikija: $1',
 	'import-logentry-interwiki-detail' => '$1 revizija/e od $2',
 	'infosubtitle' => 'Informacije za stranicu',
-	'imagemaxsize' => "Ograničenje veličine slike:<br />''(za strane opisa fajlova)''",
-	'imagelisttext' => "Ispod je spisak od '''$1''' {{PLURAL:$1|fajla|fajla|fajlova}} poređanih $2.",
+	'imagemaxsize' => 'Ograničenje veličine slike:<br />\'\'(za strane opisa fajlova)\'\'',
+	'imagelisttext' => 'Ispod je spisak od \'\'\'$1\'\'\' {{PLURAL:$1|fajla|fajla|fajlova}} poređanih $2.',
 	'ilsubmit' => 'Traži',
 	'imagelistall' => 'sve',
 	'invalidateemail' => 'poništavanje potvrde putem imejla',
@@ -22606,9 +22627,9 @@ Molimo Vas da opet pokušate.',
 	'imgmultigo' => 'Idi!',
 	'imgmultigoto' => 'Idi na stranu $1',
 	'intentionallyblankpage' => 'Ova stranica je namerno ostavljena praznom.',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'internalerror' => 'Fowtu na inisey',
 	'internalerror_info' => 'Fowtu na inisey: $1',
 	'italic_sample' => 'Skoinsi skrifi',
@@ -22623,24 +22644,24 @@ $messages['srn'] = array(
 	'ipblocklist' => 'Réy fu tapu pasi gi kebroikiman nen nanga IP',
 	'ipblocklist-submit' => 'Suku',
 	'import-comment' => 'Opotaki:',
-	'importlogpage' => "Log buku fu den sen'teki",
+	'importlogpage' => 'Log buku fu den sen\'teki',
 	'ilsubmit' => 'Suku',
 	'imgmultigo' => 'Go!',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'index-category' => 'Makhasi lacokelelwe',
 	'ipblocklist-submit' => 'Sesha',
 	'ilsubmit' => 'Sesha',
 	'imgmultigo' => 'Hamba!',
-);
+];
 
-$messages['st'] = array(
+$messages['st'] = [
 	'ipbreason' => 'Lebaka',
 	'infiniteblock' => 'ho eya ho ile',
-);
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'index-category' => 'Indizierde Sieden',
 	'internalerror' => 'Interne Failer',
 	'internalerror_info' => 'Interne Failer: $1',
@@ -22671,7 +22692,7 @@ Uut Sicherhaidsgruunde is img_auth.php deaktivierd.',
 	'img-auth-noread' => 'Benutser häd neen Begjuchtigenge, „$1“ tou leesen.',
 	'imgfile' => 'Doatäi',
 	'imagelinks' => 'Doatäiferweendengen',
-	'iteminvalidname' => "Problem mäd dän Iendraach '$1', ungultige Noome...",
+	'iteminvalidname' => 'Problem mäd dän Iendraach \'$1\', ungultige Noome...',
 	'invert' => 'Uutwoal uumekiere',
 	'isredirect' => 'Fäärelaitengs-Siede',
 	'istemplate' => 'Foarloagenienbiendenge',
@@ -22780,8 +22801,8 @@ Do ap dän lokoale Reekener spiekerje un deerätter hier hoochleede.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Version|Versione}}',
 	'import-logentry-interwiki' => 'häd „$1“ importierd (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Version|Versione}} fon $2',
-	'imagemaxsize' => "Maximoale Bieldegrööte:<br />''(foar Doatäibeskrieuwengssieden)''",
-	'imagelisttext' => "Hier is ne Lieste fon '''$1''' {{PLURAL:$1|Doatäi|Doatäie}}, sortierd $2.",
+	'imagemaxsize' => 'Maximoale Bieldegrööte:<br />\'\'(foar Doatäibeskrieuwengssieden)\'\'',
+	'imagelisttext' => 'Hier is ne Lieste fon \'\'\'$1\'\'\' {{PLURAL:$1|Doatäi|Doatäie}}, sortierd $2.',
 	'ilsubmit' => 'Säik',
 	'invalidateemail' => 'E-Mail-Adressbestäätigenge oubreeke',
 	'imgmultipageprev' => '← foarige Siede',
@@ -22789,9 +22810,9 @@ Do ap dän lokoale Reekener spiekerje un deerätter hier hoochleede.',
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gung tou Siede $1',
 	'intentionallyblankpage' => 'Disse Siede is apsichtelk sunner Inhoold. Ju wäd foar Benchmarks ferwoand.',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'index-category' => 'Kaca nu diindéks',
 	'internalerror' => 'Kasalahan internal',
 	'internalerror_info' => 'Kasalahan internal: $1',
@@ -22809,7 +22830,7 @@ Mangga lebetkeun alamat nu formatna bener atawa kosongkeun baé.',
 	'img-auth-noread' => 'Pamaké teu boga kawenangan maca "$1".',
 	'imgfile' => 'koropak',
 	'imagelinks' => 'Pamakéan berkas',
-	'iteminvalidname' => "Masalah dina '$1', ngaran teu bener...",
+	'iteminvalidname' => 'Masalah dina \'$1\', ngaran teu bener...',
 	'invert' => 'Balikkeun pilihan',
 	'isredirect' => 'Kaca alihan',
 	'istemplate' => 'ku citakan',
@@ -22894,7 +22915,7 @@ Sadaya aktivitas impor transwiki baris kacatet dina [[Special:Log/import|log imp
 	'import-logentry-interwiki' => '$1 geus ditranswikikeun',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|vérsi heubel}} ti $2',
 	'imagemaxsize' => 'Watesan gambar na kaca dadaran gambar nepi ka:',
-	'imagelisttext' => "Di handap ieu daptar '''$1''' {{PLURAL:$1|gambar|gambar}} nu disusun $2.",
+	'imagelisttext' => 'Di handap ieu daptar \'\'\'$1\'\'\' {{PLURAL:$1|gambar|gambar}} nu disusun $2.',
 	'ilsubmit' => 'Sungsi',
 	'invalidateemail' => 'Bolaykeun konfirmasi surélék',
 	'imgmultipageprev' => '&larr; kaca saacana',
@@ -22902,9 +22923,9 @@ Sadaya aktivitas impor transwiki baris kacatet dina [[Special:Log/import|log imp
 	'imgmultigo' => 'Téang!',
 	'imgmultigoto' => 'Jung ka kaca $1',
 	'intentionallyblankpage' => 'Ieu kaca ngahaja dikosongkeun.',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'index-category' => 'Indexerade sidor',
 	'internalerror' => 'Internt fel',
 	'internalerror_info' => 'Internt fel: $1',
@@ -22938,10 +22959,10 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'img-auth-bad-query-string' => 'URL-adressen har en ogiltig frågesträng.',
 	'imgfile' => 'fil',
 	'imagelinks' => 'Filanvändning',
-	'iteminvalidname' => "Problem med sidan '$1', ogiltigt namn...",
+	'iteminvalidname' => 'Problem med sidan \'$1\', ogiltigt namn...',
 	'invert' => 'Uteslut vald namnrymd',
 	'isredirect' => 'omdirigeringssida',
-	'istemplate' => 'inkluderad som mall',
+	'istemplate' => 'includering',
 	'isimage' => 'fillänk',
 	'ipadressorusername' => 'IP-adress eller användarnamn:',
 	'ipbexpiry' => 'Varaktighet:',
@@ -22961,7 +22982,7 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'ipbenableautoblock' => 'Blockera automatiskt den IP-adress som användaren använde senast, samt alla adresser som användaren försöker redigera ifrån',
 	'ipbsubmit' => 'Blockera användaren',
 	'ipbother' => 'Annan tidsperiod:',
-	'ipboptions' => '2 timmar:2 hours,1 dygn:1 day,3 dygn:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 år:1 year,oändlig:infinite',
+	'ipboptions' => '2 timmar:2 hours,1 dag:1 day,3 dagar:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 year:1 year,indefinite:infinite',
 	'ipbotheroption' => 'annan tidsperiod',
 	'ipbotherreason' => 'Annan/ytterligare anledning:',
 	'ipbhidename' => 'Dölj användarnamnet från redigeringar och listor',
@@ -23052,7 +23073,7 @@ Spara den på din dator och ladda upp den här.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|version|versioner}}',
 	'import-logentry-interwiki' => 'överförde $1 mellan wikier',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|version|versioner}} från $2',
-	'imagemaxsize' => "Begränsa bilders storlek:<br />''(för filbeskrivningssidor)''",
+	'imagemaxsize' => 'Begränsa bilders storlek:<br />\'\'(för filbeskrivningssidor)\'\'',
 	'imagelisttext' => 'Nedan finns en lista med <strong>$1</strong> {{PLURAL:$1|fil|filer}} sorterad <strong>$2</strong>.',
 	'ilsubmit' => 'Sök',
 	'invalidateemail' => 'Avbryt bekräftelse av e-postadress',
@@ -23061,9 +23082,9 @@ Spara den på din dator och ladda upp den här.',
 	'imgmultigo' => 'Gå',
 	'imgmultigoto' => 'Gå till sida $1',
 	'intentionallyblankpage' => 'Denna sida har avsiktligen lämnats tom.',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'index-category' => 'Kurasa kuu',
 	'internalerror' => 'Hitilafu ya ndani',
 	'internalerror_info' => 'Hitilafu ya ndani: $1',
@@ -23082,7 +23103,7 @@ Tafadhali uweke jina jipya kwenye faili, halafu jaribu kulipakia upya.',
 	'img-auth-noread' => 'Mtumiaji hana fursa ya kusoma "$1".',
 	'imgfile' => 'faili',
 	'imagelinks' => 'Matumizi ya faili',
-	'iteminvalidname' => "Kitu '$1' kina tatizo la jina batili...",
+	'iteminvalidname' => 'Kitu \'$1\' kina tatizo la jina batili...',
 	'invert' => 'Geuza uteuzi',
 	'isredirect' => 'elekeza ukurasa',
 	'istemplate' => 'jumuisho',
@@ -23157,8 +23178,8 @@ Ulihafadhie katika tarakalishi yako, halafu ulipakie hapa.',
 Tafadhali jaribu tena.',
 	'importlogpage' => 'Kumbukumbu ya kuleta',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|pitio|mapitio}} $1',
-	'imagemaxsize' => "Kikomo cha ukubwa wa picha:<br />''(cha kurasa za maelezo ya mafaili)''",
-	'imagelisttext' => "Orodha iliyopo chini inataja {{PLURAL:$1|faili '''$1''' lililopangwa|mafaili '''$1''' yaliyopangwa}} $2.",
+	'imagemaxsize' => 'Kikomo cha ukubwa wa picha:<br />\'\'(cha kurasa za maelezo ya mafaili)\'\'',
+	'imagelisttext' => 'Orodha iliyopo chini inataja {{PLURAL:$1|faili \'\'\'$1\'\'\' lililopangwa|mafaili \'\'\'$1\'\'\' yaliyopangwa}} $2.',
 	'ilsubmit' => 'Tafuta',
 	'invalidateemail' => 'Batilisha barua pepe ya uthibitisho.',
 	'imgmultipageprev' => '← ukurasa uliotangulia',
@@ -23166,9 +23187,9 @@ Tafadhali jaribu tena.',
 	'imgmultigo' => 'Nenda!',
 	'imgmultigoto' => 'Uende kwenye ukurasa wa $1',
 	'intentionallyblankpage' => 'Ukurasa huu umeachwa tupu kwa makusudi.',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'index-category' => 'Indeksowane zajty',
 	'internalerror' => 'Wewnyntřny feler',
 	'internalerror_info' => 'Wewnytřny feler: $1',
@@ -23279,7 +23300,7 @@ Wšyjstke uoperacyje importu transwiki sům uodnotowywane w [[Special:Log/import
 	'import-logentry-interwiki' => 'zaimportowou $1 užywajůnc transwiki',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|wersyja|wersyje|wersyji}} ze $2',
 	'imagemaxsize' => 'Na zajtach uopisu plikůw uůgrańič rozmjar uobrazkůw do:',
-	'imagelisttext' => "Půnižyj na {{PLURAL:$1||posortowanyj $2}} liśće {{PLURAL:$1|znojdowo|znojdujům|znojdowo}} śe '''$1''' {{PLURAL:$1|plik|pliki|plikůw}}.",
+	'imagelisttext' => 'Půnižyj na {{PLURAL:$1||posortowanyj $2}} liśće {{PLURAL:$1|znojdowo|znojdujům|znojdowo}} śe \'\'\'$1\'\'\' {{PLURAL:$1|plik|pliki|plikůw}}.',
 	'ilsubmit' => 'Šnupej',
 	'invalidateemail' => 'Anulowańy potwjerdzyńo adresa e-brif',
 	'imgmultipageprev' => '← popředńo zajta',
@@ -23287,9 +23308,9 @@ Wšyjstke uoperacyje importu transwiki sům uodnotowywane w [[Special:Log/import
 	'imgmultigo' => 'Přyńdź',
 	'imgmultigoto' => 'Přyńdź do zajty $1',
 	'intentionallyblankpage' => 'Ta zajta nauůmyślńy uostoua śe pusto',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'index-category' => 'வரிசைபடுத்தப்பட்ட பக்கங்கள்',
 	'internalerror' => 'உள்ளகத் தவறு',
 	'internalerror_info' => 'உள்ளகத் தவறு: $1',
@@ -23321,7 +23342,7 @@ $messages['ta'] = array(
 	'img-auth-bad-query-string' => 'செல்லாத கேள்வி எழுத்துகளை URL கொண்டுள்ளது.',
 	'imgfile' => 'கோப்பு',
 	'imagelinks' => 'கோப்பு பயன்பாடு',
-	'iteminvalidname' => "விடயம் '$1' தொடர்பில் பிரச்சினை உள்ளது, செல்லுபடியாகாத பெயர்...",
+	'iteminvalidname' => 'விடயம் \'$1\' தொடர்பில் பிரச்சினை உள்ளது, செல்லுபடியாகாத பெயர்...',
 	'invert' => 'தெரிவைத் தலைகீழாக்கு',
 	'isredirect' => 'வழிமாற்றுப் பக்கம்',
 	'istemplate' => 'உள்ளிடப்பட்டுள்ளது',
@@ -23431,7 +23452,7 @@ $messages['ta'] = array(
 	'import-logentry-upload-detail' => '{{PLURAL:$1|ஒரு திருத்தம்|$1 திருத்தங்கள்}}',
 	'import-logentry-interwiki' => 'transwikied$1',
 	'import-logentry-interwiki-detail' => '$2 இலிருந்து {{PLURAL:$1|ஒரு திருத்தம்|$1 திருத்தங்கள்}}',
-	'imagemaxsize' => "படிமங்களின் உச்ச அளவு:<br />''(கோப்புக்களின் விவர பக்கங்களுக்கு)''",
+	'imagemaxsize' => 'படிமங்களின் உச்ச அளவு:<br />\'\'(கோப்புக்களின் விவர பக்கங்களுக்கு)\'\'',
 	'imagelisttext' => 'கீழ் வருவது $2 பாகுபடுத்தப்பட்ட $1 {{PLURAL:$1|படிமத்தின்|படிமங்களின்}} பட்டியலாகும்.',
 	'ilsubmit' => 'தேடுக',
 	'invalidateemail' => 'மின்னஞ்சல் உறுதிப்படுத்தலை இரத்துச் செய்க',
@@ -23440,9 +23461,9 @@ $messages['ta'] = array(
 	'imgmultigo' => 'செல்!',
 	'imgmultigoto' => 'பக்கம் $1இற்கு செல்க',
 	'intentionallyblankpage' => 'இந்த பக்கம் திட்டமிட்டே வெற்றாக விடப்பட்டுள்ளது',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'index-category' => 'ವಿಷಯ ಸೂಚಿ ಪುಟಕ್‘ಲು',
 	'internalerror' => 'ಆ೦ತರಿಕ ದೋಷ',
 	'internalerror_info' => 'ಆಂತರಿಕ ದೋಷ: $1',
@@ -23457,9 +23478,9 @@ $messages['tcy'] = array(
 	'isimage' => 'ಚಿತ್ರ ಕೊಂಡಿ',
 	'ipboptions' => '2 ಗಂಟೆಲು:2 hours,1 ದಿನ:1 day,3 ದಿನೊಲು:3 days,1 ವಾರ:1 week,2 ವಾರೊಲು:2 weeks,1 ತಿಂಗೊಲು:1 month,3 ತಿಂಗೊಲು:3 months,6 ತಿಂಗೊಲು:6 months,1 ವರ್ಷ:1 year,ಅನಿರ್ಧಿಷ್ಟ:infinite',
 	'ipblocklist' => 'ತಡೆಪತ್ತ್’ದಿನ ಐ.ಪಿ ವಿಳಾಸೊಲು ಅಂಚೆನೆ ಬಳಕೆದ ಪುದರ್’ಲು',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'index-category' => 'సూచీకరించిన పేజీలు',
 	'internalerror' => 'అంతర్గత లోపం',
 	'internalerror_info' => 'అంతర్గత లోపం: $1',
@@ -23492,7 +23513,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization చూడండి.',
 	'img-auth-bad-query-string' => 'ఈ URL లో తప్పుడు క్వెరీ స్ట్రింగు ఉంది.',
 	'imgfile' => 'ఫైలు',
 	'imagelinks' => 'దస్త్రపు వాడుక',
-	'iteminvalidname' => "'$1' తో ఇబ్బంది, సరైన పేరు కాదు...",
+	'iteminvalidname' => '\'$1\' తో ఇబ్బంది, సరైన పేరు కాదు...',
 	'invert' => 'ఎంపికను తిరగవెయ్యి',
 	'isredirect' => 'దారిమార్పు పుట',
 	'istemplate' => 'పేజీకి జతపరిచారు',
@@ -23602,8 +23623,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization చూడండి.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|కూర్పు|కూర్పులు}}',
 	'import-logentry-interwiki' => 'ఇతర వికీల నుండి $1',
 	'import-logentry-interwiki-detail' => '$2 నుండి {{PLURAL:$1|ఒక కూర్పు|$1 కూర్పులు}}',
-	'imagemaxsize' => "బొమ్మ పరిమాణంపై పరిమితి:<br />''(దస్త్రపు వివరణ పుటల కొరకు)''",
-	'imagelisttext' => "ఇది $2 వారీగా పేర్చిన  '''$1''' {{PLURAL:$1|పైలు|ఫైళ్ళ}} జాబితా.",
+	'imagemaxsize' => 'బొమ్మ పరిమాణంపై పరిమితి:<br />\'\'(దస్త్రపు వివరణ పుటల కొరకు)\'\'',
+	'imagelisttext' => 'ఇది $2 వారీగా పేర్చిన  \'\'\'$1\'\'\' {{PLURAL:$1|పైలు|ఫైళ్ళ}} జాబితా.',
 	'ilsubmit' => 'వెతుకు',
 	'invalidateemail' => 'ఈ-మెయిలు నిర్ధారణని రద్దుచేయండి',
 	'imgmultipageprev' => '← మునుపటి పేజీ',
@@ -23611,20 +23632,20 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization చూడండి.',
 	'imgmultigo' => 'వెళ్ళు!',
 	'imgmultigoto' => '$1వ పేజీకి వెళ్ళు',
 	'intentionallyblankpage' => 'బెంచిమార్కింగు, మొదలగు వాటికై ఈ పేజీని కావాలనే ఖాళీగా వదిలాము.',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'image_sample' => 'Ezemplu.jpg',
 	'imgfile' => 'fail',
-	'imagelinks' => "Pájina iha ne'ebá fixeiru ne'e",
+	'imagelinks' => 'Pájina iha ne\'ebá fixeiru ne\'e',
 	'isimage' => 'ligasaun ba fixeiru',
 	'ipbreason' => 'Motivu:',
 	'ipbreasonotherlist' => 'Motivu seluk',
-	'ipbsubmit' => "Blokeiu uza-na'in ne'e",
+	'ipbsubmit' => 'Blokeiu uza-na\'in ne\'e',
 	'ipbother' => 'Tempu seluk:',
 	'ipboptions' => '2 hours:2 hours,1 loron:1 day,3 Loron:3 days,1 semana:1 week,2 semana:2 weeks,1 fulan:1 month,3 fulan:3 months,6 fulan:6 months,1 tinan:1 year,infinite:infinite',
 	'ipbotheroption' => 'seluk',
-	'ipblocklist' => "Uza-na'in sira-ne'ebé la bele edita",
+	'ipblocklist' => 'Uza-na\'in sira-ne\'ebé la bele edita',
 	'ipblocklist-submit' => 'Buka',
 	'ipb_already_blocked' => 'Ema ruma blokeiu "$1" tiha ona',
 	'import-interwiki-submit' => 'Importa',
@@ -23635,20 +23656,20 @@ $messages['tet'] = array(
 	'imgmultipageprev' => '← pájina molok',
 	'imgmultipagenext' => 'pájina oinmai →',
 	'imgmultigo' => 'Bá!',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'image_sample' => 'Ezemplu.jpg',
 	'imgfile' => 'fail',
-	'imagelinks' => "Pájina iha ne'ebá fixeiru ne'e",
+	'imagelinks' => 'Pájina iha ne\'ebá fixeiru ne\'e',
 	'isimage' => 'ligasaun ba fixeiru',
 	'ipbreason' => 'Motivu:',
 	'ipbreasonotherlist' => 'Motivu seluk',
-	'ipbsubmit' => "Blokeiu uza-na'in ne'e",
+	'ipbsubmit' => 'Blokeiu uza-na\'in ne\'e',
 	'ipbother' => 'Tempu seluk:',
 	'ipboptions' => '2 hours:2 hours,1 loron:1 day,3 Loron:3 days,1 semana:1 week,2 semana:2 weeks,1 fulan:1 month,3 fulan:3 months,6 fulan:6 months,1 tinan:1 year,infinite:infinite',
 	'ipbotheroption' => 'seluk',
-	'ipblocklist' => "Uza-na'in sira-ne'ebé la bele edita",
+	'ipblocklist' => 'Uza-na\'in sira-ne\'ebé la bele edita',
 	'ipblocklist-submit' => 'Buka',
 	'ipb_already_blocked' => 'Ema ruma blokeiu "$1" tiha ona',
 	'import-interwiki-submit' => 'Importa',
@@ -23659,9 +23680,9 @@ $messages['tg'] = array(
 	'imgmultipageprev' => '← pájina molok',
 	'imgmultipagenext' => 'pájina oinmai →',
 	'imgmultigo' => 'Bá!',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'index-category' => 'Саҳифаҳои намояшуда',
 	'internalerror' => 'Хатои дохилӣ',
 	'internalerror_info' => 'Хатои дохилӣ: $1',
@@ -23674,7 +23695,7 @@ $messages['tg-cyrl'] = array(
 	'illegalfilename' => 'Номи парвандаи "$1" аломатҳоеро дар бар мегирад, ки барои номи саҳифаҳо истифода намешаванд. Лутфан номи парвандаро тағйир диҳед ва онро аз нав бор кунед.',
 	'imgfile' => 'парванда',
 	'imagelinks' => 'Пайвандҳои парванда',
-	'iteminvalidname' => "Мушкилӣ бо мавриди '$1', номи номӯътабар аст...",
+	'iteminvalidname' => 'Мушкилӣ бо мавриди \'$1\', номи номӯътабар аст...',
 	'invert' => 'Пинҳон кардани интихобкардашуда',
 	'isredirect' => 'саҳифаи тағйири масир',
 	'istemplate' => 'истифодашуда дар саҳифа',
@@ -23756,7 +23777,7 @@ $messages['tg-cyrl'] = array(
 	'import-logentry-interwiki' => '$1 трансвикишуда',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|нусха|нусха}} аз $2',
 	'imagemaxsize' => 'Маҳуд кардани аксҳо дар саҳифаҳои тавсифоти парванда ба:',
-	'imagelisttext' => "Дар зер феҳристи '''$1''' {{PLURAL:$1|парвандаи|парвандаҳои}} ба тартиб оварда шуда, омадааст $2.",
+	'imagelisttext' => 'Дар зер феҳристи \'\'\'$1\'\'\' {{PLURAL:$1|парвандаи|парвандаҳои}} ба тартиб оварда шуда, омадааст $2.',
 	'ilsubmit' => 'Ҷустуҷӯи',
 	'invalidateemail' => 'Таъйиди тариқи почтаи электрониро лағв кунед',
 	'imgmultipageprev' => '← саҳифаи пешин',
@@ -23775,9 +23796,9 @@ $messages['tg-cyrl'] = array(
 	'iranian-calendar-m10' => 'Ҷадӣ',
 	'iranian-calendar-m11' => 'Далв',
 	'iranian-calendar-m12' => 'Ҳут',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'index-category' => 'Sahifahoi namojaşuda',
 	'internalerror' => 'Xatoi doxilī',
 	'internalerror_info' => 'Xatoi doxilī: $1',
@@ -23789,7 +23810,7 @@ $messages['tg-latn'] = array(
 	'illegalfilename' => 'Nomi parvandai "$1" alomathoero dar bar megirad, ki baroi nomi sahifaho istifoda nameşavand. Lutfan nomi parvandaro taƣjir dihed va onro az nav bor kuned.',
 	'imgfile' => 'parvanda',
 	'imagelinks' => 'Pajvandhoi parvanda',
-	'iteminvalidname' => "Muşkilī bo mavridi '$1', nomi nomū'tabar ast...",
+	'iteminvalidname' => 'Muşkilī bo mavridi \'$1\', nomi nomū\'tabar ast...',
 	'invert' => 'Pinhon kardani intixobkardaşuda',
 	'isredirect' => 'sahifai taƣjiri masir',
 	'istemplate' => 'istifodaşuda dar sahifa',
@@ -23798,24 +23819,24 @@ $messages['tg-latn'] = array(
 	'ipbexpiry' => 'Xotima:',
 	'ipbreason' => 'Sabab:',
 	'ipbreasonotherlist' => 'Digar dalel',
-	'ipbreason-dropdown' => "*Sababhoi umumiji bastan
+	'ipbreason-dropdown' => '*Sababhoi umumiji bastan
 ** Vorid kardani ittilooti nodurust
 ** Pok kardani ittilooti mufid az sahifaho
 ** Istifoda burdani pajvandhoi spam ba somonahoi beruna
-** Vorid kardani naviştahoi beman'nī ba sahifaho
-** Raftori ba'd/masxarakuniji digar korbaron
+** Vorid kardani naviştahoi beman\'nī ba sahifaho
+** Raftori ba\'d/masxarakuniji digar korbaron
 ** Sūiistifoda az cand hisobi korbarī
-** Nomi korbariji nomunosib",
+** Nomi korbariji nomunosib',
 	'ipbcreateaccount' => 'Çilavgirī az eçodi hisob',
 	'ipbemailban' => 'Çilavgiriji korbar az firistodani poctai elektronī',
-	'ipbenableautoblock' => "Nişonai oxire ki az on in korbar istifoda mekunad, ba surati xudkor buband, va digar nişonahoi IP-hoi ba'dina, ki az onho metavonad viroiş kunand",
+	'ipbenableautoblock' => 'Nişonai oxire ki az on in korbar istifoda mekunad, ba surati xudkor buband, va digar nişonahoi IP-hoi ba\'dina, ki az onho metavonad viroiş kunand',
 	'ipbsubmit' => 'Bastani in korbar',
 	'ipbother' => 'Digar vaqt:',
 	'ipboptions' => '2 soat:2 hours,1 rūz:1 day,3 rūz:3 days,1 hafta:1 week,2 hafta:2 weeks,1 moh:1 month,3 moh:3 months,6 moh:6 months,1 sol:1 year,beoxir:infinite',
 	'ipbotheroption' => 'digar',
 	'ipbotherreason' => 'Dalelhoi digar/izofī:',
 	'ipbhidename' => 'Pinhoni nomi korbarī az viroişho va fehristho',
-	'ipb-edit-dropdown' => "Daleli qat'i dastrasī",
+	'ipb-edit-dropdown' => 'Daleli qat\'i dastrasī',
 	'ipb-unblock-addr' => 'Boz kardani $1',
 	'ipb-unblock' => 'Boz kardani nomi korbarī jo nişonai IP',
 	'ipb-blocklist' => 'Didani bastahoi mavçud',
@@ -23825,36 +23846,36 @@ $messages['tg-latn'] = array(
 	'ipblocklist-submit' => 'Çustuçū',
 	'infiniteblock' => 'be pojon',
 	'ipblocklist-empty' => 'Fehristi bastaşudanho xolī ast.',
-	'ipblocklist-no-results' => "Dastrasiji hisobi korbarī jo nişonai internetiji mavridi nazar qat' nest.",
-	'ipb_expiry_invalid' => "Vaqti xotima nomū'tabar.",
+	'ipblocklist-no-results' => 'Dastrasiji hisobi korbarī jo nişonai internetiji mavridi nazar qat\' nest.',
+	'ipb_expiry_invalid' => 'Vaqti xotima nomū\'tabar.',
 	'ipb_already_blocked' => '"$1" allakaj basta şudaast',
 	'ipb_cant_unblock' => 'Xato: Nişonai basta şudani $1 joft naşud. Mumkin ast peştar boz şuda boşad.',
 	'ipb_blocked_as_range' => 'Xato: Nişonai IP-i $1 ba şakli mustaqim basta naşudaast va nametavonad boz şavad. In nişona hamrohi $2, basta şuda qobili boz şudan ast.',
-	'ip_range_invalid' => "Safi IP nomū'tabar ast.",
+	'ip_range_invalid' => 'Safi IP nomū\'tabar ast.',
 	'immobile-source-page' => 'In sahifa kūconidaşavanda nest.',
 	'import' => 'Vorid kardani sahifaho',
 	'importinterwiki' => 'Voridoti transviki',
-	'import-interwiki-text' => "Jak viki va jak nomi sahifaro intixob kuned, to ittiloot az on vorid şavad.
-Ta'rixi nusxaho va nomhoi viroişkunandagon sabt xohand mond.
-Ittilooti marbut ba vorid kardani sahifaho dar [[Special:Log/import|guzorişhoi voridot]] sabt xohad şud.",
-	'import-interwiki-history' => "Tamomi ta'rixi nusxahoi in sahifa intiqol doda şavad",
+	'import-interwiki-text' => 'Jak viki va jak nomi sahifaro intixob kuned, to ittiloot az on vorid şavad.
+Ta\'rixi nusxaho va nomhoi viroişkunandagon sabt xohand mond.
+Ittilooti marbut ba vorid kardani sahifaho dar [[Special:Log/import|guzorişhoi voridot]] sabt xohad şud.',
+	'import-interwiki-history' => 'Tamomi ta\'rixi nusxahoi in sahifa intiqol doda şavad',
 	'import-interwiki-submit' => 'Vorid şavad',
 	'import-interwiki-namespace' => 'Fazoi nomi maqsad:',
 	'import-upload-filename' => 'Nomi parvanda:',
 	'import-comment' => 'Tavzeh:',
-	'importtext' => "Lutfan parvandaro az viki manba' sodir kuned, az tariqi sahifa [[Special:Export|abzori sodirot]].
-Pas onro ba kompjuteraton zaxira karda inço borguzorī kuned.",
+	'importtext' => 'Lutfan parvandaro az viki manba\' sodir kuned, az tariqi sahifa [[Special:Export|abzori sodirot]].
+Pas onro ba kompjuteraton zaxira karda inço borguzorī kuned.',
 	'importstart' => 'Dar holi vorid kardani sahifaho...',
 	'import-revision-count' => '$1 {{PLURAL:$1|viroiş|viroiş}}',
 	'importnopages' => 'Sahifaho baroi vorid kardan nest.',
 	'importfailed' => 'Vorid kardani sahifaho şikast xūrd: $1',
-	'importunknownsource' => "Nav'i manbai noma'lum baroi voridkuni",
+	'importunknownsource' => 'Nav\'i manbai noma\'lum baroi voridkuni',
 	'importcantopen' => 'Parvandai vurudi sahifaho boz naşud',
 	'importbadinterwiki' => 'Pajvandi bajniviki nodurust',
 	'importnotext' => 'Sahifa xolī jo be matn',
 	'importsuccess' => 'Vorid kardan bo muvaffaqijat ançom joft!',
-	'importhistoryconflict' => "Nusxahoi nosozgor az ta'rixcai in sahifa vuçud dorad (ehtimolan qablan in sahifa vorid şudaast)",
-	'importnosources' => "Heç manba'e baroi vorid kardani ittiloot az vikiji digar ta'rif naşudaast va borguzoriji bevositai ta'rix ƣajrifa'ol ast.",
+	'importhistoryconflict' => 'Nusxahoi nosozgor az ta\'rixcai in sahifa vuçud dorad (ehtimolan qablan in sahifa vorid şudaast)',
+	'importnosources' => 'Heç manba\'e baroi vorid kardani ittiloot az vikiji digar ta\'rif naşudaast va borguzoriji bevositai ta\'rix ƣajrifa\'ol ast.',
 	'importnofile' => 'Heç parvandai vurudi borguzorī naşudaast.',
 	'importuploaderrorsize' => 'Dar borguzoriji parvandai vurud, işkole rux dod. Andozai parvanda kalontar az andozai içozatşuda ba borzuorī ast.',
 	'importuploaderrorpartial' => 'Dar borguzoriji parvandai vurud, işkole rux dod. Parvanda faqat qisman borguzori şudaast.',
@@ -23862,19 +23883,19 @@ Pas onro ba kompjuteraton zaxira karda inço borguzorī kuned.",
 	'import-parse-failure' => 'Xato dar tahlili XML borguzorişuda',
 	'import-noarticle' => 'Sahifae baroi borguzorī vuçud nadorad!',
 	'import-nonewrevisions' => 'Tamomi sahifaho qablan borguzorī şudaand.',
-	'import-token-mismatch' => "Dodahoi nişasti korbarī az dast raft. Lutfan dubora sa'j kuned.",
+	'import-token-mismatch' => 'Dodahoi nişasti korbarī az dast raft. Lutfan dubora sa\'j kuned.',
 	'import-invalid-interwiki' => 'Az vikiji muşaxxasşuda nametavon voridot kard.',
 	'importlogpage' => 'Voridi guzorişho',
-	'importlogpagetext' => "Vorid kardani sahifaho bo hamrohi ta'rixcai viroişi onho az vikihoi digar.",
+	'importlogpagetext' => 'Vorid kardani sahifaho bo hamrohi ta\'rixcai viroişi onho az vikihoi digar.',
 	'import-logentry-upload' => '[[$1]] az tariqi borguzoriji parvanda, vorid şud',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|nusxa|nusxa}}',
 	'import-logentry-interwiki' => '$1 transvikişuda',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|nusxa|nusxa}} az $2',
-	'imagelisttext' => "Dar zer fehristi '''$1''' {{PLURAL:$1|parvandai|parvandahoi}} ba tartib ovarda şuda, omadaast $2.",
+	'imagelisttext' => 'Dar zer fehristi \'\'\'$1\'\'\' {{PLURAL:$1|parvandai|parvandahoi}} ba tartib ovarda şuda, omadaast $2.',
 	'ilsubmit' => 'Çustuçūi',
-	'invalidateemail' => "Ta'jidi tariqi poctai elektroniro laƣv kuned",
+	'invalidateemail' => 'Ta\'jidi tariqi poctai elektroniro laƣv kuned',
 	'imgmultipageprev' => '← sahifai peşin',
-	'imgmultipagenext' => "sahifai ba'd →",
+	'imgmultipagenext' => 'sahifai ba\'d →',
 	'imgmultigo' => 'Birav!',
 	'imgmultigoto' => 'Ba sahifai $1 raved',
 	'iranian-calendar-m1' => 'Hamal',
@@ -23889,9 +23910,9 @@ Pas onro ba kompjuteraton zaxira karda inço borguzorī kuned.",
 	'iranian-calendar-m10' => 'Çadī',
 	'iranian-calendar-m11' => 'Dalv',
 	'iranian-calendar-m12' => 'Hut',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'index-category' => 'หน้าที่มีดัชนี',
 	'internalerror' => 'เกิดความผิดพลาดภายใน',
 	'internalerror_info' => 'เกิดความผิดพลาดภายใน: $1',
@@ -23923,7 +23944,7 @@ $messages['th'] = array(
 	'img-auth-bad-query-string' => 'ที่อยู่ URL ดังกล่าวมีชุดข้อความสตริงก์ที่ร้องขอไม่ถูกต้อง',
 	'imgfile' => 'ไฟล์',
 	'imagelinks' => 'หน้าที่มีไฟล์นี้',
-	'iteminvalidname' => "เกิดปัญหาชื่อไม่ถูกต้องกับ '$1'...",
+	'iteminvalidname' => 'เกิดปัญหาชื่อไม่ถูกต้องกับ \'$1\'...',
 	'invert' => 'ทั้งหมดที่ไม่ได้เลือก',
 	'isredirect' => 'หน้าเปลี่ยนทาง',
 	'istemplate' => 'รวมอยู่',
@@ -24032,8 +24053,8 @@ $messages['th'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|รุ่นการแก้ไข|รุ่นการแก้ไข}}',
 	'import-logentry-interwiki' => 'นำเข้าข้ามวิกิ $1 แล้ว',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|รุ่นการแก้ไข|รุ่นการแก้ไข}}จาก $2',
-	'imagemaxsize' => "ขนาดภาพที่จำกัด:<br />''(สำหรับหน้าอธิบายภาพ)''",
-	'imagelisttext' => "รายชื่อไฟล์ '''$1''' รายการ เรียงตาม$2",
+	'imagemaxsize' => 'ขนาดภาพที่จำกัด:<br />\'\'(สำหรับหน้าอธิบายภาพ)\'\'',
+	'imagelisttext' => 'รายชื่อไฟล์ \'\'\'$1\'\'\' รายการ เรียงตาม$2',
 	'ilsubmit' => 'สืบค้น',
 	'invalidateemail' => 'ยกเลิกการยืนยันทางอีเมล',
 	'imgmultipageprev' => '← หน้าก่อนหน้า',
@@ -24041,17 +24062,17 @@ $messages['th'] = array(
 	'imgmultigo' => 'ไป!',
 	'imgmultigoto' => 'ไปที่หน้า $1',
 	'intentionallyblankpage' => 'หน้านี้ถูกทิ้งว่างโดยเจตนา',
-);
+];
 
-$messages['ti'] = array(
+$messages['ti'] = [
 	'imgfile' => 'ምስሊ',
 	'ipblocklist-submit' => 'ድሉይ',
 	'ilsubmit' => 'ድሉይ',
 	'imgmultipageprev' => '← ናይ ቀደም ፅሑፍ',
 	'imgmultipagenext' => 'ዝቕጽል ፅሑፍ →',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'index-category' => 'Indeksirlenen sahypalar',
 	'internalerror' => 'Içerki säwlik',
 	'internalerror_info' => 'Içerki säwlik: $1',
@@ -24083,7 +24104,7 @@ Howpsuzlygyň optimizasiýasy üçin, img_auth.php ýapylyp goýuldy.',
 	'img-auth-noread' => 'Ulanyjy "$1" faýlyny okamak üçin baryp bilmeýär.',
 	'imgfile' => 'faýl',
 	'imagelinks' => 'Faýlyň çykgytlary',
-	'iteminvalidname' => "'$1' elementinde problema bar, nädogry at...",
+	'iteminvalidname' => '\'$1\' elementinde problema bar, nädogry at...',
 	'invert' => 'Saýlanmadyklar',
 	'isredirect' => 'gönükdirme sahypasy',
 	'istemplate' => 'atanaklaýyn girizme',
@@ -24189,8 +24210,8 @@ Kompýuteriňize ýazdyryň we şu ýere ýükläň.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|wersiýa|wersiýa}}',
 	'import-logentry-interwiki' => '$1 transwikilendi',
 	'import-logentry-interwiki-detail' => '$2 sahypasyndan $1 {{PLURAL:$1|wersiýa|wersiýa}}',
-	'imagemaxsize' => "Surat ölçeginiň çägi:<br />''(faýl düşündiriş sahypalary üçin)''",
-	'imagelisttext' => "Aşakda $2 boýunça düzülen '''$1''' {{PLURAL:$1|sany faýlyň|sany faýlyň}} sanawy görkezilýär.",
+	'imagemaxsize' => 'Surat ölçeginiň çägi:<br />\'\'(faýl düşündiriş sahypalary üçin)\'\'',
+	'imagelisttext' => 'Aşakda $2 boýunça düzülen \'\'\'$1\'\'\' {{PLURAL:$1|sany faýlyň|sany faýlyň}} sanawy görkezilýär.',
 	'ilsubmit' => 'Gözle',
 	'invalidateemail' => 'E-poçta tassyklamasyny ýatyr',
 	'imgmultipageprev' => '← öňki sahypa',
@@ -24198,9 +24219,9 @@ Kompýuteriňize ýazdyryň we şu ýere ýükläň.',
 	'imgmultigo' => 'Git!',
 	'imgmultigoto' => '$1 sahypasyna git',
 	'intentionallyblankpage' => 'Bu sahypa ýörite boş goýuldy.',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'index-category' => 'Mga pahinang may talatuntunan',
 	'internalerror' => 'Kamaliang panloob',
 	'internalerror_info' => 'Kamaliang panloob: $1',
@@ -24233,7 +24254,7 @@ Para sa pinakamatatag na kaligtasan, hindi pinagana ang img_auth.php.',
 	'img-auth-bad-query-string' => 'Ang URL ay may isang hindi katanggap-tanggap na sinulid ng tanong.',
 	'imgfile' => 'talaksan',
 	'imagelinks' => 'Mga kawing ng talaksan',
-	'iteminvalidname' => "May suliranin ang bagay na '$1', hindi tanggap na pangalan...",
+	'iteminvalidname' => 'May suliranin ang bagay na \'$1\', hindi tanggap na pangalan...',
 	'invert' => 'Baligtarin and pinili',
 	'isredirect' => 'pahinang panturo/panuto',
 	'istemplate' => 'pagsasali',
@@ -24294,7 +24315,7 @@ Para sa pinakamatatag na kaligtasan, hindi pinagana ang img_auth.php.',
 	'ipbnounblockself' => 'Hindi ka pinahihintulutang tanggalin ang pagharang sa iyo.',
 	'immobile-source-namespace' => 'Hindi mailipat ang mga pahinang nasa espasyo ng pangalang "$1"',
 	'immobile-target-namespace' => 'Hindi mailipat ang mga pahina patungo sa espasyo ng pangalang "$1"',
-	'immobile-target-namespace-iw' => "Hindi isang tanggap na puntirya para sa isang paglilipat ng pahina ang isang kawing na pang-''interwiki'' (ugnayang pangwiki).",
+	'immobile-target-namespace-iw' => 'Hindi isang tanggap na puntirya para sa isang paglilipat ng pahina ang isang kawing na pang-\'\'interwiki\'\' (ugnayang pangwiki).',
 	'immobile-source-page' => 'Hindi naililipat ang pahinang ito.',
 	'immobile-target-page' => 'Hindi makakalipat papunta sa ganyang kapupuntahang pamagat.',
 	'imagenocrossnamespace' => 'Hindi mailipat ang talaksan patungo sa hindi pangtalaksang espasyo ng pangalan',
@@ -24342,8 +24363,8 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|pagbabago|mga pagbabago}}',
 	'import-logentry-interwiki' => 'Na-i-transwiki na ang $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|pagbabago|mga pagbabago}} mula sa $2',
-	'imagemaxsize' => "Takdang hangganan sa laki ng larawan: <br />''(para sa mga pahina ng paglalarawan ng talaksan)''",
-	'imagelisttext' => "Nasa ibaba ang isang tala ng '''$1''' {{PLURAL:$1|talaksan|mga talakasang}} nauri na $2.",
+	'imagemaxsize' => 'Takdang hangganan sa laki ng larawan: <br />\'\'(para sa mga pahina ng paglalarawan ng talaksan)\'\'',
+	'imagelisttext' => 'Nasa ibaba ang isang tala ng \'\'\'$1\'\'\' {{PLURAL:$1|talaksan|mga talakasang}} nauri na $2.',
 	'ilsubmit' => 'Hanapin',
 	'invalidateemail' => 'Huwag ituloy/kanselahin ang pagpapatotoo ng e-liham',
 	'imgmultipageprev' => '← nakaraang pahina',
@@ -24363,9 +24384,9 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
 	'intentionallyblankpage' => 'Sinadyang walang laman ang pahinang ito',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'internalerror' => 'Hala fakalototānekingaʻilo',
 	'invalidemailaddress' => 'ʻOku ʻikai tali ʻa e tohila ʻeni, koeʻuhi ʻoku hā taʻeʻaonga ia. Kātaki fokotuʻu ha tohila totonu pe fakaʻataaʻi ʻa e malaʻé na.',
 	'italic_sample' => 'Mataʻitohi mahei',
@@ -24374,7 +24395,7 @@ $messages['to'] = array(
 	'ignorewarnings' => 'Taʻetokaʻi ngaahi fakatokanga',
 	'imgfile' => 'faile',
 	'imagelinks' => 'Ngaahi fehokotaki',
-	'iteminvalidname' => "Meʻa fihi mo e meʻa '$1', hingo taʻeʻaongaʻi...",
+	'iteminvalidname' => 'Meʻa fihi mo e meʻa \'$1\', hingo taʻeʻaongaʻi...',
 	'invert' => 'Fulihi hoʻo fili',
 	'isredirect' => 'Peesi leʻei',
 	'istemplate' => 'kātoi',
@@ -24393,12 +24414,12 @@ $messages['to'] = array(
 	'ipb_cant_unblock' => 'Hala: naʻe ʻikai ʻilo ko e taʻofi fika $1. Mahalo pē kuo ʻosi ʻene taʻetaʻofi.',
 	'ip_range_invalid' => 'ʻOku taʻeʻaonga ʻa e fakavā IP',
 	'import' => 'Hū mai ngaahi peesi',
-	'importinterwiki' => "Hū mai ʻo e fakalava ''wiki''",
+	'importinterwiki' => 'Hū mai ʻo e fakalava \'\'wiki\'\'',
 	'import-interwiki-history' => 'Hiki ko e paaki hisitōlia kotoa maʻa e pēsí ni',
 	'import-interwiki-submit' => 'Hū mai',
 	'import-interwiki-namespace' => 'ʻAve ngaahi peesi ki he vā hingoa:',
 	'import-comment' => 'Fakamatala:',
-	'importtext' => "Kātaki ʻe hū atu ʻa e faile mei he ''wiki'' tupunga ngāueʻaki ''Special:Export'', pea haofakiʻi ʻi hoʻo tisi, pea hū mai ia mei hē.",
+	'importtext' => 'Kātaki ʻe hū atu ʻa e faile mei he \'\'wiki\'\' tupunga ngāueʻaki \'\'Special:Export\'\', pea haofakiʻi ʻi hoʻo tisi, pea hū mai ia mei hē.',
 	'importstart' => 'Hū mai ngaahi peesi...',
 	'import-revision-count' => 'Paaki ʻe $1',
 	'importnopages' => 'ʻOku ʻikai ha ngaahi peesi ʻoku hū mai ai.',
@@ -24406,20 +24427,20 @@ $messages['to'] = array(
 	'importunknownsource' => 'Ko e falenga hū mai taʻeʻiloa',
 	'importnotext' => 'Maha pe ʻikai ha mataʻitohi',
 	'importsuccess' => 'Kuo ola ʻa e hū mai!',
-	'importnosources' => "Naʻe ʻikai fakaʻuhingaʻi ha ngaahi hūmai fakalava ''wiki'' pea ʻoku fakataʻeʻaongaʻi  ngaahi hiki hake fakahisitōlia.",
+	'importnosources' => 'Naʻe ʻikai fakaʻuhingaʻi ha ngaahi hūmai fakalava \'\'wiki\'\' pea ʻoku fakataʻeʻaongaʻi  ngaahi hiki hake fakahisitōlia.',
 	'importnofile' => 'Naʻe ʻikai fekahekaʻi hake ha faile hūmai.',
 	'importlogpage' => 'Tohinoa ʻo e hūmai',
-	'importlogpagetext' => "Ko e ngaahi hūmai fakapule mo e honau hisitōlia fatu mei he ngaahi ''wiki'' kehe.",
+	'importlogpagetext' => 'Ko e ngaahi hūmai fakapule mo e honau hisitōlia fatu mei he ngaahi \'\'wiki\'\' kehe.',
 	'import-logentry-upload-detail' => 'paaki ʻe $1',
 	'imagemaxsize' => 'Fakangatangata ngaahi faitā ʻi he ʻū peesi fakamahino ki he:',
-	'imagelisttext' => "ʻOku ʻasi ʻi lalo ha hokohoko ʻo e '''$1''' vahevahe he $2.",
+	'imagelisttext' => 'ʻOku ʻasi ʻi lalo ha hokohoko ʻo e \'\'\'$1\'\'\' vahevahe he $2.',
 	'ilsubmit' => 'Kumi',
 	'imgmultipageprev' => '← Peesi ki muʻa',
 	'imgmultipagenext' => 'Peesi hoko →',
 	'imgmultigo' => 'Fai ā!',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'imgfile' => 'fail',
 	'imagelinks' => 'Ol fail link',
 	'invert' => 'Tanbek',
@@ -24431,9 +24452,9 @@ $messages['tpi'] = array(
 	'ipblocklist-submit' => 'Painim',
 	'ilsubmit' => 'Painim',
 	'imgmultigo' => 'Go!',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'index-category' => 'Endeksli sayfalar',
 	'internalerror' => 'Yazılım hatası',
 	'internalerror_info' => 'İç hata: $1',
@@ -24459,14 +24480,14 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization sayfasına bakın.',
 	'img-auth-isdir' => '"$1" dizinine erişmeye çalışıyorsunuz.
 Sadece dosya erişimine izin veriliyor.',
 	'img-auth-streaming' => '"$1" oynatılıyor.',
-	'img-auth-public' => "img_auth.php'nin fonksiyonu özel bir vikiden dosyaları çıkarmaktır.
+	'img-auth-public' => 'img_auth.php\'nin fonksiyonu özel bir vikiden dosyaları çıkarmaktır.
 Bu viki genel bir viki olarak ayarlanmış.
-En uygun güvenlik için, img_auth.php devre dışı bırakıldı.",
+En uygun güvenlik için, img_auth.php devre dışı bırakıldı.',
 	'img-auth-noread' => 'Kullanıcının "$1" dosyasını okumaya erişimi yok.',
-	'img-auth-bad-query-string' => "URL'de geçersiz bir sorgu dizesi vardır.",
+	'img-auth-bad-query-string' => 'URL\'de geçersiz bir sorgu dizesi vardır.',
 	'imgfile' => 'dosya',
 	'imagelinks' => 'Dosya kullanımı',
-	'iteminvalidname' => "'$1' öğesi ile sorun, geçersiz isim...",
+	'iteminvalidname' => '\'$1\' öğesi ile sorun, geçersiz isim...',
 	'invert' => 'Seçili haricindekileri göster',
 	'isredirect' => 'yönlendirme sayfası',
 	'istemplate' => 'dönüştürülme',
@@ -24580,8 +24601,8 @@ Geçici dosya kayıp.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revizyon|revizyon}}',
 	'import-logentry-interwiki' => '$1 transvikileşmiş',
 	'import-logentry-interwiki-detail' => '$2 sayfasından $1 {{PLURAL:$1|revizyon|revizyon}}',
-	'imagemaxsize' => "Resim boyutu sınırı:<br />''(dosya açıklama sayfaları için)''",
-	'imagelisttext' => "Aşağıdaki liste '''$2''' göre dizilmiş {{PLURAL:$1|adet dosyayı|adet dosyayı}} göstermektedir.",
+	'imagemaxsize' => 'Resim boyutu sınırı:<br />\'\'(dosya açıklama sayfaları için)\'\'',
+	'imagelisttext' => 'Aşağıdaki liste \'\'\'$2\'\'\' göre dizilmiş {{PLURAL:$1|adet dosyayı|adet dosyayı}} göstermektedir.',
 	'ilsubmit' => 'Ara',
 	'invalidateemail' => 'E-posta doğrulamasını iptal et',
 	'imgmultipageprev' => '← önceki sayfa',
@@ -24589,15 +24610,15 @@ Geçici dosya kayıp.',
 	'imgmultigo' => 'Git!',
 	'imgmultigoto' => '$1 sayfasına git',
 	'intentionallyblankpage' => 'Bu sayfa özellikle boştur.',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'internalerror' => 'Xihoxo xa le ndzeni',
 	'imgfile' => 'fayili',
 	'invert' => 'Invert selection',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'index-category' => 'Индексланган битләр',
 	'internalerror' => 'Эчке хата',
 	'internalerror_info' => 'Эчке хата: $1',
@@ -24658,16 +24679,16 @@ $messages['tt-cyrl'] = array(
 	'importnotext' => 'Буш яки текст юк',
 	'importlogpage' => 'Кертү көндәлеге',
 	'import-logentry-interwiki' => '«$1» — викиара  импортлау',
-	'imagemaxsize' => "Рәсемнең зурлыгына чикләүләр:<br />''(тасвирлау бите өчен)''",
+	'imagemaxsize' => 'Рәсемнең зурлыгына чикләүләр:<br />\'\'(тасвирлау бите өчен)\'\'',
 	'ilsubmit' => 'Эзләү',
 	'imgmultipageprev' => '← алдагы бит',
 	'imgmultipagenext' => 'алдагы бит →',
 	'imgmultigo' => 'Күчү!',
 	'imgmultigoto' => '$1 битенә күчү',
 	'intentionallyblankpage' => 'Бу бит махсус буш калдырылган',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'index-category' => 'İndekslanğan bitlär',
 	'internalerror' => 'Eçke xata',
 	'internalerror_info' => 'Eçke xata: $1',
@@ -24720,16 +24741,16 @@ $messages['tt-latn'] = array(
 	'importsuccess' => 'İmportlaw uñışlı buldı!',
 	'importlogpage' => 'Kertü köndälege',
 	'import-logentry-interwiki' => '«$1» — wikiara  importlaw',
-	'imagemaxsize' => "Räsemneñ zurlığına çikläwlär:<br />''(taswirlaw bite öçen)''",
+	'imagemaxsize' => 'Räsemneñ zurlığına çikläwlär:<br />\'\'(taswirlaw bite öçen)\'\'',
 	'ilsubmit' => 'Ezläw',
 	'imgmultipageprev' => '← aldağı bit',
 	'imgmultipagenext' => 'aldağı bit →',
 	'imgmultigo' => 'Küçü!',
 	'imgmultigoto' => '$1 bitenä küçü',
 	'intentionallyblankpage' => 'Bu bit maxsus buş qaldırılğan',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'info_short' => 'Медеглел',
 	'internalerror' => 'Иштики алдаг',
 	'internalerror_info' => 'Иштики алдаг: $1',
@@ -24756,17 +24777,17 @@ $messages['tyv'] = array(
 	'imgmultipageprev' => '← мурнунда арын',
 	'imgmultipagenext' => 'соонда арын →',
 	'imgmultigo' => 'Go!',
-);
+];
 
-$messages['udm'] = array(
+$messages['udm'] = [
 	'index-category' => 'Индексировать кароно бамъёс',
-);
+];
 
-$messages['ug'] = array(
+$messages['ug'] = [
 	'index-category' => 'Индексировать кароно бамъёс',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'index-category' => 'ئىندېكسلانغان بەتلەر',
 	'internalerror' => 'ئىچكى خاتالىق',
 	'internalerror_info' => 'ئىچكى خاتالىق: $1',
@@ -24799,7 +24820,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'img-auth-bad-query-string' => 'بۇ URL دا بىر ئىناۋەتسىز سۈرۈشتۈرۈش تىزىقى بار.',
 	'imgfile' => 'ھۆججەت',
 	'imagelinks' => 'ھۆججەت ئۇلىنىشى',
-	'iteminvalidname' => "بەت'$1'  خاتالىقى، ئاتى ئىناۋەتسىز…",
+	'iteminvalidname' => 'بەت\'$1\'  خاتالىقى، ئاتى ئىناۋەتسىز…',
 	'invert' => 'ئەكسىچە تاللا',
 	'isredirect' => 'قايتا نىشان بەلگىلەنگەن بەت',
 	'istemplate' => 'ئۆز ئىچىگە ئالغان',
@@ -24917,8 +24938,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|تۈزىتىش|تۈزىتىش}}',
 	'import-logentry-interwiki' => 'wiki ھالقىغان $1',
 	'import-logentry-interwiki-detail' => '$2 دىن كەلگەن $1 {{PLURAL:$1|تۈزىتىش|تۈزىتىش}}',
-	'imagemaxsize' => "سۈرەت چوڭلۇق چەكلىمىسى: <br />''(ھۆججەت چۈشەندۈرۈش بېتى ئۈچۈن)''",
-	'imagelisttext' => "تۆۋەندىكىسى $2 غا ئاساسەن تەرتىپلەنگەن'''$1''' {{PLURAL:$1|ھۆججەت|ھۆججەت}} sorted تىزىملىكى.",
+	'imagemaxsize' => 'سۈرەت چوڭلۇق چەكلىمىسى: <br />\'\'(ھۆججەت چۈشەندۈرۈش بېتى ئۈچۈن)\'\'',
+	'imagelisttext' => 'تۆۋەندىكىسى $2 غا ئاساسەن تەرتىپلەنگەن\'\'\'$1\'\'\' {{PLURAL:$1|ھۆججەت|ھۆججەت}} sorted تىزىملىكى.',
 	'ilsubmit' => 'ئىزدەش',
 	'invalidateemail' => 'ئېلخەت جەزملەشتىن ۋاز كەچ',
 	'imgmultipageprev' => '← ئالدىنقى بەت',
@@ -24926,17 +24947,17 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization',
 	'imgmultigo' => 'يۆتكەل!',
 	'imgmultigoto' => '$1 بەتكە يۆتكەل',
 	'intentionallyblankpage' => 'بۇ بەت قەستەن بوش قالدۇرۇلغان.',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'ipblocklist-submit' => 'Izdash',
 	'ilsubmit' => 'Izdash',
 	'imgmultipageprev' => '← aldinqi bet',
 	'imgmultipagenext' => 'kéyinki bet →',
 	'imgmultigo' => 'Kuchush!',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'index-category' => 'Індексовані сторінки',
 	'internalerror' => 'Внутрішня помилка',
 	'internalerror_info' => 'Внутрішня помилка: $1',
@@ -24975,18 +24996,18 @@ $messages['uk'] = array(
 	'isredirect' => 'сторінка-перенаправлення',
 	'istemplate' => 'включення',
 	'isimage' => 'посилання на файл',
-	'ipadressorusername' => "IP-адреса або ім'я користувача:",
+	'ipadressorusername' => 'IP-адреса або ім\'я користувача:',
 	'ipbexpiry' => 'Термін:',
 	'ipbreason' => 'Причина:',
 	'ipbreasonotherlist' => 'Інша причина',
-	'ipbreason-dropdown' => "* Типові причини блокування
+	'ipbreason-dropdown' => '* Типові причини блокування
 ** Вставка неправильної інформації
 ** Видалення змісту сторінок
 ** Спам, рекламні посилання
 ** Вставка нісенітниці/лайки в текст
 ** Залякуюча поведінка/переслідування
 ** Зловживання кількома обліковими записами
-** Неприйнятне ім'я користувача",
+** Неприйнятне ім\'я користувача',
 	'ipb-hardblock' => 'Заборонити редагування зареєстрованим користувачам з цієї IP-адреси',
 	'ipbcreateaccount' => 'Заборонити створення нових облікових записів',
 	'ipbemailban' => 'Заборонити користувачеві відправляти листи електронною поштою',
@@ -24996,13 +25017,13 @@ $messages['uk'] = array(
 	'ipboptions' => '2 години:2 hours,1 день:1 day,3 дні:3 days,1 тиждень:1 week,2 тижні:2 weeks,1 місяць:1 month,3 місяці:3 months,6 місяців:6 months,1 рік:1 year,назавжди:infinite',
 	'ipbotheroption' => 'інший термін',
 	'ipbotherreason' => 'Інша/додаткова причина:',
-	'ipbhidename' => "Приховати ім'я користувача у редагуваннях ті списках",
+	'ipbhidename' => 'Приховати ім\'я користувача у редагуваннях ті списках',
 	'ipbwatchuser' => 'Додати до списку спостереження сторінку користувача і його обговорення',
 	'ipb-disableusertalk' => 'Заборонити користувачу редагувати свою сторінку обговорення під час блокування',
 	'ipb-change-block' => 'Переблокувати користувача з цими налаштуваннями',
 	'ipb-confirm' => 'Підтвердити блокування',
 	'ipb-blockingself' => 'Ви збираєтеся заблокувати себе!  Ви дійсно бажаєте це зробити?',
-	'ipb-confirmhideuser' => "Ви збираєтеся заблокувати користувача з опцією приховання імені. Це вилучить його ім'я з усіх списків та журналів. Ви точно хочете це зробити?",
+	'ipb-confirmhideuser' => 'Ви збираєтеся заблокувати користувача з опцією приховання імені. Це вилучить його ім\'я з усіх списків та журналів. Ви точно хочете це зробити?',
 	'ipb-edit-dropdown' => 'Редагувати причини блокувань',
 	'ipb-unblock-addr' => 'Розблокувати $1',
 	'ipb-unblock' => 'Розблокувати користувача або IP-адресу',
@@ -25016,7 +25037,7 @@ $messages['uk'] = array(
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Інше блокування|Інші блокування}}',
 	'infiniteblock' => 'блокування на невизначений термін',
 	'ipblocklist-empty' => 'Список блокувань порожній.',
-	'ipblocklist-no-results' => "Запрохані IP-адреса або ім'я користувача не заблоковані.",
+	'ipblocklist-no-results' => 'Запрохані IP-адреса або ім\'я користувача не заблоковані.',
 	'ipb_expiry_invalid' => 'Невірно вказано термін.',
 	'ipb_expiry_temp' => 'Блокування із приховуванням імені користувача мають бути безстроковими.',
 	'ipb_hide_invalid' => 'Неможливо приховати обліковий запис; з нього зроблено дуже багато редагувань.',
@@ -25084,8 +25105,8 @@ $messages['uk'] = array(
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|версія|версії|версій}}',
 	'import-logentry-interwiki' => '«$1» — міжвікі імпорт',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|версія|версії|версій}} з $2',
-	'imagemaxsize' => "Обмеження розміру зображення:<br />''(для сторінок опису файлів)''",
-	'imagelisttext' => "Нижче подано список з '''$1''' {{PLURAL:$1|файлу|файлів|файлів}}, відсортованих $2.",
+	'imagemaxsize' => 'Обмеження розміру зображення:<br />\'\'(для сторінок опису файлів)\'\'',
+	'imagelisttext' => 'Нижче подано список з \'\'\'$1\'\'\' {{PLURAL:$1|файлу|файлів|файлів}}, відсортованих $2.',
 	'ilsubmit' => 'Шукати',
 	'invalidateemail' => 'Скасувати підтвердження адреси електронної пошти',
 	'imgmultipageprev' => '← попередня сторінка',
@@ -25105,9 +25126,9 @@ $messages['uk'] = array(
 	'iranian-calendar-m11' => 'бахмана',
 	'iranian-calendar-m12' => 'есфанда',
 	'intentionallyblankpage' => 'Цю сторінку навмисне залишили порожньою',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'internalerror' => 'خطائے اندرونی',
 	'internalerror_info' => 'خطائے اندرونی: $1',
 	'invalidemailaddress' => 'برقی پتہ قبول نہیں کیا جاسکتا کیونکہ یہ غلط شکل میں ہے.
@@ -25127,9 +25148,9 @@ $messages['ur'] = array(
 	'ipblocklist' => 'ممنوع صارفین',
 	'import' => 'درآمد صفحات',
 	'ilsubmit' => 'تلاش',
-);
+];
 
-$messages['uz'] = array(
+$messages['uz'] = [
 	'italic_sample' => 'Kursiv',
 	'italic_tip' => 'Kursiv',
 	'image_tip' => 'Qoʻshilgan tasvir',
@@ -25139,11 +25160,11 @@ $messages['uz'] = array(
 	'istemplate' => 'qoʻshimcha',
 	'ipboptions' => '2 soat:2 hours,1 kun:1 day,3 kun:3 days,1 hafta:1 week,2 hafta:2 weeks,1 oy:1 month,3 oy:3 months,6 oy:6 months,1 yil:1 year,cheksiz:infinite',
 	'ipblocklist' => 'Chetlashtirilgan IP manzillari va foydalanuvchilar',
-	'imagemaxsize' => "Tasvir ta'rifi sahifasidagi tasvirning kattaligi:",
+	'imagemaxsize' => 'Tasvir ta\'rifi sahifasidagi tasvirning kattaligi:',
 	'ilsubmit' => 'Qidirish',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'info_short' => 'Informació',
 	'internalerror' => 'Fallida interna',
 	'invalidemailaddress' => 'No se pot acceptar la direcció electrònica perque pareix que té un format no vàlit.
@@ -25152,12 +25173,12 @@ Introduïx una direcció en un format adequat o bè buida el camp.',
 	'italic_tip' => 'Text en cursiva',
 	'image_sample' => 'Eixemple.jpg',
 	'image_tip' => 'Image anexada',
-	'importing' => "S'està important $1",
+	'importing' => 'S\'està important $1',
 	'ignorewarning' => 'Ignora qualsevol avís i guarda el ficher igualment.',
 	'ignorewarnings' => 'Ignora qualsevol avís',
-	'illegalfilename' => "El nom de l'archiu “$1” conté caràcters que no estan permesos en els títuls de pàgines. Per favor canvia el nom a l'archiu i torna-lo a carregar-lo.",
-	'imagelist' => "Llistat d'images",
-	'imagelisttext' => "Llista {{plural:$1|d'un sol archiu|de '''$1''' archius ordenats $2}}.",
+	'illegalfilename' => 'El nom de l\'archiu “$1” conté caràcters que no estan permesos en els títuls de pàgines. Per favor canvia el nom a l\'archiu i torna-lo a carregar-lo.',
+	'imagelist' => 'Llistat d\'images',
+	'imagelisttext' => 'Llista {{plural:$1|d\'un sol archiu|de \'\'\'$1\'\'\' archius ordenats $2}}.',
 	'imagelistforuser' => 'Només se mostren les images que ha pujat $1',
 	'ilsubmit' => 'Busca',
 	'imgdelete' => 'edi',
@@ -25174,22 +25195,22 @@ esta versió antiga, (rev) = revertix a esta versió antiga.
 	'imagelist_user' => 'Usuari',
 	'imagelist_size' => 'Mida (octets)',
 	'imagelist_description' => 'Descripció',
-	'imagelist_search_for' => "Busca un nom d'image:",
+	'imagelist_search_for' => 'Busca un nom d\'image:',
 	'intl' => 'Enllaços entre llengües',
-	'iteminvalidname' => "Hi ha un problema en l'element '$1': el nom no es vàlit...",
-	'imagereverted' => "S'ha revertit en èxit a una versió anterior.",
+	'iteminvalidname' => 'Hi ha un problema en l\'element \'$1\': el nom no es vàlit...',
+	'imagereverted' => 'S\'ha revertit en èxit a una versió anterior.',
 	'invert' => 'Invertix la selecció',
 	'isredirect' => 'pàgina redirigida',
 	'istemplate' => 'inclosa',
 	'ipaddress' => 'Direcció IP',
-	'ipadressorusername' => "Direcció IP o nom de l'usuari",
+	'ipadressorusername' => 'Direcció IP o nom de l\'usuari',
 	'ipbexpiry' => 'Venciment',
 	'ipbreason' => 'Motiu',
 	'ipbanononly' => 'Bloqueja només els usuaris anònims',
 	'ipbcreateaccount' => 'Evita la creació de contes',
 	'ipbenableautoblock' => 'Bloqueja automàticament totes les adreces IPs que utilise este usuari',
 	'ipbsubmit' => 'Bloqueja esta direcció',
-	'ipbother' => "Un atre temps d'expiració",
+	'ipbother' => 'Un atre temps d\'expiració',
 	'ipboptions' => '2 hores:2 hours,1 dia:1 day,3 dies:3 days,1 semana:1 week,2 semanes:2 weeks,1 mes:1 month,3 mesos:3 months,6 mesos:6 months,1 any:1 year,infinit:infinite',
 	'ipbotheroption' => 'un atre',
 	'ipb-unblock-addr' => 'Desbloquejar $1',
@@ -25197,72 +25218,72 @@ esta versió antiga, (rev) = revertix a esta versió antiga.
 	'ipb-blocklist-addr' => 'Llista els bloquejos existents per $1',
 	'ipb-blocklist' => 'Llista els bloquejos existents',
 	'ipusubmit' => 'Desbloqueja esta direcció',
-	'ipblocklist' => "Llista dde direccións IP i noms d'usuaris bloquejats",
+	'ipblocklist' => 'Llista dde direccións IP i noms d\'usuaris bloquejats',
 	'ipblocklist-submit' => 'Busca',
 	'infiniteblock' => 'infinit',
-	'ipb_expiry_invalid' => "Data d'acabament no vàlida.",
+	'ipb_expiry_invalid' => 'Data d\'acabament no vàlida.',
 	'ipb_already_blocked' => '«$1»ya està bloquejat',
 	'ip_range_invalid' => 'Ranc de IP no vàlit.',
-	'ipb_cant_unblock' => "Errada: No s'ha trobat el núm. ID de bloqueig $1. És possible que ya se'n haguera desbloquejat.",
-	'immobile_namespace' => "El títul d'orige o de destí es d'un tipo especial; no es possible renomenar pàgines a este espai de noms.",
+	'ipb_cant_unblock' => 'Errada: No s\'ha trobat el núm. ID de bloqueig $1. És possible que ya se\'n haguera desbloquejat.',
+	'immobile_namespace' => 'El títul d\'orige o de destí es d\'un tipo especial; no es possible renomenar pàgines a este espai de noms.',
 	'import' => 'Importa les pàgines',
 	'importinterwiki' => 'Importa interwiki',
-	'import-interwiki-text' => "Tria una uep basat en wiki i un títul de pàgina per a importar.
+	'import-interwiki-text' => 'Tria una uep basat en wiki i un títul de pàgina per a importar.
 Es conservaran les dates de les versions i els noms dels editors.
-Totes les accions d'importació interwiki se conserven al [[Special:Log/import|registre d'importacions]].",
-	'import-interwiki-history' => "Copia totes les versions de l'historial d'esta pàgina",
+Totes les accions d\'importació interwiki se conserven al [[Special:Log/import|registre d\'importacions]].',
+	'import-interwiki-history' => 'Copia totes les versions de l\'historial d\'esta pàgina',
 	'import-interwiki-submit' => 'Importa',
-	'import-interwiki-namespace' => "Transferix les pàgines a l'espai de noms:",
-	'importtext' => "Per favor, exporta el ficher des del wiki d'orige utilisant la ferramenta Special:Export, baixa-lo al teu disc dur i carrega una còpia ací.",
-	'importstart' => "S'està important pàgines...",
+	'import-interwiki-namespace' => 'Transferix les pàgines a l\'espai de noms:',
+	'importtext' => 'Per favor, exporta el ficher des del wiki d\'orige utilisant la ferramenta Special:Export, baixa-lo al teu disc dur i carrega una còpia ací.',
+	'importstart' => 'S\'està important pàgines...',
 	'import-revision-count' => '$1 {{PLURAL:$1|revisió|revisions}}',
 	'importnopages' => 'No hi ha cap pàgina per importar.',
 	'importfailed' => 'La importació ha fallat: $1',
-	'importunknownsource' => "No se reconeix el tipo de la font d'importació",
-	'importcantopen' => "No ha segut possible d'obrir el ficher a importar",
-	'importbadinterwiki' => "Enllaç d'interwiki incorrecte",
+	'importunknownsource' => 'No se reconeix el tipo de la font d\'importació',
+	'importcantopen' => 'No ha segut possible d\'obrir el ficher a importar',
+	'importbadinterwiki' => 'Enllaç d\'interwiki incorrecte',
 	'importnotext' => 'Buit o sense text',
-	'importsuccess' => "S'ha importat en èxit!",
-	'importhistoryconflict' => "Hi ha un conflicte de versions en l'historial (la pàgina podria haver segut importada adés)",
-	'importnosources' => "No s'ha definit cap font d'orige interwiki i s'ha deshabilitat la càrrega directa d'una còpia de l'historial",
-	'importnofile' => "No s'ha pujat cap ficher d'importació.",
-	'importuploaderror' => "Ha fallat la càrrega del ficher d'importació; potser el seu pes ha excedit el llímit màxim.",
-	'importlogpage' => "Registre d'importació",
-	'importlogpagetext' => "Importacions administratives de pàgines en l'historial des d'atres wikis.",
-	'import-logentry-upload' => "s'ha importat [[$1]] per càrrega de fichers",
+	'importsuccess' => 'S\'ha importat en èxit!',
+	'importhistoryconflict' => 'Hi ha un conflicte de versions en l\'historial (la pàgina podria haver segut importada adés)',
+	'importnosources' => 'No s\'ha definit cap font d\'orige interwiki i s\'ha deshabilitat la càrrega directa d\'una còpia de l\'historial',
+	'importnofile' => 'No s\'ha pujat cap ficher d\'importació.',
+	'importuploaderror' => 'Ha fallat la càrrega del ficher d\'importació; potser el seu pes ha excedit el llímit màxim.',
+	'importlogpage' => 'Registre d\'importació',
+	'importlogpagetext' => 'Importacions administratives de pàgines en l\'historial des d\'atres wikis.',
+	'import-logentry-upload' => 's\'ha importat [[$1]] per càrrega de fichers',
 	'import-logentry-upload-detail' => '$1 revisió/ons',
-	'import-logentry-interwiki' => "s'ha importat $1 via interwiki",
+	'import-logentry-interwiki' => 's\'ha importat $1 via interwiki',
 	'import-logentry-interwiki-detail' => '$1 revisió/ons de $2',
 	'infosubtitle' => 'Informació de la pàgina',
-	'imagemaxsize' => "Llimita les images de les pàgines de descripció d'images a:",
+	'imagemaxsize' => 'Llimita les images de les pàgines de descripció d\'images a:',
 	'imagelistall' => 'totes',
 	'imgmultipageprev' => '&larr; pàgina prèvia',
 	'imgmultipagenext' => 'pàgina següent &rarr;',
 	'imgmultigo' => 'Anar',
 	'imgmultigotopre' => 'Anar a la pàgina',
-	'imgmultiparseerror' => "Pareix que el ficher de la image es corromput o no es vàlit, i per això no s'ha pogut procedir una llista de pàgines en {{SITENAME}}.",
-);
+	'imgmultiparseerror' => 'Pareix que el ficher de la image es corromput o no es vàlit, i per això no s\'ha pogut procedir una llista de pàgines en {{SITENAME}}.',
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'index-category' => 'Pajine indicisae',
 	'internalerror' => 'Erore interno',
 	'internalerror_info' => 'Erore interno: $1',
-	'invalidemailaddress' => "L'indirisso email no'l pode èssar acetà parché el gà un formato mìa valido.
-Inserissi un indirisso valido o svoda la casèła.",
+	'invalidemailaddress' => 'L\'indirisso email no\'l pode èssar acetà parché el gà un formato mìa valido.
+Inserissi un indirisso valido o svoda la casèła.',
 	'italic_sample' => 'Corsivo',
 	'italic_tip' => 'Corsivo',
 	'image_sample' => 'Esenpio.jpg',
 	'image_tip' => 'File incorporà',
-	'ignorewarning' => "Ignora l'avertimento e salva istesso el file.",
+	'ignorewarning' => 'Ignora l\'avertimento e salva istesso el file.',
 	'ignorewarnings' => 'Ignora i messagi de avertimento del sistema',
 	'illegalfilename' => 'El nome file "$1" el contien caràteri che no xè permessi nei titoli de le pagine. Par piaser, rinomina el file e próa a ricaricarlo.',
 	'illegal-filename' => 'El nome del file no xe parmesso.',
 	'img-auth-accessdenied' => 'Acesso negà',
-	'img-auth-nopathinfo' => "Manca el PATH_INFO.
-El to server no'l xe mia configurà par passar sta informassion.
-Magari el xe basà su CGI e no'l suporta img_auth.
-Varda https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
-	'img-auth-notindir' => "El percorso richiesto no'l se cata in te la cartèla de caricamento configurà.",
+	'img-auth-nopathinfo' => 'Manca el PATH_INFO.
+El to server no\'l xe mia configurà par passar sta informassion.
+Magari el xe basà su CGI e no\'l suporta img_auth.
+Varda https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
+	'img-auth-notindir' => 'El percorso richiesto no\'l se cata in te la cartèla de caricamento configurà.',
 	'img-auth-badtitle' => 'No se riesse a costruir un titolo valido da "$1".',
 	'img-auth-nologinnWL' => 'No te sì autenticà e "$1" no\'l xe mia in te la lista bianca.',
 	'img-auth-nofile' => 'El file "$1" no l\'esiste mia.',
@@ -25275,7 +25296,7 @@ Par na major sicuressa, img_auth.php el xe disabilità.',
 	'img-auth-noread' => 'L\'utente no\'l gà mia dirito de lèzar "$1".',
 	'imgfile' => 'file',
 	'imagelinks' => 'Uso del file',
-	'iteminvalidname' => "Problemi con la voxe '$1', nome mìa vałido...",
+	'iteminvalidname' => 'Problemi con la voxe \'$1\', nome mìa vałido...',
 	'invert' => 'Inverti la selession',
 	'isredirect' => 'Pagina de rimando',
 	'istemplate' => 'inclusion',
@@ -25293,16 +25314,16 @@ Par na major sicuressa, img_auth.php el xe disabilità.',
 ** Uso indebito de più account
 ** Nome utente non cònsono',
 	'ipbcreateaccount' => 'Inpedissi la creazion de altri account',
-	'ipbemailban' => "Inpedìsseghe a l'utente de mandar e-mail",
-	'ipbenableautoblock' => "Bloca automaticamente l'ultimo indirizo IP doparà da l'utente e i sucessivi con cui vien tentà modifiche",
+	'ipbemailban' => 'Inpedìsseghe a l\'utente de mandar e-mail',
+	'ipbenableautoblock' => 'Bloca automaticamente l\'ultimo indirizo IP doparà da l\'utente e i sucessivi con cui vien tentà modifiche',
 	'ipbsubmit' => 'Bloca sto indirisso IP',
 	'ipbother' => 'Altra durata:',
 	'ipboptions' => '2 ore:2 hours,1 zorno:1 day,3 zorni:3 days,1 setimana:1 week,2 setimane:2 weeks,1 mese:1 month,3 mesi:3 months,6 mesi:6 months,1 ano:1 year,infinìo:infinite',
 	'ipbotheroption' => 'altro',
 	'ipbotherreason' => 'Altri motivi/detagli:',
 	'ipbhidename' => 'Scondi el nome utente da le modìfeghe e da i elenchi.',
-	'ipbwatchuser' => "Tien d'ocio la pagina utente e la pagina de discussion de sto utente",
-	'ipb-change-block' => "Bloca de novo l'utente co ste inpostassion",
+	'ipbwatchuser' => 'Tien d\'ocio la pagina utente e la pagina de discussion de sto utente',
+	'ipb-change-block' => 'Bloca de novo l\'utente co ste inpostassion',
 	'ipb-edit-dropdown' => 'Motivi par el bloco',
 	'ipb-unblock-addr' => 'Sbloca $1',
 	'ipb-unblock' => 'Sbloca un utente o un indirizo IP',
@@ -25315,35 +25336,35 @@ Par na major sicuressa, img_auth.php el xe disabilità.',
 	'ipblocklist-localblock' => 'Bloco local',
 	'ipblocklist-otherblocks' => '{{PLURAL:$1|Altro bloco|Altri blochi}}',
 	'infiniteblock' => 'infinito',
-	'ipblocklist-empty' => "L'elenco dei blochi el xe vodo.",
-	'ipblocklist-no-results' => "L'indirizo IP o nome utente richiesto no'l xe blocà.",
+	'ipblocklist-empty' => 'L\'elenco dei blochi el xe vodo.',
+	'ipblocklist-no-results' => 'L\'indirizo IP o nome utente richiesto no\'l xe blocà.',
 	'ipb_expiry_invalid' => 'Tenpo de scadensa mìa valido. Controla el [http://www.gnu.org/software/tar/manual/html_chapter/tar_7.html manual de tar] par la sintassi esatta.',
 	'ipb_expiry_temp' => 'I blochi dei nomi utente sconti i dovarìa essar infiniti.',
-	'ipb_hide_invalid' => "No se riesse a scancelar l'utensa; podarìa èssar che la gà massa contributi.",
+	'ipb_hide_invalid' => 'No se riesse a scancelar l\'utensa; podarìa èssar che la gà massa contributi.',
 	'ipb_already_blocked' => 'L\'utente "$1" el xe zà blocà',
 	'ipb-needreblock' => '$1 xe xà blocà. Vuto canbiar le inpostassion?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|Altro bloco|Altri blochi}}',
 	'ipb_cant_unblock' => 'Eror: Inpossibile catar el bloco con ID $1. El bloco el podarìa èssar zà stà cavà.',
-	'ipb_blocked_as_range' => "Eror: L'indirizo IP $1 no'l xe sogeto a bloco individual e no'l pol èssar sblocà. El bloco el xe invesse ativo a livel de l'intervalo $2, che el pol èssar sblocà.",
+	'ipb_blocked_as_range' => 'Eror: L\'indirizo IP $1 no\'l xe sogeto a bloco individual e no\'l pol èssar sblocà. El bloco el xe invesse ativo a livel de l\'intervalo $2, che el pol èssar sblocà.',
 	'ip_range_invalid' => 'Intervało de indirissi IP mìa vałido.',
 	'ip_range_toolarge' => 'No se pol mia blocar intervali piassè grandi de /$1',
 	'ipbblocked' => 'No te pui blocare o sblocare altri utenti, parché ti steso te si blocà',
 	'ipbnounblockself' => 'No te pui sblocare ti steso',
 	'immobile-source-namespace' => 'No te pol spostar pàxene in tel namespace "$1"',
 	'immobile-target-namespace' => 'No te pol spostar pàxene \'ntel namespace "$1"',
-	'immobile-target-namespace-iw' => "El colegamento interwiki no'l xe na valida destinassion in do spostar na pàxena.",
+	'immobile-target-namespace-iw' => 'El colegamento interwiki no\'l xe na valida destinassion in do spostar na pàxena.',
 	'immobile-source-page' => 'Sta pàxena no la pol vegner spostà.',
 	'immobile-target-page' => 'No te pol spostar a sto titolo.',
 	'imagenocrossnamespace' => 'No se pol spostar un file verso un namespace diverso da quelo dei file.',
-	'imagetypemismatch' => "L'estension nova del file no la corisponde mìa al tipo de file",
-	'imageinvalidfilename' => "El nome file de destinassion no'l xe mia valido",
+	'imagetypemismatch' => 'L\'estension nova del file no la corisponde mìa al tipo de file',
+	'imageinvalidfilename' => 'El nome file de destinassion no\'l xe mia valido',
 	'import' => 'Inporta pàxene',
 	'importinterwiki' => 'Inportazion transwiki',
 	'import-interwiki-text' => 'Seleziona un projeto wiki e el titoło de ła pàxena da inportar.
 Le date de publicazion e i nomi de i autori de łe varie version i sarà conservà.
 Tute łe operazion de inportazion trans-wiki łe xè notà nel [[Special:Log/import|registro de inportazion]].',
 	'import-interwiki-source' => 'Sorgente wiki/pàxena:',
-	'import-interwiki-history' => "Copia l'intiera cronołogia de sta pàxena",
+	'import-interwiki-history' => 'Copia l\'intiera cronołogia de sta pàxena',
 	'import-interwiki-templates' => 'Tira dentro tuti i modèi',
 	'import-interwiki-submit' => 'Inporta',
 	'import-interwiki-namespace' => 'Namespace de destinassion:',
@@ -25356,31 +25377,31 @@ Salvalo sul to computer e càrghelo qua.',
 	'importnopages' => 'Nissuna pàxena da inportar.',
 	'imported-log-entries' => 'Inportà $1 {{PLURAL:$1|evento|eventi}} del registro.',
 	'importfailed' => 'Inportassion falía: $1',
-	'importunknownsource' => "Tipo de origine sconossiùo par l'inportassion",
+	'importunknownsource' => 'Tipo de origine sconossiùo par l\'inportassion',
 	'importcantopen' => 'Impossibiłe vèrzar el file de inportassion',
 	'importbadinterwiki' => 'Cołegamento inter-wiki mìa giusto',
 	'importnotext' => 'Testo vodo o mancante',
 	'importsuccess' => 'Inportazion avegnù con sucesso!',
 	'importhistoryconflict' => 'Esiste na revision de la cronołogia in conflito (sta pàxena la podarìa èssar xà stà inportà)',
-	'importnosources' => "No xè stà definia na fonte par l'inportassion transwiki; l'inportassion direta de ła cronołogia no la xè ativa.",
-	'importnofile' => "No xè stà caricà nissun file par l'inportassion.",
-	'importuploaderrorsize' => "Caricamento del file par l'importazion mìa riussìo. El file el supera le dimension massime consentìe par el caricamento.",
-	'importuploaderrorpartial' => "Caricamento del file par l'inportazion mìa riussìo. El file el xe stà cargà solo in parte.",
-	'importuploaderrortemp' => "Caricamento del file par l'inportazion mìa riussìo. Manca na cartela tenporanea.",
-	'import-parse-failure' => "Eror de analisi ne l'inportazion XML",
+	'importnosources' => 'No xè stà definia na fonte par l\'inportassion transwiki; l\'inportassion direta de ła cronołogia no la xè ativa.',
+	'importnofile' => 'No xè stà caricà nissun file par l\'inportassion.',
+	'importuploaderrorsize' => 'Caricamento del file par l\'importazion mìa riussìo. El file el supera le dimension massime consentìe par el caricamento.',
+	'importuploaderrorpartial' => 'Caricamento del file par l\'inportazion mìa riussìo. El file el xe stà cargà solo in parte.',
+	'importuploaderrortemp' => 'Caricamento del file par l\'inportazion mìa riussìo. Manca na cartela tenporanea.',
+	'import-parse-failure' => 'Eror de analisi ne l\'inportazion XML',
 	'import-noarticle' => 'Nissuna pagina da inportar.',
 	'import-nonewrevisions' => 'Tute le revision le xe zà stà inportà in precedenza.',
 	'import-upload' => 'Carga dati XML',
-	'import-token-mismatch' => "I dati relativi a la session i xe 'ndài persi. Par piaser, próa da novo.",
+	'import-token-mismatch' => 'I dati relativi a la session i xe \'ndài persi. Par piaser, próa da novo.',
 	'import-invalid-interwiki' => 'No se pode inportar da la wiki indicà.',
 	'importlogpage' => 'Inportassion',
-	'importlogpagetext' => "Registro de łe inportazion d'ufiçio de pàxene provenienti da altre wiki, conplete de cronołogia.",
+	'importlogpagetext' => 'Registro de łe inportazion d\'ufiçio de pàxene provenienti da altre wiki, conplete de cronołogia.',
 	'import-logentry-upload' => 'gà inportà $1 tramite caricamento de file',
 	'import-logentry-upload-detail' => '{{PLURAL:$1|una revixion importà|$1 revixion importae}}',
 	'import-logentry-interwiki' => 'gà trasferìo da altra wiki ła pàxena $1',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|una revixion importà|$1 revixion importae}} da $2',
-	'imagemaxsize' => "Dimension massima de le imagini:<br />''(su le relative pagine de descrizion)''",
-	'imagelisttext' => "Qua ghe xe na lista de '''$1''' {{PLURAL:$1|file|files}} ordinà par $2.",
+	'imagemaxsize' => 'Dimension massima de le imagini:<br />\'\'(su le relative pagine de descrizion)\'\'',
+	'imagelisttext' => 'Qua ghe xe na lista de \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} ordinà par $2.',
 	'ilsubmit' => 'Serca',
 	'invalidateemail' => 'Anula richiesta de conferma e-mail',
 	'imgmultipageprev' => '← la pagina prima',
@@ -25388,9 +25409,9 @@ Salvalo sul to computer e càrghelo qua.',
 	'imgmultigo' => 'Và',
 	'imgmultigoto' => 'Và a la pagina $1',
 	'intentionallyblankpage' => 'Sta pagina la xe stà lassà voda aposta',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'index-category' => 'Indeksiruidud lehtpoled',
 	'internalerror' => 'Südäipetuz',
 	'internalerror_info' => 'Südäipetuz: $1',
@@ -25401,42 +25422,42 @@ $messages['vep'] = array(
 	'image_tip' => 'Mülütadud fail',
 	'ignorewarning' => 'Ignoriruida varutuz i kirjutada fail muštho',
 	'ignorewarnings' => 'Ignoriruida kaik varutused',
-	'illegal-filename' => "Kel'tud failannimi.",
+	'illegal-filename' => 'Kel\'tud failannimi.',
 	'invalid-chunk-offset' => 'Laskmatoi fragmentan sirdand',
-	'img-auth-accessdenied' => "Pästand tänna om kel'tud",
+	'img-auth-accessdenied' => 'Pästand tänna om kel\'tud',
 	'img-auth-badtitle' => 'Ei voi tehta oiktad pälkirjutest "$1"-späi.',
 	'img-auth-nofile' => 'Ei ole mugošt failad: "$1".',
 	'img-auth-streaming' => '"$1"-joksmuz.',
 	'img-auth-noread' => 'Kävutajal ei ole oiktusid lugeda "$1"-failad.',
 	'imgfile' => 'fail',
 	'imagelinks' => 'Failan kävutamine',
-	'iteminvalidname' => "'$1'-elemental om problem, sen nimi om vär...",
+	'iteminvalidname' => '\'$1\'-elemental om problem, sen nimi om vär...',
 	'invert' => 'Käta erigoittud sanad vastkarin',
-	'isredirect' => "Oigendai lehtpol'",
+	'isredirect' => 'Oigendai lehtpol\'',
 	'istemplate' => 'mülütand',
 	'isimage' => 'Kosketuz failale',
 	'ipadressorusername' => 'IP-adres vai kävutajan nimi:',
 	'ipbexpiry' => 'Lopindan strok:',
 	'ipbreason' => 'Sü:',
 	'ipbreasonotherlist' => 'Toine sü',
-	'ipbreason-dropdown' => "*Blokiruindan päsüd
+	'ipbreason-dropdown' => '*Blokiruindan päsüd
 ** Väran informacijan andand
 ** Lehtpoliden südäimišton čudand
 ** Spamkosketused irdsaitoihe
 ** Hamatoman tekstan da rujon kirjutamine lehtpolile
-** Toižiden kävutajiden pöl'gästoitand
+** Toižiden kävutajiden pöl\'gästoitand
 ** Erazvuiččiden registracijoiden kävutand ühtel ristitul
-** Paha kävutajan nimi",
-	'ipbcreateaccount' => "Kel'ta uded registracijad",
-	'ipbemailban' => "Kel'ta kävutajid e-počtan oigendamaspäi",
+** Paha kävutajan nimi',
+	'ipbcreateaccount' => 'Kel\'ta uded registracijad',
+	'ipbemailban' => 'Kel\'ta kävutajid e-počtan oigendamaspäi',
 	'ipbenableautoblock' => 'Blokiruida avtomatižešti kävutajal kävutadud IP-adresad',
 	'ipbsubmit' => 'Blokiruida nece kävutai',
 	'ipbother' => 'Toine aig:',
-	'ipboptions' => "2 časud:2 hours,1 päiv:1 day,3 päiväd:3 days,1 nedal':1 week,2 nedalid:2 weeks,1 ku:1 month,3 kud:3 months,6 kud:6 months,1 voz':1 year,strokuta:infinite",
+	'ipboptions' => '2 časud:2 hours,1 päiv:1 day,3 päiväd:3 days,1 nedal\':1 week,2 nedalid:2 weeks,1 ku:1 month,3 kud:3 months,6 kud:6 months,1 voz\':1 year,strokuta:infinite',
 	'ipbotheroption' => 'toine',
 	'ipbotherreason' => 'Toine sü/Ližasü:',
 	'ipbhidename' => 'Peitta kävutajan nimi redakcijoišpäi da nimikirjutesišpäi',
-	'ipbwatchuser' => "Kacelta necen kävutajan personališt lehtpol't da lodulehtpol't",
+	'ipbwatchuser' => 'Kacelta necen kävutajan personališt lehtpol\'t da lodulehtpol\'t',
 	'ipb-change-block' => 'Blokirujda kävutajad udes neniden järgendusidenke',
 	'ipb-edit-dropdown' => 'Redaktiruida süiden nimikirjutez',
 	'ipb-unblock-addr' => 'Heitta blokiruind kävutajalpäi $1',
@@ -25464,14 +25485,14 @@ Voib olda, se om jo heittud.',
 	'immobile-source-namespace' => 'Ei voi udesnimitada lehtpolid "$1"-nimiavaruses',
 	'immobile-target-namespace' => 'Ei voi udesnimitada lehtpolid "$1"-nimiavarushe',
 	'immobile-target-namespace-iw' => 'Interviki-kosketust ei sa kävutada udesnimitamižen täht.',
-	'immobile-source-page' => "Necidä lehtpol't ei sa udesnimitada.",
+	'immobile-source-page' => 'Necidä lehtpol\'t ei sa udesnimitada.',
 	'immobile-target-page' => 'Ei sa antta lehtpolele nece nimi.',
 	'imagenocrossnamespace' => 'Ei sa antta kuvale nimi toižes nimiavarusespäi.',
-	'imagetypemismatch' => "Uz' failan liža ei sättu sen tipale",
+	'imagetypemismatch' => 'Uz\' failan liža ei sättu sen tipale',
 	'imageinvalidfilename' => 'Metfailan nimi om vär',
 	'import' => 'Toda lehtesid toižiš saitoišpäi',
 	'importinterwiki' => 'Transwiki-tomine',
-	'import-interwiki-source' => "Wikipurde/lehtpol':",
+	'import-interwiki-source' => 'Wikipurde/lehtpol\':',
 	'import-interwiki-history' => 'Kopiruida kaik necen lehtpolen toižetamižen istorii',
 	'import-interwiki-templates' => 'Mülütada kaik šablonad',
 	'import-interwiki-submit' => 'Import',
@@ -25495,22 +25516,22 @@ Vaiše failan pala om jügutoittud.',
 	'importuploaderrortemp' => 'Ei voi jügutoitta vai importiruida failad.
 Ei ole pordaigašt failhodrad.',
 	'import-parse-failure' => 'XML-tundištandan petuz importan aigan',
-	'import-noarticle' => "Ei ole lehtpol't importiruides!",
+	'import-noarticle' => 'Ei ole lehtpol\'t importiruides!',
 	'import-nonewrevisions' => 'Kaik redakcijad oma importiruidud aigemba.',
 	'import-upload' => 'Jügutoitta XML-andmusid',
 	'import-token-mismatch' => 'Andmused oma kadonuded. Olgat hüväd, toštkat tegend völ kerdan.',
 	'import-invalid-interwiki' => 'Ei voi importiruida neciš wikišpäi.',
 	'importlogpage' => 'Importan aigkirj',
 	'import-logentry-upload' => 'importiruidihe [[$1]] failan jügetoitandan abul',
-	'import-logentry-upload-detail' => "{{PLURAL:$1|üks' versii|$1 versijad}}",
+	'import-logentry-upload-detail' => '{{PLURAL:$1|üks\' versii|$1 versijad}}',
 	'import-logentry-interwiki' => 'toi toižes wikišpäi lehtpolen $1',
-	'import-logentry-interwiki-detail' => "$1 {{PLURAL:$1|üks' versii|versijad}} $2-wikišpäi",
-	'imagemaxsize' => "Kuvan suruden limit:<br />''(failan ümbrikirjutamižen lehtpolen täht)''",
-	'imagelisttext' => "Naku om '''$1''' {{PLURAL:$1|fail, kudamb om|failad, kudambad oma}} sortiruidud $2.",
+	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|üks\' versii|versijad}} $2-wikišpäi',
+	'imagemaxsize' => 'Kuvan suruden limit:<br />\'\'(failan ümbrikirjutamižen lehtpolen täht)\'\'',
+	'imagelisttext' => 'Naku om \'\'\'$1\'\'\' {{PLURAL:$1|fail, kudamb om|failad, kudambad oma}} sortiruidud $2.',
 	'ilsubmit' => 'Ectä',
 	'invalidateemail' => 'Keskustada e-počtan adresan vahvištoitand',
-	'imgmultipageprev' => "← edeline lehtpol'",
-	'imgmultipagenext' => "jäl'ghine lehtpol' →",
+	'imgmultipageprev' => '← edeline lehtpol\'',
+	'imgmultipagenext' => 'jäl\'ghine lehtpol\' →',
 	'imgmultigo' => 'Mända!',
 	'imgmultigoto' => 'Mända lehtpolele $1',
 	'iranian-calendar-m1' => 'Farvardin',
@@ -25525,10 +25546,10 @@ Ei ole pordaigašt failhodrad.',
 	'iranian-calendar-m10' => 'Dei',
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
-	'intentionallyblankpage' => "Nece lehtpol' om jättud puhthaks tahtonke.",
-);
+	'intentionallyblankpage' => 'Nece lehtpol\' om jättud puhthaks tahtonke.',
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'index-category' => 'Trang được ghi chỉ mục',
 	'internalerror' => 'Lỗi nội bộ',
 	'internalerror_info' => 'Lỗi nội bộ: $1',
@@ -25680,8 +25701,8 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|phiên bản|phiên bản}}',
 	'import-logentry-interwiki' => 'đã nhập vào $1 từ wiki khác',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|phiên bản|phiên bản}} từ $2',
-	'imagemaxsize' => "Giới hạn cỡ hình:<br />''(trên trang miêu tả tập tin)''",
-	'imagelisttext' => "Dưới đây là danh sách '''$1''' {{PLURAL:$1|tập tin|tập tin}} xếp theo $2.",
+	'imagemaxsize' => 'Giới hạn cỡ hình:<br />\'\'(trên trang miêu tả tập tin)\'\'',
+	'imagelisttext' => 'Dưới đây là danh sách \'\'\'$1\'\'\' {{PLURAL:$1|tập tin|tập tin}} xếp theo $2.',
 	'ilsubmit' => 'Tìm kiếm',
 	'invalidateemail' => 'Hủy xác nhận thư điện tử',
 	'imgmultipageprev' => '← trang trước',
@@ -25701,9 +25722,9 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 	'iranian-calendar-m11' => 'Bahman',
 	'iranian-calendar-m12' => 'Esfand',
 	'intentionallyblankpage' => 'Trang này được chủ định để trắng',
-);
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'italic_sample' => 'Ghursiif-dhägsd',
 	'italic_tip' => 'Ghursiif-dhägsd',
 	'image_tip' => 'Âjbedâde dadaj',
@@ -25714,9 +25735,9 @@ $messages['vmf'] = array(
 	'isimage' => 'fârwajs af des bild hiir',
 	'ipboptions' => '2 schdund:2 hours,1 dooch:1 day,3 dooch:3 days,1 wochng:1 week,2 wochng:2 weeks,1 moonad:1 month,3 moonad:3 months,6 moonad:6 months,1 jôôr:1 year,oone dsajdschrangng:infinite',
 	'ipblocklist' => 'Gschbärde IP-adresn un Ôôgmelde',
-);
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'info_short' => 'Nün',
 	'internalerror' => 'Pöl ninik',
 	'internalerror_info' => 'Pöl ninik: $1',
@@ -25730,7 +25751,7 @@ Penolös ladeti labü fomät lonöföl, u vagükolös penamaspadi.',
 	'illegalfilename' => 'Ragivanem: „$1“ labon malatis no pedälölis pö padatiäds. Votanemolös ragivi e steifülolös ad löpükön oni dönu.',
 	'imgfile' => 'ragiv',
 	'imagelinks' => 'Ragivayüms',
-	'iteminvalidname' => "Fikul tefü el '$1': nem no lonöföl...",
+	'iteminvalidname' => 'Fikul tefü el \'$1\': nem no lonöföl...',
 	'invert' => 'Güükön väloti',
 	'isredirect' => 'lüodükömapad',
 	'istemplate' => 'ninükam',
@@ -25840,7 +25861,7 @@ Dakipolös oni su nünöm olik e löpükolös oni isio.',
 	'import-logentry-interwiki-detail' => '{{PLURAL:$1|fomam|fomams}} $1 se $2',
 	'infosubtitle' => 'Nüns tefü pad',
 	'imagemaxsize' => 'Miedükön magodis su pads magodis bepenöls ad:',
-	'imagelisttext' => "Dono binon lised '''$1''' {{PLURAL:$1|ragiva|ragivas}} $2 pedilädölas.",
+	'imagelisttext' => 'Dono binon lised \'\'\'$1\'\'\' {{PLURAL:$1|ragiva|ragivas}} $2 pedilädölas.',
 	'ilsubmit' => 'Sukolöd',
 	'imagelistall' => 'valik',
 	'invalidateemail' => 'Negebidükon fümedami ladeta leäktronik',
@@ -25849,9 +25870,9 @@ Dakipolös oni su nünöm olik e löpükolös oni isio.',
 	'imgmultigo' => 'Gololöd!',
 	'imgmultigoto' => 'Lü pad: $1',
 	'intentionallyblankpage' => 'Pad at pevagükon desino',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'italic_sample' => 'Kursiivoi teksti',
 	'italic_tip' => 'Kursiivi',
 	'image_tip' => 'Kuva',
@@ -25862,9 +25883,9 @@ $messages['vot'] = array(
 	'isimage' => 'kuvalinkki',
 	'ipboptions' => '2 tunnia:2 hours,1 päivä:1 day,3 päivää:3 days,1 näteľi:1 week,2 näteľiä:2 weeks,1 kuu:1 month,3 kuut:3 months,6 kuut:6 months,1 voosi:1 year,itšiin:infinite',
 	'ipblocklist' => 'Piäteltüd IP-adressid ja tšäüttijänimed',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'index-category' => 'Indeksiga leheq',
 	'internalerror' => 'Sisemäne viga',
 	'internalerror_info' => 'Viga: $1',
@@ -25879,7 +25900,7 @@ Kirodaq õigõ e-postiaadrõs vai jätäq rivi rühäs.',
 	'illegalfilename' => 'Teedüstü nimen "$1" om lehenime jaos lubamaldaq märke. Vaihtaq teedüstü nimme ja prooviq taa vahtsõst üles laatiq.',
 	'imgfile' => 'teedüstü',
 	'imagelinks' => 'Teedüstülingiq',
-	'iteminvalidname' => "Hädä lehega '$1'! Lehe nimen om viga.",
+	'iteminvalidname' => 'Hädä lehega \'$1\'! Lehe nimen om viga.',
 	'invert' => 'Näütäq kõiki päält validu nimeruumi',
 	'isredirect' => 'ümbresaatmislehekülg',
 	'istemplate' => 'pruugit näüdüssen',
@@ -25888,14 +25909,14 @@ Kirodaq õigõ e-postiaadrõs vai jätäq rivi rühäs.',
 	'ipbexpiry' => 'Tähtaig',
 	'ipbreason' => 'Põhjus:',
 	'ipbreasonotherlist' => 'Muu põhjus',
-	'ipbreason-dropdown' => "*Hariliguq kinniqpidämise põhjusõq
+	'ipbreason-dropdown' => '*Hariliguq kinniqpidämise põhjusõq
 ** Võlss teedüse kirotaminõ
 ** Lehti sisu ärqkistutaminõ
 ** Reklaamilinkõ pandminõ
 ** Mõttõlda jutu vai prahi pandminõ
-** Segämine ja ts'urkminõ
+** Segämine ja ts\'urkminõ
 ** Mitmõ pruukjanime võlsspruukminõ
-** Sündümäldäq pruukjanimi",
+** Sündümäldäq pruukjanimi',
 	'ipbcreateaccount' => 'Lasku-i pruukjanimme luvvaq',
 	'ipbemailban' => 'Lubagu-i pruukjal e-posti saataq',
 	'ipbenableautoblock' => 'Piäq kinniq viimäne puutri võrgoaadrõs, kost pruukja om toimõnduisi tennüq, ja edespiten aadrõsiq, kost tä viil pruuv toimõnduisi tetäq.',
@@ -25955,24 +25976,24 @@ Kirodaq õigõ e-postiaadrõs vai jätäq rivi rühäs.',
 	'imgmultipageprev' => '← mineväne leht',
 	'imgmultipagenext' => 'järgmäne leht →',
 	'imgmultigo' => 'Mineq!',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'internalerror' => 'Divintrinne aroke',
-	'invalidemailaddress' => "L' adresse emile ni pout nén esse acceptêye la k' i shonnreut k' ele soeye dins ene cogne nén valide. Tapez ene adresse emile sicrîte comifåt oudobén vudîz l' tchamp, s' i vs plait.",
+	'invalidemailaddress' => 'L\' adresse emile ni pout nén esse acceptêye la k\' i shonnreut k\' ele soeye dins ene cogne nén valide. Tapez ene adresse emile sicrîte comifåt oudobén vudîz l\' tchamp, s\' i vs plait.',
 	'italic_sample' => 'Clintcheyès letes',
 	'italic_tip' => 'Tecse e clintcheyès letes',
 	'image_sample' => 'Egzimpe.jpg',
 	'image_tip' => 'Ravalêye imådje',
-	'ignorewarning' => "Passer houte des adviertixhmints eyet schaper tot l' minme li fitchî.",
+	'ignorewarning' => 'Passer houte des adviertixhmints eyet schaper tot l\' minme li fitchî.',
 	'ignorewarnings' => 'Passer houte des adviertixhmints',
-	'illegalfilename' => "Li no d' fitchî «$1» a des caracteres ki n' si polèt nén eployî dins l' tite d' ene pådje. Candjîz l' no do fitchî eyet sayîz del reberweter s' i vs plait.",
+	'illegalfilename' => 'Li no d\' fitchî «$1» a des caracteres ki n\' si polèt nén eployî dins l\' tite d\' ene pådje. Candjîz l\' no do fitchî eyet sayîz del reberweter s\' i vs plait.',
 	'imgfile' => 'fitchî',
 	'imagelinks' => 'Loyéns viè ciste imådje cial',
-	'iteminvalidname' => "Åk n' a nén stî avou «$1», li no n' est nén valide...",
+	'iteminvalidname' => 'Åk n\' a nén stî avou «$1», li no n\' est nén valide...',
 	'invert' => 'Tchuze å rvier',
 	'isredirect' => 'pådje di redjiblaedje',
-	'ipadressorusername' => "Adresse IP ou no d' uzeu",
+	'ipadressorusername' => 'Adresse IP ou no d\' uzeu',
 	'ipbexpiry' => 'Tins do blocaedje',
 	'ipbreason' => 'Råjhon:',
 	'ipbsubmit' => 'Bloker cist uzeu',
@@ -25980,37 +26001,37 @@ $messages['wa'] = array(
 	'ipboptions' => '2 eures:2 hours,1 djoû:1 day,3 djoûs:3 days,1 samwinne:1 week,2 samwinnes:2 weeks,1 moes:1 month,3 moes:3 months,6 moes:6 months,1 anêye:1 year,po todi:infinite',
 	'ipbotheroption' => 'ôte',
 	'ipusubmit' => 'Disbloker ciste adresse ci',
-	'ipblocklist' => "Djivêye d' adresses IP et di nos d' uzeus ki sont blokés",
+	'ipblocklist' => 'Djivêye d\' adresses IP et di nos d\' uzeus ki sont blokés',
 	'ipblocklist-submit' => 'Cweri',
 	'infiniteblock' => 'po todi',
 	'ipb_expiry_invalid' => 'Tins di blocaedje nén valide.',
-	'ip_range_invalid' => "Fortchete d' adresses IP nén valide.",
+	'ip_range_invalid' => 'Fortchete d\' adresses IP nén valide.',
 	'import' => 'Ristitchî des pådjes',
 	'importinterwiki' => 'Ricopiaedje eterwiki',
-	'import-interwiki-text' => "Tchoezixhoz on wiki eyet on tite di pådje did wice ricopyî l' contnou a stitchî chal.
+	'import-interwiki-text' => 'Tchoezixhoz on wiki eyet on tite di pådje did wice ricopyî l\' contnou a stitchî chal.
 Les dates des diferinnès modêyes eyet les nos des contribouweus seront consiervés.
-Totes les accions di rcopiaedje eterwiki sont metowes e [[Special:Log/import|djournå des ristitchaedjes]].",
-	'import-interwiki-history' => "Ristitchî avou l' istwere di totes les modêyes",
+Totes les accions di rcopiaedje eterwiki sont metowes e [[Special:Log/import|djournå des ristitchaedjes]].',
+	'import-interwiki-history' => 'Ristitchî avou l\' istwere di totes les modêyes',
 	'import-interwiki-submit' => 'Ristitchî',
 	'import-comment' => 'Comintaire:',
-	'importtext' => "S' vs plait ricopyîz l' fitchî foû do sourdant wiki avou l' usteye di rcopiaedje foû (Special:Export), el schaper so voste éndjole, et poy l' eberweter droci.",
-	'importstart' => "Dj' enonde li ristitchaedje...",
+	'importtext' => 'S\' vs plait ricopyîz l\' fitchî foû do sourdant wiki avou l\' usteye di rcopiaedje foû (Special:Export), el schaper so voste éndjole, et poy l\' eberweter droci.',
+	'importstart' => 'Dj\' enonde li ristitchaedje...',
 	'import-revision-count' => '{{PLURAL:$1|1 modêye|$1 modêyes}}',
 	'importnopages' => 'Nole pådje a ristitchî.',
 	'importfailed' => 'Li ristitchaedje a fwait berwete: $1',
 	'importunknownsource' => 'Sourdant nén cnoxhou pol ristitchaedje',
-	'importcantopen' => "Dji n' sai drovi l' fitchî a ristitchî",
+	'importcantopen' => 'Dji n\' sai drovi l\' fitchî a ristitchî',
 	'importbadinterwiki' => 'Cron loyén eterwiki',
-	'importnotext' => "Vude ou pont d' tecse",
+	'importnotext' => 'Vude ou pont d\' tecse',
 	'importsuccess' => 'Li ristitchaedje a stî comifåt!',
-	'imagemaxsize' => "Limite pol håynaedje ezès pådjes d' imådje:",
-	'imagelisttext' => "Chal pa dzo c' est ene djivêye di '''$1''' {{PLURAL:$1|imådje relîte|imådjes relîtes}} $2.",
+	'imagemaxsize' => 'Limite pol håynaedje ezès pådjes d\' imådje:',
+	'imagelisttext' => 'Chal pa dzo c\' est ene djivêye di \'\'\'$1\'\'\' {{PLURAL:$1|imådje relîte|imådjes relîtes}} $2.',
 	'ilsubmit' => 'Cweri',
 	'imgmultipageprev' => '← pådje di dvant',
 	'imgmultipagenext' => 'pådje shuvante →',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'index-category' => 'Mga nakatudlokan nga pagkli',
 	'internalerror' => 'Sayop ha sulod',
 	'internalerror_info' => 'Sayop ha sulod: $1',
@@ -26047,9 +26068,9 @@ $messages['war'] = array(
 	'imgmultigo' => 'Pakadto!',
 	'imgmultigoto' => 'Pakadto ha pakli $1',
 	'intentionallyblankpage' => 'Ini nga pakli gintuyo pagpabilin nga blanko.',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'internalerror' => 'Njuumte gu biir',
 	'internalerror_info' => 'Njuumte gu biir : $1',
 	'invalidemailaddress' => 'Dayoob m-bataaxal bi baaxul. Duggalal beneen walla nga bàyyi tool bi ne këmm',
@@ -26118,9 +26139,9 @@ Dangaa bëgg a soppi anam yi?',
 	'immobile-source-page' => 'Xët wii kenn manuta soppi turam.',
 	'immobile-target-page' => 'Xët wii manoo koo jox wii tur.',
 	'ilsubmit' => 'Seet',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'index-category' => '索引拉许个页面',
 	'internalerror' => '内部错误',
 	'internalerror_info' => '内部错误：$1',
@@ -26146,9 +26167,9 @@ $messages['wuu'] = array(
 	'ilsubmit' => '搜寻',
 	'imgmultipageprev' => '← 上一页',
 	'imgmultipagenext' => '下一页 →',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'index-category' => 'Индекссн халхс',
 	'internalerror' => 'Дотрнь эндү',
 	'internalerror_info' => 'Дотрнь эндү: $1',
@@ -26171,14 +26192,14 @@ $messages['xal'] = array(
 	'imgmultigo' => 'Орх!',
 	'imgmultigoto' => '$1 халхд орх',
 	'intentionallyblankpage' => 'Тер  халх хоосн күслтә бәәнә.',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'ipblocklist-submit' => 'Khangela',
 	'ilsubmit' => 'Khangela',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'italic_sample' => 'ელართელი ტექსტი',
 	'italic_tip' => 'ელართელი ტექსტი',
 	'image_tip' => 'დინოხუნაფილი ფაილი',
@@ -26193,16 +26214,16 @@ $messages['xmf'] = array(
 	'ipblocklist-submit' => 'გორუა',
 	'importlogpage' => 'იმპორტიშ ჟურნალ',
 	'ilsubmit' => 'გორუა',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'index-category' => 'אינדעקסירטע בלעטער',
 	'internalerror' => 'אינערווייניגער פֿעלער',
 	'internalerror_info' => 'אינערווייניגער פֿעלער: $1',
 	'invalidemailaddress' => 'דער ע-פאסט אדרעס קען נישט אקצעפטירט ווערן ווייל ער שיינט צו האבן אן אומגילטיגן פֿארמאט.
 ביטע אריינלייגן א גוט-פארמאטירטן אדרעס אדער ליידיגט אויס דאס פֿעלד.',
-	'italic_sample' => "דאס וועט מאכן ''שיף'' די אויסגעוועלט ווארט.",
-	'italic_tip' => "דאס וועט מאכן ''שיף'' די אויסגעוועלט פאנט.",
+	'italic_sample' => 'דאס וועט מאכן \'\'שיף\'\' די אויסגעוועלט ווארט.',
+	'italic_tip' => 'דאס וועט מאכן \'\'שיף\'\' די אויסגעוועלט פאנט.',
 	'image_sample' => 'PictureFileName.jpg|קליין|250px|לייגט דא א קעפל פֿארן בילד',
 	'image_tip' => 'טעקע געוויזן אין בלאט',
 	'ignorewarning' => 'איגנאָרירן ווארענונג און אויפֿהיטן טעקע סיי ווי סיי',
@@ -26220,7 +26241,7 @@ $messages['yi'] = array(
 	'img-auth-noread' => 'באניצער האט נישט קיין דערלויבניש צו ליינען "$1".',
 	'imgfile' => 'טעקע',
 	'imagelinks' => 'טעקע באַניץ',
-	'iteminvalidname' => "פּראָבלעם מיט '$1', אומגילטיקער נאָמען ...",
+	'iteminvalidname' => 'פּראָבלעם מיט \'$1\', אומגילטיקער נאָמען ...',
 	'invert' => 'ווײַז אַלע אויסער די',
 	'isredirect' => 'ווײַטערפירן בלאט',
 	'istemplate' => 'אײַנשליסן',
@@ -26279,10 +26300,10 @@ $messages['yi'] = array(
 	'ipb_already_blocked' => '"$1" איז שוין בלאקירט',
 	'ipb-needreblock' => '$1 איז שוין בלאקירט. צי ווילט איר טוישן די באַצייכנונגען?',
 	'ipb-otherblocks-header' => '{{PLURAL:$1|אנדער בלאקירונג|אנדערע בלאקירונגען}}',
-	'ipb_cant_unblock' => "גרײַז: בלאק ID $1 נישט געפֿונען.
-ס'מעגליך שוין געווארן באַפֿרייט.",
-	'ipb_blocked_as_range' => "טעות: דער IP אַדרעס $1 איז נישט בלאקירט גראָד און מען קען אים נישט אויפֿבלאקירן.
-דאך איז ער בלאקירט אַלס א טייל פֿון דעם אָפשטאַנד $2, וואָס מ'קען יא אויפֿבלאקירן.",
+	'ipb_cant_unblock' => 'גרײַז: בלאק ID $1 נישט געפֿונען.
+ס\'מעגליך שוין געווארן באַפֿרייט.',
+	'ipb_blocked_as_range' => 'טעות: דער IP אַדרעס $1 איז נישט בלאקירט גראָד און מען קען אים נישט אויפֿבלאקירן.
+דאך איז ער בלאקירט אַלס א טייל פֿון דעם אָפשטאַנד $2, וואָס מ\'קען יא אויפֿבלאקירן.',
 	'ip_range_invalid' => 'אומריכטיגער IP גרייך.',
 	'ip_range_toolarge' => 'אָפשטאַנדן גרעסער ווי /$1 קען מען נישט בלאקירן.',
 	'ipbnounblockself' => 'איר זענט נישט ערלויבט זיך אליין אויסבלאקירן',
@@ -26359,9 +26380,9 @@ $messages['yi'] = array(
 	'iranian-calendar-m11' => 'באַהמאַן',
 	'iranian-calendar-m12' => 'עספֿאַנד',
 	'intentionallyblankpage' => 'דער בלאַט איז ליידיג בכוונה',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'index-category' => 'Àwọn ojúewé títọ́kasí',
 	'info_short' => 'Ìfitọ́nilétí',
 	'internalerror' => 'Àsìṣe inú',
@@ -26377,7 +26398,7 @@ $messages['yo'] = array(
 	'img-auth-nofile' => 'Fáìlì "$1" kò sí.',
 	'imgfile' => 'fáìlì',
 	'imagelinks' => 'Àwọn ìjápọ̀ fáìlì',
-	'iteminvalidname' => "Ìṣòro wà pẹ̀lú '$1', orúkọ àìtọ́...",
+	'iteminvalidname' => 'Ìṣòro wà pẹ̀lú \'$1\', orúkọ àìtọ́...',
 	'invert' => 'Pàṣípààrọ̀ àsàyàn',
 	'isredirect' => 'àtúnjúwe ojúewé',
 	'istemplate' => 'ìkómọ́ra',
@@ -26439,9 +26460,9 @@ $messages['yo'] = array(
 	'imgmultipagenext' => 'ojúewé tóúnbọ̀ →',
 	'imgmultigo' => 'Lọ!',
 	'imgmultigoto' => 'Lọ sí ojúewé $1',
-);
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'index-category' => '做咗索引嘅版',
 	'internalerror' => '內部錯誤',
 	'internalerror_info' => '內部錯誤: $1',
@@ -26471,7 +26492,7 @@ $messages['yue'] = array(
 	'img-auth-noread' => '用戶無通行去讀"$1"。',
 	'imgfile' => '檔案',
 	'imagelinks' => '檔案連結',
-	'iteminvalidname' => "項目'$1'出錯，無效嘅名稱...",
+	'iteminvalidname' => '項目\'$1\'出錯，無效嘅名稱...',
 	'invert' => '反選',
 	'isredirect' => '跳轉頁',
 	'istemplate' => '包含',
@@ -26575,8 +26596,8 @@ $messages['yue'] = array(
 	'import-logentry-upload-detail' => '$1個修訂',
 	'import-logentry-interwiki' => 'transwiki咗 $1',
 	'import-logentry-interwiki-detail' => '由$2嘅$1個修訂',
-	'imagemaxsize' => "圖像大細限制:<br />''(用響檔案描述頁)''",
-	'imagelisttext' => "以下係'''$1'''個檔案$2排序嘅清單。",
+	'imagemaxsize' => '圖像大細限制:<br />\'\'(用響檔案描述頁)\'\'',
+	'imagelisttext' => '以下係\'\'\'$1\'\'\'個檔案$2排序嘅清單。',
 	'ilsubmit' => '搵嘢',
 	'invalidateemail' => '取消電郵確認',
 	'imgmultipageprev' => '← 上一版',
@@ -26584,24 +26605,24 @@ $messages['yue'] = array(
 	'imgmultigo' => '去!',
 	'imgmultigoto' => '去第$1版',
 	'intentionallyblankpage' => '呢一版係留空咗嘅，用來作測速等用嘅。',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'ipblocklist-submit' => 'Cwmh',
 	'ilsubmit' => 'Cwmh',
 	'imgmultigo' => 'Bei！',
-);
+];
 
-$messages['zea'] = array(
-	'index-category' => "Te indexeren pagina's",
+$messages['zea'] = [
+	'index-category' => 'Te indexeren pagina\'s',
 	'internalerror' => 'Interne fout',
 	'internalerror_info' => 'Interne fout: $1',
-	'invalidemailaddress' => "'t E-mailadres is nie anvaerd omda 't een onheldihe opmaek ei.
-Heef asjeblieft een heldig e-mailadres op of lit 't veld leeg.",
+	'invalidemailaddress' => '\'t E-mailadres is nie anvaerd omda \'t een onheldihe opmaek ei.
+Heef asjeblieft een heldig e-mailadres op of lit \'t veld leeg.',
 	'italic_sample' => 'Schuunhedrukte tekst',
 	'italic_tip' => 'Schuun',
 	'image_tip' => 'Mediabestand',
-	'ignorewarning' => "Deêze waerschuwienge neheern en 't bestand toch opslaene",
+	'ignorewarning' => 'Deêze waerschuwienge neheern en \'t bestand toch opslaene',
 	'ignorewarnings' => 'Aolle waerschuwiengen neheern',
 	'imagelinks' => 'Bestandsgebruuk',
 	'invert' => 'Omgekeêrde selectie',
@@ -26612,9 +26633,9 @@ Heef asjeblieft een heldig e-mailadres op of lit 't veld leeg.",
 	'ipblocklist' => 'Geblokkeerde gebrukers',
 	'imgmultipageprev' => '← vorrege bladzie',
 	'imgmultipagenext' => 'volgende bladzie →',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'index-category' => '允许索引的页面',
 	'internalerror' => '内部错误',
 	'internalerror_info' => '内部错误：$1',
@@ -26640,7 +26661,7 @@ $messages['zh-hans'] = array(
 	'img-auth-bad-query-string' => 'URL 有一个无效的查询字符串。',
 	'imgfile' => '文件',
 	'imagelinks' => '文件用途',
-	'iteminvalidname' => "页面'$1'错误，无效命名...",
+	'iteminvalidname' => '页面\'$1\'错误，无效命名...',
 	'invert' => '反选',
 	'isredirect' => '重定向页',
 	'istemplate' => '包含',
@@ -26752,8 +26773,8 @@ $messages['zh-hans'] = array(
 	'import-logentry-upload-detail' => '$1个修订',
 	'import-logentry-interwiki' => '跨 wiki $1',
 	'import-logentry-interwiki-detail' => '来自$2的$1个修订',
-	'imagemaxsize' => "图像大小限制：<br />''（文件说明页面）''",
-	'imagelisttext' => "以下是按$2排列的'''$1'''个文件列表。",
+	'imagemaxsize' => '图像大小限制：<br />\'\'（文件说明页面）\'\'',
+	'imagelisttext' => '以下是按$2排列的\'\'\'$1\'\'\'个文件列表。',
 	'ilsubmit' => '搜索',
 	'invalidateemail' => '取消电邮确认',
 	'imgmultipageprev' => '← 上一页',
@@ -26761,9 +26782,9 @@ $messages['zh-hans'] = array(
 	'imgmultigo' => '提交！',
 	'imgmultigoto' => '到第$1页',
 	'intentionallyblankpage' => '这个页面被故意留为空白',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'index-category' => '已做索引的頁面',
 	'internalerror' => '內部錯誤',
 	'internalerror_info' => '內部錯誤：$1',
@@ -26792,7 +26813,7 @@ $messages['zh-hant'] = array(
 	'img-auth-bad-query-string' => 'URL有一個無效的查詢字符串',
 	'imgfile' => '檔案',
 	'imagelinks' => '文件使用情況',
-	'iteminvalidname' => "頁面 '$1' 錯誤，無效命名...",
+	'iteminvalidname' => '頁面 \'$1\' 錯誤，無效命名...',
 	'invert' => '反向選擇',
 	'isredirect' => '重定向頁',
 	'istemplate' => '包含',
@@ -26906,8 +26927,8 @@ $messages['zh-hant'] = array(
 	'import-logentry-upload-detail' => '$1個修訂',
 	'import-logentry-interwiki' => '跨 wiki $1',
 	'import-logentry-interwiki-detail' => '來自$2的$1個修訂',
-	'imagemaxsize' => "影像大小限制:<br />''（用在檔案描述頁面中）''",
-	'imagelisttext' => "以下是按$2排列的'''$1'''個檔案列表。",
+	'imagemaxsize' => '影像大小限制:<br />\'\'（用在檔案描述頁面中）\'\'',
+	'imagelisttext' => '以下是按$2排列的\'\'\'$1\'\'\'個檔案列表。',
 	'ilsubmit' => '搜尋',
 	'invalidateemail' => '取消電郵確認',
 	'imgmultipageprev' => '← 上一頁',
@@ -26915,9 +26936,9 @@ $messages['zh-hant'] = array(
 	'imgmultigo' => '確定！',
 	'imgmultigoto' => '到第$1頁',
 	'intentionallyblankpage' => '這個頁面是為空白',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'invalidemailaddress' => '電子郵件地址格式不正確，請輸入正確的電子郵件位址或清空該輸入框。',
 	'image_tip' => '嵌入圖片',
 	'ignorewarning' => '忽略警告並儲存檔案。',
@@ -26955,9 +26976,10 @@ $messages['zh-tw'] = array(
 	'importhistoryconflict' => '存在衝突的修訂沿革(可能在之前已經匯入過此頁面)',
 	'imagemaxsize' => '在圖片描述頁對圖片大小限制為:',
 	'imagelisttext' => '以下是按$2排列的$1個檔案列表。',
-);
+	'irc' => '線上協助',
+];
 
-$messages['zh-yue'] = array(
+$messages['zh-yue'] = [
 	'invalidemailaddress' => '電子郵件地址格式不正確，請輸入正確的電子郵件位址或清空該輸入框。',
 	'image_tip' => '嵌入圖片',
 	'ignorewarning' => '忽略警告並儲存檔案。',
@@ -26995,9 +27017,9 @@ $messages['zh-yue'] = array(
 	'importhistoryconflict' => '存在衝突的修訂沿革(可能在之前已經匯入過此頁面)',
 	'imagemaxsize' => '在圖片描述頁對圖片大小限制為:',
 	'imagelisttext' => '以下是按$2排列的$1個檔案列表。',
-);
+];
 
-$messages['zu'] = array(
+$messages['zu'] = [
 	'internalerror' => 'Icala lingaphakathi',
 	'italic_sample' => 'Amazwi ama-italiki',
 	'italic_tip' => 'Amazwi ama-italiki',
@@ -27009,5 +27031,9 @@ $messages['zu'] = array(
 	'ipusubmit' => 'Qeda isivimbelo lo msebenzisi',
 	'import-interwiki-submit' => 'Ngenisa',
 	'ilsubmit' => 'Sesha',
-);
+];
+
+$messages['zh-cn'] = [
+	'irc' => '線上協助',
+];
 

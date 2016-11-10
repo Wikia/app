@@ -30,50 +30,50 @@ class MediaWikiService
 	 * @var \WikiaApp
 	 */
 	protected $app;
-	
+
 	/**
 	 * Allows us to memoize article instantiation based on pageid
 	 * @var array
 	 */
 	static protected $pageIdsToArticles = array();
-	
+
 	/**
 	 * Allows us to cache titles based on page id
 	 * @var array
 	 */
 	static protected $pageIdsToTitles = array();
-	
+
 	/**
 	 * Allows us to recover the canonical page ID
 	 * @var array
 	 */
 	static protected $redirectsToCanonicalIds = array();
-	
+
 	/**
 	 * Gives direct access to File instance from page id
 	 * @var array
 	 */
 	static protected $pageIdsToFiles = array();
-	
+
 	/**
 	 * Stores articles that are redirects (helps us grab non-canonical info)
 	 * @var array
 	 */
 	static protected $redirectArticles = array();
-	
+
 	/**
 	 * An array that corresponds wiki IDs to their wiki data sources.
 	 * @var array
 	 */
 	static protected $wikiDataSources = array();
-	
+
 	/**
 	 * Constructor method
 	 */
 	public function __construct() {
 		$this->app = \F::app();
 	}
-	
+
 	/**
 	 * Given a page ID, get the title string
 	 * @param int $pageId
@@ -82,7 +82,7 @@ class MediaWikiService
 	public function getTitleStringFromPageId( $pageId ) {
 		return $this->getTitleString( $this->getTitleFromPageId( $pageId ) );
 	}
-	
+
 	/**
 	 * Provided a page ID, return the canonical page ID
 	 * @param int $pageId
@@ -90,7 +90,7 @@ class MediaWikiService
 	 */
 	public function getCanonicalPageIdFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		// make sure we have the right values cached
 		try {
     		$this->getPageFromPageId( $pageId );
@@ -98,14 +98,14 @@ class MediaWikiService
 			wfProfileOut( __METHOD__ );
 			return $pageId;
 		}
-		
+
 		if ( isset( self::$redirectsToCanonicalIds[$pageId] ) ) {
 			$pageId = self::$redirectsToCanonicalIds[$pageId];
 		}
 		wfProfileOut(__METHOD__);
 		return $pageId;
 	}
-	
+
 	/**
 	 * Determines if the page is within content namespaces
 	 * @param int $pageId
@@ -114,14 +114,14 @@ class MediaWikiService
 	public function isPageIdContent( $pageId ) {
 		return in_array( $this->getNamespaceFromPageId( $pageId ), $this->getGlobal( 'ContentNamespaces' ) );
 	}
-	
+
 	/**
 	 * Returns the two-letter language code set globally
 	 */
 	public function getLanguageCode() {
 		return $this->getGlobal( 'ContLang' )->getCode();
 	}
-	
+
 	/**
 	 * Returns a string valued URL from a page id
 	 * @param int $pageId
@@ -130,7 +130,7 @@ class MediaWikiService
 	public function getUrlFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getFullUrl();
 	}
-	
+
 	/**
 	 * Returns the namespace value of the provided page id
 	 * @param int $pageId
@@ -139,7 +139,7 @@ class MediaWikiService
 	public function getNamespaceFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getNamespace();
 	}
-	
+
 	/**
 	 * Provides the page ID of the current wiki's main page
 	 * @return int
@@ -147,7 +147,7 @@ class MediaWikiService
 	public function getMainPageArticleId() {
 		return \Title::newMainPage()->getArticleId();
 	}
-	
+
 	/**
 	 * Provides the non-extended value of the language code, set globally
 	 * @return string
@@ -155,7 +155,7 @@ class MediaWikiService
 	public function getSimpleLanguageCode() {
 		return preg_replace( '/-.*$/', '', $this->getLanguageCode() );
 	}
-	
+
 	/**
 	 * Allows us to abstract out the MW Api for parse responses
 	 * @param int $pageId
@@ -167,9 +167,9 @@ class MediaWikiService
 					'action'	=> 'parse',
 				));
 	}
-	
+
 	/**
-	 * Performs an API request, but still returns the data 
+	 * Performs an API request, but still returns the data
 	 * @param int $pageId
 	 * @return Mixed
 	 **/
@@ -184,9 +184,7 @@ class MediaWikiService
 				));
 		return isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;
 	}
-	
 
-	
 	/**
 	 * Provides global value as set in the Oasis wg helper. Can use wgGlobalValue or GlobalValue.
 	 * @param mixed $global
@@ -196,7 +194,7 @@ class MediaWikiService
 		$global = substr_count( $global, 'wg', 0, 2 ) ? substr( $global, 2 ) : $global;
 		return $this->app->wg->{$global};
 	}
-	
+
 	/**
 	 * Gets global values set for other wikis. Can use wgGlobalValue or GlobalValue
 	 * @param string $global
@@ -211,7 +209,7 @@ class MediaWikiService
 		}
 		return $row;
 	}
-	
+
 	/**
 	 * Determines whether we are using a mobile skin.
 	 * @return bool
@@ -219,7 +217,7 @@ class MediaWikiService
 	public function isSkinMobile() {
 		return $this->app->wg->User->getSkin() instanceof \SkinWikiaMobile;
 	}
-	
+
 	/**
 	 * Provides global value as set in the Oasis wg helper.
 	 * If the value is NULL, we return the default value set in param 2
@@ -231,7 +229,7 @@ class MediaWikiService
 		$result = $this->getGlobal( $global );
 		return $result === null ? $default : $result;
 	}
-	
+
 	/**
 	 * Sets a global param, abstracted away from MediaWiki
 	 * @param string $global
@@ -243,7 +241,7 @@ class MediaWikiService
 		$this->app->wg->{$global} = $value;
 		return $this;
 	}
-	
+
 	/**
 	 * Provides the ID of the wiki based on current global settings
 	 * @return int
@@ -251,7 +249,7 @@ class MediaWikiService
 	public function getWikiId() {
 		return (int) $this->isOnDbCluster() ?  $this->getGlobal( 'CityId' ) : $this->getGlobal( 'SearchWikiId' );
 	}
-	
+
 	/**
 	 * Tells us whether we're using the DB cluster. This is how we figure out if we're on internal or not.
 	 * @return boolean
@@ -260,7 +258,7 @@ class MediaWikiService
 		$shared = $this->getGlobal( 'ExternalSharedDB' );
 		return !empty( $shared );
 	}
-	
+
 	/**
 	 * Returns a serialized array of metadata for a given page, if a file
 	 * @param int $pageId
@@ -270,10 +268,10 @@ class MediaWikiService
 		if ( ! $this->pageIdHasFile( $pageId ) ) {
 			return '';
 		}
-		
+
 		return ( $file = $this->getFileForPageId( $pageId ) ) ? $file->getMetadata() : array();
 	}
-	
+
 	/**
 	 * Determines whether a given page has a file
 	 * @param int $pageId
@@ -283,7 +281,7 @@ class MediaWikiService
 		$result = $this->getFileForPageId( $pageId );
 		return $result !== null;
 	}
-	
+
 	/**
 	 * Returns the value of a mediawiki api call for statistics
 	 * @param int $pageId
@@ -299,7 +297,7 @@ class MediaWikiService
 					'siprop'   => 'statistics|wikidesc|variables|namespaces|category'
 			));
 	}
-	
+
 	/**
 	 * Returns page ID statistics for a given wiki
 	 * @return array
@@ -313,8 +311,7 @@ class MediaWikiService
 					'siprop'   => 'statistics'
 			));
 	}
-	
-	
+
 	/**
 	 * Determines whether or not a page "exists"
 	 * @param int $pageId
@@ -327,7 +324,7 @@ class MediaWikiService
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Provides redirect title text for canonical pages
 	 * @param int $pageId
@@ -345,13 +342,13 @@ class MediaWikiService
 				array( 'GROUP'=>'rd_title' ),
 				array( 'page' => array( 'INNER JOIN', array('rd_title'=> $title->getDbKey(), 'rd_namespace' => $title->getNamespace(), 'page_id = rd_from' ) ) )
 		);
-		while ( $row = $dbr->fetchObject( $query ) ) { 
+		while ( $row = $dbr->fetchObject( $query ) ) {
 				$result[] = str_replace( '_', ' ', $row->page_title );
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * For a given NS (e.g. 'Category'), returns the integer value (e.g. 14).
 	 * @param string $namespaceString
@@ -360,7 +357,7 @@ class MediaWikiService
 	public function getNamespaceIdForString( $namespaceString ) {
 		return $this->app->wg->ContLang->getNsIndex( $namespaceString );
 	}
-	
+
 	/**
 	 * Returns default namespaces from mediawiki.
 	 * @return array
@@ -368,7 +365,7 @@ class MediaWikiService
 	public function getDefaultNamespacesFromSearchEngine() {
 		return \SearchEngine::defaultNamespaces();
 	}
-	
+
 	/**
 	 * Returns searchable namespaces from MediaWiki.
 	 * @return array
@@ -376,7 +373,7 @@ class MediaWikiService
 	public function getSearchableNamespacesFromSearchEngine() {
 		return \SearchEngine::searchableNamespaces();
 	}
-	
+
 	/**
 	 * Returns text values for namespaces.
 	 * @param array $namespaces
@@ -385,7 +382,7 @@ class MediaWikiService
 	public function getTextForNamespaces( array $namespaces ) {
 		return \SearchEngine::namespacesAsText( $namespaces );
 	}
-	
+
 	/**
 	 * Allows us to abstract calling a hook away from other parts of the library.
 	 * @param string $hookName
@@ -395,7 +392,7 @@ class MediaWikiService
 	public function invokeHook( $hookName, array $args = array() ) {
 		return wfRunHooks( $hookName, $args );
 	}
-	
+
 	/**
 	 * Returns the output of passing a title instance fo WikiaFileHelper::getMediaDetail, which out to be an array
 	 * @param int $pageId
@@ -404,7 +401,7 @@ class MediaWikiService
 	public function getMediaDetailFromPageId( $pageId ) {
 		return \WikiaFileHelper::getMediaDetail( $this->getTitleFromPageId( $pageId ) );
 	}
-	
+
 	/**
 	 * Determines if a page id is a video file
 	 * @param int $pageId
@@ -413,7 +410,7 @@ class MediaWikiService
 	public function pageIdIsVideoFile( $pageId ) {
 		return \WikiaFileHelper::isVideoFile( $this->getFileForPageId( $pageId ) );
 	}
-	
+
 	/**
 	 * Returns the appropriately formatted timestamp for the first revision of a given page.
 	 * @param int $pageId
@@ -423,7 +420,7 @@ class MediaWikiService
 		$firstRev = $this->getTitleFromPageId( $pageId )->getFirstRevision();
 		return empty( $firstRev ) ? '' : $this->getFormattedTimestamp( $firstRev->getTimestamp() );
 	}
-	
+
 	/**
 	 * Returns a text snippet provided a page ID.
 	 * @param int $pageId
@@ -435,7 +432,7 @@ class MediaWikiService
 		$articleService = new \ArticleService( $canonicalPageId );
 		return $articleService->getTextSnippet( $snippetLength );
 	}
-	
+
 	/**
 	 * Returns the non-canonical title string for page ID (redirects ignored)
 	 * @param int $pageId
@@ -445,9 +442,9 @@ class MediaWikiService
 		if ( isset( self::$redirectArticles[$pageId] ) ) {
 			return $this->getTitleString( self::$redirectArticles[$pageId]->getTitle() );
 		}
-		return $this->getTitleStringFromPageId( $pageId ); 
+		return $this->getTitleStringFromPageId( $pageId );
 	}
-	
+
 	/**
 	 * Returns the non-canonical url string for page ID (redirects ignored)
 	 * @param int $pageId
@@ -457,9 +454,9 @@ class MediaWikiService
 		if ( isset( self::$redirectArticles[$pageId] ) ) {
 			return self::$redirectArticles[$pageId]->getTitle()->getFullUrl();
 		}
-		return $this->getUrlFromPageId( $pageId ); 
+		return $this->getUrlFromPageId( $pageId );
 	}
-	
+
 	/**
 	 * Provided a string, uses MediaWiki's ability to find article matches to instantiate a Wikia Search Article Match.
 	 * @param string $term
@@ -504,7 +501,7 @@ class MediaWikiService
 		}
 		return $match;
 	}
-	
+
 	/**
 	 * For a given wiki ID, get all values in the city_domain table.
 	 * @param int $wikiId
@@ -524,7 +521,7 @@ class MediaWikiService
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Given a domain, returns a wiki ID.
 	 * @param string $domain
@@ -542,7 +539,7 @@ class MediaWikiService
 	public function getMainPageUrlForWikiId( $wikiId ) {
 		return $this->getMainPageTitleForWikiId( $wikiId )->getFullUrl();
 	}
-	
+
 	/**
 	 * Returns the article ID of a main page for the wiki ID passed.
 	 * @param int $wikiId
@@ -551,7 +548,7 @@ class MediaWikiService
 	public function getMainPageIdForWikiId( $wikiId ) {
 		return $this->getMainPageTitleForWikiId( $wikiId )->getArticleId();
 	}
-	
+
 	/**
 	 * Returns text from the main page of a provided wiki.
 	 * @param int $wikiId
@@ -559,15 +556,15 @@ class MediaWikiService
 	 */
 	public function getMainPageTextForWikiId( $wikiId ) {
 		$params = array(
-				'controller' => 'ArticlesApiController', 
-				'method' => 'getDetails', 
+				'controller' => 'ArticlesApiController',
+				'method' => 'getDetails',
 				'titles' => $this->getMainPageTitleForWikiId( $wikiId )->getDbKey()
 				);
 		$response = (new \ApiService)->foreignCall( $this->getDbNameForWikiId( $wikiId ), $params, \ApiService::WIKIA );
 		$item = \array_shift( $response['items'] );
 		return $item['abstract'];
 	}
-	
+
 	/**
 	 * Returns text from the main page of a provided wiki.
 	 * @param int $wikiId
@@ -575,17 +572,17 @@ class MediaWikiService
 	 */
 	public function getDescriptionTextForWikiId( $wikiId ) {
 		$response = (new \ApiService)->foreignCall(
-			$this->getDbNameForWikiId( $wikiId ), 
+			$this->getDbNameForWikiId( $wikiId ),
 			array(
 					'action'      => 'query',
 					'meta'        => 'allmessages',
 					'ammessages'  => 'description',
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
-					) 
+					)
 			);
 		return str_replace( '{{SITENAME}}', $this->getGlobalForWiki( 'wgSitename', $wikiId ), $response['query']['allmessages'][0]['*'] );
 	}
-	
+
 	/**
 	 * Returns the string name of the top-level hub for the provided wiki ID
 	 * @param $wikiId
@@ -594,7 +591,7 @@ class MediaWikiService
 	public function getHubForWikiId( $wikiId ) {
 		return (new \HubService())->getCategoryInfoForCity( $wikiId )->cat_name;
 	}
-	
+
 	/**
 	 * Returns the string name of a sub-hub for the provided wiki ID.
 	 * @param int $wikiId
@@ -604,7 +601,7 @@ class MediaWikiService
 		$cat = (new \WikiFactory)->getCategory( $wikiId );
 		return is_object( $cat ) ? $cat->cat_name : $cat;
 	}
-	
+
 	/**
 	 * Returns the appropriately formatted timestamp for the most recent revision of a given page.
 	 * @param int $pageId
@@ -612,18 +609,18 @@ class MediaWikiService
 	 */
 	public function getLastRevisionTimestampForPageId( $pageId ) {
 		$lastRev = \Revision::newFromId( $this->getTitleFromPageId( $pageId )->getLatestRevID() );
-		return empty( $lastRev ) ? '' : $this->getFormattedTimestamp( $lastRev->getTimestamp() ); 
+		return empty( $lastRev ) ? '' : $this->getFormattedTimestamp( $lastRev->getTimestamp() );
 	}
-	
+
 	/**
 	 * Returns mediawiki-formatted timestamps.
 	 * @param string $timestamp
 	 * @return string
 	 */
-	public function getMediaWikiFormattedTimestamp( $timestamp ) { 
+	public function getMediaWikiFormattedTimestamp( $timestamp ) {
 		return $this->app->wg->Lang ? $this->app->wg->Lang->date( wfTimestamp( TS_MW, $timestamp ) ) : '';
 	}
-	
+
 	/**
 	 * Access visualization info for a wiki.
 	 * The underscore indicates that it is public exposed as a cached magic method.
@@ -637,7 +634,7 @@ class MediaWikiService
 	}
 
 	/**
-	 * Uses WikiService to access stats info. 
+	 * Uses WikiService to access stats info.
 	 * We add '_count' to each key clarify these are count values
 	 * @param int $wikiId
 	 * @return array
@@ -645,7 +642,7 @@ class MediaWikiService
 	public function getStatsInfoForWikiId( $wikiId ) {
 		$service = new \WikiService;
 		$statsInfo = $service->getSiteStats( $wikiId );
-		$statsInfo['videos'] = $service->getTotalVideos( $wikiId ); 
+		$statsInfo['videos'] = $service->getTotalVideos( $wikiId );
 		foreach ( $statsInfo as $key => $val ) {
 			$statsInfo[$key.'_count'] = $val;
 			unset( $statsInfo[$key] );
@@ -660,7 +657,7 @@ class MediaWikiService
 	public function searchSupportsCurrentLanguage() {
 		return $this->searchSupportsLanguageCode( $this->getLanguageCode() );
 	}
-	
+
 	/**
 	 * Determines if a given language code is supported for dynamic search
 	 * @param string $languageCode
@@ -734,7 +731,7 @@ class MediaWikiService
 	public function getFormattedVideoViewsForPageId( $pageId ) {
 		return wfMsgExt( 'videohandler-video-views', array( 'parsemag' ), $this->formatNumber( $this->getVideoViewsForPageId( $pageId ) ) );
 	}
-	
+
 	public function getVideoViewsForPageId( $pageId ) {
 		$title = $this->getTitleFromPageId( $pageId );
 		$videoViews = 0;
@@ -750,9 +747,9 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function formatNumber( $number ) {
-		return $this->app->wg->Lang->formatNum( $number ); 
+		return $this->app->wg->Lang->formatNum( $number );
 	}
-	
+
 	/**
 	 * Compares a pageid to the main page's article ID for this wiki.
 	 * False if the main page ID is 0.
@@ -762,7 +759,7 @@ class MediaWikiService
 	public function isPageIdMainPage( $pageId ) {
 		return $pageId !== 0 && $pageId == $this->getMainPageArticleId();
 	}
-	
+
 	/**
 	 * Returns the hostname for a wiki. e.g. returns 'rap.wikia.com' for $wgServer = http://rap.wikia.com.
 	 * @return string
@@ -782,33 +779,7 @@ class MediaWikiService
 	}
 
 	/**
-	 * Put a number into the i18n message based on the quantity. For $number smaller than 1000, $msgName is used.
-	 * For $number between 1K and 1M a message with '-k' postfix is used to display the number of thousands.
-	 * For $number 1M and greated a message with '-M' postfix is used to display the number of millions
-	 * TODO: should be abstracted and added to $wg->Lang
-	 *
-	 * @author Rafal
-	 * @author Mech
-	 * @param int $number - number to be put into the i18n message
-	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
-	 * @return string
-	 */
-	public function shortNumForMsg( $number, $msgName ) {
-		if ( $number >= 1000000 ) {
-			$shortNum = floor($number / 1000000);
-			$msgName = $msgName . '-M';
-		} else if ( $number >= 1000 ) {
-			$shortNum = floor($number / 1000);
-			$msgName = $msgName . '-k';
-		} else {
-			$shortNum = $number;
-		}
-
-		return wfMessage($msgName, $shortNum, $number);
-	}
-	
-	/**
-	 * Provides a relative URL provided a page id, with optional query string as array. 
+	 * Provides a relative URL provided a page id, with optional query string as array.
 	 * @param int $pageId
 	 * @param array $query
 	 * @param bool $query2
@@ -820,35 +791,35 @@ class MediaWikiService
 
 	/**
 	 * Returns the memcache key for the given string
-	 * 
+	 *
 	 * @param string $key
 	 * @return string
 	 */
 	public function getCacheKey( $key ) {
 		return wfSharedMemcKey( $key, $this->getWikiId() );
 	}
-	
+
 	/**
 	 * Returns what's set in memcache through the app
-	 * 
+	 *
 	 * @param string $key
 	 * @return array
 	 */
 	public function getCacheResult( $key ) {
 		return $this->app->wg->Memc->get( $key );
 	}
-	
+
 	/**
 	 * Returns the cached result without the intermediate cache query in
 	 * consumer logic
-	 * 
+	 *
 	 * @param string $key
 	 * @return array
 	 */
 	public function getCacheResultFromString( $key ) {
 		return $this->getCacheResult( $this->getCacheKey( $key ) );
 	}
-	
+
 	/**
 	 * Wrapper for WikiaApp::registerHook
 	 * @param string $event
@@ -859,11 +830,11 @@ class MediaWikiService
 	public function registerHook( $event, $class, $method ) {
 		$this->app->registerHook( $event, $class, $method );
 	}
-	
+
 	/**
 	 * Allows us to set values in global memcache without knowing the memcache
 	 * key
-	 * 
+	 *
 	 * @param string $key
 	 * @param mixed $value
 	 * @param int $ttl defaults to a day
@@ -893,14 +864,14 @@ class MediaWikiService
 	}
 
 	/**
-	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
+	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table
 	 * @param int $wikiId
 	 * @return \stdClass
 	 */
 	protected function getWikiFromWikiId( $wikiId ) {
 		return (new \WikiFactory)->getWikiById( $wikiId );
 	}
-	
+
 	/**
 	 * Give a page id, provide a file
 	 * @param int $pageId
@@ -912,7 +883,7 @@ class MediaWikiService
 		}
 		return self::$pageIdsToFiles[$pageId];
 	}
-	
+
     /**
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
@@ -944,11 +915,11 @@ class MediaWikiService
 			self::$redirectsToCanonicalIds[$pageId] = $newId;
 		}
 		self::$pageIdsToArticles[$pageId] = $page;
-		
+
 		wfProfileOut(__METHOD__);
 		return $page;
 	}
-	
+
     /**
 	 * Provided a page, returns the string value of that page's title
 	 * This allows us to accommodate unconventional locations for titles
@@ -979,7 +950,7 @@ class MediaWikiService
 		wfProfileOut(__METHOD__);
 		return $title->getFullText();
 	}
-	
+
 	/**
 	 * Allows us to access an instance of WikiDataSource
 	 * @param int $wikiId
@@ -1000,7 +971,7 @@ class MediaWikiService
 	protected function getDbNameForWikiId( $wikiId ) {
 		return $this->getDataSourceForWikiId( $wikiId )->getDbName();
 	}
-	
+
 	/**
 	 * Returns an instance of GlobalTitle provided a Wiki ID
 	 * @param int $wikiId
@@ -1008,13 +979,13 @@ class MediaWikiService
 	 */
 	protected function getMainPageTitleForWikiId( $wikiId ) {
 		$response = (new \ApiService)->foreignCall(
-			$this->getDbNameForWikiId( $wikiId ), 
+			$this->getDbNameForWikiId( $wikiId ),
 			array(
 					'action'      => 'query',
 					'meta'        => 'allmessages',
 					'ammessages'  => 'mainpage',
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
-					) 
+					)
 			);
 		$title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
 		if ( $title->isRedirect() ) {
@@ -1022,7 +993,6 @@ class MediaWikiService
 		}
 		return $title;
 	}
-	
 
 	/**
 	 * Gets a title from a page id

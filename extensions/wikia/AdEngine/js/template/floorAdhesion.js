@@ -1,18 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floorAdhesion', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, log, doc, win) {
+], function (adContext, slotTweaker, log, doc, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floorAdhesion',
-		slotName = 'INVISIBLE_HIGH_IMPACT_2',
-		wrapper = doc.getElementById('InvisibleHighImpactWrapper');
+		slotName = 'INVISIBLE_HIGH_IMPACT_2';
 
 	function show() {
-		var skin = adContext.getContext().targeting.skin;
+		var skin = adContext.getContext().targeting.skin,
+			wrapper = doc.getElementById('InvisibleHighImpactWrapper');
 
 		wrapper.querySelector('.close').addEventListener('click', function (event) {
 			event.preventDefault();
@@ -25,6 +26,9 @@ define('ext.wikia.adEngine.template.floorAdhesion', [
 
 		wrapper.classList.add('floor-adhesion');
 		wrapper.classList.remove('hidden');
+
+		slotTweaker.adjustIframeByContentSize(slotName);
+
 		log('Show floor adhesion', 'info', logGroup);
 	}
 

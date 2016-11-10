@@ -1,7 +1,7 @@
 <?php
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'discussionslog' => 'Discussions Users Log',
 	'discussionslog-desc' => "Wikia's Discussion users log extension",
 	'discussionslog-pagetitle' => "Mobile app users' discussion logs",
@@ -26,12 +26,13 @@ $messages['en'] = [
 	'discussionslog-app-header' => 'App',
 	'discussionslog-site-header' => 'Site',
 	'discussionslog-timestamp-header' => 'Timestamp',
+	'discussionslog-user-action-header' => 'Action',
 	'discussionslog-more-info' => 'Click for info',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 	'right-specialdiscussionslog' => 'View [[Special:DiscussionsLog]]',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'discussionslog-desc' => '{{desc}}',
 	'discussionslog-pagetitle' => 'Title of the special Discussion users log page',
 	'discussionslog-page-title' => 'Title of the special Discussion users log page',
@@ -54,11 +55,12 @@ $messages['qqq'] = [
 	'discussionslog-app-header' => 'Table header for app',
 	'discussionslog-site-header' => 'Table header for site',
 	'discussionslog-timestamp-header' => 'Table header for timestamp',
+	'discussionslog-user-action-header' => 'Table header for user action',
 	'discussionslog-more-info' => 'A message saying to click for info',
 	'action-specialdiscussionslog' => 'An action that a user has a forbidden access to when opening Special Page',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'discussionslog' => 'Diskussions-Benutzerprotokoll',
 	'discussionslog-desc' => 'Erweiterung des Wikia Diskussions-Benutzerprotokolls',
 	'discussionslog-pagetitle' => 'Benutzer-Diskussionsprotokoll der mobilen App',
@@ -85,9 +87,11 @@ $messages['de'] = [
 	'discussionslog-more-info' => 'Für weitere Informationen hier klicken',
 	'discussionslog-page-title' => 'Diskussions-Benutzeraktivitätsprotokoll',
 	'discussionslog-site-header' => 'Site',
-];
+	'discussionslog-user-action-header' => 'Aktion',
+	'right-specialdiscussionslog' => 'Im [[Spezial:Diskussionsprotokoll]] ansehen',
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'discussionslog' => 'Registro de discusiones de usuarios',
 	'discussionslog-desc' => 'Extensión de registro de discusiones de usuarios en Wikia',
 	'discussionslog-pagetitle' => 'Registros de discusión de usuarios en la aplicación móvil',
@@ -114,9 +118,11 @@ $messages['es'] = [
 	'discussionslog-more-info' => 'Haz clic para información',
 	'discussionslog-page-title' => 'Registros de actividad del usuario en Discusiones',
 	'discussionslog-site-header' => 'Sitio',
-];
+	'discussionslog-user-action-header' => 'Acción',
+	'right-specialdiscussionslog' => 'Ver [[Special:DiscussionsLog]]',
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'discussionslog' => 'Journal des utilisateurs des discussions',
 	'discussionslog-desc' => 'Extension du journal des utilisateurs des discussions de Wikia',
 	'discussionslog-pagetitle' => "Journaux de discussion des utilisateurs d'application mobile",
@@ -143,9 +149,11 @@ $messages['fr'] = [
 	'discussionslog-more-info' => "Cliquez pour plus d'infos.",
 	'discussionslog-page-title' => "Journaux d'activité des utilisateurs dans les discussions",
 	'discussionslog-site-header' => 'Site',
-];
+	'discussionslog-user-action-header' => 'Action',
+	'right-specialdiscussionslog' => 'Voir [[Special:DiscussionsLog]]',
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'discussionslog' => 'Registro utenti di Discussioni',
 	'discussionslog-desc' => "Registro utenti dell'estensione Discussioni di Wikia",
 	'discussionslog-pagetitle' => 'Registri discussioni degli utenti app mobili',
@@ -172,9 +180,11 @@ $messages['it'] = [
 	'discussionslog-more-info' => 'Clicca per informazioni',
 	'discussionslog-page-title' => "Registri delle attività di discussione dell'utente",
 	'discussionslog-site-header' => 'Sito',
-];
+	'discussionslog-user-action-header' => 'Azione',
+	'right-specialdiscussionslog' => 'Visualizza [[Special:DiscussionsLog]]',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'discussionslog' => 'トークのユーザーログ',
 	'discussionslog-desc' => 'Wikiaのトークログ拡張機能',
 	'discussionslog-pagetitle' => 'モバイルアプリ・ユーザーのトークログ',
@@ -201,9 +211,11 @@ $messages['ja'] = [
 	'discussionslog-more-info' => 'クリックして詳細を確認',
 	'discussionslog-page-title' => 'ユーザー・アクティビティのトークログ',
 	'discussionslog-site-header' => 'サイト',
-];
+	'discussionslog-user-action-header' => '対処',
+	'right-specialdiscussionslog' => '[[特別:DiscussionsLog|ログ]]を表示',
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'discussionslog' => 'Discussions Users Log',
 	'discussionslog-desc' => "Wikia's Discussion users log extension",
 	'discussionslog-pagetitle' => "Mobile app users' discussion logs",
@@ -230,9 +242,11 @@ $messages['nl'] = [
 	'discussionslog-more-info' => 'Click for info',
 	'discussionslog-page-title' => 'Discussions user activity logs',
 	'discussionslog-site-header' => 'Site',
-];
+	'discussionslog-user-action-header' => 'Action',
+	'right-specialdiscussionslog' => 'View [[Special:DiscussionsLog]]',
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'discussionslog' => 'Rejestr użytkowników Dyskusji',
 	'discussionslog-desc' => 'Rozszerzenie zawierające rejestr użytkowników Dyskusji na Wikii',
 	'discussionslog-pagetitle' => 'Rejestry dyskusji użytkowników aplikacji mobilnej',
@@ -259,9 +273,11 @@ $messages['pl'] = [
 	'discussionslog-more-info' => 'Kliknij, aby uzyskać informacje',
 	'discussionslog-page-title' => 'Dane aktywności użytkowników Dyskusji',
 	'discussionslog-site-header' => 'Strona',
-];
+	'discussionslog-user-action-header' => 'Działanie',
+	'right-specialdiscussionslog' => 'Zobacz [[Specjalna:Rejestr dyskusji]]',
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'discussionslog' => 'Registro de discussões de usuários',
 	'discussionslog-desc' => 'Extensão de registros de discussão de usuários da Wikia',
 	'discussionslog-pagetitle' => 'Registro de discussões de usuários em app móvel',
@@ -288,9 +304,11 @@ $messages['pt'] = [
 	'discussionslog-more-info' => 'Clique para informações',
 	'discussionslog-page-title' => 'Registro de discussões de usuários',
 	'discussionslog-site-header' => 'Site',
-];
+	'discussionslog-user-action-header' => 'Ação',
+	'right-specialdiscussionslog' => 'Ver [[Especial:DiscussionsLog]]',
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'discussionslog' => 'Журнал участников обсуждений',
 	'discussionslog-desc' => 'Журнал участников обсуждений — расширение Викия',
 	'discussionslog-pagetitle' => 'Журнал участников обсуждений для пользователей мобильных устройств',
@@ -317,9 +335,11 @@ $messages['ru'] = [
 	'discussionslog-more-info' => 'Узнать больше',
 	'discussionslog-page-title' => 'Журнал действий участников обсуждений',
 	'discussionslog-site-header' => 'Сайт',
-];
+	'discussionslog-user-action-header' => 'Действие',
+	'right-specialdiscussionslog' => 'Просмотр [[Служебная:DiscussionsLog]]',
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'discussionslog' => '讨论区用户日志',
 	'discussionslog-desc' => 'Wikia讨论区用户日志扩展功能',
 	'discussionslog-pagetitle' => '移动应用用户的讨论日志',
@@ -346,9 +366,11 @@ $messages['zh-hans'] = [
 	'discussionslog-more-info' => '点击查看信息',
 	'discussionslog-page-title' => '讨论区用户活动日志',
 	'discussionslog-site-header' => '网站',
-];
+	'discussionslog-user-action-header' => '操作',
+	'right-specialdiscussionslog' => '查看[[Special:DiscussionsLog]]',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'discussionslog' => '討論區使用者日誌',
 	'discussionslog-desc' => 'Wikia討論區使用者日誌擴展功能',
 	'discussionslog-pagetitle' => '手機App使用者的討論日誌',
@@ -375,4 +397,7 @@ $messages['zh-hant'] = [
 	'discussionslog-more-info' => '點擊查看訊息',
 	'discussionslog-page-title' => '討論區使用者活動日誌',
 	'discussionslog-site-header' => '網站',
-];
+	'discussionslog-user-action-header' => '操作',
+	'right-specialdiscussionslog' => '查看[[Special:DiscussionsLog]]',
+);
+

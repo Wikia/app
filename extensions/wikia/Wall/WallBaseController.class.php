@@ -609,6 +609,8 @@ class WallBaseController extends WikiaController {
 			$this->response->setVal( 'wall_message', $wall_message );
 		}
 
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
+
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 

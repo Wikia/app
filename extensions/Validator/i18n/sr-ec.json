@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rancher",
+			"Milicevic01"
+		]
+	},
+	"validator-error": "Грешка: $1",
+	"validator-listerrors-severity-message": "($1) $2"
+}

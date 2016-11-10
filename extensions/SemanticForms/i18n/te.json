@@ -46,5 +46,9 @@
 	"sf_form_freetextlabel": "స్వేచ్ఛా పాఠ్యం",
 	"sf_category_hasdefaultform": "ఈ వర్గం $1 అనే ఫారాన్ని వాడుతుంది.",
 	"sf_category_desc": "ఇది $1 అనే వర్గం.",
-	"sf_blank_namespace": "ప్రధాన"
+	"sf_blank_namespace": "ప్రధాన",
+	"sf-datepicker-close": "మూసివేయి",
+	"sf-datepicker-prev": "గత",
+	"sf-datepicker-next": "తదుపరి",
+	"sf-datepicker-today": "ఈరోజు"
 }

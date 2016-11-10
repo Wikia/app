@@ -5,7 +5,6 @@ class InsightsSorting {
 
 	private $insightsCache;
 	private $config;
-	private $data;
 
 	public static
 		$sorting = [
@@ -18,6 +17,10 @@ class InsightsSorting {
 		'pvDiff' => [
 			'sortType' => SORT_NUMERIC,
 			'metadata' => 'pv7',
+		],
+		'random' => [
+			'sortType' =>  null,
+			'metadata' => 'pv7'
 		]
 	];
 
@@ -27,11 +30,11 @@ class InsightsSorting {
 	}
 
 	public static function getDefaultSorting() {
-		return self::INSIGHTS_DEFAULT_SORTING;
+		return static::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	public static function getSortingTypes() {
-		return self::$sorting;
+		return static::$sorting;
 	}
 
 	/**
@@ -41,17 +44,32 @@ class InsightsSorting {
 	 * @return array
 	 */
 	public function getSortedData( $articleData, $params ) {
-		if ( isset( $params['sort'] ) && isset( self::$sorting[ $params['sort'] ] ) ) {
-			$this->data = $this->insightsCache->get( $params['sort'] );
+		$sortParam = $params['sort'] ?? '';
+
+		if ( $sortParam || $this->config->showPageViews() ) {
+			$sortParam = isset( self::$sorting[ $sortParam ] ) ?
+				$sortParam :
+				self::INSIGHTS_DEFAULT_SORTING;
+
+			$data = WikiaDataAccess::cache(
+				$this->insightsCache->getMemcKey( $sortParam ),
+				InsightsCache::INSIGHTS_MEMC_TTL,
+				function () use ( $sortParam, $articleData ) {
+					uasort( $articleData, function( $a, $b ) use ( $sortParam ) {
+						return $b['metadata'][ $sortParam ] - $a['metadata'][ $sortParam ];
+					});
+					return array_keys( $articleData );
+				}
+			);
 		} else {
-			$this->getData( $articleData );
+			$data = array_keys( $articleData );
 		}
 
-		return $this->data;
+		return $data;
 	}
 
 	public function createSortingArrays( $sortingData ) {
-		foreach ( self::$sorting as $key => $item ) {
+		foreach ( static::$sorting as $key => $item ) {
 			if ( isset( $sortingData[$key] ) ) {
 				$this->createSortingArray( $sortingData[ $key ], $key );
 			}
@@ -66,20 +84,12 @@ class InsightsSorting {
 	 * @param string $key Memcache key
 	 */
 	public function createSortingArray( $sortingArray, $key ) {
-		if ( isset( self::$sorting[ $key ]['sortFunction'] ) ) {
-			usort( $sortingArray, self::$sorting[ $key ]['sortFunction'] );
+		if ( isset( static::$sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, static::$sorting[ $key ]['sortFunction'] );
 		} else {
-			arsort( $sortingArray, self::$sorting[ $key ]['sortType'] );
+			arsort( $sortingArray, static::$sorting[ $key ]['sortType'] );
 		}
 
 		$this->insightsCache->set( $key, array_keys( $sortingArray ) );
-	}
-
-	private function getData( $articlesData ) {
-		if ( $this->config->showPageViews() ) {
-			$this->data = $this->insightsCache->get( self::INSIGHTS_DEFAULT_SORTING );
-		} else {
-			$this->data = array_keys( $articlesData );
-		}
 	}
 }

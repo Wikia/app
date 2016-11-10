@@ -18,8 +18,8 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
+<?= ( !empty( $wg->EnableDesignSystem ) ) ? $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) : $app->renderView( 'GlobalNavigation', 'index' ); ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
@@ -104,13 +104,13 @@
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
 				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
-				<div id="WikiaArticleMsg">
-					<h2>Ad blocker interference detected!</h2>
-					<br />
-					<h3>Wikia is a free-to-use site that makes money from advertising. We have a modified experience for viewers using ad blockers.
-						<br /><br />
-						Wikia is not accessible if you’ve made further modifications. Remove the custom ad blocker rule(s) and the page will load as expected.</h3>
-				</div>
+					<div id="WikiaArticleMsg">
+						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
+						<br />
+						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
+							<br /><br />
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
+					</div>
 				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
@@ -154,27 +154,12 @@
 				}
 				?>
 
-				<?php
-				if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
-					echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
-				}
-				?>
-
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
 					</div>
 				<?php } ?>
 
-				<?php
-				if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_FOOTER'] );
-					} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
-						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
-					}
-				}
-				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
 					<?php
@@ -198,12 +183,10 @@
 		?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-		<? if ( !empty( $wg->EnableCorporateFooterExt ) && empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if ( empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 
-<? if ( !empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
+<?= $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
 
 <?php if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>

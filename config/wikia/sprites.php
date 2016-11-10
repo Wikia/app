@@ -110,11 +110,3 @@ $config['VideoPageTool'] = array(
 	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
 
 );
-
-$config['MonetizationModule'] = array(
-	'name'   => 'monetization-module',
-	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
-	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
-	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
-
-);

@@ -72,6 +72,7 @@
 						callback(item);
 					};
 				};
+				return queue;
 			} else {
 				throw new Error('LazyQueue requires an array as the first parameter');
 			}

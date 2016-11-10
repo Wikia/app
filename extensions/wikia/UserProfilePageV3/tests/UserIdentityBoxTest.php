@@ -31,6 +31,29 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$this->assertEquals($expectedResult, $userIdentityBox->checkIfDisplayZeroStates($data));
 	}
 
+	public function testClearMastheadContents() {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'saveSettings' ] )
+			->getMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with();
+
+		$userIdentityBox = new UserIdentityBox( $userMock );
+		$userIdentityBox->clearMastheadContents();
+
+		foreach ( $userIdentityBox->optionsArray as $option ) {
+			if ( $option === 'gender' || $option === 'birthday' ) {
+				$option = UserIdentityBox::USER_PROPERTIES_PREFIX . $option;
+			}
+			$this->assertEquals( null, $userMock->getGlobalAttribute( $option ), 'clearMastheadContents should reset all user profile attributes' );
+		}
+
+		$this->assertEquals( null, $userMock->getRealName(), 'clearMastheadContents should reset user\'s real name' );
+	}
+
 	/**
 	 * @brief data provider for UserIdentityBoxTest::testCheckIfDisplayZeroStates()
 	 *

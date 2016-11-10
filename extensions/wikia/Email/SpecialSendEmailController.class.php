@@ -89,7 +89,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$postedFormValues = $this->request->getParams();
 		$controllerName = $postedFormValues['emailController'];
 		if ( !preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $controllerName ) ) {
-			throw new Fatal("Invalid email type: {$controllerName}");
+			throw new Fatal( "Invalid email type: {$controllerName}" );
 		}
 		return \F::app()->sendRequest( $controllerName, 'handle', $postedFormValues );
 	}

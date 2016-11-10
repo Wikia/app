@@ -104,24 +104,4 @@ class QuickStatsController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	public static function shortenNumberDecorator($number) {
-		$number = intval( $number );
-
-		if ( $number >= 1000000000 ) {
-			return wfMessage( 'quickstats-number-shortening-billions' )
-				->params( round( $number / 1000000000, 1 ) )
-				->parse();
-		} elseif ( $number >= 1000000 ) {
-			return wfMessage( 'quickstats-number-shortening-millions' )
-				->params( round( $number / 1000000, 1 ) )
-				->parse();
-		} elseif ( $number >= 10000 ) {
-			return wfMessage( 'quickstats-number-shortening' )
-				->params( round( $number / 1000 , 1 ) )
-				->parse();
-		} else {
-			return F::app()->wg->Lang->formatNum( $number );
-		}
-	}
 }

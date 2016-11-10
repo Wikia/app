@@ -8,6 +8,9 @@
 	</nav>
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
+			<? // TODO remove after XW-2226 is done ?>
+			<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
+			<? // TODO remove end ?>
 			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
 		</div>
 	<? endif ?>

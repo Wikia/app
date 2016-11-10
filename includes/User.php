@@ -29,6 +29,7 @@ use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 
 /**
  * Int Number of characters in user_token field.
@@ -914,12 +915,27 @@ class User {
 				array( 'rev_user' => $uid ),
 				__METHOD__
 			);
-			$dbw->update(
-				'user',
-				array( 'user_editcount' => $count ),
-				array( 'user_id' => $uid ),
-				__METHOD__
-			);
+
+			// Wikia change - begin
+			try {
+				$dbw->update(
+					'user',
+					[ 'user_editcount' => $count ],
+					[ 'user_id' => $uid ],
+					__METHOD__
+				);
+			} catch ( DBQueryError $dbQueryError ) {
+				// Wikia change
+				// SUS-1221: Some of these UPDATE queries are failing
+				// If this happens let's log exception details to try to identify root cause
+				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
+					'exception' => $dbQueryError,
+					'userId' => $uid,
+					'editCount' => $count
+				] );
+			}
+			// Wikia change - end
+
 		} else {
 			$count = $field;
 		}
@@ -2147,7 +2163,7 @@ class User {
 	 *
 	 * @return bool
 	 */
-	public function setPassword( $str ) {
+	public function setPassword( $str, $forceLogout=true ) {
 		global $wgAuth;
 
 		if( $str !== null ) {
@@ -2174,6 +2190,7 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
+		wfRunHooks( 'UserSetPassword', [ $this->getId(), $forceLogout ] );
 
 		return true;
 	}
@@ -4189,7 +4206,18 @@ class User {
 	 */
 	public static function crypt( $password, $salt = false ) {
 		global $wgPasswordSalt;
-
+		// Wikia change - begin
+		// @see PLATFORM-2502 comparing new passwords in PHP code.
+		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING crypt called in PHP',
+			[
+				'wgPasswordSalt' => $wgPasswordSalt,
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+ 		// Wikia change - end
 		$hash = '';
 		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
 			return $hash;
@@ -4216,6 +4244,19 @@ class User {
 	 * @return Boolean
 	 */
 	public static function comparePasswords( $hash, $password, $userId = false ) {
+		// Wikia change - begin
+		// @see PLATFORM-2502 comparing new passwords in PHP code.
+		// @todo mech remove after the new password hashing is implemented (PLATFORM-2526).
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING comparePasswords called in PHP',
+			[
+				'user_id' => $userId,
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+		// Wikia change - end
+
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
@@ -4840,5 +4881,36 @@ class User {
 		$key = "right-$right";
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
+	}
+
+
+	/**
+	 * We want to use one source for username.
+	 * This function will perform the lookup if
+	 * $wgEnableUsernameLookup is true
+	 *
+	 * @param $userId int userId
+	 * @param $name string anon username
+	 * @return string
+	 */
+	public static function getUsername( $userId, $name ) {
+		global $wgEnableUsernameLookup;
+		if ( !empty( $userId ) && $wgEnableUsernameLookup ) {
+			$caller = debug_backtrace()[1];
+			$callerFunction = $caller["class"]."::".$caller["function"];
+			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
+			$dbName = static::whoIs( $userId );
+			if( $dbName !== $name ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Default name different than lookup", [
+					"user_id" => $userId,
+					"username_db" => $dbName,
+					"username_default" => $name,
+					"caller" => $callerFunction
+				] );
+			}
+			$profiler->end();
+			return $dbName ?: $name;
+		}
+		return $name;
 	}
 }

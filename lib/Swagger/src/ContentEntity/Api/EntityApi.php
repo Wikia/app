@@ -162,6 +162,11 @@ class EntityApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
+        }
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -246,6 +251,11 @@ class EntityApi
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
         }
         // make the API Call
         try {
@@ -446,6 +456,11 @@ class EntityApi
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
         }
         // make the API Call
         try {
