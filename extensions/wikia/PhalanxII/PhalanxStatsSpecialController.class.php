@@ -95,7 +95,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'comment' => $this->getParsedContent( $data, 'comment' ),
 			'editUrl' => $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ),
 			'blockId' => $blockId,
-		    'statsPager' => $this->buildPager( $blockId )
+			'statsPager' => $this->buildPager( $blockId )
 		] );
 
 		// SUS-269: Add JS for unblock button
