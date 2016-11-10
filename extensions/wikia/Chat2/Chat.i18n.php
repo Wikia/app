@@ -94,6 +94,7 @@ $messages['en'] = [
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
+	'chat-blocking-user' => 'Blocking User',
 ];
 
 $messages['qqq'] = [
@@ -164,6 +165,7 @@ Parameters:
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
+	'chat-blocking-user' => 'Shown in header of banned user table on Special:ChatBanList. Describes a person (Admin, Discussions Moderator or Chat Moderator), that has banned another user from chat.'
 ];
 
 $messages['af'] = [

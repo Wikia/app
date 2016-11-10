@@ -124,7 +124,7 @@ $wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
 		'blocklist-timestamp',
 		'blocklist-target',
 		'blocklist-expiry',
-		'blocklist-by',
+		'chat-blocking-user',
 		'blocklist-reason',
 	],
 	'styles' => [
