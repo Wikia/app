@@ -2297,9 +2297,11 @@ class WallHooksHelper {
 					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
 					break;
 				case 'create':
-					$isActionAllowed = $wgIsSafeWallTransaction && ( $isAuthor || $user->isAllowed( 'walledit' ) );
+					// Pages in Thread or Board Thread namespaces should only be created via Nirvana API
+					// Manually creating one results in a broken page and broken RC entry
+					$isActionAllowed = $wgIsSafeWallTransaction;
 					if ( !$isActionAllowed ) {
-						$result = [ !$wgIsSafeWallTransaction ? 'badtitle' : 'badaccess-group0' ];
+						$result = [ 'badtitle' ];
 					}
 					break;
 				case 'move':
