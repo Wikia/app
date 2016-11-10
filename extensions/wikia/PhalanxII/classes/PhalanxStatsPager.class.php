@@ -53,7 +53,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
 		// SUS-184: Render usernames containing spaces correctly
-		$encUserName = str_replace(' ', '_', $username );
+		$encUserName = str_replace( ' ', '_', $username );
 
 		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
 

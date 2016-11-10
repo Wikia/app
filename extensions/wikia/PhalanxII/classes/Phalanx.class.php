@@ -76,24 +76,24 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		return $this->data;
 	}
 
-    public function offsetSet($offset, $value) {
-        if (is_null($offset)) {
+    public function offsetSet( $offset, $value ) {
+        if ( is_null( $offset ) ) {
             $this->data[] = $value;
         } else {
             $this->data[$offset] = $value;
         }
     }
 
-    public function offsetExists($offset) {
-        return isset($this->data[$offset]);
+    public function offsetExists( $offset ) {
+        return isset( $this->data[$offset] );
     }
 
-    public function offsetUnset($offset) {
-        unset($this->data[$offset]);
+    public function offsetUnset( $offset ) {
+        unset( $this->data[$offset] );
     }
 
-    public function offsetGet($offset) {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+    public function offsetGet( $offset ) {
+        return isset( $this->data[$offset] ) ? $this->data[$offset] : null;
     }
 
 	public function load() {
@@ -188,7 +188,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 
 	/* get the values for the expire select */
 	public static function getExpireValues() {
-		return array_combine( self::$expiry_text, explode(",", wfMsg( self::$expiry_values ) ) );
+		return array_combine( self::$expiry_text, explode( ",", wfMsg( self::$expiry_values ) ) );
 	}
 
 	/*
@@ -203,7 +203,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 
 		/* iterate for each module for which block is saved */
 		for ( $bit = $typemask & 1, $type = 1; $typemask; $typemask >>= 1, $bit = $typemask & 1, $type <<= 1 ) {
-			if (!$bit) continue;
+			if ( !$bit ) continue;
 			$types[$type] = self::$typeNames[$type];
 		}
 
@@ -218,14 +218,14 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	/* map array keys to fields in phalanx table */
 	private function mapToDB() {
 		$fields = array();
-		foreach( $this->data as $key => $field  ) {
+		foreach ( $this->data as $key => $field  ) {
 			$fields[ 'p_' . $key ] = $field;
 		}
 		return $fields;
 	}
 
 	private function log( $action ) {
-		$title = Title::newFromText('PhalanxStats/' . $this->data['id'], NS_SPECIAL);
+		$title = Title::newFromText( 'PhalanxStats/' . $this->data['id'], NS_SPECIAL );
 		$types = implode( ',', Phalanx::getTypeNames( $this->data['type'] ) );
 
 		if ( $this->data['type'] & Phalanx::TYPE_EMAIL ) {
