@@ -92,4 +92,13 @@ class Geocode extends ApiBase {
 		);
 	}
 
+	/**
+	 * Wikia change
+	 * MAIN-8474: In new version of MediaWiki and Maps extension ApiBase::getVersion method does not exist
+	 * However it still does in our 1.19 version and we need to implement it to prevent PHP fatal
+	 * @return string
+	 */
+	public function getVersion() {
+		return __CLASS__ . '-' . Maps_VERSION;
+	}
 }

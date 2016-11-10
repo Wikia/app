@@ -2340,5 +2340,4 @@ class WallHooksHelper {
 
 		return true;
 	}
-
 }

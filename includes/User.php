@@ -915,12 +915,27 @@ class User {
 				array( 'rev_user' => $uid ),
 				__METHOD__
 			);
-			$dbw->update(
-				'user',
-				array( 'user_editcount' => $count ),
-				array( 'user_id' => $uid ),
-				__METHOD__
-			);
+
+			// Wikia change - begin
+			try {
+				$dbw->update(
+					'user',
+					[ 'user_editcount' => $count ],
+					[ 'user_id' => $uid ],
+					__METHOD__
+				);
+			} catch ( DBQueryError $dbQueryError ) {
+				// Wikia change
+				// SUS-1221: Some of these UPDATE queries are failing
+				// If this happens let's log exception details to try to identify root cause
+				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
+					'exception' => $dbQueryError,
+					'userId' => $uid,
+					'editCount' => $count
+				] );
+			}
+			// Wikia change - end
+
 		} else {
 			$count = $field;
 		}
