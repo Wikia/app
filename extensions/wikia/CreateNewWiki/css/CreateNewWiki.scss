@@ -41,9 +41,7 @@
 }
 
 .tooltip.top .tooltip-arrow {
-	border-left-width: 10px;
-	border-right-width: 10px;
-	border-top-width: 10px;
+	border-width: 10px 10px 0;
 	bottom: -5px;
 	left: calc(50% - 5px);
 }
