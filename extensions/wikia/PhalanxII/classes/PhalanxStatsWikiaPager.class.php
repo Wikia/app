@@ -8,7 +8,7 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
 		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
 	}
-	
+
 	function formatRow( $row ) {
 		$type = implode( ", ", Phalanx::getTypeNames( ( isset( $row->ps_blocker_hit ) ) ? $row->ps_blocker_hit : $row->ps_blocker_type ) );
 		$username = $row->ps_blocked_user;
@@ -18,10 +18,10 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 		# block
 		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
 		# stats
-		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
+		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg( 'phalanx-link-stats' ), 'blockId=' . $blockId );
 
 		$html  = Html::openElement( 'li' );
-		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl, $url );
+		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array( 'parseinline', 'replaceafter' ), $type, $username, $phalanxUrl, $timestamp, $statsUrl, $url );
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

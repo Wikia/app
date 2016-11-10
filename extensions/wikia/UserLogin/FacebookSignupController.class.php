@@ -331,7 +331,7 @@ class FacebookSignupController extends WikiaController {
 			return null;
 		}
 
-		if ( !$user->checkPassword( $wikiaPassword ) ) {
+		if ( !$user->checkPassword( $wikiaPassword )->success() ) {
 			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], self::SIGNUP_PASSWORD_KEY );
 			return null;
 		}
