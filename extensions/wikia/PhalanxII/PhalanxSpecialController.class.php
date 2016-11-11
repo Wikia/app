@@ -106,7 +106,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		// VSTF should not be allowed to block emails in Phalanx
 		$showEmailBlock = $this->wg->User->isAllowed( 'phalanxemailblock' );
-		$blockTypes  = Phalanx::getAllTypeNames();
+		$blockTypes  = Phalanx::getSupportedTypeNames();
 
 		$typeSections = [
 			'page-edition' => [
@@ -264,7 +264,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$listing = '';
 		$noMatches = true;
 
-		foreach ( Phalanx::getAllTypeNames() as $blockType ) {
+		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
 			$res = $service->match( $blockType, $blockText );
 
 			if ( empty( $res ) ) {
@@ -383,7 +383,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$block = $this->request->getVal( 'block' );
 
 		if ( $token == $this->getToken() ) {
-			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
+			foreach ( Phalanx::getSupportedTypeNames() as $type => $typeName ) {
 				$blocks = $this->service->match( $type, $block );
 				if ( !empty( $blocks ) ) {
 					$result[$type] = $blocks;
