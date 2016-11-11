@@ -66,9 +66,9 @@ class PhalanxStatsPager extends PhalanxPager {
 			NS_SPECIAL,
 			$row->ps_wiki_id
 		);
-		$specialContributionsURL = $specialContributions->getFullURL();
 
-		if ( !empty( $specialContributionsURL ) ) {
+		if ( $specialContributions->getServer() ) {
+			$specialContributionsURL = $specialContributions->getFullURL();
 			$username = '[' . $specialContributionsURL . '/' . $encUserName . ' ' . $username . ']';
 		}
 
