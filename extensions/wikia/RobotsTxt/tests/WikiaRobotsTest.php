@@ -169,6 +169,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
+		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
 		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
 		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
@@ -186,6 +187,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
+		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
 		$this->assertFalse( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
@@ -203,6 +205,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE_TALK ) );
+		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER_TALK ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_USER ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_HELP ) );
 	}
