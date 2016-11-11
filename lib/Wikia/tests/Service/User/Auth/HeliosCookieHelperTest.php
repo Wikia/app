@@ -24,6 +24,8 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
+		$this->request = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+
 		$this->cookieHelper = new HeliosCookieHelper( $this->helios );
 	}
 
@@ -57,6 +59,130 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 		 	);
 
 		$this->cookieHelper->clearAuthenticationCookie( $this->response );
+	}
+
+	public function testGetAccessTokenFromCookie() {
+		$token = 'qi8H8R7OM4xMUNMPuRAZxlY';
+
+		$this->request->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( $token );
+
+		$this->assertEquals( $this->cookieHelper->getAccessToken( $this->request ), $token );
+	}
+
+	public function testGetAccessTokenFromAuthorizationHeader() {
+		$token = 'qi8H8R7OM4xMUNMPuRAZxlY';
+
+		$this->request->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->request->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( $token );
+
+		$this->assertEquals( $this->cookieHelper->getAccessToken( $this->request ), $token );
+	}
+
+	public function testGetAccessTokenFromCookieReturnsNull() {
+		// No HTTP header
+		$this->request->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( '' );
+
+		// Cookie with no value
+		$this->request->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( '' );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+
+		$this->request->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( false );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+
+		$this->request->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+	}
+
+	public function testGetAccessTokenFromHeaderReturnsNull() {
+		// No Cookie
+		$this->request->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		// Header with no value
+		$this->request->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( '' );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+
+		$this->request->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( false );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+
+		$this->request->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( null );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+	}
+
+
+	public function testGetAccessTokenCookiePrecedenceIfBoth() {
+		$tokenInCookie = 'qi8H8R7OM4xMUNMPuRAZxlY';
+		$tokenInHeader = 'MUNMPuRAZxlYqi8H8R7OM4x';
+
+		$this->request->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( $tokenInCookie );
+
+		$this->request->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( $tokenInHeader );
+
+		$this->assertEquals( $this->cookieHelper->getAccessToken( $this->request ), $tokenInCookie );
+	}
+
+	public function testGetAccessTokenNoCookieNoAuthorizationHeader() {
+		$this->request->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->request->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( false );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
+	}
+
+	public function testGetAccessTokenNoCookieMalformedAuthorizationHeader() {
+		$this->request->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->request->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( false );
+
+		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
 	}
 
 }

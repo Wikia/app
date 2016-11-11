@@ -802,7 +802,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 
 				// from attemptReset() in SpecialResetpass
-				if ( !$user->checkTemporaryPassword( $password ) && !$user->checkPassword( $password ) ) {
+				if ( !$user->checkPassword( $password )->success() ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
 					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );

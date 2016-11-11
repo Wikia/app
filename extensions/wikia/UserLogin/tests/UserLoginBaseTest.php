@@ -83,7 +83,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$this->mockClass( $objectName, $mockObject, 'newFromName' );
 				$this->mockClass( $objectName, $mockObject, 'newFromId' );
 				$this->mockClass( $objectName, $mockObject, 'newFromConfirmationCode' );
-				$this->mockClass( $objectName, $mockObject, 'newFromSession' );
+				$this->mockClass( $objectName, $mockObject, 'newFromToken' );
 				$this->mockClass( $objectName, $mockObject, 'newFromRow' );
 				$this->mockClass( $objectName, ( isset( $objectParams['params']['mId'] ) ? $objectParams['params']['mId'] : 0 ), 'idFromName' );
 			}
