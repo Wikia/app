@@ -1,5 +1,5 @@
 <? if ( is_array( $comment ) ) :?>
-<li id="comm-<?=$commentId?>" class="comment SpeechBubble <?=$rowClass?><?= $comment['isStaff'] ? 'staff' : '' ?>" data-user="<?=$comment['username']?>">
+<li id="comm-<?=$commentId?>" class="comment SpeechBubble <?=$rowClass?><?= $comment['isStaff'] ? ' staff' : '' ?>" data-user="<?= Sanitizer::encodeAttribute( $comment['username'] ); ?>">
 	<div class="speech-bubble-avatar">
 		<a href="<?= $comment['userurl'] ?>">
 			<?= $comment['avatar'] ?>
