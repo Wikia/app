@@ -10,17 +10,13 @@
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<?php if ( !empty( $pageExists ) ) { ?>
-					<div id="PageShareContainer" class="page-share-container">
-						<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
-					</div>
-				<?php } ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
+					<?= F::app()->renderView(
+						'PageHeader',
+						'AddNewPageButton'
+					); ?>
 				<? endif; ?>
-				<? // TODO remove after XW-2226 is done ?>
-				<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
-				<? // TODO remove end ?>
 			</div>
 		</div>
 		<?php
@@ -59,13 +55,6 @@
 				<img src="<?= wfBlankImgUrl(); ?>" class="sprite addRelatedVideo"/> <?= wfMessage( 'videos-add-video' )->escaped(); ?>
 			</a>
 		<? endif;
-
-		?>
-
-		<? // TODO remove after XW-2226 is done ?>
-		<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
-		<? // TODO remove end ?>
-		<?
 
 		// comments & like button
 		if ( !$isWallEnabled ) {
