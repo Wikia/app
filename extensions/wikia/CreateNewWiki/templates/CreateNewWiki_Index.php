@@ -133,7 +133,7 @@
 				<?php
 					foreach ( $categoriesSet as $category ) {
 				?>
-						<label>
+						<label class="category-label">
 							<div class="checkbox-styled">
 								<? $categoryShort = Sanitizer::encodeAttribute( $category['short'] ); ?>
 								<input id="<?= $categoryShort ?>-<?= $setId ?>" type="checkbox"
