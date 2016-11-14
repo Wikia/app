@@ -17,6 +17,7 @@ class Custom404PageHooks {
 	 * @return bool
 	 */
 	static public function onBeforeDisplayNoArticleText( Article $article ) {
+		global $wgJsMimeType, $wgExtensionsPath;
 
 		$title = $article->getTitle();
 
@@ -40,6 +41,7 @@ class Custom404PageHooks {
 		$text = '<div class="noarticletext">' . PHP_EOL . $text . PHP_EOL . '</div>';
 
 		$wgOut = $article->getContext()->getOutput();
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Custom404Page/scripts/Custom404Page.tracking.js\"></script>" );
 		$wgOut->addWikiText( $text );
 		$wgOut->setStatusCode( 200 );
 		$wgOut->setRobotPolicy( 'noindex,follow' );
