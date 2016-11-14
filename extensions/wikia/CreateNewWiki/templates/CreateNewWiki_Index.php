@@ -36,46 +36,43 @@
 					<div class="wiki-domain-error error-msg"></div>
 				</div>
 
-				<div class="language-choice">
+				<div class="cnw-select">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
-					<select name="wiki-language">
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+							<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+								<span class="default-value">
+									 <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$selectedLang] ) ?>
+								</span>
+							<? endif ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+						</div>
+						<div class="wds-dropdown__content wiki-language-dropdown">
+							<ul class="wds-list">
+								<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
+									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
+									<? foreach ( $aTopLanguages as $sLang ) : ?>
+										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
+											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
+										</li>
+									<? endforeach ?>
+								<? endif ?>
 
-					<? $isSelected = false ?>
-					<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
-						<optgroup label="<?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?>">
-
-							<? foreach ( $aTopLanguages as $sLang ) :
-								$selected = '';
-								if ( empty( $isSelected ) && $sLang == $selectedLang ) {
-									$isSelected = true;
-									$selected = ' selected="selected"';
-								}
-							?>
-								<option value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?= $selected ?>>
-									<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
-								</option>
-							<? endforeach ?>
-						</optgroup>
-					<? endif ?>
-
-					<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
-						<optgroup label="<?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?>">
-						<? ksort( $aLanguages );
-						foreach ( $aLanguages as $sLang => $sLangName ) :
-							$selected = "";
-							if ( empty( $isSelected ) && ( $sLang == $selectedLang ) ) :
-								$isSelected = true;
-								$selected = ' selected="selected"';
-							endif ?>
-							<option value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?=$selected?>>
-								<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
-							</option>
-						<? endforeach ?>
-						</optgroup>
-					<? endif ?>
-
-					</select>
+								<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?></li>
+									<? ksort( $aLanguages );
+									foreach ( $aLanguages as $sLang => $sLangName ) : ?>
+										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
+											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
+										</li>
+									<? endforeach ?>
+								<? endif ?>
+							</ul>
+						</div>
+					</div>
+					<input type="hidden" name="wiki-language" value="<?= $selectedLang ?>">
 				</div>
+
 				<span class="submit-error error-msg"></span>
 				<nav class="controls">
 					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next">
@@ -102,24 +99,34 @@
 				</div>
 
 				<!-- Hub Category / Vertical -->
-				<div class="select-container">
+				<div class="cnw-select validated">
 					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
-					<select name="wiki-vertical">
-						<option value="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></option>
-				<?php
-					foreach ( $verticals as $vertical ) {
-				?>
-						<option
-							value="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
-							data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
-							data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
-							<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
-						</option>
-				<?php
-					}
-				?>
-					</select>
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+						</div>
+						<div class="wds-dropdown__content wiki-vertical-dropdown">
+							<ul class="wds-list">
+								<li id="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></li>
+								<?php
+									foreach ( $verticals as $vertical ) {
+								?>
+									<li
+										id="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
+										data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
+										data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
+										<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
+									</li>
+								<?php
+									}
+								?>
+							</ul>
+						</div>
+					</div>
+					<input type="hidden" name="wiki-vertical" value="-1">
 				</div>
+				<div class="wiki-vertical-error error-msg"></div>
 
 				<!-- Additional Categories -->
 				<div class="select-container categories-sets">
