@@ -64,7 +64,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			pane.show();
 		}
 
-		$('.tooltip-icon').tooltip();
+		$('.cnw-tooltip').tooltip();
 
 		// onload stuff
 		wikiName.focus();
@@ -117,7 +117,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
-		$('#Description').on('click', onWikiDescriptionClick);
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
 		wikiVerticalList.bind('click', onWikiVerticalListClick);
@@ -201,10 +200,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		}
-	}
-
-	function onWikiDescriptionClick(e) {
-		e.target.classList.add('active');
 	}
 
 	function onWikiVerticalChange () {

@@ -10,19 +10,19 @@ class PhalanxBlockTestPager extends PhalanxPager {
 		$this->blockType = $blockType;
 	}
 
-	public function setRows(Array $rows) {
+	public function setRows( Array $rows ) {
 		$this->rows = $rows;
 	}
 
 	public function getHeader() {
-		return Html::element('h2', array(), sprintf('%s (%d)', $this->blockType, count($this->rows)));
+		return Html::element( 'h2', array(), sprintf( '%s (%d)', $this->blockType, count( $this->rows ) ) );
 	}
 
 	public function getBody() {
 		$ret = '<ul>';
 
-		foreach($this->rows as $row) {
-			$ret .= $this->formatRow($row);
+		foreach ( $this->rows as $row ) {
+			$ret .= $this->formatRow( $row );
 		}
 
 		$ret .= '</ul>';

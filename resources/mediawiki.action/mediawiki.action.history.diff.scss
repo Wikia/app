@@ -1,3 +1,5 @@
+@import 'skins/shared/color';
+
 /*!
  * Diff rendering
  */
@@ -37,6 +39,12 @@ td.diff-ntitle {
 	text-align: center;
 }
 
+table.diff,
+td.diff-otitle,
+td.diff-ntitle {
+	background-color: $color-page;
+}
+
 td.diff-lineno {
 	font-weight: bold;
 }
@@ -62,22 +70,28 @@ td.diff-context {
 }
 
 td.diff-addedline {
-	border-color: #a3d3ff;
+	border-color: $color-diff-addedline-border;
+	color: $color-diff-text;
 }
 
 td.diff-deletedline {
-	border-color: #ffe49c;
+	border-color: $color-diff-deletedline-border;
+	color: $color-diff-text;
 }
 
 td.diff-context {
-	background: #f9f9f9;
-	border-color: #e6e6e6;
-	color: #333;
+	background-color: $color-diff-context;
+	border-color: $color-diff-context-border;
+	color: $color-diff-text;
 }
 
 .diffchange {
 	font-weight: bold;
 	text-decoration: none;
+}
+
+.diffchange-inline {
+	color: $color-diffchange-text;
 }
 
 td.diff-addedline .diffchange,
@@ -87,11 +101,11 @@ td.diff-deletedline .diffchange {
 }
 
 td.diff-addedline .diffchange {
-	background: #d8ecff;
+	background: $color-diff-addedline-diffchange;
 }
 
 td.diff-deletedline .diffchange {
-	background: #feeec8;
+	background: $color-diff-deletedline-diffchange;
 }
 
 /* Correct user & content directionality when viewing a diff */

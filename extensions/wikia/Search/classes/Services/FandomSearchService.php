@@ -9,11 +9,14 @@ class FandomSearchService extends EntitySearchService {
 		return 'fandom';
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $phrase ) {
 		$select = $this->getSelect();
 
-		$phrase = $this->sanitizeQuery( $query );
-		$select->setQuery( 'title:' . $phrase . ' excerpt_t:' . $phrase . ' content_t:' . $phrase );
+		// escape query text properly to prevent HTTP 500 errors
+		$queryText = 'title:%P1% excerpt_t:%P1% content_t:%P1%';
+		$params = [ $phrase ];
+
+		$select->setQuery( $queryText, $params );
 		$select->clearFields()->addFields( [ 'title', 'url', 'image_s', 'excerpt_t', 'vertical_s' ] );
 		$select->setRows( static::RESULTS_COUNT );
 

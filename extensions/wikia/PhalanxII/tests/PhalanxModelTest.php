@@ -21,11 +21,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * setup tests
 	 */
 	public function setUp() {
-		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
+		$this->setupFile =  dirname( __FILE__ ) . '/../Phalanx_setup.php';
 		parent::setUp();
 	}
 
-	private function setUpUser( $userName, $email, $isAnon ){
+	private function setUpUser( $userName, $email, $isAnon ) {
 		// User
 		$userMock = $this->mockClassWithMethods( 'User',
 			array(
@@ -35,12 +35,12 @@ class PhalanxModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$this->mockGlobalVariable('wgUser', $userMock);
+		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		return $userMock;
 	}
 
-	private function setUpTitle( $title ){
+	private function setUpTitle( $title ) {
 		// User
 		$titleMock = $this->mockClassWithMethods( 'Title',
 			array(
@@ -51,7 +51,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'newFromText'
 		);
 
-		$this->mockGlobalVariable('wgTitle', $titleMock);
+		$this->mockGlobalVariable( 'wgTitle', $titleMock );
 
 		return $titleMock;
 	}
@@ -182,14 +182,14 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * @dataProvider phalanxNewFromTypeProvider
 	 */
 	public function testPhalanxNewFromType( $type, $content, $className, $methodName ) {
-		$model = PhalanxModel::newFromType($type, $content);
+		$model = PhalanxModel::newFromType( $type, $content );
 
-		if ($className === false) {
-			$this->assertNull($model);
+		if ( $className === false ) {
+			$this->assertNull( $model );
 		}
 		else {
-			$this->assertInstanceOf($className, $model);
-			$this->assertEquals($content, $model->$methodName());
+			$this->assertInstanceOf( $className, $model );
+			$this->assertEquals( $content, $model->$methodName() );
 		}
 	}
 
@@ -197,7 +197,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		return array(
 			array(
 				'type' => Phalanx:: TYPE_TITLE,
-				'content' => $this->getMockWithMethods('Title', array('getText' => 'foo')),
+				'content' => $this->getMockWithMethods( 'Title', array( 'getText' => 'foo' ) ),
 				'className' => 'PhalanxContentModel',
 				'methodName' => 'getTitle'
 			),
@@ -209,7 +209,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			),
 			array(
 				'type' => Phalanx::TYPE_USER,
-				'content' => $this->getMockWithMethods('User', array('getUser' => 'foo')),
+				'content' => $this->getMockWithMethods( 'User', array( 'getUser' => 'foo' ) ),
 				'className' => 'PhalanxUserModel',
 				'methodName' => 'getUser'
 			),
