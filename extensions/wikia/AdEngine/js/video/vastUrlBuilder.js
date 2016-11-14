@@ -38,13 +38,12 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return !isNaN(parseFloat(n)) && isFinite(n);
 	}
 
-	function getSize(aspectRatio) {
+	function getSizeByAspectRatio(aspectRatio) {
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
 	function build(aspectRatio, slotParams) {
 		slotParams = slotParams || {};
-
 		var params = [
 				'output=vast',
 				'env=vp',
@@ -52,7 +51,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 				'impl=s',
 				'unviewed_position_start=1',
 				'iu=' + adUnitBuilder.build(slotParams.pos, slotParams.src),
-				'sz=' + getSize(aspectRatio),
+				'sz=' + getSizeByAspectRatio(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,
 				'cust_params=' + getCustomParameters(slotParams)

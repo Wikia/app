@@ -18,7 +18,7 @@ class UserCookieBlock extends UserBlock {
 	 * @param User $user
 	 * @return array|bool|null
 	 */
-	public static function blockCheck(User $user) {
+	public static function blockCheck( User $user ) {
 		global $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
