@@ -172,8 +172,9 @@
 			<?= F::app()->renderView( 'ThemeDesigner', 'ThemeTab' ) ?>
 			<p class="instruction creative"><?= wfMessage( 'cnw-theme-instruction' )->escaped() ?></p>
 			<span class="submit-error finish-status"></span>
-			<nav class="controls">
-				<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next" disabled>
+			<nav class="controls creating-wiki">
+				<span class="creating-wiki-message"><?= wfMessage( 'cnw-theme-loading-state' )->escaped() ?></span>
+				<input type="button" value="<?= wfMessage( 'cnw-theme-show-wiki' )->escaped() ?>" class="next" disabled>
 			</nav>
 		</li>
 	</ol>

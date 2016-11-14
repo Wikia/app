@@ -115,6 +115,7 @@
 	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
+		font-family: inherit;
 		font-size: inherit;
 		line-height: $wds-line-height;
 		outline: none;
@@ -305,6 +306,26 @@
 #DescWiki,
 #ThemeWiki {
 	display: none;
+}
+
+#ThemeWiki {
+	.creating-wiki-message {
+		display: none;
+	}
+
+	.creating-wiki {
+		.creating-wiki-message {
+			color: $wds-color-light-gray;
+			display: block;
+			font-size: $wds-typescale-size-minus-1;
+			line-height: $wds-line-height;
+			padding: $content-spacing-regular $content-spacing-regular 0 0;
+		}
+
+		.next {
+			display: none;
+		}
+	}
 }
 
 #UserAuth {
