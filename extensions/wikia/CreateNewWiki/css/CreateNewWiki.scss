@@ -315,8 +315,9 @@
 		.creating-wiki-message {
 			color: $wds-color-light-gray;
 			display: block;
-			font-size: 14px;
-			padding: 16px 18px 0 0;
+			font-size: $wds-typescale-size-minus-1;
+			line-height: $wds-line-height;
+			padding: $content-spacing-regular $content-spacing-regular 0 0;
 		}
 
 		.next {
