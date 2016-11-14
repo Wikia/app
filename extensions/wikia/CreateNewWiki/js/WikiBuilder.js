@@ -151,7 +151,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			descriptionVal;
 
 		descWikiNext.attr('disabled', true);
-		val = $descWikiWrapper.find('input[name=wiki-vertical]').val();
+		val = wikiVertical.val();
 
 		if (val !== '-1' /* yes, it is a string */ ) {
 			descriptionVal = $('#Description').val();
