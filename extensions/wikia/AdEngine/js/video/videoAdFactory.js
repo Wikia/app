@@ -40,8 +40,11 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				var self = this;
 				googleIma.playVideo(self.slotSize.width, self.slotSize.height, function () {
 					self.toggle(true);
-					self.videoContainer =
-						googleIma.setupIma(vastUrl, adSlot, self.slotSize.width, self.slotSize.height);
+					setTimeout(function () {
+						self.videoContainer = googleIma.setupIma(
+							vastUrl, adSlot, self.slotSize.width, self.slotSize.height
+						);
+					}.bind(this), animationDuration);
 
 					if (self.events.onVideoEnded) {
 						self.events.onVideoEnded();
