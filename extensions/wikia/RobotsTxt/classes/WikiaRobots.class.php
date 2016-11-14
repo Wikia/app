@@ -64,6 +64,7 @@ class WikiaRobots {
 		NS_SPECIAL,
 		NS_TEMPLATE,
 		NS_TEMPLATE_TALK,
+		NS_USER_TALK,
 	];
 
 	/**
