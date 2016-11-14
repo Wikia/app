@@ -14,7 +14,7 @@
 			<th width="19%"><?= wfMessage( 'blocklist-timestamp' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'blocklist-target' )->escaped() ?></th>
 			<th width="19%"><?= wfMessage( 'blocklist-expiry' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'chat-blocking-user' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'blocklist-by' )->escaped() ?></th>
 			<th width="22%"><?= wfMessage( 'blocklist-reason' )->escaped() ?></th>
 		</tr>
 	</thead>
@@ -28,7 +28,7 @@
 			<th width="19%"><?= wfMessage( 'blocklist-timestamp' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'blocklist-target' )->escaped() ?></th>
 			<th width="19%"><?= wfMessage( 'blocklist-expiry' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'chat-blocking-user' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'blocklist-by' )->escaped() ?></th>
 			<th width="22%"><?= wfMessage( 'blocklist-reason' )->escaped() ?></th>
 		</tr>
 	</tfoot>
