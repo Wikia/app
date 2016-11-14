@@ -1,18 +1,3 @@
-<?php
-$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
-if ( $runNjord ) {
-	// edit button with actions dropdown
-	if ( !empty( $action ) ) {
-		echo F::app()->renderView(
-			'MenuButton',
-			'Index',
-			[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
-		);
-	}
-
-	echo $curatedContentToolButton;
-} else {
-	?>
 	<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
 		<div class="header-container">
 			<div class="header-column header-title">
@@ -97,6 +82,3 @@ if ( $runNjord ) {
 		}
 		?>
 	</header>
-	<?php
-}
-?>
