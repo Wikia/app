@@ -29,6 +29,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiLanguageList,
 		wikiVertical,
 		wikiVerticalList,
+		wikiVerticalError,
 		wikiAllAges,
 		allAgesDiv,
 		descWikiSubmitError,
@@ -94,6 +95,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiLanguageList = $nameWikiWrapper.find('.wiki-language-dropdown');
 		wikiVertical = $descWikiWrapper.find('input[name=wiki-vertical]');
 		wikiVerticalList = $descWikiWrapper.find('.wiki-vertical-dropdown');
+		wikiVerticalError = $descWikiWrapper.find('.wiki-vertical-error');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
 		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
@@ -150,7 +152,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			descriptionVal;
 
 		descWikiNext.attr('disabled', true);
-		val = wikiVertical.find('option:selected').val();
+		val = $descWikiWrapper.find('input[name=wiki-vertical]').val();
 
 		if (val !== '-1' /* yes, it is a string */ ) {
 			descriptionVal = $('#Description').val();
@@ -195,13 +197,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				action: tracker.ACTIONS.ERROR,
 				label: 'vertical-not-selected-error'
 			});
-			descWikiSubmitError
-				.show()
-				.html(WikiBuilderCfg['desc-wiki-submit-error'])
-				.delay(3000)
-				.fadeOut();
-
 			descWikiNext.attr('disabled', false);
+
+			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		}
 	}
 
@@ -222,6 +220,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				label: 'vertical-unselected'
 			});
 			categoriesSets.hide();
+
+			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		} else {
 			track({
 				label: 'vertical-selected'
@@ -250,6 +250,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				hiddenDuplicate = duplicate.closest('label').hide();
 			}
 			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
+
+			removeWikiVerticalError();
 		}
 	}
 
@@ -290,6 +292,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				});
 				userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
 			}
+
+			removeWikiVerticalError();
 		} else {
 			transition(id, false);
 		}
@@ -681,6 +685,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomain.removeClass('input-error');
 		wikiDomainLabel.removeClass('label-error');
 		wikiDomainError.html('');
+	}
+
+	function addWikiVerticalError(message) {
+		wikiVerticalList.parent().addClass('input-error');
+		wikiVerticalError.html(message);
+	}
+
+	function removeWikiVerticalError() {
+		wikiVerticalList.parent().removeClass('input-error');
+		wikiVerticalError.html('');
 	}
 
 	return {

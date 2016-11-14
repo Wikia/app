@@ -104,7 +104,7 @@
 				</div>
 
 				<!-- Hub Category / Vertical -->
-				<div class="cnw-select">
+				<div class="cnw-select validated">
 					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
@@ -131,6 +131,7 @@
 					</div>
 					<input type="hidden" name="wiki-vertical" value="-1">
 				</div>
+				<div class="wiki-vertical-error error-msg"></div>
 
 				<!-- Additional Categories -->
 				<div class="select-container categories-sets">

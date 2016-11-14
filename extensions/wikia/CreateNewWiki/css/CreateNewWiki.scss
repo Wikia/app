@@ -207,7 +207,7 @@
 		border-bottom: 1px solid $wds-color-mist-gray;
 		list-style: none;
 		margin: 0;
-		padding: 0 $content-spacing-large;
+		padding: 0 $content-spacing-large $content-spacing-regular;
 	}
 
 	.error-msg {
@@ -324,11 +324,19 @@
 }
 
 .cnw-select {
-	margin: $content-spacing-xxlarge 0;
+	margin: $content-spacing-large 0;
+
+	&.validated {
+		margin-bottom: 0;
+	}
 
 	.wds-dropdown {
 		border-bottom: 1px solid $wds-color-mist-gray;
 		width: $cnw-input-width-large;
+
+		&.input-error {
+			border-color: $wds-color-alert;
+		}
 
 		.default-value {
 			line-height: $wds-line-height;
