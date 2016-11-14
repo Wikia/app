@@ -1,4 +1,4 @@
-/* global define */
+/* global define, setTimeout */
 define('ext.wikia.adEngine.video.videoAdFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.googleIma',
@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 ], function (DOMElementTweaker, googleIma, vastUrlBuilder, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.videoAdFactory';
+	var logGroup = 'ext.wikia.adEngine.video.videoAdFactory',
+		animationDuration = 400;
 
 	function init() {
 		return googleIma.init();
@@ -26,6 +27,15 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			slotSize: slotSize,
 			slotParams: slotParams,
 			videoContainer: googleIma.setupIma(vastUrl, adSlot, slotSize.width, slotSize.height),
+		    getOriginalHeight: function (element) {
+				var height;
+
+				DOMElementTweaker.removeClass(element, 'hidden');
+				height = element.offsetHeight + 'px';
+				DOMElementTweaker.addClass(element, 'hidden');
+
+				return height;
+			},
 			play: function () {
 				var self = this;
 				googleIma.playVideo(self.slotSize.width, self.slotSize.height, function () {
@@ -44,13 +54,26 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			toggle: function (showAd) {
 				if (showAd) {
 					log('Hide vided ad/show image ad', log.levels.info, logGroup);
-					DOMElementTweaker.hide(this.videoContainer, false);
-					DOMElementTweaker.removeClass(this.imageContainer, 'hidden');
+
+					adSlot.style.height = this.videoContainer.offsetHeight + 'px';
+					adSlot.style.height = this.getOriginalHeight(this.imageContainer);
+
+					setTimeout(function () {
+						DOMElementTweaker.hide(this.videoContainer, false);
+						DOMElementTweaker.removeClass(this.imageContainer, 'hidden');
+					}.bind(this), animationDuration);
 				} else {
 					log('Hide image ad/show video ad', log.levels.info, logGroup);
+
+					adSlot.style.height = this.imageContainer.offsetHeight + 'px';
 					DOMElementTweaker.hide(this.imageContainer, false);
 					DOMElementTweaker.removeClass(this.videoContainer, 'hidden');
+					adSlot.style.height = this.videoContainer.offsetHeight + 'px';
 				}
+
+				setTimeout(function () {
+					adSlot.style.height = '';
+				}.bind(this), animationDuration);
 			},
 			updateSize: function (slotSize) {
 				this.slotSize = slotSize;

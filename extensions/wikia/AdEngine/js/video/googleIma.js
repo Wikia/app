@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 		adDisplayContainer.initialize();
 
-		return prepareVideoAdContainer(adContainer.querySelector('div'));
+		return prepareVideoAdContainer(adContainer.querySelector('div:last-of-type').previousSibling.previousSibling);
 	}
 
 	function playVideo(width, height, onVideoFinishedCallback) {
