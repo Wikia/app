@@ -306,6 +306,25 @@
 	display: none;
 }
 
+#ThemeWiki {
+	.creating-wiki-message {
+		display: none;
+	}
+
+	.creating-wiki {
+		.creating-wiki-message {
+			color: $wds-color-light-gray;
+			display: block;
+			font-size: 14px;
+			padding: 16px 18px 0 0;
+		}
+
+		.next {
+			display: none;
+		}
+	}
+}
+
 #UserAuth {
 	@include clearfix;
 	display: none;

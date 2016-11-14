@@ -606,6 +606,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				},
 				callback: function (res) {
 					throbberWrapper.stopThrobbing();
+					throbberWrapper.removeClass('creating-wiki');
 					cityId = res.cityId;
 					createStatus = res.status;
 					createStatusMessage = res.statusMsg;
