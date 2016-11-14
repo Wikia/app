@@ -586,12 +586,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function createWiki() {
 		var throbberWrapper = $themWikiWrapper.find('.controls'),
-			verticalOption = wikiVertical.find('option:selected'),
 			categories = [];
 
 		throbberWrapper.startThrobbing();
 
-		$('#categories-set-' + verticalOption.data('categoriesset') + ' :checked').each(function () {
+		$('#categories-set-' + wikiVertical.data('categoriesset') + ' :checked').each(function () {
 			categories.push($(this).val());
 		});
 
@@ -617,8 +616,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					data: {
 						wName: wikiName.val(),
 						wDomain: wikiDomain.val(),
-						wLanguage: wikiLanguage.find('option:selected').val(),
-						wVertical: verticalOption.val(),
+						wLanguage: wikiLanguage.val(),
+						wVertical: wikiVertical.val(),
 						wCategories: categories,
 						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null
 					},
