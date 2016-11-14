@@ -114,6 +114,7 @@
 	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
+		font-family: inherit;
 		font-size: inherit;
 		line-height: $wds-line-height;
 		outline: none;
