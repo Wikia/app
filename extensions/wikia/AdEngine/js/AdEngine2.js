@@ -8,7 +8,8 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
-	'wikia.log'
+	'wikia.log',
+	'ext.wikia.aRecoveryEngine.recovery.helper'
 ], function (
 	adDecoratorLegacyParamFormat,
 	eventDispatcher,
@@ -18,7 +19,8 @@ define('ext.wikia.adEngine.adEngine', [
 	registerHooks,
 	doc,
 	lazyQueue,
-	log
+	log,
+	recoveryHelper
 ) {
 	'use strict';
 
@@ -197,7 +199,14 @@ define('ext.wikia.adEngine.adEngine', [
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
 		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
-		adslots.start();
+
+		if (recoveryHelper.isBlocking()) {
+			window.addEventListener('arecovery.mms.empty', function (e) {
+				adslots.start();
+			});
+		} else {
+			adslots.start();
+		}
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);
 	}

@@ -5,7 +5,6 @@
 	], function (adContext) {
 
 		var context = adContext.getContext();
-		var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
 
 		window._sp_ = window._sp_ || {};
 		window._sp_.config = window._sp_.config || {};
@@ -15,11 +14,16 @@
 		window._sp_.mms.cmd = window._sp_.mms.cmd || [];
 
 		window._sp_.mms.cmd.push(function () {
-			window._sp_.mms.setTargeting("x", "y");
+			window._sp_.mms.setTargeting("x", "yua");
 		});
 
 		window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
 		window._sp_.config.enable_rid = true;
+
+		window._sp_.mms.cmd.push(function () {
+			window._sp_.mms.startMsg();
+		});
+
 		window._sp_.config.content_control_callback = function () {
 			var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
 			if (!window.wgUserName) {
@@ -49,21 +53,15 @@
 					helper.verifyContent();
 
 					// THIS HAS TO BE SET AFTER MMSClient and Messaging libraries are loaded
+					var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
 					window._sp_.config.mms_domain = mmsDomain;
 					window._sp_.config.mms_client_data_callback = function (o) {
-						// MESSAGE CALLBACK
+						if (o.msgID === 0) {
+							require(['ext.wikia.adEngine.utils.eventDispatcher'], function (eventDispatcher) {
+								eventDispatcher.dispatch('arecovery.mms.empty');
+							});
+						}
 					};
-
-					helper.addOnBlockingCallback(function () {
-						window.addEventListener('adengine.slot.status', function (e) {
-							if (e.detail.slotName === "TOP_LEADERBOARD" && e.detail.status === 'collapse') {
-								window._sp_.mms.cmd.push(function () {
-									window._sp_.mms.startMsg();
-								});
-
-							}
-						});
-					});
 				});
 			});
 		}
