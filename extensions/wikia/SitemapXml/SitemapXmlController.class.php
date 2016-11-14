@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class SpecialSitemapXmlController
+ * Class SitemapXmlController
  *
  * This code is designed to generate XML sitemaps very fast.
  * A sitemap consisting of 10k URLs should be generated in a fraction of a second.
@@ -12,7 +12,7 @@
  *  * Don't call wfTimestamp for each timestamp read from database
  *  * Don't use templates or XML-building libraries (including XMLWriter) to render the XML
  */
-class SpecialSitemapXmlController extends WikiaSpecialPageController {
+class SitemapXmlController extends WikiaController {
 	/**
 	 * Number of URLs to include per sitemap
 	 */
@@ -66,24 +66,27 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 	 */
 	private $model;
 
-	public function __construct( $name = 'SitemapXml' ) {
-		parent::__construct( $name, '', false );
+	public function __construct() {
 		$this->model = new SitemapXmlModel();
 	}
 
-	public function execute( $subpage ) {
+	public function index() {
 		$start = microtime( true ) * 1000;
-		$this->getOutput()->disable();
+		$response = $this->getResponse();
 
-		$parsedSubpage = $this->parseSubpage( $subpage );
+		$path = $this->getRequest()->getVal( 'path', 'sitemap-index.xml' );
+		$parsedPath = $this->parsePath( $path );
 
-		if ( $parsedSubpage->index ) {
+		if ( $parsedPath->index ) {
 			$out = $this->generateSitemapIndex();
-		} elseif ( $parsedSubpage->namespaces ) {
-			$out = $this->generateSitemapPage( $parsedSubpage->namespaces, $parsedSubpage->page );
+		} elseif ( $parsedPath->namespaces ) {
+			$out = $this->generateSitemapPage( $parsedPath->namespaces, $parsedPath->page );
 		} else {
-			header( 'HTTP/1.0 404 Not Found' );
-			echo '<h1>404 Not Found</h1>';
+			$title = ( new WikiaHtmlTitle() )->setParts( [ 'Not Found' ] )->getTitle();
+			$body = '<title>%s</title><h1>Not Found</h1><p>The requested URL was not found</p>';
+
+			$response->setCode( 404 );
+			$response->setBody( sprintf( $body, htmlspecialchars( $title ) ) );
 			return;
 		}
 
@@ -94,7 +97,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 			$out .= '<!-- Sitemap requested without gzip! -->' . PHP_EOL;
 			\Wikia\Logger\WikiaLogger::instance()->warning( 'Sitemap requested without gzip', [
 				'ex' => new Exception( 'Sitemap requested without gzip' ),
-				'subpage' => $subpage,
+				'path' => $path,
 				'user-agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'null',
 			] );
 		}
@@ -105,13 +108,13 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 				'ex' => new Exception( 'Sitemap is too big' ),
 				'curSize' => strlen( $out ),
 				'maxSize' => self::SITEMAP_SIZE_LIMIT,
-				'subpage' => $subpage,
+				'path' => $path,
 			] );
 		}
 
-		header( 'Content-type: application/xml; charset=utf-8' );
-		header( 'Cache-Control: maxage=86400' );
-		echo $out;
+		$response->setContentType( 'application/xml; charset=utf-8' );
+		$response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$response->setBody( $out );
 	}
 
 	private function getIso8601Timestamp( $touched ) {
@@ -213,14 +216,14 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		return strpos( $acceptEncoding, 'gzip' ) !== false;
 	}
 
-	private function parseSubpage( $subpage ) {
+	private function parsePath( $path ) {
 		$parsed = (object) [
 			'index' => false,
 			'namespaces' => null,
 			'page' => null,
 		];
 
-		if ( $subpage === 'sitemap-newsitemapxml-index.xml' || $subpage === 'sitemap-index.xml' ) {
+		if ( $path === 'sitemap-newsitemapxml-index.xml' || $path === 'sitemap-index.xml' ) {
 			$parsed->index = true;
 			return $parsed;
 		}
@@ -228,7 +231,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		$m = null;
 
 		if ( !preg_match(
-			'/^sitemap-(newsitemapxml-)?(others|NS_([0-9]+))-p(\d+)\.xml$/', $subpage, $m )
+			'/^sitemap-(newsitemapxml-)?(others|NS_([0-9]+))-p(\d+)\.xml$/', $path, $m )
 		) {
 			return $parsed;
 		}

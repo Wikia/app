@@ -123,12 +123,17 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test Wikia\RobotsTxt\WikiaRobots sets the proper sitemap based on wgServer
+	 * Test Wikia\RobotsTxt\WikiaRobots sets the proper sitemap based on wgServer,
+	 * wgEnableSpecialSitemapExt, wgEnableSitemapXmlExt and wgSitemapXmlExposeInRobots
+	 *
+	 * @dataProvider dataProviderSitemap
 	 */
-	public function testSitemapEnabled() {
+	public function testSitemap( $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
-		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', true );
+		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', $wgEnableSpecialSitemapExt );
+		$this->mockGlobalVariable( 'wgEnableSitemapXmlExt', $wgEnableSitemapXmlExt );
+		$this->mockGlobalVariable( 'wgSitemapXmlExposeInRobots', $wgSitemapXmlExposeInRobots );
 
 		$robotsTxtMock = $this->getRobotsTxtMock();
 		$pathBuilderMock = $this->getPathBuilderMock();
@@ -136,24 +141,21 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
 		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
 
-		$this->assertEquals( $robotsTxtMock->spiedSitemap, [ 'http://server/sitemap-index.xml' ] );
+		$this->assertEquals( $robotsTxtMock->spiedSitemap, $sitemapUrls );
 	}
 
-	/**
-	 * Test Wikia\RobotsTxt\WikiaRobots doesn't set the sitemap if wgEnableSpecialSitemapExt is false
-	 */
-	public function testSitemapDisabled() {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
-		$this->mockGlobalVariable( 'wgServer', 'http://server' );
-		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', false );
-
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
-		$this->assertEquals( $robotsTxtMock->spiedSitemap, [] );
+	public function dataProviderSitemap() {
+		return [
+			# $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls
+			[ false, false, false, [] ],
+			[ false, false, true, [] ],
+			[ false, true, false, [] ],
+			[ false, true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
+			[ true, false, false, [ 'http://server/sitemap-index.xml' ] ],
+			[ true, false, true, [ 'http://server/sitemap-index.xml' ] ],
+			[ true, true, false, [ 'http://server/sitemap-index.xml' ] ],
+			[ true, true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
+		];
 	}
 
 	public function testDisallowedNamespaces() {

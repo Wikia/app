@@ -76,7 +76,12 @@ class SitemapPage extends UnlistedSpecialPage {
 				$this->print404();
 				return;
 			}
-			return ( new SpecialSitemapXmlController() )->execute( $subpage );
+
+			$wgOut->disable();
+			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
+			$response->sendHeaders();
+			echo $response->getBody();
+			return;
 		}
 
 		if ( !is_array( $wgMemc->get( wfMemcKey( 'sitemap-index' ) ) ) ) {
