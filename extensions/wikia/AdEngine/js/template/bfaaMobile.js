@@ -118,7 +118,6 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		DOMElementTweaker.removeClass(imageContainer, 'hidden');
 	}
 
-
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
 		imageContainer = adSlot.querySelector('div:last-of-type');
