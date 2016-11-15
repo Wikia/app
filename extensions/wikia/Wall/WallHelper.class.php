@@ -395,14 +395,6 @@ class WallHelper {
 
 	}
 
-	public function getParsedText( $rawtext, $title ) {
-		global $wgParser, $wgOut;
-		global $wgEnableParserCache;
-		$wgEnableParserCache = false;
-
-		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions() )->getText();
-	}
-
 	public function isDbkeyFromWall( $dbkey ) {
 		$lookFor = explode( '/@' , $dbkey );
 		if ( count( $lookFor ) > 1 ) {
