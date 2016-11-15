@@ -1589,7 +1589,7 @@ class ArticleComment {
 	 * @param Title $title
 	 * @param User $user
 	 * @param string $action
-	 * @param mixed $result False if user is not allowed to perform this action, true otherwise
+	 * @param bool|null $result False if user is not allowed to perform this action, true otherwise
 	 * @return bool False to abort checking hooks if action is forbidden, true otherwise
 	 */
 	static public function userCan( Title $title, User $user, string $action, &$result ): bool {
@@ -1607,7 +1607,6 @@ class ArticleComment {
 		$comment = static::newFromTitle( $title );
 		$isBlog = ( $wgEnableBlogArticles && static::isBlog( $title ) );
 
-		$result = true;
 		switch ( $action ) {
 			// Creating article comments requires 'commentcreate' permission
 			// For blogs, additionally check if the owner has enabled commenting+
@@ -1632,10 +1631,10 @@ class ArticleComment {
 				);
 				break;
 			default:
-				$result = true;
+				// we have no opinion
 		}
 
-		return $result;
+		return is_null( $result ) ? true : $result;
 	}
 
 	/**
