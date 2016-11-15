@@ -151,7 +151,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
 
 		$this->wg->Out->setPageTitle($this->getStatsPageTitle());
-		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
+
+		$helper = $this->getHelper();
+
+		$stats = $helper->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
 
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
 
