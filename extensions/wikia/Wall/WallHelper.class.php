@@ -288,20 +288,19 @@ class WallHelper {
 	/**
 	 * @brief Gets wall comments data from memc/db
 	 *
-	 * @param array $comments an array with WallMessage instances
+	 * @param WallMessage[] $comments an array with WallMessage instances
 	 *
 	 * @return array
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getCommentsData( $comments ) {
+	private function getCommentsData( Array $comments ) {
 		wfProfileIn( __METHOD__ );
 
 		$timeNow = time();
 		$items = [ ];
 		$i = 0;
 		foreach ( $comments as $wm ) {
-			/** @var WallMessage $wm */
-			$data = $wm->getData( false, null, 30 );
+			$data = $wm->getData();
 
 			if ( !( $data['author'] instanceof User ) ) {
 				// bugId:22820
