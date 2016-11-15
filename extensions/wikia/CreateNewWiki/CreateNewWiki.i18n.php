@@ -5,6 +5,7 @@ $messages['en'] = array(
 	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
+	'cnw-next-create-wiki' => 'Create my wiki',
 	'cnw-or' => 'or',
 	'cnw-title' => 'Create New Wiki',
 	'cnw-name-wiki-headline' => 'Name your wiki',
@@ -79,6 +80,7 @@ $messages['qqq'] = array(
 {{Identical|Next}}',
 	'cnw-back' => 'Text for "Back" Button
 {{Identical|Back}}',
+	'cnw-next-create-wiki' => 'Text for button on the second slide (before choosing theming) informing user that wiki will be created.',
 	'cnw-or' => 'Division for login or Facebook login.
 {{Identical|Or}}',
 	'cnw-title' => 'General Title for this feature',
