@@ -90,7 +90,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 					window.addEventListener('resize', adHelper.throttle(function () {
 						slotSizes = getSlotSize(params);
-						video.updateSize(slotSizes.width, slotSizes.videoHeight);
+						video.resize(slotSizes.width, slotSizes.videoHeight);
 					}));
 
 					params.videoTriggerElement.addEventListener('click', function () {
