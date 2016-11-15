@@ -360,15 +360,17 @@ class MercuryApiController extends WikiaController {
 					case NS_CATEGORY:
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+						if ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
+							if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
+								$data[ 'details' ] = MercuryApiArticleHandler::getArticleDetails( $article );
+								$data[ 'article' ] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 
-							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-							$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
-						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+								// Remove namespace prefix from displayTitle, so it can be consistent with title
+								// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+								$data[ 'article' ][ 'displayTitle' ] = Title::newFromText( $data[ 'article' ][ 'displayTitle' ] )->getText();
+							} else {
+								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							}
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
