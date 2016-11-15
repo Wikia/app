@@ -26,9 +26,23 @@ $discussion-deleted-actions-opacity: .5;
 
 $upvote-icon-activated-color: #e3bd00;
 
-$overlay-color: #000;
+$overlay-color: #fff;
 @if luminance($color-page) > 0.3 {
-	$overlay-color: #fff;
+	$overlay-color: #000;
+}
+
+$overlay-large-value: 25%;
+$overlay-small-value: 15%;
+
+@if luminance($color-page) > 0.1 {
+	$overlay-large-value: 6%;
+	$overlay-small-value: 3%;
+}
+
+$text-overlay-value: 15%;
+$text-overlay-color: #fff;
+@if luminance($color-text) > 0.3 {
+	$text-overlay-color: #000;
 }
 
 .embeddable-discussions-module {
@@ -86,7 +100,7 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-forum {
-		color: mix($overlay-color, $color-text, 15%);
+		color: mix($text-overlay-color, $color-text, $text-overlay-value);
 		font-size: $font-size-small;
 		float: left;
 	}
@@ -121,7 +135,7 @@ $overlay-color: #000;
 		@include align-self(center);
 		@include justify-content(flex-start);
 
-		border-top: 1px solid mix($overlay-color, $color-page, 25%);
+		border-top: 1px solid mix($overlay-color, $color-page, $overlay-large-value);
 		font-size: $font-size-small;
 		font-weight: 500;
 		height: 45px;
@@ -132,7 +146,7 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-post-actions li {
-		color: mix($overlay-color, $color-text, 15%);
+		color: mix($text-overlay-color, $color-text, $text-overlay-value);
 		cursor: pointer;
 		overflow: hidden;
 		text-align: left;
@@ -145,7 +159,7 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-post-actions a {
-		color: mix($overlay-color, $color-text, 15%);
+		color: mix($text-overlay-color, $color-text, $text-overlay-value);
 		cursor: pointer;
 		font-size: $font-size-small;
 	}
@@ -155,7 +169,7 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-post-counters {
-		color: mix($overlay-color, $color-text, 15%);
+		color: mix($text-overlay-color, $color-text, $text-overlay-value);
 		font-size: $font-size-small;
 		justify-content: flex-end;
 		padding-bottom: 4px;
@@ -163,11 +177,11 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-post-detail {
-		border: 1px solid mix($overlay-color, $color-page, 25%);
+		border: 1px solid mix($overlay-color, $color-page, $overlay-large-value);
 		margin: 0 0 20px;
 		padding: 20px 0 0;
 		position: relative;
-		background-color: mix($overlay-color, $color-page, 15%);
+		background-color: mix($overlay-color, $color-page, $overlay-small-value);
 
 		&.is-deleted,
 		&.is-reported {
@@ -206,7 +220,7 @@ $overlay-color: #000;
 
 	.embeddable-discussions-reply-icon {
 		path {
-			fill: mix($overlay-color, $color-text, 15%);
+			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
 		}
 	}
 
@@ -214,13 +228,13 @@ $overlay-color: #000;
 		margin-right: 4px;
 
 		path {
-			fill: mix($overlay-color, $color-text, 15%);
+			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
 		}
 	}
 
 	.embeddable-discussions-share-icon {
 		path {
-			fill: mix($overlay-color, $color-text, 15%);
+			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
 		}
 	}
 
@@ -248,7 +262,7 @@ $overlay-color: #000;
 	}
 
 	.embeddable-discussions-timestamp {
-		color: mix($overlay-color, $color-text, 15%);
+		color: mix($text-overlay-color, $color-text, $text-overlay-value);
 		font-size: $font-size-small;
 		padding-left: 5px;
 	}
@@ -265,7 +279,7 @@ $overlay-color: #000;
 
 	.embeddable-discussions-upvote-icon {
 		path {
-			fill: mix($overlay-color, $color-text, 15%);
+			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
 		}
 	}
 
@@ -279,7 +293,7 @@ $overlay-color: #000;
 		margin-right: 4px;
 
 		path {
-			fill: mix($overlay-color, $color-text, 15%);
+			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
 		}
 	}
 
