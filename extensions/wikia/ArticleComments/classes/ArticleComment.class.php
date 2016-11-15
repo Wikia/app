@@ -348,7 +348,7 @@ class ArticleComment {
 	/**
 	 * Returns the wikitext content of the comment with filtering done by self::removeMetadataTag()
 	 *
-	 * @@return string
+	 * @return string
 	 */
 	public function getRawText() {
 		return self::removeMetadataTag( $this->mRawtext );
@@ -880,11 +880,10 @@ class ArticleComment {
 	/**
 	 * remove metadata tag from
 	 *
-	 * @param $text
-	 *
-	 * @return mixed
+	 * @param string $text
+	 * @return string
 	 */
-	static protected function removeMetadataTag( $text ) {
+	static private function removeMetadataTag( $text ) {
 		return preg_replace( '#</?ac_metadata(\s[^>]*)?>#i', '', $text );
 	}
 
