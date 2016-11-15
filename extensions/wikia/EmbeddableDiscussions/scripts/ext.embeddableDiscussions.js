@@ -51,7 +51,7 @@ require([
 
 				modal.show();
 
-				$('.embeddable-discussions-sharemodal-cancel-button').on('click', function(event) {
+				$('.embeddable-discussions-sharemodal-cancel-button').on('click', function (event) {
 					modal.trigger('close', event);
 					event.preventDefault();
 				});
@@ -84,7 +84,7 @@ require([
 				content: content,
 				createdAt: $.timeago(date),
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
-				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
+				forumName: $.msg('embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
 				isDeleted: thread.isDeleted ? 'is-deleted' : '',
 				isReported: thread.isReported ? 'is-reported' : '',
@@ -124,9 +124,8 @@ require([
 				withCredentials: true
 			},
 		}).done(function (data) {
-			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
-
-			var imagesDir = '/extensions/wikia/EmbeddableDiscussions/images/';
+			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl),
+				imagesDir = '/extensions/wikia/EmbeddableDiscussions/images/';
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
@@ -153,27 +152,29 @@ require([
 	}
 
 	/**
-	 * Replace img elements with svg element, it give us possibility to set fill color of svg.
+	 * Replace img elements with svg element, it gives us possibility to set fill color of svg.
 	 * @param $elem
 	 */
 	function replaceSvgImages($elem) {
-		$elem.find('img.svg').each(function(){
-			var $img = jQuery(this);
-			var imgID = $img.attr('id');
-			var imgClass = $img.attr('class');
-			var imgURL = $img.attr('src');
+		$elem.find('img.svg').each(function () {
+			var $img = $(this),
+				imgID = $img.attr('id'),
+				imgClass = $img.attr('class'),
+				imgURL = $img.attr('src');
 
-			jQuery.get(imgURL, function(data) {
+			$.get(imgURL, replaceImgWithSvg, 'xml');
+
+			function replaceImgWithSvg(data) {
 				// Get the SVG tag, ignore the rest
-				var $svg = jQuery(data).find('svg');
+				var $svg = $(data).find('svg');
 
 				// Add replaced image's ID to the new SVG
-				if(typeof imgID !== 'undefined') {
+				if (typeof imgID !== 'undefined') {
 					$svg = $svg.attr('id', imgID);
 				}
 				// Add replaced image's classes to the new SVG
-				if(typeof imgClass !== 'undefined') {
-					$svg = $svg.attr('class', imgClass+' replaced-svg');
+				if (typeof imgClass !== 'undefined') {
+					$svg = $svg.attr('class', imgClass + ' replaced-svg');
 				}
 
 				// Remove any invalid XML tags as per http://validator.w3.org
@@ -185,9 +186,7 @@ require([
 
 				// Replace image with new SVG
 				$img.replaceWith($svg);
-
-			}, 'xml');
-
+			}
 		});
 	}
 
@@ -195,7 +194,7 @@ require([
 		var $threads = $('.embeddable-discussions-threads');
 		throbber.show($threads);
 
-		$.each($threads, function() {
+		$.each($threads, function () {
 			performRequest($(this));
 		});
 	}
@@ -243,7 +242,7 @@ require([
 			label: 'embeddable-discussions-loaded',
 		});
 
-		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
+		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 				$svg = $($(event.currentTarget).children()[0]),
@@ -271,7 +270,7 @@ require([
 			event.preventDefault();
 		});
 
-		$('.embeddable-discussions-module').on('click', '.share', function(event) {
+		$('.embeddable-discussions-module').on('click', '.share', function (event) {
 			openModal(event.currentTarget.getAttribute('data-link'), event.currentTarget.getAttribute('data-title'));
 			event.preventDefault();
 		});

@@ -177,11 +177,11 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-post-detail {
+        background-color: mix($overlay-color, $color-page, $overlay-small-value);
 		border: 1px solid mix($overlay-color, $color-page, $overlay-large-value);
 		margin: 0 0 20px;
 		padding: 20px 0 0;
 		position: relative;
-		background-color: mix($overlay-color, $color-page, $overlay-small-value);
 
 		&.is-deleted,
 		&.is-reported {

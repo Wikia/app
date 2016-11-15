@@ -33,11 +33,13 @@
 			</div>
 			<div class="embeddable-discussions-post-counters">
 				<span class="embeddable-discussions-post-counter">
-					<img class="svg embeddable-discussions-upvote-icon-tiny" src="{{upvoteTinyIconSrc}}" width="14" height="16">
+					<img class="svg embeddable-discussions-upvote-icon-tiny" src="{{upvoteTinyIconSrc}}" width="14"
+						 height="16">
 					{{upvoteCount}}
 				</span>
 				<span class="embeddable-discussions-post-counter">
-					<img class="svg embeddable-discussions-reply-icon-tiny" src="{{replyTinyIconSrc}}" width="14" height="16">
+					<img class="svg embeddable-discussions-reply-icon-tiny" src="{{replyTinyIconSrc}}" width="14"
+						 height="16">
 					{{commentCount}}
 				</span>
 			</div>
@@ -47,21 +49,24 @@
 				<li class="embeddable-discussions-upvote-area">
 					{{#hasUpvoted}}
 						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="1">
-                            <img class="svg embeddable-discussions-upvote-icon-active" src="{{upvoteIconSrc}}" width="24" height="22">
+							<img class="svg embeddable-discussions-upvote-icon-active" src="{{upvoteIconSrc}}"
+								 width="24" height="22">
 							{{upvoteText}}
 						</a>
 					{{/hasUpvoted}}
 					{{^hasUpvoted}}
 						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="0">
-                            <img class="svg embeddable-discussions-upvote-icon" src="{{upvoteIconSrc}}" width="24" height="22">
-                            {{upvoteText}}
+							<img class="svg embeddable-discussions-upvote-icon" src="{{upvoteIconSrc}}" width="24"
+								 height="22">
+							{{upvoteText}}
 						</a>
 					{{/hasUpvoted}}
 				</li>
-                <li class="embeddable-action-gap"></li>
+				<li class="embeddable-action-gap"></li>
 				<li class="embeddable-discussions-replies-area">
 					<a href="{{link}}">
-						<img class="svg embeddable-discussions-reply-icon" src="{{replyIconSrc}}" width="24" height="22">
+						<img class="svg embeddable-discussions-reply-icon" src="{{replyIconSrc}}" width="24"
+							 height="22">
 						{{replyText}}
 					</a>
 				</li>
