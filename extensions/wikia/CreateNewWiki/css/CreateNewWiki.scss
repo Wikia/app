@@ -241,7 +241,8 @@
 	}
 
 	.category-label {
-		display: inline-block;
+		display: block;
+		page-break-inside: avoid;
 	}
 
 	.cnw-tooltip {
