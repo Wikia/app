@@ -219,7 +219,7 @@ jQuery(function ($) {
 
 	/** contribute **/
 
-	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function (event) {
+	$wikiHeader.find('.buttons .contribute').add('#WikiaPageHeader').on('mousedown', 'a', function (event) {
 		var label,
 			el = $(event.target),
 			id = el.data('id');
@@ -258,16 +258,6 @@ jQuery(function ($) {
 			});
 		}
 	});
-
-	// TODO remove after XW-2226 is done
-	$('.add-new-page-experiment-element.createpage').on('mousedown', function (event) {
-		track({
-			browserEvent: event,
-			category: 'contribute',
-			label: 'add-a-page'
-		});
-	});
-	// TODO remove end
 
 	/** recent-changes **/
 

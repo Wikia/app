@@ -195,7 +195,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'multidelete',
 		'multiwikiedit',
 		'multiwikifinder',
-		'njordeditmode',
 		'phalanxexempt',
 		'phalanx',
 		'phalanxemailblock',
