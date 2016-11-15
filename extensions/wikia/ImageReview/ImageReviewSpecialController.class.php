@@ -265,9 +265,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $this->action == 'csvstats' ) {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
-
-		if ( !$this->ts || intval($this->ts) < 0 || intval($this->ts) > time() ) {
-			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
+		else {
+			// SUS-833: perform the redirect for Special:ImageReview only (ignore /stats and /csvstats)
+			if ( !$this->ts || intval( $this->ts ) < 0 || intval( $this->ts ) > time() ) {
+				$this->wg->Out->redirect( $this->submitUrl . '?ts=' . time() );
+			}
 		}
 	}
 
