@@ -26,9 +26,9 @@ class ArticleComment {
 	/** @var array */
 	public $mMetadata;
 
-	private $mText;
-	private $mRawtext;
-	public $mHeadItems;
+	private $mText = false; // parsed HTML
+	private $mRawtext; // wikitext
+	private $mHeadItems = false;
 	public $mNamespaceTalk;
 
 	/** @var Title */
@@ -200,8 +200,7 @@ class ArticleComment {
 			return true;
 		}
 
-		$rawText = $this->mLastRevision->getText();
-		$this->parseText( $rawText );
+		$this->setRawText( $this->mLastRevision->getText() );
 
 		$this->isTextLoaded = true;
 		return true;
@@ -335,12 +334,33 @@ class ArticleComment {
 		return !empty( $this->mLastRevision ) && $this->mLastRevision instanceof Revision;
 	}
 
-	public function parseText( $rawText ) {
+	/**
+	 * @param string $rawText
+	 */
+	public function setRawText( $rawText ) {
+		$this->mRawtext = $rawText;
+
+		// invalidate locally cached value that will be set when parseText() is called
+		$this->mText = false;
+		$this->mHeadItems = false;
+	}
+
+	/**
+	 * Returns the wikitext content of the comment with filtering done by self::removeMetadataTag()
+	 *
+	 * @@return string
+	 */
+	public function getRawText() {
+		return self::removeMetadataTag( $this->mRawtext );
+	}
+
+	/**
+	 * Parse the comment content in a lazy fashion: when either getText() or getHeadItems() is called
+	 */
+	private function parseText() {
 		wfProfileIn( __METHOD__ );
 
 		global $wgEnableParserCache;
-
-		$this->mRawtext = self::removeMetadataTag( $rawText );
 
 		# seriously, WTF?
 		$wgEnableParserCache = false;
@@ -352,7 +372,7 @@ class ArticleComment {
 		// VOLDEV-68: Remove broken section edit links
 		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
 		$opts->setEditSection( false );
-		$parserOutput = $parser->parse( $rawText, $this->mTitle, $opts );
+		$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
 
 		$this->mText = wfFixMalformedHTML( $parserOutput->getText() );
 
@@ -367,14 +387,32 @@ class ArticleComment {
 		ParserPool::release( $parser );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Return HTML content of parsed comment
+	 *
+	 * @return string
+	 */
+	public function getText() {
+		if ( $this->mText === false ) {
+			$this->parseText();
+		}
+
 		return $this->mText;
 	}
 
 	/**
-	 * @return string
+	 * Return mHeadItems taken from ParserOutput when parsing comment content
+	 *
+	 * @return array
 	 */
-	public function getText() {
-		return $this->mText;
+	public function getHeadItems() {
+		if ( !is_array( $this->mHeadItems ) ) {
+			$this->parseText();
+		}
+
+		return $this->mHeadItems;
 	}
 
 	/**
@@ -516,7 +554,7 @@ class ArticleComment {
 			'sig' => $sig,
 			'text' => $this->getText(),
 			'metadata' => $this->mMetadata, # filled by parseText()
-			'rawtext' =>  $this->mRawtext, # filled by parseText()
+			'rawtext' =>  $this->getRawText(), # filled by parseText()
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
