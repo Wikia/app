@@ -12,7 +12,6 @@ class WikiaTracer {
 	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const SHIELDS_HEADER_NAME = 'X-SJC-shields-healthy';
-	const SHIELDS_HEADER_STATUS_HEALTHY = '1';
 	const SHIELDS_HEADER_STATUS_UNHEALTHY  = '0';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
