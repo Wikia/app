@@ -3051,6 +3051,13 @@ $config['page_header_experiments_js'] = [
 	]
 ];
 
+$config['page_header_experiments_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/PageHeaderExperiments/styles/localSearchSuggestions.scss'
+	]
+];
+
 /* StoriesLinkTag */
 $config['storieslink_tag_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
