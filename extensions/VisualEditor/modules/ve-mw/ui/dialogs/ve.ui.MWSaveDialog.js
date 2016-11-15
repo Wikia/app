@@ -114,7 +114,7 @@ ve.ui.MWSaveDialog.prototype.setDiffAndReview = function ( content ) {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.pushPending = function () {
-	this.getActions().setAbilities( { review: false } );
+	this.getActions().setAbilities( { review: false, save: false } );
 	return ve.ui.MWSaveDialog.super.prototype.pushPending.call( this );
 };
 
@@ -124,7 +124,7 @@ ve.ui.MWSaveDialog.prototype.pushPending = function () {
 ve.ui.MWSaveDialog.prototype.popPending = function () {
 	var ret = ve.ui.MWSaveDialog.super.prototype.popPending.call( this );
 	if ( !this.isPending() ) {
-		this.getActions().setAbilities( { review: true } );
+		this.getActions().setAbilities( { review: true, save: true } );
 	}
 	return ret;
 };
@@ -460,10 +460,6 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.panels.$element );
 
-	if ( !pageExists ) {
-		this.executeAction('save');
-	}
-
 	this.setupDeferred.resolve();
 };
 
@@ -491,11 +487,8 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 			} );
 
 			if ( !pageExists ) {
-				// Can't disable `Resume editing` using this one
-				// this.actions.setAbilities( { save: false, review: false } );
-				this.actions.forEach( { modes: 'save' }, function ( action ) {
-					action.setDisabled( true );
-				} );
+				this.executeAction('save');
+				this.getActions().setAbilities( { review: false, save: false } );
 			}
 		}, this );
 };
