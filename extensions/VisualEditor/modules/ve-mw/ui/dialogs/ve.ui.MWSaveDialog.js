@@ -434,7 +434,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Panel stack
 	this.panels.$element.addClass( 've-ui-mwSaveDialog-panel' );
 	this.panels.addItems( [
-		this.savePanel,
+		//this.savePanel,
 		this.reviewPanel,
 		this.conflictPanel,
 		this.nochangesPanel
@@ -450,6 +450,10 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.$body.append( this.panels.$element );
+
+	if ( wgArticleId === 0 ) {
+		this.executeAction('save');
+	}
 
 	this.setupDeferred.resolve();
 };
