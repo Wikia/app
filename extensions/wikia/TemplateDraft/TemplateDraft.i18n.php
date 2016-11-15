@@ -33,6 +33,7 @@ to see this:
 $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Click here to refresh the preview above]',
+	'templatedraft-preview-example-value' => 'This is a test',
 	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1.',
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
@@ -59,6 +60,7 @@ $messages['qqq'] = [
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
 	'templatedraft-module-approve-protected' => 'Message informing user that template is protected and to approve it should contact one of the admins.',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
+	'templatedraft-preview-example-value' => 'Example attribute value used when generating documentation for a converted draft of a template',
 	'templatedraft-module-editintro-please-convert' => 'Information for user that a draft version of infobox with new markup can be generated automatically by clicking button ($1).',
 	'templatedraft-module-view-parent' => 'Link label to view parent page of this draft',
 	'templatedraft-module-help' => 'Link label to view the help page on Infobox markup',
