@@ -360,31 +360,31 @@ class ArticleComment {
 	private function parseText() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgEnableParserCache;
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey()) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() {
+				$parser = ParserPool::get();
+				$parser->ac_metadata = [];
 
-		# seriously, WTF?
-		$wgEnableParserCache = false;
+				// VOLDEV-68: Remove broken section edit links
+				$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+				$opts->setEditSection( false );
+				$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
 
-		$parser = ParserPool::get();
+				$data = [
+					'text' => wfFixMalformedHTML( $parserOutput->getText() ),
+					'metadata' => isset( $parser->ac_metadata ) ? $parser->ac_metadata : [],
+					'headitems' => $parserOutput->getHeadItems(),
+				];
 
-		$parser->ac_metadata = [];
+				ParserPool::release( $parser );
+				return $data;
+			});
 
-		// VOLDEV-68: Remove broken section edit links
-		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-		$opts->setEditSection( false );
-		$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
-
-		$this->mText = wfFixMalformedHTML( $parserOutput->getText() );
-
-		$this->mHeadItems = $parserOutput->getHeadItems();
-
-		if ( isset( $parser->ac_metadata ) ) {
-			$this->mMetadata = $parser->ac_metadata;
-		} else {
-			$this->mMetadata = [];
-		}
-
-		ParserPool::release( $parser );
+		$this->mText = $data['text'];
+		$this->mHeadItems = $data['headitems'];
+		$this->mMetadata = $data['metadata'];
 
 		wfProfileOut( __METHOD__ );
 	}
