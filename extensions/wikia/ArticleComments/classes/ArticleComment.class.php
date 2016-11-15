@@ -935,20 +935,6 @@ class ArticleComment {
 		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
-
-		if ( $retVal->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			if ( empty( $commentsIndex ) ) {
-				WikiaLogger::instance()->error( 'Empty commentsIndex', [
-					'method' => __METHOD__,
-					'parentId' => $parentId,
-					'commentTitleText' => $commentTitleText,
-				] );
-			} else {
-				Hooks::run( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
-			}
-		}
-
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 
 		ArticleComment::doPurge( $title, $commentTitle );
