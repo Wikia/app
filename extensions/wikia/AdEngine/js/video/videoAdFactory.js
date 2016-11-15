@@ -1,4 +1,4 @@
-/* global define, setTimeout */
+/* global define */
 define('ext.wikia.adEngine.video.videoAdFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.googleIma',
