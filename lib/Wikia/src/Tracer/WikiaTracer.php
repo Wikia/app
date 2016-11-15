@@ -35,6 +35,7 @@ class WikiaTracer {
 
 	private $traceId;
 	private $sjcShieldsHealthStatus;
+	private $sjcShieldsHeaderValue;
 	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
@@ -314,7 +315,7 @@ class WikiaTracer {
 			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId,
 			// pass the current span ID to the subrequest, it will be logged as parent_span_id there
 			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId,
-			self::SHIELDS_HEADER_NAME => $this->sjcShieldsHealthStatus,
+			self::SHIELDS_HEADER_NAME => $this->sjcShieldsHeaderValue,
 		] );
 	}
 
@@ -458,12 +459,14 @@ class WikiaTracer {
 	}
 
 	/**
-	 * Set the flag ONLY if backend is unhealthy (i.e. 0)
+	 * Set the flag ONLY if backend is unhealthy (header says "0")
 	 * If the backend is healthy, remove it from stack (set to null, trimmed later by removeNullEntries
 	 * @see removeNullEntries
 	 */
 	private function getSjcShieldsStatus() {
-		return $this->getTraceEntry( self::SHIELDS_HEADER_NAME ) === self::SHIELDS_HEADER_STATUS_UNHEALTHY
+		$this->sjcShieldsHeaderValue = $this->getTraceEntry( self::SHIELDS_HEADER_NAME );
+
+		return $this->sjcShieldsHeaderValue === self::SHIELDS_HEADER_STATUS_UNHEALTHY
 			? 1
 			: null;
 	}
