@@ -229,6 +229,10 @@
 
 	.categories-sets {
 		display: none;
+
+		h3 {
+			margin-top: $content-spacing-regular-minus;
+		}
 	}
 
 	.categories-set {
@@ -425,17 +429,17 @@
 
 				li {
 					margin: 0;
-					padding: $content-spacing-small-plus $content-spacing-regular;
+					padding: $content-spacing-small $content-spacing-regular;
 				}
 
 				li.spacer {
 					cursor: default;
-					padding: $content-spacing-regular;
+					padding: $content-spacing-regular-minus $content-spacing-regular;
 				}
 
 				li:not(.spacer):hover {
-					color: $wds-color-white;
-					background: $wds-color-mist-gray;
+					color: $wds-color-link;
+					background: $wds-color-off-white;
 				}
 
 			}
