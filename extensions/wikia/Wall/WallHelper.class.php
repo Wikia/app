@@ -329,7 +329,7 @@ class WallHelper {
 			}
 
 			$items[$i]['author'] = $data['username'];
-			$items[$i]['wall-comment'] = $this->getMessageSnippet( $data['rawtext'], $wm->getTitle() ) . '&nbsp;';
+			$items[$i]['wall-comment'] = $this->getMessageSnippet( $wm ) . '&nbsp;';
 			if ( User::isIP( $data['username'] ) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $data['username'];
 				$items[$i]['real-name'] = wfMessage( 'oasis-anon-user' )->escaped();
@@ -406,12 +406,11 @@ class WallHelper {
 	 *
 	 * @see SUS-1135
 	 *
-	 * @param string $text
-	 * @param Title $title
+	 * @param WallMessage $wallMessage
 	 * @return string
 	 */
-	public function getMessageSnippet( string $text, Title $title ) {
-		$formatted = Linker::formatComment( $text, $title );
+	public function getMessageSnippet( WallMessage $wallMessage ) {
+		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
 
 		return $this->shortenText( $formatted );
 	}
