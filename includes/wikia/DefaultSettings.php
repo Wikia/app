@@ -1601,6 +1601,13 @@ $wgAdDriverSourcePointDetectionMobileCountries = null;
 $wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
+ * @name $wgAdDriverSourcePointMMSCountries
+ * List of countries to call SourcePoint MMS
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointMMSCountries = null;
+
+/**
  * @name wgAdDriverEnableSourcePointRecovery
  * Disable SourcePoint Recovery per wiki
  */

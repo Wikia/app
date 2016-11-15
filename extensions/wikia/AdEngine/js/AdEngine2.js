@@ -200,8 +200,8 @@ define('ext.wikia.adEngine.adEngine', [
 
 		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
 
-		if (recoveryHelper.isBlocking()) {
-			window.addEventListener('arecovery.mms.empty', function (e) {
+		if (recoveryHelper.isMMSEnabled()) {
+			window.addEventListener('arecovery.mms.empty', function () {
 				adslots.start();
 			});
 		} else {

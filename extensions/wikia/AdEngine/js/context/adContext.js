@@ -83,6 +83,13 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
+		// SourcePoint MMS
+		if (!noExternals && context.opts.sourcePointRecovery !== false) {
+			if (geo.isProperGeo(instantGlobals.wgAdDriverSourcePointMMSCountries)) {
+				context.opts.sourcePointMMS = true;
+			}
+		}
+
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
