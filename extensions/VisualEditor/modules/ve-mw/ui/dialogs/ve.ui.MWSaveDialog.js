@@ -341,7 +341,8 @@ ve.ui.MWSaveDialog.prototype.setEditSummary = function ( summary ) {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.initialize = function () {
-	var saveAccessKey;
+	var pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0,
+		saveAccessKey;
 
 	// Parent method
 	ve.ui.MWSaveDialog.super.prototype.initialize.call( this );
@@ -393,6 +394,14 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 			.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
 			.find( 'a' ).attr( 'target', '_blank' ).end()
 	);
+
+	if ( !pageExists ) {
+		this.$editSummaryLabel.hide();
+		this.editSummaryInput.$element.hide();
+		this.$saveOptions.hide();
+		this.$saveFoot.hide();
+	}
+
 	this.savePanel.$element.append(
 		this.$editSummaryLabel,
 		this.editSummaryInput.$element,
@@ -434,7 +443,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Panel stack
 	this.panels.$element.addClass( 've-ui-mwSaveDialog-panel' );
 	this.panels.addItems( [
-		//this.savePanel,
+		this.savePanel,
 		this.reviewPanel,
 		this.conflictPanel,
 		this.nochangesPanel
@@ -451,7 +460,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.panels.$element );
 
-	if ( mw.config.get( 'wgArticleId', 0 ) === 0 ) {
+	if ( !pageExists ) {
 		this.executeAction('save');
 	}
 
@@ -464,6 +473,8 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.MWSaveDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
+			var pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
+
 			// Old messages should not persist
 			this.clearAllMessages();
 			this.swapPanel( 'save' );
@@ -478,6 +489,14 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 					)
 				);
 			} );
+
+			if ( !pageExists ) {
+				// Can't disable `Resume editing` using this one
+				// this.actions.setAbilities( { save: false, review: false } );
+				this.actions.forEach( { modes: 'save' }, function ( action ) {
+					action.setDisabled( true );
+				} );
+			}
 		}, this );
 };
 
