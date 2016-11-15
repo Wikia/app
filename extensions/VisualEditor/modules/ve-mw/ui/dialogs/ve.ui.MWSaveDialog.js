@@ -451,7 +451,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.panels.$element );
 
-	if ( wgArticleId === 0 ) {
+	if ( mw.config.get( 'wgArticleId', 0 ) === 0 ) {
 		this.executeAction('save');
 	}
 
