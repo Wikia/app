@@ -13,6 +13,7 @@ class WikiaTracer {
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const SHIELDS_HEADER_NAME = 'X-SJC-shields-healthy';
 	const SHIELDS_HEADER_STATUS_UNHEALTHY  = '0';
+	const SHIELDS_LOG_STATUS_UNHEALTHY  = 'unhealthy';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
 	const CLIENT_USER_ID = 'X-User-Id';
@@ -113,7 +114,7 @@ class WikiaTracer {
 				'span_id' => $this->spanId,
 				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
-				'sjc_shields_unhealthy' => $this->sjcShieldsHealthStatus,
+				'sjc_shields_status' => $this->sjcShieldsHealthStatus,
 			] )
 		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
@@ -466,7 +467,7 @@ class WikiaTracer {
 		$this->sjcShieldsHeaderValue = $this->getTraceEntry( self::SHIELDS_HEADER_NAME );
 
 		return $this->sjcShieldsHeaderValue === self::SHIELDS_HEADER_STATUS_UNHEALTHY
-			? 1
+			? self::SHIELDS_LOG_STATUS_UNHEALTHY
 			: null;
 	}
 }
