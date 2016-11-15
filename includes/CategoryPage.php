@@ -43,13 +43,6 @@ class CategoryPage extends Article {
 		$diffOnly = $request->getBool( 'diffonly',
 			$this->getContext()->getUser()->getGlobalPreference( 'diffonly' ) );
 
-		/* Wikia change - begin */
-		$title = $this->getTitle();
-		$category = Category::newFromTitle( $title );
-		if ( !$category->hasMembers() ) {
-			$this->getContext()->getOutput()->setStatusCode( 404 );
-		}
-
 		if ( isset( $diff ) && $diffOnly ) {
 			parent::view();
 			return;
@@ -59,14 +52,19 @@ class CategoryPage extends Article {
 			return;
 		}
 
+		$title = $this->getTitle();
 		if ( NS_CATEGORY == $title->getNamespace() ) {
 			$this->openShowCategory();
 		}
-		/* Wikia change - end */
 
 		parent::view();
 
 		if ( NS_CATEGORY == $title->getNamespace() ) {
+			/* Wikia change - begin */
+			if ( $this->getPage()->exists() && !$this->getPage()->hasViewableContent() ) {
+				$this->getContext()->getOutput()->setStatusCode( 404 );
+			}
+			/* Wikia change - end */
 			$this->closeShowCategory();
 		}
 	}

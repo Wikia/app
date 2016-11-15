@@ -314,10 +314,18 @@ class Category {
 	 * @return bool
 	 */
 	public function hasMembers() {
-		if ( empty( $this->getPageCount() ) && empty( $this->getSubcatCount() ) && empty( $this->getFileCount() ) ) {
-			return false;
+		$app = F::app();
+		$cacheKey = wfMemcKey( __METHOD__, sha1( $this->mName ) );
+		$data = $app->wg->Memc->get( $cacheKey );
+		if ( !is_numeric( $data ) ) {
+			if ( empty( $this->getPageCount() ) && empty( $this->getSubcatCount() ) && empty( $this->getFileCount() ) ) {
+				$data = 0;
+			} else {
+				$data = 1;
+			}
+			$app->wg->Memc->set( $cacheKey, $data, WikiaResponse::CACHE_VERY_SHORT );
 		}
 
-		return true;
+		return (bool) $data;
 	}
 }
