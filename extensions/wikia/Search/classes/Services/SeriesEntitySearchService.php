@@ -13,7 +13,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
