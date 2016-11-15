@@ -552,9 +552,7 @@ class ArticleComment {
 			'links' => $links,
 			'replyButton' => $replyButton,
 			'sig' => $sig,
-			'text' => $this->getText(),
-			'metadata' => $this->mMetadata, # filled by parseText()
-			'rawtext' =>  $this->getRawText(), # filled by parseText()
+			'rawtext' =>  $this->getRawText(),
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
