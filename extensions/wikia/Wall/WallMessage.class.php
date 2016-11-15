@@ -1524,7 +1524,6 @@ class WallMessage {
 	private function updateParentLastComment( $useMaster, CommentsIndex $commentsIndex ) {
 		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 	}
 
 	protected function markInProps( $prop ) {
