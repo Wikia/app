@@ -314,9 +314,9 @@ class WallHelper {
 
 			$items[$i]['avatar'] = $data['avatarSmall'];
 			$items[$i]['user-profile-url'] = $data['userurl'];
-			$user = User::newFromName( $data['author']->getName() );
+			$user = $data['author'];
 
-			if ( $user ) {
+			if ( $user instanceof User ) {
 				$items[$i]['real-name'] = $user->getName();
 				if ( !empty( F::app()->wg->EnableWallExt ) ) {
 					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
