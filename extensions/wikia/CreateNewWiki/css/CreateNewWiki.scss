@@ -241,6 +241,11 @@
 		}
 	}
 
+	.category-label {
+		display: block;
+		page-break-inside: avoid;
+	}
+
 	.cnw-tooltip {
 		display: inline-block;
 	}
