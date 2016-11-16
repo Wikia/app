@@ -213,18 +213,10 @@ body {
 
 	#diff {
 		@include bodytext;
-		background-color: $color-epl-header-secondary;
+		background-color: $color-page;
 		border: 1px solid $color-page-border;
 		margin: 10px 0;
 		padding: 5px;
-
-		table {
-			.diff-addedline,
-			.diff-context,
-			.diff-deletedline {
-				color: $color-epl-notices-color;
-			}
-		}
 	}
 
 	#myedit {

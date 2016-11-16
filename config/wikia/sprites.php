@@ -89,13 +89,6 @@ $config['MiniEditor'] = array(
 	'scss'   => "$IP/extensions/wikia/MiniEditor/css/mixins/_sprite-MiniEditor.scss"
 );
 
-$config['Chat2'] = array(
-	'name'   => 'Chat',
-	'source' => "$IP/extensions/wikia/Chat2/images/sprite-Chat/",
-	'sprite' => "$IP/extensions/wikia/Chat2/images/sprite-Chat.png",
-	'scss'   => "$IP/extensions/wikia/Chat2/css/mixins/_sprite-Chat.scss"
-);
-
 $config['Lightbox'] = array(
 	'name'   => 'Lightbox',
 	'source' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox/",

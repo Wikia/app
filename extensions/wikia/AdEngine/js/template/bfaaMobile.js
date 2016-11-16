@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.uapVideoAd',
+	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -12,9 +13,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 ], function (
 	adHelper,
 	uapContext,
+	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
-	uapVideoAd,
+	videoAdFactory,
 	doc,
 	log,
 	win,
@@ -22,8 +24,12 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
+	var adSlot,
+		adsModule,
+		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
+		imageContainer,
+		slotSizes,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
@@ -31,22 +37,33 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		],
 		wrapper;
 
+	function getSlotSize(params) {
+		var width = document.body.clientWidth;
+		return {
+			width: width,
+			videoHeight: width / params.videoAspectRatio,
+			adHeight: width / params.aspectRatio
+		};
+	}
+
+	function adjustPadding(iframe, aspectRatio) {
+		var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
+			height = aspectRatio ? viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
+
+		page.style.paddingTop = height + 'px';
+		adsModule.setSiteHeadOffset(height);
+	}
+
 	function runOnReady(iframe, params) {
-		var aspectRatio = params.aspectRatio,
-			adsModule = win.Mercury.Modules.Ads.getInstance(),
-			adjustPadding = function () {
-				var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
-					height = aspectRatio ?
-						viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
-				page.style.paddingTop = height + 'px';
-				adsModule.setSiteHeadOffset(height);
-			},
-			onResize = adHelper.throttle(adjustPadding, 100);
+		var onResize = function (aspectRatio) {
+				adjustPadding(iframe, aspectRatio);
+			};
 
+		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
-		adjustPadding();
+		adjustPadding(iframe, params.aspectRatio);
+		win.addEventListener('resize', onResize.bind(null, params.aspectRatio));
 
-		win.addEventListener('resize', onResize);
 		if (mercuryListener) {
 			mercuryListener.onPageChange(function () {
 				page.classList.remove('bfaa-template');
@@ -56,31 +73,60 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function() {
-				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
-					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+		if (params.videoTriggerElement && params.videoAspectRatio) {
+			videoAdFactory.init().then(function () {
+				try {
+					var video = videoAdFactory.create(
+						slotSizes.width,
+						slotSizes.videoHeight,
+						adSlot,
+						{
+							src: 'gpt',
+							pos: params.slotName,
+							uap: params.uap,
+							passback: 'vuap'
+						}
+					);
 
-				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
-					aspectRatio = video.videoWidth / video.videoHeight;
-					onResize();
-				});
+					window.addEventListener('resize', adHelper.throttle(function () {
+						slotSizes = getSlotSize(params);
+						video.resize(slotSizes.width, slotSizes.videoHeight);
+					}));
 
-				video.addEventListener('ended', function () {
-					aspectRatio = params.aspectRatio;
-					onResize();
-				});
+					params.videoTriggerElement.addEventListener('click', function () {
+						video.play(showVideo, function (videoContainer) {
+							hideVideo(videoContainer);
+							onResize(params.aspectRatio);
+						});
+						onResize(params.videoAspectRatio);
+					}.bind(video));
+
+				} catch (error) {
+					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
+				}
 			});
 		}
 	}
 
+	function showVideo(videoContainer) {
+		DOMElementTweaker.hide(imageContainer, false);
+		DOMElementTweaker.removeClass(videoContainer, 'hidden');
+	}
+
+	function hideVideo(videoContainer) {
+		DOMElementTweaker.hide(videoContainer, false);
+		DOMElementTweaker.removeClass(imageContainer, 'hidden');
+	}
+
 	function show(params) {
+		adSlot = doc.getElementById(params.slotName);
+		imageContainer = adSlot.querySelector('div:last-of-type');
+		slotSizes = getSlotSize(params);
+
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
-		log(['show', page, wrapper, params], 'info', logGroup);
+		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
@@ -89,7 +135,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], 'info', logGroup);
+		log(['show', params.uap], log.levels.info, logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);

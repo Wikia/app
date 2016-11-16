@@ -6,7 +6,7 @@ class IDSEntitySearchService extends EntitySearchService {
 
 	protected $fields = [ "id", "url" ];
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 		$select->setFields( $this->fields );
 

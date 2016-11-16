@@ -197,11 +197,6 @@ $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExcep
  */
 
 /**
- * Modular main pages hooks
- */
-$wgAutoloadClasses['NjordHooks'] =  "{$IP}/extensions/wikia/NjordPrototype/NjordHooks.class.php";
-
-/**
  * Wikia Skins
  *
  * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
@@ -370,6 +365,9 @@ $wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 $wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 $wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
+
+// controllers
+$wgAutoloadClasses['Wikia\Helios\HelperController'] = "{$IP}/includes/wikia/controllers/HeliosHelperController.class.php";
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1180,7 +1178,8 @@ $wgEnableQuickToolsExt = true;
 $wgPhalanxService = true;
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
-	'timeout' => 1 # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
+	'timeout' => 1, # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
+	'internalRequest' => true
 ];
 
 /**
