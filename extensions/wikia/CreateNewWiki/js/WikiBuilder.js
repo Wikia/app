@@ -456,9 +456,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function checkDomain() {
 		var wd = wikiDomain.val(),
-			lang = wikiLanguage.val();
+			lang = wikiLanguage.val(),
+			throbberWrapper = $nameWikiWrapper.find('.controls');
 
 		if (wd) {
+			throbberWrapper.startThrobbing();
+
 			wd = wd.toLowerCase();
 			wikiDomain.val(wd);
 			domainAjax = true;
@@ -483,6 +486,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 						domainAjax = false;
 						checkNextButtonStep1();
+						throbberWrapper.stopThrobbing();
 					}
 				}
 			});
@@ -509,7 +513,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function checkNextButtonStep1() {
 		var nextButton = nextButtons.eq(0);
 
-		isNameWikiSubmitError() ? nextButton.removeClass('enabled') : nextButton.addClass('enabled');
+		if (isNameWikiSubmitError()) {
+			nextButton.removeClass('enabled').attr('disabled', true);
+		} else {
+			nextButton.addClass('enabled').attr('disabled', false);
+		}
 	}
 
 	function showSpinnerIcon(el) {
