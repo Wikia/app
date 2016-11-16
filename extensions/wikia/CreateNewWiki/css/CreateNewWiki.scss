@@ -252,16 +252,16 @@
 	.category-label {
 		display: block;
 		margin-left: -$content-spacing-xxsmall;
-		min-height: 48px;
+		min-height: $cnw-category-label-height;
 		padding: $content-spacing-xxsmall 0 $content-spacing-xxsmall $content-spacing-xxsmall;
 		page-break-inside: avoid;
 	}
 
 	.cnw-tooltip {
 		display: inline-block;
-		height: 24px;
+		height: $cnw-tooltip-size;
 		padding: $content-spacing-xxsmall 0;
-		width: 24px;
+		width: $cnw-tooltip-size;
 	}
 
 	.cnw-tooltip-icon {
