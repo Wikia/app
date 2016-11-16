@@ -158,36 +158,50 @@ require([
 	function replaceSvgImages($elem) {
 		$elem.find('img.svg').each(function () {
 			var $img = $(this),
-				imgID = $img.attr('id'),
-				imgClass = $img.attr('class'),
 				imgURL = $img.attr('src');
 
-			$.get(imgURL, replaceImgWithSvg, 'xml');
+			$.get(imgURL, replaceImgWithSvg.bind(null, $img), 'xml');
 
-			function replaceImgWithSvg(data) {
-				// Get the SVG tag, ignore the rest
-				var $svg = $(data).find('svg');
-
-				// Add replaced image's ID to the new SVG
-				if (typeof imgID !== 'undefined') {
-					$svg = $svg.attr('id', imgID);
-				}
-				// Add replaced image's classes to the new SVG
-				if (typeof imgClass !== 'undefined') {
-					$svg = $svg.attr('class', imgClass + ' replaced-svg');
-				}
-
-				// Remove any invalid XML tags as per http://validator.w3.org
-				$svg = $svg.removeAttr('xmlns:a');
-
-				$svg.attr('width', $img.attr('width'));
-				$svg.attr('height', $img.attr('height'));
-				$svg.attr('viewBox', '0 0 ' + $img.attr('width') + ' ' + $img.attr('height'));
-
-				// Replace image with new SVG
-				$img.replaceWith($svg);
-			}
 		});
+	}
+
+	/**
+	 * Replace img element with svg element
+	 * @param $img - img element to be replaced
+	 * @param data - svg content
+	 */
+	function replaceImgWithSvg($img, data) {
+		// Get the SVG tag, ignore the rest
+		var $svg = $(data).find('svg'),
+			imgID = $img.attr('id'),
+			imgClass = $img.attr('class');
+
+		// Add replaced image's ID to the new SVG
+		if (typeof imgID !== 'undefined') {
+			$svg = $svg.attr('id', imgID);
+		}
+		// Add replaced image's classes to the new SVG
+		if (typeof imgClass !== 'undefined') {
+			$svg = $svg.attr('class', imgClass + ' replaced-svg');
+		}
+
+		removeInvalidXMLTags($svg);
+
+		$svg.attr('width', $img.attr('width'));
+		$svg.attr('height', $img.attr('height'));
+		$svg.attr('viewBox', '0 0 ' + $img.attr('width') + ' ' + $img.attr('height'));
+
+		// Replace image with new SVG
+		$img.replaceWith($svg);
+	}
+
+	/**
+	 * Removes any invalid XML tags as per http://validator.w3.org
+	 * @param $svg
+	 * @returns {*}
+	 */
+	function removeInvalidXMLTags($svg) {
+		$svg.removeAttr('xmlns:a');
 	}
 
 	function loadData() {
