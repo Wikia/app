@@ -36,8 +36,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
 	}
 
-	public function testGetCurrentStagingHostDevbox()
-	{
+	public function testGetCurrentStagingHostDevbox() {
+		$this->mockGlobalVariable( 'wgDevDomain', 'mydevbox.wikia-dev.com' );
 		$this->assertEquals('muppet.mydevbox.wikia-dev.com',
 			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'dev-mydevbox'));
 	}
@@ -54,7 +54,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetCurrentStagingHostDataProvider
 	 */
-	public function testGetCurrentStagingHost($host, $dbName, $expHost) {
+	public function testGetCurrentStagingHost($host, $dbName, $devDomain, $expHost) {
 		$default = 'defaulthost';
 		$this->mockGlobalVariable('wgStagingList', ['preview',
 			'verify',
@@ -71,6 +71,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 			'sandbox-qa04',
 			'demo-sony',
 		] );
+		$this->mockGlobalVariable( 'wgDevDomain', $devDomain );
 
 		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
 	}
@@ -88,31 +89,37 @@ class WikiFactoryTest extends WikiaBaseTest {
 			[
 				'demo-sony-s1',
 				'muppet',
+				'',
 				'demo-sony.muppet.wikia.com'
 			],
 			[
 				'demo-sony-s2',
 				'muppet',
+				'',
 				'demo-sony.muppet.wikia.com'
 			],
 			[
 				'preview',
 				'muppet',
+				'',
 				'preview.muppet.wikia.com'
 			],
 			[
 				'verify',
 				'muppet',
-				'verify.muppet.wikia.com'
+				'',
+				'verify.muppet.wikia.com',
 			],
 			[
 				'dev-test',
 				'muppet',
-				'muppet.test.wikia-dev.com'
+				'test.wikia-dev.com',
+				'muppet.test.wikia-dev.com',
 			],
 			[
 				'sandbox-s3',
 				'muppet',
+				'',
 				'sandbox-s3.muppet.wikia.com'
 			]
 		];
@@ -142,7 +149,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki',
-				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_SANDBOX,
@@ -173,7 +180,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.com'
+				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.us'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,

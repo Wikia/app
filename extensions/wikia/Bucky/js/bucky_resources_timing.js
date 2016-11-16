@@ -16,7 +16,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	'use strict';
 
 	var assetIdx = 0,
-		wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.com|\.wikia\.com|\.wikia\.nocookie\.net)\//;
+		wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.(us|pl|com)|\.wikia\.com|\.wikia\.nocookie\.net)\//;
 
 	/**
 	 * Check the support of ResourceTiming

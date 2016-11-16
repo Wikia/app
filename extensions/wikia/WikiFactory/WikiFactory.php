@@ -1168,7 +1168,7 @@ class WikiFactory {
 	 * @return string changed host or $default
 	 */
 	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList;
+		global $wgStagingList, $wgDevDomain;
 
 		if ( $host === null ) {
 			$host = gethostname();
@@ -1182,8 +1182,8 @@ class WikiFactory {
 			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
 		}
 
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
-			return $dbName . '.' . $m[ 1 ] . '.wikia-dev.com';
+		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
+			return "{$dbName}.{$wgDevDomain}";
 		}
 
 		return $default;
@@ -1214,7 +1214,7 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
 
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
@@ -1231,15 +1231,9 @@ class WikiFactory {
 
 		// strip env-specific pre- and suffixes for staging environment
 		$server = preg_replace( '/^(preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
-		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
-
-		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
-			$devbox = $groups[ 1 ];
-		} else {
-			$devbox = '';
+		if ( !empty( $wgDevDomain ) ) {
+			$server = str_replace( ".{$wgDevDomain}", '', $server );
 		}
-
-		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
 		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
@@ -1264,7 +1258,7 @@ class WikiFactory {
 			case WIKIA_ENV_SANDBOX:
 				return 'http://' . static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
+				return 'http://' . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );

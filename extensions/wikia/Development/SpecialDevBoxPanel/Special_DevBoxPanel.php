@@ -261,15 +261,15 @@ function wfDevBoxLogExceptions( $errorText ) {
  * Example: muppet.wikia.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
-	global $wgDevelEnvironmentName;
+	global $wgDevDomain;
 
-	if (!isset($_SERVER['HTTP_HOST'])) {
+	if ( !isset( $_SERVER['HTTP_HOST'] ) ) {
 		return '';
 	}
 
 	// This is an attempt to match "devbox" host names
-	if (strpos($_SERVER['HTTP_HOST'], "wikia-dev.com") !== false){
-		$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+	if ( strpos( $_SERVER['HTTP_HOST'], $wgDevDomain) !== false ) {
+		$site = str_replace( '.' . $wgDevDomain, '', $_SERVER['HTTP_HOST'] );
 		return "$site.wikia.com";
 	}
 
