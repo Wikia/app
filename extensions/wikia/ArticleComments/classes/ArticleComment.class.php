@@ -359,17 +359,19 @@ class ArticleComment {
 	 */
 	private function parseText() {
 		wfProfileIn( __METHOD__ );
+		$this->load();
+
+		// VOLDEV-68: Remove broken section edit links
+		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$opts->setEditSection( false );
 
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey()) ),
+			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
 			WikiaResponse::CACHE_STANDARD,
-			function() {
+			function() use ( $opts ) {
 				$parser = ParserPool::get();
 				$parser->ac_metadata = [];
 
-				// VOLDEV-68: Remove broken section edit links
-				$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-				$opts->setEditSection( false );
 				$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
 
 				$data = [
@@ -395,7 +397,7 @@ class ArticleComment {
 	 * @return string
 	 */
 	public function getText() {
-		if ( $this->mText === false ) {
+		if ( !is_string( $this->mText ) ) {
 			$this->parseText();
 		}
 
