@@ -524,7 +524,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			th;
 
 		t.css('position', 'absolute');
-		th = t.height() + wb.outerHeight(true) - wb.height();
+		th = t.height() + wb.outerHeight() - stepsWrapper.height();
 		t.css('position', op);
 		stepsWrapper.css({'border-bottom-style': 'none'});
 
