@@ -13,6 +13,10 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		return googleIma.init();
 	}
 
+	function isVideoAd(params) {
+		return params.videoTriggerElement && params.videoAspectRatio;
+	}
+
 	function create(imageContainer, slotSize, adSlot, slotParams) {
 		var vastUrl = vastUrlBuilder.build(slotSize.width / slotSize.height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
@@ -60,6 +64,7 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 
 	return {
 		create: create,
-		init: init
+		init: init,
+		isVideoAd: isVideoAd
 	};
 });

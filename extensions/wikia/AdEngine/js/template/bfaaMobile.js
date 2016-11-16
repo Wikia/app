@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
+		if (videoAdFactory.isVideoAd(params)) {
 			videoAdFactory.init().then(function () {
 				try {
 					var video = videoAdFactory.create(
