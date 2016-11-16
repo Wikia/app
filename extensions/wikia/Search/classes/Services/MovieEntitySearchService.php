@@ -13,7 +13,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	private static $HOSTS_BLACKLIST = [ 'uncyclopedia.wikia.com' ];
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$this->getBlacklist()->addBlacklistedHostsProvider(
 			BlacklistFilter::staticProvider( self::$HOSTS_BLACKLIST )
 		);
