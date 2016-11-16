@@ -445,7 +445,7 @@ ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function ( $cont
 /**
  * Get the licensing
  *
- * @return {*}
+ * @returns {jQuery}
  */
 ve.init.wikia.ViewPageTarget.prototype.getLicense = function () {
 	if ( !this.$license ) {
