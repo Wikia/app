@@ -28,7 +28,6 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	// Properties
 	this.toolbarSaveButton = null;
 	this.saveDialog = null;
-	this.$license = null;
 	this.onBeforeUnloadFallback = null;
 	this.onBeforeUnloadHandler = null;
 	this.active = false;
@@ -186,16 +185,6 @@ ve.init.mw.ViewPageTarget.compatibility = {
  */
 ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
 	return popState && popState.tag === 'visualeditor';
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.ViewPageTarget.prototype.setSurface = function ( surface ) {
-	// Parent method
-	ve.init.mw.Target.prototype.setSurface.call( this, surface );
-
-	this.setupLicense( surface );
 };
 
 /**
@@ -1101,11 +1090,6 @@ ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
 		this.saveDialog = null;
 	}
 
-	if ( this.$license ) {
-		this.$license.remove();
-		this.$license = null;
-	}
-
 	return $.when.apply( $, promises ).then( function () {
 		// Destroy surface
 		while ( this.surfaces.length ) {
@@ -1812,30 +1796,4 @@ ve.init.mw.ViewPageTarget.prototype.switchToWikitextEditor = function ( discardC
  */
 ve.init.mw.ViewPageTarget.prototype.resetDocumentOpacity = function () {
 	this.getSurface().getView().getDocument().getDocumentNode().$element.css( 'opacity', 1 );
-};
-
-/**
- * Get the licensing
- *
- * @return {*}
- */
-ve.init.mw.ViewPageTarget.prototype.getLicense = function () {
-	if ( !this.$license ) {
-		this.$license = this.$('<div>')
-			.append(
-				this.$( '<p>' ).addClass( 've-ui-wikia-license' )
-					.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
-					.find( 'a' ).attr( 'target', '_blank' ).end()
-			);
-	}
-	return this.$license;
-};
-
-/**
- * Set up the license, attaching it after a surface.
- *
- * @param {ve.ui.Surface} surface Surface
- */
-ve.init.mw.ViewPageTarget.prototype.setupLicense = function ( surface ) {
-	this.getLicense().insertAfter( surface.$element.closest( '.WikiaArticle' ) );
 };
