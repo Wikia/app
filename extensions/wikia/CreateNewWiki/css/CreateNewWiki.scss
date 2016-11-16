@@ -122,6 +122,15 @@
 		outline: none;
 	}
 
+	textarea {
+		display: block;
+		height: 4 * $wds-line-height;
+		overflow-x: hidden;
+		overflow-y: auto;
+		resize: none;
+		width: $cnw-textarea-width;
+	}
+
 	input[type=text] {
 		width: $cnw-input-width;
 
@@ -179,15 +188,6 @@
 				opacity: 1;
 			}
 		}
-	}
-
-	textarea {
-		display: block;
-		height: 4 * $wds-line-height;
-		overflow-x: hidden;
-		overflow-y: auto;
-		resize: none;
-		width: $cnw-textarea-width;
 	}
 
 	.checkbox {
@@ -326,6 +326,90 @@
 			}
 		}
 	}
+
+	.cnw-select {
+		margin: $content-spacing-large 0;
+
+		&.cnw-select-language {
+			margin-top: 0;
+
+			h3 {
+				margin-top: 0;
+			}
+		}
+
+		&.cnw-select-vertical {
+			margin-bottom: 0;
+		}
+
+		.wds-dropdown {
+			border-bottom: 1px solid $wds-color-mist-gray;
+			width: $cnw-input-width-large;
+
+			&.input-error {
+				border-color: $wds-color-alert;
+			}
+
+			.default-value {
+				line-height: $wds-line-height;
+			}
+
+			svg {
+				fill: $wds-color-light-gray;
+				float: right;
+				margin-top: 4px;
+			}
+
+			&.wds-is-active {
+				svg {
+					@include transform-rotate(180deg);
+				}
+			}
+
+			.wds-dropdown__content {
+				overflow: auto;
+				width: $cnw-input-width-large;
+
+				&.wiki-language-dropdown {
+					max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
+				}
+
+				&.wiki-vertical-dropdown {
+					max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
+				}
+
+				.wds-list {
+					cursor: pointer;
+					list-style-type: none;
+					margin: 0;
+					padding: 0;
+
+					.spacer {
+						color: $wds-color-dark-gray;
+						font-size: $wds-typescale-size-base;
+						font-weight: bold;
+						line-height: .9;
+					}
+
+					li {
+						margin: 0;
+						padding: $content-spacing-small $content-spacing-regular;
+					}
+
+					li.spacer {
+						cursor: default;
+						padding: $content-spacing-regular-minus $content-spacing-regular;
+					}
+
+					li:not(.spacer):hover {
+						color: $wds-color-link;
+						background: $wds-color-off-white;
+					}
+
+				}
+			}
+		}
+	}
 }
 
 #DescWiki,
@@ -385,88 +469,4 @@
 
 .hidden {
 	display: none;
-}
-
-.cnw-select {
-	margin: $content-spacing-large 0;
-
-	&.cnw-select-language {
-		margin-top: 0;
-
-		h3 {
-			margin-top: 0 !important;
-		}
-	}
-
-	&.cnw-select-vertical {
-		margin-bottom: 0;
-	}
-
-	.wds-dropdown {
-		border-bottom: 1px solid $wds-color-mist-gray;
-		width: $cnw-input-width-large;
-
-		&.input-error {
-			border-color: $wds-color-alert;
-		}
-
-		.default-value {
-			line-height: $wds-line-height;
-		}
-
-		svg {
-			fill: $wds-color-light-gray;
-			float: right;
-			margin-top: 4px;
-		}
-
-		&.wds-is-active {
-			svg {
-				@include transform-rotate(180deg);
-			}
-		}
-
-		.wds-dropdown__content {
-			overflow: auto;
-			width: $cnw-input-width-large;
-
-			&.wiki-language-dropdown {
-				max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
-			}
-
-			&.wiki-vertical-dropdown {
-				max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
-			}
-
-			.wds-list {
-				cursor: pointer;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-
-				.spacer {
-					color: $wds-color-dark-gray;
-					font-size: $wds-typescale-size-base;
-					font-weight: bold;
-					line-height: .9;
-				}
-
-				li {
-					margin: 0;
-					padding: $content-spacing-small $content-spacing-regular;
-				}
-
-				li.spacer {
-					cursor: default;
-					padding: $content-spacing-regular-minus $content-spacing-regular;
-				}
-
-				li:not(.spacer):hover {
-					color: $wds-color-link;
-					background: $wds-color-off-white;
-				}
-
-			}
-		}
-	}
 }
