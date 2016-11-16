@@ -208,7 +208,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			selectedShort,
 			categoriesSets = $('.categories-sets'),
 			newCategoriesSetId,
-			duplicate;
+			duplicate,
+			nextButton = nextButtons.eq(1);
 
 		if (selectedValue === '-1' /* yes, it is a string */ ) {
 			track({
@@ -216,6 +217,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			});
 			categoriesSets.hide();
 
+			nextButton.attr('disabled', true);
 			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		} else {
 			track({
@@ -246,6 +248,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			}
 			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
 
+			nextButton.attr('disabled', false);
 			removeWikiVerticalError();
 		}
 	}
