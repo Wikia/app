@@ -182,6 +182,7 @@
 	}
 
 	textarea {
+		display: block;
 		height: 4 * $wds-line-height;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -189,7 +190,7 @@
 		width: $cnw-textarea-width;
 	}
 
-	.desc-block .checkbox {
+	.checkbox {
 		display: flex;
 		margin: $content-spacing-small 0 0 (-$content-spacing-xxsmall);
 
@@ -240,7 +241,7 @@
 		display: none;
 
 		h3 {
-			margin-top: $content-spacing-regular-minus;
+			margin-top: 0;
 		}
 	}
 
@@ -389,7 +390,15 @@
 .cnw-select {
 	margin: $content-spacing-large 0;
 
-	&.validated {
+	&.cnw-select-language {
+		margin-top: 0;
+
+		h3 {
+			margin-top: 0 !important;
+		}
+	}
+
+	&.cnw-select-vertical {
 		margin-bottom: 0;
 	}
 
