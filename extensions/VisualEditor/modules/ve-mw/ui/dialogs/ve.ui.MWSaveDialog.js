@@ -342,7 +342,8 @@ ve.ui.MWSaveDialog.prototype.setEditSummary = function ( summary ) {
  */
 ve.ui.MWSaveDialog.prototype.initialize = function () {
 	var pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0,
-		saveAccessKey;
+		saveAccessKey,
+		savePanelElements = [];
 
 	// Parent method
 	ve.ui.MWSaveDialog.super.prototype.initialize.call( this );
@@ -395,21 +396,27 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 			.find( 'a' ).attr( 'target', '_blank' ).end()
 	);
 
-	if ( !pageExists ) {
-		this.$editSummaryLabel.hide();
-		this.editSummaryInput.$element.hide();
-		this.$saveOptions.hide();
-		this.$saveFoot.hide();
+	if ( pageExists ) {
+		savePanelElements = savePanelElements.concat( [
+			this.$editSummaryLabel,
+			this.editSummaryInput.$element,
+			this.$saveOptions
+		] );
 	}
 
-	this.savePanel.$element.append(
-		this.$editSummaryLabel,
-		this.editSummaryInput.$element,
-		this.$saveOptions,
+	savePanelElements = savePanelElements.concat( [
 		this.$saveMessages,
-		this.$saveActions,
-		this.$saveFoot
-	);
+		this.$saveActions
+	] );
+
+	if ( pageExists ) {
+		savePanelElements = savePanelElements.concat( [
+			// TODO move licencing under the editor
+			this.$saveFoot
+		] );
+	}
+
+	this.savePanel.$element.append( savePanelElements );
 
 	// Review panel
 	this.reviewPanel = new OO.ui.PanelLayout( { $: this.$, scrollable: true } );
