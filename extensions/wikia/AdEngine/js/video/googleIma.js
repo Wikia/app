@@ -58,11 +58,12 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return prepareVideoAdContainer(adContainer.querySelector('div'));
 	}
 
-	function playVideo(width, height, onVideoFinishedCallback) {
+	function playVideo(width, height, callbacks) {
 		runWhenAdsManagerLoaded(function () {
-			adsManager.init(width, height, google.ima.ViewMode.FULLSCREEN);
+			adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 			adsManager.start();
-			adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onVideoFinishedCallback);
+			adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, callbacks.onVideoEnded);
+			adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, callbacks.onVideoLoaded);
 		});
 	}
 
@@ -74,9 +75,14 @@ define('ext.wikia.adEngine.video.googleIma', [
 		}
 	}
 
+	function resize(width, height) {
+		adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+	}
+
 	return {
 		init: init,
 		playVideo: playVideo,
+		resize: resize,
 		setupIma: setupIma
 	};
 });

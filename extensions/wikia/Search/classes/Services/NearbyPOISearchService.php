@@ -115,7 +115,7 @@ class NearbyPOISearchService extends EntitySearchService {
 		return $geoQuery;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$select->setQuery( $query );

@@ -12,7 +12,7 @@ class FeedEntitySearchService extends EntitySearchService {
 		parent::__construct( $client );
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();

@@ -1,16 +1,18 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfab', [
+	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (slotTweaker, videoAdFactory, log, doc, win, recoveryTweaker) {
+], function (DOMElementTweaker, slotTweaker, videoAdFactory, log, doc, win, recoveryTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfab',
-		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD');
+		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD'),
+		imageContainer;
 
 	function calculateVideoSize(element, videoAspectRatio) {
 		return {
@@ -19,26 +21,42 @@ define('ext.wikia.adEngine.template.bfab', [
 		};
 	}
 
+	function showVideo(videoContainer) {
+		DOMElementTweaker.hide(imageContainer, false);
+		DOMElementTweaker.removeClass(videoContainer, 'hidden');
+
+	}
+
+	function hideVideo(videoContainer) {
+		DOMElementTweaker.hide(videoContainer, false);
+		DOMElementTweaker.removeClass(imageContainer, 'hidden');
+
+	}
+
 	function initializeVideoAd(iframe, params) {
 		try {
-			var providerContainer = slot.querySelector('div'),
+			imageContainer = slot.querySelector('div');
+			var size = calculateVideoSize(iframe, params.videoAspectRatio),
 				video = videoAdFactory.create(
-					providerContainer,
-					calculateVideoSize(iframe, params.videoAspectRatio),
-					slot,
-					{
-						src: 'gpt',
-						slotName: params.pos,
-						uap: params.uap,
-						passback: 'vuap'
-					}
-				);
+				size.width,
+				size.height,
+				slot,
+				{
+					src: 'gpt',
+					slotName: params.pos,
+					uap: params.uap,
+					passback: 'vuap'
+				}
+			);
 
 			win.addEventListener('resize', function () {
-				video.updateSize(calculateVideoSize(iframe, params.videoAspectRatio));
+				var size = calculateVideoSize(iframe, params.videoAspectRatio);
+				video.resize(size.width, size.height);
 			});
 
-			params.videoTriggerElement.addEventListener('click', video.play.bind(video));
+			params.videoTriggerElement.addEventListener('click', function () {
+				video.play(showVideo, hideVideo);
+			});
 		} catch (error) {
 			log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 		}
