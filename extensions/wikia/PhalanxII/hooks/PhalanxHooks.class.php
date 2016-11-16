@@ -68,7 +68,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		// get type ID -> type mapping
-		$types = Phalanx::getAllTypeNames();
+		$types = Phalanx::getSupportedTypeNames();
 		$ret = $model->match( $types[$typeId] );
 
 		// pass matching block details
