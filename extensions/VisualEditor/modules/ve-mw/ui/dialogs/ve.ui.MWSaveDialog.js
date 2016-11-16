@@ -341,9 +341,7 @@ ve.ui.MWSaveDialog.prototype.setEditSummary = function ( summary ) {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.initialize = function () {
-	var pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0,
-		saveAccessKey,
-		savePanelElements = [];
+	var saveAccessKey;
 
 	// Parent method
 	ve.ui.MWSaveDialog.super.prototype.initialize.call( this );
@@ -390,33 +388,14 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	);
 	this.$saveMessages = this.$( '<div>' );
 	this.$saveActions = this.$( '<div>' );
-	this.$saveFoot = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-foot' ).append(
-		this.$( '<p>' ).addClass( 've-ui-mwSaveDialog-license' )
-			.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
-			.find( 'a' ).attr( 'target', '_blank' ).end()
-	);
 
-	if ( pageExists ) {
-		savePanelElements = savePanelElements.concat( [
-			this.$editSummaryLabel,
-			this.editSummaryInput.$element,
-			this.$saveOptions
-		] );
-	}
-
-	savePanelElements = savePanelElements.concat( [
+	this.savePanel.$element.append( [
+		this.$editSummaryLabel,
+		this.editSummaryInput.$element,
+		this.$saveOptions,
 		this.$saveMessages,
 		this.$saveActions
 	] );
-
-	if ( pageExists ) {
-		savePanelElements = savePanelElements.concat( [
-			// TODO move licencing under the editor
-			this.$saveFoot
-		] );
-	}
-
-	this.savePanel.$element.append( savePanelElements );
 
 	// Review panel
 	this.reviewPanel = new OO.ui.PanelLayout( { $: this.$, scrollable: true } );
@@ -482,7 +461,7 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 			this.clearAllMessages();
 			this.swapPanel( 'save' );
 			// Update save button label
-			this.actions.forEach( { actions: 'save' }, function ( action ) {
+			this.getActions().forEach( { actions: 'save' }, function ( action ) {
 				action.setLabel(
 					ve.msg(
 						// TODO: Actually populate this.resotring with information, right now it is
@@ -494,7 +473,9 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 			} );
 
 			if ( !pageExists ) {
-				this.executeAction('save');
+				// Trigger save action automatically when creating new page
+				this.currentAction = this.getActions().get( { actions: 'save' } )[0];
+				this.executeAction( 'save' );
 				this.getActions().setAbilities( { review: false, save: false } );
 			}
 		}, this );
