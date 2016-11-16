@@ -474,7 +474,7 @@ class MediaWikiService
 			if ( $page instanceof \Article ) {
 				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
 			} else {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'SUS-1306 - Invalid article ID', [
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-1306 - Invalid article ID', [
 					'exception' => new \BadTitleError(),
 					'articleId' => $articleId,
 					'ns' => $title->getNamespace(),
