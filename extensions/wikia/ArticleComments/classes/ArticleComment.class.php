@@ -154,6 +154,11 @@ class ArticleComment {
 	 * @return string
 	 */
 	public function getMetadata( $key, $val = '' ) {
+		// mMetadata is lazy-loaded (possibly from cache)
+		if ( !is_array( $this->mMetadata ) ) {
+			$this->parseText();
+		}
+
 		return empty( $this->mMetadata[$key] ) ? $val: $this->mMetadata[$key];
 	}
 
