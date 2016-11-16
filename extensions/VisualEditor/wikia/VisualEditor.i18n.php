@@ -197,6 +197,9 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Tooltip shown on Video button in the toolbar.',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Video insert dialog title.',
 	'wikia-visualeditor-media-photo-policy' => 'Missing documentation',
+	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Placeholder text put into the editable area of the Visual Editor for a newly created page.',
+	'wikia-visualeditor-zero-state-call-to-action-variant-b' => 'Simple template put into the editable area of the Visual Editor for a newly created page',
+	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Advanced template put into the editable area of the Visual Editor for a newly created page.',
 ];
 
 $messages['aeb'] = [
