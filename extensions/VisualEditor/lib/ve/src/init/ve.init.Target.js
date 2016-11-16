@@ -195,6 +195,10 @@ ve.init.Target.prototype.destroy = function () {
 		this.$element.remove();
 		this.$element = null;
 	}
+	if ( this.$license ) {
+		this.$license.remove();
+		this.$license = null;
+	}
 	this.unbindHandlers();
 	ve.init.target = null;
 };
@@ -315,6 +319,23 @@ ve.init.Target.prototype.getToolbar = function () {
 };
 
 /**
+ * Get the licensing
+ *
+ * @return {*}
+ */
+ve.init.Target.prototype.getLicense = function () {
+	if ( !this.$license ) {
+		this.$license = this.$('<div>')
+			.append(
+				this.$( '<p>' ).addClass( 've-ui-mwSaveDialog-license' )
+					.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
+					.find( 'a' ).attr( 'target', '_blank' ).end()
+			);
+	}
+	return this.$license;
+};
+
+/**
  * Set up the toolbar, attaching it to a surface.
  *
  * @param {ve.ui.Surface} surface Surface
@@ -323,4 +344,14 @@ ve.init.Target.prototype.setupToolbar = function ( surface ) {
 	this.getToolbar().setup( this.constructor.static.toolbarGroups, surface );
 	this.getToolbar().$element.insertBefore( surface.$element );
 	this.getToolbar().$bar.append( surface.toolbarDialogs.$element );
+};
+
+
+/**
+ * Set up the license, attaching it after a surface.
+ *
+ * @param {ve.ui.Surface} surface Surface
+ */
+ve.init.Target.prototype.setupToolbar = function ( surface ) {
+	this.getLicense().insertAfter( surface.$element.parents( '.WikiaArticle' ) );
 };
