@@ -2,7 +2,7 @@ require(['mw', 'jquery', 'wikia.window'], function(mw, $, window) {
 	const experimentId = '7835092457';
 
 	if (window.optimizely.activeExperiments.includes(experimentId) &&
-		window.optimizely.variationMap[parseInt(experimentId)] != 0) {
+		window.optimizely.variationMap[parseInt(experimentId)] !== 0) {
 
 		mw.loader.using('jquery.autocomplete').then(function () {
 
