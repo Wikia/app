@@ -26,7 +26,6 @@ ve.init.Target = function VeInitTarget( toolbarConfig ) {
 	this.surfaces = [];
 	this.surface = null;
 	this.toolbar = null;
-	this.$license = null;
 	this.toolbarConfig = toolbarConfig;
 	this.documentTriggerListener = new ve.TriggerListener( this.constructor.static.documentCommands );
 	this.targetTriggerListener = new ve.TriggerListener( this.constructor.static.targetCommands );
@@ -196,10 +195,6 @@ ve.init.Target.prototype.destroy = function () {
 		this.$element.remove();
 		this.$element = null;
 	}
-	if ( this.$license ) {
-		this.$license.remove();
-		this.$license = null;
-	}
 	this.unbindHandlers();
 	ve.init.target = null;
 };
@@ -295,7 +290,6 @@ ve.init.Target.prototype.setSurface = function ( surface ) {
 	if ( surface !== this.surface ) {
 		this.surface = surface;
 		this.setupToolbar( surface );
-		this.setupLicense( surface );
 	}
 };
 
@@ -321,23 +315,6 @@ ve.init.Target.prototype.getToolbar = function () {
 };
 
 /**
- * Get the licensing
- *
- * @return {*}
- */
-ve.init.Target.prototype.getLicense = function () {
-	if ( !this.$license ) {
-		this.$license = this.$('<div>')
-			.append(
-				this.$( '<p>' ).addClass( 've-ui-wikia-license' )
-					.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
-					.find( 'a' ).attr( 'target', '_blank' ).end()
-			);
-	}
-	return this.$license;
-};
-
-/**
  * Set up the toolbar, attaching it to a surface.
  *
  * @param {ve.ui.Surface} surface Surface
@@ -346,14 +323,4 @@ ve.init.Target.prototype.setupToolbar = function ( surface ) {
 	this.getToolbar().setup( this.constructor.static.toolbarGroups, surface );
 	this.getToolbar().$element.insertBefore( surface.$element );
 	this.getToolbar().$bar.append( surface.toolbarDialogs.$element );
-};
-
-
-/**
- * Set up the license, attaching it after a surface.
- *
- * @param {ve.ui.Surface} surface Surface
- */
-ve.init.Target.prototype.setupLicense = function ( surface ) {
-	this.getLicense().insertAfter( surface.$element.closest( '.WikiaArticle' ) );
 };
