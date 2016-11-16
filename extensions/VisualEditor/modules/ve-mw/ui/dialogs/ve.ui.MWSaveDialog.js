@@ -473,10 +473,13 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 			} );
 
 			if ( !pageExists ) {
+				// Review button doesn't make sense when creating new page
+				this.getActions().remove( [ this.getActions().get( { actions: 'review' } )[0] ] );
+
 				// Trigger save action automatically when creating new page
 				this.currentAction = this.getActions().get( { actions: 'save' } )[0];
 				this.executeAction( 'save' );
-				this.getActions().setAbilities( { review: false, save: false } );
+				this.getActions().setAbilities( { save: false } );
 			}
 		}, this );
 };
