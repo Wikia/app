@@ -164,7 +164,7 @@
 				<span class="submit-error error-msg"></span>
 				<nav class="controls">
 					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back">
-					<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next">
+					<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next" disabled>
 				</nav>
 			</form>
 		</li>
