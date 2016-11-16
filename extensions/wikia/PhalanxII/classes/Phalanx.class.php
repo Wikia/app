@@ -317,10 +317,10 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		$log->addEntry(
 			$action,
 			$title,
-			wfMsgExt(
-				'phalanx-rule-log-details', [ 'parsemag', 'content' ],
+			wfMessage(
+				'phalanx-rule-log-details',
 				$this->data['text'], $types, $this->data['reason']
-			)
+			)->inContentLanguage()->escaped()
 		);
 	}
 }
