@@ -1062,6 +1062,7 @@ class ArticleComment {
 
 				$parameters = [
 					'comment' => $comment->getData( true ),
+					'commentContent' => $comment->getText(),
 					'commentId' => $commentId,
 					'rowClass' => '',
 					'level' => ( $parentId ) ? 2 : 1
