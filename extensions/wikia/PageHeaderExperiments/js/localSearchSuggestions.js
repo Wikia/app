@@ -12,6 +12,16 @@ require(['mw', 'jquery', 'wikia.window'], function(mw, $, window) {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
+			if (!$searchInput.length || !$searchInputWrapper.length) {
+				window.Wikia.Tracker.track({
+					action: Wikia.Tracker.ACTIONS.ERROR,
+					category: 'navigation',
+					trackingMethod: 'analytics',
+					label: 'search-input-undefined-local-nav-abtest'
+				});
+				return;
+			}
+
 			$searchInput.data('suggestions-tracking-label', $searchInput.data('suggestions-tracking-label') + '-local-nav-abtest');
 
 			$searchInput
@@ -80,12 +90,7 @@ require(['mw', 'jquery', 'wikia.window'], function(mw, $, window) {
 					}
 				});
 		}).fail(function() {
-			window.Wikia.Tracker.track({
-				action: Wikia.Tracker.ACTIONS.ERROR,
-				category: 'navigation',
-				trackingMethod: 'analytics',
-				label: 'suggestions-not-attached-local-nav-abtest'
-			});
+			console.error("Failed to load jquery autocomplete");
 		});
 	}
 });
