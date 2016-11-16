@@ -26,6 +26,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 	var adSlot,
 		adsModule,
+		animationDuration = 400,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
 		imageContainer,
@@ -54,10 +55,39 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		adsModule.setSiteHeadOffset(height);
 	}
 
+	function animate(startAspectRatio, finalAspectRatio) {
+		var windowWidth = document.body.clientWidth;
+
+		adSlot.style.height = windowWidth / startAspectRatio + 'px';
+
+		setTimeout(function () {
+			adSlot.style.height = windowWidth / finalAspectRatio + 'px';
+		}, 0);
+		setTimeout(function () {
+			adSlot.style.height = '';
+		}, animationDuration);
+	}
+
 	function runOnReady(iframe, params) {
-		var onResize = function (aspectRatio) {
-				adjustPadding(iframe, aspectRatio);
-			};
+		function onResize(aspectRatio) {
+			adjustPadding(iframe, aspectRatio);
+		}
+
+		function showVideo(videoContainer) {
+			DOMElementTweaker.addClass(imageContainer, 'hidden');
+			DOMElementTweaker.removeClass(videoContainer, 'hidden');
+			onResize(params.videoAspectRatio);
+			animate(params.aspectRatio, params.videoAspectRatio);
+		}
+
+		function hideVideo(videoContainer) {
+			onResize(params.aspectRatio);
+			animate(params.videoAspectRatio, params.aspectRatio);
+			setTimeout(function () {
+				DOMElementTweaker.addClass(videoContainer, 'hidden');
+				DOMElementTweaker.removeClass(imageContainer, 'hidden');
+			}, animationDuration);
+		}
 
 		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
@@ -88,34 +118,22 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 						}
 					);
 
+					page.classList.add('vuap-loaded');
+
 					window.addEventListener('resize', adHelper.throttle(function () {
 						slotSizes = getSlotSize(params);
 						video.resize(slotSizes.width, slotSizes.videoHeight);
 					}));
 
 					params.videoTriggerElement.addEventListener('click', function () {
-						video.play(showVideo, function (videoContainer) {
-							hideVideo(videoContainer);
-							onResize(params.aspectRatio);
-						});
-						onResize(params.videoAspectRatio);
-					}.bind(video));
+						video.play(showVideo, hideVideo);
+					});
 
 				} catch (error) {
 					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 				}
 			});
 		}
-	}
-
-	function showVideo(videoContainer) {
-		DOMElementTweaker.hide(imageContainer, false);
-		DOMElementTweaker.removeClass(videoContainer, 'hidden');
-	}
-
-	function hideVideo(videoContainer) {
-		DOMElementTweaker.hide(videoContainer, false);
-		DOMElementTweaker.removeClass(imageContainer, 'hidden');
 	}
 
 	function show(params) {
