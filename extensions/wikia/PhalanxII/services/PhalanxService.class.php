@@ -331,13 +331,14 @@ class PhalanxService extends Service {
 	}
 
 	private function getPhalanxUrl( $action ) {
-		global $wgConsulUrl, $wgConsulServiceTag, $wgPhalanxServiceUrl;
+		global $wgConsulUrl, $wgConsulServiceTag, $wgPhalanxServiceUrl, $wgWikiaEnvironment;
 
 		if ( !empty( $wgPhalanxServiceUrl ) ) {
 			// e.g. "localhost:4666"
 			$baseurl = $wgPhalanxServiceUrl;
 		} else {
-			$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )
+			$tag = $wgWikiaEnvironment == WIKIA_ENV_PROD ? "prodTesting" : $wgConsulServiceTag;
+			$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $tag ) )
 				->getUrl( 'phalanx' );
 		}
 
