@@ -86,6 +86,15 @@ $messages['en'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Image',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Insert a video',
+	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'What do you know about {{PAGENAME}}? Start sharing your knowledge about this topic here.',
+	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} is a…',
+	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Begin the first paragraph of your page here. You can use it to introduce your topic to readers. Add any basic data you find relevant.
+==Name this Section==
+Write the first section of your page here. Use this to describe details about your topic. Here are examples of things you can put here:
+* Plot (for movies, tv shows, books, or comics)
+* Character descriptions
+* Background information
+If you think your page does not need this section, simply delete it. You may also copy and paste this text underneath if you want your page to have more than one section.',
 ];
 
 $messages['qqq'] = [
