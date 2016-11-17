@@ -86,11 +86,13 @@
 				<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 				<div class="checkbox" id="all-ages-div"
 					<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
-					<div class="checkbox-styled">
-						<input id="allAges" type="checkbox" name="all-ages" value="1">
-						<label for="allAges"></label>
-					</div>
-					<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+					<label>
+						<div class="checkbox-styled">
+							<input id="allAges" type="checkbox" name="all-ages" value="1">
+							<label for="allAges"></label>
+						</div>
+						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+					</label>
 					<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
 						<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
 					</div>

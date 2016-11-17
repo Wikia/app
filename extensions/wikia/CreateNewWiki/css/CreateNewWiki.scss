@@ -7,8 +7,8 @@
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons';
 
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
@@ -49,8 +49,8 @@
 
 #CreateNewWiki {
 	background: $wds-color-white;
-	box-sizing: border-box;
 	border: 1px solid $wds-color-faint-gray;
+	box-sizing: border-box;
 	color: $wds-color-dark-gray;
 	font-family: $wds-font-family;
 	font-size: $wds-typescale-size-base;
@@ -69,10 +69,10 @@
 	}
 
 	h2 {
-		border: none;
+		border: 0;
 		font-size: $wds-typescale-size-plus-2;
 		font-weight: bold;
-		margin: 0 0 $content-spacing-regular 0;
+		margin: 0 0 $content-spacing-regular;
 		overflow: visible;
 		padding: 0;
 	}
@@ -114,7 +114,7 @@
 
 	textarea,
 	input[type=text] {
-		border: none;
+		border: 0;
 		border-bottom: 1px solid $wds-color-mist-gray;
 		font-family: inherit;
 		font-size: inherit;
@@ -309,7 +309,7 @@
 	}
 
 	.floating-label {
-		@include transition(font-size top, 0.1s, ease-in, 0);
+		@include transition(font-size top, .1s, ease-in, 0);
 
 		color: $wds-color-light-gray;
 		left: 0;
@@ -341,74 +341,71 @@
 		&.cnw-select-vertical {
 			margin-bottom: 0;
 		}
+	}
 
-		.wds-dropdown {
-			border-bottom: 1px solid $wds-color-mist-gray;
-			width: $cnw-input-width-large;
+	.wds-dropdown {
+		border-bottom: 1px solid $wds-color-mist-gray;
+		width: $cnw-input-width-large;
 
-			&.input-error {
-				border-color: $wds-color-alert;
-			}
+		&.input-error {
+			border-color: $wds-color-alert;
+		}
 
-			.default-value {
-				line-height: $wds-line-height;
-			}
+		.default-value {
+			line-height: $wds-line-height;
+		}
 
+		svg {
+			fill: $wds-color-light-gray;
+			float: right;
+			margin-top: 4px;
+		}
+
+		&.wds-is-active {
 			svg {
-				fill: $wds-color-light-gray;
-				float: right;
-				margin-top: 4px;
-			}
-
-			&.wds-is-active {
-				svg {
-					@include transform-rotate(180deg);
-				}
-			}
-
-			.wds-dropdown__content {
-				overflow: auto;
-				width: $cnw-input-width-large;
-
-				&.wiki-language-dropdown {
-					max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
-				}
-
-				&.wiki-vertical-dropdown {
-					max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
-				}
-
-				.wds-list {
-					cursor: pointer;
-					list-style-type: none;
-					margin: 0;
-					padding: 0;
-
-					.spacer {
-						color: $wds-color-dark-gray;
-						font-size: $wds-typescale-size-base;
-						font-weight: bold;
-						line-height: .9;
-					}
-
-					li {
-						margin: 0;
-						padding: $content-spacing-small $content-spacing-regular;
-					}
-
-					li.spacer {
-						cursor: default;
-						padding: $content-spacing-regular-minus $content-spacing-regular;
-					}
-
-					li:not(.spacer):hover {
-						color: $wds-color-link;
-						background: $wds-color-off-white;
-					}
-
-				}
+				@include transform-rotate(180deg);
 			}
 		}
+
+		.wds-dropdown__content {
+			overflow: auto;
+			width: $cnw-input-width-large;
+
+			&.wiki-language-dropdown {
+				max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
+			}
+
+			&.wiki-vertical-dropdown {
+				max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
+			}
+		}
+	}
+
+	.wds-list {
+		cursor: pointer;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		.spacer {
+			color: $wds-color-dark-gray;
+			cursor: default;
+			font-size: $wds-typescale-size-base;
+			font-weight: bold;
+			line-height: .9;
+			padding: $content-spacing-regular-minus $content-spacing-regular;
+		}
+
+		li {
+			margin: 0;
+			padding: $content-spacing-small $content-spacing-regular;
+		}
+
+		li:not(.spacer):hover {
+			background: $wds-color-off-white;
+			color: $wds-color-link;
+		}
+
 	}
 }
 
