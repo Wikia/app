@@ -44,11 +44,17 @@
 				});
 
 				window.addEventListener('load', function () {
-					var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
+					var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.'),
+							bucket = getBucket();
+
+					if (bucket) {
+						mmsDomain += '/mms/qa_set_partition?bucket=' + bucket;
+					}
 
 					// THIS HAS TO BE SET AFTER MMSClient and Messaging libraries are loaded
 					window._sp_.config.mms_domain = mmsDomain;
 					window._sp_.config.mms_client_data_callback = function (mms) {
+						console.log("****** BOGNA", arguments);
 						// IF THERE IS NO MESSAGE DEFINED BUT USER MATCHES THE KEY-VAL - MSG_ID = 0
 						// IF USER DOESN'T MATCH THE KEY-VAL - MSG_ID = 0
 						// IF NOTHING CONFIGURED IN SP - CMPGN_ID = 0
@@ -70,6 +76,22 @@
 					helper.verifyContent();
 				});
 			});
+		}
+
+		function getBucket() {
+			var vars, query, i, pair;
+
+			if (window.location.search.substring(1).indexOf('mmsbucket') > -1) {
+				query = window.location.search.substring(1);
+				vars = query.split('&');
+
+				for (i = 0; i < vars.length; i++) {
+					pair = vars[i].split('=');
+					if (decodeURIComponent(pair[0]) == 'mmsbucket') {
+						return parseInt(decodeURIComponent(pair[1]));
+					}
+				}
+			}
 		}
 	});
 
