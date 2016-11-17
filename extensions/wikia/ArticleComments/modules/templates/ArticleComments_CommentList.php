@@ -9,6 +9,7 @@
 			<? if ( isset( $commentArr[ 'level1' ] ) && $commentArr[ 'level1' ] instanceof ArticleComment ): ?>
 				<?= $app->getView( 'ArticleComments', 'Comment', [
 						'comment' => $commentArr[ 'level1' ]->getData( $useMaster ),
+						'commentContent' => $commentArr[ 'level1' ]->getText(),
 						'commentId' => $commentId,
 						'rowClass' => $rowClass,
 						'level' => 1,
@@ -23,6 +24,7 @@
 						<? if ( $reply instanceof ArticleComment ): ?>
 							<?= $app->getView( 'ArticleComments', 'Comment', [
 									'comment' => $reply->getData( $useMaster ),
+									'commentContent' => $reply->getText(),
 									'commentId' => $commentId,
 									'rowClass' => $rowClass,
 									'level' => 2
