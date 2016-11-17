@@ -296,6 +296,14 @@ class WallMessage {
 		return $out;
 	}
 
+	/**
+	 * @param string $body
+	 * @param User $user
+	 * @param string $summary
+	 * @param bool $force
+	 * @param bool $preserveMetadata
+	 * @return string
+	 */
 	public function doSaveComment( $body, $user, $summary = '', $force = false, $preserveMetadata = false ) {
 		wfProfileIn( __METHOD__ );
 
@@ -306,7 +314,13 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
-		$out = $this->getArticleComment()->parseText( $body );
+
+		$articleComment = $this->getArticleComment();
+
+		// parse the new / updated message
+		$articleComment->setRawText( $body );
+		$out = $articleComment->getText();
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -903,13 +917,7 @@ class WallMessage {
 	}
 
 	public function getHeadItems() {
-		$ac = $this->getArticleComment();
-
-		if ( !empty( $ac->mHeadItems ) ) {
-			return $ac->mHeadItems;
-		}
-
-		return [ ];
+		return $this->getArticleComment()->getHeadItems();
 	}
 
 	public function getCreateTime( $format = TS_ISO_8601 ) {
@@ -1524,7 +1532,6 @@ class WallMessage {
 	private function updateParentLastComment( $useMaster, CommentsIndex $commentsIndex ) {
 		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 	}
 
 	protected function markInProps( $prop ) {
