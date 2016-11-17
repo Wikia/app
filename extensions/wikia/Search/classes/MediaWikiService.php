@@ -4,6 +4,7 @@
  * @author relwell
  */
 namespace Wikia\Search;
+
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -469,8 +470,17 @@ class MediaWikiService
 		$title = $searchEngine->getNearMatch( $term );
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if ( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			$this->getPageFromPageId( $articleId );
-			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
+			$page = $this->getPageFromPageId( $articleId );
+			if ( $page instanceof \Article ) {
+				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-1306 - Invalid article ID', [
+					'exception' => new \BadTitleError(),
+					'articleId' => $articleId,
+					'ns' => $title->getNamespace(),
+					'titleText' => $title->getPrefixedText()
+				] );
+			}
 		}
 		return $articleMatch;
 	}
@@ -899,7 +909,7 @@ class MediaWikiService
 		$page = \Article::newFromID( $pageId );
 
 		if ( $page === null ) {
-			throw new \Exception( 'Invalid Article ID' );
+			return null;
 		}
 
 		$redirectTarget = null;
