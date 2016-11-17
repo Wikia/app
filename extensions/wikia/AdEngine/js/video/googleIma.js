@@ -3,8 +3,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader'
 ], function (scriptLoader) {
 	'use strict';
-	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
-		videoMock = document.createElement('video');
+	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js';
 
 	function init() {
 		return scriptLoader.loadScript(imaLibraryUrl);
@@ -28,11 +27,12 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 	function createIma() {
 		return {
-			container: null,
-			isAdsManagerLoaded: false,
 			adDisplayContainer: null,
 			adsLoader: null,
 			adsManager: null,
+			container: null,
+			isAdsManagerLoaded: false,
+			videoMock: document.createElement('video'),
 			playVideo: function (width, height, callbacks) {
 				var self = this,
 					callback = function () {
@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
-			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
+			ima.adsManager = adsManagerLoadedEvent.getAdsManager(ima.videoMock, adsRenderingSettings);
 			ima.isAdsManagerLoaded = true;
 		}
 
