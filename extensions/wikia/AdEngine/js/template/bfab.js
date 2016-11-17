@@ -10,36 +10,58 @@ define('ext.wikia.adEngine.template.bfab', [
 ], function (DOMElementTweaker, slotTweaker, videoAdFactory, log, doc, win, recoveryTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfab',
+	var animationDuration = 400,
+		logGroup = 'ext.wikia.adEngine.template.bfab',
 		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD'),
-		imageContainer;
+		imageContainer,
+		slotSizes;
 
-	function calculateVideoSize(element, videoAspectRatio) {
+	function calculateSizes(element, params) {
 		return {
 			width: element.clientWidth,
-			height: element.clientWidth / videoAspectRatio
+			height: element.clientWidth / params.videoAspectRatio,
+			adHeight: element.clientWidth / params.aspectRatio,
+			videoHeight: element.clientWidth / params.videoAspectRatio
 		};
 	}
 
 	function showVideo(videoContainer) {
+		slot.style.height = slotSizes.adHeight + 'px';
 		DOMElementTweaker.hide(imageContainer, false);
 		DOMElementTweaker.removeClass(videoContainer, 'hidden');
+		setTimeout(function () {
+			slot.style.height = slotSizes.videoHeight + 'px';
+		}, 0);
 
+		setTimeout(function () {
+			slot.style.height = '';
+		}, animationDuration);
 	}
 
 	function hideVideo(videoContainer) {
-		DOMElementTweaker.hide(videoContainer, false);
-		DOMElementTweaker.removeClass(imageContainer, 'hidden');
+		slot.style.height = slotSizes.videoHeight + 'px';
+		setTimeout(function () {
+			slot.style.height = slotSizes.adHeight + 'px';
+		}, 0);
 
+		setTimeout(function () {
+			DOMElementTweaker.hide(videoContainer, false);
+			DOMElementTweaker.removeClass(imageContainer, 'hidden');
+		}, animationDuration);
+
+		setTimeout(function () {
+			slot.style.height = '';
+		}, animationDuration);
 	}
 
 	function initializeVideoAd(iframe, params) {
 		try {
+			slotSizes = calculateSizes(iframe, params);
 			imageContainer = slot.querySelector('div');
-			var size = calculateVideoSize(iframe, params.videoAspectRatio),
-				video = videoAdFactory.create(
-				size.width,
-				size.height,
+
+			var video = videoAdFactory.create(
+				slotSizes.width,
+				slotSizes.height,
 				slot,
 				{
 					src: 'gpt',
@@ -50,7 +72,7 @@ define('ext.wikia.adEngine.template.bfab', [
 			);
 
 			win.addEventListener('resize', function () {
-				var size = calculateVideoSize(iframe, params.videoAspectRatio);
+				var size = calculateSizes(iframe, params);
 				video.resize(size.width, size.height);
 			});
 
