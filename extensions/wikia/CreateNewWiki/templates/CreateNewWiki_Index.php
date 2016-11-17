@@ -36,7 +36,7 @@
 					<div class="wiki-domain-error error-msg"></div>
 				</div>
 
-				<div class="cnw-select">
+				<div class="cnw-select cnw-select-language">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
@@ -83,25 +83,23 @@
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
 			<form name="desc-form" class="clearfix">
-				<div class="desc-block">
-					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
-					<div class="checkbox" id="all-ages-div"
-						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
-						<label>
-							<div class="checkbox-styled">
-								<input id="allAges" type="checkbox" name="all-ages" value="1">
-								<label for="allAges"></label>
-							</div>
-							<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
-						</label>
-						<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
-							<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
+				<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
+				<div class="checkbox" id="all-ages-div"
+					<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
+					<label>
+						<div class="checkbox-styled">
+							<input id="allAges" type="checkbox" name="all-ages" value="1">
+							<label for="allAges"></label>
 						</div>
+						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+					</label>
+					<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
+						<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
 					</div>
 				</div>
 
 				<!-- Hub Category / Vertical -->
-				<div class="cnw-select validated">
+				<div class="cnw-select cnw-select-vertical">
 					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
