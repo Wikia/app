@@ -1,4 +1,4 @@
-/*global define, google*/
+/* global define, google, Promise */
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader'
 ], function (scriptLoader) {
@@ -10,7 +10,17 @@ define('ext.wikia.adEngine.video.googleIma', [
 		isAdsManagerLoaded = false,
 		videoMock = document.createElement('video');
 
+	function isInitialized() {
+		return !!window.google && !!window.google.ima;
+	}
+
 	function init() {
+		if (isInitialized()) {
+			return new Promise(function (resolve, reject) {
+				resolve();
+			});
+		}
+
 		return scriptLoader.loadScript(imaLibraryUrl);
 	}
 

@@ -229,6 +229,12 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	margin: 0 0 23px 0;
 	text-align: center;
 	width: 100%;
+
+	overflow: hidden;
+	-webkit-transition: height 0.4s ease;
+	-moz-transition: height 0.4s ease;
+	-o-transition: height 0.4s ease;
+	transition: height 0.4s ease;
 }
 
 /** Box ads **/
