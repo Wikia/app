@@ -56,13 +56,13 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	}
 
 	function animate(startAspectRatio, finalAspectRatio) {
-		var windowWidth = document.body.clientWidth;
+		function calcHeight(aspectRatio) {
+			return document.body.clientWidth / aspectRatio + 'px';
+		}
 
-		adSlot.style.height = windowWidth / startAspectRatio + 'px';
+		adSlot.style.height = calcHeight(startAspectRatio);
+		adSlot.style.height = calcHeight(finalAspectRatio);
 
-		setTimeout(function () {
-			adSlot.style.height = windowWidth / finalAspectRatio + 'px';
-		}, 0);
 		setTimeout(function () {
 			adSlot.style.height = '';
 		}, animationDuration);
