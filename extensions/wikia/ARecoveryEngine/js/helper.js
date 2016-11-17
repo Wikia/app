@@ -48,10 +48,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
-	function isMMSEnabled() {
-		return !!context.opts.sourcePointMMS;
-	}
-
 	function isRecoverable(slotName, recoverableSlots) {
 		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
@@ -100,7 +96,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		getSafeUri: getSafeUri,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isMMSEnabled: isMMSEnabled,
 		isRecoverable: isRecoverable,
 		isRecoveryEnabled: isRecoveryEnabled,
 		track: track,

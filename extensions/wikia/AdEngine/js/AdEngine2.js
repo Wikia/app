@@ -10,18 +10,16 @@ define('ext.wikia.adEngine.adEngine', [
 	'wikia.lazyqueue',
 	'wikia.log',
 	'ext.wikia.aRecoveryEngine.recovery.helper'
-], function (
-	adDecoratorLegacyParamFormat,
-	eventDispatcher,
-	adSlot,
-	slotTracker,
-	slotTweaker,
-	registerHooks,
-	doc,
-	lazyQueue,
-	log,
-	recoveryHelper
-) {
+], function (adDecoratorLegacyParamFormat,
+			 eventDispatcher,
+			 adSlot,
+			 slotTracker,
+			 slotTweaker,
+			 registerHooks,
+			 doc,
+			 lazyQueue,
+			 log,
+			 recoveryHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -198,15 +196,9 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots (' + adslots.length + ')'], 'debug', logGroup);
 
-		if (recoveryHelper.isMMSEnabled()) {
-			window.addEventListener('arecovery.mms.empty', function () {
-				adslots.start();
-			});
-		} else {
-			adslots.start();
-		}
+		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);
 	}
