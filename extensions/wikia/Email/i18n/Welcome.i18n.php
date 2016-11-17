@@ -156,7 +156,7 @@ $messages['ko'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-welcome-subject' => 'Welcome to Wikia, $1!',
+	'emailext-welcome-subject' => 'Welcome to Fandom, $1!',
 	'emailext-welcome-summary' => 'Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you.',
 	'emailext-welcome-summary-extended' => 'So what’s next?',
 	'emailext-welcome-summary-extended-tips' => 'Here are 5 ways you can get the most out of Fandom:',
