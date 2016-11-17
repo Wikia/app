@@ -279,7 +279,6 @@ class ExternalUser_Wikia extends ExternalUser {
                         'user_id' => null,
                         'user_name' => $User->mName,
                         'user_real_name' => $realname,
-                        'user_password' => $User->mPassword,
                         'user_newpassword' => '',
                         'user_email' => $email,
                         'user_touched' => '',
@@ -448,7 +447,6 @@ class ExternalUser_Wikia extends ExternalUser {
 				'`user`',
 				array( /* SET */
 					'user_name' => $this->mUser->mName,
-					'user_password' => $this->mUser->mPassword,
 					'user_newpassword' => $this->mUser->mNewpassword,
 					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
 					'user_real_name' => $this->mUser->mRealName,

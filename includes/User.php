@@ -823,15 +823,24 @@ class User {
 	public function getPasswordValidity( $password ) {
 		$result = self::heliosClient()->validatePassword( $password, $this->getName() );
 
-		if ( !empty( $result->success ) && $result->success == true ) {
+		if ( !empty( $result->success ) && $result->success ) {
 			return true;
 		}
 
-		if ( !empty( $result->errors ) ) {
+		if ( empty( $result->errors ) ) {
+			return false;
+		}
+
+		if ( count( $result->errors ) == 1 ) {
 			return $result->errors[0]->description;
 		}
 
-		return false;
+		$return = [];
+		foreach ( $result->errors as $errors ) {
+			$return[] = $errors->description;
+		}
+
+		return $return;
 	}
 
 	/**
@@ -1986,7 +1995,9 @@ class User {
 			return;
 		}
 		$this->load();
-		if ( wfReadOnly() ) { return; }
+		if ( wfReadOnly() ) {
+			return;
+		}
 		if( $this->mId ) {
 			$this->mTouched = self::newTouchedTimestamp();
 
@@ -2073,16 +2084,13 @@ class User {
 		$heliosClient = self::heliosClient();
 		$heliosPasswordChange = null;
 
-		try {
-			$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
-			if ( !$heliosPasswordChange ) {
-				throw new PasswordError( wfMessage( 'externaldberror' )->text() );
-			}
-		} catch ( \Exception $e ) {
-			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
+		$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
+
+		if ( !$heliosPasswordChange ) {
+			WikiaLogger::instance()->error( 'Helios password set communication failed', [
 				'userId' => $this->getId(),
-				'err'    => $e,
 			] );
+			throw new PasswordError( wfMessage( 'externaldberror' )->text() );
 		}
 
 		if ( !empty( $heliosPasswordChange->errors ) ) {
@@ -3133,8 +3141,12 @@ class User {
 	 */
 	public function saveSettings() {
 		$this->load();
-		if ( wfReadOnly() ) { return; }
-		if ( 0 == $this->mId ) { return; }
+		if ( wfReadOnly() ) {
+			return;
+		}
+		if ( 0 == $this->mId ) {
+			return;
+		}
 
 		$this->mTouched = self::newTouchedTimestamp();
 
