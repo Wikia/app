@@ -1,15 +1,18 @@
 <?php
 
 abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEngineBase {
-	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
-	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
-	const CACHE_BUSTER = 15;     // increase this any time the local files change
+	// one day for fresh scripts from SourcePoint
+	const TTL_SCRIPTS = 86400;
+	// one hour for old scripts (served if we fail to fetch fresh scripts)
+	const TTL_GRACE = 3600;
+	// increase this any time the local files change
+	const CACHE_BUSTER = 15;
 	const REQUEST_TIMEOUT = 30;
 	const FALLBACK_SCRIPT_BASE_URL = 'project43.wikia.com';
+	// FALLBACK_SCRIPT_URL should be set in classes extending this class
+	const FALLBACK_SCRIPT_URL = null;
 	// SCRIPT_URL should be set in classes extending this class
 	const SCRIPT_URL = null;
-
-	protected $fallbackScriptUrl = null;
 
 	protected function getMemcKey() {
 		return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
@@ -25,7 +28,7 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 		$scripts = [
 			( new ResourceLoaderScript() )
 				->setTypeLocal()
-				->setValue( $this->fallbackScriptUrl )
+				->setValue( static::FALLBACK_SCRIPT_URL )
 		];
 		$data = [
 			'script' => $this->generateData( $scripts ),
