@@ -17,18 +17,21 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		var vastUrl = vastUrlBuilder.build(width / height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
+		var ima = googleIma.setupIma(vastUrl, adSlot, width, height);
 		return {
 			adSlot: adSlot,
 			width: width,
 			height: height,
-			videoContainer: googleIma.setupIma(vastUrl, adSlot, width, height),
+			videoContainer: ima.container,
+			ima: ima,
 			play: function (onVideoLoaded, onVideoEnded) {
 				var self = this;
 
-				googleIma.playVideo(this.width, this.height, {
+				googleIma.playVideo(ima, this.width, this.height, {
 					onVideoEnded: function () {
 						onVideoEnded(self.videoContainer);
-						self.videoContainer = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
+						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
+						self.videoContainer = self.ima.container;
 					},
 					onVideoLoaded: function () {
 						onVideoLoaded(self.videoContainer);
@@ -38,7 +41,7 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			resize: function (width, height) {
 				this.width = width;
 				this.height = height;
-				googleIma.resize(width, height);
+				googleIma.resize(this.ima, width, height);
 			}
 		};
 	}
