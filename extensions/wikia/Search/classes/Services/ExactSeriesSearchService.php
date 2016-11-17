@@ -9,7 +9,7 @@ class ExactSeriesSearchService extends EntitySearchService {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EXACT_MATCH_FIELD = "tv_series_mv_em";
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );

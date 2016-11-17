@@ -10,11 +10,12 @@ $color-borders: #CECECE;
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/buttons";
 @import "skins/oasis/css/core/typography";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 body {
 	background: #F5F5F5;
 	color: #666;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
 	margin: 0;
 	overflow: hidden;

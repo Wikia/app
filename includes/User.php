@@ -495,9 +495,10 @@ class User {
 	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 *
-	 * @param \WebRequest $request the HTTP request data as an object
+	 * @param  WebRequest $request The HTTP request data as an object
 	 *
-	 * @return \User on successful authentication
+	 * @return User                A logged in User object on successful authentication,
+	 *                             or an anonymous User object on failure
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		global $wgMemc;
@@ -517,7 +518,7 @@ class User {
 			$user = self::newFromId( $tokenInfo->user_id );
 			$user->setGlobalAuthToken( $token );
 
-			// Dont' return the user object if it's disabled
+			// Don't return the user object if it's disabled
 			// @see SERVICES-459
 			if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 				$cookieHelper->clearAuthenticationCookie( $request->response() );
@@ -958,12 +959,27 @@ class User {
 				array( 'rev_user' => $uid ),
 				__METHOD__
 			);
-			$dbw->update(
-				'user',
-				array( 'user_editcount' => $count ),
-				array( 'user_id' => $uid ),
-				__METHOD__
-			);
+
+			// Wikia change - begin
+			try {
+				$dbw->update(
+					'user',
+					[ 'user_editcount' => $count ],
+					[ 'user_id' => $uid ],
+					__METHOD__
+				);
+			} catch ( DBQueryError $dbQueryError ) {
+				// Wikia change
+				// SUS-1221: Some of these UPDATE queries are failing
+				// If this happens let's log exception details to try to identify root cause
+				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
+					'exception' => $dbQueryError,
+					'userId' => $uid,
+					'editCount' => $count
+				] );
+			}
+			// Wikia change - end
+
 		} else {
 			$count = $field;
 		}

@@ -108,7 +108,8 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
-		'//extensions/wikia/AdEngine/js/video/uapVideoAd.js',
+		'//extensions/wikia/AdEngine/js/video/googleIma.js',
+		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
@@ -908,11 +909,12 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
-		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
+		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
-		'//extensions/wikia/AdEngine/js/video/uapVideoAd.js',
+		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
+		'//extensions/wikia/AdEngine/js/video/googleIma.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
@@ -2387,21 +2389,6 @@ $config['delayed_hover_js'] = [
 	],
 ];
 
-$config['njord_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery.ui/jquery.ui.widget.js',
-		'//resources/jquery.ui/jquery.ui.position.js',
-		'//resources/jquery.ui/jquery.ui.mouse.js',
-		'//resources/jquery.ui/jquery.ui.draggable.js',
-		'//resources/jquery.ui/jquery.ui.droppable.js',
-		'//extensions/wikia/NjordPrototype/scripts/jquery.caret.js',
-		'//extensions/wikia/NjordPrototype/scripts/Njord.js',
-	],
-];
-
 $config['upload_photos_dialog_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -3056,6 +3043,21 @@ $config['flow_tracking_create_page_js'] = [
 	],
 ];
 
+/* Page header experiments */
+$config['page_header_experiments_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PageHeaderExperiments/js/localSearchSuggestions.js'
+	]
+];
+
+$config['page_header_experiments_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/PageHeaderExperiments/styles/localSearchSuggestions.scss'
+	]
+];
+
 /* StoriesLinkTag */
 $config['storieslink_tag_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -3070,5 +3072,50 @@ $config['storieslink_tag_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
+	],
+];
+
+$config['oasislight_top_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasislight' ],
+	'assets' => [
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/lazyqueue.js',
+		'//extensions/wikia/OasisLight/scripts/jquery-3.1.1.slim.min.js',
+		'//extensions/wikia/OasisLight/scripts/jquery-extra.js',
+	],
+];
+
+$config['oasislight_bottom_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasislight' ],
+	'assets' => [
+		# WikiHeader
+		'//skins/oasis/js/isTouchScreen.js',
+		'//skins/oasis/js/WikiHeader.js',
+
+		# ImageLazyLoad
+		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/modules/browserDetect.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/modules/window.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+
+		# Header, Footer
+		'//resources/wikia/modules/history.js',
+		'#group_tracker_js',
+		'#group_design_system_js',
+
+		# TOC
+		'//resources/jquery/jquery.cookie.js',
+		'//extensions/wikia/TOC/js/modules/toc.mustache.js',
+		'#group_toc_js',
+
+		# Lightbox
+		'//extensions/wikia/OasisLight/scripts/heavybox.js',
 	],
 ];
