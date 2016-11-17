@@ -184,9 +184,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
 		}
 
-		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
-		if ( !empty( $wikiImages[ $this->wg->CityId ] ) ) {
-			$wikiVariables[ 'image' ] = $wikiImages[ $this->wg->CityId ];
+		// get wiki image from Curated Main Pages (SUS-474)
+		$communityData = ( new CommunityDataService( $this->wg->CityId ) )->getCommunityData();
+
+		if ( !empty( $communityData[ 'image_id' ] ) ) {
+			$url = CuratedContentHelper::getImageUrl( $communityData[ 'image_id' ], self::WIKI_IMAGE_SIZE );
+			$wikiVariables[ 'image' ] = $url;
 		}
 
 		$wikiVariables[ 'specialRobotPolicy' ] = null;

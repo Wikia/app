@@ -25,19 +25,19 @@ class RemoveNjordTag extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgUser;
+		global $wgDBname, $wgUser;
 
 		// attribute automated edits to FandomBot
-		$wgUser = User::newFromName( 'FandomBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$this->dryRun = !$this->hasOption( 'process' );
 
 		if ( $this->dryRun ) {
-			$this->output( 'Dry run for ' . $wgCityId . PHP_EOL );
+			$this->output( 'Dry run for ' . $wgDBname . PHP_EOL );
 		} else {
 			$this->output( PHP_EOL );
 			$this->output( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' . PHP_EOL );
-			$this->output( 'REAL DESTRUCTIVE OPERATION: Removal for ' . $wgCityId . PHP_EOL );
+			$this->output( 'REAL DESTRUCTIVE OPERATION: Removal for ' . $wgDBname . PHP_EOL );
 			$this->output( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' . PHP_EOL );
 			$this->output( PHP_EOL );
 		}
@@ -46,7 +46,7 @@ class RemoveNjordTag extends Maintenance {
 		$this->removeNjordPagePropsData();
 		$this->output( PHP_EOL );
 
-		$this->output( 'Done for ' . $wgCityId . PHP_EOL );
+		$this->output( $wgDBname . ': cleanup completed' . PHP_EOL );
 	}
 
 	private function removeTag() {

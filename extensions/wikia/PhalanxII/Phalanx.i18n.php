@@ -139,6 +139,8 @@ Please [[Special:Contact|contact Fandom]] about the problem.<br />The blocker al
 	'phalanx-section-type-wiki-creation' => 'Wiki creation',
 	'phalanx-section-type-questions' => 'Questions',
 	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Fandom network.',
+	'phalanx-required-filter' => '*This field is required',
+	'phalanx-required-type' => '*At least one of checkboxes is required',
 ];
 
 $messages['qqq'] = [
@@ -164,6 +166,8 @@ $messages['qqq'] = [
 	'phalanx-user-block-withreason-exact' => 'Missing documentation',
 	'phalanx-user-block-withreason-ip' => 'Missing documentation',
 	'phalanx-user-block-withreason-similar' => 'Missing documentation',
+	'phalanx-required-filter' => 'Error message for filter field',
+	'phalanx-required-type' => 'Error message for type checkboxes',
 ];
 
 $messages['ar'] = [

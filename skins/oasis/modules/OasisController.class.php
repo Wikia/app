@@ -66,6 +66,7 @@ class OasisController extends WikiaController {
 		$this->ivw3 = null;
 		$this->krux = null;
 		$this->ubisoft = null;
+		$this->netzathleten = null;
 
 		wfProfileOut(__METHOD__);
 	}
