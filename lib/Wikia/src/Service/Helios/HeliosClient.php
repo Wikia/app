@@ -2,8 +2,7 @@
 
 namespace Wikia\Service\Helios;
 
-interface HeliosClient
-{
+interface HeliosClient {
 
 	/**
 	 * A shortcut method for login requests.
@@ -67,4 +66,13 @@ interface HeliosClient
 	 * @return mixed
 	 */
 	public function validatePassword( $password, $name );
+
+	/**
+	 * Remove the password
+	 *
+	 * @param $userId int
+	 *
+	 * @return mixed
+	 */
+	public function deletePassword( $userId );
 }

@@ -2081,10 +2081,25 @@ class User {
 	 * @throws PasswordError on failure
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
-		$heliosClient = self::heliosClient();
+		if(is_null($password)){
+			$this->heliosDeletePassword();
+		}else{
+			$this->heliosSetNewPassword($password);
+		}
+
+		$this->resetNewPasswordAndSetToken();
+
+		if ( $forceLogout ) {
+			self::heliosClient()->forceLogout( $this->getId() );
+		}
+
+		return true;
+	}
+
+	private function heliosSetNewPassword($password){
 		$heliosPasswordChange = null;
 
-		$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
+		$heliosPasswordChange = self::heliosClient()->setPassword( $this->getId(), $password );
 
 		if ( !$heliosPasswordChange ) {
 			WikiaLogger::instance()->error( 'Helios password set communication failed', [
@@ -2100,14 +2115,10 @@ class User {
 			] );
 			throw new PasswordError( wfMessage( $heliosPasswordChange->errors[0]->description )->text() );
 		}
+	}
 
-		$this->resetNewPasswordAndSetToken();
-
-		if ( $forceLogout ) {
-			$heliosClient->forceLogout( $this->getId() );
-		}
-
-		return true;
+	private function heliosDeletePassword(){
+		self::heliosClient()->deletePassword($this->getId());
 	}
 
 	/**
