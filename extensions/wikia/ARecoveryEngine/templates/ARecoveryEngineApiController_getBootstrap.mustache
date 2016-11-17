@@ -3,21 +3,18 @@
 	require([
 		"ext.wikia.adEngine.adContext"
 	], function (adContext) {
-		var context = adContext.getContext();
+		var context = adContext.getContext(),
+		logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
 
-		if (context.opts.sourcePointRecovery === true) {
-			{{{code}}}
-
+		if (context.opts.sourcePointBootstrap === true) {
 			window._sp_ = window._sp_ || {};
 			window._sp_.config = window._sp_.config || {};
 			window._sp_.config.account_id = 106;
-			window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
-			window._sp_.config.enable_rid = true;
 
-			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+			{{{code}}}
 
 			window._sp_.config.content_control_callback = function () {
-				var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
+				window.Wikia.log('content_control_callback called', 'debug', logGroup);
 				if (!window.wgUserName) {
 					document.getElementById('WikiaArticle').style.display = 'none';
 					document.getElementById('WikiaArticleMsg').style.display = 'block';
@@ -28,13 +25,36 @@
 						});
 					});
 				} else {
-					window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
+					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], 'debug', logGroup);
 				}
 			};
+		}
 
-			if (context.opts.sourcePointMMS === true) {
-				window._sp_.mms = window._sp_.mms || {};
-				window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+		if (context.opts.sourcePointRecovery === true) {
+			window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
+			window._sp_.config.enable_rid = true;
+
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+
+			window.addEventListener('load', function () {
+				require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+					helper.verifyContent();
+				});
+			});
+		} else if (context.opts.sourcePointMMS === true) {
+			var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
+
+			window._sp_.mms = window._sp_.mms || {};
+			window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMessaging');
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMMSClient');
+
+			window.addEventListener('load', function() {
+				window._sp_.config.mms_domain = mmsDomain;
+				window._sp_.config.mms_client_data_callback = function () {
+					window.Wikia.log(['getBootstrap', 'mms_client_data_callback called', arguments], 'debug', logGroup);
+				};
 
 				window._sp_.mms.cmd.push(function () {
 					window._sp_.mms.setTargeting("showmessage", "yes");
@@ -42,56 +62,9 @@
 				window._sp_.mms.cmd.push(function () {
 					window._sp_.mms.startMsg();
 				});
-
-				window.addEventListener('load', function () {
-					var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.'),
-							bucket = getBucket();
-
-					if (bucket) {
-						mmsDomain += '/mms/qa_set_partition?bucket=' + bucket;
-					}
-
-					// THIS HAS TO BE SET AFTER MMSClient and Messaging libraries are loaded
-					window._sp_.config.mms_domain = mmsDomain;
-					window._sp_.config.mms_client_data_callback = function (mms) {
-						console.log("****** BOGNA", arguments);
-						// IF THERE IS NO MESSAGE DEFINED BUT USER MATCHES THE KEY-VAL - MSG_ID = 0
-						// IF USER DOESN'T MATCH THE KEY-VAL - MSG_ID = 0
-						// IF NOTHING CONFIGURED IN SP - CMPGN_ID = 0
-						// IF USER NOT ASSIGNED TO BUCKET - PRTN_UUID = NULL
-						if (mms.msgID === 0 || mms.cmpgn_id === 0 || mms.prtn_uuid === null) {
-							require(['ext.wikia.adEngine.utils.eventDispatcher'], function (eventDispatcher) {
-								eventDispatcher.dispatch('arecovery.mms.empty');
-							});
-						}
-					};
-				});
-
-				window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMessaging');
-				window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMMSClient');
-			}
-
-			window.addEventListener('load', function () {
-				require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
-					helper.verifyContent();
-				});
 			});
-		}
-
-		function getBucket() {
-			var vars, query, i, pair;
-
-			if (window.location.search.substring(1).indexOf('mmsbucket') > -1) {
-				query = window.location.search.substring(1);
-				vars = query.split('&');
-
-				for (i = 0; i < vars.length; i++) {
-					pair = vars[i].split('=');
-					if (decodeURIComponent(pair[0]) == 'mmsbucket') {
-						return parseInt(decodeURIComponent(pair[1]));
-					}
-				}
-			}
+		} else {
+			window.Wikia.log(['getBootstrap', 'MMS and Recovery are disabled'], 'debug', logGroup);
 		}
 	});
 
