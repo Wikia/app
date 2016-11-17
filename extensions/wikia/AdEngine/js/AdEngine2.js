@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
-	'wikia.log',
-	'ext.wikia.aRecoveryEngine.recovery.helper'
+	'wikia.log'
 ], function (adDecoratorLegacyParamFormat,
 			 eventDispatcher,
 			 adSlot,
@@ -18,8 +17,7 @@ define('ext.wikia.adEngine.adEngine', [
 			 registerHooks,
 			 doc,
 			 lazyQueue,
-			 log,
-			 recoveryHelper) {
+			 log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';

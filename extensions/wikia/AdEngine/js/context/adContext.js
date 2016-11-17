@@ -80,10 +80,12 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery
-		if (!noExternals && context.opts.sourcePointRecovery !== false) {
-			if (geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)) {
-				context.opts.sourcePointRecovery = true;
-			}
+		if (
+			!noExternals &&
+			context.opts.sourcePointRecovery !== false &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)
+		) {
+			context.opts.sourcePointRecovery = true;
 		}
 
 		// SourcePoint MMS
