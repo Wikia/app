@@ -26,22 +26,49 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return videoAdContainer;
 	}
 
-	function setupIma(vastUrl, adContainer, width, height) {
-		var ima = {
+	function createIma() {
+		return {
 			container: null,
 			isAdsManagerLoaded: false,
 			adDisplayContainer: null,
 			adsLoader: null,
-			adsManager: null
-		};
+			adsManager: null,
+			playVideo: function (width, height, callbacks) {
+				var self = this,
+					callback = function () {
+						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
+						self.adsManager.start();
+						self.adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, callbacks.onVideoEnded);
+						self.adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, callbacks.onVideoLoaded);
+					};
 
-		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
-		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);
-		ima.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, function (adsManagerLoadedEvent) {
+				if (this.isAdsManagerLoaded) {
+					callback();
+				} else {
+					this.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
+				}
+			},
+			resize: function(width, height){
+				if (this.adsManager) {
+					this.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+				}
+			}
+		};
+	}
+
+	function setupIma(vastUrl, adContainer, width, height) {
+		var ima = createIma();
+
+		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
 			ima.isAdsManagerLoaded = true;
-		}, false);
+		}
+
+		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
+		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);
+		ima.adsLoader.addEventListener(
+			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, adsManagerLoadedCallback, false);
 		ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
 		ima.adDisplayContainer.initialize();
 		ima.container = prepareVideoAdContainer(adContainer.querySelector('div'));
@@ -49,33 +76,8 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return ima;
 	}
 
-	function playVideo(ima, width, height, callbacks) {
-		runWhenAdsManagerLoaded(ima, function () {
-			ima.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
-			ima.adsManager.start();
-			ima.adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, callbacks.onVideoEnded);
-			ima.adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, callbacks.onVideoLoaded);
-		});
-	}
-
-	function runWhenAdsManagerLoaded(ima, callback) {
-		if (ima.isAdsManagerLoaded) {
-			callback();
-		} else {
-			ima.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
-		}
-	}
-
-	function resize(ima, width, height) {
-		if (ima.adsManager) {
-			ima.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
-		}
-	}
-
 	return {
 		init: init,
-		playVideo: playVideo,
-		resize: resize,
 		setupIma: setupIma
 	};
 });

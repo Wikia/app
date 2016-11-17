@@ -17,31 +17,28 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		var vastUrl = vastUrlBuilder.build(width / height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
-		var ima = googleIma.setupIma(vastUrl, adSlot, width, height);
 		return {
 			adSlot: adSlot,
 			width: width,
 			height: height,
-			videoContainer: ima.container,
-			ima: ima,
+			ima: googleIma.setupIma(vastUrl, adSlot, width, height),
 			play: function (onVideoLoaded, onVideoEnded) {
 				var self = this;
 
-				googleIma.playVideo(ima, this.width, this.height, {
+				this.ima.playVideo(this.width, this.height, {
 					onVideoEnded: function () {
-						onVideoEnded(self.videoContainer);
+						onVideoEnded(self.ima.container);
 						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
-						self.videoContainer = self.ima.container;
 					},
 					onVideoLoaded: function () {
-						onVideoLoaded(self.videoContainer);
+						onVideoLoaded(self.ima.container);
 					}
 				});
 			},
 			resize: function (width, height) {
 				this.width = width;
 				this.height = height;
-				googleIma.resize(this.ima, width, height);
+				this.ima.resize(width, height);
 			}
 		};
 	}
