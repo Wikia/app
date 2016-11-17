@@ -215,6 +215,11 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	}
 
 	protected function setTokenMismatchError() {
+		// SUS-932: log cases when there's a token mismatch
+		Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+			'exception' => new BadRequestException()
+		] );
+
 		$this->response->setValues( [
 			'status' => 'error',
 			'errormsg' => wfMessage( 'sessionfailure' )->escaped(),
