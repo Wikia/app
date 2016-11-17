@@ -228,7 +228,7 @@ class MercuryApi {
 		}
 		return [
 			'id' => $commentData[ 'id' ],
-			'text' => $commentData[ 'text' ],
+			'text' => $articleComment->getText(),
 			'created' => (int)wfTimestamp( TS_UNIX, $commentData[ 'rawmwtimestamp' ] ),
 			'userName' => $this->addUser( $commentData ),
 		];
