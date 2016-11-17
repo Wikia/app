@@ -20,6 +20,8 @@ class HeliosClientImpl implements HeliosClient {
 	const PASSWORD = 'password';
 	const METHOD = 'method';
 	const HEADERS = 'headers';
+	const METHOD_POST = 'POST';
+	const METHOD_DELETE = 'DELETE';
 
 
 	// Timeout (in seconds) of the Helios HTTP requests.
@@ -199,7 +201,7 @@ class HeliosClientImpl implements HeliosClient {
 			'token',
 			[],
 			$postData,
-			[ self::METHOD => 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 
 		return [ $this->status, $response ];
@@ -219,7 +221,7 @@ class HeliosClientImpl implements HeliosClient {
 			[],
 			[],
 			[
-				self::METHOD  => 'DELETE',
+				self::METHOD  => self::METHOD_DELETE,
 				self::HEADERS => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ],
 			]
 		);
@@ -255,7 +257,7 @@ class HeliosClientImpl implements HeliosClient {
 			sprintf( 'token/%s', $token ),
 			[],
 			[],
-			[ self::METHOD  => 'DELETE',
+			[ self::METHOD  => self::METHOD_DELETE,
 			  self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
 		);
 	}
@@ -273,7 +275,7 @@ class HeliosClientImpl implements HeliosClient {
 			sprintf( 'users/%s/tokens', $userId ),
 			[],
 			[],
-			[ self::METHOD => 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 	}
 
@@ -305,7 +307,7 @@ class HeliosClientImpl implements HeliosClient {
 			'users',
 			[],
 			$postData,
-			[ self::METHOD => 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 	}
 
@@ -332,7 +334,7 @@ class HeliosClientImpl implements HeliosClient {
 			'password/validation',
 			[],
 			$postData,
-			[ self::METHOD => 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 	}
 
@@ -344,7 +346,7 @@ class HeliosClientImpl implements HeliosClient {
 			sprintf( 'users/%s/password/delete', $userId ),
 			[],
 			[],
-			[ self::METHOD => 'DELETE', self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
+			[ self::METHOD => self::METHOD_DELETE, self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
 		);
 	}
 }
