@@ -49,7 +49,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	}
 
 	/**
-	 * Merges sripts into one
+	 * Merges scripts into one
 	 * @param array $scriptItems
 	 * @return bool|string
 	 */

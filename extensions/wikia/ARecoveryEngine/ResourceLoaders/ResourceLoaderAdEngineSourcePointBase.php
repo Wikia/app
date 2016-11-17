@@ -6,11 +6,13 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 	const CACHE_BUSTER = 15;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
 	const FALLBACK_SCRIPT_BASE_URL = 'project43.wikia.com';
+	// SCRIPT_URL should be set in classes extending this class
+	const SCRIPT_URL = null;
 
 	protected $fallbackScriptUrl = null;
 
 	protected function getMemcKey() {
-		return wfSharedMemcKey( 'adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER );
+		return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
 	}
 
 	/**
@@ -23,7 +25,7 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 		$scripts = [
 			( new ResourceLoaderScript() )
 				->setTypeLocal()
-				->setValue($this->fallbackScriptUrl)
+				->setValue( $this->fallbackScriptUrl )
 		];
 		$data = [
 			'script' => $this->generateData( $scripts ),
@@ -32,7 +34,7 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 		];
 
 		$data['script'] = str_replace( self::FALLBACK_SCRIPT_BASE_URL,
-			str_replace('http://', '', $wgServer),
+			str_replace( 'http://', '', $wgServer ),
 			$data['script'] );
 		$data['script'] .= '/*Fallback data*/';
 		return $data;
@@ -49,15 +51,19 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 		$content = ExternalHttp::get( $url,
 			null,
 			[
-				'headers' => ['Authorization' =>  'Token '.$wgSourcePointApiKey],
+				'headers' => [ 'Authorization' => 'Token ' . $wgSourcePointApiKey ],
 				'timeout' => self::REQUEST_TIMEOUT
 			]
 		);
 
-		if (!$content) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to fetch SourcePoint script', ['url' => $url] );
+		if ( !$content ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to fetch SourcePoint script', [ 'url' => $url ] );
 		}
 
 		return $content;
+	}
+
+	protected function getScripts() {
+		return [ ( new ResourceLoaderScript() )->setTypeRemote()->setValue( static::SCRIPT_URL ) ];
 	}
 }
