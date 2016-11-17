@@ -196,8 +196,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
-		var i = 0,
-			taboolaSlot;
+		var i, taboolaSlot;
 
 		for (taboolaSlot in taboolaConfig) {
 			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {

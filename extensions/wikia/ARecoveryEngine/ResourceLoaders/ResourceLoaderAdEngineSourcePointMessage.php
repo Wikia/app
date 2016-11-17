@@ -13,11 +13,10 @@ class ResourceLoaderAdEngineSourcePointMessage extends ResourceLoaderAdEngineSou
 	protected function getFallbackDataWhenRequestFails() {
 		$scripts = [];
 		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(self::FALLBACK_SCRIPT_URL);
-		$data = [
+		return $data = [
 			'script' => $this->generateData( $scripts ),
 			'modTime' => $this->getCurrentTimestamp(),
 			'ttl' => self::TTL_GRACE
 		];
-		return $data;
 	}
 }
