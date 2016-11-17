@@ -8,13 +8,6 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointCSDelivery());
 	}
 
-	public function getSourcePointStatus() {
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
-	}
-
 	public function getSourcePointMessaging() {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointMessage());
 	}
