@@ -81,20 +81,22 @@ class SamplerProxy {
 			}
 
 			if ( !$shouldShadow && isset( $alternateResult ) ) {
-				return $alternateResult;
-			}
+				$resultToReturn = $alternateResult;
+			} else {
 
-			// We're shadowing, so also call the original method and invoke the results
-			// callable if it's set
-			$originalResult = call_user_func_array( $this->originalCallable, $args );
+				// We're shadowing, so also call the original method and invoke the results
+				// callable if it's set
+				$originalResult = call_user_func_array( $this->originalCallable, $args );
 
-			if ( $this->resultsCallable && isset( $alternateResult ) ) {
-				return call_user_func( $this->resultsCallable, $originalResult, $alternateResult );
+				if ( $this->resultsCallable && isset( $alternateResult ) ) {
+					$resultToReturn = call_user_func( $this->resultsCallable, $originalResult, $alternateResult );
+				} else {
+					$resultToReturn = $originalResult;
+				}
 			}
 
 			// We didn't invoke a results callable, so we return the result of the original method
-			return $originalResult;
-
+			return $resultToReturn;
 		}
 
 		/*
