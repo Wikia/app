@@ -303,7 +303,7 @@ var CreatePage = {
 		CreatePage.flowName = redLinkFlowName;
 
 		if ( CreatePage.canUseVisualEditor() ) {
-			CreatePage.track( { category: 'article', action: 'click', label: 've-redlink-click' } );
+			CreatePage.track( { category: 'article', action: Wikia.Tracker.ACTIONS.CLICK, label: 've-redlink-click' } );
 		}
 
 		if (
