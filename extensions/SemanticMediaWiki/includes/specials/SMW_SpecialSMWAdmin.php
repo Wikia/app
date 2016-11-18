@@ -74,6 +74,7 @@ class SMWAdmin extends SpecialPage {
 
 		$this->messageBuilder = $this->htmlFormRenderer->getMessageBuilder();
 
+		/**
 		$jobQueueLookup = $mwCollaboratorFactory->newJobQueueLookup( $this->getStore()->getConnection( 'mw.db' ) );
 		$row = $jobQueueLookup->selectJobRowFor( 'SMW\RefreshJob' );
 
@@ -84,6 +85,8 @@ class SMWAdmin extends SpecialPage {
 		} else {
 			$refreshjob = null;
 		}
+		**/
+		$refreshjob = null; // Wikia change - we do not use job DB table for handling tasks queue (SUS-1305)
 
 		/**** Execute actions if any ****/
 		switch ( $this->getRequest()->getText( 'action' ) ) {
