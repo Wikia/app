@@ -6,8 +6,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	var wntimer = false,
 		wdtimer = false,
 		createStatus = false,
-		createStatusMessage = false,
-		cityId = false,
 		finishCreateUrl = false,
 		retryGoto = 0,
 		nameAjax = false,
@@ -32,7 +30,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiVerticalError,
 		wikiAllAges,
 		allAgesDiv,
-		descWikiSubmitError,
 		nextButtons,
 		finishSpinner,
 		descWikiNext,
@@ -98,7 +95,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiVerticalError = $descWikiWrapper.find('.wiki-vertical-error');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
-		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
 		nextButtons = wb.find('nav .next');
 		finishSpinner = wb.find('.finish-status');
 		descWikiNext = $descWikiWrapper.find('nav .next');
@@ -637,9 +633,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				callback: function (res) {
 					throbberWrapper.stopThrobbing();
 					throbberWrapper.removeClass('creating-wiki');
-					cityId = res.cityId;
 					createStatus = res.status;
-					createStatusMessage = res.statusMsg;
 					finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
 						res.finishCreateUrl.replace('.com/', '.com/wiki/') :
 						res.finishCreateUrl);
