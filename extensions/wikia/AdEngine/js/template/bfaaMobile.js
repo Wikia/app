@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
+		if (uapVideo.isVideoAd(params)) {
 			uapVideo.init()
 				.then(function () {
 					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);

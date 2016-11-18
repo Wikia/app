@@ -1,12 +1,21 @@
-/*global define, google*/
+/*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
-	'ext.wikia.adEngine.utils.scriptLoader'
-], function (scriptLoader) {
+	'ext.wikia.adEngine.utils.scriptLoader',
+	'wikia.log',
+	'wikia.window'
+], function (scriptLoader, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
+		logGroup = 'ext.wikia.adEngine.video.googleIma',
 		videoMock = document.createElement('video');
 
 	function init() {
+		if (win.google && win.google.ima) {
+			return new Promise(function (resolve) {
+				log('Google IMA library already loaded', log.levels.info, logGroup);
+				resolve();
+			});
+		}
 		return scriptLoader.loadScript(imaLibraryUrl);
 	}
 

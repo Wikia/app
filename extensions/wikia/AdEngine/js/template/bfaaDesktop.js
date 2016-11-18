@@ -72,16 +72,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
+		if (uapVideo.isVideoAd(params)) {
             uapVideo.init()
 				.then(function () {
-					uapVideo.loadVideoAd(params, adSlot, imageContainer, getSlotWidth);
+					uapVideo.loadVideoAd(params, adSlot, imageContainer);
 				});
 		}
-	}
-
-	function getSlotWidth() {
-		return doc.body.clientWidth;
 	}
 
 	function show(params) {
