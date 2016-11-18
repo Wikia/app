@@ -30,17 +30,16 @@ class UserPasswordTest extends WikiaBaseTest {
 		$this->assertTrue( $this->testUser->setPassword( 'goodpassword123' ) );
 	}
 
-	// @todo uncomment once Helios supports password deletion
-//	public function testShouldDeletePassword() {
-//		$password = "fhsdakljhasfdhjjfdjh2345";
-//		$this->testUser->setPassword( $password );
-//		$this->assertTrue( $this->testUser->setPassword( null ) );
-//		$this->assertEquals(
-//			'401',
-//			Injector::getInjector()->get( HeliosClient::class )
-//				->login( $this->testUser->getName(), $password )[0]
-//		);
-//	}
+	public function testShouldDeletePassword() {
+		$password = "fhsdakljhasfdhjjfdjh2345";
+		$this->testUser->setPassword( $password );
+		$this->assertTrue( $this->testUser->setPassword( null ) );
+		$this->assertEquals(
+			'401',
+			Injector::getInjector()->get( HeliosClient::class )
+				->login( $this->testUser->getName(), $password )[0]
+		);
+	}
 
 	/**
 	 * @expectedException PasswordError
