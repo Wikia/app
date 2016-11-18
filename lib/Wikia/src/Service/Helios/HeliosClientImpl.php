@@ -17,7 +17,7 @@ class HeliosClientImpl implements HeliosClient {
 	const SCHWARTZ_TOKEN = 'schwartz_token';
 	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
 	const USERNAME = 'username';
-	const PASSWORD = 'password';
+	const PASSWORD = 'password'; //NOSONAR
 	const METHOD = 'method';
 	const HEADERS = 'headers';
 	const METHOD_POST = 'POST';
