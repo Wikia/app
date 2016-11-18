@@ -339,11 +339,8 @@ class HeliosClientImpl implements HeliosClient {
 	}
 
 	public function deletePassword( $userId ) {
-		return true;
-
-		// @todo Helios impl
 		return $this->request(
-			sprintf( 'users/%s/password/delete', $userId ),
+			sprintf( 'users/%s/password', $userId ),
 			[],
 			[],
 			[ self::METHOD => self::METHOD_DELETE, self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
