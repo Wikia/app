@@ -46,6 +46,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				video.play();
 			});
 
+			return video;
 		} catch (error) {
 			log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 		}
