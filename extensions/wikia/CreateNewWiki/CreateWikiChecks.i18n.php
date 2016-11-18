@@ -3556,7 +3556,7 @@ $messages['ps'] = [
 	'autocreatewiki-welcometalk-wall-title' => 'ښه راغلۍ!',
 ];
 
-$messages['pt'] = [
+$messages['pt-br'] = [
 	'autocreatewiki' => 'Crie uma nova wikia',
 	'autocreatewiki-desc' => 'Crie uma wikia no WikiFactory a partir de pedidos de usuários.',
 	'autocreatewiki-page-title-default' => 'Crie uma nova wikia',
@@ -3677,126 +3677,6 @@ Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começ
  *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Not%C3%ADcias_da_Comunidade|blog do staff] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da comunidade]].
 *Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
-];
-
-$messages['pt-br'] = [
-	'autocreatewiki' => 'Crie uma nova Wiki',
-	'autocreatewiki-desc' => 'Crie uma wiki no WikiFactory a partir de pedidos de usuários',
-	'autocreatewiki-page-title-default' => 'Crie uma nova Wiki',
-	'autocreatewiki-page-title-answers' => 'Criar um site novo de Respostas',
-	'createwiki' => 'Crie uma nova Wiki',
-	'autocreatewiki-chooseone' => 'Escolha uma',
-	'autocreatewiki-required' => '$1 = campos obrigatórios',
-	'autocreatewiki-web-address' => 'Endereço:',
-	'autocreatewiki-category-select' => 'Escolha uma',
-	'autocreatewiki-language-top' => 'Os $1 idiomas mais usados',
-	'autocreatewiki-language-all' => 'Todos os idiomas',
-	'autocreatewiki-remember' => 'Me lembre',
-	'autocreatewiki-create-account' => 'Crie uma conta',
-	'autocreatewiki-haveaccount-question' => 'Você já tem uma conta Wikia?',
-	'autocreatewiki-info-domain' => 'É melhor usar uma palavra com a qual as pessoas irão encontrar seu tópico através de buscas.',
-	'autocreatewiki-info-topic' => 'Coloque uma descrição curta como \"Star Wars\" ou \"Programas de TV\".',
-	'autocreatewiki-info-category-default' => 'Isto ajudará os visitantes a encontrar a sua wiki.',
-	'autocreatewiki-info-category-answers' => 'Isto ajudará os visitantes a encontrar o seu site de Respostas.',
-	'autocreatewiki-info-language' => 'Esse irá ser o idioma padrão para os visitantes da sua wiki.',
-	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém no Wikia.',
-	'autocreatewiki-info-realname' => 'Se você optar por preenchê-lo, este será utilizado para dar-lhe crédito pelo seu trabalho.',
-	'autocreatewiki-info-birthdate' => 'O Wikia exige que todos os usuários providam suas verdadeiras datas de nascimento como uma medida de segurança e para preservar a integridade do site, mantendo a conformidade com os regulamentos federais.',
-	'autocreatewiki-info-blurry-word' => 'Para ajudar a proteger o site contra a criação automática de contas, por favor digite a palavra borrada que você vê dentro deste campo.',
-	'autocreatewiki-info-terms-agree' => 'Ao criar uma wiki e uma conta de usuário, você está concordando com os <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Termos de Uso do Wikia</a>',
-	'autocreatewiki-info-staff-username' => '<b>Só o staff:</b> O usuário especificado será listado com o fundador.',
-	'autocreatewiki-title-template' => 'Wikia $1',
-	'autocreatewiki-limit-day' => 'O Wikia excedeu o número máximo de criação de wiki hoje ($1).',
-	'autocreatewiki-limit-creation' => 'Você excedeu o máximo número de criação de wikis em 24 horas ($1).',
-	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
-	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculo.',
-	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
-	'autocreatewiki-violate-policy' => 'Esse nome de wiki contém uma palavra que viola as nossas políticas de nomeação.',
-	'autocreatewiki-name-taken' => 'Já existe uma wiki com esse nome. Você é bem-vindo a partipar dela em <ahref=\"http://$1.wikia.com\">http://$1.wikia.com</a> ou escolher outro endereço.',
-	'autocreatewiki-name-too-short' => 'Esse nome é muito curto, por favor escolha um nome com no mímino 3 caracteres.',
-	'autocreatewiki-name-too-long' => 'Esse nome é muito longo, por favor escolha um nome com no máximo 50 caracteres.',
-	'autocreatewiki-similar-wikis' => 'Abaixo estão as wikis já criadas nesse tópico. Nós sugerimos que você edite uma delas.',
-	'autocreatewiki-invalid-username' => 'Esse nome de usuário é inválido.',
-	'autocreatewiki-busy-username' => 'Esse nome de usuário já é usado.',
-	'autocreatewiki-blocked-username' => 'Você não pode criar uma conta.',
-	'autocreatewiki-user-notloggedin' => 'Sua conta foi criada, mas você não está logado.',
-	'autocreatewiki-empty-language' => 'Por favor, selecione o idioma da Wiki.',
-	'autocreatewiki-empty-category' => 'Por favor, selecione uma categoria.',
-	'autocreatewiki-empty-wikiname' => 'O nome da Wiki não pode estar vazio.',
-	'autocreatewiki-empty-username' => 'O nome de usuário não pode estar vazio.',
-	'autocreatewiki-empty-password' => 'A senha não pode estar vazia.',
-	'autocreatewiki-empty-retype-password' => '\"Redigite sua senha\" não pode estar vazio.',
-	'autocreatewiki-category-label' => 'Categoria:',
-	'autocreatewiki-category-other' => 'Outro',
-	'autocreatewiki-set-username' => 'Primeiro defina o nome de usuário.',
-	'autocreatewiki-invalid-category' => 'Categoria inválida.
-Selecione uma apropriada da lista.',
-	'autocreatewiki-invalid-language' => 'Língua inválida.
-Selecione uma apropriada da lista.',
-	'autocreatewiki-invalid-retype-passwd' => 'Repita a mesma senha, por favor',
-	'autocreatewiki-invalid-birthday' => 'Data de nascimento inválida',
-	'autocreatewiki-log-title' => 'A sua wiki está sendo criada',
-	'autocreatewiki-step0' => 'Iniciando processo ...',
-	'autocreatewiki-stepdefault' => 'O processo está sendo feito, por favor aguarde...',
-	'autocreatewiki-errordefault' => 'O processo não foi finalizado...',
-	'autocreatewiki-step1' => 'Criando o diretório de imagens ...',
-	'autocreatewiki-step2' => 'Criando a base de dados ...',
-	'autocreatewiki-step3' => 'Definindo os dados por padrão na base de dados ...',
-	'autocreatewiki-step4' => 'Copiando as imagens e logotipo padrões ...',
-	'autocreatewiki-step5' => 'Definindo as variáveis padrões na base de dados ...',
-	'autocreatewiki-step6' => 'Definindo as tabelas padrões na base de dados ...',
-	'autocreatewiki-step7' => 'Definindo base de dados inicial da língua ...',
-	'autocreatewiki-step8' => 'Definindo grupos de usuários e categorias ...',
-	'autocreatewiki-step9' => 'Definindo variáveis da nova wiki ...',
-	'autocreatewiki-step10' => 'Definindo páginas na wiki central ...',
-	'autocreatewiki-step11' => 'A enviar correio eletrônico para o usuário ...',
-	'autocreatewiki-redirect' => 'Redirecionando para a nova wiki: $1 ...',
-	'autocreatewiki-congratulation' => 'Parabéns!',
-	'autocreatewiki-welcometalk-log' => 'Mensagem de Boas-vindas',
-	'autocreatewiki-regex-error-comment' => 'usada na wiki $1 (texto completo: $2)',
-	'autocreatewiki-step2-error' => 'A base de dados existe!',
-	'autocreatewiki-step3-error' => 'Não foi possível definir os dados padrões na base de dados!',
-	'autocreatewiki-step6-error' => 'Não foi possível definir as tabelas padrões na base de dados!',
-	'autocreatewiki-step7-error' => 'Não foi possível copiar a base de dados inicial para a língua!',
-	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
-	'autocreatewiki-welcomesubject' => '$1 foi criado!',
-	'autocreatewiki-welcomebody' => 'Olá, $2!
-
-Sua wiki foi criada! Dê uma olhada: <$1>
-
-Pronto para começar? Adicionamos alguns links para sua página de discussão (<$5>) para o ajudar à começar e o encorajar à explorar as variadas áreas úteis ao redor da Wikia. Caso tenha dúvidas ou sente-se um pouco perdido, responda a esse email ou confira nossas Páginas de Ajuda <http://help.wikia.com>.
-
-Você também pode conferir o blog do Fundador & Administrador <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e o blog do time da Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>, onde você achará dicas e truques e informações sobre os novos recursos e novas coisas que estão acontecendo na Wikia.
-
-Boa edição!
-
-$3
-Suporte da Comunidade Wikia
-<http://community.wikia.com/wiki/User:$4>
-
-___________________________________________
-* Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
-	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk-wall' => 'Olá, estamos felizes em ter Wikia Messaging como parte da comunidade Wikia!
-
-Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para fluir sua wiki:
-*Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo Chat, Medalhas e mais.
-*Pare na [[w:c:comunidade|Central da Comunidade]] para ficar informado pelo nosso [[w:c:comunidade:Blog:Notícias da Comunidade|blog da staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Special:Forum|fórum da comunidade]] ou [[w:c:comunidade:Special:Chat|converse ao vivo]] com nossos queridos Wikianos.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar a Wikia.
-
-Todos os links acima são bons lugares para começar explorando, e divirta-se!',
-	'autocreatewiki-welcometalk' => '== Bem-vindo! ==
-Olá!
-
-Estamos felizes em ter $4 como parte da comunidade Wikia! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para fluir sua wiki:
-
-*Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo Chat, Medalhas e muito mais.
-*Pare na [[w:c:community|Central da Comunidade]] para ficar informado pelo nosso [[w:c:community:Blog:Wikia_Staff_Blog|blog da staff]], tenha suas dúvidas respondidas no nosso [[w:c:community:Special:Forum|fórum da comunidade]], participe de nossas [[w:c:community:Help:Webinars|séries webinar]] ou converse ao vivo com nossos queridos Wikianos.
-*Por último, visite nossas [[Help:Contents|páginas de ajuda]] para aprender mais sobre as manhas de como usar a Wikia.
-
-Todos os links acima são ótimos lugares para começar explorando, e divirta-se!
-
--- [[User:$2|$3]] <staff />',
 ];
 
 $messages['ro'] = [
@@ -4590,35 +4470,6 @@ $messages['yi'] = [
 	'autocreatewiki-create-account' => 'שאַפֿן אַ קאנטע',
 ];
 
-$messages['zh'] = [
-	'autocreatewiki-page-title-default' => '申请wiki',
-	'createwiki' => '申請Wiki',
-	'autocreatewiki-info-language' => '的預設語文',
-	'autocreatewiki-welcomesubject' => '$1 已建立!',
-	'autocreatewiki-welcomebody' => '嗨 $2!
-
-您的wiki已经创建了! 欢迎造访: <$1>
-
-准备好要开始了吗？我们已经增加了一些链接到您的对话页 (<$5>) 来帮助您，我们鼓励您浏览这些Wikia中有助益的页面。如果您有任何问题，回复本封邮件，或是查看我们的帮助页面<http://zh.community.wikia.com/wiki/help:contents>。
-
-您也可以造访社区中心的论坛 <http://zh.community.wikia.com/wiki/special:forum> 以及博客<http://zh.community.wikia.com/wiki/%E5%8D%9A%E5%AE%A2:%E5%8D%9A%E5%AE%A2%E5%B8%96%E5%AD%90>，您可以在那里获得一些编写的提示和协助，也可以了解Wikia的最新消息和功能。
-
-祝编辑愉快!
-
-$3
-Wikia 社区支持
-<http://community.wikia.com/wiki/User:$4>
-
-___________________________________________
-* 不想要收到那么多通知吗？ 您可以在以下连结更改您的电子邮件通知设定：http://zh.community.wikia.com/Special:Preferences',
-	'autocreatewiki-title-template' => '$1 Wiki',
-];
-
-$messages['zh-cn'] = [
-	'autocreatewiki-page-title-default' => '申请wiki',
-	'createwiki' => '申请wiki',
-];
-
 $messages['zh-hans'] = [
 	'autocreatewiki' => '创建新的维基',
 	'autocreatewiki-desc' => '按用户的请求在维基出厂配置中创建维基',
@@ -4864,140 +4715,9 @@ ___________________________________________
 祝您玩得開心！',
 ];
 
-$messages['zh-hk'] = [
-	'autocreatewiki-page-title-default' => '申請wiki',
-	'createwiki' => '申請wiki',
-	'autocreatewiki-info-birthdate' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Wikia要求所有用戶提供自己的真實出生日期。',
-	'autocreatewiki-title-template' => '$1 Wiki',
-];
-
 $messages['zh-sg'] = [
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
-];
-
-$messages['zh-tw'] = [
-	'autocreatewiki-page-title-default' => '創建新的維基',
-	'createwiki' => '申請wiki',
-	'autocreatewiki' => '創建新的維基',
-	'autocreatewiki-desc' => '按用戶的請求在維基出廠配置中創建維基',
-	'autocreatewiki-page-title-answers' => '創建新的問答網站',
-	'autocreatewiki-chooseone' => '選擇一個',
-	'autocreatewiki-required' => '$1 = 必選項目',
-	'autocreatewiki-web-address' => '網站位址：',
-	'autocreatewiki-category-select' => '選擇一個',
-	'autocreatewiki-language-top' => '最常用的$1種語言',
-	'autocreatewiki-language-all' => '所有語言',
-	'autocreatewiki-remember' => '記住我',
-	'autocreatewiki-create-account' => '創建帳戶',
-	'autocreatewiki-haveaccount-question' => '已經有Wikia帳戶？',
-	'autocreatewiki-info-domain' => '最好使用一個可能會搜尋到你的主題的關鍵字。',
-	'autocreatewiki-info-topic' => '增加簡短的描述，如「星際大戰」或「電視節目」。',
-	'autocreatewiki-info-category-default' => '這會幫助訪客找到你的維基。',
-	'autocreatewiki-info-category-answers' => '這會幫助訪客找到你的問答網站。',
-	'autocreatewiki-info-language' => '這將是你的維基訪客的預設語言。',
-	'autocreatewiki-info-email-address' => '我們絕不會把你的電子郵寄地址顯示給Wikia上的任何人。',
-	'autocreatewiki-info-realname' => '如果您選擇提供此資訊，這將用來表明這些工作是由你完成的。',
-	'autocreatewiki-info-birthdate' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Wikia要求所有用戶提供自己的真實出生日期。',
-	'autocreatewiki-info-blurry-word' => '為了幫助防止自動創建帳戶，請在此欄中鍵入你看到的模糊字詞。',
-	'autocreatewiki-info-terms-agree' => '創建維基和使用者帳戶，即表示你同意此<a {{#NewWindowLink: w:zh.Terms of use | Wikia使用條款}}</a>。',
-	'autocreatewiki-info-staff-username' => '<b>僅供工作人員使用：</b>指定的用戶將被列爲創始人。',
-	'autocreatewiki-title-template' => '$1 Wiki',
-	'autocreatewiki-tagline' => '',
-	'autocreatewiki-limit-day' => '在今天已超過了Wikia每日維基創建數上限($1)。',
-	'autocreatewiki-limit-creation' => '您已超出所允許的24小時維基創建數上限($1)。',
-	'autocreatewiki-empty-field' => '請填寫此欄位。',
-	'autocreatewiki-bad-name' => '名稱不能包含特殊字元 （如 $ 或 @），並且必須是沒有空格、由小寫字母組成的單字。',
-	'autocreatewiki-invalid-wikiname' => '名稱不能包含特殊字元 （如 $ 或 @） 且不能為空白。',
-	'autocreatewiki-violate-policy' => '此維基名稱中包含有違反我們的命名準則的字詞。',
-	'autocreatewiki-name-taken' => '已經有用此網址創建的維基。可在<a href=\"http://<span class=\" notranslate\"=\"\">$1.wikia.com\">http:// $1.wikia.com</a> 進行編輯或選擇另一個位址。',
-	'autocreatewiki-name-too-short' => '此網址太短，請選擇一個至少有3個字元的網址。',
-	'autocreatewiki-name-too-long' => '此網址太長，請選擇一個50個字元以下的網址。',
-	'autocreatewiki-similar-wikis' => '下面是已經創建的關於這一主題的維基。我們建議您參與編輯其中之一。',
-	'autocreatewiki-invalid-username' => '此用戶名無效。',
-	'autocreatewiki-busy-username' => '此用戶名已有人使用。',
-	'autocreatewiki-blocked-username' => '無法創建帳戶。',
-	'autocreatewiki-user-notloggedin' => '你的帳戶已創建，但未登入！',
-	'autocreatewiki-empty-language' => '請選擇維基的語言。',
-	'autocreatewiki-empty-category' => '請選擇一個類別。',
-	'autocreatewiki-empty-wikiname' => '維基的名稱不能為空白。',
-	'autocreatewiki-empty-username' => '使用者名稱不能為空白。',
-	'autocreatewiki-empty-password' => '密碼不能為空白。',
-	'autocreatewiki-empty-retype-password' => '重新鍵入密碼不能為空白。',
-	'autocreatewiki-category-label' => '類別：',
-	'autocreatewiki-category-other' => '其他',
-	'autocreatewiki-set-username' => '請先設置使用者名稱。',
-	'autocreatewiki-invalid-category' => '無效的類別。
-請從下拉列表中選擇適當的類別。',
-	'autocreatewiki-invalid-language' => '無效的語言。
-請從下拉列表中選擇適當的語言。',
-	'autocreatewiki-invalid-retype-passwd' => '請再輸入與上欄密碼相同的密碼。',
-	'autocreatewiki-invalid-birthday' => '出生日期無效。',
-	'autocreatewiki-log-title' => '正在創建你的維基',
-	'autocreatewiki-step0' => '正在進行初始化處理...',
-	'autocreatewiki-stepdefault' => '處理中，請稍候...',
-	'autocreatewiki-errordefault' => '仍在處理中...',
-	'autocreatewiki-step1' => '正在創建影像文件夾...',
-	'autocreatewiki-step2' => '正在創建資料庫...',
-	'autocreatewiki-step3' => '正在資料庫中設置預設資訊...',
-	'autocreatewiki-step4' => '正在複製預設的圖標和圖像...',
-	'autocreatewiki-step5' => '正在資料庫中設置預設變數...',
-	'autocreatewiki-step6' => '正在資料庫中設置預設表格...',
-	'autocreatewiki-step7' => '設置語言啟動器...',
-	'autocreatewiki-step8' => '設置用戶組和類別...',
-	'autocreatewiki-step9' => '正在為新的維基設置變數...',
-	'autocreatewiki-step10' => '正在中央維基上設置頁面...',
-	'autocreatewiki-step11' => '正在給用戶發送電子郵件...',
-	'autocreatewiki-redirect' => '正在重定向到新的維基：$1 ...',
-	'autocreatewiki-congratulation' => '恭喜你！',
-	'autocreatewiki-welcometalk-log' => '歡迎辭',
-	'autocreatewiki-regex-error-comment' => '已用於$1維基（全文：$2 ）',
-	'autocreatewiki-step2-error' => '資料庫已存在！',
-	'autocreatewiki-step3-error' => '無法在資料庫中設置預設資訊 ！',
-	'autocreatewiki-step6-error' => '無法在資料庫中設置預設表格！',
-	'autocreatewiki-step7-error' => '無法複製啟動資料庫的語言 ！',
-	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-protect-reason' => '屬於官方介面',
-	'autocreatewiki-welcomesubject' => '$1已創建！',
-	'autocreatewiki-welcomebody' => '嗨 $2!
-
-您的wiki已經創建了! 歡迎造訪: <$1>
-
-準備好要開始了嗎？我們已經增加了一些鏈接到您的對話頁 (<$5>) 來幫助您，我們鼓勵您瀏覽這些Wikia中有助益的頁面。如果您有任何問題，回覆本封郵件，或是查看我們的幫助頁面<http://zh.community.wikia.com/wiki/help:contents>。
-
-您也可以造訪社區中心的論壇 <http://zh.community.wikia.com/wiki/special:forum> 以及網誌<http://zh.community.wikia.com/wiki/%E5%8D%9A%E5%AE%A2:%E5%8D%9A%E5%AE%A2%E5%B8%96%E5%AD%90>，您可以在那裡獲得一些編寫的提示和協助，也可以了解Wikia的最新消息和功能。
-
-祝編輯愉快!
-
-$3
-Wikia 社區支持
-<http://community.wikia.com/wiki/User:$4>
-
-___________________________________________
-* 不想要收到那麼多通知嗎？ 您可以在以下連結更改您的電子郵件通知設定：http://zh.community.wikia.com/Special:Preferences',
-	'autocreatewiki-welcometalk-wall-title' => '歡迎你！',
-	'autocreatewiki-welcometalk-wall' => '嘿，你好！我們很高興Wikia Messaging能成爲Wikia社區的一部分！
-
-還有很多事情要做。這裡有一些有用的提示和連接，能讓你的維基運轉起來：
-*查看[[Special:WikiFeatures|維基功能]]，看看你可以在你的維基上開啓那些功能，包括聊天、成就及更多其他功能。
-*透過訪問[[Special:ThemeDesigner|主題界面]]自訂你的維基的外觀，在這裡你可以給你的背景和文字添加顔色和樣式。
-*到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]了解最新資訊、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、或與其他Wikia用户[[w:c:zh.community:Special:Chat|線上聊天]]。
-*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Wikia的所有功能，包括[[Help:New page|如何在你的維基上添加新頁面]]、 [[Help:Attracting contributors|如何吸引網友]]以及[[Help:User access levels|如何添加其他管理員]]。
-*你還可以到你的管理員控制面板使用上述所有工具，只需按一下底部工具欄的「管理員」即可找到這些工具。
-上面列出的所有連結都是開始探索的好起點。祝你使用愉快！',
-	'autocreatewiki-welcometalk' => '==歡迎你！==
-嘿，你好！
-
-你好！我們很高興Wikia Messaging能成爲Wikia社區的一部分！還有很多事情要做。這裡有一些有用的提示和連接，能讓你的維基開始運轉：
-
-*查看[[Special:WikiFeatures|維基功能]]，看看你可以在你的維基上開啓哪些功能，包括聊天、成就及更多其他功能。
-*到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]了解最新資訊、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、參與我們的[[w:c:community:Help:Webinars|網路研討會系列]]（英文）或與其他Wikia使用者[[w:c:zh.community:Special:Chat|線上聊天]]。
-*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Wikia的所有功能
-
-上面列出的所有連接都是開始探索的好起點。祝你使用愉快！
-
- -- [[User:$2|$3]]  <staff />',
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
 
 $messages['lv'] = [
