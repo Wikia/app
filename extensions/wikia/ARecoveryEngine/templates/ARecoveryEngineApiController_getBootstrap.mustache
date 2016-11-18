@@ -42,7 +42,7 @@
 				});
 			});
 		} else if (context.opts.sourcePointMMS === true) {
-			var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
+			var mmsDomain = context.opts.sourcePointMMSDomain;
 
 			window._sp_.mms = window._sp_.mms || {};
 			window._sp_.mms.cmd = window._sp_.mms.cmd || [];
