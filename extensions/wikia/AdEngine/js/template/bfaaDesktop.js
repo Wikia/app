@@ -92,6 +92,34 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	}
 
 	function loadVideoAd(params) {
+		function clearHeight() {
+			setTimeout(function () {
+				adSlot.style.height = '';
+			}, animationDuration);
+		}
+
+		function showVideo(videoContainer) {
+			adSlot.style.height = getSlotSize(params).adHeight + 'px';
+			adSlot.style.height = getSlotSize(params).videoHeight + 'px';
+
+			DOMElementTweaker.hide(imageContainer, false);
+			DOMElementTweaker.removeClass(videoContainer, 'hidden');
+
+			clearHeight();
+		}
+
+		function hideVideo(videoContainer) {
+			adSlot.style.height = getSlotSize(params).videoHeight + 'px';
+			adSlot.style.height = getSlotSize(params).adHeight + 'px';
+
+			setTimeout(function () {
+				DOMElementTweaker.hide(videoContainer, false);
+				DOMElementTweaker.removeClass(imageContainer, 'hidden');
+			}, animationDuration);
+
+			clearHeight();
+		}
+
 		return function () {
 			try {
 				var video = videoAdFactory.create(
@@ -119,35 +147,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 				log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 			}
 		};
-	}
-
-	function showVideo(videoContainer) {
-		adSlot.style.height = slotSizes.adHeight + 'px';
-		DOMElementTweaker.hide(imageContainer, false);
-		DOMElementTweaker.removeClass(videoContainer, 'hidden');
-		setTimeout(function () {
-			adSlot.style.height = slotSizes.videoHeight + 'px';
-		}, 0);
-
-		setTimeout(function () {
-			adSlot.style.height = '';
-		}, animationDuration);
-	}
-
-	function hideVideo(videoContainer) {
-		adSlot.style.height = slotSizes.videoHeight + 'px';
-		setTimeout(function () {
-			adSlot.style.height = slotSizes.adHeight + 'px';
-		}, 0);
-
-		setTimeout(function () {
-			DOMElementTweaker.hide(videoContainer, false);
-			DOMElementTweaker.removeClass(imageContainer, 'hidden');
-		}, animationDuration);
-
-		setTimeout(function () {
-			adSlot.style.height = '';
-		}, animationDuration);
 	}
 
 	function show(params) {
