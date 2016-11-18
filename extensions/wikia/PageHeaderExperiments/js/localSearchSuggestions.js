@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener('load', function() {
 	require(['mw', 'jquery', 'wikia.window'], function (mw, $, window) {
 		const experimentId = 7835092457;
 
@@ -95,4 +95,4 @@ window.onload = function() {
 			});
 		}
 	});
-};
+});
