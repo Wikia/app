@@ -7,7 +7,7 @@
 		var cookieValue = cookieName + '=true;path=/;domain=',
 			hostName = window.location.host,
 			devDomainIndex = hostName.indexOf('wikia-dev');
-		if (devDomainIndex) {
+		if (devDomainIndex > -1) {
 			cookieValue += '.' + hostName.substr(devDomainIndex);
 		} else {
 			cookieValue += '.wikia.com';
