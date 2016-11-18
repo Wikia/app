@@ -2,7 +2,7 @@
 
 class EmbeddableDiscussionsController {
 	const TAG_NAME = 'discussions';
-	const ITEMS_DEFAULT = 5;
+	const ITEMS_DEFAULT = 4;
 	const ITEMS_MIN = 3;
 	const ITEMS_MAX = 6;
 	const COLUMNS_DEFAULT = 1;

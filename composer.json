@@ -34,7 +34,7 @@
     "param-processor/param-processor": "~1.2",
     "data-values/geo": "~1.0",
     "mediawiki/maps": "3.5.1",
-    "mediawiki/semantic-media-wiki": "2.4.2.2"
+    "mediawiki/semantic-media-wiki": "2.4.2.3"
   }
 }
 

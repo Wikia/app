@@ -81,10 +81,6 @@ Class | Method | HTTP request | Description
 *TCSApi* | [**getTemplateType**](docs/TCSApi.md#gettemplatetype) | **GET** /{wiki_id}/{page_id} | Provides template type
 *TCSApi* | [**getTemplateTypesOnWiki**](docs/TCSApi.md#gettemplatetypesonwiki) | **GET** /{wiki_id} | Provides template types on wiki
 *TCSApi* | [**insertTemplateDetails**](docs/TCSApi.md#inserttemplatedetails) | **POST** /{wiki_id}/{page_id} | Save template type data
-*TCSStatsApi* | [**getClassifiedTemplatesByProviderCount**](docs/TCSStatsApi.md#getclassifiedtemplatesbyprovidercount) | **GET** /stats/{provider} | Returns number of classified templates on all wikis by provider
-*TCSStatsApi* | [**getClassifiedTemplatesByProviderOnWikiCount**](docs/TCSStatsApi.md#getclassifiedtemplatesbyprovideronwikicount) | **GET** /stats/{wiki_id}/{provider} | Returns number of classified templates on given wiki by provider
-*TCSStatsApi* | [**getClassifiedTemplatesCount**](docs/TCSStatsApi.md#getclassifiedtemplatescount) | **GET** /stats | Returns number of classified templates on all wikis
-*TCSStatsApi* | [**getClassifiedTemplatesOnWikiCount**](docs/TCSStatsApi.md#getclassifiedtemplatesonwikicount) | **GET** /stats/{wiki_id} | Returns number of classified templates on given wiki
 
 
 ## Documentation For Models
