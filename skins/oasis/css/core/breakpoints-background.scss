@@ -180,9 +180,9 @@ body.skin-oasis {
 }
 
 body.skin-oasis.uap-skin {
-	$uap-color: lighten($color-body, 15%);
+	$uap-color: mix(white, $color-body, 15%);
 	@if (luminance($color-body) > 0.3) {
-		$uap-color: darken($color-body, 10%);
+		$uap-color: mix(black, $color-body, 10%);
 	}
 	background: {
 		color: $uap-color;
