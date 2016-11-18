@@ -3745,7 +3745,7 @@ $messages['ru'] = [
 	'autocreatewiki-required' => '$1 = обязательно',
 	'autocreatewiki-web-address' => 'Веб-адрес:',
 	'autocreatewiki-category-select' => 'Выберите одну категорию',
-	'autocreatewiki-language-top' => 'Наиболее используемые языки ($1)',
+	'autocreatewiki-language-top' => '$1 Наиболее используемых языков',
 	'autocreatewiki-language-all' => 'Все языки',
 	'autocreatewiki-remember' => 'Запомнить меня',
 	'autocreatewiki-create-account' => 'Создание учётной записи',
