@@ -9,6 +9,9 @@
  */
 
 class MemcacheSync{
+
+	use Wikia\Logger\Loggable;
+
 	/** @var MemcachedPhpBagOStuff */
 	var $memc = null;
 	var $key;
@@ -22,6 +25,12 @@ class MemcacheSync{
 		$this->key = $key;
 		$this->lockKey = wfSharedMemcKey('MemcacheSyncLock', $key);
 		$this->instance = uniqid ('', true);
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'key' => $this->key,
+		];
 	}
 
 	function lock($time = 5) {
@@ -50,12 +59,14 @@ class MemcacheSync{
 		return $this->memc->get($this->lockKey, false);
 	}
 
-	function get($val = null) {
-		return $this->memc->get($this->key, $val);
+	function get() {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
+		return $this->memc->get($this->key);
 	}
 
 	function set($val, $time = 0) {
 		if($this->isMy()) {
+			$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
 			$this->memc->set($this->key, $val, $time);
 			return true;
 		} else {
@@ -64,10 +75,12 @@ class MemcacheSync{
 	}
 
 	function delete() {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
 		$this->memc->delete($this->key);
 	}
 
 	protected function randomSleep( $max = 20 ) {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
 		usleep( rand( 1, $max*1000 ) );
 	}
 
