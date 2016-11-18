@@ -18,22 +18,29 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
 		return {
+			addEventListener: function (name, callback) {
+				if (this.events[name]) {
+					this.events[name].push(callback);
+				} else {
+					throw new Error('Event name ' + name + '  not supported');
+				}
+			},
+			events: {
+				onStart: [],
+				onFinished: []
+			},
 			adSlot: adSlot,
 			width: width,
 			height: height,
 			ima: googleIma.setupIma(vastUrl, adSlot, width, height),
-			play: function (onVideoLoaded, onVideoEnded) {
+			play: function () {
 				var self = this;
 
-				this.ima.playVideo(this.width, this.height, {
-					onVideoEnded: function () {
-						onVideoEnded(self.ima.container);
-						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
-					},
-					onVideoLoaded: function () {
-						onVideoLoaded(self.ima.container);
-					}
+				this.events.onFinished.push(function () {
+					self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
 				});
+
+				this.ima.playVideo(this.width, this.height, this.events);
 			},
 			resize: function (width, height) {
 				this.width = width;

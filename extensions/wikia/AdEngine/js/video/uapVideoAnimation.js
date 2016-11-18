@@ -25,7 +25,8 @@ define('ext.wikia.adEngine.video.uapVideoAnimation', [
 		DOMElementTweaker.removeClass(elementToShow, 'hidden');
 	}
 
-	function hideVideo(videoContainer, imageContainer, adSlot, params, getSlotWidth) {
+	function hideVideo(video, imageContainer, adSlot, params, getSlotWidth) {
+		var videoContainer = video.ima.container;
 		updateHeight(adSlot, getVideoHeight(getSlotWidth(adSlot), params));
 		setTimeout(function () {
 			updateHeight(adSlot, getAdHeight(getSlotWidth(adSlot), params));
@@ -40,7 +41,8 @@ define('ext.wikia.adEngine.video.uapVideoAnimation', [
 		}, animationDuration);
 	}
 
-	function showVideo(videoContainer, imageContainer, adSlot, params, getSlotWidth) {
+	function showVideo(video, imageContainer, adSlot, params, getSlotWidth) {
+		var videoContainer = video.ima.container;
 		updateHeight(adSlot, getAdHeight(getSlotWidth(adSlot), params));
 		toggle(videoContainer, imageContainer);
 		setTimeout(function () {

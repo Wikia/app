@@ -39,11 +39,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				video.resize(slotWidth, getVideoHeight(slotWidth, params));
 			}));
 
+			video.addEventListener('onStart', uapVideoAnimation.showVideo.bind(null, video, imageContainer, adSlot, params, getSlotWidth));
+			video.addEventListener('onFinished', uapVideoAnimation.hideVideo.bind(null, video, imageContainer, adSlot, params, getSlotWidth));
+
 			params.videoTriggerElement.addEventListener('click', function () {
-				video.play(
-					uapVideoAnimation.showVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth),
-					uapVideoAnimation.hideVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth)
-				);
+				video.play();
 			});
 
 		} catch (error) {
