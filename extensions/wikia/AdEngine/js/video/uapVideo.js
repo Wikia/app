@@ -2,46 +2,13 @@
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.log'
-], function (adHelper, DOMElementTweaker, videoAdFactory, log) {
+], function (adHelper, DOMElementTweaker, uapVideoAnimation, videoAdFactory, log) {
 	'use strict';
 
-	var animationDuration = 400,
-		logGroup = 'ext.wikia.adEngine.video.uapVideo';
-
-	function showVideo(videoContainer, imageContainer, adSlot, params, getSlotWidth) {
-		adSlot.style.height = getAdHeight(getSlotWidth(adSlot), params) + 'px';
-		DOMElementTweaker.hide(imageContainer, false);
-		DOMElementTweaker.removeClass(videoContainer, 'hidden');
-		setTimeout(function () {
-			adSlot.style.height = getVideoHeight(getSlotWidth(adSlot), params) + 'px';
-		}, 0);
-
-		setTimeout(function () {
-			adSlot.style.height = '';
-		}, animationDuration);
-	}
-
-	function hideVideo(videoContainer, imageContainer, adSlot, params, getSlotWidth) {
-		adSlot.style.height = getVideoHeight(getSlotWidth(adSlot), params) + 'px';
-		setTimeout(function () {
-			adSlot.style.height = getAdHeight(getSlotWidth(adSlot), params) + 'px';
-		}, 0);
-
-		setTimeout(function () {
-			DOMElementTweaker.hide(videoContainer, false);
-			DOMElementTweaker.removeClass(imageContainer, 'hidden');
-		}, animationDuration);
-
-		setTimeout(function () {
-			adSlot.style.height = '';
-		}, animationDuration);
-	}
-
-	function getAdHeight(width, params) {
-		return width / params.aspectRatio;
-	}
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
 	function getVideoHeight(width, params) {
 		return width / params.videoAspectRatio;
@@ -74,8 +41,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 			params.videoTriggerElement.addEventListener('click', function () {
 				video.play(
-					showVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth),
-					hideVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth)
+					uapVideoAnimation.showVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth),
+					uapVideoAnimation.hideVideo.bind(null, video.ima.container, imageContainer, adSlot, params, getSlotWidth)
 				);
 			});
 
