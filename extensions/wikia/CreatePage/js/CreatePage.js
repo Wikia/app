@@ -137,7 +137,7 @@ var CreatePage = {
 				uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
 					CreatePage.track( { action: Wikia.Tracker.ACTIONS.IMPRESSION, label: 'modal' } );
 
-					createPageModal.bind( 'create', function( event ) {
+					createPageModal.bind( 'create', function() {
 						CreatePage.submitDialog();
 					});
 					createPageModal.bind( 'cancel', function( event ) {
