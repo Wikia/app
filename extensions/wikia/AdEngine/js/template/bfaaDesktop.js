@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isVideoAd(params)) {
-            uapVideo.init()
+			uapVideo.init()
 				.then(function () {
 					uapVideo.loadVideoAd(params, adSlot, imageContainer);
 				});
