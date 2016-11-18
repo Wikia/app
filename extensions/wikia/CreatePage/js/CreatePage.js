@@ -38,7 +38,7 @@ var CreatePage = {
 				CreatePage.flowName = '';
 			}
 			else {
-				CreatePage.track( { action: Wikia.Tracker.ACTIONS.ERROR, label: response.msg.substring( 0, 300 ) } );
+				CreatePage.track( { action: Wikia.Tracker.ACTIONS.ERROR, label: response.error } );
 				CreatePage.displayError( response.msg );
 			}
 		});
