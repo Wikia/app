@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: harnas
- * Date: 25/07/16
- * Time: 13:26
- */
 
-
-class ImageReviewStatsCache
-{
+class ImageReviewStatsCache {
 	const CACHE_EXPIRE_TIME = 60 * 60;
 	use Wikia\Logger\Loggable;
 
@@ -17,7 +9,7 @@ class ImageReviewStatsCache
 	 * to store it's values.
 	 * @var array
      */
-	private $image_stats_cache_keys = [];
+	private $imageStatsCacheKeys = [];
 
 	const STATS_REVIEWER     = 'reviewer';
 	const STATS_QUESTIONABLE = 'questionable';
@@ -25,7 +17,7 @@ class ImageReviewStatsCache
 	const STATS_INVALID      = 'invalid';
 	const STATS_UNREVIEWED   = 'unreviewed';
 
-	private $allowed_stats = [
+	private $allowedStats = [
 		self::STATS_REVIEWER,
 		self::STATS_QUESTIONABLE,
 		self::STATS_REJECTED,
@@ -35,36 +27,35 @@ class ImageReviewStatsCache
 
 	/**
 	 * global registry object
-	 * @var $wg WikiaGlobalRegistry
+	 * @var $wg MemcachedPhpBagOStuff
 	 */
-	private $wg = null;
+	private $memc;
 
 	/**
 	 * ImageReviewStats constructor.
-	 * @param $user_id string
-	 * @param $wg WikiaGlobalRegistry
+	 * @param $userId string
 	 */
-	public function __construct( $user_id, $wg ) {
-		foreach ( $this->allowed_stats as $key ) {
+	public function __construct( $userId ) {
+		foreach ( $this->allowedStats as $key ) {
 			if ( $key == self::STATS_REVIEWER ) {
-				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $user_id, $key );
+				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $userId, $key );
 			} else {
 				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $key );
 			}
-			$this->image_stats_cache_keys[$key] = $cache_key;
+			$this->imageStatsCacheKeys[$key] = $cache_key;
 		}
-		$this->wg = $wg;
+		$this->memc = F::app()->wg->Memc;
 	}
 
 	/**
 	 * @return array
      */
 	public function getAllowedStats() {
-		return $this->allowed_stats;
+		return $this->allowedStats;
 	}
 
 	public function getStatsKey( $key ) {
-		if ( !in_array( $key, $this->allowed_stats ) ) {
+		if ( !in_array( $key, $this->allowedStats ) ) {
 			$this->warning( "ImageReviewLog", [
 				'method' => __METHOD__,
 				'message' => 'Incorrect cache stats key',
@@ -72,31 +63,37 @@ class ImageReviewStatsCache
 			] );
 			return '';
 		}
-		return $this->image_stats_cache_keys[$key];
+		return $this->imageStatsCacheKeys[$key];
 	}
 
 	public function getStats() {
 		$stats = [];
-		foreach( $this->image_stats_cache_keys as $key => $cache_key ) {
-			$value = $this->wg->memc->get( $cache_key );
+		foreach( $this->imageStatsCacheKeys as $key => $cacheKey ) {
+			$value = $this->memc->get( $cacheKey );
 			if ( !empty( $value ) ) {
 				$stats[$key] = $value;
 			}
 		}
 		return $stats;
 	}
-
-	public function setStats ( $new_stats ) {
-		foreach ( $new_stats as $key => $value ) {
-			$cache_key = $this->getStatsKey( $key );
-			if ( empty( $cache_key ) ) {
+	
+	public function setStats( $newStats ) {
+		foreach ( $newStats as $key => $value ) {
+			$cacheKey = $this->getStatsKey( $key );
+			if ( empty( $cacheKey ) ) {
 				continue;
 			}
 
-			$this->wg->memc->set( $cache_key, $value, self::CACHE_EXPIRE_TIME );
+			$this->memc->set( $cacheKey, $value, self::CACHE_EXPIRE_TIME );
 		}
 	}
 
+	public function clearStats() {
+		foreach( $this->imageStatsCacheKeys as $key => $cacheKey ) {
+			$this->memc->delete( $cacheKey );
+		}
+	}
+	
 	/**
 	 * This function is a wrapper over Memcached incr/decr to allow easy
 	 * atomic incrementing or decrementing given stats without paying attention
@@ -104,18 +101,18 @@ class ImageReviewStatsCache
 	 * unsigned integers.
 	 *
 	 * @param $key string key of the stats (see: $allowed_stats)
-	 * @param $relative_change integer amount by which given stats should be changed
+	 * @param $relativeChange integer amount by which given stats should be changed
      */
-	public function offsetStats ( $key, $relative_change ) {
-		$cache_key = $this->getStatsKey( $key );
-		if ( empty( $cache_key ) ) {
+	public function offsetStats ( $key, $relativeChange ) {
+		$cacheKey = $this->getStatsKey( $key );
+		if ( empty( $cacheKey ) ) {
 			return;
 		}
 
-		if ( $relative_change > 0 ) {
-			$this->wg->memc->incr( $cache_key, $relative_change );
+		if ( $relativeChange > 0 ) {
+			$this->memc->incr( $cacheKey, $relativeChange );
 		} else {
-			$this->wg->memc->decr( $cache_key, -$relative_change );
+			$this->memc->decr( $cacheKey, -$relativeChange );
 		}
 	}
 }

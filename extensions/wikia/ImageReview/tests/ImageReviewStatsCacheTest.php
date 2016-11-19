@@ -28,7 +28,7 @@ class ImageReviewStatsCacheTest extends \WikiaBaseTest
 			->setMethods( [ 'get', 'set', 'incr', 'decr' ] )
 			->getMock();
 
-		$this->imageReviewStatsCache = new ImageReviewStatsCache( self::TEST_USER_ID, $this->app->wg );
+		$this->imageReviewStatsCache = new ImageReviewStatsCache( self::TEST_USER_ID );
 	}
 
 	public function testGetStats() {

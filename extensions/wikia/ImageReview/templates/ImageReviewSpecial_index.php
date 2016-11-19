@@ -2,16 +2,24 @@
 	<div style="float: right; text-align: left">
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally">
-			<a href="<?= $baseUrl ?>"><em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span></a>
+			<a href="<?= $baseUrl ?>">
+				<em><?= empty( $imageCount['unreviewed'] ) ? 0 : $imageCount['unreviewed'] ?></em>
+				<span>unreviewed<br>images</span>
+			</a>
 		</div>
 		<div class="tally">
-			<a href="<?= $baseUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
+			<a href="<?= $baseUrl ?>/questionable">
+				<em><?= empty( $imageCount['questionable'] ) ? 0 : $imageCount['questionable'] ?></em>
+				<span>questionable<br>images</span>
+			</a>
 		</div>
 <?php } ?>
 <?php if ( $accessRejected ) { ?>
-
 		<div class="tally">
-			<a href="<?= $baseUrl ?>/rejected"><em><?= $imageCount['rejected']?></em> <span>rejected<br>images</span></a>
+			<a href="<?= $baseUrl ?>/rejected">
+				<em><?= empty( $imageCount['rejected'] ) ? 0 : $imageCount['rejected'] ?></em>
+				<span>rejected<br>images</span>
+			</a>
 		</div>
 <?php } ?>
 	</div>
@@ -64,7 +72,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 
 			<li class="state-<?= $stateId ?> <?= $action ?>">
 				<div class="img-container">
-					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>" <? if ( !$image['isthumb'] ) { ?>width="230" <?php } ?>/>
+					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>" <? if ( !empty( $image['isthumb'] ) ) { ?>width="230" <?php } ?>/>
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="<?= wfMessage( 'imagereview-gotoimage' )->escaped(); ?>"></a>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
@@ -98,13 +106,11 @@ if ( is_array($imageList) && count($imageList) > 0) {
 
 <footer>
 	<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
-	<input id="nextButton"  type="submit" class="wikia-button" value="Review & get next batch" />
+	<input id="nextButton" type="submit" class="wikia-button" value="Review & get next batch" />
 </footer>
-	<?php
-} else {
-	echo wfMsg( 'imagereview-noresults' );
-	echo Xml::element( 'a', array( 'href' => $fullUrl, 'class' => 'wikia-button', 'style' => 'float: none' ), 'Refresh page' );
-}
-?>
+	<?php } else { ?>
+	<?= wfMsg( 'imagereview-noresults' ) ?>
+	<a href="<?= $fullUrl ?>" class="wikia-button" style="float: none">Refresh page</a>
+<? } ?>
 
 </form>

@@ -1,7 +1,7 @@
 <?php
 
 class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
-	const DEFAUL_IMAGE_SIZE = 320;
+	const DEFAULT_IMAGE_SIZE = 320;
 
 	public function __construct() {
 		WikiaSpecialPageController::__construct('PromoteImageReview', 'promoteimagereview', true /* $listed */);

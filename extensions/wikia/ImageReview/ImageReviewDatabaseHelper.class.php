@@ -11,10 +11,12 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * Query selecting images populating a list
-	 * @param  integer       $iState  A state to select
-	 * @param  string        $sOrder  Sorting order
-	 * @param  integer       $iLimit  SQL limit of queried images
-	 * @return ResultWrapper          Query's results
+	 *
+	 * @param integer $iState A state to select
+	 * @param string $sOrder Sorting order
+	 * @param integer $iLimit SQL limit of queried images
+	 *
+	 * @return ResultWrapper Query's results
 	 */
 	public function selectImagesForList( $sOrder,
 		$iLimit = ImageReviewHelper::LIMIT_IMAGES_FROM_DB,
@@ -23,15 +25,21 @@ class ImageReviewDatabaseHelper {
 		$oDB = $this->getDatawareDB( DB_SLAVE );
 
 		$oResults = $oDB->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-				FROM `image_review`
-				WHERE state = ' . $iState . ' AND top_200 = 0
+			SELECT 
+				pages.page_title_lower,
+				image_review.wiki_id,
+				image_review.page_id,
+				image_review.state,
+				image_review.flags,
+				image_review.priority,
+				image_review.last_edited
+			FROM `image_review`
+				LEFT JOIN pages
+					ON (image_review.wiki_id = pages.page_wikia_id)
+					AND (image_review.page_id = pages.page_id)
+			WHERE state = ' . $iState . ' AND top_200 = 0
 				ORDER BY ' . $sOrder . '
-				LIMIT ' . $iLimit . '
-			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)'
+				LIMIT ' . $iLimit
 		);
 
 		return $oResults;
@@ -39,8 +47,8 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * Query updating a state of a batch of images
-	 * @param  Array         $aValues  Values to set
-	 * @param  Array         $aWhere   SQL WHERE conditions
+	 * @param  array $aValues Values to set
+	 * @param  array $aWhere SQL WHERE conditions
 	 * @return void
 	 */
 	public function updateBatchImages( Array $aValues, Array $aWhere ) {
@@ -62,22 +70,22 @@ class ImageReviewDatabaseHelper {
 		$oDB = $this->getDatawareDB( DB_SLAVE );
 
 		$aWhere = [];
-		$aStatesToFetch = array(
+		$aStatesToFetch = [
 			ImageReviewStatuses::STATE_QUESTIONABLE,
 			ImageReviewStatuses::STATE_REJECTED,
 			ImageReviewStatuses::STATE_UNREVIEWED,
 			ImageReviewStatuses::STATE_INVALID_IMAGE,
-		);
+		];
 		$aWhere[] = 'state in (' . $oDB->makeList( $aStatesToFetch ) . ')';
 		$aWhere[] = 'top_200=0';
 
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$oResults = $oDB->select(
-			array( 'image_review' ),
-			array( 'state', 'count(*) as total' ),
+			[ 'image_review' ],
+			[ 'state', 'count(*) as total' ],
 			$aWhere,
 			__METHOD__,
-			array( 'GROUP BY' => 'state' )
+			[ 'GROUP BY' => 'state' ]
 		);
 
 		while( $oRow = $oDB->fetchObject( $oResults ) ) {
