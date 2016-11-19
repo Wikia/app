@@ -27,15 +27,17 @@ class ImageReviewStatsCache {
 
 	/**
 	 * global registry object
-	 * @var $wg MemcachedPhpBagOStuff
+	 * @var $memc MemcachedPhpBagOStuff
 	 */
 	private $memc;
 
 	/**
 	 * ImageReviewStats constructor.
 	 * @param $userId string
+	 * @param MemcachedPhpBagOStuff $memc Allows passing a custom memcached client (typically for
+	 *                                    testing)
 	 */
-	public function __construct( $userId ) {
+	public function __construct( $userId, $memc = null ) {
 		foreach ( $this->allowedStats as $key ) {
 			if ( $key == self::STATS_REVIEWER ) {
 				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $userId, $key );
@@ -44,15 +46,9 @@ class ImageReviewStatsCache {
 			}
 			$this->imageStatsCacheKeys[$key] = $cache_key;
 		}
-		$this->memc = $this->getMemc();
-	}
 
-	/**
-	 * Return the memcached client we're using or mock this method in tests.
-	 * @return MemcachedPhpBagOStuff
-	 */
-	public function getMemc() {
-		return F::app()->wg->Memc;
+		// If we didn't get a custom memcached client, use the default
+		$this->memc = $memc ?: F::app()->wg->Memc;
 	}
 
 	/**
