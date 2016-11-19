@@ -44,7 +44,15 @@ class ImageReviewStatsCache {
 			}
 			$this->imageStatsCacheKeys[$key] = $cache_key;
 		}
-		$this->memc = F::app()->wg->Memc;
+		$this->memc = $this->getMemc();
+	}
+
+	/**
+	 * Return the memcached client we're using or mock this method in tests.
+	 * @return MemcachedPhpBagOStuff
+	 */
+	public function getMemc() {
+		return F::app()->wg->Memc;
 	}
 
 	/**
