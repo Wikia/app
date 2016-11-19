@@ -217,6 +217,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function csvStats() {
+		$this->wg->Out->setArticleBodyOnly( true );
+
 		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
 		$startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
 		$startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
