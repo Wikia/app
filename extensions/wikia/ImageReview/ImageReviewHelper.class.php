@@ -563,7 +563,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				foreach ( array_keys( $summary ) as $review_state ) {
 					# union query: mysql explain: Using where; Using index and max 150k rows
 					$query[] = $dbr->selectSQLText(
-						[  'image_review_stats'  ],
+						[ 'image_review_stats' ],
 						[ 'review_state', 'count(*) as cnt' ],
 						[
 							"review_state"	=> $review_state,
@@ -666,9 +666,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			# MySQL explain: Using where; Using index for group-by
 			$result = $db->select(
-				[  'image_review_stats'  ],
-				[  'reviewer_id'  ],
-				[  'reviewer_id > 0'  ],
+				[ 'image_review_stats' ],
+				[ 'reviewer_id' ],
+				[ 'reviewer_id > 0' ],
 				__METHOD__,
 				[ 'GROUP BY' => 'reviewer_id' ]
 			);
