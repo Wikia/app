@@ -60,6 +60,11 @@ class CategoryPage extends Article {
 		parent::view();
 
 		if ( NS_CATEGORY == $title->getNamespace() ) {
+			/* Wikia change - begin */
+			if ( $this->getPage()->exists() && !$this->getPage()->hasViewableContent() ) {
+				$this->getContext()->getOutput()->setStatusCode( 404 );
+			}
+			/* Wikia change - end */
 			$this->closeShowCategory();
 		}
 	}

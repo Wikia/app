@@ -12,18 +12,10 @@ class WikiCategoryPage extends WikiPage {
 	 * @return bool
 	 */
 	public function hasViewableContent() {
-		if ( parent::hasViewableContent() ) {
-			return true;
-		} else {
-			$cat = Category::newFromTitle( $this->mTitle );
-			// If any of these are not 0, then has members
-			if ( $cat->getPageCount()
-				|| $cat->getSubcatCount()
-				|| $cat->getFileCount()
-			) {
-				return true;
-			}
-		}
-		return false;
+		/* Wikia change - begin */
+		$cat = Category::newFromTitle( $this->mTitle );
+		return $cat->hasMembers();
+		/* Wikia change - end */
 	}
+
 }

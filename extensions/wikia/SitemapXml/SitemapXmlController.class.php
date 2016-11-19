@@ -147,6 +147,10 @@ class SitemapXmlController extends WikiaController {
 		}
 
 		foreach ( $this->model->getItems( $namespaces, $offset, $limit ) as $page ) {
+			if ( $page->page_namespace === NS_CATEGORY && !$this->isValidCategory( $page->page_title ) ) {
+				continue;
+			}
+
 			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $page->page_title ) );
 			$lastmod = $this->getIso8601Timestamp( $page->page_touched );
 
@@ -249,4 +253,19 @@ class SitemapXmlController extends WikiaController {
 
 		return $parsed;
 	}
+
+	/**
+	 * Check if the category page is valid
+	 * @param $pageTitle - page title
+	 * @return bool
+	 */
+	private function isValidCategory( $pageTitle ) {
+		$category = Category::newFromName( $pageTitle );
+		if ( !empty( $category ) && $category->hasMembers() ) {
+			return true;
+		}
+
+		return false;
+	}
+
 }
