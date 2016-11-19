@@ -22,13 +22,18 @@ class ImageReviewTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.08867 ms
 	 */
 	public function testImageReviewSpecialControllerIndexCorrect() {
-		$this->setStubsForImageReviewSpecialControllerTests(false);
+		$this->setStubsForImageReviewSpecialControllerTests( false );
 
-		$response = $this->app->sendRequest('ImageReviewSpecialController', 'index', array());
-		$imagesList = $response->getVal('imageList');
+		$response = $this->app->sendRequest(
+			'ImageReviewSpecialController',
+			'index',
+			[ 'ts' => $this->fakeUserTs ]
+		);
 
-		$this->assertInternalType('array', $imagesList);
-		$this->assertEquals($this->fakeCorrectImages, $imagesList);
+		$imagesList = $response->getVal( 'imageList' );
+
+		$this->assertInternalType( 'array', $imagesList );
+		$this->assertEquals( $this->fakeCorrectImages, $imagesList );
 	}
 
 	/**
@@ -36,13 +41,17 @@ class ImageReviewTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.07902 ms
 	 */
 	public function testImageReviewSpecialControllerIndexError() {
-		$this->setStubsForImageReviewSpecialControllerTests(true);
+		$this->setStubsForImageReviewSpecialControllerTests( true );
 
-		$response = $this->app->sendRequest('ImageReviewSpecialController', 'index', array());
-		$imagesList = $response->getVal('imageList');
+		$response = $this->app->sendRequest(
+			'ImageReviewSpecialController',
+			'index',
+			[ 'ts' => $this->fakeUserTs ]
+		);
+		$imagesList = $response->getVal( 'imageList' );
 
-		$this->assertInternalType('array', $imagesList);
-		$this->assertEquals($this->fakeWrongImages, $imagesList);
+		$this->assertInternalType( 'array', $imagesList );
+		$this->assertEquals( $this->fakeWrongImages, $imagesList );
 	}
 
 	private function setStubsForImageReviewSpecialControllerTests($error) {
@@ -57,8 +66,9 @@ class ImageReviewTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgTitle', $wgTitleStub);
 
 		//not to stop ImageSpecialController() 'cause ts parameter not given
-		$wgRequestStub = $this->getMock('Request', array('getVal', 'wasPosted'));
+		$wgRequestStub = $this->getMock('Request', array('getVal', 'wasPosted', 'getIP'));
 		$wgRequestStub->expects($this->any())->method('getVal')->will($this->returnValue($this->fakeTimestamp));
+		$wgRequestStub->expects($this->any())->method('getIP')->will($this->returnValue('127.0.0.1'));
 		$wgRequestStub->expects($this->any())->method('wasPosted')->will($this->returnValue(false));
 		$this->mockGlobalVariable('wgRequest', $wgRequestStub);
 

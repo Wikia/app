@@ -117,7 +117,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			? 'error'
 			: 'success';
 		$this->logImageListCompleteness( $severity );
-		
+
 		return true;
 	}
 
