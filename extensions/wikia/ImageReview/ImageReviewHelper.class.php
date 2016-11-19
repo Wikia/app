@@ -341,7 +341,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$dbh->freeResult( $results );
 			}
 
-			return array_pop( $rows );
+			return array_shift( $rows );
 		};
 	}
 
