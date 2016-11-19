@@ -970,7 +970,7 @@ class UserProfilePageController extends WikiaController {
 		global $wgEnableDiscussions;
 
 		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussions );
-		if ( $wgEnableDiscussions ) {
+		if ( $wgEnableDiscussions && $user->isLoggedIn() ) {
 			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
 
 			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
