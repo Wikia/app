@@ -716,9 +716,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function getFandomResults( $query ) {
-		$proxyBuilder = SamplerProxy::createBuilder();
 		$searchService =
-			$proxyBuilder->enableShadowingVariableName( 'wgEnableSearchRequestShadowing' )
+			\Wikia\Util\SamplerProxy::createBuilder()
+				->enableShadowingVariableName( 'wgEnableSearchRequestShadowing' )
 				->methodSamplingRateVariableName( 'wgSearchRequestSamplingRate' )
 				->originalCallable( [ new \Wikia\Search\Services\FandomSearchService(), 'query' ] )
 				->alternateCallable( [
