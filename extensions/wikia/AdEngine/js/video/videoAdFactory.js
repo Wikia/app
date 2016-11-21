@@ -21,17 +21,18 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			adSlot: adSlot,
 			width: width,
 			height: height,
-			videoContainer: googleIma.setupIma(vastUrl, adSlot, width, height),
-			play: function (onVideoLoaded, onVideoEnded) {
+			videoContainer: googleIma.prepareVideoAdContainer(adSlot),
+			play: function (showVideo, hideVideo) {
 				var self = this;
 
+				googleIma.setupIma(vastUrl, adSlot, width, height);
 				googleIma.playVideo(this.width, this.height, {
 					onVideoEnded: function () {
-						onVideoEnded(self.videoContainer);
+						hideVideo(self.videoContainer);
 						self.videoContainer = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
 					},
 					onVideoLoaded: function () {
-						onVideoLoaded(self.videoContainer);
+						showVideo(self.videoContainer);
 					}
 				});
 			},

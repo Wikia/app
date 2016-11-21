@@ -77,16 +77,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			DOMElementTweaker.addClass(imageContainer, 'hidden');
 			DOMElementTweaker.removeClass(videoContainer, 'hidden');
 			onResize(params.videoAspectRatio);
-			animate(params.aspectRatio, params.videoAspectRatio);
 		}
 
 		function hideVideo(videoContainer) {
 			onResize(params.aspectRatio);
-			animate(params.videoAspectRatio, params.aspectRatio);
-			setTimeout(function () {
-				DOMElementTweaker.addClass(videoContainer, 'hidden');
-				DOMElementTweaker.removeClass(imageContainer, 'hidden');
-			}, animationDuration);
 		}
 
 		adsModule = win.Mercury.Modules.Ads.getInstance();
