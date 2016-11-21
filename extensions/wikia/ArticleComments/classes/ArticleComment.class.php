@@ -163,7 +163,7 @@ class ArticleComment {
 	/**
 	 * @return array
 	 */
-	public function getAllMedata() {
+	public function getAllMetadata() {
 		$this->loadMetadata();
 		return $this->mMetadata;
 	}

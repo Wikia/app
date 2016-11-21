@@ -329,7 +329,7 @@ class WallMessage {
 		wfProfileIn( __METHOD__ );
 		$body = $this->getArticleComment()->getRawText();
 
-		wfDebug( __METHOD__ . json_encode( $this->getArticleComment()->getAllMedata() ) . "\n" );
+		wfDebug( __METHOD__ . json_encode( $this->getArticleComment()->getAllMetadata() ) . "\n" );
 
 		$out = $this->doSaveComment( $body, $user, $summary, $force, true );
 		wfProfileOut( __METHOD__ );
