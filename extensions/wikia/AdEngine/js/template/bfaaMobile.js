@@ -64,10 +64,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				.then(function () {
 					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-					video.ima.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
 						onResize(params.videoAspectRatio);
 					});
-					video.ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+					video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
 						onResize(params.aspectRatio);
 					});
 				});

@@ -21,11 +21,14 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			width: width,
 			height: height,
 			ima: googleIma.setupIma(vastUrl, adSlot, width, height),
+			addEventListener: function (eventName, callback) {
+				this.ima.addEventListener(eventName, callback);
+			},
 			play: function () {
 				var self = this;
 
 				if (!preventImaReload) {
-					this.ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+					this.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
 						var events = self.ima.events;
 						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
 						self.ima.events = events;
