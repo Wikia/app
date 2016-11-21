@@ -103,6 +103,8 @@ $2
 	'templatedraft-module-approve-protected' => 'Diese Vorlage ist geschützt. Wende dich bitte an einen [[Special: ListAdmins| Administrator]], damit er diesen Entwurf freischalten kann.',
 	'templatedraft-protect-edit' => 'Du hast keine Berechtigung, die übergeordnete Vorlagenseite zu bearbeiten.',
 	'templatedraft-module-closelink-create' => 'Dies ist keine Infobox',
+	'right-templatedraft' => 'Ermöglicht den Zugriff auf einen Assistenten, der hilft, die nicht plattformunabhängigen Infoboxen zum neuen Markup zu konvertieren',
+	'templatedraft-preview-example-value' => 'Dies ist ein Test',
 );
 
 $messages['es'] = array(
@@ -141,6 +143,8 @@ $2
 	'templatedraft-module-approve-protected' => 'Esta plantilla está protegida. Por favor pregunta a un [[Special:ListAdmins|administrador]] que apruebe este borrador.',
 	'templatedraft-protect-edit' => 'No tienes permiso para editar la página principal.',
 	'templatedraft-module-closelink-create' => 'Este no es una infobox',
+	'right-templatedraft' => 'Permite el acceso a un asistente que ayudará a convertir infoboxes no portátiles al nuevo marcador',
+	'templatedraft-preview-example-value' => 'Esta es una prueba',
 );
 
 $messages['fr'] = array(
@@ -179,6 +183,8 @@ $2
 	'templatedraft-module-approve-protected' => "Ce modèle est protégé. Veuillez demander à un [[Special:ListAdmins|administrateur]] d'approuver cette version de travail.",
 	'templatedraft-protect-edit' => "Vous n'êtes pas autorisé à modifier la page parente.",
 	'templatedraft-module-closelink-create' => "Il ne s'agit pas d'une infobox.",
+	'right-templatedraft' => 'Permet d’accéder à un assistant qui vous aidera à convertir les infoboxes non portables au nouveau balisage',
+	'templatedraft-preview-example-value' => 'Ceci est un test',
 );
 
 $messages['it'] = array(
@@ -217,6 +223,8 @@ $2
 	'templatedraft-module-approve-protected' => 'Questo template è protetto. Chiedi ad un [[Special:ListAdmins|amministratore]] di approvare questo progetto.',
 	'templatedraft-protect-edit' => 'Non hai il permesso di modificare la pagina madre.',
 	'templatedraft-module-closelink-create' => 'Questo non è un infobox',
+	'right-templatedraft' => "Consente l'accesso ad una procedura guidata che aiuta nella conversione degli infobox al nuovo markup",
+	'templatedraft-preview-example-value' => 'Questo è un test',
 );
 
 $messages['ja'] = array(
@@ -250,11 +258,13 @@ $2
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge ここをクリックすると上のプレビューを更新できます]',
 	'templatedraft-module-editintro-please-convert' => '「$1」をクリックすると、新しいマークアップを使用したインフォボックスのドラフト版を生成できます。',
 	'templatedraft-module-view-parent' => 'もとのテンプレートのウィキテキスト',
-	'templatedraft-module-help' => 'インフォボックスのマークアップに関するヘルプページ',
+	'templatedraft-module-help' => 'インフォボックスのマークアップに関するヘルプページを見る',
 	'templatedraft-invalid-template' => '入力したテンプレート名は無効です。',
 	'templatedraft-module-approve-protected' => 'このテンプレートは保護されているようです。このドラフトを承認するには、[[Special:ListAdmins|アドミン]]にお問い合わせください。',
-	'templatedraft-protect-edit' => '親ページを編集していただくための権限をお持ちでないようです。',
+	'templatedraft-protect-edit' => '親ページを編集していただくための権限がありません。',
 	'templatedraft-module-closelink-create' => 'これはインフォボックスではありません',
+	'right-templatedraft' => '新しいマークアップを使用したインフォボックスへの変換を補助するウィザードを許可する',
+	'templatedraft-preview-example-value' => 'これはテストです',
 );
 
 $messages['ko'] = array(
@@ -316,6 +326,8 @@ $2
 	'templatedraft-module-approve-protected' => 'This template is protected. Please ask an [[Special:ListAdmins|Admin]] to approve this draft.',
 	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
 	'templatedraft-module-closelink-create' => 'This is not an infobox',
+	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
+	'templatedraft-preview-example-value' => 'This is a test',
 );
 
 $messages['pl'] = array(
@@ -354,6 +366,8 @@ $2
 	'templatedraft-module-approve-protected' => 'Ten szablon jest chroniony. Poproś [[Special:ListAdmins|Admina]] o zatwierdzenie wersji roboczej.',
 	'templatedraft-protect-edit' => 'Nie masz uprawnień do edytowania strony nadrzędnej.',
 	'templatedraft-module-closelink-create' => 'To nie jest infoboks',
+	'right-templatedraft' => 'Udostępnia kreator pozwalający na konwersję nie-przenośnych infoboksów na nową składnię',
+	'templatedraft-preview-example-value' => 'To jest test',
 );
 
 $messages['pt'] = array(
@@ -363,17 +377,17 @@ $messages['pt'] = array(
 	'templatedraft-approval-no-page-error' => 'A aprovação falhou porque a página de rascunho não existe',
 	'templatedraft-approval-no-templatedraft-error' => 'A página não é um rascunho de predefinição e portanto não pode ser aprovada.',
 	'templatedraft-approval-success-confirmation' => 'O conteúdo desta predefinição foi substituído por uma versão atualizada e o rascunho foi removido',
-	'templatedraft-approval-summary' => 'A infobox foi atualizada usando a [[Help:PortableInfoboxes|portable infobox]] ferramenta de migração',
+	'templatedraft-approval-summary' => 'A infobox foi atualizada usando a ferramenta de migração de [[Ajuda:Infoboxes|infoboxes portáteis]]',
 	'templatedraft-draft-removal-summary' => 'Limpeza. Rascunho aprovado para a página principal.',
 	'templatedraft-module-title-create' => 'Migrar esta infobox',
-	'templatedraft-module-subtitle-create' => 'Esta predefinição não utiliza a nova [[Help:PortableInfoboxes|marcação de infobox]].',
+	'templatedraft-module-subtitle-create' => 'Esta predefinição não utiliza a nova [[Ajuda:Infoboxes|marcação de infobox]].',
 	'templatedraft-module-content-create' => 'Nós podemos gerar uma versão preliminar da marcação da sua infobox existente e salvá-la como uma sub-página, para que você possa analisá-la e fazer as alterações necessárias.',
 	'templatedraft-module-button-create' => 'Gerar a marcação de rascunho',
 	'templatedraft-module-button-title-create' => 'Abrir uma nova aba com um formulário de edição já preenchido',
 	'templatedraft-module-title-approve' => 'Mover este rascunho de predefinição',
 	'templatedraft-module-content-approve' => 'Você está satisfeito com este rascunho e deseja promovê-lo para uma predefinição ativa?',
 	'templatedraft-module-button-approve' => 'Aprovar este rascunho',
-	'templatedraft-preview-n-docs' => '== Uso &  pré-visualização
+	'templatedraft-preview-n-docs' => '== Uso & pré-visualização ==
 Digite o seguinte:
 
 <pre>
@@ -392,6 +406,8 @@ $2
 	'templatedraft-module-approve-protected' => 'Esta predefinição está protegida. Por favor, pergunte a um  [[Special:ListAdmins|Admin]] para aprovar este projeto.',
 	'templatedraft-protect-edit' => 'Você não tem permissão para editar esta página.',
 	'templatedraft-module-closelink-create' => 'Isto não é uma infobox',
+	'right-templatedraft' => 'Permite o acesso a um assistente que ajuda a converter infoboxes de não-portáteis para a nova marcação',
+	'templatedraft-preview-example-value' => 'Isto é um teste',
 );
 
 $messages['ru'] = array(
@@ -427,9 +443,11 @@ $2
 	'templatedraft-module-view-parent' => 'Просмотр викитекста старой версии шаблона',
 	'templatedraft-module-help' => 'Справочная статья о модульных инфобоксах',
 	'templatedraft-invalid-template' => 'Недопустимое название шаблона.',
-	'templatedraft-module-approve-protected' => 'Этот шаблон находится под защитой. Пожалуйста, попросите [[Special:ListAdmins|администраторов]] вики одобрить этот черновик.',
+	'templatedraft-module-approve-protected' => 'Этот шаблон был защищён. Пожалуйста, попросите [[Special:ListAdmins|администраторов]] вики одобрить этот черновик.',
 	'templatedraft-protect-edit' => 'Вы не имеете разрешения на редактирование родительской страницы.',
 	'templatedraft-module-closelink-create' => 'Это не инфобокс',
+	'right-templatedraft' => 'Доступ к инструменту конвертации немодульных инфобоксов с использованием новой разметки',
+	'templatedraft-preview-example-value' => 'Тест',
 );
 
 $messages['zh-hans'] = array(
@@ -468,6 +486,8 @@ $2
 	'templatedraft-module-approve-protected' => '此模板受到保护。请咨询[[Special:ListAdmins|管理员]]批准这一草案。',
 	'templatedraft-protect-edit' => '您没有权限编辑首页面。',
 	'templatedraft-module-closelink-create' => '这不是信息框',
+	'right-templatedraft' => '允许向导帮助非移动式讯息框转换成一个新的标记文件',
+	'templatedraft-preview-example-value' => '这是一个测试',
 );
 
 $messages['zh-hant'] = array(
@@ -506,5 +526,7 @@ $2
 	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這一草案。',
 	'templatedraft-protect-edit' => '您沒有許可權編輯首頁面。',
 	'templatedraft-module-closelink-create' => '這不是一個資訊框',
+	'right-templatedraft' => '允許使用將非行動話訊息框轉變為新標記方式的協助精靈',
+	'templatedraft-preview-example-value' => '這是一個測試',
 );
 
