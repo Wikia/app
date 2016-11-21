@@ -158,12 +158,11 @@ class WallHelper {
 				$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 			} else {
 			// child
+				/* @var WallMessage $parent */
 				$parent->load();
 
 				if ( !in_array( true, [ $parent->isRemove(), $parent->isAdminDelete() ] ) ) {
-					$title = wfMessage( 'wall-no-title' )->escaped(); // in case metadata does not include title field
-					if ( isset( $parent->mMetadata['title'] ) ) $title = $wmessage->getMetaTitle();
-					$this->mapParentData( $item, $parent, $title );
+					$this->mapParentData( $item, $parent );
 					$res['title'] = 'message-wall-thread-#' . $parent->getTitle()->getArticleID();
 					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 				} else {
@@ -186,13 +185,11 @@ class WallHelper {
 	 * @brief Copies parent's informations to child item
 	 *
 	 * @param array $item a referance to an array with wall comment informations
-	 * @param ArticleComment $parent parent comment
-	 * @param Title $title title object instance
+	 * @param WallMessage $parent parent comment
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-
-	private function mapParentData( &$item, $parent, $title ) {
+	private function mapParentData( Array &$item, WallMessage $parent ) {
 		wfProfileIn( __METHOD__ );
 
 		$metaTitle = $parent->getMetaTitle();
