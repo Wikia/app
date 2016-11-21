@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (uapVideo.isVideoAd(params)) {
+		if (uapVideo.isEnabled(params)) {
 			uapVideo.init()
 				.then(function () {
 					uapVideo.loadVideoAd(params, adSlot, imageContainer);
