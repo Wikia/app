@@ -39,11 +39,7 @@ $overlay-small-value: 15%;
 	$overlay-small-value: 3%;
 }
 
-$text-overlay-value: 15%;
-$text-overlay-color: #fff;
-@if luminance($color-text) > 0.3 {
-	$text-overlay-color: #000;
-}
+$text-overlay-value: 30%;
 
 .embeddable-discussions-module {
 	@include flexbox();
@@ -100,7 +96,7 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-forum {
-		color: mix($text-overlay-color, $color-text, $text-overlay-value);
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		font-size: $font-size-small;
 		float: left;
 	}
@@ -146,7 +142,7 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-post-actions li {
-		color: mix($text-overlay-color, $color-text, $text-overlay-value);
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		cursor: pointer;
 		overflow: hidden;
 		text-align: left;
@@ -159,7 +155,7 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-post-actions a {
-		color: mix($text-overlay-color, $color-text, $text-overlay-value);
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		cursor: pointer;
 		font-size: $font-size-small;
 	}
@@ -169,7 +165,7 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-post-counters {
-		color: mix($text-overlay-color, $color-text, $text-overlay-value);
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		font-size: $font-size-small;
 		justify-content: flex-end;
 		padding-bottom: 4px;
@@ -220,7 +216,7 @@ $text-overlay-color: #fff;
 
 	.embeddable-discussions-reply-icon {
 		path {
-			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
 		}
 	}
 
@@ -228,13 +224,13 @@ $text-overlay-color: #fff;
 		margin-right: 4px;
 
 		path {
-			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
 		}
 	}
 
 	.embeddable-discussions-share-icon {
 		path {
-			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
 		}
 	}
 
@@ -262,7 +258,7 @@ $text-overlay-color: #fff;
 	}
 
 	.embeddable-discussions-timestamp {
-		color: mix($text-overlay-color, $color-text, $text-overlay-value);
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		font-size: $font-size-small;
 		padding-left: 5px;
 	}
@@ -279,7 +275,7 @@ $text-overlay-color: #fff;
 
 	.embeddable-discussions-upvote-icon {
 		path {
-			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
 		}
 	}
 
@@ -293,7 +289,7 @@ $text-overlay-color: #fff;
 		margin-right: 4px;
 
 		path {
-			fill: mix($text-overlay-color, $color-text, $text-overlay-value);
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
 		}
 	}
 
