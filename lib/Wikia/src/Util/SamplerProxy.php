@@ -97,7 +97,6 @@ class SamplerProxy {
 
 		/*
 		 * Just pass through if:
-		 *   - the method called isn't the one we're sampling
 		 *   - sampling rate is undefined or is zero
 		 *   - we're sampling, but this particular call is in the unsampled population
 		 */
