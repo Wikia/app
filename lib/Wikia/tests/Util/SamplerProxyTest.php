@@ -10,8 +10,9 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	private $alternateMock;
 
-	private $enableShadowingVariableName = 'wgEnableShadowing';
-	private $methodSamplingRateVariableName = 'wgMethodSamplingRate';
+	private $enableShadowing = true;
+	private $methodSamplingRate = 50;
+
 	private $originalMethodToSample = 'methodToSample';
 	private $originalMethodNotToSample = 'methodNotToSample';
 	private $alternateMethod = 'alternateMethod';
@@ -32,57 +33,43 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testProxyBuilderSuccess() {
-		$this->doTestProxyBuilder( $this->enableShadowingVariableName, $this->methodSamplingRateVariableName,
+		$this->doTestProxyBuilder( $this->enableShadowing, $this->methodSamplingRate,
 			[ $this->originalMock, $this->originalMethodToSample ], [ $this->alternateMock, $this->alternateMethod ],
 			[ $this->alternateMock, $this->compareResultsMethod ] );
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	function testProxyBuilderNullShadowVariable() {
-		$this->doTestProxyBuilder( null, $this->methodSamplingRateVariableName,
-			[ $this->originalMock, $this->originalMethodToSample ], [ $this->alternateMock, $this->alternateMethod ],
-			[ $this->alternateMock, $this->compareResultsMethod ] );
-	}
-
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
-	function testProxyBuilderNullSampleVariable() {
-		$this->doTestProxyBuilder( $this->enableShadowingVariableName, null,
+		$this->doTestProxyBuilder( null, null,
 			[ $this->originalMock, $this->originalMethodToSample ], [ $this->alternateMock, $this->alternateMethod ],
 			[ $this->alternateMock, $this->compareResultsMethod ] );
 	}
 
 	function doTestProxyBuilder(
-		$testShadowVariableName, $testMethodSamplingRateVariableName, $testOriginalCallable,
+		$testShadowing, $testMethodSamplingRate, $testOriginalCallable,
 		$testAlternateCallable, $testResultsCallable
 	) {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowingVariableName( $testShadowVariableName )
-				->methodSamplingRateVariableName( $testMethodSamplingRateVariableName )
+			$builder->enableShadowing( $testShadowing )
+				->methodSamplingRate( $testMethodSamplingRate )
 				->originalCallable( $testOriginalCallable )
 				->alternateCallable( $testAlternateCallable )
 				->resultsCallable( $testResultsCallable )
 				->build();
 
-		$this->assertEquals( $testShadowVariableName,
-			$samplerProxy->getEnableShadowingVariableName() );
-		$this->assertEquals( $testMethodSamplingRateVariableName,
-			$samplerProxy->getMethodSamplingRateVariableName() );
+		$this->assertEquals( $testShadowing,
+			$samplerProxy->getEnableShadowing() );
+		$this->assertEquals( $testMethodSamplingRate,
+			$samplerProxy->getMethodSamplingRate() );
 		$this->assertEquals( $testOriginalCallable, $samplerProxy->getOriginalCallable() );
 		$this->assertEquals( $testAlternateCallable, $samplerProxy->getAlternateCallable() );
 		$this->assertEquals( $testResultsCallable, $samplerProxy->getResultsCallable() );
 	}
 
 	function testUnsampledMethod() {
-		$testShadowVariableName = $this->enableShadowingVariableName;
-		$GLOBALS[$testShadowVariableName] = 0;
-		$testMethodSamplingRateVariableName = $this->methodSamplingRateVariableName;
-		$GLOBALS[$testMethodSamplingRateVariableName] = 100;
+		$testShadowing = true;
+		$testMethodSamplingRate = 15;
 
 		$testOriginalCallable = [ $this->originalMock, $this->originalMethodToSample ];
 		$testAlternateCallable = [ $this->alternateMock, $this->alternateMethod ];
@@ -93,8 +80,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowingVariableName( $testShadowVariableName )
-				->methodSamplingRateVariableName( $testMethodSamplingRateVariableName )
+			$builder->enableShadowing( $testShadowing )
+				->methodSamplingRate( $testMethodSamplingRate )
 				->originalCallable( $testOriginalCallable )
 				->alternateCallable( $testAlternateCallable )
 				->build();
@@ -153,11 +140,6 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 		$samplingRate, $enableShadowing, $count, $deviation
 	) {
 
-		$testShadowVariableName = $this->enableShadowingVariableName;
-		$GLOBALS[$testShadowVariableName] = $enableShadowing;
-		$testMethodSamplingRateVariableName = $this->methodSamplingRateVariableName;
-		$GLOBALS[$testMethodSamplingRateVariableName] = $samplingRate;
-
 		$testOriginalCallable = [ $this->originalMock, $this->originalMethodToSample ];
 		$testAlternateCallable = [ $this->alternateMock, $this->alternateMethod ];
 
@@ -169,8 +151,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowingVariableName( $testShadowVariableName )
-				->methodSamplingRateVariableName( $testMethodSamplingRateVariableName )
+			$builder->enableShadowing( $enableShadowing )
+				->methodSamplingRate( $samplingRate )
 				->originalCallable( $testOriginalCallable )
 				->alternateCallable( $testAlternateCallable )
 				->build();
@@ -213,10 +195,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testResultsCallable() {
-		$testShadowVariableName = $this->enableShadowingVariableName;
-		$GLOBALS[$testShadowVariableName] = 1;
-		$testMethodSamplingRateVariableName = $this->methodSamplingRateVariableName;
-		$GLOBALS[$testMethodSamplingRateVariableName] = 100;
+		$testShadowing = true;
+		$testMethodSamplingRate = 100;
 
 		$testOriginalCallable = [ $this->originalMock, $this->originalMethodToSample ];
 		$testAlternateCallable = [ $this->alternateMock, $this->alternateMethod ];
@@ -230,8 +210,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowingVariableName( $testShadowVariableName )
-				->methodSamplingRateVariableName( $testMethodSamplingRateVariableName )
+			$builder->enableShadowing( $testShadowing )
+				->methodSamplingRate( $testMethodSamplingRate )
 				->originalCallable( $testOriginalCallable )
 				->alternateCallable( $testAlternateCallable )
 				->resultsCallable( $resultsCallable )
@@ -258,10 +238,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testExceptionFallbackFromShadow() {
-		$testShadowVariableName = $this->enableShadowingVariableName;
-		$GLOBALS[$testShadowVariableName] = 0;
-		$testMethodSamplingRateVariableName = $this->methodSamplingRateVariableName;
-		$GLOBALS[$testMethodSamplingRateVariableName] = 100;
+		$testShadow = false;
+		$testMethodSamplingRate = 100;
 
 		$testOriginalCallable = [ $this->originalMock, $this->originalMethodToSample ];
 		$testAlternateCallable = [ $this->alternateMock, $this->alternateMethod ];
@@ -273,8 +251,8 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowingVariableName( $testShadowVariableName )
-				->methodSamplingRateVariableName( $testMethodSamplingRateVariableName )
+			$builder->enableShadowing( $testShadow )
+				->methodSamplingRate( $testMethodSamplingRate )
 				->originalCallable( $testOriginalCallable )
 				->alternateCallable( $testAlternateCallable )
 				->build();
