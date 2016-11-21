@@ -677,14 +677,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				] );
 			}
 
+			$searchCommand = $this->buildSearchCommand( $query );
+
 			if ( !$wgDisableFandomStoriesCaching ) {
 				$fandomStories =
 					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
-						$query ), \WikiaResponse::CACHE_STANDARD, function () use ( $query ) {
-						$this->getFandomResults( $query );
-					} );
+						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand);
 			} else {
-				$fandomStories = $this->getFandomResults( $query );
+				$fandomStories = $searchCommand();
 			}
 
 			if ( !empty( $fandomStories ) ) {
@@ -715,19 +715,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 	}
 
-	protected function getFandomResults( $query ) {
-		$searchService =
-			\Wikia\Util\SamplerProxy::createBuilder()
-				->enableShadowingVariableName( 'wgEnableSearchRequestShadowing' )
-				->methodSamplingRateVariableName( 'wgSearchRequestSamplingRate' )
-				->originalCallable( [ new \Wikia\Search\Services\FandomSearchService(), 'query' ] )
-				->alternateCallable( [
-					new \Wikia\Search\Services\ESFandomSearchService(),
-					'query',
-				] )
-				->build();
+	protected function buildSearchCommand( $query ) {
+		return function () use ( $query ) {
+			$searchService =
+				\Wikia\Util\SamplerProxy::createBuilder()
+					->enableShadowingVariableName( 'wgEnableSearchRequestShadowing' )
+					->methodSamplingRateVariableName( 'wgSearchRequestSamplingRate' )
+					->originalCallable( [ new \Wikia\Search\Services\FandomSearchService(), 'query' ] )
+					->alternateCallable( [
+						new \Wikia\Search\Services\ESFandomSearchService(),
+						'query',
+					] )
+					->build();
 
-		return $searchService->query( $query );
+			return $searchService->query( $query );
+		};
 	}
 
 	/**
