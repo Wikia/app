@@ -138,10 +138,12 @@ class ArticleComment {
 	 * @param mixed $val
 	 */
 	public function setMetadata( $key, $val ) {
+		$this->loadMetadata();
 		$this->mMetadata[$key] = $val;
 	}
 
 	public function removeMetadata( $key ) {
+		$this->loadMetadata();
 		unset( $this->mMetadata[$key] );
 	}
 
@@ -154,12 +156,16 @@ class ArticleComment {
 	 * @return string
 	 */
 	public function getMetadata( $key, $val = '' ) {
+		$this->loadMetadata();
+		return empty( $this->mMetadata[$key] ) ? $val: $this->mMetadata[$key];
+	}
+
+	private function loadMetadata() {
 		// mMetadata is lazy-loaded (possibly from cache)
 		if ( !is_array( $this->mMetadata ) ) {
+			wfDebug(__METHOD__ . " - lazy-loading\n");
 			$this->parseText();
 		}
-
-		return empty( $this->mMetadata[$key] ) ? $val: $this->mMetadata[$key];
 	}
 
 	/**
