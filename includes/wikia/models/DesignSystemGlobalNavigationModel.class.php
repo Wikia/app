@@ -236,6 +236,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getLoggedInUserData( $user ) {
+		global $wgEnableAuthorProfileLinks;
+
 		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
 
@@ -260,7 +262,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
-		if ( $this->hasAuthorProfile( $user ) ) {
+		if ( $this->hasAuthorProfile( $user ) && $wgEnableAuthorProfileLinks ) {
 			$viewProfileLinks[] = [
 				'type' => 'link-text',
 				'href' => $this->getAuthorProfileUrl( $userName ),
