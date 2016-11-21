@@ -57,9 +57,11 @@ class PortableInfoboxRenderServiceHelper {
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
 		$title = $data[ 'name' ];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
-		if ( !$file || !$file->exists() ) {
+
+		if ( !$file || !$file->exists() || !in_array($file->media_type, array(MEDIATYPE_BITMAP, MEDIATYPE_DRAWING))) {
 			return false;
 		}
+
 		// get dimensions
 		$originalWidth = $file->getWidth();
 		$dimensions = $this->getThumbnailSizes(
