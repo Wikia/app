@@ -71,6 +71,15 @@ class SamplerProxy {
 				$alternateResult = call_user_func_array( $this->alternateCallable, $args );
 			}
 			catch ( \Exception $e ) {
+				$log = \Wikia\Logger\WikiaLogger::instance();
+				$log->error( __METHOD__ . " - Exception thrown from alternate method: " .
+				             $e->getMessage(), [
+					'method' => __METHOD__,
+					'exception' => $e,
+					'shadowing' => $this->enableShadowing,
+					'sampleRate' => $this->methodSamplingRate,
+				] );
+
 				// ensure we call the original method
 				$shouldShadow = true;
 			}
@@ -91,7 +100,6 @@ class SamplerProxy {
 				}
 			}
 
-			// We didn't invoke a results callable, so we return the result of the original method
 			return $resultToReturn;
 		}
 

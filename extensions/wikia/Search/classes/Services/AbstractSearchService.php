@@ -13,17 +13,9 @@ abstract class AbstractSearchService {
 		return $this->consumeResponse( $response );
 	}
 
-	protected function prepareQuery( $query ) {
-		// Subclass implements
+	protected abstract function prepareQuery( $query );
 
-		return null;
-	}
-
-	protected function select( $select ) {
-		// Subclass implements
-
-		return null;
-	}
+	protected abstract function select( $select );
 
 	protected function consumeResponse( $response ) {
 		return $response;
