@@ -45,6 +45,12 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	public function blockWiki() {
+
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
+	
 		$par = $this->getPar();
 		list ( , $wikiId ) = explode( '/', $par, 2 );
 
