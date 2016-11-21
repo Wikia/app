@@ -1,34 +1,22 @@
-/* global define */
+/*global define*/
 define('ext.wikia.adEngine.video.videoAdFactory', [
-	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.googleIma',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'wikia.log'
-], function (DOMElementTweaker, googleIma, vastUrlBuilder, log) {
+	'wikia.log',
+	'wikia.window'
+], function (googleIma, vastUrlBuilder, log, win) {
 	'use strict';
-
 	var logGroup = 'ext.wikia.adEngine.video.videoAdFactory';
 
 	function init() {
 		return googleIma.init();
 	}
 
-	function create(width, height, adSlot, slotParams) {
-		var vastUrl = vastUrlBuilder.build(width / height, slotParams);
+	function create(width, height, adSlot, slotParams, vastUrl, preventImaReload) {
+		vastUrl = vastUrl || vastUrlBuilder.build(width / height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
 		return {
-			addEventListener: function (name, callback) {
-				if (this.events[name]) {
-					this.events[name].push(callback);
-				} else {
-					throw new Error('Event name ' + name + '  not supported');
-				}
-			},
-			events: {
-				onStart: [],
-				onFinished: []
-			},
 			adSlot: adSlot,
 			width: width,
 			height: height,
@@ -36,11 +24,14 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			play: function () {
 				var self = this;
 
-				this.events.onFinished.push(function () {
-					self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
-				});
-
-				this.ima.playVideo(this.width, this.height, this.events);
+				if (!preventImaReload) {
+					this.ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+						var events = self.ima.events;
+						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
+						self.ima.events = events;
+					});
+				}
+				this.ima.playVideo(this.width, this.height);
 			},
 			resize: function (width, height) {
 				this.width = width;

@@ -1,13 +1,14 @@
 /*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, log, win) {
+], function (scriptLoader, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
-		videoMock = document.createElement('video');
+		videoMock = doc.createElement('video');
 
 	function init() {
 		if (win.google && win.google.ima) {
@@ -35,26 +36,49 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return videoAdContainer;
 	}
 
+	function registerEvents(ima) {
+		Object.keys(google.ima.AdEvent.Type).forEach(function (eventKey) {
+			var eventName = google.ima.AdEvent.Type[eventKey];
+			ima.adsManager.addEventListener(eventName, function (event) {
+				ima.events[eventName] = ima.events[eventName] || [];
+
+				ima.events[eventName].map(function (callback) {
+					callback(ima, event);
+				});
+				log([eventName, event.getAdData()], log.levels.debug, logGroup);
+			}, false);
+		});
+
+		Object.keys(google.ima.AdErrorEvent.Type).forEach(function (eventKey) {
+			var eventName = google.ima.AdErrorEvent.Type[eventKey];
+			ima.adsLoader.addEventListener(eventName, function (event) {
+				ima.events[eventName] = ima.events[eventName] || [];
+
+				ima.events[eventName].map(function (callback) {
+					callback(ima, event);
+				});
+				log([eventName, event.getError()], log.levels.debug, logGroup);
+			}, false);
+		});
+	}
+
 	function createIma() {
 		return {
-			container: null,
-			isAdsManagerLoaded: false,
 			adDisplayContainer: null,
 			adsLoader: null,
 			adsManager: null,
-			playVideo: function (width, height, callbacks) {
+			container: null,
+			events: {},
+			isAdsManagerLoaded: false,
+			addEventListener: function (eventName, callback) {
+				this.events[eventName] = this.events[eventName] || [];
+				this.events[eventName].push(callback);
+			},
+			playVideo: function (width, height) {
 				var self = this,
 					callback = function () {
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
-
-						callbacks.onStart.map(function (callback) {
-							self.adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, callback);
-						});
-
-						callbacks.onFinished.map(function (callback) {
-							self.adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, callback);
-						});
 					};
 
 				if (this.isAdsManagerLoaded) {
@@ -77,6 +101,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
+			registerEvents(ima);
 			ima.isAdsManagerLoaded = true;
 		}
 

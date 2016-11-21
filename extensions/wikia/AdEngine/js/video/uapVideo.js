@@ -1,11 +1,11 @@
 /* global define */
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
-	'wikia.log'
-], function (adHelper, DOMElementTweaker, uapVideoAnimation, videoAdFactory, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adHelper, uapVideoAnimation, videoAdFactory, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -34,13 +34,17 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				}
 			);
 
-			window.addEventListener('resize', adHelper.throttle(function () {
+			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(adSlot);
 				video.resize(slotWidth, getVideoHeight(slotWidth, params));
 			}));
 
-			video.addEventListener('onStart', uapVideoAnimation.showVideo.bind(null, video, imageContainer, adSlot, params, getSlotWidth));
-			video.addEventListener('onFinished', uapVideoAnimation.hideVideo.bind(null, video, imageContainer, adSlot, params, getSlotWidth));
+			video.ima.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+				uapVideoAnimation.showVideo(video, imageContainer, adSlot, params, getSlotWidth);
+			});
+			video.ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
+			});
 
 			params.videoTriggerElement.addEventListener('click', function () {
 				video.play();

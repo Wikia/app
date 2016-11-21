@@ -1,23 +1,17 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaMobile', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.videoAdFactory',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
-	adHelper,
 	uapContext,
-	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
-	videoAdFactory,
 	uapVideo,
 	doc,
 	log,
@@ -70,8 +64,12 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				.then(function () {
 					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-					video.addEventListener('onStart', onResize.bind(null, params.videoAspectRatio));
-					video.addEventListener('onFinished', onResize.bind(null, params.aspectRatio));
+					video.ima.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+						onResize(params.videoAspectRatio);
+					});
+					video.ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+						onResize(params.aspectRatio);
+					});
 				});
 		}
 	}
