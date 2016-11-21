@@ -69,7 +69,7 @@ class SamplerProxy {
 			// We're going to route the request to the alternate instance.
 			// Now determine if we're going to shadow or redirect
 			global ${$this->enableShadowingVariableName};
-			$shouldShadow = ${$this->enableShadowingVariableName};
+			$shouldShadow = ${$this->enableShadowingVariableName} ? true : false;
 
 			// Call the alternate method and cache the result
 			try {

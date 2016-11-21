@@ -200,14 +200,6 @@ class EntitySearchService {
 		return $select;
 	}
 
-	/**
-	 * @param Solarium_Result_Select $response Search response
-	 * @return mixed
-	 */
-	protected function consumeResponse( $response ) {
-		return $response;
-	}
-
 	protected function getConfig() {
 		return ( new Factory() )->getSolariumClientConfig();
 	}
