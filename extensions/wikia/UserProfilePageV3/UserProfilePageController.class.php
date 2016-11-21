@@ -966,12 +966,12 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function fetchDiscussionPostsNumberFrom( $user ) {
+	public function fetchDiscussionPostsNumberFrom( $targetUser ) {
 		global $wgEnableDiscussions;
 
 		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussions );
-		if ( $wgEnableDiscussions && $user->isLoggedIn() ) {
-			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
+		if ( $wgEnableDiscussions && !$targetUser->isAnon() ) {
+			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $targetUser );
 
 			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
 			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
