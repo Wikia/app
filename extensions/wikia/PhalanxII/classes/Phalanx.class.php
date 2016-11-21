@@ -10,7 +10,9 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_ANSWERS_QUESTION_TITLE = 16;
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
+	const TYPE_COOKIE = 128;
 	const TYPE_EMAIL = 256;
+	const MAX_TYPE_VALUE = self::TYPE_EMAIL;
 
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
@@ -22,10 +24,10 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	private $blockId = 0;
 	private $db_table = 'phalanx';
 
-	public $moduleData = array();
-	public $moduleDataShort = array();
+	public $moduleData = [];
+	public $moduleDataShort = [];
 
-	private static $typeNames = array(
+	private static $typeNames = [
 		1   => 'content',
 		2   => 'summary',
 		4   => 'title',
@@ -33,10 +35,18 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		16  => 'question_title',
 		32  => 'recent_questions',
 		64  => 'wiki_creation',
+		128 => 'cookie',
 		256 => 'email'
-	);
+	];
+
+	// These types should not be made available when creating blocks but should still be shown
+	// for existing blocks.
+	private static $unsupportedTypes = [
+		128 => 'cookie'
+	];
+
 	private static $expiry_values = 'phalanx-expire-durations';
-	private static $expiry_text = array(
+	private static $expiry_text = [
 		"1 hour",
 		"2 hours",
 		"4 hours",
@@ -50,7 +60,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		"6 months",
 		"1 year",
 		"infinite"
-	);
+	];
 
 	public $data = [];
 
@@ -67,7 +77,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	public static function newFromId( $blockId ) {
 		$instance = new Phalanx( $blockId );
 
-		/* read data from database */
+		// read data from database
 		$instance->load();
 		return $instance;
 	}
@@ -101,10 +111,10 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 
 		$dbr = $this->getSharedDB();
 
-		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
+		$row = $dbr->selectRow( $this->db_table, '*', [ 'p_id' => $this->blockId ], __METHOD__ );
 
 		if ( is_object( $row ) ) {
-			$this->data = array(
+			$this->data = [
 				'id'        => $row->p_id,
 				'author_id' => $row->p_author_id,
 				'text'      => $row->p_text,
@@ -117,10 +127,42 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				'reason'    => $row->p_reason,
 				'comment'   => $row->p_comment,
 				'ip_hex'    => $row->p_ip_hex
-			);
+			];
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function isTypeContent() {
+		return $this->data['type'] & self::TYPE_CONTENT;
+	}
+
+	public function isTypeSummary() {
+		return $this->data['type'] & self::TYPE_SUMMARY;
+	}
+
+	public function isTypeTitle() {
+		return $this->data['type'] & self::TYPE_TITLE;
+	}
+
+	public function isTypeUser() {
+		return $this->data['type'] & self::TYPE_USER;
+	}
+
+	public function isTypeQuestionTitle() {
+		return $this->data['type'] & self::TYPE_ANSWERS_QUESTION_TITLE;
+	}
+
+	public function isTypeRecentQuestions() {
+		return $this->data['type'] & self::TYPE_ANSWERS_RECENT_QUESTIONS;
+	}
+
+	public function isTypeWikiCreation() {
+		return $this->data['type'] & self::TYPE_WIKI_CREATION;
+	}
+
+	public function isTypeEmail() {
+		return $this->data['type'] & self::TYPE_EMAIL;
 	}
 
 	public function save() {
@@ -141,7 +183,12 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 			$dbw->insert( $this->db_table, $this->mapToDB(), __METHOD__ );
 			$action = 'add';
 		} else {
-			$dbw->update( $this->db_table, $this->mapToDB(), array( 'p_id' => $this->data['id'] ), __METHOD__ );
+			$dbw->update(
+				$this->db_table,
+				$this->mapToDB(),
+				[ 'p_id' => $this->data['id'] ],
+				__METHOD__
+			);
 			$action = 'edit';
 		};
 
@@ -186,38 +233,70 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		return $return;
 	}
 
-	/* get the values for the expire select */
+	/**
+	 * Get the values for the expire select
+	 *
+	 * @return array
+	 */
 	public static function getExpireValues() {
 		return array_combine( self::$expiry_text, explode( ",", wfMsg( self::$expiry_values ) ) );
 	}
 
-	/*
-	 * @author tor <tor@wikia-inc.com>
-	 * @author Marooned <marooned at wikia-inc.com>
+	/**
+	 * Convert a bit field in an int to an array of type names.
 	 *
-	 * @param $typemask bit mask of types
-	 * @return Array of strings with human-readable names
+	 * @param int $typeField bit field of types
+	 * @return array strings with human-readable names
 	 */
-	public static function getTypeNames( $typemask ) {
-		$types = array();
+	public static function getTypeNames( $typeField ) {
+		$types = [];
 
-		/* iterate for each module for which block is saved */
-		for ( $bit = $typemask & 1, $type = 1; $typemask; $typemask >>= 1, $bit = $typemask & 1, $type <<= 1 ) {
-			if ( !$bit ) continue;
-			$types[$type] = self::$typeNames[$type];
+		// Start with the largest type bit mask we have, e.g. 0b10000000 = 0x80 = 256
+		$bitMask = self::MAX_TYPE_VALUE;
+
+		while ( $bitMask ) {
+			// If the current bit given by $bitMask is set in $typeField AND we have a
+			// type name for it, save it in $types.  Otherwise skip.
+			if ( $typeField & $bitMask && !empty( self::$typeNames[$bitMask] ) ) {
+				$types[$bitMask] = self::$typeNames[$bitMask];
+			}
+			$bitMask >>= 1;
+		}
+
+		// Some data we get will have bits set that are no longer recognized.  If this is the
+		// case at lease output something
+		if ( count( $types ) == 0 ) {
+			$types[0] = 'unknown';
 		}
 
 		return $types;
 	}
 
-	/* get all phalanx types */
+	/**
+	 * Get all phalanx types
+	 *
+	 * @return array
+	 */
 	public static function getAllTypeNames() {
 		return self::$typeNames;
 	}
 
-	/* map array keys to fields in phalanx table */
+	/**
+	 * Get supported phalanx types
+	 *
+	 * @return array
+	 */
+	public static function getSupportedTypeNames() {
+		return array_diff( self::$typeNames, self::$unsupportedTypes );
+	}
+
+	/**
+	 * Mmap array keys to fields in phalanx table
+	 *
+	 * @return array
+	 */
 	private function mapToDB() {
-		$fields = array();
+		$fields = [];
 		foreach ( $this->data as $key => $field  ) {
 			$fields[ 'p_' . $key ] = $field;
 		}
@@ -238,7 +317,10 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		$log->addEntry(
 			$action,
 			$title,
-			wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] )
+			wfMessage(
+				'phalanx-rule-log-details',
+				$this->data['text'], $types, $this->data['reason']
+			)->inContentLanguage()->escaped()
 		);
 	}
 }
