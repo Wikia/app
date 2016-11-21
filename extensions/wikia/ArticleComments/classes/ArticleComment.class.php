@@ -24,7 +24,7 @@ class ArticleComment {
 	public $mNamespace;
 
 	/** @var array */
-	public $mMetadata;
+	private $mMetadata;
 
 	private $mText = false; // parsed HTML
 	private $mRawtext; // wikitext
