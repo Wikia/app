@@ -358,6 +358,7 @@ $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/ser
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['InspectletService'] = $IP . '/includes/wikia/services/InspectletService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
+$wgAutoloadClasses['DesignSystemService'] = $IP . '/includes/wikia/services/DesignSystemService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';

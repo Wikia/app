@@ -102,6 +102,18 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getWiki( $msgName = false, $wikiText = '' ) {
+		if ($msgName != false && !empty( $wikiText ) ) {
+			return $this->parseNavigation( $msgName, $wikiText );
+		}
+		$header = ( new DesignSystemService() )->getPageHeader();
+
+		return [
+			'wikia' => $header[ 'on_the_wiki' ],
+			'wiki' => $header[ 'local_navigation' ]
+		];
+	}
+
+	public function parseNavigation( $msgName, $wikiText ) {
 
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
