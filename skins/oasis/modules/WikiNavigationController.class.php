@@ -89,11 +89,11 @@ HEADER;
 		if (NavigationModel::isWikiNavMessage($title)) {
 			global $wgCityId;
 
-			$navModel = new NavigationModel();
-			$localNav = $navModel -> getWiki(NavigationModel::WIKI_LOCAL_MESSAGE, $text);
+			$localNav = (new NavigationModel())->getWiki(NavigationModel::WIKI_LOCAL_MESSAGE, $text);
 
-			$api = (new SiteAttributeService())->getAuthenticatedInternalApiClient();
-			$response = $api->internallySaveAttribute($wgCityId, 'localNavigation', null, $localNav['wiki']);
+			(new SiteAttributeService())
+				->getAuthenticatedInternalApiClient()
+				->internallySaveAttribute($wgCityId, 'localNavigation', null, $localNav['wiki']);
 
 			return true;
 		}
