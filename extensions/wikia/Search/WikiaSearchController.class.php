@@ -650,7 +650,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
-		global $wgDisableFandomStoriesCaching;
+		global $wgDisableFandomStoriesSearchResultsCaching;
 		global $wgEnableFandomStoriesSearchLogging;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
@@ -679,7 +679,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$searchCommand = $this->buildSearchCommand( $query );
 
-			if ( !$wgDisableFandomStoriesCaching ) {
+			if ( !$wgDisableFandomStoriesSearchResultsCaching ) {
 				$fandomStories =
 					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
 						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand );
