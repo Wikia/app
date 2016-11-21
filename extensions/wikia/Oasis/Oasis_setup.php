@@ -32,6 +32,7 @@ function wfOasisSetup() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
 	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationController::onEditPageLayoutModifyPreview';
 	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
+	$wgHooks['ArticleSaveComplete'][] = 'WikiNavigationController::onArticleSaveComplete';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
