@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		return videoAdFactory.create(
 			params.width,
 			params.height,
-			params.adContainer,
+			params.container,
 			{
 				src: params.src,
 				pos: params.slotName,
