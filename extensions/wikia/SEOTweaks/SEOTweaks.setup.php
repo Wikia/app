@@ -18,6 +18,7 @@ $wgHooks['AfterInitialize'][] = 'SEOTweaksHooksHelper::onAfterInitialize';
 $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
 $wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
+$wgHooks['CategoryPageView'][] = 'SEOTweaksHooksHelper::onCategoryPageView';
 
 // messages
 $wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

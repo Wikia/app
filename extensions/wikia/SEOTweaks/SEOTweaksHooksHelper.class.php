@@ -9,6 +9,7 @@
 
 class SEOTweaksHooksHelper {
 	const DELETED_PAGES_STATUS_CODE = 410;
+	const NOT_FOUND_STATUS_CODE = 404;
 
 	/**
 	 * List of hosts associated with external sharing services
@@ -150,6 +151,23 @@ class SEOTweaksHooksHelper {
 				$outputDone = true;
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * Hook: set status code to 404 for category pages without pages or media
+	 * @param CategoryPage $categoryPage
+	 * @return bool
+	 */
+	public static function onCategoryPageView( &$categoryPage ) {
+		$title = $categoryPage->getTitle();
+		if ( $title->getNamespace() === NS_CATEGORY ) {
+			$category = Category::newFromTitle( $title );
+			if ( !$category->hasMembers() ) {
+				$categoryPage->getContext()->getOutput()->setStatusCode( self::NOT_FOUND_STATUS_CODE );
+			}
+		}
+
 		return true;
 	}
 
