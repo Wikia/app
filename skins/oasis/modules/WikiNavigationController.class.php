@@ -83,4 +83,19 @@ HEADER;
 
 		return true;
 	}
+
+	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		$title = $article->getTitle();
+		if (NavigationModel::isWikiNavMessage($title)) {
+			global $wgCityId;
+
+			$navModel = new NavigationModel();
+			$localNav = $navModel -> getWiki(NavigationModel::WIKI_LOCAL_MESSAGE, $text);
+
+			$api = (new SiteAttributeService())->getAuthenticatedInternalApiClient();
+			$response = $api->internallySaveAttribute($wgCityId, 'localNavigation', null, $localNav['wiki']);
+
+			return true;
+		}
+	}
 }
