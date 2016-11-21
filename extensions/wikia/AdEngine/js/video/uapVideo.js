@@ -1,11 +1,12 @@
 /* global define */
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapVideoAnimation, videoAdFactory, log, win) {
+], function (adHelper, uapContext, uapVideoAnimation, videoAdFactory, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -29,7 +30,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				{
 					src: 'gpt',
 					pos: params.slotName,
-					uap: params.uap,
+					uap: params.uap || uapContext.getUapId(),
 					passback: 'vuap'
 				}
 			);
