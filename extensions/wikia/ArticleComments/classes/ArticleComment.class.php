@@ -160,10 +160,18 @@ class ArticleComment {
 		return empty( $this->mMetadata[$key] ) ? $val: $this->mMetadata[$key];
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getAllMedata() {
+		$this->loadMetadata();
+		return $this->mMetadata;
+	}
+
 	private function loadMetadata() {
 		// mMetadata is lazy-loaded (possibly from cache)
 		if ( !is_array( $this->mMetadata ) ) {
-			wfDebug(__METHOD__ . " - lazy-loading\n");
+			wfDebug(__METHOD__ . " - lazy-loading...\n");
 			$this->parseText();
 		}
 	}
