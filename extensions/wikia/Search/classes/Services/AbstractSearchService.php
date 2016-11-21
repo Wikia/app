@@ -9,16 +9,19 @@ abstract class AbstractSearchService {
 		$select = $this->prepareQuery( $phrase );
 
 		$response = $this->select( $select );
-		$result = $this->consumeResponse( $response );
 
-		return $result;
+		return $this->consumeResponse( $response );
 	}
 
 	protected function prepareQuery( $query ) {
+		// Subclass implements
+
 		return null;
 	}
 
 	protected function select( $select ) {
+		// Subclass implements
+
 		return null;
 	}
 
