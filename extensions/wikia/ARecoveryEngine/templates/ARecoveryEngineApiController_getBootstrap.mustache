@@ -14,7 +14,7 @@
 			{{{code}}}
 
 			window._sp_.config.content_control_callback = function () {
-				window.Wikia.log('content_control_callback called', 'debug', logGroup);
+				window.Wikia.log('content_control_callback called', window.Wikia.log.levels.debug, logGroup);
 				if (!window.wgUserName) {
 					document.getElementById('WikiaArticle').style.display = 'none';
 					document.getElementById('WikiaArticleMsg').style.display = 'block';
@@ -53,7 +53,7 @@
 			window.addEventListener('load', function() {
 				window._sp_.config.mms_domain = mmsDomain;
 				window._sp_.config.mms_client_data_callback = function () {
-					window.Wikia.log(['getBootstrap', 'mms_client_data_callback called', arguments], 'debug', logGroup);
+					window.Wikia.log(['getBootstrap', 'mms_client_data_callback called', arguments], window.Wikia.log.levels.debug, logGroup);
 				};
 
 				window._sp_.mms.cmd.push(function () {
@@ -64,7 +64,7 @@
 				});
 			});
 		} else {
-			window.Wikia.log(['getBootstrap', 'MMS and Recovery are disabled'], 'debug', logGroup);
+			window.Wikia.log(['getBootstrap', 'MMS and Recovery are disabled'], window.Wikia.log.levels.debug, logGroup);
 		}
 	});
 
