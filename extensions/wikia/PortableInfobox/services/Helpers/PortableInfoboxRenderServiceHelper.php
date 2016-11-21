@@ -58,7 +58,7 @@ class PortableInfoboxRenderServiceHelper {
 		$title = $data[ 'name' ];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
-		if ( !$file || !$file->exists() || !in_array($file->media_type, array(MEDIATYPE_BITMAP, MEDIATYPE_DRAWING))) {
+		if ( !$file || !$file->exists() || !in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING ] ) ) {
 			return false;
 		}
 
