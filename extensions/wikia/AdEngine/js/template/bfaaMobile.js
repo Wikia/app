@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.videoAdFactory',
@@ -12,6 +13,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 ], function (
 	adHelper,
 	uapContext,
+	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
 	videoAdFactory,
@@ -24,8 +26,11 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 	var adSlot,
 		adsModule,
+		animationDuration = 400,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
+		imageContainer,
+		slotSizes,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
@@ -34,9 +39,11 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		wrapper;
 
 	function getSlotSize(params) {
+		var width = document.body.clientWidth;
 		return {
-			width: document.body.clientWidth,
-			height: document.body.clientWidth / params.videoAspectRatio
+			width: width,
+			videoHeight: width / params.videoAspectRatio,
+			adHeight: width / params.aspectRatio
 		};
 	}
 
@@ -48,10 +55,39 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		adsModule.setSiteHeadOffset(height);
 	}
 
+	function animate(startAspectRatio, finalAspectRatio) {
+		function calcHeight(aspectRatio) {
+			return document.body.clientWidth / aspectRatio + 'px';
+		}
+
+		adSlot.style.height = calcHeight(startAspectRatio);
+		adSlot.style.height = calcHeight(finalAspectRatio);
+
+		setTimeout(function () {
+			adSlot.style.height = '';
+		}, animationDuration);
+	}
+
 	function runOnReady(iframe, params) {
-		var onResize = function (aspectRatio) {
-				adjustPadding(iframe, aspectRatio);
-			};
+		function onResize(aspectRatio) {
+			adjustPadding(iframe, aspectRatio);
+		}
+
+		function showVideo(videoContainer) {
+			DOMElementTweaker.addClass(imageContainer, 'hidden');
+			DOMElementTweaker.removeClass(videoContainer, 'hidden');
+			onResize(params.videoAspectRatio);
+			animate(params.aspectRatio, params.videoAspectRatio);
+		}
+
+		function hideVideo(videoContainer) {
+			onResize(params.aspectRatio);
+			animate(params.videoAspectRatio, params.aspectRatio);
+			setTimeout(function () {
+				DOMElementTweaker.addClass(videoContainer, 'hidden');
+				DOMElementTweaker.removeClass(imageContainer, 'hidden');
+			}, animationDuration);
+		}
 
 		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
@@ -71,27 +107,27 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			videoAdFactory.init().then(function () {
 				try {
 					var video = videoAdFactory.create(
-						adSlot.querySelector('div:last-of-type'),
-						getSlotSize(params),
+						slotSizes.width,
+						slotSizes.videoHeight,
 						adSlot,
 						{
 							src: 'gpt',
-							slotName: params.slotName,
+							pos: params.slotName,
 							uap: params.uap,
 							passback: 'vuap'
 						}
 					);
 
-					video.events.onVideoEnded = onResize.bind(null, params.aspectRatio);
+					page.classList.add('vuap-loaded');
 
-					window.addEventListener('resize', function () {
-						video.updateSize(getSlotSize(params));
-					});
+					window.addEventListener('resize', adHelper.throttle(function () {
+						slotSizes = getSlotSize(params);
+						video.resize(slotSizes.width, slotSizes.videoHeight);
+					}));
 
 					params.videoTriggerElement.addEventListener('click', function () {
-						video.play();
-						onResize(params.videoAspectRatio);
-					}.bind(video));
+						video.play(showVideo, hideVideo);
+					});
 
 				} catch (error) {
 					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
@@ -102,6 +138,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
+		imageContainer = adSlot.querySelector('div:last-of-type');
+		slotSizes = getSlotSize(params);
+
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
