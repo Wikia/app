@@ -4,31 +4,31 @@ namespace Wikia\Util;
 
 class SamplerProxyBuilder {
 
-	protected $enableShadowingVariableName;
-	protected $methodSamplingRateVariableName;
+	protected $enableShadowing;
+	protected $methodSamplingRate;
 
 	protected $originalCallable;
 	protected $alternateCallable;
 	protected $resultsCallable;
 
-	public function enableShadowingVariableName( $name ) {
-		$this->enableShadowingVariableName = $name;
+	public function enableShadowing( $isEnabled ) {
+		$this->enableShadowing = $isEnabled;
 
 		return $this;
 	}
 
-	public function getEnableShadowingVariableName() {
-		return $this->enableShadowingVariableName;
+	public function getEnableShadowing() {
+		return $this->enableShadowing;
 	}
 
-	public function methodSamplingRateVariableName( $name ) {
-		$this->methodSamplingRateVariableName = $name;
+	public function methodSamplingRate( $rate ) {
+		$this->methodSamplingRate = $rate;
 
 		return $this;
 	}
 
-	public function getMethodSamplingRateVariableName() {
-		return $this->methodSamplingRateVariableName;
+	public function getMethodSamplingRate() {
+		return $this->methodSamplingRate;
 	}
 
 	public function originalCallable( callable $callable ) {
@@ -62,15 +62,6 @@ class SamplerProxyBuilder {
 	}
 
 	public function build() {
-		$this->checkNull( $this->enableShadowingVariableName, "enableShadowingVariableName" );
-		$this->checkNull( $this->methodSamplingRateVariableName, "methodSamplingRateVariableName" );
-
 		return new SamplerProxy( $this );
-	}
-
-	protected function checkNull( $variable, $name ) {
-		if ( $variable == null ) {
-			throw new \InvalidArgumentException( "Attribute '${name}' may not be null" );
-		}
 	}
 }

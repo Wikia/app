@@ -14,12 +14,12 @@ class SamplerProxy {
 	/**
 	 * @var string
 	 */
-	protected $enableShadowingVariableName;
+	protected $enableShadowing;
 
 	/**
 	 * @var string
 	 */
-	protected $methodSamplingRateVariableName;
+	protected $methodSamplingRate;
 
 	/**
 	 * @var callable
@@ -46,9 +46,8 @@ class SamplerProxy {
 	}
 
 	public function __construct( SamplerProxyBuilder $samplerProxyBuilder ) {
-		$this->enableShadowingVariableName = $samplerProxyBuilder->getEnableShadowingVariableName();
-		$this->methodSamplingRateVariableName =
-			$samplerProxyBuilder->getMethodSamplingRateVariableName();
+		$this->enableShadowing = $samplerProxyBuilder->getEnableShadowing();
+		$this->methodSamplingRate = $samplerProxyBuilder->getMethodSamplingRate();
 		$this->originalCallable = $samplerProxyBuilder->getOriginalCallable();
 		$this->alternateCallable = $samplerProxyBuilder->getAlternateCallable();
 		$this->resultsCallable = $samplerProxyBuilder->getResultsCallable();
@@ -61,15 +60,11 @@ class SamplerProxy {
 			return call_user_func_array( [ $this->originalCallable[0], $method ], $args );
 		}
 
-		global ${$this->methodSamplingRateVariableName};
-		$samplingRate = ${$this->methodSamplingRateVariableName};
-
-		if ( !empty( $samplingRate ) && rand( 0, 100 ) <= $samplingRate ) {
+		if ( !empty( $this->methodSamplingRate ) && rand( 0, 100 ) <= $this->methodSamplingRate ) {
 
 			// We're going to route the request to the alternate instance.
 			// Now determine if we're going to shadow or redirect
-			global ${$this->enableShadowingVariableName};
-			$shouldShadow = ${$this->enableShadowingVariableName};
+			$shouldShadow = $this->enableShadowing;
 
 			// Call the alternate method and cache the result
 			try {
@@ -89,7 +84,8 @@ class SamplerProxy {
 				$originalResult = call_user_func_array( $this->originalCallable, $args );
 
 				if ( $this->resultsCallable && isset( $alternateResult ) ) {
-					$resultToReturn = call_user_func( $this->resultsCallable, $originalResult, $alternateResult );
+					$resultToReturn =
+						call_user_func( $this->resultsCallable, $originalResult, $alternateResult );
 				} else {
 					$resultToReturn = $originalResult;
 				}
@@ -109,12 +105,12 @@ class SamplerProxy {
 		return call_user_func_array( $this->originalCallable, $args );
 	}
 
-	public function getEnableShadowingVariableName() {
-		return $this->enableShadowingVariableName;
+	public function getEnableShadowing() {
+		return $this->enableShadowing;
 	}
 
-	public function getMethodSamplingRateVariableName() {
-		return $this->methodSamplingRateVariableName;
+	public function getMethodSamplingRate() {
+		return $this->methodSamplingRate;
 	}
 
 	public function getOriginalCallable() {

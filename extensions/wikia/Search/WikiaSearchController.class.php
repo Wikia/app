@@ -682,7 +682,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( !$wgDisableFandomStoriesCaching ) {
 				$fandomStories =
 					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
-						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand);
+						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand );
 			} else {
 				$fandomStories = $searchCommand();
 			}
@@ -716,12 +716,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function buildSearchCommand( $query ) {
-		return function () use ( $query ) {
+		global $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate;
+
+		return function () use (
+			$query, $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate
+		) {
 			$searchService =
 				\Wikia\Util\SamplerProxy::createBuilder()
-					->enableShadowingVariableName( 'wgEnableSearchRequestShadowing' )
-					->methodSamplingRateVariableName( 'wgSearchRequestSamplingRate' )
-					->originalCallable( [ new \Wikia\Search\Services\FandomSearchService(), 'query' ] )
+					->enableShadowing( $wgEnableSearchRequestShadowing )
+					->methodSamplingRate( $wgSearchRequestSamplingRate )
+					->originalCallable( [
+						new \Wikia\Search\Services\FandomSearchService(),
+						'query',
+					] )
 					->alternateCallable( [
 						new \Wikia\Search\Services\ESFandomSearchService(),
 						'query',
