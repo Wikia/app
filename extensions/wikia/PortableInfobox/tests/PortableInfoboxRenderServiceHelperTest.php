@@ -385,11 +385,12 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			->getMock();
 		$file = $this->getMockBuilder( 'File' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'exists', 'transform', 'getWidth', 'getHeight' ] )
+			->setMethods( [ 'exists', 'transform', 'getWidth', 'getHeight', 'getMediaType' ] )
 			->getMock();
 		$file->expects( $this->once() )->method( 'exists' )->will( $this->returnValue( true ) );
 		$file->expects( $this->once() )->method( 'getWidth' )->will( $this->returnValue( $originalDimension[ 'width' ] ) );
 		$file->expects( $this->once() )->method( 'getHeight' )->will( $this->returnValue( $originalDimension[ 'height' ] ) );
+		$file->expects( $this->once() )->method( 'getMediaType' )->will( $this->returnValue( MEDIATYPE_BITMAP ) );
 
 		$file->expects( $this->any() )
 			->method( 'transform' )
