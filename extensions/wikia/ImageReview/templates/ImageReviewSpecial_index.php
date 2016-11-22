@@ -64,7 +64,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 
 			<li class="state-<?= $stateId ?> <?= $action ?>">
 				<div class="img-container">
-					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>" <? if ( !$image['isthumb'] ) { ?>width="230" <?php } ?>/>
+					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>" <? if ( !empty($image['isthumb']) ) { ?>width="230" <?php } ?>/>
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="<?= wfMessage( 'imagereview-gotoimage' )->escaped(); ?>"></a>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
