@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-subpage' => 'Draft',
@@ -38,9 +38,9 @@ $2
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
 	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
 	'templatedraft-editintro' => 'Message informing user that a new sub-page with draft version of infobox with new markup was created and user can review it and make any changes. Params: $1 is a link to the help page for the new infobox markup and $2 is a link to the parent template page.',
@@ -65,9 +65,9 @@ $messages['qqq'] = array(
 	'templatedraft-module-help' => 'Link label to view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
 	'templatedraft-protect-edit' => 'Error message informing user does not have permissions to edit parent page.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'templatedraft-description' => 'TemplateDraft-Erweiterung',
 	'templatedraft-subpage' => 'Entwurf',
 	'templatedraft-editintro' => 'Bitteschön! Wir haben eine Entwurfsversion deiner Infobox in unserem neuen Format erstellt. Wir speichern sie als Unterseite, damit du sie überprüfen und alle notwendigen Änderungen vornehmen kannst. Schau auch bei $1 und $2 vorbei.',
@@ -105,9 +105,9 @@ $2
 	'templatedraft-module-closelink-create' => 'Dies ist keine Infobox',
 	'right-templatedraft' => 'Ermöglicht den Zugriff auf einen Assistenten, der hilft, die nicht plattformunabhängigen Infoboxen zum neuen Markup zu konvertieren',
 	'templatedraft-preview-example-value' => 'Dies ist ein Test',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'templatedraft-description' => 'Extensión TemplateDraft',
 	'templatedraft-subpage' => 'Borrador',
 	'templatedraft-editintro' => '¡Aquí tienes! Hemos generado un borrador de tu infobox con nuestro nuevo marcador. Lo guardaremos como una subpágina para que puedas revisarlo y realizar cualquier cambio necesario. Tal vez desees $1 o $2.',
@@ -145,9 +145,9 @@ $2
 	'templatedraft-module-closelink-create' => 'Este no es una infobox',
 	'right-templatedraft' => 'Permite el acceso a un asistente que ayudará a convertir infoboxes no portátiles al nuevo marcador',
 	'templatedraft-preview-example-value' => 'Esta es una prueba',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'templatedraft-description' => 'Extension TemplateDraft',
 	'templatedraft-subpage' => 'Version de travail',
 	'templatedraft-editintro' => "Eh voilà ! Nous avons généré une version de travail de votre infobox avec notre nouveau code. Nous allons l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications. Vous voudrez peut-être $1 ou $2.",
@@ -185,9 +185,9 @@ $2
 	'templatedraft-module-closelink-create' => "Il ne s'agit pas d'une infobox.",
 	'right-templatedraft' => 'Permet d’accéder à un assistant qui vous aidera à convertir les infoboxes non portables au nouveau balisage',
 	'templatedraft-preview-example-value' => 'Ceci est un test',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Bozza',
 	'templatedraft-editintro' => 'Ecco qua! Abbiamo generato una bozza del tuo infobox con il nuovo markup. La salveremo come sottopagina in modo che tu possa rivederla e fare tutte le modifiche necessarie. Puoi fare anche riferimento a $1 o $2.',
@@ -225,9 +225,9 @@ $2
 	'templatedraft-module-closelink-create' => 'Questo non è un infobox',
 	'right-templatedraft' => "Consente l'accesso ad una procedura guidata che aiuta nella conversione degli infobox al nuovo markup",
 	'templatedraft-preview-example-value' => 'Questo è un test',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'templatedraft-description' => 'TemplateDraft拡張機能',
 	'templatedraft-subpage' => 'ドラフト',
 	'templatedraft-editintro' => '新しいマークアップを使用したインフォボックスのドラフト版を生成しました。サブページとして保存されますので、内容を確認し、必要に応じて変更を加えていただけます。$1または$2もご覧ください。',
@@ -265,9 +265,9 @@ $2
 	'templatedraft-module-closelink-create' => 'これはインフォボックスではありません',
 	'right-templatedraft' => '新しいマークアップを使用したインフォボックスへの変換を補助するウィザードを許可する',
 	'templatedraft-preview-example-value' => 'これはテストです',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'templatedraft-editintro' => '성공적으로 변환이 완료되었습니다. 새 정보상자는 기존 정보상자의 하위문서로 저장되며 언제든지 추가적으로 수정하실 수 있습니다. 또, $1 또는 $2을 확인해 보시는 건 어떨까요?',
 	'templatedraft-module-button-create' => '초안 생성하기',
 	'templatedraft-module-content-create' => '기존의 정보상자를 간편 정보상자로 변환해 초안을 만들어드릴 수 있습니다. 변환된 초안은 이 틀의 하위문서에 저장되며 필요에 따라 추가적으로 수정하시면 됩니다.',
@@ -288,9 +288,9 @@ $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 이곳을 눌러 예제를 새로 고침하세요.]',
 	'templatedraft-subpage' => '초안',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Draft',
 	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
@@ -328,9 +328,9 @@ $2
 	'templatedraft-module-closelink-create' => 'This is not an infobox',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-preview-example-value' => 'This is a test',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'templatedraft-description' => 'Rozszerzenie TemplateDraft',
 	'templatedraft-subpage' => 'Wersje robocze',
 	'templatedraft-editintro' => 'Proszę bardzo! Wygenerowaliśmy wersję roboczą twojego infoboksu wykorzystując nasze nowe znaczniki. Zapiszemy go jako podstronę, żebyś mógł go przejrzeć i wprowadzić niezbędne zmiany. Może chcesz $1 albo $2.',
@@ -368,9 +368,9 @@ $2
 	'templatedraft-module-closelink-create' => 'To nie jest infoboks',
 	'right-templatedraft' => 'Udostępnia kreator pozwalający na konwersję nie-przenośnych infoboksów na nową składnię',
 	'templatedraft-preview-example-value' => 'To jest test',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'templatedraft-description' => 'Extensão TemplateDraft',
 	'templatedraft-subpage' => 'Rascunho',
 	'templatedraft-editintro' => 'Aqui está! Criamos uma versão preliminar da sua infobox com nossa nova marcação. Nós vamos salvá-la como uma sub-página, para que você possa analisá-la e fazer as alterações necessárias. Você pode querer $1 ou $2.',
@@ -408,9 +408,9 @@ $2
 	'templatedraft-module-closelink-create' => 'Isto não é uma infobox',
 	'right-templatedraft' => 'Permite o acesso a um assistente que ajuda a converter infoboxes de não-portáteis para a nova marcação',
 	'templatedraft-preview-example-value' => 'Isto é um teste',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'templatedraft-description' => 'Расширение TemplateDraft',
 	'templatedraft-subpage' => 'Модульная версия',
 	'templatedraft-editintro' => 'Вы создали модульную версию вашего инфобокса, построенную с использованием новой разметки. Она будет сохранена на подстранице, где вы сможете проверить изменения и внести поправки, если требуется. Вы можете $1 или $2.',
@@ -448,9 +448,9 @@ $2
 	'templatedraft-module-closelink-create' => 'Это не инфобокс',
 	'right-templatedraft' => 'Доступ к инструменту конвертации немодульных инфобоксов с использованием новой разметки',
 	'templatedraft-preview-example-value' => 'Тест',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'templatedraft-description' => 'TemplateDraft扩展',
 	'templatedraft-subpage' => '模版草稿',
 	'templatedraft-editintro' => '好啦！我们已经使用新的标记文件为您生成了信息框草稿。我们会将其保存为一个子页面，以便于您查看并进行必要的更改。您可以$1或$2。',
@@ -488,9 +488,9 @@ $2
 	'templatedraft-module-closelink-create' => '这不是信息框',
 	'right-templatedraft' => '允许向导帮助非移动式讯息框转换成一个新的标记文件',
 	'templatedraft-preview-example-value' => '这是一个测试',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'templatedraft-description' => 'TemplateDraft的擴展文件',
 	'templatedraft-subpage' => '模版草稿',
 	'templatedraft-editintro' => '好啦！ 我們已經使用新的標記檔為您生成了訊息框草稿。 我們會將其保存為一個子頁面，以便於您查看並進行必要的更改。 您可以$1或$2。',
@@ -528,5 +528,5 @@ $2
 	'templatedraft-module-closelink-create' => '這不是一個資訊框',
 	'right-templatedraft' => '允許使用將非行動話訊息框轉變為新標記方式的協助精靈',
 	'templatedraft-preview-example-value' => '這是一個測試',
-);
+];
 
