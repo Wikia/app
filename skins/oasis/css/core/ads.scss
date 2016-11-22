@@ -463,3 +463,11 @@ body > a > img[src$="noad.gif"] {
 #WikiaArticleMsg {
   display: none;
 }
+
+.overVideoLayer {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
