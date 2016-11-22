@@ -77,6 +77,8 @@ define('ext.wikia.adEngine.video.googleIma', [
 			playVideo: function (width, height) {
 				var self = this,
 					callback = function () {
+						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
+						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
 					};
@@ -110,7 +112,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		ima.adsLoader.addEventListener(
 			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, adsManagerLoadedCallback, false);
 		ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
-		ima.adDisplayContainer.initialize();
 		ima.container = prepareVideoAdContainer(adContainer.querySelector('div'));
 
 		return ima;
