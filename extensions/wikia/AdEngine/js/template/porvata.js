@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 	/**
 	 * @param {object} params
-	 * @param {object} params.adContainer - DOM element where player should be placed
+	 * @param {object} params.container - DOM element where player should be placed
 	 * @param {object} params.slotName - Slot name key-value needed for VastUrlBuilder
 	 * @param {object} params.src - SRC key-value needed for VastUrlBuilder
 	 * @param {object} params.width - Player width
