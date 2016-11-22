@@ -977,6 +977,10 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
 			$this->setVal( 'discussionAllPostsByUserLink',
 				$discussionInfo->getDiscussionAllPostsByUserLink() );
+		} else {
+			$this->setVal( 'discussionActive', false );
+			$this->setVal( 'discussionPostsCount', 0 );
+			$this->setVal( 'discussionAllPostsByUserLink', '' );
 		}
 	}
 
