@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.videoAdFactory',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	btfBlocker,
 	slotTweaker,
 	videoAdFactory,
+	uapVideo,
 	doc,
 	log,
 	win,
@@ -26,26 +28,15 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 	var adSlot,
 		adsModule,
-		animationDuration = 400,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
 		imageContainer,
-		slotSizes,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER'
 		],
 		wrapper;
-
-	function getSlotSize(params) {
-		var width = document.body.clientWidth;
-		return {
-			width: width,
-			videoHeight: width / params.videoAspectRatio,
-			adHeight: width / params.aspectRatio
-		};
-	}
 
 	function adjustPadding(iframe, aspectRatio) {
 		var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
@@ -55,38 +46,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		adsModule.setSiteHeadOffset(height);
 	}
 
-	function animate(startAspectRatio, finalAspectRatio) {
-		function calcHeight(aspectRatio) {
-			return document.body.clientWidth / aspectRatio + 'px';
-		}
-
-		adSlot.style.height = calcHeight(startAspectRatio);
-		adSlot.style.height = calcHeight(finalAspectRatio);
-
-		setTimeout(function () {
-			adSlot.style.height = '';
-		}, animationDuration);
-	}
-
 	function runOnReady(iframe, params) {
 		function onResize(aspectRatio) {
 			adjustPadding(iframe, aspectRatio);
-		}
-
-		function showVideo(videoContainer) {
-			DOMElementTweaker.addClass(imageContainer, 'hidden');
-			DOMElementTweaker.removeClass(videoContainer, 'hidden');
-			onResize(params.videoAspectRatio);
-			animate(params.aspectRatio, params.videoAspectRatio);
-		}
-
-		function hideVideo(videoContainer) {
-			onResize(params.aspectRatio);
-			animate(params.videoAspectRatio, params.aspectRatio);
-			setTimeout(function () {
-				DOMElementTweaker.addClass(videoContainer, 'hidden');
-				DOMElementTweaker.removeClass(imageContainer, 'hidden');
-			}, animationDuration);
 		}
 
 		adsModule = win.Mercury.Modules.Ads.getInstance();
@@ -103,43 +65,20 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
-			videoAdFactory.init().then(function () {
-				try {
-					var video = videoAdFactory.create(
-						slotSizes.width,
-						slotSizes.videoHeight,
-						adSlot,
-						{
-							src: 'gpt',
-							pos: params.slotName,
-							uap: params.uap,
-							passback: 'vuap'
-						}
-					);
+		if (uapVideo.isEnabled(params)) {
+			uapVideo.init()
+				.then(function () {
+					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-					page.classList.add('vuap-loaded');
-
-					window.addEventListener('resize', adHelper.throttle(function () {
-						slotSizes = getSlotSize(params);
-						video.resize(slotSizes.width, slotSizes.videoHeight);
-					}));
-
-					params.videoTriggerElement.addEventListener('click', function () {
-						video.play(showVideo, hideVideo);
-					});
-
-				} catch (error) {
-					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
-				}
-			});
+					video.addEventListener('onStart', onResize.bind(null, params.videoAspectRatio));
+					video.addEventListener('onFinished', onResize.bind(null, params.aspectRatio));
+				});
 		}
 	}
 
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
 		imageContainer = adSlot.querySelector('div:last-of-type');
-		slotSizes = getSlotSize(params);
 
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
