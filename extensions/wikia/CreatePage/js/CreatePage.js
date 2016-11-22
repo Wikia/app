@@ -433,7 +433,7 @@ var CreatePage = {
 		// Don't track if category isn't provided. It's a flow that we didn't identify and can affect our numbers
 		if ( Wikia.Tracker && data.category ) {
 			defaultData = {
-				trackingMethod: 'internal'
+				trackingMethod: 'analytics'
 			};
 
 			$.extend( defaultData, data );
