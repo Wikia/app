@@ -58,7 +58,8 @@ class PortableInfoboxRenderServiceHelper {
 		$title = $data[ 'name' ];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
-		if ( !$file || !$file->exists() || !in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING ] ) ) {
+		if ( !$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] ) ) {
 			return false;
 		}
 
@@ -116,7 +117,7 @@ class PortableInfoboxRenderServiceHelper {
 			'firstImage' => $images[0],
 			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
 		];
-		
+
 		return $data;
 	}
 
@@ -160,7 +161,7 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function isMercury() {
 		global $wgArticleAsJson;
-		
+
 		return !empty( $wgArticleAsJson );
 	}
 
