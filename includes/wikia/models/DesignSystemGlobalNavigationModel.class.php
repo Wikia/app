@@ -262,7 +262,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
-		if ( $this->hasAuthorProfile( $user ) && $wgEnableAuthorProfileLinks ) {
+		if ( $this->hasAuthorProfile( $user ) && !empty( $wgEnableAuthorProfileLinks ) ) {
 			$viewProfileLinks[] = [
 				'type' => 'link-text',
 				'href' => $this->getAuthorProfileUrl( $userName ),
