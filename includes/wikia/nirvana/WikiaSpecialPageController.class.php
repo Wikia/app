@@ -47,6 +47,8 @@
  * @method void checkIfUserIsBlocked()
  */
 class WikiaSpecialPageController extends WikiaController {
+
+	/** @var null|SpecialPage  */
 	protected $specialPage = null;
 
 	const PAR = 'par';

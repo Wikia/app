@@ -173,8 +173,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$imageList = array();
 		while( $row = $db->fetchObject($result) ) {
 			$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
-			$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
-			$tmp = array(
+			$wiki = WikiFactory::getWikiByID( $row->wiki_id );
+			$image = array(
 				'wikiId' 	=> $row->wiki_id,
 				'pageId' 	=> $row->page_id,
 				'state' 	=> $row->state,
@@ -182,12 +182,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'priority' 	=> $row->priority,
 				'url' 		=> $img['page'],
 				'flags' 	=> $row->flags,
-				'wiki_url' 	=> isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+				'wiki_url' 	=> isset( $wiki->city_url ) ? $wiki->city_url : '',
 				'user_page' => '', // @TODO fill this with url to user page
 			);
 
-			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
-				$imageList[] = $tmp;
+			if(	!empty($image['src']) && !empty($image['url']) ) {
+				$imageList[] = $image;
 			}
 		}
 		$db->freeResult( $result );
@@ -438,94 +438,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $total;
 	}
 
-	public function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {
-
-		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
-		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
-
-		$summary = array(
-			'all' => 0,
-			ImageReviewStatuses::STATE_APPROVED 	=> 0,
-			ImageReviewStatuses::STATE_REJECTED 	=> 0,
-			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
-			'avg' => 0,
-		);
-		$data = array();
-		$userCount = $total = $avg = 0;
-
-		$dbr = $this->getDatawareDB( DB_SLAVE );
-		$reviewers = $this->getReviewersForStats();
-
-		$count_users = count( $reviewers );
-		if ( $count_users > 0 ) {
-			foreach ( $reviewers as $reviewer ) {
-				# user
-				$user = User::newFromId( $reviewer );
-				if ( !is_object( $user ) ) {
-					// invalid user id?
-					continue;
-				}
-
-				$query = array();
-				foreach ( array_keys( $summary ) as $review_state ) {
-					# union query: mysql explain: Using where; Using index and max 150k rows
-					$query[] = $dbr->selectSQLText(
-						array( 'image_review_stats' ),
-						array( 'review_state', 'count(*) as cnt' ),
-						array(
-							"review_state"	=> $review_state,
-							"reviewer_id"	=> $reviewer,
-							"review_end between '{$startDate}' AND '{$endDate}'"
-						),
-						__METHOD__
-					);
-				}
-
-				# Join the two fast queries, and sort the result set
-				$sql = $dbr->unionQueries( $query, false );
-				$res = $dbr->query( $sql, __METHOD__ );
-
-				while ( $row = $dbr->fetchObject( $res ) ) {
-					if ( !empty( $row->review_state ) ) {
-						if ( !isset( $data[ $reviewer ] ) ) {
-							$data[ $reviewer ] = array(
-								'name' => $user->getName(),
-								'total' => 0,
-								ImageReviewStatuses::STATE_APPROVED => 0,
-								ImageReviewStatuses::STATE_REJECTED => 0,
-								ImageReviewStatuses::STATE_QUESTIONABLE => 0,
-							);
-						}
-						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
-						$data[ $reviewer ][ 'total' ] += $row->cnt;
-
-						# total
-						$total += $row->cnt;
-
-						# index in summary
-						$summary[ $row->review_state ] += $row->cnt;
-					}
-				}
-
-			}
-		}
-		$activeReviewers = count( $data );
-
-		$summary[ 'all' ] = $total;
-		$summary[ 'avg' ] = $activeReviewers > 0 ? $summary['all'] / $activeReviewers : 0;
-
-		foreach ( $data as &$stats ) {
-			$stats['toavg'] = $stats['total'] - $summary['avg'];
-		}
-
-		return array(
-			'summary' => $summary,
-			'data' => $data,
-		);
-	}
-
-	public function getUserTsKey() {
-		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+	public static function getCacheKey( int $userId ) : string {
+		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $userId );
 	}
 
 	/**
@@ -562,59 +476,4 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $sFrom;
 	}
 
-	private function getImageStatesForStats() {
-		wfProfileIn( __METHOD__ );
-
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$states = $this->wg->memc->get($key);
-		if ( empty($states) ) {
-			$states = array();
-			$db = $this->getDatawareDB( DB_SLAVE );
-
-			# MySQL explain: Using where; Using index for group-by
-			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'review_state' ),
-				array( 'review_state > 0' ),
-				__METHOD__,
-				array( 'GROUP BY' => 'review_state' )
-			);
-
-			while( $row = $db->fetchObject($result) ) {
-				$states[] = $row->review_state;
-			}
-			$this->wg->memc->set( $key, $states, 60 * 60 * 8 );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $states;
-	}
-
-	private function getReviewersForStats() {
-		wfProfileIn( __METHOD__ );
-
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$reviewers = $this->wg->memc->get($key);
-		if ( empty($reviewers) ) {
-			$reviewers = array();
-			$db = $this->getDatawareDB( DB_SLAVE );
-
-			# MySQL explain: Using where; Using index for group-by
-			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'reviewer_id' ),
-				array( 'reviewer_id > 0' ),
-				__METHOD__,
-				array( 'GROUP BY' => 'reviewer_id' )
-			);
-
-			while( $row = $db->fetchObject($result) ) {
-				$reviewers[] = $row->reviewer_id;
-			}
-			$this->wg->memc->set( $key, $reviewers, 60 * 60 * 8 );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $reviewers;
-	}
 }
