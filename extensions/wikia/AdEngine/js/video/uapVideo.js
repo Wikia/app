@@ -58,13 +58,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		}
 	}
 
-	function isVideoAd(params) {
+	function isEnabled(params) {
 		return params.videoTriggerElement && params.videoAspectRatio;
 	}
 
 	return {
 		init: videoAdFactory.init,
-		isVideoAd: isVideoAd,
+		isEnabled: isEnabled,
 		loadVideoAd: loadVideoAd
 	};
 });
