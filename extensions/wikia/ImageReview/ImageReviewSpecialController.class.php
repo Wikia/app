@@ -265,6 +265,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		);
 	}
 
+	// TODO verify method name is actually what this logic is doing
 	private function requestingAlreadySeenBatchOfImages() : bool {
 		$cacheKey = $this->helper->getCacheKey( $this->wg->User->getId() );
 		$mostRecentBatchSeenTimeStamp = $this->wg->Memc->get( $cacheKey );
