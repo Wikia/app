@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.video.videoAdFactory', [
 	'ext.wikia.adEngine.video.googleIma',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'wikia.log',
-	'wikia.window'
-], function (googleIma, vastUrlBuilder, log, win) {
+	'wikia.log'
+], function (googleIma, vastUrlBuilder, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.videoAdFactory';
 
@@ -12,7 +11,7 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		return googleIma.init();
 	}
 
-	function create(width, height, adSlot, slotParams, vastUrl, preventImaReload) {
+	function create(width, height, adSlot, slotParams, vastUrl) {
 		vastUrl = vastUrl || vastUrlBuilder.build(width / height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
@@ -25,16 +24,12 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				this.ima.addEventListener(eventName, callback);
 			},
 			play: function () {
-				var self = this;
-
-				if (!preventImaReload) {
-					this.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
-						var events = self.ima.events;
-						self.ima = googleIma.setupIma(vastUrl, adSlot, self.width, self.height);
-						self.ima.events = events;
-					});
-				}
 				this.ima.playVideo(this.width, this.height);
+			},
+			reload: function () {
+				var events = this.ima.events;
+				this.ima = googleIma.setupIma(vastUrl, adSlot, this.width, this.height);
+				this.ima.events = events;
 			},
 			resize: function (width, height) {
 				this.width = width;

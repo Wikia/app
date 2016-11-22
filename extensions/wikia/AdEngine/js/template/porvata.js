@@ -14,8 +14,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				pos: params.slotName,
 				passback: 'porvata'
 			},
-			params.vastUrl,
-			true
+			params.vastUrl
 		);
 	}
 
