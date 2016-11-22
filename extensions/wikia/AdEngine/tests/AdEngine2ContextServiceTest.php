@@ -332,7 +332,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointRecovery' => false
+				'sourcePointRecovery' => false,
+				'sourcePointMMS' => false,
+				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com'
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
