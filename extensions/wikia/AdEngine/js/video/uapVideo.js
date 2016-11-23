@@ -1,4 +1,4 @@
-/*global define, clearInterval, setInterval*/
+/*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
@@ -9,8 +9,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 ], function (adHelper, uapContext, uapVideoAnimation, videoAdFactory, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
-		progressBarInterval = 200;
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
 	function getVideoHeight(width, params) {
 		return width / params.videoAspectRatio;
@@ -20,38 +19,29 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return slot.clientWidth;
 	}
 
+	function updateProgressBar(ima) {
+		var currentTime = ima.container.querySelector('.progress-bar > .current-time'),
+			remainingTime = ima.adsManager.getRemainingTime();
+
+		if (remainingTime) {
+			currentTime.style.transitionDuration = remainingTime + 's';
+			currentTime.style.width = '100%';
+		} else {
+			currentTime.style.width = '0';
+		}
+	}
+
 	function addProgressListeners(video) {
-		var duration = null,
-			interval;
+		video.addEventListener('start', updateProgressBar);
+		video.addEventListener('firstquartile', updateProgressBar);
+		video.addEventListener('resume', updateProgressBar);
+		video.addEventListener('complete', updateProgressBar);
+		video.addEventListener('pause', function (ima) {
+			var progressBar = ima.container.querySelector('.progress-bar'),
+				currentTime = progressBar.querySelector('.current-time');
 
-		function updateWidth(ima) {
-			var currentProgress,
-				nodeElement = ima.container.querySelector('.progress-bar > .current-time'),
-				remainingTime = ima.adsManager.getRemainingTime();
-
-			duration = duration !== null ? duration : remainingTime;
-
-			currentProgress = (duration - remainingTime + progressBarInterval / 1000) / duration;
-			nodeElement.style.width = (currentProgress * 100) + '%';
-		}
-
-		function stopInterval() {
-			if (interval) {
-				clearInterval(interval);
-			}
-		}
-
-		function startInterval(ima) {
-			stopInterval();
-			interval = setInterval(function () {
-				updateWidth(ima);
-			}, progressBarInterval);
-		}
-
-		video.addEventListener('start', startInterval);
-		video.addEventListener('resume', startInterval);
-		video.addEventListener('pause', stopInterval);
-		video.addEventListener('complete', stopInterval);
+			currentTime.style.width = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
+		});
 	}
 
 	function loadVideoAd(params, adSlot, imageContainer, getSlotWidth) {

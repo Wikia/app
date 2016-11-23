@@ -16,7 +16,6 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 $uap-progress-bar-color: #666;
 $uap-progress-bar-current-time-color: #b7b7b7;
-$uap-progress-bar-interval: 0.2s;
 $uap-video-animation-duration: 0.4s;
 
 /** Hide invisible slots and 1x1 iframes **/
@@ -254,11 +253,11 @@ $uap-video-animation-duration: 0.4s;
 		background: $uap-progress-bar-current-time-color;
 		height: 100%;
 		max-width: 100%;
-		width: 0%;
-		-webkit-transition: width $uap-progress-bar-interval linear;
-		-moz-transition: width $uap-progress-bar-interval linear;
-		-o-transition: width $uap-progress-bar-interval linear;
-		transition: width $uap-progress-bar-interval linear;
+		width: 0;
+		-webkit-transition: width linear;
+		-moz-transition: width linear;
+		-o-transition: width linear;
+		transition: width linear;
 	}
 }
 
