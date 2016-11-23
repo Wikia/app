@@ -36,13 +36,13 @@ class LogEventsApiController extends WikiaApiController {
 		$comment = $this->request->getVal( 'comment' );
 		$user_id = $this->request->getVal( 'user_id' );
 		$params = json_decode( $this->request->getVal( 'params', '[]' ) );
-        $user = User::newFromId($user_id);
+		$user = User::newFromId($user_id);
 
-        // exceptions thrown by addEntry() will be handled by Nirvana API dispatcher
-        $entry = new LogPage( $type );
-        $id = $entry->addEntry( $action, $this->wg->Title, $comment, $params, $user );
+		// exceptions thrown by addEntry() will be handled by Nirvana API dispatcher
+		$entry = new LogPage( $type );
+		$id = $entry->addEntry( $action, $this->wg->Title, $comment, $params, $user );
 
-        $this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
 		$this->response->setData( [ 'id' => $id ] );
 	}
 }
