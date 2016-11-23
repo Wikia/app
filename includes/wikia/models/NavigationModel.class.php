@@ -102,7 +102,7 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getWiki( $msgName = false, $wikiText = '' ) {
-		global $wgUser;
+		global $wgUser, $wgOnTheWikiAsLastTab;
 
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
@@ -142,8 +142,8 @@ class NavigationModel extends WikiaModel {
 		}
 		$this->setShouldTranslateContent( true );
 
-		// if user is anon 'On The Wiki' tab is displayed as last
-		if ( $wgUser->isAnon() ) {
+		// if user is anon 'On The Wiki' tab is displayed as last tab
+		if ( $wgOnTheWikiAsLastTab && $wgUser->isAnon() ) {
 			return [
 				'wiki' => $wiki,
 				'wikia' => $wikia
