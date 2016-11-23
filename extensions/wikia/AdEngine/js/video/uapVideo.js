@@ -33,7 +33,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	function addProgressListeners(video) {
 		video.addEventListener('start', updateProgressBar);
-		video.addEventListener('firstquartile', updateProgressBar);
 		video.addEventListener('resume', updateProgressBar);
 		video.addEventListener('complete', updateProgressBar);
 		video.addEventListener('pause', function (ima) {
