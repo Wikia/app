@@ -14,6 +14,11 @@
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
+$uap-progress-bar-color: #666;
+$uap-progress-bar-current-time-color: #b7b7b7;
+$uap-progress-bar-interval: 0.2s;
+$uap-video-animation-duration: 0.4s;
+
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
 .wikia-ad.hidden,
@@ -73,10 +78,10 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		background: $color-black;
 		max-width: none;
 		overflow: hidden;
-		-webkit-transition: height 0.4s ease;
-		-moz-transition: height 0.4s ease;
-		-o-transition: height 0.4s ease;
-		transition: height 0.4s ease;
+		-webkit-transition: height $uap-video-animation-duration ease;
+		-moz-transition: height $uap-video-animation-duration ease;
+		-o-transition: height $uap-video-animation-duration ease;
+		transition: height $uap-video-animation-duration ease;
 		width: 100%;
 
 		> div {
@@ -170,6 +175,28 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		position: absolute;
 		width: 100%;
 		top: 0;
+	}
+}
+
+.bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+	.progress-bar {
+		background: $uap-progress-bar-color;
+		bottom: 0;
+		height: 8px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	.current-time {
+		background: $uap-progress-bar-current-time-color;
+		height: 100%;
+		max-width: 100%;
+		width: 0%;
+		-webkit-transition: width $uap-progress-bar-interval linear;
+		-moz-transition: width $uap-progress-bar-interval linear;
+		-o-transition: width $uap-progress-bar-interval linear;
+		transition: width $uap-progress-bar-interval linear;
 	}
 }
 
@@ -293,10 +320,10 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #BOTTOM_LEADERBOARD {
 	background: $color-black;
-	-webkit-transition: height 0.4s ease;
-	-moz-transition: height 0.4s ease;
-	-o-transition: height 0.4s ease;
-	transition: height 0.4s ease;
+	-webkit-transition: height $uap-video-animation-duration ease;
+	-moz-transition: height $uap-video-animation-duration ease;
+	-o-transition: height $uap-video-animation-duration ease;
+	transition: height $uap-video-animation-duration ease;
 
 	overflow: hidden;
 	margin: 0 0 23px 0;
