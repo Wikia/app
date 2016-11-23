@@ -104,8 +104,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getHref( $hrefKey ) {
-		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	private function getHref( $hrefKey, $variables = null ) {
+		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang, $variables );
 	}
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
@@ -214,25 +214,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function hasAuthorProfile( $user ) {
-		foreach ( $user->getGroups() as $group ) {
-			if ( strpos( $group, 'fancontributor-' ) === 0 ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private function getAuthorProfileUrl( $userName ) {
-		global $wgStagingEnvironment;
-
-		if ($wgStagingEnvironment) {
-			$server = 'http://staging.fandom.wikia.com';
-		} else {
-			$server = 'http://fandom.wikia.com';
-		}
-
-		return $server . '/u/' . $userName;
+		return sizeof(preg_grep("/^fancontributor-/", $user->getGroups())) > 0;
 	}
 
 	private function getLoggedInUserData( $user ) {
@@ -262,10 +244,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
-		if ( $this->hasAuthorProfile( $user ) && !empty( $wgEnableAuthorProfileLinks ) ) {
+		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
 			$viewProfileLinks[] = [
 				'type' => 'link-text',
-				'href' => $this->getAuthorProfileUrl( $userName ),
+				'href' => $this->getHref( 'user-author-profile',  ['userName' => $userName ] ),
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-user-view-author-profile'
