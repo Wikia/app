@@ -31,16 +31,18 @@ define('wikia.pageShare', [
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
 
-	function appendShareIcons(data) {
+	function prepareSocialLinks(data) {
 		if (data.socialIcons) {
 			var url = encodeURIComponent(win.location.origin + win.location.pathname),
 				title = encodeURIComponent(win.document.title),
 				description = encodeURIComponent($('meta[property="og:description"]').attr('content'));
 
-			return data.socialIcons
+			data.socialIcons
 				.replace(/\$url/g, url)
 				.replace(/\$title/g, title)
 				.replace(/\$description/g, description);
+
+			return data;
 		}
 	}
 
@@ -48,7 +50,8 @@ define('wikia.pageShare', [
 		var mCacheQueryStringParam = $.getUrlVar('mcache'),
 			requestData = {
 				lang: getShareLang($.getUrlVar('uselang')),
-				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
+				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0,
+				title: win.wgPageName
 			};
 
 		if (mCacheQueryStringParam) {
@@ -60,7 +63,7 @@ define('wikia.pageShare', [
 			controller: 'PageShare',
 			method: 'getShareIcons',
 			data: requestData
-		}).then(appendShareIcons);
+		}).then(prepareSocialLinks);
 	}
 
 	/**
