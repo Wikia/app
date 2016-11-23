@@ -1,4 +1,4 @@
-/* global define */
+/*global define, clearInterval, setInterval*/
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 ], function (adHelper, uapContext, uapVideoAnimation, videoAdFactory, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
+		progressBarInterval = 200;
 
 	function getVideoHeight(width, params) {
 		return width / params.videoAspectRatio;
@@ -17,6 +18,40 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	function defaultGetSlotWidth(slot) {
 		return slot.clientWidth;
+	}
+
+	function addProgressListeners(video) {
+		var duration = null,
+			interval;
+
+		function updateWidth(ima) {
+			var currentProgress,
+				nodeElement = ima.container.querySelector('.progress-bar > .current-time'),
+				remainingTime = ima.adsManager.getRemainingTime();
+
+			duration = duration !== null ? duration : remainingTime;
+
+			currentProgress = (duration - remainingTime + progressBarInterval / 1000) / duration;
+			nodeElement.style.width = (currentProgress * 100) + '%';
+		}
+
+		function stopInterval() {
+			if (interval) {
+				clearInterval(interval);
+			}
+		}
+
+		function startInterval(ima) {
+			stopInterval();
+			interval = setInterval(function () {
+				updateWidth(ima);
+			}, progressBarInterval);
+		}
+
+		video.addEventListener('start', startInterval);
+		video.addEventListener('resume', startInterval);
+		video.addEventListener('pause', stopInterval);
+		video.addEventListener('complete', stopInterval);
 	}
 
 	function loadVideoAd(params, adSlot, imageContainer, getSlotWidth) {
@@ -34,6 +69,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					passback: 'vuap'
 				}
 			);
+			addProgressListeners(video);
 
 			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(adSlot);
