@@ -8,13 +8,13 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isDisabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
 		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
 			return false;
 		}
 
-		return $wgAdDriverEnableSourcePointRecovery === false;
+		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
 	}
 	
 	public static function getSourcePointBootstrapCode() {

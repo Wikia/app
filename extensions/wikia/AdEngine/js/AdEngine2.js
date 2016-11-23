@@ -9,17 +9,15 @@ define('ext.wikia.adEngine.adEngine', [
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (
-	adDecoratorLegacyParamFormat,
-	eventDispatcher,
-	adSlot,
-	slotTracker,
-	slotTweaker,
-	registerHooks,
-	doc,
-	lazyQueue,
-	log
-) {
+], function (adDecoratorLegacyParamFormat,
+			 eventDispatcher,
+			 adSlot,
+			 slotTracker,
+			 slotTweaker,
+			 registerHooks,
+			 doc,
+			 lazyQueue,
+			 log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -196,7 +194,8 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots (' + adslots.length + ')'], 'debug', logGroup);
+
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);

@@ -101,6 +101,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/ooyala.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
+		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
@@ -111,6 +112,8 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
+		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
+		'//extensions/wikia/AdEngine/js/video/uapVideoAnimation.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
@@ -149,6 +152,14 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/experiments/mix.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 		'//extensions/wikia/Recirculation/js/discussions.js',
+	],
+];
+
+$config['recirculation_liftigniter_tracker'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',	
 	],
 ];
 
@@ -911,10 +922,13 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
+		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
 		'//extensions/wikia/AdEngine/js/video/googleIma.js',
+		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
+		'//extensions/wikia/AdEngine/js/video/uapVideoAnimation.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',

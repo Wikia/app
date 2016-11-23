@@ -5,20 +5,15 @@ class ARecoveryEngineApiController extends WikiaController {
 	const MAX_EVENT_INTERVAL = 900;
 
 	public function getDelivery() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
-		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-		$source = $resourceLoader->getScript( $resourceLoaderContext );
-
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$this->response->setBody( $source );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->loadScript(new ResourceLoaderAdEngineSourcePointCSDelivery());
 	}
 
-	public function getSourcePointStatus() {
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
+	public function getSourcePointMessaging() {
+		$this->loadScript(new ResourceLoaderAdEngineSourcePointMessage());
+	}
+
+	public function getSourcePointMMSClient() {
+		$this->loadScript(new ResourceLoaderAdEngineSourcePointMMSClient());
 	}
 
 	public function getBootstrap() {
@@ -37,5 +32,14 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( 'var arecoveryEngineLogInfoStatus=1;' );
 		$this->response->setCacheValidity( self::MAX_EVENT_INTERVAL );
+	}
+
+	private function loadScript(\ResourceLoaderModule $resourceLoader) {
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$this->response->setBody( $source );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 }

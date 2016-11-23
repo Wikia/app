@@ -58,6 +58,9 @@
 @import 'resources/wikia/libraries/bootstrap/tooltip';
 @import 'resources/wikia/libraries/bootstrap/popover';
 
+// UI Components initial scss
+@import 'resources/wikia/ui_components/modal/css/modal-initial.scss';
+
 // Extensions (only include here if used on the majority of page views!)
 @import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
