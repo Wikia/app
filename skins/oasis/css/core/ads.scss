@@ -54,10 +54,6 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .bfaa-template {
-	/* remove Firefox's dotted outline on buttons and links */
-	:focus {outline:none;}
-	::-moz-focus-inner {border:0;}
-
 	&.WikiaSiteWrapper {
 		@include flexbox();
 		@include flex-direction(column);
@@ -104,6 +100,10 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .wikia-ad .ima-mute-div {
+	/* remove Firefox's dotted outline on buttons and links */
+	:focus {outline:none;}
+	::-moz-focus-inner {border:0;}
+
 	position: absolute;
 	bottom: 18px;
 	right: 10px;

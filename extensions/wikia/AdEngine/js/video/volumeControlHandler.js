@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 	var logGroup = 'ext.wikia.adEngine.video.volumeControlHandler';
 
 	function init(ima, adContainer) {
-		var	muteDiv,
+		var muteDiv,
 			speaker;
 
 		muteDiv = getMuteDiv(ima, adContainer);
