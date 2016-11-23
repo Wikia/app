@@ -17,7 +17,7 @@ define('wikia.pageShare', [
 	 *
 	 * @param {Event} event
 	 */
-	function shareLinkClick(event) {
+	function shareLinkClickHandler(event) {
 		event.stopPropagation();
 		event.preventDefault();
 
@@ -37,13 +37,10 @@ define('wikia.pageShare', [
 				title = encodeURIComponent(win.document.title),
 				description = encodeURIComponent($('meta[property="og:description"]').attr('content'));
 
-			$('#PageShareContainer')
-				.html(data.socialIcons
-					.replace(/\$url/g, url)
-					.replace(/\$title/g, title)
-					.replace(/\$description/g, description)
-				)
-				.on('click', '.page-share a', shareLinkClick);
+			return data.socialIcons
+				.replace(/\$url/g, url)
+				.replace(/\$title/g, title)
+				.replace(/\$description/g, description);
 		}
 	}
 
@@ -58,13 +55,12 @@ define('wikia.pageShare', [
 			requestData.mcache = mCacheQueryStringParam;
 		}
 
-		$.nirvana.sendRequest({
+		return $.nirvana.sendRequest({
 			type: 'GET',
 			controller: 'PageShare',
 			method: 'getShareIcons',
-			data: requestData,
-			callback: appendShareIcons
-		});
+			data: requestData
+		}).then(appendShareIcons);
 	}
 
 	/**
@@ -102,6 +98,7 @@ define('wikia.pageShare', [
 
 	return {
 		loadShareIcons: loadShareIcons,
-		getShareLang: getShareLang
+		getShareLang: getShareLang,
+		shareLinkClickHandler: shareLinkClickHandler
 	};
 });

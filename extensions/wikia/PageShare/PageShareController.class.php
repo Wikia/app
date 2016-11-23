@@ -38,7 +38,7 @@ class PageShareController extends WikiaController {
 
 		foreach ( $wgPageShareServices as $service ) {
 			if ( PageShareHelper::isValidShareService( $service, $lang, $isTouchScreen ) ) {
-				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
+				$service['icon'] = DesignSystemHelper::renderSvg( 'wds-icons-' . $service['name'], '', $service['name'] );
 				$services[] = $service;
 			}
 		}

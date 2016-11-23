@@ -1,7 +1,10 @@
 	<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
 		<div class="header-container">
 			<div class="header-column header-title">
-				<h1><?= !empty( $displaytitle ) ? $title : htmlspecialchars( $title ) ?></h1>
+				<h1>
+					<?= !empty( $displaytitle ) ? $title : htmlspecialchars( $title ) ?>
+					<a id="ShareEntryPoint" class="header-share-entry-point" href="#" title="TODO share"><?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'header-share-entry-point-icon', 'TODO share' ); ?></a>
+				</h1>
 				<?php if ( !empty( $pageSubtitle ) ): ?>
 					<h2><?= $pageSubtitle ?></h2>
 				<? endif;
