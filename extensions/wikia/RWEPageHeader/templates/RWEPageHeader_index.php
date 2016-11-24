@@ -1,7 +1,7 @@
 <h2>test</h2>
 
 <div>some random stuff</div>
-<div id="searchFormWrapperRWE" class="wds-global-navigation">
+<div id="searchFormWrapperRWE">
 	<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $searchModel['module']['results']['url'] ); ?>">
 		<div id="searchInputWrapperRWE" class="wds-dropdown wds-global-navigation__search-input-wrapper">
 			<label class="wds-global-navigation__search-label">

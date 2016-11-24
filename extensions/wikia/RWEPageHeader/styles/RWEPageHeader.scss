@@ -1,5 +1,5 @@
 #searchFormWrapperRWE {
-  width: 200px;
+  width: 400px;
   position: relative;
 
   .wds-global-navigation__search {
@@ -10,9 +10,24 @@
     border-bottom: none;
   }
 
-  .wds-search-is-active {
+
+  &.wds-search-is-active {
     width: 400px;
 
+    .wds-global-navigation__search-submit {
+      display:inline-block;
+      max-width: 100%;
+      height: 100%;
+      padding: 5px 9px;
+      transition: background-color .3s, border-color .3s, color .3s, max-width 50ms 150ms, opacity .3s, padding 50ms 150ms;
+    }
+
+    .wds-global-navigation__search-close {
+      margin-right: 24px;
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+    }
 
     #searchInputWrapperRWE {
       border-bottom: solid 1px black;
