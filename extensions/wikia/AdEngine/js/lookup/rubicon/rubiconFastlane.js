@@ -240,7 +240,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			node.parentNode.insertBefore(rubicon, node);
 			context = adContext.getContext();
 			configureSlots(skin);
-			response = false;
 
 			rubiconLoaded = true;
 		}
