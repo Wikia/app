@@ -545,10 +545,6 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-#WikiaArticleMsg {
-  display: none;
-}
-
 .overVideoLayer {
 	position: absolute;
 	cursor: pointer;
@@ -558,10 +554,14 @@ body > a > img[src$="noad.gif"] {
 
 	.close-ad {
 		float: right;
-		margin: 40px;
+		margin: 10px 10px 30px 30px;
 
 		width: 30px;
 		height: 30px;
-		background-image: url('/skins/oasis/images/player/collapse_dark.svg');
+		background-image: url('/skins/oasis/images/player/collapse_light.svg');
 	}
+}
+
+#WikiaArticleMsg {
+  display: none;
 }
