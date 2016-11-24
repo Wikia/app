@@ -1,7 +1,20 @@
-#searchInputFormRWE {
-  width: 200px;
+#searchFormWrapperRWE {
+  width: 100px;
+  position: relative;
+
+  .wds-global-navigation__search {
+    border-top: none;
+  }
+
+  #searchInputWrapperRWE {
+    border-bottom: none;
+  }
 
   &.wds-search-is-active {
     width: 400px;
+
+    #searchInputWrapperRWE {
+      border-bottom: solid 1px black;
+    }
   }
 }
