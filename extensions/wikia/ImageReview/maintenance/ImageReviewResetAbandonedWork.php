@@ -5,8 +5,7 @@ require_once( dirname(__FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 class ImageReviewResetAbandonedWork extends Maintenance {
 
 	public function execute() {
-		$oHelper = new ImageReviewHelper();
-		$sFrom = $oHelper->resetAbandonedWork();
+		$sFrom = ( new AbandonedWorkResetter() )->resetAbandonedWork();
 
 		$this->output( "\nReviews older than {$sFrom} reset.\n" );
 	}

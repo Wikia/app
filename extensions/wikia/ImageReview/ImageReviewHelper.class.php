@@ -497,44 +497,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		 ];
 	}
 
-	public function getUserTsKey() {
-		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
-	}
-
-	/**
-	 * reset state in abandoned work
-	 * note: this is run via a cron script
-	 */
-	public function resetAbandonedWork() {
-		wfProfileIn( __METHOD__ );
-
-		$oDatabaseHelper = $this->getDatabaseHelper();
-
-		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
-		$sFrom = wfTimestamp(TS_DB, time() - $timeLimit );
-
-		// for STATE_UNREVIEWED
-		$oDatabaseHelper->updateResetAbandoned( $sFrom,
-			ImageReviewStatuses::STATE_UNREVIEWED,
-			ImageReviewStatuses::STATE_IN_REVIEW
-		);
-
-		// for STATE_QUESTIONABLE
-		$oDatabaseHelper->updateResetAbandoned( $sFrom,
-			ImageReviewStatuses::STATE_QUESTIONABLE,
-			ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
-		);
-
-		// for STATE_REJECTED
-		$oDatabaseHelper->updateResetAbandoned( $sFrom,
-			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_REJECTED_IN_REVIEW
-		);
-
-		wfProfileOut( __METHOD__ );
-		return $sFrom;
-	}
-
 	private function getReviewersForStats() {
 		wfProfileIn( __METHOD__ );
 

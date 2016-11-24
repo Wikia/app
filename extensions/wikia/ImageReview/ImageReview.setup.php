@@ -35,6 +35,7 @@ $wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
 $wgAutoloadClasses['ImageReviewStatsCache'] =  $dir . 'ImageReviewStatsCache.class.php';
 $wgAutoloadClasses['ImageStateUpdater'] =  $dir . 'ImageStateUpdater.class.php';
 $wgAutoloadClasses['ImageCountGetter'] =  $dir . 'ImageCountGetter.class.php';
+$wgAutoloadClasses['AbandonedWorkResetter'] =  $dir . 'AbandonedWorkResetter.class.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 

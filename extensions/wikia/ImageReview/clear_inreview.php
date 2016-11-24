@@ -2,5 +2,4 @@
 
 require( "../../../maintenance/commandLine.inc" );
 
-$helper = (new ImageReviewHelper);
-$helper->resetAbandonedWork();
+( new AbandonedWorkResetter() )->resetAbandonedWork();
