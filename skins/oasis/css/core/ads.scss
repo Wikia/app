@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transition';
 @import 'layout';
 @import 'responsive-variables';
 @import 'breakpoints-variables';
@@ -70,13 +71,10 @@ $uap-video-animation-duration: 0.4s;
 	}
 
 	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
 		max-width: none;
 		overflow: hidden;
-		-webkit-transition: height $uap-video-animation-duration ease;
-		-moz-transition: height $uap-video-animation-duration ease;
-		-o-transition: height $uap-video-animation-duration ease;
-		transition: height $uap-video-animation-duration ease;
 		width: 100%;
 
 		.provider-container {
@@ -188,14 +186,11 @@ $uap-video-animation-duration: 0.4s;
 	}
 
 	.current-time {
+		@include transition(width, 1s, linear, 0);
 		background: $uap-progress-bar-current-time-color;
 		height: 100%;
 		max-width: 100%;
 		width: 0;
-		-webkit-transition: width linear;
-		-moz-transition: width linear;
-		-o-transition: width linear;
-		transition: width linear;
 	}
 }
 
@@ -318,11 +313,8 @@ $uap-video-animation-duration: 0.4s;
 }
 
 #BOTTOM_LEADERBOARD {
+	@include transition(height, $uap-video-animation-duration, ease, 0);
 	background: $color-black;
-	-webkit-transition: height $uap-video-animation-duration ease;
-	-moz-transition: height $uap-video-animation-duration ease;
-	-o-transition: height $uap-video-animation-duration ease;
-	transition: height $uap-video-animation-duration ease;
 
 	overflow: hidden;
 	margin: 0 0 23px 0;

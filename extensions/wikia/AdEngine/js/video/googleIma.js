@@ -49,8 +49,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		var progressBar = createProgressBar();
 
 		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden');
-		videoAdContainer.classList.add('video-ima-container');
+		videoAdContainer.classList.add('hidden', 'video-ima-container');
 		videoAdContainer.appendChild(progressBar);
 
 		return videoAdContainer;
