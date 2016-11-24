@@ -8,5 +8,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'page-share-entry-point-label' => 'Button label that is an entry point to social share modal.',
-	'page-share-modal-title' => 'Title for modal with links to share. $1 is current title name',
+	'page-share-modal-title' => 'Title of the modal with social media share buttons. $1 is the shared page\'s title (which is the current page).',
 ];
