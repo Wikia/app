@@ -81,17 +81,6 @@ class ImageReviewStatsCache {
 		return $stats;
 	}
 	
-	public function setStats( $newStats ) {
-		foreach ( $newStats as $key => $value ) {
-			$cacheKey = $this->getStatsKey( $key );
-			if ( empty( $cacheKey ) ) {
-				continue;
-			}
-
-			$this->memc->set( $cacheKey, $value, self::CACHE_EXPIRE_TIME );
-		}
-	}
-
 	public function clearStats() {
 		foreach( $this->imageStatsCacheKeys as $key => $cacheKey ) {
 			$this->memc->delete( $cacheKey );

@@ -37,8 +37,6 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 
 	public abstract function getImageList($timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST);
 
-	public abstract function getImageCount();
-
 	public abstract function getUserTsKey();
 
 	protected function getDatabaseHelper() {

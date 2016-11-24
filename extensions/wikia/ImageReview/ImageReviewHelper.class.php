@@ -395,50 +395,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$this->statsCache->clearStats();
 	}
 
-	public function getCachedImageCount() {
-		return $this->statsCache->getStats();
-	}
-
-	public function getImageCount() {
-		$total = $this->getCachedImageCount();
-
-		// IF we we have a non-zero number of unreviewed images in the cache, use it
-		if ( !empty( $total[ImageReviewStatsCache::STATS_UNREVIEWED] ) &&
-			$total[ImageReviewStatsCache::STATS_UNREVIEWED] >= 0 ) {
-			return $total;
-		}
-
-		static $initialStats = [
-			ImageReviewStatsCache::STATS_INVALID      => 0,
-			ImageReviewStatsCache::STATS_UNREVIEWED   => 0,
-			ImageReviewStatsCache::STATS_QUESTIONABLE => 0,
-			ImageReviewStatsCache::STATS_REJECTED     => 0,
-			ImageReviewStatsCache::STATS_REVIEWER     => 0,
-		];
-
-		$total = array_merge( $initialStats, $total );
-
-		$dbHelper = $this->getDatabaseHelper();
-		$counters = $dbHelper->countImagesByState();
-
-		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $counters ) ) {
-			$total[ImageReviewStatsCache::STATS_UNREVIEWED] = $counters[ ImageReviewStatuses::STATE_UNREVIEWED ];
-		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $counters ) ) {
-			$total[ImageReviewStatsCache::STATS_QUESTIONABLE] = $counters[ ImageReviewStatuses::STATE_QUESTIONABLE ];
-		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $counters ) ) {
-			$total[ImageReviewStatsCache::STATS_REJECTED] = $counters[ ImageReviewStatuses::STATE_REJECTED ];
-		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $counters ) ) {
-			$total[ImageReviewStatsCache::STATS_INVALID] = $counters[ ImageReviewStatuses::STATE_INVALID_IMAGE ];
-		}
-
-		$this->statsCache->setStats( $total );
-
-		return $total;
-	}
-
 	public function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {
 
 		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';

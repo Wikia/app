@@ -57,6 +57,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $helper;
 
 	private $imageStateUpdater;
+	private $imageCountGetter;
 
 	public function __construct() {
 		parent::__construct( 'ImageReview', 'imagereview', false /* $listed */ );
@@ -69,6 +70,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->helper = $this->getHelper();
 		$this->imageStateUpdater = new ImageStateUpdater();
+		$this->imageCountGetter = new ImageCountGetter();
 	}
 
 	protected function setGlobalDisplayVars() {
@@ -111,7 +113,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->setAssets();
 
 		$this->imageList = $this->getImageList();
-		$this->imageCount = $this->getImageCount();
+		$this->imageCount = $this->getImageCounts();
 
 		$this->setVariables();
 
@@ -159,13 +161,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		return $imageList;
 	}
 
-	private function getImageCount() {
-		$imageCount = $this->helper->getImageCount();
+	private function getImageCounts() {
+		$imageCounts = $this->imageCountGetter->getImageCounts();
 
 		// Format the number locally (add ',' or '.')
 		return array_map(
 			function( $number ) { return $this->wg->Lang->formatNum($number); },
-			$imageCount
+			$imageCounts
 		);
 	}
 
