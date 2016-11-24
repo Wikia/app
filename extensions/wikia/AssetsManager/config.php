@@ -3133,3 +3133,11 @@ $config['oasislight_bottom_js'] = [
 		'//extensions/wikia/OasisLight/scripts/heavybox.js',
 	],
 ];
+
+$config['rwe_page_header_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/styles/index.scss'
+	]
+];

@@ -1,0 +1,17 @@
+@import 'variables';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+
+.rwe-page-header__nav {
+	@include flexbox();
+	@include justify-content(center);
+
+}
+
+.rwe-page-header__nav-element {
+	border-right: 1px $color-page-border solid;
+
+	&:last-child {
+		border: none;
+	}
+}
