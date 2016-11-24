@@ -1,7 +1,7 @@
 $(function ($) {
 	'use strict';
 
-	var $globalNav = $('.wds-global-navigation'),
+	var $globalNav = $('#searchInputWrapperRWE'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
 		placeholderText = $searchInput.attr('placeholder'),
