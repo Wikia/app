@@ -546,19 +546,18 @@ body > a > img[src$="noad.gif"] {
 }
 
 .overVideoLayer {
-	position: absolute;
 	cursor: pointer;
+	height: 100%;
+	position: absolute;
 	top: 0;
 	width: 100%;
-	height: 100%;
 
 	.close-ad {
-		float: right;
-		margin: 10px 10px 30px 30px;
-
-		width: 30px;
-		height: 30px;
 		background-image: url('/skins/oasis/images/player/collapse_light.svg');
+		float: right;
+		height: 30px;
+		margin: 10px 10px 30px 30px;
+		width: 30px;
 	}
 }
 

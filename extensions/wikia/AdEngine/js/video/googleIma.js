@@ -1,13 +1,13 @@
 /*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
-    'ext.wikia.adEngine.video.player.ui.closeButton',
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.googleImaAdStatus',
+	'ext.wikia.adEngine.video.player.ui.closeButton',
 	'ext.wikia.adEngine.video.volumeControlHandler',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (closeButton, scriptLoader, googleImaAdStatus, volumeControlHandler, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
@@ -90,15 +90,15 @@ define('ext.wikia.adEngine.video.googleIma', [
 		layer.appendChild(closeButton.create(ad));
 		ad.container.appendChild(layer);
 
-        layer.addEventListener('click', function () {
-            if (ad && ad.adsManager && ad.status) {
-                if (ad.status.get() === 'paused') {
-                    ad.adsManager.resume();
-                } else {
-                    ad.adsManager.pause();
-                }
-            }
-        });
+		layer.addEventListener('click', function () {
+			if (ad && ad.adsManager && ad.status) {
+				if (ad.status.get() === 'paused') {
+					ad.adsManager.resume();
+				} else {
+					ad.adsManager.pause();
+				}
+			}
+		});
 	}
 
 	function createIma() {
