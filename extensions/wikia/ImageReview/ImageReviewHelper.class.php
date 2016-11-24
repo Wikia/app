@@ -9,7 +9,7 @@ use \Wikia\Logger\WikiaLogger;
  */
 class ImageReviewHelper extends ImageReviewHelperBase {
 
-	private $user_id = 0;
+	private $userId = 0;
 	/**
 	 * @var ImageReviewStatsCache
      */
@@ -17,8 +17,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	
 	function __construct() {
 		parent::__construct();
-		$this->user_id = $this->wg->user->getId();
-		$this->statsCache = new ImageReviewStatsCache( $this->user_id );
+		$this->userId = $this->wg->user->getId();
+		$this->statsCache = new ImageReviewStatsCache( $this->userId );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return ( new WikiaSQL() )
 			->SELECT( 'UNIX_TIMESTAMP(MIN(review_start))' )->AS_( "ts" )
 			->FROM( 'image_review' )
-			->WHERE( 'reviewer_id' )->EQUAL_TO( $this->user_id )
+			->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
 			->AND_( 'state' )->EQUAL_TO( $state )
 			->run( $dbh, function( ResultWrapper $result ) {
 		        $row = $result->fetchObject();
@@ -101,7 +101,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			[  'wiki_id, page_id, state, flags, priority'  ],
 			[
 				'review_start'	=> $review_start,
-				'reviewer_id'	=> $this->user_id
+				'reviewer_id'	=> $this->userId
 			],
 			__METHOD__,
 			[
@@ -142,6 +142,21 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $imageList;
 	}
 
+	private function previouslyViewedImageList( $timestamp ) {
+		$db = $this->getDatawareDB();
+		$numOfImages = ( new WikiaSQL() )
+			->SELECT()
+			->COUNT( '*' )->AS_( 'count' )
+			->FROM( 'image_review' )
+			->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
+			->AND_( 'review_start' )->EQUAL_TO( wfTimestamp( TS_DB, $timestamp ) )
+			->run( $db, function( ResultWrapper $result ) {
+				return $result->current()->count;
+			} );
+
+		return intval( $numOfImages ) > 0;
+	}
+
 	/**
 	 * Get image list
 	 *
@@ -156,6 +171,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * @throws MWException
 	 */
 	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
+		if ( $this->previouslyViewedImageList( $timestamp ) ) {
+			return $this->refetchImageListByTimestamp( $timestamp );
+		}
+
+
 		// Get the start date to use for all images collected here
 		$reviewStart = wfTimestamp( TS_DB, $timestamp );
 
@@ -266,7 +286,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$dbw = $this->getDatawareDB( DB_MASTER );
 		$query = ( new WikiaSQL() )
 			->UPDATE( 'image_review' )
-				->SET( 'reviewer_id', $this->user_id )
+				->SET( 'reviewer_id', $this->userId )
 				->SET( 'review_start', $reviewStart )
 				->SET( 'state', $targetState )
 			->WHERE( 'reviewer_id' )->IS_NULL()
@@ -389,10 +409,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			'method' => __METHOD__,
 			'message' => "Updated {$count} images (type 'icons')",
 		] );
-	}
-
-	public function clearCachedImageCount() {
-		$this->statsCache->clearStats();
 	}
 
 	public function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {

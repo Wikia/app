@@ -1,6 +1,6 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
+use Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
@@ -19,7 +19,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	];
 
 	// Map each action to the pool of images we can pull from when getting new images
-	const NEW_STATE_FOR_ACTION = [
+	const ACTION_TO_STATUS_CODE = [
 		self::ACTION_QUESTIONABLE => ImageReviewStatuses::STATE_QUESTIONABLE,
 		self::ACTION_REJECTED => ImageReviewStatuses::STATE_REJECTED,
 		self::ACTION_UNREVIEWED => ImageReviewStatuses::STATE_UNREVIEWED
@@ -127,38 +127,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function getImageList() {
-		$imageList = [];
-
-		if ( $this->requestedTimestampIsNewest() ) {
-			WikiaLogger::instance()->info( 'ImageReviewLog', [
-				'method' => __METHOD__,
-				'message' => "I've got the newest ts ({$this->ts}), I won't refetch the images",
-			]);
-			$this->setNewestTimestampToCurrent();
-		} else {
-			$imageList = $this->helper->refetchImageListByTimestamp( $this->ts );
-
-			/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
-			if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
-				$this->logImageListCompleteness( 'warning' );
-			}
-		}
-
-		if ( count( $imageList ) == 0 ) {
-			// If we're looking at unreviewed and there aren't any new images by latest
-			// timestamp, clear the image counts before refreshing the image list.
-			if ( $this->action == self::ACTION_UNREVIEWED ) {
-				$this->helper->clearCachedImageCount();
-			}
-
-			$imageList = $this->helper->getImageList(
-				$this->ts,
-				$this::NEW_STATE_FOR_ACTION[$this->action],
-				$this->order
-			);
-		}
-
-		return $imageList;
+		return $this->helper->getImageList( $this->ts, $this::ACTION_TO_STATUS_CODE[$this->action], $this->order );
 	}
 
 	private function getImageCounts() {
@@ -169,20 +138,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			function( $number ) { return $this->wg->Lang->formatNum($number); },
 			$imageCounts
 		);
-	}
-
-	private function requestedTimestampIsNewest() {
-		return $this->ts > $this->getNewestTimestamp();
-	}
-
-	private function getNewestTimestamp() {
-		$userKey = $this->helper->getUserTsKey();
-		return $this->wg->Memc->get( $userKey );
-	}
-
-	private function setNewestTimestampToCurrent() {
-		$userKey = $this->helper->getUserTsKey();
-		$this->wg->Memc->set( $userKey, $this->ts, 3600 /* 1h */ );
 	}
 
 	public function stats() {
