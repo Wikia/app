@@ -476,10 +476,7 @@ class MediaWikiService
 				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
 			} catch ( StaleResultException $staleResultException ) {
 				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-1306 - Invalid article ID', [
-					'exception' => $staleResultException,
-					'articleId' => $articleId,
-					'ns' => $title->getNamespace(),
-					'titleText' => $title->getPrefixedText()
+					'exception' => $staleResultException
 				] );
 			}
 		}
@@ -910,7 +907,7 @@ class MediaWikiService
 		$page = \Article::newFromID( $pageId );
 
 		if ( $page === null ) {
-			throw new StaleResultException();
+			throw new StaleResultException( $pageId );
 		}
 
 		$redirectTarget = null;
