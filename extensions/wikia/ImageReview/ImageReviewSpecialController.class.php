@@ -56,6 +56,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	/** @var ImageReviewHelper */
 	private $helper;
 
+	private $imageStateUpdater;
+
 	public function __construct() {
 		parent::__construct( 'ImageReview', 'imagereview', false /* $listed */ );
 
@@ -66,6 +68,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->baseUrl = $this->getBaseUrl();
 
 		$this->helper = $this->getHelper();
+		$this->imageStateUpdater = new ImageStateUpdater();
 	}
 
 	protected function setGlobalDisplayVars() {
@@ -302,7 +305,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$images = $this->parseImageData( $data );
 
 			if ( count( $images ) > 0 ) {
-				$this->helper->updateImageState( $images, $this->action );
+				$this->imageStateUpdater->update( $images, $this->wg->User->getId() );
 			}
 			$this->ts = null;
 		}
