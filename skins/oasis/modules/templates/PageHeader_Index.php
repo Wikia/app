@@ -1,10 +1,7 @@
 	<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
 		<div class="header-container">
 			<div class="header-column header-title">
-				<h1>
-					<?= !empty( $displaytitle ) ? $title : htmlspecialchars( $title ) ?>
-					<a id="ShareEntryPoint" class="header-share-entry-point" href="#" title="TODO share"><?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'header-share-entry-point-icon', 'TODO share' ); ?></a>
-				</h1>
+				<h1><?= !empty( $displaytitle ) ? $title : htmlspecialchars( $title ) ?></h1>
 				<?php if ( !empty( $pageSubtitle ) ): ?>
 					<h2><?= $pageSubtitle ?></h2>
 				<? endif;
@@ -66,8 +63,14 @@
 
 		foreach ( $extraButtons as $button ) {
 			echo $button;
-		}
+		} ?>
 
+		<a id="ShareEntryPoint" class="wikia-button secondary" href="#">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'header-share-entry-point-icon'); ?>
+			<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+		</a>
+
+		<?
 		// Temp for CommunityPageExperiment
 		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
 			echo Html::closeElement( 'div' );
