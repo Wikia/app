@@ -15,12 +15,12 @@
 		</li>
 
 		<li class="rwe-page-header__nav-element">
-			<a class="rwe-page-header__nav-link rwe-page-header--dropdown" href="/wiki/Special:Community" data-tracking="participate">
+			<a class="rwe-page-header__nav-link rwe-page-header--dropdown" href="/wiki/Special:Community" data-tracking="create">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-pencil',
 					'wds-icon wds-icon-small rwe-page-header__icon'
 				) ?>
-				<span class="rwe-page-header__nav-text">Participate</span>
+				<span class="rwe-page-header__nav-text">Create</span>
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-dropdown-tiny',
 					'wds-icon wds-icon-tiny rwe-page-header__chevron'

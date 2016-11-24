@@ -24,10 +24,10 @@
 }
 
 .rwe-page-header__nav-element {
-	border-right: 1px $color-divider solid;
+	border-right: 1px $color-page-border solid;
 	color: $color-page-border;
 	margin: $content-spacing-small 0;
-	padding: 0 $content-spacing-regular;
+	padding: $content-spacing-small $content-spacing-regular;
 
 	&:last-child {
 		border-right: none;
@@ -44,7 +44,7 @@
 
 .rwe-page-header__nav-element--active {
 	border-bottom: 1px $color-page solid;
-	border-left: 1px $color-divider solid;
+	border-left: 1px $color-page-border solid;
 	margin-bottom: -1px;
 	margin-left: -1px;
 	padding-bottom: $content-spacing-small;
