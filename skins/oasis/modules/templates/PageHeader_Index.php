@@ -66,7 +66,7 @@
 		} ?>
 
 		<a id="ShareEntryPoint" class="wikia-button secondary" href="#">
-			<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'header-share-entry-point-icon'); ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'wds-icon header-share-entry-point-icon'); ?>
 			<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
 		</a>
 
