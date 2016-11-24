@@ -30,6 +30,7 @@ class SitemapXmlController extends WikiaController {
 	const SEPARATE_SITEMAPS = [
 		NS_MAIN,
 		NS_FILE,
+		NS_CATEGORY,
 	];
 
 	/**
@@ -249,4 +250,5 @@ class SitemapXmlController extends WikiaController {
 
 		return $parsed;
 	}
+
 }

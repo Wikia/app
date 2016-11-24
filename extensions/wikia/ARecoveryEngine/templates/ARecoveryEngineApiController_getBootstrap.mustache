@@ -41,7 +41,7 @@
 					helper.verifyContent();
 				});
 			});
-		} else if (context.opts.sourcePointMMS === true) {
+		} else if (context.opts.sourcePointMMS === true && !window.wgUserName) {
 			var mmsDomain = context.opts.sourcePointMMSDomain;
 
 			window._sp_.mms = window._sp_.mms || {};
@@ -58,7 +58,6 @@
 
 				window._sp_.mms.cmd.push(function () {
 					window._sp_.mms.setTargeting("showmessage", "yes");
-					window._sp_.mms.setTargeting("anon", !window.wgUserName);
 				});
 				window._sp_.mms.cmd.push(function () {
 					window._sp_.mms.startMsg();
