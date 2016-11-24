@@ -1,5 +1,5 @@
 #searchFormWrapperRWE {
-  width: 100px;
+  width: 200px;
   position: relative;
 
   .wds-global-navigation__search {
@@ -10,11 +10,16 @@
     border-bottom: none;
   }
 
-  &.wds-search-is-active {
+  .wds-search-is-active {
     width: 400px;
+
 
     #searchInputWrapperRWE {
       border-bottom: solid 1px black;
+    }
+
+    .wds-global-navigation__search-suggestions {
+      z-index: 2;
     }
   }
 }
