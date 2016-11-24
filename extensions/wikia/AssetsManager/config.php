@@ -159,7 +159,7 @@ $config['recirculation_liftigniter_tracker'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',	
+		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 
@@ -2988,6 +2988,13 @@ $config['create_new_wiki_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss',
+	],
+];
+
+$config['rwe_page_header_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/styles/RWEPageHeader.scss',
 	],
 ];
 

@@ -1,0 +1,55 @@
+@import 'skins/shared/mixins/transform';
+
+.RWEPageHeader {
+
+	.first-level {
+		display: flex;
+		background-color: #fff;
+		box-shadow: 0 0 10px 0 rgba(26,26,26,.2);
+		width: 80%;
+		margin: auto;
+
+		.first-level-item {
+			width: 200px;
+			float: left;
+			margin: 18px 0;
+			min-width: 25%;
+			box-sizing: border-box;
+
+			&:not(:last-child) {
+				border-right: 1px solid grey;
+			}
+		}
+	}
+
+
+	a {
+		display: block;
+		color: black;
+		font-size: 14px;
+		padding: 10px 12px;
+		margin-left: 12px;
+
+		&:hover {
+			text-decoration: none;
+			color: blue;
+			//background: lightgrey;
+		}
+
+		&.spacer {
+			font-weight: bold;
+			font-size: 16px;
+			padding-top: 12px;
+		}
+
+		svg {
+			@include transform-rotate(270deg);
+			float: right;
+			margin: 2px;
+		}
+	}
+
+	.second-level:last-child > a {
+		padding-bottom: 18px;
+	}
+}
