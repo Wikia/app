@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'emailext-weeklydigest-subject' => 'See what\'s new on your favorite fandoms this week',
+	'emailext-weeklydigest-subject' => 'See what\'s new with your favorite communities this week',
 	'emailext-weeklydigest-summary' => 'Since your last visit, Fandom users have made changes to pages that you follow. Check them out:',
 ];
 
