@@ -3,6 +3,9 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
 
 $color-divider: mix($color-page-border, $wds-color-white, 50%);
+@if ($is-dark-wiki) {
+	$color-divider: mix($color-page-border, $wds-color-black, 50%);
+}
 
 $content-spacing-tiny-minus: 2px;
 $content-spacing-tiny: 3px;
