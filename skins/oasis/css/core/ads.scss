@@ -53,6 +53,29 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
+.wikia-ad {
+	&.slot-animation {
+		@include transition(max-height, 0.5s, ease, 0);
+		overflow: hidden;
+	}
+
+	&.slot-responsive {
+		width: 100%;
+
+		.provider-container {
+			position: relative;
+
+			iframe {
+				height: 100%;
+				left: 0;
+				position: absolute;
+				width: 100%;
+				top: 0;
+			}
+		}
+	}
+}
+
 .bfaa-template {
 	&.WikiaSiteWrapper {
 		@include flexbox();
@@ -76,18 +99,6 @@ $uap-video-animation-duration: 0.4s;
 		max-width: none;
 		overflow: hidden;
 		width: 100%;
-
-		.provider-container {
-			position: relative;
-
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
-			}
-		}
 
 		video {
 			height: auto;
@@ -160,19 +171,6 @@ $uap-video-animation-duration: 0.4s;
 				transform: scale(.5) translate(-15px, 0) rotate(36deg);
 			}
 		}
-	}
-}
-
-.bfab-template > .provider-container {
-	position: relative;
-	width: 100%;
-
-	iframe {
-		height: 100%;
-		left: 0;
-		position: absolute;
-		width: 100%;
-		top: 0;
 	}
 }
 

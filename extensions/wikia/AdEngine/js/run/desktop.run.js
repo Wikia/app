@@ -71,6 +71,8 @@ require([
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
+		slotTweaker.registerMessageListener();
+
 		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {

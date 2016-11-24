@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, adSlot, recoveryHelper, doc, log, win) {
+], function (DOMElementTweaker, messageListener, adSlot, recoveryHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -137,7 +138,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function makeResponsive(slotName, aspectRatio) {
-		var providerContainer = doc.getElementById(slotName).lastElementChild,
+		var slot = doc.getElementById(slotName),
+			providerContainer = slot.lastElementChild,
 			recoveredProviderContainer;
 
 		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
@@ -149,6 +151,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 
 		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
+		slot.classList.add('slot-responsive');
 
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
@@ -179,6 +182,53 @@ define('ext.wikia.adEngine.slotTweaker', [
 		return;
 	}
 
+	function collapse(slotName) {
+		var slot = doc.getElementById(slotName);
+
+		slot.style.maxHeight = slot.scrollHeight + 'px';
+		noop(slot.offsetHeight);
+		DOMElementTweaker.addClass(slot, 'slot-animation');
+		slot.style.maxHeight = '0';
+	}
+
+	function expand(slotName) {
+		var slot = doc.getElementById(slotName);
+
+		slot.style.maxHeight = slot.offsetHeight + 'px';
+		DOMElementTweaker.removeClass(slot, 'hidden');
+		DOMElementTweaker.addClass(slot, 'slot-animation');
+		slot.style.maxHeight = slot.scrollHeight + 'px';
+	}
+
+	function messageCallback(data) {
+		if (!data.slotName) {
+			return log('messageCallback: missing slot name', log.levels.debug, logGroup);
+		}
+
+		var slot = doc.getElementById(data.slotName);
+
+		if (!slot) {
+			return log('messageCallback: slot does not exist', log.levels.debug, logGroup);
+		}
+
+		switch (data.action) {
+			case 'expand':
+				return expand(data.slotName);
+			case 'collapse':
+				return collapse(data.slotName);
+			case 'hide':
+				return hide(data.slotName);
+			case 'show':
+				return show(data.slotName);
+			case 'make-responsive':
+				return makeResponsive(data.slotName, data.aspectRatio);
+		}
+	}
+
+	function registerMessageListener() {
+		messageListener.register({dataKey: 'action', infinite: true}, messageCallback);
+	}
+
 	/**
 	 * Triggers repaint to hide empty slot placeholders in Chrome
 	 * This is a temporary workaround
@@ -204,6 +254,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
+		registerMessageListener: registerMessageListener,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,

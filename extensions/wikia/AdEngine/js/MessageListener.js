@@ -55,7 +55,9 @@ define('ext.wikia.adEngine.messageListener', [
 					log(['Event matching', msg, callback], 'debug', logGroup);
 
 					callback.fn(JSON.parse(msg.data).AdEngine);
-					callbacks.splice(i, 1);
+					if (!callback.match.infinite) {
+						callbacks.splice(i, 1);
+					}
 					return;
 				}
 			}
@@ -96,6 +98,7 @@ define('ext.wikia.adEngine.messageListener', [
 	}
 
 	adContext.addCallback(function () {
+		callbacks = [];
 		unhandledMessages = [];
 	});
 
