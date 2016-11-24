@@ -1,22 +1,18 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaMobile', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.videoAdFactory',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
-	adHelper,
 	uapContext,
-	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
-	videoAdFactory,
+	uapVideo,
 	doc,
 	log,
 	win,
@@ -29,22 +25,12 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
 		imageContainer,
-		slotSizes,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER'
 		],
 		wrapper;
-
-	function getSlotSize(params) {
-		var width = document.body.clientWidth;
-		return {
-			width: width,
-			videoHeight: width / params.videoAspectRatio,
-			adHeight: width / params.aspectRatio
-		};
-	}
 
 	function adjustPadding(iframe, aspectRatio) {
 		var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
@@ -55,9 +41,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	}
 
 	function runOnReady(iframe, params) {
-		var onResize = function (aspectRatio) {
-				adjustPadding(iframe, aspectRatio);
-			};
+		function onResize(aspectRatio) {
+			adjustPadding(iframe, aspectRatio);
+		}
 
 		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
@@ -73,55 +59,24 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
-			videoAdFactory.init().then(function () {
-				try {
-					var video = videoAdFactory.create(
-						slotSizes.width,
-						slotSizes.videoHeight,
-						adSlot,
-						{
-							src: 'gpt',
-							pos: params.slotName,
-							uap: params.uap,
-							passback: 'vuap'
-						}
-					);
+		if (uapVideo.isEnabled(params)) {
+			uapVideo.init()
+				.then(function () {
+					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-					window.addEventListener('resize', adHelper.throttle(function () {
-						slotSizes = getSlotSize(params);
-						video.resize(slotSizes.width, slotSizes.videoHeight);
-					}));
-
-					params.videoTriggerElement.addEventListener('click', function () {
-						video.play(showVideo, function (videoContainer) {
-							hideVideo(videoContainer);
-							onResize(params.aspectRatio);
-						});
+					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
 						onResize(params.videoAspectRatio);
-					}.bind(video));
-
-				} catch (error) {
-					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
-				}
-			});
+					});
+					video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+						onResize(params.aspectRatio);
+					});
+				});
 		}
-	}
-
-	function showVideo(videoContainer) {
-		DOMElementTweaker.hide(imageContainer, false);
-		DOMElementTweaker.removeClass(videoContainer, 'hidden');
-	}
-
-	function hideVideo(videoContainer) {
-		DOMElementTweaker.hide(videoContainer, false);
-		DOMElementTweaker.removeClass(imageContainer, 'hidden');
 	}
 
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
 		imageContainer = adSlot.querySelector('div:last-of-type');
-		slotSizes = getSlotSize(params);
 
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];

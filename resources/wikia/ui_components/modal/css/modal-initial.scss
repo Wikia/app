@@ -1,0 +1,6 @@
+// This is needed so initially modal is hidden by default
+// and is revealed when modal_default.scss is loaded
+
+.modal-blackout {
+	display: none;
+}

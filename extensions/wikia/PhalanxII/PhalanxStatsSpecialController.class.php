@@ -12,45 +12,124 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		wfProfileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-stats-title' ) );
 		$this->wg->Out->addBacklinkSubtitle( $this->phalanxTitle );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
-			return;
+			return false;
 		}
 
 		$par = $this->getPar();
+
+		// Look for paths with a wiki ID like /wiki/Special:PhalanxStats/wiki/125951
 		if ( strpos( $par, 'wiki' ) === 0 ) {
 			// show per-wiki stats
-			list ( , $wikiId ) = explode( "/", $par, 2 );
-			$this->blockWikia( $wikiId );
-		} else {
-			$blockId = $this->wg->Request->getInt( 'blockId', intval( $par ) );
-			if ( !empty( $blockId ) ) {
-				// show block stats
-				$this->blockStats( $blockId );
-			} else {
-				// show help page
-				$this->forward( 'PhalanxStatsSpecial', 'help' );
-			}
+			return $this->forward( 'PhalanxStatsSpecial', 'blockWiki' );
 		}
 
-		wfProfileOut( __METHOD__ );
+		// Look for paths with a block ID like /wiki/Special:PhalanxStats/123456
+		$blockId = $this->wg->Request->getInt( 'blockId', intval( $par ) );
+		if ( empty( $blockId ) ) {
+			// show help page
+			return $this->forward( 'PhalanxStatsSpecial', 'help' );
+		}
+
+		// show block stats
+		return $this->blockStats( $blockId );
 	}
 
+	/**
+	 * Show a list of blocks for a specific wiki
+	 *
+	 * @return bool
+	 */
+	public function blockWiki() {
+
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return false;
+		}
+	
+		$par = $this->getPar();
+		list ( , $wikiId ) = explode( '/', $par, 2 );
+
+		$wikiData = $this->getWikiData( $wikiId );
+		if ( empty( $wikiData ) ) {
+			return false;
+		}
+
+		// We have a valid id, change title to use it
+		$this->wg->Out->setPageTitle(
+			wfMessage( 'phalanx-stats-title' )->text() . ': ' . $wikiData['url']
+		);
+		$this->wg->Out->addBacklinkSubtitle( $this->title );
+
+		$this->getResponse()->setValues( [
+			'wikiData' => $wikiData,
+			'statsPager' => $this->buildWikiPager( $wikiId ),
+		] );
+
+		return true;
+	}
+
+	/**
+	 * Show information for a specific block ID
+	 *
+	 * @param $blockId
+	 * @return bool
+	 */
 	private function blockStats( $blockId ) {
 		$out = $this->getOutput();
 		$out->setPageTitle( $this->msg( 'phalanx-stats-title' )->text() . "#$blockId" );
 		$out->addBacklinkSubtitle( $this->title );
 
-		$data = Phalanx::newFromId( $blockId );
-
-		if ( !isset( $data["id"] ) ) {
+		$data = $this->getPhalanxData( $blockId );
+		if ( empty( $data ) ) {
 			$out->addWikiMsg( 'phalanx-stats-block-notfound', $blockId );
-			return false; // skip rendering
+			return false;
+		}
+
+		// pull these out of the array, so they don't get used in the top rows
+		$row = $data->toArray();
+		unset( $row['text'], $row['reason'], $row['comment'], $row['ip_hex'] );
+
+		$this->response->setValues( [
+			'firstRow' => $row,
+			'text' => $data['text'],
+			'reason' => $this->getParsedContent( $data, 'reason' ),
+			'comment' => $this->getParsedContent( $data, 'comment' ),
+			'editUrl' => $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ),
+			'blockId' => $blockId,
+			'statsPager' => $this->buildPager( $blockId )
+		] );
+
+		// SUS-269: Add JS for unblock button
+		$out->addModules( 'ext.wikia.Phalanx' );
+
+		return true;
+	}
+
+	/**
+	 * Show a help page if the expected wiki ID or block ID were not provided
+	 */
+	public function help() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
+		$this->setVal( 'action', $this->title->getFullURL() );
+	}
+
+	/**
+	 * @param $blockId
+	 * @return bool|Phalanx
+	 */
+	private function getPhalanxData( $blockId ) {
+		$data = Phalanx::newFromId( $blockId );
+		if ( empty( $data['id'] ) ) {
+			return false;
 		}
 
 		$data['author_id'] = User::newFromId( $data['author_id'] )->getName();
@@ -66,109 +145,59 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
 
-		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
-			/* hide email from non-privildged users */
+		if ( $data->isTypeEmail() && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
+			/* hide email from non-privileged users */
 			$data['text'] = $this->msg( 'phalanx-email-filter-hidden' )->escaped();
 		}
 
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
-
-		/* pull these out of the array, so they dont get used in the top rows */
-		$row = $data->toArray();
-		unset( $row['text'] );
-		unset( $row['reason'] );
-		unset( $row['comment'] );
-		unset( $row['ip_hex'] );
-
-		// parse block reason and comment
-		$parserOptions = ParserOptions::newFromContext( $this->getContext() );
-		$parser = ParserPool::get();
-
-		if ( $data['reason'] != '' ) {
-			$reason = $parser->parse( $data['reason'], $this->getTitle(), $parserOptions )->getText();
-		} else {
-			$reason = '';
-		}
-
-		if ( $data['comment'] != '' ) {
-			$comment = $parser->parse( $data['comment'], $this->getTitle(), $parserOptions )->getText();
-		} else {
-			$comment = '';
-		}
-
-		ParserPool::release( $parser );
-
-		$this->response->setValues( [
-			'firstRow' => $row,
-			'text' => $data['text'],
-			'reason' => $reason,
-			'comment' => $comment,
-			'editUrl' => $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ),
-			'blockId' => $blockId,
-		] );
-
-		/* match statistics */
-		$pager = new PhalanxStatsPager( $blockId );
-		$pager->setContext( $this->getContext() );
-		$this->setVal( 'statsPager',
-			$pager->getNavigationBar() .
-			$pager->getBody() .
-			$pager->getNavigationBar()
-		);
-
-		// SUS-269: Add JS for unblock button
-		$out->addModules( 'ext.wikia.Phalanx' );
+		return $data;
 	}
 
-	private function blockWikia( $wikiId ) {
-		$oWiki = WikiFactory::getWikiById( $wikiId );
-		if ( !is_object( $oWiki ) ) {
+	private function getParsedContent( $data, $key ) {
+		$content = '';
+
+		if ( $data[$key] != '' ) {
+			$parserOptions = ParserOptions::newFromContext( $this->getContext() );
+			$parser = ParserPool::get();
+
+			$content = $parser
+				->parse( $data[$key], $this->getTitle(), $parserOptions )
+				->getText();
+
+			ParserPool::release( $parser );
+		}
+
+		return $content;
+	}
+
+	private function getWikiData( $wikiId ) {
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+		if ( !is_object( $wiki ) ) {
 			return false;
 		}
 
-		// process block data for display
-		$data = array(
-			'wiki_id'         => $oWiki->city_id,
-			'sitename'        => WikiFactory::getVarValueByName( "wgSitename", $oWiki->city_id ),
-			'url'             => WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id ),
-			'last_timestamp'  => $this->wg->Lang->timeanddate( $oWiki->city_last_timestamp ),
-		);
-
-		// we have a valid id, change title to use it
-		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
-		$this->wg->Out->addBacklinkSubtitle( $this->title );
-
-		$headers = array(
-			wfMsg( 'phalanx-stats-table-wiki-id' ),
-			wfMsg( 'phalanx-stats-table-wiki-name' ),
-			wfMsg( 'phalanx-stats-table-wiki-url' ),
-			wfMsg( 'phalanx-stats-table-wiki-last-edited' ),
-		);
-
-		$tableAttribs = array(
-			'border' => 1,
-			'class' => 'wikitable',
-			'style' => "font-family:monospace;",
-		);
-
-		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
-		$this->setVal( 'table', $table );
-
-		$pager = new PhalanxStatsWikiaPager( $wikiId );
-		$this->setVal( 'statsPager',
-			$pager->getNavigationBar() .
-			$pager->getBody() .
-			$pager->getNavigationBar()
-		);
+		return [
+			'wiki_id' => $wiki->city_id,
+			'sitename' => WikiFactory::getVarValueByName( "wgSitename", $wiki->city_id ),
+			'url' => WikiFactory::getVarValueByName( "wgServer", $wiki->city_id ),
+			'last_timestamp' => $this->wg->Lang->timeanddate( $wiki->city_last_timestamp ),
+		];
 	}
 
-	public function help() {
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+	private function buildWikiPager( $wikiId ) {
+		$pager = new PhalanxStatsWikiaPager( $wikiId );
+		return $pager->getNavigationBar() .
+		       $pager->getBody() .
+		       $pager->getNavigationBar();
+	}
 
-		$this->setVal( 'action', $this->title->getFullURL() );
+	private function buildPager( $blockId ) {
+		$pager = new PhalanxStatsPager( $blockId );
+		$pager->setContext( $this->getContext() );
+		return $pager->getNavigationBar() .
+		       $pager->getBody() .
+		       $pager->getNavigationBar();
 	}
 }
