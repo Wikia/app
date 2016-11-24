@@ -50,7 +50,8 @@ define('ext.wikia.adEngine.video.googleIma', [
 		var progressBar = createProgressBar();
 
 		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden', 'video-ima-container');
+		videoAdContainer.classList.add('hidden');
+		videoAdContainer.classList.add('video-ima-container');
 		videoAdContainer.appendChild(progressBar);
 
 		return videoAdContainer;
@@ -82,19 +83,22 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
-	function nextAction(status) {
-		return status === 'paused' ? 'resume' : 'pause';
-	}
-
 	function addLayerOverVideo(ad) {
 		var layer = document.createElement('div');
+
 		layer.classList.add(videoLayerClassName);
 		layer.appendChild(closeButton.create(ad));
 		ad.container.appendChild(layer);
 
-		layer.addEventListener('click', function () {
-			ad.adsManager[nextAction(ad.status.get())]();
-		});
+        layer.addEventListener('click', function () {
+            if (ad && ad.adsManager && ad.status) {
+                if (ad.status.get() === 'paused') {
+                    ad.adsManager.resume();
+                } else {
+                    ad.adsManager.pause();
+                }
+            }
+        });
 	}
 
 	function createIma() {
