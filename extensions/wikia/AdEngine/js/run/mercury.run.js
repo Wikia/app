@@ -67,4 +67,15 @@ require([
 			prebid.call();
 		});
 	}
+
+	if (
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+	) {
+		mercuryListener.onEveryPageChange(function () {
+			rubiconFastlane.call();
+		});
+	}
+
+
 });

@@ -77,6 +77,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
+		rubiconLoaded = false,
 		sizeMap = {
 			'468x60': 1,
 			'728x90': 2,
@@ -149,6 +150,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function defineSlots(skin, onResponse) {
+		rubiconSlots = [];
 		Object.keys(slots).forEach(function (slotName) {
 			defineSingleSlot(slotName, slots[slotName], skin);
 		});
@@ -222,20 +224,25 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function call(skin, onResponse) {
-		var rubicon = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+		if (!rubiconLoaded) {
+			var rubicon = doc.createElement('script'),
+				node = doc.getElementsByTagName('script')[0];
 
-		win.rubicontag = win.rubicontag || {};
-		win.rubicontag.cmd = win.rubicontag.cmd || [];
+			win.rubicontag = win.rubicontag || {};
+			win.rubicontag.cmd = win.rubicontag.cmd || [];
 
-		rubicon.async = true;
-		rubicon.type = 'text/javascript';
-		rubicon.src = rubiconLibraryUrl;
+			rubicon.async = true;
+			rubicon.type = 'text/javascript';
+			rubicon.src = rubiconLibraryUrl;
 
-		node.parentNode.insertBefore(rubicon, node);
-		context = adContext.getContext();
-		configureSlots(skin);
-		response = false;
+			node.parentNode.insertBefore(rubicon, node);
+			context = adContext.getContext();
+			configureSlots(skin);
+			response = false;
+
+			rubiconLoaded = true;
+		}
+
 		defineSlots(skin, function () {
 			response = true;
 			onResponse();
