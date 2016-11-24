@@ -27,7 +27,7 @@
 				'wds-icons-reply',
 				'wds-icon wds-icon-small'
 			) ?>
-			<a class="rwe-page-header__nav-link" href="/d">Discuss</a>
+			<a class="rwe-page-header__nav-link" href="<?= $discussTabLink ?>">Discuss</a>
 		</li>
 
 		<li class="rwe-page-header__nav-element">
