@@ -224,6 +224,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function call(skin, onResponse) {
+		response = false;
+
 		if (!rubiconLoaded) {
 			var rubicon = doc.createElement('script'),
 				node = doc.getElementsByTagName('script')[0];

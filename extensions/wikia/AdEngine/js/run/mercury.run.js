@@ -76,6 +76,4 @@ require([
 			rubiconFastlane.call();
 		});
 	}
-
-
 });
