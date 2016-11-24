@@ -36,6 +36,7 @@ $wgAutoloadClasses['ImageReviewStatsCache'] =  $dir . 'ImageReviewStatsCache.cla
 $wgAutoloadClasses['ImageStateUpdater'] =  $dir . 'ImageStateUpdater.class.php';
 $wgAutoloadClasses['ImageCountGetter'] =  $dir . 'ImageCountGetter.class.php';
 $wgAutoloadClasses['AbandonedWorkResetter'] =  $dir . 'AbandonedWorkResetter.class.php';
+$wgAutoloadClasses['StatsDataGetter'] =  $dir . 'StatsDataGetter.class.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 

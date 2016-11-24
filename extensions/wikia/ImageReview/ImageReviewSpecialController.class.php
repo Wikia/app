@@ -58,6 +58,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	private $imageStateUpdater;
 	private $imageCountGetter;
+	private $statsDataGetter;
 
 	public function __construct() {
 		parent::__construct( 'ImageReview', 'imagereview', false /* $listed */ );
@@ -71,6 +72,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->helper = $this->getHelper();
 		$this->imageStateUpdater = new ImageStateUpdater();
 		$this->imageCountGetter = new ImageCountGetter();
+		$this->statsDataGetter = new StatsDataGetter();
 	}
 
 	protected function setGlobalDisplayVars() {
@@ -212,7 +214,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	protected function getStatsData( $startYear, $startMonth, $startDay,
 	                                 $endYear, $endMonth, $endDay ) {
 
-		return $this->helper->getStatsData(
+		return $this->statsDataGetter->getStatsData(
 			$startYear, $startMonth, $startDay,
 			$endYear, $endMonth, $endDay
 		);
