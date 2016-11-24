@@ -121,6 +121,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 					callback = function () {
 						self.status = googleImaAdStatus.create(self);
 						addLayerOverVideo(self);
+						volumeControlHandler.init(self);
 
 						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 						self.adDisplayContainer.initialize();
@@ -153,8 +154,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 			registerEvents(ima);
 			ima.isAdsManagerLoaded = true;
 		}
-
-		volumeControlHandler.init(ima, adContainer);
 
 		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
 		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);

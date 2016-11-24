@@ -7,11 +7,11 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.volumeControlHandler';
 
-	function init(ima, adContainer) {
+	function init(ima) {
 		var muteDiv,
 			speaker;
 
-		muteDiv = getMuteDiv(adContainer);
+		muteDiv = createMuteDiv(ima.container);
 		speaker = muteDiv.querySelector('.speaker');
 
 		muteDiv.addEventListener('click', function(e) {
@@ -29,19 +29,7 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 		});
 	}
 
-	function getMuteDiv(adContainer) {
-		var muteDiv;
-
-		muteDiv = adContainer.querySelector('.ima-mute-div');
-
-		if (!muteDiv) {
-			muteDiv = createMuteDiv(adContainer);
-		}
-
-		return muteDiv;
-	}
-
-	function createMuteDiv(adContainer) {
+	function createMuteDiv(container) {
 		var muteDiv,
 			speaker;
 
@@ -52,7 +40,7 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 		speaker.className = 'speaker';
 		speaker.appendChild(doc.createElement('span'));
 		muteDiv.appendChild(speaker);
-		adContainer.appendChild(muteDiv);
+		container.appendChild(muteDiv);
 		log('volume control is added', log.levels.info, logGroup);
 
 		return muteDiv;
