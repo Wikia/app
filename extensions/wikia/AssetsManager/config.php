@@ -2991,13 +2991,6 @@ $config['create_new_wiki_scss'] = [
 	],
 ];
 
-$config['rwe_page_header_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/RWEPageHeader/styles/RWEPageHeader.scss',
-	],
-];
-
 $config['contribution_prototype_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
@@ -3139,4 +3132,20 @@ $config['oasislight_bottom_js'] = [
 		# Lightbox
 		'//extensions/wikia/OasisLight/scripts/heavybox.js',
 	],
+];
+
+$config[ 'rwe_page_header_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/styles/index.scss'
+	]
+];
+
+$config[ 'rwe_page_header_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js'
+	]
 ];
