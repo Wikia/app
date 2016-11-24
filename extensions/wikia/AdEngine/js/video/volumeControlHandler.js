@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 			unmute(ima, speaker);
 			muteDiv.classList.remove('hidden');
 		});
-		ima.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+		ima.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
 			unmute(ima, speaker);
 			muteDiv.classList.add('hidden');
 		});

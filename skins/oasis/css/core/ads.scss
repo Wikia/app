@@ -102,6 +102,7 @@ $uap-video-animation-duration: 0.4s;
 	::-moz-focus-inner {border:0;}
 
 	bottom: 18px;
+	cursor: pointer;
 	position: absolute;
 	right: 10px;
 
@@ -554,4 +555,13 @@ body > a > img[src$="noad.gif"] {
 	top: 0;
 	width: 100%;
 	height: 100%;
+
+	.close-ad {
+		float: right;
+		margin: 40px;
+
+		width: 30px;
+		height: 30px;
+		background-image: url('/skins/oasis/images/player/collapse_dark.svg');
+	}
 }

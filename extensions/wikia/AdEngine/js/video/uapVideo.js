@@ -68,7 +68,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
 				uapVideoAnimation.showVideo(video, imageContainer, adSlot, params, getSlotWidth);
 			});
-			video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+
+			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
 				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
 				video.reload();
 			});
