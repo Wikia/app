@@ -96,54 +96,54 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-.wikia-ad .ima-mute-div {
+.bfaa-template .ima-mute-div, .bfab-template .ima-mute-div {
 	/* remove Firefox's dotted outline on buttons and links */
 	:focus {outline:none;}
 	::-moz-focus-inner {border:0;}
 
-	position: absolute;
 	bottom: 18px;
+	position: absolute;
 	right: 10px;
 
 	.speaker {
-		height: 30px;
-		width: 30px;
-		position: relative;
-		overflow: hidden;
 		display: inline-block;
+		height: 30px;
+		overflow: hidden;
+		position: relative;
+		width: 30px;
 
 		span {
-			display: block;
-			width: 8px;
-			height: 8px;
 			background: #000;
+			display: block;
+			height: 8px;
 			margin: 11px 0 0 2px;
+			width: 8px;
 
 			&:after {
-				content: '';
-				position: absolute;
-				width: 0;
-				height: 0;
-				border-style: solid;
 				border-color: transparent #000 transparent transparent;
+				border-style: solid;
 				border-width: 10px 14px 10px 15px;
+				content: '';
+				height: 0;
 				left: -13px;
+				position: absolute;
 				top: 5px;
+				width: 0;
 			}
 
 			&:before {
-				transform: rotate(45deg);
-				border-radius: 0 50px 0 0;
-				content: '';
-				position: absolute;
-				width: 5px;
-				height: 5px;
-				border-style: double;
 				border-color: #000;
+				border-radius: 0 50px 0 0;
+				border-style: double;
 				border-width: 7px 7px 0 0;
+				content: '';
+				height: 5px;
 				left: 18px;
+				position: absolute;
 				top: 9px;
+				transform: rotate(45deg);
 				transition: all 0.2s ease-out;
+				width: 5px;
 			}
 		}
 
@@ -155,8 +155,8 @@ $uap-video-animation-duration: 0.4s;
 
 		&.mute {
 			span:before {
-				transform: scale(.5) translate(-15px, 0) rotate(36deg);
 				opacity: 0;
+				transform: scale(.5) translate(-15px, 0) rotate(36deg);
 			}
 		}
 	}
