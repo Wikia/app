@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 		log('unmute', log.levels.info, logGroup);
 		speaker.classList.remove('mute');
 		ima.adMuted = false;
-		ima.adsManager.setVolume(1);
+		ima.adsManager.setVolume(0.75);
 	}
 
 	return {
