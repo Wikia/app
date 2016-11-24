@@ -6,11 +6,6 @@
 		<? endif; ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
 	</nav>
-<!--TODO: show it only if extension enabled -->
-	<div class="RWEPageHeader">
-		<?= $app->renderView( 'RWEPageHeader', 'index') ?>
-	</div>
-<!--TODO: end -->
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
 			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>

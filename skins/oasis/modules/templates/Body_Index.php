@@ -37,6 +37,11 @@
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
+		<!--TODO: show it only if extension enabled -->
+		<div class="RWEPageHeader">
+			<?= $app->renderView( 'RWEPageHeader', 'index') ?>
+		</div>
+
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
 				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
