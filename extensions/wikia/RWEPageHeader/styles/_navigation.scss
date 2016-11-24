@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'skins/shared/mixins/flexbox';
 
+.rwe-page-header {
+	padding-bottom: $content-spacing-medium;
+}
+
 .rwe-page-header__chevron {
 	color: $color-page-border;
 	margin-left: $content-spacing-small;
