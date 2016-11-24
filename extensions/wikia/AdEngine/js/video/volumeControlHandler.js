@@ -30,27 +30,35 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 	}
 
 	function getMuteDiv(adContainer) {
-		var muteDiv,
-			speaker;
+		var muteDiv;
 
 		muteDiv = adContainer.querySelector('.ima-mute-div');
 
 		if (!muteDiv) {
-			muteDiv = doc.createElement('div');
-			muteDiv.className = 'ima-mute-div';
-			muteDiv.classList.add('hidden');
-			speaker = doc.createElement('a');
-			speaker.className = 'speaker';
-			speaker.appendChild(doc.createElement('span'));
-			muteDiv.appendChild(speaker);
-			adContainer.appendChild(muteDiv);
-			log('volume control is added', log.levels.info, logGroup);
+			muteDiv = createMuteDiv(adContainer);
 		}
 
 		return muteDiv;
 	}
 
-	function onAdMuteClick(ima, speaker){
+	function createMuteDiv(adContainer) {
+		var muteDiv,
+			speaker;
+
+		muteDiv = doc.createElement('div');
+		muteDiv.className = 'ima-mute-div';
+		muteDiv.classList.add('hidden');
+		speaker = doc.createElement('a');
+		speaker.className = 'speaker';
+		speaker.appendChild(doc.createElement('span'));
+		muteDiv.appendChild(speaker);
+		adContainer.appendChild(muteDiv);
+		log('volume control is added', log.levels.info, logGroup);
+
+		return muteDiv;
+	}
+
+	function onAdMuteClick(ima, speaker) {
 		if (ima.adMuted) {
 			unmute(ima, speaker);
 		} else {
