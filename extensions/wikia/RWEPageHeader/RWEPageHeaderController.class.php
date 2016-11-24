@@ -4,7 +4,6 @@ class RWEPageHeaderController extends WikiaController {
 
 	public function index() {
 		$this->searchModel = $this->getSearchData();
-//		ddd($this->searchModel);
 	}
 
 	private function getSearchData() {
