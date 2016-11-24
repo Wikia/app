@@ -1,7 +1,11 @@
 #searchInputFormRWE {
   width: 200px;
 
-  &.wds-search-is-active {
+  .wds-search-is-active {
     width: 400px;
+
+    .wds-global-navigation__search-suggestions {
+      z-index: 2;
+    }
   }
 }

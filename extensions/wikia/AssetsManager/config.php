@@ -3147,5 +3147,6 @@ $config['RWEPageHeader_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/RWEPageHeader/scripts/search.js',
+		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js',
 	]
 ];
