@@ -16,7 +16,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			$(this).removeClass('rwe-page-header--active');
 		});
 
-		$('.rwe-page-header-nav__link').on('click', function (e) {
+		$('.rwe-page-header-nav__link').on('click', function () {
 			track({
 				label: $(this).data().tracking
 			});
