@@ -2,11 +2,15 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
+use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Auth\CookieHelper;
+use Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class UserTest extends WikiaBaseTest {
 
@@ -19,6 +23,8 @@ class UserTest extends WikiaBaseTest {
 	protected $userPreferenceServiceMock;
 	protected $userAttributeServiceMock;
 	protected $userAttributesMock;
+	protected $userPermissionsMock;
+	protected $heliosClientMock;
 
 	/** @var User */
 	protected $testUser;
@@ -31,7 +37,7 @@ class UserTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->setupAndInjectUserPreferenceServiceMock();
+		$this->setupAndInjectServiceMocks();
 
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
@@ -40,7 +46,7 @@ class UserTest extends WikiaBaseTest {
 		Injector::setInjector( self::$currentInjector );
 	}
 
-	private function setupAndInjectUserPreferenceServiceMock() {
+	private function setupAndInjectServiceMocks() {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
 
 		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
@@ -53,12 +59,20 @@ class UserTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMock();
 
+		$this->userPermissionsMock = $this->getMock( PermissionsService::class );
+
+		$this->heliosClientMock = $this->getMock( HeliosClient::class,
+			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken' ] );
+
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
 			->bind( AttributeService::class )->to( $this->userAttributeServiceMock )
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
 			->bind( UserAttributes::class )->to( $this->userAttributesMock )
+			->bind( HeliosClient::class )->to( $this->heliosClientMock )
+			->bind( CookieHelper::class )->toClass( HeliosCookieHelper::class )
+			->bind( PermissionsService::class )->to( $this->userPermissionsMock )
 			->build();
 		Injector::setInjector( $container );
 	}
@@ -198,5 +212,48 @@ class UserTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableUsernameLookup', true );
 		$this->mockStaticMethod( 'User', 'whoIs', false );
 		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
+	}
+
+	public function testNewFromTokenAuthorizationGranted() {
+		$webRequestMock = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$userInfo = new StdClass;
+		$userInfo->user_id = 1;
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $userInfo );
+
+		$userMock = $this->getMockBuilder( 'User' )
+			->setMethods( [ 'getGlobalFlag' ] )
+			->getMock();
+		$userMock->expects( $this->once() )
+			->method( 'getGlobalFlag' )
+			->with( $this->equalTo( 'disabled' ) )
+			->will( $this->returnValue( false ) );
+
+		$this->mockClass( 'User', $userMock );
+
+		$this->assertEquals( User::newFromToken( $webRequestMock ), User::newFromId( 1 ) );
+	}
+
+	public function testNewFromTokenAuthorizationDeclined() {
+		$webRequestMock = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$userInfo = new StdClass;
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $userInfo );
+
+		$this->assertEquals( User::newFromToken( $webRequestMock ), new User );
 	}
 }

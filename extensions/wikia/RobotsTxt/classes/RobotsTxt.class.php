@@ -91,8 +91,8 @@ class RobotsTxt {
 			return array_merge(
 				[ 'User-agent: *' ],
 				$allowSection,
-				$disallowSection,
 				$noIndexSection,
+				$disallowSection,
 				[ '' ]
 			);
 		}

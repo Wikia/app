@@ -158,12 +158,11 @@ class WallHelper {
 				$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 			} else {
 			// child
+				/* @var WallMessage $parent */
 				$parent->load();
 
 				if ( !in_array( true, [ $parent->isRemove(), $parent->isAdminDelete() ] ) ) {
-					$title = wfMessage( 'wall-no-title' )->escaped(); // in case metadata does not include title field
-					if ( isset( $parent->mMetadata['title'] ) ) $title = $wmessage->getMetaTitle();
-					$this->mapParentData( $item, $parent, $title );
+					$this->mapParentData( $item, $parent );
 					$res['title'] = 'message-wall-thread-#' . $parent->getTitle()->getArticleID();
 					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 				} else {
@@ -186,13 +185,11 @@ class WallHelper {
 	 * @brief Copies parent's informations to child item
 	 *
 	 * @param array $item a referance to an array with wall comment informations
-	 * @param ArticleComment $parent parent comment
-	 * @param Title $title title object instance
+	 * @param WallMessage $parent parent comment
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-
-	private function mapParentData( &$item, $parent, $title ) {
+	private function mapParentData( Array &$item, WallMessage $parent ) {
 		wfProfileIn( __METHOD__ );
 
 		$metaTitle = $parent->getMetaTitle();
@@ -288,20 +285,19 @@ class WallHelper {
 	/**
 	 * @brief Gets wall comments data from memc/db
 	 *
-	 * @param array $comments an array with WallMessage instances
+	 * @param WallMessage[] $comments an array with WallMessage instances
 	 *
 	 * @return array
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getCommentsData( $comments ) {
+	private function getCommentsData( Array $comments ) {
 		wfProfileIn( __METHOD__ );
 
 		$timeNow = time();
 		$items = [ ];
 		$i = 0;
 		foreach ( $comments as $wm ) {
-			/** @var WallMessage $wm */
-			$data = $wm->getData( false, null, 30 );
+			$data = $wm->getData();
 
 			if ( !( $data['author'] instanceof User ) ) {
 				// bugId:22820
@@ -315,9 +311,9 @@ class WallHelper {
 
 			$items[$i]['avatar'] = $data['avatarSmall'];
 			$items[$i]['user-profile-url'] = $data['userurl'];
-			$user = User::newFromName( $data['author']->getName() );
+			$user = $data['author'];
 
-			if ( $user ) {
+			if ( $user instanceof User ) {
 				$items[$i]['real-name'] = $user->getName();
 				if ( !empty( F::app()->wg->EnableWallExt ) ) {
 					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
@@ -330,8 +326,7 @@ class WallHelper {
 			}
 
 			$items[$i]['author'] = $data['username'];
-			$strippedText = $this->strip_wikitext( $data['rawtext'], $wm->getTitle() );
-			$items[$i]['wall-comment'] = $this->shortenText( $strippedText ) . '&nbsp;';
+			$items[$i]['wall-comment'] = $this->getMessageSnippet( $wm ) . '&nbsp;';
 			if ( User::isIP( $data['username'] ) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $data['username'];
 				$items[$i]['real-name'] = wfMessage( 'oasis-anon-user' )->escaped();
@@ -395,14 +390,6 @@ class WallHelper {
 
 	}
 
-	public function getParsedText( $rawtext, $title ) {
-		global $wgParser, $wgOut;
-		global $wgEnableParserCache;
-		$wgEnableParserCache = false;
-
-		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions() )->getText();
-	}
-
 	public function isDbkeyFromWall( $dbkey ) {
 		$lookFor = explode( '/@' , $dbkey );
 		if ( count( $lookFor ) > 1 ) {
@@ -411,35 +398,18 @@ class WallHelper {
 		return false;
 	}
 
-	public function strip_wikitext( $text, Title $title = null ) {
-		$app = F::app();
+	/**
+	 * Call a lighweight parser to get a snippet of wall message
+	 *
+	 * @see SUS-1135
+	 *
+	 * @param WallMessage $wallMessage
+	 * @return string
+	 */
+	public function getMessageSnippet( WallMessage $wallMessage ) {
+		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
 
-		// use memcached on top of Parser
-		$textHash = md5( $text );
-		$key = wfmemcKey( __METHOD__, $textHash );
-		$cachedText = $app->wg->memc->get( $key );
-		if ( !empty( $cachedText ) ) {
-			return $cachedText;
-		}
-
-
-		$text = str_replace( '*', '&asterix;', $text );
-		if ( empty( $title ) ) {
-			$title = $app->wg->Title;
-		}
-
-		// local parser to fix the issue fb#17907
-		$text = ParserPool::parse( $text, $title, $app->wg->Out->parserOptions() )->getText();
-		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
-		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
-		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
-		// and displayed in... an ugly way.
-		$text = trim( strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) ) );
-		$text = str_replace( '&asterix;', '*', $text );
-
-		$app->wg->memc->set( $key, $text, self::PARSER_CACHE_TTL );
-
-		return $text;
+		return $this->shortenText( $formatted );
 	}
 
 	/**

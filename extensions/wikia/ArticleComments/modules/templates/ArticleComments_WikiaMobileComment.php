@@ -9,7 +9,7 @@
 			<img class=staff src=<?= wfReplaceImageServer( wfGetSignatureUrl() ) ?> alt=@fandom/></span>
 			<? endif ;?>
 		</div>
-		<div class=txt><?= $comment['text'] ?></div>
+		<div class=txt><?= $commentContent ?></div>
 		<div class=date><?= $comment['timestamp'] ;?></div>
 	</blockquote>
 <?php

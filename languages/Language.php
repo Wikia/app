@@ -137,18 +137,30 @@ class Language {
 
 	/**
 	 * Get a cached language object for a given language code
+	 * !!!Wikia changed - entire method!!!
+	 *
 	 * @param $code String
+	 * @param $cityId int - used only in global title to force rebuilding cache for other wiki
 	 * @return Language
 	 */
-	static function factory( $code ) {
-		if ( !isset( self::$mLangObjCache[$code] ) ) {
+	static function factory( $code, $cityId = null ) {
+		global $wgCityId;
+		if ( is_null( $cityId )) {
+			$cityId = $wgCityId;
+		}
+
+		if ( !isset( self::$mLangObjCache[$code][$cityId] ) ) {
 			if ( count( self::$mLangObjCache ) > 10 ) {
 				// Don't keep a billion objects around, that's stupid.
-				self::$mLangObjCache = array();
+				self::$mLangObjCache = [];
 			}
-			self::$mLangObjCache[$code] = self::newFromCode( $code );
+			if ( !isset( self::$mLangObjCache[$code] ) ) {
+				self::$mLangObjCache[$code] = [];
+			}
+
+			self::$mLangObjCache[$code][$cityId] = self::newFromCode( $code );
 		}
-		return self::$mLangObjCache[$code];
+		return self::$mLangObjCache[$code][$cityId];
 	}
 
 	/**

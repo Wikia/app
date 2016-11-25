@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.uapVideoAd',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	uapContext,
 	btfBlocker,
 	slotTweaker,
-	uapVideoAd,
+	uapVideo,
 	doc,
 	log,
 	win,
@@ -22,21 +22,22 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 ) {
 	'use strict';
 
-	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var adSlot,
+		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
+		imageContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
 		],
 		wrapper;
 
-
 	function updateNavBar(height) {
 		var position = win.scrollY || win.pageYOffset;
 
-		log(['updateNavBar', height, position], 'info', logGroup);
+		log(['updateNavBar', height, position], log.levels.info, logGroup);
 
 		if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 			nav.classList.add('bfaa-pinned');
@@ -46,17 +47,17 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	}
 
 	function runOnReady(iframe, params) {
-		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
-			adContainer = doc.getElementById(params.slotName);
+		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
+		doc.body.classList.add('uap-skin');
 
-		log('desktopHandler::show', 'info', logGroup);
+		log('desktopHandler::show', log.levels.info, logGroup);
 
-		updateNavBar(adContainer.offsetHeight);
+		updateNavBar(adSlot.offsetHeight);
 		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(adContainer.offsetHeight);
+			updateNavBar(adSlot.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {
@@ -72,25 +73,22 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function() {
-				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
-					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
-
-				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
+		if (uapVideo.isEnabled(params)) {
+			uapVideo.init()
+				.then(function () {
+					uapVideo.loadVideoAd(params, adSlot, imageContainer);
 				});
-			});
 		}
 	}
 
 	function show(params) {
+		adSlot = doc.getElementById(params.slotName);
+		imageContainer = adSlot.querySelector('div:last-of-type');
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
 
-		log(['show', page, wrapper, params], 'info', logGroup);
+		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
@@ -99,7 +97,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], 'info', logGroup);
+		log(['show', params.uap], log.levels.info, logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);

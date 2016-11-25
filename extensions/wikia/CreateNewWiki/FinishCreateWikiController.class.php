@@ -62,7 +62,7 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgOut, $wgEnableNjordExt, $wgSitename;
+		global $wgUser, $wgOut;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -70,8 +70,6 @@ class FinishCreateWikiController extends WikiaController {
 
 		$this->skipRendering();
 		$this->LoadState();
-
-		$mainPageTitleText = $wgSitename;
 
 		// SUS-563 debug
 		$mainPageMessageContent = wfMsgForContent( 'mainpage' );
@@ -109,19 +107,16 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText( $mainPageTitleText );
+			global $wgSitename;
+
+			$mainTitle = Title::newFromText( $wgSitename );
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID( $mainId );
 
 			if ( !empty( $mainArticle ) ) {
-				if ( !empty( $wgEnableNjordExt ) ) {
-					$newMainPageText = $this->getMoMMainPage( $mainArticle );
-				} else {
-					$newMainPageText = $this->getClassicMainPage( $mainArticle );
-				}
+				$newMainPageText = $this->getClassicMainPage( $mainArticle );
 
 				$mainArticle->doEdit( $newMainPageText, '' );
-				$this->initHeroModule( $mainPageTitleText );
 			}
 		}
 
@@ -138,29 +133,6 @@ class FinishCreateWikiController extends WikiaController {
 		 * @see SUS-1167
 		 */
 		$wgOut->redirect( '/?wiki-welcome=1' );
-	}
-
-	/**
-	 * initialize hero module on modular main page
-	 * @param $mainPageTitle string
-	 */
-	private function initHeroModule( $mainPageTitle ) {
-		global $wgSitename;
-
-		$wikiDataModel = new WikiDataModel( $mainPageTitle );
-		$wikiDataModel->title = $wgSitename;
-		$wikiDataModel->description = $this->params['wikiDescription'];
-		$wikiDataModel->storeInProps();
-		$wikiDataModel->storeInPage();
-	}
-
-	/**
-	 * Gets markup for empty Modular Main Page
-	 * @returns string - main page article wiki text
-	 */
-	private function getMoMMainPage( $mainPageTitle ) {
-		return 	'<mainpage-leftcolumn-start /><mainpage-endcolumn />
-				<mainpage-rightcolumn-start /><mainpage-endcolumn />';
 	}
 
 	/**

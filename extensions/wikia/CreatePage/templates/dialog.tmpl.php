@@ -1,5 +1,5 @@
 <div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" >
-	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog(true); return false;">
+	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog('page-create-title-modal'); return false;">
 		<div id="CreatePageContainer">
 			<div id="CreatePageDialogHeader">
 				<?= wfMsg( 'createpage-dialog-message1' ) ?>

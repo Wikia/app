@@ -11,16 +11,16 @@
 @import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/typography";
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 @import "ChatColor";
 @import "ChatModal";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body {
 	background: $color-body;
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
 	height: 100%;
 	margin: 0;
@@ -154,21 +154,21 @@ a {
 
 		&:after {
 			content: '';
-			height: 15px;
+			height: 18px;
 			position: absolute;
 			right: 5px;
 			top: 5px;
-			width: 15px;
+			width: 18px;
 		}
 	}
 	&.chat-mod .username:after, &.staff .username:after {
-		@include sprite-Chat-base;
+
 	}
 	&.chat-mod .username:after {
-		@include sprite-Chat('icon-chat_mod');
+		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-admin.svg'); /* inline */
 	}
 	&.staff .username:after {
-		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
+		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-staff.svg'); /* inline */
 	}
 	.details {
 		font-size: 11px;
