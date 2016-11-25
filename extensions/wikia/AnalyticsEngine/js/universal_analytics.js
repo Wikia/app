@@ -314,31 +314,6 @@
 		['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
 	);
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	/**
-	 * Get unconfirmed email AbTest user type
-	 * @returns {string}
-	 */
-	function getUnconfirmedEmailUserType() {
-		if (!window.wgUserName) {
-			return 'anon';
-		} else {
-			switch (window.wgNotConfirmedEmail) {
-				case '1':
-					return 'unconfirmed';
-				case '2':
-					return 'confirmed';
-				default:
-					return 'old user';
-			}
-		}
-	}
-	/*
-	 * end remove
-	 */
-
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
 		['set', 'dimension8', window.wikiaPageType],                            // PageType
@@ -357,14 +332,6 @@
 		['set', 'dimension25', String(window.wgNamespaceNumber)],               // Namespace Number
 		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)]          // SEO Testing bucket
 	);
-
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	_gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
-	/*
-	 * end remove
-	 */
 
 	/**
 	 * Checks if Optimizely object and its crucial data attributes are available
@@ -453,8 +420,9 @@
 	// Unleash
 	_gaWikiaPush(['send', 'pageview']);
 
+	// łapimy event ktorzy jest rzucony przez zewnętrznych providerów
+	// dzieje się to tylko kiedy pf albo sp działają
 	if (window.ads && window.ads.context.opts.showAds) {
-
 		listenerSettings.map(function (listenerSetting) {
 			document.addEventListener(listenerSetting.eventName, function () {
 				trackBlocking(listenerSetting.detectorSettings, listenerSetting.value);
@@ -552,6 +520,7 @@
 
 			args.unshift('ads.send', 'event');
 			try {
+				// ["ads.send", "event", category, action, opt_label, opt_value]
 				window.ga.apply(window, args);
 			} catch (e) {}
 		}

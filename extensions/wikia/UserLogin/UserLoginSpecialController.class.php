@@ -11,16 +11,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
 
-	/*
-	 * Remove when SOC-217 ABTest is finished
-	 */
-	const NOT_CONFIRMED_LOGIN_OPTION_NAME = 'NotConfirmedLogin';
-	const NOT_CONFIRMED_LOGIN_ALLOWED = '1';
-	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = '2';
-	/*
-	 * end remove
-	 */
-
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
 
@@ -438,15 +428,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
-					/*
-					 * Remove when SOC-217 ABTest is finished
-					 */
-					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
-					/*
-					 * end remove
-					 */
-				) {
+				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );

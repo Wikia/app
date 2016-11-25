@@ -49,15 +49,8 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
-
-		/*
-		 * Remove when SOC-217 ABTest is finished
-		 */
-		$vars['wgNotConfirmedEmail'] = $user->getGlobalPreference( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
-		/*
-		 * End remove
-		 */
 	}
+
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
 	}

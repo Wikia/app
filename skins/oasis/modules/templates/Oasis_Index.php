@@ -22,6 +22,31 @@
 	normally added. See Skin::setupUserCss()
 	*/
 ?>
+
+<!-- One tag - Tealium IQ: start -->
+<script type="text/javascript">
+	cookieExists = function (cookieName) {
+		return document.cookie.indexOf(cookieName) > -1;
+	};
+
+	var utag_data = {
+		sampleRate: (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+		loginStatus: !!window.wgUserName ? 'user' : 'anon'
+	};
+
+	console.log("diana");
+</script>
+
+<!-- Loading script asynchronously -->
+<script type="text/javascript">
+	(function(a,b,c,d){
+		a='//tags.tiqcdn.com/utag/wikia/main/dev/utag.js';
+		b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+		a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+	})();
+</script>
+<!-- One tag - Tealium IQ: end -->
+
 <? if ( !empty( $wg->OasisLastCssScripts ) ): ?>
 	<? foreach( $wg->OasisLastCssScripts as $src ): ?>
 		<link rel="stylesheet" href="<?= $src ?>">
