@@ -6,11 +6,18 @@
 	padding-bottom: $content-spacing-medium;
 }
 
-.rwe-page-header-nav {
+.rwe-page-header-nav-wrapper {
 	@include flexbox();
 	@include justify-content(center);
 
 	border-bottom: 1px solid $color-page-border;
+}
+
+.rwe-page-header-nav {
+	@include display-inline-flex();
+	@include justify-content(center);
+
+	position: relative;
 }
 
 // elements
@@ -46,7 +53,7 @@
 	color: $color-page-border;
 
 	&:last-child .rwe-page-header-nav__link {
-		border-right: none;
+		border-right: 0;
 	}
 }
 
