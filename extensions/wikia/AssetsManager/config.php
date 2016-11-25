@@ -159,7 +159,7 @@ $config['recirculation_liftigniter_tracker'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',	
+		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 
@@ -396,6 +396,8 @@ $config['oasis_jquery'] = [
 
 		// rail
 		'#group_rail_js',
+
+		'#group_page_share_js',
 	],
 ];
 
