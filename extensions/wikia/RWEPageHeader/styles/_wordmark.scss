@@ -1,0 +1,27 @@
+@import 'variables';
+@import 'skins/shared/mixins/calc';
+
+// blocks
+
+.rwe-page-header-wordmark {
+	position: relative;
+	margin: -$content-spacing-great auto $content-spacing-small-plus auto;
+	width: 274px;
+}
+
+// elements
+.rwe-page-haader-wordmark__shadow {
+	display: block;
+	box-shadow: 0 0 10px rgba(26, 26, 26, .6);
+	height: 36px;
+	position: absolute;
+	width: 100%;
+	z-index: 200;
+}
+
+.rwe-page-header-wordmark .wordmark {
+	background-color: $color-page;
+	padding: $content-spacing-medium $content-spacing-medium 0 $content-spacing-medium;
+	position: relative;
+	z-index: 300;
+}

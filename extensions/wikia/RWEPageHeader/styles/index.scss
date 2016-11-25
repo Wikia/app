@@ -1,5 +1,16 @@
 @import 'navigation';
+@import 'variables';
+@import 'wordmark';
 
 .WikiaPageHeader .header-container {
 	border: none;
+}
+
+.WikiaPage {
+	border-top: $content-spacing-large solid $color-buttons;
+	margin-top: $content-spacing-medium;
+}
+
+.WikiHeader {
+	display: none;
 }
