@@ -4,10 +4,7 @@
 
 .rwe-page-header-nav__dropdown {
 	display: none;
-	margin-top: -$content-spacing-medium;
-	position: absolute;
-	z-index: 99;
-	left: 50%;
+	margin-top: 13px;
 
 	.rwe-page-header-nav__dropdown-first-level {
 		@include display-inline-flex();
@@ -15,7 +12,6 @@
 		box-shadow: 0 $content-spacing-small $content-spacing-medium-minus 0 rgba(26, 26, 26, .3);
 		margin: 0 auto $content-spacing-medium-minus;
 		position: relative;
-		left: -50%;
 
 		.rwe-page-header-nav__dropdown-first-level-item {
 			box-sizing: border-box;
