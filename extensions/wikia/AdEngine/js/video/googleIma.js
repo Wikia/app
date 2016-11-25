@@ -1,13 +1,17 @@
 /*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
+	'ext.wikia.adEngine.video.googleImaAdStatus',
+	'ext.wikia.adEngine.video.player.ui.closeButton',
+	'ext.wikia.adEngine.video.volumeControlHandler',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
+		videoLayerClassName = 'overVideoLayer',
 		videoMock = doc.createElement('video');
 
 	function init() {
@@ -30,9 +34,26 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return adsRequest;
 	}
 
+	function createProgressBar() {
+		var progressBar = doc.createElement('div'),
+			currentTime = doc.createElement('div');
+
+		progressBar.classList.add('progress-bar');
+		currentTime.classList.add('current-time');
+
+		progressBar.appendChild(currentTime);
+
+		return progressBar;
+	}
+
 	function prepareVideoAdContainer(videoAdContainer) {
+		var progressBar = createProgressBar();
+
 		videoAdContainer.style.position = 'relative';
 		videoAdContainer.classList.add('hidden');
+		videoAdContainer.classList.add('video-ima-container');
+		videoAdContainer.appendChild(progressBar);
+
 		return videoAdContainer;
 	}
 
@@ -62,14 +83,35 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
+	function addLayerOverVideo(ad) {
+		var layer = document.createElement('div');
+
+		layer.classList.add(videoLayerClassName);
+		layer.appendChild(closeButton.create(ad));
+		ad.container.appendChild(layer);
+
+		layer.addEventListener('click', function () {
+			if (ad && ad.adsManager && ad.status) {
+				if (ad.status.get() === 'paused') {
+					ad.adsManager.resume();
+				} else {
+					ad.adsManager.pause();
+				}
+			}
+		});
+	}
+
 	function createIma() {
 		return {
+			status: null,
 			adDisplayContainer: null,
+			adMuted: false,
 			adsLoader: null,
 			adsManager: null,
 			container: null,
 			events: {},
 			isAdsManagerLoaded: false,
+			layerOverVideo: null,
 			addEventListener: function (eventName, callback) {
 				this.events[eventName] = this.events[eventName] || [];
 				this.events[eventName].push(callback);
@@ -77,6 +119,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 			playVideo: function (width, height) {
 				var self = this,
 					callback = function () {
+						self.status = googleImaAdStatus.create(self);
+						addLayerOverVideo(self);
+						volumeControlHandler.init(self);
+
 						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
@@ -102,6 +148,8 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
+			adsRenderingSettings.enablePreloading = true;
+			adsRenderingSettings.uiElements = [];
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
 			registerEvents(ima);
 			ima.isAdsManagerLoaded = true;

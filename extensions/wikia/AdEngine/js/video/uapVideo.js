@@ -1,4 +1,4 @@
-/* global define */
+/*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
@@ -19,6 +19,30 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return slot.clientWidth;
 	}
 
+	function updateProgressBar(ima) {
+		var currentTime = ima.container.querySelector('.progress-bar > .current-time'),
+			remainingTime = ima.adsManager.getRemainingTime();
+
+		if (remainingTime) {
+			currentTime.style.transitionDuration = remainingTime + 's';
+			currentTime.style.width = '100%';
+		} else {
+			currentTime.style.width = '0';
+		}
+	}
+
+	function addProgressListeners(video) {
+		video.addEventListener('start', updateProgressBar);
+		video.addEventListener('resume', updateProgressBar);
+		video.addEventListener('complete', updateProgressBar);
+		video.addEventListener('pause', function (ima) {
+			var progressBar = ima.container.querySelector('.progress-bar'),
+				currentTime = progressBar.querySelector('.current-time');
+
+			currentTime.style.width = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
+		});
+	}
+
 	function loadVideoAd(params, adSlot, imageContainer, getSlotWidth) {
 		getSlotWidth = getSlotWidth || defaultGetSlotWidth;
 
@@ -34,6 +58,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					passback: 'vuap'
 				}
 			);
+			addProgressListeners(video);
 
 			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(adSlot);
@@ -43,7 +68,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
 				uapVideoAnimation.showVideo(video, imageContainer, adSlot, params, getSlotWidth);
 			});
-			video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+
+			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
 				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
 				video.reload();
 			});
