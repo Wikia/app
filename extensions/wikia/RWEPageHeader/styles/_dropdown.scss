@@ -3,21 +3,25 @@
 @import 'skins/shared/mixins/flexbox';
 
 .rwe-page-header__dropdown {
-	overflow: hidden;
+	display: none;
+	margin-top: -$content-spacing-medium;
+	position: absolute;
+	z-index: 99;
+	left: 50%;
 
-	.first-level {
-		@include flexbox();
-		background-color: $color-page;
-		box-shadow: 0 0 $content-spacing-medium-minus 0 rgba(26,26,26,.2);
-		margin: auto;
-		margin-bottom: $content-spacing-medium-minus;
-		width: 80%;
+	.rwe-page-header__dropdown-first-level {
+		@include display-inline-flex();
+		background-color: $background-color;
+		box-shadow: 0 $content-spacing-small $content-spacing-medium-minus 0 rgba(26, 26, 26, .3);
+		margin: 0 auto $content-spacing-medium-minus;
+		position: relative;
+		left: -50%;
 
-		.first-level-item {
+		.rwe-page-header__dropdown-first-level-item {
 			box-sizing: border-box;
 			float: left;
 			margin: $content-spacing-regular 0;
-			min-width: 25%;
+			width: $rwe-dropdown-column-width;
 
 			&:not(:last-child) {
 				border-right: 1px solid $color-page-border;
@@ -51,7 +55,7 @@
 		}
 	}
 
-	.second-level:last-child > a {
+	.rwe-page-header__dropdown-second-level:last-child > a {
 		padding-bottom: $content-spacing-regular;
 	}
 }

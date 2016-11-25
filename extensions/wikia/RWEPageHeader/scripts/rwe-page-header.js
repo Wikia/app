@@ -10,12 +10,24 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	};
 
 	$(function () {
-		$('.rwe-page-header--dropdown').hover(function () {
-			$(this).parent('.rwe-page-header__nav-element')
-				.addClass('rwe-page-header__nav-element--active');
+		$('.rwe-page-header__nav-element-dropdown').hover(function () {
+			$(this).addClass('rwe-page-header__nav-element--active');
+			$('.rwe-page-header__dropdown[data-category=' +
+				$(this).children('.rwe-page-header__nav-link').data('tracking') + ']').show();
 		}, function () {
-			$(this).parent('.rwe-page-header__nav-element')
+			$(this).removeClass('rwe-page-header__nav-element--active');
+			$('.rwe-page-header__dropdown[data-category=' +
+				$(this).children('.rwe-page-header__nav-link').data('tracking') + ']').hide();
+		});
+
+		$('.rwe-page-header__dropdown').hover(function () {
+			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header__nav-element')
+				.addClass('rwe-page-header__nav-element--active');
+			$(this).show();
+		}, function () {
+			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header__nav-element')
 				.removeClass('rwe-page-header__nav-element--active');
+			$(this).hide();
 		});
 
 		$('.rwe-page-header__nav-link').on('click', function (e) {

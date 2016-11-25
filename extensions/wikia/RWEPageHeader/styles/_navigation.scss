@@ -2,7 +2,7 @@
 @import 'skins/shared/mixins/flexbox';
 
 .rwe-page-header {
-	padding-bottom: 0;
+	padding-bottom: $content-spacing-medium;
 }
 
 .rwe-page-header__chevron {
@@ -34,7 +34,7 @@
 	}
 }
 
-.rwe-page-header__nav-link:hover {
+.rwe-page-header__nav-element:hover {
 	.rwe-page-header__chevron,
 	.rwe-page-header__icon,
 	.rwe-page-header__nav-text {
@@ -43,11 +43,18 @@
 }
 
 .rwe-page-header__nav-element--active {
-	border-bottom: 1px $color-page solid;
+	background-color: $background-color;
+	border-bottom: 1px $background-color solid;
 	border-left: 1px $color-page-border solid;
 	margin-bottom: -1px;
 	margin-left: -1px;
 	padding-bottom: $content-spacing-small;
+
+	.rwe-page-header__chevron,
+	.rwe-page-header__icon,
+	.rwe-page-header__nav-text {
+		color: $color-links;
+	}
 }
 
 .rwe-page-header__nav-link {
