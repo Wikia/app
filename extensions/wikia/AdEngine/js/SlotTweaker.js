@@ -203,17 +203,23 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		switch (data.action) {
 			case 'expand':
-				return expand(data.slotName);
+				expand(data.slotName);
+				break;
 			case 'collapse':
-				return collapse(data.slotName);
+				collapse(data.slotName);
+				break;
 			case 'hide':
-				return hide(data.slotName);
+				hide(data.slotName);
+				break;
 			case 'show':
-				return show(data.slotName);
+				show(data.slotName);
+				break;
 			case 'make-responsive':
-				return makeResponsive(data.slotName, data.aspectRatio);
+				makeResponsive(data.slotName, data.aspectRatio);
+				break;
 			default:
-				return log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
+				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
+				break;
 		}
 	}
 
