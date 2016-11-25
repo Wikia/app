@@ -1,8 +1,12 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.adTracker',
-	['ext.wikia.adEngine.utils.timeBuckets','wikia.tracker', 'wikia.window', 'wikia.log'],
-	function (timeBuckets, tracker, window, log) {
+define('ext.wikia.adEngine.adTracker', [
+	'ext.wikia.adEngine.utils.timeBuckets',
+	'jquery',
+	'wikia.tracker',
+	'wikia.window',
+	'wikia.log'
+], function (timeBuckets, $, tracker, window, log) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
@@ -82,9 +86,15 @@ define('ext.wikia.adEngine.adTracker',
 	function trackDW(data) {
 		var trackValue = {
 			eventName: 'adengstream',
-			trackingMethod: 'internal',
-			action: typeof data === 'string' ? data : encodeAsQueryString(data || {})
+			trackingMethod: 'internal'
 		};
+
+		if (typeof data === 'string') {
+			trackValue.ping = data;
+		} else {
+			$.extend(trackValue, data);
+		}
+
 		tracker.track(trackValue);
 		log(trackValue, 'debug', logGroup);
 	}
