@@ -1,47 +1,61 @@
-$search-transition-duration: .3s;
+$search-initial-width: 100px;
+$search-expanded-width: 400px;
+$search-button-height: 100%;
+$search-button-width: 100%;
+$search-close-button-margin-right: 24px;
+$search-submit-button-padding: 5px 9px;
+$search-transition-long: .3s;
+$search-transition-short: 50ms 150ms;
+$search-suggestion-z-index: 2;
 
 #searchFormWrapperRWE {
-  width: 100px;
-  position: absolute;
-  right: 0px;
-  transition: width $search-transition-duration;
+  transition: width $search-transition-long;
+  width: $search-initial-width;
+
+  // just for placement on the right side for testing
+  //position: absolute;
+  //right: 0;
+  ///////////////////
+
+  #searchInputWrapperRWE {
+    border-bottom: solid 1px transparent;
+  }
 
   .wds-global-navigation__search {
     border-top: none;
   }
 
-  #searchInputWrapperRWE {
-    border-bottom: none;
+  .wds-global-navigation__search-close {
+    height: $search-button-height;
+    width: $search-button-width;
   }
 
   .wds-global-navigation__search-submit {
-    max-width: 0;
     display: inline-block;
+    height: $search-button-height;
+    max-width: 0;
     opacity: 0;
-    height: 100%;
-    transition: background-color .3s, border-color .3s, color .3s, max-width 50ms 150ms, opacity .3s, padding 50ms 150ms;
+    transition: background-color $search-transition-long,
+                border-color $search-transition-long,
+                color $search-transition-long,
+                max-width $search-transition-short,
+                opacity $search-transition-long,
+                padding $search-transition-short;
   }
 
-  .wds-global-navigation__search-close {
-    height: 100%;
-    width: 100%;
-  }
 
   &.wds-search-is-active {
-    width: 400px;
-    transition: width $search-transition-duration;
+    width: $search-expanded-width;
+    transition: width $search-transition-long;
 
     .wds-global-navigation__search-submit {
-      max-width: 100%;
+      max-width: $search-button-width;
       opacity: 1;
-      padding: 5px 9px;
-      transition: background-color .3s, border-color .3s, color .3s, max-width 50ms 150ms, opacity .3s, padding 50ms 150ms;
+      padding: $search-submit-button-padding;
     }
 
     .wds-global-navigation__search-close {
-      margin-right: 24px;
-      height: 100%;
-      width: 100%;
+      margin-right: $search-close-button-margin-right;
       opacity: 1;
       transition-delay: 150ms;
     }
@@ -51,7 +65,7 @@ $search-transition-duration: .3s;
     }
 
     .wds-global-navigation__search-suggestions {
-      z-index: 2;
+      z-index: $search-suggestion-z-index;
     }
   }
 }
