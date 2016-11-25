@@ -9,7 +9,7 @@ $inactive-color: darken($color-text, 50%);
 $search-transition-duration: .3s;
 $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
 
-$search-initial-width: 100px;
+$search-initial-width: 150px;
 $search-expanded-width: 400px;
 $search-button-height: 100%;
 $search-button-width: 100%;
@@ -26,6 +26,9 @@ $search-suggestion-z-index: 2;
 #searchInputRWE {
 	background: transparent;
 	color: $color-text;
+	font-size: $wds-typescale-size-base;
+	font-weight: bold;
+	line-height: $wds-line-height;
 
 	@include placeholder {
 		color: $inactive-color;
@@ -35,10 +38,15 @@ $search-suggestion-z-index: 2;
 #searchFormWrapperRWE {
 	background: transparent;
 	border-top: 0;
-	position: relative;
-	right: 0;
+	margin-bottom: 0;
 	transition: width $search-transition-long;
 	width: $search-initial-width;
+
+	form {
+		height: 30px;
+		margin-top: 9px;
+		padding-left: 12px;
+	}
 
 	.wds-global-navigation__search {
 		background: transparent;
@@ -54,6 +62,7 @@ $search-suggestion-z-index: 2;
 
 		svg {
 			fill: $color-text;
+			margin: 0 2px 0 6px;
 		}
 	}
 
