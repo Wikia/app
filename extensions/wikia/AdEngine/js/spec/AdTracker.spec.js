@@ -23,7 +23,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		};
 	});
 
-	it('track: simple event', function () {
+	it('track: simple event to GA', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
@@ -34,6 +34,17 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'
+		});
+	});
+
+	it('track: simple event to DW', function () {
+		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+
+		spyOn(trackerMock, 'trackDW');
+		adTracker.trackDW('slotLoaded');
+		expect(trackerMock.trackDW).toHaveBeenCalledWith({
+			eventName: 'adengstream',
+			trackingMethod: 'internal'
 		});
 	});
 
