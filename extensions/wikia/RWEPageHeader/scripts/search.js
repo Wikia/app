@@ -2,6 +2,7 @@ $(function ($) {
 	'use strict';
 
 	var $globalNav = $('#searchFormWrapperRWE'),
+		$searchInputWrapper = $globalNav.find('.wds-global-navigation__search-input-wrapper'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
 		placeholderText = $searchInput.attr('placeholder'),
@@ -41,8 +42,11 @@ $(function ($) {
 	$searchInput.on('keydown', function (event) {
 		// Escape key
 		if (event.which === 27) {
+			$searchInputWrapper.removeClass('wds-is-active');
 			this.blur();
 			deactivateSearch();
+			event.preventDefault();
+			event.stopImmediatePropagation();
 		}
 	});
 
