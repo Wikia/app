@@ -205,12 +205,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 			return log('messageCallback: missing slot name', log.levels.debug, logGroup);
 		}
 
-		var slot = doc.getElementById(data.slotName);
-
-		if (!slot) {
-			return log('messageCallback: slot does not exist', log.levels.debug, logGroup);
-		}
-
 		switch (data.action) {
 			case 'expand':
 				return expand(data.slotName);
