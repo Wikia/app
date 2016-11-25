@@ -1,3 +1,14 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/placeholder';
+
+$background-color-mix: 10%;
+$black: #000;
+
+$active-color: darken($color-links, 20%);
+$inactive-color: darken($color-text, 50%);
+$search-transition-duration: .3s;
+$background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
+
 $search-initial-width: 100px;
 $search-expanded-width: 400px;
 $search-button-height: 100%;
@@ -8,66 +19,117 @@ $search-transition-long: .3s;
 $search-transition-short: 50ms 150ms;
 $search-suggestion-z-index: 2;
 
+#searchInputWrapperRWE {
+	border-bottom: solid 1px transparent;
+}
+
+#searchInputRWE {
+	background: transparent;
+	color: $color-text;
+
+	@include placeholder {
+		color: $inactive-color;
+	}
+}
+
 #searchFormWrapperRWE {
-  transition: width $search-transition-long;
-  width: $search-initial-width;
+	background: transparent;
+	border-top: 0;
+	position: relative;
+	right: 0;
+	transition: width $search-transition-long;
+	width: $search-initial-width;
 
-  // just for placement on the right side for testing
-  position: absolute;
-  right: 0;
-  ///////////////////
+	.wds-global-navigation__search {
+		background: transparent;
+		border-top: 0;
+	}
 
-  #searchInputWrapperRWE {
-    border-bottom: solid 1px transparent;
-  }
+	.wds-global-navigation__search {
+		border-top: 0;
+	}
 
-  .wds-global-navigation__search {
-    border-top: none;
-  }
+	.wds-global-navigation__search-label {
+		background: transparent;
 
-  .wds-global-navigation__search-close {
-    background: none;
-    height: $search-button-height;
-    transition-delay: 150ms;
-  }
+		svg {
+			fill: $color-text;
+		}
+	}
 
-  .wds-global-navigation__search-submit {
-    display: inline-block;
-    height: $search-button-height;
-    max-width: 0;
-    opacity: 0;
-    transition: background-color $search-transition-long,
-                border-color $search-transition-long,
-                color $search-transition-long,
-                max-width $search-transition-short,
-                opacity $search-transition-long,
-                padding $search-transition-short;
-  }
+	.wds-global-navigation__search-close {
+		background: none;
+		height: $search-button-height;
+		transition-delay: 150ms;
 
+		svg {
+			fill: $inactive-color;
+		}
+	}
 
-  &.wds-search-is-active {
-    width: $search-expanded-width;
-    transition: width $search-transition-long;
+	.wds-global-navigation__search-submit {
+		background: $color-links;
+		border-radius: 0;
+		display: inline-block;
+		height: $search-button-height;
+		max-width: 0;
+		opacity: 0;
+		transition: background-color $search-transition-long,
+					border-color $search-transition-long,
+					color $search-transition-long,
+					max-width $search-transition-short,
+					opacity $search-transition-long,
+					padding $search-transition-short;
+	}
 
-    .wds-global-navigation__search-submit {
-      max-width: $search-button-width;
-      opacity: 1;
-      padding: $search-submit-button-padding;
-    }
+	.wds-global-navigation__search-suggestions {
+		background-color: $background-color;
+		border-top-color: $color-links;
+		z-index: 2;
+	}
 
-    .wds-global-navigation__search-close {
-      max-width: $search-button-width;
-      opacity: 1;
-      padding-right: $search-close-button-padding-right;
-      transition-delay: 150ms;
-    }
+	.wds-global-navigation__dropdown-link {
+		color: $color-text;
 
-    #searchInputWrapperRWE {
-      border-bottom-color: black;
-    }
+		&:hover {
+			color: $color-links;
+		}
+	}
 
-    .wds-global-navigation__search-suggestions {
-      z-index: $search-suggestion-z-index;
-    }
-  }
+	&.wds-search-is-active {
+		width: $search-expanded-width;
+		transition: width $search-transition-long;
+
+		#searchInputWrapperRWE {
+			border-bottom-color: $color-text;
+
+			&.wds-is-active {
+				border-bottom-color: $color-links;
+			}
+		}
+
+		.wds-global-navigation__search-submit {
+			max-width: $search-button-width;
+			opacity: 1;
+			padding: $search-submit-button-padding;
+
+			&:hover:not(:disabled) {
+				background-color: $active-color;
+				border-color: $active-color;
+				opacity: 1;
+			}
+
+			&:disabled {
+				cursor: default;
+				opacity: .5;
+			}
+		}
+
+		.wds-global-navigation__search-close {
+			max-width: $search-button-width;
+			opacity: 1;
+			padding-right: $search-close-button-padding-right;
+			transition-delay: 150ms;
+		}
+	}
 }
