@@ -27,6 +27,11 @@ define('ext.wikia.adEngine.slot.adSlot', [
 				callbacks.hop(adInfo);
 			}
 		};
+		slot.renderEnded = function(adInfo) {
+			if (typeof callbacks.hop === 'function') {
+				callbacks.renderEnded(adInfo);
+			}
+		};
 
 		return slot;
 	}
