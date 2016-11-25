@@ -1,6 +1,8 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.adTracker', ['ext.wikia.adEngine.utils.timeBuckets','wikia.tracker', 'wikia.window', 'wikia.log'], function (timeBuckets, tracker, window, log) {
+define('ext.wikia.adEngine.adTracker',
+	['ext.wikia.adEngine.utils.timeBuckets','wikia.tracker', 'wikia.window', 'wikia.log'],
+	function (timeBuckets, tracker, window, log) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
@@ -31,7 +33,7 @@ define('ext.wikia.adEngine.adTracker', ['ext.wikia.adEngine.utils.timeBuckets','
 	}
 
 	/**
-	 * A generic function to track an ad-related event and its timing
+	 * A generic function to track an ad-related event and its timing in Google Analytics
 	 *
 	 * @param {string} eventName - the event name (use slashes for structure)
 	 * @param {object} data - extra data to track as JS object (will be converted to URL-like query-string)
@@ -73,6 +75,21 @@ define('ext.wikia.adEngine.adTracker', ['ext.wikia.adEngine.utils.timeBuckets','
 	}
 
 	/**
+	 * A generic function to track an ad-related event and its timing in DataWarehouse
+	 *
+	 * @param {object} data - data to track as JS object (will be converted to URL-like query-string)
+	 */
+	function trackDW(data) {
+		var trackValue = {
+			eventName: 'adengstream',
+			trackingMethod: 'internal',
+			action: typeof data === 'string' ? data : encodeAsQueryString(data || {})
+		};
+		tracker.track(trackValue);
+		log(trackValue, 'debug', logGroup);
+	}
+
+	/**
 	 * Measure time now. Use the passed event name and data object. Return an object with a track
 	 * method. When the method is called, the actual tracking happens. This allows you to separate
 	 * the time when the metric is gather from the time the metric is sent to GA
@@ -107,6 +124,7 @@ define('ext.wikia.adEngine.adTracker', ['ext.wikia.adEngine.utils.timeBuckets','
 
 	return {
 		track: track,
+		trackDW: trackDW,
 		measureTime: measureTime
 	};
 });

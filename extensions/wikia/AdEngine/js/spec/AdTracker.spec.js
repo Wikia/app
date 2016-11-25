@@ -8,7 +8,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	}
 
 	var timeBucketsMock = {getTimeBucket: noop},
-		trackerMock = {track: noop},
+		trackerMock = {track: noop, trackDW: noop},
 		windowMock = {},
 		logMock = noop;
 
@@ -40,11 +40,12 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	it('track: simple event to DW', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
 
-		spyOn(trackerMock, 'trackDW');
-		adTracker.trackDW('slotLoaded');
-		expect(trackerMock.trackDW).toHaveBeenCalledWith({
+		spyOn(trackerMock, 'track');
+		adTracker.trackDW('simpleAction');
+		expect(trackerMock.track).toHaveBeenCalledWith({
 			eventName: 'adengstream',
-			trackingMethod: 'internal'
+			trackingMethod: 'internal',
+			action: 'simpleAction'
 		});
 	});
 
