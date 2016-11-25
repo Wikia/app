@@ -10,7 +10,18 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	var timeBucketsMock = {getTimeBucket: noop},
 		trackerMock = {track: noop, trackDW: noop},
 		windowMock = {},
+		jqueryMock = {extend: noop},
 		logMock = noop;
+
+	function getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock) {
+		return modules['ext.wikia.adEngine.adTracker'](
+			timeBucketsMock,
+			jqueryMock,
+			trackerMock,
+			windowMock,
+			logMock
+		);
+	}
 
 	beforeEach(function () {
 		windowMock = {
@@ -24,7 +35,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('track: simple event to GA', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 		adTracker.track('test/event');
@@ -38,19 +49,19 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('track: simple event to DW', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
-		adTracker.trackDW('simpleAction');
+		adTracker.trackDW('ping');
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			eventName: 'adengstream',
 			trackingMethod: 'internal',
-			action: 'simpleAction'
+			ping: 'ping'
 		});
 	});
 
 	it('track: event with extra data', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 		adTracker.track('test/event', {data1: 'one', data2: ['two', 'three']});
@@ -64,7 +75,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('track: event with sp=yes data', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		windowMock.ads.runtime.sp.blocking = true;
 
@@ -80,7 +91,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('track: event with sp=no data', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		windowMock.ads.runtime.sp.blocking = false;
 
@@ -96,7 +107,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('track: event without sp data', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 		adTracker.track('test/event', {data1: 'one'});
@@ -129,7 +140,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			timeBucket,
 			timeBucketsModule = modules['ext.wikia.adEngine.utils.timeBuckets']();
 
-		adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsModule, trackerMock, windowMock, logMock);
+		adTracker = getModule(timeBucketsModule, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -161,7 +172,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			timeBucket,
 			timeBucketsModule = modules['ext.wikia.adEngine.utils.timeBuckets']();
 
-		adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsModule, trackerMock, windowMock, logMock);
+		adTracker = getModule(timeBucketsModule, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -200,7 +211,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			timeBucket,
 			timeBucketsModule = modules['ext.wikia.adEngine.utils.timeBuckets']();
 
-		adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsModule, trackerMock, windowMock, logMock);
+		adTracker = getModule(timeBucketsModule, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -221,10 +232,11 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 	it('track: event with an invalid value', function () {
 		var timeBucketsMock = {
-			getTimeBucket: function () {
-				return 'invalid'
-			}
-		}, adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+				getTimeBucket: function () {
+					return 'invalid';
+				}
+			},
+			adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -240,10 +252,11 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 	it('measureTime and track', function () {
 		var timeBucketsMock = {
-			getTimeBucket: function () {
-				return '0.5-1'
-			}
-		}, adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+				getTimeBucket: function () {
+					return '0.5-1';
+				}
+			},
+			adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -261,7 +274,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('measureTime: no track call after measure', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -274,9 +287,9 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	it('measureTime with eventType param and track', function () {
 		var timeBucketsMock = {
 			getTimeBucket: function () {
-				return '0.5-1'
+				return '0.5-1';
 			}
-		}, adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		}, adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -296,7 +309,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	});
 
 	it('measureDiff: no track call after measure', function () {
-		var adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+		var adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
@@ -310,10 +323,10 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		var timer,
 			timeBucketsMock = {
 				getTimeBucket: function () {
-					return '0-0.5'
+					return '0-0.5';
 				}
 			},
-			adTracker = modules['ext.wikia.adEngine.adTracker'](timeBucketsMock, trackerMock, windowMock, logMock);
+			adTracker = getModule(timeBucketsMock, jqueryMock, trackerMock, windowMock, logMock);
 
 		spyOn(trackerMock, 'track');
 
