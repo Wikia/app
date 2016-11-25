@@ -134,9 +134,9 @@ define('ext.wikia.adEngine.adEngine', [
 						tracker.track('hop', adInfo);
 						nextProvider();
 					},
-					renderEnded: function(adInfo) {
-						log(['renderEnded', provider.name, slotName, adInfo], 'debug', logGroup);
-						tracker.track('renderEnded', adInfo);
+					renderEnded: function(googleSlot) {
+						log(['renderEnded', provider.name, slotName, googleSlot], 'debug', logGroup);
+						tracker.track('renderEnded', googleSlot);
 					}
 				});
 
