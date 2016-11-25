@@ -3,12 +3,21 @@
 @import 'wordmark';
 
 .WikiaPageHeader .header-container {
-	border: none;
+	border: 0;
+}
+
+.WikiaPage:before {
+	border-top: $content-spacing-large solid $color-buttons;
+	content: '.';
+	left: -1px;
+	position: absolute;
+	right: -1px;
+	top: (-$content-spacing-large);
+	z-index: -2;
 }
 
 .WikiaPage {
-	border-top: $content-spacing-large solid $color-buttons;
-	margin-top: $content-spacing-medium;
+	margin-top: $content-spacing-great-minus;
 }
 
 .WikiHeader {
