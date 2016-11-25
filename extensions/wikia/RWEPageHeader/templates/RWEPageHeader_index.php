@@ -16,7 +16,7 @@
 
 						data-suggestions-url="<?= $searchModel['module']['suggestions']['url'] ?>"
 						data-suggestions-param-name="<?= $searchModel['module']['suggestions']['param-name'] ?>"
-						data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $searchModel['module']['suggestions']['tracking_label'] ); ?>"
+						data-suggestions-tracking-label="rwe-<?= Sanitizer::encodeAttribute( $searchModel['module']['suggestions']['tracking_label'] ); ?>"
 
 					   data-active-placeholder="<?= DesignSystemHelper::renderText( $searchModel['module']['placeholder-active'] ); ?>"
 					   placeholder="<?= DesignSystemHelper::renderText( $searchModel['module']['placeholder-inactive'] ); ?>"
@@ -30,7 +30,7 @@
 					wfMessage( 'global-navigation-search-cancel' )->escaped()
 				) ?>
 			</button>
-			<button class="wds-button wds-global-navigation__search-submit" type="submit" data-tracking-label="<?= Sanitizer::encodeAttribute( $searchModel['module']['results']['tracking_label'] ); ?>">
+			<button class="wds-button wds-global-navigation__search-submit" type="submit" data-tracking-label="rwe-<?= Sanitizer::encodeAttribute( $searchModel['module']['results']['tracking_label'] ); ?>">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-arrow',
 					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
