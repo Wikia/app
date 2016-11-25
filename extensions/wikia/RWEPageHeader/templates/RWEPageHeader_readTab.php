@@ -1,23 +1,23 @@
-<div class="rwe-page-header__dropdown" data-category="read">
-	<ul class="rwe-page-header__dropdown-first-level">
+<div class="rwe-page-header-nav__dropdown" data-category="read">
+	<ul class="rwe-page-header-nav__dropdown-first-level">
 		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) ): ?>
 			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
 				<? $menuNode0 = $menuNodes[ $level0 ] ?>
 				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
-					<li class="rwe-page-header__dropdown-first-level-item">
+					<li class="rwe-page-header-nav__dropdown-first-level-item">
 						<a class="spacer"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
 							?> data-extra="<?= $menuNode0[ NavigationModel::SPECIAL ] ?>"<? endif
 						?> href="<?= $menuNode0[ NavigationModel::HREF ]
 						?>"><?= $menuNode0[ NavigationModel::TEXT ] ?></a>
 
 						<? if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) ): ?>
-							<ul class="rwe-page-header__dropdown-second-level">
+							<ul class="rwe-page-header-nav__dropdown-second-level">
 								<? foreach ( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] as $level1 ): ?>
 									<?
 									$menuNode1 = $menuNodes[ $level1 ];
 									$hasChildNodes = isset( $menuNode1[ NavigationModel::CHILDREN ] );
 									?>
-									<li class="rwe-page-header__dropdown-second-level-item">
+									<li class="rwe-page-header-nav__dropdown-second-level-item">
 										<a<? if ( !empty( $menuNode1[ NavigationModel::SPECIAL ] ) ):
 											?> data-extra="<?= $menuNode1[ NavigationModel::SPECIAL ] ?>"<? endif
 										?> href="<?= $menuNode1[ NavigationModel::HREF ] ?>"<? if ( !empty( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ):
@@ -26,10 +26,10 @@
 												?><?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny' ); ?><? endif ?></a>
 
 										<? if ( $hasChildNodes ): ?>
-											<ul class="rwe-page-header__dropdown-third-level" style="display: none;">
+											<ul class="rwe-page-header-nav__dropdown-third-level">
 												<? foreach ( $menuNode1[ NavigationModel::CHILDREN ] as $level2 ): ?>
 													<? $menuNode2 = $menuNodes[ $level2 ] ?>
-													<li class="rwe-page-header__dropdown-third-level-item">
+													<li class="rwe-page-header-nav__dropdown-third-level-item">
 														<a<? if ( !empty( $menuNode2[ NavigationModel::SPECIAL ] ) ):
 															?> data-extra="<?= $menuNode2[ NavigationModel::SPECIAL ] ?>"<? endif
 														?> href="<?= $menuNode2[ NavigationModel::HREF ]

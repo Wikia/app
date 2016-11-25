@@ -10,27 +10,27 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	};
 
 	$(function () {
-		$('.rwe-page-header__nav-element-dropdown').hover(function () {
-			$(this).addClass('rwe-page-header__nav-element--active');
-			$('.rwe-page-header__dropdown[data-category=' +
-				$(this).children('.rwe-page-header__nav-link').data('tracking') + ']').show();
+		$('.rwe-page-header-nav__element-dropdown').hover(function () {
+			$(this).addClass('rwe-page-header-nav__element--active');
+			$('.rwe-page-header-nav__dropdown[data-category=' +
+				$(this).children('.rwe-page-header-nav__link').data('tracking') + ']').show();
 		}, function () {
-			$(this).removeClass('rwe-page-header__nav-element--active');
-			$('.rwe-page-header__dropdown[data-category=' +
-				$(this).children('.rwe-page-header__nav-link').data('tracking') + ']').hide();
+			$(this).removeClass('rwe-page-header-nav__element--active');
+			$('.rwe-page-header-nav__dropdown[data-category=' +
+				$(this).children('.rwe-page-header-nav__link').data('tracking') + ']').hide();
 		});
 
-		$('.rwe-page-header__dropdown').hover(function () {
-			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header__nav-element')
-				.addClass('rwe-page-header__nav-element--active');
+		$('.rwe-page-header-nav__dropdown').hover(function () {
+			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header-nav__element')
+				.addClass('rwe-page-header-nav__element--active');
 			$(this).show();
 		}, function () {
-			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header__nav-element')
-				.removeClass('rwe-page-header__nav-element--active');
+			$('*[data-tracking=' + $(this).data('category') + ']').parent('.rwe-page-header-nav__element')
+				.removeClass('rwe-page-header-nav__element--active');
 			$(this).hide();
 		});
 
-		$('.rwe-page-header__nav-link').on('click', function (e) {
+		$('.rwe-page-header-nav__link').on('click', function (e) {
 			track({
 				label: $(this).data().tracking
 			});
