@@ -80,6 +80,7 @@ $search-transition-short: 50ms 150ms;
 		background: transparent;
 
 		svg {
+			fill: $inactive-color;
 			margin: 0 2px 0 0;
 		}
 
