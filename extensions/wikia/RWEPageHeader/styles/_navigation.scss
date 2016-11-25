@@ -14,12 +14,12 @@
 }
 
 // elements
-.rwe-page-header__chevron {
+.rwe-page-header-nav__chevron {
 	color: $color-page-border;
 	margin-left: $content-spacing-small;
 }
 
-.rwe-page-header__icon {
+.rwe-page-header-nav__icon {
 	color: $color-page-border;
 	margin: 0 $content-spacing-small;
 	vertical-align: text-bottom;
@@ -34,9 +34,9 @@
 	&:hover {
 		text-decoration: none;
 
-		.rwe-page-header__chevron,
-		.rwe-page-header__icon,
-		.rwe-page-header__nav-text {
+		.rwe-page-header-nav__chevron,
+		.rwe-page-header-nav__icon,
+		.rwe-page-header-nav__text {
 			color: $color-links;
 		}
 	}
