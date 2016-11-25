@@ -131,6 +131,10 @@ $search-transition-short: 50ms 150ms;
 		}
 	}
 
+	.wds-dropdown__content {
+		box-shadow: 0 5px 10px 0 rgba(26, 26, 26, .3);
+	}
+
 	&.wds-search-is-active {
 		transition: width $search-transition-long;
 
