@@ -6,7 +6,7 @@
 	padding-bottom: $content-spacing-medium;
 }
 
-.rwe-page-header-nav-wrapper {
+.rwe-page-header-nav__wrapper {
 	@include flexbox();
 	@include justify-content(center);
 

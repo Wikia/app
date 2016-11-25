@@ -1,6 +1,6 @@
 <div class="rwe-page-header">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
-	<div class="rwe-page-header-nav-wrapper">
+	<div class="rwe-page-header-nav__wrapper">
 		<ul class="rwe-page-header-nav">
 			<li class="rwe-page-header-nav__tab">
 				<a class="rwe-page-header-nav__link rwe-page-header--dropdown" href="/" data-tracking="read">
