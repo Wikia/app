@@ -2,9 +2,6 @@
 <html lang="<?= $lang ?>" dir="<?= $dir ?>" class="<?= implode(' ', array_map( 'Sanitizer::escapeClass', $htmlClasses )) ?>">
 <head>
 
-	<script src="https://contributor.google.com/scripts/63838b5c087240ba/loader.js"></script>
-	<script>(function(){for(var a=("; "+document.cookie).split("; ymrhmm="),b=[],c=1;c<a.length;c++)b.push(a[c].split(";")[0]);var d="https:\/\/p.d.rpts.org\/v4\/AAAACgAAc9Uau9icuBlvDvtokvlNaAAA_beqGGg0086ASLFkx4dqFskjo6gsKeuE7We-aRPAhnfFvrJ7nVktc_FObpKtSCVqhNlY1hcqUNT6nPxFs_4bPNnpuiPMvRPDA"+b.join(","),e=document.createElement("script");e.async=!0;e.src=d;var f=document.getElementsByTagName("head")[0];f.insertBefore(e,f.childNodes[0]||null);}).call(this);</script>
-
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
 <?php if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ) : ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -58,6 +55,9 @@
 <? endif ?>
 
 <?= $headItems ?>
+
+	<script src="https://contributor.google.com/scripts/63838b5c087240ba/loader.js"></script>
+	<script>(function(){for(var a=("; "+document.cookie).split("; ymrhmm="),b=[],c=1;c<a.length;c++)b.push(a[c].split(";")[0]);var d="https:\/\/p.d.rpts.org\/v4\/AAAACgAAc9Uau9icuBlvDvtokvlNaAAA_beqGGg0086ASLFkx4dqFskjo6gsKeuE7We-aRPAhnfFvrJ7nVktc_FObpKtSCVqhNlY1hcqUNT6nPxFs_4bPNnpuiPMvRPDA"+b.join(","),e=document.createElement("script");e.async=!0;e.src=d;var f=document.getElementsByTagName("head")[0];f.insertBefore(e,f.childNodes[0]||null);}).call(this);</script>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
