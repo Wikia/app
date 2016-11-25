@@ -474,10 +474,16 @@ class Preferences {
 				);
 			}
 			if ( $wgEnotifDiscussions ) {
-				$defaultPreferences['enotifdiscussions'] = [
+				$defaultPreferences['enotifdiscussionsvotes'] = [
 					'type' => 'toggle',
 					'section' => 'personal/email',
-					'label-message' => 'tog-enotifdiscussions',
+					'label-message' => 'tog-enotifdiscussions-votes',
+					'disabled' => $disableEmailPrefs,
+				];
+				$defaultPreferences['enotifdiscussionsfollows'] = [
+					'type' => 'toggle',
+					'section' => 'personal/email',
+					'label-message' => 'tog-enotifdiscussions-follows',
 					'disabled' => $disableEmailPrefs,
 				];
 			}
