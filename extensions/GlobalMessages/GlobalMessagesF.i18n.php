@@ -36,11 +36,11 @@ $messages['en'] = [
 Preferred {{PLURAL:$3|file type is|file types are}} $2.',
 	'filetype-banned-type' => '\'\'\'".$1"\'\'\' {{PLURAL:$4|is not a permitted file type|are not permitted file types}}.
 Permitted {{PLURAL:$3|file type is|file types are}} $2.',
-	'filetype-missing' => 'The file has no extension (like ".jpg").',
+	'filetype-missing' => 'The file has no extension (for example, ".jpg"). Please check the file and upload again.',
 	'file-too-large' => 'The file you submitted was too large.',
 	'filename-tooshort' => 'The filename is too short.',
 	'filetype-banned' => 'This type of file is banned.',
-	'fileexists' => '$1 has already been uploaded to the wiki. If you upload it again, it will replace the existing photo and may take a few minutes to be visible.',
+	'fileexists' => 'A photo with this name has already been uploaded to the wiki. Please check $1 if you\'re not sure if you want to change it. Once uploaded, this photo may take up to 2 minutes to be visible.',
 	'filepageexists' => 'The description page for this file has already been created at \'\'\'<tt>[[:$1]]</tt>\'\'\', but no file with this name currently exists.
 The summary you enter will not appear on the description page.
 To make your summary appear there, you will need to manually edit it.
@@ -122,15 +122,20 @@ PICT # misc.
 	'filedelete-nofile-old' => 'There is no archived version of \'\'\'$1\'\'\' with the specified attributes.',
 	'filedelete-otherreason' => 'Other/additional reason:',
 	'filedelete-reason-otherlist' => 'Other reason',
-	'filedelete-reason-dropdown' => '*Common delete reasons
+	'filedelete-reason-dropdown' => '*Vandalism and problems
 ** Copyright violation
-** Duplicated file',
+** Spam/vandalism
+*Maintenance
+** Author request
+** Housekeeping
+** Duplicated/superseded file
+** Misnamed file',
 	'filedelete-edit-reasonlist' => 'Edit delete reasons',
 	'filedelete-maintenance' => 'Deletion and restoration of files temporarily disabled during maintenance.',
 	'filedelete-maintenance-title' => 'Cannot delete file',
 	'fewestrevisions' => 'Pages with the fewest revisions',
 	'fewestrevisions-summary' => '',
-	'fix-double-redirects' => 'Update any redirects that point to the original title',
+	'fix-double-redirects' => 'Automatically fix the redirects',
 	'file-exists-sharedrepo' => 'The filename chosen is already in use on a shared repository.
 Please choose another name.',
 	'filemissing' => 'File missing',
@@ -156,7 +161,7 @@ $1',
 	'filepath-submit' => 'Go',
 	'filepath-summary' => 'This special page returns the complete path for a file.
 Images are shown in full resolution, other file types are started with their associated program directly.',
-	'fileduplicatesearch' => 'Search for duplicate files',
+	'fileduplicatesearch' => 'Duplicate photos search',
 	'fileduplicatesearch-summary' => 'Search for duplicate files based on hash values.',
 	'fileduplicatesearch-legend' => 'Search for a duplicate',
 	'fileduplicatesearch-filename' => 'Filename:',
@@ -4276,6 +4281,7 @@ Altrament, podeu fer servir un senzill formulari a continuació. El vostre comen
 	'feedback-bugcheck' => 'Fantàstic! Comproveu que no sigui un dels [$1 problemes ja coneguts].',
 	'feedback-bugnew' => 'Ja ho he comprovat. Informeu d\'un nou problema',
 	'forum' => 'fòrum',
+	'forum-url' => 'Forum:Index',
 ];
 
 $messages['cbk-zam'] = [
@@ -5459,7 +5465,8 @@ $messages['de'] = [
 	'file-too-large' => 'Die übertragene Datei ist zu groß',
 	'filename-tooshort' => 'Der Dateiname ist zu kurz',
 	'filetype-banned' => 'Diese Dateiendung ist gesperrt.',
-	'fileexists' => 'Eine Datei mit diesem Namen existiert bereits. Bitte prüfe \'\'\'$1\'\'\', wenn du dir nicht sicher bist, ob du sie ändern willst.',
+	'fileexists' => "Eine Datei mit diesem Namen existiert bereits.
+Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.",
 	'filepageexists' => 'Eine Beschreibungsseite wurde bereits als \'\'\'<tt>[[:$1]]</tt>\'\'\' erstellt, es ist aber keine Datei mit diesem Namen vorhanden.
 Die eingegebene Beschreibung wird nicht auf die Beschreibungsseite übernommen.
 Die Beschreibungsseite musst du nach dem Hochladen der Datei noch manuell bearbeiten.
@@ -5482,20 +5489,20 @@ Wenn du diese Datei trotzdem hochladen möchtest, gehe bitte zurück und ändere
 	'filewasdeleted' => 'Eine Datei mit diesem Namen wurde schon einmal hochgeladen und zwischenzeitlich wieder gelöscht. Bitte prüfe zuerst den Eintrag im $1, bevor du die Datei wirklich speicherst.',
 	'filename-bad-prefix' => 'Der Dateiname beginnt mit \'\'\'„$1“\'\'\'. Dies ist im allgemeinen der von einer Digitalkamera vorgegebene Dateiname und daher nicht sehr aussagekräftig.
 Bitte gib der Datei einen Namen, der den Inhalt besser beschreibt.',
-	'filename-prefix-blacklist' => ' #<!-- Diese Zeile darf nicht verändert werden! --> <pre>
-#  Syntax:
-#   * Alles von einem #-Zeichen bis zum Ende der Zeile ist ein Kommentar.
-#   * Jede nicht-leere Zeile ist der Anfang eines typischen Dateinamens, der automatisch von einer Digitalkamera erzeugt wird.
+	'filename-prefix-blacklist' => ' #<!-- Belasse diese Zeile genau so wie sie ist --> <pre>
+# Die Syntax lautet wie folgt:
+#   * Alles vom "#"-Zeichen bis zum Ende der Zeile ist ein Kommentar
+#   * Jede nicht-leere Zeile ist ein Prefix für typische Dateinamen, die automatisch durch Digitalkameras vergeben werden
 CIMG # Casio
 DSC_ # Nikon
 DSCF # Fuji
 DSCN # Nikon
-DUW # einige Mobiltelefone
-IMG # allgemein
+DUW # some mobil phones
+IMG # generic
 JD # Jenoptik
 MGP # Pentax
-PICT # verschiedene
- #</pre> <!-- Diese Zeile darf nicht verändert werden!-->',
+PICT # misc.
+ #</pre> <!-- Belasse diese Zeile genau so wie sie ist -->',
 	'file-anchor-link' => 'Datei',
 	'filehist' => 'Dateiversionen',
 	'filehist-help' => 'Klicke auf einen Zeitpunkt, um diese Version zu laden.',
@@ -5537,7 +5544,9 @@ PICT # verschiedene
 	'filedelete-reason-otherlist' => 'Anderer Grund',
 	'filedelete-reason-dropdown' => '* Allgemeine Löschgründe
 ** Urheberrechtsverletzung
-** Duplikat',
+** Duplikat
+** Nicht mehr benötigt
+** Spam / Housekeeping',
 	'filedelete-edit-reasonlist' => 'Löschgründe bearbeiten',
 	'filedelete-maintenance' => 'Das Löschen und Wiederherstellen von Dateien ist aufgrund von Wartungsarbeiten vorübergehend deaktiviert.',
 	'filedelete-maintenance-title' => 'Die Datei kann nicht gelöscht werden.',
@@ -5582,7 +5591,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'feedback-message' => 'Nachricht:',
 	'feedback-cancel' => 'Abbrechen',
 	'feedback-submit' => 'Rückmeldung senden',
-	'feedback-adding' => 'Rückmeldung wird zur Seite hinzugefügt …',
+	'feedback-adding' => 'Rückmeldung wird zur Seite hinzugefügt…',
 	'feedback-error1' => 'Fehler: Unbekanntes Ergebnis der API',
 	'feedback-error2' => 'Fehler: Bearbeitung gescheitert',
 	'feedback-error3' => 'Fehler: Keine Antwort von der API',
@@ -5592,6 +5601,22 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'feedback-bugnew' => 'Ich habe es überprüft. Den neuen Fehler melden.',
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
+	'fast-adv' => 'Werbeanzeige',
+	'featured' => 'Vorgestellt',
+	'footer_1.5' => 'bearbeite diese Seite',
+	'footer_1' => 'Verbessere $1 und',
+	'footer_10' => 'Verbreite via $1',
+	'footer_2' => 'Kommentiere diesen Artikel',
+	'footer_5' => '$1 hat diese Seite am $2 bearbeitet',
+	'footer_6' => 'Zufälligen Artikel anzeigen',
+	'footer_7' => 'Artikel per Mail versenden',
+	'footer_8' => 'Verbreite diesen Artikel',
+	'footer_9' => 'Bewerte diesen Artikel',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia Über Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Auf Wikia werben]',
+	'footer_Contact_Wikia' => '[http://de.wikia.com/wiki/Kontaktiere_uns Kontakt]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Nutzungsbedingungen]',
+	'forum-url' => 'Forum:Übersicht',
 ];
 
 $messages['de-at'] = [
@@ -6329,6 +6354,7 @@ $1',
 	'feedback-thanks' => 'Ευχαριστούμε! Τα σχόλιά σας έχουν καταχωρηθεί στη σελίδα "[$2 $1]".',
 	'feedback-close' => 'Ολοκληρώθηκε',
 	'forum' => 'Αγορά',
+	'forum-url' => 'Αγορά:Ευρετήριο',
 ];
 
 $messages['eml'] = [
@@ -6530,11 +6556,14 @@ $messages['es'] = [
 	'file-too-large' => 'El archivo que enviste era demasiado grande.',
 	'filename-tooshort' => 'El nombre de archivo es demasiado corto.',
 	'filetype-banned' => 'El tipo de archivo está prohibido.',
-	'fileexists' => 'Ya existe un archivo con este nombre, por favor comprueba \'\'\'<tt>[[:$1]]</tt>\'\'\' si no estás seguro de querer cambiarlo.
-[[$1|thumb]]',
-	'filepageexists' => 'La página de descripción de este archivo ya ha sido creada en \'\'\'<tt>[[:$1]]</tt>\'\'\', pero no existe actualmente ningún fichero con este nombre.
-El resumen que ha ingresado no aparecerá en la página de descripción. Para que el sumario aparezca, deberá editarlo manualmente.
-[[$1|thumb]]',
+	'fileexists' => 'Ya existe un archivo con este nombre, por favor comprueba el existente $1 si no estás seguro de querer reemplazarlo. Una vez que lo hayas subido, el archivo tardará hasta 2 minutos para estar visible.
+
+\'\'\'Nota:\'\'\' Si finalmente sustituyes el archivo, debes refrescar la caché de tu navegador para ver los cambios:
+*\'\'\'Mozilla\'\'\' / \'\'\'Firefox\'\'\': Pulsa el botón \'\'Recargar\'\' (o \'\'CTRL+R\'\')
+*\'\'\'Internet Explorer\'\'\' / \'\'\'Opera\'\'\': \'\'CTRL+F5\'\'
+*\'\'\'Safari\'\'\': \'\'CMD+R\'\'
+*\'\'\'Konqueror\'\'\': \'\'CTRL+R\'\'',
+	'filepageexists' => 'Una página (no un archivo) con este nombre existe actualmente, por favor compruebe <strong><tt>$1</tt></strong> si no está seguro de que quiera cambiarlo',
 	'fileexists-extension' => 'Existe un archivo con un nombre similar: [[$2|thumb]]
 * Nombre del archivo que se está subiendo: \'\'\'<tt>[[:$1]]</tt>\'\'\'
 * Nombre del archivo ya existente: \'\'\'<tt>[[:$2]]</tt>\'\'\'
@@ -6551,9 +6580,7 @@ Si todavía quiere subir su archivo, por favor, regrese a la página anterior y 
 	'file-exists-duplicate' => 'Este archivo es un duplicado {{PLURAL:$1|del siguiente|de los siguientes}}:',
 	'file-deleted-duplicate' => 'Un archivo idéntico a este ([[:$1]]) ha sido borrado con anterioridad. Debes comprobar el historial de borrado del archivo ante de volver a subirlo.',
 	'filewasdeleted' => 'Un archivo con este nombre se subió con anterioridad y posteriormente ha sido borrado. Deberías revisar el $1 antes de subirlo de nuevo.',
-	'filename-bad-prefix' => 'El nombre del archivo que estás subiendo comienza por \'\'\'«$1»\'\'\', un nombre nada descriptivo de su contenido. Es un típico nombre de los que asignan automáticamente las cámaras digitales.
-
-Por favor, elige un nombre más descriptivo.',
+	'filename-bad-prefix' => 'El nombre del archivo que tú estas subiendo comienza con <strong>"$1"</strong>, el cual no es un nombre descriptivo, habitualmente asignado a cámaras digitales. Por favor elija un nombre más descriptivo para tu archivo.',
 	'file-anchor-link' => 'Archivo',
 	'filehist' => 'Historial del archivo',
 	'filehist-help' => 'Haz clic sobre una fecha/hora para ver el
@@ -6574,13 +6601,13 @@ archivo a esa fecha.',
 	'filepage-nofile' => 'No existe ningún archivo con este nombre.',
 	'filepage-nofile-link' => 'No existe ningún archivo con este nombre, pero puedes [$1 subirlo].',
 	'filerevert' => 'Revertir $1',
-	'filerevert-legend' => 'Reversión de archivos',
+	'filerevert-legend' => 'Revertir archivo',
 	'filerevert-intro' => 'Estás revirtiendo \'\'\'[[Media:$1|$1]]\'\'\' a la [$4 versión del $2 a las $3].',
 	'filerevert-comment' => 'Motivo:',
 	'filerevert-defaultcomment' => 'Revertido a la versión subida el $1 a las $2',
 	'filerevert-submit' => 'Revertir',
 	'filerevert-success' => '\'\'\'[[Media:$1|$1]]\'\'\' ha sido revertido a la [$4 versión del $2 a las $3].',
-	'filerevert-badversion' => 'No existe version local previa de este archivo con esa marca de tiempo.',
+	'filerevert-badversion' => 'No hay una versión local previa de este archivo con la fecha determinada.',
 	'filedelete' => 'Borrar $1',
 	'filedelete-legend' => 'Borrar archivo',
 	'filedelete-intro' => 'Estás borrando el archivo \'\'\'[[Media:$1|$1]]\'\'\' así como todo su historial.',
@@ -6588,24 +6615,26 @@ archivo a esa fecha.',
 	'filedelete-comment' => 'Motivo:',
 	'filedelete-submit' => 'Eliminar',
 	'filedelete-success' => '\'\'\'$1\'\'\' ha sido borrado.',
-	'filedelete-success-old' => 'La version de \'\'\'[[Media:$1|$1]]\'\'\' del $2 a las $3 ha sido borrada.',
+	'filedelete-success-old' => '<span class="plainlinks">La versión de \'\'\'[[Media:$1|$1]]\'\'\' así como la de $3, $2 ha sido borrada.</span>',
 	'filedelete-nofile' => '\'\'\'$1\'\'\' no existe.',
 	'filedelete-nofile-old' => 'No existe una versión guardada de \'\'\'$1\'\'\' con los atributos especificados.',
-	'filedelete-otherreason' => 'Otra razón:',
+	'filedelete-otherreason' => 'Otra razón/razón adicional',
 	'filedelete-reason-otherlist' => 'Otra razón',
 	'filedelete-reason-dropdown' => '*Razones de borrado habituales
-** Violación de copyright
-** Archivo duplicado',
+** Violación de derechos de autor
+** Archivo duplicado
+** Archivo inapropiado
+** Resolución demasiado pequeña',
 	'filedelete-edit-reasonlist' => 'Edita los motivos del borrado',
 	'filedelete-maintenance' => 'Borrado y restauración de archivos temporalmente deshabilitados durante el mantenimiento.',
 	'filedelete-maintenance-title' => 'No se puede eliminar el archivo',
-	'fewestrevisions' => 'Artículos con menos ediciones',
+	'fewestrevisions' => 'Páginas con menos ediciones',
 	'fix-double-redirects' => 'Actualizar las redirecciones que apuntan al título original',
 	'file-exists-sharedrepo' => 'El nombre de archivo elegido ya está siendo usado en un repositorio compartido.
 Por favor, elige otro nombre.',
 	'filemissing' => 'Falta archivo',
-	'filedeleteerror-short' => 'Se produjo un error al borrar el archivo: $1',
-	'filedeleteerror-long' => 'Se han producido errores mientras se borraba el archivo:
+	'filedeleteerror-short' => 'Error borrando el archivo: $1',
+	'filedeleteerror-long' => 'Fueron encontrados errores mientras se borraba el archivo:
 
 $1',
 	'filedelete-missing' => 'No se pudo borrar el archivo "$1" porque no existe.',
@@ -6624,8 +6653,10 @@ $1',
 	'filepath' => 'Ruta de archivo',
 	'filepath-page' => 'Archivo:',
 	'filepath-submit' => 'Ir',
-	'filepath-summary' => 'Esta página devuelve la ruta completa de un archivo.
-Las imágenes se muestran en resolución máxima, otros tipos de archivo se inician directamente con su programa asociado.',
+	'filepath-summary' => 'Esta página especial redirige a la ruta completa del archivo.
+Las imágenes son mostradas en su resolución máxima, otro tipo de archivos se abren con el programa al que estén asociados directamente.
+
+Introduce el nombre del archivo sin el prefijo "{{ns:image}}:"',
 	'fileduplicatesearch' => 'Búsqueda de archivos duplicados',
 	'fileduplicatesearch-summary' => 'Búsqueda de archivos duplicados en base a su valor hash.',
 	'fileduplicatesearch-legend' => 'Busca duplicados',
@@ -6652,6 +6683,21 @@ En otro caso, puedes usar el siguiente formulario. Tu comentario será añadido 
 	'feedback-bugnew' => 'Lo he comprobado. Informar de un nuevo fallo.',
 	'forum' => 'Foro',
 	'feed-watom' => 'Atomo de Fandom',
+	'featured' => 'Destacado',
+	'footer_1.5' => 'editando esta página',
+	'footer_1' => 'Haz crecer $1',
+	'footer_10' => 'Compartir con $1',
+	'footer_2' => 'Discute este artículo',
+	'footer_5' => '$1 realizó una edición el $2',
+	'footer_6' => 'Ver una página aleatoria',
+	'footer_7' => 'Enviar este artículo por e-mail',
+	'footer_8' => 'Compartir este artículo',
+	'footer_9' => 'Puntuar este artículo',
+	'footer_About_Wikia' => '[http://es.wikia.com/Sobre_nosotros Sobre Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://mediakit.wikia.com/wiki/Media_Kit_Wiki Publicidad]',
+	'footer_Contact_Wikia' => '[http://comunidad.wikia.com/wiki/Especial:Contactar Contacta con Wikia]',
+	'footer_License' => '[http://es.wikia.com/Licencia CC-BY-SA]',
+	'footer_Terms_of_use' => '[http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de uso]',
 ];
 
 $messages['et'] = [
@@ -7077,7 +7123,7 @@ $messages['fa'] = [
 	'feed-invalid' => 'نوع خوراک خبرخوان مجاز نیست.',
 	'feed-unavailable' => 'خوراک‌های خبرخوان در دسترس نیستند',
 	'feed-atom' => 'اتم',
-	'feed-rss' => 'آراس‌اس',
+	'feed-rss' => 'آر‌اس‌اس',
 	'fileappenderrorread' => 'در طی الحاق امکان خواندن «$1» وجود نداشت.',
 	'fileappenderror' => 'نشد «$1» را به «$2» الحاق کرد.',
 	'filecopyerror' => 'نشد از پروندهٔ «$1» روی «$2» نسخه‌برداری شود.',
@@ -7226,6 +7272,16 @@ $1',
 	'feedback-close' => 'انجام شد',
 	'feedback-bugcheck' => 'عالی‌است! فقط بررسی کنید که از [$1 ایرادهای شناخته‌شده] نباشد.',
 	'feedback-bugnew' => 'بررسی کردم. ایرادی جدید را گزارش بده',
+	'fast-adv' => 'تبلیغات',
+	'featured' => 'برگزیده',
+	'footer_1.5' => '&nbsp;',
+	'footer_1' => 'با ویرایش این صفحه $1 را بهبود بخشید',
+	'footer_5' => '$1 این صفحه را در $2 ویرایش کرد',
+	'footer_6' => 'نمایش صفحه‌های تصادفی',
+	'footer_9' => 'این مقاله را رتبه‌بندی کنید',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia دربارۀ ویکیا]',
+	'footer_Contact_Wikia' => '[http://www.fa.wikia.com/wiki/تماس_با_ما  تماس با ویکیا]',
+	'forum-url' => 'فوروم:فهرست',
 ];
 
 $messages['fi'] = [
@@ -7393,6 +7449,19 @@ Muussa tapauksessa voit käyttää alla olevaa helpompaa lomaketta. Kommenttisi 
 	'feedback-bugcheck' => 'Hyvä! Varmista, että ohjelmointivirhe ei vielä löydy [$1 tästä listasta].',
 	'feedback-bugnew' => 'Varmistin. Ilmoitan uuden ohjelmointivirheen',
 	'forum' => 'Foorumi',
+	'footer_1.5' => 'muokkaamalla tätä sivua',
+	'footer_1' => 'Paranna Wikiaa',
+	'footer_2' => 'Keskustele tästä artikkelista',
+	'footer_5' => '$1 teki muokkauksen $2',
+	'footer_6' => 'Katso sattumanvarainen sivu',
+	'footer_7' => 'Lähetä tämä artikkeli sähköpostitse',
+	'footer_8' => 'Jaa tämä artikkeli',
+	'footer_9' => 'Arvostele tämä artikkeli',
+	'footer_About_Wikia' => '[http://fi.wikia.com/wiki/Tietoja_Wikiasta Tietoja Wikiasta]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Mainosta Wikiassa]',
+	'footer_Contact_Wikia' => '[http://fi.wikia.com/wiki/Ota_yhteytt%C3%A4 Ota yhteyttä Wikiaan]',
+	'footer_Terms_of_use' => '[http://fi.wikia.com/wiki/K%C3%A4ytt%C3%B6ehdot Käyttöehdot]',
+	'forum-url' => 'Foorumi:Sisällysluettelo',
 ];
 
 $messages['fiu-vro'] = [
@@ -7805,6 +7874,20 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 	'feedback-bugnew' => 'J\'ai vérifié. Signaler un nouveau bogue',
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
+	'featured' => 'En vedette',
+	'footer_1.5' => 'modifiant cette page',
+	'footer_1' => 'Améliorez $1 en',
+	'footer_10' => 'Publier sur $1',
+	'footer_2' => 'Discuter sur cet article',
+	'footer_5' => '$1 a modifié cette page le $2',
+	'footer_6' => 'Voir une page au hasard',
+	'footer_7' => 'Envoyer cet article',
+	'footer_8' => 'Publier cet article',
+	'footer_9' => 'Notez-le',
+	'footer_About_Wikia' => '[http://fr.wikia.com/À_propos À propos de Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Faire de la publicité sur Wikia]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Contacter Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Conditions d’utilisation]',
 ];
 
 $messages['frc'] = [
@@ -11593,6 +11676,7 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 	'feedback-bugcheck' => 'Ottimo! Verifica che non sia già fra i [$1 bug conosciuti].',
 	'feedback-bugnew' => 'Controllo effettuato. Segnala un nuovo bug',
 	'feed-watom' => 'Fandom Atom',
+	'forum-url' => 'Forum:Index',
 ];
 
 $messages['iu'] = [
@@ -11785,13 +11869,13 @@ $messages['ja'] = [
 	'filesource' => '出典：',
 	'filename-toolong' => '240バイトを超えるファイル名は禁止されています。',
 	'filetype-mime-mismatch' => 'ファイルの拡張子「$1」がMIMEタイプ「$2」と一致しません。',
-	'filetype-badmime' => 'MIMEタイプ「$1」のファイルのアップロードは許可されていません。',
+	'filetype-badmime' => 'MIME タイプ "$1" のファイルのアップロードは許可されていません。',
 	'filetype-bad-ie-mime' => '許可されていない潜在的危険性のあるファイル形式「$1」としてInternet Explorerに認識されてしまうため、このファイルをアップロードできません。',
 	'filetype-unwanted-type' => '\'\'\'「.$1」\'\'\'は好ましくないファイル形式です。
 推奨される{{PLURAL:$3|ファイル形式}}は$2です。',
 	'filetype-banned-type' => '\'\'\'「.$1」\'\'\' は許可されていないファイル形式です{{PLURAL:$4|}}。
 許可されているファイル形式{{PLURAL:$3|}}は$2です。',
-	'filetype-missing' => 'ファイルに、「.jpg」のような拡張子がありません。',
+	'filetype-missing' => 'ファイルに拡張子 (".jpg" など）がありません。',
 	'file-too-large' => '送信されたファイルは大きすぎます。',
 	'filename-tooshort' => 'ファイル名が短すぎます。',
 	'filetype-banned' => 'この形式のファイルは禁止されています。',
@@ -11809,9 +11893,8 @@ $messages['ja'] = [
 [[$1|thumb]]
 ファイル\'\'\'<tt>[[:$1]]</tt>\'\'\'を確認してください。
 確認したファイルが同じ画像のもとのサイズの版である場合、サムネイルを個別にアップロードする必要はありません。',
-	'file-thumbnail-no' => 'ファイル名が\'\'\'<tt>$1</tt>\'\'\'から始まっています。
-他の画像から縮小されたもの（サムネイル）のようです。
-より高精細な画像をお持ちの場合は、そちらをアップロードしてください。そうでない場合はファイル名を変更してください。',
+	'file-thumbnail-no' => 'ファイル名が <strong><tt>$1</tt></strong> から始まっており、サムネイル（縮小版画像）である可能性が高いです。
+より高精細な画像をお持ちの場合は、フルサイズ版をアップロードしてください。そうでない場合はファイル名を変更してください。',
 	'fileexists-forbidden' => 'この名前のファイルは既に存在しており、上書きできません。
 アップロードを継続したい場合は、前のページに戻り、別のファイル名を使用してください。
 [[File:$1|thumb|center|$1]]',
@@ -11880,7 +11963,15 @@ PICT # その他
 	'filedelete-reason-otherlist' => 'その他の理由',
 	'filedelete-reason-dropdown' => '*よくある削除理由
 ** 著作権侵害
-** 重複ファイル',
+** 重複ファイル
+* ヴァンダリズムと問題
+** 著作権侵害
+** スパム／ヴァンダリズム
+* メンテナンス
+** 作者による依頼
+** ハウスキーピング
+** 重複／破棄されたファイル
+** 誤った名前のファイル',
 	'filedelete-edit-reasonlist' => '削除理由を編集する',
 	'filedelete-maintenance' => 'メンテナンス中のため、ファイルの削除と復帰は一時的に無効化されています。',
 	'filedelete-maintenance-title' => 'ファイルを削除できません',
@@ -11897,10 +11988,10 @@ $1',
 	'filedelete-old-unregistered' => '指定されたファイルの版「$1」はデータベースにありません。',
 	'filedelete-current-unregistered' => '指定されたファイル「$1」はデータベース内にはありません。',
 	'filedelete-archive-read-only' => '保存版ディレクトリ「$1」は、ウェブサーバーから書き込み不可になっています。',
-	'file-info' => 'ファイルサイズ：$1、MIMEタイプ：$2',
-	'file-info-size' => '$1×$2ピクセル、ファイルサイズ：$3、MIMEタイプ：$4',
+	'file-info' => 'ファイルサイズ: $1, MIME type: $2',
+	'file-info-size' => '$1 × $2 ピクセル、ファイルサイズ: $3、 MIMEタイプ: $4',
 	'file-info-size-pages' => '$1 × $2 ピクセル、ファイルサイズ: $3、MIMEタイプ: $4、$5ページ{{PLURAL:$5}}。',
-	'file-nohires' => '高解像度版はありません。',
+	'file-nohires' => '<small>高精細度の画像はありません。</small>',
 	'file-info-gif-looped' => 'ループします',
 	'file-info-gif-frames' => '$1フレーム',
 	'file-info-png-looped' => '繰り返し',
@@ -11929,9 +12020,25 @@ $1',
 	'feedback-error2' => 'エラー：編集に失敗しました',
 	'feedback-error3' => 'エラー：APIからの応答がありません',
 	'feedback-close' => '完了',
-	'featured' => '秀逸なウィキ',
+	'featured' => 'おすすめ',
 	'forum' => 'フォーラム',
 	'feed-watom' => 'FandomのAtom',
+	'fast-adv' => '広告',
+	'footer_1.5' => '編集してみましょう',
+	'footer_1' => '$1のこの記事を',
+	'footer_10' => 'ソーシャルブックマーク:',
+	'footer_2' => 'このページに関する議論ページ',
+	'footer_5' => '最終編集:$2 $1',
+	'footer_6' => 'おまかせ表示',
+	'footer_7' => 'このページをメールで知らせる',
+	'footer_8' => 'ソーシャルブックマーク:',
+	'footer_9' => 'この記事のランク:',
+	'footer_About_Wikia' => '[http://ja.wikia.com/wiki/%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 ウィキアについて]',
+	'footer_Advertise_on_Wikia' => '[http://ja.wikia.com/wiki/%E5%BA%83%E5%91%8A 広告について]',
+	'footer_Contact_Wikia' => '[[w:c:ja.community:Project:連絡先|連絡先]]',
+	'footer_License' => '[http://www.gnu.org/copyleft/fdl.html GFDL] - [http://www.opensource.jp/fdl/fdl.ja.html.euc-jp 日本語参考訳]',
+	'footer_MediaWiki' => '[http://www.mediawiki.org/wiki/MediaWiki/ja メディアウィキ]',
+	'footer_Terms_of_use' => '[http://ja.wikia.com/wiki/利用規約 利用規約]',
 ];
 
 $messages['jam'] = [
@@ -13681,6 +13788,13 @@ $1',
 	'feedback-close' => '완료',
 	'feedback-bugcheck' => '감사합니다! 혹시 해당 사항이 [$1 기존의 버그 리포트]에 올라와 있는지 확인해주세요.',
 	'feedback-bugnew' => '확인했습니다. 새로운 버그 리포트를 작성합니다.',
+	'fast-adv' => '광고',
+	'footer_1.5' => '이 글에 기여하시면 발전합니다.',
+	'footer_1' => '$1는(은)',
+	'footer_5' => '$1 사용자가 $2에 마지막으로 편집하였습니다.',
+	'footer_6' => '임의 문서 보기',
+	'footer_8' => '공유',
+	'footer_9' => '별점 주기',
 ];
 
 $messages['ko-kp'] = [
@@ -18283,15 +18397,15 @@ Aangewezen {{PLURAL:$3|bestandstype is|bestandstypes zijn}} $2.',
 	'filetype-banned-type' => '{{PLURAL:$4|Het bestandstype \'\'\'".$1"\'\'\' wordt|De bestandstypes \'\'\'".$1"\'\'\' worden}} niet toegelaten.
 {{PLURAL:$3|Het toegelaten bestandstype is|De toegelaten bestandstypes zijn}} $2.',
 	'filetype-missing' => 'Dit bestand heeft geen extensie (zoals ".jpg").',
-	'file-too-large' => 'Het bestand dat u probeerde te uploaden was te groot.',
+	'file-too-large' => 'Het bestand dat je probeerde te uploaden was te groot.',
 	'filename-tooshort' => 'Het bestand dat u probeerde te uploaden had een te korte bestandsnaam.',
 	'filetype-banned' => 'Het bestand dat u probeerde te uploaden was van een niet toegelaten bestandstype.',
 	'fileexists' => 'Er bestaat al een bestand met deze naam.
-Controleer \'\'\'<tt>[[:$1]]</tt>\'\'\' als u niet zeker weet of u het huidige bestand wilt overschrijven.
+Controleer \'\'\'<tt>[[:$1]]</tt>\'\'\' als je niet zeker weet of je het huidige bestand wilt overschrijven.
 [[$1|thumb]]',
 	'filepageexists' => 'De beschrijvingspagina voor dit bestand bestaat al op \'\'\'<tt>[[:$1]]</tt>\'\'\', maar er bestaat geen bestand met deze naam.
-De samenvatting die u hebt opgegeven zal niet op de beschrijvingspagina verschijnen.
-Bewerk de pagina handmatig om uw beschrijving daar weer te geven. [[$1|miniatuur]]',
+De samenvatting die je hebt opgegeven zal niet op de beschrijvingspagina verschijnen.
+Bewerk de pagina handmatig om je beschrijving daar weer te geven. [[$1|miniatuur]]',
 	'fileexists-extension' => 'Een bestand met dezelfde naam bestaat al: [[$2|thumb]]
 * Naam van het geüploade bestand: \'\'\'<tt>[[:$1]]</tt>\'\'\'
 * Naam van het bestaande bestand: \'\'\'<tt>[[:$2]]</tt>\'\'\'
@@ -18301,21 +18415,21 @@ Controleer het bestand \'\'\'<tt>[[:$1]]</tt>\'\'\'.
 Als het gecontroleerde bestand dezelfde afbeelding van oorspronkelijke grootte is, is het niet noodzakelijk een extra miniatuurafbeelding te uploaden.',
 	'file-thumbnail-no' => 'De bestandsnaam begint met \'\'\'<tt>$1</tt>\'\'\'.
 Het lijkt een verkleinde afbeelding te zijn \'\'(miniatuurafbeelding)\'\'.
-Als u deze afbeelding in volledige resolutie hebt, upload die afbeelding dan.
+Als je deze afbeelding in volledige resolutie hebt, upload die afbeelding dan.
 Wijzig anders de bestandsnaam.',
 	'fileexists-forbidden' => 'Er bestaat al een bestand met deze naam, en dat kan niet overschreven worden.
-Upload uw bestand onder een andere naam.
+Upload je bestand onder een andere naam.
 [[File:$1|thumb|center|$1]]',
-	'fileexists-shared-forbidden' => 'Er bestaat al een bestand met deze naam bij de gedeelde bestanden.
-Als u het bestand alsnog wilt uploaden, ga dan terug en kies een andere naam.
+	'fileexists-shared-forbidden' => 'Er bestaat al een bestand met deze naam bij de gedeelte bestanden.
+Als je het bestand alsnog wilt uploaden, ga dan terug en kies een andere naam.
 [[File:$1|thumb|center|$1]]',
 	'file-exists-duplicate' => 'Dit bestand is indentiek aan {{PLURAL:$1|het volgende bestand|de volgende bestanden}}:',
 	'file-deleted-duplicate' => 'Een bestand dat identiek is aan dit bestand ([[:$1]]) is voorheen verwijderd.
-Raadpleeg het verwijderingslogboek voordat u verder gaat.',
+Raadpleeg het verwijderingslogboek voordat je verder gaat.',
 	'filewasdeleted' => 'Er is eerder een bestand met deze naam verwijderd.
-Raadpleeg het $1 voordat u het opnieuw toevoegt.',
-	'filename-bad-prefix' => 'De naam van het bestand dat u aan het uploaden bent begint met \'\'\'"$1"\'\'\', wat een niet-beschrijvende naam is die meestal automatisch door een digitale camera wordt gegeven.
-Kies een duidelijke naam voor uw bestand.',
+Raadpleeg het $1 voordat je het opnieuw toevoegt.',
+	'filename-bad-prefix' => 'De naam van het bestand dat je aan het uploaden bent begint met \'\'\'"$1"\'\'\', wat een niet-beschrijvende naam is die meestal automatisch door een digitale camera wordt gegeven.
+Kies een duidelijke naam voor je bestand.',
 	'filename-prefix-blacklist' => ' #<!-- leave this line exactly as it is --> <pre>
 # De syntaxis is als volgt:
 #   * Alle tekst vanaf het karakter "#" tot het einde van de regel wordt gezien als opmerking
@@ -18347,11 +18461,11 @@ PICT # overig
 	'filehist-comment' => 'Opmerking',
 	'filehist-missing' => 'Het bestand is niet aangetroffen',
 	'filepage-nofile' => 'Er bestaat geen bestand met deze naam.',
-	'filepage-nofile-link' => 'Er bestaat geen bestand met deze naam, maar u kunt het [$1 uploaden].',
+	'filepage-nofile-link' => 'Er bestaat geen bestand met deze naam, maar je kunt het [$1 uploaden].',
 	'filepage.css' => '/ * De CSS die hier geplaatst wordt, wordt opgenomen in de bestandsbeschrijvingspagina en wordt ook opgenomen op externe wiki\'s (via externe repositories) * /',
 	'filerevert' => '$1 terugdraaien',
 	'filerevert-legend' => 'Bestand terugdraaien',
-	'filerevert-intro' => 'U bent \'\'\'[[Media:$1|$1]]\'\'\' aan het terugdraaien tot de [$4 versie op $2, $3].',
+	'filerevert-intro' => 'Je bent \'\'\'[[Media:$1|$1]]\'\'\' aan het terugdraaien tot de [$4 versie op $2, $3].',
 	'filerevert-comment' => 'Reden:',
 	'filerevert-defaultcomment' => 'Teruggedraaid tot de versie op $1 om $2',
 	'filerevert-submit' => 'Terugdraaien',
@@ -18359,8 +18473,8 @@ PICT # overig
 	'filerevert-badversion' => 'Er is geen vorige lokale versie van dit bestand met het opgegeven tijdstip.',
 	'filedelete' => '"$1" verwijderen',
 	'filedelete-legend' => 'Bestand verwijderen',
-	'filedelete-intro' => 'U staat op het punt om het bestand \'\'\'[[Media:$1|$1]]\'\'\' te verwijderen, inclusief alle eerdere versies.',
-	'filedelete-intro-old' => 'U bent de versie van \'\'\'[[Media:$1|$1]]\'\'\' van [$4 $3, $2] aan het verwijderen.',
+	'filedelete-intro' => 'Je staat op het punt om het bestand \'\'\'[[Media:$1|$1]]\'\'\' te verwijderen, inclusief alle eerdere versies.',
+	'filedelete-intro-old' => 'Je bent de versie van \'\'\'[[Media:$1|$1]]\'\'\' van [$4 $3, $2] aan het verwijderen.',
 	'filedelete-comment' => 'Reden:',
 	'filedelete-submit' => 'Verwijderen',
 	'filedelete-success' => '\'\'\'$1\'\'\' is verwijderd.',
@@ -18778,6 +18892,22 @@ Skriv inn filnamnet utan «{{ns:file}}:»-prefikset.',
 	'feedback-error2' => 'Feil: Brigdinga gjekk ikkje',
 	'feedback-error3' => 'Feil: Saknar svar frå API',
 	'forum' => 'Forum',
+	'fast-adv' => 'Reklame',
+	'featured' => 'Utvalgt',
+	'footer_1.5' => 'endre denne siden',
+	'footer_1' => 'Forbedre $1 ved å',
+	'footer_10' => 'Del med $1',
+	'footer_2' => 'Diskuter denne artikkelen',
+	'footer_5' => '$1 gjorde en endring den $2',
+	'footer_6' => 'Vis tilfeldig side',
+	'footer_7' => 'E-post artikkelen',
+	'footer_8' => 'Del denne artikkelen',
+	'footer_9' => 'Ranger denne artikkelen',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia Om Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Reklamér hos Wikia]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Kontakt Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Brukervilkår]',
+	'forum-url' => 'Forum:Indeks',
 ];
 
 $messages['nov'] = [
@@ -19537,12 +19667,12 @@ Jeśli chcesz, by się tam pojawiły, musisz później, ręcznie przeredagować 
 * Nazwa przesyłanego pliku: \'\'\'<tt>[[:$1]]</tt>\'\'\'
 * Nazwa istniejącego pliku: \'\'\'<tt>[[:$2]]</tt>\'\'\'
 Wybierz inną nazwę.',
-	'fileexists-thumbnail-yes' => 'Plik wydaje się być pomniejszoną grafiką \'\'(miniaturką)\'\'. [[$1|thumb]]
+	'fileexists-thumbnail-yes' => 'Plik wydaje się być pomniejszonym obrazem \'\'(miniaturką)\'\'. [[$1|thumb]]
 Sprawdź plik \'\'\'<tt>[[:$1]]</tt>\'\'\'.
-Jeśli wybrany plik jest tą samą grafiką co ta w rozmiarze pierwotnym, nie musisz przesyłać dodatkowej miniaturki.',
+Jeśli wybrany plik jest tym samym obrazem co ta w rozmiarze pierwotnym, nie musisz przesyłać dodatkowej miniaturki.',
 	'file-thumbnail-no' => 'Nazwa pliku zaczyna się od \'\'\'<tt>$1</tt>\'\'\'.
-Wydaje się, że jest to pomniejszona grafika \'\'(miniaturka)\'\'.
-Jeśli posiadasz tę grafikę w pełnym rozmiarze – prześlij ją. Jeśli chcesz wysłać tę – zmień nazwę przesyłanego obecnie pliku.',
+Wydaje się, że jest to pomniejszony obraz \'\'(miniaturka)\'\'.
+Jeśli posiadasz ten obraz w pełnym rozmiarze – prześlij go. Jeśli chcesz wysłać tę – zmień nazwę przesyłanego obecnie pliku.',
 	'fileexists-forbidden' => 'Plik o tej nazwie już istnieje i nie może zostać nadpisany.
 Jeśli chcesz przesłać plik cofnij się i prześlij go pod inną nazwą. [[File:$1|thumb|center|$1]]',
 	'fileexists-shared-forbidden' => 'Plik o tej nazwie już istnieje we współdzielonym repozytorium plików.
@@ -19627,7 +19757,7 @@ $1',
 	'file-info' => 'rozmiar pliku: $1, typ MIME: $2',
 	'file-info-size' => '$1 × $2 pikseli, rozmiar pliku: $3, typ MIME: $4',
 	'file-info-size-pages' => '$1 × $2 pikseli, rozmiar pliku: $3, typ MIME: $4, $5 {{PLURAL:$5|strona|strony|stron}}',
-	'file-nohires' => 'Grafika w wyższej rozdzielczości nie jest dostępna.',
+	'file-nohires' => '<small>Obraz w wyższej rozdzielczości jest niedostępny.</small>',
 	'file-info-gif-looped' => 'zapętlony',
 	'file-info-gif-frames' => '$1 {{PLURAL:$1|klatka|klatki|klatek}}',
 	'file-info-png-looped' => 'zapętlony',
@@ -19637,7 +19767,9 @@ $1',
 	'filepath-page' => 'Plik',
 	'filepath-submit' => 'Przejdź',
 	'filepath-summary' => 'Ta strona specjalna zwraca pełną ścieżkę do pliku.
-Grafiki są pokazywane w pełnej rozdzielczości. Inne typy plików są otwierane w skojarzonym z nimi programie.',
+Obrazy są pokazywane w pełnej rozdzielczości, inne typy plików są otwierane w skojarzonym z nimi programie.
+
+Wpisz nazwę pliku bez prefiksu „{{ns:file}}:”.',
 	'fileduplicatesearch' => 'Szukaj duplikatów pliku',
 	'fileduplicatesearch-summary' => 'Szukaj duplikatów pliku na podstawie wartości funkcji skrótu.',
 	'fileduplicatesearch-legend' => 'Szukaj duplikatów pliku',
@@ -19670,6 +19802,9 @@ W przeciwnym wypadku można użyć prostego formularza poniżej. Komentarz zosta
 	'footer_8' => 'Podziel się tym artykułem',
 	'footer_9' => 'Oceń ten artykuł',
 	'feed-watom' => 'Fandom Atom',
+	'filepage.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd stron plików, także na zewnętrznych wiki */',
+	'footer_About_Wikia' => '[http://pl.wikia.com/wiki/O_nas O Wikii]',
+	'footer_Terms_of_use' => '[http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania]',
 ];
 
 $messages['pms'] = [
@@ -20393,7 +20528,9 @@ PICT # misc.
 	'filedelete-reason-otherlist' => 'Outro motivo',
 	'filedelete-reason-dropdown' => '*Motivos comuns para eliminação
 ** Violação de direitos de autor
-** Ficheiro duplicado',
+** Arquivo duplicado
+** Imagem inapropriada ou pornografica
+** Imagem sem uso',
 	'filedelete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'filedelete-maintenance' => 'Eliminação e restauro de ficheiros foram temporariamente impossibilitadas durante a manutenção.',
 	'filedelete-maintenance-title' => 'Não é possível excluir o ficheiro',
@@ -20572,7 +20709,9 @@ PICT # misc.
 	'filedelete-reason-otherlist' => 'Outro motivo',
 	'filedelete-reason-dropdown' => '*Motivos comuns para eliminação
 ** Violação de direitos de autor
-** Arquivo duplicado',
+** Arquivo duplicado
+** Imagem inapropriada ou pornografica
+** Imagem sem uso',
 	'filedelete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'filedelete-maintenance' => 'Eliminação e restauro de arquivos estão temporariamente desativados durante manutenção.',
 	'filedelete-maintenance-title' => 'Não é possível excluir o arquivo',
@@ -21522,6 +21661,7 @@ $1',
 	'feedback-bugnew' => 'Я проверил. Сообщить о новой ошибке',
 	'forum' => 'Форум',
 	'feed-watom' => 'Fandom Atom',
+	'forum-url' => 'Форум:Сообщество',
 ];
 
 $messages['rue'] = [
@@ -27128,6 +27268,7 @@ Nếu không thì bạn có thể điền biểu mẫu đơn giản ở dưới.
 	'feedback-bugcheck' => 'Tuyệt! Chỉ cần kiểm tra nó chưa được [$1 báo cáo trước đây].',
 	'feedback-bugnew' => 'Tôi đã kiểm tra – báo cáo lỗi mới',
 	'forum' => 'diển đàn',
+	'forum-url' => 'Diễn đàn:Mục lục',
 ];
 
 $messages['vls'] = [
@@ -28224,6 +28365,9 @@ $1',
 	'feedback-bugcheck' => '请检查本bug是否为[$1 已知bug]。',
 	'feedback-bugnew' => '我检查了。报告新bug',
 	'feed-watom' => 'Fandom Atom',
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '想改善$1？',
+	'footer_2' => '回应此文',
 ];
 
 $messages['zh-hant'] = [
@@ -28256,7 +28400,7 @@ $messages['zh-hant'] = [
 	'filetype-bad-ie-mime' => '不可以上傳這個檔案，因為 Internet Explorer 會將它偵測為 "$1"，它是一種不容許以及有潛在危險性之檔案類型。',
 	'filetype-unwanted-type' => '\'\'\'".$1"\'\'\'是一種不需要的檔案類型。
 建議的{{PLURAL:$3|一種|多種}}檔案類型有$2。',
-	'filetype-banned-type' => '\'\'\'「.$1」\'\'\'{{PLURAL:$4|不是允許的檔案類型|是不允許的檔案類型}}。 
+	'filetype-banned-type' => '\'\'\'「.$1」\'\'\'{{PLURAL:$4|不是允許的檔案類型|是不允許的檔案類型}}。
 允許的{{PLURAL:$3|檔案類型|檔案類型}} $2。',
 	'filetype-missing' => '該檔案名稱並沒有副檔名 （像 ".jpg"）。',
 	'file-too-large' => '您所提交的檔案過大。',
@@ -28375,10 +28519,30 @@ $1',
 	'feedback-bugcheck' => '請檢查此bug是否為[$1 已知bug]。',
 	'feedback-bugnew' => '我已經檢查過。報告一個新的bug',
 	'feed-watom' => 'Fandom Atom',
+	'footer_1.5' => '快來編輯此頁！',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_2' => '回應此文',
+	'footer_5' => '修改:$1 - $2',
+	'footer_6' => '檢視隨機頁面',
+	'footer_7' => '轉寄此文',
+	'footer_8' => '分享到網路書籤',
+	'footer_9' => '打分數',
 ];
 
 $messages['zh-hk'] = [
 	'february' => '二月',
+	'footer_1.5' => '快來編修本頁',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_10' => '與$1分享',
+	'footer_2' => '發表意見',
+	'footer_5' => '最近編輯：$1 $2',
+	'footer_6' => '隨機頁面',
+	'footer_7' => '轉寄本文',
+	'footer_8' => '加到網路書籤',
+	'footer_9' => '打分數',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
 ];
 
 $messages['zh-min-nan'] = [
@@ -28423,6 +28587,19 @@ $messages['zh-tw'] = [
 	'filedelete-nofile-old' => '在已指定屬性的情況下，這裡沒有\'\'\'$1\'\'\'於 $2 $3 的版本。',
 	'file-nohires' => '無更高解析度可提供。',
 	'forum' => '討論區',
+	'footer_1.5' => '快來編修本頁',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_10' => '與$1分享',
+	'footer_2' => '發表意見',
+	'footer_5' => '最近編輯：$1 $2',
+	'footer_6' => '隨機頁面',
+	'footer_7' => '轉寄本文',
+	'footer_8' => '加到網路書籤',
+	'footer_9' => '打分數',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用條款]',
 ];
 
 $messages['zh-yue'] = [
@@ -28465,5 +28642,38 @@ $messages['zu'] = [
 	'file-anchor-link' => 'Ifayela',
 	'filemissing' => 'Ifayili lilahlekile',
 	'filepath-submit' => 'Hamba',
+];
+
+$messages['zh'] = [
+	'filedesc' => '简述',
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '想改善 $1 ?',
+	'footer_10' => '与$1分享',
+	'footer_2' => '发表意见',
+	'footer_5' => '最近编辑：$1 $2',
+	'footer_6' => '查看随机页面',
+	'footer_7' => '转寄本文',
+	'footer_8' => '加到网路书签',
+	'footer_9' => '打分数',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
+];
+
+$messages['zh-cn'] = [
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '觉得 $1 不夠好吗?',
+	'footer_10' => '与$1分享',
+	'footer_2' => '发表意见',
+	'footer_5' => '最近编辑：$1 $2',
+	'footer_6' => '随机页面',
+	'footer_7' => '转寄本文',
+	'footer_8' => '加到网路书签',
+	'footer_9' => '打分数',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
 ];
 

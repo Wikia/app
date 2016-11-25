@@ -9,6 +9,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	var googleTag,
 		mocks = {
 			callback: noop,
+			adSlot: {
+				getIframe: noop
+			},
 			element: {
 				getId: noop,
 				getNode: function () {
@@ -33,7 +36,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				disableInitialLoad: noop,
 				addEventListener: noop,
 				refresh: noop,
-				setTargeting: noop
+				setTargeting: noop,
+				getSlots: noop
 			},
 			recoveryHelper: {
 				isBlocking: function () {
@@ -62,8 +66,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 							addService: noop
 						};
 					},
-					destroySlots: noop,
-					getSlots: noop
+					destroySlots: noop
 				}
 			},
 			allSlots: [
@@ -91,6 +94,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	beforeEach(function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.googleSlots,
+			mocks.adSlot,
 			mocks.recoveryHelper,
 			document,
 			mocks.log,
@@ -215,7 +219,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('destroySlots destroys all slots when nothing passed', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
-		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+		spyOn(mocks.pubads, 'getSlots').and.returnValue(mocks.allSlots);
 
 		googleTag.init();
 		googleTag.destroySlots();
@@ -225,7 +229,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('destroySlots destroys only passed slot', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
-		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+		spyOn(mocks.pubads, 'getSlots').and.returnValue(mocks.allSlots);
 
 		googleTag.init();
 		googleTag.destroySlots(['TOP_LEADERBOARD']);
@@ -235,7 +239,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('destroySlots doesn\'t destroy slot if incorrect slot name is passed', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
-		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+		spyOn(mocks.pubads, 'getSlots').and.returnValue(mocks.allSlots);
 
 		googleTag.init();
 		googleTag.destroySlots(['foo']);

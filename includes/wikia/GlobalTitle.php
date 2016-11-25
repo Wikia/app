@@ -800,7 +800,7 @@ class GlobalTitle extends Title {
 				$this->mLang = "en";
 			}
 		}
-		$this->mContLang = Language::factory( $this->mLang );
+		$this->mContLang = Language::factory( $this->mLang, $this->mCityId );
 
 		return $this->mContLang;
 	}
@@ -822,10 +822,23 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
+		// $wgMetaNamespace is calculated per wiki and cached in Language singleton per language,
+		// so we have to override it manually in this method
+		$metaNamespace = WikiFactory::getVarValueByName( 'wgMetaNamespace', $this->mCityId );
+		$metaNamespaceTalk = WikiFactory::getVarValueByName( 'wgMetaNamespaceTalk', $this->mCityId );
+
+		if ( $metaNamespace === false ) {
+			$wiki = WikiFactory::getWikiByID( $this->mCityId );
+			// Copied from Setup.php - Namespaces can't use spaces
+			$metaNamespace = str_replace( ' ', '_', $wiki->city_title );
+		}
+
 		// $wgExtraNamespaces is calculated at MW init in context language.
 		// We have to override them to get correctly localized namespaces registered by extensions.
 		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
-			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces()
+			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces(),
+			'wgMetaNamespace' => $metaNamespace,
+			'wgMetaNamespaceTalk' => $metaNamespaceTalk
 		] );
 		$langNamespaces = $globalStateWrapper->wrap( function () {
 			return $this->mContLang->getNamespaces();
@@ -835,11 +848,11 @@ class GlobalTitle extends Title {
 		 * get extra namespaces for city_id, they have to be defined in
 		 * $wgExtraNamespacesLocal variable
 		 */
-		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId, false, [] );
+		$namespaces = WikiFactory::getVarValueByName( 'wgExtraNamespacesLocal', $this->mCityId, false, [] );
 		if ( !is_array( $namespaces ) ) {
 			$namespaces = [];
 		}
-		
+
 		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
 
 		return $this->mNamespaceNames;
@@ -859,7 +872,7 @@ class GlobalTitle extends Title {
 			foreach ( $wgExtensionNamespacesFiles as $extFile ) {
 				$namespaces = [ ];
 				// Namespace files fill in $namespaces array
-				require $extFile ;
+				require $extFile;
 
 				foreach ( $namespaces as $langKey => $namespaceArray ) {
 					if ( array_key_exists( $langKey, $extraExtensionNamespaces ) ) {
@@ -871,6 +884,10 @@ class GlobalTitle extends Title {
 			}
 
 			static::$extraExtensionNamespaces = $extraExtensionNamespaces;
+		}
+
+		if ( $this->mLang === 'en' || empty( static::$extraExtensionNamespaces[$this->mLang] ) ) {
+			return static::$extraExtensionNamespaces['en'];
 		}
 
 		return static::$extraExtensionNamespaces[$this->mLang] + static::$extraExtensionNamespaces['en'];

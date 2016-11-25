@@ -1,0 +1,60 @@
+{
+	"name": "mediawiki/maps",
+	"type": "mediawiki-extension",
+	"description": "Adds various mapping features to MediaWiki",
+	"keywords": [
+		"MediaWiki",
+		"Semantic MediaWiki",
+		"Maps",
+		"Google Maps",
+		"OpenLayers",
+		"OSM",
+		"OpenStreetMap"
+	],
+	"homepage": "https://github.com/JeroenDeDauw/Maps",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "http://jeroendedauw.com",
+			"role": "Creator and lead developer"
+		}
+	],
+	"support": {
+		"email": "semediawiki-user@lists.sourceforge.net",
+		"irc": "irc://irc.freenode.net/mediawiki",
+		"source": "https://github.com/JeroenDeDauw/Maps"
+	},
+	"require": {
+		"php": ">=5.3.2",
+		"composer/installers": "^1.0.1",
+		"mediawiki/validator": "^2.0.2",
+		"data-values/geo": "~1.0"
+	},
+	"autoload": {
+		"files" : [
+			"Maps.php"
+		],
+		"psr-4": {
+			"Maps\\": "src/Maps/"
+		},
+		"classmap": [
+			"includes/",
+			"Maps.hooks.php",
+			"tests/phpunit/elements/",
+			"tests/phpunit/parserhooks/ParserHookTest.php"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "3.5.x-dev"
+		}
+	},
+	"config": {
+		"process-timeout": 0
+	},
+	"scripts":{
+		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+	}
+}

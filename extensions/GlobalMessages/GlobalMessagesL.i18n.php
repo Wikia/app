@@ -26,12 +26,13 @@ Note that some pages may continue to be displayed as if you were still logged in
 Please wait before trying again.',
 	'login-abort-generic' => 'Your login was unsuccessful - Aborted',
 	'loginlanguagelabel' => 'Language: $1',
-	'loginlanguagelinks' => '* Deutsch|de
-* English|en
-* Esperanto|eo
-* Français|fr
+	'loginlanguagelinks' => '* English|en
+* Deutsch|de
 * Español|es
+* Français|fr
 * Italiano|it
+* 中文|zh
+* 日本語|ja
 * Nederlands|nl',
 	'link_sample' => 'Link title',
 	'link_tip' => 'Internal link',
@@ -62,9 +63,20 @@ this file is $2.',
 	'lockmanager-fail-db-bucket' => 'Could not contact enough lock databases in bucket $1.',
 	'lockmanager-fail-db-release' => 'Could not release locks on database $1.',
 	'lockmanager-fail-svr-release' => 'Could not release locks on server $1.',
-	'license' => 'Licensing:',
+	'license' => 'Licensing',
 	'license-header' => 'Licensing',
-	'licenses' => '-',
+	'licenses' => '* Fair use:
+** Fairuse|This will be used in a way that qualifies as fair use under US law
+* Own image:
+** Self|I created this image myself.
+* Wikimedia:
+** From Wikimedia|I got this from Wikipedia or another Wikimedia project
+* Free licenses:
+** CC-BY-SA|This is licensed under the Creative Commons Attribution-Share Alike License
+** Other free|This is licensed under another free license
+* Other
+** PD|This is in the public domain 
+** Permission|This is copyrighted, but use is permitted by the copyright holder',
 	'license-nopreview' => '(Preview not available)',
 	'listfiles-summary' => 'This special page shows all uploaded files.
 When filtered by user, only files where that user uploaded the most recent version of the file are shown.',
@@ -77,19 +89,19 @@ When filtered by user, only files where that user uploaded the most recent versi
 	'listfiles_size' => 'Size',
 	'listfiles_description' => 'Description',
 	'listfiles_count' => 'Versions',
-	'linkstoimage' => 'The following {{PLURAL:$1|page links|$1 pages link}} to this file:',
-	'linkstoimage-more' => 'More than $1 {{PLURAL:$1|page links|pages link}} to this file.
-The following list shows the {{PLURAL:$1|first page link|first $1 page links}} to this file only.
+	'linkstoimage' => 'The following {{PLURAL:$1|page uses|$1 pages use}} this photo:',
+	'linkstoimage-more' => 'More than $1 {{PLURAL:$1|page uses|pages use}} this photo.
+The following list shows the {{PLURAL:$1|first page|first $1 page}} that uses this photo.
 A [[Special:WhatLinksHere/$2|full list]] is available.',
 	'linkstoimage-redirect' => '$1 (file redirect) $2',
-	'listredirects' => 'List of redirects',
+	'listredirects' => 'Redirects list',
 	'listredirects-summary' => '',
 	'lonelypages' => 'Orphaned pages',
 	'lonelypages-summary' => '',
 	'lonelypagestext' => 'The following pages are not linked from or transcluded into other pages in {{SITENAME}}.',
 	'longpages' => 'Long pages',
 	'longpages-summary' => '',
-	'listusers' => 'User list',
+	'listusers' => 'Users list',
 	'listusers-summary' => '',
 	'listusers-editsonly' => 'Show only users with edits',
 	'listusers-creationsort' => 'Sort by creation date',
@@ -143,7 +155,7 @@ To lock or unlock the database, this needs to be writable by the web server.',
 	'lockedbyandtime' => '(by {{GENDER:$1|$1}} on $2 at $3)',
 	'lastmodifiedatby' => 'This page was last modified $2, $1 by $3.',
 	'log-show-hide-patrol' => '$1 patrol log',
-	'limitall' => 'all',
+	'limitall' => '5000',
 	'livepreview-loading' => 'Loading...',
 	'livepreview-ready' => 'Loading... Ready!',
 	'livepreview-failed' => 'Live preview failed!
@@ -177,7 +189,7 @@ Try normal preview.',
 	'logdelete-log-message' => '$1 for $2 {{PLURAL:$2|event|events}}',
 	'limit' => 'Limit',
 	'login-abort-readonly' => 'Site is currently in read-only mode. Users can not log in while the site is in read-only mode.',
-	'login_greeting' => 'Welcome, [[User:$1|$1]]!',
+	'login_greeting' => 'Welcome [[Special:MyPage|$1]]!',
 	'log_in' => 'Log in',
 	'login_as_another' => 'Login as another user',
 	'locked' => 'locked',
@@ -357,6 +369,7 @@ See also [[MediaWiki:Lastmodifiedat/{{SUBPAGENAME}}]].',
 
 {{Identical|All}}',
 	'livepreview-loading' => '{{Identical|Loading}}',
+	'login-abort-service-unavailable' => 'Message shown to the user trying to log-in when we cannot contact authentication service.',
 ];
 
 $messages['ab'] = [
@@ -413,6 +426,7 @@ Intekening word verbied.',
 	'login-throttled' => 'U het al te veel kere met \'n ongeldige wagwoord probeer aanteken.
 Wag asseblief alvorens u weer probeer.',
 	'login-abort-generic' => 'U is nie aangemeld nie. Die prosedure is gestaak.',
+	'login-abort-service-unavailable' => 'Login is temporarily unavailable. Please try again later.',
 	'loginlanguagelabel' => 'Taal: $1',
 	'link_sample' => 'Skakelnaam',
 	'link_tip' => 'Interne skakel',
@@ -2854,8 +2868,7 @@ $messages['bg'] = [
 	'loginreqtitle' => 'Изисква се влизане',
 	'loginreqlink' => 'влизане',
 	'loginreqpagetext' => 'Необходимо е $1, за да можете да разглеждате други страници.',
-	'longpageerror' => '\'\'\'ГРЕШКА: Изпратеният текст е с големина {{PLURAL:$1|един килобайт|$1 килобайта}}, което надвишава позволения максимум от {{PLURAL:$2|един килобайт|$2 килобайта}}.\'\'\'
-Поради тази причина той не може да бъде съхранен.',
+	'longpageerror' => '<strong>ГРЕШКА: Текстът, който се опитвате да съхраните е с големина $1 килобайта; максималният допустим обем текст е $2 килобайта. Редакцията не може да бъде съхранена.</strong>',
 	'log-fulllog' => 'Преглеждане на пълния дневник',
 	'language-converter-depth-warning' => 'Надвишени са възможностите за автоматичен превод ($1)',
 	'last' => 'пред',
@@ -2894,7 +2907,7 @@ $1',
 	'listusers-editsonly' => 'Показване само на потребители с редакции',
 	'listusers-creationsort' => 'Сортиране по дата на създаване',
 	'log' => 'Дневници',
-	'logempty' => 'Дневникът не съдържа записи, отговарящи на избрания критерий.',
+	'logempty' => 'Няма намерени подходящи записи в дневника.',
 	'log-title-wildcard' => 'Търсене на заглавия, започващи със',
 	'linksearch' => 'Търсене на външни препратки',
 	'linksearch-pat' => 'Търсене по:',
@@ -5061,7 +5074,7 @@ Eine [[Special:WhatLinksHere/$2|vollständige Liste]] ist verfügbar.',
 	'listusers-creationsort' => 'Nach Erstelldatum sortieren',
 	'log' => 'Logbücher',
 	'logempty' => 'Keine passenden Einträge.',
-	'log-title-wildcard' => 'Titel beginnt mit …',
+	'log-title-wildcard' => 'Titel beginnt mit…',
 	'linksearch' => 'Weblinksuche',
 	'linksearch-pat' => 'Suchmuster:',
 	'linksearch-ns' => 'Namensraum:',
@@ -5103,8 +5116,8 @@ Zusätzliche Informationen über einzelne Rechte können [[{{MediaWiki:Listgroup
 	'lastmodifiedatby' => 'Diese Seite wurde zuletzt am $1 um $2 Uhr von $3 geändert.',
 	'log-show-hide-patrol' => 'Kontroll-Logbuch $1',
 	'limitall' => 'alle',
-	'livepreview-loading' => 'Am Laden …',
-	'livepreview-ready' => 'Laden … Fertig!',
+	'livepreview-loading' => 'Lädt…',
+	'livepreview-ready' => 'Lädt… Fertig!',
 	'livepreview-failed' => 'Die sofortige Vorschau ist nicht möglich!
 Bitte die normale Vorschau nutzen.',
 	'livepreview-error' => 'Verbindung nicht möglich: $1 „$2“. Bitte die normale Vorschau benutzen.',
@@ -5131,8 +5144,19 @@ Bitte die normale Vorschau nutzen.',
 	'logentry-newusers-create' => '$1 erstellte ein Benutzerkonto',
 	'logentry-newusers-create2' => '$1 erstellte ein Benutzerkonto $3',
 	'logentry-newusers-autocreate' => 'Benutzerkonto $1 wurde automatisch erstellt',
-	'login_greeting' => 'Willkommen bei Wikia, [[User:$1|$1]]!',
+	'login_greeting' => 'Willkommen bei Wikia!',
 	'login_as_another' => 'Als anderer Benutzer anmelden',
+	'licenses' => '* LU|Lizenz unbekannt (ich weiß nicht genau)
+* PD|gemeinfrei (public domain)
+* CC-by-sa|CC-BY-SA: Creative Commons Attribution-ShareAlike
+* Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
+	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
+	'locked' => 'gesperrt',
+	'log-in-new' => 'Konto vorhanden? Melde dich an!',
+	'logdelete-log-message' => '$1 für $2 {{PLURAL:$2|Event|Events}}',
+	'logdelete-logentry' => 'Sichtbarkeit für das Event "[[$1]]" geändert',
+	'log_in' => 'Anmelden',
+	'login-abort-readonly' => 'Wikia befindet sich momentam im "Nur-Lese-Modus". Benutzer können sich während dieser Zeitspanne nicht anmelden. Bitte versuche es später nochmal!',
 ];
 
 $messages['de-ch'] = [
@@ -5906,7 +5930,8 @@ Ten en cuenta que las páginas que tengas abiertas en otras ventanas o pestañas
 	'loginsuccess' => '\'\'\'Has iniciado sesión en {{SITENAME}} como «$1».\'\'\'',
 	'login-userblocked' => 'Este usuario está bloqueado. Inicio de sesión no permitido.',
 	'login-throttled' => 'Has intentado demasiadas veces iniciar sesión. Por favor espera antes de intentarlo nuevamente.',
-	'login-abort-generic' => 'Tu inicio de sesión no fue exitoso - Cancelado',
+	'login-abort-generic' => 'Tu inicio de sesión no se completó - Cancelado',
+	'login-abort-service-unavailable' => 'El inicio de sesión no está disponible temporalmente. Por favor, inténtalo de nuevo más tarde.',
 	'loginlanguagelabel' => 'Idioma: $1',
 	'link_sample' => 'Título del enlace',
 	'link_tip' => 'Enlace interno',
@@ -5978,8 +6003,8 @@ Protocolos soportados: <tt>$1</tt> (no añada ninguno de estos en su búsqueda).
 	'listusers-submit' => 'Mostrar',
 	'listusers-noresult' => 'No se encontró al usuario.',
 	'listusers-blocked' => '({{GENDER:$1|bloqueado|bloqueada}})',
-	'listgrouprights' => 'Permisos del grupo de usuarios',
-	'listgrouprights-summary' => 'La siguiente es una lista de los grupos de usuario definidos en esta wiki y de sus privilegios de acceso asociados.
+	'listgrouprights' => 'Listado de permisos por grupo',
+	'listgrouprights-summary' => 'La siguiente lista contiene los grupos de usuarios definidos en este wiki y sus privilegios de acceso asociados.
 Puede haber información adicional sobre privilegios individuales en [[{{MediaWiki:Listgrouprights-helppage}}]]',
 	'listgrouprights-key' => '* <span class="listgrouprights-granted">Derecho concedido</span>
 * <span class="listgrouprights-revoked">Derecho revocado</span>',
@@ -6040,6 +6065,23 @@ Intenta usar la previsualización normal.',
 	'logentry-newusers-autocreate' => 'La cuenta $1 fue creada automáticamente',
 	'login_greeting' => 'Bienvenido a Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Ingresa como otro usuario',
+	'licenses' => '* Desconocida:
+** Sin licencia|No conozco la licencia
+* Foto propia:
+** Propia|Es una foto mía
+* Wikimedia:
+** De Wikimedia|Viene de Wikipedia u otro proyecto Wikimedia
+* Licencias libres:
+** CC-BY-SA|Tiene una licencia Creative Commons
+** Otra libre|Tiene otra licencia libre
+* Otras
+** PD|Es de dominio público
+** Fairuse|Puede usar ya que está cualificada como fair use bajo las leyes estadounidenses
+** Permiso|Tiene copyright, pero se permite su uso por parte del dueño',
+	'limit' => 'Límite',
+	'log-in-new' => '¿Dispones de una cuenta? Identifícate',
+	'log_in' => 'Identifícate',
+	'login-abort-readonly' => 'El sitio está en modo de solo lectura actualmente. Los usuarios no pueden identificarse mientras el sitio permanece en este modo.',
 ];
 
 $messages['et'] = [
@@ -6462,7 +6504,7 @@ $1',
 	'lonelypages' => 'صفحه‌های یتیم',
 	'lonelypagestext' => 'به صفحه‌های زیر از هیچ صفحهٔ دیگری در {{SITENAME}} پیوند داده نشده‌است و در هیچ صفحهٔ دیگری گنجانده نشده‌اند.',
 	'longpages' => 'صفحه‌های بلند',
-	'listusers' => 'فهرست کاربران',
+	'listusers' => 'فهرست محلی کاربران',
 	'listusers-editsonly' => 'فقط کاربرانی که ویرایش دارند را نشان بده',
 	'listusers-creationsort' => 'مرتب کردن بر اساس تاریخ ایجاد',
 	'log' => 'سیاهه‌ها',
@@ -6488,7 +6530,7 @@ $1',
 * <span class="listgrouprights-revoked">اختیارات گرفته شده</span>',
 	'listgrouprights-group' => 'گروه',
 	'listgrouprights-rights' => 'دسترسی‌ها',
-	'listgrouprights-helppage' => 'Help:دسترسی‌های گروهی',
+	'listgrouprights-helppage' => 'راهنما:دسترسی‌های گروهی',
 	'listgrouprights-members' => '(فهرست اعضا)',
 	'listgrouprights-addgroup' => 'می‌تواند این {{PLURAL:$2|گروه|گروه‌ها}} را اضافه کند: $1',
 	'listgrouprights-removegroup' => 'می‌تواند این {{PLURAL:$2|گروه|گروه‌ها}} را حذف کند: $1',
@@ -6540,6 +6582,10 @@ $1',
 	'logentry-newusers-create' => '$1 یک حساب کاربری ایجاد کرد',
 	'logentry-newusers-create2' => '$1 یک حساب کاربری ایجاد کرد $3',
 	'logentry-newusers-autocreate' => 'کاروری حساب $1  بساتن به شکل خودکار',
+	'log-in-new' => 'از قبل حساب کاربری دارید؟ وارد سیستم شوید.',
+	'log_in' => 'وارد سیستم شوید',
+	'login_as_another' => 'ورود به سیستم',
+	'login_greeting' => '!خوش‌آمدید [[User:$1|$1]]',
 ];
 
 $messages['fi'] = [
@@ -6618,9 +6664,9 @@ Seuraava lista näyttää {{PLURAL:$1|ensimmäisen linkittävän sivun|$1 ensimm
 	'logempty' => 'Ei tapahtumia lokissa.',
 	'log-title-wildcard' => 'Kohde alkaa merkkijonolla',
 	'linksearch' => 'Etsi ulkoisia linkkejä',
-	'linksearch-pat' => 'Osoite',
-	'linksearch-ns' => 'Nimiavaruus',
-	'linksearch-ok' => 'Etsi',
+	'linksearch-pat' => 'Hakukaava:',
+	'linksearch-ns' => 'Nimiavaruus:',
+	'linksearch-ok' => 'Hae',
 	'linksearch-text' => 'Tähteä (*) voi käyttää jokerimerkkinä, esimerkiksi ”*.wikipedia.org”.
 Vähintään ylätason verkkotunnus, esimerkiksi "*.org", tarvitaan.<br />
 Tuetut protokollat: <tt>$1</tt> (älä lisää näitä hakuusi).',
@@ -6629,7 +6675,7 @@ Tuetut protokollat: <tt>$1</tt> (älä lisää näitä hakuusi).',
 	'listusersfrom' => 'Katkaisuhaku',
 	'listusers-submit' => 'Hae',
 	'listusers-noresult' => 'Käyttäjiä ei löytynyt.',
-	'listusers-blocked' => '(estetty)',
+	'listusers-blocked' => 'Estetty',
 	'listgrouprights' => 'Käyttäjäryhmien oikeudet',
 	'listgrouprights-summary' => 'Tämä lista sisältää tämän wikin käyttäjäryhmät sekä ryhmiin liitetyt käyttöoikeudet.
 Lisätietoa yksittäisistä käyttäjäoikeuksista saattaa löytyä [[{{MediaWiki:Listgrouprights-helppage}}|erilliseltä ohjesivulta]].',
@@ -6689,8 +6735,9 @@ Yritä normaalia esikatselua.',
 	'logentry-newusers-create' => '$1 loi käyttäjätunnuksen',
 	'logentry-newusers-create2' => '$1 loi käyttäjätunnuksen $3',
 	'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 luotiin automaattisesti',
-	'login_greeting' => 'Tervetuloa Wikia, [[User:$1|$1]]!',
+	'login_greeting' => 'Tervetuloa {{GRAMMAR:illative|{{SITENAME}}}}, [[User:$1|$1]]!',
 	'login_as_another' => 'Kirjaudu sisään toisena käyttäjänä',
+	'log-in-new' => 'Sinulla on jo käyttäjä? Kirjaudu sisään',
 ];
 
 $messages['fiu-vro'] = [
@@ -6931,8 +6978,8 @@ Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, $1 sous le mê
 Notez que certaines pages peuvent être encore affichées comme si vous étiez toujours connecté(e), jusqu’à ce que vous effaciez le cache de votre navigateur.',
 	'logouttext-link-text' => 'vous reconnecter',
 	'login' => 'Connexion',
-	'loginprompt' => 'Vous devez activer les témoins (\'\'cookies\'\') pour vous connecter à {{SITENAME}}.',
-	'logout' => 'Se déconnecter',
+	'loginprompt' => 'Vous devez autoriser les \'\'cookies\'\' pour vous connecter à {{SITENAME}}.',
+	'logout' => 'Déconnexion',
 	'loginerror' => 'Erreur de connexion',
 	'loginsuccesstitle' => 'Connexion réussie',
 	'loginsuccess' => 'Vous êtes maintenant connecté{{GENDER:$1||e|(e)}} à {{SITENAME}} en tant que « $1 ».',
@@ -6940,6 +6987,7 @@ Notez que certaines pages peuvent être encore affichées comme si vous étiez t
 	'login-throttled' => 'Vous avez tenté un trop grand nombre de connexions dernièrement.
 Veuillez attendre avant d’essayer à nouveau.',
 	'login-abort-generic' => 'Votre tentative de connexion a échoué',
+	'login-abort-service-unavailable' => 'La connexion est temporairement indisponible. Veuillez réessayer plus tard.',
 	'loginlanguagelabel' => 'Langue : $1',
 	'link_sample' => 'Titre du lien',
 	'link_tip' => 'Lien interne',
@@ -7042,7 +7090,7 @@ Pour bloquer ou débloquer la base de données, il doit être accessible par le 
 	'lockedbyandtime' => '(par $1 le $2 à $3)',
 	'lastmodifiedatby' => 'Cette page a été modifiée pour la dernière fois le $1 à $2 par $3.',
 	'log-show-hide-patrol' => '$1 l’historique des relectures',
-	'limitall' => 'tous',
+	'limitall' => '5000',
 	'livepreview-loading' => 'Chargement...',
 	'livepreview-ready' => 'Chargement … terminé !',
 	'livepreview-failed' => 'L’aperçu rapide a échoué !
@@ -7054,7 +7102,7 @@ Essayez la prévisualisation normale.',
 	'logentry-delete-delete' => '$1 a supprimé la page $3',
 	'logentry-delete-restore' => '$1 a restauré la page $3',
 	'logentry-delete-event' => '$1 a modifié la visibilité {{PLURAL:$5|d\'un événement du journal|de $5 événements du journal}} sur $3: $4',
-	'logentry-delete-revision' => '$1 a modifié la visibilité {{PLURAL:$5|d\'une révision|de $5 révisions}} sur la page $3: $4',
+	'logentry-delete-revision' => '$1 a modifié la visibilité {{PLURAL:$5|d’une révision|de $5 révisions}} sur la page $3&nbsp;: $4',
 	'logentry-delete-event-legacy' => '$1 a modifié la visibilité des événements du journal sur $3',
 	'logentry-delete-revision-legacy' => '$1 a modifié la visibilité des révisions sur la page $3',
 	'logentry-suppress-delete' => '$1 a supprimé la page $3',
@@ -7062,10 +7110,10 @@ Essayez la prévisualisation normale.',
 	'logentry-suppress-revision' => '$1 a secrètement modifié la visibilité {{PLURAL:$5|d\'une révision|de $5 révisions}} sur la page $3: $4',
 	'logentry-suppress-event-legacy' => '$1 a secrètement modifié la visibilité des événements du journal sur $3',
 	'logentry-suppress-revision-legacy' => '$1 a secrètement modifié la visibilité des révisions sur la page $3',
-	'logentry-move-move' => '$1 a déplacé la page $3 vers $4',
-	'logentry-move-move-noredirect' => '$1 a déplacé la page $3 vers $4 sans laisser de redirection',
-	'logentry-move-move_redir' => '$1 a déplacé la page $3 vers $4 par-dessus une redirection',
-	'logentry-move-move_redir-noredirect' => '$1 a déplacé la page $3 vers $4 par-dessus une redirection sans laisser de redirection',
+	'logentry-move-move' => '$1 a renommé la page $3 en $4',
+	'logentry-move-move-noredirect' => '$1 a renommé la page $3 en $4 sans laisser de redirection',
+	'logentry-move-move_redir' => '$1 a renommé la page $3 en $4 en écrasant une redirection',
+	'logentry-move-move_redir-noredirect' => '$1 a renommé la page $3 en $4 en écrasant une redirection sans laisser de redirection',
 	'logentry-patrol-patrol' => '$1 a marqué la révision $4 de la page $3 comme contrôlée',
 	'logentry-patrol-patrol-auto' => '$1 a automatiquement marqué la révision $4 de la page $3 comme contrôlée',
 	'logentry-newusers-newusers' => '$1 a créé un compte utilisateur',
@@ -7074,6 +7122,23 @@ Essayez la prévisualisation normale.',
 	'logentry-newusers-autocreate' => 'Le compte $1 a été créé automatiquement',
 	'login_greeting' => 'Bienvenue sur Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Se connecter sous un autre compte',
+	'licenses' => '* Inconnue
+** Inconnu|Je ne connais pas la licence
+* Propre image
+** Moi|Cette image est de moi seul
+* Wikimedia
+** De Wikimedia|J\'ai pris ce fichier de Wikipédia ou d\'un autre projet de Wikimedia 
+* Licences libres
+** CC-BY|Ce fichier est sous licence Creative Commons Attribution
+** CC-BY-SA|Ce fichier est sous licence Creative Commons Attribution-Share Alike
+** Autre libre|Ce fichier est sous une autre licence libre
+* Autre
+** Domaine public|Ce fichier est du domaine public
+** Droit auteur|Ce fichier est soumis au droit d\'auteur
+** Permission|Ce fichier est sous copyright mais son auteur a permis son utilisation',
+	'limit' => 'Limite',
+	'log-in-new' => 'Déjà un compte? Connectez vous!',
+	'login-abort-readonly' => 'Le site est actuellement en mode lecture seule. Les utilisateurs ne peuvent pas se connecter tant que le site reste dans ce mode.',
 ];
 
 $messages['frc'] = [
@@ -10396,21 +10461,21 @@ $messages['it'] = [
 Si può continuare ad usare {{SITENAME}} come utente anonimo oppure $1, con lo stesso nome utente o un nome diverso.
 Nota che alcune pagine potrebbero continuare ad apparire come se il logout non fosse avvenuto finché non viene pulita la cache del proprio browser.',
 	'logouttext-link-text' => 'eseguire un nuovo accesso',
-	'login' => 'Entra',
+	'login' => 'Accedi',
 	'loginprompt' => 'Per accedere a {{SITENAME}} è necessario abilitare i cookie.',
 	'logout' => 'Esci',
-	'loginerror' => 'Errore nell\'accesso',
-	'loginsuccesstitle' => 'Accesso effettuato',
-	'loginsuccess' => '\'\'\'Sei stato connesso al server di {{SITENAME}} con il nome utente di "$1".\'\'\'',
-	'login-userblocked' => 'Questa utenza è bloccata. Non è possibile effettuare il login.',
+	'loginerror' => 'Errore nel login',
+	'loginsuccesstitle' => 'Login effettuato',
+	'loginsuccess' => '\'\'\'Sei entrato nel server di {{SITENAME}} con l\'username "$1".\'\'\'',
+	'login-userblocked' => 'Questo utente è bloccato. Non è possibile effettuare il login.',
 	'login-throttled' => 'Sono stati effettuati troppi tentativi di accesso in breve tempo.
 Riprovare più tardi.',
 	'login-abort-generic' => 'Il tuo login non ha avuto successo - Annullato',
 	'loginlanguagelabel' => 'Lingua: $1',
 	'link_sample' => 'Titolo del collegamento',
 	'link_tip' => 'Collegamento interno',
-	'loginreqtitle' => 'Accesso richiesto',
-	'loginreqlink' => 'eseguire l\'accesso',
+	'loginreqtitle' => 'Login richiesto',
+	'loginreqlink' => 'effettuare il login',
 	'loginreqpagetext' => 'Per vedere altre pagine è necessario $1.',
 	'longpageerror' => '\'\'\'Errore: il testo inviato è lungo {{PLURAL:$1|1|$1}} kilobyte, che è maggiore della dimensione massima consentita ({{PLURAL:$2|1|$2}} kilobyte).\'\'\'
 Il testo non può essere salvato.',
@@ -10457,7 +10522,7 @@ Di seguito sono elencate solo {{PLURAL:$1|la prima pagina che punta|le prime $1 
 	'lonelypages' => 'Pagine orfane',
 	'lonelypagestext' => 'Le pagine indicate di seguito sono prive di collegamenti provenienti da altre pagine di {{SITENAME}} e non sono incluse in nessuna pagina del sito.',
 	'longpages' => 'Pagine più lunghe',
-	'listusers' => 'Elenco degli utenti',
+	'listusers' => 'Lista degli utenti locali',
 	'listusers-editsonly' => 'Mostra solo utenti con dei contributi',
 	'listusers-creationsort' => 'Ordina per data di creazione',
 	'log' => 'Log',
@@ -10475,7 +10540,7 @@ Protocolli supportati: <tt>$1</tt> (non aggiungere nessuno di questi nella tua r
 	'listusersfrom' => 'Mostra gli utenti a partire da:',
 	'listusers-submit' => 'Mostra',
 	'listusers-noresult' => 'Nessun utente risponde ai criteri impostati.',
-	'listusers-blocked' => '(bloccato)',
+	'listusers-blocked' => 'Bloccati',
 	'listgrouprights' => 'Diritti del gruppo utente',
 	'listgrouprights-summary' => 'Di seguito sono elencati i gruppi utente definiti per questo sito, con i diritti d\'accesso loro associati.
 Potrebbero esserci [[{{MediaWiki:Listgrouprights-helppage}}|ulteriori informazioni]] sui diritti individuali.',
@@ -10483,7 +10548,7 @@ Potrebbero esserci [[{{MediaWiki:Listgrouprights-helppage}}|ulteriori informazio
 * <span class="listgrouprights-revoked">Diritto revocato</span>',
 	'listgrouprights-group' => 'Gruppo',
 	'listgrouprights-rights' => 'Diritti',
-	'listgrouprights-helppage' => 'Help:Diritti del gruppo',
+	'listgrouprights-helppage' => 'Aiuto:Livelli di accesso degli utenti',
 	'listgrouprights-members' => '(Elenco dei membri)',
 	'listgrouprights-addgroup' => 'Può aggiungere {{PLURAL:$2|al gruppo|ai gruppi}}: $1',
 	'listgrouprights-removegroup' => 'Può rimuovere {{PLURAL:$2|dal gruppo|dai gruppi}}: $1',
@@ -10537,7 +10602,10 @@ Usare l\'anteprima standard.',
 	'logentry-newusers-create2' => '$1 ha creato un\'utenza $3',
 	'logentry-newusers-autocreate' => 'L\'utenza $1 è stata creata automaticamente',
 	'login_greeting' => 'Benvenuto su Wikia, [[User:$1|$1]]!',
-	'login_as_another' => 'Esegui il login come un\'altro user',
+	'login_as_another' => 'Esegui il login come un altro user',
+	'log-in-new' => 'Sei già registrato? Accedi',
+	'log_in' => 'Login',
+	'login-abort-readonly' => 'Il sito è attualmente in modalità di sola lettura. Gli utenti non possono effettuare il login quando il sito è in questa modalità.',
 ];
 
 $messages['iu'] = [
@@ -10756,25 +10824,25 @@ $1',
 	'lonelypages' => '孤立しているページ',
 	'lonelypagestext' => '以下のページは、{{SITENAME}}の他のページからリンクも参照読み込みもされていません。',
 	'longpages' => '長いページ',
-	'listusers' => '利用者の一覧',
+	'listusers' => 'ローカルの登録利用者',
 	'listusers-editsonly' => '投稿記録のある利用者のみを表示',
 	'listusers-creationsort' => '作成日順に整列',
 	'log' => '記録',
 	'logempty' => '該当する記録がみつかりませんでした。',
 	'log-title-wildcard' => 'この文字列で始まるページ名を検索する',
 	'linksearch' => '外部リンクの検索',
-	'linksearch-pat' => '検索パターン：',
-	'linksearch-ns' => '名前空間：',
+	'linksearch-pat' => '検索パターン:',
+	'linksearch-ns' => '名前空間:',
 	'linksearch-ok' => '検索',
 	'linksearch-text' => '"*.wikipedia.org" のようにワイルドカードを使うことができます。
 少なくとも、"*.org" のようなトップレベルドメインが必要です。<br />
 対応プロトコル: <tt>$1</tt> (これらを検索に含めないでください)。',
 	'linksearch-line' => '$1 が $2 からリンクされています',
 	'linksearch-error' => 'ワイルドカードはホスト名の先頭でのみ使用できます。',
-	'listusersfrom' => '最初に表示する利用者：',
+	'listusersfrom' => '次の文字列から始まる利用者を表示:',
 	'listusers-submit' => '表示',
 	'listusers-noresult' => '利用者が見つかりませんでした。',
-	'listusers-blocked' => '（ブロック中）',
+	'listusers-blocked' => 'ブロック中',
 	'listgrouprights' => '利用者グループの権限',
 	'listgrouprights-summary' => '以下は、このウィキに登録されている利用者グループと、それぞれに割り当てられている権限の一覧です。
 個々の権限に関する更なる情報は[[{{MediaWiki:Listgrouprights-helppage}}|追加情報]]を見てください。',
@@ -10819,12 +10887,12 @@ $1',
 	'logentry-delete-delete' => '$1 がページ「$3」を削除しました',
 	'logentry-delete-restore' => '$1 がページ「$3」を復帰しました',
 	'logentry-delete-event' => '$1 が$3で{{PLURAL:$5|記録項目|$5件の記録項目}}の閲覧レベルを変更しました: $4',
-	'logentry-delete-revision' => '$1 がページ「$3」で{{PLURAL:$5|版|$5個の版}}の閲覧レベルを変更しました: $4',
+	'logentry-delete-revision' => '$1 がページ「$3」で{{PLURAL:$5|リビジョン|$5 個のリビジョン}}の閲覧レベルを変更しました $3: $4',
 	'logentry-delete-event-legacy' => '$1 が$3で記録項目の閲覧レベルを変更しました',
 	'logentry-delete-revision-legacy' => '$1 がページ「$3」の版の閲覧レベルを変更しました',
 	'logentry-suppress-delete' => '$1 がページ「$3」を隠蔽しました',
 	'logentry-suppress-event' => '$1 が$3で{{PLURAL:$5|記録項目|$5件の記録項目}}の閲覧レベルを見えない形で変更しました: $4',
-	'logentry-suppress-revision' => '$1 がページ「$3」で{{PLURAL:$5|版|$5個の版}}の閲覧レベルを見えない形で変更しました: $4',
+	'logentry-suppress-revision' => '$1 がページ「$3」で{{PLURAL:$5|リビジョン|$5個のリビジョン}}の閲覧レベルを見えない形で変更しました: $4',
 	'logentry-suppress-event-legacy' => '$1 が$3で記録項目の閲覧レベルを見えない形で変更しました',
 	'logentry-suppress-revision-legacy' => '$1 がページ「$3」の版の閲覧レベルを見えない形で変更しました',
 	'logentry-move-move' => '$1 がページ「$3」を「$4」へと移動しました',
@@ -10839,6 +10907,21 @@ $1',
 	'logentry-newusers-autocreate' => 'アカウント「$1」が自動的に作成されました',
 	'login_greeting' => '[[User:$1|$1]]さん、ようこそ!',
 	'login_as_another' => '他のユーザーとしてログインする',
+	'licenses' => '* フェアユース:
+** Fairuse|これはアメリカ合衆国著作権法によりフェアユースとみなして使われます
+* 自分の画像:
+** Self|私が自分でこの画像を作成しました。
+* ウィキメディア:
+** From Wikimedia|私はウィキペディアまたはウィキメディア・プロジェクトからこれを入手しました
+* フリーライセンス:
+** CC-BY-SA|これはクリエィティブ・コモンズ 表示 - 継承ライセンスのもとで許諾されています
+** Other free|これはその他のフリーライセンスのもとで許諾されています
+* その他
+** PD|これはパブリックドメインです
+** Permission|これは著作権がありますが、著作権保持者によって使用が許可されています',
+	'log-in-new' => 'アカウントを既にお持ちですか？ログイン',
+	'log_in' => 'ログイン',
+	'login-abort-readonly' => '申し訳ありません。サイトは現在読み取り専用となっており、ログインしていただくことができません。しばらくしてからお試しください。',
 ];
 
 $messages['jam'] = [
@@ -12340,7 +12423,7 @@ $1',
 	'listusersfrom' => '다음으로 시작하는 사용자 보기:',
 	'listusers-submit' => '보기',
 	'listusers-noresult' => '해당 사용자가 없습니다.',
-	'listusers-blocked' => '(차단됨)',
+	'listusers-blocked' => '차단됨',
 	'listgrouprights' => '사용자 권한 목록',
 	'listgrouprights-summary' => '다음은 이 위키에서 설정된 사용자 권한 그룹의 목록입니다.
 각각의 권한에 대해서는 [[{{MediaWiki:Listgrouprights-helppage}}|이곳]]을 참조하십시오.',
@@ -12401,6 +12484,10 @@ $1',
 	'logentry-newusers-create' => '$1 사용자가 계정을 생성했습니다.',
 	'logentry-newusers-create2' => '$1 사용자가 $3 계정을 생성했습니다.',
 	'logentry-newusers-autocreate' => '$1 계정이 자동적으로 생성되었습니다.',
+	'log-in-new' => '계정이 이미 있다면, 로그인하세요.',
+	'log_in' => '로그인',
+	'login_as_another' => '다른 계정으로 로그인',
+	'login_greeting' => '[[User:$1|$1]]님 환영합니다!',
 ];
 
 $messages['ko-kp'] = [
@@ -16459,30 +16546,30 @@ $messages['nl'] = [
 	'listingcontinuesabbrev' => 'meer',
 	'lastmodifiedat' => 'Deze pagina is het laatst bewerkt op $1 om $2.',
 	'laggedslavemode' => '\'\'\'Waarschuwing:\'\'\' de pagina kan verouder zijn.',
-	'logouttext' => '\'\'\'U bent nu afgemeld.\'\'\'
+	'logouttext' => '\'\'\'Je bent nu afgemeld.\'\'\'
 
-U kunt {{SITENAME}} nu anoniem gebruiken of weer $1 als dezelfde of een andere gebruiker.
-Mogelijk worden nog een aantal pagina\'s weergegeven alsof u aangemeld bent totdat u de cache van uw browser leegt.',
+Je kunt {{SITENAME}} nu anoniem gebruiken of weer [[Special:UserLogin|aanmelden]] als dezelfde of een andere gebruiker.
+Mogelijk worden nog een aantal pagina\'s weergegeven alsof je aangemeld bent totdat je de cache van uw browser leegt.',
 	'logouttext-link-text' => 'aanmelden',
 	'login' => 'Aanmelden',
-	'loginprompt' => 'U moet cookies ingeschakeld hebben om u te kunnen aanmelden bij {{SITENAME}}.',
+	'loginprompt' => 'Je moet cookies ingeschakeld hebben om je te kunnen aanmelden bij {{SITENAME}}.',
 	'logout' => 'Afmelden',
 	'loginerror' => 'Aanmeldfout',
 	'loginsuccesstitle' => 'Aanmelden geslaagd',
-	'loginsuccess' => '\'\'\'U bent nu aangemeld bij {{SITENAME}} als "$1".\'\'\'',
+	'loginsuccess' => '\'\'\'Je bent nu aangemeld bij {{SITENAME}} als "$1".\'\'\'',
 	'login-userblocked' => 'Deze gebruiker is geblokkeerd.
 Aanmelden is niet mogelijk.',
-	'login-throttled' => 'U hebt recentelijk te vaak geprobeerd aan te melden met een onjuist wachtwoord.
-Wacht even voordat u het opnieuw probeert.',
+	'login-throttled' => 'Je hebt recentelijk te vaak geprobeerd aan te melden met een onjuist wachtwoord.
+Wacht even voordat je het opnieuw probeert.',
 	'login-abort-generic' => 'U bent niet aangemeld. De procedure is afgebroken.',
 	'loginlanguagelabel' => 'Taal: $1',
 	'link_sample' => 'Onderwerp',
 	'link_tip' => 'Interne verwijzing',
 	'loginreqtitle' => 'Aanmelden verplicht',
 	'loginreqlink' => 'aanmelden',
-	'loginreqpagetext' => 'U moet zich $1 om andere pagina\'s te kunnen bekijken.',
-	'longpageerror' => '\'\'\'Fout: de tekst die u hebt toegevoegd is {{PLURAL:$1|één kilobyte|$1 kilobyte}} groot, wat groter is dan het maximum van {{PLURAL:$2|één kilobyte|$2 kilobyte}}.\'\'\'
-Opslaan is niet mogelijk.',
+	'loginreqpagetext' => 'Je moet je $1 om andere pagina\'s te kunnen bekijken.',
+	'longpageerror' => '\'\'\'FOUT: de tekst die je hebt toegevoegd is $1 kilobyte groot, wat groter is dan het maximum van $2 kilobyte.
+Opslaan is niet mogelijk.\'\'\'',
 	'log-fulllog' => 'Het volledige logboek bekijken',
 	'language-converter-depth-warning' => 'De dieptelimiet voor de taalconvertor is overschreden ($1)',
 	'last' => 'vorige',
@@ -16567,13 +16654,13 @@ Er kan [[{{MediaWiki:Listgrouprights-helppage}}|extra informatie]] over individu
 	'lockdb' => 'Database blokkeren',
 	'lockdbtext' => 'Waarschuwing: de database blokkeren heeft tot gevolg dat geen enkele gebruiker meer in staat is pagina\'s te bewerken, voorkeuren te wijzigen of iets anders te doen waarvoor wijzigingen in de database nodig zijn.
 
-Bevestig dat u deze handeling wilt uitvoeren en dat u de database vrijgeeft nadat het onderhoud is uitgevoerd.',
+Bevestig dat je deze handeling wilt uitvoeren en dat je de database vrijgeeft nadat het onderhoud is uitgevoerd.',
 	'lockconfirm' => 'Ja, ik wil de database blokkeren.',
 	'lockbtn' => 'Database blokkeren',
-	'locknoconfirm' => 'U hebt uw keuze niet bevestigd via het vinkvakje.',
+	'locknoconfirm' => 'Je hebt je keuze niet bevestigd via het vinkvakje.',
 	'lockdbsuccesssub' => 'De database is afgesloten',
 	'lockdbsuccesstext' => 'De database is afgesloten.<br />
-Vergeet niet de [[Special:UnlockDB|database vrij te geven]] zodra u klaar bent met uw onderhoud.',
+Vergeet niet de [[Special:UnlockDB|database vrij te geven]] zodra je klaar bent met je onderhoud.',
 	'lockfilenotwritable' => 'Geen schrijfrechten op het databaselockbestand.
 Om de database te kunnen blokkeren of vrij te geven, dient de webserver schrijfrechten op dit bestand te hebben.',
 	'lockedbyandtime' => '(door $1 om $3 op $2)',
@@ -16818,7 +16905,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'lonelypages' => 'Foreldrelause sider',
 	'lonelypagestext' => 'Følgjande sider er ikkje lenkja til på andre sider på {{SITENAME}}.',
 	'longpages' => 'Lange sider',
-	'listusers' => 'Brukarliste',
+	'listusers' => 'Brukerliste',
 	'listusers-editsonly' => 'Vis berre brukarar med endringar',
 	'listusers-creationsort' => 'Sorter etter opprettingsdato',
 	'log' => 'Loggar',
@@ -16834,7 +16921,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'listusersfrom' => 'Vis brukarnamna frå og med:',
 	'listusers-submit' => 'Vis',
 	'listusers-noresult' => 'Ingen brukarnamn vart funne.',
-	'listusers-blocked' => '(konto blokkert)',
+	'listusers-blocked' => 'Blokkert',
 	'listgrouprights' => 'Rettar for brukargrupper',
 	'listgrouprights-summary' => 'Følgjande liste viser brukargruppene som er definert på denne wikien, og kvar rettar dei har. Meir informasjon om dei ulike rettane ein kan ha finn ein [[{{MediaWiki:Listgrouprights-helppage}}|her]].',
 	'listgrouprights-key' => '* <span class="listgrouprights-granted">Innvilga rettar</span>
@@ -16882,6 +16969,10 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'logentry-newusers-autocreate' => 'Kontoen $1 vart oppretta av seg sjølv',
 	'login_greeting' => 'Velkommen til Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Logg inn som en annen bruker',
+	'limit' => 'Grense',
+	'lockdb-wikifactory-error' => 'En feil oppstod. Lagring eller fjerning av cache mislykket. Databasen er kanskje ikke låst. Vennligst prøv igjen eller kontakt teknikkansvarlig.',
+	'locked' => 'låst',
+	'log-in-new' => 'Har du allerede en bruker? Logg inn',
 ];
 
 $messages['nov'] = [
@@ -17529,7 +17620,7 @@ Odczekaj chwilę zanim ponowisz próbę.',
 	'loginlanguagelabel' => 'Język: $1',
 	'link_sample' => 'Tytuł linku',
 	'link_tip' => 'Link wewnętrzny',
-	'loginreqtitle' => 'musisz się zalogować',
+	'loginreqtitle' => 'Musisz się zalogować',
 	'loginreqlink' => 'zalogować się',
 	'loginreqpagetext' => 'Musisz $1, żeby móc przeglądać inne strony.',
 	'longpageerror' => '\'\'\'Błąd! Wprowadzony przez Ciebie tekst ma {{PLURAL:$1|1 kilobajt|$1 kilobajty|$1 kilobajtów}}. Długość tekstu nie może przekraczać {{PLURAL:$2|1 kilobajt|$2 kilobajty|$2 kilobajtów}}. Tekst nie może być zapisany.\'\'\'',
@@ -17659,6 +17750,13 @@ Blokowanie i odblokowywanie bazy danych, wymaga by plik mógł być zapisywany p
 	'logentry-newusers-autocreate' => 'Konto użytkownika $1 zostało utworzone automatycznie',
 	'login_greeting' => 'Witamy w serwisie Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Zaloguj się jako inny użytkownik',
+	'licenses' => '*Brak_licencji|Nie znam licencji
+*Fairuse|Plik używany zgodnie z zasadami dozwolonego użytku
+*CC-BY-SA|Creative Commons BY-SA
+*Copyright|Zastrzeżone prawa autorskie
+*PD|Plik znajduje się w domenie publicznej
+*Wikimedia|Plik z Wikipedii lub innego projektu Fundacji Wikimedia',
+	'log-in-new' => 'Masz już konto? Zaloguj się',
 ];
 
 $messages['pms'] = [
@@ -19182,7 +19280,7 @@ $messages['ru'] = [
 Вы можете продолжить участие в {{grammar:genitive|{{SITENAME}}}} анонимно или $1 под тем же или другим именем.
 Некоторые страницы могут продолжать отображаться в том виде, как будто вы всё ещё представлены системе. Для борьбы с этим явлением обновите кеш браузера.',
 	'logouttext-link-text' => 'представиться заново',
-	'login' => 'Представиться системе',
+	'login' => 'Войти',
 	'loginprompt' => 'Вы должны разрешить «cookies», чтобы представиться системе.',
 	'logout' => 'Завершение сеанса',
 	'loginerror' => 'Ошибка опознавания участника',
@@ -19260,15 +19358,14 @@ $1',
 	'listusersfrom' => 'Показать участников, начиная с:',
 	'listusers-submit' => 'Показать',
 	'listusers-noresult' => 'Не найдено участников.',
-	'listusers-blocked' => '(заблокирован{{GENDER:$1||а}})',
+	'listusers-blocked' => 'Заблокирован',
 	'listgrouprights' => 'Права групп участников',
-	'listgrouprights-summary' => 'Ниже представлен список определённых в этой вики групп участников, указаны соответствующие им права доступа.
-Возможно, существует [[{{MediaWiki:Listgrouprights-helppage}}|дополнительная информация]] об индивидуальных правах.',
+	'listgrouprights-summary' => 'Ниже представлен список групп участников и список их прав. Также о правах участников с различным статусом можно прочитать на [[{{MediaWiki:Listgrouprights-helppage}}|справочной странице]].',
 	'listgrouprights-key' => '* <span class="listgrouprights-granted">Предоставленные права</span>
 * <span class="listgrouprights-revoked">Отозванные права</span>',
 	'listgrouprights-group' => 'Группа',
 	'listgrouprights-rights' => 'Права',
-	'listgrouprights-helppage' => 'Help:Права групп',
+	'listgrouprights-helppage' => 'Help:Уровни доступа участников',
 	'listgrouprights-members' => '(список группы)',
 	'listgrouprights-right-display' => '<span class="listgrouprights-granted">$1 (<code>$2</code>)</span>',
 	'listgrouprights-right-revoked' => '<span class="listgrouprights-revoked">$1 (<code>$2</code>)</span>',
@@ -19326,6 +19423,20 @@ $1',
 	'logentry-newusers-autocreate' => 'Автоматически создана учётная запись $1',
 	'login_greeting' => 'Добро пожаловать в Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Войти под другим именем',
+	'licenses' => '*Без лицензии|Я не знаю, какая у этого файла лицензия
+*Fairuse|Добросовестное использование (fair use) согласно законодательству США
+*Self|Я являюсь автором этого файла
+*Из Викимедиа|Файл из Википедии или другого проекта Викимедиа
+*Свободные лицензии:
+**CC-by-sa-3.0|Creative Commons Attribution ShareAlike 3.0
+**Свободная лицензия|Любая другая свободная лицензия
+* Другое:
+**PD|Предоставлен в общественно достояние правообладателем
+**FAL|Free Art License
+**CopyrightedFreeUse|Разрешено использование правообладателем',
+	'log-in-new' => 'Уже есть учётная запись? Войти',
+	'log_in' => 'Вход',
+	'login-abort-readonly' => 'Сайт сейчас находится в режиме только для чтения. Пользователи не могут войти в систему, если сайт находится в режиме только для чтения.',
 ];
 
 $messages['rue'] = [
@@ -21983,6 +22094,20 @@ Pröva vanlig förhandsgranskning istället.',
 	'logentry-newusers-autocreate' => 'Kontot $1 skapades automatiskt',
 	'login_greeting' => 'Välkommen till Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Logga in som en annan användare',
+	'licenses' => '* Okänd:
+** Ingen licens|Jag vet inte licensen
+* Eget foto:
+** Själv|Jag tog denna bild själv
+* Wikimedia:
+** Från Wikimedia|Jag fick detta från Wikipedia eller någon annan Wikimediaprojekt
+* Fria licenser:
+** CC-BY-SA|Detta är licensierat under Creative Commons Attribution-Share Alike License
+** Andra fria|Detta är licensierat under en annan fri licens
+* Andra
+** PD|Detta är i den offentliga domän
+** Fairuse|Detta kommer att användas på ett sätt som kan betraktas som rättvisanvändning enligt amerikansk lagstiftning
+** Tillstånd|Detta är upphovsrättsskyddat, men användningen är tillåten av rättighetsinnehavaren',
+	'log-in-new' => 'Har du redan ett konto? Logga in',
 ];
 
 $messages['sw'] = [
@@ -24256,9 +24381,9 @@ Có [[Special:WhatLinksHere/$2|danh sách đầy đủ ở đây]].',
 	'linksearch-line' => '$1 được liên kết từ $2',
 	'linksearch-error' => 'Chỉ được sử dụng ký tự đại diện (\'\'wildcard\'\') vào đầu tên miền (\'\'hostname\'\').',
 	'listusersfrom' => 'Hiển thị thành viên bắt đầu từ:',
-	'listusers-submit' => 'Xem',
-	'listusers-noresult' => 'Không thấy thành viên.',
-	'listusers-blocked' => '(bị cấm)',
+	'listusers-submit' => 'Hiển thị',
+	'listusers-noresult' => 'Không tìm thấy thành viên nào.',
+	'listusers-blocked' => 'Bị cấm',
 	'listgrouprights' => 'Nhóm thành viên',
 	'listgrouprights-summary' => 'Dưới đây là danh sách nhóm thành viên được định nghĩa tại wiki này, với mức độ truy cập của từng nhóm.
 Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhóm riêng biệt.',
@@ -25299,7 +25424,7 @@ $1',
 	'listusersfrom' => '给定显示用户条件：',
 	'listusers-submit' => '显示',
 	'listusers-noresult' => '找不到用户。',
-	'listusers-blocked' => '（已封锁）',
+	'listusers-blocked' => '被封禁',
 	'listgrouprights' => '用户组权限',
 	'listgrouprights-summary' => '以下面是一个在这个wiki中定义出来的用户权限列表，以及它们的访问权。
 更多有关个别权限的细节可以在[[{{MediaWiki:Listgrouprights-helppage}}|这里]]找到。',
@@ -25447,7 +25572,7 @@ $1',
 	'listusersfrom' => '給定顯示用戶條件:',
 	'listusers-submit' => '顯示',
 	'listusers-noresult' => '找不到用戶。',
-	'listusers-blocked' => '（已封鎖）',
+	'listusers-blocked' => '被封禁',
 	'listgrouprights' => '用戶群組權限',
 	'listgrouprights-summary' => '以下面是一個在這個wiki中定義出來的用戶權限清單，以及它們的存取權。
 更多有關個別權限的細節可以在[[{{MediaWiki:Listgrouprights-helppage}}|這裏]]找到。',
@@ -25527,7 +25652,7 @@ $messages['zh-tw'] = [
 	'listfiles_search_for' => '按圖片名稱搜尋:',
 	'listfiles_user' => '使用者',
 	'lonelypagestext' => '以下頁面尚未被這個wiki中的其它頁面連結。',
-	'listusers' => '使用者列表',
+	'listusers' => '用戶列表',
 	'listusersfrom' => '給定顯示使用者條件:',
 	'listusers-noresult' => '找不到使用者。',
 	'lockdbtext' => '鎖住資料庫將禁止所有使用者進行編輯頁面、更改參數、編輯監視列表以及其他需要更改資料庫的操作。
@@ -25535,6 +25660,20 @@ $messages['zh-tw'] = [
 	'livepreview-failed' => '即時預覽失敗! 嘗試標準預覽。',
 	'login_greeting' => '歡迎來到「Wikia」, [[User:$1|$1]]!',
 	'login_as_another' => '以別的用戶身份登入',
+	'licenses' => '* 合理使用:
+** fairuse|需要符合合理使用原則
+* 擁有版權:
+** Self|我擁有圖片或影片的版權
+* 維基媒體基金會:
+** From Wikimedia|我從維基百科或其他維基媒體基金會計劃取得圖片或影片
+* 自由版權:
+** CC-BY-SA|以創作共用-署名-相同方式分享發布
+** Other free|以其他自由版權發布（於敘述中說明）
+* 其他
+** PD|版權屬公共領域 
+** Permission|版權所有者願意讓本站使用',
+	'listredirects' => '重定向頁面列表',
+	'listusers-blocked' => '被封禁',
 ];
 
 $messages['zh-yue'] = [
@@ -25573,5 +25712,33 @@ $messages['zu'] = [
 	'last' => 'Amagcino',
 	'localtime' => 'Isikhathi siyalapha',
 	'longpages' => 'Amakhasi amade',
+];
+
+$messages['zh'] = [
+	'licenses' => '* 合理使用:
+** fairuse|需要符合合理使用原则
+* 拥有版权:
+** Self|我拥有图片或视频的版权
+* 维基媒体基金会:
+** From Wikimedia|我从维基百科或其他维基媒体基金会计划取得图片或视频
+* 自由版权:
+** CC-BY-SA|以创作共用-署名-相同方式分享发布
+** Other free|以其他自由版权发布（于叙述中说明）
+* 其他
+** PD|版权属公共领域 
+** Permission|版权所有者愿意让本站使用',
+	'listredirects' => '重定向页面列表',
+	'listusers-blocked' => '被封禁',
+	'listusers' => '用户列表',
+];
+
+$messages['zh-cn'] = [
+	'listredirects' => '重定向页面列表',
+];
+
+$messages['zh-hk'] = [
+	'listredirects' => '重定向頁面列表',
+	'listusers-blocked' => '被封禁',
+	'listusers' => '用戶列表',
 ];
 

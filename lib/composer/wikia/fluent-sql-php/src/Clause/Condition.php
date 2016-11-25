@@ -60,9 +60,9 @@ class Condition implements ClauseInterface {
 			$this->left->build($bk, $tabs);
 		}
 
-		if ($this->equality == Condition::IN && $this->right instanceof Field && $this->right->numValues() == 1) {
+		if ($this->equality == Condition::IN && $this->right->hasSingleValue()) {
 			$this->equality(Condition::EQUAL);
-		} elseif ($this->equality == Condition::NOT_IN && $this->right instanceof Field && $this->right->numValues() == 1) {
+		} elseif ($this->equality == Condition::NOT_IN && $this->right->hasSingleValue()) {
 			$this->equality(Condition::NOT_EQUAL);
 		}
 

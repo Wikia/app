@@ -51,8 +51,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
-		$vars[] = 'wgAdDriverMobileTransitionInterstitialCountries';
-		$vars[] = 'wgAdDriverMobileFloorAdhesionCountries';
+		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
@@ -67,7 +66,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
-		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverYavliCountries';
@@ -80,7 +78,6 @@ class AdEngine2Hooks {
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
-		$vars[] = 'wgSitewideDisableMonetizationService';
 
 		return true;
 	}

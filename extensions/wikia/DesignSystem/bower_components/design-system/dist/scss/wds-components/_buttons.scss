@@ -1,0 +1,78 @@
+.wds-button {
+	$active-color: darken($wds-color-link, 20%);
+	$line-height: 1.3em;
+
+	background-color: $wds-color-link;
+	border: 1px solid $wds-color-link;
+	color: $wds-color-white;
+	cursor: pointer;
+	display: inline-block;
+	font-size: $wds-typescale-size-minus-2;
+	font-weight: 600;
+	letter-spacing: .15px;
+	line-height: $line-height;
+	outline: none;
+	padding: 16px 18px 15px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition-duration: $wds-button-transition-duration;
+	transition-property: background-color, border-color, color;
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		background-color: $active-color;
+		border-color: $active-color;
+	}
+
+	&:disabled,
+	&.wds-is-disabled {
+		cursor: default;
+		opacity: .5;
+	}
+
+	&.wds-is-secondary {
+		background-color: transparent;
+		color: $wds-color-link;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: $active-color;
+		}
+	}
+
+	&.wds-is-squished {
+		font-size: $wds-typescale-size-minus-3;
+		padding: 10px 12px 9px;
+	}
+
+	&.wds-is-stretched {
+		padding: 28px 18px 27px;
+	}
+
+	&.wds-is-full-width {
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	&.wds-is-text {
+		background-color: transparent;
+		border: 0;
+		color: $wds-color-link;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: $active-color;
+		}
+	}
+}

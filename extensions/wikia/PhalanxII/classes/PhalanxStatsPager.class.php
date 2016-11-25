@@ -45,19 +45,30 @@ class PhalanxStatsPager extends PhalanxPager {
 	}
 
 	function formatRow( $row ) {
-		$type = implode( ", ", Phalanx::getTypeNames( $row->ps_blocker_hit ?? $row->ps_blocker_type ) );
+		$blocker = $row->ps_blocker_hit ?: $row->ps_blocker_type;
+		$type = implode( ', ', Phalanx::getTypeNames( $blocker ) );
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
-		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
-		$url = $row->ps_referrer ?? '';
-		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
+
+		$url = $row->ps_referrer ?: '';
+		if ( empty( $url ) ) {
+			$wiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
+			if ( $wiki ) {
+				$url = $wiki->city_url;
+			}
+		}
 
 		// SUS-184: Render usernames containing spaces correctly
-		$encUserName = str_replace(' ', '_', $username );
+		$encUserName = str_replace( ' ', '_', $username );
 
-		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
+		$specialContributions = GlobalTitle::newFromText(
+			'Contributions',
+			NS_SPECIAL,
+			$row->ps_wiki_id
+		);
 
-		if ( !empty( $specialContributionsURL ) ) {
+		if ( $specialContributions->getServer() ) {
+			$specialContributionsURL = $specialContributions->getFullURL();
 			$username = '[' . $specialContributionsURL . '/' . $encUserName . ' ' . $username . ']';
 		}
 

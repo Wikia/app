@@ -156,8 +156,8 @@ Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedi
 ];
 
 $messages['fr'] = [
-	'closemyaccount' => 'Close My Account',
-	'closemyaccount-desc' => 'Allows users to close their own accounts.',
+	'closemyaccount' => 'Fermer mon compte',
+	'closemyaccount-desc' => 'Permet aux utilisateurs de fermer leur compte',
 	'closemyaccount-intro-text' => 'Nous sommes désolés que vous souhaitiez désactiver votre compte. Fandom a de nombreux wikis sur toutes sortes de sujets et nous aimerions que vous restiez et trouviez celui qui vous convient. Si vous avez un problème sur votre wiki, n\'hésitez pas à demander de l\'aide ou des conseils aux [[Special:ListUsers/sysop|administrateurs locaux]].
 
 Si vous avez finalement décidé que vous souhaitez désactiver votre compte, sachez que :
@@ -168,9 +168,9 @@ Si vous avez finalement décidé que vous souhaitez désactiver votre compte, sa
 Si vous avez besoin de plus d\'informations sur ce que la désactivation d\'un compte fait réellement, vous pouvez visiter notre [[w:fr:Aide:Fermer mon compte|page d\'aide sur la désactivation de votre compte]]. Si vous êtes {{GENDER:$2|sûr|sure}} de vouloir fermer votre compte, veuillez cliquer sur le bouton ci-dessous.
 
 Veuillez noter que vous aurez $1 {{PLURAL:$1|jour|jours}} après avoir effectué cette demande pour réactiver votre compte en vous connectant et en suivant les instructions affichées. Passé ce délai, votre compte sera fermé définitivement et ne pourra pas être restauré.',
-	'closemyaccount-unconfirmed-email' => 'Attention : Vous n\'avez pas confirmé l\'adresse de courriel associée avec ce compte. Vous ne pourrez pas réactiver votre compte durant la période de rétractation sans en avoir une. Veuillez réfléchir à indiquer une adresse de courriel dans [[Special:Preferences|vos préférences]] avant de continuer.',
+	'closemyaccount-unconfirmed-email' => 'Attention : Vous n\'avez pas confirmé l\'adresse e-mail associée avec ce compte. Vous ne pourrez pas réactiver votre compte durant la période de rétractation sans en avoir une. Veuillez réfléchir à indiquer une adresse e-mail dans [[Special:Preferences|vos préférences]] avant de continuer.',
 	'closemyaccount-logged-in-as' => 'Vous êtes {{GENDER:$1|connecté|connectée}} en tant que $1. [[Special:UserLogout|Ce n\'est pas vous ?]]',
-	'closemyaccount-current-email' => '{{GENDER:$2|Votre}} adresse de courriel est $1. [[Special:Preferences|Vous souhaitez la changer ?]]',
+	'closemyaccount-current-email' => '{{GENDER:$2|Votre}} adresse e-mail est $1. [[Special:Preferences|Vous souhaitez la changer ?]]',
 	'closemyaccount-confirm' => '{{GENDER:$1|J\'}}ai lu la [[w:fr:Aide:Fermer_mon_compte|page d\'aide sur la fermeture de mon compte]] et je confirme que je souhaite désactiver mon compte Fandom.',
 	'closemyaccount-button-text' => 'Fermer mon compte',
 	'closemyaccount-reactivate-button-text' => 'Réactiver mon compte',
@@ -178,19 +178,19 @@ Veuillez noter que vous aurez $1 {{PLURAL:$1|jour|jours}} après avoir effectué
 	'closemyaccount-reactivate-intro' => 'Vous avez demandé auparavant à ce que nous fermions votre compte. Il reste encore $1 {{PLURAL:$1|jour|jours}} avant que votre compte ne soit fermé. Si vous souhaitez toujours fermer votre compte, retournez simplement à la navigation de Fandom. Toutefois, si vous souhaitez réactiver votre compte, veuillez cliquer sur le bouton ci-dessous et suivre les instructions dans l\'e-mail que vous allez recevoir.
 
 Souhaitez-vous réactiver votre compte ?',
-	'closemyaccount-reactivate-requested' => 'Un courriel a été envoyé a l\'adresse que vous avez définie pour ce compte. Veuillez cliquer sur le lien dans le courriel pour réactiver votre compte.',
+	'closemyaccount-reactivate-requested' => 'Un e-mail a été envoyé a l\'adresse que vous avez définie pour ce compte. Veuillez cliquer sur le lien dans cet e-mail pour réactiver votre compte.',
 	'closemyaccount-reactivate-error-id' => 'Veuillez d\'abord vous connecter avant de demander la réactivation.',
-	'closemyaccount-reactivate-error-email' => 'Aucune adresse de courriel n\'a été définie pour ce compte avant de demander la fermeture, il ne peut donc pas être réactivé. Veuillez  [[Special:Contact|contacter Wikia]] si vous avez des questions.',
+	'closemyaccount-reactivate-error-email' => 'Aucune adresse e-mail n\'a été définie pour ce compte avant de demander la fermeture, il ne peut donc pas être réactivé. Veuillez [[Special:Contact|contacter Wikia]] si vous avez des questions.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'La fermeture du compte n\'est pas planifiée.',
 	'closemyaccount-reactivate-error-invalid-code' => 'Il semble que vous ayez utilisé un code de confirmation qui a expiré. Veuillez vérifier votre boîte aux lettres pour un code plus récent que vous auriez demandé ou essayez d\'en demander un nouveau en vous [[Special:UserLogin|connectant]] au compte que vous souhaitez réactiver et suivez les instructions.',
-	'closemyaccount-reactivate-error-empty-code' => 'Un code de confirmation est nécessaire pour réactiver votre compte et n\'a pas été indiqué. Si vous avez demandé à ce que votre compte soit réactivé, veuillez cliquer sur le lien dans le courriel que nous vous avons envoyé. Sinon, [[Special:UserLogin|connectez-vous]] avec le compte que vous souhaitez réactiver afin de demander un code de confirmation.',
+	'closemyaccount-reactivate-error-empty-code' => 'Un code de confirmation est nécessaire pour réactiver votre compte et n\'a pas été indiqué. Si vous avez demandé à ce que votre compte soit réactivé, veuillez cliquer sur le lien dans l\'e-mail que nous vous avons envoyé. Sinon, [[Special:UserLogin|connectez-vous]] avec le compte que vous souhaitez réactiver afin de demander un code de confirmation.',
 	'closemyaccount-reactivate-error-disabled' => 'Ce compte a déjà été désactivé. Veuillez [[Special:Contact|contacter Fandom]] si vous avez des questions.',
 	'closemyaccount-reactivate-error-failed' => 'Une erreur est survenue en essayant de réactiver ce compte. Veuillez réessayer ou [[Special:Contact|contactez Fandom]] si le problème persiste.',
 	'closemyaccount-scheduled' => 'La fermeture de votre compte a été planifiée avec succès.
 
 Veuillez noter que vous avez  $1 {{PLURAL:$1|jour|jours}} à partir de maintenant pour réactiver votre compte en [[Special:UserLogin|vous connectant]] et en suivant les instructions affichées. Après cette période de rétractation, votre compte sera définitivement fermé et ne pourra pas être restauré.',
 	'closemyaccount-scheduled-failed' => 'Une erreur est survenue en tentant de planifier la fermeture de ce compte. Veuillez [[Special:CloseMyAccount|réessayer]] ou [[Special:Contact|contactez Fandom]] si le problème persiste.',
-	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Vous}} nous avez précédemment demandé de fermer votre compte. Pour le réactiver, accédez à la [[Special:CloseMyAccount/reactivate|page de réactivation du compte]] et suivez les instructions fournies.',
+	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|Vous}} avez demandé précédemment de fermer votre compte. Si vous souhaitez réactiver votre compte, veuillez vous rendre sur la [[Special:CloseMyAccount/reactivate|page de réactivation de compte]] et suivre les instructions affichées.',
 	'closemyaccount-reactivate-success' => 'Votre compte a été réactivé.',
 ];
 
@@ -234,7 +234,7 @@ Per favore ricordati che hai $1 {{PLURAL:$1|giorno|giorni}} a disposizione da ad
 ];
 
 $messages['ja'] = [
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => '自分のアカウントの利用を停止する',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => '{{GENDER:$2|あなた}}のアカウントの無効化リクエストが送信されました。Fandomには様々なトピックのバラエティ豊かなコミュニティがありますので、今後もし興味のあるコミュニティがあればご参加いただけましたら幸いです。ご自身が関わっているコミュニティで問題が発生しいている場合には、お気軽に[[Special:ListUsers/sysop|アドミン]]にヘルプやアドバイスを頼んでみてください。
 
@@ -247,10 +247,10 @@ $messages['ja'] = [
 
 このリクエストを送信されてから$1{{PLURAL:$1|日間|日間}}は、アカウントにログインし画面の手順に沿って操作することで、再度アカウントを有効化することが可能です。この期間を過ぎると、アカウントが完全に無効となり、復元することができなくなりますのでご注意ください。',
 	'closemyaccount-unconfirmed-email' => '警告: このアカウントに関連付けられている承認済みのメールアドレスではございません。承認済みのメールアドレスがないとあなたのアカウントを再有効化することはできません。手続きに入る前に[[Special:Preferences|個人設定]]にてメールアドレスを設定して下さい。',
-	'closemyaccount-logged-in-as' => '{{GENDER:$1|$1}}としてログインしています。[[Special:UserLogout|あなたではない?]]',
-	'closemyaccount-current-email' => '{{GENDER:$2|Your}}メールアドレスは$1と設定されています。 [[Special:Preferences|変更をご希望ですか?]]',
+	'closemyaccount-logged-in-as' => 'あなたは {{GENDER:$1|$1}} としてログインしています。[[Special:UserLogout|別人ですか？]]',
+	'closemyaccount-current-email' => 'あなたの登録メールアドレスは $1 です。[[Special:Preferences|変更をご希望ですか？]]',
 	'closemyaccount-confirm' => '{{GENDER:$1|私}}は、[[w:c:ja.community:ヘルプ:アカウントの利用を停止する|アカウントを閉じる]]を読み、自身のFandomアカウントを無効化することに同意します。',
-	'closemyaccount-button-text' => 'アカウントを閉じる',
+	'closemyaccount-button-text' => '自分のアカウントの利用を停止する',
 	'closemyaccount-reactivate-button-text' => 'アカウントを再有効化する',
 	'closemyaccount-reactivate-page-title' => 'アカウントを再有効化する',
 	'closemyaccount-reactivate-intro' => 'Fandomでは、{{GENDER:$2|あなた}}からアカウント無効化リクエストを受け取っています。アカウントが完全に無効となるまであと$1{{PLURAL:$1|日間|日間}}あります。アカウントを完全に無効としたい場合、特に追加のアクションは不要です。アカウントを再開にする場合は、下のボタンをクリックし、受信されたメールに記載の手順に従ってください。
@@ -395,7 +395,7 @@ $messages['ru'] = [
 	'closemyaccount-intro-text' => 'Нам очень жаль, что вы хотите отключить вашу учётную запись. На Фэндоме есть множество википроектов на разные темы, и мы очень надеемся, что вы передумаете и найдёте ту вики, которая подходит именно вам. Если у вас возникли проблемы на вики, пожалуйста, не стесняйтесь обращаться за помощью к [[Special:ListUsers/sysop|местным администраторам]].
 
 Если вы всё-таки точно решили, что хотите отключить вашу учётную запись, пожалуйста, учтите следующее:
-* Фэндом не имеет технической возможности полностью удалить учётную запись, но может отключить её. В этом случае ваш аккаунт будет заблокирован и вы больше не сможете его использовать.
+* Фэндом не имеет технической возможности полностью удалить учётную запись, но может её отключить. В этом случае ваш аккаунт будет заблокирован и вы больше не сможете его использовать.
 * Этот процесс является необратимым по прошествии $1 {{PLURAL:$1|дня|дней}}, и если вы захотите вернуться на Фэндом, вам придётся создать новую учётную запись.
 * Закрытие учётной записи не приведёт к удалению ваших правок и вашего вклада в википроекты Фэндома, так как этот контент принадлежит вики-сообществу.
 
@@ -429,7 +429,7 @@ $messages['ru'] = [
 ];
 
 $messages['zh-hans'] = [
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => '关闭我的帐号',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => '我们很抱歉您希望禁用您的帐户。Fandom拥有众多的流行话题，您在此可以不断查看新的主题社区。如果您在任何喜欢的维基上遇到了问题，您可以选择联系这个维基的[[Special:ListUsers/sysop|管理员]]获取建议和帮助。
 
@@ -468,7 +468,7 @@ $messages['zh-hans'] = [
 ];
 
 $messages['zh-hant'] = [
-	'closemyaccount' => '關閉我的帳戶',
+	'closemyaccount' => '關閉我的帳號',
 	'closemyaccount-desc' => '允許用戶關閉其帳戶。',
 	'closemyaccount-intro-text' => '我們很抱歉您希望關閉您的帳戶。Fandom擁有眾多的流行話題，您在此可以不斷查看新的主題社區。如果您在任何喜歡的wiki上遇到了問題，您可以選擇聯絡這個wiki的[[Special:ListUsers/sysop|管理員]]獲取建議和幫助。
 
@@ -507,7 +507,7 @@ $messages['zh-hant'] = [
 ];
 
 $messages['zh-tw'] = [
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => '關閉我的帳號',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => '我們很抱歉您希望禁用您的帳戶。 Wikia擁有眾多的流行話題，您在此可以不斷查看新的主題社區。如果您在任何喜歡的維基上遇到了問題，您可以選擇聯繫這個維基的[[Special:ListUsers/sysop|管理員]]獲取建議和幫助。
 
@@ -561,6 +561,23 @@ Mikäli haluat lisätietoja siitä, mitä tilin sulkeminen tarkalleen tarkoittaa
 
 Haluatko aktivoida tilisi uudelleen?',
 	'closemyaccount-scheduled-failed' => 'Ajastettua poistoa määritettäessä tapahtui virhe. Ole hyvä ja [[Special:CloseMyAccount|yritä uudelleen]] tai [[w:c:yhteiso:ota yhteyttä|ota meihin yhteyttä]] mikäli ongelma jatkuu.',
+	'closemyaccount-button-text' => 'Poista tilini käytöstä',
+	'closemyaccount-current-email' => 'Sähköpostiosoitteeksesi on asetettu $1. [[Special:Preferences|Haluatko muuttaa sitä?]]',
+	'closemyaccount-logged-in-as' => 'Olet kirjautuneena käyttäjänä $1. [[Special:UserLogout|Joku muu, kuin sinä?]]',
+	'closemyaccount-reactivate-button-text' => 'Aktivoi tilini uudelleen',
+	'closemyaccount-reactivate-error-email' => 'Tälle tilille ei asetettu sähköpostiosoitetta ennen sen sulkemista. Mikäli sinulla on kysyttävää, ole hyvä ja  [[Special:Contact|ota Wikiaan yhteyttä]].',
+	'closemyaccount-reactivate-error-empty-code' => 'Tilisi uudelleenaktivointiin vaadittua vahvistuskoodia ei annettu. Mikäli olet pyytänyt tilisi sulkemista, ole hyvä ja napsauta  lähettämästämme sähköpostista löytyvää linkkiä. Muussa tapauksessa voit pyytää vahvistuskoodin [[Special:UserLogin|kirjautumalla]] tiliin, jonka haluat aktivoida uudelleen.',
+	'closemyaccount-reactivate-error-fbconnect' => 'Olet aiemmin pyytänyt tilisi sulkemista. Mikäli haluat aktivoida tilisi uudelleen, ole hyvä ja siirry [[Special:CloseMyAccount/reactivate|tilin aktivointisivulle]] ja seuraa näkemiäsi ohjeita.',
+	'closemyaccount-reactivate-error-id' => 'Pyytääksesi tilisi uudelleenaktivointia, ole hyvä ja kirjaudu sisään.',
+	'closemyaccount-reactivate-error-invalid-code' => 'Olet ilmeisesti käyttänyt vanhentunutta vahvistuskoodia. Ole hyvä ja tarkista sähköpostisi uudemman koodin varalta, tai pyydä uusi koodi [[Special:UserLogin|kirjautumalla tilille]], jonka haluat aktivoida sekä seuraamalla ohjeita.',
+	'closemyaccount-reactivate-error-not-scheduled' => 'Tiliä ei ole asetettu poistettavaksi.',
+	'closemyaccount-reactivate-page-title' => 'Aktivoi tilini uudelleen',
+	'closemyaccount-reactivate-requested' => 'Asettamaasi sähköpostiosoitteeseen on lähetetty viesti. Ole hyvä ja napsauta viestistä löytyvää linkkiä aktivoidaksesi tilisi uudelleen.',
+	'closemyaccount-scheduled' => 'Tilillesi on onnistuneesti määritetty ajastettu poisto.
+
+Huomaathan, että sinulla on $1 {{PLURAL:$1|päivä|päivää}} aikaa aktivoida tilisi uudelleen [[Special:UserLogin|kirjautumalla sisään]] ja seuraamalla näkemiäsi ohjeita. Tämän odotusajan jälkeen tilisi poistetaan käytöstä pysyvästi eikä sitä voida palauttaa.',
+	'closemyaccount-unconfirmed-email' => 'Varoitus: tähän tiliin ei liity vahvistettua sähköpostiosoitetta. Ilman sellaista et voi uudelleenaktivoida tiliäsi odotusperiodin aikana. Harkitsethan sähköpostiosoitteen asettamista [[Special:Preferences|asetuksissasi]] ennen jatkamista.',
+	'closemyaccount' => 'Käyttäjätilin sulkeminen',
 ];
 
 $messages['ko'] = [
@@ -575,5 +592,21 @@ $messages['ko'] = [
 더 자세한 정보는 [[Help:Close_my_account|도움말 문서 (영어)]]를 참고하세요. 정말 계정을 비활성화하시려면 아래 버튼을 눌러 주세요.
 
 계정 비활성화 요청을 보낸 후 $1일 이내에 다시 로그인하시면 짧은 과정 이후에 다시 계정을 활성화하실 수 있습니다. 이 기간이 끝나면 귀하의 계정은 완전히 비활성화되며 다시 복구할 수 없습니다.',
+	'closemyaccount-button-text' => '계정 비활성화',
+	'closemyaccount-current-email' => '귀하의 이메일 주소는 지금, \'$1\'로 설정되어 있습니다. [[Special:Preferences|이메일을 변경하고 싶으신가요?]]',
+	'closemyaccount-logged-in-as' => '귀하는 지금, $1 계정으로 로그인해 있으십니다. [[Special:UserLogout|귀하의 계정이 아니신가요?]]',
+	'closemyaccount' => '계정 비활성화',
+];
+
+$messages['zh'] = [
+	'closemyaccount' => '关闭我的帐号',
+];
+
+$messages['zh-cn'] = [
+	'closemyaccount' => '关闭我的帐号',
+];
+
+$messages['zh-hk'] = [
+	'closemyaccount' => '關閉我的帳號',
 ];
 

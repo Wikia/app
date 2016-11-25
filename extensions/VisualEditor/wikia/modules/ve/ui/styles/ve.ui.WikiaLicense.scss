@@ -1,0 +1,11 @@
+@import "skins/shared/color";
+@import "color";
+
+.ve-ui-wikia-license {
+	background-color: rgba($color-black, .1);
+	border-top: 1px solid $color-page-border;
+	color: $color-ve-text-secondary;
+	font-size: .85em;
+	line-height: 1.25em;
+	padding: 10px;
+}

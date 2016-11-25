@@ -15,7 +15,7 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 		return SearchCores::CORE_XWIKI;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$this->getBlacklist()->addBlacklistedHostsProvider(
 			BlacklistFilter::staticProvider($this->blacklistedWikiHosts)
 		);

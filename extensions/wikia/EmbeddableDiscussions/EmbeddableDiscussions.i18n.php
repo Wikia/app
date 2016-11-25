@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
 	'embeddable-discussions-parameter-error-category' => 'It must be a valid category id.',
+	'embeddable-discussions-timestamp-now' => 'Now',
 );
 
 $messages['qqq'] = array(
@@ -43,6 +44,7 @@ $messages['qqq'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Supplemental error message for numerical parameters.',
 	'embeddable-discussions-parameter-error-boolean' => 'Supplemental error message for boolean parameters. "true" and "false" should be verbatim, not translated.',
 	'embeddable-discussions-parameter-error-category' => 'Supplemental error message for showing when an incorrect category paremeter was given.',
+	'embeddable-discussions-timestamp-now' => 'Text to show for a timestamp less than one minute old (now)',
 );
 
 $messages['de'] = array(

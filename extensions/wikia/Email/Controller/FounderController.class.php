@@ -318,7 +318,7 @@ class FounderActiveController extends EmailController {
 			'list' => 'recentchanges',
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
 			'rcprop' => implode( '|', [ 'user', 'title' ] ),
-			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
+			'rcnamespace' => implode( '|', $wg->ContentNamespaces ),
 			'rcexcludeuser' => $this->getTargetUserName(),
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,
@@ -592,7 +592,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	 */
 	protected function getDetailsList() {
 		$themeDesignerUrl = \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL();
-		return [
+		$detailsList = [
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "AddVideos.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
@@ -605,13 +605,22 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details", $themeDesignerUrl )->parse()
 			],
-			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
-				"iconLink" => \WAMService::WAM_LINK,
-				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-discussion-header" )->text(),
-				"details" => $this->getMessage( "emailext-founder-3-days-discussion-details", \WAMService::WAM_LINK )->parse()
-			]
 		];
+
+		$discussionsEnabled =
+			\WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->wikiId );
+		if ( $discussionsEnabled ) {
+			array_push( $detailsList, [
+					"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
+					"iconLink" => "{$this->wikiUrl}/d",
+					"detailsHeader" => $this->getMessage( "emailext-founder-3-days-discussion-header" )
+						->text(),
+					"details" => $this->getMessage( "emailext-founder-3-days-discussion-details" )
+						->text(),
+				] );
+		}
+
+		return $detailsList;
 	}
 
 

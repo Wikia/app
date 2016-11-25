@@ -32,7 +32,7 @@ class DesignSystemHelper {
 	 *
 	 * @return string
 	 */
-	public static function getSvg( $name, $classNames = '', $alt = '' ) {
+	public static function renderSvg( $name, $classNames = '', $alt = '' ) {
 		$xml = static::getCachedSvg( $name );
 
 		if ( $xml instanceof SimpleXMLElement ) {
@@ -58,6 +58,23 @@ class DesignSystemHelper {
 
 			return $alt ?: $name ?: '';
 		}
+	}
+
+	public static function renderApiImage( $model, $classNames = '', $alt = '' ) {
+		if ( $model['type'] === 'wds-svg' ) {
+			return static::renderSvg( $model['name'], $classNames, $alt );
+		} elseif ($model['type'] === 'image-external') {
+			$imgXml = new SimpleXMLElement( '<img />' );
+			$imgXml->addAttribute( 'src', $model['url'] );
+			$imgXml->addAttribute( 'class', $classNames );
+			$imgXml->addAttribute( 'alt', $alt );
+
+			$dom = dom_import_simplexml( $imgXml );
+			return $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+		}
+
+		WikiaLogger::instance()->error( __METHOD__ . ': unhandled image type:' . $model['type'] );
+		return '';
 	}
 
 	/**

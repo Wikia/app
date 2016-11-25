@@ -65,7 +65,7 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages[ 'type' ] = $type;
 		$insightPages[ 'icon' ] = $config[ static::INSIGHTS_ICON ];
 		$insightPages[ 'title' ] = wfMessage( $config[ static::INSIGHTS_TITLE ] )->text();
-		$insightPages[ 'helpicon' ] = DesignSystemHelper::getSvg(
+		$insightPages[ 'helpicon' ] = DesignSystemHelper::renderSvg(
 			'wds-icons-question', 'community-page-card-module-help-icon wds-icon-small' );
 
 		if ( $insightPages[ 'count' ] > static::INSIGHTS_MODULE_ITEMS ) {

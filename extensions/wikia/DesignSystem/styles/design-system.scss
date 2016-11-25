@@ -1,12 +1,13 @@
+// Importing CSS has to be done via absolute url - because SASS parser doesn't accept relative path for css files
 @import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
-@import '../bower_components/design-system/base/colors';
+@import '../bower_components/design-system/dist/scss/wds-variables/index';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
-$global-navigation-height: 55px;
 
 .wds-global-navigation-wrapper {
-	height: $global-navigation-height;
+	height: $wds-global-navigation-height;
 }
 
 .wds-global-navigation {
@@ -39,7 +40,7 @@ $global-navigation-height: 55px;
 	button:focus:disabled,
 	button:hover:disabled,
 	button:active:disabled {
-		background-color: $color-link;
+		background-color: $wds-color-link;
 	}
 
 	.notifications-container .bubbles {
@@ -66,11 +67,11 @@ $global-navigation-height: 55px;
 		}
 
 		a:hover {
-			color: $color-dark-blue-gray;
+			color: $wds-color-dark-blue-gray;
 		}
 
 		.wds-is-selected a {
-			color: $color-link;
+			color: $wds-color-link;
 		}
 	}
 }
@@ -78,4 +79,12 @@ $global-navigation-height: 55px;
 .wds-global-footer {
 	position: relative;
 	z-index: 2;
+}
+
+@if $widthType == 0 {
+	@media #{$screen} and (max-width: #{$content-width-small}) {
+		.wds-global-footer {
+			width: $content-width-small;
+		}
+	}
 }

@@ -35,7 +35,7 @@ $messages['nl'] = [
 ];
 
 $messages['pl'] = [
-	'authmodal-registration-success' => 'Witaj, $1! Twoje konto w Fandom zostało utworzone.',
+	'authmodal-registration-success' => 'Witaj, $1! Twoje konto w Fandomie zostało utworzone.',
 ];
 
 $messages['pt'] = [

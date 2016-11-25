@@ -20,11 +20,11 @@ class TitleBlock {
 		$retVal = true;
 		$title = Title::newFromURL( $move->newTitle );
 
-		if (!($title instanceof Title)) {
+		if ( !( $title instanceof Title ) ) {
 			wfProfileOut( __METHOD__ );
 			return $retVal;
 		}
-		$retVal = self::checkTitle($title, $block);
+		$retVal = self::checkTitle( $title, $block );
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
@@ -35,19 +35,19 @@ class TitleBlock {
 
 		$retVal = true;
 
-		if (!($title instanceof Title)) {
+		if ( !( $title instanceof Title ) ) {
 			wfProfileOut( __METHOD__ );
 			return $retVal;
 		}
-		
+
 		// Hook is called for both page creations and edits. We should only check
 		// if the page is created = page does not exist (RT#61104)
-		if ($title->exists()) {
-			wfProfileOut(__METHOD__);
+		if ( $title->exists() ) {
+			wfProfileOut( __METHOD__ );
 			return $retVal;
 		}
 
-		$retVal = self::checkTitle($title, $block);
+		$retVal = self::checkTitle( $title, $block );
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
@@ -65,15 +65,15 @@ class TitleBlock {
 		return $retVal;
 	}
 
-	//used in Answer's CreateDefaultQuestionPage
+	// used in Answer's CreateDefaultQuestionPage
 	static public function genericTitleCheck( $titleObj, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		$retVal = true;
 
 		// titleObj is already verified as object earlier in CDQP
-		if ($titleObj instanceof Title) {
-			$retVal = self::checkTitle($titleObj, $block );
+		if ( $titleObj instanceof Title ) {
+			$retVal = self::checkTitle( $titleObj, $block );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -81,22 +81,28 @@ class TitleBlock {
 	}
 
 
-	static public function checkTitle($title, &$block) {
+	/**
+	 * @param Title $title
+	 * @param object $block
+	 *
+	 * @return bool — true if $title is considered safe, false if $title is blocked
+	 */
+	static public function checkTitle( Title $title, &$block ) {
 		wfProfileIn( __METHOD__ );
 
-		if (is_null(self::$blocksData)) {
+		if ( is_null( self::$blocksData ) ) {
 			self::$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_TITLE );
 		}
 		$fullText = $title->getFullText();
-		$result = array('blocked' => false);
+		$result = array( 'blocked' => false );
 
-		if ( !empty(self::$blocksData) ) {
+		if ( !empty( self::$blocksData ) ) {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $fullText, self::$blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
 				$block = ( object ) $blockData;
-				#self::spamPage( $result['msg'], $title );
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
+				# self::spamPage( $result['msg'], $title );
+				Wikia::log( __METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'." );
 			}
 		}
 
@@ -104,8 +110,8 @@ class TitleBlock {
 		return !$result['blocked'];
 	}
 
-	//moved from SpamRegexBatch.php
-	//TODO: use Phalanx messages
+	// moved from SpamRegexBatch.php
+	// TODO: use Phalanx messages
 	static function spamPage( $match = false, $title = null ) {
 		global $wgOut;
 

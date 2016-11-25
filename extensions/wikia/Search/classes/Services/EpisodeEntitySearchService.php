@@ -25,7 +25,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		return $this;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );

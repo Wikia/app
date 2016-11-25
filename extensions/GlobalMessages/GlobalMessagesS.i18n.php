@@ -3,14 +3,15 @@
 $messages = [];
 
 $messages['en'] = [
-	'sidebar' => '
-* navigation
+	'sidebar' => '* Content Navigation
 ** mainpage|mainpage
-** portal-url|portal
-** currentevents-url|currentevents
-** recentchanges-url|recentchanges
+** content-url|content 
 ** randompage-url|randompage
-** helppage|help',
+* Community
+** portal-url|portal
+** recentchanges-url|recentchanges
+** helppage|help
+** forum-url|forum',
 	'sunday' => 'Sunday',
 	'saturday' => 'Saturday',
 	'sun' => 'Sun',
@@ -18,7 +19,7 @@ $messages['en'] = [
 	'september' => 'September',
 	'september-gen' => 'September',
 	'sep' => 'Sep',
-	'subcategories' => 'Subcategories',
+	'subcategories' => '<span style="font-size: 80%;">Subcategories</span>',
 	'sitetitle' => '{{SITENAME}}',
 	'sitesubtitle' => '',
 	'search' => 'Search',
@@ -40,19 +41,17 @@ $messages['en'] = [
 	'sig_tip' => 'Your signature with timestamp',
 	'summary' => 'Summary:',
 	'subject' => 'Subject/headline:',
-	'savearticle' => 'Save page',
-	'showpreview' => 'Show preview',
+	'savearticle' => 'Publish',
+	'showpreview' => 'Preview',
 	'showlivepreview' => 'Live preview',
 	'showdiff' => 'Show changes',
-	'summary-preview' => 'Summary preview:',
+	'summary-preview' => 'Preview of edit summary',
 	'subject-preview' => 'Subject/headline preview:',
 	'sitecsspreview' => '\'\'\'Remember that you are only previewing this CSS.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
 	'sitejspreview' => '\'\'\'Remember that you are only previewing this JavaScript code.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
-	'session_fail_preview' => '\'\'\'Sorry! We could not process your edit due to a loss of session data.\'\'\'
-Please try again.
-If it still does not work, try [[Special:UserLogout|logging out]] and logging back in.',
+	'session_fail_preview' => '<strong>No changes saved yet! Please click \'Publish\' again to save your edits.</strong>',
 	'session_fail_preview_html' => '\'\'\'Sorry! We could not process your edit due to a loss of session data.\'\'\'
 
 \'\'Because {{SITENAME}} has raw HTML enabled, the preview is hidden as a precaution against JavaScript attacks.\'\'
@@ -60,8 +59,7 @@ If it still does not work, try [[Special:UserLogout|logging out]] and logging ba
 \'\'\'If this is a legitimate edit attempt, please try again.\'\'\'
 If it still does not work, try [[Special:UserLogout|logging out]] and logging back in.',
 	'storedversion' => 'Stored revision',
-	'semiprotectedpagewarning' => '\'\'\'Note:\'\'\' This page has been protected so that only registered users can edit it.
-The latest log entry is provided below for reference:',
+	'semiprotectedpagewarning' => '<strong>NOTE: This page has been protected so that only established registered users can edit it.</strong>',
 	'sectioneditnotsupported-title' => 'Section editing not supported',
 	'sectioneditnotsupported-text' => 'Section editing is not supported in this page.',
 	'suppressionlog' => 'Suppression log',
@@ -71,7 +69,7 @@ See the [[Special:BlockList|IP block list]] for the list of currently operationa
 	'search-summary' => '',
 	'searchresults' => 'Search results',
 	'searchresults-title' => 'Search results for "$1"',
-	'searchresulttext' => 'For more information about searching {{SITENAME}}, see [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+	'searchresulttext' => '<div style="margin-bottom:0px;" class="emptymwmsg mediawiki_searchresulttext"></div>',
 	'searchsubtitle' => 'You searched for \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|all pages starting with "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|all pages that link to "$1"]])',
 	'searchsubtitleinvalid' => 'You searched for \'\'\'$1\'\'\'',
 	'shown-title' => 'Show $1 {{PLURAL:$1|result|results}} per page',
@@ -108,8 +106,8 @@ See the [[Special:BlockList|IP block list]] for the list of currently operationa
 	'searcheverything-enable' => 'Search in all namespaces',
 	'searchrelated' => 'related',
 	'searchall' => 'all',
-	'showingresults' => 'Showing below up to {{PLURAL:$1|\'\'\'1\'\'\' result|\'\'\'$1\'\'\' results}} starting with #\'\'\'$2\'\'\'.',
-	'showingresultsnum' => 'Showing below {{PLURAL:$3|\'\'\'1\'\'\' result|\'\'\'$3\'\'\' results}} starting with #\'\'\'$2\'\'\'.',
+	'showingresults' => '<div style="margin-top: -3px;" class="emptymwmsg mediawiki_showingresults"></div>',
+	'showingresultsnum' => '<div style="margin-top: -3px;" class="emptymwmsg mediawiki_showingresultsnum"></div>',
 	'showingresultsheader' => '{{PLURAL:$5|Result \'\'\'$1\'\'\' of \'\'\'$3\'\'\'|Results \'\'\'$1 - $2\'\'\' of \'\'\'$3\'\'\'}} for \'\'\'$4\'\'\'',
 	'search-nonefound' => 'There were no results matching the query.',
 	'search-external' => 'External search',
@@ -157,7 +155,12 @@ The description on its [$2 file description page] there is shown below.',
 	'statistics-users-active' => 'Active users',
 	'statistics-users-active-desc' => 'Users who have performed an action in the last {{PLURAL:$1|day|$1 days}}',
 	'statistics-mostpopular' => 'Most viewed pages',
-	'statistics-footer' => '',
+	'statistics-footer' => '== More info ==
+\'\'\'[[Special:Insights]] has more detailed info about various aspects of this community.\'\'\'
+
+See also:
+* [[Special:SpecialPages|Special]] pages
+* [[Special:AllMessages|MediaWiki]] messages',
 	'specialpage-empty' => 'There are no results for this report.',
 	'shortpages' => 'Short pages',
 	'shortpages-summary' => '',
@@ -190,21 +193,26 @@ The latest block log entry is provided below for reference:',
 	'sp-contributions-submit' => 'Search',
 	'sp-contributions-explain' => '',
 	'sp-contributions-footer' => '-',
-	'sp-contributions-footer-anon' => '-',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin: 1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'This is the contributions page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
+
+Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address. [[Help:Why create an account?|Why create an account?]] ([[Help:Create an account|How to create an account]])
+|}',
 	'sorbs' => 'DNSBL',
 	'sorbsreason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.',
 	'sorbs_create_account_reason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.
 You cannot create an account',
-	'selfmove' => 'Source and destination titles are the same;
-cannot move a page over itself.',
+	'selfmove' => '\'\'\'Source and destination titles are the same; can\'t move a page over itself.\'\'\' Please check that you didn\'t enter the destination title into the "reason" field instead of the "new title" field.',
 	'semiprotectedpagemovewarning' => '\'\'\'Note:\'\'\' This page has been protected so that only registered users can move it.
 The latest log entry is provided below for reference:',
 	'siteuser' => '{{SITENAME}} user $1',
 	'siteusers' => '{{SITENAME}} {{PLURAL:$2|user|users}} $1',
 	'spamprotectiontitle' => 'Spam protection filter',
-	'spamprotectiontext' => 'The text you wanted to save was blocked by the spam filter.
-This is probably caused by a link to a blacklisted external site.',
-	'spamprotectionmatch' => 'The following text is what triggered our spam filter: $1',
+	'spamprotectiontext' => 'The page you wanted to save was blocked by the spam filter.<br/>
+This is probably caused by a blacklisted link or pagename.',
+	'spamprotectionmatch' => 'The following link, text or pagename is what triggered our spam filter: \'\'\'$1\'\'\'
+
+If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.',
 	'spambot_username' => 'MediaWiki spam cleanup',
 	'spam_reverting' => 'Reverting to last revision not containing links to $1',
 	'spam_blanking' => 'All revisions contained links to $1, blanking',
@@ -254,9 +262,9 @@ This is probably caused by a link to a blacklisted external site.',
 	'sqlite-no-fts' => '$1 without full-text search support',
 	'suppressedarticle' => 'suppressed "[[$1]]"',
 	'seemoredotdotdot' => 'See more...',
-	'specialpages-url' => 'Special:SpecialPages',
+	'specialpages-url' => 'Special:Specialpages',
 	'signup-password' => 'Password - ',
-	'signup-moreinfo' => 'more info',
+	'signup-moreinfo' => 'Why is this required?',
 	'signup-mail' => 'E-mail - ',
 	'skin-forced' => 'You can\'t change skin on this wiki.',
 	'shared-problemreport' => 'Report a problem',
@@ -270,108 +278,156 @@ This is probably caused by a link to a blacklisted external site.',
 	'share_it' => 'Share it:',
 	'see_more' => 'See more...',
 	'specialpages-group-wikia' => 'Fandom pages',
-	'staffsigs' => '* ?
-** Wikia
-',
+	'staffsigs' => '* de
+** ForestFairy
+* en
+** Sannse
+** DaNASCAT
+** Brandon Rhea
+** Rappy 4187
+** Ducksoup
+** Mira Laime
+** BertH
+* es
+** Luchofigo85
+** Vpinas
+* fr
+** Hypsoline
+* it
+** Leviathan_89
+** Cresh.
+* ja
+** Kuro0222
+* ko
+** Miri-Nae
+* nl
+** Yatalu
+** Flightmare
+* pl
+** Nanaki
+** Vuh
+* pt
+** Macherie ana
+* pt-br
+** Macherie ana
+* ru
+** vlazovskiy
+* vi
+** KhangND
+*zh
+**Cal-Boy
+*zh-hans
+**Cal-Boy
+*zh-tw
+**Ffaarr
+*zh-hk
+**Ffaarr
+*zh-hant
+**Ffaarr
+* ?
+** Sannse
+** DaNASCAT
+** Brandon Rhea
+** Rappy 4187
+** Ducksoup
+** Mira Laime
+** BertH',
 	'seeeditcount' => 'See edit count',
-	'shared-Globalnavigation' => '*homepage:Video_Games|Video Games|video-games-vertical-color
+	'shared-Globalnavigation' => '*http://gameshub.wikia.com/wiki/Games_Hub|Video Games|video-games-vertical-color
 
 **#|What\'s Hot
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***homepage:Video_Games/Xbox_and_PS4_Launch_Portal|Launch Portal
-***homepage:Video_Games/The_Stockpile|The Stockpile
-***w:c:video:Video_Wiki|Latest Videos
-***homepage:Video_Games|More...
+***http://ow.ly/DPznR|The Crew Driving Map
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare Guide
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide 
+***http://ow.ly/EeLdi|Master Chief in 60 Seconds
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
 **#|PS4 Games
-***http://killzone.wikia.com/wiki/Killzone:_Shadow_Fall|Killzone: Shadowfall
-***http://knack.wikia.com/wiki/Main_Page|Knack
-***http://warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
-***http://infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
-***homepage:Video_Games|More...
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare
+***http://ow.ly/DwDSA|Explore The Borderlands Map
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide
+***http://ow.ly/DPznR|The Crew Driving Map
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
 **#|Xbox One Games
-***http://forzamotorsport.wikia.com/wiki/Forza_Motorsport_5|Forza 5
-***http://killerinstinct.wikia.com/wiki/Killer_Instinct_(Xbox_One)|Killer Instinct
-***http://rysesonofrome.wikia.com/wiki/Ryse:_Son_of_Rome_Wiki|Ryse: Son of Rome
-***http://deadrising.wikia.com/wiki/Dead_Rising_3|Dead Rising 3
-***homepage:Video_Games|More...
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide
+***http://ow.ly/DPznR|Explore The Crew Driving Map
+***http://ow.ly/EeLdi|Master Chief in 60 Seconds
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
-**#|Free to Play
-***w:c:warframe|Warframe
-***w:c:leagueoflegends|League of Legends
-***w:c:clashofclans|Clash of Clans
-***w:c:puzzle-dragons-global|Puzzle & Dragons
-***homepage:Video_Games|More...
+**#|PC & Mobile
+***http://ow.ly/EiVqs|Interstellar Personality Quiz
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide 
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
+***http://ow.ly/EiVjz|Civilization Beyond Earth Guide
+***http://gameshub.wikia.com/wiki/Games_Hub|More...
 
-*homepage:Entertainment|Entertainment|entertainment-vertical-color
+*http://movieshub.wikia.com/wiki/Movies_Hub|Entertainment|entertainment-vertical-color
 
-**#|What\'s Hot
-***http://dragons.wikia.com/wiki/User_blog:Mhadick/Wikia%27s_Epic_Dragon_Battle|Dragon Battle
-***http://entertainment.wikia.com/wiki/User_blog:Gcheung28/Holiday_Know_Days:_Community_Choice_Awards|Community Choice Awards
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***w:c:video:Video_Wiki|New Videos
-***w:c:entertainment:Wikia_Entertainment|More...
+**http://comicshub.wikia.com/wiki/Comics_Hub|Comics
+***http://ow.ly/Dwg8w|The Walking Dead Trivia
+***http://ow.ly/DZul9|Agents of S.H.I.E.L.D Trivia
+***http://ow.ly/DlPug|Star Trek Memories
+***http://ow.ly/Ei6nf|Arrow Recap
+***http://comicshub.wikia.com/wiki/Comics_Hub|More...
 
-**#|Movies
-***w:c:lotr:The_Hobbit:_The_Desolation_of_Smaug|The Hobbit 2
-***w:c:disney:Frozen|Frozen
-***w:c:thehungergames:The_Hunger_Games:_Catching_Fire|Catching Fire
-***w:c:marvel:Thor:_The_Dark_World|Thor: The Dark World
-***homepage:Entertainment|More...
+**http://movieshub.wikia.com/wiki/Movies_Hub|Movies
+***http://ow.ly/EhOQA|Game of Thrones Bracket
+***http://ow.ly/EhP4J|Which GoT Character Are You?
+***http://ow.ly/DlPEa|Wikia Personality Quiz
+***http://ow.ly/EiVqs|Interstellar Personality Quiz
 
-**#|TV
-***w:c:tardis|Doctor Who
-***w:c:shield|Agents of SHIELD
-***w:c:americanhorrorstory|American Horror Story
-***w:c:vampirediaries|The Vampire Diaries
-***homepage:Entertainment|More...
+**http://tvhub.wikia.com/wiki/TV_Hub|TV
+***http://ow.ly/Dwg8w|The Walking Dead Trivia
+***http://ow.ly/EhOQA|Game of Thrones Bracket Tournament
+***http://ow.ly/EhP4J|Which Game of Thrones Character Are You?
+***http://tvhub.wikia.com/wiki/TV_Hub|More...
 
-**#|Music
+**http://musichub.wikia.com/wiki/Music_Hub|Music
 ***w:c:lyrics|Song Lyrics
-***w:c:music:Music_Wiki/|Music Wikia
-***w:c:ladygaga:Gagapedia|Lady Gaga
-***w:c:britneyspears:Britney_Spears_Wiki|Britney Spears
-***homepage:Entertainment|More...
+***http://ow.ly/DlPEa|Wikia Personality Quiz
+***http://ow.ly/DlPJF|Fan Playlist
+***w:c:musicvideo|Music Videos
+***http://musichub.wikia.com/wiki/Music_Hub|More...
 
-*homepage:Lifestyle|Lifestyle|lifestyle-vertical-color
+*http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|Lifestyle|lifestyle-vertical-color
 
-**#|What\'s Hot
-***w:c:bookclub:Portal:Book_Club|Wikia Book Club
-***w:c:recipes:Portal:Closet_Confidential|Closet Confidential
-***w:c:recipes:Portal:Food_Fiction|Food Fiction
-***w:User_blog:TranStanley/Introducing_My_Wikia_for_iPad|My Wikia for iPad
-***w:c:weddings:Category:Wedding_Themes|Movie Wedding Themes
-***homepage:Lifestyle|More...
+**http://bookshub.wikia.com/wiki/Books_Hub|Books
+***http://ow.ly/EiC1B|YA Society Mockingjay
+***http://ow.ly/EiCf3|Mockingjay Discussion
+***http://ow.ly/EiCnj|Mockingjay Fan Favorites
+***http://ow.ly/EiCtW|Samantha Shannon Q&A
+***http://ow.ly/EiCIW|YA Society Sign Up
+***http://bookshub.wikia.com/wiki/Books_Hub|More...
 
 **#|Fashion and Beauty
+***http://ow.ly/EiDD4|Closet Confidential Mockingjay
 ***w:c:fashion:Fashion_Wiki|Fashion
 ***w:c:haircolor:Haircolor_Wiki|Haircolor
-***w:c:makeup:Makeup_Wiki|Makeup
-***w:c:nails:Nails_Wiki|Nails
-***homepage:Lifestyle|More...
+***w:c:makeup:Makeup_Wiki|Makeup 
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 
 **#|Food
+***w:c:recipes:Portal:Food_Fiction|Food Fiction
 ***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes
 ***w:c:glutenfreerecipes:Gluten_Free_Recipes_Wiki|Gluten Free Recipes
-***w:c:japaneserecipes:Japanese_Recipes_Wiki|Japanese Recipes
 ***w:c:desserts:Dessert_Wiki|Dessert Recipes
-***homepage:Lifestyle|More...
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 
 **#|Drink
 ***w:c:cocktails:Cocktails_Wiki|Cocktails
 ***w:c:beer:Beer_Wiki|Beer
 ***w:c:tea:WikiTea|Tea
 ***w:c:coffee:Main_Page|Coffee
-***homepage:Lifestyle|More...
-',
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-	* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-	* [[Special:Contact|Contact]]
-	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
+	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
 ];
 
 $messages['qqq'] = [
@@ -639,6 +695,7 @@ $messages['ab'] = [
 	'sp-contributions-submit' => 'Аҧшаара',
 	'specialpages' => 'Цастәи адаҟьақәа',
 	'specialpages-group-login' => 'Урдырра / Арегистрациара',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ace'] = [
@@ -696,6 +753,7 @@ $messages['ace'] = [
 	'svg-long-desc' => 'Beureukah SVG, nominal $1 x $2 piksel, rayek beureukah: $3',
 	'show-big-image' => 'Resolusi peunoh',
 	'specialpages' => 'Ôn kusuih',
+	'signup-password' => 'Lageuëm rahsia:',
 ];
 
 $messages['af'] = [
@@ -904,6 +962,7 @@ Hierdie situasie was waarskynlik deur \'n skakel na \'n eksterne webtuiste op on
 	'specialpages-group-spam' => 'Spam-hulpmiddels',
 	'sqlite-has-fts' => 'Weergawe $1 met ondersteuning vir vol-teks soektogte ("full-text search")',
 	'sqlite-no-fts' => 'Weergawe $1 sonder ondersteuning vir vol-teks soektogte ("full-text search")',
+	'signup-password' => 'Wagwoord:',
 ];
 
 $messages['ak'] = [
@@ -915,6 +974,7 @@ $messages['ak'] = [
 	'searcharticle' => 'Kɔ',
 	'searchresultshead' => 'Hwehwɛ',
 	'sp-contributions-talk' => 'Kasa',
+	'signup-password' => 'Password:',
 ];
 
 $messages['aln'] = [
@@ -1021,6 +1081,7 @@ Vini re se indeksat e tyne të përmbajtjes së {{SITENAME}} munden me qenë të
 	'svg-long-desc' => 'skeda SVG, $1 × $2 pixela, madhësia: $3',
 	'show-big-image' => 'Rezolucion i plotë',
 	'specialpages' => 'Faqet speciale',
+	'signup-password' => 'Futni fjalëkalimin tuej',
 ];
 
 $messages['als'] = [
@@ -1127,6 +1188,7 @@ Vini re se indeksat e tyne të përmbajtjes së {{SITENAME}} munden me qenë të
 	'svg-long-desc' => 'skeda SVG, $1 × $2 pixela, madhësia: $3',
 	'show-big-image' => 'Rezolucion i plotë',
 	'specialpages' => 'Faqet speciale',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['am'] = [
@@ -1251,6 +1313,7 @@ $messages['am'] = [
 	'specialpages-group-highuse' => 'ከፍተኛ ጥቅም ያላቸው ገጾች',
 	'specialpages-group-pagetools' => 'የገጽ መሣሪያዎች',
 	'specialpages-group-wiki' => 'የዊኪ መረጃና መሣርያዎች',
+	'signup-password' => 'Password / መግቢያ ቃል',
 ];
 
 $messages['an'] = [
@@ -1452,6 +1515,7 @@ Ta más información, s\'amuestra contino a zaguera dentrada d\'o rechistro de b
 	'specialpages-group-spam' => 'Ferramientas de spam',
 	'sqlite-has-fts' => '$1, con soporte de busca de texto integro',
 	'sqlite-no-fts' => '$1, sin soporte de busca de texto integro',
+	'signup-password' => 'Palabra de paso:',
 ];
 
 $messages['ang'] = [
@@ -1538,6 +1602,7 @@ $messages['ang'] = [
 	'specialpages' => 'Syndriȝa sīdan',
 	'specialpages-group-other' => 'Ōðra syndriȝa sīdan',
 	'specialpages-group-users' => 'Brūcendas and riht',
+	'signup-password' => 'Þīn gelēafnesword',
 ];
 
 $messages['anp'] = [
@@ -1810,6 +1875,7 @@ $messages['ar'] = [
 	'specialpages-group-spam' => 'أدوات السبام',
 	'sqlite-has-fts' => '$1 بدعم البحث في كامل النص',
 	'sqlite-no-fts' => '$1 بدون دعم البحث في كامل النص',
+	'signup-password' => 'كلمة السر:',
 ];
 
 $messages['arc'] = [
@@ -1916,6 +1982,7 @@ $messages['arc'] = [
 	'specialpages-group-pagetools' => 'ܡܐܢ̈ܐ ܕܦܐܬܐ',
 	'specialpages-group-wiki' => 'ܓܠܝܬ̈ܐ ܘܡܐܢ̈ܐ ܕܘܝܩܝ',
 	'specialpages-group-redirects' => 'ܨܘܝܒܐ ܕܦܐܬܐ ܕܝܠܢܝܬܐ',
+	'signup-password' => 'ܡܠܬܐ ܕܥܠܠܐ:',
 ];
 
 $messages['arn'] = [
@@ -1995,6 +2062,7 @@ Fey ñi chumngen mülelu ($2 fey ñi chumngen wülngiñ) pengeli tüfa mew.',
 	'specialpages' => 'Wichuke wülngiñ',
 	'specialpages-group-login' => 'Konün',
 	'specialpages-group-pagetools' => 'Küsawkawe pakina mew',
+	'signup-password' => 'Tami kondungu',
 ];
 
 $messages['ary'] = [
@@ -2361,6 +2429,7 @@ $messages['arz'] = [
 	'specialpages-group-wiki' => 'بيانات وأدوات الويكى',
 	'specialpages-group-redirects' => 'صفحات  التحويل الخاصه',
 	'specialpages-group-spam' => 'أدوات السبام',
+	'signup-password' => 'الباسوورد:',
 ];
 
 $messages['as'] = [
@@ -2573,6 +2642,7 @@ $messages['as'] = [
 	'specialpages-group-spam' => 'স্পেম সা-সঁজুলি',
 	'sqlite-has-fts' => '$1 সম্পূৰ্ণ-পাঠ অনুসন্ধান সমৰ্থন সহ',
 	'sqlite-no-fts' => '$1 সম্পূৰ্ণ-পাঠ অনুসন্ধান সমৰ্থন অবিহনে',
+	'signup-password' => 'আপোনাৰ গুপ্তশব্দ',
 ];
 
 $messages['ast'] = [
@@ -2780,6 +2850,7 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 	'specialpages-group-spam' => 'Ferramientes pa spam',
 	'sqlite-has-fts' => '$1 con sofitu pa gueta en testu completu',
 	'sqlite-no-fts' => '$1 ensin sofitu pa gueta en testu completu',
+	'signup-password' => 'Clave:',
 ];
 
 $messages['av'] = [
@@ -2790,6 +2861,7 @@ $messages['av'] = [
 	'shortpages' => 'Къокъал макъалаби',
 	'specialloguserlabel' => 'ГӀахьалчи:',
 	'specialpages' => 'Хассал гьумерал',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['avk'] = [
@@ -2916,6 +2988,7 @@ MediaWiki spam cleanup',
 	'specialpages-group-wiki' => 'Wiki origeem isu xekeem',
 	'specialpages-group-redirects' => 'Graskara va aptabu',
 	'specialpages-group-spam' => 'Spam xekeem',
+	'signup-password' => 'Rinaf remravlem',
 ];
 
 $messages['ay'] = [
@@ -2940,6 +3013,7 @@ $messages['ay'] = [
 	'speciallogtitlelabel' => 'Titulu:',
 	'sp-contributions-talk' => 'Kutkatasiña',
 	'sp-contributions-submit' => 'Thaqaña',
+	'signup-password' => 'Contraseña:',
 ];
 
 $messages['az'] = [
@@ -3115,6 +3189,7 @@ Bloklama qeydlərinin sonuncusu aşağıda göstərilmişdir:',
 	'specialpages-group-spam' => 'Spam alətləri',
 	'sqlite-has-fts' => '$1 tam mətn axtarma ilə',
 	'sqlite-no-fts' => '$1 tam mətn axtarma olmadan',
+	'signup-password' => 'Parol',
 ];
 
 $messages['ba'] = [
@@ -3325,6 +3400,7 @@ $messages['ba'] = [
 	'specialpages-group-spam' => 'Спамға ҡаршы ҡоралдар',
 	'sqlite-has-fts' => '$1, тулы текст буйынса эҙләү мөмкинлеге менән',
 	'sqlite-no-fts' => '$1, тулы текст буйынса эҙләү мөмкинлекһеҙ',
+	'signup-password' => 'Һеҙҙең пароль',
 ];
 
 $messages['bar'] = [
@@ -3446,6 +3522,7 @@ Soidad des Probleem bestee blaim, [[Special:UserLogout|möid de ob]] und danoch 
 	'specialpages-group-wiki' => 'Systémdaaten und Werzeig',
 	'specialpages-group-redirects' => 'Weiderloattende Speziaalseiten',
 	'specialpages-group-spam' => 'Spam-Werkzeig',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['bat-smg'] = [
@@ -3567,6 +3644,7 @@ Soidad des Probleem bestee blaim, [[Special:UserLogout|möid de ob]] und danoch 
 	'specialpages-group-wiki' => 'Systémdaaten und Werzeig',
 	'specialpages-group-redirects' => 'Weiderloattende Speziaalseiten',
 	'specialpages-group-spam' => 'Spam-Werkzeig',
+	'signup-password' => 'Slaptažuodis:',
 ];
 
 $messages['bcc'] = [
@@ -3753,6 +3831,7 @@ $messages['bcc'] = [
 	'specialpages-group-wiki' => 'وسایل و دیتا وی کی',
 	'specialpages-group-redirects' => 'غیر مستقیم بیگنت صفحات حاصین',
 	'specialpages-group-spam' => 'وسایل اسپم',
+	'signup-password' => 'کلمه رمز',
 ];
 
 $messages['bcl'] = [
@@ -3857,6 +3936,7 @@ Pindotón tabî an "back" asin ikarga giraray an páhinang ginikanan mo, dangan 
 	'specialpages-group-other' => 'Iba pang mga espesyal na pahina',
 	'specialpages-group-login' => 'Maglaóg/ maggíbo',
 	'specialpages-group-changes' => 'Nakakaági pa sanáng mga pagbàgo asín laóg',
+	'signup-password' => 'Sekretong panlaog:',
 ];
 
 $messages['be'] = [
@@ -4059,6 +4139,7 @@ $messages['be'] = [
 	'specialpages-group-spam' => 'Прылады супраць спама',
 	'sqlite-has-fts' => '$1 з падтрымкай поўна-тэкставага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўна-тэкставага пошуку',
+	'signup-password' => 'Пароль',
 ];
 
 $messages['be-tarask'] = [
@@ -4274,6 +4355,7 @@ $messages['be-tarask'] = [
 	'specialpages-group-spam' => 'Інструмэнты для барацьбы са спамам',
 	'sqlite-has-fts' => '$1 з падтрымкай поўнатэкстнага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўнатэкстнага пошуку',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['be-x-old'] = [
@@ -4489,6 +4571,7 @@ $messages['be-x-old'] = [
 	'specialpages-group-spam' => 'Інструмэнты для барацьбы са спамам',
 	'sqlite-has-fts' => '$1 з падтрымкай поўнатэкстнага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўнатэкстнага пошуку',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['bg'] = [
@@ -4692,6 +4775,7 @@ $messages['bg'] = [
 	'specialpages-group-spam' => 'Инструменти против спам',
 	'sqlite-has-fts' => '$1 с поддръжка на пълнотекстово търсене',
 	'sqlite-no-fts' => '$1 без поддръжка на пълнотекстово търсене',
+	'signup-password' => 'Парола:',
 ];
 
 $messages['bh'] = [
@@ -4895,6 +4979,7 @@ $messages['bh'] = [
 	'specialpages-group-spam' => 'Инструменти против спам',
 	'sqlite-has-fts' => '$1 с поддръжка на пълнотекстово търсене',
 	'sqlite-no-fts' => '$1 без поддръжка на пълнотекстово търсене',
+	'signup-password' => 'Password:',
 ];
 
 $messages['bho'] = [
@@ -4993,6 +5078,7 @@ $messages['bi'] = [
 	'shortpages' => 'Ol smol pej',
 	'sp-contributions-talk' => 'toktok',
 	'showhidebots' => '($1 bot)',
+	'signup-password' => 'Password:',
 ];
 
 $messages['bjn'] = [
@@ -5214,6 +5300,7 @@ $messages['bm'] = [
 	'searcharticle' => 'Taa',
 	'specialpage' => 'Nyɛ kɛrɛnkɛrɛnnen',
 	'specialpages' => 'Nyɛw kɛrɛnkɛrɛnnen',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['bn'] = [
@@ -5407,6 +5494,7 @@ $messages['bn'] = [
 	'specialpages-group-wiki' => 'উইকি উপাত্ত এবং সরঞ্জামসমূহ',
 	'specialpages-group-redirects' => 'বিশেষ পাতাগুলি পুনর্নির্দেশ করা হচ্ছে',
 	'specialpages-group-spam' => 'স্প্যামরোধী হাতিয়ার',
+	'signup-password' => 'শব্দচাবি (Password)',
 ];
 
 $messages['bo'] = [
@@ -5467,6 +5555,7 @@ $messages['bo'] = [
 	'sp-contributions-submit' => 'འཚོལ་བ།',
 	'show-big-image' => 'གཏན་འབེབ་ཆ་ཚང་།',
 	'specialpages' => 'དམིགས་གསལ་ཤོག་ངོས།',
+	'signup-password' => 'ལམ་ཡིག',
 ];
 
 $messages['bpy'] = [
@@ -5579,6 +5668,7 @@ $messages['bpy'] = [
 	'specialpages-group-login' => 'একাউন্টহাত হমানি/মিহানি',
 	'specialpages-group-users' => 'আতাকুরাগি বারো অধিকারহানি',
 	'specialpages-group-pagetools' => 'পাতাহানর আতিয়ার',
+	'signup-password' => 'খন্তাচাবিগ (password)',
 ];
 
 $messages['bqi'] = [
@@ -5617,6 +5707,7 @@ $messages['bqi'] = [
 	'svg-long-desc' => 'SVG فایل, تقریبا$1 × $2 پیکسل, اندازه فایل: $3',
 	'show-big-image' => 'تصویر با قابلیت تفکیک کامل',
 	'specialpages' => 'صفحات ویژه',
+	'signup-password' => 'رمز:',
 ];
 
 $messages['br'] = [
@@ -5827,6 +5918,7 @@ Sur a-walc\'h abalamour d\'ul liamm enni a gas d\'ul lec\'hienn ziavaez berzet.'
 	'specialpages-group-spam' => 'Ostilh enepstrob',
 	'sqlite-has-fts' => '$1 gant enklask eus an destenn a-bezh embreget',
 	'sqlite-no-fts' => '$1 hep enklask eus an destenn a-bezh embreget',
+	'signup-password' => 'Ho ker-tremen',
 ];
 
 $messages['brh'] = [
@@ -6094,6 +6186,7 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 	'specialpages-group-spam' => 'Alati za spam',
 	'sqlite-has-fts' => '$1 sa podrškom pretrage cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretrage cijelog teksta',
+	'signup-password' => 'Šifra:',
 ];
 
 $messages['bug'] = [
@@ -6141,6 +6234,7 @@ $messages['bug'] = [
 	'specialpages-group-pagetools' => 'Tool leppaë',
 	'specialpages-group-wiki' => 'Data sibawa tool wiki',
 	'specialpages-group-spam' => 'Tool spam',
+	'signup-password' => 'Pasewodo:',
 ];
 
 $messages['ca'] = [
@@ -6346,6 +6440,7 @@ Això deu ser degut per un enllaç a un lloc extern inclòs a la llista negra.',
 	'sqlite-has-fts' => '$1, amb suport de búsqueda de text íntegre',
 	'sqlite-no-fts' => '$1, sense supor de búsqueda de text íntegre',
 	'share_it' => 'Comparteix-ho:',
+	'signup-password' => 'Contrasenya',
 ];
 
 $messages['cbk-zam'] = [
@@ -6358,6 +6453,7 @@ $messages['cbk-zam'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|1 palabra|$2 maga palabra}})',
 	'search-mwsuggest-enabled' => 'con sugestiones',
 	'search-mwsuggest-disabled' => 'sin sugestion',
+	'signup-password' => 'Contraseña:',
 ];
 
 $messages['cdo'] = [
@@ -6410,6 +6506,7 @@ $messages['cdo'] = [
 	'sp-contributions-submit' => 'Sìng-tō̤',
 	'showhidebots' => '($1 gĭ-ké-nè̤ng)',
 	'specialpages' => 'Dĕk-sṳ̀ hiĕk',
+	'signup-password' => 'Mĭk-mā',
 ];
 
 $messages['ce'] = [
@@ -6526,6 +6623,7 @@ $messages['ce'] = [
 	'specialpages-group-wiki' => 'Вики-баххаш а гlирсаш',
 	'specialpages-group-redirects' => 'Дlасахьажош йолу гlуллакхан агlонаш',
 	'specialpages-group-spam' => 'Гlирсаш совбиларна дуьхьал',
+	'signup-password' => 'Хьан тешаман дош',
 ];
 
 $messages['ceb'] = [
@@ -6595,6 +6693,7 @@ Hinumdomi nga ang ilang indeks sa sulod sa {{SITENAME}} mahimong dugay-dugay na.
 	'svg-long-desc' => 'SVG nga payl, nominally $1 × $2 pixels, size sa payl: $3',
 	'show-big-image' => 'Tibuok resolusyon',
 	'specialpages' => 'Espesyal nga mga panid',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ch'] = [
@@ -6670,6 +6769,7 @@ Fanapunta na fana\'an ti gus nuebu i listan-ñiha i guinahan {{SITENAME}}.',
 	'svg-long-desc' => 'Atkibu SVG, $1 × $2 na pixels, mineddong atkibu: $3',
 	'show-big-image' => 'Magåhet mineddong-ña',
 	'specialpages' => 'Manespesiat na påhina',
+	'signup-password' => 'Password:',
 ];
 
 $messages['chr'] = [
@@ -6677,6 +6777,7 @@ $messages['chr'] = [
 	'searchresultshead' => 'ᎠᏯᏍᏗ',
 	'sp-contributions-talk' => 'ᎧᏃᎮᎸᏗ',
 	'specialpages' => 'ᎤᏤᎵᏛ ᏚᏆᏓᏛ',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ckb'] = [
@@ -6891,6 +6992,7 @@ $messages['co'] = [
 	'show-big-image' => 'Imagine in alta resoluzione',
 	'showhidebots' => '($1 boti)',
 	'specialpages' => 'Pagine spiciale',
+	'signup-password' => 'Parulla secreta:',
 ];
 
 $messages['cps'] = [
@@ -7031,6 +7133,7 @@ Ang paglarawan nga yara sa ibabaw sang [$2 pahina sang paglarawan sang akta] sin
 	'svg-long-desc' => 'SVG file, nga ara sa $1 × $2 ka piksels, kadakuon sang file: $3',
 	'show-big-image' => 'Bilog nga resolusyon (katin-aw)',
 	'specialpages' => 'Pinasahi nga mga pahina',
+	'signup-password' => 'Paroliñiz',
 ];
 
 $messages['crh-cyrl'] = [
@@ -7179,6 +7282,7 @@ $messages['crh-cyrl'] = [
 	'specialpages-group-wiki' => 'Вики малюмат ве алетлер',
 	'specialpages-group-redirects' => 'Ёллама махсус саифелер',
 	'specialpages-group-spam' => 'Спамгъа къаршы алетлер',
+	'signup-password' => 'Паролинъиз',
 ];
 
 $messages['crh-latn'] = [
@@ -7328,6 +7432,7 @@ Jurnalnıñ soñki yazısı aşağıda berilgen:',
 	'specialpages-group-wiki' => 'Viki malümat ve aletler',
 	'specialpages-group-redirects' => 'Yollama mahsus saifeler',
 	'specialpages-group-spam' => 'Spamğa qarşı aletler',
+	'signup-password' => 'Paroliñiz',
 ];
 
 $messages['cs'] = [
@@ -7540,6 +7645,7 @@ Níže je pro přehled zobrazen nejnovější protokolovací záznam:',
 	'specialpages-group-spam' => 'Protispamové nástroje',
 	'sqlite-has-fts' => '$1 s podporou plnotextového vyhledávání',
 	'sqlite-no-fts' => '$1 bez podpory plnotextového vyhledávání',
+	'signup-password' => 'Vaše heslo',
 ];
 
 $messages['csb'] = [
@@ -7608,6 +7714,7 @@ $messages['csb'] = [
 	'svg-long-desc' => 'Lopk SVG, nominalno $1 × $2 pikslów, miara lopka: $3',
 	'show-big-image' => 'Fùl miara',
 	'specialpages' => 'Specjalné starnë',
+	'signup-password' => 'Twòja parola',
 ];
 
 $messages['cu'] = [
@@ -7667,6 +7774,7 @@ $messages['cu'] = [
 	'size-bytes' => '$1 Б҃',
 	'size-kilobytes' => '$1 Х҃Б',
 	'specialpages' => 'нарочьнꙑ страницѧ',
+	'signup-password' => 'Таино слово напиши',
 ];
 
 $messages['cv'] = [
@@ -7734,6 +7842,7 @@ $messages['cv'] = [
 	'specialpages-group-media' => 'Медиа-материалсемпе тултарăшсем',
 	'specialpages-group-users' => 'Хутшăнакансем тата правасем',
 	'specialpages-group-highuse' => 'Нумай усă куракан страницăсем',
+	'signup-password' => 'Вăрттăн сăмах:',
 ];
 
 $messages['cy'] = [
@@ -7945,6 +8054,7 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 	'specialpages-group-spam' => 'Offer sbam',
 	'sqlite-has-fts' => '$1 gyda chymorth chwilio yr holl destun',
 	'sqlite-no-fts' => '$1 heb gymorth chwiliad yr holl destun',
+	'signup-password' => 'Eich cyfrinair:',
 ];
 
 $messages['da'] = [
@@ -8148,6 +8258,7 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 	'specialpages-group-spam' => 'Spamværktøjer',
 	'sqlite-has-fts' => '$1 med fuld-tekst søgnings support',
 	'sqlite-no-fts' => '$1 uden fuld-tekst søgnings support',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['de'] = [
@@ -8175,7 +8286,7 @@ $messages['de'] = [
 	'summary' => 'Zusammenfassung:',
 	'subject' => 'Betreff:',
 	'savearticle' => 'Seite speichern',
-	'showpreview' => 'Vorschau zeigen',
+	'showpreview' => 'Vorschau',
 	'showlivepreview' => 'Sofortige Vorschau',
 	'showdiff' => 'Änderungen zeigen',
 	'summary-preview' => 'Vorschau der Zusammenfassungszeile:',
@@ -8204,14 +8315,14 @@ Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen
 	'showhideselectedversions' => 'Gewählte Versionen zeigen/verstecken',
 	'searchresults' => 'Suchergebnisse',
 	'searchresults-title' => 'Suchergebnisse für „$1“',
-	'searchresulttext' => 'Für mehr Informationen zur Suche siehe die [[{{MediaWiki:Helppage}}|Hilfeseite]].',
+	'searchresulttext' => 'Für mehr Informationen zur Suche siehe [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 	'searchsubtitle' => 'Deine Suchanfrage: „[[:$1]]“ ([[Special:Prefixindex/$1|alle mit „$1“ beginnenden Seiten]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|alle Seiten, die nach „$1“ verlinken]])',
 	'searchsubtitleinvalid' => 'Deine Suchanfrage: „$1“.',
 	'shown-title' => 'Zeige $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} pro Seite',
 	'searchmenu-legend' => 'Suchoptionen',
 	'searchmenu-exists' => '\'\'\'Es gibt eine Seite, die den Namen „[[:$1]]“ hat.\'\'\'',
 	'searchmenu-new' => '\'\'\'Erstelle die Seite „[[:$1]]“ in diesem Wiki.\'\'\'',
-	'searchhelp-url' => 'Help:Hilfe',
+	'searchhelp-url' => 'Help:Übersicht',
 	'searchmenu-prefix' => '[[Special:PrefixIndex/$1|Zeige alle Seiten, die mit dem Suchbegriff anfangen]]',
 	'searchprofile-articles' => 'Inhaltsseiten',
 	'searchprofile-project' => 'Hilfe und Projektseiten',
@@ -8252,7 +8363,7 @@ Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen
 	'savedprefs' => 'Deine Einstellungen wurden gespeichert.',
 	'servertime' => 'Aktuelle Zeit auf dem Server:',
 	'saveusergroups' => 'Gruppenzugehörigkeit ändern',
-	'show' => 'einblenden',
+	'show' => 'anzeigen',
 	'savefile' => 'Datei speichern',
 	'sourcefilename' => 'Quelldatei:',
 	'sourceurl' => 'Quell-URL:',
@@ -8359,106 +8470,140 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'sqlite-has-fts' => 'Version $1 mit Unterstützung für die Volltextsuche',
 	'sqlite-no-fts' => 'Version $1 ohne Unterstützung für die Volltextsuche',
 	'share_it' => 'Mitteilen:',
-	'shared-Globalnavigation' => '*w:c:de:Videospiele|Videospiele|video-games-vertical-color
+	'shared-Globalnavigation' => '*w:c:de.videospielehub|Videospiele|video-games-vertical-color
 
-**w:c:de:Videospiele|Großartiges
+**w:c:de.videospielehub|Großartiges
 ***w:c:de.elderscrolls|The Elder Scrolls
 ***w:c:de.gta|Grand Theft Auto
 ***w:c:de.fallout|Fallout
-***w:c:de.assassinscreed|Assassin\'s Creed
-***http://www.de.wikia.com/Videospiele|Mehr...
-
-**w:c:de:Videospiele|Aufsteigendes
-***w:c:de.bindingofisaac|Binding of Isaac
 ***w:c:de.terraria|Terraria
+***w:c:de.videospielehub|Mehr...
+
+**w:c:de.videospielehub|Aufsteigendes
+***w:c:de.clashofclans|Clash of Clans
+***w:c:de.starbound|Starbound
 ***w:c:de.monsterhunter|Monster Hunter
 ***w:c:de.leagueoflegends|League of Legends
-***http://www.de.wikia.com/Videospiele|Mehr...
+***w:c:de.videospielehub|Mehr...
 
-**w:c:de:Videospiele|Empfohlenes
+**w:c:de.videospielehub|Empfohlenes
 ***w:c:de.masseffect|Mass Effect
-***w:c:de.dofuswiki|Dofus
-***w:c:hexer|The Witcher
-***w:c:de.borderlands|Borderlands
-***http://www.de.wikia.com/Videospiele|Mehr...
+***w:c:mordorsschatten|Mordors Schatten
+***w:c:de.titanfall|Titanfall
+***w:c:de.warframe|Warframe
+***w:c:de.videospielehub|Mehr...
 
-**w:c:de:Videospiele|Bekanntes
+**w:c:de.videospielehub|Bekanntes
 ***w:c:de.mario|Super Mario
 ***w:c:de.halo|Halo
 ***w:c:de.finalfantasy|Final Fantasy
-***w:c:de.bioshock|BioShock
-***w:c:de:Videospiele|Mehr...
+***w:c:de.valve|Valve
+***w:c:de.videospielehub|Mehr...
 
 *w:c:de:Entertainment|Entertainment|entertainment-vertical-color
 
-**w:c:de:Entertainment|Serien
-***w:c:de.vampirediaries|Vampire Diaries
-***w:c:de.bigbangtheory|The Big Bang Theory
+**w:c:de.tvhub|Serien
+***w:c:de.vampirediaries|The Vampire Diaries
 ***w:c:de.how-i-met-your-mother|How I Met Your Mother
 ***w:c:de.glee|Glee
-***w:c:de:Entertainment|Mehr...
-
-**w:c:de:Entertainment/Anime|Anime
-***http://bit.ly/anime-portal-ref-globalheader|Anime-Portal und aktuelles
-***http://bit.ly/anime-tv-programm-ref-globalHeader|Anime-TV-Programm
-***http://bit.ly/animangawiki-ref-globalheader|Anime und Manga Wiki
-***http://bit.ly/wikia-de-inuyasha-globalheader|InuYasha
-***w:c:de:Entertainment/Anime|Mehr...
-
-**w:c:de:Entertainment|Filme und mehr
-***w:c:de.moviepedia|Moviepedia
-***w:c:dietributevonpanem|Die Tribute von Panem
-***w:c:de.harry-potter|Harry Potter
-***w:c:de.marvel-filme|Marvel-Filme
-***w:c:de:Entertainment|Mehr...
-
-**w:c:de:Entertainment|Wir empfehlen
-***w:c:de.gameofthrones|Game of Thrones
-***w:c:de.scrubs|Scrubs
 ***w:c:de.supernatural|Supernatural
-***w:c:de.ghibli|Ghibli
-***w:c:de:Entertainment|Mehr...
+***w:c:de.tvhub|Mehr...
 
-*w:c:de:Lifestyle|Lifestyle|lifestyle-vertical-color
+**w:c:de.filmhub|Filme und mehr
+***w:c:de.moviepedia|Moviepedia
+***w:c:de.marvel-filme|Marvel-Filme
+***w:c:de.jamesbond|James Bond
+***w:c:de.lotr|Der Herr der Ringe
+***w:c:de.filmhub|Mehr...
 
-**w:c:de:Lifestyle|Empfohlenes
+**w:c:de.literaturhub|Literatur
+***w:c:dietributevonpanem|Die Tribute von Panem
+***w:c:de.chronikenderunterwelt|Chroniken der Unterwelt
+***w:c:de.harrypotter|Harry Potter
+***w:c:de.eisundfeuer|Das Lied von Eis und Feuer
+***w:c:de.literaturhub|Mehr...
+
+**w:c:de.animehub|Anime
+***http://bit.ly/animangawiki-ref-globalheader|Anime und Manga Wiki
+***w:c:de.sailor-moon|Sailor Moon
+***w:c:de.avatar|Avatar
+***w:c:de.naruto|Naruto
+***w:c:de.animehub|Mehr...
+
+*w:c:de.lifestylehub|Lifestyle|lifestyle-vertical-color
+
+**w:c:de.lifestylehub|Empfohlenes
+***w:c:de.cocktail|Cocktails
+***w:c:bier|Bier
 ***w:c:de.mittelalter|Mittelalter
-***w:c:de.griechische-mythologie|Griechische Mythologie
+***w:c:elefanten|Elefanten
+***w:c:de.lifestylehub|Mehr...
+
+**w:c:de.lifestylehub|Spielereien
 ***w:c:de.lego|Lego
-***w:c:de.fahrrad|Fahrrad
-***w:c:de:Lifestyle|Mehr...
-
-**w:c:de:Lifestyle|Kreatives
-***http://bit.ly/mum-mainpage|Fanfiction- und Geschichten-Wiki
-***w:c:de.narutofantasyrpg|Naruto Fanfiction
-***w:c:de.inazuma-eleven-fantasy-rpg|Inazuma Eleven Fanfiction
-***w:c:de.starwarsfantasyrpg|Star Wars Fanfiction
-***w:c:de:Lifestyle|Mehr...
-
-**w:c:de:Lifestyle|Interessantes
 ***w:c:de.playmobil|Playmobil
-***w:c:de.drachen|Drachen
-***w:c:de.lego-stadt|Lego Bautipps
-***w:c:daffs|Fußball-Statistiken
-***w:c:de:Lifestyle|Mehr...
+***w:c:de.bionicle|Bionicle
+***w:c:de.x-wing|X-Wing Miniaturen
+***w:c:de.lifestylehub|Mehr...
+
+**w:c:de.lifestylehub|Interessantes
+***w:c:de.adel|Adel
+***w:c:de.royalpedia|Royalpedia
+***w:c:motorrad|Motorrad
+***http://bit.ly/mum-mainpage|Fanfiction
+***w:c:de.lifestylehub|Mehr...
 
 **w:c:de|Information
 ***w:c:de.community|Community-Wiki
 ***w:c:de.community:Blog:Wikia_Deutschland_News|Wikia Deutschland Blog
-***w:c:de.community:Hilfe:Übersicht|Hilfeseiten
+***w:c:de.community:Wikia-Universität|Wikia-Universität
 ***w:c:de.community:Spezial:Forum|Community-Forum
-***w:c:de|Mehr...
-',
+***w:c:de|Mehr...',
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
 * [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
-* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
+* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 	'specialpages-group-wikia' => 'Fandom-Seiten',
+	'save' => 'Speichern',
+	'searchsuggest' => 'Suchvorschläge',
+	'searchtype' => 'Such-Frontend',
+	'see_more' => 'Zeige mehr...',
+	'seeeditcount' => 'siehe Bearbeitungsstatistik',
+	'seemoredotdotdot' => 'Zeige mehr...',
+	'send' => 'Senden',
+	'shared-News_box' => '<!-- &nbsp; -->',
+	'shared-problemreport' => 'Problem melden',
+	'showall' => 'Alle anzeigen',
+	'signup-mail' => 'E-Mail -',
+	'signup-moreinfo' => 'Hinweis',
+	'signup-password' => 'Passwort:',
+	'skin-forced' => 'Du kannst den Skin in diesem Wiki nicht ändern.',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Dies ist die Beitragsseite für unangemeldete Benutzer, die noch keine Benutzerkonto erstellt haben oder es nicht benutzen. Sie werden durch ihre [[wikipedia:de:IP-Adresse|IP-Adresse]] identifiziert.\'\'\'
+
+Einige IP-Adressen werden dynamisch vergeben und können von verschiedenen Nutzern geteilt werden. Als anonymous Nutzer kannst du [[{{ns:Special}}:Userlogin|ein Benutzerkonto erstellen oder dich einloggen]] um zu vermeiden, mit anderen unangemeldeten Nutzern verwechselt zu werden. Bei Benutzerkonten wird die IP-Adresse versteckt. [[w:c:help:Help:Why create an account|Why create an account?]] ([[w:c:help:Help:Create an account|How to create an account]])
+
+\'\'\'Informationen zur IP-Adresse:\'\'\' [http://www.utrace.de/?query=$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 America] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europe] · [http://www.afrinic.net/cgi-bin/whois?query=$1 Africa] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacific] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latin America/Caribbean]
+|}',
+	'specialpages-summary' => '{|cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
+|
+Diese Seite bietet einen Überblick aller [[w:c:hilfe:Hilfe:Spezialseiten|Spezialseiten]]. 
+
+Spezialseiten werden automatisch erstellt und sind nicht direkt zu bearbeiten. 
+|}',
+	'statistics-footer' => '== Weitere Informationen ==
+Auf der Seite \'\'\'[[Special:WikiStats]] finden sich eine Menge weiterer statistischer Informationen zu diesem Wiki.\'\'\'
+
+Siehe auch:
+* [[Special:Specialpages|Spezialseiten]]
+* [[Special:Allmessages|MediaWiki-Systemnachrichten]]',
+	'suppressedarticle' => 'unterdrückte "[[$1]]"',
 ];
 
 $messages['de-ch'] = [
 	'svg-long-desc' => 'SVG-Datei, Basisgrösse: $1 × $2 Pixel, Dateigrösse: $3',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['de-formal'] = [
@@ -8483,6 +8628,7 @@ Diese Aktion wurde daher sicherheitshalber abgebrochen, um eine falsche Zuordnun
 Bitte gehen Sie zurück und versuchen Sie den Vorgang erneut auszuführen.',
 	'spamprotectiontext' => 'Der Text, die Sie speichern wollen, wurde vom Spamschutzfilter blockiert.
 Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -8638,6 +8784,7 @@ Bid surüg geddar und nogmal brobär auswühr dose Worgang.',
 	'specialpages-group-wiki' => 'Sysdemdades und Wergseuges',
 	'specialpages-group-redirects' => 'Weidleidendes Schbesialseides',
 	'specialpages-group-spam' => 'Sbäm-Wergseuges',
+	'signup-password' => 'Basword:',
 ];
 
 $messages['diq'] = [
@@ -8824,6 +8971,7 @@ Wexta ke şıma no pel vurneni diqet bıkeri, loge bivini:',
 	'specialpages-group-wiki' => 'Data u hacetê wîkîyî',
 	'specialpages-group-redirects' => 'Pela xasî reyna direk kenê',
 	'specialpages-group-spam' => 'hacetê spami',
+	'signup-password' => 'Parola',
 ];
 
 $messages['dsb'] = [
@@ -9030,6 +9178,7 @@ Nejnowšy protokolowy zapisk jo dołojce ako referenca pódany:',
 	'specialpages-group-spam' => 'Spamowe rědy',
 	'sqlite-has-fts' => 'Wersija $1 z pódpěru za połnotekstowe pytanje',
 	'sqlite-no-fts' => 'Wersija $1 bźez pódpěry za połnotekstowe pytanje',
+	'signup-password' => 'šćitne gronidło:',
 ];
 
 $messages['dtp'] = [
@@ -9166,6 +9315,7 @@ $messages['dv'] = [
 	'sp-contributions-userrights' => 'މެންބަރުގެ ހައްގުތަކުގެ އިންތިޒާމް',
 	'showhidebots' => '($1 ސެއްޓި)',
 	'specialpages' => 'ހާއްސަ ޞަފްޙާތައް',
+	'signup-password' => 'ސިއްރުބަސް',
 ];
 
 $messages['dz'] = [
@@ -9203,6 +9353,7 @@ $messages['dz'] = [
 	'svg-long-desc' => 'ཨེསི་བི་ཇི་ཡིག་སྣོད་  $1 × $2 པིག་སེལསི་ཆུང་སུ་ཅིག་  ཡིག་སྣོད་ཚད་: $3',
 	'show-big-image' => 'ཧུམ་ཆ་གང་།',
 	'specialpages' => 'དམིགས་བསལ་ཤོག་ལེབ།',
+	'signup-password' => 'ཆོག་ཡིག:',
 ];
 
 $messages['ee'] = [
@@ -9248,6 +9399,7 @@ $messages['ee'] = [
 	'sp-contributions-search' => 'Di nuŋɔŋlɔwo',
 	'sp-contributions-submit' => 'Dii',
 	'specialpages' => 'Axa tɔxewo',
+	'signup-password' => 'Password:',
 ];
 
 $messages['el'] = [
@@ -9450,6 +9602,7 @@ $messages['el'] = [
 	'sqlite-has-fts' => '$1 με υποστήριξη αναζήτησης πλήρους κειμένου',
 	'sqlite-no-fts' => '$1 χωρίς την υποστήριξη αναζήτησης πλήρους κειμένου',
 	'share_it' => 'Μοιραστείτε το:',
+	'signup-password' => 'Κωδικός:',
 ];
 
 $messages['eml'] = [
@@ -9464,6 +9617,7 @@ $messages['eml'] = [
 	'searchhelp-url' => 'Help:Introduzione',
 	'specialloguserlabel' => 'Utèint:',
 	'specialpages' => 'Pàgin specièli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['en-ca'] = [
@@ -9476,6 +9630,7 @@ $messages['en-gb'] = [
 	'sessionfailure' => 'There seems to be a problem with your login session;
 this action has been cancelled as a precaution against session hijacking.
 Go back to the previous page, reload that page and then try again.',
+	'signup-password' => 'Password:',
 ];
 
 $messages['en-rtl'] = [
@@ -9690,6 +9845,7 @@ Jen la lasta protokolero por via referenco:',
 	'specialpages-group-spam' => 'Kontraŭspamiloj',
 	'sqlite-has-fts' => '$1 kun tut-teksta subteno',
 	'sqlite-no-fts' => '$1 sen tut-teksta subteno',
+	'signup-password' => 'Pasvorto:',
 ];
 
 $messages['es'] = [
@@ -9750,8 +9906,8 @@ Mire la [[Special:BlockList|lista de bloqueos activos]] para ver una lista de pr
 	'searchsubtitleinvalid' => 'Has buscado \'\'\'$1\'\'\'',
 	'shown-title' => 'Mostrar $1 {{PLURAL:$1|resultado|resultados}} por página',
 	'searchmenu-legend' => 'Opciones de búsqueda',
-	'searchmenu-exists' => '\'\'\'Hay una página llamada "[[:$1]]" en esta wiki.\'\'\'',
-	'searchmenu-new' => '\'\'\'¡Crea la página «[[:$1]]» en este wiki!\'\'\'',
+	'searchmenu-exists' => '\'\'\'Hay una página llamada «[[$1]]» en este wiki\'\'\'',
+	'searchmenu-new' => '\'\'\'¡Crear la página «[[:$1]]» en este wiki!\'\'\'',
 	'searchhelp-url' => 'Help:Ayuda',
 	'searchmenu-prefix' => '[[Special:PrefixIndex/$1|Otras páginas con este prefijo]]',
 	'searchprofile-articles' => 'Páginas de contenido',
@@ -9793,7 +9949,7 @@ Mientras tanto puedes buscar mediante Google, pero ten en cuenta que sus índice
 	'stub-threshold-disabled' => 'Desactivado',
 	'savedprefs' => 'Tus preferencias han sido guardadas.',
 	'servertime' => 'Hora del servidor:',
-	'saveusergroups' => 'Guardar grupos de usuarios',
+	'saveusergroups' => 'Guardar grupos del usuario',
 	'show' => 'mostrar',
 	'savefile' => 'Guardar archivo',
 	'sourcefilename' => 'Nombre del archivo origen:',
@@ -9813,7 +9969,7 @@ La descripción en su [$2 página de descripción del archivo] está mostrada de
 	'statistics-header-hooks' => 'Otras estadísticas',
 	'statistics-articles' => 'Páginas de contenido',
 	'statistics-pages' => 'Páginas',
-	'statistics-pages-desc' => 'Todas las páginas en el wiki, incluyendo páginas de discusión, redirecciones, etc.',
+	'statistics-pages-desc' => 'Todas las páginas del wiki, incluyendo discusiones, redirecciones, etc.',
 	'statistics-files' => 'Ficheros subidos',
 	'statistics-edits' => 'Ediciones en páginas desde que {{SITENAME}} fue instalado',
 	'statistics-edits-average' => 'Media de ediciones por página',
@@ -9863,7 +10019,9 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'spamprotectiontitle' => 'Filtro de protección contra spam',
 	'spamprotectiontext' => 'La página que quería guardar fue bloqueada por el filtro de spam.
 Esto podría estar causado por un enlace a un sitio externo incluido en la lista negra.',
-	'spamprotectionmatch' => 'El siguiente texto es el que activó nuestro filtro de spam: $1',
+	'spamprotectionmatch' => 'El siguiente texto es el que activó nuestro filtro \'\'anti-spam\'\' (contra la publicidad no solicitada): \'\'\'$1\'\'\'
+
+Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.',
 	'spambot_username' => 'Limpieza de spam de MediaWiki',
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',
@@ -9891,10 +10049,10 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'specialpages-group-changes' => 'Cambios recientes y registros',
 	'specialpages-group-media' => 'Páginas sobre archivos',
 	'specialpages-group-users' => 'Usuarios y permisos',
-	'specialpages-group-highuse' => 'Páginas sobre usos',
+	'specialpages-group-highuse' => 'Páginas de alto uso',
 	'specialpages-group-pages' => 'Listas de páginas',
 	'specialpages-group-pagetools' => 'Herramientas de páginas',
-	'specialpages-group-wiki' => 'Herramientas y datos del wiki',
+	'specialpages-group-wiki' => 'Herramientas y datos sobre el wiki',
 	'specialpages-group-redirects' => 'Búsquedas y redirecciones',
 	'specialpages-group-spam' => 'Herramientas anti-SPAM',
 	'sqlite-has-fts' => '$1 con soporte para búsqueda de texto completo',
@@ -9902,65 +10060,65 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'share_it' => 'Compártelo:',
 	'shared-Globalnavigation' => '*w:c:es:Videojuegos|Videojuegos|video-games-vertical-color
 
-**w:c:es.gaming|Impulsados
-***w:c:es.assassinscreed|Assassin\'s Creed
-***w:c:es.finalfantasy|Final Fantasy
-***w:c:es.callofduty|Call of Duty
-***w:c:es.elderscrolls|Elder Scrolls
-***w:c:es.borderlands|Borderlands
-
 **w:c:es.gaming|Más visitados
 ***w:c:es.pokemon|Pokémon
 ***w:c:es.gta|Grand Theft Auto
-***w:c:es.dofus|Dofus
-***w:c:es.wow|WoW
+***w:c:es.yugioh|Yu-Gi-Oh!
+***w:c:es.dragoncity|Dragon City
+***w:c:es.terraria|Terraria
+
+**w:c:es.gaming|&nbsp;
 ***w:c:es.halo|Halo
-
-**w:c:es.gaming|&nbsp;
-***w:c:es.mortalkombat|Mortal Kombat
-***w:c:es.sims|Los Sims
-***w:c:es.fallout|Fallout
-***w:c:es.kingdomhearts|Kingdom Hearts
-***w:c:es.metroid|Metroid
-
-**w:c:es.gaming|&nbsp;
 ***w:c:es.zelda|Zelda
-***w:c:es.animalcrossing|Animal Crossing
-***w:c:es.reddead|Red Dead
-***w:c:es.metalgear|Metal Gear
-***w:c:es.kirby|Kirby
+***w:c:es.elderscrolls|Elder Scrolls
+***w:c:es.sims|Los Sims
+***w:c:es.monsterlegends|Monster Legends
+
+**w:c:es.gaming|&nbsp;
+***w:c:es.ssb|Super Smash Bros
+***w:c:es.clubpenguin|Club Penguin
+***w:c:es.sonic|Sonic
+***w:c:es.residentevil|Resident Evil
+***w:c:es.warhammer40k|Warhammer 40k
+
+**w:c:es.gaming|&nbsp;
+***w:c:es.assassinscreed|Assassin\'s Creed
+***w:c:es.dofuswiki|Dofus
+***w:c:es.mario|Super Mario
+***w:c:es.callofduty|Call of Duty
+***w:c:es.megaman|Mega Man
 
 *w:c:es:Entretenimiento|Entretenimiento|entertainment-vertical-color
 
-**w:c:es.entertainment|Impulsados
-***w:c:es.dexter|Dexterpedia
-***w:c:es.onepiece|One Piece
-***w:c:crepusculo|Crepúsculo
-***w:c:es.rosariovampire|Wiki Rosario Vampire
-***w:c:es.inazumaelevengo5|Inazuma Eleven Go 5
-
 **w:c:es.entertainment|Más visitados
-***w:c:doblaje|Doblaje
 ***w:c:es.drama|Drama
-***w:c:es.digimon|Digimon
-***w:c:es.ben10|Ben 10
-***w:c:es.starwars|Star Wars
-
-**w:c:es.entertainment|&nbsp;
-***w:c:es.glee|Wiki Glee
+***w:c:es.doblaje|Doblaje
 ***w:c:es.naruto|Naruto
-***w:c:es.saintseiya|Saint Seiya
-***w:c:es.harrypotter|Harry Potter
-***w:c:es.yugioh|Yu-Gi-Oh!
+***w:c:es.dragonball|Dragon Ball
+***w:c:es.horadeaventura|Hora de Aventura
 
 **w:c:es.entertainment|&nbsp;
-***w:c:es.simpsons|Simpsons
-***w:c:es.bleach|Bleach
-***w:c:es.dragonball|Dragon Ball
-***w:c:es.lostpedia|Lostpedia
+***w:c:es.mlp|My Little Pony
+***w:c:hieloyfuego|Hielo y Fuego
+***w:c:es.onepiece|One Piece
+***w:c:es.regularshow|Regular Show
+***w:c:es.ben10|Ben 10
+
+**w:c:es.entertainment|&nbsp;
+***w:c:es.creepypasta|Creepypasta
+***w:c:es.saintseiya|Saint Seiya
+***w:c:es.thewalkingdead|The Walking Dead
+***w:c:es.starwars|Star Wars
 ***w:c:es.disney|Disney
 
-*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color
+**w:c:es.entertainment|&nbsp;
+***w:c:es.bleach|Bleach
+***w:c:los-juegos-del-hambre|Los Juegos del Hambre
+***w:c:es.bajoterra|Bajoterra
+***w:c:es.harrypotter|Harry Potter
+***w:c:es.fairytail|Fairy Tail
+
+*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color 
 
 **w:c:respuestas|WikiRespuestas
 ***w:c:pokemon.respuestas|Pokémon Respuestas
@@ -9971,31 +10129,60 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 
 **w:c:comunidad:Lista_de_Wikis|Otros
 ***w:c:Inciclopedia|Inciclopedia
-***w:c:es.bionicle|Bionicle
-***w:c:apicultura|Apicultura
+***w:c:es.althistory|Historia Alternativa
+***w:c:es.yugiohdecks|Yu-Gi-Oh! Decks
+***w:c:es.prehistrico|Prehistoria
+***w:c:es.club-penguin-super-fanon|Club Penguin Fanon
+
+**w:c:comunidadLista_de_Wikis|&nbsp;
+***w:c:es.la-wiki-pokeland|Pokeland
+***w:c:es.mujeres|Mujeres
 ***w:c:ceramica|Cerámica
-***w:c:es.quimica|Química
-
-**w:c:comunidadLista_de_Wikis|&nbsp;
-***w:c:herbolaria|Herbolaria
-***w:c:como-hacer|¿Cómo hacer?
-***w:c:es.transformers|Transformers
 ***w:c:futbol|Fútbol
-***w:c:matematica|Matemáticas
+***w:c:quimica|Química
 
 **w:c:comunidadLista_de_Wikis|&nbsp;
-***w:c:es.solarcooking|Cocina Solar
+***w:c:es.bionicle|Bionicle
 ***w:c:es.althistory|Historia Alternativa
 ***w:c:micronaciones|Micronaciones
-***w:c:es.gorillaz|Gorillaz
-***w:c:arte|Arte
-',
+***w:c:es.mitologia|Mitología
+***w:c:arte|Arte',
 	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
 * [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
 * [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
 * [[Special:Contact|Contactar]]
 * [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 	'specialpages-group-wikia' => 'Páginas de Fandom',
+	'save' => 'Guardar',
+	'searchsuggest' => 'Búsquedas 2',
+	'see_more' => 'Ver más...',
+	'seeeditcount' => 'Ver contador de ediciones',
+	'seemoredotdotdot' => 'Ver más...',
+	'send' => 'Enviar',
+	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
+	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
+	'shared-problemreport' => 'Reportar un problema',
+	'shoutbox' => 'Chat',
+	'showall' => 'Mostrar todo',
+	'sidebar' => '* SEARCH
+* navigation
+** mainpage|mainpage
+** portal-url|portal
+** currentevents-url|currentevents
+** recentchanges-url|recentchanges
+** randompage-url|randompage
+** forum-url|forum 
+** helppage|help',
+	'signup-mail' => 'Correo electrónico -',
+	'signup-moreinfo' => 'más información',
+	'signup-password' => 'Contraseña -',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:IP address|dirección IP]] numérica.\'\'\'
+
+Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o identificarte]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:es:¿Por qué crear una cuenta?|¿Por qué crear una cuenta?]] ([[Ayuda:Registrar una cuenta|Cómo crear una cuenta]])
+
+\'\'\'Información sobre esta IP:\'\'\' [http://whatismyipaddress.com/ip/$1 WHOIS] &bull; [http://www.robtex.com/ip/$1.html#whois rDNS] &bull; [http://rbls.org/$1 RBLs] &bull; [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor] &bull; [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] <br /> \'\'\'[[wikipedia:Regional Internet registry|RIR]]s:\'\'\' [http://whois.arin.net/rest/ip/$1.html América] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europa] &bull; [http://www.afrinic.net/cgi-bin/whois?query=$1 África] &bull; [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacífico] &bull; [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 América Latina/Caribe]
+|}',
 ];
 
 $messages['et'] = [
@@ -10209,6 +10396,7 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 	'specialpages-group-spam' => 'Töö spämmiga',
 	'sqlite-has-fts' => '$1 koos täistekstiotsingu toega',
 	'sqlite-no-fts' => '$1 ilma täistekstiotsingu toeta',
+	'signup-password' => 'Teie parool',
 ];
 
 $messages['eu'] = [
@@ -10399,6 +10587,7 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 	'specialpages-group-wiki' => 'Wiki datuak eta tresnak',
 	'specialpages-group-redirects' => 'Berbideraketa-orri bereziak',
 	'specialpages-group-spam' => 'Spam tresnak',
+	'signup-password' => 'Pasahitza',
 ];
 
 $messages['ext'] = [
@@ -10541,6 +10730,7 @@ tu escrucaol pa cargal otra vezi la páhina i güervi a ententalu.',
 	'specialpages-group-pagetools' => 'Herramientas de página',
 	'specialpages-group-wiki' => 'Datus Wiki i herramientas',
 	'specialpages-group-spam' => 'Herramientas de Spam',
+	'signup-password' => 'Consínia:',
 ];
 
 $messages['fa'] = [
@@ -10759,10 +10949,106 @@ $messages['fa'] = [
 	'specialpages-group-spam' => 'ابزارهای هرزنگاری',
 	'sqlite-has-fts' => '$1 با پشتیبانی از جستجو در متن کامل',
 	'sqlite-no-fts' => '$1 بدون پشتیبانی از جستجو در متن کامل',
+	'send' => 'بفرست',
+	'shared-Globalnavigation' => '*http://www.wikia.com/Video_Games|بازی‌های ویدیویی|video-games-vertical-color
+
+**http://www.wikia.com/Video_Games|What\'s Hot
+***w:c:batman:User_blog:Xean/Wikia_Exclusive!_Batman:_The_Fire_Rises|Batman: Fire Rises
+***w:c:mario:MarioWiki|Super Mario Bros. U
+***w:c:Halo:Halo_4|Halo 4
+***w:c:anarchyreigns:Anarchyreigns_Wiki|Anarchy Reigns
+***w:c:www:Video_Games|More...
+
+**http://www.wikia.com/Video_Games|Fall\'s Finest
+***w:c:farcry:Far_Cry_3|Far Cry 3
+***w:c:borderlands:Borderlands_2|Borderlands 2
+***w:c:assassinscreed:Assassin\'s_Creed_III|Assassin\'s Creed III
+***w:c:residentevil:Resident_Evil_6|Resident Evil 6
+***w:c:www:Video_Games|More...
+
+**http://www.wikia.com/Video_Games|Game Guides
+***w:c:elderscrolls:Quests_(Skyrim)|Skyrim
+***w:c:masseffect:Mass_Effect_3_Guide|Mass Effect 3
+***w:c:infinityblade:Game_Guides|Infinity Blade 2
+***w:c:amalur:Kingdoms_of_Amalur:_Reckoning_Walkthrough|Kingdoms of Amalur: Reckoning
+***w:c:www:Video_Games|More...
+
+**w:c:specops:Spec_Ops_Wiki|Spec Ops: The Line
+***w:c:specops:Spec_Ops:_The_Line/Walkthrough|Walkthrough
+***w:c:specops:Martin_Walker|Martin Walker
+***w:c:specops:Delta_Force|Delta Force
+***w:c:specops:The_Exiles|The Exiles
+***w:c:specops:Spec_Ops_Wiki|More Spec Ops...
+
+*http://www.wikia.com/Entertainment|سرگرمی|entertainment-vertical-color
+
+**http://www.wikia.com/Entertainment|What\'s Trending
+***w:c:wikia:Entertainment/Book_Club|Wikia Book Club
+***w:c:animanga:User_blog:LexiLexi/Summer_Anime_Movie_Guide|Summer Animé Guide
+***w:c:community:User_blog:Ericmoro/Represent_Your_Wiki_at_Comic-Con|Wikia at Comic-Con
+***w:c:wikia:Entertainment/TV_Schedule|Fall TV Schedule
+***w:c:entertainment:Wikia_Entertainment|More...
+
+**w:c:www:Movie|Movies
+***w:c:amazingspiderman:Amazing_Spider-Man_Wiki|The Amazing Spider-Man
+***w:c:avp:Prometheus_(Film)|Prometheus
+***w:c:pixar:Brave|Brave 
+***w:c:movies:Magic_Mike|Magic Mike 
+***w:c:www:Movie|More...
+
+**w:c:www:TV|TV
+***w:c:dallas:Dallas|Dallas
+***w:c:breakingbad:Breaking_Bad_Wiki|Breaking Bad
+***w:c:fallingskies:User_blog:LexiLexi/What_You_Need_to_Know|Falling Skies
+***w:c:weeds:Weeds_Wiki|Weeds
+***w:c:www:TV|More...
+
+**w:c:www:Music|Music
+***w:c:music:User_blog:Porterfield/2012_Concert_Series_-_Aerosmith|Aerosmith on Tour 
+***w:c:music:User_blog:Porterfield/Summer_Albums_Guide_2012|Summer Albums Guide  
+***w:c:lyrics:Carly_Rae_Jepsen|Carly Rae Jepsen
+***w:c:katyperry:Main_Page|Katy Perry
+***w:c:www:Music|More...
+
+*http://www.wikia.com/Lifestyle|شیو‌هٔ زندگی|lifestyle-vertical-color
+
+**w:c:www:Recipes|Body
+***w:c:recipes:Recipes_Wiki|BBQ Recipes
+***w:c:athletics:Athlepedia_Home|Athlepedia
+***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes 
+***w:c:nails:Nails_Wiki|Nail Color 
+***w:c:www:Recipes|More...
+
+**w:c:www:humanscience|Mind
+***w:c:space:Main_Page|Space Travel
+***w:c:humanscience:Welcome_to_Human_Science|Human Science
+***w:c:how-to:How_To|How-To
+***w:c:liberapedia:Main_Page|Liberapedia
+***w:c:www:humanscience|More...
+
+**w:c:Travel:Wikia_Travel|Soul
+***w:c:art:Main_Page|Art
+***w:c:toys:Main_Page|Toys 
+***w:c:gardening:Gardening_Wiki|Gardening 
+***w:c:travel:Travel_Wiki|Travel 
+***w:c:www:Lifestyle|More...
+
+**http://www.wikia.com/Lifestyle|Of Note
+***w:c:olympics:Olympics_Wiki|2012 Olympics
+***w:c:literature:Literawiki|Literature
+***w:c:tea:WikiTea|Tea
+***w:c:althistory:Main_Page|Alternative History
+***w:c:www:Lifestyle|More...',
+	'shared-problemreport' => 'گزارش‌دادن اشکال',
+	'signup-mail' => 'پست‌الکترونیکی -',
+	'signup-moreinfo' => 'اطلاعات بیشتر',
+	'signup-password' => 'گذرواژه -',
+	'specialpages-url' => 'ویژه:صفحه‌های_ویژه',
 ];
 
 $messages['ff'] = [
 	'sp-contributions-talk' => 'Kaldigal',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['fi'] = [
@@ -10775,7 +11061,7 @@ $messages['fi'] = [
 	'sep' => 'syyskuu',
 	'subcategories' => 'Alaluokat',
 	'search' => 'Haku',
-	'searchbutton' => 'Etsi',
+	'searchbutton' => 'Hae',
 	'searcharticle' => 'Siirry',
 	'specialpage' => 'Toimintosivu',
 	'showtoc' => 'näytä',
@@ -10829,7 +11115,7 @@ Alla on viimeisin lokitapahtuma:',
 	'searchprofile-project' => 'Ohje- ja projektisivut',
 	'searchprofile-images' => 'Kuvat ja tiedostot',
 	'searchprofile-everything' => 'Kaikki',
-	'searchprofile-advanced' => 'Laajennettu',
+	'searchprofile-advanced' => 'Laajennettu haku',
 	'searchprofile-articles-tooltip' => 'Hae nimiavaruuksista $1',
 	'searchprofile-project-tooltip' => 'Hae nimiavaruuksista $1',
 	'searchprofile-images-tooltip' => 'Etsi tiedostoja',
@@ -10968,6 +11254,21 @@ Alla on viimeisin lokitapahtuma:',
 	'sqlite-has-fts' => '$1, jossa on tuki kokotekstihaulle',
 	'sqlite-no-fts' => '$1, jossa ei ole tukea kokotekstihaulle',
 	'share_it' => 'Jaa:',
+	'save' => 'Tallenna',
+	'searchsuggest' => 'Ehdottava haku',
+	'searchtype' => 'Haun tyyppi',
+	'see_more' => 'Katso lisää...',
+	'seeeditcount' => 'Katso muokkauslaskuri',
+	'send' => 'Lähetä',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Yksityisyys]
+* [http://www.wikia.com/wiki/Wikia:About Tietoa Wikiasta]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Käyttöehdot]
+* [[Special:Contact|Ota yhteyttä]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Mainosta]',
+	'showall' => 'Näytä kaikki',
+	'signup-mail' => 'Sähköposti -',
+	'signup-moreinfo' => 'lisätietoja',
+	'signup-password' => 'Salasana -',
 ];
 
 $messages['fiu-vro'] = [
@@ -11173,6 +11474,7 @@ Alla on viimeisin lokitapahtuma:',
 	'sqlite-has-fts' => '$1, jossa on tuki kokotekstihaulle',
 	'sqlite-no-fts' => '$1, jossa ei ole tukea kokotekstihaulle',
 	'share_it' => 'Jaa:',
+	'signup-password' => 'Salasõna',
 ];
 
 $messages['fj'] = [
@@ -11192,6 +11494,7 @@ $messages['fj'] = [
 	'showdiff' => 'Vakaritaka na veisau',
 	'searchresultshead' => 'Vaqaqara',
 	'specialpages' => 'Tabana vakamareqeti',
+	'signup-password' => 'Yaca vuni',
 ];
 
 $messages['fo'] = [
@@ -11331,6 +11634,7 @@ Frágreiðingin á [$2 fílu frágreiðingar síðu] er víst her niðanfyri.',
 	'svg-long-desc' => 'SVG fíle, nominelt $1 × $2 pixel, fíle stødd: $3',
 	'show-big-image' => 'Full upploysn',
 	'specialpages' => 'Serligar síður',
+	'signup-password' => 'Títt loyniorð:',
 ];
 
 $messages['fr'] = [
@@ -11501,9 +11805,9 @@ impossible de renommer une page sur elle-même.',
 	'semiprotectedpagemovewarning' => '\'\'\'Note :\'\'\' Cette page a été protégée afin que seuls les utilisateurs enregistrés puissent la renommer. La dernière entrée du journal est affichée ci-dessous pour référence :',
 	'siteuser' => '{{GENDER:$2|l’utilisateur|l’utilisatrice|l’utilisateur}} $1 de {{SITENAME}}',
 	'siteusers' => '{{PLURAL:$2|l’utilisateur|les utilisateurs}} $1 de {{SITENAME}}',
-	'spamprotectiontitle' => 'Filtre de protection anti-pollution',
-	'spamprotectiontext' => 'La page que vous avez voulu sauvegarder a été bloquée par le filtre anti-pollution. Ceci est probablement dû à l’introduction d’un lien vers un site externe apparaissant sur la liste noire. Cette dernière utilise les expressions rationnelles suivantes :',
-	'spamprotectionmatch' => 'La chaîne de caractères « \'\'\'$1\'\'\' » a déclenché le détecteur de pourriel.',
+	'spamprotectiontitle' => 'Filtre de protection anti-pourriel',
+	'spamprotectiontext' => 'Le texte que vous avez voulu enregistrer a été bloqué par le filtre anti-pourriel. Cela est probablement dû à un lien vers un site externe sur liste noire.',
+	'spamprotectionmatch' => 'Le texte suivant a déclenché notre filtre anti-pourriel : $1',
 	'spambot_username' => 'Nettoyage de pourriels par MediaWiki',
 	'spam_reverting' => 'Rétablissement de la dernière version ne contenant pas de lien vers $1',
 	'spam_blanking' => 'Toutes les versions contenant des liens vers $1 sont blanchies',
@@ -11521,15 +11825,14 @@ impossible de renommer une page sur elle-même.',
 	'scarytranscludetoolong' => '[L’URL est trop longue]',
 	'semicolon-separator' => '&nbsp;;&#32;',
 	'size-bytes' => '$1 o',
-	'size-kilobytes' => '$1 Kio',
-	'size-megabytes' => '$1 Mio',
-	'size-gigabytes' => '$1 Gio',
+	'size-kilobytes' => '$1 Ko',
+	'size-megabytes' => '$1 Mo',
+	'size-gigabytes' => '$1 Go',
 	'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|discussion]])',
 	'specialpages' => 'Pages spéciales',
 	'specialpages-note' => '----
 * Pages spéciales normales.
-* <span class="mw-specialpagerestricted">Pages spéciales restreintes.</span>
-* <span class="mw-specialpagecached">Pages spéciales seulement en cache (pourraient être obsolètes).</span>',
+* <span class="mw-specialpagerestricted">Pages spéciales restreintes.</span>',
 	'specialpages-group-maintenance' => 'Rapports de maintenance',
 	'specialpages-group-other' => 'Autres pages spéciales',
 	'specialpages-group-login' => 'S’identifier / s’inscrire',
@@ -11545,24 +11848,24 @@ impossible de renommer une page sur elle-même.',
 	'sqlite-has-fts' => '$1 avec recherche en texte intégral supportée',
 	'sqlite-no-fts' => '$1 sans recherche en texte intégral supportée',
 	'share_it' => 'Partagez:',
-	'shared-Globalnavigation' => '*w:c:fr:Jeux vidéo|Jeux vidéo|video-games-vertical-color
+	'shared-Globalnavigation' => '*w:c:portail-jeuxvideo|Jeux vidéo|video-games-vertical-color
 
 **w:c:communaute:Thème:Jeux divers|Jeux divers
-***w:c:fr.dragonsofatlantis|Dragons of Atlantis
+***w:c:fr.dont-starve|Don\'t Starve
 ***w:c:fr.mario|Mario
 ***w:c:fr.sims|Les Sims
-***w:c:fr.zelda|Zelda
+***w:c:fr.tekken|Tekken
 ***w:c:fr.animalcrossing|Animal Crossing
 
 **w:c:communaute:Thème:Jeux divers|Jeux divers
-***w:c:fr.masseffect|Mass Effect
-***w:c:fr.halo|Halo
-***w:c:fr.leagueoflegends|League of Legends
+***w:c:fr.warframe|Warframe
+***w:c:ombredumordor|L\'Ombre du Mordor
 ***w:c:fr.gta|GTA
 ***w:c:fr.assassinscreed|Assassin\'s Creed
+***w:c:fr.simpson-springfield|Les Simpson : Springfield
 
 **w:c:communaute:Thème:Jeux de rôle|Jeux de rôle
-***w:c:fr.guildwars|Guild Wars
+***w:c:fr.clashofclans|Clash of Clans
 ***w:c:fr.wowwiki|World of Warcraft
 ***w:c:fr.kingdomhearts|Kingdom Hearts
 ***w:c:sorceleur|The Witcher
@@ -11575,27 +11878,27 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.finalfantasy|Final Fantasy
 ***w:c:fr.valkyrieprofilefr|Valkyrie Profile
 
-*w:c:fr:Divertissement|Divertissement|entertainment-vertical-color
+*w:c:portail-divertissement|Divertissement|entertainment-vertical-color
 
 **w:c:communaute:Thème:Littérature|Littérature
-***w:c:fr.hungergames|Hunger Games
-***w:c:fr.harrypotter|Harry Potter
+***w:c:fr.percy-jackson|Percy Jackson
+***w:c:fr.shadowhunters|The Mortal Instruments
 ***w:c:fr.seigneur-des-anneaux|Le Seigneur des Anneaux
 ***w:c:fr.asterix|Astérix
-***w:c:fr.picsou|Picsou
+***w:c:fr.divergent|Divergent
 
 **w:c:communaute:Thème:Séries télévisées|Séries télévisées
 ***w:c:fr.arrow|Arrow
 ***w:c:fr.pretty-little-liars|Pretty Little Liars
-***w:c:fr.nickcutter|Nick Cutter (Portes du Temps)
-***w:c:fr.whitecollar|FBI : Duo Très Spécial
+***w:c:fr.walking-dead|The Walking Dead
+***w:c:fr.game-of-thrones|Game of Thrones
 ***w:c:fr.simpsons|Les Simpson
 
 **w:c:communaute:Thème:Animes|Animes
-***w:c:fr.naruto|Naruto
+***w:c:fr.shingekinokyojin|L\'Attaque des Titans
 ***w:c:fr.onepiece|One Piece
-***w:c:fr.bleach|Bleach
-***w:c:fr.dragonball|Dragon Ball
+***w:c:fr.hunterxhunter|Hunter x Hunter
+***w:c:fr.reborn|Reborn!
 ***w:c:fr.fairytail|Fairy Tail
 
 **w:c:communaute:Thème:Films|Films
@@ -11605,7 +11908,7 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.jamesbond|James Bond
 ***w:c:fr.cinepedia|Cinéma
 
-*w:c:fr:Mode de vie|Mode de vie|lifestyle-vertical-color
+*w:c:portail-modedevie|Mode de vie|lifestyle-vertical-color
 **w:c:fr:Mode de vie|Mode de vie
 ***w:c:fr.saveurs-du-monde|Saveurs du monde
 ***w:c:fr.londres|Londres
@@ -11613,30 +11916,53 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.lego|LEGO
 ***w:c:fr.barbie|Barbie
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:capoeira|Capoeira
-***w:c:fr.icehockey|Hockey sur glace
 ***w:c:fr.withkids|WithKids
 ***w:c:fr.howto|WikiComment
 ***w:c:fr.graphic|Wiki Graphic
+***w:c:fr.encyclopedie|Encyclopédie
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:fr.univers|Univers
 ***w:c:fr.wikapplefrance|Apple
 ***w:c:lanormejuridique|La norme juridique
 ***w:c:familles|Familles
 ***w:c:monde|Monde
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:routes|Routes de France
-***w:c:fr.encyclopedie|Encyclopédie
-',
+***w:c:fr.icehockey|Hockey sur glace
+***w:c:fr.ski|Ski
+***w:c:fr.mahabharata|Mahâbhârata',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
 * [http://fr.wikia.com/À_propos À propos de Wikia]
-* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
+* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 	'specialpages-group-wikia' => 'Pages Fandom',
+	'save' => 'Enregistrer',
+	'searchsuggest' => 'Suggestions de recherche',
+	'see_more' => 'Plus…',
+	'seeeditcount' => 'Voir le nombre de modifications',
+	'seemoredotdotdot' => 'Plus…',
+	'send' => 'Envoyer',
+	'shared-News_box' => 'Visitez le [[w:fr:Accueil|Centre des communautés]] pour de l’aide et les dernières nouvelles',
+	'shared-problemreport' => 'Signaler un problème',
+	'sidebar' => '* navigation
+** mainpage|mainpage
+** portal-url|Portail
+** currentevents-url|Qu\'est-ce qu\'est actuel?
+** recentchanges-url|Modifications récentes
+** randompage-url|Une page au hassard
+** helppage|Aide',
+	'signup-moreinfo' => 'plus d\'info',
+	'signup-password' => 'Mot de passe -',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'Ceci est la page des contributions d\'un utilisateur anonyme qui n\'a pas encore créé de compte ou qui n\'en utilise pas, identifié par son [[wikipedia:fr:adresse IP|adresse IP]] numérique.\'\'\'
+
+Certaines adresses IP changent de façon périodiques et peuvent être partagées par plusieurs utilisateurs. Si vous êtes un utilisateur anonyme, vous devriez [[{{ns:Special}}:Userlogin|créer un compte ou vous connecter]] pour éviter à l\'avenir des confusions avec d\'autres utilisateurs anonymes. S\'enregistrer masque aussi votre adresse IP. ([[w:c:communaute:Aide:Créer un compte|Comment créer un compte]])
+|}',
 ];
 
 $messages['frc'] = [
@@ -11679,6 +12005,7 @@ $messages['frc'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|1 mot|$2 mots}})',
 	'skin-preview' => 'Vue d\'avance',
 	'sp-contributions-talk' => 'Discuter',
+	'signup-password' => 'Mot de passe:',
 ];
 
 $messages['frp'] = [
@@ -11898,6 +12225,7 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 	'specialpages-group-spam' => 'Outils anti-spame',
 	'sqlite-has-fts' => '$1 avouéc rechèrche en tèxto complèt recognua',
 	'sqlite-no-fts' => '$1 sen rechèrche en tèxto complèt recognua',
+	'signup-password' => 'Voutron mot de pâssa :',
 ];
 
 $messages['frr'] = [
@@ -12142,6 +12470,7 @@ La descrizion su la sô [$2 pagjine di descrizion] e je mostrade ca sot.',
 	'specialpages-group-wiki' => 'Imprescj e informazions sul progjet',
 	'specialpages-group-redirects' => 'Pagjinis speciâls di re-indreçament',
 	'specialpages-group-spam' => 'Imprescj pal spam',
+	'signup-password' => 'Peraule clâf',
 ];
 
 $messages['fy'] = [
@@ -12293,6 +12622,7 @@ As it dan  noch net slagget, [[Special:UserLogout|meld jo dan ôf]] en wer oan.\
 	'specialpages-group-wiki' => 'Wikigegevens en -helpmiddels',
 	'specialpages-group-redirects' => 'Trochferwizende bysûndere siden',
 	'specialpages-group-spam' => 'Spamhelpmiddels',
+	'signup-password' => 'Jo wachtwurd',
 ];
 
 $messages['ga'] = [
@@ -12406,6 +12736,7 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 	'specialpages-group-pagetools' => 'Uirslí leathanach',
 	'specialpages-group-wiki' => 'Sonraí vicí agus uirslí',
 	'specialpages-group-spam' => 'Uirlisí turscar',
+	'signup-password' => 'D\'fhocal faire',
 ];
 
 $messages['gag'] = [
@@ -12484,6 +12815,7 @@ $messages['gag'] = [
 	'svg-long-desc' => 'SVG faylı, nominal $1 × $2 piksel, fayl ölçüsü: $3',
 	'show-big-image' => 'Taman aydınnık',
 	'specialpages' => 'Maasus sayfalar',
+	'signup-password' => 'Parol',
 ];
 
 $messages['gan-hans'] = [
@@ -12628,6 +12960,7 @@ $messages['gan-hans'] = [
 	'scarytranscludetoolong' => '[对伓住，URL 太长]',
 	'specialpages' => '特殊页',
 	'specialpages-group-redirects' => '重定向特殊页面',
+	'signup-password' => '密码：',
 ];
 
 $messages['gan-hant'] = [
@@ -12772,6 +13105,7 @@ $messages['gan-hant'] = [
 	'scarytranscludetoolong' => '[對伓住，URL 太長]',
 	'specialpages' => '特殊頁',
 	'specialpages-group-redirects' => '重定向特殊頁面',
+	'signup-password' => '密碼：',
 ];
 
 $messages['gd'] = [
@@ -12862,6 +13196,7 @@ Chithear an tuairisgeul a tha aice air [duilleag tuairisgeul an fhaidhle $2] gu 
 	'svg-long-desc' => 'Faidhle SVG, a-rèir ainm $1 × $2 pixel, meud faidhle: $3',
 	'show-big-image' => 'Dùmhlachd-bhreacaidh shlàn',
 	'specialpages' => 'Duilleagan sònraichte',
+	'signup-password' => 'Am facal-faire agaibh',
 ];
 
 $messages['gl'] = [
@@ -13074,6 +13409,7 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 	'sqlite-has-fts' => '$1 con soporte para procuras de texto completo',
 	'sqlite-no-fts' => '$1 sen soporte para procuras de texto completo',
 	'share_it' => 'Compártelo:',
+	'signup-password' => 'O seu contrasinal:',
 ];
 
 $messages['glk'] = [
@@ -13085,6 +13421,7 @@ $messages['glk'] = [
 	'searchsubtitle' => 'شمه \'\'\'[[:$1]]\'\'\' ره واموتید ([[Special:Prefixindex/$1|هنه‌شرانی (صفحه‌هایی) کی «$1» همره سرأ گیفته بیدی (شوروع بیدی).]]{{int:pipe-separator}}
 [[Special:WhatLinksHere/$1|او هنه‌شرانی (صفحه‌هایی) کی به «$1» خال (لینک) بدأیید]])',
 	'sp-contributions-talk' => 'گب',
+	'signup-password' => 'گذرواژهٔ شما',
 ];
 
 $messages['gn'] = [
@@ -13124,6 +13461,7 @@ $messages['gn'] = [
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',
 	'specialpages' => 'Kuatiarogue hekochĩchĩva',
+	'signup-password' => 'Ne remiñemi',
 ];
 
 $messages['got'] = [
@@ -13161,6 +13499,7 @@ $messages['got'] = [
 	'sp-contributions-talk' => 'Maþleiseido',
 	'show-big-image' => 'Fullis wahstus',
 	'specialpages' => '𐌿𐍃𐍃𐌹𐌽𐌳𐍃𐌴𐌹𐌳𐍉𐍃',
+	'signup-password' => 'Analaúgns wáurda:',
 ];
 
 $messages['grc'] = [
@@ -13324,6 +13663,7 @@ $messages['grc'] = [
 	'specialpages-group-wiki' => 'Βικι-δεδομένα καὶ στοιχεῖα',
 	'specialpages-group-redirects' => 'Ἀναδιευθύνειν εἰδικὰς δέλτους',
 	'specialpages-group-spam' => 'Ἐργαλεῖα κατὰ τῶν ἀνεπιθυμήτων διαγγελιῶν',
+	'signup-password' => 'Σῆμα:',
 ];
 
 $messages['gsw'] = [
@@ -13528,6 +13868,7 @@ As Referänz wird do dr letscht Logbuechyytrag aagee:',
 	'specialpages-group-spam' => 'Spam-Wärchzüüg',
 	'sqlite-has-fts' => '$1 mit Unterstitzig vu dr Volltextsuechi',
 	'sqlite-no-fts' => '$1 ohni Unterstitzig vu dr Volltextsuechi',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['gu'] = [
@@ -13739,6 +14080,7 @@ $messages['gu'] = [
 	'specialpages-group-spam' => 'સ્પેમ સાધનો',
 	'sqlite-has-fts' => '$1 પૂર્ણ શબ્દ શોધ સહીત',
 	'sqlite-no-fts' => '$1 પૂર્ણ શબ્દ  શોધ વિકલ્પ વગર',
+	'signup-password' => 'ગુપ્ત સંજ્ઞા:',
 ];
 
 $messages['gv'] = [
@@ -13824,6 +14166,7 @@ $messages['gv'] = [
 	'specialpages-group-other' => 'Duillagyn elley er lheh',
 	'specialpages-group-login' => 'Log stiagh / croo coontys',
 	'specialpages-group-users' => 'Ymmydeyryn as kiartyn',
+	'signup-password' => 'Fockle yn arrey:',
 ];
 
 $messages['ha'] = [
@@ -13875,6 +14218,7 @@ $messages['ha'] = [
 	'svg-long-desc' => 'Fayil kin SVG, saƙar fikisal $1 x $2, girman fayil: $3',
 	'show-big-image' => 'Cikakkar saƙa',
 	'specialpages' => 'Shafuna na musamman',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hak'] = [
@@ -13975,6 +14319,7 @@ $messages['hak'] = [
 	'scarytranscludetoolong' => '[Tui-put-hí; URL thi-tiám thai-chhòng]',
 	'size-bytes' => '$1 Vi-ngièn-chû',
 	'specialpages' => 'Thi̍t-sû-ya̍p',
+	'signup-password' => 'Me̍t-me̍t',
 ];
 
 $messages['haw'] = [
@@ -14026,6 +14371,7 @@ $messages['haw'] = [
 	'sp-contributions-submit' => 'Huli',
 	'show-big-image' => 'Miomio piha',
 	'specialpages' => 'Nā ‘ao‘ao kūikawā',
+	'signup-password' => 'ʻŌlelo hūnā:',
 ];
 
 $messages['he'] = [
@@ -14253,6 +14599,7 @@ $messages['he'] = [
 	'sqlite-has-fts' => '$1 עם תמיכה בחיפוש בטקסט מלא',
 	'sqlite-no-fts' => '$1 ללא תמיכה בחיפוש בטקסט מלא',
 	'share_it' => 'תשתפ/י',
+	'signup-password' => 'סיסמה:',
 ];
 
 $messages['hi'] = [
@@ -14444,6 +14791,7 @@ $messages['hi'] = [
 	'specialpages-group-wiki' => 'विकि डाटा और औज़ार',
 	'specialpages-group-redirects' => 'विशेष पन्ने अनुप्रेषित कर रहें हैं',
 	'specialpages-group-spam' => 'स्पैम औज़ार',
+	'signup-password' => 'आपका पासवर्ड',
 ];
 
 $messages['hif'] = [
@@ -14635,6 +14983,7 @@ $messages['hif'] = [
 	'specialpages-group-wiki' => 'विकि डाटा और औज़ार',
 	'specialpages-group-redirects' => 'विशेष पन्ने अनुप्रेषित कर रहें हैं',
 	'specialpages-group-spam' => 'स्पैम औज़ार',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hif-latn'] = [
@@ -14815,6 +15164,7 @@ Ii saait ii kaaran se hoi ki panna ke ek jorr koi blacklisted external site se h
 	'specialpages-group-highuse' => 'Jaada kaam me laae waala panna',
 	'specialpages-group-pages' => 'Panna ke suchi',
 	'specialpages-group-pagetools' => 'Panna ke aujar',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hil'] = [
@@ -14932,6 +15282,7 @@ Tandai nga ang ila nga palasulundan sang mga unod sang {{SITENAME}} mahimo nga m
 	'svg-long-desc' => 'SVG file, nominalya $1 × $2 piksels, kadakuon sang file: $3',
 	'show-big-image' => 'Kabilogan nga resolusyon',
 	'specialpages' => 'Espesyal nga mga panid',
+	'signup-password' => 'Kontra-senyas:',
 ];
 
 $messages['hr'] = [
@@ -15134,6 +15485,7 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 	'sqlite-has-fts' => '$1 s podrškom pretraživanja cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretraživanja cijelog teksta',
 	'share_it' => 'Podijeli:',
+	'signup-password' => 'Lozinka:',
 ];
 
 $messages['hsb'] = [
@@ -15338,6 +15690,7 @@ Najnowši protokolowy zapisk je deleka jako referenca podaty:',
 	'specialpages-group-spam' => 'Spamowe nastroje',
 	'sqlite-has-fts' => '$1 połnotekstowe pytanje podpěruje.',
 	'sqlite-no-fts' => '$1 połnotekstowe pytanje njepodpěruje',
+	'signup-password' => 'Hesło',
 ];
 
 $messages['ht'] = [
@@ -15418,6 +15771,7 @@ Dènye ekriti nan jounal parèt pi ba kòm referans:',
 	'svg-long-desc' => 'Fichye SVG, rezolisyon de $1 × $2 piksèl, gwosè fichye : $3',
 	'show-big-image' => 'Pi bon rezolisyon',
 	'specialpages' => 'Paj espesyal yo',
+	'signup-password' => 'Mopas ou an :',
 ];
 
 $messages['hu'] = [
@@ -15622,6 +15976,7 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 	'specialpages-group-spam' => 'Spam eszközök',
 	'sqlite-has-fts' => '$1 teljes szöveges keresés támogatással',
 	'sqlite-no-fts' => '$1 teljes szöveges keresés támogatása nélkül',
+	'signup-password' => 'Jelszavad:',
 ];
 
 $messages['hy'] = [
@@ -15786,6 +16141,7 @@ $messages['hy'] = [
 	'specialpages-group-wiki' => 'Վիքի-տվյալներ և գործիքներ',
 	'specialpages-group-redirects' => 'Վերահղող հատուկ էջեր',
 	'specialpages-group-spam' => 'Սպամի գործիքներ',
+	'signup-password' => 'Գաղտնաբառ.',
 ];
 
 $messages['ia'] = [
@@ -15996,6 +16352,7 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 	'specialpages-group-spam' => 'Instrumentos antispam',
 	'sqlite-has-fts' => '$1 con supporto de recerca de texto integre',
 	'sqlite-no-fts' => '$1 sin supporto de recerca de texto integre',
+	'signup-password' => 'Contrasigno:',
 ];
 
 $messages['id'] = [
@@ -16202,6 +16559,7 @@ Ini mungkin disebabkan oleh pranala ke situs luar yang termasuk dalam daftar hit
 	'specialpages-group-spam' => 'Peralatan spam',
 	'sqlite-has-fts' => '$1 dengan dukungan pencarian teks lengkap',
 	'sqlite-no-fts' => '$1 tanpa dukungan pencarian teks lengkap',
+	'signup-password' => 'Kata sandi:',
 ];
 
 $messages['ie'] = [
@@ -16315,6 +16673,7 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 	'specialpages-group-wiki' => 'Data wiki e utensiles',
 	'specialpages-group-redirects' => 'Redirectionant págines special',
 	'specialpages-group-spam' => 'Utensiles de spam',
+	'signup-password' => 'Vor passa-parol:',
 ];
 
 $messages['ig'] = [
@@ -16432,10 +16791,12 @@ Ndetu banyéré nkè ogẹ nso di na okpúrụ màkà ádịamámá:',
 	'specialpages-group-wiki' => 'Ùmá Wiki na ngwa ọru ya',
 	'specialpages-group-redirects' => 'Na kufù ihü mkpà',
 	'specialpages-group-spam' => 'Ngwa ụrú',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ik'] = [
 	'searchhelp-url' => 'Help:anniqsuiruq',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ike-cans'] = [
@@ -16464,6 +16825,7 @@ $messages['ike-cans'] = [
 	'sp-contributions-talk' => 'ᐅᖃᓕᒪᔪᖅ',
 	'sp-contributions-submit' => 'ᐃᕚᖅᐳᖅ',
 	'specialpages' => 'ᐱᔨ ᒪᑉᐱᑕᖅ',
+	'signup-password' => 'ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 ];
 
 $messages['ike-latn'] = [
@@ -16485,6 +16847,7 @@ $messages['ike-latn'] = [
 	'statistics-header-users' => 'qatannguti kisitsisillgurlugitpasissitissat',
 	'sp-contributions-submit' => 'ivaaqpuq',
 	'specialpages' => 'piji mappitaq',
+	'signup-password' => 'uikipitia palanngasauti',
 ];
 
 $messages['ilo'] = [
@@ -16697,6 +17060,7 @@ Daytoy ngata ket gapu ti panilpo a naiparit ti akin ruar a pagsaadan.',
 	'specialpages-group-spam' => 'Ramramit kontra spam',
 	'sqlite-has-fts' => '$1 adda ti suporta amin a teksto ti pinagbiruk',
 	'sqlite-no-fts' => '$1 awan ti suporta amin a teksto ti pinagbiruk',
+	'signup-password' => 'Pasesbalikas:',
 ];
 
 $messages['inh'] = [
@@ -16783,6 +17147,7 @@ $messages['inh'] = [
 	'specialpages-group-users' => 'Дакъалаьцархой, цара бокъо',
 	'specialpages-group-pages' => 'ОагIувний дагарченаш',
 	'specialpages-group-pagetools' => 'ОагIувнаша гIирсаш',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['io'] = [
@@ -16880,6 +17245,7 @@ Se ol ankore nefuncionas, probez [[Special:UserLogout|ekirar]] e pose enirar.',
 	'specialpages-group-pages' => 'Listi di pagini',
 	'specialpages-group-pagetools' => 'Paginala utensili',
 	'specialpages-group-redirects' => 'Specala pagini di ridirektili',
+	'signup-password' => 'Pasovorto:',
 ];
 
 $messages['is'] = [
@@ -17092,6 +17458,7 @@ Síðasta færsla síðunnar úr verndunarskrá er sýnd til skýringar:',
 	'sqlite-has-fts' => '$1 með fullum texta leitar stuðningi',
 	'sqlite-no-fts' => '$1 án fullum texta leitar stuðningi',
 	'share_it' => 'Deila því:',
+	'signup-password' => 'Lykilorð:',
 ];
 
 $messages['it'] = [
@@ -17293,11 +17660,97 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-	* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
-	* [[Special:Contact|Contact]]
-	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Pagine di Fandom',
+	'shared-Globalnavigation' => '*w:c:it|Videogiochi
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.assassinscreed|Assassin\'s Creed
+***w:c:it.finalfantasy|Final Fantasy
+***w:c:it.witcher|Witcher
+***w:c:it.uncharted|Uncharted
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.elderscrolls|Elder Scrolls
+***w:c:it.residentevil|Resident Evil
+***w:c:it.gta|GTA
+***w:c:it.ratcheteclank|Ratchet & Clank
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.halo|Halo
+***w:c:it.wow|World of Warcraft
+***w:c:it.gothic|Gothic
+***w:c:it.sims|Sims
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Browsergames
+***w:c:it.planetside|Planetside 2
+***w:c:it.ikariam|Ikariam
+***w:c:it.travian|Travian
+***w:c:it.dofuswiki|Dofus
+***w:c:it:community:Categoria:Videogiochi|Altro...
+
+*w:c:it|Intrattenimento
+
+**w:c:it.community:Categoria:Televisione|TV
+***w:c:it.ceraunavolta|C\'era Una Volta
+***w:c:it.iltronodispade|Il Trono di Spade
+***w:c:it.glee|Glee
+***w:c:it.squadraspecialecobra11|Cobra 11
+***w:c:it.community:Categoria:Televisione|Altro...
+
+**w:c:it.community:Categoria:Cinema|Cinema
+***http://it.memory-alpha.org/ |Star Trek
+***w:c:it.starwars|Guerre Stellari
+***w:c:padrino|Il Padrino
+***w:c:it.piratideicaraibi|Pirati dei Caraibi
+***w:c:it.community:Categoria:Cinema|Altro...
+
+**w:c:it.community:Categoria:Fumetti_e_cartoni|Fumetti e manga
+***w:c:it.onepiece|One Piece
+***w:c:it.naruto|Naruto
+***w:c:it.paperpedia|Paperpedia
+***w:c:it.shingekinokyojin|L\'Attacco dei Giganti
+***w:c:it.community:Categoria:Fumetti_e_cartoni|Altro...
+
+**w:c:it.community:Categoria:Anime_e_manga|Cartoni e anime
+***w:c:it.inazumaelevenwiki-italia|Inazuma Eleven
+***w:c:it.simpsons|Simpsons
+***w:c:it.dragonball|Dragon Ball
+***w:c:it.generatorrex|Generator Rex
+***w:c:it.community:Categoria:Anime_e_manga|Altro...
+
+*w:c:it|Stili di vita
+
+**w:c:it.community:Categoria:Letteratura|Letteratura
+***w:c:it.harrypotter|Harry Potter
+***w:c:it.lotr|J.R.R. Tolkien
+***w:c:it.questeoscurematerie|Queste Oscure Materie
+***w:c:it.eragon|Eragon
+***w:c:it|Altro...
+
+**w:c:it|Altro
+***w:c:it.magicthegathering|Magic the Gathering
+***w:c:it.coldplay|Coldplay
+***w:c:it.appunti|Appunti universitari
+***w:c:it.creepypasta|Creepypasta
+***w:c:it|Altro...
+
+**w:c:it|Altro
+***w:c:it.linux|Linux
+***w:c:it.gloves|Guanti
+***w:c:it.lego|Lego
+***w:c:it.encicprotezionecivile|Protezione Civile
+***w:c:it|Altro...',
+	'signup-mail' => 'E-mail -',
+	'signup-moreinfo' => 'Ulteriori informazioni',
+	'signup-password' => 'Password -',
+	'specialpages-url' => 'Special:SpecialPages',
 ];
 
 $messages['iu'] = [
@@ -17498,6 +17951,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'specialpages-group-spam' => 'Strumenti contro lo spam',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
+	'signup-password' => 'ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 ];
 
 $messages['ja'] = [
@@ -17524,7 +17978,7 @@ $messages['ja'] = [
 	'sig_tip' => '時刻印つきの署名',
 	'summary' => '編集内容の要約：',
 	'subject' => '題名・見出し：',
-	'savearticle' => 'ページを保存',
+	'savearticle' => '保存',
 	'showpreview' => 'プレビューを表示',
 	'showlivepreview' => 'ライブプレビュー',
 	'showdiff' => '差分を表示',
@@ -17571,7 +18025,7 @@ $messages['ja'] = [
 	'searchprofile-articles-tooltip' => '$1で検索',
 	'searchprofile-project-tooltip' => '$1で検索',
 	'searchprofile-images-tooltip' => 'ファイルを検索',
-	'searchprofile-everything-tooltip' => '全ページ（トークページ含む）を検索',
+	'searchprofile-everything-tooltip' => '全てのコンテンツ (トークページ含む) を検索',
 	'searchprofile-advanced-tooltip' => '特定の名前空間を検索',
 	'search-result-size' => '$1（$2単語）',
 	'search-result-category-size' => '$1件（$2下位カテゴリ、$3ファイル）',
@@ -17603,7 +18057,7 @@ $messages['ja'] = [
 	'stub-threshold-disabled' => '無効',
 	'savedprefs' => '個人設定を保存しました。',
 	'servertime' => 'サーバーの時間：',
-	'saveusergroups' => '利用者グループを保存',
+	'saveusergroups' => 'ユーザー権限を保存',
 	'show' => '表示',
 	'savefile' => 'ファイルを保存',
 	'sourcefilename' => 'アップロード元のファイル名：',
@@ -17623,7 +18077,7 @@ $messages['ja'] = [
 	'statistics-header-hooks' => 'その他の統計',
 	'statistics-articles' => '記事数',
 	'statistics-pages' => '総ページ数',
-	'statistics-pages-desc' => 'このウィキ内のすべてのページです（トークページや転送などを含む）。',
+	'statistics-pages-desc' => 'トークページやリダイレクトなどを含んだこのウィキア内のすべてのページです。',
 	'statistics-files' => 'アップロードされたファイル数',
 	'statistics-edits' => '{{SITENAME}}が開設されてからの編集回数の総計',
 	'statistics-edits-average' => '1ページあたりの編集回数',
@@ -17722,12 +18176,72 @@ $messages['ja'] = [
 	'share_it' => '共有ツール:',
 	'searchsuggest' => '検索補間',
 	'see_more' => '更に詳しくは',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Monobook-footer-wikia-links' => '* [http://ja.wikia.com/プライバシーポリシー プライバシー]
+* [http://ja.wikia.com/ウィキアについて ウィキアについて]
+* [http://ja.wikia.com/利用規約 利用規約]
+* [[Special:Contact|お問い合わせ]]
+* [http://www.wikia.com/Advertising 広告]',
 	'specialpages-group-wikia' => 'Fandomのページ',
+	'seeeditcount' => '編集回数のカウントをご覧ください',
+	'seemoredotdotdot' => 'その他',
+	'shared-Globalnavigation' => '* w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テスト
+** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テストで
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|あなたは技術に詳しい人ですか？
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|TVの熱狂的なファンですか？
+** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|本当の自分をみつけてみよう
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|グルメですか？
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|意外なことがわかるかもしれません！
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|詳細はこちらをクリック！
+* w:c:ja|人気・おすすめウィキア|video-games-vertical-color 
+** w:c:ja.videogameshub|ゲーム
+*** w:c:ja.game|ゲーム総合
+*** w:c:ja.destiny|Destiny
+*** w:c:ja.eq2|EverQuest 2
+*** w:c:ja.lotro|Lord of the Rings Online
+*** w:c:ja.rfonline|RF Online
+**
+*** w:c:ja.gw2|Guild Wars 2
+*** w:c:ja.finalfantasy|Final Fantasy
+*** w:c:ja.halo|Halo
+*** w:c:ja.kirby|カービィ
+** w:c:ja.entertainmenthub|エンターテイメント
+***w:c:ja.entertainment|エンターテイメント総合
+*** w:c:ja.starwars|スター・ウォーズ
+*** memoryalpha:ja:Portal:Main|スタートレック
+*** w:c:ja.onepiece|ワンピース
+*** w:c:ja.animanga|アニメ・漫画総合
+** w:c:ja:ライフスタイル|ライフスタイル
+*** w:c:japan|日本
+*** w:c:ja.tanukipedia|たぬき
+*** w:c:ja.noodle|ヌードル
+* w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ・ヘルプ|entertainment-vertical-color
+** w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テストをやってみよう
+*** w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ
+*** w:c:ja.community:Blog:コミュニティサポートブログ|コミュニティサポートブログ
+*** w:c:ja.community:Blog:技術情報|技術情報
+** w:c:ja.community:Help:コンテンツ|ヘルプ
+*** w:c:ja.community:ウィキアユニバーシティ|ウィキアユニバーシティ
+*** w:c:ja.community:Blog:ヒントとコツ|ヒントとコツ',
+	'showall' => '全て表示する',
+	'sidebar' => '* Content Navigation|コンテンツナビゲーション
+** mainpage|メインページ
+** content-url|コンテンツ
+** randompage-url|ランダムページ
+* Community|コミュニティ
+** portal-url|ポータル
+** recentchanges-url|最近の更新
+** helppage|ヘルプ
+** forum-url|フォーラム',
+	'signup-mail' => 'メールアドレス -',
+	'signup-moreinfo' => '詳細',
+	'signup-password' => 'パスワード:',
+	'skin-forced' => 'このウィキでは外装を変更できません。',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin: 1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'これは、アカウントを取得していないか、または利用していない匿名ユーザーのための投稿履歴ページです。このユーザーは、[[wikipedia:ja:IPアドレス|IPアドレス]]の数字により識別されます。\'\'\'
+
+IPアドレスは、時折変更されることもあり、複数人で共有されることもあります。もし、まだ匿名で利用しているなら、他の匿名ユーザーとの混乱を避けるため是非とも[[{{ns:Special}}:Userlogin|アカウントの作成、またはログイン]]することをお勧めします。登録することで、IPアドレスを隠すこともできます。[[w:c:ja.community:ヘルプ:アカウントを作る理由|なぜアカウントを作成するのですか？]] ([[w:c:ja.community:ヘルプ:アカウントを作成する|アカウントを作成する方法]])
+|}',
 ];
 
 $messages['jam'] = [
@@ -17823,6 +18337,7 @@ $messages['jbo'] = [
 	'sp-contributions-talk' => 'casnu',
 	'sp-contributions-submit' => 'sisku',
 	'specialpages' => 'steci ckupau',
+	'signup-password' => 'Password:',
 ];
 
 $messages['jut'] = [
@@ -17864,6 +18379,7 @@ $messages['jut'] = [
 	'svg-long-desc' => 'SVG gøret, wønetstørrelse $1 × $2 pixel, gøretstørrelse: $3',
 	'show-big-image' => 'Hersenenge i større åpløsnenge',
 	'specialpages' => 'Sonst sider',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['jv'] = [
@@ -18048,6 +18564,7 @@ Katrangan tampilan:
 	'specialpages-group-wiki' => 'Data lan piranti wiki',
 	'specialpages-group-redirects' => 'Ngalihaké kaca astamèwa',
 	'specialpages-group-spam' => 'Piranit spam',
+	'signup-password' => 'tembung sandhi',
 ];
 
 $messages['ka'] = [
@@ -18239,6 +18756,7 @@ $messages['ka'] = [
 	'specialpages-group-wiki' => 'ვიკი–მონაცემები და ინსტრუმენტები',
 	'specialpages-group-redirects' => 'სპეცგვერდების გადამისამართება',
 	'specialpages-group-spam' => 'ინსტრუმენტები სპამის წინააღმდეგ',
+	'signup-password' => 'პაროლი:',
 ];
 
 $messages['kaa'] = [
@@ -18357,6 +18875,7 @@ To\'mende en\' aqırg\'ı jurnal mag\'lıwmatları berilgen.',
 	'sp-newimages-showfrom' => '$2, $1 baslap taza fayllardı ko\'rset',
 	'specialpages' => 'Arnawlı betler',
 	'specialpages-group-users' => 'Paydalanıwshılar ha\'m olardın\' huqıqları',
+	'signup-password' => 'Parol:',
 ];
 
 $messages['kab'] = [
@@ -18448,6 +18967,7 @@ G leɛnayek wekki ɣef taqeffalt "Back/Précédent" n browser/explorateur inek, 
 	'size-megabytes' => '$1 MB/MO',
 	'size-gigabytes' => '$1 GB/GO',
 	'specialpages' => 'isebtar usligen',
+	'signup-password' => 'Awal n tbaḍnit',
 ];
 
 $messages['kbd'] = [
@@ -18639,6 +19159,7 @@ $messages['kg'] = [
 	'searchall' => 'nyonso',
 	'show' => 'Monisa',
 	'sp-contributions-talk' => 'disolo',
+	'signup-password' => 'Password:',
 ];
 
 $messages['khw'] = [
@@ -18854,6 +19375,7 @@ $messages['kk'] = [
 	'statistics-users' => 'Тіркелген қатысушылар',
 	'statistics-users-active' => 'Белсенді қатысушылар',
 	'statistics-users-active-desc' => 'Соңғы {{PLURAL:$1|күнде|$1 күнде}} қандай да бір іс-әрекет жасаған қатысушылар',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-arab'] = [
@@ -18992,6 +19514,7 @@ $messages['kk-arab'] = [
 	'specialpages-group-wiki' => 'ۋىيكىي دەرەكتەرى جانە قۇرالدارى',
 	'specialpages-group-redirects' => 'ايدايتىن ارنايى بەتتەر',
 	'specialpages-group-spam' => 'سپام قۇرالدارى',
+	'signup-password' => 'قۇپىييا ٴسوزىڭىز:',
 ];
 
 $messages['kk-cn'] = [
@@ -19130,6 +19653,7 @@ $messages['kk-cn'] = [
 	'specialpages-group-wiki' => 'ۋىيكىي دەرەكتەرى جانە قۇرالدارى',
 	'specialpages-group-redirects' => 'ايدايتىن ارنايى بەتتەر',
 	'specialpages-group-spam' => 'سپام قۇرالدارى',
+	'signup-password' => 'قۇپىييا ٴسوزىڭىز:',
 ];
 
 $messages['kk-cyrl'] = [
@@ -19287,6 +19811,7 @@ $messages['kk-cyrl'] = [
 	'specialpages-group-wiki' => 'Уики деректері және құралдары',
 	'specialpages-group-redirects' => 'Айдайтын арнайы беттер',
 	'specialpages-group-spam' => 'Спам құралдары',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-kz'] = [
@@ -19444,6 +19969,7 @@ $messages['kk-kz'] = [
 	'specialpages-group-wiki' => 'Уики деректері және құралдары',
 	'specialpages-group-redirects' => 'Айдайтын арнайы беттер',
 	'specialpages-group-spam' => 'Спам құралдары',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-latn'] = [
@@ -19580,6 +20106,7 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 	'specialpages-group-wiki' => 'Wïkï derekteri jäne quraldarı',
 	'specialpages-group-redirects' => 'Aýdaýtın arnaýı better',
 	'specialpages-group-spam' => 'Spam quraldarı',
+	'signup-password' => 'Qupïya söziñiz:',
 ];
 
 $messages['kk-tr'] = [
@@ -19716,6 +20243,7 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 	'specialpages-group-wiki' => 'Wïkï derekteri jäne quraldarı',
 	'specialpages-group-redirects' => 'Aýdaýtın arnaýı better',
 	'specialpages-group-spam' => 'Spam quraldarı',
+	'signup-password' => 'Qupïya söziñiz:',
 ];
 
 $messages['kl'] = [
@@ -19765,6 +20293,7 @@ $messages['kl'] = [
 	'sp-contributions-username' => 'IP adresse imalt. atuisoq:',
 	'sp-contributions-submit' => 'Ujaruk',
 	'specialpages' => 'Quppernerit immikkut ittut',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['km'] = [
@@ -19978,6 +20507,7 @@ $messages['km'] = [
 	'specialpages-group-wiki' => 'ទិន្នន័យនិងឧបករណ៍វិគី',
 	'specialpages-group-redirects' => 'ទំព័របញ្ជូនបន្តពិសេសៗ',
 	'specialpages-group-spam' => 'ឧបករណ៍ស្ព៊ែម',
+	'signup-password' => 'ពាក្យសំងាត់៖',
 ];
 
 $messages['kn'] = [
@@ -20100,6 +20630,7 @@ $messages['kn'] = [
 	'specialpages-group-highuse' => 'ಹೆಚ್ಚು ಬಳಕೆಯಲ್ಲಿರುವ ಪುಟಗಳು',
 	'specialpages-group-pages' => 'ಪುಟಗಳ ಪಟ್ಟಿ',
 	'specialpages-group-redirects' => 'ವಿಶೇಷ ಪುಟಗಳನ್ನು ಪುನರ್ನಿರ್ದೇಶಿಸಲಾಗುತ್ತಿದೆ',
+	'signup-password' => 'ನಿಮ್ಮ ಪ್ರವೇಶಪದ',
 ];
 
 $messages['ko'] = [
@@ -20304,6 +20835,58 @@ $messages['ko'] = [
 	'specialpages-group-spam' => '스팸 처리 도구',
 	'sqlite-has-fts' => '$1 (본문 전체 검색)',
 	'sqlite-no-fts' => '$1 (본문은 검색에서 제외)',
+	'see_more' => '더 보기...',
+	'seeeditcount' => '편집 횟수 보기',
+	'send' => '보내기',
+	'shared-Globalnavigation' => '*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|게임|video-games-vertical-color
+
+**#|화제의 게임
+***http://ko.pokemon.wikia.com/wiki/대문|포켓몬
+***http://ko.bujok.wikia.com/wiki/Home|부족전쟁
+***http://ko.unlight.wikia.com/wiki/대문|언라이트
+***http://ko.mabinogi.wikia.com/wiki/대문|마비노기
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|더 보기...
+
+**#|게임 추천
+***http://ko.projectarcturus.wikia.com/wiki/악튜러스(Arcturus,アークトゥルス)_위키|악튜러스
+***http://ko.maplestory2.wikia.com/wiki/메이플스토리2 위키|메이플스토리 2
+***http://ko.metalgear.wikia.com/wiki/메탈_기어_위키|메탈 기어
+***http://ko.halo.wikia.com/wiki/헤일로페디아_메인_페이지|헤일로
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|더 보기...
+
+*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|엔터테인먼트|entertainment-vertical-color
+
+**#|텔레비전
+***http://ko.oreimo.wikia.com/wiki/대문|내 여동생이 이렇게 귀여울 리가 없어
+***http://ko.mlp.wikia.com/wiki/마이_리틀_포니_위키|마이 리틀 포니
+***http://ko.clairebible.wikia.com/wiki/슬레이어즈_위키|슬레이어즈
+***http://ko.shinchan.wikia.com/wiki/크레용_신짱_위키|크레용 신짱
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|더 보기...
+
+**#|음악
+***http://ko.music.wikia.com/wiki/대문|음악 백과 사전
+***http://ko.utau.wikia.com/wiki/UTAU_위키|UTAU
+***http://ko.vocapedia.wikia.com/wiki/보컬로이드_위키|보컬로이드
+***http://ko.suju.wikia.com/wiki/슈주피디아|슈퍼주니어
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|더 보기...
+
+*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EC%83%9D%ED%99%9C|생활|lifestyle-vertical-color
+
+**#|지식
+***http://ko.lihe.wikia.com/wiki/Lihe_위키:대문|Lihe 위키
+***http://ko.solution.wikia.com/wiki/풀이백과_위키|풀이백과
+***http://kore.wikia.com/wiki/대문|한자 위키
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EC%83%9D%ED%99%9C|더 보기...
+
+**http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8|커뮤니티
+***http://ko.community.wikia.com/wiki/Blog:%EC%9C%84%ED%82%A4%EC%95%84_%EB%89%B4%EC%8A%A4|위키아 뉴스
+***http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:Forum|커뮤니티 포럼
+***http://ko.community.wikia.com/wiki/%EB%8F%84%EC%9B%80%EB%A7%90:%EC%BD%98%ED%85%90%EC%B8%A0|도움말
+***http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8|더 보기...',
+	'shared-problemreport' => '오류 보고하기',
+	'signup-mail' => '이메일 -',
+	'signup-moreinfo' => '정보',
+	'signup-password' => '비밀번호 -',
 ];
 
 $messages['ko-kp'] = [
@@ -20805,6 +21388,7 @@ Memba se somtem dem indeks-dem noh op tu det {{SITENAME}}.',
 	'sp-contributions-talk' => 'tok',
 	'sp-contributions-submit' => 'Sach',
 	'specialpages' => 'Speshal pej-dem',
+	'signup-password' => 'Password:',
 ];
 
 $messages['krj'] = [
@@ -20827,6 +21411,7 @@ $messages['krj'] = [
 	'sp-contributions-talk' => 'Wakal',
 	'sp-contributions-submit' => 'Sagap',
 	'specialpages' => 'Manga espesyal nga pahina',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ks'] = [
@@ -20836,6 +21421,7 @@ $messages['ks'] = [
 	'summary' => 'خُلاسہٕ:',
 	'sp-contributions-talk' => 'بَحَژ',
 	'sp-contributions-submit' => 'ژھارُن',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ks-arab'] = [
@@ -21067,6 +21653,7 @@ Heh kütt der neuste Enndrach em Logbooch doh drövver:',
 	'specialpages-group-spam' => 'Werrekzüch jäje SPÄM',
 	'sqlite-has-fts' => 'Version $1 (un kann en janze Täxte söhke)',
 	'sqlite-no-fts' => 'Version $1 (kann ävver nit en janze Täxte söhke)',
+	'signup-password' => 'Passwood',
 ];
 
 $messages['ku'] = [
@@ -21289,6 +21876,7 @@ Heh kütt der neuste Enndrach em Logbooch doh drövver:',
 	'specialpages-group-spam' => 'Werrekzüch jäje SPÄM',
 	'sqlite-has-fts' => 'Version $1 (un kann en janze Täxte söhke)',
 	'sqlite-no-fts' => 'Version $1 (kann ävver nit en janze Täxte söhke)',
+	'signup-password' => 'Şîfreya te (password)',
 ];
 
 $messages['ku-latn'] = [
@@ -21423,6 +22011,7 @@ $messages['ku-latn'] = [
 	'specialpages-group-users' => 'Bikarhêner û maf',
 	'specialpages-group-pages' => 'Lîstên rûpelan',
 	'specialpages-group-pagetools' => 'Amûrên rûpelê',
+	'signup-password' => 'Şîfreya te (password)',
 ];
 
 $messages['kv'] = [
@@ -21437,6 +22026,7 @@ $messages['kv'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|$2 кыв}})',
 	'specialloguserlabel' => 'Пырысь:',
 	'specialpages' => 'Торъя лист бокъяс',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['kw'] = [
@@ -21522,6 +22112,7 @@ $messages['kw'] = [
 	'svg-long-desc' => 'Restren SVG, $1 × $2 pixel en hanow, mens an restren: $3',
 	'show-big-image' => 'Clerder leun',
 	'specialpages' => 'Folednow arbednek',
+	'signup-password' => 'Ger-tremena:',
 ];
 
 $messages['ky'] = [
@@ -21593,6 +22184,7 @@ $messages['ky'] = [
 	'svg-long-desc' => 'SVG файл, шарттуу түрдө $1 × $2 пиксел, файлдын көлөмү: $3',
 	'show-big-image' => 'Толук чечилиши',
 	'specialpages' => 'Атайын барактар',
+	'signup-password' => 'Сырсөз',
 ];
 
 $messages['la'] = [
@@ -21732,6 +22324,7 @@ Contenta [$2 paginae descriptionis fasciculi] subter monstrantur.',
 	'specialpages-group-wiki' => 'Vici-data et instrumenta',
 	'specialpages-group-redirects' => 'Paginae speciales redirigentes',
 	'specialpages-group-spam' => 'Instrumenta contra praeconia incommoda',
+	'signup-password' => 'Tessera tua:',
 ];
 
 $messages['lad'] = [
@@ -21808,6 +22401,7 @@ La descripción en su [$2 hoja de descripción del arxivo] está amostrada debax
 	'show-big-image' => 'Resolución original',
 	'specialpages' => 'Hojas especiales',
 	'specialpages-group-users' => 'Usadores y derechos',
+	'signup-password' => 'Parola',
 ];
 
 $messages['lb'] = [
@@ -22015,6 +22609,7 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 	'specialpages-group-spam' => 'Handwierksgeschir géint de Spam',
 	'sqlite-has-fts' => '$1 ënnerstëtzt d\'Volltextsich',
 	'sqlite-no-fts' => '$1 ënnerstëtzt d\'Volltextsich net',
+	'signup-password' => 'Passwuert:',
 ];
 
 $messages['lbe'] = [
@@ -22022,6 +22617,7 @@ $messages['lbe'] = [
 	'showpreview' => 'Цалсса ххалбаву',
 	'specialloguserlabel' => 'Гьурттучув:',
 	'sp-contributions-talk' => 'Ихтилат',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['lez'] = [
@@ -22103,6 +22699,7 @@ $messages['lez'] = [
 	'svg-long-desc' => 'SVG файл, номилдаказ $1 $2 × пикселяр, файлдин кьадар: $3',
 	'show-big-image' => 'Мадни хъсан еридин шикил',
 	'specialpages' => 'КьетIен  ччинар',
+	'signup-password' => 'Password:',
 ];
 
 $messages['lfn'] = [
@@ -22160,6 +22757,7 @@ $messages['lfn'] = [
 	'svg-long-desc' => 'SVG fix, per nom $1 × $2 pixeles, grandia de fix: $3',
 	'show-big-image' => 'Densia masima',
 	'specialpages' => 'Pajes spesial',
+	'signup-password' => 'Sinia de entra:',
 ];
 
 $messages['lg'] = [
@@ -22266,6 +22864,7 @@ Ekyasemba okuyingizibwa mu lukalala olw\'ebifuddeyo lwa lwo bibino okwongera oku
 	'size-megabytes' => 'MB $1',
 	'size-gigabytes' => 'GB $1',
 	'specialpages' => 'Empapula enjawule',
+	'signup-password' => 'Ekigambo ekikuumi',
 ];
 
 $messages['li'] = [
@@ -22473,6 +23072,7 @@ Meistal wörd dit door \'ne zwarte externe link veroorzaak.',
 	'specialpages-group-spam' => 'Spamhölpmiddele',
 	'sqlite-has-fts' => 'Zeuk versie $1 mit óngersteuning veur "full-text"',
 	'sqlite-no-fts' => 'Zeuk versie $1 zónger óngersteuning veur "fulltext"',
+	'signup-password' => 'Die wachwaord',
 ];
 
 $messages['lij'] = [
@@ -22553,6 +23153,7 @@ Chi de segoito ti peu védde a descriçión inta [$2 pàgina de descriçión do 
 	'svg-long-desc' => 'archivio in formato SVG, dimenscioìn nominâli $1 × $2 pixel, dimenscioìn de l\'archivio: $3',
 	'show-big-image' => 'Verscion d\'ærta resolûxon',
 	'specialpages' => 'Pagine speçiâli',
+	'signup-password' => 'Pòula segretta:',
 ];
 
 $messages['liv'] = [
@@ -22720,6 +23321,7 @@ La descrizión sura la sua [$2 pagina de descrizión del file] l\'è mustrada ch
 	'svg-long-desc' => 'archivi in furmaa SVG, dimensión nominaj  $1 × $2 pixel, dimensión de l\'archivi: $3',
 	'show-big-image' => 'Versión a resolüzión volta',
 	'specialpages' => 'Paginn special',
+	'signup-password' => 'Parola d\'urdin',
 ];
 
 $messages['ln'] = [
@@ -22773,6 +23375,7 @@ $messages['ln'] = [
 	'sp-contributions-talk' => 'Ntembe',
 	'sp-contributions-submit' => 'Boluki',
 	'specialpages' => 'Nkásá gudi',
+	'signup-password' => 'Banda nayó:',
 ];
 
 $messages['lo'] = [
@@ -22828,6 +23431,7 @@ $messages['lo'] = [
 	'sp-contributions-submit' => 'ຊອກຫາ',
 	'show-big-image' => 'ເຕັມຂະໜາດ',
 	'specialpages' => 'ໜ້າພິເສດ',
+	'signup-password' => 'ລະຫັດຜ່ານ',
 ];
 
 $messages['loz'] = [
@@ -22890,6 +23494,7 @@ $messages['loz'] = [
 	'show-big-image' => 'Risolusi bakisize',
 	'sp-newimages-showfrom' => 'Kamukile nca imegi di $1',
 	'specialpages' => 'Petulo zwenti',
+	'signup-password' => 'Sebu dafi:',
 ];
 
 $messages['lt'] = [
@@ -23097,6 +23702,7 @@ Naujausias įrašas žurnale yra pateiktas žemiau:',
 	'specialpages-group-spam' => 'Šlamšto valdymo priemonės',
 	'sqlite-has-fts' => '$1 su visatekstės paieškos palaikymu',
 	'sqlite-no-fts' => '$1 be visatekstės paieškos palaikymo',
+	'signup-password' => 'Slaptažodis:',
 ];
 
 $messages['ltg'] = [
@@ -23354,6 +23960,7 @@ To visticamāk izraisīja ārēja saite uz melnajā sarakstā esošu interneta v
 	'specialpages-group-spam' => 'Spama rīki',
 	'sqlite-has-fts' => '$1 ar pilnteksta meklēšanas atbalstu',
 	'sqlite-no-fts' => '$1 bez pilnteksta meklēšanas atbalsta',
+	'signup-password' => 'Tava parole',
 ];
 
 $messages['lzh'] = [
@@ -23546,6 +24153,7 @@ $messages['lzh'] = [
 	'specialpages-group-spam' => '反垃圾之器',
 	'sqlite-has-fts' => '$1 含全文之尋',
 	'sqlite-no-fts' => '$1 不含全文之尋',
+	'signup-password' => '符節',
 ];
 
 $messages['lzz'] = [
@@ -23597,6 +24205,7 @@ $messages['lzz'] = [
 	'svg-long-desc' => 'SVG dosya, coxoten $1 × $2 pʼikʼseli, dosyaşi didinoba: $3',
 	'show-big-image' => 'Tam ozʼiramuşi',
 	'specialpages' => 'Doxmeli butʼkʼape',
+	'signup-password' => 'Password:',
 ];
 
 $messages['mai'] = [
@@ -23806,6 +24415,7 @@ $messages['mai'] = [
 	'specialpages-group-spam' => 'अनपेक्षित संदेश औजार',
 	'sqlite-has-fts' => '$1 पूर्ण-पाठ खोज सहायता युक्त',
 	'sqlite-no-fts' => '$1 बिन पूर्ण-पाठ खोज सहायताक',
+	'signup-password' => 'आपका पासवर्ड',
 ];
 
 $messages['map-bms'] = [
@@ -23952,6 +24562,7 @@ ora teyeng mindahna kaca maring awake dhewek.',
 	'svg-long-desc' => 'Berkas SVG, nominal $1 × $2 piksel, gedhené berkas: $3',
 	'show-big-image' => 'Résolusi kebak',
 	'specialpages' => 'Kaca-kaca khusus',
+	'signup-password' => 'tembung sandhi',
 ];
 
 $messages['mdf'] = [
@@ -24116,6 +24727,7 @@ $messages['mdf'] = [
 	'specialpages-group-wiki' => 'Викинь дата ди кядьёнксне',
 	'specialpages-group-redirects' => 'Башка лопатнень умборондафтома',
 	'specialpages-group-spam' => 'Лудна пачфтематнень каршес кядьёнксне',
+	'signup-password' => 'Сувама валце:',
 ];
 
 $messages['mg'] = [
@@ -24304,6 +24916,7 @@ Ny iditra farany tao amin\'ny laogim-panakanam-pikambana dia naseho teo ambany m
 	'specialpages-group-wiki' => 'Datan\'ny wiki sy fitaovana',
 	'specialpages-group-redirects' => 'Pejy manokana voaodina',
 	'specialpages-group-spam' => 'Fitaovana fanalana spam',
+	'signup-password' => 'Tenimiafina',
 ];
 
 $messages['mhr'] = [
@@ -24396,6 +25009,7 @@ $messages['mhr'] = [
 	'specialpages-group-pages' => 'Лаштык лӱмер-влак',
 	'specialpages-group-pagetools' => 'Лаштык ӱзгар-влак',
 	'specialpages-group-redirects' => 'Вес верек колтышо лӱмын ыштыме лаштык-влак',
+	'signup-password' => 'Шолыпмут:',
 ];
 
 $messages['mi'] = [
@@ -24408,6 +25022,7 @@ $messages['mi'] = [
 	'showdiff' => 'Tiro rerekētanga',
 	'show' => 'Whakaaturia',
 	'specialpages' => 'Whārangi motuhake',
+	'signup-password' => 'Password:',
 ];
 
 $messages['min'] = [
@@ -24717,7 +25332,7 @@ $messages['mk'] = [
 * Нормални специјални страници.
 * <span class="mw-specialpagerestricted">Ограничени специјални страници.</span>
 * <span class="mw-specialpagecached">Кеширани специјални страници (може да се застарени).</span>',
-	'specialpages-group-maintenance' => 'Извештаи за одржување',
+	'specialpages-group-maintenance' => 'Извештаи за одржување на Викија',
 	'specialpages-group-other' => 'Други специјални страници',
 	'specialpages-group-login' => 'Најава / регистрација',
 	'specialpages-group-changes' => 'Скорешни промени и дневници',
@@ -24731,6 +25346,7 @@ $messages['mk'] = [
 	'specialpages-group-spam' => 'Алатки против спам',
 	'sqlite-has-fts' => '$1 со поддршка за пребарување по цели текстови',
 	'sqlite-no-fts' => '$1 без поддршка за пребарување по цели текстови',
+	'signup-password' => 'Лозинка:',
 ];
 
 $messages['ml'] = [
@@ -24937,6 +25553,7 @@ $messages['ml'] = [
 	'specialpages-group-spam' => 'പാഴെഴുത്ത് ഉപകരണങ്ങൾ',
 	'sqlite-has-fts' => 'പൂർണ്ണ-എഴുത്ത് തിരച്ചിൽ പിന്തുണയുള്ള $1',
 	'sqlite-no-fts' => 'പൂർണ്ണ-എഴുത്ത് തിരച്ചിൽ പിന്തുണയില്ലാത്ത $1',
+	'signup-password' => 'രഹസ്യവാക്ക്:',
 ];
 
 $messages['mn'] = [
@@ -25143,6 +25760,7 @@ $messages['mn'] = [
 	'specialpages-group-spam' => 'Спамын хэрэгслүүд',
 	'sqlite-has-fts' => '$1 (бүх текстээрх хайлтыг дэмждэг)',
 	'sqlite-no-fts' => '$1 (бүх текстээрх хайлтыг дэмждэггүй)',
+	'signup-password' => 'Нууц үг:',
 ];
 
 $messages['mo'] = [
@@ -25189,6 +25807,7 @@ $messages['mo'] = [
 	'svg-long-desc' => 'фишиер SVG, ку дименсиуня номиналэ де $1 × $2 пиксель, мэриме фишиер: $3',
 	'show-big-image' => 'Мэреште резолуция имаӂиний',
 	'specialpages' => 'Сервичий',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['mr'] = [
@@ -25394,6 +26013,7 @@ $messages['mr'] = [
 	'specialpages-group-spam' => 'उत्पात साधने',
 	'sqlite-has-fts' => 'पूर्ण-मजकूर शोध समर्थनासहित $1',
 	'sqlite-no-fts' => 'पूर्ण-मजकूर शोध समर्थनाविरहित $1',
+	'signup-password' => 'तुमचा परवलीचा शब्द',
 ];
 
 $messages['mrj'] = [
@@ -25647,6 +26267,7 @@ Masukan log terakhir ditunjukkan di bawah untuk rujukan:',
 	'specialpages-group-spam' => 'Alatan spam',
 	'sqlite-has-fts' => '$1 dengan sokongan carian teks penuh',
 	'sqlite-no-fts' => '$1 tanpa sokongan carian teks penuh',
+	'signup-password' => 'Kata laluan:',
 ];
 
 $messages['mt'] = [
@@ -25854,6 +26475,7 @@ ma tistax iċaqlaq paġna fuqha nnifsa.',
 	'specialpages-group-spam' => 'Għodda kontra l-ispam',
 	'sqlite-has-fts' => '$1 bil-possibilità ta\' tfittxija kompluta fit-test',
 	'sqlite-no-fts' => '$1 mingħajr il-possibilità ta\' tfittxija kompluta fit-test',
+	'signup-password' => 'Password:',
 ];
 
 $messages['mwl'] = [
@@ -25927,6 +26549,7 @@ $messages['mwl'] = [
 	'specialpages-group-login' => 'Antrar / anscrebir',
 	'specialpages-group-pages' => 'Lhistas de páiginas',
 	'specialpages-group-pagetools' => 'Ferramienta de páiginas',
+	'signup-password' => 'Palabra chabe',
 ];
 
 $messages['my'] = [
@@ -26066,6 +26689,7 @@ $messages['my'] = [
 	'specialpages-group-wiki' => 'ဝီကီဒေတာနှင့် ကိရိယာများ',
 	'specialpages-group-redirects' => 'အထူးစာမျက်နှာများကို ပြန်ညွှန်းနေသည်',
 	'specialpages-group-spam' => 'စပမ်းကိရိယာများ',
+	'signup-password' => 'လှို့​ဝှက်​စ​ကား​လုံး:',
 ];
 
 $messages['myv'] = [
@@ -26192,6 +26816,7 @@ $messages['myv'] = [
 	'specialpages-group-wiki' => 'Викинь дата ды кедьйонкст',
 	'specialpages-group-redirects' => 'Башка тевень лопатнень ютавтома лия таркас',
 	'specialpages-group-spam' => 'Шукш пачтнематнеде кедьёнкст',
+	'signup-password' => 'Совамо валот:',
 ];
 
 $messages['mzn'] = [
@@ -26244,6 +26869,7 @@ $messages['mzn'] = [
 	'sp-newimages-showfrom' => 'نشون‌هدائن عکسای نو $2، $1 جه به بعد',
 	'specialpages' => 'شا صفحه‌ئون',
 	'specialpages-group-maintenance' => 'چله‌بندی صفحه‌ئون',
+	'signup-password' => 'پـاس‌واجـه',
 ];
 
 $messages['na'] = [
@@ -26255,6 +26881,7 @@ $messages['na'] = [
 	'searchhelp-url' => 'Help:Oangan',
 	'searchresultshead' => 'Anani ko',
 	'show' => 'oduwen',
+	'signup-password' => 'Password:',
 ];
 
 $messages['nah'] = [
@@ -26362,6 +26989,7 @@ $messages['nah'] = [
 	'specialpages-group-highuse' => 'Zāzaniltin tlatequitiliztechcopa',
 	'specialpages-group-pages' => 'Mochīntīn zāzaniltin',
 	'specialpages-group-redirects' => 'Tlatēmoliztli īhuān  tlacuepaliztli',
+	'signup-password' => 'Motlahtōlichtacāyo',
 ];
 
 $messages['nan'] = [
@@ -26513,6 +27141,7 @@ $messages['nan'] = [
 	'specialpages-group-login' => '登入',
 	'specialpages-group-changes' => '最近改的記錄',
 	'specialpages-group-wiki' => 'Wiki資料佮家私',
+	'signup-password' => 'Lí ê bi̍t-bé:',
 ];
 
 $messages['nap'] = [
@@ -26538,6 +27167,7 @@ $messages['nap'] = [
 	'shortpages' => 'Paggene curte',
 	'sp-contributions-talk' => 'Chiàcchiera',
 	'specialpages' => 'Paggene speciale',
+	'signup-password' => 'Password:',
 ];
 
 $messages['nb'] = [
@@ -26744,6 +27374,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 	'specialpages-group-spam' => 'Spamverktøy',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 uten støtte for fulltekstsøk',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['nds'] = [
@@ -26929,6 +27560,7 @@ De jüngste Indrag in dat Sperr-Logbook wart ünnen wiest:',
 	'specialpages-group-spam' => 'Spam-Warktüüch',
 	'sqlite-has-fts' => '$1 mit Stöhn för Vulltext-Söök',
 	'sqlite-no-fts' => '$1 ahn Stöhn för Vulltext-Söök',
+	'signup-password' => 'Dien Passwoort',
 ];
 
 $messages['nds-nl'] = [
@@ -27134,6 +27766,7 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 	'specialpages-group-spam' => 'Hulpmiddels tegen ongewunste bewarkingen',
 	'sqlite-has-fts' => 'Versie $1 mit ondersteuning veur "full-text" zeuken',
 	'sqlite-no-fts' => 'Versie $1 zonder ondersteuning veur "full-text" zeuken',
+	'signup-password' => 'Wachwoord',
 ];
 
 $messages['ne'] = [
@@ -27283,6 +27916,7 @@ $messages['ne'] = [
 	'specialpages-group-pagetools' => 'पृष्ठ उपकरणहरू',
 	'specialpages-group-redirects' => 'विशेष पृष्ठमा पठाउने',
 	'specialpages-group-spam' => 'स्पाम उपकरणहरु',
+	'signup-password' => 'पासवर्ड',
 ];
 
 $messages['new'] = [
@@ -27310,6 +27944,7 @@ $messages['new'] = [
 	'statistics' => 'तथ्याङ्क',
 	'sp-contributions-talk' => 'खँल्हाबँल्हा',
 	'specialpages' => 'विषेश पौत:',
+	'signup-password' => 'दुथखँग्वः (पासवर्द):',
 ];
 
 $messages['niu'] = [
@@ -27327,6 +27962,7 @@ $messages['niu'] = [
 	'searchresultshead' => 'Kumi',
 	'sp-contributions-submit' => 'Kumi',
 	'specialpages' => 'Tau Lau Mahuiga',
+	'signup-password' => 'Kupu fufu:',
 ];
 
 $messages['nl'] = [
@@ -27349,8 +27985,8 @@ $messages['nl'] = [
 	'sort-ascending' => 'Oplopend sorteren',
 	'sqlhidden' => '(SQL-zoekopdracht verborgen)',
 	'securelogin-stick-https' => 'Verbonden blijven via HTTPS na aanmelden',
-	'suspicious-userlogout' => 'Uw verzoek om af te melden is genegeerd, omdat het lijkt alsof het verzoek is verzonden door een browser of cacheproxy die stuk is.',
-	'sig_tip' => 'Uw handtekening met datum en tijd',
+	'suspicious-userlogout' => 'Je verzoek om af te melden is genegeerd, omdat het lijkt alsof het verzoek is verzonden door een browser of cacheproxy die stuk is.',
+	'sig_tip' => 'Je handtekening met datum en tijd',
 	'summary' => 'Samenvatting:',
 	'subject' => 'Onderwerp/kop:',
 	'savearticle' => 'Pagina opslaan',
@@ -27363,15 +27999,15 @@ $messages['nl'] = [
 \'\'\'Deze is nog niet opgeslagen!\'\'\'',
 	'sitejspreview' => '\'\'\'Dit is alleen een voorvertoning van de JavaScriptcode.\'\'\'
 \'\'\'Deze is nog niet opgeslagen!\'\'\'',
-	'session_fail_preview' => '\'\'\'Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.
+	'session_fail_preview' => '\'\'\'Je bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.
 Probeer het opnieuw.
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.\'\'\'',
-	'session_fail_preview_html' => '\'\'\'Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.\'\'\'
+Als het dan nog niet lukt, [[Special:UserLogout|meld jezelf dan af]] en weer aan.\'\'\'',
+	'session_fail_preview_html' => '\'\'\'Je bewerking is niet verwerkt, omdat sessiegegevens verloren zijn gegaan.\'\'\'
 
 \'\'Omdat in {{SITENAME}} ruwe HTML is ingeschakeld, is een voorvertoning niet mogelijk als bescherming tegen aanvallen met JavaScript.\'\'
 
-\'\'\'Als dit een legitieme bewerking is, probeer het dan opnieuw.\'\'\'
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.',
+\'\'\'Als dit een legitieme bewerking is, probeer het dan opnieuw.
+Als het dan nog niet lukt, [[Special:UserLogout|meld jezelf dan af]] en weer aan.\'\'\'',
 	'storedversion' => 'Opgeslagen versie',
 	'semiprotectedpagewarning' => '\'\'\'Let op:\'\'\' deze pagina is beveiligd en kan alleen door geregistreerde gebruikers bewerkt worden.
 De laatste logboekregel staat hieronder:',
@@ -27384,8 +28020,8 @@ In de [[Special:BlockList|IP-blokkeerlijst]] zijn de huidige blokkades te bekijk
 	'searchresults' => 'Zoekresultaten',
 	'searchresults-title' => 'Zoekresultaten voor "$1"',
 	'searchresulttext' => 'Voor meer informatie over zoeken op {{SITENAME}}, zie [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-	'searchsubtitle' => 'U zocht naar \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|pagina\'s die beginnen met "$1"]] {{int:pipe-separator}}[[Special:WhatLinksHere/$1|pagina\'s die verwijzen naar "$1"]])',
-	'searchsubtitleinvalid' => 'U hebt gezocht naar \'\'\'$1\'\'\'',
+	'searchsubtitle' => 'Je zocht naar \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|pagina\'s die beginnen met "$1"]] {{int:pipe-separator}}[[Special:WhatLinksHere/$1|pagina\'s die verwijzen naar "$1"]])',
+	'searchsubtitleinvalid' => 'Je hebt gezocht naar \'\'\'$1\'\'\'',
 	'shown-title' => '$1 {{PLURAL:$1|resultaat|resultaten}} per pagina weergeven',
 	'searchmenu-legend' => 'Zoekopties',
 	'searchmenu-exists' => '* Pagina \'\'\'[[$1]]\'\'\'',
@@ -27407,7 +28043,7 @@ In de [[Special:BlockList|IP-blokkeerlijst]] zijn de huidige blokkades te bekijk
 	'search-result-score' => 'Relevantie: $1%',
 	'search-redirect' => '(doorverwijzing $1)',
 	'search-section' => '(subkop $1)',
-	'search-suggest' => 'Bedoelde u: $1',
+	'search-suggest' => 'Bedoelde je: $1',
 	'search-interwiki-caption' => 'Zusterprojecten',
 	'search-interwiki-default' => '$1 resultaten:',
 	'search-interwiki-more' => '(meer)',
@@ -27423,14 +28059,14 @@ In de [[Special:BlockList|IP-blokkeerlijst]] zijn de huidige blokkades te bekijk
 	'search-nonefound' => 'Er zijn geen resultaten voor uw zoekopdracht.',
 	'search-external' => 'Extern zoeken',
 	'searchdisabled' => 'Zoeken in {{SITENAME}} is niet mogelijk.
-U kunt gebruik maken van Google.
+Je kunt gebruik maken van Google.
 De gegevens over {{SITENAME}} zijn mogelijk niet bijgewerkt.',
 	'skin-preview' => 'Voorvertoning',
 	'saveprefs' => 'Opslaan',
 	'searchresultshead' => 'Zoekresultaten',
 	'stub-threshold' => 'Drempel voor markering als <a href="#" class="stub">beginnetje</a>:',
 	'stub-threshold-disabled' => 'Uitgeschakeld',
-	'savedprefs' => 'Uw voorkeuren zijn opgeslagen.',
+	'savedprefs' => 'Je voorkeuren zijn opgeslagen.',
 	'servertime' => 'Servertijd:',
 	'saveusergroups' => 'Gebruikersgroepen opslaan',
 	'show' => 'weergeven',
@@ -27473,8 +28109,8 @@ De [$2 pagina met de bestandsbeschrijving] wordt hieronder weergegeven.',
 	'special-categories-sort-abc' => 'alfabetisch sorteren',
 	'sp-deletedcontributions-contribs' => 'bijdragen',
 	'sessionfailure-title' => 'Sessiefout',
-	'sessionfailure' => 'Er lijkt een probleem te zijn met uw aanmeldsessie.
-Uw handeling is gestopt uit voorzorg tegen een beveiligingsrisico (dat bestaat uit mogelijke "hijacking" van deze sessie).
+	'sessionfailure' => 'Er lijkt een probleem te zijn met je aanmeldsessie.
+Je handeling is gestopt uit voorzorg tegen een beveiligingsrisico (dat bestaat uit mogelijke "hijacking" van deze sessie).
 Ga een pagina terug, laad die pagina opnieuw en probeer het nog eens.',
 	'sp-contributions-newbies' => 'Alleen de bijdragen van nieuwe gebruikers bekijken',
 	'sp-contributions-newbies-sub' => 'Voor nieuwelingen',
@@ -27493,16 +28129,16 @@ De laatste regel uit het blokkeerlogboek wordt hieronder ter referentie weergege
 	'sp-contributions-username' => 'IP-adres of gebruikersnaam:',
 	'sp-contributions-toponly' => 'Alleen nieuwste versies weergeven',
 	'sp-contributions-submit' => 'Bekijken',
-	'sorbsreason' => 'Uw IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.',
-	'sorbs_create_account_reason' => 'Uw IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.
-U kunt geen gebruiker registreren.',
+	'sorbsreason' => 'Je IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.',
+	'sorbs_create_account_reason' => 'Je IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.
+Je kunt geen gebruiker registreren.',
 	'selfmove' => 'U kunt een pagina niet hernoemen naar dezelfde paginanaam.',
 	'semiprotectedpagemovewarning' => '\'\'\'Let op:\'\'\' Deze pagina kan alleen door geregistreerde gebruikers hernoemd worden.
 De laatste logboekregel staat hieronder:',
 	'siteuser' => '{{SITENAME}}-gebruiker $1',
 	'siteusers' => '{{SITENAME}}-{{PLURAL:$2|gebruiker|gebruikers}} $1',
 	'spamprotectiontitle' => 'Spamfilter',
-	'spamprotectiontext' => 'De pagina die u wilde opslaan is geblokkeerd door het spamfilter.
+	'spamprotectiontext' => 'De pagina die je wilde opslaan is geblokkeerd door het spamfilter.
 Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 	'spamprotectionmatch' => 'De volgende tekst veroorzaakte een alarm van de spamfilter: $1',
 	'spambot_username' => 'MediaWiki opschoning spam',
@@ -27547,6 +28183,7 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Globalnavigation' => '{{:MediaWiki:Shared-Globalnavigation}}',
 ];
 
 $messages['nl-informal'] = [
@@ -27776,6 +28413,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'specialpages-group-spam' => 'Spamverktøy',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 utan støtte for fulltekstsøk',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['no'] = [
@@ -27977,6 +28615,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 utan støtte for fulltekstsøk',
 	'share_it' => 'Del den:',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['nov'] = [
@@ -28013,6 +28652,7 @@ $messages['nov'] = [
 	'sp-contributions-search' => 'Sercha kontributiones',
 	'sp-contributions-submit' => 'Sercha',
 	'specialpages' => 'Spesial pagines',
+	'signup-password' => 'Pasa-vorde:',
 ];
 
 $messages['nso'] = [
@@ -28082,6 +28722,7 @@ $messages['nso'] = [
 	'show-big-image' => '\'\'resolution\'\' ya gofella',
 	'show-big-image-thumb' => '<small>Bogolo ba pono: $1 × $2 pixels</small>',
 	'specialpages' => 'Matlakala a itšeng',
+	'signup-password' => 'Ditlhaka-tša-siphiri:',
 ];
 
 $messages['nv'] = [
@@ -28116,6 +28757,7 @@ $messages['nv'] = [
 	'sp-contributions-submit' => 'hanishtá',
 	'skinname-monobook' => 'NaaltsoosŁáa\'ígíí',
 	'specialpages' => 'Naaltsoos spéshelígíí',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ny'] = [
@@ -28123,6 +28765,7 @@ $messages['ny'] = [
 	'searchbutton' => 'Fufuzani',
 	'searcharticle' => 'Pitani',
 	'specialpages' => 'Masamba apadera',
+	'signup-password' => 'Password:',
 ];
 
 $messages['oc'] = [
@@ -28322,6 +28965,7 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 	'specialpages-group-wiki' => 'Donadas del wiki e aisinas',
 	'specialpages-group-redirects' => 'Redireccions',
 	'specialpages-group-spam' => 'Aisinas antispam',
+	'signup-password' => 'Vòstre senhal :',
 ];
 
 $messages['om'] = [
@@ -28330,6 +28974,7 @@ $messages['om'] = [
 	'sun' => 'Dil',
 	'sat' => 'San',
 	'september' => 'Fuulbana',
+	'signup-password' => 'Password:',
 ];
 
 $messages['or'] = [
@@ -28541,6 +29186,7 @@ $messages['or'] = [
 	'specialpages-group-spam' => 'ଅଯଥା ଉପକରଣ',
 	'sqlite-has-fts' => 'ପୁରା ଟେକ୍ସ୍ଟ ଖୋଜା ସହଯୋଗ ସହିତ $1',
 	'sqlite-no-fts' => 'ପୁରା ଟେକ୍ସ୍ଟ ଖୋଜା ସହଯୋଗ ବିନା $1',
+	'signup-password' => 'Password:',
 ];
 
 $messages['os'] = [
@@ -28632,6 +29278,7 @@ $messages['os'] = [
 	'size-megabytes' => '$1 МБ',
 	'size-gigabytes' => '$1 ГБ',
 	'specialpages' => 'Сæрмагонд фæрстæ',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['pa'] = [
@@ -28725,6 +29372,7 @@ $messages['pa'] = [
 	'scarytranscludetoolong' => '[ਅਫਸੋਸ ਹੈ ਕਿ URL ਬਹੁਤ ਲੰਮਾ ਹੈ]',
 	'specialpages' => 'ਖਾਸ ਪੇਜ',
 	'specialpages-group-login' => 'ਲਾਗ ਇਨ / ਅਕਾਊਂਟ ਬਣਾਓ',
+	'signup-password' => 'ਪਾਸਵਰਡ:',
 ];
 
 $messages['pag'] = [
@@ -28743,6 +29391,7 @@ $messages['pag'] = [
 	'sp-contributions-newbies-sub' => 'Para balo ran account',
 	'sp-contributions-submit' => 'Anapen',
 	'specialpages' => 'Niduma ran bolobolong',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pam'] = [
@@ -28867,6 +29516,7 @@ Mapaliaring ing sangkan metung yang suglung king karinan king kilual (link to an
 	'specialpages-group-media' => 'Ulat king media ampong pamaglulan (uploads)',
 	'specialpages-group-users' => 'Talagamit ampong katuliran',
 	'specialpages-group-highuse' => 'Deng bulung a magamitan',
+	'signup-password' => 'Kekang password:',
 ];
 
 $messages['pap'] = [
@@ -28883,6 +29533,7 @@ $messages['pap'] = [
 	'statistics' => 'Estadístika',
 	'statistics-header-users' => 'Estadístika di uzadónan',
 	'specialpages' => 'Páginanan Spesial',
+	'signup-password' => 'Kontraseña',
 ];
 
 $messages['pcd'] = [
@@ -29004,6 +29655,7 @@ $messages['pdc'] = [
 	'specialpages-group-pagetools' => 'Gscharr fer Bledder',
 	'specialpages-group-redirects' => 'Besunnere Bledder wu weiderleide',
 	'specialpages-group-spam' => 'Spam-Gscharr',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['pdt'] = [
@@ -29052,6 +29704,7 @@ Daut woat aun eenem Link lidje, woona no eene externe Sied wiest.',
 	'spam_reverting' => 'Latste Versioon ohne Links no $1 wada trajcht jemoakt.',
 	'spam_blanking' => 'Aule Versioone haude Links no $1, reed jemoakt',
 	'specialpages' => 'Spezialsiede',
+	'signup-password' => 'Pauswot:',
 ];
 
 $messages['pfl'] = [
@@ -29102,16 +29755,19 @@ $messages['pfl'] = [
 	'show-big-image' => 'Gsamte Ergebnis',
 	'showhidebots' => '(Bots $1)',
 	'specialpages' => 'Spezialsaide',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['pi'] = [
 	'september' => 'सेप्टेम्बर',
 	'searchbutton' => 'खोज',
 	'searcharticle' => 'गच्छामि',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pih'] = [
 	'searchhelp-url' => 'Help:Dem Kontent',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pl'] = [
@@ -29138,7 +29794,7 @@ $messages['pl'] = [
 	'sig_tip' => 'Twój podpis wraz z datą i czasem',
 	'summary' => 'Opis zmian ',
 	'subject' => 'Temat/nagłówek:',
-	'savearticle' => 'Zapisz',
+	'savearticle' => 'Publikuj',
 	'showpreview' => 'Pokaż podgląd',
 	'showlivepreview' => 'Dynamiczny podgląd',
 	'showdiff' => 'Podgląd zmian',
@@ -29175,7 +29831,7 @@ Zobacz [[Special:BlockList|rejestr blokowania adresów IP]], jeśli chcesz spraw
 	'searchmenu-legend' => 'Opcje wyszukiwania',
 	'searchmenu-exists' => '* Strona \'\'\'[[$1]]\'\'\'',
 	'searchmenu-new' => '\'\'\'Utwórz stronę „[[:$1|$1]]” na tej wiki.\'\'\'',
-	'searchhelp-url' => 'Help:Spis treści',
+	'searchhelp-url' => 'Help:Zawartość',
 	'searchmenu-prefix' => '[[Special:PrefixIndex/$1|Przeglądaj strony zaczynające się od tego przedrostka]]',
 	'searchprofile-articles' => 'Strony',
 	'searchprofile-project' => 'Strony pomocy i projektu',
@@ -29222,13 +29878,13 @@ Jednak informacje o treści {{GRAMMAR:D.lp|{{SITENAME}}}} mogą być w Google ni
 	'savefile' => 'Zapisz plik',
 	'sourcefilename' => 'Nazwa pierwotna',
 	'sourceurl' => 'Źródłowy adres URL',
-	'sharedupload' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.',
-	'sharedupload-desc-there' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.
+	'sharedupload' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.',
+	'sharedupload-desc-there' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.
 Więcej informacji odnajdziesz na [$2 stronie opisu pliku].',
-	'sharedupload-desc-here' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.
+	'sharedupload-desc-here' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.
 Poniżej znajdują się informacje ze [$2 strony opisu] tego pliku.',
 	'shared-repo-from' => 'z $1',
-	'shared-repo' => 'współdzielone zasoby',
+	'shared-repo' => 'współdzielonych zasobach',
 	'statistics' => 'Statystyki',
 	'statistics-header-pages' => 'Statystyka stron',
 	'statistics-header-edits' => 'Statystyka edycji',
@@ -29292,7 +29948,7 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'spambot_username' => 'MediaWiki – usuwanie spamu',
 	'spam_reverting' => 'Przywracanie ostatniej wersji nie zawierającej linków do $1',
 	'spam_blanking' => 'Wszystkie wersje zawierały odnośniki do $1. Czyszczenie strony.',
-	'skinname-monobook' => 'Książka',
+	'skinname-monobook' => 'Monobook',
 	'svg-long-desc' => 'Plik SVG, nominalnie $1 × $2 pikseli, rozmiar pliku: $3',
 	'show-big-image' => 'Pełna rozdzielczość',
 	'show-big-image-preview' => 'Rozmiar podglądu – $1.',
@@ -29311,9 +29967,9 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'size-gigabytes' => '$1&nbsp;GB',
 	'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|dyskusja]])',
 	'specialpages' => 'Strony specjalne',
-	'specialpages-note' => '* Typowe strony specjalne.
-* <span class="mw-specialpagerestricted">Strony specjalne o ograniczonym dostępie.</span>
-* <span class="mw-specialpagecached">Buforowane strony specjalne (mogą być nieaktualne).</span>',
+	'specialpages-note' => '---- 
+* Normalne strony specjalne.
+* <span class="mw-specialpagerestricted">Zastrzeżone strony specjalne.</span>',
 	'specialpages-group-maintenance' => 'Raporty konserwacyjne',
 	'specialpages-group-other' => 'Inne strony specjalne',
 	'specialpages-group-login' => 'Logowanie i rejestracja',
@@ -29332,102 +29988,117 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'send' => 'Wyślij',
 	'share_it' => 'Podziel się:',
 	'see_more' => 'Więcej...',
-	'shared-Globalnavigation' => '*w:c:pl:Gry|Gry|video-games-vertical-color
+	'shared-Globalnavigation' => '*http://gryhub.wikia.com/|Gry|video-games-vertical-color
 
-**w:c:pl:Gry|RPG
+**http://gryhub.wikia.com/|RPG
+***w:c:pl.gothic|Gothic
+***w:c:pl.elderscrolls|The Elder Scrolls
 ***w:c:wiedzmin|Wiedźmin
 ***w:c:pl.fallout|Fallout
-***w:c:pl.gothic|Gothic
-***w:c:pl.elderscrolls|Elder Scrolls
 ***w:c:pl.risen|Risen
 
-**w:c:pl:Gry|Akcja
-***w:c:pl.callofduty|Call of Duty
+**http://gryhub.wikia.com/|Akcja
 ***w:c:pl.gta|Grand Theft Auto
-***w:c:pl.saintsrow|Saints Row
 ***w:c:pl.assassinscreed|Assassin\'s Creed
+***w:c:pl.callofduty|Call of Duty
 ***w:c:pl.masseffect|Mass Effect
+***w:c:pl.saintsrow|Saints Row
 
-**w:c:pl:Gry|Multiplayer
-***w:c:pl.wow|World of Warcraft
-***w:c:pl.rappelz|Rappelz
-***w:c:pl.leagueoflegends|League of Legends
+**http://gryhub.wikia.com/|Multiplayer
 ***w:c:pl.dota-2|Dota 2
+***w:c:pl.leagueoflegends|League of Legends
+***w:c:pl.wow|World of Warcraft
 ***w:c:pl.warframe|Warframe
+***w:c:pl.rappelz|Rappelz
 
-**w:c:pl:Gry|Pozostałe
-***w:c:pl.sims|The Sims
-***w:c:pl.dontstarve|Don\'t Starve
+**http://gryhub.wikia.com/|Pozostałe
 ***w:c:pl.slodkiflirt|Słodki Flirt
-***w:c:pl.patapon|Patapon
+***w:c:pl.dontstarve|Don\'t Starve
+***w:c:pl.sims|The Sims
+***w:c:pl.wh40k|Warhammer 40.000
 ***w:c:pl.bindingofisaac|Binding of Isaac
 
-*w:c:pl:Rozrywka|Rozrywka|entertainment-vertical-color
+*http://rozrywkahub.wikia.com/|Rozrywka|entertainment-vertical-color
 
-**w:c:pl:Rozrywka|Filmy
-***w:c:pl.lotr|Władca Pierścieni
+**http://rozrywkahub.wikia.com/|Filmy
+***w:c:jakwytresowacsmoka|Jak Wytresować Smoka
 ***w:c:pl.harrypotter|Harry Potter
+***w:c:pl.lotr|Władca Pierścieni
+***w:c:pl.frozen|Kraina Lodu
 ***w:c:pl.polskapersopedia|Percy Jackson
-***w:c:pl.twilightsaga|Zmierzch
-***w:c:igrzyskasmierci|Igrzyska Śmierci
 
-**w:c:pl:Rozrywka|Seriale
+**http://rozrywkahub.wikia.com/|Seriale
 ***w:c:pl.mlp|My Little Pony
-***w:c:pl.austinially|Austin i Ally
+***w:c:pl.ben10|Ben 10
 ***w:c:ranczo|Ranczo
 ***w:c:pl.pora-na-przygode|Pora na Przygodę!
-***w:c:pl.nadzdolni|Nadzdolni
+***w:c:pl.totalna-porazka|Totalna Porażka
 
-**w:c:pl:Rozrywka|Anime
+**http://pl.animehub.wikia.com/|Anime
 ***w:c:pl.naruto|Naruto
 ***w:c:pl.bleach|Bleach
+***w:c:pl.onepiece|One Piece
 ***w:c:pl.dragonball|Dragon Ball
 ***w:c:pl.fairytail|Fairy Tail
-***w:c:pl.onepiece|One Piece
 
-**w:c:pl:Rozrywka|Pozostałe
-***w:c:pl.ben10|Ben 10
-***w:c:pl.fineasziferb|Fineasz i Ferb
-***w:c:pl.pzm|Pingwiny z Madagaskaru
+**http://rozrywkahub.wikia.com/|Pozostałe
+***w:c:pl.marvel|Marvel Universe
 ***w:c:pl.slugterra|Slugterra
-***w:c:pl.yugioh|Yu-Gi-Oh!
+***w:c:pl.pzm|Pingwiny z Madagaskaru
+***w:c:igrzyskasmierci|Igrzyska Śmierci
+***w:c:pl.fineasziferb|Fineasz i Ferb
+***w:c:pl.vocaloid|Vocaloid
 
-*w:c:pl:Lifestyle|Lifestyle|lifestyle-vertical-color
+*http://pl.lifestylehub.wikia.com/|Lifestyle|lifestyle-vertical-color
 
-**w:c:pl:Lifestyle|Miasta
+**http://pl.lifestylehub.wikia.com/|Miasta
 ***w:c:warszawa|Warszawa
+***w:c:poznan|Poznań
 ***w:c:wroclaw|Wrocław
 ***w:c:torun|Toruń
-***w:c:poznan|Poznań
 ***w:c:krakow|Kraków
 
-**w:c:pl:Lifestyle|Kultura
+**http://pl.lifestylehub.wikia.com/|Kultura
 ***w:c:wiersze|Wiersze
+***w:c:pl.mitologia|Mitologia
 ***w:c:dziedzictwo|Dziedzictwo
 ***w:c:pl.bractwoczarnegosztyletu|Bractwo Czarnego Sztyletu
 ***w:c:pl.ogienilod|Pieśń Lodu i Ognia
-***w:c:pl.mitologia|Mitologia
 
-**w:c:pl:Lifestyle|Kreatywne
+**http://pl.lifestylehub.wikia.com/|Kreatywne
 ***w:c:nonsensopedia|Nonsensopedia
 ***w:c:pl.creepypasta|Creepypasta
-***w:c:bezsensopedia|Bezsensopedia
 ***w:c:totaldramafanfick|Total Drama Polish FanFick
+***w:c:bezsensopedia|Bezsensopedia
 ***w:c:pl.bakuganfanfic|Bakugan Fan Fiction
 
-**w:c:pl:Lifestyle|Zainteresowania
-***w:c:pl.lego|Lego
-***w:c:egipt|Egipt
+**http://pl.lifestylehub.wikia.com/|Zainteresowania
 ***w:c:pl.monsterhigh|Monster High
+***w:c:pl.lego|Lego
 ***w:c:pl.bionicle|Bionicle
-***w:c:pl.vocaloid|Vocaloid
-',
+***w:c:egipt|Egipt
+***w:c:tradycja|Tradycja',
 	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-	* [http://pl.wikia.com/O_nas O Wikii]
-	* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
-	* [[Special:Contact|Kontakt]]
-	* [http://www.wikia.com/Advertising Reklama]',
+* [http://pl.wikia.com/O_nas O Wikii]
+* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]
+* [[Special:Contact|Kontakt]]
+* [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu Fandom',
+	'save' => 'Publikuj',
+	'scarytranscludebadinterwiki' => 'Użyto niewłaściwej składni transkluzji zewnętrznego szablonu.',
+	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum]].',
+	'sidebar' => '* Nawigacja
+** mainpage|mainpage-description
+** randompage-url|randompage
+* Społeczność
+** recentchanges-url|recentchanges
+** forum-url|forum
+** helppage|help
+* SEARCH
+* TOOLBOX
+* LANGUAGES',
+	'signup-moreinfo' => 'dodatkowe informacje',
+	'signup-password' => 'Hasło -',
 ];
 
 $messages['pms'] = [
@@ -29636,6 +30307,7 @@ Sòn a l\'é motobin belfé che a sia rivà përchè a-i era n\'anliura a un sit
 	'specialpages-group-spam' => 'Utiss contra lë spam',
 	'sqlite-has-fts' => '$1 con arserca an test pien mantnùa',
 	'sqlite-no-fts' => '$1 sensa arserca an test pien mantnùa',
+	'signup-password' => 'Soa ciav',
 ];
 
 $messages['pnb'] = [
@@ -29846,6 +30518,7 @@ $messages['pnb'] = [
 	'specialpages-group-spam' => 'سپام روک اوزار',
 	'sqlite-has-fts' => '$1 پوری لکھت کھوج مدد نال',
 	'sqlite-no-fts' => '$1 بنا کسے لکھت مدد دے',
+	'signup-password' => 'کنجی:',
 ];
 
 $messages['pnt'] = [
@@ -29926,6 +30599,7 @@ $messages['pnt'] = [
 	'specialpages-group-other' => 'Αλλέτερα ειδικά σελίδας',
 	'specialpages-group-pagetools' => 'Εργαλεία σελίδας',
 	'specialpages-group-spam' => 'Εργαλεία αντι-σπάμ',
+	'signup-password' => 'Σημάδι:',
 ];
 
 $messages['prg'] = [
@@ -30243,6 +30917,7 @@ $messages['ps'] = [
 	'specialpages-group-pages' => 'د مخونو لړليک',
 	'specialpages-group-pagetools' => 'د مخ اوزارونه',
 	'specialpages-group-wiki' => 'ويکيډاټا او اوزارونه',
+	'signup-password' => 'پټنوم:',
 ];
 
 $messages['pt'] = [
@@ -30461,6 +31136,96 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 * [[Special:Contact|Contato]]
 * [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
 	'specialpages-group-wikia' => 'Páginas do Fandom',
+	'shared-Globalnavigation' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Videogames|video-games-vertical-color
+
+**#|Em alta
+***http://pt-br.watchdogs.wikia.com/wiki/Wiki_Watch_Dogs|Watchdogs
+***http://pt-br.titanfall.wikia.com/wiki/Wiki_Titanfall|Titanfall
+***http://pt-br.elderscrolls.wikia.com/wiki/P%C3%A1gina_principal|Elder Scrolls
+***w:c:video:Video_Wiki|Últimos Vídeos
+***homepage:Video_Games|Mais...
+
+**#|Jogos para PS
+***http://pt.assassinscreedbr.wikia.com/wiki/Página_principal|Assassin\'s Creed
+***http://pt-br.finalfantasy.wikia.com/wiki/Página_principal|Final Fantasy
+***http://pt-br.warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
+***http://pt-br.infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
+***homepage:Video_Games|Mais...
+
+**#|Jogos para Xbox One 
+***http://pt-br.evolve.wikia.com/wiki/Wiki_Evolve|Evolve
+***http://pt-br.dragonage.wikia.com/wiki/P%C3%A1gina_principal|Dragon Age
+***http://pt-br.fifa.wikia.com/wiki/Wiki_Fifa|Wiki Fifa
+***http://pt.gta.wikia.com/wiki/P%C3%A1gina_principal|Grand Theft Auto
+***homepage:Video_Games|Mais...
+
+**#|Grátis
+***w:c:pt-br.warframe|Warframe
+***w:c:pt-br.leagueoflegends|League of Legends
+***w:c:pt-br.hearthstone|Hearthstone
+***w:c:pt-br.clashofclans|Clash of Clans
+***homepage:Video_Games|Mais...
+
+*http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment-vertical-color
+
+**#|Em alta
+***http://pt-br.monica.wikia.com/wiki/P%C3%A1gina_principal|Turma da Mônica
+***http://pt-br.phineaseferb.wikia.com/wiki/Phineas_e_Ferb_Wiki|Phineas e Ferb
+***http://pt-br.disneyprincesas.wikia.com/wiki/Wiki_Disney_Princesas|Disney Princesas
+***w:c:video:Video_Wiki|Novos Vídeos
+***homepage:Entertainment|Mais...
+
+**#|Filmes
+***w:c:filmes|Filmes Wikia
+***w:c:pt-br.disneyprincesas:Frozen|Frozen
+***w:c:jogosvorazes:Em_Chamas_(filme)|Em Chamas
+***w:c:pt-br.marvel:Guardi%C3%B5es_da_Gal%C3%A1xia_(filme)|Guardiões da Galáxia
+***homepage:Entertainment|Mais...
+
+**#|TV
+***w:c:pt-br.doctorwho|Doctor Who
+***w:c:pt-br.revenge|Revenge
+***w:c:pt.simpsons|The Simpsons
+***w:c:pt-br.vampirediaries|The Vampire Diaries
+***homepage:Entertainment|Mais...
+
+**#|Música
+***w:c:lyrics:Main_Page_Pt|Letras de músicas
+***w:c:pt.musica:Wiki_Música/|Wiki Música
+***w:c:pt.ladygaga:Gagapedia|Lady Gaga
+***w:c:pt-br.adele:Wiki_Adele|Adele
+***homepage:Entertainment|Mais...
+
+*http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo De Vida|lifestyle-vertical-color
+
+**#|Em alta
+***w:c:sociedade-literaria:Portal_Clube_do_Livro|Clube do Livro
+***w:c:pt-br.foodficcao:Wiki_Food_Ficção|Food Ficção
+***w:c:comunidade:User_blog:Macherie_ana/Anunciando_o_nosso_aplicativo_de_letras_para_fãs,_por_fãs|Lyrically
+***w:c:futebol:User_blog:PeF001/Escale_a_sua_seleção_da_Copa_do_Mundo_de_2014|Copa 2014
+***homepage:Lifestyle|Mais...
+
+**#|Livros
+***w:c:pt-br.harrypotter:Página_Principal|Harry Potter
+***w:c:divergente-br:Divergente_Wiki|Divergente
+***w:c:pt.crepusculo:Página Inicial|Crepúsculo
+***w:c:pt-br.geloefogo:Wiki_As_Crônicas_de_Gelo_e_Fogo|As Crônicas de Gelo e Fogo
+***homepage:Lifestyle|Mais...
+
+**#|Receitas
+***w:c:receitas:Wiki_Receitas|Receitas Wikia
+***w:c:pt-br.chocolate:Wiki_Chocolate|Wiki Chocolate
+***w:c:pt.receitas-vegetarianas:Wiki_Receitas_Vegetarianas|Receitas Vegetarianas
+***w:c:pt.sobremesas:Wiki_Sobremesas|Receitas de Sobremesas
+***homepage:Lifestyle|Mais...
+
+**#|Comidas & Bebidas
+***w:c:pt-br.cafe:Wiki_Café|Café
+***w:c:pt.vitaminas:Wiki_Smoothies|Vitaminas
+***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
+***w:c:pt.conservas:Wiki_Conservas|Conservas
+***homepage:Lifestyle|Mais...',
+	'signup-password' => 'Palavra-chave:',
 ];
 
 $messages['pt-br'] = [
@@ -30676,6 +31441,96 @@ Tal bloqueio foi provavelmente causado por uma ligação para um \'\'website\'\'
 	'specialpages-group-spam' => 'Ferramentas anti-spam',
 	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
 	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
+	'shared-Globalnavigation' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Videogames|video-games-vertical-color
+
+**#|Em alta
+***http://pt-br.watchdogs.wikia.com/wiki/Wiki_Watch_Dogs|Watchdogs
+***http://pt-br.titanfall.wikia.com/wiki/Wiki_Titanfall|Titanfall
+***http://pt-br.elderscrolls.wikia.com/wiki/P%C3%A1gina_principal|Elder Scrolls
+***w:c:video:Video_Wiki|Últimos Vídeos
+***homepage:Video_Games|Mais...
+
+**#|Jogos para PS
+***http://pt.assassinscreedbr.wikia.com/wiki/Página_principal|Assassin\'s Creed
+***http://pt-br.finalfantasy.wikia.com/wiki/Página_principal|Final Fantasy
+***http://pt-br.warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
+***http://pt-br.infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
+***homepage:Video_Games|Mais...
+
+**#|Jogos para Xbox One 
+***http://pt-br.evolve.wikia.com/wiki/Wiki_Evolve|Evolve
+***http://pt-br.dragonage.wikia.com/wiki/P%C3%A1gina_principal|Dragon Age
+***http://pt-br.fifa.wikia.com/wiki/Wiki_Fifa|Wiki Fifa
+***http://pt.gta.wikia.com/wiki/P%C3%A1gina_principal|Grand Theft Auto
+***homepage:Video_Games|Mais...
+
+**#|Grátis
+***w:c:pt-br.warframe|Warframe
+***w:c:pt-br.leagueoflegends|League of Legends
+***w:c:pt-br.hearthstone|Hearthstone
+***w:c:pt-br.clashofclans|Clash of Clans
+***homepage:Video_Games|Mais...
+
+*http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment-vertical-color
+
+**#|Em alta
+***http://pt-br.monica.wikia.com/wiki/P%C3%A1gina_principal|Turma da Mônica
+***http://pt-br.phineaseferb.wikia.com/wiki/Phineas_e_Ferb_Wiki|Phineas e Ferb
+***http://pt-br.disneyprincesas.wikia.com/wiki/Wiki_Disney_Princesas|Disney Princesas
+***w:c:video:Video_Wiki|Novos Vídeos
+***homepage:Entertainment|Mais...
+
+**#|Filmes
+***w:c:filmes|Filmes Wikia
+***w:c:pt-br.disneyprincesas:Frozen|Frozen
+***w:c:jogosvorazes:Em_Chamas_(filme)|Em Chamas
+***w:c:pt-br.marvel:Guardi%C3%B5es_da_Gal%C3%A1xia_(filme)|Guardiões da Galáxia
+***homepage:Entertainment|Mais...
+
+**#|TV
+***w:c:pt-br.doctorwho|Doctor Who
+***w:c:pt-br.revenge|Revenge
+***w:c:pt.simpsons|The Simpsons
+***w:c:pt-br.vampirediaries|The Vampire Diaries
+***homepage:Entertainment|Mais...
+
+**#|Música
+***w:c:lyrics:Main_Page_Pt|Letras de músicas
+***w:c:pt.musica:Wiki_Música/|Wiki Música
+***w:c:pt.ladygaga:Gagapedia|Lady Gaga
+***w:c:pt-br.adele:Wiki_Adele|Adele
+***homepage:Entertainment|Mais...
+
+*http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo De Vida|lifestyle-vertical-color
+
+**#|Em alta
+***w:c:sociedade-literaria:Portal_Clube_do_Livro|Clube do Livro
+***w:c:pt-br.foodficcao:Wiki_Food_Ficção|Food Ficção
+***w:c:comunidade:User_blog:Macherie_ana/Anunciando_o_nosso_aplicativo_de_letras_para_fãs,_por_fãs|Lyrically
+***w:c:futebol:User_blog:PeF001/Escale_a_sua_seleção_da_Copa_do_Mundo_de_2014|Copa 2014
+***homepage:Lifestyle|Mais...
+
+**#|Livros
+***w:c:pt-br.harrypotter:Página_Principal|Harry Potter
+***w:c:divergente-br:Divergente_Wiki|Divergente
+***w:c:pt.crepusculo:Página Inicial|Crepúsculo
+***w:c:pt-br.geloefogo:Wiki_As_Crônicas_de_Gelo_e_Fogo|As Crônicas de Gelo e Fogo
+***homepage:Lifestyle|Mais...
+
+**#|Receitas
+***w:c:receitas:Wiki_Receitas|Receitas Wikia
+***w:c:pt-br.chocolate:Wiki_Chocolate|Wiki Chocolate
+***w:c:pt.receitas-vegetarianas:Wiki_Receitas_Vegetarianas|Receitas Vegetarianas
+***w:c:pt.sobremesas:Wiki_Sobremesas|Receitas de Sobremesas
+***homepage:Lifestyle|Mais...
+
+**#|Comidas & Bebidas
+***w:c:pt-br.cafe:Wiki_Café|Café
+***w:c:pt.vitaminas:Wiki_Smoothies|Vitaminas
+***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
+***w:c:pt.conservas:Wiki_Conservas|Conservas
+***homepage:Lifestyle|Mais...',
+	'signup-password' => 'Senha:',
 ];
 
 $messages['qu'] = [
@@ -30881,6 +31736,7 @@ Hallch\'api qhipaq kaq yaykuchisqataqa kay qatiqpim rikunki willasunaykipaq:',
 	'specialpages-group-spam' => 'Spam nisqa millay rurayta hark\'anapaq llamk\'anakuna',
 	'sqlite-has-fts' => '$1 hunt\'a qillqa maskana yanapawan',
 	'sqlite-no-fts' => '$1 mana hunt\'a qillqa maskana yanapawan',
+	'signup-password' => 'Yaykuna rimayki',
 ];
 
 $messages['qug'] = [
@@ -31053,6 +31909,7 @@ $messages['rif'] = [
 	'svg-long-desc' => 'Afaylu n SVG, dis $1 × $2 pixel, Tiddi n ufaylu: $3',
 	'show-big-image' => 'Resolution ameqran',
 	'specialpages' => 'Tasniwin tinemmezrayin',
+	'signup-password' => 'Taguri n wadaf:',
 ];
 
 $messages['rm'] = [
@@ -31250,6 +32107,7 @@ Probablamien è quai capità pervia dad in link ad ina pagina externa ch\'è sin
 	'specialpages-group-spam' => 'Utensils da spam',
 	'sqlite-has-fts' => '$1 cun sustegn per la retschertga da text integrala',
 	'sqlite-no-fts' => '$1 senza sustegn per la retschertga da text integrala',
+	'signup-password' => 'pled-clav',
 ];
 
 $messages['rmy'] = [
@@ -31281,6 +32139,7 @@ $messages['rmy'] = [
 	'siteusers' => 'Jeno/e kai {{SITENAME}} $1',
 	'showhidebots' => '($1 boturya)',
 	'specialpages' => 'Uzalutne patrya',
+	'signup-password' => 'O nakhavipnasko lav',
 ];
 
 $messages['ro'] = [
@@ -31488,6 +32347,7 @@ Ultima intrare în jurnal este afișată mai jos pentru referință:',
 	'sqlite-has-fts' => '$1 cu suport de căutare în tot textul',
 	'sqlite-no-fts' => '$1 fără suport de căutare în tot textul',
 	'share_it' => 'Trimite:',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['roa-rup'] = [
@@ -31505,6 +32365,7 @@ $messages['roa-rup'] = [
 	'searchresultshead' => 'Caftã',
 	'sp-contributions-submit' => 'Caftã',
 	'specialpages' => 'Frãndzã spetsiale',
+	'signup-password' => 'Cljao:',
 ];
 
 $messages['roa-tara'] = [
@@ -31725,6 +32586,7 @@ Stu fatte ha state causate da \'nu collegamende a \'nu site esterne ca appartene
 	'specialpages-group-spam' => 'Struminde p\'u spam',
 	'sqlite-has-fts' => '$1 cu \'u supporte d\'a ricerche full-text',
 	'sqlite-no-fts' => '$1 senze \'u supporte d\'a ricerche full-text',
+	'signup-password' => 'Passuord:',
 ];
 
 $messages['ru'] = [
@@ -31740,7 +32602,7 @@ $messages['ru'] = [
 	'searchbutton' => 'Найти',
 	'searcharticle' => 'Перейти',
 	'specialpage' => 'Служебная страница',
-	'showtoc' => 'показать',
+	'showtoc' => 'развернуть',
 	'site-rss-feed' => '$1 — RSS-лента',
 	'site-atom-feed' => '$1 — Atom-лента',
 	'sort-descending' => 'Упорядочить по убыванию',
@@ -31751,7 +32613,7 @@ $messages['ru'] = [
 	'sig_tip' => 'Ваша подпись и момент времени',
 	'summary' => 'Описание изменений:',
 	'subject' => 'Тема/заголовок:',
-	'savearticle' => 'Записать страницу',
+	'savearticle' => 'Записать',
 	'showpreview' => 'Предварительный просмотр',
 	'showlivepreview' => 'Быстрый предпросмотр',
 	'showdiff' => 'Внесённые изменения',
@@ -31898,7 +32760,9 @@ $messages['ru'] = [
 	'spamprotectiontitle' => 'Спам-фильтр',
 	'spamprotectiontext' => 'Страница, которую вы пытаетесь сохранить, заблокирована спам-фильтром.
 Вероятно, это произошло из-за того, что она содержит ссылку на занесённый в чёрный список внешний сайт.',
-	'spamprotectionmatch' => 'Следующая ссылка вызвала срабатывание спам-фильтра: $1.',
+	'spamprotectionmatch' => 'Следующая ссылка, текст или название страницы вызвали срабатывание нашего спам-фильтра: \'\'\'$1\'\'\'
+
+Если Вы думаете, что здесь ошибка, то, пожалуйста, сообщите нам [[w:c:vstf:Report:Spam filter problems|здесь]]. Пожалуйста, приводите полный текст сообщения при сообщение о проблеме.',
 	'spambot_username' => 'Чистка спама',
 	'spam_reverting' => 'Откат к последней версии, не содержащей ссылки на $1',
 	'spam_blanking' => 'Все версии содержат ссылки на $1, очистка',
@@ -31945,6 +32809,105 @@ $messages['ru'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Страницы Фэндома',
+	'save' => 'Сохранить',
+	'see_more' => 'Подробнее...',
+	'seeeditcount' => 'См. счётчик правок',
+	'seemoredotdotdot' => 'Подробнее...',
+	'send' => 'Отправить',
+	'shared-Globalnavigation' => '*w:c:www:Entertainment|Кино и сериалы
+
+**w:c:ru.community:Портал:Фильмы|Сериалы
+***w:c:ru.tardis|Доктор Кто
+***w:c:ru.walkingdead|Ходячие мертвецы
+***w:c:ru.supernatural|Сверхъестественное
+***w:c:ru.vampirediaries|Дневники вампира
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Анимация/Аниме
+***w:c:ru.avatar|Легенда о Корре
+***w:c:ru.onepiece|One Piece
+***w:c:ru.httyd|Как приручить дракона
+***w:c:ru.gravityfalls|Гравити Фолз
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Книги/комиксы
+***w:c:ru.warriors-cats|Коты-Воители
+***w:c:ru.bubbleverse|Комиксы "Bubble"
+***w:c:ru.camphalfblood|Перси Джексон
+***w:c:ru.marvel|Комиксы "Marvel"
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Кино/Музыка
+***w:c:ru.starwars|Звёздные войны
+***w:c:ru.harrypotter|Гарри Поттер
+***w:c:ru.transformers|Трансформеры
+***w:c:ru.rock-n-roll|Рок-н-Ролл
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+*w:c:www:Gaming|Игры
+
+**w:c:www:Gaming|Новое
+***w:c:ru.shadowofmordor|Средиземье: Тени Мордора
+***w:c:ru.assassinscreed|Assassin\'s Creed: Единство
+***w:c:ru.callofduty|Call of Duty: Advanced Warfare
+***w:c:ru.wasteland|Wasteland 2
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.community:Портал:Игры|Лучшее
+***w:c:ru.fallout|Fallout
+***w:c:ru.warframe|Warframe
+***w:c:ru.angrybirds|Angry Birds
+***w:c:ru.dragonage|Dragon Age
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.community:Портал:Игры|Лучшее
+***w:c:ru.darksouls|Dark Souls
+***w:c:ru.elderscrolls|The Elder Scrolls
+***w:c:ru.payday|PAYDAY
+***w:c:ru.spiralka|Spiral Knights
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.borderlands|Borderlands
+***w:c:ru.borderlands:The Pre-Sequel|The Pre-Sequel
+***w:c:ru.borderlands:Категория:Персонажи|Персонажи
+***w:c:ru.borderlands:Категория:Оружие|Оружие
+***w:c:ru.borderlands:Special:Random|Случайная статья
+***w:c:ru.community:Портал:Игры|Ещё...
+
+*w:c:www:Lifestyle|Увлечения/Викия
+
+**w:c:ru.community:Портал:Увлечения|Выдуманные миры
+***w:c:ru.svinastorona|Авторские комиксы
+***w:c:ru.angrybirds-fiction|Angry Birds Fiction
+***w:c:ru.domovoy|Комиксы Домового
+***w:c:ru.weboflife|Паутина Жизни
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community:Портал:Увлечения|Разное
+***w:c:absurdopedia|Абсурдопедия
+***w:c:ru.lego|LEGO
+***w:c:ru.science|Наука
+***w:c:ru.wikies|О википроектах
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community:Портал:Увлечения|Разное
+***w:c:ru.warriors|Военная история
+***w:c:ru.extinct-animals|О вымерших животных
+***w:c:ru.althistory|Альт. история
+***w:c:ru.zombie|О зомби
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community|Викия
+***w:c:ru.community:Викия:Условия использования|Правила Викия
+***w:c:ru.community:Служебная:Forum|Форум ru-Викия
+***w:c:ru.community:Список википроектов на русском языке|Список ru-википроектов
+***w:c:ru.community:Викия: Запросы на статус администратора/бюрократа‎|Запрос статуса администратора
+***w:c:ru.community|Ещё...',
+	'shared-problemreport' => 'Сообщить о проблеме',
+	'showall' => 'Показать всё',
+	'signup-moreinfo' => 'подробнее',
+	'signup-password' => 'Пароль:',
+	'skin-forced' => 'Вы не можете изменить оформление этой вики.',
 ];
 
 $messages['rue'] = [
@@ -32185,6 +33148,7 @@ $messages['ruq'] = [
 	'searchresultshead' => 'Caftã',
 	'sp-contributions-submit' => 'Caftã',
 	'specialpages' => 'Frãndzã spetsiale',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['ruq-cyrl'] = [
@@ -32210,6 +33174,7 @@ $messages['ruq-cyrl'] = [
 	'sp-contributions-talk' => 'дискућу',
 	'show-big-image' => 'Мареште ресолуцион',
 	'specialpages' => 'Пажи спецалус',
+	'signup-password' => 'Лозинка:',
 ];
 
 $messages['ruq-latn'] = [
@@ -32235,6 +33200,7 @@ $messages['ruq-latn'] = [
 	'sp-contributions-talk' => 'Diskuţu',
 	'show-big-image' => 'Mareşte resolucion',
 	'specialpages' => 'Paži specalus',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['sa'] = [
@@ -32345,6 +33311,7 @@ $messages['sa'] = [
 	'specialpages-group-highuse' => 'अधिकोपयोगीनि पृष्ठानि',
 	'specialpages-group-pages' => 'पृष्ठानाम् आवली',
 	'specialpages-group-pagetools' => 'पृष्ठोपकरणानि',
+	'signup-password' => 'सङ्केतशब्द:',
 ];
 
 $messages['sah'] = [
@@ -32551,6 +33518,7 @@ $messages['sah'] = [
 	'specialpages-group-spam' => 'Спаамы утары үнүстүрүмүөннэр',
 	'sqlite-has-fts' => '$1 толору тиэкистээх көрдөөһүнү өйүүр',
 	'sqlite-no-fts' => '$1 толору тиэкистээх көрдөөһүнү өйөөбөт',
+	'signup-password' => 'Киирии тыла:',
 ];
 
 $messages['sc'] = [
@@ -32646,6 +33614,7 @@ impossìbile mòver sa pàgina a issa etotu.',
 	'size-gigabytes' => '$1 GB',
 	'specialpages' => 'Pàginas ispetziales',
 	'specialpages-group-pages' => 'Listas de is pàginas',
+	'signup-password' => 'Password:',
 ];
 
 $messages['scn'] = [
@@ -32823,6 +33792,7 @@ Pi favuri utilizza lu tastu "\'n arreri" dû tò browser, ricàrrica la pàggina
 	'specialpages-group-wiki' => 'Strumenti e nfurmazzioni supra lu pruggettu',
 	'specialpages-group-redirects' => 'Pàggini spiciali di redirect',
 	'specialpages-group-spam' => 'Strumenti contr\'a lu spam',
+	'signup-password' => 'La tò \'\'password\'\'',
 ];
 
 $messages['sco'] = [
@@ -32938,6 +33908,7 @@ Th\' description oan tis [$2 file description page] thare is shown below.',
 	'specialpages' => 'Byordinar pages',
 	'specialpages-group-users' => 'Uisers an richts',
 	'specialpages-group-pages' => 'leet o pages',
+	'signup-password' => 'Passwaird:',
 ];
 
 $messages['sd'] = [
@@ -32978,6 +33949,7 @@ $messages['sd'] = [
 	'show-big-image' => 'سنهو ترين تحلل',
 	'specialpages' => 'خاص صفحا',
 	'specialpages-group-users' => 'يوزرس ۽ حق',
+	'signup-password' => 'ڳجھو لفظ:',
 ];
 
 $messages['sdc'] = [
@@ -33084,6 +34056,7 @@ $messages['sdc'] = [
 	'scarytranscludetoolong' => '[L\'URL è troppu longu]',
 	'specialpages' => 'Pagini ippiziari',
 	'specialpages-group-login' => 'Intra / registhrazioni',
+	'signup-password' => 'Paràura d\'órdhini',
 ];
 
 $messages['se'] = [
@@ -33151,6 +34124,7 @@ $messages['se'] = [
 	'size-megabytes' => '$1 MiB',
 	'size-gigabytes' => '$1 GiB',
 	'specialpages' => 'Erenomáš siiddut',
+	'signup-password' => 'Suollemassátni:',
 ];
 
 $messages['sei'] = [
@@ -33216,6 +34190,7 @@ Nexajvon. Jan necoccebj naxajvon poop, cuípo ö caápo.\'\'\'',
 	'spambot_username' => 'MediaWiki nespam',
 	'showhidebots' => '($1 botám)',
 	'specialpages' => 'Páhinám extravám',
+	'signup-password' => 'Quimx canj:',
 ];
 
 $messages['sg'] = [
@@ -33236,6 +34211,7 @@ $messages['sg'] = [
 	'shown-title' => 'Fa $1 {{PLURAL:$1|pendâkua |âpendâkua}} nî alîngbi na lêmbëtï ôko ôko.',
 	'search-result-size' => '$1 ({{PLURAL:$2|1 mbupa|$2 âmbupa}})',
 	'specialpages' => 'Âlêmbëtï sô ayeke ndê',
+	'signup-password' => 'Pafungûla',
 ];
 
 $messages['sgs'] = [
@@ -33590,6 +34566,7 @@ Ovo je vjerovatno izazvano vezom ka vanjskoj nepoželjnoj stranici.',
 	'specialpages-group-spam' => 'Spam alati',
 	'sqlite-has-fts' => '$1 sa podrškom pretrage cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretrage cijelog teksta',
+	'signup-password' => 'Lozinka/zaporka:',
 ];
 
 $messages['shi'] = [
@@ -33696,6 +34673,7 @@ Izdar ad urtili ɣ isbidn n mayllan ɣ {{SITENAME}} .',
 	'specialpages-group-wiki' => 'wiki ladawat dlmalomat',
 	'specialpages-group-redirects' => 'sfhat tahwil gant khassa',
 	'specialpages-group-spam' => 'ladawat n spam',
+	'signup-password' => 'awal iḥdan:',
 ];
 
 $messages['si'] = [
@@ -33914,6 +34892,7 @@ $messages['si'] = [
 	'specialpages-group-spam' => 'අයාචිත-තැපෑල මෙවලම්',
 	'sqlite-has-fts' => '$1 සම්පූර්ණ-පෙළ සෙවුම් සහය සමග',
 	'sqlite-no-fts' => '$1 සම්පූර්ණ-පෙළ සෙවුම් සහය රහිතව',
+	'signup-password' => 'මුරපදය:',
 ];
 
 $messages['sk'] = [
@@ -34122,6 +35101,7 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 	'specialpages-group-spam' => 'Nástroje proti spamu',
 	'sqlite-has-fts' => '$1 s podporou vyhľadávania v plnom texte',
 	'sqlite-no-fts' => '$1 bez podpory vyhľadávania v plnom texte',
+	'signup-password' => 'Heslo:',
 ];
 
 $messages['sl'] = [
@@ -34334,6 +35314,7 @@ Najnovejši vnos v dnevniku je na voljo spodaj:',
 	'sqlite-has-fts' => '$1 s podporo iskanju polnih besedil',
 	'sqlite-no-fts' => '$1 brez podpore iskanju polnih besedil',
 	'share_it' => 'Deli:',
+	'signup-password' => 'Geslo',
 ];
 
 $messages['sli'] = [
@@ -34500,6 +35481,7 @@ $messages['sm'] = [
 	'showdiff' => 'Fa\'aali suiga',
 	'searchresultshead' => 'Su\'e',
 	'specialpages' => 'Itulau fa\'apitoa',
+	'signup-password' => '\'Upu ulufale',
 ];
 
 $messages['sma'] = [
@@ -34552,6 +35534,7 @@ $messages['sma'] = [
 	'show-big-image' => 'Dïeves stoerre',
 	'scarytranscludetoolong' => '[URL lea ihke guhkie; gaatelassjedh]',
 	'specialpages' => 'Joekoen bielieh',
+	'signup-password' => 'Loevesbaakoe:',
 ];
 
 $messages['sn'] = [
@@ -34569,6 +35552,7 @@ $messages['sn'] = [
 	'searchresultshead' => 'Tsvaga',
 	'sp-contributions-submit' => 'Tsvaga',
 	'specialpages' => 'Mapeji akakosha',
+	'signup-password' => 'Password:',
 ];
 
 $messages['so'] = [
@@ -34612,6 +35596,7 @@ Fadlan markale isku day. Hadii aysan weli shaqaynin, ka bax ee markale soo gudag
 	'sp-contributions-talk' => 'Wadahadal',
 	'siteuser' => '{{SITENAME}} isticmaale $1',
 	'specialpages' => 'bogaga khaaska ah',
+	'signup-password' => 'Ereysir ah',
 ];
 
 $messages['sq'] = [
@@ -34814,6 +35799,7 @@ Veprimi i fundit mbi këtë faqe është poshtë për referncë:',
 	'specialpages-group-spam' => 'Mjetet për spam',
 	'sqlite-has-fts' => '$1 me mbështetje të kërkimit me teskt të plotë',
 	'sqlite-no-fts' => '$1 pa mbështetje të kërkimit me teskt të plotë',
+	'signup-password' => 'Fusni fjalëkalimin tuaj',
 ];
 
 $messages['sr'] = [
@@ -35017,6 +36003,7 @@ Veprimi i fundit mbi këtë faqe është poshtë për referncë:',
 	'sqlite-has-fts' => '$1 me mbështetje të kërkimit me teskt të plotë',
 	'sqlite-no-fts' => '$1 pa mbështetje të kërkimit me teskt të plotë',
 	'share_it' => 'Podelite:',
+	'signup-password' => 'Ваша лозинка',
 ];
 
 $messages['sr-ec'] = [
@@ -35236,6 +36223,7 @@ $messages['sr-ec'] = [
 	'specialpages-group-spam' => 'Алатке против непожељних порука',
 	'sqlite-has-fts' => '$1 с подршком претраге целог текста',
 	'sqlite-no-fts' => '$1 без подршке претраге целог текста',
+	'signup-password' => 'Ваша лозинка',
 ];
 
 $messages['sr-el'] = [
@@ -35415,6 +36403,7 @@ Ovo je verovatno izazvano blokiranom vezom ka spoljašnjem sajtu.',
 	'specialpages-group-wiki' => 'podaci i oruđa vikija',
 	'specialpages-group-redirects' => 'Preusmeravanje posebnih stranica',
 	'specialpages-group-spam' => 'oruđa protiv spama',
+	'signup-password' => 'Vaša lozinka',
 ];
 
 $messages['srn'] = [
@@ -35473,6 +36462,7 @@ $messages['srn'] = [
 	'show-big-image' => 'Moro srapu',
 	'showhidebots' => '(Bot $1)',
 	'specialpages' => 'Spesrutu papira',
+	'signup-password' => 'Psa wortu:',
 ];
 
 $messages['ss'] = [
@@ -35508,6 +36498,7 @@ Naka kutsi makhasi abo e {{SITENAME}} angaba sekadlulelwe sikhatsi.',
 	'sp-contributions-talk' => 'ingcoco',
 	'sp-contributions-submit' => 'Sesha',
 	'specialpages' => 'Emakhasi labalulekile',
+	'signup-password' => 'Password:',
 ];
 
 $messages['st'] = [
@@ -35522,6 +36513,7 @@ $messages['st'] = [
 	'searchresultshead' => 'Phuputso',
 	'statistics' => 'Dipalopalo',
 	'shortpages' => 'Maqephe a makgutshwane',
+	'signup-password' => 'Password:',
 ];
 
 $messages['stq'] = [
@@ -35716,6 +36708,7 @@ Foar Information foulget die aktuelle Iendraach uut dät Speer-Logbouk:',
 	'specialpages-group-spam' => 'Spam-Reewen',
 	'sqlite-has-fts' => 'Version $1 mäd Unnerstutsenge foar ju Fultäkstsäike',
 	'sqlite-no-fts' => 'Version $1 sunner Unnerstutsenge foaar ju Fultäkstsäike',
+	'signup-password' => 'Paaswoud:',
 ];
 
 $messages['su'] = [
@@ -35903,6 +36896,7 @@ Sigana mah ieu téh alatan tumbu ka loka luar.',
 	'specialpages-group-wiki' => 'Data wiki jeung parabot',
 	'specialpages-group-redirects' => 'Alihan kaca husus',
 	'specialpages-group-spam' => 'Parabot Spam',
+	'signup-password' => 'Sandi anjeun',
 ];
 
 $messages['sv'] = [
@@ -35913,7 +36907,7 @@ $messages['sv'] = [
 	'september' => 'september',
 	'september-gen' => 'septembers',
 	'sep' => 'sep',
-	'subcategories' => 'Underkategorier',
+	'subcategories' => '<span style="font-size: 80%;">Underkategorier</span>',
 	'search' => 'Sök',
 	'searchbutton' => 'Sök',
 	'searcharticle' => 'Gå till',
@@ -36069,15 +37063,15 @@ Den senaste posten i blockeringsloggen visas nedan som referens:',
 	'sorbsreason' => 'Din IP-adress är listad som öppen proxy i den DNSBL {{SITENAME}} använder.',
 	'sorbs_create_account_reason' => 'Din IP-adress är listad som en öppen proxy i den DNSBL som används av {{SITENAME}}.
 Du får inte skapa ett användarkonto',
-	'selfmove' => 'Ursprungstitel och destinationstitel är identiska. Sidan kan inte flyttas till sig själv.',
+	'selfmove' => '\'\'\'Källa och destinationstitel är den samma: kan inte flyttas till sig själv.\'\'\' Kontrollera att du inte ange destinationens titel i "orsaken"-fältet i stället för "nya titel"-fältet.',
 	'semiprotectedpagemovewarning' => '\'\'\'Observera:\'\'\' Denna sida har låsts så att endast registrerade användare kan flytta den.
 Den senaste loggposten tillhandahålls nedan som referens:',
 	'siteuser' => 'användaren $1 på {{SITENAME}}',
 	'siteusers' => '{{SITENAME}}-{{PLURAL:$2|användaren|användarna}} $1',
 	'spamprotectiontitle' => 'Spamfilter',
 	'spamprotectiontext' => 'Sidan du ville spara blockerades av spamfiltret.
-Detta orsakades troligen av en länk till en svartlistad webbplats.',
-	'spamprotectionmatch' => 'Följande text aktiverade vårt spamfilter: $1',
+Detta orsakades troligen av en svartlistad länk eller sidnamn.',
+	'spamprotectionmatch' => 'Följande länk, text eller sidnamn är aktiverade vårt spamfilter: \'\'\'$1\'\'\'',
 	'spambot_username' => 'MediaWikis spampatrull',
 	'spam_reverting' => 'Återställer till den senaste versionen som inte innehåller länkar till $1',
 	'spam_blanking' => 'Alla versioner innehöll en länk till $1, blankar',
@@ -36118,6 +37112,10 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 	'sqlite-has-fts' => '$1 med stöd för fulltextsökning',
 	'sqlite-no-fts' => '$1 utan stöd för fulltextsökning',
 	'share_it' => 'Dela med av den:',
+	'seeeditcount' => 'Se redigera räkna',
+	'signup-mail' => 'E-post -',
+	'signup-moreinfo' => 'mer information',
+	'signup-password' => 'Lösenord -',
 ];
 
 $messages['sw'] = [
@@ -36310,6 +37308,7 @@ Kumbukumbu ya mwisho inaandikwa chini:',
 	'specialpages-group-pagetools' => 'Zana za kuushughulika ukurasa',
 	'specialpages-group-wiki' => 'Zana na data za wiki',
 	'specialpages-group-redirects' => 'Kurasa maalum za kuelekeza',
+	'signup-password' => 'Nywila',
 ];
 
 $messages['szl'] = [
@@ -36490,6 +37489,7 @@ Nojprawdopodobńij zostoło to spowodowane bez link do zewnyntrznyj zajty intern
 	'specialpages-group-wiki' => 'Informacyje a nořyńdźa wiki',
 	'specialpages-group-redirects' => 'Ekstra zajty, kere kerujům',
 	'specialpages-group-spam' => 'Nořyńdźa do wyćepywanio spamu',
+	'signup-password' => 'Hasuo:',
 ];
 
 $messages['ta'] = [
@@ -36692,6 +37692,7 @@ $messages['ta'] = [
 	'specialpages-group-spam' => 'எரித கருவிகள்',
 	'sqlite-has-fts' => '$1முழு-உரை தேடல் ஆதரவுடன்',
 	'sqlite-no-fts' => '$1முழு-உரை தேடல் ஆதரவு இல்லாமல்',
+	'signup-password' => 'உங்கள் கடவுச்சொல்',
 ];
 
 $messages['tcy'] = [
@@ -36764,6 +37765,7 @@ $messages['tcy'] = [
 	'svg-long-desc' => 'ಎಸ್.ವಿ.ಜಿ ಫೈಲ್, ಸುಮಾರಾದ್ $1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3',
 	'show-big-image' => 'ಪೂರ್ತಿ ರೆಸೊಲ್ಯೂಶನ್',
 	'specialpages' => 'ವಿಷೇಶ ಪುಟೊಲು',
+	'signup-password' => 'ಪಾಸ್-ವರ್ಡ್:',
 ];
 
 $messages['te'] = [
@@ -36974,6 +37976,7 @@ $messages['te'] = [
 	'specialpages-group-spam' => 'స్పామ్ పనిముట్లు',
 	'sqlite-has-fts' => '$1 పూర్తి-పాఠ్య అన్వేషణ తోడ్పాటుతో',
 	'sqlite-no-fts' => '$1 పూర్తి-పాఠ్య అన్వేషణ తోడ్పాటు లేకుండా',
+	'signup-password' => 'మీ సంకేతపదం',
 ];
 
 $messages['tet'] = [
@@ -37025,6 +38028,7 @@ $messages['tet'] = [
 	'specialpages-group-changes' => 'Mudansa foufoun sira no lista sira',
 	'specialpages-group-users' => 'Uza-na\'in no priviléjiu sira',
 	'specialpages-group-pages' => 'Lista pájina nian',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tg'] = [
@@ -37076,6 +38080,7 @@ $messages['tg'] = [
 	'specialpages-group-changes' => 'Mudansa foufoun sira no lista sira',
 	'specialpages-group-users' => 'Uza-na\'in no priviléjiu sira',
 	'specialpages-group-pages' => 'Lista pájina nian',
+	'signup-password' => 'Калимаи убур\пароль',
 ];
 
 $messages['tg-cyrl'] = [
@@ -37216,6 +38221,7 @@ $messages['tg-cyrl'] = [
 	'specialpages-group-pagetools' => 'Абзорҳои саҳифа',
 	'specialpages-group-wiki' => 'Вики додаҳо ва абзорҳо',
 	'specialpages-group-redirects' => 'Дар ҳоли тағйири масири саҳифаҳои вижа',
+	'signup-password' => 'Калимаи убур\пароль',
 ];
 
 $messages['tg-latn'] = [
@@ -37349,6 +38355,7 @@ Ehtimolan in az sababi dar bar giriftani pajvandi beruna ba somonai xoriçiji ba
 	'specialpages-group-pagetools' => 'Abzorhoi sahifa',
 	'specialpages-group-wiki' => 'Viki dodaho va abzorho',
 	'specialpages-group-redirects' => 'Dar holi taƣjiri masiri sahifahoi viƶa',
+	'signup-password' => 'Password:',
 ];
 
 $messages['th'] = [
@@ -37554,6 +38561,7 @@ $messages['th'] = [
 	'specialpages-group-spam' => 'เครื่องมือเกี่ยวกับสแปม',
 	'sqlite-has-fts' => 'รุ่น $1 พร้อมการสนับสนุนการค้นหาข้อความแบบเต็ม',
 	'sqlite-no-fts' => 'รุ่น $1 โดยไม่มีการสนับสนุนการค้นหาข้อความแบบเต็ม',
+	'signup-password' => 'รหัสผ่าน',
 ];
 
 $messages['ti'] = [
@@ -37575,6 +38583,7 @@ $messages['ti'] = [
 	'size-kilobytes' => '$1 ኪሎባይታት',
 	'size-megabytes' => '$1 ሜጋባይታት',
 	'size-gigabytes' => '$1 ጊጋባይታት',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tk'] = [
@@ -37772,6 +38781,7 @@ Gündeligiň iň soňky ýazgysy salgylanmak üçin aşakda berilýär:',
 	'specialpages-group-spam' => 'Spam gurallary',
 	'sqlite-has-fts' => '$1 (doly tekstli gözleg goldawly)',
 	'sqlite-no-fts' => '$1 (doly tekstli gözleg goldawsyz)',
+	'signup-password' => 'Parolyňyz:',
 ];
 
 $messages['tl'] = [
@@ -37978,6 +38988,7 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 	'specialpages-group-spam' => 'Mga kagamitang pang-spam',
 	'sqlite-has-fts' => '$1 na may suportang paghahanap ng buong teksto',
 	'sqlite-no-fts' => '$1 na walang suporta ng paghahanap ng buong teksto',
+	'signup-password' => 'Hudyat:',
 ];
 
 $messages['tn'] = [
@@ -37993,6 +39004,7 @@ $messages['tn'] = [
 	'showpreview' => 'Supa gore go tlaa lebega jang',
 	'showdiff' => 'Supa diphetogo',
 	'specialpages' => 'Diphetogo tse di faphegileng',
+	'signup-password' => 'Selotlolo sa sephiri:',
 ];
 
 $messages['to'] = [
@@ -38053,6 +39065,7 @@ $messages['to'] = [
 	'sp-newimages-showfrom' => 'ʻAsi mai ha ngaahi faitā foʻou ʻoku kamata mei he $1',
 	'scarytranscludefailed' => '[Fakamolemole, naʻe movete maʻu he sīpinga maʻa e $1]',
 	'specialpages' => 'Ngaahi peesi makehe',
+	'signup-password' => 'Leatapu',
 ];
 
 $messages['tokipona'] = [
@@ -38065,6 +39078,7 @@ $messages['tokipona'] = [
 	'savearticle' => 'o awen',
 	'showpreview' => 'mi wile lukin taso e ante',
 	'specialpages' => 'lipu suli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tpi'] = [
@@ -38127,6 +39141,7 @@ $messages['tpi'] = [
 	'specialpages-group-other' => 'Ol narapela sipesol pes',
 	'specialpages-group-pages' => 'Lista long ol pes',
 	'specialpages-group-pagetools' => 'Ol tul bilong pes',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tr'] = [
@@ -38332,6 +39347,7 @@ Son günlük girdisi referans amaçlı aşağıda verilmiştir:',
 	'sqlite-has-fts' => '$1 tam-metin arama desteği ile',
 	'sqlite-no-fts' => '$1 tam-metin arama desteği olmaksızın',
 	'share_it' => 'Paylaş:',
+	'signup-password' => 'Parolanız',
 ];
 
 $messages['ts'] = [
@@ -38361,6 +39377,7 @@ $messages['ts'] = [
 	'sp-contributions-talk' => 'Mbulavulo',
 	'sp-contributions-search' => 'Lava minyikelo',
 	'specialpages' => 'Matluka yo hlawuleka',
+	'signup-password' => 'Vito-mpfungulo:',
 ];
 
 $messages['tt-cyrl'] = [
@@ -38527,6 +39544,7 @@ $messages['tt-cyrl'] = [
 	'specialpages-group-wiki' => 'Вики-мәгълүмат һәм җиһазлар',
 	'specialpages-group-redirects' => 'Күчерелүче махсус битләр',
 	'specialpages-group-spam' => 'Спамга каршы кораллар',
+	'signup-password' => 'Серсүз:',
 ];
 
 $messages['tt-latn'] = [
@@ -38682,6 +39700,7 @@ Asta bu bitne küzätü köndälege birelgän:',
 	'specialpages-group-wiki' => 'Wiki-mäğlümat häm cihazlar',
 	'specialpages-group-redirects' => 'Küçerelüçe maxsus bitlär',
 	'specialpages-group-spam' => 'Spamğa qarşı qorallar',
+	'signup-password' => 'Sersüzeñ',
 ];
 
 $messages['ty'] = [
@@ -38698,6 +39717,7 @@ $messages['ty'] = [
 	'specialpage' => '’Api ta’a ’ē',
 	'specialloguserlabel' => 'Ta’ata fa’a’ohipa :',
 	'specialpages' => 'Te mau ’api ta’a ’ē',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['tyv'] = [
@@ -38747,6 +39767,7 @@ $messages['tyv'] = [
 	'skinname-monobook' => 'Моно-Ном',
 	'showhidebots' => '(боцду $1)',
 	'specialpages' => 'Тускай арыннар',
+	'signup-password' => 'Чажыт сөс',
 ];
 
 $messages['udm'] = [
@@ -38770,6 +39791,7 @@ $messages['udm'] = [
 	'search-result-size' => '$1 кыл({{PLURAL:$2|1 word|$2 words}})',
 	'sharedupload' => 'Та файл — $1-ысь, сое мукет проектъёсын но уже кутыны луэ.',
 	'specialpages' => 'Ваньмыз панельёс',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ug'] = [
@@ -38793,6 +39815,7 @@ $messages['ug'] = [
 	'search-result-size' => '$1 кыл({{PLURAL:$2|1 word|$2 words}})',
 	'sharedupload' => 'Та файл — $1-ысь, сое мукет проектъёсын но уже кутыны луэ.',
 	'specialpages' => 'Ваньмыз панельёс',
+	'signup-password' => 'Achkuch:',
 ];
 
 $messages['ug-arab'] = [
@@ -39019,6 +40042,7 @@ $messages['ug-latn'] = [
 	'sp-contributions-talk' => 'Monazire',
 	'sp-contributions-submit' => 'Izdash',
 	'specialpages' => 'Alahide tor betleri',
+	'signup-password' => 'Achkuch:',
 ];
 
 $messages['uk'] = [
@@ -39234,6 +40258,50 @@ $messages['uk'] = [
 	'sqlite-has-fts' => '$1 з підтримкою повнотекстового пошуку',
 	'sqlite-no-fts' => '$1 без підтримки повнотекстового пошуку',
 	'share_it' => 'Поділитись:',
+	'shared-Globalnavigation' => '*w:c:www:Entertainment|Кіно та серіали
+
+**w:c:www:TV|Серіали
+***w:c:uk.how-i-met-your-mother|Як я зустрів вашу маму
+***w:c:druzi|Друзі
+
+**w:c:www:Movie|Фільми
+***w:c:uk.harrypotter|Гаррі Поттер
+
+*w:c:www:Video_Games|Ігри
+
+**w:c:www:Video_Games|Ігри
+***w:c:uk.stalker|S.T.A.L.K.E.R.
+***w:c:uk.elderscrolls|The Elder Scrolls
+***w:c:uk.borderlands|Borderlands
+***w:c:uk.mafia|Mafia
+***w:c:uk.survarium|Survarium
+***w:c:uk.metro|Metro 2033
+***w:c:uk.assassinscreed|Assassin\'s Creed
+***w:c:uk.callofduty|Call of Duty
+
+**w:c:www:Video_Games|Молоді проекти
+***w:c:uk.fallout|Fallout
+***w:c:uk.angry-birds|Angry Birds
+***w:c:uk.sonic|Sonic
+***w:c:uk.gta|GTA
+***w:c:uk.havenandhearth|Haven and Hearth
+
+*w:c:www:Lifestyle|Захоплення
+
+**w:c:www:Lifestyle|Країни, міста, села
+***w:c:uk.cherkasy|Черкаси
+***w:c:uk.bucha|Буча
+
+**w:c:www:Lifestyle|Історія
+***w:c:uk.historyukraine|Історія України
+***w:c:uk.althistory|Альтернативна історія
+***w:c:uk.warriors|Воїни та військова техніка
+
+**w:c:www:Lifestyle|Обране
+***w:c:uk.compu|Комп\'ютери в Україні
+***w:c:uk.vijskpens|Світ Військового Пенсіонера
+***w:c:uk.wikies|Вікі про вікі',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ur'] = [
@@ -39331,6 +40399,7 @@ $messages['ur'] = [
 	'sp-contributions-submit' => 'تلاش',
 	'showhidebots' => '($1 بوٹ)',
 	'specialpages' => 'خصوصی صفحات',
+	'signup-password' => 'کلمۂ شناخت',
 ];
 
 $messages['uz'] = [
@@ -39379,6 +40448,7 @@ $messages['uz'] = [
 	'svg-long-desc' => 'SVG fayl, asl oʻlchamlari $1 × $2 piksel, fayl hajmi: $3',
 	'show-big-image' => 'Asl hajmdagi tasvir',
 	'specialpages' => 'Maxsus sahifalar',
+	'signup-password' => 'Maxfiy so\'z',
 ];
 
 $messages['val'] = [
@@ -39491,11 +40561,13 @@ La mida de la [http://meta.wikimedia.org/wiki/Help:Job_queue cua de treballs] es
 	'size-kilobytes' => '$1 KB',
 	'size-megabytes' => '$1 MB',
 	'size-gigabytes' => '$1 GB',
+	'signup-password' => 'Contrasenya',
 ];
 
 $messages['ve'] = [
 	'search' => 'Ṱolani',
 	'searchbutton' => 'Ṱolani',
+	'signup-password' => 'Phasiwede:',
 ];
 
 $messages['vec'] = [
@@ -39685,6 +40757,7 @@ Questo xe probabilmente dovùo a la presenza de un colegamento a un sito foresto
 	'specialpages-group-spam' => 'Strumenti anti spam',
 	'sqlite-has-fts' => '$1 con la possibilità de riserca completa nel testo',
 	'sqlite-no-fts' => '$1 sensa la possibilità de riserca completa nel testo',
+	'signup-password' => 'Scegli na password',
 ];
 
 $messages['vep'] = [
@@ -39874,6 +40947,7 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 	'specialpages-group-spam' => 'Azeged spaman vaste',
 	'sqlite-has-fts' => ' $1 täuz\'tekstaižen ecindan tügedamiženke',
 	'sqlite-no-fts' => ' $1 täuz\'tekstaižen ecindan tügedamižeta',
+	'signup-password' => 'Peitsana:',
 ];
 
 $messages['vi'] = [
@@ -40080,6 +41154,7 @@ Thông tin mới nhất trong nhật trình được ghi dưới đây để ti�
 	'specialpages-group-spam' => 'Công cụ chống spam',
 	'sqlite-has-fts' => '$1 với sự hỗ trợ tìm kiếm toàn văn',
 	'sqlite-no-fts' => '$1 không có hỗ trợ tìm kiếm toàn văn',
+	'signup-password' => 'Mật khẩu:',
 ];
 
 $messages['vls'] = [
@@ -40096,6 +41171,7 @@ $messages['vls'] = [
 	'site-rss-feed' => '$1 RSS-feed',
 	'site-atom-feed' => '$1 Atom-feed',
 	'search-result-size' => '$1 ({{PLURAL:$2|1 woord|$2 woordn}})',
+	'signup-password' => 'Wachtwoord:',
 ];
 
 $messages['vmf'] = [
@@ -40330,6 +41406,7 @@ Pad luveratiko ninädon yümi lü bevüresodatopäd plödik in blägalised.',
 	'specialpages-group-redirects' => 'Lüodükam padas patik',
 	'specialpages-group-spam' => 'Stums ta el spam',
 	'share_it' => 'Notidükolös oni:',
+	'signup-password' => 'Letavöd:',
 ];
 
 $messages['vot'] = [
@@ -40519,6 +41596,7 @@ $messages['vro'] = [
 	'specialpages-group-pagetools' => 'Lehetüüriistaq',
 	'specialpages-group-wiki' => 'Vikiteedüseq ja tüüriistaq',
 	'specialpages-group-redirects' => 'Ümbrenäütämistallitusleheq',
+	'signup-password' => 'Salasõna',
 ];
 
 $messages['wa'] = [
@@ -40610,6 +41688,7 @@ Rissayîz s\' i vs plait. Si çoula n\' va todi nén, sayîz di vs dislodjî eye
 	'specialpages-group-users' => 'Uzeus et abondroets',
 	'specialpages-group-highuse' => 'Eployaedje timpesse des pådjes',
 	'specialpages-group-redirects' => 'Ridjiblaedjes di pådjes sipeciåles',
+	'signup-password' => 'Vosse sicret',
 ];
 
 $messages['war'] = [
@@ -40721,6 +41800,7 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 	'size-gigabytes' => '$1 nga GB',
 	'specialpages' => 'Mga pinaurog nga pakli',
 	'specialpages-group-pagetools' => 'Mga higamit han pakli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['wo'] = [
@@ -40869,6 +41949,7 @@ Manoo tudewaat aw xët ci wenn tur wi.',
 	'svg-long-desc' => 'Dencukaay SVG, kem bu jaadu  $1 × $2 pixel, dayoo dencukaay bi: $3',
 	'show-big-image' => 'Ngandalal nataal gii',
 	'specialpages' => 'Xëti jagleel',
+	'signup-password' => 'Sa baatujàll',
 ];
 
 $messages['wuu'] = [
@@ -40982,6 +42063,7 @@ $messages['wuu'] = [
 	'showhidebots' => '（$1机器人）',
 	'scarytranscludetoolong' => '[对呒起，URL太长了]',
 	'specialpages' => '特殊页面',
+	'signup-password' => '密码:',
 ];
 
 $messages['xal'] = [
@@ -41084,6 +42166,7 @@ $messages['xal'] = [
 	'specialpages-group-wiki' => 'Бики өггцн болн зер-зев',
 	'specialpages-group-redirects' => 'Авч оддг көдлхнә халхс',
 	'specialpages-group-spam' => 'Спамас зевсг',
+	'signup-password' => 'Түлкүр үг:',
 ];
 
 $messages['xh'] = [
@@ -41102,6 +42185,7 @@ $messages['xh'] = [
 	'sp-contributions-talk' => 'Inthetho',
 	'sp-contributions-submit' => 'Khangela',
 	'specialpages' => 'Amaphepha Abalulekileyo',
+	'signup-password' => 'Igama elifihlakeleyo lelungu:',
 ];
 
 $messages['xmf'] = [
@@ -41180,6 +42264,7 @@ $messages['xmf'] = [
 	'svg-long-desc' => 'SVG ფაილ, ნომინალურო $1 × $2 პიქსელ, ფაილიშ ზიმა: $3',
 	'show-big-image' => 'რსული გიშაგორანჯალა',
 	'specialpages' => 'სპეციალურ ხასილეფ',
+	'signup-password' => 'პაროლ',
 ];
 
 $messages['yi'] = [
@@ -41370,6 +42455,7 @@ $messages['yi'] = [
 	'specialpages-group-spam' => 'ספאַם געצייג',
 	'sqlite-has-fts' => '$1 מיט פולן-טעקסט זוכן שטיץ',
 	'sqlite-no-fts' => '$1 אָן פֿולן-טעקסט זוכן שטיץ',
+	'signup-password' => 'פאסווארט',
 ];
 
 $messages['yo'] = [
@@ -41521,6 +42607,7 @@ Ní báyìí ná ẹ le ṣàwárí lọ́dọ̀ Google.
 	'specialpages-group-login' => 'Ìwọlé / ìforúkọsílẹ́',
 	'specialpages-group-pages' => 'Àkójọ àwọn ojúewé',
 	'specialpages-group-pagetools' => 'Àwọn irinṣẹ́ ojúewé',
+	'signup-password' => 'Ọ̀rọ̀ìpamọ́:',
 ];
 
 $messages['yue'] = [
@@ -41720,6 +42807,7 @@ $messages['yue'] = [
 	'specialpages-group-spam' => '反垃圾工具',
 	'sqlite-has-fts' => '$1 有全文搜尋支援',
 	'sqlite-no-fts' => '$1 冇全文搜尋支援',
+	'signup-password' => '密碼:',
 ];
 
 $messages['za'] = [
@@ -41749,6 +42837,7 @@ $messages['za'] = [
 	'statistics-pages' => 'Yieb',
 	'sp-contributions-submit' => 'Ra',
 	'specialpages' => 'Doenghmae daegxsei',
+	'signup-password' => '密码：',
 ];
 
 $messages['zea'] = [
@@ -41850,6 +42939,7 @@ De [$2 pagina mè de bestandsbeschrievienge] wòdt hieronder weergegeev\'n.',
 	'svg-long-desc' => 'SVG-bestand, nominaal $1 × $2 pixels, bestandshroôtte: $3',
 	'show-big-image' => 'Volledige resolutie',
 	'specialpages' => 'Speciaole bladzies',
+	'signup-password' => 'Wachtwoôrd',
 ];
 
 $messages['zh-hans'] = [
@@ -42061,6 +43151,7 @@ $messages['zh-hans'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandom页面',
+	'signup-password' => '密码：',
 ];
 
 $messages['zh-hant'] = [
@@ -42275,6 +43366,8 @@ $messages['zh-hant'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandom頁面',
+	'shared-problemreport' => '問題回報',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-hk'] = [
@@ -42284,6 +43377,7 @@ $messages['zh-hk'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-min-nan'] = [
@@ -42293,6 +43387,7 @@ $messages['zh-min-nan'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => 'Lí ê bi̍t-bé:',
 ];
 
 $messages['zh-mo'] = [
@@ -42302,6 +43397,7 @@ $messages['zh-mo'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-my'] = [
@@ -42311,6 +43407,7 @@ $messages['zh-my'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '密码：',
 ];
 
 $messages['zh-tw'] = [
@@ -42358,6 +43455,10 @@ $messages['zh-tw'] = [
 	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
 	'specialpages' => '特殊頁面',
 	'share_it' => '分享:',
+	'see_more' => '更多內容...',
+	'shared-problemreport' => '回報問題',
+	'showdiff' => '顯示差異',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-yue'] = [
@@ -42405,6 +43506,7 @@ $messages['zh-yue'] = [
 	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
 	'specialpages' => '特殊頁面',
 	'share_it' => '分享:',
+	'signup-password' => '密碼:',
 ];
 
 $messages['zu'] = [
@@ -42428,5 +43530,172 @@ $messages['zu'] = [
 	'statistics-header-users' => 'Ukwaziswa wamsebenzisi',
 	'shortpages' => 'Amakhasi amafishane',
 	'specialloguserlabel' => 'Umsebenzisi:',
+	'signup-password' => 'Izwi elingenangozi',
+];
+
+$messages['zh'] = [
+	'see_more' => '更多內容...',
+	'shared-problemreport' => '回報問題',
+	'showdiff' => '显示差異',
+	'signup-password' => '密码：',
+];
+
+$messages['zh-cn'] = [
+	'see_more' => '更多內容...',
+	'shared-problemreport' => '回报问题',
+	'showdiff' => '显示差異',
+	'signup-password' => '密码：',
+];
+
+$messages['aa'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['bto'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['bxr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['cho'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['chy'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['cr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['de-at'] = [
+	'signup-password' => 'Passwort:',
+];
+
+$messages['dk'] = [
+	'signup-password' => 'Din adgangskode',
+];
+
+$messages['gan'] = [
+	'signup-password' => '密碼：',
+];
+
+$messages['hif-deva'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ho'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['hz'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ii'] = [
+	'signup-password' => '密码：',
+];
+
+$messages['kh'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ki'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kj'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kp'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ku-arab'] = [
+	'signup-password' => 'تێپه‌ڕه‌وشه‌',
+];
+
+$messages['lld'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mh'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mu'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mus'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ng'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['nrm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['plm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['rn'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ruq-grek'] = [
+	'signup-password' => 'Κωδικός:',
+];
+
+$messages['rw'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['simple'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tp'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tt'] = [
+	'signup-password' => 'Sersüzeñ',
+];
+
+$messages['tum'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tw'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tzm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ydd'] = [
+	'signup-password' => 'פאסווארט',
+];
+
+$messages['zh-classical'] = [
+	'signup-password' => '符節',
+];
+
+$messages['zh-sg'] = [
+	'signup-password' => '密码：',
 ];
 

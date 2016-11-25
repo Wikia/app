@@ -3,11 +3,21 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.adLogicPageDimensions',
-	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adHelper, adLogicPageDimensions, adTracker, $, log, win) {
+], function (
+	adContext,
+	adHelper,
+	adLogicPageDimensions,
+	recoveryHelper,
+	slotFinder,
+	$,
+	log,
+	win
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
@@ -44,6 +54,14 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			return stopPoint - globalNavigationHeight - 2 * margin - ad.height();
 		}
 
+		function replaceAdSlot() {
+			var recoveredElement = slotFinder.getRecoveredSlot(slotName);
+
+			if (recoveredElement) {
+				$adSlot = $(recoveredElement.parentNode.parentNode);
+			}
+		}
+
 		function update() {
 			if ($win.scrollTop() <= startPosition) {
 				$adSlot.css({
@@ -78,9 +96,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
 					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
-				if (adLogicPageDimensions.shouldBeShown(slotName)) {
-					adTracker.track('floating_medrec/disabling');
-				}
 
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
@@ -95,14 +110,22 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
-				win.addEventListener('scroll', update);
-				win.addEventListener('resize', update);
-
 				enabled = true;
 
 				if (!adPushed) {
 					$placeHolder.append($adSlot);
-					win.adslots2.push(slotName);
+					win.adslots2.push({
+						slotName: slotName,
+						onSuccess: function () {
+							if (recoveryHelper.isRecoveryEnabled()) {
+								recoveryHelper.addOnBlockingCallback(replaceAdSlot);
+							}
+
+							win.addEventListener('scroll', update);
+							win.addEventListener('resize', update);
+
+						}
+					});
 					adPushed = true;
 				}
 			}

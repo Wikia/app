@@ -66,7 +66,13 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 
 	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+		background: $color-black;
 		max-width: none;
+		overflow: hidden;
+		-webkit-transition: height 0.4s ease;
+		-moz-transition: height 0.4s ease;
+		-o-transition: height 0.4s ease;
+		transition: height 0.4s ease;
 		width: 100%;
 
 		> div {
@@ -79,6 +85,11 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 				width: 100%;
 				top: 0;
 			}
+		}
+
+		video {
+			height: auto;
+			width: 100%;
 		}
 	}
 }
@@ -215,6 +226,12 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #BOTTOM_LEADERBOARD {
+	background: $color-black;
+	-webkit-transition: height 0.4s ease;
+	-moz-transition: height 0.4s ease;
+	-o-transition: height 0.4s ease;
+	transition: height 0.4s ease;
+
 	overflow: hidden;
 	margin: 0 0 23px 0;
 	text-align: center;
@@ -441,4 +458,8 @@ body > a > img[src$="noad.gif"] {
 		clear: both;
 		margin: 0;
 	}
+}
+
+#WikiaArticleMsg {
+  display: none;
 }

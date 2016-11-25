@@ -4,11 +4,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adaptersTracker, appnexus, index, helper, factory, doc, win) {
+], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -17,36 +18,53 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		],
 		adUnits = [],
 		biddersPerformanceMap = {},
-		autoPriceGranularity = 'auto';
+		autoPriceGranularity = 'auto',
+		prebidLoaded = false;
 
 	function call(skin, onResponse) {
-		var prebid = doc.createElement('script'),
+		var prebid, node;
+
+		if (!prebidLoaded) {
+			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
-
-		adUnits = helper.setupAdUnits(adapters, skin);
-
-		if (adUnits.length > 0) {
-			win.pbjs = win.pbjs || {};
-			win.pbjs.que = win.pbjs.que || [];
+			if (wikiaAdapter.isEnabled()) {
+				adapters.push(wikiaAdapter);
+				win.pbjs.que.push(function () {
+					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
+				});
+			}
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
 			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
-
 			node.parentNode.insertBefore(prebid, node);
+		}
 
-			win.pbjs.que.push(function () {
+		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
+		adUnits = helper.setupAdUnits(adapters, skin);
 
-				win.pbjs.setPriceGranularity(autoPriceGranularity);
-				win.pbjs.addAdUnits(adUnits);
+		if (adUnits.length > 0) {
+			if (!prebidLoaded) {
+				win.pbjs.que.push(function () {
+					win.pbjs.setPriceGranularity(autoPriceGranularity);
+					win.pbjs.addAdUnits(adUnits);
+				});
+			}
+
+			win.pbjs.que.push(function() {
+
+				//@TODO remove two lines below when https://github.com/prebid/Prebid.js/issues/772 is fixed and prebid is updated
+				win.pbjs._bidsReceived = [];
+				win.pbjs._winningBids = [];
 
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});
 			});
 		}
+
+		prebidLoaded = true;
 	}
 
 	function calculatePrices() {
@@ -57,7 +75,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap)
+			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
 		});
 	}
 

@@ -24,7 +24,7 @@
 		</div>
 		<?php if ( !empty( $viewMoreLink ) ) : ?>
 			<div class="side-articles-footer">
-				<a href="<?= Sanitizer::encodeAttribute( $viewMoreLink ); ?>"><?= wfMessage( 'wikiasearch2-fandom-stories-view-more' )->escaped(); ?>  <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small fandom-stories__arrow' ); ?></a>
+				<a href="<?= Sanitizer::encodeAttribute( $viewMoreLink ); ?>"><?= wfMessage( 'wikiasearch2-fandom-stories-view-more' )->escaped(); ?>  <?= DesignSystemHelper::renderSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small fandom-stories__arrow' ); ?></a>
 			</div>
 		<?php endif; ?>
 	</div>

@@ -91,6 +91,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			name: slotName,
 			container: mocks.slotElement,
 			success: noop,
+			collapse: noop,
 			pre: noop
 		};
 	}

@@ -18,9 +18,9 @@ $messages['en'] = [
 	'pool-errorunknown' => 'Unknown error',
 	'policy-url' => 'Project:Policy',
 	'portal' => 'Community portal',
-	'portal-url' => 'Project:Community portal',
-	'privacy' => 'Privacy policy',
-	'privacypage' => 'Project:Privacy policy',
+	'portal-url' => 'Project:Community Portal',
+	'privacy' => 'Terms of use (Updated)',
+	'privacypage' => 'w:Wikia:Privacy_Policy',
 	'pagetitle' => '$1 - {{SITENAME}}',
 	'pagetitle-view-mainpage' => '{{SITENAME}}',
 	'page-rss-feed' => '"$1" RSS feed',
@@ -52,11 +52,9 @@ Please log in again after you receive it.',
 	'php-mail-error' => '$1',
 	'php-mail-error-unknown' => 'Unknown error in PHP\'s mail() function.',
 	'preview' => 'Preview',
-	'previewnote' => '\'\'\'Remember that this is only a preview.\'\'\'
-Your changes have not yet been saved!',
+	'previewnote' => '<strong>Preview mode: no changes saved yet! Scroll down to continue editing.</strong>',
 	'previewconflict' => 'This preview reflects the text in the upper text editing area as it will appear if you choose to save.',
-	'protectedpagewarning' => '\'\'\'Warning: This page has been protected so that only users with administrator privileges can edit it.\'\'\'
-The latest log entry is provided below for reference:',
+	'protectedpagewarning' => '<strong>NOTE: This page has been protected so that only users with administrator privileges can edit it.</strong>',
 	'permissionserrors' => 'Permissions errors',
 	'permissionserrorstext' => 'You do not have permission to do that, for the following {{PLURAL:$1|reason|reasons}}:',
 	'permissionserrorstext-withaction' => 'You do not have permission to $2, for the following {{PLURAL:$1|reason|reasons}}:',
@@ -94,7 +92,7 @@ These arguments have been omitted.',
 	'prefs-labs' => 'Labs features',
 	'prefs-personal' => 'My Info',
 	'prefs-rc' => 'Recent changes',
-	'prefs-watchlist' => 'Watchlist',
+	'prefs-watchlist' => 'Followed pages',
 	'prefs-watchlist-days' => 'Days to show in watchlist:',
 	'prefs-watchlist-days-max' => 'Maximum $1 {{PLURAL:$1|day|days}}',
 	'prefs-watchlist-edits' => 'Maximum number of changes to show in expanded watchlist:',
@@ -104,7 +102,7 @@ These arguments have been omitted.',
 	'prefs-resetpass' => 'Change password',
 	'prefs-changeemail' => 'Change e-mail address',
 	'prefs-setemail' => 'Set an e-mail address',
-	'prefs-email' => 'E-mail options',
+	'prefs-email' => 'Email options',
 	'prefs-rendering' => 'Appearance',
 	'prefs-editing' => 'Editing',
 	'prefs-edit-boxsize' => 'Size of the edit window.',
@@ -120,18 +118,18 @@ Here\'s a randomly-generated value you can use: $1',
 	'prefs-common-css-js' => 'Shared CSS/JavaScript for all skins:',
 	'prefs-reset-intro' => 'You can use this page to reset your preferences to the site defaults.
 This cannot be undone.',
-	'prefs-emailconfirm-label' => 'E-mail confirmation:',
+	'prefs-emailconfirm-label' => 'Email confirmation:',
 	'prefs-textboxsize' => 'Size of editing window',
 	'prefs-memberingroups' => 'Member of {{PLURAL:$1|group|groups}}:',
 	'prefs-memberingroups-type' => '$1',
 	'prefs-registration' => 'Registration time:',
 	'prefs-registration-date-time' => '$1',
 	'prefs-help-variant' => 'Your preferred variant or orthography to display the content pages of this wiki in.',
-	'prefs-help-signature' => 'Comments on talk pages should be signed with "<nowiki>~~~~</nowiki>" which will be converted into your signature and a timestamp.',
+	'prefs-help-signature' => 'Comments on talk pages should be signed with "~~<!---->~~" which will be converted into your signature and a timestamp.',
 	'prefs-help-gender' => 'Optional: Used for gender-correct addressing by the software.
 This information will be public.',
-	'prefs-help-realname' => 'Optional',
-	'prefs-help-email' => 'We loathe spam even more than you do. We will NOT sell your email address.',
+	'prefs-help-realname' => 'Name will be shown publicly if entered.',
+	'prefs-help-email' => 'We will use this email address to alert you of new messages or edits to pages you are following. No spam, we promise!',
 	'prefs-help-email-others' => 'You can also choose to let others contact you by e-mail through a link on your user or talk page.
 Your e-mail address is not revealed when other users contact you.',
 	'prefs-help-email-required' => 'E-mail address is required.',
@@ -171,8 +169,9 @@ Please check the file_uploads setting.',
 	'pubmedurl' => '//www.ncbi.nlm.nih.gov/pubmed/$1?dopt=Abstract',
 	'prevpage' => 'Previous page ($1)',
 	'protectlogpage' => 'Protection log',
-	'protectlogtext' => 'Below is a list of changes to page protections.
-See the [[Special:ProtectedPages|protected pages list]] for the list of currently operational page protections.',
+	'protectlogtext' => 'Below is a list of page locks and unlocks.
+See the [[Special:ProtectedPages|protected pages list]] for the list of currently operational page protections.
+See the [[Special:ProtectedTitles|protected titles list]] for the list of currently operational title protections.',
 	'protectedarticle' => 'protected "[[$1]]"',
 	'protect-title' => 'Change protection level for "$1"',
 	'protect-title-notallowed' => 'View protection level of "$1"',
@@ -185,7 +184,7 @@ See the [[Special:ProtectedPages|protected pages list]] for the list of currentl
 	'protect_expiry_invalid' => 'Expiry time is invalid.',
 	'protect_expiry_old' => 'Expiry time is in the past.',
 	'protect-unchain-permissions' => 'Unlock further protect options',
-	'protect-text' => 'Here you may view and change the protection level for the page \'\'\'$1\'\'\'.',
+	'protect-text' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_protect-text"></div>',
 	'protect-locked-blocked' => 'You cannot change protection levels while blocked.
 Here are the current settings for the page \'\'\'$1\'\'\':',
 	'protect-locked-dblock' => 'Protection levels cannot be changed due to an active database lock.
@@ -240,7 +239,7 @@ The latest log entry is provided below for reference:',
 	'patrol-log-page' => 'Patrol log',
 	'patrol-log-header' => 'This is a log of patrolled revisions.',
 	'previousdiff' => '← Older edit',
-	'pipe-separator' => ' | ',
+	'pipe-separator' => ' |&#32;',
 	'percent' => '$1%',
 	'parentheses' => '($1)',
 	'patrol-log-line' => 'marked $1 of $2 patrolled $3',
@@ -248,7 +247,7 @@ The latest log entry is provided below for reference:',
 	'patrol-log-diff' => 'revision $1',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-help-blurmesg' => 'Blurry word',
-	'prefs-help-terms' => 'By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia, Inc\'s Terms of Use}}',
+	'prefs-help-terms' => 'By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc\'s Terms of Use]]',
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
 	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
@@ -4354,7 +4353,7 @@ $messages['bg'] = [
 	'page-rss-feed' => 'Емисия на RSS за „$1“',
 	'page-atom-feed' => 'Емисия на Atom за „$1“',
 	'perfcached' => 'Следните данни са извлечени от склада и затова може да не отговарят на текущото състояние. В складираното копие {{PLURAL:$1|е допустим най-много един резултат|са допустими най-много $1 резултата}}.',
-	'perfcachedts' => 'Данните са складирани и обновени за последно на $1. Най-много {{PLURAL:$4|един резултат е допустим и наличен|$4 резултата са допустими и налични}} в складираното копие.',
+	'perfcachedts' => 'Тази информация е извадена от кеша. За последен път е била актуализирана на $1.',
 	'protectedpagetext' => 'Тази страница е заключена за редактиране.',
 	'protectedinterface' => 'Тази страница съдържа текст, нужен за работата на системата. Тя е защитена против редактиране, за да се предотвратят възможни злоупотреби.',
 	'passwordtooshort' => 'Необходимо е паролата да съдържа поне {{PLURAL:$1|1 знак|$1 знака}}.',
@@ -4496,10 +4495,10 @@ $messages['bg'] = [
 	'protect-locked-dblock' => 'Нивата на защита на страниците не могат да бъдат променяни, защото базата от данни е заключена. Ето текущите настройки за страницата „\'\'\'$1\'\'\'“:',
 	'protect-locked-access' => 'Нямате правото да променяте нивата на защита на страниците. Ето текущите настройки за страницата „\'\'\'$1\'\'\'“:',
 	'protect-cascadeon' => 'Тази страница е защитена против редактиране, защото е включена в {{PLURAL:$1|следната страница, която от своя страна има|следните страници, които от своя страна имат}} каскадна защита. Можете да промените нивото на защита на страницата, но това няма да повлияе върху каскадната защита.',
-	'protect-default' => 'Позволяване за всички потребители',
+	'protect-default' => '(по подразбиране)',
 	'protect-fallback' => 'Необходими са права на „$1“',
-	'protect-level-autoconfirmed' => 'Блокиране на нови и нерегистрирани потребители',
-	'protect-level-sysop' => 'Само за администратори',
+	'protect-level-autoconfirmed' => 'Само регистрирани потребители',
+	'protect-level-sysop' => 'Само администратори',
 	'protect-summary-cascade' => 'каскадно',
 	'protect-expiring' => 'изтича на $1 (UTC)',
 	'protect-expiring-local' => 'срок на изтичане $1',
@@ -6148,6 +6147,7 @@ A continuació es mostra la darrera entrada del registre com a referència:',
 	'patrol-log-page' => 'Registre de supervisió',
 	'patrol-log-header' => 'Això és un registre de les revisions patrullades.',
 	'previousdiff' => '← Vés a l\'edició anterior',
+	'profile' => 'Perfil',
 ];
 
 $messages['cbk-zam'] = [
@@ -7778,6 +7778,7 @@ Dyma\'r cofnod lòg diweddaraf, er gwybodaeth:',
 	'patrol-log-page' => 'Lòg patrolio',
 	'patrol-log-header' => 'Mae\'r lòg hwn yn dangos y golygiadau sydd wedi derbyn ymweliad patrôl.',
 	'previousdiff' => '← Y fersiwn gynt',
+	'profile' => 'Proffil',
 ];
 
 $messages['da'] = [
@@ -8007,14 +8008,14 @@ $messages['de'] = [
 	'pool-errorunknown' => 'Unbekannter Fehler',
 	'policy-url' => 'Project:Richtlinien',
 	'portal' => 'Gemeinschafts-Portal',
-	'portal-url' => 'Project:Gemeinschafts-Portal',
+	'portal-url' => 'Project:Portal',
 	'privacy' => 'Datenschutz',
-	'privacypage' => 'Project:Datenschutz',
+	'privacypage' => 'w:Wikia:Privacy_Policy',
 	'pagetitle' => '$1 – {{SITENAME}}',
 	'page-rss-feed' => 'RSS-Feed für „$1“',
 	'page-atom-feed' => 'Atom-Feed für „$1“',
 	'perfcached' => 'Die folgenden Daten stammen aus dem Cache und sind möglicherweise nicht aktuell. Maximal {{PLURAL:$1|ein Ergebnis ist|$1 Ergebnisse sind}} im Cache verfügbar.',
-	'perfcachedts' => 'Diese Daten stammen aus dem Cache. Der Zeitpunkt der letzten Aktualisierung: $1. Maximal {{PLURAL:$4|ein Ergebnis ist|$4 Ergebnisse sind}} im Cache verfügbar.',
+	'perfcachedts' => 'Diese Daten stammen aus dem Cache, letzte Aktualisierung: $1',
 	'protectedpagetext' => 'Diese Seite wurde geschützt, um Bearbeitungen zu verhindern.',
 	'protectedinterface' => 'Diese Seite enthält Text für die Benutzeroberfläche der Software und ist geschützt, um Missbrauch vorzubeugen.',
 	'passwordtooshort' => 'Passwörter müssen mindestens {{PLURAL:$1|1 Zeichen|$1 Zeichen}} lang sein.',
@@ -8075,9 +8076,9 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'prefs-beta' => 'Beta-Funktionen',
 	'prefs-datetime' => 'Datum und Zeit',
 	'prefs-labs' => 'Alpha-Funktionen (experimentell)',
-	'prefs-personal' => 'Meine Informationen',
+	'prefs-personal' => 'Meine Daten',
 	'prefs-rc' => 'Letzte Änderungen',
-	'prefs-watchlist' => 'Beobachtungsliste',
+	'prefs-watchlist' => 'Verfolgte Seiten',
 	'prefs-watchlist-days' => 'Anzahl der Tage, die die Beobachtungsliste standardmäßig umfassen soll:',
 	'prefs-watchlist-days-max' => 'Maximal {{PLURAL:$1|ein Tag|$1 Tage}}',
 	'prefs-watchlist-edits' => 'Maximale Zahl der Einträge:',
@@ -8113,7 +8114,7 @@ Dies kann nicht mehr rückgängig gemacht werden.',
 	'prefs-help-signature' => 'Beiträge auf Diskussionsseiten sollten mit „<nowiki>~~~~</nowiki>“ signiert werden, was dann in die Signatur mit Zeitstempel umgewandelt wird.',
 	'prefs-help-gender' => 'Optional: Wird unter anderem von der Software für die geschlechtsspezifische Anrede genutzt. Diese Information ist <u>öffentlich</u>.',
 	'prefs-help-realname' => 'Optional. Damit kann dein bürgerlicher Name deinen Beiträgen zugeordnet werden.',
-	'prefs-help-email' => 'Die Angabe einer E-Mail-Adresse ist optional, ermöglicht aber die Zusendung eines Ersatzpasswortes, sofern du dein Passwort vergessen hast.',
+	'prefs-help-email' => 'Die Angabe deiner E-Mail dient dazu, auf dem Laufenden über deine verfolgten Seiten zu bleiben oder ein Ersatzpasswort anzufordern, falls du dein Passwort vergisst.',
 	'prefs-help-email-others' => 'Mit anderen Benutzern kannst du auch über die Benutzerdiskussionsseiten Kontakt aufnehmen, ohne dass du deine Identität offenlegen musst.',
 	'prefs-help-email-required' => 'Es wird eine gültige E-Mail-Adresse benötigt.',
 	'prefs-info' => 'Basisinformationen',
@@ -8211,9 +8212,21 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'patrol-log-page' => 'Kontroll-Logbuch',
 	'patrol-log-header' => 'Dies ist das Kontroll-Logbuch.',
 	'previousdiff' => '← Zum vorherigen Versionsunterschied',
-	'percent' => '$1&nbsp;%',
+	'percent' => '$1%',
 	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
-	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den {{#NewWindowLink: homepage:de:Nutzungsbedingungen|Nutzungsbedingungen}} von Fandom zu',
+	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den [[homepage:de:Nutzungsbedingungen|Nutzungsbedingungen]] von Fandom zu',
+	'patrol-log-auto' => '(automatisch)',
+	'patrol-log-diff' => 'Version $1',
+	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
+	'popular-articles' => 'Beliebte Artikel',
+	'popular-wikis' => 'Beliebte Wikis',
+	'preferences_s' => 'Einstellungen',
+	'prefs-help-birthday' => 'Warum muss ich das angeben?',
+	'prefs-help-birthmesg' => 'Warum muss ich mein Geburtsdatum angeben?',
+	'prefs-help-blurmesg' => 'Captcha',
+	'prefs-help-mailmesg' => 'E-Mail',
+	'prefs-layout' => 'Aussehen',
+	'profile' => 'Profil',
 ];
 
 $messages['de-ch'] = [
@@ -9068,7 +9081,7 @@ $messages['el'] = [
 	'prefs-watchlist-token' => 'Σημείο λίστας παρακολούθησης:',
 	'prefs-misc' => 'Διάφορες ρυθμίσεις',
 	'prefs-resetpass' => 'Αλλαγή κωδικού',
-	'prefs-changeemail' => 'Αλλαγή ηλεκτρονικού μηνύματος',
+	'prefs-changeemail' => 'Αλλαγή ηλεκτρονικής διεύθυνσης',
 	'prefs-setemail' => 'Ορίστε μια διεύθυνση ηλεκτρονικού ταχυδρομείου',
 	'prefs-email' => 'Επιλογές e-mail',
 	'prefs-rendering' => 'Εμφάνιση',
@@ -9081,9 +9094,9 @@ $messages['el'] = [
 	'prefs-searchoptions' => 'Επιλογές αναζήτησης',
 	'prefs-namespaces' => 'Περιοχές ονομάτων',
 	'prefs-files' => 'Αρχεία',
-	'prefs-custom-css' => 'Προκαθορισμένη CSS',
-	'prefs-custom-js' => 'Προκαθορισμένη JS',
-	'prefs-common-css-js' => 'Κοινά CSS/JS για όλα τα skins:',
+	'prefs-custom-css' => 'Προσαρμοσμένα CSS',
+	'prefs-custom-js' => 'Προσαρμοσμένα JS',
+	'prefs-common-css-js' => 'Κοινά CSS/JS για όλες τις επιφάνειες:',
 	'prefs-reset-intro' => 'Μπορείτε να χρησιμοποιήσετε αυτήν την σελίδα για να επαναρρυθμίσετε τις προτιμήσεις σας στις προεπιλογές του ιστότοπου. Αυτό δεν μπορεί να αναστρεφθεί.',
 	'prefs-emailconfirm-label' => 'Επιβεβαίωση e-mail:',
 	'prefs-textboxsize' => 'Μέγεθος πλαίσιου επεξεργασίας',
@@ -9124,8 +9137,7 @@ $messages['el'] = [
 	'pager-older-n' => '{{PLURAL:$1|παλαιότερο 1|παλαιότερα $1}}',
 	'prevpage' => 'Προηγούμενη σελίδα ($1)',
 	'protectlogpage' => 'Καταγραφές προστασίας (κλειδώματος)',
-	'protectlogtext' => 'Παρακάτω είναι μια λίστα των αλλαγών που έγιναν στις ρυθμίσεις προστασίας της σελίδας
-Ρίξτε μια ματιά στο [[Special:ProtectedPages|protected pages list]] για μια λίστα των παρόντων ρυθμίσεων προστασίας της λειτουργικής σελίδας.',
+	'protectlogtext' => 'Παρακάτω είναι μια λίστα των αλλαγών που έγιναν στις ρυθμίσεις προστασίας της σελίδας. Ρίξτε μια ματιά στη [[Special:ProtectedPages|λίστα προστατευόμενων σελίδων]] για τη λίστα προστατευτικών παραμέτρων για σελίδες σε χρήση.',
 	'protectedarticle' => 'κλείδωσε το $1',
 	'protect-title' => 'Κλειδώνεται η "$1"',
 	'prot_1movedto2' => 'Η [[$1]] μετακινήθηκε στη θέση [[$2]]',
@@ -9188,6 +9200,8 @@ $messages['el'] = [
 	'patrol-log-page' => 'Αρχείο καταγραφής περιπολιών',
 	'patrol-log-header' => 'Αυτός είναι ένας κατάλογος περιπολούμενων αναθεωρήσεων.',
 	'previousdiff' => '← Προηγούμενη επεξεργασία',
+	'preferences_s' => 'Προτιμήσεις',
+	'prefixindex-namespace' => 'Όλες οι σελίδες με πρόθεμα ($1 χώρος ονομάτων)',
 ];
 
 $messages['eml'] = [
@@ -9431,7 +9445,7 @@ $messages['es'] = [
 	'policy-url' => 'Project:Políticas',
 	'portal' => 'Portal de la comunidad',
 	'portal-url' => 'Project:Portal de la comunidad',
-	'privacy' => 'Política de protección de datos',
+	'privacy' => 'Política de Privacidad',
 	'privacypage' => 'Project:Política de protección de datos',
 	'page-rss-feed' => 'Canal RSS «$1»',
 	'page-atom-feed' => 'Canal Atom «$1»',
@@ -9456,12 +9470,12 @@ ___________________________________________________________
 
     * Para cambiar tus preferencias o contraseña, ingresa a: http://www.es.fandom.com/wiki/Especial:Preferencias.
     * Esta contraseña temporal fue pedida por la siguiente dirección de correo electrónico: $1.',
-	'passwordsent' => 'Se ha enviado una nueva contraseña al correo electrónico de «$1».
+	'passwordsent' => 'Se ha enviado una nueva contraseña al correo electrónico de registrado por "$1".
 Por favor, identifícate de nuevo tras recibirla.',
 	'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP',
 	'preview' => 'Previsualizar',
-	'previewnote' => '\'\'\'¡Recuerda que esto es solo una previsualización.\'\'\'
-¡Tus cambios aún no se ha guardado!',
+	'previewnote' => '\'\'\'Recuerda que esto es solo una previsualización.\'\'\'
+¡Tus cambios aún no se han guardado!',
 	'previewconflict' => 'Esta previsualización refleja el texto en el área de edición superior como aparecerá una vez guardados los cambios.',
 	'protectedpagewarning' => '\'\'\'Aviso: Esta página ha sido protegida de manera que solo usuarios con permisos de administrador puedan editarla.\'\'\'
 A continuación se muestra la última entrada de registro para referencia:',
@@ -9499,9 +9513,9 @@ Ese o esos parámetros han sido omitidos.',
 	'prefs-beta' => 'Características de prueba',
 	'prefs-datetime' => 'Fecha y hora',
 	'prefs-labs' => 'Características de los laboratorios',
-	'prefs-personal' => 'Información básica',
+	'prefs-personal' => 'Personal',
 	'prefs-rc' => 'Cambios recientes',
-	'prefs-watchlist' => 'Seguimiento',
+	'prefs-watchlist' => 'Páginas seguidas',
 	'prefs-watchlist-days' => 'Número de días a mostrar en la lista de seguimiento:',
 	'prefs-watchlist-days-max' => 'Máximo $1 {{PLURAL:$1|día|días}}',
 	'prefs-watchlist-edits' => 'Número de ediciones a mostrar en la lista expandida:',
@@ -9522,7 +9536,7 @@ Cualquiera que conozca la clave en este campo será capaz de leer tu lista de se
 	'prefs-namespaces' => 'Espacios de nombres',
 	'prefs-files' => 'Archivos',
 	'prefs-custom-css' => 'CSS personalizado',
-	'prefs-custom-js' => 'JavaScript personalizado',
+	'prefs-custom-js' => 'JS personalizado',
 	'prefs-common-css-js' => 'CSS/JS compartido para todas las skins:',
 	'prefs-reset-intro' => 'Puedes usar esta página para restaurar tus preferencias a las predeterminadas del sitio.
 Esto no se puede deshacer.',
@@ -9531,10 +9545,10 @@ Esto no se puede deshacer.',
 	'prefs-memberingroups' => 'Miembro {{PLURAL:$1|del grupo|de los grupos}}:',
 	'prefs-registration' => 'Hora de registro:',
 	'prefs-help-variant' => 'Tu variante u ortografía preferida para mostrar las páginas de contenido de este wiki.',
-	'prefs-help-signature' => 'Los comentarios en páginas de discusión deberían firmarse con «<nowiki>~~~~</nowiki>», que se convertirá en tu firma con fecha y hora.',
+	'prefs-help-signature' => 'Los comentarios en páginas de discusión deberían estar firmados con "~~{{{~|~}}}~", que se convertirá en tu firma y fecha.',
 	'prefs-help-gender' => 'Opcional: empleado para que sea usado correctamente el género por parte del software. Esta información será pública.',
 	'prefs-help-realname' => 'El nombre real es opcional. Si decides proporcionarlo, se usará para dar atribución a tu trabajo.',
-	'prefs-help-email' => 'La dirección de correo electrónico es opcional, pero es necesaria para el restablecimiento de tu contraseña, en caso de que la olvides.',
+	'prefs-help-email' => 'Usaremos esta dirección de email para alertarte de nuevos mensajes o ediciones a páginas que estés siguiendo. No haremos spam ¡Lo prometemos! Odiamos el spam tanto como tú.',
 	'prefs-help-email-others' => 'También puedes permitir que otros usuarios te contacten por correo a través de un enlace en tus páginas de usuario y de discusión.
 Tu dirección de correo no se revela cuando otros usuarios te contactan.',
 	'prefs-help-email-required' => 'Es necesario proporcionar una dirección de correo electrónico.',
@@ -9563,7 +9577,7 @@ Tu dirección de correo no se revela cuando otros usuarios te contactan.',
 	'protectedpagesempty' => 'Actualmente no hay ninguna página protegida con esos parámetros.',
 	'protectedtitles' => 'Títulos protegidos',
 	'protectedtitlestext' => 'Los siguientes títulos están protegidos, por lo que no se pueden crear',
-	'protectedtitlesempty' => 'Actualmente no existen entradas protegidas con esos parámetros.',
+	'protectedtitlesempty' => 'No hay títulos actualmente protegidos con estos parámetros.',
 	'pager-newer-n' => '{{PLURAL:$1|1 siguiente|$1 siguientes}}',
 	'pager-older-n' => '{{PLURAL:$1|1 anterior|$1 anteriores}}',
 	'prevpage' => 'Página anterior ($1)',
@@ -9573,7 +9587,7 @@ Véase [[Special:ProtectedPages|la lista de páginas protegidas]] para ver las p
 	'protectedarticle' => 'protegió «[[$1]]»',
 	'protect-title' => 'Cambiando el nivel de protección de «$1»',
 	'protect-title-notallowed' => 'Ver el nivel de protección de «$1»',
-	'prot_1movedto2' => 'heredando la protección al trasladar [[$1]] a [[$2]]',
+	'prot_1movedto2' => 'heredando la protección al renombrar [[$1]] a [[$2]]',
 	'protect-badnamespace-title' => 'Espacio de nombres no protegible',
 	'protect-badnamespace-text' => 'Las páginas de este espacio de nombres no pueden ser protegidas',
 	'protect-legend' => 'Confirmar protección',
@@ -9617,7 +9631,7 @@ A continuación se muestran las opciones actuales de la página \'\'\'$1\'\'\':'
 	'proxyblockreason' => 'Su dirección IP ha sido bloqueada porque es un proxy abierto. Por favor, contacte con su proveedor de servicios de Internet o con su servicio de asistencia técnica e infórmeles de este grave problema de seguridad.',
 	'proxyblocksuccess' => 'Hecho.',
 	'pagemovedsub' => 'Renombrado realizado con éxito',
-	'protectedpagemovewarning' => '\'\'\'Advertencia:\'\'\' Esta página ha sido bloqueada de tal manera que solamente usuarios con privilegios de administrador puedan trasladarla.
+	'protectedpagemovewarning' => '\'\'\'Advertencia:\'\'\' Esta página ha sido bloqueada de tal manera que solamente usuarios con privilegios de administrador puedan renombrarla.
 A continuación se muestra la última entrada de registro para referencia:',
 	'print.css' => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 	'pageinfo-title' => 'Información para «$1»',
@@ -9635,7 +9649,16 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
 	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
-	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|Términos de uso de Fandom}}',
+	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los [[w:c:es:Términos de uso|términos de uso de Fandom]]',
+	'popular-articles' => 'Artículos Populares',
+	'popular-wikis' => 'Wikis Populares',
+	'preferences_s' => 'Preferencias',
+	'prefs-help-birthday' => '¿Por qué necesito proporcionarlo?',
+	'prefs-help-birthmesg' => '¿Por qué necesito decir mi fecha de nacimiento?',
+	'prefs-help-blurmesg' => 'Palabra borrosa',
+	'prefs-help-mailmesg' => 'Correo electrónico',
+	'prefs-layout' => 'Diseño de Wikia',
+	'profile' => 'Perfil',
 ];
 
 $messages['et'] = [
@@ -10291,7 +10314,7 @@ $messages['fa'] = [
 این اطلاعات عمومی خواهد بود.',
 	'prefs-help-realname' => 'نام واقعی اختیاری است
 اگر آن را وارد کنید هنگام ارجاع به آثارتان و انتساب آن‌ها به شما از نام واقعی‌تان استفاده خواهد شد.',
-	'prefs-help-email' => 'نشانی پست الکترونیکی اختیاری‌است، اما فرستادن گذرواژه‌ای جدید را اگر گذرواژهٔ خود را فراموش کنید ممکن می‌کند.',
+	'prefs-help-email' => 'ما هم مانند شما از هرزنامه‌ها بیزاریم. ما آدرس پست‌الکترونیکی شما را به فروش نخواهیم رساند.',
 	'prefs-help-email-others' => 'شما همچنین می‌توانید انتخاب کنید که کاربران بتوانند از طریق پیوندی در صفحهٔ کاربری یا صفحهٔ بحث کاربری‌تان به شما پست الکترونیکی بفرستند.
 نشانی پست الکترونیکی شما زمانی که دیگران با شما تماس بگیرند فاش نمی‌شود.',
 	'prefs-help-email-required' => 'نشانی پست الکترونیکی الزامی‌است.',
@@ -10340,7 +10363,7 @@ $messages['fa'] = [
 	'protect_expiry_invalid' => 'زمان سرآمدن نامعتبر است.',
 	'protect_expiry_old' => 'زمان سرآمدن در گذشته‌است.',
 	'protect-unchain-permissions' => 'باز کردن سایر گزینه‌های محافظت',
-	'protect-text' => 'شما می‌توانید سطح محافظت صفحهٔ \'\'\'$1\'\'\' را ببینید و از اینجا آن را تغییر دهید.',
+	'protect-text' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_protect-text"></div>',
 	'protect-locked-blocked' => 'شما در مدتی که دسترسی‌تان قطع است نمی‌توانید سطح محافظت صفحه‌ها را تغییر دهید.
 تنظیمات فعلی صفحهٔ \'\'\'$1\'\'\' از این قرار است:',
 	'protect-locked-dblock' => 'به دلیل قفل شدن پایگاه داده، امکان تغییر سطح محافظت صفحه وجود ندارد.
@@ -10394,6 +10417,11 @@ $messages['fa'] = [
 	'patrol-log-page' => 'سیاههٔ گشت',
 	'patrol-log-header' => 'این سیاهه‌ای از ویرایش‌های گشت‌خورده است.',
 	'previousdiff' => '→ تفاوت قدیمی‌تر',
+	'pagecategorieslink' => 'ویژه:رده‌ها',
+	'popular-articles' => 'مقالات محبوب',
+	'popular-wikis' => 'ویکی‌های محبوب',
+	'prefs-help-blurmesg' => 'کلمه تار',
+	'prefs-help-mailmesg' => 'پست الکترونیکی',
 ];
 
 $messages['ff'] = [
@@ -10508,7 +10536,7 @@ Tässä satunnaisesti tuotettu arvo, jota voit käyttää: $1',
 	'prefs-help-signature' => 'Kommentit keskustelusivuilla allekirjoitetaan merkinnällä <nowiki>~~~~</nowiki>, joka muuntuu allekirjoitukseksi ja aikaleimaksi.',
 	'prefs-help-gender' => 'Vapaaehtoinen. Tietoa käytetään ohjelmistossa kielellisesti oikeaan ilmaisuun. Tämä tieto on julkinen.',
 	'prefs-help-realname' => 'Vapaaehtoinen. Nimesi näytetään käyttäjätunnuksesi sijasta sivun tekijäluettelossa.',
-	'prefs-help-email' => 'Vapaaehtoinen, mutta tarvitaan uuden salasanan pyytämiseen, jos unohdat salasanasi.',
+	'prefs-help-email' => 'Käytämme tätä sähköpostiosoitetta tiedottamaan sinua uusista viesteistä sekä muutoksista sivuihin, joita tarkkailet. Ei spämmiä, sen lupaamme!',
 	'prefs-help-email-others' => 'Voit myös antaa muiden käyttäjien ottaa yhteyttä sinuun sähköpostilla. Osoitteesi ei paljastu toisen käyttäjän ottaessa sinuun yhteyttä.',
 	'prefs-help-email-required' => 'Sähköpostiosoite on pakollinen.',
 	'prefs-info' => 'Perustiedot',
@@ -10605,6 +10633,14 @@ Alla on viimeisin lokitapahtuma:',
 	'patrol-log-header' => 'Tämä on loki tarkastetuista muutoksista.',
 	'previousdiff' => '← Vanhempi muutos',
 	'percent' => '$1&nbsp;%',
+	'popular-articles' => 'Suositut artikkelit',
+	'popular-wikis' => 'Suositut wikit',
+	'preferences_s' => 'Asetukset',
+	'prefs-help-birthday' => 'Miksi minun pitää vastata tähän?',
+	'prefs-help-birthmesg' => 'Miksi minun pitää ilmoittaa syntymäpäiväni?',
+	'prefs-help-blurmesg' => 'Epäselvä sana',
+	'prefs-help-mailmesg' => 'Sähköposti',
+	'profile' => 'Profiili',
 ];
 
 $messages['fiu-vro'] = [
@@ -10991,7 +11027,7 @@ $messages['fr'] = [
 	'page-rss-feed' => 'Flux RSS de « $1 »',
 	'page-atom-feed' => 'Flux Atom de « $1 »',
 	'perfcached' => 'Les données suivantes sont en cache et peuvent ne pas être à jour. Un maximum de {{PLURAL:$1|un résultat|$1 résultats}} est disponible dans le cache.',
-	'perfcachedts' => 'Les données suivantes sont en cache et ont été mises à jour pour la dernière fois à $1. Un maximum de {{PLURAL:$4|un résultat|$4 résultats}} est disponible dans le cache.',
+	'perfcachedts' => 'Les données suivantes sont en cache et ont été mises à jour pour la dernière fois le $1. Un maximum de {{PLURAL:$4|un résultat est disponible|$4 résultats sont disponibles}} dans le cache.',
 	'protectedpagetext' => 'Cette page a été protégée pour empêcher sa modification.',
 	'protectedinterface' => 'Cette page fournit du texte d’interface pour le logiciel et est protégée pour éviter les abus.',
 	'passwordtooshort' => 'Votre mot de passe doit contenir au moins $1 caractère{{PLURAL:$1||s}}.',
@@ -11011,9 +11047,9 @@ ___________________________________________________________
 
     * Pour modifier vos préférences ou changer de mot de passe, accédez à la page suivante : http://www.wikia.com/wiki/Special:Preferences.
     * Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.',
-	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse de courriel de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
+	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse e-mail de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
 	'php-mail-error-unknown' => 'Erreur inconnue dans la fonction mail() de PHP.',
-	'preview' => 'Prévisualisation',
+	'preview' => 'Aperçu',
 	'previewnote' => '\'\'\'Attention, ce texte n’est qu’une prévisualisation et n’a pas encore été publié !\'\'\'',
 	'previewconflict' => 'Cette prévisualisation montre le texte de la boîte supérieure de modification tel qu’il apparaîtra si vous choisissez de le publier.',
 	'protectedpagewarning' => '\'\'\'AVERTISSEMENT : cette page est protégée. Seuls les utilisateurs ayant le statut d’administrateur peuvent la modifier.\'\'\'<br />
@@ -11049,7 +11085,7 @@ La dernière entrée du journal est affichée ci-dessous pour référence :',
 	'prefs-skin' => 'Habillage',
 	'prefs-beta' => 'Fonctionnalités bêta',
 	'prefs-datetime' => 'Date et heure',
-	'prefs-labs' => 'Fonctionnalités « labs »',
+	'prefs-labs' => 'Fonctionnalités dans les Incubateurs',
 	'prefs-personal' => 'Informations personnelles',
 	'prefs-rc' => 'Modifications récentes',
 	'prefs-watchlist' => 'Liste de suivi',
@@ -11060,9 +11096,9 @@ La dernière entrée du journal est affichée ci-dessous pour référence :',
 	'prefs-watchlist-token' => 'Jeton pour la liste de suivi :',
 	'prefs-misc' => 'Préférences diverses',
 	'prefs-resetpass' => 'Changer de mot de passe',
-	'prefs-changeemail' => 'Changer l’adresse de courriel',
-	'prefs-setemail' => 'Définir une adresse de courriel',
-	'prefs-email' => 'Options des courriels',
+	'prefs-changeemail' => 'Changer l’adresse e-mail',
+	'prefs-setemail' => 'Définir une adresse e-mail',
+	'prefs-email' => 'Options des e-mails',
 	'prefs-rendering' => 'Apparence',
 	'prefs-editing' => 'Modification',
 	'prefs-edit-boxsize' => 'Taille de la fenêtre de modification.',
@@ -11077,7 +11113,7 @@ Voici une valeur générée aléatoirement que vous pouvez utiliser : $1',
 	'prefs-custom-js' => 'JavaScript personnalisé',
 	'prefs-common-css-js' => 'JavaScript et CSS partagé pour tous les habillages :',
 	'prefs-reset-intro' => 'Vous pouvez utiliser cette page pour restaurer vos préférences aux valeurs par défaut du site. Ceci ne peut pas être défait.',
-	'prefs-emailconfirm-label' => 'Confirmation du courriel :',
+	'prefs-emailconfirm-label' => 'Confirmation de l\'adresse e-mail :',
 	'prefs-textboxsize' => 'Taille de la fenêtre de modification',
 	'prefs-memberingroups' => 'Membre {{PLURAL:$1|du groupe|des groupes}} :',
 	'prefs-registration' => 'Date d’inscription :',
@@ -11085,9 +11121,9 @@ Voici une valeur générée aléatoirement que vous pouvez utiliser : $1',
 	'prefs-help-signature' => 'Les commentaires sur les pages de discussion doivent être signés avec « <nowiki>~~~~</nowiki> », qui sera converti par votre signature et un horodatage.',
 	'prefs-help-gender' => 'Facultatif : utilisé pour accorder en genre les messages de l’interface. Cette information sera publique.',
 	'prefs-help-realname' => 'Facultatif : si vous le spécifiez, il sera utilisé pour vous attribuer vos contributions.',
-	'prefs-help-email' => 'L’adresse de courriel est facultative, mais elle est nécessaire pour réinitialiser votre mot de passe, si vous veniez à l’oublier.',
+	'prefs-help-email' => 'Nous utiliserons cette adresse e-mail pour vous alerter de nouveaux messages ou de modifications sur les pages que vous suivez. Pas de spam, promis !',
 	'prefs-help-email-others' => 'Vous pourriez aussi choisir de laisser les autres vous contacter sur votre page de discussion utilisateur sans que soit nécessaire de révéler votre identité.',
-	'prefs-help-email-required' => 'Une adresse de courriel est requise.',
+	'prefs-help-email-required' => 'Une adresse e-mail est requise.',
 	'prefs-info' => 'Informations de base',
 	'prefs-i18n' => 'Internationalisation',
 	'prefs-signature' => 'Signature',
@@ -11187,7 +11223,14 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'previousdiff' => '← Modification précédente',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l\'intégrité du site tout en respectant les lois fédérales américaines.',
-	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation}}',
+	'prefs-help-terms' => 'En créant un compte, vous acceptez les [[homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation]]',
+	'pipe-separator' => '&#32;•&#32;',
+	'preferences_s' => 'Préférences',
+	'prefs-help-birthday' => 'Pourquoi dois-je fournir cette information?',
+	'prefs-help-birthmesg' => 'Pourquoi dois-je fournir ma date de naissance?',
+	'prefs-help-blurmesg' => 'Mot flouté',
+	'prefs-layout' => 'Apparence',
+	'profile' => 'Profil',
 ];
 
 $messages['frc'] = [
@@ -16616,7 +16659,7 @@ Per favore, effettua un accesso non appena la ricevi.',
 	'preview' => 'Anteprima',
 	'previewnote' => '\'\'\'Questa è solo un\'anteprima; le modifiche alla pagina NON sono ancora state salvate!\'\'\'',
 	'previewconflict' => 'L\'anteprima corrisponde al testo presente nella casella di modifica superiore e rappresenta la pagina come apparirà se si sceglie di premere "Salva la pagina" in questo momento.',
-	'protectedpagewarning' => '\'\'\'ATTENZIONE: Questa pagina è stata bloccata in modo che solo gli utenti con privilegi di amministratore possano modificarla.\'\'\'
+	'protectedpagewarning' => '\'\'\'ATTENZIONE: Questa pagina è stata protetta in modo che solo gli utenti con privilegi di amministratore possano modificarla.\'\'\'
 L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'permissionserrors' => 'Errore nei permessi',
 	'permissionserrorstext' => 'Non si dispone dei permessi necessari ad eseguire l\'azione richiesta, per {{PLURAL:$1|il seguente motivo|i seguenti motivi}}:',
@@ -16651,7 +16694,7 @@ Alcuni template non verranno inclusi.',
 	'prefs-beta' => 'Funzionalità beta',
 	'prefs-datetime' => 'Data e ora',
 	'prefs-labs' => 'Funzionalità dei laboratori',
-	'prefs-personal' => 'Profilo utente',
+	'prefs-personal' => 'Info personali',
 	'prefs-rc' => 'Ultime modifiche',
 	'prefs-watchlist' => 'Osservati speciali',
 	'prefs-watchlist-days' => 'Numero di giorni da mostrare negli osservati speciali:',
@@ -16665,10 +16708,10 @@ Alcuni template non verranno inclusi.',
 	'prefs-setemail' => 'Imposta un indirizzo e-mail',
 	'prefs-email' => 'Opzioni email',
 	'prefs-rendering' => 'Aspetto',
-	'prefs-editing' => 'Casella di modifica',
+	'prefs-editing' => 'Modifica',
 	'prefs-edit-boxsize' => 'Dimensioni della finestra di modifica.',
 	'prefs-help-recentchangescount' => 'Comprende ultime modifiche, cronologie e registri.',
-	'prefs-help-watchlist-token' => 'Compilando questo campo con una chiave segreta verrà generato un feed RSS per i propri osservati speciali. Chiunque conosca la chiave in questo campo potrà leggere gli osservati speciali, quindi assicurasi di inserire un valore sicuro. Qui c\'è un valore generato casualmente che si può usare: $1',
+	'prefs-help-watchlist-token' => 'Compilando questo campo con una chiave segreta verrà generato un feed RSS per le proprie pagine seguite. Chiunque conosca la chiave in questo campo potrà leggere le pagine seguite, quindi assicurarsi di inserire un valore sicuro. Si può usare anche il seguente valore generato casualmente: $1',
 	'prefs-searchoptions' => 'Opzioni di ricerca',
 	'prefs-namespaces' => 'Namespace',
 	'prefs-files' => 'File',
@@ -16677,15 +16720,15 @@ Alcuni template non verranno inclusi.',
 	'prefs-common-css-js' => 'CSS/JS condiviso per tutte le skin:',
 	'prefs-reset-intro' => 'È possibile usare questa pagina per reimpostare le proprie preferenze a quelle predefinite del sito.
 L\'operazione non può essere annullata.',
-	'prefs-emailconfirm-label' => 'Conferma dell\'e-mail:',
+	'prefs-emailconfirm-label' => 'Conferma dell\'email:',
 	'prefs-textboxsize' => 'Dimensione della finestra di modifica',
 	'prefs-memberingroups' => 'Membro {{PLURAL:$1|del gruppo|dei gruppi}}:',
 	'prefs-registration' => 'Data di registrazione:',
-	'prefs-help-variant' => 'La variante o grafia in cui preferisci che le pagine del wiki ti siano mostrate.',
-	'prefs-help-signature' => 'I commenti nelle pagine di discussione devono essere firmati con "<nowiki>~~~~</nowiki>" che verrà convertito nella propria firma seguita dalla data.',
+	'prefs-help-variant' => 'La variante o grafia in cui preferisci che le pagine della wiki ti siano mostrate.',
+	'prefs-help-signature' => 'I commenti nelle pagine di discussione devono essere firmati con "~~{{{~|~}}}~" che verrà convertito nella propria firma seguita dalla data.',
 	'prefs-help-gender' => 'Opzionale: consente di adattare i messaggi del software in funzione del genere dell\'utente. Questa informazione sarà pubblica.',
 	'prefs-help-realname' => 'L\'indicazione del proprio nome vero è opzionale; se si sceglie di inserirlo, verrà utilizzato per attribuire la paternità dei contenuti inviati.',
-	'prefs-help-email' => 'L\'inserimento del proprio indirizzo e-mail è facoltativo, ma permette di ricevere la propria password qualora venisse dimenticata.',
+	'prefs-help-email' => 'Useremo questo indirizzo email per avvisarti dei nuovi messaggi o delle modifiche alle pagine che stai seguendo. Niente spam, promesso!',
 	'prefs-help-email-others' => 'Puoi anche scegliere di lasciare che gli altri ti contattino via posta elettronica con un collegamento dalla tua pagina utente o di discussione.
 Il tuo indirizzo non viene rivelato quando gli altri utenti ti contattano.',
 	'prefs-help-email-required' => 'Indirizzo e-mail obbligatorio.',
@@ -16718,7 +16761,7 @@ Il tuo indirizzo non viene rivelato quando gli altri utenti ti contattano.',
 	'pager-newer-n' => '{{PLURAL:$1|1 più recente|$1 più recenti}}',
 	'pager-older-n' => '{{PLURAL:$1|1 meno recente|$1 meno recenti}}',
 	'prevpage' => 'Pagina precedente ($1)',
-	'protectlogpage' => 'Protezioni',
+	'protectlogpage' => 'Registro delle protezioni',
 	'protectlogtext' => 'Di seguito sono elencate le modifiche alle protezioni delle pagine.
 Vedi la [[Special:ProtectedPages|lista delle pagine protette]] per l\'elenco delle protezioni di pagina attualmente attive.',
 	'protectedarticle' => 'ha protetto "[[$1]]"',
@@ -16786,7 +16829,14 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'patrol-log-header' => 'Di seguito sono elencate le verifiche delle modifiche.',
 	'previousdiff' => '← Differenza precedente',
 	'prefs-help-birthinfo' => 'Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l\'integrità del sito rispettando al contempo le disposizioni federali.',
-	'prefs-help-terms' => 'Con la creazione di un account, accetti i {{#NewWindowLink:w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom}}',
+	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom]]',
+	'preferences_s' => 'Preferenze',
+	'prefs-help-birthday' => 'Perché devo fornire questo dato?',
+	'prefs-help-birthmesg' => 'Perché è necessario indicare la mia data di nascita?',
+	'prefs-help-blurmesg' => 'Immagine annebbiata',
+	'prefs-help-mailmesg' => 'E-mail',
+	'prefs-layout' => 'Layout globale',
+	'profile' => 'Profilo',
 ];
 
 $messages['iu'] = [
@@ -17083,12 +17133,12 @@ ___________________________________________________________
 	'prefs-beta' => 'ベータ版機能',
 	'prefs-datetime' => '日付と時刻',
 	'prefs-labs' => 'ラボの機能',
-	'prefs-personal' => '利用者情報',
+	'prefs-personal' => 'ユーザー情報',
 	'prefs-rc' => '最近の更新',
-	'prefs-watchlist' => 'ウォッチリスト',
+	'prefs-watchlist' => 'フォロー',
 	'prefs-watchlist-days' => 'ウォッチリストに表示する日数：',
 	'prefs-watchlist-days-max' => '最大$1{{PLURAL:$1|日|日間}}',
-	'prefs-watchlist-edits' => '拡張ウォッチリストに表示する件数：',
+	'prefs-watchlist-edits' => '拡張ウォッチリストの表示件数：',
 	'prefs-watchlist-edits-max' => '（最大数：1000）',
 	'prefs-watchlist-token' => 'ウォッチリストのトークン：',
 	'prefs-misc' => 'その他',
@@ -17100,9 +17150,9 @@ ___________________________________________________________
 	'prefs-editing' => '編集',
 	'prefs-edit-boxsize' => '編集ウィンドウのサイズ。',
 	'prefs-help-recentchangescount' => 'この設定は最近の更新、ページの履歴、および記録に適用されます。',
-	'prefs-help-watchlist-token' => 'この欄に秘密鍵を入力すると、自身のウォッチリストのRSSフィードが生成されます。
-この欄に入力されている鍵を知っている人は誰でもこのウォッチリストを閲覧できるようになるため、他人に分からない値を選んでください。
-乱数によって生成された次の値を使うこともできます：$1',
+	'prefs-help-watchlist-token' => 'この欄にキーを入力すると、自身のウォッチリストのRSSフィードが生成されます。
+この欄に入力されているキーを知っている人は誰でもこのウォッチリストを閲覧できるようになるため、他人に知られていないものをお選びください。
+ランダムに生成されたこちらの値をご利用いただくこともできます：$1',
 	'prefs-searchoptions' => '検索設定',
 	'prefs-namespaces' => '名前空間',
 	'prefs-files' => 'ファイル',
@@ -17119,9 +17169,8 @@ ___________________________________________________________
 	'prefs-help-signature' => 'トークページ上での発言には「<nowiki>~~~~</nowiki>」と付けて署名するべきです。これは自分の署名に時刻印を付加したものに変換されます。',
 	'prefs-help-gender' => '省略可能：ソフトウェアによる文法的性の解決に使用されます。
 この情報は公開されます。',
-	'prefs-help-realname' => '本名登録は省略可能です。
-登録した場合、著作物の帰属表示に本名が用いられます。',
-	'prefs-help-email' => '電子メールアドレスの設定は省略可能ですが、パスワードを忘れた際に新しいパスワードを電子メールで受け取る場合に必要です。',
+	'prefs-help-realname' => '* 本名 (任意): 本名を入力すると、ページ・クレジットに利用者名（アカウント名）の代わりに本名が表示されます。',
+	'prefs-help-email' => '私たちは新規メッセージやあなたがフォローしているページをあなたに通知するためにこのEメールアドレスを使用します。スパムではないことを保証します！',
 	'prefs-help-email-others' => 'あなたの身元を明らかにすることなく、他の利用者に利用者ページやトークページを使って連絡をしてもらうようにすることもできます。',
 	'prefs-help-email-required' => 'メールアドレスが必要です。',
 	'prefs-info' => '基本情報',
@@ -17225,10 +17274,18 @@ file_uploadsの設定を確認してください。',
 	'patrol-log-header' => '以下は巡回された版の記録です。',
 	'previousdiff' => '←古い編集',
 	'pipe-separator' => ' |&#32;',
-	'parentheses' => '（$1）',
+	'parentheses' => '($1)',
 	'preferences_s' => 'オプション',
 	'prefs-help-birthinfo' => 'Fandomでは健全なサイト運営およびアメリカ合衆国の法規定に則るため、すべてのユーザーに対して生年月日の入力を必須としています。',
-	'prefs-help-terms' => 'アカウントを作成することで、{{#NewWindowLink: homepage:利用規約| Wikia株式会社の利用規約}}に同意したものと見なされます',
+	'prefs-help-terms' => 'アカウントを作成することで、[[homepage:利用規約|Wikia株式会社の利用規約]]に同意したものと見なされます',
+	'popular-articles' => '人気ページ',
+	'popular-wikis' => '人気のウィキ',
+	'prefs-help-birthday' => 'なぜこれが必要なのですか?',
+	'prefs-help-birthmesg' => 'なぜ生年月日を入力しなければならないのですか？',
+	'prefs-help-blurmesg' => '画像認証',
+	'prefs-help-mailmesg' => 'メールアドレス',
+	'prefs-layout' => 'サイトの外装',
+	'profile' => 'プロフィール',
 ];
 
 $messages['jam'] = [
@@ -19560,7 +19617,7 @@ $messages['ko'] = [
 	'passwordsent' => '‘$1’ 계정의 새로운 암호를 이메일로 보냈습니다. 암호를 받고 다시 로그인해 주세요.',
 	'php-mail-error-unknown' => 'PHP의 mail() 함수에서 알 수 없는 오류가 발생했습니다.',
 	'preview' => '미리 보기',
-	'previewnote' => '\'\'\'지금 미리 보기로 보고 있는 내용은 아직 저장되지 않았습니다!\'\'\'',
+	'previewnote' => '\'\'\'미리보기 모드 : 보시고 계신 문서는 아직 저장되지 않았습니다! 편집을 계속하시려면 스크롤바를 내려주세요.\'\'\'',
 	'previewconflict' => '이 미리 보기는 저장할 때의 모습, 즉 위쪽 편집창의 문서를 반영합니다.',
 	'protectedpagewarning' => '\'\'\'경고: 이 문서는 관리자만 편집할 수 있도록 보호되어 있습니다.\'\'\'
 이 문서의 최근 기록을 참고하십시오:',
@@ -19612,7 +19669,7 @@ $messages['ko'] = [
 	'prefs-setemail' => '이메일 주소 설정하기',
 	'prefs-email' => '이메일 설정',
 	'prefs-rendering' => '문서 보이기 설정',
-	'prefs-editing' => '편집상자',
+	'prefs-editing' => '편집',
 	'prefs-edit-boxsize' => '편집 창의 크기',
 	'prefs-help-recentchangescount' => '이 설정은 최근 바뀜, 문서 역사와 기록에 적용됩니다.',
 	'prefs-help-watchlist-token' => '아래에 비밀 값을 넣으면 주시문서에 대한 RSS 피드가 생성됩니다.
@@ -19732,6 +19789,13 @@ $messages['ko'] = [
 	'patrol-log-page' => '검토 기록',
 	'patrol-log-header' => '문서 검토에 대한 기록입니다.',
 	'previousdiff' => '← 이전 편집',
+	'preferences_s' => '사용자 환경 설정',
+	'prefs-help-birthday' => '왜 생년월일을 입력해야 합니까?',
+	'prefs-help-birthmesg' => '왜 생년월일을 입력해야 합니까?',
+	'prefs-help-blurmesg' => '보안문자',
+	'prefs-help-mailmesg' => '이메일',
+	'prefs-layout' => '스킨',
+	'profile' => '프로필',
 ];
 
 $messages['ko-kp'] = [
@@ -20211,7 +20275,7 @@ $messages['kri'] = [
 	'portal-url' => 'Project:Mitin-ples fo yuza-dem',
 	'privacy' => 'Polisi fo Praivesi',
 	'privacypage' => 'Project:Polisi fo praivesi',
-	'pagetitle-view-mainpage' => ' 
+	'pagetitle-view-mainpage' => '
 {{SAITNEM}}',
 	'preview' => 'Privyu',
 	'permissionserrorstext-withaction' => 'Yu no get pamishon fo $2, bikoz {{PLURAL:$1|rizin|rizin-dem}}:',
@@ -21414,7 +21478,7 @@ $messages['lez'] = [
 	'page-rss-feed' => '"$1" РСС Xуьрек',
 	'page-atom-feed' => '"$1" Атом-зул',
 	'preview' => 'Сифтедин килигун',
-	'previewnote' => '\'\'\'Рикlел хуьх хьи, им анжах сифтедин килигун я.\'\'\'  
+	'previewnote' => '\'\'\'Рикlел хуьх хьи, им анжах сифтедин килигун я.\'\'\'
 Куь дегишунар гьеле хвенвач!',
 	'permissionserrorstext-withaction' => 'Квез и {{PLURAL:$1|себебдалди|себебралди}} $2 йиз ихтияр авайд туш:',
 	'post-expand-template-inclusion-warning' => '\'\'\'Дикъет:\'\'\' Кутазвай чешнейрин кьадар гзаф чIехи я.
@@ -23941,7 +24005,7 @@ $messages['mk'] = [
 	'portal-url' => 'Project:Портал на заедницата',
 	'privacy' => 'Заштита на личните податоци',
 	'privacypage' => 'Project:Заштита на личните податоци',
-	'pagetitle' => '$1 - {{SITENAME}}',
+	'pagetitle' => '$1 - Викија',
 	'pagetitle-view-mainpage' => '{{SITENAME}}',
 	'page-rss-feed' => '„$1“ - RSS емитувања',
 	'page-atom-feed' => '„$1“ - Atom емитувања',
@@ -25657,7 +25721,7 @@ $messages['mzn'] = [
 	'protectedpagetext' => 'این صفحه دچی‌ین وسّه زلفین بزه بیّه.',
 	'protectedinterface' => 'این صفحه ارائه‌دهندهٔ متنی واسط کارور این نرم‌افزار هسته و به منظور پیشگیری از خرابکاری زلفین بزه‌بیّه.',
 	'preview' => 'پیش نمایش',
-	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه. 
+	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه.
  شِمه دگاردسته‌ئون جانـَکِته که و‌نه، ونه اِسا ذخیره‌بیّـِن دوکمه ره بَزنین!',
 	'permissionserrorstext-withaction' => 'ته اجازهٔ $2 ره به {{PLURAL:$1|دلیل|دلایل}} رو به رو ندانی:',
 	'previousrevision' => '→ پیشی دگاردسته‌ئون',
@@ -26798,7 +26862,7 @@ $messages['nl'] = [
 Bewerken is niet mogelijk.',
 	'protectedinterface' => 'Deze pagina bevat tekst voor berichten van de software en is beveiligd om misbruik te voorkomen.',
 	'passwordtooshort' => 'Wachtwoorden moeten uit minstens {{PLURAL:$1|$1 teken|$1 tekens}} bestaan.',
-	'password-name-match' => 'Uw wachtwoord en uw gebruikersnaam mogen niet overeenkomen.',
+	'password-name-match' => 'Je wachtwoord en uw gebruikersnaam mogen niet overeenkomen.',
 	'password-login-forbidden' => 'Het gebruik van deze gebruikersnaam met dit wachtwoord is niet toegestaan.',
 	'passwordremindertitle' => 'Nieuw tijdelijk wachtwoord voor {{SITENAME}}',
 	'passwordremindertext' => 'Iemand, waarschijnlijk jijzelf, heeft vanaf IP-adres $1 een verzoek
@@ -26812,16 +26876,16 @@ Als iemand anders dan jij dit verzoek heeft gedaan of als je zich inmiddels het
 wachtwoord herinnert en het niet langer wilt wijzigen, negeer dit bericht
 dan en blijf je bestaande wachtwoord gebruiken.',
 	'passwordsent' => 'Het wachtwoord is verzonden naar het e-mailadres voor "$1".
-Meld u aan nadat u het hebt ontvangen.',
+Meld je aan nadat je het hebt ontvangen.',
 	'php-mail-error-unknown' => 'Er is een onbekende fout opgetreden in de mail()-functie van PHP',
 	'preview' => 'Voorvertoning',
-	'previewnote' => '\'\'\'Let op: dit is een controlepagina; uw tekst is niet opgeslagen!\'\'\'',
-	'previewconflict' => 'Deze voorvertoning geeft aan hoe de tekst in het bovenste veld eruit ziet als u deze opslaat.',
+	'previewnote' => '\'\'\'Let op: dit is een controlepagina; je tekst is niet opgeslagen!\'\'\'',
+	'previewconflict' => 'Deze voorvertoning geeft aan hoe de tekst in het bovenste veld eruit ziet als je deze opslaat.',
 	'protectedpagewarning' => '\'\'\'Waarschuwing: deze beveiligde pagina kan alleen door gebruikers met beheerdersrechten bewerkt worden.\'\'\'
 De laatste logboekregel staat hieronder:',
 	'permissionserrors' => 'Fouten in rechten',
-	'permissionserrorstext' => 'U hebt geen rechten om dit te doen om de volgende {{PLURAL:$1|reden|redenen}}:',
-	'permissionserrorstext-withaction' => 'U hebt geen rechten om $2 om de volgende {{PLURAL:$1|reden|redenen}}:',
+	'permissionserrorstext' => 'Je hebt geen rechten om dit te doen om de volgende {{PLURAL:$1|reden|redenen}}:',
+	'permissionserrorstext-withaction' => 'Je hebt geen rechten om $2 om de volgende {{PLURAL:$1|reden|redenen}}:',
 	'post-expand-template-inclusion-warning' => 'Waarschuwing: de maximale transclusiegrootte voor sjablonen is overschreden.
 Sommige sjablonen worden niet getranscludeerd.',
 	'post-expand-template-inclusion-category' => 'Pagina\'s waarvoor de maximale transclusiegrootte is overschreden',
@@ -26848,7 +26912,7 @@ Deze parameters zijn weggelaten.',
 	'preferences' => 'Voorkeuren',
 	'prefs-edits' => 'Aantal bewerkingen:',
 	'prefsnologin' => 'Niet aangemeld',
-	'prefsnologintext' => 'U moet <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} aangemeld]</span> zijn om uw voorkeuren te kunnen instellen.',
+	'prefsnologintext' => 'Je moet <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} aangemeld]</span> zijn om je voorkeuren te kunnen instellen.',
 	'prefs-skin' => 'Vormgeving',
 	'prefs-beta' => 'Bètafunctionaliteit',
 	'prefs-datetime' => 'Datum en tijd',
@@ -26870,16 +26934,16 @@ Deze parameters zijn weggelaten.',
 	'prefs-editing' => 'Bewerken',
 	'prefs-edit-boxsize' => 'Afmetingen van het bewerkingsvenster.',
 	'prefs-help-recentchangescount' => 'Dit geldt voor recente wijzigingen, paginageschiedenis en logboekpagina\'s.',
-	'prefs-help-watchlist-token' => 'Door hier een geheime sleutel in te vullen wordt een RSS-feed voor uw volglijst aangemaakt.
-Iedereen die deze sleutel kent kan uw volglijst lezen, dus kies een veilige sleutel.
-Hier volgt een willekeurig gegenereerde waarde die u kunt gebruiken: $1',
+	'prefs-help-watchlist-token' => 'Door hier een geheime sleutel in te vullen wordt een RSS-feed voor je volglijst aangemaakt.
+Iedereen die deze sleutel kent kan je volglijst lezen, dus kies een veilige sleutel.
+Hier volgt een willekeurig gegenereerde waarde die je kunt gebruiken: $1',
 	'prefs-searchoptions' => 'Zoekinstellingen',
 	'prefs-namespaces' => 'Naamruimten',
 	'prefs-files' => 'Bestanden',
 	'prefs-custom-css' => 'persoonlijke CSS',
 	'prefs-custom-js' => 'persoonlijke JS',
 	'prefs-common-css-js' => 'Gedeelde CSS/JS voor elke vormgeving:',
-	'prefs-reset-intro' => 'Gebruik deze functie om uw voorkeuren te herstellen naar de standaardinstellingen.
+	'prefs-reset-intro' => 'Gebruik deze functie om je voorkeuren te herstellen naar de standaardinstellingen.
 Deze handeling kan niet ongedaan gemaakt worden.',
 	'prefs-emailconfirm-label' => 'E-mailbevestiging:',
 	'prefs-textboxsize' => 'Afmetingen bewerkingsscherm',
@@ -26887,11 +26951,12 @@ Deze handeling kan niet ongedaan gemaakt worden.',
 	'prefs-registration' => 'Registratiedatum:',
 	'prefs-help-variant' => 'Uw voorkeursvariant of -spelling om de inhoudspagina\'s van deze wiki in weer te geven.',
 	'prefs-help-signature' => 'Reacties op de overlegpagina\'s worden meestal ondertekend met "<nowiki>~~~~</nowiki>".
-De tildes worden omgezet in uw ondertekening en een datum en tijd van de bewerking.',
+De tildes worden omgezet in je ondertekening en een datum en tijd van de bewerking.',
 	'prefs-help-gender' => 'Optioneel: dit wordt gebruikt om gebruikers correct aan te spreken in de software.
 Deze informatie is zichtbaar voor andere gebruikers.',
-	'prefs-help-realname' => 'Echte naam is optioneel, als u deze opgeeft kan deze naam gebruikt worden om u erkenning te geven voor uw werk.',
-	'prefs-help-email' => 'E-mailadres is optioneel, maar maakt het mogelijk om u uw wachtwoord te e-mailen als u het bent vergeten.',
+	'prefs-help-realname' => 'Echte naam is optioneel, als je deze opgeeft kan deze naam gebruikt worden om je erkenning te geven voor uw werk.',
+	'prefs-help-email' => 'E-mailadres is optioneel, maar maakt het mogelijk om je jouw wachtwoord te e-mailen als je het bent vergeten.
+Je kunt ook anderen in staat stellen per e-mail contact met je op te nemen via een verwijzing op je gebruikers- en overlegpagina zonder dat u uw identiteit prijsgeeft.',
 	'prefs-help-email-others' => 'U kunt ook anderen in staat stellen per e-mail contact met u op te nemen via een verwijzing op uw gebruikers- en overlegpagina zonder dat u uw identiteit prijsgeeft.',
 	'prefs-help-email-required' => 'Hiervoor is een e-mailadres nodig.',
 	'prefs-info' => 'Basisinformatie',
@@ -26939,12 +27004,12 @@ Zie de [[Special:ProtectedPages|lijst met beveiligde pagina\'s]] voor alle bevei
 	'protect_expiry_invalid' => 'De aangegeven duur is ongeldig.',
 	'protect_expiry_old' => 'Vervaldatum is in het verleden.',
 	'protect-unchain-permissions' => 'Overige beveiligingsinstellingen beschikbaar maken',
-	'protect-text' => 'Hier kunt u het beveiligingsniveau voor de pagina \'\'\'$1\'\'\' bekijken en wijzigen.',
-	'protect-locked-blocked' => 'U kunt het beveiligingsniveau niet wijzigen terwijl u geblokkeerd bent.
+	'protect-text' => 'Hier kun je het beveiligingsniveau voor de pagina \'\'\'<nowiki>$1</nowiki>\'\'\' bekijken en wijzigen.',
+	'protect-locked-blocked' => 'Je kunt het beveiligingsniveau niet wijzigen terwijl je geblokkeerd bent.
 Hier zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
 	'protect-locked-dblock' => 'Het beveiligingsniveau kan niet worden gewijzigd, omdat de database gesloten is.
 Hier zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
-	'protect-locked-access' => 'U hebt geen rechten om het beveiligingsniveau te wijzigen.
+	'protect-locked-access' => 'Je hebt geen rechten om het beveiligingsniveau te wijzigen.
 Dit zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
 	'protect-cascadeon' => 'Deze pagina is beveiligd, omdat die in de volgende {{PLURAL:$1|pagina|pagina\'s}} is opgenomen, die beveiligd {{PLURAL:$1|is|zijn}} met de cascade-optie.
 Het beveiligingsniveau wijzigen heeft geen enkel effect.',
@@ -26957,7 +27022,7 @@ Het beveiligingsniveau wijzigen heeft geen enkel effect.',
 	'protect-expiring-local' => 'vervalt op $1',
 	'protect-expiry-indefinite' => 'vervalt niet',
 	'protect-cascade' => 'Cascadebeveiliging: hiermee worden alle pagina\'s en sjablonen die in deze pagina opgenomen zijn beveiligd (let op: dit kan grote gevolgen hebben)',
-	'protect-cantedit' => 'U kunt het beveiligingsniveau van deze pagina niet wijzigen, omdat u geen rechten hebt om het te bewerken.',
+	'protect-cantedit' => 'Je kunt het beveiligingsniveau van deze pagina niet wijzigen, omdat je geen rechten hebt om het te bewerken.',
 	'protect-othertime' => 'Andere duur:',
 	'protect-othertime-op' => 'andere duur',
 	'protect-existing-expiry' => 'Bestaande vervaldatum: $2 om $3',
@@ -26973,8 +27038,8 @@ Het beveiligingsniveau wijzigen heeft geen enkel effect.',
 	'pagesize' => '(bytes)',
 	'proxyblocker' => 'Proxyblocker',
 	'proxyblocker-disabled' => 'Deze functie is uitgeschakeld.',
-	'proxyblockreason' => 'Uw IP-adres is geblokkeerd, omdat u gebruik maakt van een open proxyserver.
-Neem contact op met uw Internet-provider of uw helpdesk en stel die op de hoogte van dit ernstige beveiligingsprobleem.',
+	'proxyblockreason' => 'Dit is een automatische preventieve blokkade, omdat je gebruik maakt van een open proxyserver.
+Neem contact op met je Internet-provider of je helpdesk en stel die op de hoogte van dit ernstige beveiligingsprobleem.',
 	'proxyblocksuccess' => 'Afgerond.',
 	'pagemovedsub' => 'De pagina is hernoemd',
 	'protectedpagemovewarning' => '\'\'\'Waarschuwing:\'\'\' Deze pagina kan alleen door beheerders hernoemd worden.
@@ -27348,7 +27413,8 @@ Dette kan ikke tilbakestillast.',
 	'prefs-help-signature' => 'Kommentarar på diskusjonssider bør alltid signerast med «<nowiki>~~~~</nowiki>», som vil konverterast til signaturen din med tidspunkt.',
 	'prefs-help-gender' => 'Valfritt: nytta for at programvara skal retta seg til brukaren med rett kjønn i systemmeldingar. Denne informasjonen vil vera offentleg.',
 	'prefs-help-realname' => '* Namn (valfritt): Om du vel å fylle ut dette feltet, vil informasjonen bli brukt til å godskrive arbeid du har gjort.',
-	'prefs-help-email' => 'Å oppgje e-postadresse er valfritt, men lar deg ta i mot nytt passord om du gløymer det gamle.',
+	'prefs-help-email' => 'Å angi e-postadresse er valgfritt, men lar deg motta et nytt passord om du glemmer det gamle.
+Du kan også velge å la andre brukere kontakte deg via brukersiden din uten å røpe egen identiteten.',
 	'prefs-help-email-others' => 'Du kan òg velje å la andre brukarar kontakte deg på e-post via brukarsida di utan å røpe identiteten din.',
 	'prefs-help-email-required' => 'E-postadresse må oppgjevast.',
 	'prefs-info' => 'Grunnleggjande informasjon',
@@ -27426,7 +27492,7 @@ Her er dei noverande innstillingane for sida \'\'\'$1\'\'\':',
 	'pagemovedsub' => 'Flyttinga er gjennomførd',
 	'protectedpagemovewarning' => '\'\'\'ÅTVARING:\'\'\' Denne sida er verna, slik at berre brukarar med administratorrettar kan flytta henne.
 Det siste loggelementet er oppgjeve under som referanse:',
-	'print.css' => '/* CSS i denne fila vil påverke utskriftsversjonen */',
+	'print.css' => '/* CSS plassert her vil påvirke utskriften */',
 	'pageinfo-title' => 'Informasjon om «$1»',
 	'pageinfo-header-edits' => 'Endringar',
 	'pageinfo-header-watchlist' => 'Overvakingsliste',
@@ -27441,6 +27507,13 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'patrol-log-page' => 'Patruljeringslogg',
 	'patrol-log-header' => 'Dette er ein logg over patruljerte sideversjonar.',
 	'previousdiff' => '← Eldre endring',
+	'popular-articles' => 'Populære artikler',
+	'popular-wikis' => 'Populære wikier',
+	'preferences_s' => 'Innstillinger',
+	'prefs-help-birthday' => 'Hvorfor må jeg oppgi dette?',
+	'prefs-help-birthmesg' => 'Hvorfor må jeg oppgi fødselsdagen min?',
+	'prefs-help-blurmesg' => 'Uklart ord',
+	'profile' => 'Profil',
 ];
 
 $messages['nov'] = [
@@ -28535,8 +28608,8 @@ $messages['pl'] = [
 	'policy-url' => 'Project:Zasady',
 	'portal' => 'Portal społeczności',
 	'portal-url' => 'Project:Portal społeczności',
-	'privacy' => 'Zasady ochrony prywatności',
-	'privacypage' => 'Project:Zasady ochrony prywatności',
+	'privacy' => 'Polityka prywatności',
+	'privacypage' => 'w:Wikia:Privacy_Policy',
 	'pagetitle' => '$1 – {{SITENAME}}',
 	'page-rss-feed' => 'Kanał RSS „$1”',
 	'page-atom-feed' => 'Kanał Atom „$1”',
@@ -28567,7 +28640,7 @@ Po otrzymaniu go zaloguj się ponownie.',
 	'preview' => 'Podgląd',
 	'previewnote' => '\'\'\'To jest tylko podgląd – zmiany nie zostały jeszcze zapisane!\'\'\'',
 	'previewconflict' => 'Podgląd odnosi się do tekstu z górnego pola edycji. Tak będzie wyglądać strona, jeśli zdecydujesz się ją zapisać.',
-	'protectedpagewarning' => '\'\'\'Uwaga! Możliwość modyfikacja tej strony została zabezpieczona. Mogą ją edytować jedynie użytkownicy z uprawnieniami administratora.\'\'\'
+	'protectedpagewarning' => '\'\'\'Uwaga! Możliwość modyfikacji tej strony została zabezpieczona. Mogą ją edytować jedynie użytkownicy z uprawnieniami administratora.\'\'\'
 Ostatni wpis z rejestru jest pokazany poniżej.',
 	'permissionserrors' => 'Błędy uprawnień',
 	'permissionserrorstext' => 'Nie masz uprawnień do tego działania z {{PLURAL:$1|następującej przyczyny|następujących przyczyn}}:',
@@ -28736,12 +28809,18 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'pageinfo-authors' => 'Autorów',
 	'pageinfo-views' => 'Odsłon',
 	'pageinfo-viewsperedit' => 'Odsłon na edycję',
-	'patrol-log-page' => 'Dziennik patrolowania',
+	'patrol-log-page' => 'Rejestr patrolowania',
 	'patrol-log-header' => 'Poniżej znajduje się dziennik patrolowania stron.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
-	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz {{#NewWindowLink: homepage:Terms of use | Zasady Użytkowania}}',
+	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz [[homepage:Terms of use|Zasady Użytkowania]]',
+	'pipe-separator' => '&#32;•&#32;',
+	'prefs-help-birthday' => 'Dlaczego mam podać te informacje?',
+	'prefs-help-birthmesg' => 'Dlaczego mam wpisać swoją datę urodzenia?',
+	'prefs-help-blurmesg' => 'Słowo z obrazka',
+	'prefs-layout' => 'Układy stron',
+	'profile' => 'Profil',
 ];
 
 $messages['pms'] = [
@@ -29827,7 +29906,7 @@ O último registo é apresentado abaixo para referência:',
 	'patrol-log-header' => 'Este é um registo de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
 	'prefs-help-birthinfo' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
-	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os {{#NewWindowLink: w: pt:Termos de Uso |Termos de Uso da Wikia}}',
+	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os [[w:pt:Termos de Uso|Termos de Uso da Wikia]]',
 ];
 
 $messages['pt-br'] = [
@@ -30042,6 +30121,7 @@ A última entrada no histórico é fornecida abaixo para referência:',
 	'patrol-log-page' => 'Registro de edições patrulhadas',
 	'patrol-log-header' => 'Este é um registro de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
+	'profile' => 'Perfil',
 ];
 
 $messages['qu'] = [
@@ -31139,7 +31219,7 @@ $messages['ru'] = [
 	'password-login-forbidden' => 'Использование этого имени участника и пароля запрещено.',
 	'passwordremindertitle' => 'Напоминание о пароле от Фэндома',
 	'passwordremindertext' => 'Здравствуйте,
-Новый пароль для участника «$2» — «$3».
+Новый пароль для учётной записи «$2» — «$3».
 Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.
 
 Команда Фэндома
@@ -31159,8 +31239,8 @@ ___________________________________________________________
 	'protectedpagewarning' => '\'\'\'Предупреждение. Эта страница защищена от изменений, её могут редактировать только участники с полномочиями администраторов.\'\'\'
 Ниже для справки приведена последняя запись журнала:',
 	'permissionserrors' => 'Ошибки прав доступа',
-	'permissionserrorstext' => 'У вас нет прав на выполнение этой операции по {{PLURAL:$1|следующей причине|следующим причинам}}:',
-	'permissionserrorstext-withaction' => 'У вас нет разрешения на «\'\'\'$2\'\'\'» по {{PLURAL:$1|следующей причине|следующим причинам}}:',
+	'permissionserrorstext' => 'Вы не имеете разрешения на данное действие по {{PLURAL:$1|следующей причине|следующим причинам}}:',
+	'permissionserrorstext-withaction' => 'Вы не имеете разрешения на «\'\'\'$2\'\'\'» по {{PLURAL:$1|следующей причине|следующим причинам}}:',
 	'post-expand-template-inclusion-warning' => 'Предупреждение: суммарный размер включаемых шаблонов слишком велик.
 Некоторые шаблоны не будут включены.',
 	'post-expand-template-inclusion-category' => 'Страницы, для которых превышен допустимый размер включаемых шаблонов',
@@ -31192,7 +31272,7 @@ ___________________________________________________________
 	'prefs-beta' => 'Бета-возможности',
 	'prefs-datetime' => 'Дата и время',
 	'prefs-labs' => 'Экспериментальные возможности',
-	'prefs-personal' => 'Моя информация',
+	'prefs-personal' => 'Личные',
 	'prefs-rc' => 'Свежие правки',
 	'prefs-watchlist' => 'Список наблюдения',
 	'prefs-watchlist-days' => 'Количество дней:',
@@ -31331,7 +31411,12 @@ ___________________________________________________________
 	'previousdiff' => '← Предыдущая правка',
 	'parentheses' => '($1)',
 	'prefs-help-birthinfo' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Это мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
-	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования, установленными компанией Wikia, Inc.}}',
+	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с [[w:c:ru.community:Викия:Условия_использования|Условиями использования, установленными компанией Wikia, Inc.]]',
+	'popular-articles' => 'Популярные страницы',
+	'popular-wikis' => 'Популярные вики',
+	'prefs-help-birthday' => 'Почему я должен указывать это?',
+	'prefs-help-birthmesg' => 'Почему я должен указать дату своего рождения?',
+	'profile' => 'Профайл',
 ];
 
 $messages['rue'] = [
@@ -32255,7 +32340,7 @@ yer auld password.',
 	'permissionserrors' => 'Richts Errors',
 	'permissionserrorstext' => 'Ye dinnae hae the richts tae dae that, acause o the followin {{PLURAL:$1|grund|grunds}}:',
 	'permissionserrorstext-withaction' => 'Ye dinna hae the richts tae $2, for the follaein {{PLURAL:$1|reason|reasons}}:',
-	'post-expand-template-inclusion-warning' => '\'\'\'Wairnin:\'\'\' Template include size is tae lairge. 
+	'post-expand-template-inclusion-warning' => '\'\'\'Wairnin:\'\'\' Template include size is tae lairge.
 Some templates wull nae be included.',
 	'post-expand-template-inclusion-category' => 'Pages whaur template include size is exceeded',
 	'post-expand-template-argument-warning' => 'Tak tent: This page hauds at least the ae template argument that haes an ower muckle expansion size.
@@ -32287,7 +32372,7 @@ Thae arguments hae been left oot.',
 	'prefs-memberingroups' => 'Member o {{PLURAL:$1|group|groups}}:',
 	'prefs-help-realname' => 'Rael name is optional an gin ye chuise tae provide it this will be uised tae gie ye attreibution for yer wark.',
 	'prefs-help-email' => 'E-mail is optional, bit is needed fur password resets, shuid ye forget yer password.',
-	'prefs-help-email-others' => 'Ye kin an choose tae let others contact ye by e-mail thro\' a link oan yer uiser or collogue  page. 
+	'prefs-help-email-others' => 'Ye kin an choose tae let others contact ye by e-mail thro\' a link oan yer uiser or collogue  page.
 Yer e-mail address insae revealed whin ither uisers contact ye.',
 	'prefs-help-email-required' => 'Yer e-mail address is needit.',
 	'prefs-diffs' => 'Diffs',
@@ -35327,7 +35412,7 @@ $messages['sv'] = [
 	'policy-url' => 'Project:Riktlinjer',
 	'portal' => 'Deltagarportalen',
 	'portal-url' => 'Project:Deltagarportalen',
-	'privacy' => 'Integritetspolicy',
+	'privacy' => 'Användningsvillkor',
 	'privacypage' => 'Project:Integritetspolicy',
 	'page-rss-feed' => '"$1" RSS-matning',
 	'page-atom-feed' => '"$1" Atom-matning',
@@ -35355,13 +35440,12 @@ ___________________________________________________________
 	'passwordsent' => 'Ett nytt lösenord har skickats till den e-postadress som användaren "$1" har registrerat. När du får meddelandet, var god logga in igen.',
 	'php-mail-error-unknown' => 'Okänt fel i PHP\'s mail()-funktion',
 	'preview' => 'Förhandsgranska',
-	'previewnote' => '\'\'\'Detta är bara en förhandsvisning;
-ändringar har ännu inte sparats!\'\'\'',
+	'previewnote' => '<strong>Förhandsläge: inga ändringar sparats ännu! Bläddra ner för att fortsätta redigera.</strong>',
 	'previewconflict' => 'Den här förhandsvisningen är resultatet av den
 redigerbara texten ovanför,
 så som det kommer att se ut om du väljer att spara.',
-	'protectedpagewarning' => '\'\'\'Varning: Den här sidan har låsts så att bara användare med administratörsrättigheter kan redigera den.\'\'\'
-Den senaste loggposten tillhandahålls nedan som referens:',
+	'protectedpagewarning' => '<strong>VARNING: Den här sidan har låsts så att bara administratörer kan redigera den.</strong><br/>
+Kontrollera att du följer några skyddade sida riktlinjer.',
 	'permissionserrors' => 'Behörighetsfel',
 	'permissionserrorstext' => 'Du har inte behörighet att göra det du försöker göra, av följande {{PLURAL:$1|anledning|anledningar}}:',
 	'permissionserrorstext-withaction' => 'Du har inte behörighet att $2, av följande {{PLURAL:$1|anledning|anledningar}}:',
@@ -35466,8 +35550,9 @@ Om du väljer att ange ditt riktiga namn, kommer det att användas för att till
 	'pager-older-n' => '{{PLURAL:$1|1 äldre|$1 äldre}}',
 	'prevpage' => 'Föregående sida ($1)',
 	'protectlogpage' => 'Skrivskyddslogg',
-	'protectlogtext' => 'Detta är en lista över applicerande och borttagande av skrivskydd.
-Se [[Special:ProtectedPages|listan över skyddade sidor]] för listan över aktiva sidskydd.',
+	'protectlogtext' => 'Nedan är en lista av sidan lås och låser upp.
+Se [[Special:ProtectedPages|skyddade sidor lista]] för listan med operativa sidan skydd.
+Se [[Special:ProtectedTitles|skyddade titlar listan]] för listan med operativa avdelning skydd.',
 	'protectedarticle' => 'skyddade [[$1]]',
 	'protect-title' => 'Skyddsinställningar för "$1"',
 	'protect-title-notallowed' => 'Visa skyddsnivån för "$1"',
@@ -35534,6 +35619,10 @@ Den senaste loggposten tillhandahålls nedan som referens:',
 	'patrol-log-page' => 'Patrulleringslogg',
 	'patrol-log-header' => 'Detta är en logg över patrullerade sidversioner.',
 	'previousdiff' => '← Äldre redigering',
+	'prefs-help-birthday' => 'Varför måste jag lämna detta?',
+	'prefs-help-birthmesg' => 'Varför måste jag ge min födelsedag?',
+	'prefs-help-blurmesg' => 'Suddiga ord',
+	'prefs-help-mailmesg' => 'E-post',
 ];
 
 $messages['sw'] = [
@@ -39224,7 +39313,7 @@ Những giá trị này sẽ bị bỏ đi.',
 	'prefs-skin' => 'Hình dạng',
 	'prefs-beta' => 'Tính năng beta',
 	'prefs-datetime' => 'Ngày tháng',
-	'prefs-labs' => 'Tính năng phòng thí nghiệm',
+	'prefs-labs' => 'Tính năng Phòng thí nghiệm',
 	'prefs-personal' => 'Thông tin về tôi',
 	'prefs-rc' => 'Thay đổi gần đây',
 	'prefs-watchlist' => 'Theo dõi',
@@ -39239,9 +39328,9 @@ Những giá trị này sẽ bị bỏ đi.',
 	'prefs-setemail' => 'Đặt địa chỉ thư điện tử',
 	'prefs-email' => 'Tùy chọn thư điện tử',
 	'prefs-rendering' => 'Bề ngoài',
-	'prefs-editing' => 'Sửa đổi',
+	'prefs-editing' => 'Soạn thảo',
 	'prefs-edit-boxsize' => 'Kích thước cửa sổ soạn thảo.',
-	'prefs-help-recentchangescount' => 'Số này bao gồm các thay đổi gần đây, lịch sử trang, và nhật trình.',
+	'prefs-help-recentchangescount' => 'Điều này bao gồm các thay đổi gần đây, lịch sử trang, và nhật trình.',
 	'prefs-help-watchlist-token' => 'Điền vào ô này một khóa bí mật để tạo ra bản tin RSS cho danh sách theo dõi của bạn.
 Bất cứ ai biết được khóa trong ô này cũng có thể đọc được danh sách theo dõi của bạn, vì vậy hãy chọn một giá trị an toàn.
 Đây là giá trị được tạo ngẫu nhiên mà bạn có thể sử dụng: $1',
@@ -39255,17 +39344,16 @@ Bất cứ ai biết được khóa trong ô này cũng có thể đọc đượ
 Không có thể lùi lại tác động này.',
 	'prefs-emailconfirm-label' => 'Xác nhận thư điện tử:',
 	'prefs-textboxsize' => 'Kích cỡ hộp sửa đổi',
-	'prefs-memberingroups' => 'Thành viên của {{PLURAL:$1|nhóm|nhóm}}:',
+	'prefs-memberingroups' => 'Thành viên thuộc nhóm:',
 	'prefs-registration' => 'Thời điểm đăng ký:',
 	'prefs-help-variant' => 'Phép chính tả hoặc bộ chữ để hiển thị nội dung của các trang tại wiki này.',
 	'prefs-help-signature' => 'Các ý kiến tại trang thảo luận nên được ký tên bằng cách gõ "<nowiki>~~~~</nowiki>", nó sẽ được đổi thành chữ ký của bạn cùng với thời điểm thảo luận.',
 	'prefs-help-gender' => 'Tùy chọn: được phần mềm sử dụng để xác định đúng giới tính.
 Thông tin này là công khai.',
-	'prefs-help-realname' => 'Tên thật là không bắt buộc.
-Nếu bạn đồng ý cung cấp, nó sẽ dùng để ghi nhận công lao của bạn.',
+	'prefs-help-realname' => 'Tùy chọn',
 	'prefs-help-email' => 'Địa chỉ thư điện tử là tùy chọn, nhưng nó giúp chúng tôi gửi cho bạn mật khẩu mới qua thư điện tử nếu bạn quên mật khẩu của mình.',
 	'prefs-help-email-others' => 'Bạn cũng có thể lựa chọn cho phép người khác liên lạc với bạn thông qua trang cá nhân hoặc trang thảo luận cá nhân mà không cần để lộ danh tính.',
-	'prefs-help-email-required' => 'Bắt buộc phải có địa chỉ e-mail.',
+	'prefs-help-email-required' => 'Địa chỉ thư điện tử là bắt buộc.',
 	'prefs-info' => 'Thông tin cơ bản',
 	'prefs-i18n' => 'Quốc tế hóa',
 	'prefs-signature' => 'Chữ ký',
@@ -39362,6 +39450,13 @@ Thông tin mới nhất trong nhật trình được ghi dưới đây để ti�
 	'patrol-log-page' => 'Nhật ký tuần tra',
 	'patrol-log-header' => 'Đây là nhật trình tuần tra phiên bản.',
 	'previousdiff' => '← Sửa đổi cũ',
+	'preferences_s' => 'Tùy chọn',
+	'prefs-help-birthday' => 'Tạo sao tôi cần cung cấp điều này?',
+	'prefs-help-birthmesg' => 'Tại sao tôi cần phải cung cấp ngày sinh của mình?',
+	'prefs-help-blurmesg' => 'Chữ mờ',
+	'prefs-help-mailmesg' => 'Thư điện tử',
+	'prefs-layout' => 'Mẫu trang web',
+	'profile' => 'Hồ sơ',
 ];
 
 $messages['vls'] = [
@@ -40358,7 +40453,7 @@ $messages['xmf'] = [
 	'protect_expiry_invalid' => 'ვადაშ გიშულაშ თარიღ რე ჩილათირ',
 	'protect_expiry_old' => 'ვადაშ გიშულაშ თარიღ რე ულირ ბორჯის',
 	'protect-text' => '\'\'\'$1\'\'\' ხასილაშო თხილუაშ დონეშ ძირაფა დო თირაფა შეგილებუნა თაქ.',
-	'protect-locked-access' => 'თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა. 
+	'protect-locked-access' => 'თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა.
 ათაქ რე \'\'\'$1\'\'\' ხასილაშ ასეიან გენწყილობეფ.',
 	'protect-cascadeon' => 'ათე ხასილა ასე თხილერ რე, თიშენ ნამდა თენა მიშულირ რე {{PLURAL:$1|ხასილაშა, ნამდგასით|ხასილეფშა, ნამდგეფსით}} ჩართულ აფუ კასკადურ თხილუა.
 თქვა შეგილეუნა დოთირუათ ათე ხასილაშ თხილუაშ დონე, მარა თეს გავლენა ვაღვენუ კასკადურ თხილუაშა.',
@@ -40728,7 +40823,7 @@ Bí a ṣe to ojúewé \'\'\'$1\'\'\' nì yí:',
 ];
 
 $messages['yue'] = [
-	'pagecategories' => '屬於$1類',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 	'printableversion' => '可打印版本',
 	'permalink' => '永久連結',
 	'print' => '印',
@@ -41028,10 +41123,14 @@ Sommige sjabloon\'n worr\'n nie getranscludeerd.',
 
 $messages['zh-cn'] = [
 	'portal' => '社区专页',
+	'permalink' => '固定链结',
+	'prefixindex' => '前缀索引',
+	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
+	'protectedpages' => '被保护的页面',
 ];
 
 $messages['zh-hans'] = [
-	'pagecategories' => '$1个分类',
+	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 	'printableversion' => '可打印版',
 	'permalink' => '永久链接',
 	'print' => '打印',
@@ -41062,15 +41161,15 @@ $messages['zh-hans'] = [
 
 用户"$2"的登入密码是"$3"。
 
-如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。 
+如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。
 
 谢谢！
 
-Fandom社区团队 
+Fandom社区团队
 
 www.wikia.com
 ___________________________________________________________
-* 若要更改您的个人设置或密码，请访问︰http://www.wikia.com/wiki/Special:参数设置。    
+* 若要更改您的个人设置或密码，请访问︰http://www.wikia.com/wiki/Special:参数设置。
 * 密码提醒来源于以下地址：$1。',
 	'passwordsent' => '用户"$1"的新密码已经寄往所登记的电子邮件地址。
 请在收到后再登录。',
@@ -41105,7 +41204,7 @@ ___________________________________________________________
 	'powersearch-togglelabel' => '选择：',
 	'powersearch-toggleall' => '全选',
 	'powersearch-togglenone' => '全不选',
-	'preferences' => '系统设置',
+	'preferences' => '用戶设定',
 	'prefs-edits' => '编辑数量：',
 	'prefsnologin' => '尚未登录',
 	'prefsnologintext' => '您必须先<span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} 登录]</span>才能设置个人参数。',
@@ -41245,11 +41344,12 @@ ___________________________________________________________
 	'previousdiff' => '←上一编辑',
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
-	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用条款}}',
+	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此[[homepage:Terms of use|Wikia, Inc使用条款]]',
+	'profile' => '用户档案',
 ];
 
 $messages['zh-hant'] = [
-	'pagecategories' => '$1個分類',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 	'printableversion' => '可列印版',
 	'permalink' => '永久連結',
 	'print' => '列印',
@@ -41372,7 +41472,7 @@ ___________________________________________________________
 	'prefs-help-email-others' => '您亦可以在您沒有公開自己的用戶身分時透過您的用戶頁或用戶討論頁與您聯繫。',
 	'prefs-help-email-required' => '需要電子郵件地址。',
 	'prefs-info' => '基本資料',
-	'prefs-i18n' => '國際化',
+	'prefs-i18n' => '字體轉換',
 	'prefs-signature' => '簽名',
 	'prefs-dateformat' => '日期格式',
 	'prefs-timeoffset' => '時間偏移',
@@ -41470,7 +41570,8 @@ ___________________________________________________________
 	'previousdiff' => '←上一版本',
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Fandom要求所有用戶提供自己的真實出生日期。',
-	'prefs-help-terms' => '創建帳戶，即表示你同意此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用條款}}。',
+	'prefs-help-terms' => '創建帳戶，即表示你同意此[[homepage:Terms of use|Wikia, Inc使用條款]]。',
+	'profile' => '用戶檔案',
 ];
 
 $messages['zh-hk'] = [
@@ -41480,6 +41581,12 @@ $messages['zh-hk'] = [
 	'privacy' => '私隱政策',
 	'privacypage' => 'Project:私隱政策',
 	'passwordremindertitle' => 'Wikia密碼變更通知',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
+	'prefixindex' => '前缀索引',
+	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
+	'prefs-i18n' => '字體轉換',
+	'profile' => '用戶檔案',
+	'protectedpages' => '被保護的頁面',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41520,10 +41627,10 @@ $messages['zh-tw'] = [
 	'passwordremindertitle' => 'Wikia密碼變更通知',
 	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
 
-Wikia社區團隊 
+Wikia社區團隊
 
-___________________________________________________________ 
-* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences 
+___________________________________________________________
+* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences
 * 這個密碼通知是由以下IP地址申請的：$1 。',
 	'passwordsent' => '使用者"$1"的新密碼已經寄往所登記的電子郵件地址。
 請在收到後再登入。',
@@ -41537,9 +41644,9 @@ ___________________________________________________________
 	'prefs-rc' => '近期變動',
 	'prefs-watchlist-days' => '監視列表中顯示記錄的最長天數:',
 	'prefs-help-realname' => '真實姓名是選填的，如果您選擇提供它，那它便用以對您的貢獻署名。',
-	'prefs-help-email' => '電子郵件是選填的，但當啟用它後可以在您忘記您的個密碼時需要將新密碼重設寄回給您。而在您未公開自己的使用者身分時也能透過您的用戶頁或用戶討論頁與您聯繫。',
+	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
 	'popularpages' => '熱門頁面',
-	'prefixindex' => '前綴索引',
+	'prefixindex' => '前缀索引',
 	'protect-title' => '正在保護"$1"',
 	'protect-locked-blocked' => '您不能在被封鎖時更改保護級別。
 以下是\'\'\'$1\'\'\'現時的保護級別:',
@@ -41551,6 +41658,11 @@ ___________________________________________________________
 	'protect-expiry-options' => '2小時:2 hours,1天:1 day,1周:1 week,2周:2 weeks,1個月:1 month,3個月:3 months,6個月:6 months,1年:1 year,永久:infinite',
 	'patrol-log-page' => '巡查記錄',
 	'previousdiff' => '←上一個',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
+	'permalink' => '固定鏈結',
+	'prefs-i18n' => '字體轉換',
+	'profile' => '用戶檔案',
+	'protectedpages' => '被保護的頁面',
 ];
 
 $messages['zh-yue'] = [
@@ -41615,5 +41727,14 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'passwordremindertitle' => 'Wikia密码变更通知',
+	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
+	'perfcachedts' => '下列数据已经过缓存处理，最后更新时间为$1。在缓存中最多有{{PLURAL:$4|一个结果|$4个结果}}可用。',
+	'permalink' => '固定链结',
+	'preferences' => '用戶设定',
+	'prefixindex' => '前缀索引',
+	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
+	'prefs-i18n' => '字体转换',
+	'profile' => '用户档案',
+	'protectedpages' => '被保护的页面',
 ];
 

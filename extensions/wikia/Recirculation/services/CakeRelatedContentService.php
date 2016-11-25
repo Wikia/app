@@ -18,13 +18,17 @@ class CakeRelatedContentService {
 
 	/**
 	 * @param $title
-	 * @param $ignore
+	 * @param $namespaceId
+	 * @param $wikiId
+	 * @param null $universeName
+	 * @param int $limit
+	 * @param null $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo( $title, $universeName = null, $limit = 5, $ignore = null ) {
+	public function getContentRelatedTo($title, $namespaceId, $wikiId, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) ) {
+		if ( !$this->onValidWiki($wikiId) || !$this->onValidPage( $title ) || !$this->isValidNamespace($namespaceId) ) {
 			return $items;
 		}
 
@@ -105,7 +109,7 @@ class CakeRelatedContentService {
 								'thumbnail' => $content->getImage(),
 								'title' => $this->formatTitle( $content ),
 								'publishDate' => $content->getModified(),
-								'author' => $this->getAuthor( $content->getContentMetadata() ),
+								'author' => $this->getAuthor( $content ),
 								'isVideo' => false,
 								'meta' => $content->getContentMetadata(),
 								'source' => $this->getRecirculationContentType( $content->getContentType() ),
@@ -153,13 +157,13 @@ class CakeRelatedContentService {
 		return $content->getTitle();
 	}
 
-	private function getAuthor( $metadata ) {
-		if ( array_key_exists( "authorName", $metadata ) ) {
-			return $metadata["authorName"];
-		} else {
+	private function getAuthor( Content $content ) {
+		$authorObjects = $content->getAuthors();
+		if ( !is_array( $authorObjects ) || empty( $authorObjects ) ) {
 			return "";
 		}
 
+		return $authorObjects[0]->getUsername();
 	}
 
 	private function getRecirculationContentType( $contentType ) {
@@ -173,14 +177,11 @@ class CakeRelatedContentService {
 			default:
 				return "undefined";
 		}
-
 	}
 
-	private function onValidWiki() {
-		global $wgCityId;
-
+	private function onValidWiki($wikiId) {
 		return in_array(
-				$wgCityId,
+				$wikiId,
 				[
 						147,    // starwars
 						130814, // gameofthrones
@@ -188,11 +189,18 @@ class CakeRelatedContentService {
 						2237,   // dc
 						2233,   // marvel
 						208733, // darksouls
+						1706, 	// elderscrolls
+						1071836,// overwatch
+						509,		// harrypotter
 				]
 		);
 	}
 
 	private function onValidPage( $title ) {
 		return $title != "Main Page";
+	}
+
+	private function isValidNamespace($namespaceId) {
+		return $namespaceId == NS_MAIN;
 	}
 }

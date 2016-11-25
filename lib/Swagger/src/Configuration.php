@@ -105,7 +105,7 @@ class Configuration
      *
      * @var string
      */
-    protected $curlTimeout = 0;
+    protected $curlTimeout = 5;
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default

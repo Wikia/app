@@ -8,7 +8,7 @@
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper($hub); ?></p>
-		<p class="description"><?= $description; ?></p>
+		<p class="description"><?= \Wikia\Search\Result::limitTextLength( htmlspecialchars( $description ), $descriptionWordLimit ); ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<?

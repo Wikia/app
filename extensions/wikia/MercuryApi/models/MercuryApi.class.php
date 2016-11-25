@@ -148,6 +148,10 @@ class MercuryApi {
 				'ubisoft' => [
 					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
 					'url' => AnalyticsProviderUbisoft::URL
+				],
+				'netzathleten' => [
+					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
+					'url' => AnalyticsProviderNetzAthleten::URL
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
@@ -224,7 +228,7 @@ class MercuryApi {
 		}
 		return [
 			'id' => $commentData[ 'id' ],
-			'text' => $commentData[ 'text' ],
+			'text' => $articleComment->getText(),
 			'created' => (int)wfTimestamp( TS_UNIX, $commentData[ 'rawmwtimestamp' ] ),
 			'userName' => $this->addUser( $commentData ),
 		];

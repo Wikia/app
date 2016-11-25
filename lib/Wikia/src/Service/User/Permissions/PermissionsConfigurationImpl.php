@@ -195,7 +195,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'multidelete',
 		'multiwikiedit',
 		'multiwikifinder',
-		'njordeditmode',
 		'phalanxexempt',
 		'phalanx',
 		'phalanxemailblock',
@@ -255,6 +254,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'hideblockername',
 		'fancontributor-staff',
 		'fancontributor-contributor',
+		'clearuserprofile',
 	];
 
 	public function __construct() {

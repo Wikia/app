@@ -21,6 +21,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             type: 'get',
             data: {
                 relatedTo: articleTitle,
+                namespaceId: w.wgNamespaceNumber,
                 ignore: w.location.pathname,
                 limit: options.limit
             },

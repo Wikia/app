@@ -11,6 +11,7 @@ $messages['en'] = [
 $messages['fr'] = [
 	'wikia-version-code' => 'Code de Fandom',
 	'wikia-version-config' => 'Config de Fandom',
+	'wikia-version-desc' => 'Extension de Special:Version de Wikia, en soutien de déploiement à base de paquets',
 ];
 
 $messages['qqq'] = [
@@ -41,6 +42,7 @@ $messages['ja'] = [
 $messages['pl'] = [
 	'wikia-version-code' => 'Kod Fandomu',
 	'wikia-version-config' => 'Konfiguracja Fandomu',
+	'wikia-version-desc' => 'Rozszerzenie Wikia dla Specjalna:Wersja, wspierające wdrażanie pakietów.',
 ];
 
 $messages['pt'] = [
@@ -50,7 +52,7 @@ $messages['pt'] = [
 
 $messages['ru'] = [
 	'wikia-version-code' => 'Код Фэндома',
-	'wikia-version-config' => 'Конфигурации Fandom',
+	'wikia-version-config' => 'Конфигурации Фэндома',
 ];
 
 $messages['zh-hans'] = [

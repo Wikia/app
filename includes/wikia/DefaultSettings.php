@@ -197,11 +197,6 @@ $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExcep
  */
 
 /**
- * Modular main pages hooks
- */
-$wgAutoloadClasses['NjordHooks'] =  "{$IP}/extensions/wikia/NjordPrototype/NjordHooks.class.php";
-
-/**
  * Wikia Skins
  *
  * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
@@ -370,6 +365,10 @@ $wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 $wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 $wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
+
+// controllers
+$wgAutoloadClasses['Wikia\Helios\HelperController'] = "{$IP}/includes/wikia/controllers/HeliosHelperController.class.php";
+$wgAutoloadClasses['Wikia\Helios\SampleController'] = "{$IP}/includes/wikia/controllers/HeliosSampleController.class.php";
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -692,7 +691,8 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'campfire',
-		'wikiamobile'
+		'wikiamobile',
+		'oasislight'
 );
 
 /**
@@ -1178,10 +1178,10 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = true;
-$wgPhalanxBaseUrl = "phalanx.service.consul:4666";
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
-	'timeout' => 1 # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
+	'timeout' => 1, # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
+	'internalRequest' => true
 ];
 
 /**
@@ -1219,6 +1219,19 @@ $wgNielsenApid = 'FIXME';
  * Enables Ubisoft
  */
 $wgEnableUbisoft = false;
+
+/**
+ * @name $wgEnableNetzAthleten
+ * Enables NetzAthleten provider
+ */
+$wgEnableNetzAthleten = true;
+
+/**
+ * @name $wgAdDriverNetzAthletenCountries
+ * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNetzAthletenCountries = null;
 
 /**
  * @name $wgEnableAmazonMatch
@@ -1494,17 +1507,6 @@ $wgEnableKruxTargeting = true;
 $wgSitewideDisableKrux = false;
 
 /**
- * @name $wgSitewideDisableMonetizationService
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableMonetizationService
- *
- * Disable MonetizationService sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableMonetizationService = false;
-
-/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1598,6 +1600,12 @@ $wgAdDriverSourcePointDetectionMobileCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointRecoveryCountries = null;
+
+/**
+ * @name wgAdDriverEnableSourcePointRecovery
+ * Disable SourcePoint Recovery per wiki
+ */
+$wgAdDriverEnableSourcePointRecovery = null;
 
 /**
  * trusted proxy service registry

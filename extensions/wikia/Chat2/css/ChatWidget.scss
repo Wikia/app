@@ -5,7 +5,6 @@
 @import "skins/shared/mixins/clearfix";
 
 @import "ChatColor";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body.skin-monobook .ChatWidget,
@@ -14,14 +13,16 @@ body.skin-oasis .ChatMonobookWidget {
 }
 
 .chat-join {
-	button:before {
-		@include sprite-Chat-full('icon-chat_bubble');
-		content: "";
+	button .icon {
 		display: inline-block;
-		height: 15px;
+		height: 17px;
 		margin-right: 5px;
 		vertical-align: middle;
 		width: 17px;
+
+		svg {
+			fill: #fff;
+		}
 	}
 }
 

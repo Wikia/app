@@ -111,8 +111,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$title = Title::newFromText( $titleText, NS_MEDIAWIKI );
 		}
 
-		$title = $this->resolveRedirect( $title );
-
 		return $title;
 	}
 

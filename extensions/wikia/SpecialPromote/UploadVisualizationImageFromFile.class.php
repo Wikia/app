@@ -57,7 +57,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	static public function UploadVerification($destName, $tempPath, &$error) {
 		$promoImage = PromoImage::fromPathname($destName);
 
-		if($promoImage->isValid() and ($promoImage->getCityId() == F::app()->wg->cityId)){
+		if ( $promoImage->isValid() && $promoImage->getCityId() == F::app()->wg->cityId ) {
 			// you cannot upload to this wiki an image with database name the same as this wiki
 			$error = wfMsg('promote-manual-upload-error');
 			return false;

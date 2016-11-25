@@ -2,13 +2,13 @@
 /**
  * A maintenance script to rebuild Phalanx's cache. Rebuilding the cache
  * during regular HTTP requests has become too resource-consuming.
- * 
+ *
  * @file extensions/wikia/Phalanx/maintenance/rebuildPhalanxCache.php
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  */
 
 // MediaWiki
-ini_set( "include_path", dirname(__FILE__)."/../../../../../maintenance/" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
 // Phalanx caches its blocks by the type and by the language. Let's
@@ -16,10 +16,10 @@ require_once( "commandLine.inc" );
 $aTypes     = array_keys( PhalanxFallback::$typeNames );
 $aLanguages = array_keys( $wgPhalanxSupportedLanguages );
 
-function getmicrotime() { 
-	list($usec, $sec) = explode(" ",microtime()); 
-	return ((float)$usec + (float)$sec); 
-} 
+function getmicrotime() {
+	list( $usec, $sec ) = explode( " ", microtime() );
+	return ( (float)$usec + (float)$sec );
+}
 
 // Walk through all types...
 foreach ( $aTypes as $iType ) {
