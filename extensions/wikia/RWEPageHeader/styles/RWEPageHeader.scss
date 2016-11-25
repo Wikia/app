@@ -2,7 +2,7 @@ $search-initial-width: 100px;
 $search-expanded-width: 400px;
 $search-button-height: 100%;
 $search-button-width: 100%;
-$search-close-button-margin-right: 24px;
+$search-close-button-padding-right: 8px;
 $search-submit-button-padding: 5px 9px;
 $search-transition-long: .3s;
 $search-transition-short: 50ms 150ms;
@@ -13,8 +13,8 @@ $search-suggestion-z-index: 2;
   width: $search-initial-width;
 
   // just for placement on the right side for testing
-  //position: absolute;
-  //right: 0;
+  position: absolute;
+  right: 0;
   ///////////////////
 
   #searchInputWrapperRWE {
@@ -26,8 +26,9 @@ $search-suggestion-z-index: 2;
   }
 
   .wds-global-navigation__search-close {
+    background: none;
     height: $search-button-height;
-    width: $search-button-width;
+    transition-delay: 150ms;
   }
 
   .wds-global-navigation__search-submit {
@@ -55,13 +56,14 @@ $search-suggestion-z-index: 2;
     }
 
     .wds-global-navigation__search-close {
-      margin-right: $search-close-button-margin-right;
+      max-width: $search-button-width;
       opacity: 1;
+      padding-right: $search-close-button-padding-right;
       transition-delay: 150ms;
     }
 
     #searchInputWrapperRWE {
-      border-bottom: solid 1px black;
+      border-bottom-color: black;
     }
 
     .wds-global-navigation__search-suggestions {

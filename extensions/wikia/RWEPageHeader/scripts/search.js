@@ -21,6 +21,7 @@ $(function ($) {
 	}
 
 	function deactivateSearch() {
+		// console.log("!!!!!!!!!!!!!!!!!!!!!!!!");
 		$searchSubmit.prop('disabled', true);
 		$globalNav.removeClass(activeSearchClass);
 		$searchInput.attr('placeholder', placeholderText).val('');
