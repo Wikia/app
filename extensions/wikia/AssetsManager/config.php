@@ -3138,7 +3138,6 @@ $config[ 'rwe_page_header_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/RWEPageHeader/styles/RWEPageHeader.scss',
 		'//extensions/wikia/RWEPageHeader/styles/index.scss'
 	]
 ];
