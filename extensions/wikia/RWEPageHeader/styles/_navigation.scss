@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
 
 // blocks
 .rwe-page-header {
@@ -38,6 +39,10 @@
 		.rwe-page-header-nav__icon,
 		.rwe-page-header-nav__text {
 			color: $color-links;
+		}
+
+		.rwe-page-header-nav__chevron {
+			@include transform-rotate(180deg);
 		}
 	}
 }
