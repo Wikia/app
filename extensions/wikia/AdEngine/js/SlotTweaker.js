@@ -219,7 +219,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 				break;
 			default:
 				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
-				break;
 		}
 	}
 
