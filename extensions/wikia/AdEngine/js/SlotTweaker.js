@@ -178,15 +178,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function noop() {
-		return;
-	}
-
 	function collapse(slotName) {
 		var slot = doc.getElementById(slotName);
 
 		slot.style.maxHeight = slot.scrollHeight + 'px';
-		noop(slot.offsetHeight);
+		DOMElementTweaker.forceRepaint(slot);
 		DOMElementTweaker.addClass(slot, 'slot-animation');
 		slot.style.maxHeight = '0';
 	}
@@ -216,6 +212,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 				return show(data.slotName);
 			case 'make-responsive':
 				return makeResponsive(data.slotName, data.aspectRatio);
+			default:
+				return log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
 		}
 	}
 
@@ -234,7 +232,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		if (parent && slotId.match(/^INCONTENT/)) {
 			parent.style.display = 'none';
-			noop(parent.offsetHeight);
+			DOMElementTweaker.forceRepaint(parent);
 			parent.style.display = '';
 		}
 	}
