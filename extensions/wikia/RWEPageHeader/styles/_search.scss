@@ -13,15 +13,18 @@ $inactive-color: lighten($color-text, 50%);
 
 $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
 
-$search-initial-width: 150px;
-$search-expanded-width: 400px;
 $search-button-height: 100%;
 $search-button-width: 100%;
 $search-close-button-padding-right: 8px;
+$search-expanded-width: 100%;
+$search-initial-width: 110px;
+$search-form-height: 34px;
+$search-form-margin-top: 7px;
+$search-form-wrapper-initial-width: $search-initial-width + 20px;
 $search-submit-button-padding: 5px 9px;
+$search-suggestion-z-index: 2;
 $search-transition-long: .3s;
 $search-transition-short: 50ms 150ms;
-$search-suggestion-z-index: 2;
 
 #searchInputWrapperRWE {
 	border-bottom: solid 1px transparent;
@@ -41,13 +44,7 @@ $search-suggestion-z-index: 2;
 #searchFormWrapperRWE {
 	border-top: 0;
 	margin-bottom: 0;
-	width: 162px;
-
-	form {
-		height: 30px;
-		margin-top: 9px;
-		padding-left: 12px;
-	}
+	width: $search-form-wrapper-initial-width;
 
 	&:hover {
 		.wds-global-navigation__search-label {
@@ -70,8 +67,9 @@ $search-suggestion-z-index: 2;
 	.wds-global-navigation__search {
 		background-color: $color-page;
 		border-top: 0;
-		margin-top: 7px;
-		padding: 2px 0;
+		height: $search-form-height;
+		margin-top: $search-form-margin-top;
+		padding: 0;
 		position: absolute;
 		right: 0;
 		transition: width $search-transition-long;
@@ -82,7 +80,7 @@ $search-suggestion-z-index: 2;
 		background: transparent;
 
 		svg {
-			margin: 0 2px 0 6px;
+			margin: 0 2px 0 0;
 		}
 
 		input {
@@ -121,7 +119,7 @@ $search-suggestion-z-index: 2;
 	.wds-global-navigation__search-suggestions {
 		background-color: $background-color;
 		border-top-color: $color-links;
-		z-index: 2;
+		z-index: $search-suggestion-z-index;
 	}
 
 	.wds-global-navigation__dropdown-link {
@@ -136,7 +134,7 @@ $search-suggestion-z-index: 2;
 		transition: width $search-transition-long;
 
 		.wds-global-navigation__search {
-			width: 100%;
+			width: $search-expanded-width;
 		}
 
 		#searchInputWrapperRWE {
