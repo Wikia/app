@@ -11,14 +11,12 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 	$(function () {
 		$('.rwe-page-header--dropdown').hover(function () {
-			$(this).parent('.rwe-page-header__nav-element')
-				.addClass('rwe-page-header__nav-element--active');
+			$(this).addClass('rwe-page-header--active');
 		}, function () {
-			$(this).parent('.rwe-page-header__nav-element')
-				.removeClass('rwe-page-header__nav-element--active');
+			$(this).removeClass('rwe-page-header--active');
 		});
 
-		$('.rwe-page-header__nav-link').on('click', function (e) {
+		$('.rwe-page-header-nav__link').on('click', function (e) {
 			track({
 				label: $(this).data().tracking
 			});
