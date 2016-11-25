@@ -525,7 +525,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return \Wikia\Search\Config
 	 */
 	protected function getSearchConfigFromRequest() {
-		$request = $this->getRequest();
+		global $wgRequest;
+
+		// Use WebRequest instead of Nirvana request
+		// Nirvana request does not process certain Unicode stuff correctly which causes HTTP 500
+		$request = $wgRequest;
 		$searchConfig = new Wikia\Search\Config();
 		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
@@ -533,12 +537,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setQuery                   ( $request->getVal( 'query', $request->getVal( 'search' ) ) )
 			->setCityId                  ( $this->wg->CityId )
 			->setLimit                   ( $request->getInt( 'limit', $resultsPerPage ) )
-			->setPage                    ( $request->getVal( 'page', 1) )
+			->setPage                    ( $request->getInt( 'page', 1 ) )
 			->setRank                    ( $request->getVal( 'rank', 'default' ) )
-			->setHub                     ( $request->getVal( 'hub', false ) )
+			->setHub                     ( $request->getBool( 'hub', false ) )
 			->setInterWiki               ( $this->isCorporateWiki() )
-			->setVideoSearch             ( $request->getVal( 'videoSearch', false ) )
-			->setFilterQueriesFromCodes  ( $request->getVal( 'filters', array() ) )
+			->setVideoSearch             ( $request->getBool( 'videoSearch', false ) )
+			->setFilterQueriesFromCodes  ( $request->getArray( 'filters', [] ) )
 			->setBoostGroup              ( $request->getVal( 'ab' ) );
 
 		if ( $this->isCorporateWiki() ) {
@@ -648,7 +652,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
-		$query = $searchConfig->getQuery()->getSanitizedQuery();
 		$this->response->setValues( [
 			'fandomStories' => [],
 			'topWikiArticles' => [],
@@ -658,7 +661,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && !empty( $query ) ) {
+		// SUS-1219: Use proper sanity check to handle space-only queries correctly
+		$hasTerms = $searchConfig->getQuery()->hasTerms();
+		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && $hasTerms ) {
+			$query = $searchConfig->getQuery()->getSanitizedQuery();
+
 			$fandomStories = \WikiaDataAccess::cache(
 				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
 				\WikiaResponse::CACHE_STANDARD,

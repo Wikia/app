@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, recoveryHelper, doc, log, win) {
+], function (DOMElementTweaker, adSlot, recoveryHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -89,23 +90,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function getRecoveredIframe(slotName) {
-		var node = doc.querySelector('div[id="' + slotName + '"] > div > div'),
-			fallbackId = node && win._sp_.getElementId(node.id),
-			elementById = fallbackId && doc.getElementById(fallbackId);
-
-		if (elementById) {
-			return elementById.querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
-		}
-	}
-
 	function onReady(slotName, callback) {
-		var iframe = doc.querySelector('#' + slotName +' div:not(.hidden) > div[id*="_container_"] iframe');
-
-		if (!iframe && recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
-			log('onIframeReady - trying fallback iframe', 'debug', logGroup);
-			iframe = getRecoveredIframe(slotName);
-		}
+		var iframe = adSlot.getIframe(slotName);
 
 		if (!iframe) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);

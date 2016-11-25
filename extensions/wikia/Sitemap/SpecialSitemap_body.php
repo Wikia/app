@@ -69,7 +69,20 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgMemc, $wgRequest, $wgOut;
+		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt;
+
+		if ( strpos( $subpage, '-newsitemapxml-' ) !== false ) {
+			if ( empty( $wgEnableSitemapXmlExt ) ) {
+				$this->print404();
+				return;
+			}
+
+			$wgOut->disable();
+			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
+			$response->sendHeaders();
+			echo $response->getBody();
+			return;
+		}
 
 		if ( !is_array( $wgMemc->get( wfMemcKey( 'sitemap-index' ) ) ) ) {
 			$wgOut->disable();

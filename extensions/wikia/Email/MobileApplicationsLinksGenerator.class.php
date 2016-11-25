@@ -18,7 +18,7 @@ class MobileApplicationsLinksGenerator {
 
 	const APPLICATION_APP_STORE_URL = 'https://itunes.apple.com/%s/app/id' . self::RELEASE_KEYWORD;
 
-	const WIKIA_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/developer?hl=%s&id=Wikia,+Inc.';
+	const WIKIA_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/developer?hl=%s&id=Fandom+powered+by+Wikia';
 
 	const APPLICATION_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?hl=%s&id=' .
 	                                    self::RELEASE_KEYWORD;

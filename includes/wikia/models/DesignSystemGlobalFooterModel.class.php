@@ -28,7 +28,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data = [
 			'header' => [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+				],
 				'href' => $this->getHref( 'fandom-logo' ),
 				'title' => [
 					'type' => 'text',
@@ -164,7 +169,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'links' => [
 					[
 						'type' => 'link-image',
+						// 'image' is deprecated, use 'image-data' instead
 						'image' => 'wds-company-store-appstore',
+						'image-data' => [
+							'type' => 'wds-svg',
+							'name' => 'wds-company-store-appstore',
+						],
 						'title' => [
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-apps-link-app-store'
@@ -174,42 +184,18 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					],
 					[
 						'type' => 'link-image',
+						// 'image' is deprecated, use 'image-data' instead
 						'image' => 'wds-company-store-googleplay',
+						'image-data' => [
+							'type' => 'wds-svg',
+							'name' => 'wds-company-store-googleplay',
+						],
 						'title' => [
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-apps-link-google-play'
 						],
 						'href' => $this->getHref( 'google-play' ),
 						'tracking_label' => 'community-apps.google-play',
-					]
-				]
-			],
-			'advertise' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-advertise-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-media-kit'
-						],
-						'href' => $this->getHref( 'media-kit' ),
-						'tracking_label' => 'advertise.media-kit',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-contact'
-						],
-						'href' => $this->getHref( 'media-kit-contact' ),
-						'tracking_label' => 'advertise.contact',
 					]
 				]
 			],
@@ -229,6 +215,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
+		$data['advertise'] = $this->getAdvertise();
 
 		return $data;
 	}
@@ -386,7 +373,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-facebook' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-facebook',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-facebook',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-follow-us-link-facebook'
@@ -399,7 +391,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-twitter' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-twitter',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-twitter',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-follow-us-link-twitter'
@@ -412,7 +409,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-reddit' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-reddit',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-reddit',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-follow-us-link-reddit'
@@ -425,7 +427,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-youtube' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-youtube',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-youtube',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-follow-us-link-youtube'
@@ -438,7 +445,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-instagram' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-instagram',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-instagram',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-follow-us-link-instagram'
@@ -520,6 +532,43 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				'href' => $this->getHref( 'help' ),
 				'tracking_label' => 'community.help',
+			];
+		}
+
+		return $data;
+	}
+
+	private function getAdvertise() {
+		$data = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-advertise-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-advertise-link-media-kit'
+					],
+					'href' => $this->getHref( 'media-kit' ),
+					'tracking_label' => 'advertise.media-kit',
+				]
+			]
+		];
+
+		if ( $this->getHref( 'media-kit-contact' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-advertise-link-contact'
+				],
+				'href' => $this->getHref( 'media-kit-contact' ),
+				'tracking_label' => 'advertise.contact',
 			];
 		}
 

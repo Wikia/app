@@ -1,10 +1,11 @@
 @import "layout";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/color";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 body {
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;

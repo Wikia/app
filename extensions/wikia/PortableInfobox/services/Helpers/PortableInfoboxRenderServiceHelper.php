@@ -57,9 +57,12 @@ class PortableInfoboxRenderServiceHelper {
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
 		$title = $data[ 'name' ];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
-		if ( !$file || !$file->exists() ) {
+
+		if ( !$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] ) ) {
 			return false;
 		}
+
 		// get dimensions
 		$originalWidth = $file->getWidth();
 		$dimensions = $this->getThumbnailSizes(
@@ -72,7 +75,11 @@ class PortableInfoboxRenderServiceHelper {
 			'width' => round( $dimensions[ 'width' ] * $ratio ),
 			'height' => round( $dimensions[ 'height' ] * $ratio )
 		] );
-		if ( !$thumbnail || $thumbnail->isError() ) {
+		$thumbnail2x = $file->transform( [
+			'width' => round( $dimensions[ 'width' ] * $ratio * 2 ),
+			'height' => round( $dimensions[ 'height' ] * $ratio * 2 )
+		] );
+		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
 		}
 		$ref = null;
@@ -84,6 +91,7 @@ class PortableInfoboxRenderServiceHelper {
 			'height' => $dimensions[ 'height' ],
 			'width' => $dimensions[ 'width' ],
 			'thumbnail' => $thumbnail->getUrl(),
+			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
 			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
 			'mercuryComponentAttrs' => json_encode( [
@@ -109,7 +117,7 @@ class PortableInfoboxRenderServiceHelper {
 			'firstImage' => $images[0],
 			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
 		];
-		
+
 		return $data;
 	}
 
@@ -153,7 +161,7 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function isMercury() {
 		global $wgArticleAsJson;
-		
+
 		return !empty( $wgArticleAsJson );
 	}
 

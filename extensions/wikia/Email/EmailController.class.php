@@ -270,8 +270,8 @@ abstract class EmailController extends \WikiaController {
 				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
 				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
-				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'socialIcons' => SocialLinksGenerator::generate( $this->targetLang ),
 				'disableInit' => true,
 			]
 		);
@@ -382,26 +382,6 @@ abstract class EmailController extends \WikiaController {
 		return [
 			$this->getMessage( 'emailext-mobile-application-footer-1' )->text(),
 			$this->getMessage( 'emailext-mobile-application-footer-2' )->text()
-		];
-	}
-
-	/**
-	 * Get localized strings for social networks and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getSocialMessages() {
-		return [
-			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
-			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
-			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
-			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
-			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
-			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
-			'reddit' => $this->getMessage( 'oasis-social-reddit' )->text(),
-			'reddit-link' => $this->getMessage( 'oasis-social-reddit-link' )->text(),
-			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
-			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
 		];
 	}
 

@@ -5,7 +5,7 @@
 describe('ext.wikia.adEngine.adEngine', function () {
 	'use strict';
 
-	var eventDispatcher = { trigger: function () { return true; }},
+	var eventDispatcher = { dispatch: function () { return true; }},
 		noop = function () { return; },
 		originalLazyQueue = modules['wikia.lazyqueue'](),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },

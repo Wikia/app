@@ -33,6 +33,10 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function partnerSlot() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	public function linkAuthentication() {
 		$model = $this->getVal( 'model' );
 		$messageKey = $model['title']['key'];

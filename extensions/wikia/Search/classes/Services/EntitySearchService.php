@@ -194,7 +194,7 @@ class EntitySearchService {
 	}
 
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		return $select;

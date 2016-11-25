@@ -4,7 +4,7 @@ class CommunityPageSpecialHelpModel {
 	public function getData() {
 		return [
 			'title' => wfMessage( 'communitypage-help-module-title' )->text(),
-			'titleIcon' => DesignSystemHelper::getSvg( 'wds-icons-help' ),
+			'titleIcon' => DesignSystemHelper::renderSvg( 'wds-icons-help' ),
 			'editPage' => wfMessage( 'communitypage-help-edit-page' )->text(),
 			'addLinks' => wfMessage( 'communitypage-help-add-link' )->text(),
 			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->text(),
@@ -12,7 +12,7 @@ class CommunityPageSpecialHelpModel {
 			'editPageLink' => $this->getHelpPageLink( 'communitypage-help-module-edit-page-name' ),
 			'addLinksPageLink' => $this->getHelpPageLink( 'communitypage-help-module-add-link-name' ),
 			'addNewPageLink' => $this->getHelpPageLink( 'communitypage-help-module-new-page-name' ),
-			'communityPolicyIcon' => DesignSystemHelper::getSvg( 'wds-icons-clipboard-small' ),
+			'communityPolicyIcon' => DesignSystemHelper::renderSvg( 'wds-icons-clipboard-small' ),
 			'communityPolicyLink' => $this->getPolicyLink()
 		];
 	}

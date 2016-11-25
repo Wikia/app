@@ -14,18 +14,88 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 					sizes: [
 						[728, 90],
 						[970, 250]
-					]
+					],
+					position: 'atf'
+				},
+				HOME_TOP_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					position: 'atf'
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
-					]
+					],
+					position: 'atf'
+				},
+				HOME_TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					],
+					position: 'atf'
+				},
+				PREFOOTER_LEFT_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					position: 'btf'
+				},
+				PREFOOTER_MIDDLE_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					position: 'btf'
+				},
+				PREFOOTER_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					position: 'btf'
+				},
+				LEFT_SKYSCRAPER_2: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					position: 'btf'
+				},
+				LEFT_SKYSCRAPER_3: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					position: 'btf'
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					position: 'hivi'
 				}
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
 					sizes: [
+						[320, 50]
+					]
+				},
+				MOBILE_IN_CONTENT: {
+					sizes: [
+						[300, 250],
+						[320, 480]
+					]
+				},
+				MOBILE_PREFOOTER: {
+					sizes: [
+						[300, 250],
 						[320, 50]
 					]
 				}
@@ -37,6 +107,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position);
+
+		if (!placementId) {
+			return;
+		}
+
 		return {
 			code: slotName,
 			sizes: config.sizes,
@@ -44,7 +120,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 				{
 					bidder: bidderName,
 					params: {
-						placementId: appnexusPlacements.getPlacement(skin)
+						placementId: placementId
 					}
 				}
 			]

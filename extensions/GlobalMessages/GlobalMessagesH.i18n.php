@@ -91,10 +91,12 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'htmlform-float-invalid' => 'The value you specified is not a number.',
 	'htmlform-int-toolow' => 'The value you specified is below the minimum of $1',
 	'htmlform-int-toohigh' => 'The value you specified is above the maximum of $1',
+	'htmlform-no' => 'No',
 	'htmlform-required' => 'This value is required',
 	'htmlform-submit' => 'Submit',
 	'htmlform-reset' => 'Undo changes',
 	'htmlform-selectorother-other' => 'Other',
+	'htmlform-yes' => 'Yes',
 	'hidesome' => 'Hide Some',
 	'hidebots' => 'Hide bots',
 	'hubs' => 'Hubs',
@@ -244,6 +246,7 @@ Name of month in Hebrew calender.',
 Name of month in Hebrew calender.',
 	'hebrew-calendar-m12-gen' => '{{optional}}
 Name of month in Hebrew calender.',
+	'htmlform-no' => 'Used in form, such as with radio buttons, for generic yes / no questions',
 	'htmlform-submit' => '{{Identical|Submit}}',
 	'htmlform-reset' => '{{Identical|Undo}}',
 	'htmlform-selectorother-other' => 'Used in drop-down boxes in [[Special:Preferences]] as follows:
@@ -251,6 +254,7 @@ Name of month in Hebrew calender.',
 * stub threshold (appearance tab)
 
 {{Identical|Other}}',
+	'htmlform-yes' => 'Used in form, such as with radio buttons, for generic yes / no questions',
 	'hub-Wikia' => 'Missing documentation',
 ];
 
@@ -2552,6 +2556,8 @@ $messages['de'] = [
 	'hub-Food_and_Drink' => 'Essen und Trinken',
 	'hub-Video_Games' => 'Videospiele',
 	'hubs' => 'Portale',
+	'htmlform-no' => 'Nein',
+	'htmlform-yes' => 'Ja',
 ];
 
 $messages['de-formal'] = [
@@ -2954,6 +2960,8 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'hub-Wikia' => 'Fandom',
 	'hidebots' => 'Ocultar bots',
 	'hidesome' => 'Ocultar Algo',
+	'htmlform-no' => 'No',
+	'htmlform-yes' => 'Sí',
 ];
 
 $messages['et'] = [
@@ -3402,6 +3410,8 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'hub-Lifestyle' => 'Mode de vie',
 	'hub-Video_Games' => 'Jeux vidéo',
 	'hubs' => 'Thèmes',
+	'htmlform-no' => 'Non',
+	'htmlform-yes' => 'Oui',
 ];
 
 $messages['frc'] = [
@@ -5108,6 +5118,8 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'hub-Gaming' => 'Videogiochi',
 	'hub-Lifestyle' => 'Stili di vita',
 	'hub-Video_Games' => 'Videogiochi',
+	'htmlform-no' => 'No',
+	'htmlform-yes' => 'Sì',
 ];
 
 $messages['iu'] = [
@@ -5264,6 +5276,8 @@ $messages['ja'] = [
 	'hub-Video_Games' => 'ゲーム',
 	'hub-Lifestyle' => 'ライフスタイル',
 	'hub-Wikia' => 'Fandom',
+	'htmlform-no' => 'いいえ',
+	'htmlform-yes' => 'はい',
 ];
 
 $messages['jam'] = [
@@ -8238,6 +8252,8 @@ Wellicht is die verwijderd of hernoemd.
 	'home' => 'Hoofdpagina',
 	'helpfaq' => 'Hulp & veelgestelde vragen',
 	'highest_ratings' => 'Hoogst geranschikt',
+	'htmlform-no' => 'No',
+	'htmlform-yes' => 'Yes',
 ];
 
 $messages['nl-informal'] = [
@@ -8799,6 +8815,8 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'hub-Lifestyle' => 'Lifestyle',
 	'hub-Wikia' => 'Fandom',
 	'hubs' => 'Huby',
+	'htmlform-no' => 'Nie',
+	'htmlform-yes' => 'Tak',
 ];
 
 $messages['pms'] = [
@@ -9082,6 +9100,8 @@ Tente [[Special:Search|pesquisar na wiki]] novas páginas relevantes.',
 	'helpfaq' => 'Ajuda e perguntas mais freqüentes',
 	'highest_ratings' => 'Melhores pontuações',
 	'hub-Wikia' => 'Fandom',
+	'htmlform-no' => 'Não',
+	'htmlform-yes' => 'Sim',
 ];
 
 $messages['pt-br'] = [
@@ -9567,6 +9587,8 @@ $messages['ru'] = [
 	'hub-Lifestyle' => 'Увлечения',
 	'hub-Video_Games' => 'Видеоигры',
 	'hub-Videospiele' => 'Видеоигры',
+	'htmlform-no' => 'Нет',
+	'htmlform-yes' => 'Да',
 ];
 
 $messages['rue'] = [
@@ -12489,6 +12511,8 @@ $messages['zh-hans'] = [
 	'htmlform-reset' => '撤销更改',
 	'htmlform-selectorother-other' => '其他',
 	'hub-Wikia' => 'Fandom',
+	'htmlform-no' => '否',
+	'htmlform-yes' => '是的',
 ];
 
 $messages['zh-hant'] = [
@@ -12542,6 +12566,8 @@ $messages['zh-hant'] = [
 	'htmlform-reset' => '撤銷更改',
 	'htmlform-selectorother-other' => '其他',
 	'hub-Wikia' => 'Fandom',
+	'htmlform-no' => '否',
+	'htmlform-yes' => '是的',
 ];
 
 $messages['zh-tw'] = [

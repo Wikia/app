@@ -7,11 +7,10 @@ class PhalanxContentModel extends PhalanxModel {
 
 	/**
 	 * @param Title $title
-	 * @param string $lang
-	 * @param int $id
 	 */
-	public function __construct( $title, $lang = null, $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
+	public function __construct( Title $title ) {
+		parent::__construct();
+		$this->title = $title;
 	}
 
 	/**
@@ -19,9 +18,9 @@ class PhalanxContentModel extends PhalanxModel {
 	 *
 	 * @return bool
 	 */
-	public function isOk() { 
-		return ( 
-			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
+	public function isOk() {
+		return (
+			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
 			!( $this->title instanceof Title ) ||
 			$this->isWikiaInternalRequest()
 		);
@@ -62,34 +61,34 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->logBlock();
 		return $msg;
 	}
-	
+
 	public function textBlock() {
 		$this->logBlock();
 		return $this->block->text;
 	}
-	
+
 	public function match_summary( $summary ) {
 		return $this->setText( $summary )->match( "summary" );
-	} 
-	
+	}
+
 	public function match_summary_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		return ContentBlock::onEditFilter( '', $this->getText(), $this->block );
 	}
-	
+
 	public function match_content( $textbox ) {
-		return $this->setText( $textbox )->match( "content" ); 
+		return $this->setText( $textbox )->match( "content" );
 	}
-	
+
 	public function match_content_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		return ContentBlock::onEditFilter( $this->getText(), '', $this->block );
 	}
-	
+
 	public function match_title() {
 		return $this->match( "title" );
 	}
-	
+
 	public function match_title_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		return TitleBlock::genericTitleCheck( $this->title, $this->block );
@@ -98,7 +97,7 @@ class PhalanxContentModel extends PhalanxModel {
 	public function match_question_title() {
 		return $this->match( "question_title" );
 	}
-	
+
 	public function match_question_title_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		return QuestionTitleBlock::badWordsTest( $this->title, $this->block );

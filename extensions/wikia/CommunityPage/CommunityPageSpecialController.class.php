@@ -56,8 +56,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
-			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
-			'inspectlet' => ( new InspectletService( InspectletService::COMMUNITY_PAGE ) )->getInspectletCode()
+			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors
 		] );
 	}
 
@@ -301,7 +300,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $userCanEditinterface,
-			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
+			'editIcon' => DesignSystemHelper::renderSvg( 'wds-icons-pencil',
 				'community-page-todo-list-module-edit-icon' ),
 			'showTodoListModule' => $data[ 'haveContent' ] || $userCanEditinterface,
 			'isZeroState' => !$data[ 'haveContent' ],

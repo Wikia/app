@@ -25,7 +25,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
 		'Title' => [ 'newFromDBkey', 'newFromText', 'newFromURL', 'newFromID', 'newFromRow' ],
-		'User' => [ 'newFromName', 'newFromId', 'newFromSession', 'newFromRow' ],
+		'User' => [ 'newFromName', 'newFromId', 'newFromToken', 'newFromRow' ],
 	];
 
 

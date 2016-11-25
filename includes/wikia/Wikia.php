@@ -87,6 +87,8 @@ class Wikia {
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
+	const BOT_USER = 'FandomBot';
+
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
@@ -94,6 +96,7 @@ class Wikia {
 	const TAG_INTERFACE_PREFIX = 'tag-';
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -163,6 +166,31 @@ class Wikia {
 
 	public static function invalidateFavicon() {
 		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return mixed an array containing "url" and "size" keys
+	 */
+	public static function getWikiLogoMetadata() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ( $localWikiLogo->exists() ) {
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
+		}
+		else {
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
+		}
 	}
 
 	/**

@@ -28,18 +28,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			'logo' => [
-				'header' => [
-					'type' => 'link-image',
-					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-fandom-powered-by-wikia',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom powered by Wikia'
-					],
-					'tracking_label' => 'logo',
-				]
-			],
+			'logo' => $this->getLogo(),
 			'search' => [
 				'module' => $this->getSearchData()
 			],
@@ -56,7 +45,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			]
 		];
 
-		if ( $this->lang === static::DEFAULT_LANG ) {
+		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
 			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = [
 				'header' => [
@@ -105,6 +94,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			}
 		} else {
 			$data[ 'anon' ] = $this->getAnonUserData();
+		}
+
+		$partnerSlot = $this->getPartnerSlot();
+		if ( !empty( $partnerSlot ) ) {
+			$data[ 'partner_slot' ] = $partnerSlot;
 		}
 
 		return $data;
@@ -174,7 +168,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-user',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-user',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-my-account',
@@ -234,7 +233,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
 			],
-			'param-name' => 'returnto',
+			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
 			'tracking_label' => 'account.sign-out',
 		];
 
@@ -300,7 +299,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-bell',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-bell',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
@@ -357,6 +361,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
+	private function isWikiaOrgCommunity() {
+		return $this->product === self::PRODUCT_WIKIS &&
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+	}
+
 	private function getCorporatePageSearchUrl() {
 		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL( [
 			'fulltext' => 'Search',
@@ -380,6 +389,112 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'type' => 'text',
 			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
+		];
+	}
+
+	private function getPartnerSlot() {
+		if ( $this->lang === 'de' ) {
+			return [
+				'type' => 'link-image',
+				'href' => 'http://www.entertainweb.de/',
+				'image-data' => [
+					'type' => 'image-external',
+					'url' => 'https://services.wikia.com/static-assets/image/5588e692-fae8-4dc3-8db6-5f62e37fed47',
+				],
+				'title' => [
+					'type' => 'text',
+					'value' => 'entertainweb'
+				],
+				'tracking_label' => 'entertainweb',
+			];
+		}
+		return null;
+	}
+
+	private function getLogo() {
+		$logo = [
+			// Deprecated
+			'header' => [
+				'type' => 'link-image',
+				'href' => $this->getHref( 'fandom-logo' ),
+				// 'image' is deprecated use 'image-data' instead
+				'image' => 'wds-company-logo-fandom-powered-by-wikia',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-fandom-powered-by-wikia',
+				],
+				'title' => [
+					'type' => 'text',
+					'value' => 'Fandom powered by Wikia'
+				],
+				'tracking_label' => 'logo',
+			],
+			'module' => [
+				'type' => 'logo',
+				'main' => $this->getLogoMain(),
+			]
+		];
+
+
+		$tagline = $this->getLogoTagline();
+		if ( !empty( $tagline ) ) {
+			$logo['module'][ 'tagline' ] = $tagline;
+		}
+
+		return $logo;
+	}
+
+	private function getLogoMain() {
+		if ( $this->isWikiaOrgCommunity() === true ) {
+			return [
+				'type' => 'link-image',
+				'href' => $this->getHref( 'wikia-org-logo' ),
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-company-logo-wikia-org',
+				],
+				'title' => [
+					'type' => 'text',
+					'value' => 'Wikia.org'
+				],
+				'tracking_label' => 'logo',
+			];
+		}
+
+		return [
+			'type' => 'link-image',
+			'href' => $this->getHref( 'fandom-logo' ),
+			// 'image' is deprecated use 'image-data' instead
+			'image' => 'wds-company-logo-fandom',
+			'image-data' => [
+				'type' => 'wds-svg',
+				'name' => 'wds-company-logo-fandom',
+			],
+			'title' => [
+				'type' => 'text',
+				'value' => 'Fandom powered by Wikia'
+			],
+			'tracking_label' => 'logo',
+		];
+	}
+
+	private function getLogoTagline() {
+		if ( $this->isWikiaOrgCommunity() === true ) {
+			return null;
+		}
+
+		return [
+			'type' => 'link-image',
+			'href' => $this->getHref( 'fandom-logo' ),
+			'image-data' => [
+				'type' => 'wds-svg',
+				'name' => 'wds-company-logo-powered-by-wikia',
+			],
+			'title' => [
+				'type' => 'text',
+				'value' => 'Fandom powered by Wikia'
+			],
+			'tracking_label' => 'logo-tagline',
 		];
 	}
 }

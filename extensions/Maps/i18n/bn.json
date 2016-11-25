@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tauhid16",
+			"Wikitanvir"
+		]
+	},
+	"maps_map": "মানচিত্র",
+	"maps-loading-map": "মানচিত্র লোড করা হচ্ছে...",
+	"maps-load-failed": "মানচিত্র লোড করা সম্ভব হয়নি!",
+	"maps-others": "অন্যান্য",
+	"maps-ns-layer": "পর্ব",
+	"maps-ns-layer-talk": "পর্ব আলোচনা",
+	"maps-layer-property": "সম্পত্তি",
+	"maps-layer-value": "মান",
+	"maps-layer-errors": "ত্রুটি",
+	"maps-layer-of-type": "\"$1\" ধরণের লেয়ার",
+	"validation-error-invalid-location": "স্থিতিমাপ \"$1\" একটি বৈধ অবস্থান হতে হবে।",
+	"maps-abb-north": "উ",
+	"maps-abb-east": "পূ",
+	"maps-abb-south": "দ",
+	"maps-abb-west": "প",
+	"maps-latitude": "অক্ষাংশ:",
+	"maps-longitude": "দ্রাঘিমাংশ:",
+	"maps_map_cannot_be_displayed": "এই মানচিত্রটি প্রদর্শন করা সম্ভব নয়।",
+	"maps_click_to_activate": "মানচিত্র চালু করতে ক্লিক করুন",
+	"maps_centred_on": "মানচিত্র $1, $2-এ কেন্দ্রীভূত।",
+	"maps-osm-par-thumbs": "থাম্ব দেখাও",
+	"maps-osm-par-photos": "ছবি দেখাও"
+}

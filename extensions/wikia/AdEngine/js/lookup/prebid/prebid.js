@@ -18,39 +18,53 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		],
 		adUnits = [],
 		biddersPerformanceMap = {},
-		autoPriceGranularity = 'auto';
+		autoPriceGranularity = 'auto',
+		prebidLoaded = false;
 
 	function call(skin, onResponse) {
-		var prebid = doc.createElement('script'),
+		var prebid, node;
+
+		if (!prebidLoaded) {
+			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-		if (wikiaAdapter.isEnabled()) {
-			adapters.push(wikiaAdapter);
-			win.pbjs.que.push(function () {
-				win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-			});
+			if (wikiaAdapter.isEnabled()) {
+				adapters.push(wikiaAdapter);
+				win.pbjs.que.push(function () {
+					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
+				});
+			}
+
+			prebid.async = true;
+			prebid.type = 'text/javascript';
+			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
+			node.parentNode.insertBefore(prebid, node);
 		}
 
 		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
 		adUnits = helper.setupAdUnits(adapters, skin);
 
 		if (adUnits.length > 0) {
-			prebid.async = true;
-			prebid.type = 'text/javascript';
-			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
+			if (!prebidLoaded) {
+				win.pbjs.que.push(function () {
+					win.pbjs.setPriceGranularity(autoPriceGranularity);
+					win.pbjs.addAdUnits(adUnits);
+				});
+			}
 
-			node.parentNode.insertBefore(prebid, node);
+			win.pbjs.que.push(function() {
 
-			win.pbjs.que.push(function () {
-
-				win.pbjs.setPriceGranularity(autoPriceGranularity);
-				win.pbjs.addAdUnits(adUnits);
+				//@TODO remove two lines below when https://github.com/prebid/Prebid.js/issues/772 is fixed and prebid is updated
+				win.pbjs._bidsReceived = [];
+				win.pbjs._winningBids = [];
 
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});
 			});
 		}
+
+		prebidLoaded = true;
 	}
 
 	function calculatePrices() {
@@ -80,24 +94,10 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var bidResponses,
-			params,
-			winner;
+		var params;
 
 		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
 			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
-
-			if (params.hb_adid) {
-				bidResponses = win.pbjs.getBidResponsesForAdUnitCode(slotName);
-				winner = bidResponses.bids.find(function (bid) {
-					return bid.adId === params.hb_adid;
-				});
-
-				if (winner && winner.complete) {
-					return {};
-				}
-			}
-
 		}
 
 		return params || {};

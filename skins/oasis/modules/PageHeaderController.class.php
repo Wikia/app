@@ -80,12 +80,7 @@ class PageHeaderController extends WikiaController {
 
 			$this->actionImage = MenuButtonController::ADD_ICON;
 			$this->actionName = 'addtopic';
-		} // "Edit with form" (SMW)
-		else if ( isset( $this->content_actions['form_edit'] ) ) {
-			$this->action = $this->content_actions['form_edit'];
-			$this->actionImage = MenuButtonController::EDIT_ICON;
-			$this->actionName = 'form-edit';
-		} // ve-edit
+		}  // ve-edit
 		else if ( isset( $this->content_actions['ve-edit'] ) && $this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
@@ -124,6 +119,9 @@ class PageHeaderController extends WikiaController {
 			} else {
 				array_push( $editActions, 've-edit' );
 			}
+		}
+		if ( isset( $this->content_actions['formedit'] ) ) {
+			array_push( $editActions, 'formedit' ); // SUS-533
 		}
 
 		// items to be added to "edit" dropdown
@@ -198,7 +196,7 @@ class PageHeaderController extends WikiaController {
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
-		$this->pageExists = !empty( $this->wg->Title ) && $this->wg->Title->exists();
+		$this->pageExists = $this->pageExists();
 
 		// default title "settings" (RT #145371), don't touch special pages
 		if ( $ns != NS_SPECIAL ) {
@@ -227,6 +225,8 @@ class PageHeaderController extends WikiaController {
 			// number of pages on this wiki
 			$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
+		} elseif ( !empty( $this->wg->Title ) && $this->wg->Title->isDeleted() == 0 ) {
+			$this->comments = false;
 		}
 
 		// remove namespaces prefix from title
@@ -396,11 +396,6 @@ class PageHeaderController extends WikiaController {
 
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty( $this->wg->DisableAnonymousEditing ) ? ' require-login' : '';
-
-		// render monetization module
-		if ( !empty( $params['monetizationModules'] ) ) {
-			$this->monetizationModules = $params['monetizationModules'];
-		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -606,6 +601,24 @@ class PageHeaderController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function executeAddNewPageButton() {
+		$this->shouldDisplay = false;
+
+		// That's when we show the number of pages on a wiki
+		if ( $this->pageExists() && !$this->wg->Title->isSpecial( 'Videos' ) ) {
+			$this->shouldDisplay = true;
+			$href = SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL();
+
+			wfRunHooks( 'PageHeaderAfterAddNewPageButton', [ &$href ] );
+
+			$this->href = $href;
+		}
+	}
+
+	private function pageExists() {
+		return !empty( $this->wg->Title ) && $this->wg->Title->exists();
 	}
 
 	static function onArticleSaveComplete( &$article, &$user, $text, $summary,

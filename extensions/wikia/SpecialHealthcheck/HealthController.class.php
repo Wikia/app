@@ -24,6 +24,8 @@ class HealthController extends WikiaController {
 	 * - errors: list of errors
 	 */
 	public function databases() {
+		global $wgWikiaDatacenter;
+
 		$cluster = $this->getVal( 'cluster' );
 		$clusters = $this->getAllClusters();
 		if ( $cluster ) {
@@ -45,6 +47,7 @@ class HealthController extends WikiaController {
 		$this->setVal( 'readWrite', [
 			'status' => !wfReadOnly(),
 			'reason' => wfReadOnlyReason(),
+			'datacenter' => $wgWikiaDatacenter,
 		] );
 	}
 

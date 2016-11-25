@@ -96,24 +96,24 @@ class SFCreateTemplate extends SpecialPage {
 		$fieldString = $display ? '' : 'id="starterField" style="display: none"';
 		$text = "\t<div class=\"fieldBox\" $fieldString>\n";
 		$text .= "\t<table style=\"width: 100%;\"><tr><td>\n";
-		$text .= "\t<p><label>" . wfMessage( 'sf_createtemplate_fieldname' )->text() . ' ' .
+		$text .= "\t<p><label>" . wfMessage( 'sf_createtemplate_fieldname' )->escaped() . ' ' .
 			Html::input( 'name_' . $id, null, 'text',
 				array( 'size' => '15' )
 			) . "</label>&nbsp;&nbsp;&nbsp;\n";
-		$text .= "\t<label>" . wfMessage( 'sf_createtemplate_displaylabel' )->text() . ' ' .
+		$text .= "\t<label>" . wfMessage( 'sf_createtemplate_displaylabel' )->escaped() . ' ' .
 			Html::input( 'label_' . $id, null, 'text',
 				array( 'size' => '15' )
 			) . "</label>&nbsp;&nbsp;&nbsp;\n";
 
 		if ( defined( 'SMW_VERSION' ) ) {
 			$dropdown_html = self::printPropertiesComboBox( $all_properties, $id );
-			$text .= "\t<label>" . wfMessage( 'sf_createtemplate_semanticproperty' )->text() . ' ' . $dropdown_html . "</label></p>\n";
+			$text .= "\t<label>" . wfMessage( 'sf_createtemplate_semanticproperty' )->escaped() . ' ' . $dropdown_html . "</label></p>\n";
 		} elseif ( defined( 'CARGO_VERSION' ) ) {
 			$dropdown_html = self::printFieldTypeDropdown( $id );
 			$text .= "\t<label>" . wfMessage( 'sf_createproperty_proptype' )->text() . ' ' . $dropdown_html . "</label></p>\n";
 		}
 
-		$text .= "\t<p>" . '<label><input type="checkbox" name="is_list_' . $id . '" class="isList" /> ' . wfMessage( 'sf_createtemplate_fieldislist' )->text() . "</label>&nbsp;&nbsp;&nbsp;\n";
+		$text .= "\t<p>" . '<label><input type="checkbox" name="is_list_' . $id . '" class="isList" /> ' . wfMessage( 'sf_createtemplate_fieldislist' )->escaped() . "</label>&nbsp;&nbsp;&nbsp;\n";
 		$text .= "\t" . '<label class="delimiter" style="display: none;">' . wfMessage( 'sf_createtemplate_delimiter' )->text() . ' ' .
 			Html::input( 'delimiter_' . $id, ',', 'text',
 				array( 'size' => '2' )
@@ -127,7 +127,7 @@ class SFCreateTemplate extends SpecialPage {
 			$text .= "\t</p>\n";
 		}
 		$text .= "\t</td><td>\n";
-		$text .= "\t" . '<input type="button" value="' . wfMessage( 'sf_createtemplate_deletefield' )->text() . '" class="deleteField" />' . "\n";
+		$text .= "\t" . '<input type="button" value="' . wfMessage( 'sf_createtemplate_deletefield' )->escaped() . '" class="deleteField" />' . "\n";
 
 		$text .= <<<END
 </td></tr></table>
@@ -137,60 +137,9 @@ END;
 		return $text;
 	}
 
-	static function addJavascript() {
-		global $wgOut;
-
-		SFUtils::addJavascriptAndCSS();
-
-		// TODO - this should be in a JS file
-		$template_name_error_str = wfMessage( 'sf_blank_error' )->escaped();
-		$jsText =<<<END
-<script type="text/javascript">
-var fieldNum = 1;
-function createTemplateAddField() {
-	fieldNum++;
-	newField = jQuery('#starterField').clone().css('display', '').removeAttr('id');
-	newHTML = newField.html().replace(/starter/g, fieldNum);
-	newField.html(newHTML);
-	newField.find(".deleteField").click( function() {
-		// Remove the encompassing div for this instance.
-		jQuery(this).closest(".fieldBox")
-			.fadeOut('fast', function() { jQuery(this).remove(); });
-	});
-	newField.find(".isList").click( function() {
-		jQuery(this).closest(".fieldBox").find(".delimiter").toggle();
-	});
-	var combobox = new sf.select2.combobox();
-	combobox.apply($(newField.find('.sfComboBox')));
-	jQuery('#fieldsList').append(newField);
-}
-
-function validateCreateTemplateForm() {
-	templateName = jQuery('#template_name').val();
-	if (templateName === '') {
-		scroll(0, 0);
-		jQuery('#template_name_p').append(' <font color="red">$template_name_error_str</font>');
-		return false;
-	} else {
-		return true;
-	}
-}
-
-jQuery(document).ready(function() {
-	jQuery(".deleteField").click( function() {
-		// Remove the encompassing div for this instance.
-		jQuery(this).closest(".fieldBox")
-			.fadeOut('fast', function() { jQuery(this).remove(); });
-	});
-	jQuery(".isList").click( function() {
-		jQuery(this).closest(".fieldBox").find(".delimiter").toggle();
-	});
-	jQuery('#createTemplateForm').submit( function() { return validateCreateTemplateForm(); } );
-});
-</script>
-
-END;
-		$wgOut->addScript( $jsText );
+	function addJavascript() {
+		$out = $this->getOutput();
+		$out->addModules( array( 'ext.semanticforms.SF_CreateTemplate' ) );
 	}
 
 	static function printTemplateStyleButton( $formatStr, $formatMsg, $htmlFieldName, $curSelection ) {
@@ -214,34 +163,36 @@ END;
 	}
 
 	function printCreateTemplateForm( $query ) {
-		global $wgOut, $wgRequest, $sfgScriptPath;
+		$out = $this->getOutput();
+		$req = $this->getRequest();
 
 		if ( !is_null( $query ) ) {
 			$presetTemplateName = str_replace( '_', ' ', $query );
-			$wgOut->setPageTitle( wfMessage( 'sf-createtemplate-with-name', $presetTemplateName )->text() );
+			$out->setPageTitle( wfMessage( 'sf-createtemplate-with-name', $presetTemplateName )->text() );
 			$template_name = $presetTemplateName;
 		} else {
 			$presetTemplateName = null;
-			$template_name = $wgRequest->getVal( 'template_name' );
+			$template_name = $req->getVal( 'template_name' );
 		}
 
-		self::addJavascript();
+		$out->addModules( 'ext.semanticforms.main' );
+		$this->addJavascript();
 
 		$text = '';
-		$save_page = $wgRequest->getCheck( 'wpSave' );
-		$preview_page = $wgRequest->getCheck( 'wpPreview' );
+		$save_page = $req->getCheck( 'wpSave' );
+		$preview_page = $req->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
-			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateTemplate' );
+			$validToken = $this->getUser()->matchEditToken( $req->getVal( 'csrf' ), 'CreateTemplate' );
 			if ( !$validToken ) {
 				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
+				$out->addHTML( $text );
 				return;
 			}
 
 			$fields = array();
 			// Cycle through the query values, setting the
 			// appropriate local variables.
-			foreach ( $wgRequest->getValues() as $var => $val ) {
+			foreach ( $req->getValues() as $var => $val ) {
 				$var_elements = explode( "_", $var );
 				// we only care about query variables of the form "a_b"
 				if ( count( $var_elements ) != 2 )
@@ -250,27 +201,27 @@ END;
 				if ( $field_field == 'name' && $id != 'starter' ) {
 					$field = SFTemplateField::create(
 						$val,
-						$wgRequest->getVal( 'label_' . $id ),
-						$wgRequest->getVal( 'semantic_property_' . $id ),
-						$wgRequest->getCheck( 'is_list_' . $id ),
-						$wgRequest->getVal( 'delimiter_' . $id )
+						$req->getVal( 'label_' . $id ),
+						$req->getVal( 'semantic_property_' . $id ),
+						$req->getCheck( 'is_list_' . $id ),
+						$req->getVal( 'delimiter_' . $id )
 					);
-					// Fake attributes.
-					$field->mCargoFieldType = $wgRequest->getVal( 'field_type_' . $id );
-					$field->mAllowedValuesStr = $wgRequest->getVal( 'allowed_values_' . $id );
+					$field->setFieldType( $req->getVal( 'field_type_' . $id ) );
+					// Fake attribute.
+					$field->mAllowedValuesStr = $req->getVal( 'allowed_values_' . $id );
 					$fields[] = $field;
 				}
 			}
 
 			// Assemble the template text, and submit it as a wiki
 			// page.
-			$wgOut->setArticleBodyOnly( true );
+			$out->setArticleBodyOnly( true );
 			$title = Title::makeTitleSafe( NS_TEMPLATE, $template_name );
-			$category = $wgRequest->getVal( 'category' );
-			$cargo_table = $wgRequest->getVal( 'cargo_table' );
-			$aggregating_property = $wgRequest->getVal( 'semantic_property_aggregation' );
-			$aggregation_label = $wgRequest->getVal( 'aggregation_label' );
-			$template_format = $wgRequest->getVal( 'template_format' );
+			$category = $req->getVal( 'category' );
+			$cargo_table = $req->getVal( 'cargo_table' );
+			$aggregating_property = $req->getVal( 'semantic_property_aggregation' );
+			$aggregation_label = $req->getVal( 'aggregation_label' );
+			$template_format = $req->getVal( 'template_format' );
 			$sfTemplate = new SFTemplate( $template_name, $fields );
 			$sfTemplate->setCategoryName( $category );
 			$sfTemplate->mCargoTable = $cargo_table;
@@ -279,7 +230,7 @@ END;
 			$full_text = $sfTemplate->createText();
 
 			$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
-			$wgOut->addHTML( $text );
+			$out->addHTML( $text );
 			return;
 		}
 
@@ -312,7 +263,7 @@ END;
 			null,
 			wfMessage( 'sf_createtemplate_addfield' )->text(),
 			'button',
-			array( 'onclick' => "createTemplateAddField()" )
+			array( 'class' => "createTemplateAddField" )
 		);
 		$text .= Html::rawElement( 'p', null, $add_field_button ) . "\n";
 		$text .= "\t</fieldset>\n";
@@ -345,7 +296,7 @@ END;
 
 END;
 
-		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
-		$wgOut->addHTML( $text );
+		$out->addHTML( $text );
 	}
+
 }

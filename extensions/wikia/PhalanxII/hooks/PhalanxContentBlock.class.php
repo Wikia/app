@@ -20,13 +20,15 @@ class PhalanxContentBlock extends WikiaObject {
 	 * @param $summary
 	 * @return bool
 	 */
-	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( EditPage $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 		list( $contentIsBlocked, $errorMessage ) = self::checkContentFromEditPage( $editPage );
 
 		if ( $contentIsBlocked ) {
 			// we found block
 			$editPage->spamPageWithContent( $errorMessage );
+
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $editPage->getTitle()->getPrefixedDBkey(), 'error_message' => $errorMessage ] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -71,13 +73,14 @@ class PhalanxContentBlock extends WikiaObject {
 			return [ $contentIsBlocked, $errorMessage ];
 		}
 
-		if (self::isContentBlockingDisabled()) {
+		if ( self::isContentBlockingDisabled() ) {
 			wfProfileOut( __METHOD__ );
-			wfDebug(__METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n");
+			wfDebug( __METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n" );
 			return [ $contentIsBlocked, $errorMessage ];
 		}
 
-		$title = RequestContext::getMain()->getTitle();
+		// SUS-1219: fallback to editpage title if wgTitle is null
+		$title = $editPage->getContextTitle() ?? $editPage->getTitle();
 
 		$phalanxModel = new PhalanxContentModel( $title );
 
@@ -155,13 +158,13 @@ class PhalanxContentBlock extends WikiaObject {
 		// no need to check edit summary if title is blocked
 		if ( $isOk !== false ) {
 			$isOk = $phalanxModel->match_summary( $reason );
-		} 
-		
+		}
+
 		if ( $isOk === false ) {
 			// SUS-1090: $error must be a MediaWiki message key
 			$error = 'spamprotectionmatch';
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 
 		// SUS-1090: We need to return false if we found a match - otherwise move won't be aborted
@@ -171,7 +174,7 @@ class PhalanxContentBlock extends WikiaObject {
 	/**
 	 * @static
 	 *
-	 * hook 
+	 * hook
 	 * @param $textbox string
 	 * @param $error_msg string
 	 * @param $phalanxModel PhalanxModel
@@ -187,8 +190,8 @@ class PhalanxContentBlock extends WikiaObject {
 		}
 
 		/* check in Phalanx service */
-		$ret = $phalanxModel->match_content( $textbox );	
-		
+		$ret = $phalanxModel->match_content( $textbox );
+
 		if ( $ret === false ) {
 			if ( $errorFunctionName !== null ) {
 				$error_msg = call_user_func( array( $phalanxModel, $errorFunctionName ) );
@@ -197,17 +200,17 @@ class PhalanxContentBlock extends WikiaObject {
 				$error_msg = $phalanxModel->contentBlock();
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * @static
 	 *
 	 * hook
 	 */
-	static public function checkContent( $textbox, &$msg ) {
+	static public function checkContent( $textbox, &$msg, $displayBlock = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = RequestContext::getMain()->getTitle();
@@ -215,11 +218,11 @@ class PhalanxContentBlock extends WikiaObject {
 		$phalanxModel = new PhalanxContentModel( $title );
 
 		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
-		
-		if ( $ret === false ) {
-			$msg = $phalanxModel->textBlock();
+
+		if ( $ret === false && $displayBlock ) {
+			$phalanxModel->displayBlock();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}

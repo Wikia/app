@@ -10,6 +10,7 @@ require([
 			window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
 			window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK,
 		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON,
+		createboxFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX,
 		inputBoxFlow = window.wgFlowTrackingFlows.CREATE_PAGE_INPUT_BOX;
 
 	function init() {
@@ -33,17 +34,11 @@ require([
 			flowTracking.beginFlow(redLinkFlow, {});
 		});
 
-		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
-			if (isNewArticle() && isMainNamespace()) {
-				var qs = new QueryString();
-				qs.setVal('flow', createButtonFlow);
-				window.history.replaceState({}, '', qs.toString());
-				
-				flowTracking.beginFlow(createButtonFlow, {});
-			}
+		$('form.createboxForm .createboxButton').click(function () {
+			flowTracking.beginFlow(createboxFlow, {});
 		});
 
-		$( 'form.createbox' ).submit(function() {
+		$('form.createbox').submit(function () {
 			var flowInput = document.createElement('input');
 
 			flowInput.setAttribute('type', 'hidden');
@@ -52,6 +47,22 @@ require([
 			this.appendChild(flowInput);
 
 			flowTracking.beginFlow(inputBoxFlow, {});
+		});
+
+		$('#ca-edit').on('mousedown', function () {
+			if (isNewArticle() && isMainNamespace()) {
+				flowTracking.beginFlow(createButtonFlow, {});
+			}
+		});
+
+		$('#ca-ve-edit').click(function () {
+			if (isNewArticle() && isMainNamespace()) {
+				var qs = new QueryString();
+
+				flowTracking.beginFlow(createButtonFlow, {});
+				qs.removeVal('tracked');
+				window.history.replaceState({}, '', qs.toString());
+			}
 		});
 	}
 
@@ -66,13 +77,14 @@ require([
 
 			if (flow) {
 				qs.removeVal('flow');
+				qs.removeVal('tracked');
 				window.history.replaceState({}, '', qs.toString())
 			}
 		});
 
-		mw.hook('ve.afterVEInit').add(function(veEditUri) {
-			if (!!mw.config.get( 'wgArticleId' )) {
-				veEditUri.extend( { flow: createButtonFlow } );
+		mw.hook('ve.afterVEInit').add(function (veEditUri) {
+			if (!mw.config.get('wgArticleId')) {
+				veEditUri.extend({ flow: createButtonFlow });
 			}
 		});
 	}

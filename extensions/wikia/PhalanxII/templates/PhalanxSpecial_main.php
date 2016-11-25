@@ -29,6 +29,7 @@
 						</div>
 						<div>
 							<span id="validateMessage"></span>
+							<span id="formValidateMessage-filter"><?= wfMessage( 'phalanx-required-filter' )->escaped(); ?></span>
 						</div>
 						<!-- Format -->
 						<div class="clearfix">
@@ -101,6 +102,8 @@
 <?php
 						}
 ?>
+						</div>
+						<span id="formValidateMessage-type"><?= wfMessage( 'phalanx-required-type' )->escaped(); ?></span>
 					</div>
 					<!-- Reason -->
 					<div id="phalanx-block-optionals" class="clearfix">
@@ -111,14 +114,6 @@
 						<div class="clearfix">
 							<label for="wpPhalanxComment" class="left"><?= wfMessage( 'phalanx-label-comment' )->escaped() ?></label>
 							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= Sanitizer::encodeAttribute( $data['comment'] ); ?>" />
-						</div>
-						<div class="clearfix">
-							<label for="wpPhalanxLanguages" class="left"><?= wfMessage( 'phalanx-label-lang' )->escaped() ?></label>
-							<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
-								<? foreach ($languages as $k => $v) { ?>
-									<option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
-								<? } ?>
-							</select>
 						</div>
 						<div class="clearfix">
 							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?= wfMessage( empty( $editMode ) ? 'phalanx-add-block' : 'phalanx-modify-block' )->escaped() ?>" />

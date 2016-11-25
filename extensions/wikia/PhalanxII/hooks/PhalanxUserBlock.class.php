@@ -9,7 +9,7 @@
 class PhalanxUserBlock extends WikiaObject {
 	private static $typeBlock = null;
 	private static $checkEmail = false;
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
@@ -37,7 +37,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$phalanxModel->setShouldLogInStats( $shouldLogBlockInStats );
 
 		$ret = $phalanxModel->match_user();
-		if ( $ret !== false ){
+		if ( $ret !== false ) {
 			if ( self::$checkEmail === true ) {
 				$ret = $phalanxModel->match_email();
 				if ( $ret === false ) {
@@ -48,7 +48,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
-			self::$typeBlock = (empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
+			self::$typeBlock = ( empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
 		}
 		wfProfileOut( __METHOD__ );
 		return $ret;

@@ -39,8 +39,6 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	if ( mw.config.get( 'WikiaBar' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
-	this.$njordHeroModule = this.$('header.MainPageHeroHeader');
-	this.$njordPageEditButton = this.$('#WikiaArticle nav.wikia-menu-button');
 
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
@@ -164,10 +162,6 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset,
 				(this.$navBackground.offset().top + this.$navBackground.height()) :
 				(this.$localNavigation.offset().top + this.$localNavigation.height())
 		);
-
-	if ( this.$njordHeroModule.length ) {
-		topEdge = this.$njordPageEditButton.offset().top + this.$njordPageEditButton.outerHeight(true);
-	}
 
 	return {
 		top: {
