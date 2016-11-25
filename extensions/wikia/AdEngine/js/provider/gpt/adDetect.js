@@ -3,12 +3,13 @@
 /*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, messageListener, slotTweaker, log, win) {
+], function (adContext, adTracker, uapContext, messageListener, slotTweaker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -170,7 +171,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
-			successTimer;
+			successTimer,
+
+			slotFirstChildData,
+			pageParams,
+			slotParams;
 
 		function noop() { return; }
 
@@ -302,6 +307,29 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 
 		if (expectAsyncHop || expectAsyncHopWithSlotName) {
 			if (shouldPollForSuccess || expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
+
+				slotFirstChildData = slot.container.firstChild.dataset;
+				pageParams = JSON.parse(slotFirstChildData.gptPageParams);
+				slotParams = JSON.parse(slotFirstChildData.gptSlotParams);
+
+				adTracker.trackDW({
+					'pv': pageParams.pv,
+					'country': pageParams.geo,
+					'slot_size': JSON.parse(slotFirstChildData.gptCreativeSize).join('x'),
+					'kv_pos': slotParams.pos,
+					'kv_wsi': slotParams.wsi,
+					'bidder_won': '',
+					'bidder_1': '',
+					'bidder_2': '',
+					'bidder_3': '',
+					'bidder_4': '',
+					'bidder_5': '',
+					'bidder_6': '',
+					'bidder_7': '',
+					'product_chosen': '',
+					'product_creative_id': slotFirstChildData.gptCreativeId,
+					'product_label': ''
+				});
 				// Hops and successes handled. We can safely return now
 				return;
 			}

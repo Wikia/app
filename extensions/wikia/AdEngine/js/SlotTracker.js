@@ -3,8 +3,9 @@
 
 define('ext.wikia.adEngine.slotTracker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker'
-], function (adContext, adTracker) {
+	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.adLogicPageParams'
+], function (adContext, adTracker, pageParamsLogic) {
 	'use strict';
 
 	var timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
@@ -70,7 +71,8 @@ define('ext.wikia.adEngine.slotTracker', [
 		var slotname = data.slotname,
 			slotType = slotTypes[slotname] || 'other',
 			extraParams = data.extraParams || {},
-			forcedLabel = data.state;
+			forcedLabel = data.state,
+			productChosen = [eventName, data.provider, slotType].join('/');
 
 		extraParams.pos = data.slotname;
 
@@ -78,7 +80,7 @@ define('ext.wikia.adEngine.slotTracker', [
 		if (isInteresting(eventName, data)) {
 			stats.interestingEvents += 1;
 			adTracker.track(
-				[eventName, data.provider, slotType].join('/'),
+				productChosen,
 				extraParams,
 				value,
 				forcedLabel

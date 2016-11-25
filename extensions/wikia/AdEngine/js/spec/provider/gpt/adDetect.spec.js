@@ -45,6 +45,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	function getModule(mocks) {
 		return modules['ext.wikia.adEngine.provider.gpt.adDetect'](
 			mocks.adContext,
+			mocks.adTracker,
 			uapContext,
 			mocks.messageListener,
 			slotTweaker,
@@ -69,6 +70,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
+				adTracker: {},
 				messageListener: {}
 			};
 
@@ -110,6 +112,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
+				adTracker: {},
 				messageListener: {}
 			};
 
