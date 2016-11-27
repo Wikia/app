@@ -46,6 +46,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// enqueue i18n message for javascript
 		JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );
 
+		// SUS-936: Don't load article related assets here
+		$this->getOutput()->setArticleRelated( false );
+
 		// Change the <title> attribute and the <h1> for the page
 		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'specialvideos-page-title' )->text() );
 		$this->getContext()->getOutput()->setHTMLTitle( wfMessage( 'specialvideos-html-title' )->text() );

@@ -35,7 +35,11 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		OasisController::addHtmlClass( 'full-screen-page' );
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
-		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
+
+		$this->response->addAsset( 'portable_infobox_builder_scss' );
+		$this->response->addAsset( 'portable_infobox_scss' );
+		$this->response->addAsset( 'portable_infobox_js' );
+
 		$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
 		$this->response->setVal( 'iframeUrl', $url );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
