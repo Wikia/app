@@ -104,8 +104,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getHref( $hrefKey, $variables = null ) {
-		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang, $variables );
+	private function getHref( $hrefKey ) {
+		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 	}
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
@@ -214,7 +214,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function hasAuthorProfile( $user ) {
-		return sizeof(preg_grep("/^fancontributor-/", $user->getGroups())) > 0;
+		return sizeof( preg_grep( "/^fancontributor-/", $user->getGroups() ) ) > 0;
 	}
 
 	private function getLoggedInUserData( $user ) {
@@ -247,7 +247,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
 			$viewProfileLinks[] = [
 				'type' => 'link-text',
-				'href' => $this->getHref( 'user-author-profile',  ['userName' => $userName ] ),
+				'href' => $this->getHref( 'user-author-profile' ) . $userName,
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-user-view-author-profile'

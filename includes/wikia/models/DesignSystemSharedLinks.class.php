@@ -23,24 +23,12 @@ class DesignSystemSharedLinks {
 	/**
 	 * @param $name string key for href
 	 * @param $lang string two letter language code
-	 * @param [$variables] array key-value variables that will be replaced in the href
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
-	public function getHref( $name, $lang, $variables = null ) {
+	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		$href = $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
-
-		if ( !empty( $variables ) ) {
-			$href = preg_replace_callback( '/\\{\\{([^{}]+)\}\\}/',
-				function( $matches ) use ( $variables ) {
-					$key = $matches[1];
-					return array_key_exists( $key, $variables ) ? $variables[ $key ] : '';
-				}
-				, $href );
-		}
-
-		return $href;
+		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
 	}
 
 	private function getLangWithFallback( $lang ) {
@@ -95,7 +83,7 @@ class DesignSystemSharedLinks {
 			'fandom-university' => 'http://community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-register' => 'https://www.wikia.com/register',
-			'user-author-profile' => 'http://fandom.wikia.com/u/{{userName}}',
+			'user-author-profile' => 'http://fandom.wikia.com/u/',
 			'wikia-org-logo' => 'https://www.wikia.org',
 		],
 		'de' => [
