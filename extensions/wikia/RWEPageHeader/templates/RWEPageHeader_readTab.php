@@ -1,4 +1,4 @@
-<div class="rwe-page-header-nav__dropdown wds-dropdown__content">
+<div class="rwe-page-header-nav__dropdown wds-dropdown__content rwe-page-header-nav--columns-<?= $menuColumnsCount ?>">
 	<ul class="rwe-page-header-nav__dropdown-first-level">
 		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) ): ?>
 			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
