@@ -9,7 +9,7 @@
 	.rwe-page-header-nav__dropdown-first-level {
 		@include display-inline-flex();
 		background-color: $background-color;
-		box-shadow: 0 $content-spacing-small $content-spacing-medium-minus 0 rgba(26, 26, 26, .3);
+		box-shadow: 0 $content-spacing-small $content-spacing-medium-minus 0 $shadow-color;
 		margin: 0 auto $content-spacing-medium-minus;
 		position: relative;
 
