@@ -3,9 +3,9 @@
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/breakpoints';
 
+
 .rwe-page-header-nav__dropdown {
 	display: none;
-	margin-top: 13px;
 
 	// reset
 	&.wds-dropdown__content {
@@ -13,7 +13,7 @@
 		box-shadow: unset;
 		display: none;
 		left: -100%;
-		top: unset;
+		top: 43px;
 	}
 
 	&.rwe-page-header-nav--columns-5 {
