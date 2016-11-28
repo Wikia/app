@@ -28,36 +28,43 @@ $(function ($) {
 		$searchInput.attr('placeholder', placeholderText).val('');
 	}
 
-	$searchInput.on('focus', activateSearch);
+	function init() {
+		$searchInput.on('focus', activateSearch);
 
-	$searchInput.on('input', function () {
-		var textLength = this.value.length;
+		$searchInput.on('input', function () {
+			var textLength = this.value.length;
 
-		if (textLength > 0 && $searchSubmit.prop('disabled')) {
-			$searchSubmit.prop('disabled', false);
-		} else if (textLength === 0) {
+			if (textLength > 0 && $searchSubmit.prop('disabled')) {
+				$searchSubmit.prop('disabled', false);
+			} else if (textLength === 0) {
+				$searchSubmit.prop('disabled', true);
+			}
+		});
+
+		$searchInput.on('keydown', function (event) {
+			// Escape key
+			if (event.which === 27) {
+				$searchInputWrapper.removeClass('wds-is-active');
+				this.blur();
+				deactivateSearch();
+				event.preventDefault();
+				event.stopImmediatePropagation();
+			}
+		});
+
+		$searchFormRWE.find('.wds-global-navigation__search-close').on('click', deactivateSearch);
+
+		if ($searchInput.is(':focus')) {
+			activateSearch();
+		}
+
+		if ($searchInput.val().length === 0) {
 			$searchSubmit.prop('disabled', true);
 		}
-	});
-
-	$searchInput.on('keydown', function (event) {
-		// Escape key
-		if (event.which === 27) {
-			$searchInputWrapper.removeClass('wds-is-active');
-			this.blur();
-			deactivateSearch();
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		}
-	});
-
-	$searchFormRWE.find('.wds-global-navigation__search-close').on('click', deactivateSearch);
-
-	if ($searchInput.is(':focus')) {
-		activateSearch();
 	}
 
-	if ($searchInput.val().length === 0) {
-		$searchSubmit.prop('disabled', true);
+	if ($searchInput.length) {
+		init();
 	}
+
 });

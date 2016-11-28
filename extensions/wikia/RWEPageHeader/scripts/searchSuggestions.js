@@ -78,7 +78,7 @@ $(function () {
 		});
 	}
 
-	if (searchSuggestionsUrl) {
+	if ($searchInput.length && searchSuggestionsUrl) {
 		$searchInput.one('focus', initSuggestions);
 
 		if ($searchInput.is(':focus')) {
