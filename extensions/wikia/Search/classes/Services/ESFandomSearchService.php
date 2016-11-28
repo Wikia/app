@@ -5,16 +5,20 @@ namespace Wikia\Search\Services;
 class ESFandomSearchService extends AbstractSearchService {
 	const RESULTS_COUNT = 6;
 
+	protected function getConsulUrl() {
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		return ( new \Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl,
+				$wgConsulServiceTag ) )->getUrl( 'fandom-search' );
+	}
+
 	protected function prepareQuery( string $query ) {
 		return urlencode( $query );
 	}
 
 	protected function select( $query ) {
-		global $wgConsulServiceTag, $wgConsulUrl;
 
-		$consulUrl =
-			( new \Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl,
-				$wgConsulServiceTag ) )->getUrl( 'fandom-search' );
+		$consulUrl = $this->getConsulUrl();
 
 		$response = \Http::post( "http://$consulUrl/fandom", array(
 			'noProxy' => true,
@@ -31,15 +35,13 @@ class ESFandomSearchService extends AbstractSearchService {
 					'response' => $response,
 					'error' => json_last_error(),
 				] );
+			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
+				return $decodedResponse['hits']['hits'];
 			} else {
-				if ( isset( $decodedResponse['hits']['hits'] ) ) {
-					return $decodedResponse['hits']['hits'];
-				} else {
-					\WikiaLogger::instance()->error( " Fandom Stories Search: invalid response", [
-						'query' => $query,
-						'response' => $response
-					] );
-				}
+				\WikiaLogger::instance()->error( " Fandom Stories Search: invalid response", [
+					'query' => $query,
+					'response' => $response
+				] );
 			}
 		} else {
 			\WikiaLogger::instance()->error( " Fandom Stories Search: empty response", [
