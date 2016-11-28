@@ -11,7 +11,7 @@ class ARecoveryModule {
 		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
 		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
-			return false;
+			return true;
 		}
 
 		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
@@ -26,7 +26,6 @@ class ARecoveryModule {
 	
 
 	public static function isLockEnabled() {
-		$user = F::app()->wg->User;
-		return !self::isDisabled() && ( $user && !$user->isLoggedIn() );
+		return !self::isDisabled();
 	}
 }
