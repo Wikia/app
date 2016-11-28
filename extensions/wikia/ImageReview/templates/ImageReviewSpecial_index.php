@@ -89,9 +89,9 @@ if ( is_array($imageList) && count($imageList) > 0) {
 				<span class="image-wiki-url"><a href="<?= htmlspecialchars( $image['wiki_url'] ) ?>"><?= htmlspecialchars( $image['wiki_url'] ) ?></a></span>
 				<?php } ?>
 
-				<label title="<?= wfMessage( 'imagereview-label-ok' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-ok' )->escaped(); ?></label>
-				<label title="<?= wfMessage( 'imagereview-label-delete' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-delete' )->escaped(); ?></label>
-				<label title="<?= wfMessage( 'imagereview-label-questionable' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ( ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ' checked' : '' ) ?>><?= wfMessage( 'imagereview-option-questionable' )->escaped(); ?></label>
+				<label title="<?= wfMessage( 'imagereview-label-ok' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::APPROVED ?>"<?= ($stateId == ImageReviewStates::APPROVED || $stateId == ImageReviewStates::IN_REVIEW || $stateId == ImageReviewStates::UNREVIEWED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-ok' )->escaped(); ?></label>
+				<label title="<?= wfMessage( 'imagereview-label-delete' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED ?>"<?= ($stateId == ImageReviewStates::REJECTED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-delete' )->escaped(); ?></label>
+				<label title="<?= wfMessage( 'imagereview-label-questionable' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::QUESTIONABLE ?>"<?= ( ( $stateId == ImageReviewStates::QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewStates::QUESTIONABLE ) ? ' checked' : '' ) ?>><?= wfMessage( 'imagereview-option-questionable' )->escaped(); ?></label>
 			</li>
 <?php
 /*

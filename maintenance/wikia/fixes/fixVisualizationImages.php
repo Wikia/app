@@ -54,7 +54,7 @@ class FixWikiMainImage extends Maintenance {
 	protected function getCVImage( $wikiId ) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$result = $dbr->selectRow( array( CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME ), array( '*' ), array( 'city_id' => $wikiId, 'image_index' => 0, 'image_review_status' => ImageReviewStatuses::STATE_APPROVED ), __METHOD__ );
+		$result = $dbr->selectRow( array( CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME ), array( '*' ), array( 'city_id' => $wikiId, 'image_index' => 0, 'image_review_status' => ImageReviewStates::APPROVED ), __METHOD__ );
 
 		return $result;
 	}

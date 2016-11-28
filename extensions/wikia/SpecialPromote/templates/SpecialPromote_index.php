@@ -67,22 +67,22 @@
 				</div>
 				<?php if (!empty($mainImage)): ?>
 					<div class="status">
-						<div class="rejected<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
+						<div class="rejected<?= ($mainImage['review_status'] == ImageReviewStates::REJECTED) ? '' : ' hidden' ?>">
 							<p><span>
 								<?= wfMessage('promote-image-rejected')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
 							</span></p>
 						</div>
-						<div class="accepted<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
+						<div class="accepted<?= ($mainImage['review_status'] == ImageReviewStates::APPROVED) ? '' : ' hidden' ?>">
 							<p><span>
 								<?= wfMessage('promote-image-accepted')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
 							</span></p>
 						</div>
 						<div class="reviewed<?=
 							in_array($mainImage['review_status'],array(
-								ImageReviewStatuses::STATE_UNREVIEWED,
-								ImageReviewStatuses::STATE_IN_REVIEW,
-								ImageReviewStatuses::STATE_QUESTIONABLE,
-								ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+								ImageReviewStates::UNREVIEWED,
+								ImageReviewStates::IN_REVIEW,
+								ImageReviewStates::QUESTIONABLE,
+								ImageReviewStates::QUESTIONABLE_IN_REVIEW
 							)) ? '' : ' hidden'
 							?>">
 							<p><span>
@@ -121,22 +121,22 @@
 								<a class="remove" href="#"><?= wfMessage('promote-remove-photo')->text() ?></a>
 							</div>
 							<div class="status">
-								<div class="rejected<?= ($image['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
+								<div class="rejected<?= ($image['review_status'] == ImageReviewStates::REJECTED) ? '' : ' hidden' ?>">
 									<p><span>
 										<?= wfMessage('promote-image-rejected')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
 									</span></p>
 								</div>
-								<div class="accepted<?= ($image['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
+								<div class="accepted<?= ($image['review_status'] == ImageReviewStates::APPROVED) ? '' : ' hidden' ?>">
 									<p><span>
 										<?= wfMessage('promote-image-accepted')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
 									</span></p>
 								</div>
 								<div class="reviewed<?=
 									in_array($image['review_status'],array(
-										ImageReviewStatuses::STATE_UNREVIEWED,
-										ImageReviewStatuses::STATE_IN_REVIEW,
-										ImageReviewStatuses::STATE_QUESTIONABLE,
-										ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+										ImageReviewStates::UNREVIEWED,
+										ImageReviewStates::IN_REVIEW,
+										ImageReviewStates::QUESTIONABLE,
+										ImageReviewStates::QUESTIONABLE_IN_REVIEW
 									)) ? '' : ' hidden'
 									?>">
 									<p><span>

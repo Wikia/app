@@ -107,7 +107,7 @@ class PromoteImageReviewTask extends BatchTask {
 			array(
 				"city_id " => $sourceWikiId,
 				"page_id" => $imageId,
-				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+				'image_review_status' => ImageReviewStates::APPROVED_AND_TRANSFERRING,
 			),
 			__METHOD__
 		);
@@ -137,10 +137,10 @@ class PromoteImageReviewTask extends BatchTask {
 						'id' => $result['id'],
 						'name' => $result['name'],
 					);
-					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_APPROVED);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStates::APPROVED);
 				} else {
 					//on error move image back to review, so that upload could be retried
-					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_UNREVIEWED);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStates::UNREVIEWED);
 					$isError = true;
 				}
 			}
@@ -386,7 +386,7 @@ class PromoteImageReviewTask extends BatchTask {
 			$imageData->city_lang_code = $targetWikiLang;
 			$imageData->image_index =  $promoImage->getType();
 			$imageData->image_name = $promoImage->getPathname();
-			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
+			$imageData->image_review_status = ImageReviewStates::APPROVED;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;
 			$imageData->review_end = null;

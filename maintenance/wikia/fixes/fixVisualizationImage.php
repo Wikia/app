@@ -66,7 +66,7 @@ class FixVisualizationImage extends Maintenance {
 	}
 
 	public static function buildSyntheticCVImagesRow(PromoImage $promoImage, $langCode){
-		$imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
+		$imageReviewStatus = ImageReviewStates::UNREVIEWED;
 
 		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
 		if (!$title->exists()){

@@ -364,8 +364,8 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		if (!empty($modifiedImageNames)) {
 			$imageReviewState = $isCorpLang
-				? ImageReviewStatuses::STATE_UNREVIEWED
-				: ImageReviewStatuses::STATE_AUTO_APPROVED;
+				? ImageReviewStates::UNREVIEWED
+				: ImageReviewStates::AUTO_APPROVED;
 			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedImageNames, $imageReviewState);
 		}
 
@@ -479,16 +479,16 @@ class SpecialPromoteHelper extends WikiaObject {
 		}		
 		foreach($imageStatuses as $status) {
 			switch($status) {
-				case ImageReviewStatuses::STATE_REJECTED:
+				case ImageReviewStates::REJECTED:
 					$wikiStatus['hasImagesRejected'] = true;
 					break;
-				case ImageReviewStatuses::STATE_UNREVIEWED:
-				case ImageReviewStatuses::STATE_IN_REVIEW:
-				case ImageReviewStatuses::STATE_QUESTIONABLE:
-				case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
+				case ImageReviewStates::UNREVIEWED:
+				case ImageReviewStates::IN_REVIEW:
+				case ImageReviewStates::QUESTIONABLE:
+				case ImageReviewStates::QUESTIONABLE_IN_REVIEW:
 				$wikiStatus['hasImagesInReview'] = true;
 					break;
-				case ImageReviewStatuses::STATE_AUTO_APPROVED:
+				case ImageReviewStates::AUTO_APPROVED:
 					$wikiStatus['isAutoApproved'] = true;
 					break;
 			}

@@ -32,7 +32,6 @@ $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.cla
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
 $wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
 $wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
-$wgAutoloadClasses['ImageReviewStatsCache'] =  $dir . 'ImageReviewStatsCache.class.php';
 $wgAutoloadClasses['ImageStateUpdater'] =  $dir . 'ImageStateUpdater.class.php';
 $wgAutoloadClasses['ImageCountGetter'] =  $dir . 'ImageCountGetter.class.php';
 $wgAutoloadClasses['AbandonedWorkResetter'] =  $dir . 'AbandonedWorkResetter.class.php';

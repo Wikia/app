@@ -10,15 +10,10 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $userId = 0;
-	/**
-	 * @var ImageReviewStatsCache
-     */
-	private $statsCache;
-	
+
 	function __construct() {
 		parent::__construct();
 		$this->userId = $this->wg->user->getId();
-		$this->statsCache = new ImageReviewStatsCache( $this->userId );
 	}
 
 	/**
@@ -170,7 +165,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * @throws Exception
 	 * @throws MWException
 	 */
-	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
+	public function getImageList($timestamp, $state = ImageReviewStates::UNREVIEWED, $order = self::ORDER_LATEST ) {
 		if ( $this->previouslyViewedImageList( $timestamp ) ) {
 			return $this->refetchImageListByTimestamp( $timestamp );
 		}
@@ -275,12 +270,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private function assignImageToUser( $reviewStart, $state, stdClass $imageRecord ) {
 		// Determine what our next state should be
-		$targetState = ImageReviewStatuses::STATE_IN_REVIEW;
+		$targetState = ImageReviewStates::IN_REVIEW;
 
-		if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ) {
-			$targetState = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
-		} elseif ( $state == ImageReviewStatuses::STATE_REJECTED ) {
-			$targetState = ImageReviewStatuses::STATE_REJECTED_IN_REVIEW;
+		if ( $state == ImageReviewStates::QUESTIONABLE ) {
+			$targetState = ImageReviewStates::QUESTIONABLE_IN_REVIEW;
+		} elseif ( $state == ImageReviewStates::REJECTED ) {
+			$targetState = ImageReviewStates::REJECTED_IN_REVIEW;
 		}
 
 		$dbw = $this->getDatawareDB( DB_MASTER );
@@ -293,8 +288,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				->AND_( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
 				->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id );
 
-		if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ||
-		     $state == ImageReviewStatuses::STATE_REJECTED ) {
+		if ( $state == ImageReviewStates::QUESTIONABLE ||
+		     $state == ImageReviewStates::REJECTED ) {
 			$query->SET( 'review_end', '0000-00-00 00:00:00' );
 		}
 
@@ -399,7 +394,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			return;
 		}
 
-		$values = [ 'state' => ImageReviewStatuses::STATE_ICO_IMAGE ];
+		$values = [ 'state' => ImageReviewStates::ICO_IMAGE ];
 		$where = [ implode( 'OR', $where ) ];
 
 		$databaseHelper = $this->getDatabaseHelper();

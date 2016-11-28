@@ -8,9 +8,9 @@ class StatsDataGetter extends WikiaModel {
 
 		$summary = [
 			'all' => 0,
-			ImageReviewStatuses::STATE_APPROVED 	=> 0,
-			ImageReviewStatuses::STATE_REJECTED 	=> 0,
-			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
+			ImageReviewStates::APPROVED 	=> 0,
+			ImageReviewStates::REJECTED 	=> 0,
+			ImageReviewStates::QUESTIONABLE => 0,
 			'avg' => 0,
 		];
 		$data = [];
@@ -54,9 +54,9 @@ class StatsDataGetter extends WikiaModel {
 							$data[ $reviewer ] = [
 								'name' => $user->getName(),
 								'total' => 0,
-								ImageReviewStatuses::STATE_APPROVED => 0,
-								ImageReviewStatuses::STATE_REJECTED => 0,
-								ImageReviewStatuses::STATE_QUESTIONABLE => 0,
+								ImageReviewStates::APPROVED => 0,
+								ImageReviewStates::REJECTED => 0,
+								ImageReviewStates::QUESTIONABLE => 0,
 							];
 						}
 						$data[ $reviewer ][ $row->review_state ] = $row->cnt;

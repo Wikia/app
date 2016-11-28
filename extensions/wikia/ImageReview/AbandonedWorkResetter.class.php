@@ -13,20 +13,20 @@ class AbandonedWorkResetter extends WikiaModel {
 
 		// for STATE_UNREVIEWED
 		$this->updateResetAbandoned( $from,
-			ImageReviewStatuses::STATE_UNREVIEWED,
-			ImageReviewStatuses::STATE_IN_REVIEW
+			ImageReviewStates::UNREVIEWED,
+			ImageReviewStates::IN_REVIEW
 		);
 
 		// for STATE_QUESTIONABLE
 		$this->updateResetAbandoned( $from,
-			ImageReviewStatuses::STATE_QUESTIONABLE,
-			ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+			ImageReviewStates::QUESTIONABLE,
+			ImageReviewStates::QUESTIONABLE_IN_REVIEW
 		);
 
 		// for STATE_REJECTED
 		$this->updateResetAbandoned( $from,
-			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_REJECTED_IN_REVIEW
+			ImageReviewStates::REJECTED,
+			ImageReviewStates::REJECTED_IN_REVIEW
 		);
 
 		wfProfileOut( __METHOD__ );

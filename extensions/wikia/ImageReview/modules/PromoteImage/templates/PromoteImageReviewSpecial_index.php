@@ -62,15 +62,15 @@
 						<label title="Mark as OK">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::APPROVED ?>"<?= ($stateId == ImageReviewStates::APPROVED || $stateId == ImageReviewStates::IN_REVIEW || $stateId == ImageReviewStates::QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewStates::QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewStates::UNREVIEWED ? ' checked' :'') ?>>OK</label>
 						<label title="Delete">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED ?>"<?= ($stateId == ImageReviewStates::REJECTED ? ' checked' :'') ?>>Del</label>
 						<label title="Questionable">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::QUESTIONABLE ?>"<?= ($stateId == ImageReviewStates::QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
 					</li>
 					<?php
 					/*

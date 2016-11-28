@@ -41,10 +41,10 @@ class PromoteImageReviewTask extends BaseTask {
 						'id' => $result['id'],
 						'name' => $result['name']
 					];
-					$this->finalizeImageUploadStatus( $image['id'], $sourceWikiId, \ImageReviewStatuses::STATE_APPROVED );
+					$this->finalizeImageUploadStatus( $image['id'], $sourceWikiId, \ImageReviewStates::APPROVED );
 				} else {
 					// on error move image back to review, so that upload could be retried
-					$this->finalizeImageUploadStatus( $image['id'], $sourceWikiId, \ImageReviewStatuses::STATE_UNREVIEWED );
+					$this->finalizeImageUploadStatus( $image['id'], $sourceWikiId, \ImageReviewStates::UNREVIEWED );
 					$isError = true;
 				}
 			}
@@ -293,7 +293,7 @@ class PromoteImageReviewTask extends BaseTask {
 			$imageData->city_lang_code = $targetWikiLang;
 			$imageData->image_index =  $promoImage->getType();
 			$imageData->image_name = $promoImage->getPathname();
-			$imageData->image_review_status = \ImageReviewStatuses::STATE_APPROVED;
+			$imageData->image_review_status = \ImageReviewStates::APPROVED;
 			$imageData->last_edited = date( 'Y-m-d H:i:s' );
 			$imageData->review_start = null;
 			$imageData->review_end = null;
@@ -338,7 +338,7 @@ class PromoteImageReviewTask extends BaseTask {
 				->SET( 'image_review_status', $status )
 			->WHERE( 'city_id' )->EQUAL_TO( $sourceWikiId )
 				->AND_( 'page_id' )->EQUAL_TO( $imageId )
-				->AND_( 'image_review_status' )->EQUAL_TO( \ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING )
+				->AND_( 'image_review_status' )->EQUAL_TO( \ImageReviewStates::APPROVED_AND_TRANSFERRING )
 			->run( wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ) );
 	}
 }

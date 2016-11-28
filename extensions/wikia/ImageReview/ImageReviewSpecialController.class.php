@@ -20,16 +20,16 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	// Map each action to the pool of images we can pull from when getting new images
 	const ACTION_TO_STATUS_CODE = [
-		self::ACTION_QUESTIONABLE => ImageReviewStatuses::STATE_QUESTIONABLE,
-		self::ACTION_REJECTED => ImageReviewStatuses::STATE_REJECTED,
-		self::ACTION_UNREVIEWED => ImageReviewStatuses::STATE_UNREVIEWED
+		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE,
+		self::ACTION_REJECTED => ImageReviewStates::REJECTED,
+		self::ACTION_UNREVIEWED => ImageReviewStates::UNREVIEWED
 	];
 
 	// Map each action to the pool of images already in review when showing images in progress
 	const REVIEW_STATE_FOR_ACTION = [
-		self::ACTION_QUESTIONABLE => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
-		self::ACTION_REJECTED => ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
-		self::ACTION_UNREVIEWED => ImageReviewStatuses::STATE_IN_REVIEW
+		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE_IN_REVIEW,
+		self::ACTION_REJECTED => ImageReviewStates::REJECTED_IN_REVIEW,
+		self::ACTION_UNREVIEWED => ImageReviewStates::IN_REVIEW
 	];
 
 	private $statsHeaders = [
@@ -133,12 +133,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getImageCounts() {
-		$imageCounts = $this->imageCountGetter->getImageCounts();
-
 		// Format the number locally (add ',' or '.')
 		return array_map(
-			function( $number ) { return $this->wg->Lang->formatNum($number); },
-			$imageCounts
+			function( $number ) { return $this->wg->Lang->formatNum( $number ); },
+			$this->imageCountGetter->getImageCounts()
 		);
 	}
 

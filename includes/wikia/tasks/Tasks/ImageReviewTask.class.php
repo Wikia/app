@@ -121,7 +121,7 @@ class ImageReviewTask extends BaseTask {
 			'user_id' => wfLocalFile( $title )->getUser( 'id' ),
 			'last_edited' => \Revision::newFromId( $latestRevId, \Revision::READ_LATEST )->getTimestamp(),
 			'top_200' => $this->isTop200( $wikiId ) ? 1 : 0,
-			'state' => \ImageReviewStatuses::STATE_UNREVIEWED,
+			'state' => \ImageReviewStates::UNREVIEWED,
 		];
 
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );

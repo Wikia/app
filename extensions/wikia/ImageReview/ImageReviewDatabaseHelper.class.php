@@ -20,7 +20,7 @@ class ImageReviewDatabaseHelper {
 	 */
 	public function selectImagesForList( $sOrder,
 		$iLimit = ImageReviewHelper::LIMIT_IMAGES_FROM_DB,
-		$iState = ImageReviewStatuses::STATE_UNREVIEWED
+		$iState = ImageReviewStates::UNREVIEWED
 	) {
 		$oDB = $this->getDatawareDB( DB_SLAVE );
 
@@ -71,10 +71,10 @@ class ImageReviewDatabaseHelper {
 
 		$aWhere = [];
 		$aStatesToFetch = [
-			ImageReviewStatuses::STATE_QUESTIONABLE,
-			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_UNREVIEWED,
-			ImageReviewStatuses::STATE_INVALID_IMAGE,
+			ImageReviewStates::QUESTIONABLE,
+			ImageReviewStates::REJECTED,
+			ImageReviewStates::UNREVIEWED,
+			ImageReviewStates::INVALID_IMAGE,
 		];
 		$aWhere[] = 'state in (' . $oDB->makeList( $aStatesToFetch ) . ')';
 		$aWhere[] = 'top_200=0';

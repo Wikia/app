@@ -14,15 +14,15 @@ class ImageStateUpdater extends WikiaModel {
 		$statsInsert = [];
 
 		$sqlWhere = [
-			ImageReviewStatuses::STATE_APPROVED => [],
-			ImageReviewStatuses::STATE_REJECTED => [],
-			ImageReviewStatuses::STATE_QUESTIONABLE => [],
+			ImageReviewStates::APPROVED => [],
+			ImageReviewStates::REJECTED => [],
+			ImageReviewStates::QUESTIONABLE => [],
 		];
 
 		foreach ( $images as $image ) {
 			$sqlWhere[ $image['state'] ][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 
-			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
+			if ( $image['state'] == ImageReviewStates::DELETED ) {
 				$deletionList[] = [ $image['wikiId'], $image['pageId'] ];
 			}
 
