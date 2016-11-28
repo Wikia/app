@@ -15,4 +15,12 @@ class RWEPageHeaderController extends WikiaController {
 			return '/wiki/Special:Forum';
 		}
 	}
+
+	public function readTab() {
+		$model = new NavigationModel();
+
+		$data = $model->getWiki( NavigationModel::WIKI_LOCAL_MESSAGE );
+
+		$this->menuNodes = $data[ 'wiki' ];
+	}
 }

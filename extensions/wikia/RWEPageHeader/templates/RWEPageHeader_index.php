@@ -4,8 +4,8 @@
 		<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	</div>
 	<ul class="rwe-page-header-nav">
-		<li class="rwe-page-header-nav__tab">
-			<a class="rwe-page-header-nav__link rwe-page-header--dropdown" href="/" data-tracking="read">
+		<li class="rwe-page-header-nav__element rwe-page-header-nav__element-dropdown wds-dropdown wds-dropdown__toggle">
+			<a class="rwe-page-header-nav__link" href="#" data-tracking="read">
 				<svg width="18" height="18" viewBox="0 0 18 18"
 					 class="wds-icon wds-icon-small rwe-page-header-nav__icon" xmlns="http://www.w3.org/2000/svg">
 					<path fill-rule="evenodd"
@@ -17,10 +17,11 @@
 					'wds-icon wds-icon-tiny rwe-page-header-nav__chevron'
 				) ?>
 			</a>
+			<?= $app->renderView('RWEPageHeader', 'readTab'); ?>
 		</li>
 
-		<li class="rwe-page-header-nav__tab">
-			<a class="rwe-page-header-nav__link rwe-page-header--dropdown" href="/wiki/Special:Community"
+		<li class="rwe-page-header-nav__element rwe-page-header-nav__element-dropdown">
+			<a class="rwe-page-header-nav__link" href="/wiki/Special:Community"
 			   data-tracking="create">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-pencil',
@@ -34,7 +35,7 @@
 			</a>
 		</li>
 
-		<li class="rwe-page-header-nav__tab">
+		<li class="rwe-page-header-nav__element">
 			<a class="rwe-page-header-nav__link" href="<?= $discussTabLink ?>" data-tracking="discuss">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-reply',
@@ -44,7 +45,7 @@
 			</a>
 		</li>
 
-		<li class="rwe-page-header-nav__tab">
+		<li class="rwe-page-header-nav__element">
 			<a class="rwe-page-header-nav__link" href="/wiki/Special:Search" data-tracking="search">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-magnifying-glass',

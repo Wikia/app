@@ -12,6 +12,15 @@
 	@include justify-content(center);
 
 	border-bottom: 1px solid $color-page-border;
+
+	// reset
+	.wds-dropdown__content {
+		background-color: unset;
+		box-shadow: unset;
+		display: none;
+		left: -100%;
+		top: unset;
+	}
 }
 
 // elements
@@ -20,20 +29,34 @@
 	margin-left: $content-spacing-small;
 }
 
-.rwe-page-header-nav__icon {
-	color: $color-page-border;
-	margin: 0 $content-spacing-small;
-	vertical-align: text-bottom;
-}
-
-.rwe-page-header-nav__link {
+.rwe-page-header-nav__element {
 	border-right: 1px $color-page-border solid;
-	display: inline-block;
+	color: $color-page-border;
 	margin: $content-spacing-small 0;
-	padding: $content-spacing-small $content-spacing-regular $content-spacing-small $content-spacing-medium;
+	padding: $content-spacing-small $content-spacing-regular;
+
+	&:last-child {
+		border-right: none;
+	}
 
 	&:hover {
+		cursor: pointer;
 		text-decoration: none;
+
+		.rwe-page-header-nav__chevron,
+		.rwe-page-header-nav__icon,
+		.rwe-page-header-nav__text {
+			color: $color-links;
+		}
+	}
+
+	&.wds-is-active {
+		background-color: $background-color;
+		border-bottom: 1px $background-color solid;
+		border-left: 1px $color-page-border solid;
+		margin-bottom: -1px;
+		margin-left: -1px;
+		padding-bottom: $content-spacing-medium;
 
 		.rwe-page-header-nav__chevron,
 		.rwe-page-header-nav__icon,
@@ -47,12 +70,14 @@
 	}
 }
 
-.rwe-page-header-nav__tab {
+.rwe-page-header-nav__icon {
 	color: $color-page-border;
+	margin: 0 $content-spacing-small;
+	vertical-align: text-bottom;
+}
 
-	&:last-child .rwe-page-header-nav__link {
-		border-right: none;
-	}
+.rwe-page-header-nav__link:hover {
+	text-decoration: none;
 }
 
 .rwe-page-header-nav__text {
@@ -60,13 +85,4 @@
 	font-size: $wds-typescale-size-base;
 	font-weight: bold;
 	line-height: $wds-line-height;
-}
-
-// modifiers
-.rwe-page-header--active {
-	border-bottom: 1px $color-page solid;
-	border-left: 1px $color-page-border solid;
-	margin-bottom: -1px;
-	margin-left: -1px;
-	padding-bottom: $content-spacing-medium;
 }
