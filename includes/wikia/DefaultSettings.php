@@ -1203,6 +1203,12 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
+ * @name $wgEnableGoogleFundingChoices
+ * Enables Google Funding Choices
+ */
+$wgEnableGoogleFundingChoices = true;
+
+/**
  * @name $wgEnableNielsen
  * Enables Nielsen Digital Content Ratings
  */

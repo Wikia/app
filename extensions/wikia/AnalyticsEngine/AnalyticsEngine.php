@@ -39,6 +39,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderComscore();
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
+			case 'GoogleFundingChoices':
+				return new AnalyticsProviderGoogleFundingChoices();
 			case 'GoogleUA':
 				return new AnalyticsProviderGoogleUA();
 			case 'Krux':
