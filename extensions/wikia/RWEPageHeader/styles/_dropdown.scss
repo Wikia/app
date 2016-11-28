@@ -2,9 +2,9 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
 
+
 .rwe-page-header-nav__dropdown {
 	display: none;
-	margin-top: 13px;
 
 	// reset
 	&.wds-dropdown__content {
@@ -12,7 +12,7 @@
 		box-shadow: unset;
 		display: none;
 		left: -100%;
-		top: unset;
+		top: 43px;
 	}
 
 	.rwe-page-header-nav__dropdown-first-level {
