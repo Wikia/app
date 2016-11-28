@@ -23,8 +23,8 @@ $search-form-margin-top: 7px;
 $search-form-wrapper-initial-width: $search-initial-width + 20px;
 $search-submit-button-padding: 5px 9px;
 $search-suggestion-z-index: 2;
-$search-transition-long: .3s;
-$search-transition-short: 50ms 150ms;
+$search-transition-long: .2s;
+$search-transition-short: 100ms;
 
 #searchInputWrapperRWE {
 	border-bottom: solid 1px transparent;
@@ -53,13 +53,13 @@ $search-transition-short: 50ms 150ms;
 			}
 
 			.wds-global-navigation__search-input {
+				cursor: pointer;
+				
 				@include placeholder {
 					color: $color-links;
 					transition-delay: 0s;
 					transition-duration: 0s;
 				}
-
-				cursor: pointer;
 			}
 		}
 	}
@@ -95,7 +95,12 @@ $search-transition-short: 50ms 150ms;
 	.wds-global-navigation__search-close {
 		background: none;
 		height: $search-button-height;
-		transition-delay: 150ms;
+		max-width: 0;
+		opacity: 0;
+		padding: 0;
+		transition: max-width $search-transition-short,
+					opacity $search-transition-short,
+					padding $search-transition-short;
 
 		svg {
 			fill: $inactive-color;
@@ -108,12 +113,8 @@ $search-transition-short: 50ms 150ms;
 		display: inline-block;
 		height: $search-button-height;
 		max-width: 0;
-		opacity: 0;
-		transition: background-color $search-transition-long,
-					border-color $search-transition-long,
-					color $search-transition-long,
-					max-width $search-transition-short,
-					opacity $search-transition-long,
+		opacity: .5;
+		transition: max-width $search-transition-short,
 					padding $search-transition-short;
 	}
 
