@@ -125,6 +125,10 @@ $search-transition-long: .2s;
 		}
 	}
 
+	.wds-is-selected .wds-global-navigation__dropdown-link {
+		color: $color-links;
+	}
+
 	.wds-dropdown__content {
 		box-shadow: 0 5px 10px 0 rgba(26, 26, 26, .3);
 	}

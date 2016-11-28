@@ -22,7 +22,7 @@ $(function () {
 				.autocomplete({
 					serviceUrl: searchSuggestionsUrl,
 					queryParamName: $searchInput.data('suggestions-param-name'),
-					appendTo: '.wds-global-navigation__search-input-wrapper',
+					appendTo: '#searchInputWrapperRWE',
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
