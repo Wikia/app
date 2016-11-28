@@ -649,9 +649,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
-		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
-		global $wgDisableFandomStoriesSearchResultsCaching;
-		global $wgEnableFandomStoriesSearchLogging;
+		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage, $wgDisableFandomStoriesSearchResultsCaching, $wgEnableFandomStoriesSearchLogging;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$this->response->setValues( [
@@ -671,8 +669,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$query = $searchConfig->getQuery()->getSanitizedQuery();
 
 			if ( $wgEnableFandomStoriesSearchLogging ) {
-				$log = WikiaLogger::instance();
-				$log->info( __METHOD__ . ' - Querying Fandom Stories', [
+				WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
 					'query' => $query,
 				] );
 			}
@@ -706,9 +703,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
-		$topWikiArticles =
-			\Wikia\Search\TopWikiArticles::getArticlesWithCache( $this->wg->CityId,
-				$this->response->getVal( 'isGridLayoutEnabled' ) );
+		$topWikiArticles = \Wikia\Search\TopWikiArticles::getArticlesWithCache(
+			$this->wg->CityId,
+			$this->response->getVal( 'isGridLayoutEnabled' )
+		);
 
 		if ( !empty( $topWikiArticles ) ) {
 			$this->setVal( 'topWikiArticles', $topWikiArticles );
@@ -723,13 +721,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		) {
 			$searchService =
 				\Wikia\Util\SamplerProxy::createBuilder()
-					->enableShadowing( $wgEnableSearchRequestShadowing )
-					->methodSamplingRate( $wgSearchRequestSamplingRate )
-					->originalCallable( [
+					->setEnableShadowing( $wgEnableSearchRequestShadowing )
+					->setMethodSamplingRate( $wgSearchRequestSamplingRate )
+					->setOriginalCallable( [
 						new \Wikia\Search\Services\FandomSearchService(),
 						'query',
 					] )
-					->alternateCallable( [
+					->setAlternateCallable( [
 						new \Wikia\Search\Services\ESFandomSearchService(),
 						'query',
 					] )

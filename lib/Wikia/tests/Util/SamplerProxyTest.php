@@ -2,7 +2,7 @@
 
 use Wikia\Util\SamplerProxy;
 
-class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
+class SamplerProxyTest extends \WikiaBaseTest {
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	private $originalMock;
@@ -51,11 +51,11 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowing( $testShadowing )
-				->methodSamplingRate( $testMethodSamplingRate )
-				->originalCallable( $testOriginalCallable )
-				->alternateCallable( $testAlternateCallable )
-				->resultsCallable( $testResultsCallable )
+			$builder->setEnableShadowing( $testShadowing )
+				->setMethodSamplingRate( $testMethodSamplingRate )
+				->setOriginalCallable( $testOriginalCallable )
+				->setAlternateCallable( $testAlternateCallable )
+				->setResultsCallable( $testResultsCallable )
 				->build();
 
 		$this->assertEquals( $testShadowing,
@@ -80,10 +80,10 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowing( $testShadowing )
-				->methodSamplingRate( $testMethodSamplingRate )
-				->originalCallable( $testOriginalCallable )
-				->alternateCallable( $testAlternateCallable )
+			$builder->setEnableShadowing( $testShadowing )
+				->setMethodSamplingRate( $testMethodSamplingRate )
+				->setOriginalCallable( $testOriginalCallable )
+				->setAlternateCallable( $testAlternateCallable )
 				->build();
 
 		$this->originalMock->expects( $this->once() )
@@ -151,10 +151,10 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowing( $enableShadowing )
-				->methodSamplingRate( $samplingRate )
-				->originalCallable( $testOriginalCallable )
-				->alternateCallable( $testAlternateCallable )
+			$builder->setEnableShadowing( $enableShadowing )
+				->setMethodSamplingRate( $samplingRate )
+				->setOriginalCallable( $testOriginalCallable )
+				->setAlternateCallable( $testAlternateCallable )
 				->build();
 
 		$originalCallableRecorder =
@@ -210,11 +210,11 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowing( $testShadowing )
-				->methodSamplingRate( $testMethodSamplingRate )
-				->originalCallable( $testOriginalCallable )
-				->alternateCallable( $testAlternateCallable )
-				->resultsCallable( $resultsCallable )
+			$builder->setEnableShadowing( $testShadowing )
+				->setMethodSamplingRate( $testMethodSamplingRate )
+				->setOriginalCallable( $testOriginalCallable )
+				->setAlternateCallable( $testAlternateCallable )
+				->setResultsCallable( $resultsCallable )
 				->build();
 
 		$this->originalMock->expects( $this->once() )
@@ -251,10 +251,10 @@ class SamplerProxyTest extends \PHPUnit_Framework_TestCase {
 
 		$builder = SamplerProxy::createBuilder();
 		$samplerProxy =
-			$builder->enableShadowing( $testShadow )
-				->methodSamplingRate( $testMethodSamplingRate )
-				->originalCallable( $testOriginalCallable )
-				->alternateCallable( $testAlternateCallable )
+			$builder->setEnableShadowing( $testShadow )
+				->setMethodSamplingRate( $testMethodSamplingRate )
+				->setOriginalCallable( $testOriginalCallable )
+				->setAlternateCallable( $testAlternateCallable )
 				->build();
 
 		$this->alternateMock->expects( $this->once() )

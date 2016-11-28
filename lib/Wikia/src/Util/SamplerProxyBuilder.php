@@ -11,7 +11,7 @@ class SamplerProxyBuilder {
 	protected $alternateCallable;
 	protected $resultsCallable;
 
-	public function enableShadowing( $isEnabled ) {
+	public function setEnableShadowing( $isEnabled ) {
 		$this->enableShadowing = $isEnabled;
 
 		return $this;
@@ -21,7 +21,7 @@ class SamplerProxyBuilder {
 		return $this->enableShadowing;
 	}
 
-	public function methodSamplingRate( $rate ) {
+	public function setMethodSamplingRate( $rate ) {
 		$this->methodSamplingRate = $rate;
 
 		return $this;
@@ -31,7 +31,7 @@ class SamplerProxyBuilder {
 		return $this->methodSamplingRate;
 	}
 
-	public function originalCallable( callable $callable ) {
+	public function setOriginalCallable( callable $callable ) {
 		$this->originalCallable = $callable;
 
 		return $this;
@@ -41,7 +41,7 @@ class SamplerProxyBuilder {
 		return $this->originalCallable;
 	}
 
-	public function alternateCallable( callable $callable ) {
+	public function setAlternateCallable( callable $callable ) {
 		$this->alternateCallable = $callable;
 
 		return $this;
@@ -51,7 +51,7 @@ class SamplerProxyBuilder {
 		return $this->alternateCallable;
 	}
 
-	public function resultsCallable( callable $callable ) {
+	public function setResultsCallable( callable $callable ) {
 		$this->resultsCallable = $callable;
 
 		return $this;
