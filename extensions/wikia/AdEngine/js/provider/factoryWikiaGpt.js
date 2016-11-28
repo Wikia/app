@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
 	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
 	 * @param {function} [extra.beforeHop]      - function to call before calling hop
-	 * @param {boolean}  [extra.onSlotRendered] - function to call before calling renderEnded
+	 * @param {function}  [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
