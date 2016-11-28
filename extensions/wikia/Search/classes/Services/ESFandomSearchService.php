@@ -5,8 +5,8 @@ namespace Wikia\Search\Services;
 class ESFandomSearchService extends AbstractSearchService {
 	const RESULTS_COUNT = 6;
 
-	protected function prepareQuery( $phrase ) {
-		return urlencode( $phrase );
+	protected function prepareQuery( string $query ) {
+		return urlencode( $query );
 	}
 
 	protected function select( $query ) {

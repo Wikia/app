@@ -13,7 +13,7 @@ abstract class AbstractSearchService {
 		return $this->consumeResponse( $response );
 	}
 
-	protected abstract function prepareQuery( $query );
+	protected abstract function prepareQuery( string $query );
 
 	protected abstract function select( $select );
 

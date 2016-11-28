@@ -7,7 +7,7 @@ use Wikia\Search\Query\Select;
 use Wikia\Search\QueryService\Factory;
 use WikiFactory;
 
-class EntitySearchService {
+class EntitySearchService extends AbstractSearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 
