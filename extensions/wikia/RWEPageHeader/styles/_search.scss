@@ -206,4 +206,8 @@ $search-transition-long: .2s;
 			padding-right: $search-close-button-padding-right;
 		}
 	}
+
+	.rwe-page-header-nav__element {
+		cursor: default;
+	}
 }
