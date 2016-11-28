@@ -159,7 +159,7 @@ $config['recirculation_liftigniter_tracker'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',	
+		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 

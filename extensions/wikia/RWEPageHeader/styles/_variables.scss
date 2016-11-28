@@ -22,3 +22,9 @@ $content-spacing-huge-plus: 52px;
 $content-spacing-gargantuan-minus: 56px;
 $content-spacing-gargantuan: 60px;
 $content-spacing-gargantuan-plus: 64px;
+
+$rwe-dropdown-column-width: 192px;
+
+$background-color-mix: 10%;
+$background-color: mix(mix($color-buttons, $color-black, $background-color-mix * 5), $color-page, $background-color-mix);
+$shadow-color: rgba(26, 26, 26, .3);
