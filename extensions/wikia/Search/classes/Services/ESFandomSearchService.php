@@ -2,7 +2,7 @@
 
 namespace Wikia\Search\Services;
 
-class ESFandomSearchService extends ESEntitySearchService {
+class ESFandomSearchService extends AbstractSearchService {
 	const RESULTS_COUNT = 6;
 
 	protected function prepareQuery( $phrase ) {
@@ -24,15 +24,30 @@ class ESFandomSearchService extends ESEntitySearchService {
 			],
 		) );
 		if ( $response !== false ) {
-
 			$decodedResponse = json_decode( $response, true );
-			if ( isset( $decodedResponse['hits']['hits'] ) &&
-			     json_last_error() === JSON_ERROR_NONE
-			) {
-				return $decodedResponse['hits']['hits'];
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				\WikiaLogger::instance()->error( " Fandom Stories Search: error decoding response", [
+					'query' => $query,
+					'response' => $response,
+					'error' => json_last_error(),
+				] );
+			} else {
+				if ( isset( $decodedResponse['hits']['hits'] ) ) {
+					return $decodedResponse['hits']['hits'];
+				} else {
+					\WikiaLogger::instance()->error( " Fandom Stories Search: invalid response", [
+						'query' => $query,
+						'response' => $response
+					] );
+				}
 			}
+		} else {
+			\WikiaLogger::instance()->error( " Fandom Stories Search: empty response", [
+				'query' => $query,
+			] );
 		}
 
+		// Must return an array of results or an empty array - don't return any errors here
 		return [];
 	}
 
