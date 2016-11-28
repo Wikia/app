@@ -1,3 +1,4 @@
+// DIANA: is that used anywhere?
 (function (window, document) {
 	'use strict';
 

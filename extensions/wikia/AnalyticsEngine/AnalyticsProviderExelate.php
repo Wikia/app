@@ -5,6 +5,8 @@ class AnalyticsProviderExelate implements iAnalyticsProvider {
 		return null;
 	}
 
+	// Diana: from what I see here, currently we track only pageview events to exelate (Nielsen)
+	// todo: what is $wgExelateData?
 	function trackEvent($event, $eventDetails = array()) {
 		switch ($event){
 			case AnalyticsEngine::EVENT_PAGEVIEW:
