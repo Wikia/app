@@ -7,7 +7,7 @@
 	padding-bottom: $content-spacing-medium;
 }
 
-.rwe-page-header-nav {
+.rwe-page-header-nav__wrapper {
 	@include flexbox();
 	@include justify-content(center);
 
@@ -21,6 +21,13 @@
 		left: -100%;
 		top: unset;
 	}
+}
+
+.rwe-page-header-nav {
+	@include display-inline-flex();
+	@include justify-content(center);
+
+	position: relative;
 }
 
 // elements

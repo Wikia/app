@@ -3146,6 +3146,8 @@ $config[ 'rwe_page_header_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js'
+		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js',
+		'//extensions/wikia/RWEPageHeader/scripts/search.js',
+		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
 	]
 ];
