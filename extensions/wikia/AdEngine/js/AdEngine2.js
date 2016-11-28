@@ -136,7 +136,6 @@ define('ext.wikia.adEngine.adEngine', [
 					},
 					renderEnded: function() {
 						log(['renderEnded', provider.name, slotName], 'debug', logGroup);
-						tracker.track('renderEnded');
 					}
 				});
 
