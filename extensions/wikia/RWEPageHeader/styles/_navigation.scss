@@ -12,15 +12,6 @@
 	@include justify-content(center);
 
 	border-bottom: 1px solid $color-page-border;
-
-	// reset
-	.wds-dropdown__content {
-		background-color: unset;
-		box-shadow: unset;
-		display: none;
-		left: -100%;
-		top: unset;
-	}
 }
 
 .rwe-page-header-nav {
@@ -43,7 +34,7 @@
 	padding: $content-spacing-small $content-spacing-regular;
 
 	&:last-child {
-		border-right: none;
+		border-right: 0;
 	}
 
 	&:hover {
