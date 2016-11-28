@@ -1,7 +1,8 @@
 $(function ($) {
 	'use strict';
 
-	var $searchFormRWE = $('#searchFormWrapperRWE'),
+	var $RWEPageHeaderNav = $('.rwe-page-header-nav'),
+		$searchFormRWE = $('#searchFormWrapperRWE'),
 		$searchInputWrapper = $searchFormRWE.find('.wds-global-navigation__search-input-wrapper'),
 		$searchInput = $searchFormRWE.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $searchFormRWE.find('.wds-global-navigation__search-submit'),
@@ -9,8 +10,8 @@ $(function ($) {
 		activeSearchClass = 'wds-search-is-active';
 
 	function activateSearch() {
-		if (!$searchFormRWE.hasClass(activeSearchClass)) {
-			$searchFormRWE.addClass(activeSearchClass);
+		if (!$RWEPageHeaderNav.hasClass(activeSearchClass)) {
+			$RWEPageHeaderNav.addClass(activeSearchClass);
 			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
 
 			/**
@@ -23,7 +24,7 @@ $(function ($) {
 
 	function deactivateSearch() {
 		$searchSubmit.prop('disabled', true);
-		$searchFormRWE.removeClass(activeSearchClass);
+		$RWEPageHeaderNav.removeClass(activeSearchClass);
 		$searchInput.attr('placeholder', placeholderText).val('');
 	}
 
