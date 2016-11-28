@@ -18,9 +18,9 @@
 
 // elements
 .rwe-page-haader-wordmark__shadow {
-	box-shadow: 0 4px 20px rgba(26, 26, 26, .6);
+	box-shadow: 0 $content-spacing-tiny-plus $content-spacing-regular-plus rgba(26, 26, 26, .6);
 	display: block;
-	height: 36px;
+	height: $content-spacing-great;
 	position: absolute;
 	width: 100%;
 	z-index: -1;
