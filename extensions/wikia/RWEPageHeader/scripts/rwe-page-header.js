@@ -19,5 +19,21 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.rwe-page-header-nav__element-dropdown').click(function(event) {
 			event.preventDefault();
 		});
+
+		$('.rwe-page-header-nav__dropdown-first-level-item:not(:first-child)')
+			.children('.rwe-page-header-nav__dropdown-second-level').hide();
+
+		$('.rwe-page-header-nav__dropdown-second-level-item:not(:first-child)')
+			.children('.rwe-page-header-nav__dropdown-third-level').hide();
+
+		$('.rwe-page-header-nav__dropdown-first-level-item').hover(function() {
+			$(this).children('.rwe-page-header-nav__dropdown-second-level').show();
+			$(this).siblings().children('.rwe-page-header-nav__dropdown-second-level').hide();
+		});
+
+		$('.rwe-page-header-nav__dropdown-second-level-item').hover(function() {
+			$(this).children('.rwe-page-header-nav__dropdown-third-level').show();
+			$(this).siblings().children('.rwe-page-header-nav__dropdown-third-level').hide();
+		});
 	});
 });
