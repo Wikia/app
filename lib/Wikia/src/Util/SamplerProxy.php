@@ -80,7 +80,10 @@ class SamplerProxy {
 					'sampleRate' => $this->methodSamplingRate,
 				] );
 
-				// ensure we call the original method
+				// An exception was thrown by the alternate method.  Call the original method in
+				// an attempt to obtain valid results for the caller.  This seems like a reasonable
+				// fallback during a temporary migration scenario as should always be the case when
+				// you are using this proxy object.
 				$shouldShadow = true;
 			}
 
