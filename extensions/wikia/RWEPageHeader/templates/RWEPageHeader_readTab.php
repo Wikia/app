@@ -5,7 +5,7 @@
 				<? $menuNode0 = $menuNodes[ $level0 ] ?>
 				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
 					<li class="rwe-page-header-nav__dropdown-first-level-item">
-						<a class="spacer"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
+						<a class="rwe-page-header-nav__link spacer" data-tracking="first-level"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
 							?> data-extra="<?= $menuNode0[ NavigationModel::SPECIAL ] ?>"<? endif
 						?> href="<?= $menuNode0[ NavigationModel::HREF ]
 						?>"><?= $menuNode0[ NavigationModel::TEXT ] ?></a>
@@ -18,7 +18,7 @@
 									$hasChildNodes = isset( $menuNode1[ NavigationModel::CHILDREN ] );
 									?>
 									<li class="rwe-page-header-nav__dropdown-second-level-item">
-										<a<? if ( !empty( $menuNode1[ NavigationModel::SPECIAL ] ) ):
+										<a class="rwe-page-header-nav__link" data-tracking="second-level"<? if ( !empty( $menuNode1[ NavigationModel::SPECIAL ] ) ):
 											?> data-extra="<?= $menuNode1[ NavigationModel::SPECIAL ] ?>"<? endif
 										?> href="<?= $menuNode1[ NavigationModel::HREF ] ?>"<? if ( !empty( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ):
 											?> data-canonical="<?= strtolower( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ?>"<? endif
@@ -30,7 +30,7 @@
 												<? foreach ( $menuNode1[ NavigationModel::CHILDREN ] as $level2 ): ?>
 													<? $menuNode2 = $menuNodes[ $level2 ] ?>
 													<li class="rwe-page-header-nav__dropdown-third-level-item">
-														<a<? if ( !empty( $menuNode2[ NavigationModel::SPECIAL ] ) ):
+														<a class="rwe-page-header-nav__link" data-tracking="third-level"<? if ( !empty( $menuNode2[ NavigationModel::SPECIAL ] ) ):
 															?> data-extra="<?= $menuNode2[ NavigationModel::SPECIAL ] ?>"<? endif
 														?> href="<?= $menuNode2[ NavigationModel::HREF ]
 														?>"><?= $menuNode2[ NavigationModel::TEXT ] ?></a>
