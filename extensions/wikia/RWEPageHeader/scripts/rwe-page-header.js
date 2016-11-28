@@ -15,5 +15,9 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 				label: $(this).data().tracking
 			});
 		});
+
+		$('.rwe-page-header-nav__element-dropdown').click(function(event) {
+			event.preventDefault();
+		});
 	});
 });
