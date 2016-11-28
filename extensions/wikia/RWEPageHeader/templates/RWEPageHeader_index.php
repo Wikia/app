@@ -48,7 +48,7 @@
 
 			<li id="searchFormWrapperRWE" class="rwe-page-header-nav__element">
 				<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $searchModel['results']['url'] ); ?>">
-					<div id="searchInputWrapperRWE" class="wds-dropdown wds-global-navigation__search-input-wrapper">
+					<div id="searchInputWrapperRWE" class="wds-dropdown wds-global-navigation__search-input-wrapper" data-tracking="search">
 						<label class="wds-global-navigation__search-label">
 							<?= DesignSystemHelper::renderSvg(
 								'wds-icons-magnifying-glass',

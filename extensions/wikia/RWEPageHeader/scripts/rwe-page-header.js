@@ -16,6 +16,12 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			});
 		});
 
+		$('#searchInputWrapperRWE').on('click', function (e) {
+			track({
+				label: $(this).data().tracking
+			});
+		});
+
 		$('.rwe-page-header-nav__element-dropdown').click(function(event) {
 			event.preventDefault();
 		});
