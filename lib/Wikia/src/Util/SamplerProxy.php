@@ -5,6 +5,23 @@
  * alternate) or as a substitution (i.e. execute the alternate instead of the original).
  * Both shadowing and substitution may be sampled so that only a specified percentage of
  * calls involve the alternate and the rest pass through to the original.
+ *
+ * This object supports the following migration pattern:
+ *  1. Implement new service/functionality in production with no client access
+ *  2. Deploy app code that uses this object configured with the existing (to be replaced) code
+ *     as the original callable and the new code as the alternate callable.  This should have no
+ *     effect on functionality until global variables are changed.
+ *  3. Configure global variables so that this object shadows 10% of the calls - should be
+ *     transparent to users and will verify that the production deployment from step 1 is working
+ *     without overtaxing it.
+ *  4. Gradually increase shadowed call percentage until the new service/functionality can handle
+ *     100% of the traffic without any issues.
+ *  5. Back the sampling percentage back down to 10% and disable shadowing - the new
+ *     service/functionality now handles 10% of live calls.
+ *  6, Gradually increase sampling percentage until the new service/functionality handles 100% of
+ *     live calls without issues.
+ *  7. Deploy a code change that removes the SamplerProxy and directly calls the new
+ *     service/functionality and deletes the old code.
  */
 namespace Wikia\Util;
 
