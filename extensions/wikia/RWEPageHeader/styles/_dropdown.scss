@@ -6,6 +6,15 @@
 	display: none;
 	margin-top: 13px;
 
+	// reset
+	&.wds-dropdown__content {
+		background-color: unset;
+		box-shadow: unset;
+		display: none;
+		left: -100%;
+		top: unset;
+	}
+
 	.rwe-page-header-nav__dropdown-first-level {
 		@include display-inline-flex();
 		background-color: $background-color;
