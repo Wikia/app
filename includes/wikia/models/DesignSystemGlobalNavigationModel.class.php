@@ -252,7 +252,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-user-view-author-profile'
 				],
-				'tracking_label' => 'account.profile.author',
+				'tracking_label' => 'account.profile-author',
 			];
 		}
 
