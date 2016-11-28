@@ -23,8 +23,7 @@ $search-form-margin-top: 7px;
 $search-form-wrapper-initial-width: $search-initial-width + 20px;
 $search-submit-button-padding: 5px 9px;
 $search-suggestion-z-index: 2;
-$search-transition-long: .3s;
-$search-transition-short: 50ms 150ms;
+$search-transition-long: .2s;
 
 #searchInputWrapperRWE {
 	border-bottom: solid 1px transparent;
@@ -53,13 +52,13 @@ $search-transition-short: 50ms 150ms;
 			}
 
 			.wds-global-navigation__search-input {
+				cursor: pointer;
+
 				@include placeholder {
 					color: $color-links;
 					transition-delay: 0s;
 					transition-duration: 0s;
 				}
-
-				cursor: pointer;
 			}
 		}
 	}
@@ -95,7 +94,6 @@ $search-transition-short: 50ms 150ms;
 	.wds-global-navigation__search-close {
 		background: none;
 		height: $search-button-height;
-		transition-delay: 150ms;
 
 		svg {
 			fill: $inactive-color;
@@ -107,14 +105,6 @@ $search-transition-short: 50ms 150ms;
 		border-radius: 0;
 		display: inline-block;
 		height: $search-button-height;
-		max-width: 0;
-		opacity: 0;
-		transition: background-color $search-transition-long,
-					border-color $search-transition-long,
-					color $search-transition-long,
-					max-width $search-transition-short,
-					opacity $search-transition-long,
-					padding $search-transition-short;
 	}
 
 	.wds-global-navigation__search-suggestions {
@@ -191,7 +181,6 @@ $search-transition-short: 50ms 150ms;
 			max-width: $search-button-width;
 			opacity: 1;
 			padding-right: $search-close-button-padding-right;
-			transition-delay: 150ms;
 		}
 	}
 }
