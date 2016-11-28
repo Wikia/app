@@ -93,6 +93,7 @@ jQuery(function ($) {
 				case 'comment':
 					label = el.hasClass('talk') ? 'talk' : 'comment';
 					break;
+				case 'share':
 				case 'edit':
 					label = id;
 					break;
