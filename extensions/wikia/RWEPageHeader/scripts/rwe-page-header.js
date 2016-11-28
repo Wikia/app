@@ -10,13 +10,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	};
 
 	$(function () {
-		$('.rwe-page-header--dropdown').hover(function () {
-			$(this).addClass('rwe-page-header--active');
-		}, function () {
-			$(this).removeClass('rwe-page-header--active');
-		});
-
-		$('.rwe-page-header-nav__link').on('click', function () {
+		$('.rwe-page-header-nav__link').on('click', function (e) {
 			track({
 				label: $(this).data().tracking
 			});

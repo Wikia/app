@@ -45,7 +45,8 @@ $search-transition-long: .2s;
 
 #searchFormWrapperRWE {
 	border-top: 0;
-	margin-bottom: 0;
+	margin: 0;
+	padding: 0;
 	width: $search-form-wrapper-initial-width;
 
 	&:hover {
@@ -129,7 +130,7 @@ $search-transition-long: .2s;
 	}
 }
 
-.rwe-page-header-nav__tab:not(#searchFormWrapperRWE) {
+.rwe-page-header-nav__element:not(#searchFormWrapperRWE) {
 	opacity: 1;
 	transition: opacity $search-transition-long;
 	transition-delay: 100ms;
@@ -137,7 +138,7 @@ $search-transition-long: .2s;
 }
 
 .rwe-page-header-nav.wds-search-is-active {
-	.rwe-page-header-nav__tab:not(#searchFormWrapperRWE) {
+	.rwe-page-header-nav__element:not(#searchFormWrapperRWE) {
 		opacity: 0;
 		transition-duration: 100ms;
 		transition-delay: 0ms;
