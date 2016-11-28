@@ -74,7 +74,7 @@
 	}
 }
 
-@media #{$wds-breakpoint-m-only} {
+@media #{$wds-screen} and (max-width:#{$wds-breakpoint-l - 1}) {
 	.rwe-page-header-nav__dropdown.rwe-page-header-nav--columns-5 {
 		left: -100%;
 
