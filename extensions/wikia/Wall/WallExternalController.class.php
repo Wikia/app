@@ -246,7 +246,7 @@ class WallExternalController extends WikiaController {
 		$ns = $this->request->getInt( 'pagenamespace' );
 
 		// SUS-1387: Namespace parameter must be valid Wall or Forum namespace
-		if ( empty( $body ) || !in_array( $ns, $this->wg->WallNS ) ) {
+		if ( empty( $body ) || !WallHelper::isWallNamespace( $ns ) ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
