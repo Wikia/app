@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/breakpoints';
 
 .rwe-page-header-nav__dropdown {
 	display: none;
@@ -69,6 +70,16 @@
 			fill: $color-page-border;
 			float: right;
 			margin: $content-spacing-tiny-minus;
+		}
+	}
+}
+
+@media #{$wds-breakpoint-m-only} {
+	.rwe-page-header-nav__dropdown.rwe-page-header-nav--columns-5 {
+		left: -100%;
+
+		.rwe-page-header-nav__dropdown-first-level-item {
+			width: 158px;
 		}
 	}
 }
