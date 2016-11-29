@@ -88,7 +88,22 @@ define('ext.wikia.adEngine.lookup.services', [
 		addParameters(providerName, slotName, slotTargeting);
 	}
 
+	function getSlotPrices(slotName) {
+		var slotPrices = {};
+
+		bidders.forEach(function(bidder) {
+			if (bidder.name === 'prebid') {
+				//custom logic for prebid
+			} else {
+				slotPrices[bidder.name] = bidder.getSlotPrice(slotName);
+			}
+		});
+
+		return slotPrices;
+	}
+
 	return {
-		extendSlotTargeting: extendSlotTargeting
+		extendSlotTargeting: extendSlotTargeting,
+		getSlotPrices: getSlotPrices
 	};
 });
