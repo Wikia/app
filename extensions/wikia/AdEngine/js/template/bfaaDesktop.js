@@ -91,11 +91,11 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
-		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
-		slotTweaker.onReady(params.slotName, function (iframe) {
-			runOnReady(iframe, params);
-			wrapper.style.opacity = '';
-		});
+		slotTweaker.makeResponsive(params.slotName, params.aspectRatio)
+			.then(function (iframe) {
+				runOnReady(iframe, params);
+				wrapper.style.opacity = '';
+			});
 
 		log(['show', params.uap], log.levels.info, logGroup);
 
