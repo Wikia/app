@@ -57,4 +57,14 @@ class RWEPageHeaderController extends WikiaController {
 			'value' => WikiFactory::getVarValueByName( 'wgSitename', $wgCityId, false, $this->wg->Sitename ),
 		];
 	}
+
+	public function readTab() {
+		$model = new NavigationModel();
+
+		$data = $model->getWiki( NavigationModel::WIKI_LOCAL_MESSAGE );
+
+		$this->menuNodes = $data[ 'wiki' ];
+		$this->menuColumnsCount = is_array( $this->menuNodes ) && isset( $this->menuNodes[0] )
+			? count( $this->menuNodes[0]['children'] ) : 0;
+	}
 }

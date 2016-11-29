@@ -24,8 +24,7 @@ $search-form-margin-top: 7px;
 $search-form-wrapper-initial-width: $search-initial-width + 16px;
 $search-submit-button-padding: 5px 9px;
 $search-suggestion-z-index: 2;
-$search-transition-long: .3s;
-$search-transition-short: 50ms 150ms;
+$search-transition-long: .2s;
 
 #searchInputWrapperRWE {
 	border-bottom: solid 1px transparent;
@@ -34,7 +33,7 @@ $search-transition-short: 50ms 150ms;
 #searchInputRWE {
 	background: transparent;
 	padding: $search-input-padding;
-		height: 20px;
+	height: 20px;
 
 	@include placeholder {
 		color: $color-text;
@@ -44,31 +43,32 @@ $search-transition-short: 50ms 150ms;
 	}
 }
 
-#searchFormWrapperRWE {
-	border-top: 0;
-	margin-bottom: 0;
-	width: $search-form-wrapper-initial-width;
+.rwe-page-header-nav:not(.wds-search-is-active) #searchFormWrapperRWE:hover {
+	.wds-global-navigation__search-label {
+		svg {
+			fill: $color-links;
+		}
 
-	&:hover {
-		.wds-global-navigation__search-label {
-			svg {
-				fill: $color-links;
-			}
+		.wds-global-navigation__search-input {
+			cursor: pointer;
 
-			.wds-global-navigation__search-input {
-				@include placeholder {
-					color: $color-links;
-					transition-delay: 0s;
-					transition-duration: 0s;
-				}
-
-				cursor: pointer;
+			@include placeholder {
+				color: $color-links;
+				transition-delay: 0s;
+				transition-duration: 0s;
 			}
 		}
 	}
+}
+
+#searchFormWrapperRWE {
+	border-top: 0;
+	margin: 0;
+	padding: 0;
+	width: $search-form-wrapper-initial-width;
 
 	.wds-global-navigation__search {
-		background-color: $color-page;
+		background-color: transparent;
 		border-top: 0;
 		height: $search-form-height;
 		margin-top: $search-form-margin-top;
@@ -98,7 +98,6 @@ $search-transition-short: 50ms 150ms;
 	.wds-global-navigation__search-close {
 		background: none;
 		height: $search-button-height;
-		transition-delay: 150ms;
 
 		svg {
 			fill: $inactive-color;
@@ -110,14 +109,6 @@ $search-transition-short: 50ms 150ms;
 		border-radius: 0;
 		display: inline-block;
 		height: $search-button-height;
-		max-width: 0;
-		opacity: 0;
-		transition: background-color $search-transition-long,
-					border-color $search-transition-long,
-					color $search-transition-long,
-					max-width $search-transition-short,
-					opacity $search-transition-long,
-					padding $search-transition-short;
 	}
 
 	.wds-global-navigation__search-suggestions {
@@ -134,33 +125,52 @@ $search-transition-short: 50ms 150ms;
 		}
 	}
 
+	.wds-is-selected .wds-global-navigation__dropdown-link {
+		color: $color-links;
+	}
+
 	.wds-dropdown__content {
 		box-shadow: 0 5px 10px 0 rgba(26, 26, 26, .3);
 	}
+}
 
-	&.wds-search-is-active {
+.rwe-page-header-nav__element:not(#searchFormWrapperRWE) {
+	opacity: 1;
+	transition: opacity $search-transition-long;
+	transition-delay: 100ms;
+
+}
+
+.rwe-page-header-nav.wds-search-is-active {
+	.rwe-page-header-nav__element:not(#searchFormWrapperRWE) {
+		opacity: 0;
+		transition-delay: 0ms;
+		transition-duration: 100ms;
+	}
+
+	#searchInputWrapperRWE {
+		border-bottom-color: $color-text;
+
+		&.wds-is-active {
+			border-bottom-color: $color-links;
+		}
+	}
+
+	#searchInputRWE {
+		color: $color-text;
+
+		@include placeholder {
+			color: $inactive-color;
+			font-size: $wds-typescale-size-minus-1;
+			font-weight: normal;
+		}
+	}
+
+	#searchFormWrapperRWE {
 		transition: width $search-transition-long;
 
 		.wds-global-navigation__search {
 			width: $search-expanded-width;
-		}
-
-		#searchInputWrapperRWE {
-			border-bottom-color: $color-text;
-
-			&.wds-is-active {
-				border-bottom-color: $color-links;
-			}
-		}
-
-		#searchInputRWE {
-			color: $color-text;
-
-			@include placeholder {
-				color: $inactive-color;
-				font-size: $wds-typescale-size-minus-1;
-				font-weight: normal;
-			}
 		}
 
 		.wds-global-navigation__search-label {
@@ -194,7 +204,16 @@ $search-transition-short: 50ms 150ms;
 			max-width: $search-button-width;
 			opacity: 1;
 			padding-right: $search-close-button-padding-right;
-			transition-delay: 150ms;
 		}
+	}
+
+	.rwe-page-header-nav__element {
+		cursor: default;
+	}
+}
+
+@media #{$wds-screen} and (max-width:#{$wds-breakpoint-l - 1}) {
+	#searchInputRWE {
+		position: static;
 	}
 }

@@ -15,10 +15,20 @@ $content-spacing-regular: 18px;
 $content-spacing-regular-plus: 20px;
 $content-spacing-large-minus: 22px;
 $content-spacing-large: 24px;
-$content-spacing-large-plus: 32px;
-$content-spacing-huge-minus: 40px;
+$content-spacing-large-plus: 28px;
+$content-spacing-great-minus: 32px;
+$content-spacing-great: 36px;
+$content-spacing-great-plus: 40px;
+$content-spacing-huge-minus: 44px;
 $content-spacing-huge: 48px;
 $content-spacing-huge-plus: 52px;
 $content-spacing-gargantuan-minus: 56px;
 $content-spacing-gargantuan: 60px;
 $content-spacing-gargantuan-plus: 64px;
+
+$rwe-dropdown-column-width: 192px;
+
+$background-color-mix: 10%;
+$background-color: mix(mix($color-buttons, $color-black, $background-color-mix * 5), $color-page, $background-color-mix);
+$shadow-color: rgba(26, 26, 26, .3);
+$color-icons: rgba($color-text, .4);
