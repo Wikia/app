@@ -75,6 +75,8 @@
 <?= $ivw3 ?>
 <?= $ivw2 ?>
 <?= $sourcePoint ?>
+<?= $gfc ?>
+
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
