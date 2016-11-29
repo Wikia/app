@@ -52,10 +52,7 @@ class RWEPageHeaderController extends WikiaController {
 	private function getSitenameData() {
 		global $wgCityId;
 
-		return [
-			'type' => 'text',
-			'value' => WikiFactory::getVarValueByName( 'wgSitename', $wgCityId, false, $this->wg->Sitename ),
-		];
+		return WikiFactory::getVarValueByName( 'wgSitename', $wgCityId, false, $this->wg->Sitename );
 	}
 
 	public function readTab() {

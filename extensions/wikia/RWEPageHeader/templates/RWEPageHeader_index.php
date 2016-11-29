@@ -65,8 +65,8 @@
 								   data-suggestions-param-name="<?= $searchModel['suggestions']['param-name'] ?>"
 								   data-suggestions-tracking-label="rwe-<?= Sanitizer::encodeAttribute( $searchModel['suggestions']['tracking_label'] ); ?>"
 
-								   data-active-placeholder="<?= DesignSystemHelper::renderText( $searchModel['placeholder-active'] ); ?>"
-								   placeholder="<?= DesignSystemHelper::renderText( $searchModel['placeholder-inactive'] ); ?>"
+								   data-active-placeholder="<?= Sanitizer::encodeAttribute(wfMessage( $searchModel['placeholder-active'], $searchModel['placeholder-active']['params']['sitename'] )->inContentLanguage()); ?>"
+								   placeholder="<?= Sanitizer::encodeAttribute(wfMessage( $searchModel['placeholder-inactive'] )->inContentLanguage()); ?>"
 								   autocomplete="off"
 								/>
 						</label>
