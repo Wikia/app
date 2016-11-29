@@ -57,6 +57,7 @@
 	clear: both;
 }
 
+#CreatePageDialogInputSub,
 #CreatePageDialogTitleErrorMsg {
 	margin-top: 8px;
 }
