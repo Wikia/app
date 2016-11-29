@@ -93,6 +93,10 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
+		function getSlotPrice(slotName) {
+
+		}
+
 		function getName() {
 			return module.name;
 		}
@@ -112,6 +116,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			call: call,
 			getName: getName,
 			getSlotParams: getSlotParams,
+			getSlotPrice: getSlotPrice,
 			hasResponse: hasResponse,
 			trackState: trackState,
 			wasCalled: wasCalled

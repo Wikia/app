@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.lookup.services', [
 				char: 'P'
 			}
 		},
-		bidMarker = ['x','x','x','x','x'];
+		bidMarker = ['x', 'x', 'x', 'x', 'x'];
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
@@ -91,12 +91,8 @@ define('ext.wikia.adEngine.lookup.services', [
 	function getSlotPrices(slotName) {
 		var slotPrices = {};
 
-		bidders.forEach(function(bidder) {
-			if (bidder.name === 'prebid') {
-				//custom logic for prebid
-			} else {
-				slotPrices[bidder.name] = bidder.getSlotPrice(slotName);
-			}
+		bidders.forEach(function (bidder) {
+			slotPrices[bidder.name] = bidder.getSlotPrice(slotName);
 		});
 
 		return slotPrices;
