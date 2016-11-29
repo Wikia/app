@@ -10,7 +10,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	};
 
 	$(function () {
-		$('.rwe-page-header-nav__link, #searchInputWrapperRWE').on('click', function (e) {
+		$('.rwe-page-header-nav__link, .rwe-page-header-wordmark_wrapper').on('click', function (e) {
 			track({
 				label: $(this).data().tracking
 			});

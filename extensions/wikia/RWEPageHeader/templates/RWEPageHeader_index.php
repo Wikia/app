@@ -1,7 +1,9 @@
 <div class="rwe-page-header">
 	<div class="rwe-page-header-wordmark">
 		<div class="rwe-page-haader-wordmark__shadow"></div>
-		<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
+		<div class="rwe-page-header-wordmark_wrapper" data-tracking="wordmark">
+			<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
+		</div>
 	</div>
 	<div class="rwe-page-header-nav__wrapper">
 		<ul class="rwe-page-header-nav">
