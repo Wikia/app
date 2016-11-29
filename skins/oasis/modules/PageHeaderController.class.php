@@ -29,6 +29,7 @@ class PageHeaderController extends WikiaController {
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
 		$this->subtitle = $skinVars['subtitle'];
+		$this->skinname = $skinVars['skinname'];
 	}
 
 	/**
