@@ -137,6 +137,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function calculateIframeAspectRatio(iframe) {
+		var height = iframe.contentWindow.document.body.scrollHeight,
+			width = iframe.contentWindow.document.body.scrollWidth;
+
+		return width / height;
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
 		var slot = doc.getElementById(slotName),
 			providerContainer = slot.lastElementChild,
@@ -157,10 +164,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 			onReady(slotName, function (iframe) {
 				log(['makeResponsive', slotName], 'debug', logGroup);
 				if (!aspectRatio) {
-					var height = iframe.contentWindow.document.body.scrollHeight,
-						width = iframe.contentWindow.document.body.scrollWidth;
-
-					aspectRatio = width / height;
+					aspectRatio = calculateIframeAspectRatio(iframe);
 				}
 
 				log(['Slot ratio', aspectRatio], 'debug', logGroup);
