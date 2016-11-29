@@ -69,7 +69,20 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgMemc, $wgRequest, $wgOut;
+		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt;
+
+		if ( strpos( $subpage, '-newsitemapxml-' ) !== false ) {
+			if ( empty( $wgEnableSitemapXmlExt ) ) {
+				$this->print404();
+				return;
+			}
+
+			$wgOut->disable();
+			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
+			$response->sendHeaders();
+			echo $response->getBody();
+			return;
+		}
 
 		if ( !is_array( $wgMemc->get( wfMemcKey( 'sitemap-index' ) ) ) ) {
 			$wgOut->disable();
@@ -250,7 +263,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				return gzencode( str_replace( 'http://localhost/', 'http://' . $_SERVER['SERVER_NAME'] . '/', gzdecode( $namespaceSitemap ) ) );
 			}
 		}
-		$startTime = microtime( true );
+		$start = microtime( true ) * 1000;
 
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
@@ -306,13 +319,21 @@ class SitemapPage extends UnlistedSpecialPage {
 			$out .= $entry;
 		}
 		$out .= "</urlset>\n";
-		$endTime = microtime( true );
-		$out .= "<!-- Generating time: " . ( $endTime - $startTime ) . " sec - " . date( 'Y-m-d H:i:s' ) . " -->\n";
+		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, ( microtime( true ) * 1000 - $start ) );
+		$out .= sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 
 		return gzencode( $out );
 	}
 
 	private function generateNamespaceFromDb() {
+		// Sitemaps are ONLY saved to database for NS_6 and only if wgEnableVideoSitemaps is true.
+		// If you turn that var ON you're putting the pre-cached sitemaps into the db.
+		// If you then turn the var back OFF you're serving the outdated sitemaps.
+		// SEO-557
+		if ( !F::app()->wg->EnableVideoSitemaps ) {
+			return null;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$sitemapContent = $dbr->selectField(

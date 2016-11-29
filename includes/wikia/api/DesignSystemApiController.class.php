@@ -22,7 +22,11 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 
 		$this->setResponseData(
-			( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData() );
+			( new DesignSystemGlobalNavigationModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			) )->getData() );
 
 		$this->addCachingHeaders();
 	}
@@ -75,6 +79,8 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	private function addCachingHeaders() {
 		global $wgUser;
+
+		$this->response->setHeader( 'Vary', 'Accept-Encoding,Cookie' );
 
 		if ( $wgUser->isLoggedIn() ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );

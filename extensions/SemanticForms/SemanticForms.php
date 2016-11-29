@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Note: When updating this file please also update extension.json with the same changes.
+ */
+
 /**
  * Default settings for Semantic Forms.
  *
@@ -7,7 +12,7 @@
  */
 
 /**
- * Forms for adding and editing semantic data.
+ * Forms for creating and editing wiki pages.
  *
  * @defgroup SF Semantic Forms
  */
@@ -33,23 +38,54 @@
  * @ingroup SF
  */
 
+if ( array_key_exists( 'wgWikimediaJenkinsCI', $GLOBALS ) ) {
+	if ( file_exists( __DIR__ . '/../../vendor/autoload.php' ) ) {
+		require_once __DIR__ . '/../../vendor/autoload.php';
+	}
+} elseif ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
+// In some versions of MW 1.25, there's a bug in which global variables
+// set in LocalSettings.php do not override the settings in
+// extension.json. For simplicity's sake, don't load extensions unless we're
+// at version 1.27 or higher.
+//if ( function_exists( 'wfLoadExtension' ) ) {
+if ( version_compare( $GLOBALS['wgVersion'], '1.28c', '>' ) ) {
+	if ( function_exists( 'wfLoadExtension' ) ) {
+		wfLoadExtension( 'SemanticForms' );
+		// Keep i18n globals so mergeMessageFileList.php doesn't break
+		$GLOBALS['wgMessagesDirs']['SemanticForms'] = __DIR__ . '/i18n';
+		$GLOBALS['wgExtensionMessagesFiles']['SemanticFormsAlias'] = __DIR__ . '/languages/SF_Aliases.php';
+		$GLOBALS['wgExtensionMessagesFiles']['SemanticFormsMagic'] = __DIR__ . '/languages/SF_Magic.php';
+		$GLOBALS['wgExtensionMessagesFiles']['SemanticFormsNS'] = __DIR__ . '/languages/SF_Namespaces.php';
+		/* wfWarn(
+			'Deprecated PHP entry point used for SemantiForms extension. ' .
+			'Please use wfLoadExtension instead, ' .
+			'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
+		); */
+		return;
+	}
+}
+
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
 if ( defined( 'SF_VERSION' ) ) {
 	// Do not load Semantic Forms more than once.
 	return 1;
 }
 
-define( 'SF_VERSION', '3.3' );
+define( 'SF_VERSION', '3.7' );
 
-if ( !defined( 'SMW_VERSION' ) ) {
-	// SMW defines these namespaces itself.
+// SMW defines these namespaces itself.
+if ( !defined( 'SF_NS_FORM' ) ) {
 	define( 'SF_NS_FORM', 106 );
 	define( 'SF_NS_FORM_TALK', 107 );
 }
 
-$GLOBALS['wgExtensionCredits'][defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
+$GLOBALS['wgExtensionCredits']['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Semantic Forms',
 	'version' => SF_VERSION,
@@ -86,40 +122,39 @@ define( 'SF_SP_CREATES_PAGES_WITH_FORM', 3 );
 define( 'SF_SP_PAGE_HAS_DEFAULT_FORM', 4 );
 define( 'SF_SP_HAS_FIELD_LABEL_FORMAT', 5 );
 
-/**
- * This is a delayed init that makes sure that MediaWiki is set up
- * properly before we add our stuff.
- */
-$GLOBALS['wgExtensionFunctions'][] = function() {
-	// This global variable is needed so that other extensions can hook
-	// into it to add their own input types.
-	$GLOBALS['sfgFormPrinter'] = new StubObject( 'sfgFormPrinter', 'SFFormPrinter' );
-};
+// Wikia change -- don't delay setting sfgFormPrinter
+// This global variable is needed so that other extensions can
+// hook into it to add their own input types.
+$GLOBALS['sfgFormPrinter'] = new StubObject( 'sfgFormPrinter', 'SFFormPrinter' );
+// Wikia change -- end
 
+// Wikia change -- disable SkinTemplateTabs hooks
 $GLOBALS['wgHooks']['LinkEnd'][] = 'SFFormLinker::setBrokenLink';
 // 'SkinTemplateNavigation' replaced 'SkinTemplateTabs' in the Vector skin
-// Wikia change -- disable SkinTemplateTabs hooks
-// $GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
+//$GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'SFFormEditAction::displayTab2';
-// $GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFHelperFormAction::displayTab';
+//$GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFHelperFormAction::displayTab';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'SFHelperFormAction::displayTab2';
-$GLOBALS['wgHooks']['smwInitProperties'][] = 'SFUtils::initProperties';
+$GLOBALS['wgHooks']['smwInitProperties'][] = 'SFHooks::initProperties';
 $GLOBALS['wgHooks']['ArticlePurge'][] = 'SFFormUtils::purgeCache';
-$GLOBALS['wgHooks']['ArticleSave'][] = 'SFFormUtils::purgeCache';
-$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'SFParserFunctions::registerFunctions';
-$GLOBALS['wgHooks']['MakeGlobalVariablesScript'][] = 'SFFormUtils::setGlobalJSVariables';
+$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'SFHooks::registerFunctions';
+$GLOBALS['wgHooks']['MakeGlobalVariablesScript'][] = 'SFHooks::setGlobalJSVariables';
 $GLOBALS['wgHooks']['PageSchemasRegisterHandlers'][] = 'SFPageSchemas::registerClass';
-$GLOBALS['wgHooks']['EditPage::importFormData'][] = 'SFUtils::showFormPreview';
-$GLOBALS['wgHooks']['CanonicalNamespaces'][] = 'SFUtils::registerNamespaces';
-$GLOBALS['wgHooks']['UnitTestsList'][] = 'SFUtils::onUnitTestsList';
-$GLOBALS['wgHooks']['ResourceLoaderRegisterModules'][] = 'SFUtils::registerModules';
+$GLOBALS['wgHooks']['EditPage::importFormData'][] = 'SFHooks::showFormPreview';
+$GLOBALS['wgHooks']['CanonicalNamespaces'][] = 'SFHooks::registerNamespaces';
+$GLOBALS['wgHooks']['UnitTestsList'][] = 'SFHooks::onUnitTestsList';
+$GLOBALS['wgHooks']['ResourceLoaderRegisterModules'][] = 'SFHooks::registerModules';
 
-// Admin Links hook needs to be called in a delayed way so that it
-// will always be called after SMW's Admin Links addition; as of
-// SMW 1.9, SMW delays calling all its hook functions.
-$GLOBALS['wgExtensionFunctions'][] = function() {
-	$GLOBALS['wgHooks']['AdminLinks'][] = 'SFUtils::addToAdminLinks';
-};
+if ( defined( 'SMW_VERSION' ) ) {
+	// Admin Links hook needs to be called in a delayed way so that it
+	// will always be called after SMW's Admin Links addition; as of
+	// SMW 1.9, SMW delays calling all its hook functions.
+	$GLOBALS['wgExtensionFunctions'][] = function() {
+		$GLOBALS['wgHooks']['AdminLinks'][] = 'SFHooks::addToAdminLinks';
+	};
+} else {
+	$GLOBALS['wgHooks']['AdminLinks'][] = 'SFHooks::addToAdminLinks';
+}
 
 // New "actions"
 $GLOBALS['wgActions']['formedit'] = 'SFFormEditAction';
@@ -176,6 +211,8 @@ $GLOBALS['wgAutoloadClasses']['SFFormField'] = __DIR__ . '/includes/SF_FormField
 $GLOBALS['wgAutoloadClasses']['SFFormPrinter'] = __DIR__ . '/includes/SF_FormPrinter.php';
 $GLOBALS['wgAutoloadClasses']['SFFormUtils'] = __DIR__ . '/includes/SF_FormUtils.php';
 $GLOBALS['wgAutoloadClasses']['SFUtils'] = __DIR__ . '/includes/SF_Utils.php';
+$GLOBALS['wgAutoloadClasses']['SFValuesUtils'] = __DIR__ . '/includes/SF_ValuesUtils.php';
+$GLOBALS['wgAutoloadClasses']['SFHooks'] = __DIR__ . '/includes/SF_Hooks.php';
 $GLOBALS['wgAutoloadClasses']['SFFormLinker'] = __DIR__ . '/includes/SF_FormLinker.php';
 $GLOBALS['wgAutoloadClasses']['SFPageSchemas'] = __DIR__ . '/includes/SF_PageSchemas.php';
 $GLOBALS['wgAutoloadClasses']['SFParserFunctions'] = __DIR__ . '/includes/SF_ParserFunctions.php';
@@ -200,6 +237,7 @@ $GLOBALS['wgAutoloadClasses']['SFDropdownInput'] = __DIR__ . '/includes/forminpu
 $GLOBALS['wgAutoloadClasses']['SFListBoxInput'] = __DIR__ . '/includes/forminputs/SF_ListBoxInput.php';
 $GLOBALS['wgAutoloadClasses']['SFComboBoxInput'] = __DIR__ . '/includes/forminputs/SF_ComboBoxInput.php';
 $GLOBALS['wgAutoloadClasses']['SFDateInput'] = __DIR__ . '/includes/forminputs/SF_DateInput.php';
+$GLOBALS['wgAutoloadClasses']['SFDatePickerInput'] = __DIR__ . '/includes/forminputs/SF_DatePickerInput.php';
 $GLOBALS['wgAutoloadClasses']['SFDateTimeInput'] = __DIR__ . '/includes/forminputs/SF_DateTimeInput.php';
 $GLOBALS['wgAutoloadClasses']['SFYearInput'] = __DIR__ . '/includes/forminputs/SF_YearInput.php';
 $GLOBALS['wgAutoloadClasses']['SFTreeInput'] = __DIR__ . '/includes/forminputs/SF_TreeInput.php';
@@ -209,10 +247,17 @@ $GLOBALS['wgAutoloadClasses']['SFCategoriesInput'] = __DIR__ . '/includes/formin
 $GLOBALS['wgAutoloadClasses']['SFTokensInput'] = __DIR__ . '/includes/forminputs/SF_TokensInput.php';
 $GLOBALS['wgAutoloadClasses']['SFGoogleMapsInput'] = __DIR__ . '/includes/forminputs/SF_GoogleMapsInput.php';
 $GLOBALS['wgAutoloadClasses']['SFOpenLayersInput'] = __DIR__ . '/includes/forminputs/SF_OpenLayersInput.php';
+$GLOBALS['wgAutoloadClasses']['SFRegExpInput'] = __DIR__ . '/includes/forminputs/SF_RegExpInput.php';
+
+$GLOBALS['wgAutoloadClasses']['SFWikiPage'] = __DIR__ . '/includes/wikipage/SF_WikiPage.php';
+$GLOBALS['wgAutoloadClasses']['SFWikiPageTemplate'] = __DIR__ . '/includes/wikipage/SF_WikiPageTemplate.php';
+$GLOBALS['wgAutoloadClasses']['SFWikiPageTemplateParam'] = __DIR__ . '/includes/wikipage/SF_WikiPageTemplateParam.php';
+$GLOBALS['wgAutoloadClasses']['SFWikiPageSection'] = __DIR__ . '/includes/wikipage/SF_WikiPageSection.php';
+$GLOBALS['wgAutoloadClasses']['SFWikiPageFreeText'] = __DIR__ . '/includes/wikipage/SF_WikiPageFreeText.php';
 
 $GLOBALS['wgJobClasses']['createPage'] = 'SFCreatePageJob';
 $GLOBALS['wgAutoloadClasses']['SFCreatePageJob'] = __DIR__ . '/includes/SF_CreatePageJob.php';
-require_once( __DIR__ . '/languages/SF_Language.php' );
+$GLOBALS['wgAutoloadClasses']['SF_Language'] = __DIR__ . '/languages/SF_Language.php';
 
 $GLOBALS['wgMessagesDirs']['SemanticForms'] = __DIR__ . '/i18n';
 $GLOBALS['wgExtensionMessagesFiles']['SemanticForms'] = __DIR__ . '/languages/SF_Messages.php';
@@ -223,132 +268,191 @@ $GLOBALS['wgExtensionMessagesFiles']['SemanticFormsNS'] = __DIR__ . '/languages/
 // Allow for popup windows for file upload
 $GLOBALS['wgEditPageFrameOptions'] = 'SAMEORIGIN';
 
-// register client-side modules
-if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-	$sfgResourceTemplate = array(
-		'localBasePath' => __DIR__,
-		'remoteExtPath' => 'SemanticForms'
-	);
-	$GLOBALS['wgResourceModules'] += array(
-		'ext.semanticforms.main' => $sfgResourceTemplate + array(
-			'scripts' => array(
-				'libs/SemanticForms.js',
-				'libs/SF_preview.js'
-			),
-			'styles' => array(
-				'skins/SemanticForms.css',
-				'skins/SF_jquery_ui_overrides.css',
-			),
-			'dependencies' => array(
-				'jquery.ui.core',
-				'jquery.ui.autocomplete',
-				'jquery.ui.button',
-				'jquery.ui.sortable',
-				'jquery.ui.widget',
-				'ext.semanticforms.fancybox',
-				'ext.semanticforms.autogrow',
-				'mediawiki.util',
-				'ext.semanticforms.select2',
-			),
-			'messages' => array(
-				'sf_formerrors_header',
-				'sf_too_few_instances_error',
-				'sf_too_many_instances_error',
-				'sf_blank_error',
-				'sf_not_unique_error',
-				'sf_bad_url_error',
-				'sf_bad_email_error',
-				'sf_bad_number_error',
-			),
+// Register client-side modules.
+$sfgResourceTemplate = array(
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'SemanticForms'
+);
+$GLOBALS['wgResourceModules'] += array(
+	'ext.semanticforms.main' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SemanticForms.js',
+			'libs/SF_preview.js'
 		),
-		'ext.semanticforms.browser' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/jquery.browser.js',
+		'styles' => array(
+			'skins/SemanticForms.css',
+			'skins/SF_jquery_ui_overrides.css',
 		),
-		'ext.semanticforms.fancybox' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/jquery.fancybox.js',
-			'styles' => 'skins/jquery.fancybox.css',
-			'dependencies' => array( 'ext.semanticforms.browser' ),
+		'dependencies' => array(
+			'jquery.ui.core',
+			'jquery.ui.autocomplete',
+			'jquery.ui.button',
+			'jquery.ui.sortable',
+			'jquery.ui.widget',
+			'ext.semanticforms.fancybox',
+			'ext.semanticforms.autogrow',
+			'mediawiki.util',
+			'ext.semanticforms.select2',
 		),
-		'ext.semanticforms.dynatree' => $sfgResourceTemplate + array(
-			'dependencies' => array( 'jquery.ui.widget' ),
-			'scripts' => array(
-				'libs/jquery.dynatree.js',
-				'libs/ext.dynatree.js',
-			),
-			'styles' => 'skins/ui.dynatree.css',
+		'messages' => array(
+			'sf_formerrors_header',
+			'sf_too_few_instances_error',
+			'sf_too_many_instances_error',
+			'sf_blank_error',
+			'sf_not_unique_error',
+			'sf_bad_url_error',
+			'sf_bad_email_error',
+			'sf_bad_number_error',
+			'sf_bad_date_error',
+			'sf_pipe_error',
 		),
-		'ext.semanticforms.autogrow' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_autogrow.js',
+	),
+	'ext.semanticforms.browser' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/jquery.browser.js',
+	),
+	'ext.semanticforms.fancybox' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/jquery.fancybox.js',
+		'styles' => 'skins/jquery.fancybox.css',
+		'dependencies' => array( 'ext.semanticforms.browser' ),
+	),
+	'ext.semanticforms.dynatree' => $sfgResourceTemplate + array(
+		'dependencies' => array( 'jquery.ui.widget' ),
+		'scripts' => array(
+			'libs/jquery.dynatree.js',
+			'libs/SF_dynatree.js',
 		),
-		'ext.semanticforms.popupformedit' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_popupform.js',
-			'styles' => 'skins/SF_popupform.css',
-			'dependencies' => array( 'ext.semanticforms.browser' ),
+		'styles' => 'skins/ui.dynatree.css',
+	),
+	'ext.semanticforms.autogrow' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_autogrow.js',
+	),
+	'ext.semanticforms.popupformedit' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_popupform.js',
+		'styles' => 'skins/SF_popupform.css',
+		'dependencies' => array( 'ext.semanticforms.browser' ),
+	),
+	'ext.semanticforms.autoedit' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_autoedit.js',
+		'styles' => 'skins/SF_autoedit.css',
+		'messages' => array(
+			'sf-autoedit-wait',
+			'sf_autoedit_anoneditwarning',
 		),
-		'ext.semanticforms.autoedit' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_autoedit.js',
-			'styles' => 'skins/SF_autoedit.css',
-			'messages' => array(
-				'sf-autoedit-wait',
-				'sf_autoedit_anoneditwarning',
-			),
+	),
+	'ext.semanticforms.submit' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_submit.js',
+		'styles' => 'skins/SF_submit.css',
+		'messages' => array(
+			'sf_formedit_saveandcontinue_summary',
+			'sf_formedit_saveandcontinueediting',
 		),
-		'ext.semanticforms.submit' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_submit.js',
-			'styles' => 'skins/SF_submit.css',
-			'messages' => array(
-				'sf_formedit_saveandcontinue_summary',
-				'sf_formedit_saveandcontinueediting',
-			),
+	),
+	'ext.semanticforms.collapsible' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_collapsible.js',
+		'styles' => 'skins/SF_collapsible.css',
+	),
+	'ext.semanticforms.imagepreview' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_imagePreview.js',
+	),
+	'ext.semanticforms.checkboxes' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_checkboxes.js',
+		'styles' => 'skins/SF_checkboxes.css',
+		'messages' => array(
+			'sf_forminputs_checkboxes_select_all',
+			'sf_forminputs_checkboxes_select_none',
 		),
-		'ext.semanticforms.collapsible' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_collapsible.js',
-			'styles' => 'skins/SF_collapsible.css',
+	),
+	'ext.semanticforms.datepicker' => $sfgResourceTemplate + array(
+		'scripts'      => 'libs/SF_datepicker.js',
+		'dependencies' => array(
+			'jquery.ui.datepicker',
+			'ext.semanticforms.main'
 		),
-		'ext.semanticforms.imagepreview' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_imagePreview.js',
+		'position' => 'bottom', // MW 1.26
+	),
+	'ext.semanticforms.regexp' => $sfgResourceTemplate + array(
+		'scripts' => 'libs/SF_regexp.js',
+		'dependencies' => array(
+			'ext.semanticforms.main'
 		),
-		'ext.semanticforms.checkboxes' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_checkboxes.js',
-			'styles' => 'skins/SF_checkboxes.css',
-			'messages' => array(
-				'sf_forminputs_checkboxes_select_all',
-				'sf_forminputs_checkboxes_select_none',
-			),
+	),
+	'ext.semanticforms.select2' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/select2.js',
+			'libs/ext.sf.select2.base.js',
+			'libs/ext.sf.select2.combobox.js',
+			'libs/ext.sf.select2.tokens.js',
 		),
-		'ext.semanticforms.select2' => $sfgResourceTemplate + array(
-			'scripts' => array(
-				'libs/select2.js',
-				'libs/ext.sf.select2.base.js',
-				'libs/ext.sf.select2.combobox.js',
-				'libs/ext.sf.select2.tokens.js',
-			),
-			'styles' => array(
-				'skins/select2/select2.css',
-				'skins/select2/select2-bootstrap.css',
-				'skins/ext.sf.select2.css',
-			),
-			'dependencies' => array(
-				'ext.semanticforms',
-				'mediawiki.jqueryMsg',
-			),
-			'messages' => array(
-				'sf-select2-no-matches',
-				'sf-select2-searching',
-				'sf-select2-input-too-short',
-				'sf-select2-selection-too-big',
-			),
+		'styles' => array(
+			'skins/select2/select2.css',
+			'skins/select2/select2-bootstrap.css',
+			'skins/ext.sf.select2.css',
 		),
-		'ext.semanticforms.maps' => $sfgResourceTemplate + array(
-			'scripts' => 'libs/SF_maps.js',
+		'dependencies' => array(
+			'ext.semanticforms',
+			'mediawiki.jqueryMsg',
 		),
-		'ext.semanticforms' => $sfgResourceTemplate + array(
-			'scripts' => array(
-				'libs/ext.sf.js',
-			),
+		'messages' => array(
+			'sf-select2-no-matches',
+			'sf-select2-searching',
+			'sf-select2-input-too-short',
+			'sf-select2-selection-too-big',
 		),
-	);
-}
+	),
+	'ext.semanticforms.jsgrid' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/jsgrid.js',
+			'libs/SF_jsGrid.js',
+		),
+		'styles' => array(
+			'skins/jsgrid/jsgrid.css',
+			'skins/jsgrid/theme.css',
+		),
+		'dependencies' => array(
+			'jquery.ui.sortable',
+		),
+		'messages' => array(
+			'htmlform-yes',
+			'htmlform-no',
+		),
+	),
+	'ext.semanticforms' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/ext.sf.js',
+		),
+	),
+	'ext.semanticforms.SF_CreateProperty' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SF_CreateProperty.js',
+		),
+	),
+	'ext.semanticforms.SF_PageSchemas' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SF_PageSchemas.js',
+		),
+	),
+	'ext.semanticforms.SF_CreateTemplate' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SF_CreateTemplate.js',
+		),
+		'messages' => array(
+			'sf_blank_error',
+		),
+	),
+	'ext.semanticforms.SF_CreateClass' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SF_CreateClass.js',
+		),
+	),
+	'ext.semanticforms.SF_CreateForm' => $sfgResourceTemplate + array(
+		'scripts' => array(
+			'libs/SF_CreateForm.js',
+		),
+		'messages' => array(
+			'sf_blank_error',
+		),
+	),
+);
 
 // PHP fails to find relative includes at some level of inclusion:
 // $pathfix = $IP . $GLOBALS['sfgScriptPath;
@@ -473,16 +577,18 @@ $GLOBALS['sfgShowTabsForAllHelperForms'] = true;
 # ##
 $GLOBALS['sfgRunQueryFormAtTop'] = false;
 
-# ##
-# Page properties, used for the API
-# ##
-$GLOBALS['wgPageProps']['formdefinition'] = 'Definition of the semantic form used on the page';
+$GLOBALS['sfgGoogleMapsKey'] = null;
+
+// Include default settings for form inputs
+require_once 'includes/SF_DatePickerSettings.php';
 
 # ##
 # Global variables for Javascript
 # ##
 $GLOBALS['sfgShowOnSelect'] = array();
 $GLOBALS['sfgAutocompleteValues'] = array();
+$GLOBALS['sfgGridValues'] = array();
+$GLOBALS['sfgGridParams'] = array();
 // SMW
 $GLOBALS['sfgFieldProperties'] = array();
 // Cargo
@@ -496,4 +602,3 @@ $GLOBALS['sfgCheckboxesSelectAllMinimum'] = 10;
 
 // Necessary setting for SMW 1.9+
 $GLOBALS['smwgEnabledSpecialPage'][] = 'RunQuery';
-

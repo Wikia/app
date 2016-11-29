@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.helpers.googleMatch', [
 			return;
 		}
 
-		window.adsbygoogle = window.adsbygoogle || []
+		window.adsbygoogle = window.adsbygoogle || [];
 
 		googleScript = document.createElement('script');
 		googleScript.async = true;

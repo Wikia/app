@@ -5,13 +5,23 @@
  * This service provides interface to add Inspectlet integrations to parts of the product
  */
 class InspectletService extends WikiaService {
-	const COMMUNITY_PAGE = 'CommunityPage';
-	const CREATE_NEW_WIKI = 'CreateNewWiki';
+	const MAIN_PAGE = 'MainPage';
+	const ADD_NEW_PAGE = 'AddNewPage';
 
 	private static $applicationIds = [
-		self::CREATE_NEW_WIKI => 55883171,
-		// @see https://wikia-inc.atlassian.net/browse/WW-111
-		self::COMMUNITY_PAGE => 1280339383
+		/**
+		 * @see https://wikia-inc.atlassian.net/browse/WW-437
+		 *
+		 * In inspectlet targeting is set to Main pages on:
+		 * - marvel.wikia.com
+		 * - harrypotter.wikia.com
+		 * - arrow.wikia.com
+		 * - westworld.wikia.com
+		 * - titanfall.wikia.com
+		 * - overwatch.wikia.com
+		 */
+		self::MAIN_PAGE => 1469642463,
+		self::ADD_NEW_PAGE => 1424713574,
 	];
 
 	private $inspectletExperimentId;

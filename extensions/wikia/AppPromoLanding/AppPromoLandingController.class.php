@@ -72,7 +72,9 @@ class AppPromoLandingController extends WikiaController {
 		$this->debug = "";
 
 		// render global and user navigation
-		$this->header = $this->app->renderView( 'GlobalNavigation', 'index' );
+		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
+			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
+			F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Get the config for this app, from the service.
 		$this->config = AppPromoLandingController::getConfigForWiki( $this->wg->CityId );
@@ -178,7 +180,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->androidStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
 
 		$this->iosPhoneSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
-		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
+		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/5.5/4.png.PNGCRUSH.png";
 		$this->iosStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
 
 		$this->imgSpacing = 1; // spacing between the image-grid cells.

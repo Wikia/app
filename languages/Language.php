@@ -137,18 +137,30 @@ class Language {
 
 	/**
 	 * Get a cached language object for a given language code
+	 * !!!Wikia changed - entire method!!!
+	 *
 	 * @param $code String
+	 * @param $cityId int - used only in global title to force rebuilding cache for other wiki
 	 * @return Language
 	 */
-	static function factory( $code ) {
-		if ( !isset( self::$mLangObjCache[$code] ) ) {
+	static function factory( $code, $cityId = null ) {
+		global $wgCityId;
+		if ( is_null( $cityId )) {
+			$cityId = $wgCityId;
+		}
+
+		if ( !isset( self::$mLangObjCache[$code][$cityId] ) ) {
 			if ( count( self::$mLangObjCache ) > 10 ) {
 				// Don't keep a billion objects around, that's stupid.
-				self::$mLangObjCache = array();
+				self::$mLangObjCache = [];
 			}
-			self::$mLangObjCache[$code] = self::newFromCode( $code );
+			if ( !isset( self::$mLangObjCache[$code] ) ) {
+				self::$mLangObjCache[$code] = [];
+			}
+
+			self::$mLangObjCache[$code][$cityId] = self::newFromCode( $code );
 		}
-		return self::$mLangObjCache[$code];
+		return self::$mLangObjCache[$code][$cityId];
 	}
 
 	/**
@@ -4090,4 +4102,58 @@ class Language {
 		return $pluralRules;
 	}
 
+	/**
+	 * Shorten number to thousands/millions/billions
+	 * Returns an object containing 2 values to allow calculation of correct plural version of the message
+	 *	* shortened number string
+	 *	* rounded number
+	 *
+	 * Languages like PL and RU uses more complex plural rules that uses multiple forms for different numbers
+	 * http://www.unicode.org/cldr/charts/29/supplemental/language_plural_rules.html#pl
+	 *
+	 * @param $number
+	 * @param $precision
+	 * @return DecoratedShortenNumber
+	 *
+	 * (added by Wikia)
+	 */
+	public function shortenNumberDecorator( $number, $precision = 1 ) {
+		$number = intval( $number );
+
+		$shorteningBreakpoints = [
+			'number-shortening-billions' => 1000000000,
+			'number-shortening-millions' => 1000000,
+			'number-shortening' => 1000
+		];
+
+		foreach ( $shorteningBreakpoints as $messageKey => $breakpointNumber ) {
+			if ( $number >= $breakpointNumber ) {
+				return new DecoratedShortenNumber(
+					wfMessage( $messageKey )
+						->params( $this->formatNum( round( $number / $breakpointNumber, $precision ) ) )
+						->escaped(),
+					round( $number, - ( log10( $breakpointNumber ) - $precision ) )
+				);
+			}
+		}
+
+		return new DecoratedShortenNumber(
+			$this->formatNum( $number ),
+			$number
+		);
+	}
+}
+
+
+/**
+ * Class DecoratedShortenNumber returned by Language::shortenNumberDecorator()
+ */
+class DecoratedShortenNumber {
+	public $decorated;
+	public $rounded;
+
+	public function __construct( $decorated, $rounded ) {
+		$this->decorated = $decorated;
+		$this->rounded = $rounded;
+	}
 }

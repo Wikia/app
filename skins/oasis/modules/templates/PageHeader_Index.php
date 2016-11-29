@@ -1,26 +1,3 @@
-<?php
-if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-	if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-		echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_ABOVE_TITLE' ] );
-	} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
-		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
-	}
-}
-
-$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
-if ( $runNjord ) {
-	// edit button with actions dropdown
-	if ( !empty( $action ) ) {
-		echo F::app()->renderView(
-			'MenuButton',
-			'Index',
-			[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
-		);
-	}
-
-	echo $curatedContentToolButton;
-} else {
-	?>
 	<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
 		<div class="header-container">
 			<div class="header-column header-title">
@@ -33,11 +10,12 @@ if ( $runNjord ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<div id="PageShareContainer" class="page-share-container">
-					<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
-				</div>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
+					<?= F::app()->renderView(
+						'PageHeader',
+						'AddNewPageButton'
+					); ?>
 				<? endif; ?>
 			</div>
 		</div>
@@ -85,21 +63,17 @@ if ( $runNjord ) {
 
 		foreach ( $extraButtons as $button ) {
 			echo $button;
-		}
+		} ?>
 
+		<a id="ShareEntryPoint" class="wikia-button secondary" href="#" data-id="share">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'wds-icon header-share-entry-point-icon'); ?>
+			<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+		</a>
+
+		<?
 		// Temp for CommunityPageExperiment
 		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
 			echo Html::closeElement( 'div' );
 		}
 		?>
 	</header>
-	<?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-			echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_TITLE' ] );
-		} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
-			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
-		}
-	}
-}
-?>

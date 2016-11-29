@@ -224,6 +224,20 @@ class UserMailer {
 		}
 		wfRunHooks( 'UserMailerSend', [ &$to ] );
 
+		if ( F::app()->wg->DisableAllEmail ) {
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				"Ignoring UserMailer::send due to wgDisableAllEmail",
+				[
+					'issue' => 'SOC-3123',
+					'toAddress' => $to[0]->toString(),
+					'fromAddress' => $from->toString(),
+				    'subject' => $subject,
+				    'category' => $category
+				]
+			);
+			return Status::newGood();
+		}
+
 		# Forge email headers
 		# -------------------
 		#

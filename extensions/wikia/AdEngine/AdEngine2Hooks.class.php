@@ -39,6 +39,7 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
@@ -50,8 +51,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
-		$vars[] = 'wgAdDriverMobileTransitionInterstitialCountries';
-		$vars[] = 'wgAdDriverMobileFloorAdhesionCountries';
+		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
@@ -59,6 +59,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverRevcontentCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverRubiconVulcanCountries';
@@ -66,7 +67,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
-		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverYavliCountries';
@@ -79,7 +79,6 @@ class AdEngine2Hooks {
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
-		$vars[] = 'wgSitewideDisableMonetizationService';
 
 		return true;
 	}
@@ -107,9 +106,12 @@ class AdEngine2Hooks {
 		];
 
 		// Legacy vars:
-		$vars['adslots2'] = [];                  // Queue for ads registration
-		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
-		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		// Queue for ads registration
+		$vars['adslots2'] = [];
+		// Used to hop by DART ads
+		$vars['adDriverLastDARTCallNoAds'] = [];
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = [];
 
 		// GA vars
 		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );

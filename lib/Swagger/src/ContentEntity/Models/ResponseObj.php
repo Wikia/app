@@ -63,7 +63,7 @@ class ResponseObj implements ArrayAccess
       */
     protected static $swaggerTypes = array(
         'title' => 'string',
-        'identifier' => 'string'
+        'id' => 'string'
     );
 
     public static function swaggerTypes()
@@ -77,7 +77,7 @@ class ResponseObj implements ArrayAccess
      */
     protected static $attributeMap = array(
         'title' => 'title',
-        'identifier' => 'identifier'
+        'id' => 'id'
     );
 
     public static function attributeMap()
@@ -91,7 +91,7 @@ class ResponseObj implements ArrayAccess
      */
     protected static $setters = array(
         'title' => 'setTitle',
-        'identifier' => 'setIdentifier'
+        'id' => 'setId'
     );
 
     public static function setters()
@@ -105,7 +105,7 @@ class ResponseObj implements ArrayAccess
      */
     protected static $getters = array(
         'title' => 'getTitle',
-        'identifier' => 'getIdentifier'
+        'id' => 'getId'
     );
 
     public static function getters()
@@ -130,7 +130,7 @@ class ResponseObj implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['identifier'] = isset($data['identifier']) ? $data['identifier'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
     }
 
     /**
@@ -178,22 +178,22 @@ class ResponseObj implements ArrayAccess
     }
 
     /**
-     * Gets identifier
+     * Gets id
      * @return string
      */
-    public function getIdentifier()
+    public function getId()
     {
-        return $this->container['identifier'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets identifier
-     * @param string $identifier
+     * Sets id
+     * @param string $id
      * @return $this
      */
-    public function setIdentifier($identifier)
+    public function setId($id)
     {
-        $this->container['identifier'] = $identifier;
+        $this->container['id'] = $id;
 
         return $this;
     }

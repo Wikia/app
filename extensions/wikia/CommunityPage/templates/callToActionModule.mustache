@@ -1,0 +1,13 @@
+<div class="community-page-cards-module">
+    <div class="community-page-cards-module-header">
+        {{cardModules.heading}}
+    </div>
+    <div class="community-page-cards-module-block">
+        {{#cardModules.modules}}
+            {{>cardModule}}
+        {{/cardModules.modules}}
+        {{#defaultModules.modules}}
+            {{>cardModule}}
+        {{/defaultModules.modules}}
+    </div>
+</div>

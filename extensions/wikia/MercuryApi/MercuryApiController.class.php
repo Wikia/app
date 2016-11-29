@@ -29,13 +29,6 @@ class MercuryApiController extends WikiaController {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
 			unset( $smartBannerConfig[ 'author' ] );
-
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) &&
-				 !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
-			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
-			}
-
 			$meta = $smartBannerConfig[ 'meta' ];
 			unset( $smartBannerConfig[ 'meta' ] );
 			$smartBannerConfig[ 'appId' ] = [
@@ -191,9 +184,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
 		}
 
-		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
-		if ( !empty( $wikiImages[ $this->wg->CityId ] ) ) {
-			$wikiVariables[ 'image' ] = $wikiImages[ $this->wg->CityId ];
+		// get wiki image from Curated Main Pages (SUS-474)
+		$communityData = ( new CommunityDataService( $this->wg->CityId ) )->getCommunityData();
+
+		if ( !empty( $communityData[ 'image_id' ] ) ) {
+			$url = CuratedContentHelper::getImageUrl( $communityData[ 'image_id' ], self::WIKI_IMAGE_SIZE );
+			$wikiVariables[ 'image' ] = $url;
 		}
 
 		$wikiVariables[ 'specialRobotPolicy' ] = null;
@@ -364,17 +360,19 @@ class MercuryApiController extends WikiaController {
 					case NS_CATEGORY:
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+						if ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
+							if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
+								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 
-							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-							$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
-						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+								// Remove namespace prefix from displayTitle, so it can be consistent with title
+								// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+								$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
+							} else {
+								$data[ 'details' ] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							}
 						} else {
-							throw new NotFoundApiException( 'Article is empty and category has no members' );
+							throw new NotFoundApiException( 'Category has no members' );
 						}
 
 						break;

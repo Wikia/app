@@ -9,11 +9,11 @@ define('ext.wikia.adEngine.template.floorAdhesion', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floorAdhesion',
-		slotName = 'INVISIBLE_HIGH_IMPACT_2',
-		wrapper = doc.getElementById('InvisibleHighImpactWrapper');
+		slotName = 'INVISIBLE_HIGH_IMPACT_2';
 
 	function show() {
-		var skin = adContext.getContext().targeting.skin;
+		var skin = adContext.getContext().targeting.skin,
+			wrapper = doc.getElementById('InvisibleHighImpactWrapper');
 
 		wrapper.querySelector('.close').addEventListener('click', function (event) {
 			event.preventDefault();

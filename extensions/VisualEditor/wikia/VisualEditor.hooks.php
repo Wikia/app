@@ -41,7 +41,7 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUser, $wgUploadPath, $wgReCaptchaPublicKey;
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUploadPath, $wgReCaptchaPublicKey;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
 		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
 		$vars[ 'wgEnableWikiaInteractiveMaps' ] = !empty( $wgEnableWikiaInteractiveMaps );
@@ -55,13 +55,28 @@ class VisualEditorWikiaHooks {
 				. '/api/'
 				. $wgIntMapConfig[ 'version' ];
 		}
-		// Note: even if set as integer, option value is retrieved as string
-		if ( $wgUser->getGlobalPreference( 'showVisualEditorTransitionDialog' ) === '1' ) {
-			$vars[ 'showVisualEditorTransitionDialog' ] = 1;
-		}
 		$vars[ 'VignettePathPrefix' ] = VignetteRequest::parsePathPrefix( $wgUploadPath );
 		$vars[ 'reCaptchaPublicKey' ] = $wgReCaptchaPublicKey;
 		return true;
 	}
 
+	/**
+	 * If the user has specified that they want to create a page with VE, add Inspectlet script.
+	 * @param Title $title Title being used for request
+	 * @param Article|null $article
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $request
+	 * @param MediaWiki $mediaWiki
+	 * @return bool Always true
+	 */
+	public static function onBeforeInitialize(
+		Title $title, $article, OutputPage $output,
+		User $user, WebRequest $request, MediaWiki $mediaWiki
+	) {
+		if ( $request->getVal( 'veaction' ) === 'edit' && !$title->exists() ) {
+			$output->addScript( ( new InspectletService( InspectletService::ADD_NEW_PAGE ) )->getInspectletCode() );
+		}
+		return true;
+	}
 }

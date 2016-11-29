@@ -1,18 +1,23 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transition';
 @import 'layout';
 @import 'responsive-variables';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
+
+$uap-progress-bar-color: #666;
+$uap-progress-bar-current-time-color: #b7b7b7;
+$uap-video-animation-duration: 0.4s;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -48,26 +53,16 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-.bfaa-template {
-	.WikiaTopAds {
-		margin-top: 0;
-		padding: 0 0 $global-navigation-height 0;
-		width: 100%;
-
-		&.bfaa-pinned-nav {
-			padding: 0;
-		}
+.wikia-ad {
+	&.slot-animation {
+		@include transition(max-height, 0.8s, ease, 0);
+		overflow: hidden;
 	}
 
-	.WikiaTopAdsInner {
-		width: 100%;
-	}
-
-	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-		max-width: none;
+	&.slot-responsive {
 		width: 100%;
 
-		> div {
+		.provider-container {
 			position: relative;
 
 			iframe {
@@ -81,16 +76,120 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-.bfab-template > div {
-	position: relative;
-	width: 100%;
+.bfaa-template {
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
 
-	iframe {
-		height: 100%;
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	.WikiaTopAdsInner {
+		width: 100%;
+	}
+
+	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
+		max-width: none;
+		overflow: hidden;
+		width: 100%;
+
+		video {
+			height: auto;
+			width: 100%;
+		}
+	}
+}
+
+.bfaa-template .ima-mute-div, .bfab-template .ima-mute-div {
+	/* remove Firefox's dotted outline on buttons and links */
+	:focus {outline:none;}
+	::-moz-focus-inner {border:0;}
+
+	bottom: 18px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+
+	.speaker {
+		display: inline-block;
+		height: 30px;
+		overflow: hidden;
+		position: relative;
+		width: 30px;
+
+		span {
+			background: #000;
+			display: block;
+			height: 8px;
+			margin: 11px 0 0 2px;
+			width: 8px;
+
+			&:after {
+				border-color: transparent #000 transparent transparent;
+				border-style: solid;
+				border-width: 10px 14px 10px 15px;
+				content: '';
+				height: 0;
+				left: -13px;
+				position: absolute;
+				top: 5px;
+				width: 0;
+			}
+
+			&:before {
+				border-color: #000;
+				border-radius: 0 50px 0 0;
+				border-style: double;
+				border-width: 7px 7px 0 0;
+				content: '';
+				height: 5px;
+				left: 18px;
+				position: absolute;
+				top: 9px;
+				transform: rotate(45deg);
+				transition: all 0.2s ease-out;
+				width: 5px;
+			}
+		}
+
+		&:hover {
+			span:before {
+				transform: scale(.8) translate(-3px, 0) rotate(42deg);
+			}
+		}
+
+		&.mute {
+			span:before {
+				opacity: 0;
+				transform: scale(.5) translate(-15px, 0) rotate(36deg);
+			}
+		}
+	}
+}
+
+.bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+	.progress-bar {
+		background: $uap-progress-bar-color;
+		bottom: 0;
+		height: 8px;
 		left: 0;
 		position: absolute;
 		width: 100%;
-		top: 0;
+	}
+
+	.current-time {
+		@include transition(width, 1s, linear, 0);
+		background: $uap-progress-bar-current-time-color;
+		height: 100%;
+		max-width: 100%;
+		width: 0;
 	}
 }
 
@@ -171,6 +270,8 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #INCONTENT_WRAPPER {
+	font-size: 0;
+	line-height: 0;
 	text-align: center;
 }
 
@@ -213,6 +314,9 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #BOTTOM_LEADERBOARD {
+	@include transition(height, $uap-video-animation-duration, ease, 0);
+	background: $color-black;
+
 	overflow: hidden;
 	margin: 0 0 23px 0;
 	text-align: center;
@@ -439,4 +543,24 @@ body > a > img[src$="noad.gif"] {
 		clear: both;
 		margin: 0;
 	}
+}
+
+.overVideoLayer {
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	.close-ad {
+		background-image: url('/skins/oasis/images/player/collapse_light.svg');
+		float: right;
+		height: 30px;
+		margin: 10px 10px 30px 30px;
+		width: 30px;
+	}
+}
+
+#WikiaArticleMsg {
+  display: none;
 }

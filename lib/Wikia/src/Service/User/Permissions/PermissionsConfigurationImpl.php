@@ -36,7 +36,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'vanguard',
 		'voldev',
 		'vstf',
-		'wikiastars',
 		'fancontributor-staff',
 		'fancontributor-contributor',
 	];
@@ -196,7 +195,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'multidelete',
 		'multiwikiedit',
 		'multiwikifinder',
-		'njordeditmode',
 		'phalanxexempt',
 		'phalanx',
 		'phalanxemailblock',
@@ -242,7 +240,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'smwallowaskpage',
 		'council',
 		'authenticated',
-		'displaywikiastarslabel',
 		'editinterfacetrusted',
 		'deleteinterfacetrusted',
 		'voldev',
@@ -254,8 +251,11 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'viewedittab',
 		'createclass',
 		'first-edit-dialog-exempt',
+		'hideblockername',
 		'fancontributor-staff',
 		'fancontributor-contributor',
+		'clearuserprofile',
+		'smw-patternedit',
 	];
 
 	public function __construct() {

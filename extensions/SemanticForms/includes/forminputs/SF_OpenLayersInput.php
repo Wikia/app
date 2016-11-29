@@ -21,21 +21,49 @@ class SFOpenLayersInput extends SFFormInput {
 	}
 
 	public static function getDefaultCargoTypes() {
-		return array( 'Coordinates' );
+		return array( 'Coordinates' => array() );
+	}
+
+	public static function getHeight( $other_args ) {
+		if ( array_key_exists( 'height', $other_args ) ) {
+			$height = $other_args['height'];
+			// Add on "px", if no unit is defined.
+			if ( is_numeric( $height ) ) {
+				$height .= "px";
+			}
+		} else {
+			$height = "500px";
+		}
+		return $height;
+	}
+
+	public static function getWidth( $other_args ) {
+		if ( array_key_exists( 'width', $other_args ) ) {
+			$width = $other_args['width'];
+			// Add on "px", if no unit is defined.
+			if ( is_numeric( $width ) ) {
+				$width .= "px";
+			}
+		} else {
+			$width = "500px";
+		}
+		return $width;
 	}
 
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		global $sfgTabIndex, $sfgFieldNum;
 		global $wgOut;
 
-		$scripts = array(
-			"http://www.openlayers.org/api/OpenLayers.js"
-		);
-		$scriptsHTML = '';
-		foreach ( $scripts as $script ) {
-			$scriptsHTML .= Html::linkedScript( $script );
+		if ( !ExtensionRegistry::getInstance()->isLoaded( 'OpenLayers' ) ) {
+			$scripts = array(
+				"http://www.openlayers.org/api/OpenLayers.js"
+			);
+			$scriptsHTML = '';
+			foreach ( $scripts as $script ) {
+				$scriptsHTML .= Html::linkedScript( $script );
+			}
+			$wgOut->addHeadItem( $scriptsHTML, $scriptsHTML );
 		}
-		$wgOut->addHeadItem( $scriptsHTML, $scriptsHTML );
 		$wgOut->addModules( 'ext.semanticforms.maps' );
 
 		$parsedCurValue = self::parseCoordinatesString( $cur_value );
@@ -50,7 +78,9 @@ class SFOpenLayersInput extends SFFormInput {
 		// @TODO - add this in.
 		//$addressLookupInput = Html::element( 'input', array( 'type' => 'text', 'class' => 'sfAddressInput', 'size' => 40, 'placeholder' => wfMessage( 'sf-maps-enteraddress' )->parse() ), null );
 		//$addressLookupButton = Html::element( 'input', array( 'type' => 'button', 'class' => 'sfLookUpAddress', 'value' => wfMessage( 'sf-maps-lookupcoordinates' )->parse() ), null );
-		$mapCanvas = Html::element( 'div', array( 'class' => 'sfMapCanvas', 'id' => 'sfMapCanvas' . $sfgFieldNum, 'style' => 'height: 500px; width: 500px;' ), null );
+		$height = self::getHeight( $other_args );
+		$width = self::getWidth( $other_args );
+		$mapCanvas = Html::element( 'div', array( 'class' => 'sfMapCanvas', 'id' => 'sfMapCanvas' . $sfgFieldNum, 'style' => "height: $height; width: $width;" ), null );
 
 		$fullInputHTML = <<<END
 <div style="padding-bottom: 10px;">
@@ -76,6 +106,16 @@ END;
 
 	public static function getParameters() {
 		$params = parent::getParameters();
+		$params[] = array(
+			'name' => 'height',
+			'type' => 'string',
+			'description' => wfMessage( 'sf_forminputs_height' )->text()
+		);
+		$params[] = array(
+			'name' => 'width',
+			'type' => 'string',
+			'description' => wfMessage( 'sf_forminputs_width' )->text()
+		);
 		return $params;
 	}
 

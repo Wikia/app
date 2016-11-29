@@ -1,3 +1,4 @@
+/*global describe, expect, it, jasmine, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 	'use strict';
 
@@ -7,11 +8,23 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
+		},
+		appNexusPlacements: {
+			getPlacement: function () {
+				return '123';
+			}
+		},
+		slotsContext: {
+			filterSlotMap: function (map) {
+				return map;
+			}
 		}
 	};
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.slotsContext,
+			mocks.appNexusPlacements,
 			mocks.geo,
 			mocks.instantGlobals
 		);
@@ -38,7 +51,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 				{
 					bidder: 'appnexus',
 					params: {
-						placementId: '5823300'
+						placementId: '123'
 					}
 				}
 			]

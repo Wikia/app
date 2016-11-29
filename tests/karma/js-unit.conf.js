@@ -16,7 +16,8 @@ module.exports = function (config) {
 	config.set({
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
-			'resources/wikia/ui_components/**/node_modules/**/*.js'
+			'resources/wikia/ui_components/**/node_modules/**/*.js',
+			'extensions/wikia/ARecoveryEngine/js/SourcePoint/*_fallback.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',
@@ -216,6 +217,10 @@ module.exports = function (config) {
 			//PortableInfoboxBuilder
 			'extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js',
 			'extensions/wikia/PortableInfoboxBuilder/js/spec/PortableInfoboxBuilderTemplateClassificationHelper.spec.js',
+
+			// Flow Tracking
+			'extensions/wikia/FlowTracking/scripts/createPageTracking.js',
+			'extensions/wikia/FlowTracking/scripts/spec/createPageTracking.spec.js',
 		]
 	});
 };

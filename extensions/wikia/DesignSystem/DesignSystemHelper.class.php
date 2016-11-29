@@ -13,7 +13,10 @@ class DesignSystemHelper {
 			'sitename',
 			'vertical',
 			'license'
-		]
+		],
+		'global-navigation-search-placeholder-in-wiki' => [
+			'sitename',
+		],
 	];
 
 	const MAX_RECURSION_DEPTH = 10;
@@ -29,8 +32,8 @@ class DesignSystemHelper {
 	 *
 	 * @return string
 	 */
-	public static function getSvg( $name, $classNames = '', $alt = '' ) {
-		$xml = self::getCachedSvg( $name );
+	public static function renderSvg( $name, $classNames = '', $alt = '' ) {
+		$xml = static::getCachedSvg( $name );
 
 		if ( $xml instanceof SimpleXMLElement ) {
 			/* @var $xml SimpleXMLElement */
@@ -57,6 +60,23 @@ class DesignSystemHelper {
 		}
 	}
 
+	public static function renderApiImage( $model, $classNames = '', $alt = '' ) {
+		if ( $model['type'] === 'wds-svg' ) {
+			return static::renderSvg( $model['name'], $classNames, $alt );
+		} elseif ($model['type'] === 'image-external') {
+			$imgXml = new SimpleXMLElement( '<img />' );
+			$imgXml->addAttribute( 'src', $model['url'] );
+			$imgXml->addAttribute( 'class', $classNames );
+			$imgXml->addAttribute( 'alt', $alt );
+
+			$dom = dom_import_simplexml( $imgXml );
+			return $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+		}
+
+		WikiaLogger::instance()->error( __METHOD__ . ': unhandled image type:' . $model['type'] );
+		return '';
+	}
+
 	/**
 	 * @desc Loads SVG file as a SimpleXMLElement object or gets it from cache
 	 *
@@ -65,14 +85,14 @@ class DesignSystemHelper {
 	 * @return SimpleXMLElement
 	 */
 	private static function getCachedSvg( $name ) {
-		if ( isset( self::$svgCache[$name] ) ) {
-			$xml = self::$svgCache[$name];
+		if ( isset( static::$svgCache[$name] ) ) {
+			$xml = static::$svgCache[$name];
 		} else {
-			$xml = simplexml_load_file( self::SVG_DIR . '/' . $name . '.svg' );
-			self::$svgCache[$name] = $xml;
+			$xml = simplexml_load_file( static::SVG_DIR . '/' . $name . '.svg' );
+			static::$svgCache[$name] = $xml;
 		}
 
-		return clone $xml;
+		return ( $xml instanceof SimpleXMLElement ) ? clone $xml : null;
 	}
 
 	/**
@@ -87,7 +107,7 @@ class DesignSystemHelper {
 	 * @return string
 	 */
 	public static function renderText( $fields, $recursionDepth = 0 ) {
-		if ( $recursionDepth > self::MAX_RECURSION_DEPTH ) {
+		if ( $recursionDepth > static::MAX_RECURSION_DEPTH ) {
 			WikiaLogger::instance()->error( 'Recursion depth maximum reached' );
 
 			return '';
@@ -99,7 +119,7 @@ class DesignSystemHelper {
 			if ( isset( $fields['params'] ) ) {
 				$paramsRendered = [ ];
 
-				if ( !array_key_exists( $fields['key'], self::MESSAGE_PARAMS_ORDER ) ) {
+				if ( !array_key_exists( $fields['key'], static::MESSAGE_PARAMS_ORDER ) ) {
 					WikiaLogger::instance()->error(
 						'Design System tried to render a message with params that we don\'t support, ignore params',
 						[
@@ -108,8 +128,8 @@ class DesignSystemHelper {
 						]
 					);
 				} else {
-					foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
-						$paramsRendered[] = self::renderText( $fields['params'][$paramKey], $recursionDepth + 1 );
+					foreach ( static::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
+						$paramsRendered[] = static::renderText( $fields['params'][$paramKey], $recursionDepth + 1 );
 					}
 				}
 
@@ -123,7 +143,7 @@ class DesignSystemHelper {
 				[
 					'href' => $fields['href']
 				],
-				self::renderText( $fields['title'], $recursionDepth + 1 )
+				static::renderText( $fields['title'], $recursionDepth + 1 )
 			);
 		} else {
 			WikiaLogger::instance()->error(

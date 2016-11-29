@@ -5,8 +5,7 @@
  * 
  * @since 0.1
  * 
- * @file Maps_Mapper.php
- * @ingroup Maps
+ * @deprecated
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -18,16 +17,16 @@ final class MapsMapper {
 	 * Arrays are converted to JS arrays, objects are converted to JS associative
 	 * arrays (objects). So cast your PHP associative arrays to objects before
 	 * passing them to here.
-	 * 
+	 *
 	 * This is a copy of
 	 * @see Xml::encodeJsVar
 	 * which fixes incorrect behaviour with floats.
-	 * 
+	 *
 	 * @since 0.7.1
-	 * 
+	 *
 	 * @param mixed $value
 	 *
-	 * @return tring
+	 * @return string
 	 */
 	public static function encodeJsVar( $value ) {
 		if ( is_bool( $value ) ) {
@@ -64,9 +63,11 @@ final class MapsMapper {
 		}
 		return $s;
 	}
-	
+
 	/**
 	 * This function returns the definitions for the parameters used by every map feature.
+	 *
+	 * @deprecated
 	 *
 	 * @return array
 	 */
@@ -85,36 +86,35 @@ final class MapsMapper {
 			'default' => $egMapsDefaultGeoService,
 			'values' => $egMapsAvailableGeoServices,
 			'dependencies' => 'mappingservice',
-			'manipulations' => new MapsParamGeoService( 'mappingservice' ),
-		);
-
-		$params['zoom'] = array(
-			'type' => 'integer',
+			// TODO 'manipulations' => new MapsParamGeoService( 'mappingservice' ),
 		);
 
 		$params['width'] = array(
+			'type' => 'dimension',
+			'allowauto' => true,
+			'units' => array( 'px', 'ex', 'em', '%', '' ),
 			'default' => $egMapsMapWidth,
-			'criteria' => new CriterionMapDimension( 'width' ),
-			'manipulations' => new MapsParamDimension( 'width' ),
 		);
 
 		$params['height'] = array(
+			'type' => 'dimension',
+			'units' => array( 'px', 'ex', 'em', '' ),
 			'default' => $egMapsMapHeight,
-			'criteria' => new CriterionMapDimension( 'height' ),
-			'manipulations' => new MapsParamDimension( 'height' ),
 		);
 
-		$manipulation = new MapsParamLocation();
-		$manipulation->toJSONObj = true;
+		// TODO$manipulation = new MapsParamLocation();
+		// TODO$manipulation->toJSONObj = true;
 
 		$params['centre'] = array(
+			'type' => 'mapslocation',
 			'aliases' => array( 'center' ),
-			'criteria' => new CriterionIsLocation(),
-			'manipulations' => $manipulation,
 			'default' => false,
 			'manipulatedefault' => false,
 		);
 
+		// Give grep a chance to find the usages:
+		// maps-par-mappingservice, maps-par-geoservice, maps-par-width,
+		// maps-par-height, maps-par-centre
 		foreach ( $params as $name => &$data ) {
 			$data['name'] = $name;
 			$data['message'] = 'maps-par-' . $name;
@@ -127,26 +127,27 @@ final class MapsMapper {
 	 * Resolves the url of images provided as wiki page; leaves others alone.
 	 * 
 	 * @since 1.0
+	 * @deprecated
 	 * 
 	 * @param string $file
 	 * 
 	 * @return string
 	 */
 	public static function getFileUrl( $file ) {
-		$title = Title::newFromText( $file, NS_FILE );
+		$title = Title::makeTitle( NS_FILE, $file );
 
-		if ( !is_null( $title ) && $title->getNamespace() == NS_FILE && $title->exists() ) {
+		if( $title !==  null && $title->exists() ) {
 			$imagePage = new ImagePage( $title );
-			$file = $imagePage->getDisplayedFile()->getURL();
-		}		
-		
-		return $file;
+			return $imagePage->getDisplayedFile()->getURL();
+		}
+		return '';
 	}
-	
+
 	/**
 	 * Returns JS to init the vars to hold the map data when they are not there already.
 	 * 
 	 * @since 1.0
+	 * @deprecated
 	 * 
 	 * @param string $serviceName
 	 *
@@ -155,13 +156,11 @@ final class MapsMapper {
 	public static function getBaseMapJSON( $serviceName ) {
 		static $baseInit = false;
 		static $serviceInit = array();
-		
+
 		$json = '';
 		
 		if ( !$baseInit ) {
 			$baseInit = true;
-			global $egMapsScriptPath;
-			$json .= 'var egMapsScriptPath =' . FormatJson::encode( $egMapsScriptPath ) . ';';
 			$json .= 'var mwmaps={};';
 		}
 		

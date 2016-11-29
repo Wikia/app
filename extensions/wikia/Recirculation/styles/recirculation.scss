@@ -49,4 +49,28 @@
 			}
 		}
 	}
+
+	.placeholder-thumbnail {
+		background-color: $color-article-thumb-background;
+		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: block;
+		position: relative;
+
+		&::before {
+			content: '';
+			display: block;
+			padding-top: 56.25%;
+		}
+
+		img {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
 }

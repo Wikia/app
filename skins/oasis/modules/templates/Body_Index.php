@@ -18,8 +18,8 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
+<?= ( !empty( $wg->EnableDesignSystem ) ) ? $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) : $app->renderView( 'GlobalNavigation', 'index' ); ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
-<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
@@ -33,13 +33,6 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
-			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
-
-			if ( $runNjord ) {
-				echo $app->renderView( 'Njord', 'Index' );
-
-			}
-
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
@@ -70,11 +63,6 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
-			<?php
-			if ( !empty( $wg->EnableMomModulesExt ) && WikiaPageType::isMainPage() ) {
-				echo $app->renderView( 'Njord', 'mom' );
-			}
-			?>
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
@@ -92,9 +80,7 @@
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
 						} else {
-							if ( !$runNjord ) {
-								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-							}
+							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 						}
 					}
 				?>
@@ -124,13 +110,6 @@
 					?>
 					</div>
 					<?php
-					if ( $runNjord ) {
-						echo $app->renderView( 'Njord', 'Summary' );
-						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-
-					}
-					?>
-					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
 						echo $app->renderView( 'ArticleInfoBox', 'Index' );
@@ -154,27 +133,12 @@
 				}
 				?>
 
-				<?php
-				if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
-					echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
-				}
-				?>
-
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
 					</div>
 				<?php } ?>
 
-				<?php
-				if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_FOOTER'] );
-					} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
-						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
-					}
-				}
-				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
 					<?php
@@ -198,12 +162,10 @@
 		?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-		<? if ( !empty( $wg->EnableCorporateFooterExt ) && empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if ( empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 
-<? if ( !empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
+<?= $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
 
 <?php if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>

@@ -299,6 +299,7 @@ abstract class UploadBase {
 			}
 			return $result;
 		}
+
 		$this->mDestName = $this->getLocalFile()->getName();
 
 		return true;
@@ -611,6 +612,12 @@ abstract class UploadBase {
 	 * @return Status indicating the whether the upload succeeded.
 	 */
 	public function performUpload( $comment, $pageText, $watch, $user ) {
+		$msg = '';
+
+		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
+			return Status::newFatal( 'validator-fatal-error', $msg );
+		}
+
 		$status = $this->getLocalFile()->upload(
 			$this->mTempPath,
 			$comment,

@@ -29,7 +29,9 @@ define('ext.wikia.adEngine.adContext', [
 			return;
 		}
 
-		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
+		return context.targeting.mercuryPageCategories.map(function (item) {
+			return item.title;
+		});
 	}
 
 	function isUrlParamSet(param) {
@@ -43,7 +45,8 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
+			taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -76,12 +79,37 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
+		// SourcePoint recovery
+		if (
+			!noExternals &&
+			context.opts.sourcePointRecovery !== false &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)
+		) {
+			context.opts.sourcePointRecovery = true;
+		}
+
+		// SourcePoint MMS
+		if (noExternals && context.opts.sourcePointMMS === true) {
+			context.opts.sourcePointMMS = false;
+		}
+
+		if (context.opts.sourcePointMMS || context.opts.sourcePointRecovery) {
+			context.opts.sourcePointBootstrap = true;
+		}
+
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+		}
+
+		// Taboola
+		if (!noExternals) {
+			if (shouldLoadTaboolaOnBlockingTraffic(taboolaConfig)) {
+				context.opts.loadTaboolaLibrary = true;
+			}
 		}
 
 		// Google Consumer Surveys
@@ -116,22 +144,11 @@ define('ext.wikia.adEngine.adContext', [
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
-			context.slots.invisibleHighImpact &&
-			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		) || isUrlParamSet('highimpactslot');
+				context.slots.invisibleHighImpact &&
+				geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
+			) || isUrlParamSet('highimpactslot');
 
-		// INVISIBLE_HIGH_IMPACT_2 slot
-		context.slots.invisibleHighImpact2 = geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries);
-
-		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
-			isUrlParamSet('incontentplayer');
-
-		// INCONTENT_LEADERBOARD slot
-		context.slots.incontentLeaderboard =
-			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
-
-		context.slots.incontentLeaderboardAsOutOfPage =
+		context.opts.incontentLeaderboardAsOutOfPage =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
@@ -141,22 +158,19 @@ define('ext.wikia.adEngine.adContext', [
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
-			!instantGlobals.wgSitewideDisableKrux
+			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) && !instantGlobals.wgSitewideDisableKrux
 		);
 
 		// Floating medrec
 		context.opts.floatingMedrec = !!(
 			context.opts.showAds && context.opts.adsInContent &&
-			(isPageType('article') || isPageType('search')) &&
-			!context.targeting.wikiIsCorporate
+			(isPageType('article') || isPageType('search')) && !context.targeting.wikiIsCorporate
 		);
 
 		// Override prefooters sizes
-		context.opts.overridePrefootersSizes =  !!(
+		context.opts.overridePrefootersSizes = !!(
 			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
-			!isPageType('home')
+			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
 		);
 
 		// OpenX for remnant slot enabled
@@ -179,6 +193,21 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
+	}
+
+	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
+		var i, taboolaSlot;
+
+		for (taboolaSlot in taboolaConfig) {
+			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {
+				for (i = 0; i < taboolaConfig[taboolaSlot].recovery.length; i++) {
+					if (geo.isProperGeo(taboolaConfig[taboolaSlot].recovery[i])) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	function addCallback(callback) {

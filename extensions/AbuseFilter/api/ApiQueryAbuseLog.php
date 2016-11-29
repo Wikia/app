@@ -88,7 +88,10 @@ class ApiQueryAbuseLog extends ApiQueryBase {
 		$db = $this->getDB();
 		$notDeletedCond = SpecialAbuseLog::getNotDeletedCond($db);
 
-		$this->addWhereIf( array( 'afl_user_text' => $params['user'] ), isset( $params['user'] ) );
+		if ( isset( $params['user'] ) ) {
+			$userid = User::idFromName( $params['user'] );
+			$this->addWhere( array( 'afl_user' => $userid ) );
+		}
 		$this->addWhereIf( array( 'afl_filter' => $params['filter'] ), isset( $params['filter'] ) );
 		$this->addWhereIf( $notDeletedCond, !SpecialAbuseLog::canSeeHidden( $user ) );
 
@@ -119,7 +122,7 @@ class ApiQueryAbuseLog extends ApiQueryBase {
 				$entry['filter'] = $row->af_public_comments;
 			}
 			if ( $fld_user ) {
-				$entry['user'] = $row->afl_user_text;
+				$entry['user'] = User::getUsername( $row->afl_user, $row->afl_user_text );
 			}
 			if ( $fld_ip ) {
 				$entry['ip'] = $row->afl_ip;

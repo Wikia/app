@@ -7,6 +7,8 @@ namespace Wikia\Search\Test;
 use Wikia\Search\MediaWikiService;
 use \ReflectionProperty;
 use \ReflectionMethod;
+use Wikia\Search\Result\StaleResultException;
+
 /**
  * Tests the methods found in \Wikia\Search\MediaWikiService
  * @author relwell
@@ -1167,19 +1169,14 @@ class MediaWikiServiceTest extends BaseTest
 	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
-	public function testGetPageFromPageIdThrowsException() {
-		$this->mockClass( 'Article', null, 'newFromID' );
-		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getPageFromPageId' );
-		$get->setAccessible( true );
-		try {
-			$get->invoke( (new MediaWikiService), $this->pageId );
-		} catch ( \Exception $e ) {}
+	public function testGetPageFromPageIdThrowsExceptionIfInvalid() {
+		$service = new MediaWikiService();
 
-		$this->assertInstanceOf(
-				'\Exception',
-				$e,
-				'\Wikia\Search\MediaWikiService::getPageFromPageId should throw an exception when provided a nonexistent page id'
-		);
+		$method = new ReflectionMethod( MediaWikiService::class, 'getPageFromPageId' );
+		$method->setAccessible( true );
+
+		$this->setExpectedException( StaleResultException::class );
+		$method->invoke( $service, 0 );
 	}
 
 	/**
@@ -3025,34 +3022,6 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.13433 ms
-	 * @covers Wikia\Search\MediaWikiService::shortNumForMsg
-	 * @dataProvider dataShortNumForMsg
-	 */
-	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->exactly( 1 ) )
-			->method( 'wfMessage' )
-			->with( $usedMessageId, $usedNumber, $number )
-			->will( $this->returnValue( 'mocked message' ) );
-
-		$service = (new MediaWikiService);
-		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
-
-	}
-
-	public function dataShortNumForMsg() {
-		return array(
-			array(1, 'message-id', 1, 'message-id'),
-			array(999, 'message-id', 999, 'message-id'),
-			array(1000, 'message-id', 1, 'message-id-k'),
-			array(999999, 'message-id', 999, 'message-id-k'),
-			array(1000000, 'message-id', 1, 'message-id-M'),
-			array(10000000000, 'message-id', 10000, 'message-id-M'),
-		);
-	}
 
 	/**
 	 * @group Slow

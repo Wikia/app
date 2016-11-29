@@ -1,5 +1,5 @@
 <?php
-
+/** Internationalization file for /extensions/wikia/Thumbnails/Thumbnails extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -14,3 +14,30 @@ Parameters:
 * $1 is the name of the user who added the file
 * $2 is the time when the user added the file',
 ];
+
+$messages['de'] = [
+	'thumbnails-added-by' => 'Von $1 $2',
+];
+
+$messages['fr'] = [
+	'thumbnails-added-by' => 'Par $1 $2',
+	'thumbnails-extension-description' => 'Miniatures pour les images et vidéos sur Wikia',
+];
+
+$messages['pl'] = [
+	'thumbnails-added-by' => 'Przez $1 $2',
+	'thumbnails-extension-description' => 'Miniaturki zdjęć i filmów na Wikia.',
+];
+
+$messages['es'] = [
+	'thumbnails-added-by' => 'Por $1 $2',
+];
+
+$messages['fi'] = [
+	'thumbnails-added-by' => 'lisännyt $1 $2',
+];
+
+$messages['ru'] = [
+	'thumbnails-added-by' => 'От $1 $2',
+];
+

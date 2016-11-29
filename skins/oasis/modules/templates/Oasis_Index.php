@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?= $lang ?>" dir="<?= $dir ?>">
+<html lang="<?= $lang ?>" dir="<?= $dir ?>" class="<?= implode(' ', array_map( 'Sanitizer::escapeClass', $htmlClasses )) ?>">
 <head>
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
@@ -70,11 +70,13 @@
 <?= $prebid ?>
 <?= $rubiconVulcan ?>
 <?= $krux ?>
+<?= $netzathleten ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
 <?= $ivw2 ?>
 <?= $sourcePoint ?>
-<?= $ubisoft ?>
+<?= $gfc ?>
+
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 

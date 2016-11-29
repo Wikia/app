@@ -15,6 +15,18 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 					};
 				}
 			},
+			slotsContext: {
+				filterSlotMap: function (map) {
+					var newMap = {};
+					Object.keys(map).forEach(function (slotName) {
+						if (slotName.indexOf('HOME') === -1 && slotName.indexOf('MIDDLE') === -1) {
+							newMap[slotName] = map[slotName];
+						}
+					});
+
+					return newMap;
+				}
+			},
 			tracker: {
 				measureDiff: function () {
 					return mocks.tracker;
@@ -118,6 +130,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 	function getRubiconFastlane() {
 		return modules['ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'](
 			mocks.adContext,
+			mocks.slotsContext,
 			getFactory(),
 			mocks.rubiconTargeting,
 			mocks.doc,
@@ -162,7 +175,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {
@@ -222,7 +235,6 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			'bid': 'Rxx',
 			'rpfl_7450': ['15_tier0000', '43_tier0000', '44_tier0000', '67_tierNONE']
 		});
 	});
@@ -235,7 +247,6 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('INCONTENT_BOXAD_1')).toEqual({
-			'bid': 'Rxx',
 			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050']
 		});
 	});

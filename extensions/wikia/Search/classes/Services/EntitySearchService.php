@@ -7,7 +7,7 @@ use Wikia\Search\Query\Select;
 use Wikia\Search\QueryService\Factory;
 use WikiFactory;
 
-class EntitySearchService {
+class EntitySearchService extends AbstractSearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 
@@ -194,18 +194,10 @@ class EntitySearchService {
 	}
 
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		return $select;
-	}
-
-	/**
-	 * @param Solarium_Result_Select $response Search response
-	 * @return mixed
-	 */
-	protected function consumeResponse( $response ) {
-		return $response;
 	}
 
 	protected function getConfig() {

@@ -78,8 +78,8 @@
 }
 
 .phalanx-target {
-	color:#3B7F07;
-	font-size:12px;
+	color: #3B7F07;
+	font-size: 12px;
 }
 
 #phalanx-check-results .unblock {
@@ -88,4 +88,18 @@
 
 #entersingle {
 	vertical-align: top;
+}
+
+.phalanx-stats-table {
+	width: 100%;
+}
+
+#formValidateMessage-filter,
+#formValidateMessage-type {
+	color: red;
+	display: none;
+}
+
+#formValidateMessage-type {
+	margin-left: 75px
 }

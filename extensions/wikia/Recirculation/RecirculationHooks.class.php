@@ -46,14 +46,15 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgCityId;
+		global $wgWikiaEnvironment, $wgNoExternals;
+
+		// Only track on prod
+		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) ) {
+			$jsAssets[] = 'recirculation_liftigniter_tracker';
+		}
 
 		if ( static::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
-
-			if ( static::canShowDiscussions( $wgCityId ) ) {
-				$jsAssets[] = 'recirculation_discussions_js';
-			}
 		}
 
 		return true;
@@ -94,6 +95,6 @@ class RecirculationHooks {
 			return true;
 		} else {
 			return false;
-		}		
+		}
 	}
 }

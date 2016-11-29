@@ -276,87 +276,6 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * @brief Block any attempts of editing anything in NS_FORUM namespace
-	 *
-	 * @return true
-	 *
-	 * @author Tomasz Odrobny
-	 **/
-
-	static function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result ) {
-		if ( $action == 'read' ) {
-			return true;
-		}
-
-		$ns = $title->getNamespace();
-
-		# check namespace(s)
-		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
-			if ( !static::canEditOldForum( $user ) ) {
-				$result = [ 'protectedpagetext' ];
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * override button on forum
-	 * @param WikiaResponse $response
-	 * @param $ns
-	 * @param $skin
-	 * @return bool
-	 */
-
-	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
-		$app = F::App();
-		$title = $app->wg->Title;
-
-		$ns = $title->getNamespace();
-		# check namespace(s)
-		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
-			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
-				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
-				$response->setVal( 'action', $action );
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * helper function for onGetUserPermissionsErrors/onPageHeaderIndexAfterActionButtonPrepared
-	 * @param User $user
-	 * @return
-	 */
-
-	static public function canEditOldForum( $user ) {
-		return $user->isAllowed( 'forumoldedit' );
-	}
-
-	/**
-	 * show the info box for old forums
-	 * @param Article $article
-	 * @param $outputDone
-	 * @param $useParserCache
-	 * @return bool
-	 */
-
-	static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
-		$title = $article->getTitle();
-		$ns = $title->getNamespace();
-		# check namespace(s)
-		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
-			$app = F::App();
-			$html = $app->renderView( 'Forum', 'oldForumInfo' );
-			$app->wg->Out->addHTML( $html );
-		}
-		return true;
-	}
-
-	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
 	 * @param OutputPage $out
 	 * @param string $text article HTML
@@ -589,6 +508,23 @@ class ForumHooksHelper {
 
 		if ( $title && $title->getNamespace() === $nsTopic && isset( $wgNamespaceRobotPolicies[$nsTopic] ) ) {
 			$specialPolicy = Article::formatRobotPolicy( $wgNamespaceRobotPolicies[$nsTopic] );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-1196: Invalidate "Forum Activity" rail module cache if thread is deleted via Nuke / Quick Tools
+	 * @param Article|WikiPage|Page $page
+	 * @param User $user
+	 * @param string $reason
+	 * @param int $id
+	 * @return bool always true to continue hook processing
+	 */
+	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
+		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$wallHistory = new WallHistory();
+			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
 		}
 
 		return true;
