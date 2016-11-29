@@ -94,7 +94,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		}
 
 		function getSlotPrice(slotName) {
-
+			if (module.name === 'prebid') {
+				// custom prebid logic
+				// return shape:
+				// { appnexus: XX, indexExchange: XX }
+			} else {
+				// module.getSlotPrices()
+				// return shape:
+				// { fastlane: XX }
+			}
 		}
 
 		function getName() {
