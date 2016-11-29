@@ -3,6 +3,7 @@
 namespace ContributionPrototype;
 
 use FormlessAction;
+use Wikia;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Gateway\UrlProvider;
 
@@ -19,6 +20,7 @@ class CPViewAction extends FormlessAction {
 	public function show() {
 		/** @var CPArticleRenderer $renderer */
 		$renderer = $this->getRenderer();
+		Wikia::addAssetsToOutput('contribution_prototype_scss');
 		$renderer->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
 	}
 
