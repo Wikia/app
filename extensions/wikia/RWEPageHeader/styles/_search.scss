@@ -211,3 +211,9 @@ $search-transition-long: .2s;
 		cursor: default;
 	}
 }
+
+@media #{$wds-screen} and (max-width:#{$wds-breakpoint-l - 1}) {
+	#searchInputRWE {
+		position: static;
+	}
+}
