@@ -42,6 +42,7 @@ Write the first section of your page here.
 
 Write the second section of your page here.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
+	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Cancel',
 ];
 
@@ -395,6 +396,7 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 
 Schreibe den zweiten Abschnitt deines Artikels hier.',
 	'createpage-ve-body' => 'Der Artikel <b>$1</b> existiert in dieser Community nicht. Du kannst uns helfen, indem du ein paar Sätze hinzufügst.',
+	'createpage-button-proceed' => 'Neue Seite',
 	'createpage-button-cancel' => 'Abbrechen',
 ];
 
@@ -503,6 +505,7 @@ Escribe aquí la primera sección de tu artículo.
 
 Escribe aquí la segunda sección de tu artículo.',
 	'createpage-ve-body' => 'El artículo <b>$1</b> aún no existe en esta comunidad. Puedes ayudar agregando algunas oraciones.',
+	'createpage-button-proceed' => 'Crear una página',
 	'createpage-button-cancel' => 'Cancelar',
 ];
 
@@ -666,6 +669,7 @@ $messages['fr'] = [
 
 Écrivez la deuxième section de votre article ici.',
 	'createpage-ve-body' => 'L\'article <b>$1</b> n\'existe pas dans cette communauté. Vous pouvez aider en ajoutant quelques phrases.',
+	'createpage-button-proceed' => 'Créer page',
 	'createpage-button-cancel' => 'Annuler',
 ];
 
@@ -1025,6 +1029,7 @@ $messages['ja'] = [
 == 節見出し ==
 ここに2番目の節を書く。',
 	'createpage-ve-body' => '「<b>$1</b>」という記事はこのコミュニティには存在しません。新たに文章を追加して、記事を作成してみてください。',
+	'createpage-button-proceed' => '次へ',
 	'createpage-button-cancel' => 'キャンセル',
 ];
 
@@ -1073,6 +1078,10 @@ $messages['km'] = [
 
 ==ចំណងជើងផ្នែក==
 សរសេរផ្នែកទីពីររបស់ទំព័រអ្នកនៅទៅនេះ។',
+];
+
+$messages['ko'] = [
+	'createpage-button-proceed' => '새 문서 만들기',
 ];
 
 $messages['ku-latn'] = [
@@ -1483,6 +1492,10 @@ Schrijf hier de eerste paragraaf van je pagina.
 Schrijf hier de tweede paragraaf van je pagina.',
 ];
 
+$messages['no'] = [
+	'createpage-button-proceed' => 'Legg til side',
+];
+
 $messages['pa'] = [
 	'createpage-desc' => 'ਵਿਕਿ ਦੇ WYSIWYG ਐਡੀਟਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉਣਾ ਮਨਜ਼ੂਰ',
 	'createpage-sp-title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉ',
@@ -1560,6 +1573,7 @@ Tutaj napisz treść pierwszej sekcji strony.
 
 Tutaj napisz treść drugiej sekcji strony.',
 	'createpage-ve-body' => 'Artykuł <b>$1</b> nie istnieje jeszcze w tej wiki. Możesz pomóc, dodając kilka zdań.',
+	'createpage-button-proceed' => 'Dodaj stronę',
 	'createpage-button-cancel' => 'Anuluj',
 ];
 
@@ -1816,6 +1830,7 @@ $messages['ru'] = [
 
 Напишите здесь вторую секцию вашей статьи.',
 	'createpage-ve-body' => 'Статья <b>$1</b> ещё не существует на этой вики. Вы можете помочь, добавив несколько предложений.',
+	'createpage-button-proceed' => 'Добавить страницу',
 	'createpage-button-cancel' => 'Отмена',
 ];
 
@@ -2184,6 +2199,7 @@ $messages['zh'] = [
 	'tog-createpagedefaultblank' => '
 预设使用空白页来创建页面',
 	'tog-createpagepopupdisabled' => '关闭 "创建新页面" 流程 (不建议)',
+	'createpage-button-proceed' => '添加页面',
 ];
 
 $messages['zh-cn'] = [
