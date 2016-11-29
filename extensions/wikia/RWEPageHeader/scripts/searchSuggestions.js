@@ -47,7 +47,7 @@ $(function () {
 						} else {
 							window.Wikia.Tracker.track({
 								action: Wikia.Tracker.ACTIONS.CLICK,
-								category: 'navigation',
+								category: 'rwe-page-header',
 								trackingMethod: 'analytics',
 								label: $searchInput.data('suggestions-tracking-label')
 							});
