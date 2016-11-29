@@ -9,17 +9,10 @@ class ImageCountGetter extends WikiaModel {
 
 
 	public function getImageCounts( $reviewerId ) {
-		$counts = $this->mergeCounts(
+		return $this->mergeCounts(
 			$this->getCountOfAllUnassignedImages(),
 			$this->getCountOfThisUsersInProgressImages( $reviewerId )
 		);
-
-		return [
-			self::QUESTIONABLE => $counts[ ImageReviewStates::QUESTIONABLE ] ?? 0,
-			self::REJECTED => $counts[ ImageReviewStates::REJECTED ] ?? 0,
-			self::UNREVIEWED => $counts[ ImageReviewStates::UNREVIEWED ] ?? 0,
-			self::INVALID => $counts[ ImageReviewStates::INVALID_IMAGE ] ?? 0
-		];
 	}
 
 	/**
@@ -32,8 +25,7 @@ class ImageCountGetter extends WikiaModel {
 	 * @throws Exception
 	 */
 	private function getCountOfAllUnassignedImages() {
-		$db = $this->getDatawareDB();
-		$counts = ( new WikiaSQL() )
+		return ( new WikiaSQL() )
 			->SELECT()
 			->FIELD( 'state' )
 			->COUNT( '*' )->AS_( 'total' )
@@ -48,11 +40,9 @@ class ImageCountGetter extends WikiaModel {
 				]
 			)
 			->GROUP_BY( 'state' )
-			->runLoop( $db, function( &$counts, $row ) {
+			->runLoop( $this->getDatawareDB(), function( &$counts, $row ) {
 				$counts[$row->state] = $row->total;
 			} );
-
-		return $counts;
 	}
 
 	/**
@@ -66,8 +56,7 @@ class ImageCountGetter extends WikiaModel {
 	 * @throws Exception
 	 */
 	private function getCountOfThisUsersInProgressImages( $reviewerId ) {
-		$db = $this->getDatawareDB();
-		$counts = ( new WikiaSQL() )
+		return ( new WikiaSQL() )
 			->SELECT()
 			->FIELD( 'state' )
 			->COUNT( '*' )->AS_( 'total' )
@@ -81,27 +70,35 @@ class ImageCountGetter extends WikiaModel {
 			)
 			->AND_( 'reviewer_id' )->EQUAL_TO( $reviewerId )
 			->GROUP_BY( 'state' )
-			->runLoop( $db, function( &$counts, $row ) {
+			->runLoop( $this->getDatawareDB(), function( &$counts, $row ) {
 				$counts[$row->state] = $row->total;
 			} );
-
-		return $counts;
 	}
 
 	/**
 	 * Combine the counts for the unassignedImageCounts, and usersInProgressImageCounts. This ensures
-	 * that users see the proper counts for rejected, questionable, and unreviwed.
+	 * that users see the proper counts for rejected, questionable, and unreviwed for them personally.
 	 * @param array $unassignedImageCounts
 	 * @param array $usersInProgressImageCounts
 	 * @return array
 	 */
 	private function mergeCounts( array $unassignedImageCounts, array $usersInProgressImageCounts ) : array {
-		$unassignedImageCounts[ImageReviewStates::REJECTED] +=
-			$usersInProgressImageCounts[ImageReviewStates::REJECTED_IN_REVIEW] ?? 0;
+		$totalCounts = [
+			self::QUESTIONABLE => 0,
+			self::REJECTED => 0,
+			self::UNREVIEWED => 0,
+			self::INVALID => 0
+		];
 
-		$unassignedImageCounts[ImageReviewStates::QUESTIONABLE] +=
-			$usersInProgressImageCounts[ImageReviewStates::QUESTIONABLE_IN_REVIEW] ?? 0;
+		$totalCounts[self::QUESTIONABLE] += $unassignedImageCounts[ImageReviewStates::QUESTIONABLE] ?? 0;
+		$totalCounts[self::QUESTIONABLE] += $usersInProgressImageCounts[ImageReviewStates::QUESTIONABLE_IN_REVIEW] ?? 0;
 
-		return $unassignedImageCounts;
+		$totalCounts[self::REJECTED] += $unassignedImageCounts[ImageReviewStates::REJECTED] ?? 0;
+		$totalCounts[self::REJECTED] += $usersInProgressImageCounts[ImageReviewStates::REJECTED_IN_REVIEW] ?? 0;
+
+		$totalCounts[self::UNREVIEWED] += $unassignedImageCounts[ImageReviewStates::UNREVIEWED] ?? 0;
+		$totalCounts[self::INVALID] += $usersInProgressImageCounts[ImageReviewStates::INVALID_IMAGE] ?? 0;
+
+		return $totalCounts;
 	}
 }

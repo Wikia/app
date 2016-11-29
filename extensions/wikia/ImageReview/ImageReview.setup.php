@@ -30,7 +30,6 @@ $app = F::app();
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageListGetter'] =  $dir . 'ImageListGetter.class.php';
-$wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
 $wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
 $wgAutoloadClasses['ImageStateUpdater'] =  $dir . 'ImageStateUpdater.class.php';
 $wgAutoloadClasses['ImageCountGetter'] =  $dir . 'ImageCountGetter.class.php';

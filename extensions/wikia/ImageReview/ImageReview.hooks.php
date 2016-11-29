@@ -39,13 +39,8 @@ class ImageReviewHooks {
 			'state' => $statesToUpdate,
 		];
 
-		$oDB = $this->getDatabaseHelper();
-		$oDB->updateBatchImages( $aValues, $aWhere );
+		( new ImageStateUpdater() )->updateBatchImages( $aValues, $aWhere );
 
 		return true;
-	}
-
-	private function getDatabaseHelper() {
-		return new ImageReviewDatabaseHelper();
 	}
 }

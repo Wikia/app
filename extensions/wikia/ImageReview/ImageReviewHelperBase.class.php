@@ -31,10 +31,6 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 		'oldest first' => 2,
 	);
 
-	protected function getDatabaseHelper() {
-		return new ImageReviewDatabaseHelper();
-	}
-
 	protected function getOrder($order) {
 		switch ($order) {
 			case self::ORDER_PRIORITY_LATEST:

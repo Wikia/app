@@ -68,12 +68,25 @@ class ImageStateUpdater extends WikiaModel {
 	 * @param  array  $imagesToDelete  An array of [ city_id, page_id ] arrays.
 	 * @return void
 	 */
-	public function createDeleteImagesTask( array $imagesToDelete ) {
+	private function createDeleteImagesTask( array $imagesToDelete ) {
 		if ( !empty( $imagesToDelete ) ) {
 			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
 			$task->call( 'delete', $imagesToDelete );
 			$task->prioritize();
 			$task->queue();
 		}
+	}
+
+	public function updateBatchImages( array $values, array $where ) {
+		$db = $this->getDatawareDB( DB_MASTER );
+
+		$db->update(
+			'image_review',
+			$values,
+			$where,
+			__METHOD__
+		);
+
+		$db->commit();
 	}
 }

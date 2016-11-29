@@ -8,6 +8,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 	private $timestamp;
 	private $state;
 	private $order;
+	private $imageStateUpdater;
 
 	function __construct( int $timestamp, int $state, int $order ) {
 		parent::__construct();
@@ -15,6 +16,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 		$this->timestamp = wfTimestamp( TS_DB, $timestamp );
 		$this->state = $state;
 		$this->order = $order;
+		$this->imageStateUpdater= new ImageStateUpdater();
 	}
 
 	/**
@@ -22,12 +24,12 @@ class ImageListGetter extends ImageReviewHelperBase {
 	 * state (eg, unreviewed, rejected, questionable), order (last edited, priority),
 	 * and timestamp.
 	 *
-	 * When getting this batch of images, we first check if the timestamp matches
+	 * When getting this images, we first check if the given timestamp matches
 	 * a previously reviewed batch of images. If so, we return those images. If not,
 	 * we then check to see if there are any outstanding reviews (reviews that this
 	 * reviewer started on, but didn't finished by making a decision on). If so, we
 	 * return those images. If not again, we'll finally create a new review and return
-	 * those images to the user.
+	 * those images.
 	 */
 	public function getImageList() {
 		$imageList = $this->fetchPreviousReviewFromTimestamp();
@@ -294,8 +296,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 		$values = [ 'state' => ImageReviewStates::ICO_IMAGE ];
 		$where = [ implode( 'OR', $where ) ];
 
-		$databaseHelper = $this->getDatabaseHelper();
-		$databaseHelper->updateBatchImages( $values, $where );
+		$this->imageStateUpdater->updateBatchImages( $values, $where );
 
 		WikiaLogger::instance()->info( "ImageReviewLog", [
 			'method' => __METHOD__,
