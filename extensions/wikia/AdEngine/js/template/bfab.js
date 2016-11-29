@@ -21,18 +21,17 @@ define('ext.wikia.adEngine.template.bfab', [
 	 */
 	function show(params) {
 		slot.classList.add('bfab-template');
-		slotTweaker.makeResponsive(slot.id, params.aspectRatio);
+		slotTweaker.makeResponsive(slot.id, params.aspectRatio)
+			.then(function (iframe) {
+				if (recoveryTweaker && recoveryTweaker.isTweakable()) {
+					recoveryTweaker.tweakSlot(slot.id, iframe);
+				}
 
-		slotTweaker.onReady(slot.id, function (iframe) {
-			if (recoveryTweaker && recoveryTweaker.isTweakable()) {
-				recoveryTweaker.tweakSlot(slot.id, iframe);
-			}
-
-			uapVideo.init()
-				.then(function () {
-					uapVideo.loadVideoAd(params, slot, slot.querySelector('div'));
-				});
-		});
+				uapVideo.init()
+					.then(function () {
+						uapVideo.loadVideoAd(params, slot, slot.querySelector('div'));
+					});
+			});
 
 		log('show', 'info', logGroup);
 	}
