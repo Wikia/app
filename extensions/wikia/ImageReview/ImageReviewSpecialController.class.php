@@ -3,6 +3,7 @@
 use Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
+
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED     = 'rejected';
 	const ACTION_UNREVIEWED   = 'unreviewed';
@@ -25,13 +26,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		self::ACTION_UNREVIEWED => ImageReviewStates::UNREVIEWED
 	];
 
-	// Map each action to the pool of images already in review when showing images in progress
-	const REVIEW_STATE_FOR_ACTION = [
-		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE_IN_REVIEW,
-		self::ACTION_REJECTED => ImageReviewStates::REJECTED_IN_REVIEW,
-		self::ACTION_UNREVIEWED => ImageReviewStates::IN_REVIEW
-	];
-
 	const STATS_HEADERS = [
 		'user',
 		'total reviewed',
@@ -51,7 +45,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $accessRejected;
 	private $accessStats;
 
-	private $imageListGetter;
 	private $imageStateUpdater;
 	private $imageCountGetter;
 	private $statsDataGetter;
@@ -64,7 +57,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->accessRejected = $user->isAllowed( 'rejectedimagereview' );
 		$this->accessStats = $user->isAllowed( 'imagereviewstats' );
 
-		$this->imageListGetter = new ImageListGetter();
 		$this->imageStateUpdater = new ImageStateUpdater();
 		$this->imageCountGetter = new ImageCountGetter();
 		$this->statsDataGetter = new StatsDataGetter();
@@ -134,14 +126,19 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function getImageList() {
-		return $this->imageListGetter->getImageList( $this->ts, $this::ACTION_TO_STATES[$this->action], $this->order );
+		$imageListGetter = new ImageListGetter(
+			$this->ts,
+			$this::ACTION_TO_STATES[$this->action],
+			$this->order
+		);
+		return $imageListGetter->getImageList();
 	}
 
 	private function getImageCounts() {
 		// Format the number locally (add ',' or '.')
 		return array_map(
 			function( $number ) { return $this->wg->Lang->formatNum( $number ); },
-			$this->imageCountGetter->getImageCounts()
+			$this->imageCountGetter->getImageCounts( $this->wg->User->getId() )
 		);
 	}
 
@@ -269,19 +266,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function parseAction() {
-		$pathParts = explode( '/', $this->getPar() );
-		
-		// If there are path parts, try to find the action.  Explode *always* returns an
-		// array even if the content its "exploding" is empty or null.  In those cases it
-		// bizarrely returns an array with one null item.  So just check that the first
-		// element of this array is not empty.
-		if ( !empty( $pathParts[0] ) ) {
-			$action = array_pop( $pathParts );
-			return empty( self::ALLOWED_ACTIONS ) ? self::ACTION_UNREVIEWED : $action;
-		}
-
-		// Return the default action
-		return self::ACTION_UNREVIEWED;
+		return array_key_exists( $this->getPar(), self::ALLOWED_ACTIONS ) ? $this->getPar() : self::ACTION_UNREVIEWED;
 	}
 
 	private function checkUserPermissions() {

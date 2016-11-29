@@ -42,7 +42,7 @@
 	<input type="submit" class="wikia-button secondary" value="Change sort order" />
 </form>
 
-<a href="<?= $fullUrl ?>/stats" class="wikia-button secondary">View stats</a>
+<a href="<?= $baseUrl ?>/stats" class="wikia-button secondary">View stats</a>
 
 <?php } ?>
 

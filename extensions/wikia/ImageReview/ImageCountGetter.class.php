@@ -7,12 +7,6 @@ class ImageCountGetter extends WikiaModel {
 	const UNREVIEWED   = 'unreviewed';
 	const INVALID      = 'invalid';
 
-	const STATES_TO_COUNT = [
-		ImageReviewStates::QUESTIONABLE,
-		ImageReviewStates::REJECTED,
-		ImageReviewStates::UNREVIEWED,
-		ImageReviewStates::INVALID_IMAGE,
-	];
 
 	/**
 	 * Fix this so it returns a count of all available images to see AND all
@@ -22,26 +16,11 @@ class ImageCountGetter extends WikiaModel {
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	public function getImageCounts() {
-		$db = $this->getDatawareDB();
-
-		$where = [];
-		$where[] = 'state in (' . $db->makeList( self::STATES_TO_COUNT ) . ')';
-		$where[] = 'top_200=0';
-
-		// select by reviewer, state and total count with rollup and then pick the data we want out
-		$results = $db->select(
-			[ 'image_review' ],
-			[ 'state', 'count(*) as total' ],
-			$where,
-			__METHOD__,
-			[ 'GROUP BY' => 'state' ]
+	public function getImageCounts( $reviewerId ) {
+		$counts = $this->mergeCounts(
+			$this->getUnassignedImageCounts(),
+			$this->getUsersInProgressImageCounts( $reviewerId )
 		);
-
-		$counts = [];
-		while ($row = $db->fetchObject($results)) {
-			$counts[$row->state] = $row->total;
-		}
 
 		return [
 			self::QUESTIONABLE => $counts[ ImageReviewStates::QUESTIONABLE ] ?? 0,
@@ -49,5 +28,62 @@ class ImageCountGetter extends WikiaModel {
 			self::UNREVIEWED => $counts[ ImageReviewStates::UNREVIEWED ] ?? 0,
 			self::INVALID => $counts[ ImageReviewStates::INVALID_IMAGE ] ?? 0
 		];
+	}
+
+	private function getUnassignedImageCounts() {
+		$db = $this->getDatawareDB();
+		$counts = ( new WikiaSQL() )
+			->SELECT()
+			->FIELD( 'state' )
+			->COUNT( '*' )->AS_( 'total' )
+			->FROM( 'image_review' )
+			->WHERE( 'top_200' )->EQUAL_TO( '0' )
+			->AND_( 'state' )->IN(
+				[
+					ImageReviewStates::QUESTIONABLE,
+					ImageReviewStates::REJECTED,
+					ImageReviewStates::UNREVIEWED,
+					ImageReviewStates::INVALID_IMAGE,
+				]
+			)
+			->GROUP_BY( 'state' )
+			->runLoop( $db, function( &$counts, $row ) {
+				$counts[$row->state] = $row->total;
+			} );
+
+		return $counts;
+	}
+
+	private function getUsersInProgressImageCounts( $reviewerId ) {
+		$db = $this->getDatawareDB();
+		$counts = ( new WikiaSQL() )
+			->SELECT()
+			->FIELD( 'state' )
+			->COUNT( '*' )->AS_( 'total' )
+			->FROM( 'image_review' )
+			->WHERE( 'top_200' )->EQUAL_TO( '0' )
+			->AND_( 'state' )->IN(
+				[
+					ImageReviewStates::QUESTIONABLE_IN_REVIEW,
+					ImageReviewStates::REJECTED_IN_REVIEW
+				]
+			)
+			->AND_( 'reviewer_id' )->EQUAL_TO( $reviewerId )
+			->GROUP_BY( 'state' )
+			->runLoop( $db, function( &$counts, $row ) {
+				$counts[$row->state] = $row->total;
+			} );
+
+		return $counts;
+	}
+
+	private function mergeCounts( array $unassignedImageCounts, array $usersInProgressImageCounts ) : array {
+		$unassignedImageCounts[ImageReviewStates::REJECTED] +=
+			$usersInProgressImageCounts[ImageReviewStates::REJECTED_IN_REVIEW] ?? 0;
+
+		$unassignedImageCounts[ImageReviewStates::QUESTIONABLE] +=
+			$usersInProgressImageCounts[ImageReviewStates::QUESTIONABLE_IN_REVIEW] ?? 0;
+
+		return $unassignedImageCounts;
 	}
 }

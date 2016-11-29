@@ -64,37 +64,6 @@ class ImageReviewDatabaseHelper {
 		$oDB->commit();
 	}
 
-	public function countImagesByState() {
-		$aCounts = [];
-
-		$oDB = $this->getDatawareDB( DB_SLAVE );
-
-		$aWhere = [];
-		$aStatesToFetch = [
-			ImageReviewStates::QUESTIONABLE,
-			ImageReviewStates::REJECTED,
-			ImageReviewStates::UNREVIEWED,
-			ImageReviewStates::INVALID_IMAGE,
-		];
-		$aWhere[] = 'state in (' . $oDB->makeList( $aStatesToFetch ) . ')';
-		$aWhere[] = 'top_200=0';
-
-		// select by reviewer, state and total count with rollup and then pick the data we want out
-		$oResults = $oDB->select(
-			[ 'image_review' ],
-			[ 'state', 'count(*) as total' ],
-			$aWhere,
-			__METHOD__,
-			[ 'GROUP BY' => 'state' ]
-		);
-
-		while( $oRow = $oDB->fetchObject( $oResults ) ) {
-			$aCounts[ $oRow->state ] = $oRow->total;
-		}
-
-		return $aCounts;
-	}
-
 	/**
 	 * @param  mixed $mDatabase  Database machine master/slave
 	 * @return DatabaseBase     Dataware database object

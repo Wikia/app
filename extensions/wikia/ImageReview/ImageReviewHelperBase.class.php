@@ -31,8 +31,6 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 		'oldest first' => 2,
 	);
 
-	public abstract function refetchImageListByTimestamp($timestamp);
-
 	protected function getDatabaseHelper() {
 		return new ImageReviewDatabaseHelper();
 	}

@@ -40,7 +40,7 @@ class ImageStateUpdater extends WikiaModel {
 				$db->update(
 					'image_review',
 					[
-						'reviewer_id' => null,
+						'reviewer_id' => $userId,
 						'state' => $state,
 						'review_end = now()',
 					],
