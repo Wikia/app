@@ -117,7 +117,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
@@ -198,7 +197,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
