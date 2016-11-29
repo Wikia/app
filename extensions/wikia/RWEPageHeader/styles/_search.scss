@@ -43,7 +43,7 @@ $search-transition-long: .2s;
 	}
 }
 
-.rwe-page-header-nav:not(.wds-search-is-active) #searchFormWrapperRWE:hover {
+.rwe-page-header-nav:not(.wds-search-is-active) #searchInputWrapperRWE:hover {
 	.wds-global-navigation__search-label {
 		svg {
 			fill: $color-links;

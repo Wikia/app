@@ -31,14 +31,17 @@
 	border-right: 1px $color-page-border solid;
 	color: $color-page-border;
 	margin: $content-spacing-small 0;
-	padding: $content-spacing-small $content-spacing-regular;
+
+	>.rwe-page-header-nav__link {
+		display: block;
+		padding: $content-spacing-small $content-spacing-regular;
+	}
 
 	&:last-child {
 		border-right: 0;
 	}
 
 	&:hover {
-		cursor: pointer;
 		text-decoration: none;
 
 		.rwe-page-header-nav__chevron,
