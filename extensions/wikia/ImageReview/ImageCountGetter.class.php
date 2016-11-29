@@ -8,18 +8,10 @@ class ImageCountGetter extends WikiaModel {
 	const INVALID      = 'invalid';
 
 
-	/**
-	 * Fix this so it returns a count of all available images to see AND all
-	 * images already assigned to this user, but that they haven't taken an
-	 * action on
-	 * @return array
-	 * @throws DBUnexpectedError
-	 * @throws MWException
-	 */
 	public function getImageCounts( $reviewerId ) {
 		$counts = $this->mergeCounts(
-			$this->getUnassignedImageCounts(),
-			$this->getUsersInProgressImageCounts( $reviewerId )
+			$this->getCountOfAllUnassignedImages(),
+			$this->getCountOfThisUsersInProgressImages( $reviewerId )
 		);
 
 		return [
@@ -30,7 +22,16 @@ class ImageCountGetter extends WikiaModel {
 		];
 	}
 
-	private function getUnassignedImageCounts() {
+	/**
+	 * Get count of all images which have yet to be assigned a reviewer. This is for
+	 * both images that haven't gone through the first screening where they are marked
+	 * as questionable, rejected, or approved by the first level reviewers, and for
+	 * those images marked rejected or questionable which haven't been assigned to a staff
+	 * member to make the final call.
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	private function getCountOfAllUnassignedImages() {
 		$db = $this->getDatawareDB();
 		$counts = ( new WikiaSQL() )
 			->SELECT()
@@ -54,7 +55,17 @@ class ImageCountGetter extends WikiaModel {
 		return $counts;
 	}
 
-	private function getUsersInProgressImageCounts( $reviewerId ) {
+	/**
+	 * Get counts for all images this user has in outstanding reviews. These are images
+	 * which have been assigned to the user, but which they haven't made an action on
+	 * (eg, marking the image as approved, rejected, questionable, etc). These images
+	 * are hidden from all other users since they have been assigned to this user as part
+	 * of creating the review.
+	 * @param $reviewerId
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	private function getCountOfThisUsersInProgressImages( $reviewerId ) {
 		$db = $this->getDatawareDB();
 		$counts = ( new WikiaSQL() )
 			->SELECT()
@@ -77,6 +88,13 @@ class ImageCountGetter extends WikiaModel {
 		return $counts;
 	}
 
+	/**
+	 * Combine the counts for the unassignedImageCounts, and usersInProgressImageCounts. This ensures
+	 * that users see the proper counts for rejected, questionable, and unreviwed.
+	 * @param array $unassignedImageCounts
+	 * @param array $usersInProgressImageCounts
+	 * @return array
+	 */
 	private function mergeCounts( array $unassignedImageCounts, array $usersInProgressImageCounts ) : array {
 		$unassignedImageCounts[ImageReviewStates::REJECTED] +=
 			$usersInProgressImageCounts[ImageReviewStates::REJECTED_IN_REVIEW] ?? 0;
