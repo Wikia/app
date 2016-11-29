@@ -175,6 +175,10 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+	video {
+		left: 0;
+	}
+
 	.progress-bar {
 		background: $uap-progress-bar-color;
 		bottom: 0;
