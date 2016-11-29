@@ -32,8 +32,8 @@ $search-transition-long: .2s;
 
 #searchInputRWE {
 	background: transparent;
-	padding: $search-input-padding;
 	height: 20px;
+	padding: $search-input-padding;
 
 	@include placeholder {
 		color: $color-text;
@@ -83,7 +83,7 @@ $search-transition-long: .2s;
 		background: transparent;
 
 		svg {
-			fill: $inactive-color;
+			fill: $color-icons;
 			margin: 0 2px 0 0;
 		}
 
@@ -100,7 +100,7 @@ $search-transition-long: .2s;
 		height: $search-button-height;
 
 		svg {
-			fill: $inactive-color;
+			fill: $color-icons;
 		}
 	}
 
@@ -160,7 +160,7 @@ $search-transition-long: .2s;
 		color: $color-text;
 
 		@include placeholder {
-			color: $inactive-color;
+			color: $color-icons;
 			font-size: $wds-typescale-size-minus-1;
 			font-weight: normal;
 		}
