@@ -19,7 +19,7 @@ class ImageReviewDatabaseHelper {
 	 * @return ResultWrapper Query's results
 	 */
 	public function selectImagesForList( $sOrder,
-		$iLimit = ImageReviewHelper::LIMIT_IMAGES_FROM_DB,
+		$iLimit = ImageListGetter::LIMIT_IMAGES_FROM_DB,
 		$iState = ImageReviewStates::UNREVIEWED
 	) {
 		$oDB = $this->getDatawareDB( DB_SLAVE );

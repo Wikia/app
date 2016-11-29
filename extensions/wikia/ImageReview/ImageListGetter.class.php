@@ -7,7 +7,7 @@ use \Wikia\Logger\WikiaLogger;
  *
  * @author (contributing) Adam Karmiński <adamk@wikia-inc.com>
  */
-class ImageReviewHelper extends ImageReviewHelperBase {
+class ImageListGetter extends ImageReviewHelperBase {
 
 	private $userId = 0;
 
@@ -17,77 +17,115 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	/**
-	 * Creates a task removing listed images
-	 * @param  array  $aDeletionList  An array of [ city_id, page_id ] arrays.
-	 * @return void
+	 * Get batch of images for Image Review Tool. Images are filtered based on
+	 * state (eg, unreviewed, rejected, questionable), order (last edited, priority),
+	 * and timestamp.
+	 *
+	 * When getting this batch of images, we first check if the timestamp matches
+	 * a previously reviewd batch of images. If so, we return those images. If not,
+	 * we'll create a new review assigning those images to the timestamp passed in.
+	 *
+	 * @param int $timestamp
+	 * @param int $state
+	 * @param int $order
+	 * @return array
 	 */
-	public function createDeleteImagesTask( $aDeletionList ) {
-		if ( !empty( $aDeletionList ) ) {
-			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-			$task->call('delete', $aDeletionList);
-			$task->prioritize();
-			$task->queue();
+	public function getImageList( int $timestamp, int $state, int $order ) {
+		if ( $this->previouslyViewedImageList( $timestamp ) ) {
+			return $this->refetchImageListByTimestamp( $timestamp );
 		}
+
+		return $this->fetchNewImageList( $timestamp, $state, $order );
+	}
+
+	private function fetchNewImageList( $timestamp, $state, $order ) {
+		$deleteFromQueueList = [];
+		$imageList = [];
+		$iconsWhere = [];
+
+		// Set a hard and soft limit for stopping the loop.  The soft limit changes
+		// only when an image matches, the hard limit changes for every iteration.
+		$hardNum = self::LIMIT_IMAGES_FROM_DB;
+		$softNum = self::LIMIT_IMAGES;
+
+		$reviewStart = wfTimestamp( TS_DB, $timestamp );
+		$imageIter = $this->getLatestImageIter( $order, $state );
+		while ( $softNum && $hardNum && $row = $imageIter() ) {
+			$hardNum--;
+
+			// Grab this image now to eliminate any race conditions with other reviewers
+			if ( !$this->assignImageToUser( $reviewStart, $state, $row ) ) {
+				// If we failed to assign this image to ourselves, try the next
+				continue;
+			}
+
+			$imageInfo = $this->getImageData( $row );
+
+			// If we failed to load this image, remove it from the review queue
+			if ( !empty( $imageInfo['error'] ) ) {
+				$deleteFromQueueList[] = [
+					'wiki_id' => $row->wiki_id,
+					'page_id' => $row->page_id,
+					'reason' => $imageInfo['error'],
+				];
+				continue;
+			}
+
+			// If this is an icon, put it in a separate queue
+			if ( strpos( 'ico', $imageInfo['extension'] ) ) {
+				$iconsWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+				continue;
+			}
+
+			$imageList[] = $imageInfo;
+			$softNum--;
+		}
+
+		// Remove invalid images
+		$this->createDeleteFromQueueTask( $deleteFromQueueList );
+
+		// Move icons to different state
+		$this->moveImagesToIcoStateFromWhere( $iconsWhere );
+
+		// Return valid images list
+		WikiaLogger::instance()->info( 'ImageReviewLog', [
+			'method' => __METHOD__,
+			'message' => 'Fetched ' . count( $imageList ) . ' new images',
+		] );
+
+		return $imageList;
 	}
 
 	/**
-	 * Creates a task removing listed images from image_review queue
-	 * @param  array  $deletionList  An array of [ city_id, page_id ] arrays.
-	 * @return void
-	 */
-	public function createDeleteFromQueueTask( $deletionList ) {
-		if ( empty( $deletionList ) ) {
-			return;
-		}
-
-		$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-		$task->call('deleteFromQueue', $deletionList);
-		$task->queue();
-	}
-
-	/**
-	 * Look in the DB for any reviews already started and get the timestamp for the earliest one
-	 * found.  Used when a request to Special:ImageReview does not include a 'ts=' parameter.
-	 *
-	 * @param int $state The state of the review tool to find images for
-	 * @param int $dbType Optional DB type.  Useful when the DB has just been updated and slave
-	 *                    lag can create race conditions
-	 *
-	 * @return bool|mixed
-	 *
+	 * @param $timestamp
+	 * @return bool
 	 * @throws Exception
+	 * @throws MWException
 	 */
-	public function findExistingReviewTs( $state, $dbType = DB_SLAVE ) {
-		$dbh = $this->getDatawareDB( $dbType );
-
+	private function previouslyViewedImageList( $timestamp ) {
+		$db = $this->getDatawareDB();
 		return ( new WikiaSQL() )
-			->SELECT( 'UNIX_TIMESTAMP(MIN(review_start))' )->AS_( "ts" )
+			->SELECT( '1' )
 			->FROM( 'image_review' )
 			->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
-			->AND_( 'state' )->EQUAL_TO( $state )
-			->run( $dbh, function( ResultWrapper $result ) {
-		        $row = $result->fetchObject();
-				if ( $row ) {
-					return $row->ts;
-				}
-				return null;
-		      } );
+			->AND_( 'review_start' )->EQUAL_TO( wfTimestamp( TS_DB, $timestamp ) )
+			->LIMIT( 1 )
+			->run( $db, function( ResultWrapper $result ) {
+				return !empty( $result->fetchRow() );
+			} );
 	}
 
 	/**
-	* Get image list from reviewer id based on the timestamp
-	* Note: Does NOT update image state
+	 * Get image list from reviewer id based on the timestamp
+	 * Note: Does NOT update image state
 	 *
-	* @param integer $timestamp review_end
-	* @return array images
-	*/
+	 * @param integer $timestamp review_end
+	 * @return array images
+	 */
 	public function refetchImageListByTimestamp( $timestamp ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = $this->getDatawareDB( DB_SLAVE );
-
-		// try to re-fetch the previous set of images
-		// TODO: optimize it, so we don't do it on every request
 
 		$review_start = wfTimestamp( TS_DB, $timestamp );
 
@@ -137,99 +175,21 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $imageList;
 	}
 
-	private function previouslyViewedImageList( $timestamp ) {
-		$db = $this->getDatawareDB();
-		$numOfImages = ( new WikiaSQL() )
-			->SELECT()
-			->COUNT( '*' )->AS_( 'count' )
-			->FROM( 'image_review' )
-			->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
-			->AND_( 'review_start' )->EQUAL_TO( wfTimestamp( TS_DB, $timestamp ) )
-			->run( $db, function( ResultWrapper $result ) {
-				return $result->current()->count;
-			} );
-
-		return intval( $numOfImages ) > 0;
-	}
-
 	/**
-	 * Get image list
-	 *
-	 * @param $timestamp
-	 * @param int $state
-	 * @param int $order
-	 * 
-	 * @return array imageList
-	 *
-	 * @throws DBUnexpectedError
-	 * @throws Exception
-	 * @throws MWException
+	 * Creates a task removing listed images from image_review queue
+	 * @param  array  $deletionList  An array of [ city_id, page_id ] arrays.
+	 * @return void
 	 */
-	public function getImageList($timestamp, $state = ImageReviewStates::UNREVIEWED, $order = self::ORDER_LATEST ) {
-		if ( $this->previouslyViewedImageList( $timestamp ) ) {
-			return $this->refetchImageListByTimestamp( $timestamp );
+	public function createDeleteFromQueueTask( $deletionList ) {
+		if ( empty( $deletionList ) ) {
+			return;
 		}
 
-
-		// Get the start date to use for all images collected here
-		$reviewStart = wfTimestamp( TS_DB, $timestamp );
-
-		$deleteFromQueueList = [];
-		$imageList = [];
-		$iconsWhere = [];
-
-		// Set a hard and soft limit for stopping the loop.  The soft limit changes
-		// only when an image matches, the hard limit changes for every iteration.
-		$hardNum = self::LIMIT_IMAGES_FROM_DB;
-		$softNum = self::LIMIT_IMAGES;
-
-		$imageIter = $this->getLatestImageIter( $order, $state );
-
-		while ( $softNum && $hardNum && $row = $imageIter() ) {
-			$hardNum--;
-
-			// Grab this image now to eliminate any race conditions with other reviewers
-			if ( !$this->assignImageToUser( $reviewStart, $state, $row ) ) {
-				// If we failed to assign this image to ourselves, try the next
-				continue;
-			}
-
-			$imageInfo = $this->getImageData( $row );
-
-			// If we failed to load this image, remove it from the review queue
-			if ( !empty( $imageInfo['error'] ) ) {
-				$deleteFromQueueList[] = [
-					'wiki_id' => $row->wiki_id,
-					'page_id' => $row->page_id,
-					'reason' => $imageInfo['error'],
-				];
-				continue;
-			}
-
-			// If this is an icon, put it in a separate queue
-			if ( strpos( 'ico', $imageInfo['extension'] ) ) {
-				$iconsWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
-				continue;
-			}
-
-			$imageList[] = $imageInfo;
-			$softNum--;
-		}
-
-		// Remove invalid images
-		$this->createDeleteFromQueueTask( $deleteFromQueueList );
-
-		// Move icons to different state
-		$this->moveImagesToIcoStateFromWhere( $iconsWhere );
-
-		// Return valid images list
-		WikiaLogger::instance()->info( 'ImageReviewLog', [
-			'method' => __METHOD__,
-			'message' => 'Fetched ' . count( $imageList ) . ' new images',
-		] );
-
-		return $imageList;
+		$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+		$task->call('deleteFromQueue', $deletionList);
+		$task->queue();
 	}
+
 
 	/**
 	 * Return an iterator that keeps fetching images from the review table that are in state $state.

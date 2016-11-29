@@ -1,6 +1,8 @@
 <?php
 
-class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
+// TODO make a note about how this is completely fubared and we don't care about it anymore, but how it's
+// broken now that it doesn't inherit from ImageReviewSpecialController
+class PromoteImageReviewSpecialController {
 	const DEFAULT_IMAGE_SIZE = 320;
 
 	public function __construct() {

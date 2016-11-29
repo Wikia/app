@@ -49,13 +49,13 @@
 								 src="<?= htmlspecialchars($image['src']) ?>">
 						</div>
 						<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
+						<?php if ( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_USER ) { ?>
 						<a href="<?= htmlspecialchars($image['user_page']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Susicious user. Click to go to uploader's profile" style="clear: both"></a>
 						<?php } ?>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_WIKI ) { ?>
+						<?php if ( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_WIKI ) { ?>
 						<a href="<?= htmlspecialchars($image['wiki_url']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Suspicious wiki. Click to go to wiki" style="clear: both"></a>
 						<?php } ?>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SKIN_DETECTED ) { ?>
+						<?php if ( $image['flags'] & ImageListGetter::FLAG_SKIN_DETECTED ) { ?>
 						<span class="internal sprite details magnify" title="Flagged: Skin detected." style="clear: both"></span>
 						<?php } ?>
 

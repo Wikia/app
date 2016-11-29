@@ -19,7 +19,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	];
 
 	// Map each action to the pool of images we can pull from when getting new images
-	const ACTION_TO_STATUS_CODE = [
+	const ACTION_TO_STATES = [
 		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE,
 		self::ACTION_REJECTED => ImageReviewStates::REJECTED,
 		self::ACTION_UNREVIEWED => ImageReviewStates::UNREVIEWED
@@ -32,7 +32,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		self::ACTION_UNREVIEWED => ImageReviewStates::IN_REVIEW
 	];
 
-	private $statsHeaders = [
+	const STATS_HEADERS = [
 		'user',
 		'total reviewed',
 		'approved',
@@ -50,12 +50,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $accessQuestionable;
 	private $accessRejected;
 	private $accessStats;
-	private $submitUrl;
-	private $baseUrl;
 
-	/** @var ImageReviewHelper */
-	private $helper;
-
+	private $imageListGetter;
 	private $imageStateUpdater;
 	private $imageCountGetter;
 	private $statsDataGetter;
@@ -67,12 +63,17 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->accessQuestionable = $user->isAllowed( 'questionableimagereview' );
 		$this->accessRejected = $user->isAllowed( 'rejectedimagereview' );
 		$this->accessStats = $user->isAllowed( 'imagereviewstats' );
-		$this->baseUrl = $this->getBaseUrl();
 
-		$this->helper = $this->getHelper();
+		$this->imageListGetter = new ImageListGetter();
 		$this->imageStateUpdater = new ImageStateUpdater();
 		$this->imageCountGetter = new ImageCountGetter();
 		$this->statsDataGetter = new StatsDataGetter();
+	}
+
+	public function init() {
+		$this->setGlobalDisplayVars();
+		$this->setCache();
+		$this->setAssets();
 	}
 
 	protected function setGlobalDisplayVars() {
@@ -82,15 +83,22 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
-
-		$this->wg->Out->setPageTitle($this->getPageTitle());
-
+		$this->wg->Out->setPageTitle( 'Image Review tool' );
 		$this->wg->Out->enableClientCache( false );
 	}
 
-	public function index() {
-		$this->setGlobalDisplayVars();
+	private function setCache() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->sendHeaders();
+	}
 
+	private function setAssets() {
+		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
+		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
+		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
+	}
+
+	public function index() {
 		$this->action = $this->parseAction();
 		$this->order = $this->getOrderingMethod();
 		$this->ts = $this->request->getVal( 'ts' );
@@ -111,16 +119,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->setCache();
-		$this->setAssets();
-
 		$this->imageList = $this->getImageList();
 		$this->imageCount = $this->getImageCounts();
 
 		$this->setVariables();
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
-		$severity = count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES
+		$severity = count( $this->imageList ) < ImageListGetter::LIMIT_IMAGES
 			? 'error'
 			: 'success';
 		$this->logImageListCompleteness( $severity );
@@ -129,7 +134,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function getImageList() {
-		return $this->helper->getImageList( $this->ts, $this::ACTION_TO_STATUS_CODE[$this->action], $this->order );
+		return $this->imageListGetter->getImageList( $this->ts, $this::ACTION_TO_STATES[$this->action], $this->order );
 	}
 
 	private function getImageCounts() {
@@ -162,7 +167,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			],
 
 			'data' => $stats['data'],
-			'headers' => $this->statsHeaders,
+			'headers' => self::STATS_HEADERS,
 
 			'startDay' => $startDay,
 			'startMonth' => $startMonth,
@@ -200,7 +205,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		header('Content-Disposition: attachment; filename="' . $name . '.csv"');
 
-		echo implode( ",", $this->statsHeaders ) . "\n";
+		echo implode( ",", self::STATS_HEADERS ) . "\n";
 
 		foreach ( $stats['data'] as $dataRow ) {
 			echo implode( ",", $dataRow ) . "\n";
@@ -216,26 +221,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$startYear, $startMonth, $startDay,
 			$endYear, $endMonth, $endDay
 		);
-	}
-
-	protected function getPageTitle() {
-		return 'Image Review tool';
-	}
-
-	protected function getHelper() {
-		return new ImageReviewHelper();
-	}
-
-	protected function getBaseUrl() {
-		return Title::newFromText('ImageReview', NS_SPECIAL)->getFullURL();
-	}
-
-	protected function getToolName() {
-		return 'Image Review';
-	}
-
-	protected function getStatsPageTitle() {
-		return 'Image Review tool statistics';
 	}
 
 	protected function parseImageData($data) {
@@ -269,8 +254,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getOrderingMethod() {
-		if ($this->wg->user->isAllowed( 'imagereviewcontrols' )) {
-			$preferedOrder = (int)$this->app->wg->User->getGlobalPreference( 'imageReviewSort' );
+		if ( $this->wg->user->isAllowed( 'imagereviewcontrols' ) ) {
+			$preferedOrder = (int) $this->app->wg->User->getGlobalPreference( 'imageReviewSort' );
 			$order = $this->request->getInt( 'sort', $preferedOrder );
 
 			if ( $order != $preferedOrder ) {
@@ -334,35 +319,28 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function checkRedirect() {
-		if ( !$this->ts || $this->ts < 0 || $this->ts > time() ) {
-			$state = self::REVIEW_STATE_FOR_ACTION[ $this->action ];
-			$dbType = $this->wg->request->wasPosted() ? DB_MASTER : DB_SLAVE;
-
-			$existingTs = $this->helper->findExistingReviewTs( $state, $dbType );
-			$ts = $existingTs ?: time();
-			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . $ts );
+		if  ( $this->invalidTimestamp() )  {
+			$this->redirectWithTimestampSetToNow();
 			return true;
 		}
 
 		return false;
 	}
 
-	private function setAssets() {
-		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
-		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
-		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
+	private function invalidTimestamp() : bool {
+		return !$this->ts || $this->ts < 0 || $this->ts > time();
 	}
 
-	private function setCache() {
-		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-		$this->response->sendHeaders();
+	private function redirectWithTimestampSetToNow() {
+		$this->wg->Out->redirect( '?ts=' . time() );
 	}
+
 
 	private function setVariables() {
-		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
-
 		$this->response->setJsVar('wgImageReviewAction', $this->action);
 
+		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
+		$baseUrl = Title::newFromText( 'ImageReview', NS_SPECIAL )->getFullURL();
 		$this->response->setValues( [
 			'action' => $this->action,
 			'order' => $this->order,
@@ -374,9 +352,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			'accessControls' => $this->wg->user->isAllowed( 'imagereviewcontrols' ),
 			'modeMsgSuffix' => empty( $this->action ) ? '' : '-' . $this->action,
 			'fullUrl' => $this->wg->Title->getFullURL(),
-			'baseUrl' => $this->baseUrl,
-			'toolName' => $this->getToolName(),
-			'submitUrl' => $this->baseUrl . $query,
+			'baseUrl' => $baseUrl,
+			'toolName' => 'Image Review',
+			'submitUrl' => $baseUrl . $query,
 		] );
 	}
 

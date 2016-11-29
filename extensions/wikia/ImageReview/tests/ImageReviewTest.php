@@ -113,16 +113,16 @@ class ImageReviewTest extends WikiaBaseTest {
 		);
 		$getOrderMethod->setAccessible(true);
 
-		$this->assertEquals($expected, $getOrderMethod->invoke((new ImageReviewHelper), $order));
+		$this->assertEquals($expected, $getOrderMethod->invoke((new ImageListGetter), $order));
 	}
 
 	public function imageReviewHelperGetOrderDataProvider() {
 		return array(
 			array('', 'last_edited desc'),
 			array('whatever', 'last_edited desc'),
-			array(ImageReviewHelper::ORDER_LATEST, 'last_edited desc'),
-			array(ImageReviewHelper::ORDER_PRIORITY_LATEST, 'priority desc, last_edited desc'),
-			array(ImageReviewHelper::ORDER_OLDEST, 'last_edited asc'),
+			array(ImageListGetter::ORDER_LATEST, 'last_edited desc'),
+			array(ImageListGetter::ORDER_PRIORITY_LATEST, 'priority desc, last_edited desc'),
+			array(ImageListGetter::ORDER_OLDEST, 'last_edited asc'),
 		);
 	}
 }
