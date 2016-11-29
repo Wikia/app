@@ -93,16 +93,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
-		function getSlotPrice(slotName) {
-			if (module.name === 'prebid') {
-				// custom prebid logic
-				// return shape:
-				// { appnexus: XX, indexExchange: XX }
-			} else {
-				// module.getSlotPrices()
-				// return shape:
-				// { fastlane: XX }
-			}
+		function getBestSlotPrice(slotName) {
+			return module.getBestSlotPrice ? module.getBestSlotPrice(slotName) : {}; // temp workaround
+			return module.getBestSlotPrice(slotName);
 		}
 
 		function getName() {
@@ -122,9 +115,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		return {
 			addResponseListener: addResponseListener,
 			call: call,
+			getBestSlotPrice: getBestSlotPrice,
 			getName: getName,
 			getSlotParams: getSlotParams,
-			getSlotPrice: getSlotPrice,
 			hasResponse: hasResponse,
 			trackState: trackState,
 			wasCalled: wasCalled

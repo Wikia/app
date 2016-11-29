@@ -92,11 +92,11 @@ define('ext.wikia.adEngine.lookup.services', [
 		var slotPrices = {};
 
 		bidders.forEach(function (bidder) {
-			var priceFromBidder = bidder.getSlotPrice(slotName);
+			var priceFromBidder = bidder.getBestSlotPrice(slotName);
 
 			Object.keys(priceFromBidder).forEach(function(bidderName) {
 				slotPrices[bidderName] = priceFromBidder[bidderName];
-			})
+			});
 		});
 
 		return slotPrices;

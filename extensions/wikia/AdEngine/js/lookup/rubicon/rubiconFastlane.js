@@ -10,7 +10,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 ], function (adContext, slotsContext, factory, rubiconTargeting, doc, log, win) {
 	'use strict';
 
-	var config = {
+	var bestPrices = {},
+		config = {
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
@@ -179,6 +180,29 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		});
 	}
 
+	function parsePrice(tier) {
+		var matches = /^\d+_tier(\d+)/g.exec(tier);
+		if (matches.length && matches[1]) {
+			return parseInt(matches[1], 10);
+		}
+
+		return 0;
+	}
+
+	function saveBestPrice(slotName, tiers) {
+		tiers.forEach(function (tier) {
+			bestPrices[slotName] = Math.max(parsePrice(tier), bestPrices[slotName] || 0);
+		});
+	}
+
+	function getBestSlotPrice(slotName) {
+		var price = (bestPrices[slotName] || 0) / 100;
+
+		return {
+			fastlane: price.toFixed(2).toString()
+		};
+	}
+
 	function getSlotParams(slotName) {
 		var targeting,
 			parameters = {};
@@ -191,6 +215,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
 				parameters[params.key] = params.values;
+				saveBestPrice(slotName, params.values);
 			}
 		});
 		fillInWithMissingTiers(slotName, parameters);
@@ -263,6 +288,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		name: 'rubicon_fastlane',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
