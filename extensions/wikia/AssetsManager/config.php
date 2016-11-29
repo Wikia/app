@@ -108,11 +108,14 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/googleIma.js',
-		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
-		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
+		'//extensions/wikia/AdEngine/js/video/googleImaAdStatus.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
+		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
+		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
+		'//extensions/wikia/AdEngine/js/video/volumeControlHandler.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideoAnimation.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
@@ -159,7 +162,7 @@ $config['recirculation_liftigniter_tracker'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',	
+		'//extensions/wikia/Recirculation/js/trackers/liftigniter.js',
 	],
 ];
 
@@ -396,6 +399,8 @@ $config['oasis_jquery'] = [
 
 		// rail
 		'#group_rail_js',
+
+		'#group_page_share_js',
 	],
 ];
 
@@ -927,8 +932,11 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/video/videoAdFactory.js',
 		'//extensions/wikia/AdEngine/js/video/googleIma.js',
+		'//extensions/wikia/AdEngine/js/video/googleImaAdStatus.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideoAnimation.js',
+		'//extensions/wikia/AdEngine/js/video/volumeControlHandler.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',

@@ -63,8 +63,14 @@
 
 		foreach ( $extraButtons as $button ) {
 			echo $button;
-		}
+		} ?>
 
+		<a id="ShareEntryPoint" class="wikia-button secondary" href="#" data-id="share">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'wds-icon header-share-entry-point-icon'); ?>
+			<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+		</a>
+
+		<?
 		// Temp for CommunityPageExperiment
 		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
 			echo Html::closeElement( 'div' );

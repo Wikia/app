@@ -1226,11 +1226,6 @@ $wgEnableNielsen = false;
  */
 $wgNielsenApid = 'FIXME';
 
-/**
- * @name $wgEnableUbisoft
- * Enables Ubisoft
- */
-$wgEnableUbisoft = false;
 
 /**
  * @name $wgEnableNetzAthleten

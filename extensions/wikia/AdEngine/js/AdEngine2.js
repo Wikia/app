@@ -62,6 +62,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 		if (!providerContainer && adContainer) {
 			providerContainer = doc.createElement('div');
+			providerContainer.classList.add('provider-container');
 			providerContainer.id = providerContainerId;
 			adContainer.appendChild(providerContainer);
 		}
