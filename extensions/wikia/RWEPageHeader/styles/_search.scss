@@ -34,12 +34,13 @@ $search-transition-short: 50ms 150ms;
 #searchInputRWE {
 	background: transparent;
 	padding: $search-input-padding;
+		height: 20px;
 
 	@include placeholder {
 		color: $color-text;
 		font-size: $wds-typescale-size-base;
 		font-weight: bold;
-		height: $wds-line-height;
+		line-height: 16px;
 	}
 }
 
