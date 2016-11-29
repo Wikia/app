@@ -18,7 +18,7 @@ $search-button-width: 100%;
 $search-close-button-padding-right: 8px;
 $search-expanded-width: 100%;
 $search-initial-width: 110px;
-$search-input-padding: 3px 4px 2px 4px;
+$search-input-padding: 4px 4px 2px 4px;
 $search-form-height: 34px;
 $search-form-margin-top: 7px;
 $search-form-wrapper-initial-width: $search-initial-width + 16px;
@@ -33,13 +33,13 @@ $search-transition-long: .2s;
 #searchInputRWE {
 	background: transparent;
 	padding: $search-input-padding;
+	height: 20px;
 
 	@include placeholder {
 		color: $color-text;
 		font-size: $wds-typescale-size-base;
 		font-weight: bold;
-		height: $wds-line-height;
-		line-height: 100%;
+		line-height: 16px;
 	}
 }
 
