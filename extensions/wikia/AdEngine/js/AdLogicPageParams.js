@@ -38,15 +38,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	/**
-	 * Get the AbPerformanceTesting experiment name
-	 *
-	 * @returns {string}
-	 */
-	function getPerformanceAb() {
-		return win.wgABPerformanceTest;
-	}
-
-	/**
 	 * Adds the info from the second hash into the first.
 	 * If the same key is in both, the key in the second object overrides what's in the first object.
 	 *
@@ -179,7 +170,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s2: zoneParams.getPageType(),
 			ab: getAb(),
 			ar: getAspectRatio(),
-			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: zoneParams.getPageCategories(),
 			dmn: zoneParams.getDomain(),
