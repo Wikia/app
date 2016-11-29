@@ -8,6 +8,11 @@
 				<?= wfMsg( 'createpage-dialog-message2' ) ?>
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
+			<?php if ( !wfMessage( 'createpage-dialog-message3' )->isBlank() ): ?>
+				<div id="CreatePageDialogInputSub">
+					<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
+				</div>
+			<?php endif; ?>
 			<div id="CreatePageDialogTitleErrorMsg" class="CreatePageError hiddenStructure"></div>
 				<?php if( !$useFormatOnly ): ?>
 				<div id="CreatePageDialogChoose">
