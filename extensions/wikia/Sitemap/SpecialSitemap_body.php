@@ -69,7 +69,20 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt;
+		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots;
+
+		// Force new SitemapXML on old URL, because Google expects it under the old address
+		// and otherwise we'd need to update hundreds of items in Google Search Console
+		if ( !empty( $wgEnableSitemapXmlExt )
+			&& !empty( $wgSitemapXmlExposeInRobots )
+			&& strpos( $subpage, '-oldsitemapxml-' ) === false
+		) {
+			$wgOut->disable();
+			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
+			$response->sendHeaders();
+			echo $response->getBody();
+			return;
+		}
 
 		if ( strpos( $subpage, '-newsitemapxml-' ) !== false ) {
 			if ( empty( $wgEnableSitemapXmlExt ) ) {
@@ -119,7 +132,9 @@ class SitemapPage extends UnlistedSpecialPage {
 
 			header( 'Content-type: application/x-gzip' );
 			print $this->generateNamespace();
-		} else if ( $subpage == 'sitemap-index.xml' ) {
+		} else if ( $subpage == 'sitemap-index.xml'
+			|| $subpage == 'sitemap-oldsitemapxml-index.xml'
+		) {
 			$this->generateIndex();
 		} else {
 			$this->print404();
