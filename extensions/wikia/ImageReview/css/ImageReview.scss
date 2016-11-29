@@ -37,12 +37,16 @@
 	}
 
 	/* Del */
+	.state-3,
 	.state-4 {
 		border-color: #fff;
 		background-color: #FF3333;
 		color: #fff;
 		label {
 			border-color: #fff;
+		}
+		.image-wiki-url a {
+			color: #fff;
 		}
 	}
 
