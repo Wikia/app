@@ -10,3 +10,18 @@ body {
   height: auto;
   background-image: none;
 }
+
+#WikiaPageHeader {
+  display: none;
+}
+
+.cms_article_header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h2 {
+    flex-grow: 1;
+    border-bottom: none;
+  }
+}
