@@ -81,6 +81,7 @@ define('ext.wikia.adEngine.adTracker', [
 	 * A generic function to track an ad-related event and its timing in DataWarehouse
 	 *
 	 * @param {object} data - data to track as JS object (will be converted to URL-like query-string)
+	 * @param {string} eventName 
 	 */
 	function trackDW(data, eventName) {
 		var trackValue = {
