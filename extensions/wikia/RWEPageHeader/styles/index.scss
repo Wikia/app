@@ -33,8 +33,10 @@
 }
 
 .banner-notifications-wrapper {
-	position: fixed;
-	top: 55px;
+	//position: fixed;
+	//top: 55px;
+	position: relative;
+	z-index: 30;
 }
 
 @media #{$breakpoint-small-only} {
