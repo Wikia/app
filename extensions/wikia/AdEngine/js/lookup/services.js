@@ -86,8 +86,6 @@ define('ext.wikia.adEngine.lookup.services', [
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 		providerName = providerName.toLowerCase().replace('gpt', '');
 		addParameters(providerName, slotName, slotTargeting);
-
-		console.log('ADEN-4317 TEST', slotName, getSlotPrices(slotName));
 	}
 
 	function getSlotPrices(slotName) {
