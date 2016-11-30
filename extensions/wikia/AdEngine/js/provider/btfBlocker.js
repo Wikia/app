@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				pendingAtfSlots.splice(index, 1);
 
 				// If pendingAtfSlots is empty, start BTF slots
-				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);a
+				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
 					startBtfQueue();
 				}
