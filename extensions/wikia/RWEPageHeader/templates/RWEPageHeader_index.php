@@ -21,9 +21,8 @@
 				<?= $app->renderView('RWEPageHeader', 'readTab'); ?>
 			</li>
 
-			<li class="rwe-page-header-nav__element rwe-page-header-nav__element-dropdown">
-				<a class="rwe-page-header-nav__link" href="/wiki/Special:Community"
-				   data-tracking="create">
+			<li class="rwe-page-header-nav__element rwe-page-header-nav__element-dropdown wds-dropdown wds-dropdown__toggle">
+				<a class="rwe-page-header-nav__link" href="#" data-tracking="create">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-pencil',
 						'wds-icon wds-icon-small rwe-page-header-nav__icon'
@@ -34,6 +33,7 @@
 						'wds-icon wds-icon-tiny rwe-page-header-nav__chevron'
 					) ?>
 				</a>
+				<?= $app->renderView('RWEPageHeader', 'createTab'); ?>
 			</li>
 
 			<li class="rwe-page-header-nav__element">
