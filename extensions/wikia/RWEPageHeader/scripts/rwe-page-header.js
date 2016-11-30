@@ -39,8 +39,6 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function 
 			}
 		}
 
-		onScroll.bind(setNotificationPosition);
-
 		window.BannerNotification.prototype.show = function() {
 			this.onShow();
 			setNotificationPosition();
