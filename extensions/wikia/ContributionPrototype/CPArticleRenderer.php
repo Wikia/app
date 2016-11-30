@@ -71,6 +71,12 @@ class CPArticleRenderer {
 	private function addScripts(OutputPage $output) {
 		$output->addScript("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
 		$output->addScript("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
+
+		// This is not the intended use of renderSvg but it conveniently does what we want because
+		// the sprite is stored alongside the individual SVGs. The alternative would be to provide
+		// a "correct" mechanism for loading the sprite via the DesignSystem directly (lazy?). Note
+		// that this in-lines the whole thing into the page.
+		$output->addHTML(\DesignSystemHelper::renderSvg('sprite'));
 	}
 
 	private function getArticleContent($title) {
