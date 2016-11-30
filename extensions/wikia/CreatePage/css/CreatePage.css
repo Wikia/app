@@ -23,6 +23,10 @@
 }
 
 #wpCreatePageDialogTitle {
+	font-size: 14px;
+	margin-bottom: 12px;
+	max-width: 370px;
+	padding: 6px 10px;
 	width: 98%;
 }
 
