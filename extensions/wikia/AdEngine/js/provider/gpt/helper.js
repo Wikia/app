@@ -138,7 +138,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (slotTargetingData.flushOnly) {
-			slot.renderEnded();
+			slot.success();
 		}
 	}
 

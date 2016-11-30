@@ -97,6 +97,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				pendingAtfSlots.push(slot.name);
 
 				slot.pre('renderEnded', fillInSlotOnResponse);
+				slot.pre('collapse', fillInSlotOnResponse);
+				slot.pre('hop', fillInSlotOnResponse);
+				slot.pre('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
