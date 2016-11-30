@@ -40,7 +40,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconTier', [
 
 	function parsePrice(tier) {
 		var matches = /^\d+_tier(\d+)/g.exec(tier);
-		if (matches.length && matches[1]) {
+
+		if (matches && matches[1]) {
 			return parseInt(matches[1], 10);
 		}
 
