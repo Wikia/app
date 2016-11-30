@@ -45,17 +45,17 @@ class CPArticleRenderer {
 	 * @param string $title
 	 * @param OutputPage $output
 	 */
-	public function render($title, OutputPage $output) {
-		$content = $this->getArticleContent($title);
+	public function render($title, OutputPage $output, $action='view') {
+		$content = $this->getArticleContent($title, $action);
 		
 		if ($content === false) {
 			// TODO: what do we want to show here?
 			return;
 		}
 
+		$output->addHTML($content);
 		$this->addStyles($output);
 		$this->addScripts($output);
-		$output->addHTML($content);
 	}
 
 	private function addStyles(OutputPage $output) {
@@ -69,14 +69,18 @@ class CPArticleRenderer {
 	}
 
 	private function addScripts(OutputPage $output) {
-		$output->addScript("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
-		$output->addScript("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
+		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
+		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
 	}
 
-	private function getArticleContent($title) {
+	private function getArticleContent($title, $action) {
 //		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
 		$internalHost = $this->publicHost;
 		$path = "wiki/{$title}";
+
+		if ($action != 'view') {
+			$path .= "/${action}";
+		}
 
 		/** @var MWHttpRequest $response */
 		$response = Http::request(
