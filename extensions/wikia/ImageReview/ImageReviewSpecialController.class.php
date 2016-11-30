@@ -3,6 +3,7 @@
 use Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED     = 'rejected';
@@ -331,6 +332,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			'order' => $this->order,
 			'imageList' => $this->imageList,
 			'imageCount' => $this->imageCount,
+			'hasImages' => count( $this->imageList ) > 0,
 			'accessRejected' => $this->accessRejected,
 			'accessQuestionable' => $this->accessQuestionable,
 			'accessStats' => $this->wg->User->isAllowed( 'imagereviewstats' ),
@@ -340,8 +342,24 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			'baseUrl' => $baseUrl,
 			'toolName' => 'Image Review',
 			'submitUrl' => $baseUrl . $query,
+      'wfMessages' => [
+        'imagereview-gotoimage' => wfMessage( 'imagereview-gotoimage' )->escaped(),
+        'imagereview-option-delete' => wfMessage( 'imagereview-option-delete' )->escaped(),
+        'imagereview-label-delete' => wfMessage( 'imagereview-label-delete' )->escaped(),
+        'imagereview-option-ok' => wfMessage( 'imagereview-option-ok' )->escaped(),
+        'imagereview-label-ok' => wfMessage( 'imagereview-label-ok' )->escaped(),
+        'imagereview-option-questionable' => wfMessage( 'imagereview-option-questionable' )->escaped(),
+        'imagereview-label-questionable' => wfMessage( 'imagereview-label-questionable' )->escaped(),
+        'imagereview-noresults' => wfMessage( 'imagereview-noresults' )->escaped(),
+      ],
 		] );
 	}
+
+  public function helloWorld() {
+    return true;
+  }
+
+  // private function get
 
 	private function logImageListCompleteness( $severity ) {
 		WikiaLogger::instance()->debug(
@@ -353,4 +371,15 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			]
 		);
 	}
+
+
+
+
+
+
+
+
+
+
+
 }
