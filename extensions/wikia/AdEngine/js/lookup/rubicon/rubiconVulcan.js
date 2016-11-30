@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'use strict';
 
 	var accountId = 7450,
-		bestPrices = {},
 		incontentAdSettings = {
 			siteId: 55412,
 			size: [640, 480],

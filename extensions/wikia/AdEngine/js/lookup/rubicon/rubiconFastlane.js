@@ -112,6 +112,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
 				priceMap[slotName] = params.values.sort(compareTiers).join(',');
+				saveBestPrice(slotName, params.values);
 			}
 		});
 	}
@@ -211,7 +212,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
 				parameters[params.key] = params.values;
-				saveBestPrice(slotName, params.values);
 			}
 		});
 		fillInWithMissingTiers(slotName, parameters);
@@ -267,6 +267,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 		defineSlots(skin, function () {
 			response = true;
+			priceMap = {};
+			bestPrices = {};
 			onResponse();
 		});
 	}
