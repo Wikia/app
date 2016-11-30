@@ -1,4 +1,4 @@
-require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
+require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function (window, $, tracker, onScroll) {
 	'use strict';
 
 	var track = function (data) {
@@ -27,9 +27,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
 		window.BannerNotification.prototype.onHide = window.BannerNotification.prototype.hide;
 
-		window.BannerNotification.prototype.show = function() {
-			this.onShow();
-
+		function setNotificationPosition() {
 			var $globalNav = $('#globalNavigation');
 			var $notificationsWrapper = $('.banner-notifications-wrapper');
 
@@ -39,22 +37,20 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 				var topMargin = $notificationsWrapper.height();
 				$wikiaTopAds.css('marginTop', topMargin + 'px');
 			}
+		}
+
+		onScroll.bind(setNotificationPosition);
+
+		window.BannerNotification.prototype.show = function() {
+			this.onShow();
+			setNotificationPosition();
 
 			return this;
 		};
 
 		window.BannerNotification.prototype.hide = function() {
 			this.onHide();
-
-			var $globalNav = $('#globalNavigation');
-			var $notificationsWrapper = $('.banner-notifications-wrapper');
-
-			$notificationsWrapper.css('top', ($globalNav.position().top + 55) + 'px');
-
-			if ($globalNav.position().top < 10) {
-				var topMargin = $notificationsWrapper.height();
-				$wikiaTopAds.css('marginTop', topMargin + 'px');
-			}
+			setNotificationPosition();
 
 			return this;
 		};
