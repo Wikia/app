@@ -191,17 +191,6 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		});
 	});
 
-	//it('Returns proper tier format based on response', function () {
-	//	var vulcan = getVulcan();
-	//
-	//	mocks.vulcanResponse.cpm = 0.23;
-	//	vulcan.call();
-	//
-	//	expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
-	//		'rpfl_video': '203_tier0020'
-	//	});
-	//});
-
 	it('Returns tier0000 when there is no ad', function () {
 		var vulcan = getVulcan();
 
