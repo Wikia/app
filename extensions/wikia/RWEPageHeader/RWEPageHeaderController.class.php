@@ -64,4 +64,29 @@ class RWEPageHeaderController extends WikiaController {
 		$this->menuColumnsCount = is_array( $this->menuNodes ) && isset( $this->menuNodes[0] )
 			? count( $this->menuNodes[0]['children'] ) : 0;
 	}
+
+	public function createTab() {
+		$createList = [
+			'communitypage' => [
+				'text' => 'Community Page',
+				'href' => '/wiki/Special:Community'
+			],
+			'chat' => [
+				'text' => 'Chat',
+				'href' => '/wiki/Special:Chat',
+				'class' => 'rwe-chat'
+			],
+			'photos' => [
+				'text' => 'Photos',
+				'href' => '/wiki/Special:NewFiles'
+			],
+			'videos' => [
+				'text' => 'Videos',
+				'href' => '/wiki/Special:Videos'
+			]
+		];
+
+		$contributeMenu = new RWEContributeMenu();
+		$this->createList = array_merge( $createList, $contributeMenu->getContributeList() );
+	}
 }
