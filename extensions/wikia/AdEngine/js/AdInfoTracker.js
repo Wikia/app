@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.lookup.services',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adContext, log, window) {
+], function (adTracker, adContext, lookupServices, log, window) {
 	'use strict';
 
 	var	logGroup = 'ext.wikia.adEngine.adInfoTracker';
@@ -17,12 +18,14 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		var data,
 			slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams),
-			slotParams = JSON.parse(slotFirstChildData.gptSlotParams);
+			slotParams = JSON.parse(slotFirstChildData.gptSlotParams),
+			slotPrices = lookupServices.getSlotPrices(slot.name),
+			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
 
 		data = {
 			'pv': pageParams.pv,
 			'country': pageParams.geo,
-			'slot_size': JSON.parse(slotFirstChildData.gptCreativeSize).join('x'),
+			'slot_size': slotSize && slotSize.length ? slotSize.join('x') : '',
 			'kv_s0': pageParams.s0,
 			'kv_s1': pageParams.s1,
 			'kv_s2': pageParams.s2,
@@ -31,10 +34,10 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'kv_wsi': slotParams.wsi,
 			'kv_lang': pageParams.lang,
 			'bidder_won': '',
-			'bidder_1': '',
-			'bidder_2': '',
-			'bidder_3': '',
-			'bidder_4': '',
+			'bidder_1': slotPrices.indexExchange || '',
+			'bidder_2': slotPrices.appnexus || '',
+			'bidder_3': slotPrices.fastlane || '',
+			'bidder_4': slotPrices.vulcan || '',
 			'bidder_5': '',
 			'bidder_6': '',
 			'bidder_7': '',
@@ -42,6 +45,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'product_lineitem_id': slotFirstChildData.gptLineItemId,
 			'product_label': ''
 		};
+
 		return data;
 	}
 

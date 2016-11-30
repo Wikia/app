@@ -95,7 +95,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 		function getBestSlotPrice(slotName) {
 			if (module.getBestSlotPrice) {
-				module.getBestSlotPrice(slotName)
+				return module.getBestSlotPrice(slotName);
 			}
 
 			return {};

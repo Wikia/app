@@ -92,8 +92,8 @@ define('ext.wikia.adEngine.adTracker', [
 			trackValue.ping = data;
 		} else {
 			//$.extend(trackValue, data);
-			Object.keys(data).forEach(function (k,v) {
-				trackValue[k] = v;
+			Object.keys(data).forEach(function (k) {
+				trackValue[k] = data[k];
 			});
 		}
 		console.log("AAAAAA !!!!!!!");
