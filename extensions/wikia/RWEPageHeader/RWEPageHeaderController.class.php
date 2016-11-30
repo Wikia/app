@@ -73,7 +73,8 @@ class RWEPageHeaderController extends WikiaController {
 			],
 			'chat' => [
 				'text' => 'Chat',
-				'href' => '/wiki/Special:Chat'
+				'href' => '/wiki/Special:Chat',
+				'class' => 'rwe-chat'
 			],
 			'photos' => [
 				'text' => 'Photos',
