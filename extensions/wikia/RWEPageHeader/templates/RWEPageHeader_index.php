@@ -1,16 +1,16 @@
 <div class="rwe-page-header">
 	<div class="rwe-page-header-wordmark">
 		<div class="rwe-page-haader-wordmark__shadow"></div>
-		<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
+		<div class="rwe-page-header-wordmark_wrapper" data-tracking="wordmark">
+			<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
+		</div>
 	</div>
 	<div class="rwe-page-header-nav__wrapper">
 		<ul class="rwe-page-header-nav">
 			<li class="rwe-page-header-nav__element rwe-page-header-nav__element-dropdown wds-dropdown wds-dropdown__toggle">
 				<a class="rwe-page-header-nav__link" href="#" data-tracking="read">
-					<svg width="18" height="18" viewBox="0 0 18 18"
-						 class="wds-icon wds-icon-small rwe-page-header-nav__icon" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd"
-							  d="M12.063 2.875c-1.226 0-2.363.35-3.063.962-.7-.612-1.838-.962-3.063-.962C3.663 2.875 2 4.013 2 5.5v8.75c0 .525.35.875.875.875s.875-.35.875-.875c0-.262.787-.875 2.188-.875 1.4 0 2.187.613 2.187.875 0 .525.35.875.875.875s.875-.35.875-.875c0-.262.787-.875 2.188-.875 1.4 0 2.187.613 2.187.875 0 .525.35.875.875.875s.875-.35.875-.875V5.5c0-1.487-1.662-2.625-3.938-2.625zm-6.126 8.75c-.787 0-1.575.175-2.187.438V5.5c0-.263.787-.875 2.188-.875 1.4 0 2.187.612 2.187.875v6.563c-.612-.263-1.4-.438-2.188-.438zm8.313.438c-.613-.263-1.4-.438-2.188-.438-.787 0-1.574.175-2.187.438V5.5c0-.263.787-.875 2.188-.875 1.4 0 2.187.612 2.187.875v6.563z"></path>
+					<svg class="wds-icon wds-icon-small rwe-page-header-nav__icon" width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M12.938 0C11.363 0 9.9.45 9 1.237 8.1.45 6.638 0 5.062 0 2.138 0 0 1.462 0 3.375v11.25c0 .675.45 1.125 1.125 1.125s1.125-.45 1.125-1.125c0-.338 1.013-1.125 2.813-1.125 1.8 0 2.812.787 2.812 1.125 0 .675.45 1.125 1.125 1.125s1.125-.45 1.125-1.125c0-.338 1.012-1.125 2.813-1.125 1.8 0 2.812.787 2.812 1.125 0 .675.45 1.125 1.125 1.125S18 15.3 18 14.625V3.375C18 1.462 15.863 0 12.937 0zM5.061 11.25a7.37 7.37 0 0 0-2.812.563V3.374c0-.338 1.013-1.125 2.813-1.125 1.8 0 2.812.787 2.812 1.125v8.438a7.37 7.37 0 0 0-2.813-.563zm10.688.563a7.37 7.37 0 0 0-2.813-.563 7.37 7.37 0 0 0-2.812.563V3.374c0-.338 1.012-1.125 2.813-1.125 1.8 0 2.812.787 2.812 1.125v8.438z"/>
 					</svg>
 					<span class="rwe-page-header-nav__text">Read</span>
 					<?= DesignSystemHelper::renderSvg(
