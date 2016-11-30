@@ -6,7 +6,7 @@
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
 			<?php // TODO: XW-2380 | remove the condition
-			if ( !wfMessage( 'createpage-dialog-message3' )->isBlank() ): ?>
+			if ( !wfMessage( 'createpage-dialog-message3' )->isDisabled() ): ?>
 				<div id="CreatePageDialogInputSub">
 					<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
 				</div>
