@@ -162,7 +162,7 @@ function wfCreatePageAjaxGetVEDialog() {
 
 	$body['html'] = $template->render( 'dialog-ve' );
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	$body['addPageLabel'] = wfMsg( 'createpage-button-proceed' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
 	$body['cancelLabel'] = wfMsg( 'createpage-button-cancel' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
@@ -240,7 +240,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	$body['addPageLabel'] = wfMsg( 'createpage-button-proceed' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
 	$body['article'] = $wgRequest->getVal( 'article' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
