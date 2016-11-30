@@ -228,7 +228,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 			'isthumb' => true,
 			'wiki_url' => $cityUrl,
 			'showWikiLink' => $this->state === ImageReviewStates::REJECTED && !empty( $cityUrl ),
-			'labels' => $this->getLabelValues()
+			'labels' => $this->getLabelValues(),
+			'flagsContent' => $this->getFlagsContent( $imageRecord->flags ),
 		];
 	}
 
@@ -341,30 +342,30 @@ class ImageListGetter extends ImageReviewHelperBase {
 
 	/**
 	* Add additional markup for various flagged states
-	* @param object $image
+	* @param integer $
 	* @return object
 	*/
-	private function addFlagsContent( $image ) {
-		$flags = [];
+	private function getFlagsContent( $flag ) {
+		$flagsContent = [];
 
-		if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_USER ) {
-			$flags['flag_suspicous_user'] = [
-			'	title' => "Flagged: Susicious user. Click to go to uploader's profile"
-			];
-		}
-
-		if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_WIKI ) {
-			$flags['flag_suspicious_wiki'] = [
+		if( $flag & ImageListGetter::FLAG_SUSPICOUS_USER ) {
+			$flagsContent['flag_suspicous_user'] = [
 				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
 			];
 		}
 
-		if( $image['flags'] & ImageListGetter::FLAG_SKIN_DETECTED ) {
-			$flags['flag_skin_detected'] = [
+		if( $flag & ImageListGetter::FLAG_SUSPICOUS_WIKI ) {
+			$flagsContent['flag_suspicious_wiki'] = [
 				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
 			];
 		}
 
-		return $flags;
+		if( $flag & ImageListGetter::FLAG_SKIN_DETECTED ) {
+			$flagsContent['flag_skin_detected'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
+
+		return $flagsContent;
 	}
 }

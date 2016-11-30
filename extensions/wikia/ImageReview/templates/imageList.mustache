@@ -1,22 +1,26 @@
-<h2 style="clear: both">
-	<!-- TODO: Add PHP Logic to Populate List -->
-	!!! wfMsg( "imagereview-header{$modeMsgSuffix}" ) !!!
-</h2>
-
 <form action="{{submitUrl}}" method="post" id="ImageReviewForm" class="{{action}}">
 	<ul class="image-review-list">
 		{{# imageList }}
 			<li class="state-{{state}} {{action}}">
 				<div class="img-container">
-					<!-- TODO: Verify add logic for isThumb -->
 					<img id="img-{{wikiId}}-{{pageId}}" src="{{src}}"/>
 				</div>
 
 				<a href="{{url}}" target="_blank" class="internal sprite details magnify" title="{{wfMessages.imagereview-gotoimage}}"></a>
 
-				<!-- TODO: Display Flagged Content -->
+				{{# flagsContent }}
+					{{# flag_suspicous_user }}
+						<a href="{{user_page}}" target="_blank" class="internal sprite details magnify" title="{{title}}" style="clear: both"></a>
+					{{/ flag_suspicous_user }}
 
-				<!-- Display Flagged Content -->
+					{{# flag_suspicious_wiki }}
+						<a href="{{wiki_url}}" target="_blank" class="internal sprite details magnify" title="{{title}}" style="clear: both"></a>
+					{{/ flag_suspicious_wiki }}
+
+					{{# flag_skin_detected }}
+						<span class="internal sprite details magnify" title="{{title}}" style="clear: both"></span>
+					{{/ flag_skin_detected }}
+				{{/ flagsContent }}
 
 				{{# showWikiLink }}
 					<span class="image-wiki-url"><a href="{{wiki_url}}">{{wiki_url}}</a></span>
@@ -38,6 +42,7 @@
 							{{wfMessages.imagereview-option-questionable}}
 					</label>
 				{{/ labels }}
+
 			</li>
 		{{/ imageList }}
 	<ul>

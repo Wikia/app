@@ -327,6 +327,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
 		$baseUrl = Title::newFromText( 'ImageReview', NS_SPECIAL )->getFullURL();
+		$modeMsgSuffix = empty( $this->action ) ? '' : '-' . $this->action;
+
+		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $this->order ) );
+		$sortSelect->addOptions( ImageListGetter::$sortOptions );
+
 		$this->response->setValues( [
 			'action' => $this->action,
 			'order' => $this->order,
@@ -337,7 +342,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			'accessQuestionable' => $this->accessQuestionable,
 			'accessStats' => $this->wg->User->isAllowed( 'imagereviewstats' ),
 			'accessControls' => $this->wg->user->isAllowed( 'imagereviewcontrols' ),
-			'modeMsgSuffix' => empty( $this->action ) ? '' : '-' . $this->action,
+			'modeMsgSuffix' => $modeMsgSuffix,
 			'fullUrl' => $this->wg->Title->getFullURL(),
 			'baseUrl' => $baseUrl,
 			'toolName' => 'Image Review',
@@ -351,7 +356,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'imagereview-option-questionable' => wfMessage( 'imagereview-option-questionable' )->escaped(),
 				'imagereview-label-questionable' => wfMessage( 'imagereview-label-questionable' )->escaped(),
 				'imagereview-noresults' => wfMessage( 'imagereview-noresults' )->escaped(),
+				'image-review-header' => wfMsg( "imagereview-header{$modeMsgSuffix}" )
 			],
+			'sortHTML' => $sortSelect->getHTML()
 		] );
 	}
 
