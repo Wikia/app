@@ -68,7 +68,7 @@ class RWEPageHeaderController extends WikiaController {
 	public function createTab() {
 		$createList = [
 			'communitypage' => [
-				'text' => 'CommunityPage',
+				'text' => 'Community Page',
 				'href' => '/wiki/Special:Community'
 			],
 			'chat' => [
