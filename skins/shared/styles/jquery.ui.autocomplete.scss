@@ -20,7 +20,7 @@ body .ui-autocomplete {
 	margin-top: 2px;
 	padding: 5px 1px;
 	width: 245px;
-	z-index: $zTop;
+	z-index: $zTop !important;
 
 	.ui-menu-item {
 		border: 0;

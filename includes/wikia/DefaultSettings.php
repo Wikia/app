@@ -1203,6 +1203,18 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
+ * @name $wgEnableGoogleFundingChoices
+ * Enables Google Funding Choices
+ */
+$wgEnableGoogleFundingChoices = true;
+
+/**
+ * @name $wgEnableGoogleFundingChoicesInHead
+ * Enables Google Funding Choices in <head> tag
+ */
+$wgEnableGoogleFundingChoicesInHead = false;
+
+/**
  * @name $wgEnableNielsen
  * Enables Nielsen Digital Content Ratings
  */
@@ -1214,11 +1226,6 @@ $wgEnableNielsen = false;
  */
 $wgNielsenApid = 'FIXME';
 
-/**
- * @name $wgEnableUbisoft
- * Enables Ubisoft
- */
-$wgEnableUbisoft = false;
 
 /**
  * @name $wgEnableNetzAthleten

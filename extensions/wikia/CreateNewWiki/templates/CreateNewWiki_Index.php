@@ -75,7 +75,7 @@
 
 				<span class="submit-error error-msg"></span>
 				<nav class="controls">
-					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next">
+					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next wds-button wds-is-text">
 				</nav>
 			</form>
 		</li>
@@ -161,8 +161,8 @@
 
 				<span class="submit-error error-msg"></span>
 				<nav class="controls">
-					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back">
-					<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next" disabled>
+					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back wds-button wds-is-text">
+					<input type="button" value="<?= wfMessage( 'cnw-next-create-wiki' )->escaped() ?>" class="next wds-button wds-is-text" disabled>
 				</nav>
 			</form>
 		</li>
@@ -174,7 +174,7 @@
 			<span class="submit-error finish-status"></span>
 			<nav class="controls creating-wiki">
 				<span class="creating-wiki-message"><?= wfMessage( 'cnw-theme-loading-state' )->escaped() ?></span>
-				<input type="button" value="<?= wfMessage( 'cnw-theme-show-wiki' )->escaped() ?>" class="next" disabled>
+				<input type="button" value="<?= wfMessage( 'cnw-theme-show-wiki' )->escaped() ?>" class="next wds-button wds-is-text" disabled>
 			</nav>
 		</li>
 	</ol>

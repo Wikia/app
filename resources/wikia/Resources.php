@@ -256,6 +256,10 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
 	],
 
+	'jquery.dataTables' => [
+		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [

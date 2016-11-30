@@ -213,11 +213,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
+	private function hasAuthorProfile( $user ) {
+		return sizeof( preg_grep( "/^fancontributor-/", $user->getGroups() ) ) > 0;
+	}
+
 	private function getLoggedInUserData( $user ) {
+		global $wgEnableAuthorProfileLinks;
+
 		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
 
-		$viewProfileLink = [
+		$viewProfileLinks[] = [
 			'type' => 'link-text',
 			'href' => $this->getPageUrl( $userName, NS_USER ),
 			'title' => [
@@ -226,6 +232,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'tracking_label' => 'account.profile',
 		];
+
 		$logOutLink = [
 			'type' => 'link-authentication',
 			'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ),
@@ -237,46 +244,62 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
+		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
+			$viewProfileLinks[] = [
+				'type' => 'link-text',
+				'href' => $this->getHref( 'user-author-profile' ) . $userName,
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-user-view-author-profile'
+				],
+				'tracking_label' => 'account.profile-author',
+			];
+		}
+
 		$links = [
-			static::PRODUCT_WIKIS => [
-				$viewProfileLink,
+			static::PRODUCT_WIKIS => array_merge(
+				$viewProfileLinks,
 				[
-					'type' => 'link-text',
-					'href' => $isMessageWallEnabled
-						? $this->getPageUrl( $userName, NS_USER_WALL )
-						: $this->getPageUrl( $userName, NS_USER_TALK ),
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => $isMessageWallEnabled
-							? 'global-navigation-user-message-wall'
-							: 'global-navigation-user-my-talk'
+					[
+						'type' => 'link-text',
+						'href' => $isMessageWallEnabled
+							? $this->getPageUrl( $userName, NS_USER_WALL )
+							: $this->getPageUrl( $userName, NS_USER_TALK ),
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => $isMessageWallEnabled
+								? 'global-navigation-user-message-wall'
+								: 'global-navigation-user-my-talk'
+						],
+						'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
 					],
-					'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
-				],
+					[
+						'type' => 'link-text',
+						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL ),
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-user-my-preferences'
+						],
+						'tracking_label' => 'account.preferences',
+					],
+					[
+						'type' => 'link-text',
+						'href' => $this->getHref( 'help' ),
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-user-help'
+						],
+						'tracking_label' => 'account.help',
+					],
+					$logOutLink
+				]
+			),
+			static::PRODUCT_FANDOMS => array_merge(
+				$viewProfileLinks,
 				[
-					'type' => 'link-text',
-					'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL ),
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-user-my-preferences'
-					],
-					'tracking_label' => 'account.preferences',
-				],
-				[
-					'type' => 'link-text',
-					'href' => $this->getHref( 'help' ),
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-user-help'
-					],
-					'tracking_label' => 'account.help',
-				],
-				$logOutLink
-			],
-			static::PRODUCT_FANDOMS => [
-				$viewProfileLink,
-				$logOutLink
-			]
+					$logOutLink
+				]
+			),
 		];
 
 		return [
