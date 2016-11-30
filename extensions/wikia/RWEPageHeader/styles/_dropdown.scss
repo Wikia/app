@@ -12,20 +12,34 @@
 		background-color: unset;
 		box-shadow: unset;
 		display: none;
-		left: -100%;
 		top: 43px;
+	}
+
+	&.rwe-page-header-nav__read {
+		left: -100%;
+	}
+
+	&.rwe-page-header-nav__create {
+		width: $rwe-dropdown-column-width;
+
+		.rwe-page-header-nav__dropdown-list {
+			padding-top: $content-spacing-regular;
+		}
 	}
 
 	&.rwe-page-header-nav--columns-5 {
 		left: -165%;
 	}
 
-	.rwe-page-header-nav__dropdown-first-level {
-		@include display-inline-flex();
+	.rwe-page-header-nav__dropdown-list {
 		background-color: $background-color;
 		box-shadow: 0 $content-spacing-small $content-spacing-medium-minus 0 $shadow-color;
 		margin: 0 auto $content-spacing-medium-minus;
 		position: relative;
+	}
+
+	.rwe-page-header-nav__dropdown-first-level {
+		@include display-inline-flex();
 
 		.rwe-page-header-nav__dropdown-first-level-item {
 			box-sizing: border-box;
