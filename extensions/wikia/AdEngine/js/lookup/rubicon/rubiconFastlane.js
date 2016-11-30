@@ -4,10 +4,11 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTier',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, slotsContext, factory, rubiconTargeting, doc, log, win) {
+], function (adContext, slotsContext, factory, rubiconTargeting, rubiconTier, doc, log, win) {
 	'use strict';
 
 	var bestPrices = {},
@@ -180,26 +181,21 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		});
 	}
 
-	function parsePrice(tier) {
-		var matches = /^\d+_tier(\d+)/g.exec(tier);
-		if (matches.length && matches[1]) {
-			return parseInt(matches[1], 10);
-		}
-
-		return 0;
-	}
-
 	function saveBestPrice(slotName, tiers) {
 		tiers.forEach(function (tier) {
-			bestPrices[slotName] = Math.max(parsePrice(tier), bestPrices[slotName] || 0);
+			bestPrices[slotName] = Math.max(rubiconTier.parsePrice(tier), bestPrices[slotName] || 0);
 		});
 	}
 
 	function getBestSlotPrice(slotName) {
-		var price = (bestPrices[slotName] || 0) / 100;
+		var price;
+
+		if (typeof bestPrices[slotName] !== 'undefined') {
+			price = (bestPrices[slotName] / 100).toFixed(2).toString();
+		}
 
 		return {
-			fastlane: price.toFixed(2).toString()
+			fastlane: price
 		};
 	}
 
