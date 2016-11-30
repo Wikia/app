@@ -91,14 +91,10 @@ define('ext.wikia.adEngine.adTracker', [
 		if (typeof data === 'string') {
 			trackValue.ping = data;
 		} else {
-			//$.extend(trackValue, data);
 			Object.keys(data).forEach(function (k,v) {
 				trackValue[k] = v;
 			});
 		}
-		console.log("AAAAAA !!!!!!!");
-		console.log(eventName);
-		console.log(trackValue);
 		tracker.track(trackValue);
 		log(['trackDW', trackValue], 'debug', logGroup);
 	}
