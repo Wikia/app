@@ -1,5 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.slot.adSlot',
@@ -9,7 +10,8 @@ define('ext.wikia.adEngine.adEngine', [
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adDecoratorLegacyParamFormat,
+], function (adInfoTracker,
+			 adDecoratorLegacyParamFormat,
 			 eventDispatcher,
 			 adSlot,
 			 slotTracker,
@@ -118,19 +120,19 @@ define('ext.wikia.adEngine.adEngine', [
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.show(slotName);
-						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, status: 'success'});
+						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, slot: slot, status: 'success'});
 						tracker.track('success', adInfo);
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(slotName);
-						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, status: 'collapse'});
+						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, slot: slot, status: 'collapse'});
 						tracker.track('collapse', adInfo);
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(container.id);
-						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, status: 'hop'});
+						eventDispatcher.dispatch('adengine.slot.status', {slotName: slotName, slot: slot, status: 'hop'});
 						tracker.track('hop', adInfo);
 						nextProvider();
 					}
@@ -192,11 +194,13 @@ define('ext.wikia.adEngine.adEngine', [
 			decorators.push(adDecoratorLegacyParamFormat);
 		}
 
+		log(['run', 'adding adInfo listener'], 'debug', logGroup);
+		adInfoTracker.run();
+
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
 		log(['run', 'launching queue on adslots (' + adslots.length + ')'], 'debug', logGroup);
-
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);

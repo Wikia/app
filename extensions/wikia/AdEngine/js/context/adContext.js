@@ -155,6 +155,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 
+		// AdInfo warehouse logging
+		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverAdInfoCountries);
+
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&

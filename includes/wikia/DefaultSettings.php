@@ -1507,6 +1507,12 @@ $wgEnableKruxTargeting = true;
 $wgSitewideDisableKrux = false;
 
 /**
+ * @name $wgAdDriverAdInfoCountries
+ * Enables warehouse tracking of ad related info
+ */
+$wgAdDriverAdInfoCountries = [];
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
