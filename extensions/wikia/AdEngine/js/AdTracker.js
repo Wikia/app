@@ -81,6 +81,7 @@ define('ext.wikia.adEngine.adTracker', [
 	 * A generic function to track an ad-related event and its timing in DataWarehouse
 	 *
 	 * @param {object} data - data to track as JS object (will be converted to URL-like query-string)
+	 * @param {string} eventName 
 	 */
 	function trackDW(data, eventName) {
 		var trackValue = {
@@ -91,14 +92,10 @@ define('ext.wikia.adEngine.adTracker', [
 		if (typeof data === 'string') {
 			trackValue.ping = data;
 		} else {
-			//$.extend(trackValue, data);
-			Object.keys(data).forEach(function (k) {
-				trackValue[k] = data[k];
+			Object.keys(data).forEach(function (key) {
+				trackValue[key] = data[key];
 			});
 		}
-		console.log("AAAAAA !!!!!!!");
-		console.log(eventName);
-		console.log(trackValue);
 		tracker.track(trackValue);
 		log(['trackDW', trackValue], 'debug', logGroup);
 	}
