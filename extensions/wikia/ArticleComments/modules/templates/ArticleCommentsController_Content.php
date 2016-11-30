@@ -25,6 +25,9 @@
 			<? endif ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
+			<? if ( !$isMiniEditorEnabled ): ?>
+				<input type="hidden" name="token" value="<?= $wg->User->getEditToken(); ?>" />
+			<? endif; ?>
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 			<? if ( $isMiniEditorEnabled ): ?>
 				<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
