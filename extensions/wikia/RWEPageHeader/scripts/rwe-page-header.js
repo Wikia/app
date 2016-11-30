@@ -22,10 +22,9 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function 
 
 
 
-		// var $wikiaTopAds = $('.WikiaTopAds');
 		var $globalNav = $('.wds-global-navigation-wrapper');
-
 		var $notificationsWrapper = $('.banner-notifications-wrapper');
+
 		$notificationsWrapper.detach();
 		$notificationsWrapper.insertAfter($globalNav);
 
@@ -34,11 +33,11 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function 
 
 		window.BannerNotification.prototype.show = function() {
 			this.onShow();
-			var $notificationsWrapper = $('.banner-notifications-wrapper');
-			$notificationsWrapper.detach();
 
+			var $notificationsWrapper = $('.banner-notifications-wrapper');
+
+			$notificationsWrapper.detach();
 			$notificationsWrapper.insertAfter($globalNav);
-			// setNotificationPosition();
 
 			return this;
 		};
