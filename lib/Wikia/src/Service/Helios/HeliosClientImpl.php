@@ -16,6 +16,16 @@ class HeliosClientImpl implements HeliosClient
 	const BASE_URI = "helios_base_uri";
 	const SCHWARTZ_TOKEN = "schwartz_token";
 	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
+
+	// Timeout (in seconds) of the Helios HTTP requests.
+	const HELIOS_REQUEST_TIMEOUT_SEC = 2;
+
+	// Maximum number of Helios HTTP connection attempts.
+	const HELIOS_REQUEST_TRIES = 2;
+
+	// Delay for Helios HTTP connection retries.
+	const HELIOS_REQUEST_RETRY_DELAY_SEC = 1;
+
 	protected $baseUri;
 	protected $status;
 	protected $schwartzToken;
@@ -69,7 +79,7 @@ class HeliosClientImpl implements HeliosClient
 		// Request options pre-processing.
 		$options = [
 			'method'          => 'GET',
-			'timeout'         => 5,
+			'timeout'         => self::HELIOS_REQUEST_TIMEOUT_SEC,
 			'postData'        => $postData,
 			'noProxy'         => true,
 			'followRedirects' => false,
@@ -92,13 +102,40 @@ class HeliosClientImpl implements HeliosClient
 		global $wgContLang;
 		$wrapper = new GlobalStateWrapper( [ 'wgLang' => $wgContLang ] );
 
-		// Request execution.
-		/** @var \MWHttpRequest $request */
-		$request = $wrapper->wrap( function() use ( $options, $uri ) {
-			return \Http::request( $options['method'], $uri, $options );
-		} );
+		/*
+		 * We have self::HELIOS_REQUEST_RETRIES tries to receive an HTTP response from Helios.
+		 * One thing to keep in mind is that Helios address resolution is done by AuthModule
+		 * using Consul at the beginning of the request, so the retry will hit the same
+		 * Helios instance.
+		 */
+		$retryCnt = 1;
+		while ( true ) {
+
+			// Request execution.
+			/** @var \MWHttpRequest $request */
+			$request = $wrapper->wrap( function () use ( $options, $uri ) {
+				return \Http::request( $options['method'], $uri, $options );
+			} );
+
+			/*
+			 * $request->getStatus returns 200 when we failed to make http connection, so
+			 * we use the internal status object to check for http connection errors.
+			 * The general idea here is that we will make extra requests if we fail
+			 * to receive an HTTP response from Helios.
+			 */
+
+			if ( $retryCnt >= self::HELIOS_REQUEST_TRIES ||
+				( !$request->status->hasMessage( 'http-timed-out' ) &&
+					!$request->status->hasMessage( 'http-curl-error' ) )
+			) {
+				break;
+			}
+			$retryCnt += 1;
+			sleep( self::HELIOS_REQUEST_RETRY_DELAY_SEC );
+		}
 
 		$this->status = $request->getStatus();
+
 		return $this->processResponseOutput( $request );
 	}
 
@@ -112,8 +149,11 @@ class HeliosClientImpl implements HeliosClient
 
 		if ( !$output ) {
 			$data = [];
-			$data[ "response" ] = $response;
-			$data["status_code"] = $request->getStatus();
+			$data['response'] = $response;
+			$data['status_code'] = $request->getStatus();
+			if ( !$request->status->isOK() ) {
+				$data['status_errors'] = $request->status->getErrorsArray();
+			}
 			throw new ClientException ( 'Invalid Helios response.', 0, null, $data );
 		}
 

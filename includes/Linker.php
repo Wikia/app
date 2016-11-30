@@ -1256,6 +1256,7 @@ class Linker {
 	 * @param $comment String
 	 * @param $title Mixed: Title object (to generate link to the section in autocomment) or null
 	 * @param $local Boolean: whether section links should refer to local page
+	 * @return string
 	 */
 	public static function formatComment( $comment, $title = null, $local = false ) {
 		wfProfileIn( __METHOD__ );

@@ -53,6 +53,11 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 
 			win.pbjs.que.push(function() {
+
+				//@TODO remove two lines below when https://github.com/prebid/Prebid.js/issues/772 is fixed and prebid is updated
+				win.pbjs._bidsReceived = [];
+				win.pbjs._winningBids = [];
+
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});

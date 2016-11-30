@@ -116,7 +116,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $query;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();

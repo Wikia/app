@@ -150,6 +150,8 @@ class Chat {
 			$reason
 		);
 
+		Wikia::purgeSurrogateKey( ChatBanListSpecialController::getAxShowUsersSurrogateKey() );
+
 		return true;
 	}
 
@@ -161,7 +163,7 @@ class Chat {
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( string $subjectUserName, string $dir, User $requestingUser ): bool {
+	public static function blockPrivate( $subjectUserName, $requestingUser, $dir = self::PRIVATE_BLOCK_ADD ) {
 		self::info( __METHOD__ . ': Method called', [
 			'subjectUserName' => $subjectUserName,
 			'dir' => $dir,
@@ -477,16 +479,12 @@ class Chat {
 			] );
 		}
 
-		if ( $subjectUser->isAnon() ) {
-			return false;
-		}
-
-		if ( $subjectUser->isBlocked() ) {
-			return false;
-		}
-
 		$chatUser = new ChatUser( $subjectUser );
-		if ( $chatUser->isBanned() ) {
+
+		if ( $chatUser->isBanned() ||
+			 $subjectUser->isBlocked() ||
+			 $subjectUser->isAnon()
+		) {
 			return false;
 		}
 

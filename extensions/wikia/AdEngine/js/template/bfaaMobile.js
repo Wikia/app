@@ -1,20 +1,18 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaMobile', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.uapVideoAd',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
-	adHelper,
 	uapContext,
 	btfBlocker,
 	slotTweaker,
-	uapVideoAd,
+	uapVideo,
 	doc,
 	log,
 	win,
@@ -22,8 +20,11 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
+	var adSlot,
+		adsModule,
+		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
+		imageContainer,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
@@ -31,22 +32,24 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		],
 		wrapper;
 
+	function adjustPadding(iframe, aspectRatio) {
+		var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
+			height = aspectRatio ? viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
+
+		page.style.paddingTop = height + 'px';
+		adsModule.setSiteHeadOffset(height);
+	}
+
 	function runOnReady(iframe, params) {
-		var aspectRatio = params.aspectRatio,
-			adsModule = win.Mercury.Modules.Ads.getInstance(),
-			adjustPadding = function () {
-				var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
-					height = aspectRatio ?
-						viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
-				page.style.paddingTop = height + 'px';
-				adsModule.setSiteHeadOffset(height);
-			},
-			onResize = adHelper.throttle(adjustPadding, 100);
+		function onResize(aspectRatio) {
+			adjustPadding(iframe, aspectRatio);
+		}
 
+		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
-		adjustPadding();
+		adjustPadding(iframe, params.aspectRatio);
+		win.addEventListener('resize', onResize.bind(null, params.aspectRatio));
 
-		win.addEventListener('resize', onResize);
 		if (mercuryListener) {
 			mercuryListener.onPageChange(function () {
 				page.classList.remove('bfaa-template');
@@ -56,31 +59,30 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function() {
-				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
-					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+		if (uapVideo.isEnabled(params)) {
+			uapVideo.init()
+				.then(function () {
+					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
-					aspectRatio = video.videoWidth / video.videoHeight;
-					onResize();
-				});
+					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+						onResize(params.videoAspectRatio);
+					});
 
-				video.addEventListener('ended', function () {
-					aspectRatio = params.aspectRatio;
-					onResize();
+					video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+						onResize(params.aspectRatio);
+					});
 				});
-			});
 		}
 	}
 
 	function show(params) {
+		adSlot = doc.getElementById(params.slotName);
+		imageContainer = adSlot.querySelector('div:last-of-type');
+
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
-		log(['show', page, wrapper, params], 'info', logGroup);
+		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
@@ -89,7 +91,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], 'info', logGroup);
+		log(['show', params.uap], log.levels.info, logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);

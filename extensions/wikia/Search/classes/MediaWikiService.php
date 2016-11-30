@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search;
+use Wikia\Search\Result\StaleResultException;
+
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -469,8 +471,14 @@ class MediaWikiService
 		$title = $searchEngine->getNearMatch( $term );
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if ( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			$this->getPageFromPageId( $articleId );
-			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
+			try {
+				$page = $this->getPageFromPageId( $articleId );
+				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
+			} catch ( StaleResultException $staleResultException ) {
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-1306 - Invalid article ID', [
+					'exception' => $staleResultException
+				] );
+			}
 		}
 		return $articleMatch;
 	}
@@ -888,7 +896,7 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return \Article
-	 * @throws \Exception
+	 * @throws StaleResultException if page id does not belong to a valid article
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
@@ -899,7 +907,7 @@ class MediaWikiService
 		$page = \Article::newFromID( $pageId );
 
 		if ( $page === null ) {
-			throw new \Exception( 'Invalid Article ID' );
+			throw new StaleResultException( (string)$pageId );
 		}
 
 		$redirectTarget = null;

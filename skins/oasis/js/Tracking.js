@@ -60,16 +60,9 @@ jQuery(function ($) {
 		};
 	})();
 
-	/** article **/
+	/** page header (title-area) **/
 
 	(function () {
-		var category = 'article';
-
-		// Not special pages
-		if ($body.hasClass('ns-special')) {
-			return;
-		}
-
 		$('#WikiaPageHeader').on('mousedown', 'a', function (event) {
 			var label,
 				el = $(event.currentTarget),
@@ -94,29 +87,44 @@ jQuery(function ($) {
 			}
 
 			switch (id) {
-			case 'comment':
-				label = el.hasClass('talk') ? 'talk' : 'comment';
-				break;
-			case 'edit':
-				label = id;
-				break;
-			case 'delete':
-			case 'history':
-			case 'move':
-			case 'protect':
-			case 'flags':
-				label = 'edit-' + id;
-				break;
+				case 'createpage':
+					label = 'add-a-page';
+					break;
+				case 'comment':
+					label = el.hasClass('talk') ? 'talk' : 'comment';
+					break;
+				case 'share':
+				case 'edit':
+					label = id;
+					break;
+				case 'delete':
+				case 'history':
+				case 'move':
+				case 'protect':
+				case 'flags':
+					label = 'edit-' + id;
+					break;
 			}
 
 			if (label !== undefined) {
 				track({
 					browserEvent: event,
-					category: category,
+					category: 'title-area',
 					label: label
 				});
 			}
 		});
+	})();
+
+	/** article **/
+
+	(function () {
+		var category = 'article';
+
+		// Not special pages
+		if ($body.hasClass('ns-special')) {
+			return;
+		}
 
 		$wikiaArticle.on('mousedown', 'a', function (event) {
 			var label,
@@ -258,16 +266,6 @@ jQuery(function ($) {
 			});
 		}
 	});
-
-	// TODO remove after XW-2226 is done
-	$('.add-new-page-experiment-element.createpage').on('mousedown', function (event) {
-		track({
-			browserEvent: event,
-			category: 'contribute',
-			label: 'add-a-page'
-		});
-	});
-	// TODO remove end
 
 	/** recent-changes **/
 

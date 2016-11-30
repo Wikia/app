@@ -16,6 +16,11 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		}
 	}
 
+	function addClass(element, cls) {
+		log(['addClass ' + cls, element], 8, logGroup);
+		element.classList.add(cls);
+	}
+
 	function removeClass(element, cls) {
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.classList.remove(cls);
@@ -62,7 +67,13 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		});
 	}
 
+	function forceRepaint(domElement) {
+		return domElement.offsetWidth;
+	}
+
 	return {
+		addClass: addClass,
+		forceRepaint: forceRepaint,
 		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,

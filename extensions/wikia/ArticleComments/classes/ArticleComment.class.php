@@ -24,11 +24,11 @@ class ArticleComment {
 	public $mNamespace;
 
 	/** @var array */
-	public $mMetadata;
+	private $mMetadata;
 
-	private $mText;
-	private $mRawtext;
-	public $mHeadItems;
+	private $mText = false; // parsed HTML
+	private $mRawtext; // wikitext
+	private $mHeadItems = false;
 	public $mNamespaceTalk;
 
 	/** @var Title */
@@ -138,10 +138,12 @@ class ArticleComment {
 	 * @param mixed $val
 	 */
 	public function setMetadata( $key, $val ) {
+		$this->loadMetadata();
 		$this->mMetadata[$key] = $val;
 	}
 
 	public function removeMetadata( $key ) {
+		$this->loadMetadata();
 		unset( $this->mMetadata[$key] );
 	}
 
@@ -154,7 +156,24 @@ class ArticleComment {
 	 * @return string
 	 */
 	public function getMetadata( $key, $val = '' ) {
+		$this->loadMetadata();
 		return empty( $this->mMetadata[$key] ) ? $val: $this->mMetadata[$key];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAllMetadata() {
+		$this->loadMetadata();
+		return $this->mMetadata;
+	}
+
+	private function loadMetadata() {
+		// mMetadata is lazy-loaded (possibly from cache)
+		if ( !is_array( $this->mMetadata ) ) {
+			wfDebug(__METHOD__ . " - lazy-loading...\n");
+			$this->parseText();
+		}
 	}
 
 	/**
@@ -200,8 +219,7 @@ class ArticleComment {
 			return true;
 		}
 
-		$rawText = $this->mLastRevision->getText();
-		$this->parseText( $rawText );
+		$this->setRawText( $this->mLastRevision->getText() );
 
 		$this->isTextLoaded = true;
 		return true;
@@ -335,46 +353,87 @@ class ArticleComment {
 		return !empty( $this->mLastRevision ) && $this->mLastRevision instanceof Revision;
 	}
 
-	public function parseText( $rawText ) {
+	/**
+	 * @param string $rawText
+	 */
+	public function setRawText( $rawText ) {
+		$this->mRawtext = $rawText;
+
+		// invalidate locally cached value that will be set when parseText() is called
+		$this->mText = false;
+		$this->mHeadItems = false;
+	}
+
+	/**
+	 * Returns the wikitext content of the comment with filtering done by self::removeMetadataTag()
+	 *
+	 * @return string
+	 */
+	public function getRawText() {
+		return self::removeMetadataTag( $this->mRawtext );
+	}
+
+	/**
+	 * Parse the comment content in a lazy fashion: when either getText() or getHeadItems() is called
+	 */
+	private function parseText() {
 		wfProfileIn( __METHOD__ );
-
-		global $wgEnableParserCache;
-
-		$this->mRawtext = self::removeMetadataTag( $rawText );
-
-		# seriously, WTF?
-		$wgEnableParserCache = false;
-
-		$parser = ParserPool::get();
-
-		$parser->ac_metadata = [];
+		$this->load();
 
 		// VOLDEV-68: Remove broken section edit links
 		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
 		$opts->setEditSection( false );
-		$head = $parser->parse( $rawText, $this->mTitle, $opts );
 
-		$this->mText = wfFixMalformedHTML( $head->getText() );
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $opts ) {
+				$parser = ParserPool::get();
+				$parser->ac_metadata = [];
 
-		$this->mHeadItems = $head->getHeadItems();
+				$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
 
-		if ( isset( $parser->ac_metadata ) ) {
-			$this->mMetadata = $parser->ac_metadata;
-		} else {
-			$this->mMetadata = [];
-		}
+				$data = [
+					'text' => wfFixMalformedHTML( $parserOutput->getText() ),
+					'metadata' => isset( $parser->ac_metadata ) ? $parser->ac_metadata : [],
+					'headitems' => $parserOutput->getHeadItems(),
+				];
 
-		ParserPool::release( $parser );
+				ParserPool::release( $parser );
+				return $data;
+			});
+
+		$this->mText = $data['text'];
+		$this->mHeadItems = $data['headitems'];
+		$this->mMetadata = $data['metadata'];
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Return HTML content of parsed comment
+	 *
+	 * @return string
+	 */
+	public function getText() {
+		if ( !is_string( $this->mText ) ) {
+			$this->parseText();
+		}
+
 		return $this->mText;
 	}
 
 	/**
-	 * @return string
+	 * Return mHeadItems taken from ParserOutput when parsing comment content
+	 *
+	 * @return array
 	 */
-	public function getText() {
-		return $this->mText;
+	public function getHeadItems() {
+		if ( !is_array( $this->mHeadItems ) ) {
+			$this->parseText();
+		}
+
+		return $this->mHeadItems;
 	}
 
 	/**
@@ -514,9 +573,7 @@ class ArticleComment {
 			'links' => $links,
 			'replyButton' => $replyButton,
 			'sig' => $sig,
-			'text' => $this->getText(),
-			'metadata' => $this->mMetadata, # filled by parseText()
-			'rawtext' =>  $this->mRawtext, # filled by parseText()
+			'rawtext' =>  $this->getRawText(),
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
@@ -844,11 +901,10 @@ class ArticleComment {
 	/**
 	 * remove metadata tag from
 	 *
-	 * @param $text
-	 *
-	 * @return mixed
+	 * @param string $text
+	 * @return string
 	 */
-	static protected function removeMetadataTag( $text ) {
+	static private function removeMetadataTag( $text ) {
 		return preg_replace( '#</?ac_metadata(\s[^>]*)?>#i', '', $text );
 	}
 
@@ -935,20 +991,6 @@ class ArticleComment {
 		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
-
-		if ( $retVal->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			if ( empty( $commentsIndex ) ) {
-				WikiaLogger::instance()->error( 'Empty commentsIndex', [
-					'method' => __METHOD__,
-					'parentId' => $parentId,
-					'commentTitleText' => $commentTitleText,
-				] );
-			} else {
-				Hooks::run( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
-			}
-		}
-
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 
 		ArticleComment::doPurge( $title, $commentTitle );
@@ -1041,6 +1083,7 @@ class ArticleComment {
 
 				$parameters = [
 					'comment' => $comment->getData( true ),
+					'commentContent' => $comment->getText(),
 					'commentId' => $commentId,
 					'rowClass' => '',
 					'level' => ( $parentId ) ? 2 : 1

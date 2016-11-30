@@ -1,18 +1,3 @@
-<?php
-$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
-if ( $runNjord ) {
-	// edit button with actions dropdown
-	if ( !empty( $action ) ) {
-		echo F::app()->renderView(
-			'MenuButton',
-			'Index',
-			[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
-		);
-	}
-
-	echo $curatedContentToolButton;
-} else {
-	?>
 	<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
 		<div class="header-container">
 			<div class="header-column header-title">
@@ -25,17 +10,13 @@ if ( $runNjord ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<?php if ( !empty( $pageExists ) ) { ?>
-					<div id="PageShareContainer" class="page-share-container">
-						<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
-					</div>
-				<?php } ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
+					<?= F::app()->renderView(
+						'PageHeader',
+						'AddNewPageButton'
+					); ?>
 				<? endif; ?>
-				<? // TODO remove after XW-2226 is done ?>
-				<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
-				<? // TODO remove end ?>
 			</div>
 		</div>
 		<?php
@@ -75,13 +56,6 @@ if ( $runNjord ) {
 			</a>
 		<? endif;
 
-		?>
-
-		<? // TODO remove after XW-2226 is done ?>
-		<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
-		<? // TODO remove end ?>
-		<?
-
 		// comments & like button
 		if ( !$isWallEnabled ) {
 			echo F::app()->renderView( 'CommentsLikes', 'Index', [ 'comments' => $comments ] );
@@ -91,12 +65,17 @@ if ( $runNjord ) {
 			echo $button;
 		}
 
+		if ( $skinname !== 'oasislight' ) { ?>
+			<a id="ShareEntryPoint" class="wikia-button secondary" href="#" data-id="share">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-share', 'wds-icon header-share-entry-point-icon'); ?>
+				<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+			</a>
+		<? } ?>
+
+		<?
 		// Temp for CommunityPageExperiment
 		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
 			echo Html::closeElement( 'div' );
 		}
 		?>
 	</header>
-	<?php
-}
-?>

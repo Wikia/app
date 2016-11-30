@@ -48,6 +48,11 @@
 			$(ThemeDesigner.link).remove();
 			ThemeDesigner.link = link;
 		});
+
+		// allow preview of theme background when chosen
+		$('.WikiaPage').css('border', 0);
+		$('.WikiaPageBackground').css('background', 'unset');
+		$('.WikiaSiteWrapper').css('background-color', 'unset');
 	};
 
 	/**

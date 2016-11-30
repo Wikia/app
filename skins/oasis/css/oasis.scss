@@ -58,6 +58,9 @@
 @import 'resources/wikia/libraries/bootstrap/tooltip';
 @import 'resources/wikia/libraries/bootstrap/popover';
 
+// UI Components initial scss
+@import 'resources/wikia/ui_components/modal/css/modal-initial.scss';
+
 // Extensions (only include here if used on the majority of page views!)
 @import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
@@ -73,6 +76,7 @@
 @import 'extensions/wikia/TOC/css/toc';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
+@import 'extensions/wikia/PageShare/styles/PageShare';
 
 //Site Optimizations
 @import 'extensions/wikia/Rail/styles/RailElement';
@@ -95,6 +99,3 @@
 @import 'core/breakpoints-layout';
 @import 'core/breakpoints-typography';
 @import 'core/breakpoints-background';
-
-// TODO remove after XW-2226 is done
-@import 'modules/AddNewPageExperiment';

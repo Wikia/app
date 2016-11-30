@@ -262,6 +262,7 @@ function wfCreatePageAjaxCheckTitle() {
 	if ( empty( $sTitle ) ) {
 		$result['result'] = 'error';
 		$result['msg'] = wfMsg( 'createpage-error-empty-title' );
+		$result['error'] = 'error-empty-title';
 	}
 	else {
 		$oTitle = Title::newFromText( $sTitle, $nameSpace );
@@ -269,25 +270,30 @@ function wfCreatePageAjaxCheckTitle() {
 		if ( !( $oTitle instanceof Title ) || strpos( $sTitle, "#" ) !== false ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+			$result['error'] = 'error-invalid-title';
 		}
 		else {
 			if ( $oTitle->exists() ) {
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
+				$result['error'] = 'error-article-exists';
 			}
 			else { // title not exists
 				// macbre: use dedicated hook for this check (change related to release of Phalanx)
 				if ( !wfRunHooks( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
+					$result['error'] = 'error-article-spam';
 				}
 				if ( $oTitle->getNamespace() == NS_SPECIAL ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+					$result['error'] = 'error-invalid-title';
 				}
 				if ( $wgUser->isBlockedFrom( $oTitle, false ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-blocked' );
+					$result['error'] = 'error-article-blocked';
 				}
 			}
 		}
