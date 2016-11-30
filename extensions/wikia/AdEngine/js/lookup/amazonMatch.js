@@ -32,6 +32,22 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		rendered = false,
 		paramPattern = /([0-9]x[0-9])/,
 		amazonId = '3115',
+		pointMap = {
+			p1: 7,
+			p2: 6.5,
+			p3: 6,
+			p4: 5.5,
+			p5: 5,
+			p6: 4.5,
+			p7: 4,
+			p8: 3.5,
+			p9: 3,
+			p10: 2.5,
+			p11: 2,
+			p12: 1.5,
+			p13: 1,
+			p14: 0.5
+		},
 		priceMap = {},
 		slots = [];
 
@@ -83,6 +99,43 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		});
 	}
 
+	function mapPricePoint(pricePoint) {
+		var matches = /^a\d+x\d+(p\d+)/g.exec(pricePoint),
+			price = 0;
+
+		if (matches && matches[1]) {
+			price = pointMap[matches[1]];
+		}
+
+		return price;
+	}
+
+	function findBestPrice(pricePoints) {
+		var price;
+
+		pricePoints.forEach(function (pricePoint) {
+			price = Math.max(mapPricePoint(pricePoint), price || 0);
+		});
+
+		return price;
+	}
+
+	function getBestSlotPrice(slotName) {
+		var price;
+
+		if (slots[slotName]) {
+			slots[slotName].forEach(function (size) {
+				if (priceMap[size] && priceMap[size].length) {
+					price = findBestPrice(priceMap[size]).toFixed(2).toString();
+				}
+			});
+		}
+
+		return {
+			amazon: price
+		};
+	}
+
 	function encodeParamsForTracking(params) {
 		if (!params.amznslots) {
 			return;
@@ -123,6 +176,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		name: 'amazon',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
