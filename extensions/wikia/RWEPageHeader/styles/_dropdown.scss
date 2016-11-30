@@ -21,6 +21,10 @@
 
 	&.rwe-page-header-nav__create {
 		width: $rwe-dropdown-column-width;
+
+		.rwe-page-header-nav__dropdown-list {
+			padding-top: $content-spacing-regular;
+		}
 	}
 
 	&.rwe-page-header-nav--columns-5 {
