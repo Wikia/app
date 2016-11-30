@@ -20,8 +20,29 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			e.preventDefault();
 		});
 
-		// var $bannerNotifficationsWrapper = $('.banner-notifications-wrapper');
-		// $bannerNotifficationsWrapper.detach();
-		// $bannerNotifficationsWrapper.insertBefore('#WikiaPage');
+
+
+		var $wikiaTopAds = $('.WikiaTopAds');
+
+		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
+		window.BannerNotification.prototype.onHide = window.BannerNotification.prototype.hide;
+
+		window.BannerNotification.prototype.show = function() {
+			this.onShow();
+
+			var topMargin = parseInt($('.banner-notifications-wrapper').css('height'));
+			$wikiaTopAds.css('marginTop', topMargin + 'px');
+
+			return this;
+		};
+
+		window.BannerNotification.prototype.hide = function() {
+			this.onHide();
+
+			var topMargin = parseInt($('.banner-notifications-wrapper').css('height'));
+			$wikiaTopAds.css('marginTop', topMargin + 'px');
+
+			return this;
+		};
 	});
 });
