@@ -19,5 +19,10 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.rwe-page-header-nav__element-dropdown > .rwe-page-header-nav__link').on('click', function (e) {
 			e.preventDefault();
 		});
+
+		$('.rwe-chat').on('click', function (e) {
+			e.preventDefault();
+			window.ChatWidget.onClickChatButton($(this).attr('href'));
+		});
 	});
 });
