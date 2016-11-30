@@ -18,7 +18,7 @@ $search-button-width: 100%;
 $search-close-button-padding-right: 8px;
 $search-expanded-width: 100%;
 $search-initial-width: 110px;
-$search-input-padding: 4px 4px 2px 4px;
+$search-input-padding: 2px 4px;
 $search-form-height: 34px;
 $search-form-margin-top: 7px;
 $search-form-wrapper-initial-width: $search-initial-width + 16px;
@@ -32,7 +32,7 @@ $search-transition-long: .2s;
 
 #searchInputRWE {
 	background: transparent;
-	height: 20px;
+	height: 22px;
 	padding: $search-input-padding;
 
 	@include placeholder {
@@ -84,7 +84,7 @@ $search-transition-long: .2s;
 
 		svg {
 			fill: $color-icons;
-			margin: 0 2px 0 0;
+			margin: -2px 2px 0 0;
 		}
 
 		input {
