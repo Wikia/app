@@ -53,9 +53,9 @@ class CPArticleRenderer {
 			return;
 		}
 
+		$output->addHTML($content);
 		$this->addStyles($output);
 		$this->addScripts($output);
-		$output->addHTML($content);
 	}
 
 	private function addStyles(OutputPage $output) {
@@ -69,8 +69,8 @@ class CPArticleRenderer {
 	}
 
 	private function addScripts(OutputPage $output) {
-		$output->addScript("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
-		$output->addScript("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
+		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
+		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
 	}
 
 	private function getArticleContent($title, $action) {
