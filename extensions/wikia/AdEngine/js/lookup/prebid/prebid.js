@@ -103,8 +103,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		return params || {};
 	}
 
-	function getSlotPrices(slotName) {
-		pricesTracker.getSlotBestPrice(slotName);
+	function getBestSlotPrice(slotName) {
+		return pricesTracker.getSlotBestPrice(slotName);
 	}
 
 	return factory.create({
@@ -114,7 +114,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		calculatePrices: calculatePrices,
 		isSlotSupported: isSlotSupported,
 		getSlotParams: getSlotParams,
-		getSlotPrices: getSlotPrices,
+		getBestSlotPrice: getBestSlotPrice,
 		trackAdaptersOnLookupEnd: trackAdaptersOnLookupEnd,
 		trackAdaptersSlotState: trackAdaptersSlotState
 	});
