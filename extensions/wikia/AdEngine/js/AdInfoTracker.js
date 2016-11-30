@@ -67,12 +67,13 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 
 	function logSlotInfo(data) {
 		log(['logSlotInfo', data], 'debug', logGroup);
-		if (adContext.getContext().opts.enableAdInfoLog) {
-			adTracker.trackDW(data, 'adengadinfo');
-		}
+		adTracker.trackDW(data, 'adengadinfo');
 	}
 
 	function run() {
+		if (!adContext.getContext().opts.enableAdInfoLog) {
+			return;
+		}
 		log('run', 'debug', logGroup);
 		window.addEventListener('adengine.slot.status', function (e) {
 			log(['adengine.slot.status', e], 'debug', logGroup);
