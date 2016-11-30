@@ -145,10 +145,6 @@ class MercuryApi {
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
 					'apid' => AnalyticsProviderNielsen::getApid()
 				],
-				'ubisoft' => [
-					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
-					'url' => AnalyticsProviderUbisoft::URL
-				],
 				'netzathleten' => [
 					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
 					'url' => AnalyticsProviderNetzAthleten::URL

@@ -4,10 +4,11 @@ define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.video.googleImaAdStatus',
 	'ext.wikia.adEngine.video.player.ui.closeButton',
 	'ext.wikia.adEngine.video.volumeControlHandler',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, browserDetect, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
@@ -119,6 +120,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 			playVideo: function (width, height) {
 				var self = this,
 					callback = function () {
+						log('Video play: prepare player UI', log.levels.debug, logGroup);
 						self.status = googleImaAdStatus.create(self);
 						addLayerOverVideo(self);
 						volumeControlHandler.init(self);
@@ -127,12 +129,16 @@ define('ext.wikia.adEngine.video.googleIma', [
 						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
+						log('Video play: stared', log.levels.debug, logGroup);
 					};
 
 				if (this.isAdsManagerLoaded) {
 					callback();
-				} else {
+				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
+					log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 					this.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
+				} else {
+					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
 				}
 			},
 			resize: function (width, height) {
@@ -143,14 +149,18 @@ define('ext.wikia.adEngine.video.googleIma', [
 		};
 	}
 
+	function getRenderingSettings() {
+		var adsRenderingSettings = new google.ima.AdsRenderingSettings();
+		adsRenderingSettings.enablePreloading = true;
+		adsRenderingSettings.uiElements = [];
+		return adsRenderingSettings;
+	}
+
 	function setupIma(vastUrl, adContainer, width, height) {
 		var ima = createIma();
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
-			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
-			adsRenderingSettings.enablePreloading = true;
-			adsRenderingSettings.uiElements = [];
-			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
+			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima);
 			ima.isAdsManagerLoaded = true;
 		}

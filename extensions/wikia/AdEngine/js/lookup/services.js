@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.lookup.services', [
 				char: 'P'
 			}
 		},
-		bidMarker = ['x','x','x','x','x'];
+		bidMarker = ['x', 'x', 'x', 'x', 'x'];
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
@@ -88,7 +88,22 @@ define('ext.wikia.adEngine.lookup.services', [
 		addParameters(providerName, slotName, slotTargeting);
 	}
 
+	function getSlotPrices(slotName) {
+		var slotPrices = {};
+
+		bidders.forEach(function (bidder) {
+			var priceFromBidder = bidder.getBestSlotPrice(slotName);
+
+			Object.keys(priceFromBidder).forEach(function(bidderName) {
+				slotPrices[bidderName] = priceFromBidder[bidderName];
+			});
+		});
+
+		return slotPrices;
+	}
+
 	return {
-		extendSlotTargeting: extendSlotTargeting
+		extendSlotTargeting: extendSlotTargeting,
+		getSlotPrices: getSlotPrices
 	};
 });
