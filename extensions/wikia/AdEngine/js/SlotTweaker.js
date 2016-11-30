@@ -144,6 +144,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 		return width / height;
 	}
 
+	function isAspectRatioCorrect(aspectRatio) {
+		return aspectRatio > 0 && !isNaN(aspectRatio) && aspectRatio !== undefined;
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
 		var slot = doc.getElementById(slotName),
 			providerContainer = slot.lastElementChild,
@@ -168,6 +172,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 				}
 
 				log(['Slot ratio', aspectRatio], 'debug', logGroup);
+
+				if (!isAspectRatioCorrect(aspectRatio)) {
+					throw Error('Slot aspect ratio is not correct');
+				}
 				providerContainer.style.paddingBottom = 100 / aspectRatio + '%';
 
 				resolve(iframe);
