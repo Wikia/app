@@ -649,7 +649,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
-		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
+		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage, $wgDisableFandomStoriesSearchResultsCaching, $wgEnableFandomStoriesSearchLogging;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$this->response->setValues( [
@@ -663,26 +663,39 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		// SUS-1219: Use proper sanity check to handle space-only queries correctly
 		$hasTerms = $searchConfig->getQuery()->hasTerms();
-		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && $hasTerms ) {
+		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' &&
+		     $hasTerms
+		) {
 			$query = $searchConfig->getQuery()->getSanitizedQuery();
 
-			$fandomStories = \WikiaDataAccess::cache(
-				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
-				\WikiaResponse::CACHE_STANDARD,
-				function() use ( $query ) {
-					return ( new \Wikia\Search\Services\FandomSearchService() )->query( $query );
-				}
-			);
+			if ( $wgEnableFandomStoriesSearchLogging ) {
+				WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
+					'query' => $query,
+				] );
+			}
+
+			$searchCommand = $this->buildSearchCommand( $query );
+
+			if ( !$wgDisableFandomStoriesSearchResultsCaching ) {
+				$fandomStories =
+					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
+						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand );
+			} else {
+				$fandomStories = $searchCommand();
+			}
 
 			if ( !empty( $fandomStories ) ) {
-				if ( count( $fandomStories ) === \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
+				if ( count( $fandomStories ) ===
+				     \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT
+				) {
 					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
 				} else {
 					$viewMoreFandomStoriesLink = null;
 				}
 
 				$this->response->setValues( [
-					'fandomStories' => array_slice( $fandomStories, 0, static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE ),
+					'fandomStories' => array_slice( $fandomStories, 0,
+						static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE ),
 					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
 				] );
 
@@ -698,6 +711,30 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( !empty( $topWikiArticles ) ) {
 			$this->setVal( 'topWikiArticles', $topWikiArticles );
 		}
+	}
+
+	protected function buildSearchCommand( $query ) {
+		global $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate;
+
+		return function () use (
+			$query, $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate
+		) {
+			$searchService =
+				\Wikia\Util\SamplerProxy::createBuilder()
+					->setEnableShadowing( $wgEnableSearchRequestShadowing )
+					->setMethodSamplingRate( $wgSearchRequestSamplingRate )
+					->setOriginalCallable( [
+						new \Wikia\Search\Services\FandomSearchService(),
+						'query',
+					] )
+					->setAlternateCallable( [
+						new \Wikia\Search\Services\ESFandomSearchService(),
+						'query',
+					] )
+					->build();
+
+			return $searchService->query( $query );
+		};
 	}
 
 	/**
