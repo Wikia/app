@@ -17,9 +17,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		if (!slot.container.firstChild || !slot.container.firstChild.dataset.gptPageParams) {
 			return;
 		}
-		if (recoveryHelper.isBlocking()) {
-			return;
-		}
 		log(['prepareData', slot, status], 'debug', logGroup);
 		var data,
 			slotFirstChildData = slot.container.firstChild.dataset,
@@ -75,7 +72,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function run() {
-		if (!adContext.getContext().opts.enableAdInfoLog) {
+		if (!adContext.getContext().opts.enableAdInfoLog || recoveryHelper.isBlocking()) {
 			return;
 		}
 		log('run', 'debug', logGroup);
