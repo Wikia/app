@@ -22,24 +22,15 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function 
 
 
 
-		var $wikiaTopAds = $('.WikiaTopAds');
+		// var $wikiaTopAds = $('.WikiaTopAds');
 		var $globalNav = $('.wds-global-navigation-wrapper');
 
+		var $notificationsWrapper = $('.banner-notifications-wrapper');
+		$notificationsWrapper.detach();
+		$notificationsWrapper.insertAfter($globalNav);
 
 		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
-		window.BannerNotification.prototype.onHide = window.BannerNotification.prototype.hide;
 
-		function setNotificationPosition() {
-			var $globalNav = $('.wds-global-navigation-wrapper');
-			var $notificationsWrapper = $('.banner-notifications-wrapper');
-
-			$notificationsWrapper.css('top', ($globalNav.position().top + 55) + 'px');
-
-			if ($globalNav.position().top < 10) {
-				var topMargin = $notificationsWrapper.height();
-				$wikiaTopAds.css('marginTop', topMargin + 'px');
-			}
-		}
 
 		window.BannerNotification.prototype.show = function() {
 			this.onShow();
@@ -47,13 +38,6 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.onScroll'], function 
 			$notificationsWrapper.detach();
 
 			$notificationsWrapper.insertAfter($globalNav);
-			// setNotificationPosition();
-
-			return this;
-		};
-
-		window.BannerNotification.prototype.hide = function() {
-			this.onHide();
 			// setNotificationPosition();
 
 			return this;
