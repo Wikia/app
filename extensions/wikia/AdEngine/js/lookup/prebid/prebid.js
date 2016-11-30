@@ -2,21 +2,17 @@
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
-	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
-	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
+], function (adContext, performanceTracker, adaptersRegistry, pricesTracker, wikiaAdapter, helper, factory, doc, win) {
 	'use strict';
 
-	var adapters = [
-			appnexus,
-			index
-		],
-		adUnits = [],
+	var adUnits = [],
 		biddersPerformanceMap = {},
 		autoPriceGranularity = 'auto',
 		prebidLoaded = false;
@@ -29,7 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			node = doc.getElementsByTagName('script')[0];
 
 			if (wikiaAdapter.isEnabled()) {
-				adapters.push(wikiaAdapter);
+				adaptersRegistry.push(wikiaAdapter);
 				win.pbjs.que.push(function () {
 					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
 				});
@@ -41,8 +37,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			node.parentNode.insertBefore(prebid, node);
 		}
 
-		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
-		adUnits = helper.setupAdUnits(adapters, skin);
+		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
+		adUnits = helper.setupAdUnits(skin);
 
 		if (adUnits.length > 0) {
 			if (!prebidLoaded) {
@@ -68,22 +64,26 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function calculatePrices() {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 	}
 
 	function trackAdaptersOnLookupEnd() {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
+			performanceTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
 		});
 	}
 
 	function trackAdaptersSlotState(providerName, slotName) {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
+			performanceTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
 		});
 	}
 
@@ -103,6 +103,10 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		return params || {};
 	}
 
+	function getSlotPrices(slotName) {
+		pricesTracker.getSlotBestPrice(slotName);
+	}
+
 	return factory.create({
 		logGroup: 'ext.wikia.adEngine.lookup.prebid',
 		name: 'prebid',
@@ -110,6 +114,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		calculatePrices: calculatePrices,
 		isSlotSupported: isSlotSupported,
 		getSlotParams: getSlotParams,
+		getSlotPrices: getSlotPrices,
 		trackAdaptersOnLookupEnd: trackAdaptersOnLookupEnd,
 		trackAdaptersSlotState: trackAdaptersSlotState
 	});
