@@ -1,56 +1,56 @@
 <h2 style="clear: both">
-  <!-- TODO: Add PHP Logic to Populate List -->
-  !!! wfMsg( "imagereview-header{$modeMsgSuffix}" ) !!!
+	<!-- TODO: Add PHP Logic to Populate List -->
+	!!! wfMsg( "imagereview-header{$modeMsgSuffix}" ) !!!
 </h2>
 
 <form action="{{submitUrl}}" method="post" id="ImageReviewForm" class="{{action}}">
-  <ul class="image-review-list">
-    {{# imageList }}
-      <li class="state-{{state}} {{action}}">
-        <div class="img-container">
-          <!-- TODO: Verify add logic for isThumb -->
+	<ul class="image-review-list">
+		{{# imageList }}
+			<li class="state-{{state}} {{action}}">
+				<div class="img-container">
+					<!-- TODO: Verify add logic for isThumb -->
 					<img id="img-{{wikiId}}-{{pageId}}" src="{{src}}"/>
 				</div>
 
-        <a href="{{url}}" target="_blank" class="internal sprite details magnify" title="{{wfMessages.imagereview-gotoimage}}"></a>
+				<a href="{{url}}" target="_blank" class="internal sprite details magnify" title="{{wfMessages.imagereview-gotoimage}}"></a>
 
-        <!-- TODO: Display Flagged Content -->
+				<!-- TODO: Display Flagged Content -->
 
-        <!-- Display Flagged Content -->
+				<!-- Display Flagged Content -->
 
-        {{# showWikiLink }}
-          <span class="image-wiki-url"><a href="{{wiki_url}}">{{wiki_url}}</a></span>
-        {{/ showWikiLink }}
+				{{# showWikiLink }}
+					<span class="image-wiki-url"><a href="{{wiki_url}}">{{wiki_url}}</a></span>
+				{{/ showWikiLink }}
 
-        {{# labels }}
-          <label title="{{wfMessages.imagereview-label-ok}}">
-              <input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelOk.value}}" {{labelOk.checked}}>
-              {{wfMessages.imagereview-option-ok}}
-          </label>
+				{{# labels }}
+					<label title="{{wfMessages.imagereview-label-ok}}">
+							<input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelOk.value}}" {{labelOk.checked}}>
+							{{wfMessages.imagereview-option-ok}}
+					</label>
 
-          <label title="{{wfMessages.imagereview-label-delete}}">
-              <input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelDelete.value}}" {{labelDelete.checked}}>
-              {{wfMessages.imagereview-option-delete}}
-          </label>
+					<label title="{{wfMessages.imagereview-label-delete}}">
+							<input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelDelete.value}}" {{labelDelete.checked}}>
+							{{wfMessages.imagereview-option-delete}}
+					</label>
 
-          <label title="{{wfMessages.imagereview-label-questionable}}">
-              <input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelQuestionable.value}}" {{labelQuestionable.checked}}>
-              {{wfMessages.imagereview-option-questionable}}
-          </label>
-        {{/ labels }}
-      </li>
-    {{/ imageList }}
-  <ul>
+					<label title="{{wfMessages.imagereview-label-questionable}}">
+							<input type="radio" name="img-{{wikiId}}-{{pageId}}" value="{{labelQuestionable.value}}" {{labelQuestionable.checked}}>
+							{{wfMessages.imagereview-option-questionable}}
+					</label>
+				{{/ labels }}
+			</li>
+		{{/ imageList }}
+	<ul>
 
-  {{# hasImages }}
-  <footer>
-  	<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
-  	<input id="nextButton" type="submit" class="wikia-button" value="Review &amp; get next batch" />
-  </footer>
-  {{/ hasImages }}
+	{{# hasImages }}
+	<footer>
+		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
+		<input id="nextButton" type="submit" class="wikia-button" value="Review &amp; get next batch" />
+	</footer>
+	{{/ hasImages }}
 
 	{{^ hasImages }}
-    {{wfMessages.imagereview-noresults}}
-	   <a href="{{fullUrl}}" class="wikia-button" style="float: none">Refresh page</a>
-  {{/ hasImages }}
+		{{wfMessages.imagereview-noresults}}
+		 <a href="{{fullUrl}}" class="wikia-button" style="float: none">Refresh page</a>
+	{{/ hasImages }}
 </form>

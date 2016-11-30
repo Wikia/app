@@ -227,8 +227,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 			'flags' => $imageRecord->flags,
 			'isthumb' => true,
 			'wiki_url' => $cityUrl,
-      'showWikiLink' => $this->state === ImageReviewStates::REJECTED && !empty( $cityUrl ),
-      'labels' => $this->getLabelValues()
+			'showWikiLink' => $this->state === ImageReviewStates::REJECTED && !empty( $cityUrl ),
+			'labels' => $this->getLabelValues()
 		];
 	}
 
@@ -318,54 +318,53 @@ class ImageListGetter extends ImageReviewHelperBase {
 		else return ImageReviewStates::IN_REVIEW;
 	}
 
-  private function getLabelValues() {
-      $labels = [];
+	private function getLabelValues() {
+		$labels = [];
 
-      $labels['labelOk'] = [
-        'value' => ImageReviewStates::APPROVED,
-        'checked' => ''
-      ];
+		$labels['labelOk'] = [
+			'value' => ImageReviewStates::APPROVED,
+			'checked' => ''
+		];
 
-      $labels['labelDelete'] = [
-        'value' => $this->state == 'rejected' ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED,
-        'checked' => ''
-      ];
+		$labels['labelDelete'] = [
+			'value' => $this->state == 'rejected' ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED,
+			'checked' => ''
+		];
 
-      $labels['labelQuestionable'] = [
-        'value' => ImageReviewStates::QUESTIONABLE,
-        'checked' => ''
-      ];
+		$labels['labelQuestionable'] = [
+			'value' => ImageReviewStates::QUESTIONABLE,
+			'checked' => ''
+		];
 
-      return $labels;
-    }
+		return $labels;
+	}
 
-    /**
-     * Add additional markup for various flagged states
-     * @param object $image
-     * @return object
-     */
-    private function addFlagsContent( $image ) {
-      $flags = [];
+	/**
+	* Add additional markup for various flagged states
+	* @param object $image
+	* @return object
+	*/
+	private function addFlagsContent( $image ) {
+		$flags = [];
 
-      if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_USER ) {
-        $flags['flag_suspicous_user'] = [
-          'title' => "Flagged: Susicious user. Click to go to uploader's profile"
-        ];
-      }
+		if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_USER ) {
+			$flags['flag_suspicous_user'] = [
+			'	title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
 
-      if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_WIKI ) {
-        $flags['flag_suspicious_wiki'] = [
-          'title' => "Flagged: Susicious user. Click to go to uploader's profile"
-        ];
-      }
+		if( $image['flags'] & ImageListGetter::FLAG_SUSPICOUS_WIKI ) {
+			$flags['flag_suspicious_wiki'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
 
-      if( $image['flags'] & ImageListGetter::FLAG_SKIN_DETECTED ) {
-        $flags['flag_skin_detected'] = [
-          'title' => "Flagged: Susicious user. Click to go to uploader's profile"
-        ];
-      }
+		if( $image['flags'] & ImageListGetter::FLAG_SKIN_DETECTED ) {
+			$flags['flag_skin_detected'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
 
-      return $flags;
-    }
-
+		return $flags;
+	}
 }

@@ -342,24 +342,18 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			'baseUrl' => $baseUrl,
 			'toolName' => 'Image Review',
 			'submitUrl' => $baseUrl . $query,
-      'wfMessages' => [
-        'imagereview-gotoimage' => wfMessage( 'imagereview-gotoimage' )->escaped(),
-        'imagereview-option-delete' => wfMessage( 'imagereview-option-delete' )->escaped(),
-        'imagereview-label-delete' => wfMessage( 'imagereview-label-delete' )->escaped(),
-        'imagereview-option-ok' => wfMessage( 'imagereview-option-ok' )->escaped(),
-        'imagereview-label-ok' => wfMessage( 'imagereview-label-ok' )->escaped(),
-        'imagereview-option-questionable' => wfMessage( 'imagereview-option-questionable' )->escaped(),
-        'imagereview-label-questionable' => wfMessage( 'imagereview-label-questionable' )->escaped(),
-        'imagereview-noresults' => wfMessage( 'imagereview-noresults' )->escaped(),
-      ],
+			'wfMessages' => [
+				'imagereview-gotoimage' => wfMessage( 'imagereview-gotoimage' )->escaped(),
+				'imagereview-option-delete' => wfMessage( 'imagereview-option-delete' )->escaped(),
+				'imagereview-label-delete' => wfMessage( 'imagereview-label-delete' )->escaped(),
+				'imagereview-option-ok' => wfMessage( 'imagereview-option-ok' )->escaped(),
+				'imagereview-label-ok' => wfMessage( 'imagereview-label-ok' )->escaped(),
+				'imagereview-option-questionable' => wfMessage( 'imagereview-option-questionable' )->escaped(),
+				'imagereview-label-questionable' => wfMessage( 'imagereview-label-questionable' )->escaped(),
+				'imagereview-noresults' => wfMessage( 'imagereview-noresults' )->escaped(),
+			],
 		] );
 	}
-
-  public function helloWorld() {
-    return true;
-  }
-
-  // private function get
 
 	private function logImageListCompleteness( $severity ) {
 		WikiaLogger::instance()->debug(
@@ -371,15 +365,4 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			]
 		);
 	}
-
-
-
-
-
-
-
-
-
-
-
 }
