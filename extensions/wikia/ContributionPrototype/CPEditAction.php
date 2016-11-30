@@ -4,10 +4,10 @@ namespace ContributionPrototype;
 
 use FormlessAction;
 
-class CPViewAction extends FormlessAction {
+class CPEditAction extends FormlessAction {
 
 	public function getName() {
-		return 'view';
+		return 'edit';
 	}
 
 	public function onView() {
@@ -15,6 +15,6 @@ class CPViewAction extends FormlessAction {
 	}
 
 	public function show() {
-		Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
+		Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput(), 'edit');
 	}
 }
