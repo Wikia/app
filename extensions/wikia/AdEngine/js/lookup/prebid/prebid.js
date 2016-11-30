@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, performanceTracker, adaptersRegistry, pricesTracker, wikiaAdapter, helper, factory, doc, win) {
+], function (adContext, performanceTracker, pricesTracker, adaptersRegistry, wikiaAdapter, helper, factory, doc, win) {
 	'use strict';
 
 	var adUnits = [],

@@ -1,8 +1,7 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.wrappers.prebid',
-	'wikia.win'
-], function (adTracker, timeBuckets, prebid) {
+	'ext.wikia.adEngine.wrappers.prebid'
+], function (adTracker, prebid) {
 	'use strict';
 
 	function getSlotBestPrice(slotName) {
