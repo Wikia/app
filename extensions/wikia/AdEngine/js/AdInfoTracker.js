@@ -3,9 +3,10 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adContext, lookupServices, log, window) {
+], function (adTracker, adContext, lookupServices, recoveryHelper, log, window) {
 	'use strict';
 
 	var	logGroup = 'ext.wikia.adEngine.adInfoTracker';
@@ -71,7 +72,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function run() {
-		if (!adContext.getContext().opts.enableAdInfoLog) {
+		if (!adContext.getContext().opts.enableAdInfoLog || recoveryHelper.isBlocking()) {
 			return;
 		}
 		log('run', 'debug', logGroup);
