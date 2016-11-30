@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function runOnReady(iframe, params) {
+	function adjustSlot(iframe, params) {
 		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
 		nav.style.top = '';
@@ -93,7 +93,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio)
 			.then(function (iframe) {
-				runOnReady(iframe, params);
+				adjustSlot(iframe, params);
 				wrapper.style.opacity = '';
 			});
 
