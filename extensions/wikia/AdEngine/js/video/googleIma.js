@@ -150,7 +150,13 @@ define('ext.wikia.adEngine.video.googleIma', [
 	}
 
 	function getRenderingSettings() {
-		var adsRenderingSettings = new google.ima.AdsRenderingSettings();
+		var adsRenderingSettings = new google.ima.AdsRenderingSettings(),
+			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
+
+		if (!browserDetect.isMobile()) {
+			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
+		}
+
 		adsRenderingSettings.enablePreloading = true;
 		adsRenderingSettings.uiElements = [];
 		return adsRenderingSettings;
