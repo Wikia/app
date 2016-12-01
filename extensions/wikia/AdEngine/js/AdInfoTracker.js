@@ -9,12 +9,36 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 ], function (adTracker, adContext, lookupServices, recoveryHelper, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adInfoTracker';
+	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
+		enabledSlots = {
+			TOP_LEADERBOARD: true,
+			HOME_TOP_LEADERBOARD: true,
+			TOP_RIGHT_BOXAD: true,
+			HOME_TOP_RIGHT_BOXAD: true,
+			PREFOOTER_LEFT_BOXAD: true,
+			PREFOOTER_MIDDLE_BOXAD: true,
+			PREFOOTER_RIGHT_BOXAD: true,
+			LEFT_SKYSCRAPER_2: true,
+			LEFT_SKYSCRAPER_3: true,
+			INCONTENT_BOXAD_1: true,
+			MOBILE_TOP_LEADERBOARD: true,
+			MOBILE_IN_CONTENT: true,
+			MOBILE_PREFOOTER: true
+		};
 
 	win.adEnginePvUID = win.adEnginePvUID || generateUUID();
 
+	function shouldHandleSlot(slot) {
+		if (!enabledSlots[slot.name] || 
+			!slot.container.firstChild || 
+			!slot.container.firstChild.dataset.gptPageParams) {
+			return false;
+		}
+		return true;
+	}
+	
 	function prepareData(slot, status) {
-		if (!slot.container.firstChild || !slot.container.firstChild.dataset.gptPageParams) {
+		if (!shouldHandleSlot(slot)) {
 			return;
 		}
 		log(['prepareData', slot, status], 'debug', logGroup);
