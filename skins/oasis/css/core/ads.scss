@@ -118,8 +118,11 @@ $uap-video-animation-duration: 0.4s;
 	right: 10px;
 
 	.speaker {
+		background-color: #fff;
+		border-radius: 50%;
 		display: inline-block;
 		height: 30px;
+		opacity: 0.5;
 		overflow: hidden;
 		position: relative;
 		width: 30px;
@@ -175,6 +178,10 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+	video {
+		left: 0;
+	}
+
 	.progress-bar {
 		background: $uap-progress-bar-color;
 		bottom: 0;
