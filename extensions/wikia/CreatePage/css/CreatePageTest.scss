@@ -1,0 +1,51 @@
+#CreatePageModalDialog {
+	section {
+		display: flex;
+		padding: 0;
+	}
+
+	#CreatePageTitleProposalsHeader {
+		font-weight: bold;
+		margin-bottom: 8px;
+	}
+
+	#CreatePageDialog,
+	#CreatePageTitleProposals {
+		padding: 20px;
+	}
+
+	#CreatePageTitleProposals {
+		background: #f7f7f7;
+		display: none;
+
+		ul {
+			box-sizing: border-box;
+			padding: 0 12px;
+
+			li {
+				padding: 5px 0;
+			}
+		}
+	}
+
+	&.abtest-h,
+	&.abtest-v {
+		#CreatePageTitleProposals {
+			display: block;
+		}
+	}
+
+	&.abtest-h {
+		section {
+			flex-direction: column;
+		}
+
+		#CreatePageTitleProposals ul {
+			float: left;
+			width: 50%;
+		}
+	}
+}
+
+
+

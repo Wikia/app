@@ -49,3 +49,22 @@
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 	</form>
 </div>
+
+
+<div id="CreatePageTitleProposals">
+	<div id="CreatePageTitleProposalsHeader">
+		<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
+	</div>
+
+	<ul>
+		<li><a href="#" class="new">Princess of Dorne!</a></li>
+		<li><a href="#" class="new">Beshka</a></li>
+		<li><a href="#" class="new">King of Astapor</a></li>
+	</ul>
+
+	<ul>
+		<li><a href="#" class="new">Princess of Dorne!</a></li>
+		<li><a href="#" class="new">Beshka</a></li>
+		<li><a href="#" class="new">King of Astapor</a></li>
+	</ul>
+</div>
