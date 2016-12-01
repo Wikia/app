@@ -53,7 +53,7 @@
 
 <div id="CreatePageTitleProposals">
 	<div id="CreatePageTitleProposalsHeader">
-		<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
+		<?= wfMessage( 'createpage-dialog-redlinks-list-header' )->text() ?>
 	</div>
 
 	<ul>
