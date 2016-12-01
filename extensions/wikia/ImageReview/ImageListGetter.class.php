@@ -221,7 +221,7 @@ class ImageListGetter extends WikiaModel {
 			'flags' => $imageRecord->flags,
 			'isthumb' => true,
 			'wiki_url' => $cityUrl,
-			'showWikiLink' => $this->state === ImageReviewStates::REJECTED && !empty( $cityUrl ),
+			'showWikiLink' => $this->state === ImageStates::REJECTED && !empty( $cityUrl ),
 			'labels' => $this->getLabelValues(),
 			'flagsContent' => $this->getFlagsContent( $imageRecord->flags ),
 		];
@@ -336,17 +336,17 @@ class ImageListGetter extends WikiaModel {
 		$labels = [];
 
 		$labels['labelOk'] = [
-			'value' => ImageReviewStates::APPROVED,
+			'value' => ImageStates::APPROVED,
 			'checked' => ''
 		];
 
 		$labels['labelDelete'] = [
-			'value' => $this->state == 'rejected' ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED,
+			'value' => $this->state == 'rejected' ? ImageStates::DELETED : ImageStates::REJECTED,
 			'checked' => ''
 		];
 
 		$labels['labelQuestionable'] = [
-			'value' => ImageReviewStates::QUESTIONABLE,
+			'value' => ImageStates::QUESTIONABLE,
 			'checked' => ''
 		];
 
