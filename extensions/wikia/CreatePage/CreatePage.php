@@ -229,10 +229,9 @@ function wfCreatePageAjaxGetDialog() {
 		$defaultLayout = key($options);
 	}
 
-	$WantedPagesPageResponse = ( ( new WantedPagesPage() )->doQuery() );
-
+	$WantedPagesPageResponse = ( new WantedPagesPage() )->doQuery();
 	$dbr = wfGetDB( DB_SLAVE );
-	$wantedPageTitles = [];
+	$wantedPages = [ ];
 	$fetchedTitlesCount = 0;
 	$fetchedTitlesLimit = 6;
 	$editorPreferenceQueryParamName =
@@ -246,7 +245,7 @@ function wfCreatePageAjaxGetDialog() {
 				$wantedPageTitleText = $wantedPageTitle->getText();
 
 				if ( !preg_match( '/[:\/]+/', $wantedPageTitleText ) ) {
-					$wantedPageTitles[] = [
+					$wantedPages[ ] = [
 						'title' => $wantedPageTitleText,
 						'url' => $wantedPageTitle->escapeLocalURL( [
 							$editorPreferenceQueryParamName => 'edit',
@@ -268,7 +267,7 @@ function wfCreatePageAjaxGetDialog() {
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
 			'type' => $listtype,
-			'wantedPages' => $wantedPageTitles,
+			'wantedPages' => $wantedPages,
 		)
 	);
 
