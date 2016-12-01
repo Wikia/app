@@ -88,7 +88,7 @@ $column-width: $container-width / 3;
 		height: $item-height;
 		padding: $item-padding;
 
-		&:hover {
+		&:hover, .item-selected {
 			background-color: $link-active-background-color;
 
 			> .rwe-page-header-nav__dropdown-link-wrapper {
@@ -127,11 +127,6 @@ $column-width: $container-width / 3;
 		> .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
 			font-size: $first-level-font-size;
 		}
-	}
-
-	.item-selected > .rwe-page-header-nav__link {
-		color: $color-links;
-		text-decoration: none;
 	}
 
 	.rwe-page-header-nav__link {
