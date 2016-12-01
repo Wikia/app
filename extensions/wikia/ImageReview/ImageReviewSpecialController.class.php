@@ -159,24 +159,72 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		// setup response data for table rendering
 		$this->response->setValues( [
-			'summary' => $stats['summary'],
-			'summaryHeaders' => [
-				'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user'
-			],
-
-			'data' => $stats['data'],
-			'headers' => self::STATS_HEADERS,
-
+			'summaryTableHTML' => $this->getStatsSummaryTableHTML( $stats['summary'] ),
+			'userTableHTML' => $this->getStatsUserTableHtml( self::STATS_HEADERS, $stats['data'] ),
 			'startDay' => $startDay,
 			'startMonth' => $startMonth,
 			'startYear' => $startYear,
-
 			'endDay' => $endDay,
 			'endMonth' => $endMonth,
 			'endYear' => $endYear ,
+			'dates' => $this->getStatsDates()
 		] );
 
 		return true;
+	}
+
+	/**
+	 * Generate html table for mustache template
+	 * @param $stats
+	 * @return string
+	 */
+	private function getStatsSummaryTableHTML( $stats ) {
+		return Xml::buildTable( [ $stats ], [ 'class' => 'wikitable' ], 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' );
+	}
+
+	/**
+	 * Generate html for the user table for mustache template
+	 * @param $headers table headers
+	 * @param $data	data for the table
+	 * @return string generated html
+	 */
+	private function getStatsUserTableHtml( $headers, $data ) {
+		return Xml::buildTable( $data, array( 'class' => 'wikitable sortable' ), $headers );
+	}
+
+	/**
+	 * Add calendar data to build the date select boxes. The same logic is used as the previous
+	 * PHP template.
+	 * @return array
+	 */
+	private function getStatsDates() {
+		$dates = [];
+		$dates['prefixes'] = ['start', 'end'];
+
+		// Add days option lists (using the same 31 day logic as before)
+		for ( $i = 1; $i <= 31; $i++ ) {
+			$dates['days'][] = $i;
+		}
+
+		// Add months
+		global $wgLang;
+		for ( $i = 1; $i <= 12; $i++ ) {
+			$dates['months'][] = [
+				'name' => $wgLang->getMonthName( $i ),
+				'value' => $i,
+				'selected' => $i === 12 ? 'selected' : ''
+			];
+		}
+
+		// Add years
+		for ( $i = 2012; $i <= date( 'Y' ); $i++ ) {
+			$dates['years'][] = [
+				'value' => $i,
+				'selected' => $i == date( 'Y' ) ? 'selected' : ''
+			];
+		}
+
+		return $dates;
 	}
 
 	public function csvStats() {

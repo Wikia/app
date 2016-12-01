@@ -1,0 +1,61 @@
+<style type="text/css" scoped>
+    fieldset {
+        display: inline;
+    }
+    table {
+        width: 100%;
+    }
+</style>
+
+<form method="get">
+    <fieldset>
+        <legend>Start Date</legend>
+        <select name="startDay">
+            {{# dates.days }}
+                <option value="{{.}}">{{.}}</option>
+            {{/ dates.days }}
+        </select>
+
+        <select name="startMonth">
+            {{# dates.months }}
+                <option value="{{value}}" {{selected}}>{{name}}</option>
+            {{/ dates.months }}
+        </select>
+
+        <select name="startYear">
+            {{# dates.years }}
+                <option value="{{value}}" {{selected}}>{{value}}</option>
+            {{/ dates.years }}
+        </select>
+    </fieldset>
+
+    <fieldset>
+        <legend>End Date</legend>
+        <select name="endDay">
+            {{# dates.days }}
+                <option value="{{.}}">{{.}}</option>
+            {{/ dates.days }}
+        </select>
+
+        <select name="endMonth">
+            {{# dates.months }}
+                <option value="{{value}}" {{selected}}>{{name}}</option>
+            {{/ dates.months }}
+        </select>
+
+        <select name="endYear">
+            {{# dates.years }}
+                <option value="{{value}}" {{selected}}>{{value}}</option>
+            {{/ dates.years }}
+        </select>
+    </fieldset>
+
+    <input type="submit" value="Show stats">
+    <input type="submit" value="Download as CSV" formaction="csvstats" class="secondary">
+</form>
+
+<h2>Summary</h2>
+{{{summaryTableHTML}}}
+
+<h2>Breakdown by user</h2>
+{{{userTableHTML}}}
