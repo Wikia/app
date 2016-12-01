@@ -315,7 +315,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$modeMsgSuffix = empty( $this->action ) ? '' : '-' . $this->action;
 
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $this->order ) );
-		$sortSelect->addOptions( ImageListGetter::$sortOptions );
+		$sortSelect->addOptions( [
+			'latest first' => 0,
+			'by priority and recency' => 1,
+			'oldest first' => 2,
+		]);
 
 		$this->response->setValues( [
 			'action' => $this->action,

@@ -328,6 +328,10 @@ class ImageListGetter extends WikiaModel {
 		return count( $this->imageList ) == self::LIMIT_IMAGES;
 	}
 
+	/**
+	 * Setup the labels used to indicated different states for each image
+	 * @return array
+	 */
 	private function getLabelValues() {
 		$labels = [];
 
@@ -351,8 +355,8 @@ class ImageListGetter extends WikiaModel {
 
 	/**
 	* Add additional markup for various flagged states
-	* @param integer $
-	* @return object
+	* @param integer $flag
+	* @return array
 	*/
 	private function getFlagsContent( $flag ) {
 		$flagsContent = [];
