@@ -33,11 +33,12 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		});
 
 		$('.rwe-page-header-nav__dropdown-first-level-item:first-child').addClass('item-selected');
-		$('.rwe-page-header-nav__dropdown-second-level-item:first-child').addClass('item-selected');
+		$('.rwe-page-header-nav__dropdown-second-level')
+			.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first').addClass('item-selected');
 
 		firstLevelItems.hover(function () {
 			var self = $(this),
-				secondLevel = self.find('.rwe-page-header-nav__dropdown-second-level-item:first-child');
+				secondLevel = self.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first');
 
 			firstLevelItems.removeClass('item-selected');
 			secondLevelItems.removeClass('item-selected');
@@ -60,7 +61,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
 
-		window.BannerNotification.prototype.show = function() {
+		window.BannerNotification.prototype.show = function () {
 			this.onShow();
 
 			var $notificationsWrapper = $('.banner-notifications-wrapper');
