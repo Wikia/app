@@ -3,6 +3,7 @@
 use Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED     = 'rejected';
@@ -158,24 +159,72 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		// setup response data for table rendering
 		$this->response->setValues( [
-			'summary' => $stats['summary'],
-			'summaryHeaders' => [
-				'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user'
-			],
-
-			'data' => $stats['data'],
-			'headers' => self::STATS_HEADERS,
-
+			'summaryTableHTML' => $this->getStatsSummaryTableHTML( $stats['summary'] ),
+			'userTableHTML' => $this->getStatsUserTableHtml( self::STATS_HEADERS, $stats['data'] ),
 			'startDay' => $startDay,
 			'startMonth' => $startMonth,
 			'startYear' => $startYear,
-
 			'endDay' => $endDay,
 			'endMonth' => $endMonth,
 			'endYear' => $endYear ,
+			'dates' => $this->getStatsDates()
 		] );
 
 		return true;
+	}
+
+	/**
+	 * Generate html table for mustache template
+	 * @param $stats
+	 * @return string
+	 */
+	private function getStatsSummaryTableHTML( $stats ) {
+		return Xml::buildTable( [ $stats ], [ 'class' => 'wikitable' ], 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' );
+	}
+
+	/**
+	 * Generate html for the user table for mustache template
+	 * @param $headers table headers
+	 * @param $data	data for the table
+	 * @return string generated html
+	 */
+	private function getStatsUserTableHtml( $headers, $data ) {
+		return Xml::buildTable( $data, array( 'class' => 'wikitable sortable' ), $headers );
+	}
+
+	/**
+	 * Add calendar data to build the date select boxes. The same logic is used as the previous
+	 * PHP template.
+	 * @return array
+	 */
+	private function getStatsDates() {
+		$dates = [];
+		$dates['prefixes'] = ['start', 'end'];
+
+		// Add days option lists (using the same 31 day logic as before)
+		for ( $i = 1; $i <= 31; $i++ ) {
+			$dates['days'][] = $i;
+		}
+
+		// Add months
+		global $wgLang;
+		for ( $i = 1; $i <= 12; $i++ ) {
+			$dates['months'][] = [
+				'name' => $wgLang->getMonthName( $i ),
+				'value' => $i,
+				'selected' => $i === 12 ? 'selected' : ''
+			];
+		}
+
+		// Add years
+		for ( $i = 2012; $i <= date( 'Y' ); $i++ ) {
+			$dates['years'][] = [
+				'value' => $i,
+				'selected' => $i == date( 'Y' ) ? 'selected' : ''
+			];
+		}
+
+		return $dates;
 	}
 
 	public function csvStats() {
@@ -311,20 +360,42 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
 		$baseUrl = Title::newFromText( 'ImageReview', NS_SPECIAL )->getFullURL();
+		$modeMsgSuffix = empty( $this->action ) ? '' : '-' . $this->action;
+
+		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $this->order ) );
+		$sortSelect->addOptions( [
+			'latest first' => 0,
+			'by priority and recency' => 1,
+			'oldest first' => 2,
+		]);
+
 		$this->response->setValues( [
 			'action' => $this->action,
 			'order' => $this->order,
 			'imageList' => $this->imageList,
 			'imageCount' => $this->imageCount,
+			'hasImages' => count( $this->imageList ) > 0,
 			'accessRejected' => $this->accessRejected,
 			'accessQuestionable' => $this->accessQuestionable,
 			'accessStats' => $this->wg->User->isAllowed( 'imagereviewstats' ),
 			'accessControls' => $this->wg->user->isAllowed( 'imagereviewcontrols' ),
-			'modeMsgSuffix' => empty( $this->action ) ? '' : '-' . $this->action,
+			'modeMsgSuffix' => $modeMsgSuffix,
 			'fullUrl' => $this->wg->Title->getFullURL(),
 			'baseUrl' => $baseUrl,
 			'toolName' => 'Image Review',
 			'submitUrl' => $baseUrl . $query,
+			'wfMessages' => [
+				'imagereview-gotoimage' => wfMessage( 'imagereview-gotoimage' )->escaped(),
+				'imagereview-option-delete' => wfMessage( 'imagereview-option-delete' )->escaped(),
+				'imagereview-label-delete' => wfMessage( 'imagereview-label-delete' )->escaped(),
+				'imagereview-option-ok' => wfMessage( 'imagereview-option-ok' )->escaped(),
+				'imagereview-label-ok' => wfMessage( 'imagereview-label-ok' )->escaped(),
+				'imagereview-option-questionable' => wfMessage( 'imagereview-option-questionable' )->escaped(),
+				'imagereview-label-questionable' => wfMessage( 'imagereview-label-questionable' )->escaped(),
+				'imagereview-noresults' => wfMessage( 'imagereview-noresults' )->escaped(),
+				'image-review-header' => wfMsg( "imagereview-header{$modeMsgSuffix}" )
+			],
+			'sortHTML' => $sortSelect->getHTML()
 		] );
 	}
 

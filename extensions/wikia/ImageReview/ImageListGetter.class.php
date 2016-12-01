@@ -213,7 +213,7 @@ class ImageListGetter extends WikiaModel {
 		return [
 			'wikiId' => $imageRecord->wiki_id,
 			'pageId' => $imageRecord->page_id,
-			'state' => $imageRecord->state,
+			'state' => intval( $imageRecord->state ),
 			'src' => $imageInfo['src'],
 			'url' => $imageInfo['page'],
 			'extension' => $imageInfo['extension'],
@@ -221,6 +221,9 @@ class ImageListGetter extends WikiaModel {
 			'flags' => $imageRecord->flags,
 			'isthumb' => true,
 			'wiki_url' => $cityUrl,
+			'showWikiLink' => $this->state === ImageReviewStates::REJECTED && !empty( $cityUrl ),
+			'labels' => $this->getLabelValues(),
+			'flagsContent' => $this->getFlagsContent( $imageRecord->flags ),
 		];
 	}
 
@@ -323,5 +326,59 @@ class ImageListGetter extends WikiaModel {
 
 	private function fetchedEnoughImages() : bool {
 		return count( $this->imageList ) == self::LIMIT_IMAGES;
+	}
+
+	/**
+	 * Setup the labels used to indicated different states for each image
+	 * @return array
+	 */
+	private function getLabelValues() {
+		$labels = [];
+
+		$labels['labelOk'] = [
+			'value' => ImageReviewStates::APPROVED,
+			'checked' => ''
+		];
+
+		$labels['labelDelete'] = [
+			'value' => $this->state == 'rejected' ? ImageReviewStates::DELETED : ImageReviewStates::REJECTED,
+			'checked' => ''
+		];
+
+		$labels['labelQuestionable'] = [
+			'value' => ImageReviewStates::QUESTIONABLE,
+			'checked' => ''
+		];
+
+		return $labels;
+	}
+
+	/**
+	* Add additional markup for various flagged states
+	* @param integer $flag
+	* @return array
+	*/
+	private function getFlagsContent( $flag ) {
+		$flagsContent = [];
+
+		if( $flag & ImageListGetter::FLAG_SUSPICOUS_USER ) {
+			$flagsContent['flag_suspicous_user'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
+
+		if( $flag & ImageListGetter::FLAG_SUSPICOUS_WIKI ) {
+			$flagsContent['flag_suspicious_wiki'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
+
+		if( $flag & ImageListGetter::FLAG_SKIN_DETECTED ) {
+			$flagsContent['flag_skin_detected'] = [
+				'title' => "Flagged: Susicious user. Click to go to uploader's profile"
+			];
+		}
+
+		return $flagsContent;
 	}
 }
