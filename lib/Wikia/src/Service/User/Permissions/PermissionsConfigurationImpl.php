@@ -255,6 +255,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'fancontributor-staff',
 		'fancontributor-contributor',
 		'clearuserprofile',
+		'smw-patternedit',
 	];
 
 	public function __construct() {

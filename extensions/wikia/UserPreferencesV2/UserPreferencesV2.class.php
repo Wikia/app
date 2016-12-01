@@ -147,10 +147,15 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifminoredits']['label-message'] = 'tog-enotifminoredits-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifminoredits' );
 		}
-		if ( isset( $defaultPreferences['enotifdiscussions'] ) ) {
-			$defaultPreferences['enotifdiscussions']['section'] = 'emailv2/email-me-v2';
-			$defaultPreferences['enotifdiscussions']['label-message'] = 'tog-enotifdiscussions-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifdiscussions' );
+		if ( isset( $defaultPreferences['enotifdiscussionsvotes'] ) ) {
+			$defaultPreferences['enotifdiscussionsvotes']['section'] = 'emailv2/email-me-v2';
+			$defaultPreferences['enotifdiscussionsvotes']['label-message'] = 'tog-enotifdiscussions-votes-v2';
+			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifdiscussionsvotes' );
+		}
+		if ( isset( $defaultPreferences['enotifdiscussionsfollows'] ) ) {
+			$defaultPreferences['enotifdiscussionsfollows']['section'] = 'emailv2/email-me-v2';
+			$defaultPreferences['enotifdiscussionsfollows']['label-message'] = 'tog-enotifdiscussions-follows-v2';
+			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifdiscussionsfollows' );
 		}
 		if ( isset( $defaultPreferences['enotifusertalkpages'] ) ) {
 			$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/email-me-v2';

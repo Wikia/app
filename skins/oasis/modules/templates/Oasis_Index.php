@@ -75,7 +75,8 @@
 <?= $ivw3 ?>
 <?= $ivw2 ?>
 <?= $sourcePoint ?>
-<?= $ubisoft ?>
+<?= $gfc ?>
+
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
