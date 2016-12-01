@@ -1,14 +1,15 @@
-<div class="rwe-page-header-nav__dropdown rwe-page-header-nav__read wds-dropdown__content rwe-page-header-nav--columns-<?= $menuColumnsCount ?>">
-	<ul class="rwe-page-header-nav__dropdown-list rwe-page-header-nav__dropdown-first-level">
+<div class="rwe-page-header-nav__dropdown wds-dropdown__content rwe-page-header-nav__read">
+	<ul class="rwe-page-header-nav__dropdown-first-level rwe-page-header-nav__dropdown-list">
 		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) ): ?>
 			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
 				<? $menuNode0 = $menuNodes[ $level0 ] ?>
 				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
 					<li class="rwe-page-header-nav__dropdown-first-level-item">
-						<a class="rwe-page-header-nav__link spacer" data-tracking="first-level"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
+						<a class="rwe-page-header-nav__link" data-tracking="first-level"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
 							?> data-extra="<?= $menuNode0[ NavigationModel::SPECIAL ] ?>"<? endif
 						?> href="<?= $menuNode0[ NavigationModel::HREF ]
-						?>"><?= $menuNode0[ NavigationModel::TEXT ] ?></a>
+						?>"><?= $menuNode0[ NavigationModel::TEXT ] ?><? if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) ):
+								?><?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny' ); ?><? endif ?></a>
 
 						<? if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) ): ?>
 							<ul class="rwe-page-header-nav__dropdown-second-level">
@@ -38,10 +39,12 @@
 												<? endforeach ?>
 											</ul>
 										<? endif ?>
+
 									</li>
 								<? endforeach ?>
 							</ul>
 						<? endif ?>
+
 					</li>
 				<? endif ?>
 			<? endforeach ?>
