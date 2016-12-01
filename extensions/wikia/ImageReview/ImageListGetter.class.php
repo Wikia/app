@@ -4,11 +4,20 @@ use Wikia\Logger\WikiaLogger;
 
 class ImageListGetter extends ImageReviewHelperBase {
 
+	/**
+	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
+	 * we fetch a few icons from DB, we can skip them
+	 */
+	const LIMIT_IMAGES = 20;
+	const LIMIT_IMAGES_FROM_DB = 128;
+	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
+
 	private $userId = 0;
 	private $timestamp;
 	private $state;
 	private $order;
 	private $imageStateUpdater;
+	private $imageList = [];
 
 	function __construct( int $timestamp, int $state, int $order ) {
 		parent::__construct();
@@ -32,21 +41,21 @@ class ImageListGetter extends ImageReviewHelperBase {
 	 * those images.
 	 */
 	public function getImageList() {
-		$imageList = $this->fetchPreviousReviewFromTimestamp();
+		$this->fetchPreviousReviewFromTimestamp();
 
-		if ( count( $imageList ) < self::LIMIT_IMAGES ) {
-			$imageList = array_merge( $imageList, $this->fetchUnfinishedReview() );
+		if ( !$this->fetchedEnoughImages() ) {
+			$this->fetchUnfinishedReview();
 		}
 
-		if ( count( $imageList ) < self::LIMIT_IMAGES ) {
-			$imageList = array_merge( $imageList, $this->fetchNewReview() );
+		if ( !$this->fetchedEnoughImages() ) {
+			$this->fetchNewReview();
 		}
 
-		return array_slice( $imageList, 0, self::LIMIT_IMAGES );
+		return $this->imageList;
 	}
 
-	private function fetchPreviousReviewFromTimestamp() : array {
-		return $this->fetchAndPrepareImageResults( function() {
+	private function fetchPreviousReviewFromTimestamp() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
@@ -63,12 +72,12 @@ class ImageListGetter extends ImageReviewHelperBase {
 	}
 
 	private function fetchUnfinishedReview() {
-		return $this->fetchAndPrepareImageResults( function() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
 				->AND_( 'reviewer_id' )->EQUAL_TO( $this->userId )
-				->AND_( 'state' )->EQUAL_TO( $this->getInReviewState( $this->state ) )
+				->AND_( 'state' )->EQUAL_TO( $this->getNewState() )
 				->ORDER_BY( 'priority desc, last_edited desc' )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
@@ -79,8 +88,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 		);
 	}
 
-	private function fetchNewReview() : array {
-		return $this->fetchAndPrepareImageResults( function() {
+	private function fetchNewReview() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
@@ -98,11 +107,10 @@ class ImageListGetter extends ImageReviewHelperBase {
 
 	private function fetchAndPrepareImageResults( callable $getImagesQuery, bool $creatingNewReview ) {
 		$deleteFromQueueList = [];
-		$imageList = [];
 		$iconsWhere = [];
 
 		foreach ( $getImagesQuery() as $row ) {
-			if ( count( $imageList ) == self::LIMIT_IMAGES ) {
+			if ( $this->fetchedEnoughImages() ) {
 				break;
 			}
 
@@ -130,7 +138,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 				continue;
 			}
 
-			$imageList[] = $imageInfo;
+			$this->imageList[] = $imageInfo;
 		}
 
 		// Remove invalid images
@@ -142,10 +150,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 		// Return valid images list
 		WikiaLogger::instance()->info( 'ImageReviewLog', [
 			'method' => __METHOD__,
-			'message' => 'Fetched ' . count( $imageList ) . ' new images',
+			'message' => 'Fetched ' . count( $this->imageList ) . ' new images',
 		] );
-
-		return $imageList;
 	}
 
 	/**
@@ -165,30 +171,16 @@ class ImageListGetter extends ImageReviewHelperBase {
 
 
 	private function assignImageToUser( stdClass $imageRecord ) {
-
-		// Determine what our next state should be
-		$targetState = ImageReviewStates::IN_REVIEW;
-
-		if ( $this->state == ImageReviewStates::QUESTIONABLE ) {
-			$this->state = ImageReviewStates::QUESTIONABLE_IN_REVIEW;
-		} elseif ( $this->state == ImageReviewStates::REJECTED ) {
-			$targetState = ImageReviewStates::REJECTED_IN_REVIEW;
-		}
-
 		$dbw = $this->getDatawareDB( DB_MASTER );
 		$query = ( new WikiaSQL() )
 			->UPDATE( 'image_review' )
 				->SET( 'reviewer_id', $this->userId )
 				->SET( 'review_start', $this->timestamp )
-				->SET( 'state', $targetState )
+				->SET( 'state', $this->getNewState() )
+				->SET( 'review_end', '0000-00-00 00:00:00' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id )
 			->AND_( 'state' )->EQUAL_TO( $this->state );
-
-		if ( $this->state == ImageReviewStates::QUESTIONABLE ||
-		     $this->state == ImageReviewStates::REJECTED ) {
-			$query->SET( 'review_end', '0000-00-00 00:00:00' );
-		}
 
 		$query->run( $dbw );
 		$affectedRows = $dbw->affectedRows();
@@ -302,15 +294,19 @@ class ImageListGetter extends ImageReviewHelperBase {
 		] );
 	}
 
-	private function getInReviewState( int $state ) : int {
-		if ( $state == ImageReviewStates::REJECTED ) {
+	private function getNewState() : int {
+		if ( $this->state == ImageReviewStates::REJECTED ) {
 			return ImageReviewStates::REJECTED_IN_REVIEW;
 		}
 
-		if ( $state == ImageReviewStates::QUESTIONABLE ) {
+		if ( $this->state == ImageReviewStates::QUESTIONABLE ) {
 			return ImageReviewStates::QUESTIONABLE_IN_REVIEW;
 		}
 
 		else return ImageReviewStates::IN_REVIEW;
+	}
+
+	private function fetchedEnoughImages() : bool {
+		return count( $this->imageList ) == self::LIMIT_IMAGES;
 	}
 }

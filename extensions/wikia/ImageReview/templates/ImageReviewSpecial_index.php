@@ -34,7 +34,11 @@
 	Sort order: <?php
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
 
-		$sortSelect->addOptions( ImageListGetter::$sortOptions );
+		$sortSelect->addOptions( [
+			'latest first' => 0,
+			'by priority and recency' => 1,
+			'oldest first' => 2,
+		] );
 
 		echo $sortSelect->getHTML();
 	?>
