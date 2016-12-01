@@ -134,6 +134,9 @@ $column-width: $container-width / 3;
 		display: block;
 		font-size: $font-size;
 		line-height: $line-height;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		width: $link-width;
 	}
 }
