@@ -286,6 +286,7 @@ class BodyController extends WikiaController {
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
+		$this->isEditPage = self::isEditPage();
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
