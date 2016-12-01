@@ -117,7 +117,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->setVariables();
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
-		$severity = count( $this->imageList ) < ImageListGetter::LIMIT_IMAGES
+		$severity = count( $this->imageList ) < ImageListGetter::LIMIT_IMAGES && $this->action == self::ACTION_UNREVIEWED
 			? 'error'
 			: 'success';
 		$this->logImageListCompleteness( $severity );

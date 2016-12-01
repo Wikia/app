@@ -34,16 +34,16 @@ class ImageListGetter extends WikiaModel {
 	}
 
 	/**
-	 * Get batch of images for Image Review Tool. Images are filtered based on
-	 * state (eg, unreviewed, rejected, questionable), order (last edited, priority),
-	 * and timestamp.
+	 * Get batch of images for Image Review Tool.
 	 *
-	 * When getting this images, we first check if the given timestamp matches
-	 * a previously reviewed batch of images. If so, we return those images. If not,
-	 * we then check to see if there are any outstanding reviews (reviews that this
-	 * reviewer started on, but didn't finished by making a decision on). If so, we
-	 * return those images. If not again, we'll finally create a new review and return
-	 * those images.
+	 * The goal is to return up to 20 images to the client for review. In order to
+	 * do that, we trying fetching images in 3 different ways, combining any images
+	 * we've found along the way. The ways are (in order):
+	 *
+	 * 1.) Check if the given timestamp matches a previously reviewed batch of images.
+	 * 2.) Check if there are any outstanding reviews (reviews that this reviewer started
+	 *     but hasn''t finish by making a decision on the images).
+	 * 3.) Create a new review
 	 */
 	public function getImageList() {
 		$this->fetchPreviousReviewFromTimestamp();
@@ -174,7 +174,6 @@ class ImageListGetter extends WikiaModel {
 		$task->queue();
 	}
 
-
 	private function assignImageToUser( stdClass $imageRecord ) {
 		$dbw = $this->getDatawareDB( DB_MASTER );
 		$query = ( new WikiaSQL() )
@@ -299,6 +298,17 @@ class ImageListGetter extends WikiaModel {
 		] );
 	}
 
+	/**
+	 * When assigning images to a user, we move the images from the
+	 * "unreviewed" state, to the "reviewed" state. Which new state
+	 * depends on where the image is in the review process.
+	 *
+	 * If an image hasn't been reviewed at all, it moves from "unreviewed"
+	 * to "in review". If the image has been marked as rejected or questionable
+	 * during the first pass of reviews, it moves to "rejected in review"
+	 * or "questionable in review"
+	 * @return int
+	 */
 	private function getNewState() : int {
 		if ( $this->state == ImageStates::REJECTED ) {
 			return ImageStates::REJECTED_IN_REVIEW;
