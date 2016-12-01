@@ -288,7 +288,7 @@ class ImageListGetter extends WikiaModel {
 			return;
 		}
 
-		$values = [ 'state' => ImageReviewStates::ICO_IMAGE ];
+		$values = [ 'state' => ImageStates::ICO_IMAGE ];
 		$where = [ implode( 'OR', $where ) ];
 
 		$this->imageStateUpdater->updateBatchImages( $values, $where );
@@ -300,15 +300,15 @@ class ImageListGetter extends WikiaModel {
 	}
 
 	private function getNewState() : int {
-		if ( $this->state == ImageReviewStates::REJECTED ) {
-			return ImageReviewStates::REJECTED_IN_REVIEW;
+		if ( $this->state == ImageStates::REJECTED ) {
+			return ImageStates::REJECTED_IN_REVIEW;
 		}
 
-		if ( $this->state == ImageReviewStates::QUESTIONABLE ) {
-			return ImageReviewStates::QUESTIONABLE_IN_REVIEW;
+		if ( $this->state == ImageStates::QUESTIONABLE ) {
+			return ImageStates::QUESTIONABLE_IN_REVIEW;
 		}
 
-		else return ImageReviewStates::IN_REVIEW;
+		else return ImageStates::IN_REVIEW;
 	}
 
 	private function fetchedEnoughImages() : bool {

@@ -8,10 +8,10 @@ class ImageCountGetter extends WikiaModel {
 	const INVALID      = 'invalid';
 
 
-	public function getImageCounts( $reviewerId ) {
+	public function getImageCounts( int $reviewerId ) : array {
 		return $this->mergeCounts(
 			$this->getCountOfAllUnassignedImages(),
-			$this->getCountOfThisUsersInProgressImages( $reviewerId )
+			$this->getCountOfThisUsersImagesStillInReview( $reviewerId )
 		);
 	}
 
@@ -24,7 +24,7 @@ class ImageCountGetter extends WikiaModel {
 	 * @return bool|mixed
 	 * @throws Exception
 	 */
-	private function getCountOfAllUnassignedImages() {
+	private function getCountOfAllUnassignedImages() : array {
 		return ( new WikiaSQL() )
 			->SELECT()
 			->FIELD( 'state' )
@@ -33,10 +33,10 @@ class ImageCountGetter extends WikiaModel {
 			->WHERE( 'top_200' )->EQUAL_TO( '0' )
 			->AND_( 'state' )->IN(
 				[
-					ImageReviewStates::QUESTIONABLE,
-					ImageReviewStates::REJECTED,
-					ImageReviewStates::UNREVIEWED,
-					ImageReviewStates::INVALID_IMAGE,
+					ImageStates::QUESTIONABLE,
+					ImageStates::REJECTED,
+					ImageStates::UNREVIEWED,
+					ImageStates::INVALID_IMAGE,
 				]
 			)
 			->GROUP_BY( 'state' )
@@ -48,14 +48,12 @@ class ImageCountGetter extends WikiaModel {
 	/**
 	 * Get counts for all images this user has in outstanding reviews. These are images
 	 * which have been assigned to the user, but which they haven't made an action on
-	 * (eg, marking the image as approved, rejected, questionable, etc). These images
-	 * are hidden from all other users since they have been assigned to this user as part
-	 * of creating the review.
+	 * (eg, marking the image as approved, rejected, questionable, etc).
 	 * @param $reviewerId
 	 * @return bool|mixed
 	 * @throws Exception
 	 */
-	private function getCountOfThisUsersInProgressImages( $reviewerId ) {
+	private function getCountOfThisUsersImagesStillInReview( int $reviewerId ) : array {
 		return ( new WikiaSQL() )
 			->SELECT()
 			->FIELD( 'state' )
@@ -64,8 +62,8 @@ class ImageCountGetter extends WikiaModel {
 			->WHERE( 'top_200' )->EQUAL_TO( '0' )
 			->AND_( 'state' )->IN(
 				[
-					ImageReviewStates::QUESTIONABLE_IN_REVIEW,
-					ImageReviewStates::REJECTED_IN_REVIEW
+					ImageStates::QUESTIONABLE_IN_REVIEW,
+					ImageStates::REJECTED_IN_REVIEW
 				]
 			)
 			->AND_( 'reviewer_id' )->EQUAL_TO( $reviewerId )
@@ -79,10 +77,10 @@ class ImageCountGetter extends WikiaModel {
 	 * Combine the counts for the unassignedImageCounts, and usersInProgressImageCounts. This ensures
 	 * that users see the proper counts for rejected, questionable, and unreviwed for them personally.
 	 * @param array $unassignedImageCounts
-	 * @param array $usersInProgressImageCounts
+	 * @param array $usersImagesStillInReviewCounts
 	 * @return array
 	 */
-	private function mergeCounts( array $unassignedImageCounts, array $usersInProgressImageCounts ) : array {
+	private function mergeCounts( array $unassignedImageCounts, array $usersImagesStillInReviewCounts ) : array {
 		$totalCounts = [
 			self::QUESTIONABLE => 0,
 			self::REJECTED => 0,
@@ -90,14 +88,14 @@ class ImageCountGetter extends WikiaModel {
 			self::INVALID => 0
 		];
 
-		$totalCounts[self::QUESTIONABLE] += $unassignedImageCounts[ImageReviewStates::QUESTIONABLE] ?? 0;
-		$totalCounts[self::QUESTIONABLE] += $usersInProgressImageCounts[ImageReviewStates::QUESTIONABLE_IN_REVIEW] ?? 0;
+		$totalCounts[self::QUESTIONABLE] += $unassignedImageCounts[ImageStates::QUESTIONABLE] ?? 0;
+		$totalCounts[self::QUESTIONABLE] += $usersImagesStillInReviewCounts[ImageStates::QUESTIONABLE_IN_REVIEW] ?? 0;
 
-		$totalCounts[self::REJECTED] += $unassignedImageCounts[ImageReviewStates::REJECTED] ?? 0;
-		$totalCounts[self::REJECTED] += $usersInProgressImageCounts[ImageReviewStates::REJECTED_IN_REVIEW] ?? 0;
+		$totalCounts[self::REJECTED] += $unassignedImageCounts[ImageStates::REJECTED] ?? 0;
+		$totalCounts[self::REJECTED] += $usersImagesStillInReviewCounts[ImageStates::REJECTED_IN_REVIEW] ?? 0;
 
-		$totalCounts[self::UNREVIEWED] += $unassignedImageCounts[ImageReviewStates::UNREVIEWED] ?? 0;
-		$totalCounts[self::INVALID] += $usersInProgressImageCounts[ImageReviewStates::INVALID_IMAGE] ?? 0;
+		$totalCounts[self::UNREVIEWED] += $unassignedImageCounts[ImageStates::UNREVIEWED] ?? 0;
+		$totalCounts[self::INVALID] += $usersImagesStillInReviewCounts[ImageStates::INVALID_IMAGE] ?? 0;
 
 		return $totalCounts;
 	}

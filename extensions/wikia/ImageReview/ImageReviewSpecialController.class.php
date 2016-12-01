@@ -19,11 +19,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		self::ACTION_CSVSTATS => true
 	];
 
-	// Map each action to the pool of images we can pull from when getting new images
+	// Map each action to an image state code in the db (eg "unreviewed", "questionable", "rejected", etc)
 	const ACTION_TO_STATES = [
-		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE,
-		self::ACTION_REJECTED => ImageReviewStates::REJECTED,
-		self::ACTION_UNREVIEWED => ImageReviewStates::UNREVIEWED
+		self::ACTION_QUESTIONABLE => ImageStates::QUESTIONABLE,
+		self::ACTION_REJECTED => ImageStates::REJECTED,
+		self::ACTION_UNREVIEWED => ImageStates::UNREVIEWED
 	];
 
 	const STATS_HEADERS = [
@@ -35,10 +35,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		'distance to avg.'
 	];
 	
-	const ORDER_LATEST = 0;
-	const ORDER_PRIORITY_LATEST = 1;
-	const ORDER_OLDEST = 2;
-
 	private $action;
 	private $order;
 	private $imageList;
@@ -341,20 +337,5 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'exception' => new Exception
 			]
 		);
-	}
-
-	protected function getOrder($order) {
-		switch ($order) {
-			case self::ORDER_PRIORITY_LATEST:
-				$ret = 'priority desc, last_edited desc';
-				break;
-			case self::ORDER_OLDEST:
-				$ret = 'last_edited asc';
-				break;
-			case self::ORDER_LATEST:
-			default:
-				$ret = 'last_edited desc';
-		}
-		return $ret;
 	}
 }

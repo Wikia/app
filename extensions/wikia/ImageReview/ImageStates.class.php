@@ -1,6 +1,6 @@
 <?php
 
-class ImageReviewStates {
+class ImageStates {
 
 	private function __construct() {}
 
