@@ -4,6 +4,10 @@
 
 $spacing-good-sized: 12px;
 $font-size: 14px;
+$first-level-font-size: 16px;
+$first-level-link-padding: 18px 0;
+$item-padding: 0 24px;
+$link-padding: 12px 0;
 $line-height: 1.5;
 $container-width: 690px;
 $container-height: 10 * (2 * $spacing-good-sized + $font-size * $line-height);
@@ -58,7 +62,7 @@ $column-width: $container-width / 3;
 	.rwe-page-header-nav__dropdown-first-level,
 	.rwe-page-header-nav__dropdown-second-level {
 		border-right: 1px solid $color-page-border;
-		margin: $spacing-good-sized 0;
+		margin: 0;
 		min-height: $container-height;
 	}
 
@@ -69,9 +73,25 @@ $column-width: $container-width / 3;
 		top: 0;
 	}
 
+	.rwe-page-header-nav__dropdown-item {
+		height: 100%;
+		padding: $item-padding;
+	}
+
+	.rwe-page-header-nav__dropdown-item:not(:last-child) .rwe-page-header-nav__dropdown-link-wrapper {
+		border-bottom: 1px solid black; //TODO: color
+	}
+
+	.rwe-page-header-nav__dropdown-link-wrapper {
+		height: calc(100% - 1px);
+	}
+
 	.rwe-page-header-nav__dropdown-first-level-item {
-		& > .rwe-page-header-nav__link {
+
+		& > .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
+			font-size: $first-level-font-size;
 			font-weight: bold;
+			padding: $first-level-link-padding;
 		}
 	}
 
@@ -85,8 +105,7 @@ $column-width: $container-width / 3;
 		display: block;
 		font-size: $font-size;
 		line-height: $line-height;
-		margin-left: $spacing-good-sized;
-		padding: $spacing-good-sized;
+		padding: $link-padding;
 
 		&:hover {
 			color: $color-links;
