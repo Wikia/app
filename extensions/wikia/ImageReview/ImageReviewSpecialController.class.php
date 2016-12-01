@@ -39,7 +39,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $order;
 	private $imageList;
 	private $imageCount;
-	private $ts;
+	private $timestamp;
 
 	private $accessQuestionable;
 	private $accessRejected;
@@ -93,7 +93,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->action = $this->parseAction();
 		$this->order = $this->request->getInt( 'sort' );
-		$this->ts = $this->request->getVal( 'ts' );
+		$this->timestamp = $this->request->getVal( 'ts' );
 
 		$this->checkUserPermissions();
 
@@ -127,7 +127,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	protected function getImageList() {
 		$imageListGetter = new ImageListGetter(
-			$this->ts,
+			$this->timestamp,
 			$this::ACTION_TO_STATES[$this->action],
 			$this->order
 		);
@@ -246,7 +246,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			if ( count( $images ) > 0 ) {
 				$this->imageStateUpdater->update( $images, $this->wg->User->getId() );
 			}
-			$this->ts = null;
+			$this->timestamp = null;
 		}
 	}
 
@@ -298,7 +298,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function invalidTimestamp() : bool {
-		return !$this->ts || $this->ts < 0 || $this->ts > time();
+		return !$this->timestamp || $this->timestamp < 0 || $this->timestamp > time();
 	}
 
 	private function redirectWithTimestampSetToNow() {
