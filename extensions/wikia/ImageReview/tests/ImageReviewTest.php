@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class ImageReviewTest
  *
@@ -19,25 +18,6 @@ class ImageReviewTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.08867 ms
-	 */
-	public function testImageReviewSpecialControllerIndexCorrect() {
-		$this->setStubsForImageReviewSpecialControllerTests( false );
-
-		$response = $this->app->sendRequest(
-			'ImageReviewSpecialController',
-			'index',
-			[ 'ts' => $this->fakeUserTs ]
-		);
-
-		$imagesList = $response->getVal( 'imageList' );
-
-		$this->assertInternalType( 'array', $imagesList );
-		$this->assertEquals( $this->fakeCorrectImages, $imagesList );
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.07902 ms
 	 */
 	public function testImageReviewSpecialControllerIndexError() {
@@ -48,13 +28,13 @@ class ImageReviewTest extends WikiaBaseTest {
 			'index',
 			[ 'ts' => $this->fakeUserTs ]
 		);
-		$imagesList = $response->getVal( 'imageList' );
 
+		$imagesList = $response->getVal( 'imageList' );
 		$this->assertInternalType( 'array', $imagesList );
 		$this->assertEquals( $this->fakeWrongImages, $imagesList );
 	}
 
-	private function setStubsForImageReviewSpecialControllerTests($error) {
+	private function setStubsForImageReviewSpecialControllerTests() {
 		//our test have all needed rights ;)
 		$specialPageStub = $this->getMock('SpecialPage', array('userCanExecute'));
 		$specialPageStub->expects($this->any())->method('userCanExecute')->will($this->returnValue(true));
@@ -72,28 +52,13 @@ class ImageReviewTest extends WikiaBaseTest {
 		$wgRequestStub->expects($this->any())->method('wasPosted')->will($this->returnValue(false));
 		$this->mockGlobalVariable('wgRequest', $wgRequestStub);
 
-		if( !$error ) {
-			$memcTs = $this->fakeUserTs + 1;
+		$imageReviewHelperStub = $this->getMock('ImageListGetter', array('getImageList'), [$this->fakeUserTs, -1, 1]);
+		$imageReviewHelperStub
+			->expects($this->once())
+			->method('getImageList')
+			->will($this->returnValue($this->fakeWrongImages));
 
-			$imageReviewHelperStub = $this->getMock('ImageReviewHelper', array('refetchImageListByTimestamp'));
-			$imageReviewHelperStub
-				->expects($this->once())
-				->method('refetchImageListByTimestamp')
-				->will($this->returnValue($this->fakeCorrectImages));
-		} else {
-			$memcTs = $this->fakeUserTs - 1;
-
-			$imageReviewHelperStub = $this->getMock('ImageReviewHelper', array('getImageList'));
-			$imageReviewHelperStub
-				->expects($this->once())
-				->method('getImageList')
-				->will($this->returnValue($this->fakeWrongImages));
-		}
-		$this->mockClass('ImageReviewHelper', $imageReviewHelperStub);
-
-		$wgMemcStub = $this->getMock('wgMemc', array('get', 'set', 'add'));
-		$wgMemcStub->expects($this->any())->method('get')->will($this->returnValue($memcTs));
-		$this->mockGlobalVariable('wgMemc', $wgMemcStub);
+		$this->mockClass('ImageListGetter', $imageReviewHelperStub);
 
 		// disable both methods in WikiaResponse
 		$this->getMethodMock( 'WikiaResponse', 'addAsset' )
@@ -108,21 +73,23 @@ class ImageReviewTest extends WikiaBaseTest {
 	 * @dataProvider imageReviewHelperGetOrderDataProvider
 	 */
 	public function testImageReviewHelperGetOrder($order, $expected) {
+		// Give user the correct privs
+		$userMock =  $this->getMock('User', ['isAllowed']);
+		$userMock->expects($this->any())->method('isAllowed')->will($this->returnValue(true));
+
 		$getOrderMethod = new ReflectionMethod(
-			'ImageReviewHelper', 'getOrder'
+			'ImageReviewOrderGetter', 'getOrder'
 		);
 		$getOrderMethod->setAccessible(true);
 
-		$this->assertEquals($expected, $getOrderMethod->invoke((new ImageListGetter), $order));
+		$this->assertEquals($expected, $getOrderMethod->invoke((new ImageReviewOrderGetter($user, $order)), $userMock, $order));
 	}
 
 	public function imageReviewHelperGetOrderDataProvider() {
 		return array(
-			array('', 'last_edited desc'),
-			array('whatever', 'last_edited desc'),
-			array(ImageListGetter::ORDER_LATEST, 'last_edited desc'),
-			array(ImageListGetter::ORDER_PRIORITY_LATEST, 'priority desc, last_edited desc'),
-			array(ImageListGetter::ORDER_OLDEST, 'last_edited asc'),
+			array(ImageReviewOrderGetter::LATEST, 'last_edited desc'),
+			array(ImageReviewOrderGetter::PRIORITY_LATEST, 'priority desc, last_edited desc'),
+			array(ImageReviewOrderGetter::OLDEST, 'last_edited asc'),
 		);
 	}
 }
