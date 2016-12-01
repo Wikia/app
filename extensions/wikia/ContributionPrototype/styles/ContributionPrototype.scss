@@ -19,9 +19,20 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  background: white;
 
   h2 {
     flex-grow: 1;
     border-bottom: none;
   }
+}
+
+.cms_fixed_header {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+.entity_editor.fixed_toolbar .quill_toolbar {
+  top: 59px !important;
 }
