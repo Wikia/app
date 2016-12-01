@@ -27,6 +27,38 @@ body {
   }
 }
 
+.quill_toolbar {
+  .wds-icon {
+    fill: black;
+  }
+
+  .dropdown {
+    > button {
+      color: black;
+
+      > i {
+        font-style: normal;
+      }
+    }
+  }
+
+  .dropdown-content {
+    .ql-header h2 {
+      border-bottom: none !important;
+      line-height: 20px !important;
+      margin-top: 0 !important;
+    }
+
+    button {
+      color: black;
+
+      > i {
+        font-style: normal;
+      }
+    }
+  }
+}
+
 .cms_fixed_header {
   position: fixed;
   top: 0;
