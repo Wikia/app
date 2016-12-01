@@ -60,31 +60,23 @@ require([
 		}
 
 		if (experiment.helper) {
-			if (experiment.helper === 'liftigniter') {
-				// Liftigniter works differently than the other helpers in that it doesn't actually do anything until
-				// 'fetch' is called. Because fetch can only be called once per page, we need to make sure to use
-				// `loadData` before it is called at the bottom of this script.
-				liftigniterHelpers[experiment.id] = liftigniter(experiment.options);
-				liftigniterHelpers[experiment.id].loadData()
+			var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
+
+			require([helperString], function (helper) {
+				var configuredHelper = helper(experiment.options);
+				configuredHelper.loadData()
 					.done(function (data) {
 						deferred.resolve(data);
 					})
 					.fail(function (err) {
 						deferred.reject(err);
 					});
-			} else {
-				var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
 
-				require([helperString], function (helper) {
-					helper(experiment.options).loadData()
-						.done(function (data) {
-							deferred.resolve(data);
-						})
-						.fail(function (err) {
-							deferred.reject(err);
-						});
-				});
-			}
+				if (experiment.helper === 'liftigniter') {
+					// We need to keep track of the liftigniter helpers so we can setup tracking for them
+					liftigniterHelpers[experiment.id] = configuredHelper;
+				}
+			});
 		}
 
 		if (experiment.source && saved[experiment.source]) {
@@ -162,10 +154,6 @@ require([
 		.fail(function (placement) {
 			log('Error running recirc at: ' + placement, 'info', logGroup);
 		});
-
-	if (w.$p && Object.keys(liftigniterHelpers).length > 0) {
-		w.$p('fetch');
-	}
 
 	function handleError (placement) {
 		return function (errorMessage) {
