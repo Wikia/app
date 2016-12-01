@@ -2,11 +2,10 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
 
-$spacing-good-sized: 12px;
 $font-size: 14px;
 $line-height: 1.5;
 $container-width: 690px;
-$container-height: 10 * (2 * $spacing-good-sized + $font-size * $line-height);
+$container-height: 10 * (2 * $content-spacing-medium + $font-size * $line-height);
 $column-width: $container-width / 3;
 
 .rwe-page-header-nav__dropdown {
@@ -58,7 +57,7 @@ $column-width: $container-width / 3;
 	.rwe-page-header-nav__dropdown-first-level,
 	.rwe-page-header-nav__dropdown-second-level {
 		border-right: 1px solid $color-page-border;
-		margin: $spacing-good-sized 0;
+		margin: $content-spacing-medium 0;
 		min-height: $container-height;
 	}
 
@@ -85,8 +84,8 @@ $column-width: $container-width / 3;
 		display: block;
 		font-size: $font-size;
 		line-height: $line-height;
-		margin-left: $spacing-good-sized;
-		padding: $spacing-good-sized;
+		margin-left: $content-spacing-medium;
+		padding: $content-spacing-medium;
 
 		&:hover {
 			color: $color-links;
