@@ -96,7 +96,7 @@ $column-width: $container-width / 3;
 		}
 	}
 
-	.rwe-page-header-nav__dropdown-item:not(:last-child) .rwe-page-header-nav__dropdown-link-wrapper {
+	.rwe-page-header-nav__dropdown-item:not(:last-child) > .rwe-page-header-nav__dropdown-link-wrapper {
 		border-bottom: $border;
 	}
 
