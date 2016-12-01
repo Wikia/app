@@ -6,12 +6,12 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adContext, lookupServices, recoveryHelper, log, window) {
+], function (adTracker, adContext, lookupServices, recoveryHelper, log, win) {
 	'use strict';
 
-	var	logGroup = 'ext.wikia.adEngine.adInfoTracker';
+	var logGroup = 'ext.wikia.adEngine.adInfoTracker';
 
-	window.adEnginePvUID = window.adEnginePvUID || generateUUID();
+	win.adEnginePvUID = win.adEnginePvUID || generateUUID();
 
 	function prepareData(slot, status) {
 		if (!slot.container.firstChild || !slot.container.firstChild.dataset.gptPageParams) {
@@ -26,23 +26,23 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
 
 		data = {
-			'pv': pageParams.pv,
-			'pv_unique_id': window.adEnginePvUID,
-			'country': pageParams.geo,
+			'pv': pageParams.pv || '',
+			'pv_unique_id': win.adEnginePvUID,
+			'country': pageParams.geo || '',
 			'time_bucket': (new Date()).getHours(),
 			'slot_size': slotSize && slotSize.length ? slotSize.join('x') : '',
-			'kv_s0': pageParams.s0,
-			'kv_s1': pageParams.s1,
-			'kv_s2': pageParams.s2,
-			'kv_s0v': pageParams.s0v,
-			'kv_pos': slotParams.pos,
-			'kv_wsi': slotParams.wsi,
-			'kv_lang': pageParams.lang,
-			'kv_skin': pageParams.skin,
-			'kv_esrb': pageParams.esrb,
-			'kv_ref': pageParams.ref,
-			'kv_top': pageParams.top,
-			'kv_ah': pageParams.ah,
+			'kv_s0': pageParams.s0 || '',
+			'kv_s1': pageParams.s1 || '',
+			'kv_s2': pageParams.s2 || '',
+			'kv_s0v': pageParams.s0v || '',
+			'kv_pos': slotParams.pos || '',
+			'kv_wsi': slotParams.wsi || '',
+			'kv_lang': pageParams.lang || '',
+			'kv_skin': pageParams.skin || '',
+			'kv_esrb': pageParams.esrb || '',
+			'kv_ref': pageParams.ref || '',
+			'kv_top': pageParams.top || '',
+			'kv_ah': pageParams.ah || '',
 			'bidder_won': '',
 			'bidder_1': slotPrices.indexExchange || '',
 			'bidder_2': slotPrices.appnexus || '',
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_6': '',
 			'bidder_7': '',
 			'product_chosen': '',
-			'product_lineitem_id': slotFirstChildData.gptLineItemId,
+			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''
 		};
 
@@ -71,18 +71,24 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		adTracker.trackDW(data, 'adengadinfo');
 	}
 
-	function run() {
+	function isEnabled() {
 		if (!adContext.getContext().opts.enableAdInfoLog || recoveryHelper.isBlocking()) {
-			return;
+			return false;
 		}
-		log('run', 'debug', logGroup);
-		window.addEventListener('adengine.slot.status', function (e) {
-			log(['adengine.slot.status', e], 'debug', logGroup);
-			var data = prepareData(e.detail.slot, e.detail.status);
-			if (data) {
-				logSlotInfo(data);
-			}
-		});
+		return true;
+	}
+
+	function run() {
+		if (isEnabled()) {
+			log('run', 'debug', logGroup);
+			win.addEventListener('adengine.slot.status', function (e) {
+				log(['adengine.slot.status', e], 'debug', logGroup);
+				var data = prepareData(e.detail.slot, e.detail.status);
+				if (data) {
+					logSlotInfo(data);
+				}
+			});
+		}
 	}
 
 	return {

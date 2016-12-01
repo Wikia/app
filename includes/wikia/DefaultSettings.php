@@ -1514,10 +1514,10 @@ $wgEnableKruxTargeting = true;
 $wgSitewideDisableKrux = false;
 
 /**
- * @name $wgAdDriverAdInfoCountries
+ * @name $wgAdDriverKikimoraTrackingCountries
  * Enables warehouse tracking of ad related info
  */
-$wgAdDriverAdInfoCountries = [];
+$wgAdDriverKikimoraTrackingCountries = [];
 
 /**
  * @name $wgAdDriverTrackState

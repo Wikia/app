@@ -1,5 +1,4 @@
-define(
-	'wikia.flowTracking',
+define('wikia.flowTracking',
 	['wikia.log', 'wikia.tracker', 'wikia.window', 'mw', 'jquery'],
 	function (log, tracker, w, mw, $) {
 		'use strict';

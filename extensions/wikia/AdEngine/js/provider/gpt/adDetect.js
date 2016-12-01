@@ -3,13 +3,12 @@
 /*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, uapContext, messageListener, slotTweaker, log, win) {
+], function (adContext, uapContext, messageListener, slotTweaker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
