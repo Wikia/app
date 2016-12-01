@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.adTracker', [
 	'wikia.tracker',
 	'wikia.window',
 	'wikia.log'
-], function (timeBuckets, tracker, window, log) {
+], function (timeBuckets, tracker, win, log) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
@@ -14,12 +14,12 @@ define('ext.wikia.adEngine.adTracker', [
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
 
-		if (window.ads && window.ads.runtime.sp && typeof window.ads.runtime.sp.blocking === 'boolean') {
-			extraParams.sp = window.ads.runtime.sp.blocking ? 'yes' : 'no';
+		if (win.ads && win.ads.runtime.sp && typeof win.ads.runtime.sp.blocking === 'boolean') {
+			extraParams.sp = win.ads.runtime.sp.blocking ? 'yes' : 'no';
 		}
 
-		if (window.ads && window.ads.runtime.pf && typeof window.ads.runtime.pf.blocking === 'boolean') {
-			extraParams.pf = window.ads.runtime.pf.blocking ? 'yes' : 'no';
+		if (win.ads && win.ads.runtime.pf && typeof win.ads.runtime.pf.blocking === 'boolean') {
+			extraParams.pf = win.ads.runtime.pf.blocking ? 'yes' : 'no';
 		}
 
 		for (key in extraParams) {
@@ -112,14 +112,14 @@ define('ext.wikia.adEngine.adTracker', [
 	 */
 	function measureTime(eventName, eventData, eventType) {
 
-		var timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime();
+		var timingValue = win.wgNow && new Date().getTime() - win.wgNow.getTime();
 		eventType = eventType ? '/' + eventType : '';
 
 		return {
 			measureDiff: function (diffData, diffType) {
 				eventType = '/' + diffType;
 				eventData = diffData;
-				timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime() - timingValue;
+				timingValue = win.wgNow && new Date().getTime() - win.wgNow.getTime() - timingValue;
 
 				return {
 					track: this.track
