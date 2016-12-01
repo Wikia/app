@@ -95,7 +95,8 @@
 						<br />
 						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
 							<br /><br />
-							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?>
+						</h3>
 					</div>
 				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
