@@ -235,6 +235,8 @@ function wfCreatePageAjaxGetDialog() {
 	$wantedPageTitles = [];
 	$fetchedTitlesCount = 0;
 	$fetchedTitlesLimit = 6;
+	$editorPreferenceQueryParamName =
+		EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
 
 	while ( $row = $dbr->fetchObject( $WantedPagesPageResponse ) ) {
 		if ( $row->title && $row->namespace === '0' ) {
@@ -243,7 +245,7 @@ function wfCreatePageAjaxGetDialog() {
 			if ( $wantedPageTitle instanceof Title ) {
 				$wantedPageTitles[] = [
 					'title' => $wantedPageTitle->getText(),
-					'url' => $wantedPageTitle->escapeLocalURL( [ 'veaction' => 'edit' ] ),
+					'url' => $wantedPageTitle->escapeLocalURL( [ $editorPreferenceQueryParamName => 'edit' ] ),
 				];
 
 				$fetchedTitlesCount++;
