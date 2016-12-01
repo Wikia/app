@@ -54,7 +54,6 @@
 								<? endforeach ?>
 							</ul>
 						<? endif ?>
-
 					</li>
 				<? endif ?>
 			<? endforeach ?>
