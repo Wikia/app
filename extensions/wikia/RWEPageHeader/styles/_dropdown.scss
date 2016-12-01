@@ -86,13 +86,9 @@ $column-width: $container-width / 3;
 		height: calc(100% - 1px);
 	}
 
-	.rwe-page-header-nav__dropdown-first-level-item {
-
-		& > .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
-			font-size: $first-level-font-size;
-			font-weight: bold;
-			padding: $first-level-link-padding;
-		}
+	.rwe-page-header-nav__dropdown-first-level-item  > .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
+		font-size: $first-level-font-size;
+		padding: $first-level-link-padding;
 	}
 
 	.item-selected > .rwe-page-header-nav__link {
