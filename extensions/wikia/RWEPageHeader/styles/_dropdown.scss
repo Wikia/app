@@ -15,8 +15,8 @@ $first-level-link-padding: 18px 0;
 $item-padding: 0 24px;
 $link-padding: 12px 0;
 $line-height: 1.5;
-$container-width: 690px;
-$container-height: 10 * (2 * $spacing-good-sized + $font-size * $line-height);
+$container-width: 900px;
+$container-height: calc(8 * 64px);
 $column-width: $container-width / 3;
 
 .rwe-page-header-nav__dropdown {
@@ -32,7 +32,7 @@ $column-width: $container-width / 3;
 	}
 
 	&.rwe-page-header-nav__read {
-		left: -(floor($column-width / 3));
+		left: -130%;
 
 		.rwe-page-header-nav__dropdown-second-level {
 			display: none;
@@ -129,7 +129,7 @@ $column-width: $container-width / 3;
 			@include transform-rotate(270deg);
 			fill: $link-inactive-color;
 			float: right;
-			margin: 2px;
+			margin: 6px;
 		}
 	}
 }
