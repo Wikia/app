@@ -14,7 +14,7 @@ class StatsDataGetter extends WikiaModel {
 			'avg' => 0,
 		];
 		$data = [];
-		$total = $avg = 0;
+		$total = 0;
 
 		$dbr = $this->getDatawareDB( DB_SLAVE );
 		$reviewers = $this->getReviewersForStats();

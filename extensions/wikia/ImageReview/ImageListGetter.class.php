@@ -99,7 +99,7 @@ class ImageListGetter extends WikiaModel {
 				->SELECT_ALL()
 				->FROM( 'image_review' )
 				->WHERE( 'state' )->EQUAL_TO( $this->state )
-				->AND_( 'top_200' )->EQUAL_TO(0)
+				->AND_( 'top_200' )->EQUAL_TO( 0 )
 				->ORDER_BY( $this->order )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
@@ -318,7 +318,7 @@ class ImageListGetter extends WikiaModel {
 			return ImageStates::QUESTIONABLE_IN_REVIEW;
 		}
 
-		else return ImageStates::IN_REVIEW;
+		return ImageStates::IN_REVIEW;
 	}
 
 	private function fetchedEnoughImages() : bool {
