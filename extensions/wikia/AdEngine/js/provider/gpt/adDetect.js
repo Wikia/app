@@ -170,11 +170,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
-			successTimer,
-
-			slotFirstChildData,
-			pageParams,
-			slotParams;
+			successTimer;
 
 		function noop() { return; }
 
