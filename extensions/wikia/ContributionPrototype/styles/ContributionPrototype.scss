@@ -59,12 +59,16 @@ body {
   }
 }
 
+.wds-global-navigation {
+  position: fixed !important;
+}
+
 .cms_fixed_header {
   position: fixed;
-  top: 0;
+  top: 55px;
   z-index: 2;
 }
 
 .entity_editor.fixed_toolbar .quill_toolbar {
-  top: 59px !important;
+  top: 114px !important;
 }
