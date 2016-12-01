@@ -18,8 +18,7 @@ $item-padding: 0 $content-spacing-large;
 $line-height: 1.5;
 $link-width: 220px;
 
-$create-container-height: 10 * $item-height;
-$read-container-height: 8 * $first-level-item-height;
+$container-height: 10 * $item-height;
 $container-width: 900px;
 $column-width: $container-width / 3;
 
@@ -52,14 +51,13 @@ $column-width: $container-width / 3;
 	}
 
 	&.rwe-page-header-nav__create {
-		min-height: $create-container-height;
+		left: -53%;
 		width: $column-width;
 
 		.rwe-page-header-nav__dropdown-second-level {
 			background-color: $background-color;
 			border-right: 0;
-			left: 0;
-			min-height: $create-container-height;
+			min-height: 0;
 			position: static;
 		}
 	}
@@ -74,7 +72,7 @@ $column-width: $container-width / 3;
 	.rwe-page-header-nav__dropdown-second-level {
 		border-right: $border;
 		margin: 0;
-		min-height: $read-container-height;
+		min-height: $container-height;
 	}
 
 	.rwe-page-header-nav__dropdown-second-level,
