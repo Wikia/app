@@ -229,33 +229,29 @@ function wfCreatePageAjaxGetDialog() {
 		$defaultLayout = key($options);
 	}
 
-	$wantedPagesApi = new ApiMain(
-		new DerivativeRequest(
-			F::app()->wg->request, // Fallback upon $wgRequest if you can't access context
-			[
-				'action' => 'query',
-				'list' => 'querypage',
-				'qppage' => 'Wantedpages',
-				'qplimit' => 6
-			]
-		)
-	);
+	$WantedPagesPageResponse = ( ( new WantedPagesPage() )->doQuery() );
 
-	$wantedPagesApi->execute();
-	$wantedPagesData = $wantedPagesApi->getResultData();
-	$wantedPagesResult = empty( $wantedPagesData['query']['querypage']['results'] )
-		? []
-		: $wantedPagesData['query']['querypage']['results'];
-
+	$dbr = wfGetDB( DB_SLAVE );
 	$wantedPageTitles = [];
-	foreach ( $wantedPagesResult as $wantedPage ) {
-		$wantedPageTitle = Title::newFromText( $wantedPage['title'] );
+	$fetchedTitlesCount = 0;
+	$fetchedTitlesLimit = 6;
 
-		if ( $wantedPageTitle->canExist() ) {
-			$wantedPageTitles[] = [
-				'title' => $wantedPage['title'],
-				'url' => $wantedPageTitle->escapeLocalURL( [ 'veaction' => 'edit' ] ),
-			];
+	while ( $row = $dbr->fetchObject( $WantedPagesPageResponse ) ) {
+		if ( $row->title && $row->namespace === '0' ) {
+			$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
+
+			if ( $wantedPageTitle instanceof Title ) {
+				$wantedPageTitles[] = [
+					'title' => $wantedPageTitle->getText(),
+					'url' => $wantedPageTitle->escapeLocalURL( [ 'veaction' => 'edit' ] ),
+				];
+
+				$fetchedTitlesCount++;
+			}
+		}
+
+		if ( $fetchedTitlesCount >= $fetchedTitlesLimit ) {
+			break;
 		}
 	}
 
