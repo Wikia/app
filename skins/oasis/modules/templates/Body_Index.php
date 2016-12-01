@@ -4,6 +4,7 @@
 /** @var $beforeWikiaPageHtml string */
 /** @var $headerModuleName string */
 /** @var $headerModuleAction string */
+/** @var $isEditPage bool */
 ?>
 
 <? if ( $displayHeader ): ?>
@@ -152,7 +153,7 @@
 		</article><!-- WikiaMainContent -->
 
 		<?php if( $railModulesExist ): ?>
-			<?= $app->renderView( 'Rail', 'Index', array( 'railModuleList' => $railModuleList ) ); ?>
+			<?= $app->renderView( 'Rail', 'Index', array( 'railModuleList' => $railModuleList, 'isEditPage' => $isEditPage ) ); ?>
 		<?php endif; ?>
 
 		<?php
