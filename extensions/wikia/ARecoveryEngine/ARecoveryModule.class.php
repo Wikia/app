@@ -1,6 +1,7 @@
 <?php
 
 class ARecoveryModule {
+	const disabledMessage = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
 
 	/**
 	 * Checks whether recovery is enabled (on current wiki)
@@ -19,7 +20,7 @@ class ARecoveryModule {
 	
 	public static function getSourcePointBootstrapCode() {
 		if ( static::isDisabled() ) {
-			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+			return self::disabledMessage;
 		}
 		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
