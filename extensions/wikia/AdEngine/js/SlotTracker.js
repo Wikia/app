@@ -3,9 +3,8 @@
 
 define('ext.wikia.adEngine.slotTracker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.adLogicPageParams'
-], function (adContext, adTracker, pageParamsLogic) {
+	'ext.wikia.adEngine.adTracker'
+], function (adContext, adTracker) {
 	'use strict';
 
 	var timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
