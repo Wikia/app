@@ -79,7 +79,7 @@ $column-width: $container-width / 3;
 	}
 
 	.rwe-page-header-nav__dropdown-item:not(:last-child) .rwe-page-header-nav__dropdown-link-wrapper {
-		border-bottom: 1px solid black; //TODO: color
+		border-bottom: 1px solid $color-page-border;
 	}
 
 	.rwe-page-header-nav__dropdown-link-wrapper {
