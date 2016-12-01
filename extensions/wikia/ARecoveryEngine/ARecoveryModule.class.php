@@ -1,7 +1,7 @@
 <?php
 
 class ARecoveryModule {
-	const disabledMessage = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+	const DISABLED_MESSAGE = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
 
 	/**
 	 * Checks whether recovery is enabled (on current wiki)
@@ -19,7 +19,7 @@ class ARecoveryModule {
 	}
 
 	public static function getSourcePointBootstrapCode() {
-		return static::isDisabled() ? self::disabledMessage : self::getBootstrapCode();
+		return static::isDisabled() ? self::DISABLED_MESSAGE : self::getBootstrapCode();
 	}
 
 	public static function isLockEnabled() {

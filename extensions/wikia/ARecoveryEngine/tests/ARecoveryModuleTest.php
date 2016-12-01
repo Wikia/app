@@ -2,7 +2,7 @@
 
 
 class ARecoveryModuleTest extends WikiaBaseTest {
-	const bootstrapCode = 'BOOTSTRAP_CODE';
+	const BOOTSTRAP_CODE = 'BOOTSTRAP_CODE';
 
 	public function getUser($isLoggedIn ) {
 		$stubs = $this->getMockBuilder( User::class )->getMock();
@@ -55,9 +55,9 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $recoveryEnabled );
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $MMSEnabled );
 
-		$this->mockStaticMethod(WikiaApp::class, 'sendRequest', self::bootstrapCode);
+		$this->mockStaticMethod(WikiaApp::class, 'sendRequest', self::BOOTSTRAP_CODE);
 
-		$expectedValue = $isDisabled ? ARecoveryModule::disabledMessage : self::bootstrapCode;
+		$expectedValue = $isDisabled ? ARecoveryModule::DISABLED_MESSAGE : self::BOOTSTRAP_CODE;
 		$this->assertEquals( $expectedValue , ARecoveryModule::getSourcePointBootstrapCode() );
 	}
 }
