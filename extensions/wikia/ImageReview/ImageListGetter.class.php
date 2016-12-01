@@ -33,16 +33,16 @@ class ImageListGetter extends ImageReviewHelperBase {
 	 */
 	public function getImageList() {
 		$imageList = $this->fetchPreviousReviewFromTimestamp();
-		if ( !empty( $imageList ) ) {
-			return $imageList;
+
+		if ( count( $imageList ) < self::LIMIT_IMAGES ) {
+			$imageList = array_merge( $imageList, $this->fetchUnfinishedReview() );
 		}
 
-		$imageList = $this->fetchUnfinishedReview();
-		if ( !empty( $imageList ) ) {
-			return $imageList;
+		if ( count( $imageList ) < self::LIMIT_IMAGES ) {
+			$imageList = array_merge( $imageList, $this->fetchNewReview() );
 		}
 
-		return $this->fetchNewReview();
+		return array_slice( $imageList, 0, self::LIMIT_IMAGES );
 	}
 
 	private function fetchPreviousReviewFromTimestamp() : array {
@@ -57,7 +57,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			false
 		);
 	}
 
@@ -73,7 +74,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			false
 		);
 	}
 
@@ -89,11 +91,12 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			true
 		);
 	}
 
-	private function fetchAndPrepareImageResults( callable $getImagesQuery ) {
+	private function fetchAndPrepareImageResults( callable $getImagesQuery, bool $creatingNewReview ) {
 		$deleteFromQueueList = [];
 		$imageList = [];
 		$iconsWhere = [];
@@ -104,7 +107,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 			}
 
 			// Grab this image now to eliminate any race conditions with other reviewers
-			if ( !$this->assignImageToUser( $row ) ) {
+			if ( $creatingNewReview && !$this->assignImageToUser( $row ) ) {
 				// If we failed to assign this image to ourselves, try the next
 				continue;
 			}
@@ -162,11 +165,6 @@ class ImageListGetter extends ImageReviewHelperBase {
 
 
 	private function assignImageToUser( stdClass $imageRecord ) {
-		// Image already assigned to user. This happens if we're pulling up
-		// an old review via the timestamp, or fetching an unfinished review
-		if ( $imageRecord->reviewer_id == $this->userId ) {
-			return 1;
-		}
 
 		// Determine what our next state should be
 		$targetState = ImageReviewStates::IN_REVIEW;
@@ -183,9 +181,9 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->SET( 'reviewer_id', $this->userId )
 				->SET( 'review_start', $this->timestamp )
 				->SET( 'state', $targetState )
-			->WHERE( 'reviewer_id' )->IS_NULL()
-				->AND_( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
-				->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id );
+			->WHERE( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
+			->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id )
+			->AND_( 'state' )->EQUAL_TO( $this->state );
 
 		if ( $this->state == ImageReviewStates::QUESTIONABLE ||
 		     $this->state == ImageReviewStates::REJECTED ) {
