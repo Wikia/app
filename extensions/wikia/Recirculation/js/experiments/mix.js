@@ -55,8 +55,6 @@ require([
 	recircExperiment.forEach(function (experiment) {
 		var deferred = $.Deferred();
 
-		views[experiment.placement] = views[experiment.placement] || [];
-
 		if (experiment.id) {
 			saved[experiment.id] = deferred;
 		}
@@ -92,9 +90,13 @@ require([
 		if (experiment.source && saved[experiment.source]) {
 			saved[experiment.source]
 				.done(function (data) {
+					var start = experiment.options.offset || 0,
+						end = experiment.options.limit || data.items.length,
+						items = data.items.slice(start).slice(0, end);
+
 					deferred.resolve({
 						title: data.title,
-						items: data.items.slice(experiment.options.offset)
+						items: items
 					});
 				})
 				.fail(function (err) {
@@ -102,7 +104,10 @@ require([
 				});
 		}
 
-		views[experiment.placement].push(deferred);
+		if (experiment.placement) {
+			views[experiment.placement] = views[experiment.placement] || [];
+			views[experiment.placement].push(deferred);
+		}
 	});
 
 	$.each(views, function (key, promises) {
@@ -135,8 +140,6 @@ require([
 
 						data.items = data.items.concat(result.items);
 					});
-
-					data.items = utils.ditherResults(data.items, 4);
 
 					view.render(data)
 						.then(view.setupTracking(experimentName))
