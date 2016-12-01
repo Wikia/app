@@ -142,13 +142,29 @@ require([
 						.then(view.setupTracking(experimentName))
 						.then(deferred.resolve);
 				})
-				.fail(handleError(key), function() {
+				.fail(handleError(key), function () {
 					deferred.reject(key);
 				});
 		});
 	});
 
-	function handleError(placement) {
+	$.when.apply($, completed)
+		.done(function () {
+			log('Finished rendering recirculation', 'info', logGroup);
+
+			$.each(liftigniterHelpers, function (key, helper) {
+				helper.setupTracking();
+			});
+		})
+		.fail(function (placement) {
+			log('Error running recirc at: ' + placement, 'info', logGroup);
+		});
+
+	if (w.$p && Object.keys(liftigniterHelpers).length > 0) {
+		w.$p('fetch');
+	}
+
+	function handleError (placement) {
 		return function (errorMessage) {
 			log(errorMessage, 'info', logGroup);
 
