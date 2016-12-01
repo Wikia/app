@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Class ImageReviewStatuses
- *
- * Class which holds
- */
 class ImageReviewStates {
 
 	private function __construct() {}

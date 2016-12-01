@@ -34,6 +34,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		'qustionable',
 		'distance to avg.'
 	];
+	
+	const ORDER_LATEST = 0;
+	const ORDER_PRIORITY_LATEST = 1;
+	const ORDER_OLDEST = 2;
 
 	private $action;
 	private $order;
@@ -92,7 +96,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->action = $this->parseAction();
-		$this->order = $this->getOrderingMethod();
+		$this->order = $this->request->getInt( 'sort' );
 		$this->ts = $this->request->getVal( 'ts' );
 
 		$this->checkUserPermissions();
@@ -250,21 +254,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function getOrderingMethod() {
-		if ( $this->wg->user->isAllowed( 'imagereviewcontrols' ) ) {
-			$preferedOrder = (int) $this->app->wg->User->getGlobalPreference( 'imageReviewSort' );
-			$order = $this->request->getInt( 'sort', $preferedOrder );
-
-			if ( $order != $preferedOrder ) {
-				$this->app->wg->User->setGlobalPreference( 'imageReviewSort', $order );
-				$this->app->wg->User->saveSettings();
-			}
-
-			return $order;
-		}
-		return -1;
-	}
-
 	private function parseAction() {
 		return array_key_exists( $this->getPar(), self::ALLOWED_ACTIONS ) ? $this->getPar() : self::ACTION_UNREVIEWED;
 	}
@@ -352,5 +341,20 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'exception' => new Exception
 			]
 		);
+	}
+
+	protected function getOrder($order) {
+		switch ($order) {
+			case self::ORDER_PRIORITY_LATEST:
+				$ret = 'priority desc, last_edited desc';
+				break;
+			case self::ORDER_OLDEST:
+				$ret = 'last_edited asc';
+				break;
+			case self::ORDER_LATEST:
+			default:
+				$ret = 'last_edited desc';
+		}
+		return $ret;
 	}
 }

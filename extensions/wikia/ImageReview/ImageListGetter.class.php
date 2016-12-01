@@ -2,7 +2,7 @@
 
 use Wikia\Logger\WikiaLogger;
 
-class ImageListGetter extends ImageReviewHelperBase {
+class ImageListGetter extends WikiaModel {
 
 	/**
 	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
@@ -11,6 +11,10 @@ class ImageListGetter extends ImageReviewHelperBase {
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 128;
 	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
+
+	const FLAG_SUSPICOUS_USER = 2;
+	const FLAG_SUSPICOUS_WIKI = 4;
+	const FLAG_SKIN_DETECTED = 8;
 
 	private $userId = 0;
 	private $timestamp;
@@ -21,10 +25,11 @@ class ImageListGetter extends ImageReviewHelperBase {
 
 	function __construct( int $timestamp, int $state, int $order ) {
 		parent::__construct();
-		$this->userId = $this->wg->user->getId();
+		$user = $this->wg->User;
+		$this->userId = $user->getId();
 		$this->timestamp = wfTimestamp( TS_DB, $timestamp );
 		$this->state = $state;
-		$this->order = $order;
+		$this->order = ( new ImageReviewOrderGetter() )->getOrder( $user, $order );
 		$this->imageStateUpdater= new ImageStateUpdater();
 	}
 
@@ -61,7 +66,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->FROM( 'image_review' )
 				->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
 				->AND_( 'review_start' )->EQUAL_TO( $this->timestamp )
-				->ORDER_BY( 'priority desc, last_edited desc' )
+				->ORDER_BY( ImageReviewOrderGetter::PRIORITY_LATEST_SQL )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
@@ -78,7 +83,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->FROM( 'image_review' )
 				->AND_( 'reviewer_id' )->EQUAL_TO( $this->userId )
 				->AND_( 'state' )->EQUAL_TO( $this->getNewState() )
-				->ORDER_BY( 'priority desc, last_edited desc' )
+				->ORDER_BY( ImageReviewOrderGetter::PRIORITY_LATEST_SQL )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
@@ -95,7 +100,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 				->FROM( 'image_review' )
 				->WHERE( 'state' )->EQUAL_TO( $this->state )
 				->AND_( 'top_200' )->EQUAL_TO(0)
-				->ORDER_BY( $this->getOrder( $this->order ) )
+				->ORDER_BY( $this->order )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
