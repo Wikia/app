@@ -132,6 +132,9 @@ define('ext.wikia.adEngine.video.googleIma', [
 						log('Video play: stared', log.levels.debug, logGroup);
 					};
 
+				log(['video width: ', width], log.levels.info, logGroup);
+				log(['video height: ', height], log.levels.info, logGroup);
+
 				if (this.isAdsManagerLoaded) {
 					callback();
 				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
