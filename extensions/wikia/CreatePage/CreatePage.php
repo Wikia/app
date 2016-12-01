@@ -238,7 +238,7 @@ function wfCreatePageAjaxGetDialog() {
 		EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
 
 	while ( $row = $dbr->fetchObject( $WantedPagesPageResponse ) ) {
-		if ( $row->title && $row->namespace === '0' ) {
+		if ( $row->title && $row->namespace === '0' && $fetchedTitlesCount < $fetchedTitlesLimit) {
 			$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
 
 			if ( $wantedPageTitle instanceof Title ) {
@@ -256,10 +256,6 @@ function wfCreatePageAjaxGetDialog() {
 					$fetchedTitlesCount++;
 				}
 			}
-		}
-
-		if ( $fetchedTitlesCount >= $fetchedTitlesLimit ) {
-			break;
 		}
 	}
 
