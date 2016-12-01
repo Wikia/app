@@ -21,7 +21,9 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			LEFT_SKYSCRAPER_2: true,
 			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
+			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
+			MOBILE_BOTTOM_LEADERBOARD: true,
 			MOBILE_IN_CONTENT: true,
 			MOBILE_PREFOOTER: true
 		};
