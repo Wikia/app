@@ -249,7 +249,8 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		if ( $isEditPage || WikiaPageType::isMainPage() ) {
+		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
+		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
