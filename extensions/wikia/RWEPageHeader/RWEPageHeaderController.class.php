@@ -61,8 +61,6 @@ class RWEPageHeaderController extends WikiaController {
 		$data = $model->getWiki( NavigationModel::WIKI_LOCAL_MESSAGE );
 
 		$this->menuNodes = $data[ 'wiki' ];
-		$this->menuColumnsCount = is_array( $this->menuNodes ) && isset( $this->menuNodes[0] )
-			? count( $this->menuNodes[0]['children'] ) : 0;
 	}
 
 	public function createTab() {
