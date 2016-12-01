@@ -243,16 +243,19 @@ function wfCreatePageAjaxGetDialog() {
 			$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
 
 			if ( $wantedPageTitle instanceof Title ) {
-				$wantedPageTitles[] = [
-					'title' => $wantedPageTitle->getText(),
-					'url' => $wantedPageTitle->escapeLocalURL( [
-						$editorPreferenceQueryParamName => 'edit',
-						'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BUTTON,
-						'source' => 'redlink',
-					] ),
-				];
+				$wantedPageTitleText = $wantedPageTitle->getText();
 
-				$fetchedTitlesCount++;
+				if ( !preg_match( '/[:\/]+/', $wantedPageTitleText ) ) {
+					$wantedPageTitles[] = [
+						'title' => $wantedPageTitleText,
+						'url' => $wantedPageTitle->escapeLocalURL( [
+							$editorPreferenceQueryParamName => 'edit',
+							'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BUTTON,
+							'source' => 'redlink',
+						] ),
+					];
+					$fetchedTitlesCount++;
+				}
 			}
 		}
 
