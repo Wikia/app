@@ -222,6 +222,8 @@ var CreatePage = {
 						label: 'modal'
 					} );
 
+					window.dispatchEvent( new Event('CreatePageModalOpened') );
+
 					createPageModal.bind( 'create', function( event ) {
 						event.preventDefault();
 						inputChangeTracked = false;
