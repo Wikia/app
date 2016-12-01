@@ -20,13 +20,13 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 
 	public function getImagesMemcKey($wikiId, $langCode) {
 		$visualization = $this->getVisualization();
-		return $visualization->getWikiImageNamesCacheKey($wikiId, $langCode, ImageReviewStates::ANY);
+		return $visualization->getWikiImageNamesCacheKey($wikiId, $langCode, ImageStates::ANY);
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow) {
 		$visualization = $this->getVisualization();
 
-		return $visualization->getWikiImageNames($wikiId, $langCode, ImageReviewStates::ANY);
+		return $visualization->getWikiImageNames($wikiId, $langCode, ImageStates::ANY);
 	}
 
 	/**

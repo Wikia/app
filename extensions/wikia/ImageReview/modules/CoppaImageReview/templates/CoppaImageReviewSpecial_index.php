@@ -31,8 +31,8 @@ if ( !$validUser ) {
 				<span class="image-wiki-url"><a href="<?= htmlspecialchars( $image['wiki_url'] ) ?>"><?= htmlspecialchars( $image['wiki_url'] ) ?></a></span>
 				<?php } ?>
 
-				<label title="<?= wfMessage( 'imagereview-label-ok' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::APPROVED ?>" checked><?= wfMessage( 'imagereview-option-ok' )->escaped(); ?></label>
-				<label title="<?= wfMessage( 'imagereview-label-delete' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStates::DELETED ?>"><?= wfMessage( 'imagereview-option-delete' )->escaped(); ?></label>
+				<label title="<?= wfMessage( 'imagereview-label-ok' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageStates::APPROVED ?>" checked><?= wfMessage( 'imagereview-option-ok' )->escaped(); ?></label>
+				<label title="<?= wfMessage( 'imagereview-label-delete' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageStates::DELETED ?>"><?= wfMessage( 'imagereview-option-delete' )->escaped(); ?></label>
 			</li>
 <?php
 	}

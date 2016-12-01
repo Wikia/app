@@ -20,11 +20,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		self::ACTION_CSVSTATS => true
 	];
 
-	// Map each action to the pool of images we can pull from when getting new images
+	// Map each action to an image state code in the db (eg "unreviewed", "questionable", "rejected", etc)
 	const ACTION_TO_STATES = [
-		self::ACTION_QUESTIONABLE => ImageReviewStates::QUESTIONABLE,
-		self::ACTION_REJECTED => ImageReviewStates::REJECTED,
-		self::ACTION_UNREVIEWED => ImageReviewStates::UNREVIEWED
+		self::ACTION_QUESTIONABLE => ImageStates::QUESTIONABLE,
+		self::ACTION_REJECTED => ImageStates::REJECTED,
+		self::ACTION_UNREVIEWED => ImageStates::UNREVIEWED
 	];
 
 	const STATS_HEADERS = [
@@ -35,12 +35,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		'qustionable',
 		'distance to avg.'
 	];
-
+	
 	private $action;
 	private $order;
 	private $imageList;
 	private $imageCount;
-	private $ts;
+	private $timestamp;
 
 	private $accessQuestionable;
 	private $accessRejected;
@@ -93,8 +93,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->action = $this->parseAction();
-		$this->order = $this->getOrderingMethod();
-		$this->ts = $this->request->getVal( 'ts' );
+		$this->order = $this->request->getInt( 'sort' );
+		$this->timestamp = $this->request->getVal( 'ts' );
 
 		$this->checkUserPermissions();
 
@@ -118,7 +118,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->setVariables();
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
-		$severity = count( $this->imageList ) < ImageListGetter::LIMIT_IMAGES
+		$severity = count( $this->imageList ) < ImageListGetter::LIMIT_IMAGES && $this->action == self::ACTION_UNREVIEWED
 			? 'error'
 			: 'success';
 		$this->logImageListCompleteness( $severity );
@@ -128,7 +128,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	protected function getImageList() {
 		$imageListGetter = new ImageListGetter(
-			$this->ts,
+			$this->timestamp,
 			$this::ACTION_TO_STATES[$this->action],
 			$this->order
 		);
@@ -247,23 +247,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			if ( count( $images ) > 0 ) {
 				$this->imageStateUpdater->update( $images, $this->wg->User->getId() );
 			}
-			$this->ts = null;
+			$this->timestamp = null;
 		}
-	}
-
-	private function getOrderingMethod() {
-		if ( $this->wg->user->isAllowed( 'imagereviewcontrols' ) ) {
-			$preferedOrder = (int) $this->app->wg->User->getGlobalPreference( 'imageReviewSort' );
-			$order = $this->request->getInt( 'sort', $preferedOrder );
-
-			if ( $order != $preferedOrder ) {
-				$this->app->wg->User->setGlobalPreference( 'imageReviewSort', $order );
-				$this->app->wg->User->saveSettings();
-			}
-
-			return $order;
-		}
-		return -1;
 	}
 
 	private function parseAction() {
@@ -314,7 +299,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function invalidTimestamp() : bool {
-		return !$this->ts || $this->ts < 0 || $this->ts > time();
+		return !$this->timestamp || $this->timestamp < 0 || $this->timestamp > time();
 	}
 
 	private function redirectWithTimestampSetToNow() {

@@ -855,16 +855,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @throws DBQueryError
 	 * @throws MWException
 	 */
-	public function jbug($msg, $data = null) {
-		//if ($theJames) {
-		file_put_contents("/tmp/james.log", $msg.print_r($data, true) . "\n", FILE_APPEND);
-		//}
-	}
-
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
-		if ( preg_match( "/image_review/", $sql ) ) {
-			$this->jbug($sql);
-		}
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
 		if ( !Profiler::instance()->isStub() ) {
 			# generalizeSQL will probably cut down the query to reasonable

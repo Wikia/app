@@ -2,109 +2,125 @@
 
 use Wikia\Logger\WikiaLogger;
 
-class ImageListGetter extends ImageReviewHelperBase {
+class ImageListGetter extends WikiaModel {
+
+	/**
+	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
+	 * we fetch a few icons from DB, we can skip them
+	 */
+	const LIMIT_IMAGES = 20;
+	const LIMIT_IMAGES_FROM_DB = 128;
+	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
+
+	const FLAG_SUSPICOUS_USER = 2;
+	const FLAG_SUSPICOUS_WIKI = 4;
+	const FLAG_SKIN_DETECTED = 8;
 
 	private $userId = 0;
 	private $timestamp;
 	private $state;
 	private $order;
 	private $imageStateUpdater;
+	private $imageList = [];
 
 	function __construct( int $timestamp, int $state, int $order ) {
 		parent::__construct();
-		$this->userId = $this->wg->user->getId();
+		$user = $this->wg->User;
+		$this->userId = $user->getId();
 		$this->timestamp = wfTimestamp( TS_DB, $timestamp );
 		$this->state = $state;
-		$this->order = $order;
+		$this->order = ( new ImageReviewOrderGetter() )->getOrder( $user, $order );
 		$this->imageStateUpdater= new ImageStateUpdater();
 	}
 
 	/**
-	 * Get batch of images for Image Review Tool. Images are filtered based on
-	 * state (eg, unreviewed, rejected, questionable), order (last edited, priority),
-	 * and timestamp.
+	 * Get batch of images for Image Review Tool.
 	 *
-	 * When getting this images, we first check if the given timestamp matches
-	 * a previously reviewed batch of images. If so, we return those images. If not,
-	 * we then check to see if there are any outstanding reviews (reviews that this
-	 * reviewer started on, but didn't finished by making a decision on). If so, we
-	 * return those images. If not again, we'll finally create a new review and return
-	 * those images.
+	 * The goal is to return up to 20 images to the client for review. In order to
+	 * do that, we trying fetching images in 3 different ways, combining any images
+	 * we've found along the way. The ways are (in order):
+	 *
+	 * 1.) Check if the given timestamp matches a previously reviewed batch of images.
+	 * 2.) Check if there are any outstanding reviews (reviews that this reviewer started
+	 *     but hasn''t finish by making a decision on the images).
+	 * 3.) Create a new review
 	 */
 	public function getImageList() {
-		$imageList = $this->fetchPreviousReviewFromTimestamp();
-		if ( !empty( $imageList ) ) {
-			return $imageList;
+		$this->fetchPreviousReviewFromTimestamp();
+
+		if ( !$this->fetchedEnoughImages() ) {
+			$this->fetchUnfinishedReview();
 		}
 
-		$imageList = $this->fetchUnfinishedReview();
-		if ( !empty( $imageList ) ) {
-			return $imageList;
+		if ( !$this->fetchedEnoughImages() ) {
+			$this->fetchNewReview();
 		}
 
-		return $this->fetchNewReview();
+		return $this->imageList;
 	}
 
-	private function fetchPreviousReviewFromTimestamp() : array {
-		return $this->fetchAndPrepareImageResults( function() {
+	private function fetchPreviousReviewFromTimestamp() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
 				->WHERE( 'reviewer_id' )->EQUAL_TO( $this->userId )
 				->AND_( 'review_start' )->EQUAL_TO( $this->timestamp )
-				->ORDER_BY( 'priority desc, last_edited desc' )
+				->ORDER_BY( ImageReviewOrderGetter::PRIORITY_LATEST_SQL )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			false
 		);
 	}
 
 	private function fetchUnfinishedReview() {
-		return $this->fetchAndPrepareImageResults( function() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
 				->AND_( 'reviewer_id' )->EQUAL_TO( $this->userId )
-				->AND_( 'state' )->EQUAL_TO( $this->getInReviewState( $this->state ) )
-				->ORDER_BY( 'priority desc, last_edited desc' )
+				->AND_( 'state' )->EQUAL_TO( $this->getNewState() )
+				->ORDER_BY( ImageReviewOrderGetter::PRIORITY_LATEST_SQL )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			false
 		);
 	}
 
-	private function fetchNewReview() : array {
-		return $this->fetchAndPrepareImageResults( function() {
+	private function fetchNewReview() {
+		$this->fetchAndPrepareImageResults( function() {
 			return ( new WikiaSQL() )
 				->SELECT_ALL()
 				->FROM( 'image_review' )
 				->WHERE( 'state' )->EQUAL_TO( $this->state )
-				->AND_( 'top_200' )->EQUAL_TO(0)
-				->ORDER_BY( $this->getOrder( $this->order ) )
+				->AND_( 'top_200' )->EQUAL_TO( 0 )
+				->ORDER_BY( $this->order )
 				->LIMIT( self::LIMIT_IMAGES_FROM_DB )
 				->runLoop( $this->getDatawareDB(), function ( &$images, $row ) {
 					$images[] = $row;
 				});
-			}
+			},
+			true
 		);
 	}
 
-	private function fetchAndPrepareImageResults( callable $getImagesQuery ) {
+	private function fetchAndPrepareImageResults( callable $getImagesQuery, bool $creatingNewReview ) {
 		$deleteFromQueueList = [];
-		$imageList = [];
 		$iconsWhere = [];
 
 		foreach ( $getImagesQuery() as $row ) {
-			if ( count( $imageList ) == self::LIMIT_IMAGES ) {
+			if ( $this->fetchedEnoughImages() ) {
 				break;
 			}
 
 			// Grab this image now to eliminate any race conditions with other reviewers
-			if ( !$this->assignImageToUser( $row ) ) {
+			if ( $creatingNewReview && !$this->assignImageToUser( $row ) ) {
 				// If we failed to assign this image to ourselves, try the next
 				continue;
 			}
@@ -127,7 +143,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 				continue;
 			}
 
-			$imageList[] = $imageInfo;
+			$this->imageList[] = $imageInfo;
 		}
 
 		// Remove invalid images
@@ -139,10 +155,8 @@ class ImageListGetter extends ImageReviewHelperBase {
 		// Return valid images list
 		WikiaLogger::instance()->info( 'ImageReviewLog', [
 			'method' => __METHOD__,
-			'message' => 'Fetched ' . count( $imageList ) . ' new images',
+			'message' => 'Fetched ' . count( $this->imageList ) . ' new images',
 		] );
-
-		return $imageList;
 	}
 
 	/**
@@ -160,37 +174,17 @@ class ImageListGetter extends ImageReviewHelperBase {
 		$task->queue();
 	}
 
-
 	private function assignImageToUser( stdClass $imageRecord ) {
-		// Image already assigned to user. This happens if we're pulling up
-		// an old review via the timestamp, or fetching an unfinished review
-		if ( $imageRecord->reviewer_id == $this->userId ) {
-			return 1;
-		}
-
-		// Determine what our next state should be
-		$targetState = ImageReviewStates::IN_REVIEW;
-
-		if ( $this->state == ImageReviewStates::QUESTIONABLE ) {
-			$this->state = ImageReviewStates::QUESTIONABLE_IN_REVIEW;
-		} elseif ( $this->state == ImageReviewStates::REJECTED ) {
-			$targetState = ImageReviewStates::REJECTED_IN_REVIEW;
-		}
-
 		$dbw = $this->getDatawareDB( DB_MASTER );
 		$query = ( new WikiaSQL() )
 			->UPDATE( 'image_review' )
 				->SET( 'reviewer_id', $this->userId )
 				->SET( 'review_start', $this->timestamp )
-				->SET( 'state', $targetState )
-			->WHERE( 'reviewer_id' )->IS_NULL()
-				->AND_( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
-				->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id );
-
-		if ( $this->state == ImageReviewStates::QUESTIONABLE ||
-		     $this->state == ImageReviewStates::REJECTED ) {
-			$query->SET( 'review_end', '0000-00-00 00:00:00' );
-		}
+				->SET( 'state', $this->getNewState() )
+				->SET( 'review_end', '0000-00-00 00:00:00' )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $imageRecord->wiki_id )
+			->AND_( 'page_id' )->EQUAL_TO( $imageRecord->page_id )
+			->AND_( 'state' )->EQUAL_TO( $this->state );
 
 		$query->run( $dbw );
 		$affectedRows = $dbw->affectedRows();
@@ -296,7 +290,7 @@ class ImageListGetter extends ImageReviewHelperBase {
 			return;
 		}
 
-		$values = [ 'state' => ImageReviewStates::ICO_IMAGE ];
+		$values = [ 'state' => ImageStates::ICO_IMAGE ];
 		$where = [ implode( 'OR', $where ) ];
 
 		$this->imageStateUpdater->updateBatchImages( $values, $where );
@@ -307,16 +301,31 @@ class ImageListGetter extends ImageReviewHelperBase {
 		] );
 	}
 
-	private function getInReviewState( int $state ) : int {
-		if ( $state == ImageReviewStates::REJECTED ) {
-			return ImageReviewStates::REJECTED_IN_REVIEW;
+	/**
+	 * When assigning images to a user, we move the images from the
+	 * "unreviewed" state, to the "reviewed" state. Which new state
+	 * depends on where the image is in the review process.
+	 *
+	 * If an image hasn't been reviewed at all, it moves from "unreviewed"
+	 * to "in review". If the image has been marked as rejected or questionable
+	 * during the first pass of reviews, it moves to "rejected in review"
+	 * or "questionable in review"
+	 * @return int
+	 */
+	private function getNewState() : int {
+		if ( $this->state == ImageStates::REJECTED ) {
+			return ImageStates::REJECTED_IN_REVIEW;
 		}
 
-		if ( $state == ImageReviewStates::QUESTIONABLE ) {
-			return ImageReviewStates::QUESTIONABLE_IN_REVIEW;
+		if ( $this->state == ImageStates::QUESTIONABLE ) {
+			return ImageStates::QUESTIONABLE_IN_REVIEW;
 		}
 
-		else return ImageReviewStates::IN_REVIEW;
+		return ImageStates::IN_REVIEW;
+	}
+
+	private function fetchedEnoughImages() : bool {
+		return count( $this->imageList ) == self::LIMIT_IMAGES;
 	}
 
 	private function getLabelValues() {

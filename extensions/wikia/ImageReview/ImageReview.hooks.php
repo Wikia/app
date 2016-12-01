@@ -11,20 +11,20 @@ class ImageReviewHooks {
 		if ( $city_public == 0 || $city_public == -1 ) {
 			// the wiki was disabled, mark all unreviewed images as deleted
 
-			$newState = ImageReviewStates::WIKI_DISABLED;
+			$newState = ImageStates::WIKI_DISABLED;
 			$statesToUpdate = [
-				ImageReviewStates::UNREVIEWED,
-				ImageReviewStates::REJECTED,
-				ImageReviewStates::QUESTIONABLE,
-				ImageReviewStates::QUESTIONABLE_IN_REVIEW,
-				ImageReviewStates::REJECTED_IN_REVIEW,
-				ImageReviewStates::IN_REVIEW,
+				ImageStates::UNREVIEWED,
+				ImageStates::REJECTED,
+				ImageStates::QUESTIONABLE,
+				ImageStates::QUESTIONABLE_IN_REVIEW,
+				ImageStates::REJECTED_IN_REVIEW,
+				ImageStates::IN_REVIEW,
 			];
 		} elseif ( $city_public == 1 ) {
 			// the wiki was re-enabled, put all images back into the queue as unreviewed
 
-			$newState = ImageReviewStates::UNREVIEWED;
-			$statesToUpdate = [ ImageReviewStates::WIKI_DISABLED ];
+			$newState = ImageStates::UNREVIEWED;
+			$statesToUpdate = [ ImageStates::WIKI_DISABLED ];
 		} else {
 			// the state change doesn't affect images, we don't need to do anything here
 			return true;

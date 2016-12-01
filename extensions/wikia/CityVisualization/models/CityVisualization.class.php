@@ -588,11 +588,11 @@ class CityVisualization extends WikiaModel {
 		$conditions ['city_lang_code'] = $langCode;
 
 		switch ($filter) {
-			case ImageReviewStates::APPROVED:
-				$conditions ['image_review_status'] = ImageReviewStates::APPROVED;
+			case ImageStates::APPROVED:
+				$conditions ['image_review_status'] = ImageStates::APPROVED;
 				break;
-			case ImageReviewStates::UNREVIEWED:
-				$conditions ['image_review_status'] = ImageReviewStates::UNREVIEWED;
+			case ImageStates::UNREVIEWED:
+				$conditions ['image_review_status'] = ImageStates::UNREVIEWED;
 				break;
 			default:
 				break;
@@ -600,7 +600,7 @@ class CityVisualization extends WikiaModel {
 		return $conditions;
 	}
 
-	public function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStates::APPROVED) {
+	public function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageStates::APPROVED) {
 		wfProfileIn(__METHOD__);
 
 		$wikiImageNames = array();
@@ -630,7 +630,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImageNames;
 	}
 
-	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStates::APPROVED) {
+	public function getWikiImageNames($wikiId, $langCode, $filter = ImageStates::APPROVED) {
 		wfProfileIn(__METHOD__);
 
 		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode, $filter);
@@ -645,7 +645,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImageNames;
 	}
 
-	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageReviewStates::UNREVIEWED) {
+	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageStates::UNREVIEWED) {
 		$currentImages = $this->getImagesFromReviewTable($cityId, $langCode);
 
 		$reversedImages = array_flip($images);
@@ -821,7 +821,7 @@ class CityVisualization extends WikiaModel {
 
 	public function getImageReviewStatus($wikiId, $pageId) {
 		wfProfileIn(__METHOD__);
-		$reviewStatus = ImageReviewStates::UNREVIEWED;
+		$reviewStatus = ImageStates::UNREVIEWED;
 
 		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conditions['city_id'] = $wikiId;
