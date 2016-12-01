@@ -245,7 +245,11 @@ function wfCreatePageAjaxGetDialog() {
 			if ( $wantedPageTitle instanceof Title ) {
 				$wantedPageTitles[] = [
 					'title' => $wantedPageTitle->getText(),
-					'url' => $wantedPageTitle->escapeLocalURL( [ $editorPreferenceQueryParamName => 'edit' ] ),
+					'url' => $wantedPageTitle->escapeLocalURL( [
+						$editorPreferenceQueryParamName => 'edit',
+						'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BUTTON,
+						'source' => 'redlink',
+					] ),
 				];
 
 				$fetchedTitlesCount++;
