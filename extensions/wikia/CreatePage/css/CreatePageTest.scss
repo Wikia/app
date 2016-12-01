@@ -1,3 +1,5 @@
+@import "skins/shared/color";
+
 #CreatePageModalDialog {
 	section {
 		display: flex;
@@ -15,7 +17,7 @@
 	}
 
 	#CreatePageTitleProposals {
-		background: #f7f7f7;
+		background-color: rgba($color-unified-module-background, .4);
 		display: none;
 
 		ul {
