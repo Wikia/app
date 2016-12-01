@@ -26,15 +26,21 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 	function initReadDropdown() {
 		var firstLevelItems = $('.rwe-page-header-nav__dropdown-first-level-item'),
-			secondLevelItems = $('.rwe-page-header-nav__dropdown-second-level-item');
+			secondLevelItems = $('.rwe-page-header-nav__dropdown-second-level-item'),
+			topLevelDropdowns = $('.rwe-page-header-nav__element-dropdown');
 
 		$('.rwe-page-header-nav__element-dropdown > .rwe-page-header-nav__link').on('click', function (e) {
 			e.preventDefault();
 		});
 
-		$('.rwe-page-header-nav__dropdown-first-level-item:first-child').addClass('item-selected');
-		$('.rwe-page-header-nav__dropdown-second-level')
-			.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first').addClass('item-selected');
+		topLevelDropdowns.on('hover', function () {
+			firstLevelItems.removeClass('item-selected');
+			secondLevelItems.removeClass('item-selected');
+
+			$('.rwe-page-header-nav__dropdown-first-level-item:first-child').addClass('item-selected');
+			$('.rwe-page-header-nav__dropdown-second-level')
+				.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first').addClass('item-selected');
+		});
 
 		firstLevelItems.hover(function () {
 			var $hoveredItem = $(this),
