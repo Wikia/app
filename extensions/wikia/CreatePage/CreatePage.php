@@ -33,6 +33,7 @@ $wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.
  * Special page
  */
 $wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgAutoloadClasses['CreatePageHelper'] = __DIR__ . '/CreatePageHelper.class.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
@@ -229,41 +230,11 @@ function wfCreatePageAjaxGetDialog() {
 		$defaultLayout = key($options);
 	}
 
-	$WantedPagesPageResponse = ( new WantedPagesPage() )->doQuery();
-	$dbr = wfGetDB( DB_SLAVE );
-	$wantedPages = [ ];
-	$fetchedTitlesCount = 0;
-	$fetchedTitlesLimit = 6;
-	$editorPreferenceQueryParamName =
-		EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
-
-	while ( $row = $dbr->fetchObject( $WantedPagesPageResponse ) ) {
-		if ( $row->title && $row->namespace === '0' && $fetchedTitlesCount < $fetchedTitlesLimit) {
-			$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
-
-			if ( $wantedPageTitle instanceof Title ) {
-				$wantedPageTitleText = $wantedPageTitle->getText();
-
-				if ( !preg_match( '/[:\/]+/', $wantedPageTitleText ) ) {
-					$wantedPages[ ] = [
-						'title' => $wantedPageTitleText,
-						'url' => $wantedPageTitle->escapeLocalURL( [
-							$editorPreferenceQueryParamName => 'edit',
-							'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BUTTON,
-							'source' => 'redlink',
-						] ),
-					];
-					$fetchedTitlesCount++;
-				}
-			}
-		}
-	}
-
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
 			'type' => $listtype,
-			'wantedPages' => $wantedPages,
+			'wantedPages' => CreatePageHelper::getMostWantedPages(),
 		)
 	);
 
