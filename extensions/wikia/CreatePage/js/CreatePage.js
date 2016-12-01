@@ -401,7 +401,7 @@ var CreatePage = {
 					field = form.children( '.createboxInput' );
 					preloadField = form.children( 'input[name=\'preload\']' );
 
-					if ( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
+					if ( ( typeof preloadField.val() === 'undefined' ) || ( preloadField.val() === '' ) ) {
 						CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX;
 						CreatePage.requestDialog( e, prefix + field.val() );
 					}

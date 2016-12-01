@@ -25,6 +25,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		win: {}
 	};
 
+	mocks.log.levels = {debug: ''};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
