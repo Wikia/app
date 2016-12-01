@@ -3,6 +3,8 @@
 class RWEPageHeaderController extends WikiaController {
 
 	public function index() {
+		OasisController::addBodyClass( 'rwe-page-header-experiment' );
+
 		$this->searchModel = $this->getSearchData();
 		$this->discussTabLink = $this->getDiscussTabLink();
 	}

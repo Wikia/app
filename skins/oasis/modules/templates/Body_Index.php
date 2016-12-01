@@ -37,10 +37,11 @@
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
-		<!--TODO: show it only if extension enabled -->
-		<div class="RWEPageHeader">
-			<?= $app->renderView( 'RWEPageHeader', 'index') ?>
-		</div>
+		<?php if ( !empty( $wg->EnablePageHeaderExperiment ) && empty( $wg->SuppressWikiHeader ) ): ?>
+			<div class="RWEPageHeader">
+				<?= $app->renderView( 'RWEPageHeader', 'index') ?>
+			</div>
+		<?php endif ?>
 
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
