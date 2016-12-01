@@ -17,16 +17,16 @@ class ARecoveryModule {
 
 		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
 	}
-	
+
 	public static function getSourcePointBootstrapCode() {
-		if ( static::isDisabled() ) {
-			return self::disabledMessage;
-		}
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		return static::isDisabled() ? self::disabledMessage : self::getBootstrapCode();
 	}
-	
 
 	public static function isLockEnabled() {
 		return !self::isDisabled();
+	}
+
+	private static function getBootstrapCode() {
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
 }
