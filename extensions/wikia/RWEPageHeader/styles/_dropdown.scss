@@ -11,10 +11,11 @@ $border: 1px solid $color-page-border;
 $spacing-good-sized: 12px;
 $font-size: 14px;
 $first-level-font-size: 16px;
-$first-level-link-padding: 18px 0;
+$first-level-item-height: 64px;
+$item-height: 48px;
 $item-padding: 0 24px;
-$link-padding: 12px 0;
 $line-height: 1.5;
+$link-width: 220px;
 $container-width: 900px;
 $container-height: calc(8 * 64px);
 $column-width: $container-width / 3;
@@ -32,7 +33,7 @@ $column-width: $container-width / 3;
 	}
 
 	&.rwe-page-header-nav__read {
-		left: -130%;
+		left: -140%;
 
 		.rwe-page-header-nav__dropdown-second-level {
 			display: none;
@@ -84,7 +85,7 @@ $column-width: $container-width / 3;
 	}
 
 	.rwe-page-header-nav__dropdown-item {
-		height: 100%;
+		height: $item-height;
 		padding: $item-padding;
 
 		&:hover {
@@ -92,25 +93,40 @@ $column-width: $container-width / 3;
 
 			> .rwe-page-header-nav__dropdown-link-wrapper {
 				border-bottom-color: $link-active-background-color;
-			}
-
-			> .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
-				color: $link-active-color;
 
 				svg {
 					fill: $link-active-color;
 				}
 			}
+
+			> .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
+				color: $link-active-color;
+			}
 		}
 	}
 
 	.rwe-page-header-nav__dropdown-link-wrapper {
+		@include align-items(center);
+		@include flexbox();
+		@include flex-wrap(nowrap);
+		@include justify-content(space-between);
+
 		height: calc(100% - 1px);
+
+		svg {
+			@include transform-rotate(270deg);
+			fill: $link-inactive-color;
+			float: right;
+			margin: 6px;
+		}
 	}
 
-	.rwe-page-header-nav__dropdown-first-level-item  > .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
-		font-size: $first-level-font-size;
-		padding: $first-level-link-padding;
+	.rwe-page-header-nav__dropdown-first-level-item {
+		height: $first-level-item-height;
+
+		> .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
+			font-size: $first-level-font-size;
+		}
 	}
 
 	.item-selected > .rwe-page-header-nav__link {
@@ -123,13 +139,6 @@ $column-width: $container-width / 3;
 		display: block;
 		font-size: $font-size;
 		line-height: $line-height;
-		padding: $link-padding;
-
-		svg {
-			@include transform-rotate(270deg);
-			fill: $link-inactive-color;
-			float: right;
-			margin: 6px;
-		}
+		width: $link-width;
 	}
 }
