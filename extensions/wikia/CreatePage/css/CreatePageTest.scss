@@ -2,16 +2,16 @@
 	section {
 		display: flex;
 		padding: 0;
+
+		> div {
+			padding: 20px;
+			flex-grow: 1;
+		}
 	}
 
 	#CreatePageTitleProposalsHeader {
 		font-weight: bold;
 		margin-bottom: 8px;
-	}
-
-	#CreatePageDialog,
-	#CreatePageTitleProposals {
-		padding: 20px;
 	}
 
 	#CreatePageTitleProposals {
@@ -25,24 +25,6 @@
 			li {
 				padding: 5px 0;
 			}
-		}
-	}
-
-	&.abtest-h,
-	&.abtest-v {
-		#CreatePageTitleProposals {
-			display: block;
-		}
-	}
-
-	&.abtest-h {
-		section {
-			flex-direction: column;
-		}
-
-		#CreatePageTitleProposals ul {
-			float: left;
-			width: 50%;
 		}
 	}
 }
