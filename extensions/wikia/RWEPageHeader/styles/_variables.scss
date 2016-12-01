@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/functions';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/typography';
 
 $content-spacing-tiny-minus: 2px;
@@ -26,9 +27,16 @@ $content-spacing-gargantuan-minus: 56px;
 $content-spacing-gargantuan: 60px;
 $content-spacing-gargantuan-plus: 64px;
 
-$rwe-dropdown-column-width: 192px;
+$overlay-color: #fff;
+@if luminance($color-page) > 0.3 {
+	$overlay-color: #000;
+}
 
-$background-color-mix: 10%;
-$background-color: mix(mix($color-buttons, $color-black, $background-color-mix * 5), $color-page, $background-color-mix);
+$overlay-value: 10%;
+@if luminance($color-page) > 0.1 {
+	$overlay-value: 5%;
+}
+
+$background-color: mix($overlay-color, $color-page, $overlay-value);
 $shadow-color: rgba(26, 26, 26, .3);
 $color-icons: rgba($color-text, .4);
