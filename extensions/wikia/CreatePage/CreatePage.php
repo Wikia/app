@@ -229,10 +229,41 @@ function wfCreatePageAjaxGetDialog() {
 		$defaultLayout = key($options);
 	}
 
+	$wantedPagesApi = new ApiMain(
+		new DerivativeRequest(
+			F::app()->wg->request, // Fallback upon $wgRequest if you can't access context
+			[
+				'action' => 'query',
+				'list' => 'querypage',
+				'qppage' => 'Wantedpages',
+				'qplimit' => 6
+			]
+		)
+	);
+
+	$wantedPagesApi->execute();
+	$wantedPagesData = $wantedPagesApi->getResultData();
+	$wantedPagesResult = empty( $wantedPagesData['query']['querypage']['results'] )
+		? []
+		: $wantedPagesData['query']['querypage']['results'];
+
+	$wantedPageTitles = [];
+	foreach ( $wantedPagesResult as $wantedPage ) {
+		$wantedPageTitle = Title::newFromText( $wantedPage['title'] );
+
+		if ( $wantedPageTitle->canExist() ) {
+			$wantedPageTitles[] = [
+				'title' => $wantedPage['title'],
+				'url' => $wantedPageTitle->escapeLocalURL( [ 'veaction' => 'edit' ] ),
+			];
+		}
+	}
+
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
-			'type' => $listtype
+			'type' => $listtype,
+			'wantedPages' => $wantedPageTitles,
 		)
 	);
 
