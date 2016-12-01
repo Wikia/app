@@ -2,6 +2,12 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
 
+$link-inactive-color: $color-text;
+$link-inactive-background-color: $background-color;
+$link-active-color: invert($color-text);
+$link-active-background-color: $color-links;
+
+$border: 1px solid $color-page-border;
 $spacing-good-sized: 12px;
 $font-size: 14px;
 $first-level-font-size: 16px;
@@ -61,7 +67,7 @@ $column-width: $container-width / 3;
 
 	.rwe-page-header-nav__dropdown-first-level,
 	.rwe-page-header-nav__dropdown-second-level {
-		border-right: 1px solid $color-page-border;
+		border-right: $border;
 		margin: 0;
 		min-height: $container-height;
 	}
@@ -76,10 +82,22 @@ $column-width: $container-width / 3;
 	.rwe-page-header-nav__dropdown-item {
 		height: 100%;
 		padding: $item-padding;
+
+		&:hover {
+			background-color: $link-active-background-color;
+
+			> .rwe-page-header-nav__dropdown-link-wrapper > .rwe-page-header-nav__link {
+				color: $link-active-color;
+
+				svg {
+					fill: $link-active-color;
+				}
+			}
+		}
 	}
 
 	.rwe-page-header-nav__dropdown-item:not(:last-child) .rwe-page-header-nav__dropdown-link-wrapper {
-		border-bottom: 1px solid $color-page-border;
+		border-bottom: $border;
 	}
 
 	.rwe-page-header-nav__dropdown-link-wrapper {
@@ -97,20 +115,15 @@ $column-width: $container-width / 3;
 	}
 
 	.rwe-page-header-nav__link {
-		color: $color-text;
+		color: $link-inactive-color;
 		display: block;
 		font-size: $font-size;
 		line-height: $line-height;
 		padding: $link-padding;
 
-		&:hover {
-			color: $color-links;
-			text-decoration: none;
-		}
-
 		svg {
 			@include transform-rotate(270deg);
-			fill: $color-page-border;
+			fill: $link-inactive-color;
 			float: right;
 			margin: 2px;
 		}
