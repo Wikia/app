@@ -9,16 +9,24 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		}, data));
 	};
 
-	$(function () {
-		var firstLevelItems = $('.rwe-page-header-nav__dropdown-first-level-item'),
-			secondLevelItems = $('.rwe-page-header-nav__dropdown-second-level-item'),
-			thirdLevelNotFirst = $('.rwe-page-header-nav__dropdown-second-level-item:not(:first-child)');
-
-		$('.rwe-page-header-nav__link, .rwe-page-header-wordmark_wrapper').on('click', function (e) {
+	function addWordmarkTracking() {
+		$('.rwe-page-header-nav__link, .rwe-page-header-wordmark_wrapper').on('click', function () {
 			track({
 				label: $(this).data().tracking
 			});
 		});
+	}
+
+	function openChatWindowOnClick() {
+		$('.rwe-chat').on('click', function (e) {
+			e.preventDefault();
+			window.ChatWidget.onClickChatButton($(this).attr('href'));
+		});
+	}
+
+	function initReadDropdown() {
+		var firstLevelItems = $('.rwe-page-header-nav__dropdown-first-level-item'),
+			secondLevelItems = $('.rwe-page-header-nav__dropdown-second-level-item');
 
 		$('.rwe-page-header-nav__element-dropdown > .rwe-page-header-nav__link').on('click', function (e) {
 			e.preventDefault();
@@ -27,10 +35,6 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.rwe-page-header-nav__dropdown-first-level-item:first-child').addClass('item-selected');
 		$('.rwe-page-header-nav__dropdown-second-level-item:first-child').addClass('item-selected');
 
-		$('.rwe-page-header-nav__dropdown-first-level-item:not(:first-child)')
-			.children('.rwe-page-header-nav__dropdown-second-level').hide();
-		thirdLevelNotFirst.children('.rwe-page-header-nav__dropdown-third-level').hide();
-
 		firstLevelItems.hover(function () {
 			var self = $(this),
 				secondLevel = self.find('.rwe-page-header-nav__dropdown-second-level-item:first-child');
@@ -38,22 +42,40 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			firstLevelItems.removeClass('item-selected');
 			secondLevelItems.removeClass('item-selected');
 			self.addClass('item-selected');
-
-			self.siblings().children('.rwe-page-header-nav__dropdown-second-level').hide();
-			thirdLevelNotFirst.children('.rwe-page-header-nav__dropdown-third-level').hide();
-
-			self.children('.rwe-page-header-nav__dropdown-second-level').show();
 			secondLevel.addClass('item-selected');
-			secondLevel.find('.rwe-page-header-nav__dropdown-third-level').show();
 		});
 
 		secondLevelItems.hover(function () {
-			var self = $(this);
-
 			secondLevelItems.removeClass('item-selected');
-			self.addClass('item-selected');
-			self.children('.rwe-page-header-nav__dropdown-third-level').show();
-			self.siblings().children('.rwe-page-header-nav__dropdown-third-level').hide();
+			$(this).addClass('item-selected');
 		});
+	}
+
+	function moveBannerNotifications() {
+		var $globalNav = $('.wds-global-navigation-wrapper'),
+			$notificationsWrapper = $('.banner-notifications-wrapper');
+
+		$notificationsWrapper.detach();
+		$notificationsWrapper.insertAfter($globalNav);
+
+		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
+
+		window.BannerNotification.prototype.show = function() {
+			this.onShow();
+
+			var $notificationsWrapper = $('.banner-notifications-wrapper');
+
+			$notificationsWrapper.detach();
+			$notificationsWrapper.insertAfter($globalNav);
+
+			return this;
+		};
+	}
+
+	$(function () {
+		addWordmarkTracking();
+		initReadDropdown();
+		moveBannerNotifications();
+		openChatWindowOnClick();
 	});
 });

@@ -34,7 +34,7 @@
 
 	>.rwe-page-header-nav__link {
 		display: block;
-		padding: $content-spacing-small $content-spacing-regular;
+		padding: 5px $content-spacing-regular $content-spacing-small;
 	}
 
 	&:last-child {
@@ -58,6 +58,7 @@
 		margin-bottom: -1px;
 		margin-left: -1px;
 		padding-bottom: $content-spacing-small;
+		z-index: 10;
 
 		.rwe-page-header-nav__chevron,
 		.rwe-page-header-nav__icon,

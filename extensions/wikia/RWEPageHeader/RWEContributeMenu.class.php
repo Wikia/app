@@ -34,7 +34,7 @@ class RWEContributeMenu {
 			}
 
 			$attrs = [
-				'text' => wfMessage( $link[ 'label' ] )->escaped(),
+				'text' => wfMessage( $link[ 'label' ] )->inContentLanguage()->escaped(),
 				'href' =>  $specialPageTitle->getLocalURL(),
 			];
 
@@ -103,7 +103,7 @@ class RWEContributeMenu {
 	 */
 	public function getEditPageItem( $url ) {
 		return [
-			'text' => wfMessage( 'oasis-navigation-v2-edit-page' )->escaped(),
+			'text' => wfMessage( 'oasis-navigation-v2-edit-page' )->inContentLanguage()->escaped(),
 			'href' => $url,
 			// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
 			'accesskey' => false,
@@ -116,7 +116,7 @@ class RWEContributeMenu {
 	 */
 	public function getEditNavItem() {
 		return [
-			'text' => wfMessage( 'oasis-navigation-v2-edit-this-menu' )->escaped(),
+			'text' => wfMessage( 'oasis-navigation-v2-edit-this-menu' )->inContentLanguage()->escaped(),
 			'href' => Title::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI )->getLocalURL( 'action=edit' ),
 		];
 	}
