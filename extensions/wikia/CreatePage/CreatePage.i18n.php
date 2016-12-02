@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'createpage-desc' => "Allows to create a new page using Wikia's WYSIWYG editor",
 	'createpage-sp-title' => 'Create a new page',
 	'createpage_title' => 'Create a new page',
@@ -43,14 +43,14 @@ Write the second section of your page here.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Cancel',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'createpage-desc' => '{{desc}}',
 	'createpage-ve-body' => 'Missing documentation',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'createpage-sp-title' => "Skep 'n nuwe bladsy",
 	'createpage_title' => "Skep 'n nuwe artikel",
 	'createpage_title_caption' => 'Bladsynaam:',
@@ -94,9 +94,9 @@ Skryf die eerste afdeling van u bladsy hier.
 
 ==Opskrif==
 Skryf die tweede afdeling van u bladsy hier.',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'createpage-sp-title' => 'إنشاء صفحة جديدة',
 	'createpage_title' => 'أنشئ مقالة جديدة',
 	'createpage_title_caption' => 'العنوان',
@@ -143,9 +143,9 @@ $messages['ar'] = array(
 ==عنوان القسم==
 
 كتابة عنوان المقطع الثاني من مقالك هنا.',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'createpage-sp-title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
 	'createpage_title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
 	'createpage_title_caption' => 'শীৰ্ষক',
@@ -154,14 +154,14 @@ $messages['as'] = array(
 	'createpage_invalid_title_error' => 'ভুল শীৰ্ষক',
 	'createpage-dialog-title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
 	'createpage-dialog-blank' => 'উকা পৃষ্ঠা',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'createpage_title_caption' => 'Başlıq:',
 	'createpage_enter_text' => 'Mətn:',
-);
+];
 
-$messages['azb'] = array(
+$messages['azb'] = [
 	'createpage-sp-title' => 'یئنی یارپاق یارات',
 	'createpage_title' => 'یئنی صحیفه یارات',
 	'createpage_title_caption' => 'باشلیق',
@@ -171,13 +171,13 @@ $messages['azb'] = array(
 	'createpage-dialog-title' => 'یئنی یارپاق یارات',
 	'createpage-dialog-blank' => 'بوش یارپاق',
 	'createpage-error-empty-title' => 'لوطفا یارپاغیزا بیر آد یازین',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'createpage_enter_text' => 'Текст:',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'createpage-desc' => 'Позволява създаване на нова страница чрез визуалния редактор на Wikia',
 	'createpage-sp-title' => 'Създаване на нова страница',
 	'createpage_title' => 'Създаване на нова страница',
@@ -192,9 +192,9 @@ $messages['bg'] = array(
 	'createpage-error-article-exists' => 'Вече съществува страница с това име.
 Можете да отидете на <a href="$1">$2</a> или да преименувате вашата страница',
 	'tog-createpagedefaultblank' => 'По подразбиране използване на празна страница при създаване на нова страница',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'createpage-desc' => 'Talvezout a ra da grouiñ ur bajenn nevez en ur implijout aozer WYSIWYG Wikia',
 	'createpage-sp-title' => 'Krouiñ ur pennad nevez',
 	'createpage_title' => 'Krouiñ ur pennad nevez',
@@ -242,9 +242,9 @@ Skrivit amañ rannskrid kentañ ho pennad.
 == Titl ar rannskrid ==
 
 Skrivit amañ eil rannskrid ho pennad.',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'createpage-desc' => "Permet crear una pàgina nova utilitzant l'editor WYSIWYG de Wikia",
 	'createpage-sp-title' => 'Crea una pàgina nova',
 	'createpage_title' => 'Crea una pàgina nova',
@@ -292,9 +292,9 @@ Escriu la primera secció de la pàgina aquí.
 == Encapçalament ==
 
 Escriu la segona secció de la pàgina aquí.',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'createpage-desc' => 'Umožňuje vytvořit novou stránku pomocí WYSIWYG editoru.',
 	'createpage-sp-title' => 'Vytvořit novou stránku',
 	'createpage_title' => 'Vytvořit novou stránku',
@@ -342,9 +342,9 @@ Sem napište první část stránky.
 ==Nadpis části==
 
 Sem napište druhou část stránky.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'createpage-desc' => 'Erlaubt das Erstellen von neuen Seiten mit Fandoms WYSIWYG-Editor',
 	'createpage-sp-title' => 'Neue Seite anlegen',
 	'createpage_title' => 'Neue Seite anlegen',
@@ -385,9 +385,9 @@ Schreibe den zweiten Abschnitt deines Artikels hier.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Abbrechen',
-);
+];
 
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'createpage_article_already_exists' => 'Ein Artikel mit diesem Namen existiert bereits.
 Bitte wählen Sie einen anderen Namen.',
 	'createpage_spam' => 'Entschuldigung, Ihre Bearbeitung konnte nicht gespeichert werden',
@@ -426,26 +426,26 @@ Schreiben Sie den ersten Abschnitt Ihres Artikels hier.
 Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
 	'createpage-ve-body' => 'Der <b>$1</b> Artikel existiert auf diesem Wiki nicht. Du kannst helfen, indem du ein paar Sätze hinzufügst.',
 	'createpage-button-cancel' => 'Abbrechen',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'createpage-sp-title' => 'Pela newi vıraze',
 	'createpage_title' => 'Pela newi vıraze',
 	'createpage_title_caption' => 'Sername',
 	'createpage_enter_text' => 'Metın:',
 	'createpage-dialog-title' => 'Pela newi vıraze',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'createpage-desc' => 'Σας επιτρέπει να δημιουργήσετε μια νέα σελίδα χρησιμοποιώντας τον επεξεργαστή WYSIWYG της Wikia',
 	'createpage-sp-title' => 'Δημιουργήσετε μια νέα σελίδα',
 	'createpage_title' => 'Δημιουργήστε ένα καινούργιο άρθρο',
 	'createpage_title_caption' => 'Τίτλος:',
 	'createpage_invalid_title_error' => 'Άκυρος τίτλος',
 	'createpage-dialog-blank' => 'Κενή σελίδα',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Fandom',
 	'createpage-sp-title' => 'Crea una nueva página',
 	'createpage_title' => 'Crea una nueva página',
@@ -485,9 +485,9 @@ Escribe aquí la segunda sección de tu página.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Cancelar',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'createpage-desc' => 'Wikiako WYSIWYG editatzailea erabiliz orrialde berriak sortzea ahalbidetzen du',
 	'createpage-sp-title' => 'Artikulu berri bat sortu',
 	'createpage_title' => 'Artikulu berri bat sortu',
@@ -536,9 +536,9 @@ Hemen zure artikuluaren lehen atala idatz ezazu.
 ==Atal goiburua==
 
 Hemen zure artikuluaren bigarren atala idatz ezazu.',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'createpage-sp-title' => 'ایجاد صفحهٔ جدید',
 	'createpage_title' => 'ایجاد مقالۀ جدید',
 	'createpage_title_caption' => 'عنوان',
@@ -547,9 +547,9 @@ $messages['fa'] = array(
 	'createpage-dialog-format' => 'چیدمان استاندارد',
 	'createpage-dialog-blank' => 'صفحهٔ خالی',
 	'createpage-error-empty-title' => 'لطفاً برای صفحهٔ خود عنوانی بنویسید',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'createpage-desc' => 'Mahdollistaa uusien sivujen luonnin käyttäen Wikian WYSIWYG muokkainta',
 	'createpage-sp-title' => 'Luo uusi artikkeli',
 	'createpage_title' => 'Luo uusi artikkeli',
@@ -597,9 +597,9 @@ Kirjoita sivusi ensimmäinen osio tähän.
 ==Väliotsikko==
 
 Kirjoita sivusi toinen osio tähän.',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Fandom',
 	'createpage-sp-title' => 'Créer une nouvelle page',
 	'createpage_title' => 'Créer une nouvelle page',
@@ -639,9 +639,9 @@ Write the text of your article here!',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Annuler',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'createpage-desc' => 'Permite crear unha nova páxina usando o editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crear un novo artigo',
 	'createpage_title' => 'Crear un novo artigo',
@@ -689,9 +689,9 @@ Escriba aquí a primeira sección do seu artigo.
 ==Cabeceira de sección==
 
 Escriba aquí a segunda sección do seu artigo.',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'createpage-desc' => 'ההרחבה מאפשרת ליצור דף חדש באמצעות העורך החזותי של Wikia',
 	'createpage-sp-title' => 'כתוב מאמר חדש',
 	'createpage_title' => 'כתוב מאמר חדש',
@@ -739,9 +739,9 @@ $messages['he'] = array(
 ==כותרת קטע==
 
 כתוב את הקטע השני במאמר שלך כאן.',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'createpage-desc' => 'Lehetővé teszi egy új oldal létrehozását a Wikia WYSIWYG szerkesztőjével',
 	'createpage-sp-title' => 'Új szócikk létrehozása',
 	'createpage_title' => 'Új szócikk létrehozása',
@@ -789,15 +789,15 @@ Kérünk, használj más címet.',
 ==Címsor==
 
 Írd az oldalad második szakaszát ide.',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'createpage-sp-title' => 'Ստեղծել նոր էջ',
 	'createpage_title' => 'Ստեղծել նոր էջ',
 	'createpage_title_caption' => 'Վերնագիր',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'createpage-desc' => 'Permitte crear un nove pagina con le editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crear un nove articulo',
 	'createpage_title' => 'Crear un nove articulo',
@@ -845,9 +845,9 @@ Scribe hic le prime section de tu articulo.
 ==Titulo de section==
 
 Scribe hic le secunde section de tu articulo.',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'createpage-desc' => 'Memungkinkan untuk membuat halaman baru menggunakan editor WYSIWYG Wikia',
 	'createpage-sp-title' => 'Buat halaman baru',
 	'createpage_title' => 'Buat halaman baru',
@@ -895,9 +895,9 @@ Tulis bagian pertama dari halaman Anda di sini.
  == Bagian judul ==
 
 Tulis bagian kedua dari halaman Anda di sini.',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor visuale di Fandom",
 	'createpage-sp-title' => 'Crea una nuova pagina',
 	'createpage_title' => 'Crea una nuova pagina',
@@ -939,9 +939,9 @@ Scrivi qui la seconda sezione del tuo articolo.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Annulla',
 	'createpage-button-proceed' => 'Next',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'createpage-desc' => 'FandomのWYSIWYGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新しいページをつくる',
 	'createpage_title' => '新しいページをつくる',
@@ -979,9 +979,9 @@ Write the text of your article here!',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'キャンセル',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'createpage-sp-title' => 'បង្កើតទំព័រថ្មីមួយ',
 	'createpage_title' => 'បង្កើតទំព័រថ្មីមួយ',
 	'createpage_title_caption' => 'ចំណងជើង៖',
@@ -1025,9 +1025,9 @@ $messages['km'] = array(
 
 ==ចំណងជើងផ្នែក==
 សរសេរផ្នែកទីពីររបស់ទំព័រអ្នកនៅទៅនេះ។',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'createpage-dialog-blank' => '빈 문서',
 	'createpage-dialog-choose' => '문서의 레이아웃을 선택하세요:',
 	'createpage-dialog-format' => '기본 레이아웃',
@@ -1074,17 +1074,17 @@ $messages['ko'] = array(
 두 번째 문단에 들어갈 정보들을 적어 주세요.',
 	'tog-createpagedefaultblank' => '새 문서를 생성할 때 빈 문서를 기본으로 지정',
 	'tog-createpagepopupdisabled' => "'새 문서 만들기' 창을 띄우지 않기",
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'createpage-sp-title' => 'Rûpeleka nû çêke',
 	'createpage_title' => 'Rûpeleka nû çêke',
 	'createpage_title_caption' => 'Sernav:',
 	'createpage_enter_text' => 'Nivîs:',
 	'createpage-dialog-title' => 'Rûpeleka nû çêke',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'createpage-desc' => 'Erlaabt et eng nei Säit mam Wikia WYSIWYG-Editeur unzeleeën',
 	'createpage-sp-title' => 'En neien Artikel uleeën',
 	'createpage_title' => 'En neien Artikel uleeën',
@@ -1132,9 +1132,9 @@ Schreiwt déi éischt Sektioun vun Ärem Artikel hei.
 == Iwwerschrëft vun der Sektioun ==
 
 Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'createpage-sp-title' => 'Sukurti naują puslapį',
 	'createpage_title' => 'Sukurti naują puslapį',
 	'createpage_title_caption' => 'Pavadinimas',
@@ -1156,9 +1156,9 @@ Prašome naudoti kitą pavadinimą.',
 	'createpage-error-article-blocked' => 'Atsiprašome, jūs negalite sukurti šio puslapį šiuo metu.',
 	'tog-createpagedefaultblank' => 'Naudoti tuščia puslapį kaip numatytąjį kuriant naują puslapį',
 	'tog-createpagepopupdisabled' => 'Išjungti "Sukurti naują straipsnį" srautą (Nerekomenduojama)',
-);
+];
 
-$messages['lus'] = array(
+$messages['lus'] = [
 	'createpage-desc' => 'Wikia WYSIWYG ziahna hmanga phêk thar siam theihna',
 	'createpage-sp-title' => 'Phêk thar siamna',
 	'createpage_title' => 'Phêk thar siam rawh le',
@@ -1203,9 +1203,9 @@ I phêk ţhen hmasa ber hetah.
 ==Ţhen hming==
 
 Hetah hian a ţhen hnihna.',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'createpage-desc' => "Avela mamorona pejy amin'ny mpanova pejy WYSWIG an'i Wikia",
 	'createpage-sp-title' => 'Hamorona takelaka vaovzo',
 	'createpage_title' => 'Hamorona takelaka vaovao',
@@ -1248,9 +1248,9 @@ Soraty eto ny fizarana voalohan'ny pejinao.
 ==Section heading==
 
 Soraty eto ny fizarana faharoan'ny pejinao.",
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'createpage-desc' => 'Овозможува создавање на нови страници со уредникот WYSIWYG',
 	'createpage-sp-title' => 'Создавање на нова статија',
 	'createpage_title' => 'Создај нова статија',
@@ -1294,15 +1294,15 @@ $messages['mk'] = array(
 ==Наслов на заглавие==
 
 Тука напишете го второто заглавие од статијата.',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'createpage-sp-title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
 	'createpage_title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
 	'createpage_title_caption' => 'ശീർഷകം:',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'createpage-desc' => 'Membolehkan penciptaan laman baru dengan menggunakan alat penyunting WYSIWYG Wikia',
 	'createpage-sp-title' => 'Cipta laman baru',
 	'createpage_title' => 'Cipta laman baru',
@@ -1350,9 +1350,9 @@ Isikan bahagian pertama laman anda di sini.
 ==Pengatas bahagian==
 
 Isikan bahagian kedua laman anda di sini.',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'createpage-desc' => 'Tillater å opprette en ny side med Wikias WYSIWYG-redaktør',
 	'createpage-sp-title' => 'Skriv en ny artikkel',
 	'createpage_title' => 'Skriv en ny artikkel',
@@ -1399,9 +1399,9 @@ Skriv den første seksjonen av artikkelen din her.
 ==Seksjonsoverskrift==
 
 Skriv den andre seksjonen av artikkelen din her.',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'createpage-desc' => "Maakt het mogelijk nieuwe pagina's aan te maken met Wikia's WYSIWYG-tekstverwerker",
 	'createpage-sp-title' => 'Nieuwe pagina aanmaken',
 	'createpage_title' => 'Nieuwe pagina aanmaken',
@@ -1442,9 +1442,9 @@ Schrijf hier de tweede paragraaf van uw pagina.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Annuleren',
 	'createpage-button-proceed' => 'Next',
-);
+];
 
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'createpage_spam' => 'Sorry, je bewerking kon niet worden opgeslagen',
 	'createpage-dialog-message1' => 'Gefeliciteerd.
 Je hebt een nieuwe pagina aangemaakt!',
@@ -1469,13 +1469,13 @@ Schrijf hier de eerste paragraaf van je pagina.
 
 ==Paragraafkop==
 Schrijf hier de tweede paragraaf van je pagina.',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'createpage-button-proceed' => 'Legg til side',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'createpage-desc' => 'ਵਿਕਿ ਦੇ WYSIWYG ਐਡੀਟਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉਣਾ ਮਨਜ਼ੂਰ',
 	'createpage-sp-title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉ',
 	'createpage_title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਓ',
@@ -1495,13 +1495,13 @@ $messages['pa'] = array(
 	'createpage-error-empty-title' => 'ਆਪਣੇ ਸਫ਼ੇ ਲਈ ਟਾਈਟਲ ਲਿਖੋ ਜੀ',
 	'createpage-error-article-exists' => 'ਉਸ ਟਾਈਟਲ ਨਾਲ ਸਫ਼ਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।
 ਤੁਸੀਂ <a href="$1">$2</a> ਵਰਤ ਸਕਦੇ ਹੋ ਜਾਂ ਆਪਣੇ ਸਫ਼ੇ ਦਾ ਨਾਂ ਬਦਲ ਸਕਦੇ ਹੋ',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'createpage_title_caption' => 'Tidl',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
 	'createpage-sp-title' => 'Utwórz nową stronę',
 	'createpage_title' => 'Utwórz nową stronę',
@@ -1542,9 +1542,9 @@ Tutaj napisz treść drugiej sekcji strony.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Anuluj',
-);
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'createpage-desc' => "A përmët ëd creé na pàgina neuva an dovrand l'editor WYSIWYG ëd Wikia",
 	'createpage-sp-title' => 'Creé un neuv artìcol',
 	'createpage_title' => 'Creé un neuv artìcol',
@@ -1592,9 +1592,9 @@ Ch'a scriva ambelessì la prima session ëd sò artìcol.
 ==Antestassion ëd la session==
 
 Ch'a scriva ambelessì la sconda session ëd sò artìcol.",
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'createpage-sp-title' => 'يوه نوې ليکنه ليکل',
 	'createpage_title' => 'يوه نوې ليکنه ليکل',
 	'createpage_title_caption' => 'سرليک',
@@ -1624,9 +1624,9 @@ $messages['ps'] = array(
 ==د برخې سرليک==
 
 د خپل د مخ دويمه برخه دلته وليکۍ.',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG do Fandom',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
@@ -1667,9 +1667,9 @@ Escreva a segunda seção do seu artigo aqui.',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Cancelar',
 	'createpage-button-proceed' => 'Next',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
@@ -1719,9 +1719,9 @@ Escreva a primeira seção do seu artigo aqui.
 Escreva a segunda seção do seu artigo aqui.',
 	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe nesta wikia. Você pode ajudar adicionando algumas frases.',
 	'createpage-button-cancel' => 'Cancelar',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'createpage-sp-title' => 'Creează o pagină nouă',
 	'createpage_title' => 'Creează o pagină nouă',
 	'createpage_title_caption' => 'Titlu',
@@ -1732,9 +1732,9 @@ $messages['ro'] = array(
 	'createpage_cant_edit' => 'Nu se poate efectua modificarea',
 	'createpage-dialog-title' => 'Creează o pagină nouă',
 	'createpage-dialog-blank' => 'Pagină necompletată',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'createpage-desc' => 'Позволяет создавать новые страницы с помощью Визуального редактора Фэндома',
 	'createpage-sp-title' => 'Создать новую страницу',
 	'createpage_title' => 'Создать новую страницу',
@@ -1775,9 +1775,9 @@ Write the text of your article here!',
 	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-proceed' => 'Next',
 	'createpage-button-cancel' => 'Отмена',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'createpage-desc' => 'Викиа визуал эрэдээктэрин көмөтүнэн саҥа сирэйдэри оҥорору хааччыйар',
 	'createpage-sp-title' => 'Саҥа сирэйи оҥоруу',
 	'createpage_title' => 'Саҥа ыстатыйаны айыы',
@@ -1825,9 +1825,9 @@ $messages['sah'] = array(
 ==Салаа баһа==
 
 Манна ыстатыйаҥ иккис салаатын суруй.',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'createpage-sp-title' => 'Направи нову страницу',
 	'createpage_title' => 'Направи нову страницу',
 	'createpage_title_caption' => 'Наслов',
@@ -1850,9 +1850,9 @@ $messages['sr-ec'] = array(
 	'createpage-error-article-exists' => 'Страница с тим називом већ постоји.
 Посетите <a href="$1">$2</a> или преименујте је.',
 	'createpage-error-article-blocked' => 'Не можете да направите страницу.',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'createpage-desc' => 'Låter att skapa en ny sida med hjälp av Wikias WYSIWYG-redigerare',
 	'createpage-sp-title' => 'Skapa en ny sida',
 	'createpage_title' => 'Skapa en ny sida',
@@ -1891,32 +1891,32 @@ Skriv det första avsnittet på din sida här.
 ==Rubrik på avsnitt==
 
 Skriv det andra avsnittet på din sida här',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'createpage_title_caption' => 'Cheo:',
 	'createpage_invalid_title_error' => 'Jina batili',
 	'createpage-dialog-blank' => 'Ukurasa tupu',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'createpage-sp-title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
 	'createpage_title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
 	'createpage_title_caption' => 'தலைப்பு:',
 	'createpage_enter_text' => 'சொற்றொடர்:',
 	'createpage_invalid_title_error' => 'தவறான தலைப்பு',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'createpage_title_caption' => 'శీర్షిక:',
 	'createpage_enter_text' => 'పాఠ్యం:',
 	'createpage_empty_title_error' => 'శీర్షిక తప్పనిసరి',
 	'createpage_empty_article_body_error' => 'వ్యాసపు పాఠ్యం తప్పనిసరి',
 	'createpage_invalid_title_error' => 'తప్పుడు శీర్షిక',
 	'createpage-dialog-blank' => 'ఖాళీ పేజీ',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'createpage-desc' => 'Nagpapahintulot upang makalikha ng isang bagong pahina na gumagamit ng patnugot na WYSIWYG ng Wikia',
 	'createpage-sp-title' => 'Lumikha ng isang bagong artikulo',
 	'createpage_title' => 'Lumikha ng isang bagong artikulo',
@@ -1964,13 +1964,13 @@ Isulat ang unang sekyon ng artikulo mo rito.
 ==Ulo ng seksyon==
 
 Isulat ang pangalawang ulo ng sekyon mo rito.',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'createpage-dialog-blank' => 'Boş sayfa',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'createpage-desc' => 'Викиянең визуаль редакторы ярдәмендә яңа мәкаләләр төзергә мөмкинлек бирә',
 	'createpage-sp-title' => 'Яңа мәкалә язу',
 	'createpage_title' => 'Яңа мәкалә язу',
@@ -2018,9 +2018,9 @@ $messages['tt-cyrl'] = array(
 ==Бүлек исеме==
 
 Монда мәкаләнең киләсе бүлеген языгыз.',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'createpage-desc' => 'Дозволяє створити нові сторінки за допомогою WYSIWYG редактора',
 	'createpage-sp-title' => 'Створити нову статтю',
 	'createpage_title' => 'Створити нову статтю',
@@ -2066,16 +2066,16 @@ $messages['uk'] = array(
 ==Заголовок розділу==
 
 Напишіть тут другий розділ вашої статті.',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'createpage_title_caption' => 'Pälkirjutez',
 	'createpage_enter_text' => 'Tekst:',
 	'createpage-dialog-title' => "Säta uz' lehtpol'",
 	'createpage-dialog-blank' => "Puhtaz lehtpol'",
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'createpage-desc' => 'Cho phép tạo ra một trang mới bằng cách sử dụng trình soạn thảo WYSIWYG của Wikia',
 	'createpage-sp-title' => 'Tạo một trang mới',
 	'createpage_title' => 'Tạo một trang mới',
@@ -2123,9 +2123,9 @@ Viết cho đề mục 1 tại đây
 ==Đề mục 2==
 
 Viết cho đề mục 2 tại đây',
-);
+];
 
-$messages['zh'] = array(
+$messages['zh'] = [
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '文章標題',
@@ -2136,16 +2136,16 @@ $messages['zh'] = array(
 预设使用空白页来创建页面',
 	'tog-createpagepopupdisabled' => '关闭 "创建新页面" 流程 (不建议)',
 	'createpage-button-proceed' => '添加页面',
-);
+];
 
-$messages['zh-cn'] = array(
+$messages['zh-cn'] = [
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_enter_text' => '输入文字',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'createpage-sp-title' => '创建新页面',
 	'createpage_title' => '创建新页面',
 	'createpage_title_caption' => '标题',
@@ -2186,9 +2186,9 @@ Write the text of your article here!',
 	'tog-createpagedefaultblank' => '使用空白页作为创建新页面的默认设置',
 	'tog-createpagepopupdisabled' => '禁用“创建新的文章页”（不推荐使用）',
 	'createpage-button-proceed' => 'Next',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'createpage-sp-title' => '建立一個新的頁面',
 	'createpage_title' => '建立一個新的頁面',
 	'createpage_title_caption' => '標題',
@@ -2229,9 +2229,9 @@ $messages['zh-hant'] = array(
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the text of your article here!',
 	'createpage-button-proceed' => 'Next',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '標題',
@@ -2256,15 +2256,15 @@ $messages['zh-hk'] = array(
 在這裡撰寫第二項。',
 	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
 	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
-);
+];
 
-$messages['zh-sg'] = array(
+$messages['zh-sg'] = [
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_enter_text' => '输入文字',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '文章標題',
@@ -2289,5 +2289,5 @@ $messages['zh-tw'] = array(
 在這裡撰寫第二項。',
 	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
 	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
-);
+];
 
