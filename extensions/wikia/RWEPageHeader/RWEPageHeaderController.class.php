@@ -64,6 +64,19 @@ class RWEPageHeaderController extends WikiaController {
 	}
 
 	public function createTab() {
+		$order = [
+			'communitypage',
+			'chat',
+			'wikiactivity',
+			'edit',
+			'createpage',
+			'photos',
+			'upload',
+			'videos',
+			'wikiavideoadd',
+			'wikinavedit'
+		];
+
 		$createList = [
 			'communitypage' => [
 				'text' => 'Community Page',
@@ -84,7 +97,19 @@ class RWEPageHeaderController extends WikiaController {
 			]
 		];
 
+
+
 		$contributeMenu = new RWEContributeMenu();
-		$this->createList = array_merge( $createList, $contributeMenu->getContributeList() );
+		$createList = array_merge( $createList, $contributeMenu->getContributeList() );
+
+		$orderedList = [];
+
+		foreach ( $order as $orderKey ) {
+			if ( !empty( $createList[$orderKey] ) ) {
+				$orderedList[$orderKey] = $createList[$orderKey];
+			}
+		}
+
+		$this->createList = $orderedList;
 	}
 }
