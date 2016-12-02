@@ -406,24 +406,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			];
 		}
 
-		if ( $this->getHref( 'social-reddit' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-reddit',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-reddit',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-reddit'
-				],
-				'href' => $this->getHref( 'social-reddit' ),
-				'tracking_label' => 'follow-us.reddit',
-			];
-		}
-
 		if ( $this->getHref( 'social-youtube' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
@@ -457,6 +439,42 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				'href' => $this->getHref( 'social-instagram' ),
 				'tracking_label' => 'follow-us.instagram',
+			];
+		}
+
+		if ( $this->getHref( 'social-linkedin' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
+				'image' => 'wds-icons-linkedin',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-linkedin',
+				],
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-follow-us-link-linkedin'
+				],
+				'href' => $this->getHref( 'social-linkedin' ),
+				'tracking_label' => 'follow-us.linkedin',
+			];
+		}
+
+		if ( $this->getHref( 'social-vk' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				// 'image' is deprecated, use 'image-data' instead
+				'image' => 'wds-icons-vkontakte',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-vkontakte',
+				],
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-follow-us-link-vk'
+				],
+				'href' => $this->getHref( 'social-vk' ),
+				'tracking_label' => 'follow-us.vk',
 			];
 		}
 
