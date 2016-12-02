@@ -93,6 +93,14 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
+		function getBestSlotPrice(slotName) {
+			if (module.getBestSlotPrice) {
+				module.getBestSlotPrice(slotName)
+			}
+
+			return {};
+		}
+
 		function getName() {
 			return module.name;
 		}
@@ -110,6 +118,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		return {
 			addResponseListener: addResponseListener,
 			call: call,
+			getBestSlotPrice: getBestSlotPrice,
 			getName: getName,
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
