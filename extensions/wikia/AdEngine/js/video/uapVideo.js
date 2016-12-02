@@ -75,7 +75,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				video.play();
+				var slotWidth = getSlotWidth(adSlot);
+				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});
 
 			return video;

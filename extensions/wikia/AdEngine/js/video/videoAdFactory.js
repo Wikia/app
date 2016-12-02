@@ -23,7 +23,11 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			addEventListener: function (eventName, callback) {
 				this.ima.addEventListener(eventName, callback);
 			},
-			play: function () {
+			play: function (width, height) {
+				if (width !== undefined && height !== undefined) {
+					this.width = width;
+					this.height = height;
+				}
 				this.ima.playVideo(this.width, this.height);
 			},
 			reload: function () {
