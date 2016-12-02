@@ -186,6 +186,7 @@ class HelperController extends \WikiaController {
 	 * @requestParam token : user identification token
 	 */
 	public function sendPasswordResetLinkEmail() {
+		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
@@ -194,14 +195,11 @@ class HelperController extends \WikiaController {
 		}
 
 		$userId = $this->getFieldFromRequest( 'user_id', 'invalid user_id' );
-		if ( empty( $userId ) ) {
+		$token = $this->getFieldFromRequest( 'token', 'invalid token' );
+		if ( empty( $userId ) || empty ( $token ) ) {
 			return;
 		}
 
-		$token = $this->getFieldFromRequest( 'token', 'invalid token' );
-		if ( empty( $token ) ) {
-			return;
-		}
 
 		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromId( $userId );

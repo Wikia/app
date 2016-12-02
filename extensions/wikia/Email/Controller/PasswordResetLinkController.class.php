@@ -58,18 +58,14 @@ class PasswordResetLinkController extends EmailController {
 	}
 
 	protected function getResetLink() {
-		return sprintf( 'http://dummy-address/%s', $this->token );
+		return sprintf( 'http://dummy-address/%s/%s', $this->getTargetUserName(), $this->token );
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-password-summary' )->text();
+		return $this->getMessage( 'emailext-password-reset-link-summary' )->text();
 	}
 
 	protected function getIntro() {
-		return $this->getMessage( 'emailext-password-intro' )->text();
-	}
-
-	protected function getDetails() {
-		return $this->getMessage( 'emailext-password-details' )->text();
+		return $this->getMessage( 'emailext-password-reset-link-intro' )->text();
 	}
 }
