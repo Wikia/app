@@ -37,7 +37,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			firstLevelItems.removeClass('item-selected');
 			secondLevelItems.removeClass('item-selected');
 
-			$('.rwe-page-header-nav__dropdown-first-level-item:first-child').addClass('item-selected');
+			$('.rwe-page-header-nav__dropdown-first-level-item:has(ul):first').addClass('item-selected');
 			$('.rwe-page-header-nav__dropdown-second-level')
 				.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first').addClass('item-selected');
 		});
