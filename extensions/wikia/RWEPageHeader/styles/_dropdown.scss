@@ -4,7 +4,7 @@
 
 $link-inactive-color: $color-text;
 $link-inactive-background-color: $background-color;
-$link-active-background-color: $color-links;
+$link-active-background-color: mix($color-page, $color-buttons, 25%);
 $link-active-color: $color-white;
 @if lightness($link-active-background-color) > 55 {
 	$link-active-color: $color-black;
@@ -25,6 +25,8 @@ $container-height: 10 * $item-height;
 $container-width: 900px;
 $column-width: $container-width / 3;
 
+$transition-length: .5s;
+
 .rwe-page-header-nav__dropdown {
 	width: $container-width;
 
@@ -41,15 +43,25 @@ $column-width: $container-width / 3;
 		left: -125%;
 
 		.rwe-page-header-nav__dropdown-second-level {
-			display: none;
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0s, opacity $transition-length;
 		}
 
 		.rwe-page-header-nav__dropdown-third-level {
-			display: none;
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0s, opacity $transition-length;
 		}
 
 		.item-selected > ul {
-			display: block;
+			visibility: visible;
+			opacity: 1;
+			transition: visibillity 0s, opacity $transition-length;
+		}
+
+		.item-selected > ul > .item-selected > ul {
+			transition-delay: .15s;
 		}
 	}
 
@@ -120,7 +132,7 @@ $column-width: $container-width / 3;
 
 		svg {
 			@include transform-rotate(270deg);
-			fill: $link-inactive-color;
+			fill: $color-page-border;
 			float: right;
 			margin: $content-spacing-small;
 		}
