@@ -12,6 +12,11 @@ use Wikia\Service\User\Auth\AuthService;
 class HelperController extends \WikiaController {
 	const SCHWARTZ_PARAM = 'secret';
 	const EXTERNAL_SCHWARTZ_PARAM = 'token';
+	const ERR_USER_NOT_FOUND = 'user not found';
+	const ERR_INVALID_EMAIL = 'invalid email';
+	const ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE = 'could not send an email message';
+	const ERR_INVALID_TOKEN = 'invalid token';
+	const ERR_INVALID_USER_ID = 'invalid user_id';
 
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
@@ -24,6 +29,7 @@ class HelperController extends \WikiaController {
 
 		if ( !$this->authenticateViaTheSchwartz() ) {
 			$this->response->setVal( 'allow', false );
+
 			return;
 		}
 
@@ -32,6 +38,7 @@ class HelperController extends \WikiaController {
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$this->response->setVal( 'allow', true );
+
 			return;
 		}
 
@@ -39,6 +46,7 @@ class HelperController extends \WikiaController {
 
 		// Allow the given user name if it is legal and does not conflict with other names.
 		$this->response->setVal( 'allow', $spoofUser->isLegal() && !$spoofUser->getConflicts( true ) );
+
 		return;
 	}
 
@@ -61,6 +69,7 @@ class HelperController extends \WikiaController {
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$spoofUser = new \SpoofUser( $username );
 			$this->response->setVal( 'success', $spoofUser->record() );
+
 			return;
 		}
 	}
@@ -79,6 +88,7 @@ class HelperController extends \WikiaController {
 
 		if ( !$this->wg->EmailAuthentication ) {
 			$this->response->setVal( 'message', 'email authentication is not required' );
+
 			return;
 		}
 
@@ -89,16 +99,19 @@ class HelperController extends \WikiaController {
 
 		if ( !$user instanceof \User ) {
 			$this->response->setVal( 'message', 'unable to create a \User object from name' );
+
 			return;
 		}
 
 		if ( !$user->getId() ) {
 			$this->response->setVal( 'message', 'no such user' );
+
 			return;
 		}
 
 		if ( $user->isEmailConfirmed() ) {
 			$this->response->setVal( 'message', 'already confirmed' );
+
 			return;
 		}
 
@@ -111,19 +124,22 @@ class HelperController extends \WikiaController {
 			$emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
 		) {
 			$this->response->setVal( 'message', 'confirmation emails limit reached' );
+
 			return;
 		}
 
-		if ( ! \Sanitizer::validateEmail( $user->getEmail() ) ) {
-			$this->response->setVal( 'message', 'invalid email' );
+		if ( !\Sanitizer::validateEmail( $user->getEmail() ) ) {
+			$this->response->setVal( 'message', self::ERR_INVALID_EMAIL );
+
 			return;
 		}
 
 		$mailStatus = $user->sendConfirmationMail(
-			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ));
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ) );
 
-		if ( ! $mailStatus->isGood() ) {
-			$this->response->setVal( 'message', 'could not send an email message' );
+		if ( !$mailStatus->isGood() ) {
+			$this->response->setVal( 'message', self::ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE );
+
 			return;
 		}
 
@@ -154,28 +170,30 @@ class HelperController extends \WikiaController {
 
 		$user = \User::newFromName( $username );
 
-		if ( ! $user instanceof \User ) {
+		if ( !$user instanceof \User ) {
 			$this->response->setVal( 'message', 'unable to create a \User object from name' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+
 			return;
 		}
 
-		if ( ! $user->getId() ) {
+		if ( !$user->getId() ) {
 			$this->response->setVal( 'message', 'no such user' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+
 			return;
 		}
 
 		$resp = \F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
 			'targetUser' => $username,
-			'tempPass' => $tempPassword,
+			'tempPass'   => $tempPassword,
 		] );
 
 		$data = $resp->getData();
 		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
 			$this->response->setVal( 'success', true );
 		} else {
-			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setVal( 'message', self::ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 		}
 	}
@@ -194,8 +212,8 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$userId = $this->getFieldFromRequest( 'user_id', 'invalid user_id' );
-		$token = $this->getFieldFromRequest( 'token', 'invalid token' );
+		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
+		$token = $this->getFieldFromRequest( 'token', self::ERR_INVALID_TOKEN );
 		if ( empty( $userId ) || empty ( $token ) ) {
 			return;
 		}
@@ -204,14 +222,15 @@ class HelperController extends \WikiaController {
 		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromId( $userId );
 		if ( !$user instanceof \User ) {
-			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setVal( 'message', self::ERR_USER_NOT_FOUND );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 
 			return;
 		}
 
 		if ( !\Sanitizer::validateEmail( $user->getEmail() ) ) {
-			$this->response->setVal( 'message', 'invalid email' );
+			$this->response->setVal( 'message', self::ERR_INVALID_EMAIL );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 
 			return;
 		}
@@ -224,8 +243,9 @@ class HelperController extends \WikiaController {
 		$data = $resp->getData();
 		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
 			$this->response->setVal( 'success', true );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_OK );
 		} else {
-			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setVal( 'message', self::ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 		}
 	}
@@ -248,8 +268,9 @@ class HelperController extends \WikiaController {
 			!$user instanceof User ||
 			$user->getId() == 0
 		) {
-			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setVal( 'message', self::ERR_USER_NOT_FOUND );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+
 			return;
 		}
 
@@ -271,10 +292,10 @@ class HelperController extends \WikiaController {
 		// token here and elsewhere in MediaWiki (e.g. LogEventsApi). Until we are
 		// able to consolidate on the EXTERNAL_SCHWARTZ_PARAM both in MW and in
 		// external clients, we need to support both.
-		$ourSchwartz          = $this->getVal( self::SCHWARTZ_PARAM, '' );
-		$ourSchwartzIsValid   = \hash_equals( $this->wg->TheSchwartzSecretToken, $ourSchwartz );
+		$ourSchwartz = $this->getVal( self::SCHWARTZ_PARAM, '' );
+		$ourSchwartzIsValid = \hash_equals( $this->wg->TheSchwartzSecretToken, $ourSchwartz );
 
-		$theirSchwartz        = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM, '' );
+		$theirSchwartz = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM, '' );
 		$theirSchwartzIsValid = \hash_equals( $this->wg->TheSchwartzSecretToken, $theirSchwartz );
 
 		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
@@ -283,6 +304,7 @@ class HelperController extends \WikiaController {
 
 		$this->response->setVal( 'message', 'invalid secret' );
 		$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+
 		return false;
 	}
 }
