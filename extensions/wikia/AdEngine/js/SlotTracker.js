@@ -70,7 +70,8 @@ define('ext.wikia.adEngine.slotTracker', [
 		var slotname = data.slotname,
 			slotType = slotTypes[slotname] || 'other',
 			extraParams = data.extraParams || {},
-			forcedLabel = data.state;
+			forcedLabel = data.state,
+			productChosen = [eventName, data.provider, slotType].join('/');
 
 		extraParams.pos = data.slotname;
 
@@ -78,7 +79,7 @@ define('ext.wikia.adEngine.slotTracker', [
 		if (isInteresting(eventName, data)) {
 			stats.interestingEvents += 1;
 			adTracker.track(
-				[eventName, data.provider, slotType].join('/'),
+				productChosen,
 				extraParams,
 				value,
 				forcedLabel

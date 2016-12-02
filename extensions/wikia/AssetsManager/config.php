@@ -45,6 +45,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
@@ -265,6 +266,7 @@ $config['adengine2_rubicon_fastlane_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
 	],
 ];
@@ -274,6 +276,7 @@ $config['adengine2_rubicon_vulcan_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
@@ -286,6 +289,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
@@ -828,6 +833,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
@@ -849,6 +855,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
