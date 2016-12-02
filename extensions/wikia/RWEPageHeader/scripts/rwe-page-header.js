@@ -83,7 +83,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	$(function () {
 		var experimentGroup = window.Wikia.AbTest.getGroup(experimentName);
 
-		if (experimentGroup === 'TEST_1' || experimentName === 'TEST_2') {
+		if (experimentGroup === 'RDPS_HEADER_1' || experimentName === 'RDPS_HEADER_2') {
 			addWordmarkTracking();
 			initReadDropdown();
 			moveBannerNotifications();
