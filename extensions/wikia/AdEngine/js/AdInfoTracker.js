@@ -6,8 +6,9 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.log',
-	'wikia.window'
-], function (adTracker, adContext, lookupServices, mercuryListener, recoveryHelper, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (adTracker, adContext, lookupServices, recoveryHelper, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -120,10 +121,11 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 					logSlotInfo(data);
 				}
 			});
-			
-			mercuryListener.onEveryPageChange(function() {
-				setAdEnginePvUID();
-			});
+			if (mercuryListener) {
+				mercuryListener.onEveryPageChange(function() {
+					setAdEnginePvUID();
+				});	
+			}
 		}
 	}
 
