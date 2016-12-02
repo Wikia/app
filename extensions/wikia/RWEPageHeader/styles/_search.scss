@@ -42,14 +42,14 @@ $search-transition-long: .2s;
 .rwe-page-header-nav:not(.wds-search-is-active) #searchInputWrapperRWE:hover {
 	.wds-global-navigation__search-label {
 		svg {
-			fill: $color-links;
+			fill: $color-buttons;
 		}
 
 		.wds-global-navigation__search-input {
 			cursor: pointer;
 
 			@include placeholder {
-				color: $color-links;
+				color: $color-buttons;
 				transition-delay: 0s;
 				transition-duration: 0s;
 			}
@@ -101,7 +101,7 @@ $search-transition-long: .2s;
 	}
 
 	.wds-global-navigation__search-submit {
-		background: $color-links;
+		background: $color-buttons;
 		border-radius: 0;
 		display: inline-block;
 		height: $search-button-height;
@@ -109,7 +109,7 @@ $search-transition-long: .2s;
 
 	.wds-global-navigation__search-suggestions {
 		background-color: $background-color;
-		border-top-color: $color-links;
+		border-top-color: $color-buttons;
 		z-index: $search-suggestion-z-index;
 	}
 
@@ -117,12 +117,12 @@ $search-transition-long: .2s;
 		color: $color-text;
 
 		&:hover {
-			color: $color-links;
+			color: $color-buttons;
 		}
 	}
 
 	.wds-is-selected .wds-global-navigation__dropdown-link {
-		color: $color-links;
+		color: $color-buttons;
 	}
 
 	.wds-dropdown__content {
@@ -148,7 +148,7 @@ $search-transition-long: .2s;
 		border-bottom-color: $color-text;
 
 		&.wds-is-active {
-			border-bottom-color: $color-links;
+			border-bottom-color: $color-buttons;
 		}
 	}
 
