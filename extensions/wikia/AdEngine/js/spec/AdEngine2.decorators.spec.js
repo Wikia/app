@@ -15,9 +15,6 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			getDecorators: noop,
 			getProviderList: noop
 		},
-		adInfoTrackerMock: {
-			run: noop
-		},
 		adDecoratorFake1: noop,
 		adDecoratorFake2: noop,
 		adDecoratorLegacyParamFormat: noop,
@@ -48,7 +45,6 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 
 	function getAdEngine() {
 		return modules['ext.wikia.adEngine.adEngine'](
-			mocks.adInfoTrackerMock,
 			mocks.adDecoratorLegacyParamFormat,
 			mocks.eventDispatcher,
 			mocks.adSlot,
