@@ -180,6 +180,58 @@ class HelperController extends \WikiaController {
 		}
 	}
 
+	/**
+	 * Api endpoint to send a password reset e-mail.
+	 * @requestParam user_id : \User::id
+	 * @requestParam token : user identification token
+	 */
+	public function sendPasswordResetLinkEmail() {
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$userId = $this->getFieldFromRequest( 'user_id', 'invalid user_id' );
+		if ( empty( $userId ) ) {
+			return;
+		}
+
+		$token = $this->getFieldFromRequest( 'token', 'invalid token' );
+		if ( empty( $token ) ) {
+			return;
+		}
+
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
+		$user = \User::newFromId( $userId );
+		if ( !$user instanceof \User ) {
+			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+
+			return;
+		}
+
+		if ( !\Sanitizer::validateEmail( $user->getEmail() ) ) {
+			$this->response->setVal( 'message', 'invalid email' );
+
+			return;
+		}
+
+		$resp = \F::app()->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
+			'targetUserId' => $userId,
+			'token'        => $token,
+		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->response->setVal( 'success', true );
+		} else {
+			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		}
+	}
+
 	public function isBlocked() {
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
