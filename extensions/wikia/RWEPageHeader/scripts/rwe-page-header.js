@@ -1,7 +1,8 @@
 require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
 	'use strict';
 
-	var track = function (data) {
+	var experimentName = 'PAGE_HEADER_RDPS_EXPERIMENT',
+		track = function (data) {
 		tracker.track(window.Object.assign({
 			action: tracker.ACTIONS.CLICK,
 			category: 'rwe-page-header',
@@ -80,9 +81,13 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	}
 
 	$(function () {
-		addWordmarkTracking();
-		initReadDropdown();
-		moveBannerNotifications();
-		openChatWindowOnClick();
+		var experimentGroup = window.Wikia.AbTest.getGroup(experimentName);
+
+		if (experimentGroup === 'RDPS_HEADER_1' || experimentName === 'RDPS_HEADER_2') {
+			addWordmarkTracking();
+			initReadDropdown();
+			moveBannerNotifications();
+			openChatWindowOnClick();
+		}
 	});
 });
