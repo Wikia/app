@@ -337,17 +337,17 @@ class ImageListGetter extends WikiaModel {
 
 		$labels['labelOk'] = [
 			'value' => ImageStates::APPROVED,
-			'checked' => ''
+			'checked' => in_array( $this->state, [ImageStates::APPROVED, ImageStates::IN_REVIEW, ImageStates::UNREVIEWED] ) ? 'checked' : ''
 		];
 
 		$labels['labelDelete'] = [
 			'value' => $this->state == 'rejected' ? ImageStates::DELETED : ImageStates::REJECTED,
-			'checked' => ''
+			'checked' => in_array( $this->state, [ImageStates::REJECTED] ) ? 'checked' : ''
 		];
 
 		$labels['labelQuestionable'] = [
 			'value' => ImageStates::QUESTIONABLE,
-			'checked' => ''
+			'checked' => in_array( $this->state, [ImageStates::QUESTIONABLE, ImageStates::QUESTIONABLE_IN_REVIEW] ) ? 'checked' : ''
 		];
 
 		return $labels;
