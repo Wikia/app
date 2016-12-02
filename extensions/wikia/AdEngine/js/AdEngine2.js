@@ -1,6 +1,5 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.slot.adSlot',
@@ -10,8 +9,7 @@ define('ext.wikia.adEngine.adEngine', [
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adInfoTracker,
-			 adDecoratorLegacyParamFormat,
+], function (adDecoratorLegacyParamFormat,
 			 eventDispatcher,
 			 adSlot,
 			 slotTracker,
@@ -192,11 +190,6 @@ define('ext.wikia.adEngine.adEngine', [
 		var decorators = adConfig.getDecorators() || [];
 		if (adDecoratorLegacyParamFormat) {
 			decorators.push(adDecoratorLegacyParamFormat);
-		}
-
-		log(['run', 'adding adInfo listener'], 'debug', logGroup);
-		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
-			adInfoTracker.run();
 		}
 
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);

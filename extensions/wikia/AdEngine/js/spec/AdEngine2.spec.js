@@ -8,9 +8,6 @@ describe('ext.wikia.adEngine.adEngine', function () {
 	var eventDispatcher = { dispatch: function () { return true; }},
 		noop = function () { return; },
 		originalLazyQueue = modules['wikia.lazyqueue'](),
-		adInfoTrackerMock = {
-			run: noop
-		},
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
 		adSlotMock = {
 			create: function (slotName, slotElement, callbacks) {
@@ -63,7 +60,6 @@ describe('ext.wikia.adEngine.adEngine', function () {
 
 	function getAdEngine(lazyQueueMock, adDecoratorMock) {
 		return modules['ext.wikia.adEngine.adEngine'](
-			adInfoTrackerMock,
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
 			adSlotMock,

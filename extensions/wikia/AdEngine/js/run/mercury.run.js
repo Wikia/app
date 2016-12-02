@@ -1,6 +1,7 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -17,6 +18,7 @@ require([
 	'wikia.window'
 ], function (
 	adContext,
+	adInfoTracker,
 	amazon,
 	oxBidder,
 	prebid,
@@ -63,6 +65,11 @@ require([
 
 		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
+		}
+
+		log(['run', 'adding adInfo listener'], 'debug', logGroup);
+		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
+			adInfoTracker.run();
 		}
 
 		slotTweaker.registerMessageListener();
