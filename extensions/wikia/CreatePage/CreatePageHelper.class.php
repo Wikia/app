@@ -1,11 +1,26 @@
 <?php
 
+/**
+ * Class CreatePageHelper
+ */
 class CreatePageHelper {
 
+	/**
+	 * @const array of namespace IDs
+	 */
 	const ALLOWED_NAMESPACES = [ NS_MAIN ];
+	/**
+	 * @const int the maximum number of returned items
+	 */
 	const FETCHED_TITLES_LIMIT = 6;
+	/**
+	 * @const string titles (without prefix) matching this regex will be filtered out
+	 */
 	const FORBIDDEN_CHARACTERS_REGEX = '/[:\/]+/';
 
+	/**
+	 * @return array[] Returned rows contain [title => string, url => string]
+	 */
 	public static function getMostWantedPages() {
 		$WantedPagesPageResponse = ( new WantedPagesPage() )->doQuery();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -43,6 +58,9 @@ class CreatePageHelper {
 		return $wantedPages;
 	}
 
+	/**
+	 * @return string['veaction'|'action']
+	 */
 	private static function getPreferredEditorQueryParamName() {
 		return EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
 	}
