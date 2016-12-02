@@ -1,10 +1,18 @@
+<?php $firstLvlItemSelected = $secondLvlItemSelected = false; ?>
 <div class="rwe-page-header-nav__dropdown wds-dropdown__content rwe-page-header-nav__read">
 	<ul class="rwe-page-header-nav__dropdown-first-level rwe-page-header-nav__dropdown-list">
 		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) ): ?>
 			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
 				<? $menuNode0 = $menuNodes[ $level0 ] ?>
 				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
-					<li class="rwe-page-header-nav__dropdown-item rwe-page-header-nav__dropdown-first-level-item">
+					<?php
+					$itemSelected = '';
+					if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) && !$firstLvlItemSelected ) {
+						$itemSelected = 'item-selected';
+						$firstLvlItemSelected = true;
+					}?>
+
+					<li class="rwe-page-header-nav__dropdown-item rwe-page-header-nav__dropdown-first-level-item <?= $itemSelected ?>">
 						<div class="rwe-page-header-nav__dropdown-link-wrapper">
 							<a class="rwe-page-header-nav__link" data-tracking="first-level"<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
 									?> data-extra="<?= $menuNode0[ NavigationModel::SPECIAL ] ?>"<? endif
@@ -21,8 +29,13 @@
 									<?
 									$menuNode1 = $menuNodes[ $level1 ];
 									$hasChildNodes = isset( $menuNode1[ NavigationModel::CHILDREN ] );
+									$itemSelected = '';
+									if ( $hasChildNodes && !$secondLvlItemSelected ) {
+										$itemSelected = 'item-selected';
+										$secondLvlItemSelected = true;
+									}
 									?>
-									<li class="rwe-page-header-nav__dropdown-item rwe-page-header-nav__dropdown-second-level-item">
+									<li class="rwe-page-header-nav__dropdown-item rwe-page-header-nav__dropdown-second-level-item <?= $itemSelected ?>">
 										<div class="rwe-page-header-nav__dropdown-link-wrapper">
 											<a class="rwe-page-header-nav__link" data-tracking="second-level"<? if ( !empty( $menuNode1[ NavigationModel::SPECIAL ] ) ):
 													?> data-extra="<?= $menuNode1[ NavigationModel::SPECIAL ] ?>"<? endif

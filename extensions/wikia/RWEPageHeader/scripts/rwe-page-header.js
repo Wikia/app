@@ -45,12 +45,15 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 		firstLevelItems.hover(function () {
 			var $hoveredItem = $(this),
+				secondLevelSelected = $hoveredItem.find('.rwe-page-header-nav__dropdown-second-level-item.item-selected'),
 				secondLevel = $hoveredItem.find('.rwe-page-header-nav__dropdown-second-level-item:has(ul):first');
 
 			firstLevelItems.removeClass('item-selected');
-			secondLevelItems.removeClass('item-selected');
 			$hoveredItem.addClass('item-selected');
-			secondLevel.addClass('item-selected');
+			if (!secondLevelSelected.length) {
+				secondLevelItems.removeClass('item-selected');
+				secondLevel.addClass('item-selected');
+			}
 		});
 
 		secondLevelItems.hover(function () {
