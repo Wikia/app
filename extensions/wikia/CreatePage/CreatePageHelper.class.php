@@ -17,7 +17,7 @@ class CreatePageHelper {
 				in_array( $row->namespace, static::ALLOWED_NAMESPACES ) &&
 				$fetchedTitlesCount < static::FETCHED_TITLES_LIMIT
 			) {
-				$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
+				$wantedPageTitle = Title::newFromRow( $row );
 
 				if ( $wantedPageTitle instanceof Title &&
 					(
