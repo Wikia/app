@@ -66,8 +66,7 @@ require([
 		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
-
-		log(['run', 'adding adInfo listener'], 'debug', logGroup);
+		
 		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
 			adInfoTracker.run();
 		}

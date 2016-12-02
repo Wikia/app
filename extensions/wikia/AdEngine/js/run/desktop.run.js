@@ -67,8 +67,7 @@ require([
 		if (floatingRail) {
 			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
 		}
-
-		log(['run', 'adding adInfo listener'], 'debug', logGroup);
+		
 		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
 			adInfoTracker.run();
 		}
