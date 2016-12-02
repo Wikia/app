@@ -235,7 +235,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$resp = \F::app()->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
+		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
 			'targetUserId' => $userId,
 			'token'        => $token,
 		] );
