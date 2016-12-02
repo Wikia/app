@@ -57,23 +57,45 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	public function test_shouldFailUserNotafaFound() {
 		global $wgTheSchwartzSecretToken;
-		$passwordResetLinkMock = $this->getMock( '\Email\Controller\PasswordResetLinkController', [ 'handle' ] );
+		$appResponse = new WikiaResponse( 'json' );
+		$appResponse->setData( [ 'result' => 'ok' ] );
+		$appMock = $this->getMock( 'WikiaApp', [ 'sendRequest' ] );
 
-		$passwordResetLinkMock->expects( $this->once() )
-			->method( 'handle' )
-			->will( $this->returnValueMap( [
-				'result' => 'ok',
-			] ) );
+		$appMock->expects( $this->once() )
+			->method( 'sendRequest' )
+			->willReturn( $appResponse );
 
-		$this->mockClass( '\Email\Controller\PasswordResetLinkController', $passwordResetLinkMock );
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'getVal' ], [], '', false );
+		$requestMock->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValueMap(
+				[
+					[ HelperController::SCHWARTZ_PARAM, '', $wgTheSchwartzSecretToken ],
+					[ HelperController::EXTERNAL_SCHWARTZ_PARAM, '', '' ],
+					[ 'token', null, 'validtoken' ],
+					[ 'user_id', null, 5448086 ],
+				]
+			) );
 
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
-			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
-			'token'                          => 'validtoken',
-			'user_id'                        => 5448086,
-		] );
+		$userMock = $this->getMock( 'User', [ 'getEmail' ] );
+		$userMock->expects( $this->any() )
+			->method( 'getEmail' )
+			->will( $this->returnValue( 'devbox@wikia-inc.com' ) );
 
-		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_OK, $response->getCode() );
-		$this->assertTrue( $response->getData()['success'] );
+		$this->mockClass( 'User', $userMock, 'newFromId' );
+
+		$response = new WikiaResponse( 'json', $requestMock );
+
+		$controller = new Wikia\Helios\HelperController();
+		$controller->setRequest( $requestMock );
+		$controller->setResponse( $response );
+		$controller->setApp( $appMock );
+
+		$controller->sendPasswordResetLinkEmail();
+
+		$result = $controller->getResponse();
+
+		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_OK, $result->getCode() );
+		$this->assertTrue( $result->getData()['success'] );
 	}
 }
