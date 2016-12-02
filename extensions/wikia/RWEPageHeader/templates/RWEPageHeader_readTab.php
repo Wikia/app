@@ -1,16 +1,17 @@
-<?php $firstLvlItemSelected = $secondLvlItemSelected = false; ?>
+<? $firstLvlItemSelected = $secondLvlItemSelected = false; ?>
 <div class="rwe-page-header-nav__dropdown wds-dropdown__content rwe-page-header-nav__read">
 	<ul class="rwe-page-header-nav__dropdown-first-level rwe-page-header-nav__dropdown-list">
 		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) ): ?>
 			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
 				<? $menuNode0 = $menuNodes[ $level0 ] ?>
 				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
-					<?php
+					<?
 					$itemSelected = '';
 					if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) && !$firstLvlItemSelected ) {
 						$itemSelected = 'item-selected';
 						$firstLvlItemSelected = true;
-					}?>
+					}
+					?>
 
 					<li class="rwe-page-header-nav__dropdown-item rwe-page-header-nav__dropdown-first-level-item <?= $itemSelected ?>">
 						<div class="rwe-page-header-nav__dropdown-link-wrapper">
