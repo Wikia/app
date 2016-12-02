@@ -4,8 +4,11 @@
 
 $link-inactive-color: $color-text;
 $link-inactive-background-color: $background-color;
-$link-active-color: invert($color-text);
 $link-active-background-color: $color-links;
+$link-active-color: $color-white;
+@if lightness($link-active-background-color) > 55 {
+	$link-active-color: $color-black;
+}
 
 $border: 1px solid $color-page-border;
 
