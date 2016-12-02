@@ -179,7 +179,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	private function getStatsSummaryTableHTML( $stats ) {
-		return Xml::buildTable( [ $stats ], [ 'class' => 'wikitable' ], 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' );
+		return Xml::buildTable( [ $stats ], [ 'class' => 'wikitable' ], ['total reviewed', 'approved', 'deleted', 'questionable', 'avg per user'] );
 	}
 
 	/**
@@ -189,7 +189,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @return string generated html
 	 */
 	private function getStatsUserTableHtml( $headers, $data ) {
-		return Xml::buildTable( $data, array( 'class' => 'wikitable sortable' ), $headers );
+		return Xml::buildTable( $data, [ 'class' => 'wikitable sortable' ], $headers );
 	}
 
 	/**
