@@ -3142,3 +3142,21 @@ $config['oasislight_bottom_js'] = [
 		'//extensions/wikia/OasisLight/scripts/heavybox.js',
 	],
 ];
+
+$config[ 'rwe_page_header_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/styles/index.scss'
+	]
+];
+
+$config[ 'rwe_page_header_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js',
+		'//extensions/wikia/RWEPageHeader/scripts/search.js',
+		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
+	]
+];
