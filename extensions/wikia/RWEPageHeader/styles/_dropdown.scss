@@ -85,6 +85,7 @@ $transition-length: .5s;
 	.rwe-page-header-nav__dropdown-first-level,
 	.rwe-page-header-nav__dropdown-second-level,
 	.rwe-page-header-nav__dropdown-third-level {
+		min-height: $container-height;
 		width: $column-width - 1px;
 	}
 
@@ -92,7 +93,6 @@ $transition-length: .5s;
 	.rwe-page-header-nav__dropdown-second-level {
 		border-right: $border;
 		margin: 0;
-		min-height: $container-height;
 	}
 
 	.rwe-page-header-nav__dropdown-second-level,
