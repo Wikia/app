@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				getVideoHeight(getSlotWidth(adSlot), params),
 				adSlot,
 				{
-					src: 'gpt',
+					src: params.src,
 					pos: params.slotName,
 					uap: params.uap || uapContext.getUapId(),
 					passback: 'vuap'
