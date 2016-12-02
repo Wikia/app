@@ -907,7 +907,11 @@ class MediaWikiService
 		$page = \Article::newFromID( $pageId );
 
 		if ( $page === null ) {
-			throw new StaleResultException( (string)$pageId );
+			throw new StaleResultException(
+				'MediaWikiService::getPageFromPageId $page is null', 0, null, [
+					'page_id' => (string) $pageId
+				]
+			);
 		}
 
 		$redirectTarget = null;
