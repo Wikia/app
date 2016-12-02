@@ -72,3 +72,13 @@ body {
 .entity_editor.fixed_toolbar .quill_toolbar {
   top: 114px !important;
 }
+
+#WikiHeader .buttons .contribute {
+  > .drop > .chevron {
+    vertical-align: middle !important;
+  }
+
+  .WikiaMenuElement a {
+    height: auto;
+  }
+}
