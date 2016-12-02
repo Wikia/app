@@ -38,12 +38,6 @@
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
-		<?php if ( !empty( $wg->EnablePageHeaderExperiment ) && empty( $wg->SuppressWikiHeader ) ): ?>
-			<div class="RWEPageHeader">
-				<?= $app->renderView( 'RWEPageHeader', 'index') ?>
-			</div>
-		<?php endif ?>
-
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
 				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
