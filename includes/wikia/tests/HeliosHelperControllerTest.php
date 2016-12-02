@@ -3,11 +3,19 @@ use Wikia\Helios\HelperController;
 
 class HeliosHelperControllerTest extends WikiaBaseTest {
 
+	const MESSAGE = 'message';
+
+	const USER_ID = 'user_id';
+
+	const SUCCESS = 'success';
+
+	const TOKEN = 'token';
+
 	public function test_shouldFailWithInvalidSecret() {
 		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [] );
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_FORBIDDEN, $response->getCode() );
-		$this->assertFalse( $response->getData()['success'] );
-		$this->assertEquals( 'invalid secret', $response->getData()['message'] );
+		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
+		$this->assertEquals( 'invalid secret', $response->getData()[ self::MESSAGE ] );
 	}
 
 	public function test_shouldFailInvalidToken() {
@@ -17,42 +25,42 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 		] );
 
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST, $response->getCode() );
-		$this->assertFalse( $response->getData()['success'] );
-		$this->assertEquals( HelperController::ERR_INVALID_TOKEN, $response->getData()['message'] );
+		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
+		$this->assertEquals( HelperController::ERR_INVALID_TOKEN, $response->getData()[ self::MESSAGE ] );
 
 		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
-			'user_id'                        => 4,
+			self::USER_ID                    => 4,
 		] );
 
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST, $response->getCode() );
-		$this->assertFalse( $response->getData()['success'] );
-		$this->assertEquals( HelperController::ERR_INVALID_TOKEN, $response->getData()['message'] );
+		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
+		$this->assertEquals( HelperController::ERR_INVALID_TOKEN, $response->getData()[ self::MESSAGE ] );
 	}
 
 	public function test_shouldFailInvalidUserId() {
 		global $wgTheSchwartzSecretToken;
 		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
-			'token'                          => 'losowytoken',
+			self::TOKEN                      => 'losowytoken',
 		] );
 
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST, $response->getCode() );
-		$this->assertFalse( $response->getData()['success'] );
-		$this->assertEquals( HelperController::ERR_INVALID_USER_ID, $response->getData()['message'] );
+		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
+		$this->assertEquals( HelperController::ERR_INVALID_USER_ID, $response->getData()[ self::MESSAGE ] );
 	}
 
 	public function test_shouldFailUserNotFound() {
 		global $wgTheSchwartzSecretToken;
 		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
-			'token'                          => 'validtoken',
-			'user_id'                        => 'bad bad user id',
+			self::TOKEN                      => 'validtoken',
+			self::USER_ID                    => 'bad bad user id',
 		] );
 
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode() );
-		$this->assertFalse( $response->getData()['success'] );
-		$this->assertEquals( HelperController::ERR_INVALID_EMAIL, $response->getData()['message'] );
+		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
+		$this->assertEquals( HelperController::ERR_INVALID_EMAIL, $response->getData()[ self::MESSAGE ] );
 	}
 	public function test_shouldFakeSendEmail() {
 		global $wgTheSchwartzSecretToken;
@@ -71,8 +79,8 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 				[
 					[ HelperController::SCHWARTZ_PARAM, '', $wgTheSchwartzSecretToken ],
 					[ HelperController::EXTERNAL_SCHWARTZ_PARAM, '', '' ],
-					[ 'token', null, 'validtoken' ],
-					[ 'user_id', null, 5448086 ],
+					[ self::TOKEN, null, 'validtoken' ],
+					[ self::USER_ID, null, 5448086 ],
 				]
 			) );
 
@@ -95,7 +103,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 		$result = $controller->getResponse();
 
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_OK, $result->getCode() );
-		$this->assertTrue( $result->getData()['success'] );
+		$this->assertTrue( $result->getData()[ self::SUCCESS ] );
 	}
 
 }
