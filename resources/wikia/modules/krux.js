@@ -17,6 +17,7 @@ define('wikia.krux', [
 		kruxLoaded = false,
 		segmentsCountTracked = false;
 
+	// we need to setup this params! this need to stay!
 	function exportPageParams(adLogicPageParams) {
 		var params, value;
 

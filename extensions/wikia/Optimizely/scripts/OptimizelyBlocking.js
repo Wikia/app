@@ -1,3 +1,4 @@
+//looks like it's not used wnywhere
 (function (window, document) {
 	'use strict';
 

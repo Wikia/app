@@ -38,6 +38,8 @@ class OasisController extends WikiaController {
 
 	public function init() {
 		wfProfileIn(__METHOD__);
+		global $wgEnableKruxTargeting, $wgWikiaEnvironment;
+
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 
 		$this->assetsManager = AssetsManager::getInstance();
@@ -67,6 +69,36 @@ class OasisController extends WikiaController {
 		$this->ivw3 = null;
 		$this->krux = null;
 		$this->netzathleten = null;
+
+		$this->universal_variable = [
+			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
+		];
+
+		$universal_variable = new \stdClass;
+
+		$universal_variable->events = [];
+
+		$page = new \stdClass;
+		$page->type = '';
+		$page->breadcrumb = '';
+		$page->environment = $wgWikiaEnvironment;
+		$universal_variable->page =$page;
+
+		$user = new \stdClass;
+		$user->user_id = '';
+		$user->has_transacted = '';
+		$user->twitter_id = '';
+		$user->facebook_id = '';
+		$user->returning = '';
+		$user->language = '';
+		$user->email = '';
+		$user->username = '';
+		$user->name = '';
+		$universal_variable->user = $user;
+		$universal_variable->version = '';
+		//$universal_variable->basket = new \stdClass;
+
+		$this->universal_variable = $universal_variable;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -345,15 +377,14 @@ class OasisController extends WikiaController {
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
-			foreach ( $scripts as $s ) {
-			//add inline scripts to jsFiles and move non-inline to the queue
+		//add inline scripts to jsFiles and move non-inline to the queue
+		foreach ( $scripts as $s ) {
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
 				// @author macbre
 				if (strpos($s['url'], 'load.php') !== false) {
 					$this->globalVariablesScript = $s['tag'] . $this->globalVariablesScript;
-				}
-				else {
+				} else {
 					$url = $s['url'];
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
@@ -364,8 +395,8 @@ class OasisController extends WikiaController {
 				$this->jsFiles .= $s['tag'];
 			}
 		}
-		$isLoggedIn = $wgUser->isLoggedIn();
 
+		$isLoggedIn = $wgUser->isLoggedIn();
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
 
 		if ( $isLoggedIn ) {

@@ -187,6 +187,7 @@
 			if ( timeout > 0 ) {
 				setTimeout(function() {
 					if ( script ) {
+						console.log("script", script)
 						script.onload( true );
 					}
 				}, timeout );

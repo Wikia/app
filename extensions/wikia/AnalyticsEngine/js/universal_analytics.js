@@ -339,7 +339,7 @@
 	 * end remove
 	 */
 
-	/**** Medium-Priority Custom Dimensions ****/
+		/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
 		['set', 'dimension8', window.wikiaPageType],                            // PageType
 		['set', 'dimension9', window.wgCityId],                                 // CityId
@@ -414,33 +414,42 @@
 			abExp, abGroupName, abSlot, abIndex,
 			abForceTrackOnLoad = false,
 			abCustomVarsForAds = [];
+
 		for (abIndex = 0; abIndex < abList.length; abIndex++) {
 			abExp = abList[abIndex];
+
 			if (!abExp || !abExp.flags) {
 				continue;
 			}
+
 			if (!abExp.flags.ga_tracking) {
 				continue;
 			}
+
 			if (abExp.flags.forced_ga_tracking_on_load && abExp.group) {
 				abForceTrackOnLoad = true;
 			}
+
 			abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
+
 			if (abSlot >= 40 && abSlot <= 49) {
 				abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
 				_gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
 				abCustomVarsForAds.push(['ads.set', 'dimension' + abSlot, abGroupName]);
 			}
 		}
-		if (abForceTrackOnLoad) {
-			var abRenderStart = window.wgNow || (new Date()), abOnLoadHandler;
 
+		// DIANA: how to track it? - solved by adding custom event track
+		if (abForceTrackOnLoad) {
+			var abRenderStart = window.wgNow || (new Date()),
 			abOnLoadHandler = function () {
 				var renderTime = (new Date()).getTime() - abRenderStart.getTime();
+
 				setTimeout(function () {
 					window.guaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
 				}, 10);
 			};
+
 			// @see: http://stackoverflow.com/q/3763080/
 			if (window.attachEvent) {
 				window.attachEvent('onload', abOnLoadHandler);
@@ -518,12 +527,13 @@
 	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
 
 	/**** Include A/B testing status ****/
-	if (window.Wikia && window.Wikia.AbTest) {
-		var i;
-		for (i = 0; i < abCustomVarsForAds.length; i++) {
-			window.ga.apply(window, abCustomVarsForAds[i]);
-		}
-	}
+	// if (window.Wikia && window.Wikia.AbTest) {
+	// 	var i;
+	//
+	// 	for (i = 0; i < abCustomVarsForAds.length; i++) {
+	// 		window.ga.apply(window, abCustomVarsForAds[i]);
+	// 	}
+	// } DIANA: moved to _index.php
 
 	/**
 	 * Function used by the backend to trigger advertisement events
@@ -543,6 +553,7 @@
 	 */
 	window.guaTrackAdEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
 		var args, adHitSample = 1; //1%
+		// TODO: why do we sample that event?
 		if (Math.random() * 100 <= adHitSample) {
 			args = Array.prototype.slice.call(arguments);
 
