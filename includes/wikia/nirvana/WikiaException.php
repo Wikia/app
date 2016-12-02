@@ -53,7 +53,7 @@ abstract class WikiaBaseException extends MWException {
  * @link http://pl2.php.net/manual/en/class.exception.php
  */
 class WikiaException extends WikiaBaseException {
-	public function __construct( $message = '', $code = 0, Exception $previous = null, $extraContext = [] ) {
+	public function __construct( $message = '', $code = 0, Exception $previous = null, array $extraContext = [] ) {
 		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
