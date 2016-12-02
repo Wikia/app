@@ -54,26 +54,4 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 		$this->assertFalse( $response->getData()['success'] );
 		$this->assertEquals( HelperController::ERR_INVALID_EMAIL, $response->getData()['message'] );
 	}
-
-	public function test_shouldFailUserNotafaFound() {
-		global $wgTheSchwartzSecretToken;
-		$passwordResetLinkMock = $this->getMock( '\Email\Controller\PasswordResetLinkController', [ 'handle' ] );
-
-		$passwordResetLinkMock->expects( $this->once() )
-			->method( 'handle' )
-			->will( $this->returnValueMap( [
-				'result' => 'ok',
-			] ) );
-
-		$this->mockClass( '\Email\Controller\PasswordResetLinkController', $passwordResetLinkMock );
-
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
-			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
-			'token'                          => 'validtoken',
-			'user_id'                        => 5448086,
-		] );
-
-		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_OK, $response->getCode() );
-		$this->assertTrue( $response->getData()['success'] );
-	}
 }
