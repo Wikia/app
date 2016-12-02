@@ -263,6 +263,7 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+$wgHooks['BeforeInitialize'][] = 'VisualEditorWikiaHooks::onBeforeInitialize';
 
 /* Configuration */
 

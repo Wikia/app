@@ -38,6 +38,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function call() {
 			log('call', 'debug', module.logGroup);
 
+			response = false;
+
 			if (!Object.keys) {
 				log(['call', 'Module is not supported in IE8', module.name], 'debug', module.logGroup);
 				return;

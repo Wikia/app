@@ -1,13 +1,18 @@
 /*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
+	'ext.wikia.adEngine.video.googleImaAdStatus',
+	'ext.wikia.adEngine.video.player.ui.closeButton',
+	'ext.wikia.adEngine.video.volumeControlHandler',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, browserDetect, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
+		videoLayerClassName = 'overVideoLayer',
 		videoMock = doc.createElement('video');
 
 	function init() {
@@ -30,9 +35,26 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return adsRequest;
 	}
 
+	function createProgressBar() {
+		var progressBar = doc.createElement('div'),
+			currentTime = doc.createElement('div');
+
+		progressBar.classList.add('progress-bar');
+		currentTime.classList.add('current-time');
+
+		progressBar.appendChild(currentTime);
+
+		return progressBar;
+	}
+
 	function prepareVideoAdContainer(videoAdContainer) {
+		var progressBar = createProgressBar();
+
 		videoAdContainer.style.position = 'relative';
 		videoAdContainer.classList.add('hidden');
+		videoAdContainer.classList.add('video-ima-container');
+		videoAdContainer.appendChild(progressBar);
+
 		return videoAdContainer;
 	}
 
@@ -62,14 +84,35 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
+	function addLayerOverVideo(ad) {
+		var layer = document.createElement('div');
+
+		layer.classList.add(videoLayerClassName);
+		layer.appendChild(closeButton.create(ad));
+		ad.container.appendChild(layer);
+
+		layer.addEventListener('click', function () {
+			if (ad && ad.adsManager && ad.status) {
+				if (ad.status.get() === 'paused') {
+					ad.adsManager.resume();
+				} else {
+					ad.adsManager.pause();
+				}
+			}
+		});
+	}
+
 	function createIma() {
 		return {
+			status: null,
 			adDisplayContainer: null,
+			adMuted: false,
 			adsLoader: null,
 			adsManager: null,
 			container: null,
 			events: {},
 			isAdsManagerLoaded: false,
+			layerOverVideo: null,
 			addEventListener: function (eventName, callback) {
 				this.events[eventName] = this.events[eventName] || [];
 				this.events[eventName].push(callback);
@@ -77,16 +120,25 @@ define('ext.wikia.adEngine.video.googleIma', [
 			playVideo: function (width, height) {
 				var self = this,
 					callback = function () {
+						log('Video play: prepare player UI', log.levels.debug, logGroup);
+						self.status = googleImaAdStatus.create(self);
+						addLayerOverVideo(self);
+						volumeControlHandler.init(self);
+
 						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
+						log('Video play: stared', log.levels.debug, logGroup);
 					};
 
 				if (this.isAdsManagerLoaded) {
 					callback();
-				} else {
+				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
+					log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 					this.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
+				} else {
+					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
 				}
 			},
 			resize: function (width, height) {
@@ -97,12 +149,24 @@ define('ext.wikia.adEngine.video.googleIma', [
 		};
 	}
 
+	function getRenderingSettings() {
+		var adsRenderingSettings = new google.ima.AdsRenderingSettings(),
+			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
+
+		if (!browserDetect.isMobile()) {
+			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
+		}
+
+		adsRenderingSettings.enablePreloading = true;
+		adsRenderingSettings.uiElements = [];
+		return adsRenderingSettings;
+	}
+
 	function setupIma(vastUrl, adContainer, width, height) {
 		var ima = createIma();
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
-			var adsRenderingSettings = new google.ima.AdsRenderingSettings();
-			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
+			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima);
 			ima.isAdsManagerLoaded = true;
 		}

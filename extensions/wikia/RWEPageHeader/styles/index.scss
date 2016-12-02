@@ -6,10 +6,6 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/oasis/css/core/layout';
 
-.WikiaPageHeader .header-container {
-	border: 0;
-}
-
 .WikiaPage:before {
 	border-top: $content-spacing-large solid $color-buttons;
 	content: '.';
@@ -20,17 +16,8 @@
 	z-index: -2;
 }
 
-.WikiaPage {
-	margin-top: $content-spacing-great-minus;
-}
-
-.WikiHeader {
+.RWEPageHeader {
 	display: none;
-}
-
-.banner-notifications-wrapper {
-	position: relative;
-	z-index: 30;
 }
 
 @media #{$breakpoint-small-only} {

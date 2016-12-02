@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/breakpoints';
 
 $link-inactive-color: $color-text;
 $link-inactive-background-color: $background-color;
@@ -24,6 +25,10 @@ $link-width: 220px;
 $container-height: 10 * $item-height;
 $container-width: 900px;
 $column-width: $container-width / 3;
+
+$container-width-small: 766px;
+$column-width-small: $container-width-small / 3;
+$link-width-small: 175px;
 
 $transition-length: .5s;
 
@@ -155,5 +160,30 @@ $transition-length: .5s;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: $link-width;
+	}
+}
+
+@media #{$wds-screen} and (max-width:#{$wds-breakpoint-l - 1}) {
+	.rwe-page-header-nav__dropdown {
+		width: $container-width-small;
+
+		&.rwe-page-header-nav__read {
+			left: -80%;
+		}
+
+		.rwe-page-header-nav__dropdown-first-level,
+		.rwe-page-header-nav__dropdown-second-level,
+		.rwe-page-header-nav__dropdown-third-level {
+			width: $column-width-small - 1px;
+		}
+
+		.rwe-page-header-nav__dropdown-second-level,
+		.rwe-page-header-nav__dropdown-third-level {
+			left: $column-width-small;
+		}
+
+		.rwe-page-header-nav__link {
+			width: $link-width-small;
+		}
 	}
 }

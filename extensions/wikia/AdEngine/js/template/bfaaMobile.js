@@ -67,7 +67,8 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
 						onResize(params.videoAspectRatio);
 					});
-					video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+
+					video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
 						onResize(params.aspectRatio);
 					});
 				});
