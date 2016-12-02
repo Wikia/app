@@ -3,10 +3,11 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
+	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adContext, lookupServices, recoveryHelper, log, win) {
+], function (adTracker, adContext, lookupServices, mercuryListener, recoveryHelper, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -28,17 +29,15 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			MOBILE_PREFOOTER: true
 		};
 
-	win.adEnginePvUID = win.adEnginePvUID || generateUUID();
-
 	function shouldHandleSlot(slot) {
-		if (!enabledSlots[slot.name] || 
-			!slot.container.firstChild || 
+		if (!enabledSlots[slot.name] ||
+			!slot.container.firstChild ||
 			!slot.container.firstChild.dataset.gptPageParams) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	function prepareData(slot, status) {
 		if (!shouldHandleSlot(slot)) {
 			return;
@@ -103,16 +102,27 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		}
 		return true;
 	}
+	
+	function setAdEnginePvUID() {
+		win.adEnginePvUID = win.adEnginePvUID || generateUUID();
+	}
 
 	function run() {
 		if (isEnabled()) {
 			log('run', 'debug', logGroup);
+			
+			setAdEnginePvUID();
+			
 			win.addEventListener('adengine.slot.status', function (e) {
 				log(['adengine.slot.status', e], 'debug', logGroup);
 				var data = prepareData(e.detail.slot, e.detail.status);
 				if (data) {
 					logSlotInfo(data);
 				}
+			});
+			
+			mercuryListener.onEveryPageChange(function() {
+				setAdEnginePvUID();
 			});
 		}
 	}
