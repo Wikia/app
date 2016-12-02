@@ -1,10 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.slot.adSlot', [
 	'wikia.document',
+	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.helper')
-], function (doc, win, recoveryHelper) {
+], function (doc, log, win, recoveryHelper) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
 
 	function create(name, container, callbacks) {
 
@@ -31,21 +34,24 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	}
 
 	function getRecoveredIframe(slotName) {
-		var node = doc.querySelector('#' + slotName + ' > div > div'),
+		var node = doc.querySelector('#' + slotName + ' > .provider-container:not(.hidden) > div'),
 			fallbackId = node && win._sp_.getElementId(node.id),
 			elementById = fallbackId && doc.getElementById(fallbackId);
 
 		if (elementById) {
-			return elementById.querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+			return elementById.querySelector('div[id*="_container_"] iframe');
 		}
 	}
 
 	function getIframe(slotName) {
-		var iframe = doc.querySelector('#' + slotName +' div:not(.hidden) > div[id*="_container_"] iframe');
+		var cssSelector = '#' + slotName + ' > .provider-container:not(.hidden) div[id*="_container_"] > iframe',
+			iframe = doc.querySelector(cssSelector);
 
 		if (!iframe && recoveryHelper && recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
 			iframe = getRecoveredIframe(slotName);
 		}
+
+		log(['getIframe', slotName, iframe && iframe.id], log.levels.debug, logGroup);
 
 		return iframe;
 	}
