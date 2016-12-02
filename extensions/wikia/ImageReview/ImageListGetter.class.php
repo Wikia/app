@@ -341,7 +341,7 @@ class ImageListGetter extends WikiaModel {
 		];
 
 		$labels['labelDelete'] = [
-			'value' => $this->state == 'rejected' ? ImageStates::DELETED : ImageStates::REJECTED,
+			'value' => $this->state == ImageStates::REJECTED ? ImageStates::DELETED : ImageStates::REJECTED,
 			'checked' => in_array( $this->state, [ImageStates::REJECTED] ) ? 'checked' : ''
 		];
 
