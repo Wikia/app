@@ -464,7 +464,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$data['links'][] = [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-vk',
+				'image' => 'wds-icons-vkontakte',
 				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-vkontakte',
