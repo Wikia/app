@@ -11,8 +11,12 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	const TOKEN = 'token';
 
+	const WIKIA_HELIOS_HELPER_CONTROLLER = 'Wikia\Helios\HelperController';
+
+	const METHOD_SEND_PASSWORD_RESET_LINK_EMAIL = 'sendPasswordResetLinkEmail';
+
 	public function test_shouldFailWithInvalidSecret() {
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [] );
+		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PASSWORD_RESET_LINK_EMAIL, [] );
 		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_FORBIDDEN, $response->getCode() );
 		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
 		$this->assertEquals( 'invalid secret', $response->getData()[ self::MESSAGE ] );
@@ -20,7 +24,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	public function test_shouldFailInvalidToken() {
 		global $wgTheSchwartzSecretToken;
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
+		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PASSWORD_RESET_LINK_EMAIL, [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
 		] );
 
@@ -28,7 +32,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
 		$this->assertEquals( HelperController::ERR_INVALID_TOKEN, $response->getData()[ self::MESSAGE ] );
 
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
+		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PASSWORD_RESET_LINK_EMAIL, [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
 			self::USER_ID                    => 4,
 		] );
@@ -40,7 +44,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	public function test_shouldFailInvalidUserId() {
 		global $wgTheSchwartzSecretToken;
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
+		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PASSWORD_RESET_LINK_EMAIL, [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
 			self::TOKEN                      => 'losowytoken',
 		] );
@@ -52,7 +56,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	public function test_shouldFailUserNotFound() {
 		global $wgTheSchwartzSecretToken;
-		$response = $this->app->sendRequest( 'Wikia\Helios\HelperController', 'sendPasswordResetLinkEmail', [
+		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PASSWORD_RESET_LINK_EMAIL, [
 			HelperController::SCHWARTZ_PARAM => $wgTheSchwartzSecretToken,
 			self::TOKEN                      => 'validtoken',
 			self::USER_ID                    => 'bad bad user id',

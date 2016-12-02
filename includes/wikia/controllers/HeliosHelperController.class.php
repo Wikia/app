@@ -22,6 +22,7 @@ class HelperController extends \WikiaController {
 	const FIELD_TOKEN = 'token';
 	const FIELD_RESULT = 'result';
 	const FIELD_SUCCESS = 'success';
+	const FIELD_USERNAME = 'username';
 
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
@@ -38,7 +39,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$username = $this->getVal( 'username' );
+		$username = $this->getVal( self::FIELD_USERNAME );
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
@@ -69,7 +70,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$username = $this->getVal( 'username' );
+		$username = $this->getVal( self::FIELD_USERNAME );
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$spoofUser = new \SpoofUser( $username );
@@ -97,7 +98,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$username = $this->getVal( 'username' );
+		$username = $this->getVal( self::FIELD_USERNAME );
 
 		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromName( $username );
@@ -163,7 +164,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
 		if ( !isset( $username ) ) {
 			return;
 		}
@@ -263,7 +264,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
 		if ( !isset( $username ) ) {
 			return;
 		}
