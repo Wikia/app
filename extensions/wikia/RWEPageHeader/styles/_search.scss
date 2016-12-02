@@ -2,9 +2,9 @@
 @import 'skins/shared/mixins/placeholder';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/breakpoints';
 
-$active-color: darken($color-buttons, 5%);
-@if $is-dark-wiki {
-	$active-color: lighten($color-buttons, 5%);
+$active-color: lighten($color-buttons, 5%);
+@if lightness($color-buttons) > 30 {
+	$active-color: darken($color-buttons, 5%);
 }
 
 $search-button-height: 100%;
