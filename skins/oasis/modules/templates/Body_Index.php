@@ -38,6 +38,12 @@
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
+		<?php if ( !empty( $wg->EnablePageHeaderExperiment ) && empty( $wg->SuppressWikiHeader ) ): ?>
+			<div class="RWEPageHeader">
+				<?= $app->renderView( 'RWEPageHeader', 'index') ?>
+			</div>
+		<?php endif ?>
+
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
 				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
@@ -91,13 +97,16 @@
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
 				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
+					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
 						<br />
 						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
 							<br /><br />
-							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?>
+						</h3>
 					</div>
+					<!--googleon: all-->
 				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">

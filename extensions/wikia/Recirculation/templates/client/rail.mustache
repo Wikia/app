@@ -2,7 +2,13 @@
 	<h2>{{title}}</h2>
 	<ul class="thumbnails">
 		{{#items}}
-			<li class="rail-item {{classes}} item-{{source}}{{#isVideo}} is-video{{/isVideo}}" {{#id}} data-id="{{id}}" {{/id}} data-flag="{{flag}}" data-index="{{index}}" data-source="{{source}}">
+			<li class="item item-{{source}}{{#isVideo}} is-video{{/isVideo}}"
+				data-flag="{{flag}}"
+				data-index="{{index}}"
+				data-source="{{source}}"
+				{{#id}} data-id="{{id}}" {{/id}}
+				{{#meta}} data-meta="{{meta}}" {{/meta}}
+			>
 				<a href="{{url}}">
 					<div class="image image-thumbnail placeholder-thumbnail fluid small">
 						{{#thumbnail}}

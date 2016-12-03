@@ -49,3 +49,15 @@
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 	</form>
 </div>
+<? if ( !empty( $wantedPages ) ): ?>
+	<div id="CreatePageTitleProposals">
+		<div id="CreatePageTitleProposalsHeader">
+			<?= wfMessage( 'createpage-dialog-redlinks-list-header' )->text() ?>
+		</div>
+		<ul>
+			<? foreach ( $wantedPages as $page ): ?>
+				<li><a href="<?= $page['url']; ?>" class="new"><?= $page['title']; ?></a></li>
+			<? endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>

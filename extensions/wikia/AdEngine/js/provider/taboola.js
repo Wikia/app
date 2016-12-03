@@ -101,7 +101,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	function fillInAfterRecoveredSlotCollapse(slot, recoverdSlotId) {
 		log(['fillInAfterRecoveredSlotCollapse - set listener', slot.name], 'debug', logGroup);
 		window.addEventListener('adengine.slot.status', function (e) {
-			if (e.detail.slotName === recoverdSlotId && e.detail.status === 'collapse') {
+			if (e.detail.slot.name === recoverdSlotId && e.detail.status === 'collapse') {
 				log(['fillInAfterRecoveredSlotCollapse::fter event', slot.name], 'debug', logGroup);
 				fillInSlot(slot);
 			}

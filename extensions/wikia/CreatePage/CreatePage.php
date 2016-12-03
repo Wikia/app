@@ -33,6 +33,7 @@ $wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.
  * Special page
  */
 $wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgAutoloadClasses['CreatePageHelper'] = __DIR__ . '/CreatePageHelper.class.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
@@ -232,7 +233,8 @@ function wfCreatePageAjaxGetDialog() {
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
-			'type' => $listtype
+			'type' => $listtype,
+			'wantedPages' => CreatePageHelper::getMostWantedPages(),
 		)
 	);
 

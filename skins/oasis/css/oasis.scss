@@ -5,6 +5,9 @@
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
 
+// TODO: remove after test ends (XW-2375)
+@import 'extensions/wikia/CreatePage/css/CreatePageTest';
+
 // Layout
 @import 'core/layout';
 @import 'wikiagrid';

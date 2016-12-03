@@ -4,13 +4,15 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTier',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, slotsContext, factory, rubiconTargeting, doc, log, win) {
+], function (adContext, slotsContext, factory, rubiconTargeting, rubiconTier, doc, log, win) {
 	'use strict';
 
-	var config = {
+	var bestPrices = {},
+		config = {
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
@@ -110,6 +112,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
 				priceMap[slotName] = params.values.sort(compareTiers).join(',');
+				saveBestPrice(slotName, params.values);
 			}
 		});
 	}
@@ -179,6 +182,24 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		});
 	}
 
+	function saveBestPrice(slotName, tiers) {
+		tiers.forEach(function (tier) {
+			bestPrices[slotName] = Math.max(rubiconTier.parsePrice(tier), bestPrices[slotName] || 0);
+		});
+	}
+
+	function getBestSlotPrice(slotName) {
+		var price;
+
+		if (typeof bestPrices[slotName] !== 'undefined') {
+			price = (bestPrices[slotName] / 100).toFixed(2).toString();
+		}
+
+		return {
+			fastlane: price
+		};
+	}
+
 	function getSlotParams(slotName) {
 		var targeting,
 			parameters = {};
@@ -246,6 +267,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 		defineSlots(skin, function () {
 			response = true;
+			priceMap = {};
+			bestPrices = {};
 			onResponse();
 		});
 	}
@@ -263,6 +286,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		name: 'rubicon_fastlane',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,

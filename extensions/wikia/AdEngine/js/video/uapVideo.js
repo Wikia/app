@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				getVideoHeight(getSlotWidth(adSlot), params),
 				adSlot,
 				{
-					src: 'gpt',
+					src: params.src,
 					pos: params.slotName,
 					uap: params.uap || uapContext.getUapId(),
 					passback: 'vuap'
@@ -75,7 +75,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				video.play();
+				var slotWidth = getSlotWidth(adSlot);
+				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});
 
 			return video;
