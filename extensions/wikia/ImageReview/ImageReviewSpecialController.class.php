@@ -206,7 +206,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$dates['days'][] = $i;
 		}
 
-		// Add months
+		/** @var Language $wgLang */
 		global $wgLang;
 		for ( $i = 1; $i <= 12; $i++ ) {
 			$dates['months'][] = [
@@ -360,7 +360,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
 		$baseUrl = Title::newFromText( 'ImageReview', NS_SPECIAL )->getFullURL();
-		$modeMsgSuffix = empty( $this->action ) ? '' : '-' . $this->action;
+		$modeMsgSuffix = $this->getModMsgSuffix();
 
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $this->order ) );
 		$sortSelect->addOptions( [
@@ -397,6 +397,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			],
 			'sortHTML' => $sortSelect->getHTML()
 		] );
+	}
+
+	private function getModMsgSuffix() {
+		return ( $this->action == self::ACTION_QUESTIONABLE || $this->action == self::ACTION_REJECTED )
+			? '-' . $this->action
+			: '';
 	}
 
 	private function logImageListCompleteness( $severity ) {
