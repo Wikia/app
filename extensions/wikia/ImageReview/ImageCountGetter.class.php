@@ -36,7 +36,6 @@ class ImageCountGetter extends WikiaModel {
 					ImageStates::QUESTIONABLE,
 					ImageStates::REJECTED,
 					ImageStates::UNREVIEWED,
-					ImageStates::INVALID_IMAGE,
 				]
 			)
 			->GROUP_BY( 'state' )
@@ -62,6 +61,7 @@ class ImageCountGetter extends WikiaModel {
 			->WHERE( 'top_200' )->EQUAL_TO( '0' )
 			->AND_( 'state' )->IN(
 				[
+					ImageStates::IN_REVIEW,
 					ImageStates::QUESTIONABLE_IN_REVIEW,
 					ImageStates::REJECTED_IN_REVIEW
 				]
@@ -85,7 +85,6 @@ class ImageCountGetter extends WikiaModel {
 			self::QUESTIONABLE => 0,
 			self::REJECTED => 0,
 			self::UNREVIEWED => 0,
-			self::INVALID => 0
 		];
 
 		$totalCounts[self::QUESTIONABLE] += $unassignedImageCounts[ImageStates::QUESTIONABLE] ?? 0;
@@ -95,7 +94,7 @@ class ImageCountGetter extends WikiaModel {
 		$totalCounts[self::REJECTED] += $usersImagesStillInReviewCounts[ImageStates::REJECTED_IN_REVIEW] ?? 0;
 
 		$totalCounts[self::UNREVIEWED] += $unassignedImageCounts[ImageStates::UNREVIEWED] ?? 0;
-		$totalCounts[self::INVALID] += $usersImagesStillInReviewCounts[ImageStates::INVALID_IMAGE] ?? 0;
+		$totalCounts[self::UNREVIEWED] += $usersImagesStillInReviewCounts[ImageStates::IN_REVIEW] ?? 0;
 
 		return $totalCounts;
 	}
