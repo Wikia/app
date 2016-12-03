@@ -302,14 +302,12 @@ class ImageListGetter extends WikiaModel {
 	}
 
 	/**
-	 * When assigning images to a user, we move the images from the
-	 * "unreviewed" state, to the "reviewed" state. Which new state
-	 * depends on where the image is in the review process.
-	 *
-	 * If an image hasn't been reviewed at all, it moves from "unreviewed"
-	 * to "in review". If the image has been marked as rejected or questionable
-	 * during the first pass of reviews, it moves to "rejected in review"
-	 * or "questionable in review"
+	 * When assigning images to a user, we move the image from one
+	 * state to another to indicate it's been assigned. If we're assigning
+	 * an "unreviewed" image it moves into the "reviewed" state. If we're
+	 * assigning a "rejected" image it moves into the "rejected_in_review"
+	 * state. And if we're assigning a "questionable" image it moves into
+	 * the "questionable_in_review" state.
 	 * @return int
 	 */
 	private function getNewState() : int {

@@ -8,8 +8,8 @@ class ImageStates {
 	const UNREVIEWED = 0;
 	const IN_REVIEW = 1;
 	const APPROVED = 2;
-	const REJECTED = 4;
 	const DELETED = 3;
+	const REJECTED = 4;
 	const QUESTIONABLE = 5;
 	const QUESTIONABLE_IN_REVIEW = 6;
 	const REJECTED_IN_REVIEW = 7;

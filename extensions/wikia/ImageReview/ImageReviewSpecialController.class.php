@@ -179,7 +179,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	private function getStatsSummaryTableHTML( $stats ) {
-		return Xml::buildTable( [ $stats ], [ 'class' => 'wikitable' ], ['total reviewed', 'approved', 'deleted', 'questionable', 'avg per user'] );
+		return Xml::buildTable(
+			[ $stats ],
+			[ 'class' => 'wikitable' ],
+			['total reviewed', 'approved', 'deleted', 'questionable', 'avg per user']
+		);
 	}
 
 	/**
