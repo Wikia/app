@@ -438,7 +438,7 @@ class MediaQueryService extends WikiaService {
 
 			default:
 				throw new InvalidArgumentException( "\$sort was none of '" . self::SORT_RECENT_FIRST . "', '"
-					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "'." );
+					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "', '" . self::SORT_TRENDING_FIRST_LEGACY . "'." );
 				break;
 		}
 
