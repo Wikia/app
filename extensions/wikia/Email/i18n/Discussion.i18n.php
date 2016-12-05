@@ -40,10 +40,10 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Es gibt es eine neue Antwort auf deinen Beitrag [$1 $2] Im Wiki [$3 $4]',
+	'emailext-discussion-reply-with-title-subject' => 'Es gibt es eine neue Antwort auf deinen Beitrag [$1 $2] Im [$3 $4] Wiki',
 	'emailext-discussion-reply-subject' => 'Es gibt eine neue Antwort auf einen Beitrag, den du verfolgst auf [$1 $2]',
 	'emailext-discussion-button-text' => 'Komplette Diskussion',
-	'emailext-discussion-all-discussions' => '[$1 Alle Diskussionen im Wiki $2]',
+	'emailext-discussion-all-discussions' => '[$1 Alle Diskussionen im $2 Wiki]',
 	'emailext-discussion-5-upvote-subject-with-title' => 'Dein Beitrag $1 im Wiki $2 hat 5 Stimmen erhalten!',
 	'emailext-discussion-5-upvote-subject' => 'Dein Beitrag im Wiki $1 hat 5 Stimmen erhalten!',
 	'emailext-discussion-5-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] im Wiki [$3 $4] hat 5 Stimmen erhalten!',
@@ -117,21 +117,21 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'emailext-discussion-reply-with-title-subject' => '[$3 $4]の[$1 $2]に新着メッセージがあります。',
-	'emailext-discussion-reply-subject' => 'フォローしている[$1 $2]のスレッドに新しいメッセージが投稿されました。',
-	'emailext-discussion-button-text' => 'すべてのトーク',
-	'emailext-discussion-all-discussions' => '[$2のすべてのトークを見る：$1]',
-	'emailext-discussion-5-upvote-subject-with-title' => '$2のあなたの投稿：$1への賛成の数が5に達しました！',
-	'emailext-discussion-5-upvote-subject' => 'あなたの投稿：$1への賛成の数が5に達しました！',
-	'emailext-discussion-5-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] への賛成の数が5に達しました！',
-	'emailext-discussion-5-upvote-summary' => '[$1 $2] のあなたの投稿への賛成の数が5に達しました！',
-	'emailext-discussion-25-upvote-subject-with-title' => 'おめでとうございます！$2のあなたの投稿：$1への賛成の数が25に達しました！',
-	'emailext-discussion-25-upvote-subject' => 'おめでとうございます！$1のあなたの投稿への賛成の数が25に達しました！',
-	'emailext-discussion-25-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] への賛成の数が25に達しました！',
-	'emailext-discussion-25-upvote-summary' => '[$1 $2] のあなたの投稿への賛成の数が25に達しました！',
-	'emailext-discussion-100-upvote-subject-with-title' => '$2のあなたの投稿$1への賛成の数が100に達しました！おめでとうございます！',
-	'emailext-discussion-100-upvote-subject' => '$1のあなたの投稿への賛成の数が100に達しました！おめでとうございます！',
-	'emailext-discussion-100-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] への賛成の数が100に達しました！',
-	'emailext-discussion-100-upvote-summary' => '[$1 $2] のあなたの投稿への賛成の数が100に達しました！',
+	'emailext-discussion-reply-subject' => 'フォローしている[$1 $2]のディスカッションに新しいメッセージが投稿されました。',
+	'emailext-discussion-button-text' => 'ディスカッションに移動',
+	'emailext-discussion-all-discussions' => '[$2のすべてのディスカッションを見る： $1]',
+	'emailext-discussion-5-upvote-subject-with-title' => '$2のあなたの投稿：$1の「イイね！」が5件に達しました！',
+	'emailext-discussion-5-upvote-subject' => 'あなたの投稿：$1の「イイね！」が5件に達しました！',
+	'emailext-discussion-5-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] の「イイね！」が5件に達しました！',
+	'emailext-discussion-5-upvote-summary' => '[$1 $2] のあなたの投稿への「イイね！」が5件に達しました！',
+	'emailext-discussion-25-upvote-subject-with-title' => 'おめでとうございます！$2のあなたの投稿：$1への「イイね！」が25件に達しました！',
+	'emailext-discussion-25-upvote-subject' => 'おめでとうございます！$1のあなたの投稿の「イイね！」が25件に達しました！',
+	'emailext-discussion-25-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] への「イイね！」が25件に達しました！',
+	'emailext-discussion-25-upvote-summary' => '[$1 $2] のあなたの投稿への「イイね！」が25件に達しました！',
+	'emailext-discussion-100-upvote-subject-with-title' => '$2のあなたの投稿$1への「イイね！」が100件に達しました！おめでとうございます！',
+	'emailext-discussion-100-upvote-subject' => '$1のあなたの投稿への「イイね！」が100件に達しました！おめでとうございます！',
+	'emailext-discussion-100-upvote-summary-with-title' => '[$3 $4] のあなたの投稿：[$1 $2] の「イイね！」が100件に達しました！',
+	'emailext-discussion-100-upvote-summary' => '[$1 $2] のあなたの投稿への「イイね！」が100件に達しました！',
 );
 
 $messages['nl'] = array(
@@ -154,22 +154,22 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Pojawiła się nowa odpowiedź na post [$1 $2] na [$3 $4]',
-	'emailext-discussion-reply-subject' => 'Pojawiła się nowa odpowiedź na obserwowany post na [$1 $2]',
+	'emailext-discussion-reply-with-title-subject' => 'Pojawiła się nowa odpowiedź na post [$1 $2] na [$3 {{GRAMMAR:locative|$4}}]',
+	'emailext-discussion-reply-subject' => 'Pojawiła się nowa odpowiedź na obserwowany post na [$1 {{GRAMMAR:locative|$2}}]',
 	'emailext-discussion-button-text' => 'Pełna dyskusja',
-	'emailext-discussion-all-discussions' => '[$1 Wszystkie dyskusje na temat $2]',
-	'emailext-discussion-5-upvote-subject-with-title' => 'Twój post $1 na $2 ma już 5 głosów!',
-	'emailext-discussion-5-upvote-subject' => 'Twój post na $1 ma już 5 głosów!',
-	'emailext-discussion-5-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 $4] ma już 5 głosów!',
-	'emailext-discussion-5-upvote-summary' => 'Twój post na [$1 $2] ma już 5 głosów!',
-	'emailext-discussion-25-upvote-subject-with-title' => 'Komuś tutaj nieźle idzie! Twój post $1 na $2 ma już 25 głosów!',
-	'emailext-discussion-25-upvote-subject' => 'Komuś tutaj nieźle idzie! Twój post na $1 ma już 25 głosów!',
-	'emailext-discussion-25-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 $4] ma już 25 głosów!',
-	'emailext-discussion-25-upvote-summary' => 'Twój post na [$1 $2] ma już 25 głosów!',
-	'emailext-discussion-100-upvote-subject-with-title' => 'Twój post $1 na $2 ma już 100 głosów! Tak trzymaj!',
-	'emailext-discussion-100-upvote-subject' => 'Twój post na $1 ma już 100 głosów! Tak trzymaj!',
-	'emailext-discussion-100-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 $4] ma już 100 głosów!',
-	'emailext-discussion-100-upvote-summary' => 'Twój post na [$1 $2] ma już 100 głosów!',
+	'emailext-discussion-all-discussions' => '[$1 Wszystkie dyskusje na {{GRAMMAR:locative|$2}}]',
+	'emailext-discussion-5-upvote-subject-with-title' => 'Twój post $1 na {{GRAMMAR:locative|$2}} ma już 5 głosów!',
+	'emailext-discussion-5-upvote-subject' => 'Twój post na {{GRAMMAR:locative|$1}} ma już 5 głosów!',
+	'emailext-discussion-5-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 {{GRAMMAR:locative|$4}}] ma już 5 głosów!',
+	'emailext-discussion-5-upvote-summary' => 'Twój post na [$1 {{GRAMMAR:locative|$2}}] ma już 5 głosów!',
+	'emailext-discussion-25-upvote-subject-with-title' => 'Komuś tutaj nieźle idzie! Twój post $1 na {{GRAMMAR:locative|$2}} ma już 25 głosów!',
+	'emailext-discussion-25-upvote-subject' => 'Komuś tutaj nieźle idzie! Twój post na {{GRAMMAR:locative|$1}} ma już 25 głosów!',
+	'emailext-discussion-25-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 {{GRAMMAR:locative|$4}}] ma już 25 głosów!',
+	'emailext-discussion-25-upvote-summary' => 'Twój post na [$1 {{GRAMMAR:locative|$2}}] ma już 25 głosów!',
+	'emailext-discussion-100-upvote-subject-with-title' => 'Twój post $1 na {{GRAMMAR:locative|$2}} ma już 100 głosów! Tak trzymaj!',
+	'emailext-discussion-100-upvote-subject' => 'Twój post na {{GRAMMAR:locative|$1}} ma już 100 głosów! Tak trzymaj!',
+	'emailext-discussion-100-upvote-summary-with-title' => 'Twój post [$1 $2] na [$3 {{GRAMMAR:locative|$4}}] ma już 100 głosów!',
+	'emailext-discussion-100-upvote-summary' => 'Twój post na [$1 {{GRAMMAR:locative|$2}}] ma już 100 głosów!',
 );
 
 $messages['pt'] = array(
@@ -192,26 +192,26 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Получен новый ответ на сообщение [$1 $2] на [$3 $4]',
+	'emailext-discussion-reply-with-title-subject' => 'Получен новый ответ на сообщение «[$1 $2]» на [$3 $4]',
 	'emailext-discussion-reply-subject' => 'В отслеживаемом вами обсуждении на [$1 $2] появился новый ответ',
 	'emailext-discussion-button-text' => 'Посмотреть обсуждение',
 	'emailext-discussion-all-discussions' => '[$1 Все обсуждения на $2]',
-	'emailext-discussion-5-upvote-subject-with-title' => 'Ваше сообщение $1 на $2 оценили 5 участников!',
+	'emailext-discussion-5-upvote-subject-with-title' => 'Ваше сообщение «$1» на $2 оценили 5 участников!',
 	'emailext-discussion-5-upvote-subject' => 'Ваше сообщение на $1 оценили 5 участников!',
-	'emailext-discussion-5-upvote-summary-with-title' => 'Ваше сообщение [$1 $2] на [$3 $4] оценили 5 участников!',
+	'emailext-discussion-5-upvote-summary-with-title' => 'Ваше сообщение «[$1 $2]» на [$3 $4] оценили 5 участников!',
 	'emailext-discussion-5-upvote-summary' => 'Ваше сообщение на [$1 $2] оценили 5 участников!',
-	'emailext-discussion-25-upvote-subject-with-title' => 'А вы сегодня в ударе! Ваше сообщение $1 на $2 оценили 25 участников!',
+	'emailext-discussion-25-upvote-subject-with-title' => 'А вы сегодня в ударе! Ваше сообщение «$1» на $2 оценили 25 участников!',
 	'emailext-discussion-25-upvote-subject' => 'А вы сегодня в ударе! Ваше сообщение на $1 оценили 25 участников!',
-	'emailext-discussion-25-upvote-summary-with-title' => 'Ваше сообщение [$1 $2] на [$3 $4] оценили 25 участников!',
+	'emailext-discussion-25-upvote-summary-with-title' => 'Ваше сообщение «[$1 $2]» на [$3 $4] оценили 25 участников!',
 	'emailext-discussion-25-upvote-summary' => 'Ваше сообщение на [$1 $2] оценили 25 участников!',
-	'emailext-discussion-100-upvote-subject-with-title' => 'Ваше сообщение $1 на $2 оценили 100 участников! Так держать!',
+	'emailext-discussion-100-upvote-subject-with-title' => 'Ваше сообщение «$1» на $2 оценили 100 участников! Так держать!',
 	'emailext-discussion-100-upvote-subject' => 'Ваше сообщение на $1 оценили 100 участников! Так держать!',
-	'emailext-discussion-100-upvote-summary-with-title' => 'Ваше сообщение [$1 $2] на [$3 $4] оценили 100 участников!',
+	'emailext-discussion-100-upvote-summary-with-title' => 'Ваше сообщение «[$1 $2]» на [$3 $4] оценили 100 участников!',
 	'emailext-discussion-100-upvote-summary' => 'Ваше сообщение на [$1 $2] оценили 100 участников!',
 );
 
 $messages['zh-hans'] = array(
-	'emailext-discussion-reply-with-title-subject' => '在[$3 $4]上帖子[$1 $2]有了一条新回复。',
+	'emailext-discussion-reply-with-title-subject' => '在[$3 $4]上题为[$1 $2]的帖子有了一条新回复。',
 	'emailext-discussion-reply-subject' => '在[$1 $2]上您关注的帖子有了一条新回复。',
 	'emailext-discussion-button-text' => '所有讨论',
 	'emailext-discussion-all-discussions' => '[$1 $2上的所有讨论]',
