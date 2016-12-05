@@ -16,6 +16,11 @@ use Email\Fatal;
 class PasswordResetLinkController extends EmailController {
 
 	protected $token;
+	protected $returnUrl;
+	const MAX_LINK_LENGTH = 40;
+
+	const URL_NO_RETURN = 'http://dummy-address/%s/%s';
+	const URL_WITH_RETURN = 'http://dummy-address/%s/%s?return_url=%s';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
@@ -32,6 +37,7 @@ class PasswordResetLinkController extends EmailController {
 
 	public function initEmail() {
 		$this->token = $this->request->getVal( 'token' );
+		$this->returnUrl = $this->request->getVal( 'return_url' );
 
 		if ( empty( $this->token ) ) {
 			throw new Fatal( 'Required token has been left empty' );
@@ -46,19 +52,39 @@ class PasswordResetLinkController extends EmailController {
 	 * @template passwordResetLink
 	 */
 	public function body() {
+		$url = $this->getResetLink();
+
 		$this->response->setData( [
-			'salutation'    => $this->getSalutation(),
-			'summary'       => $this->getSummary(),
-			'passwordIntro' => $this->getIntro(),
-			'resetLink'     => $this->getResetLink(),
-			'instructions'  => $this->getMessage( 'emailext-password-unrequested' )->text(),
-			'questions'     => $this->getMessage( 'emailext-password-questions' )->parse(),
-			'signature'     => $this->getMessage( 'emailext-password-signature' )->text(),
+			'salutation'       => $this->getSalutation(),
+			'summary'          => $this->getSummary(),
+			'passwordIntro'    => $this->getIntro(),
+			'resetLink'        => $url,
+			'resetLinkCaption' => $this->getResetLinkCaption( $url ),
+			'instructions'     => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'questions'        => $this->getMessage( 'emailext-password-questions' )->parse(),
+			'signature'        => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
 	}
 
 	protected function getResetLink() {
-		return sprintf( 'http://dummy-address/%s/%s', $this->getTargetUserName(), $this->token );
+		$query = [
+			urlencode( $this->getTargetUserName() ),
+			urlencode( $this->token ),
+		];
+		$url = self::URL_NO_RETURN;
+
+		if ( !empty( $this->returnUrl ) ) {
+			$query[] = urlencode( $this->returnUrl );
+			$url = self::URL_WITH_RETURN;
+		}
+
+		return vsprintf( $url, $query );
+	}
+
+	protected function getResetLinkCaption( $resetLink ) {
+		return strlen( $resetLink ) > self::MAX_LINK_LENGTH
+			? $this->getMessage( 'emailext-password-reset-link-link-caption' )->text()
+			: $resetLink;
 	}
 
 	protected function getSummary() {

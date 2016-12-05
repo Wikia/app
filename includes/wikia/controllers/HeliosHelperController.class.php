@@ -173,7 +173,6 @@ class HelperController extends \WikiaController {
 		if ( !isset( $tempPassword ) ) {
 			return;
 		}
-
 		$user = \User::newFromName( $username );
 
 		if ( !$user instanceof \User ) {
@@ -220,10 +219,11 @@ class HelperController extends \WikiaController {
 
 		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
 		$token = $this->getFieldFromRequest( self::FIELD_TOKEN, self::ERR_INVALID_TOKEN );
+		$returnUrl = $this->getVal( 'return_url', null );
+
 		if ( empty( $userId ) || empty ( $token ) ) {
 			return;
 		}
-
 
 		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromId( $userId );
@@ -244,6 +244,7 @@ class HelperController extends \WikiaController {
 		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
 			'targetUserId'    => $userId,
 			self::FIELD_TOKEN => $token,
+			'returnUrl'       => $returnUrl,
 		] );
 
 		$data = $resp->getData();

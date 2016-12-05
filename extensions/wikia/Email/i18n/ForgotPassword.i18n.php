@@ -10,7 +10,8 @@ $messages['en'] = [
 	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
 	'emailext-password-signature' => 'The Fandom Community Team',
 	'emailext-password-reset-link-intro' => 'Please click on the link below to reset your password',
-	'emailext-password-reset-link-summary' => 'It looks like you\'re having trouble logging in. Sorry about that! As much as we\'d like to just send you your password, for security reasons, we\'ll need you to reset your new password',
+	'emailext-password-reset-link-summary' => 'It looks like you\'re having trouble logging in. Sorry about that! As much as we\'d like to just send you your password, for security reasons, we\'ll need you to reset your new password.',
+	'emailext-password-reset-link-link-caption' => 'Click here to reset your password.',
 ];
 
 $messages['qqq'] = [
@@ -22,6 +23,7 @@ $messages['qqq'] = [
 	'emailext-password-signature' => 'The signature for this email',
 	'emailext-password-reset-link-intro' => 'Text shown above the link',
 	'emailext-password-reset-link-summary' => 'Sumary text for the password reset link email',
+	'emailext-password-reset-link-link-caption' => 'Text to be shown as the link taking the user to the password reset form.',
 ];
 
 $messages['de'] = [
