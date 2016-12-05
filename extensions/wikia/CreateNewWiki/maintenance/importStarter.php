@@ -158,7 +158,7 @@ class ImportStarter extends Maintenance {
 		/* @var Language $wgContLang */
 		global $wgContLang, $wgCityId, $wgDBname;
 		$language = $wgContLang->getCode();
-		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['id'];
+		$wikiVertical = (int) getopt( '', [ 'vertical:' ] )['vertical'];
 
 		// TODO Clean up in XW-2393
 		if ( $wikiVertical === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {

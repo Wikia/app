@@ -69,10 +69,11 @@ class ImportStarterData extends Task {
 		global $IP;
 
 		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
+			"SERVER_ID=%d %s %s/maintenance/importStarter.php --vertical=%d",
 			$this->taskContext->getCityId(),
 			$this->phpBin,
-			"{$IP}/extensions/wikia/CreateNewWiki"
+			"{$IP}/extensions/wikia/CreateNewWiki",
+			$this->taskContext->getVertical()
 		);
 
 		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );
