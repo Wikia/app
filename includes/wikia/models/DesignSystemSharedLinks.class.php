@@ -28,7 +28,7 @@ class DesignSystemSharedLinks {
 	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ] ?? NULL;
+		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
 	}
 
 	private function getLangWithFallback( $lang ) {
