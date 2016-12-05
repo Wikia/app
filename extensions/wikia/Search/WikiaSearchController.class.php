@@ -653,6 +653,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->addRightRailModules( $searchConfig );
 	}
 
+	// ST-78: temporary code to use globals from community central because we can't
+	// deploy config during code freeze
+	protected function getCentralVariableValue( $variableName ) {
+		$variable =
+			WikiFactory::getVarByName( $variableName, WikiFactory::COMMUNITY_CENTRAL,
+				true  // ignore cached value
+			);
+
+		return unserialize( $variable->cv_value );
+	}
+
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
@@ -675,12 +686,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			// ST-78: temporary code to use globals from community central because we can't
 			// deploy config during code freeze
-			$enableSearchLoggingVariable = WikiFactory::getVarByName(
-				self::ENABLE_FANDOM_STORIES_SEARCH_LOGGING,
-				WikiFactory::COMMUNITY_CENTRAL,
-				true
-			);
-			$enableSearchLogging = unserialize( $enableSearchLoggingVariable->cv_value );
+			$enableSearchLogging =
+				$this->getCentralVariableValue( self::ENABLE_FANDOM_STORIES_SEARCH_LOGGING );
 			if ( $enableSearchLogging ) {
 				WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
 					'query' => $query,
@@ -691,12 +698,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			// ST-78: temporary code to use globals from community central because we can't
 			// deploy config during code freeze
-			$disableResultsCachingVariable = WikiFactory::getVarByName(
-				self::DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING,
-				WikiFactory::COMMUNITY_CENTRAL,
-				true
-			);
-			$disableResultsCaching = unserialize( $disableResultsCachingVariable->cv_value );
+			$disableResultsCaching =
+				$this->getCentralVariableValue( self::DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING );
 			if ( !$disableResultsCaching ) {
 				$fandomStories =
 					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
@@ -738,21 +741,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		// ST-78: temporary code to use globals from community central because we can't
 		// deploy config during code freeze
-		$enableShadowingVariable = WikiFactory::getVarByName(
-				self::ENABLE_SEARCH_REQUEST_SHADOWING,
-				WikiFactory::COMMUNITY_CENTRAL,
-				true
-			);
-
-		$enableShadowing = unserialize( $enableShadowingVariable->cv_value );
-
-		$samplingRateVariable = WikiFactory::getVarByName(
-				self::SEARCH_REQUEST_SAMPLING_RATE,
-				WikiFactory::COMMUNITY_CENTRAL,
-				true
-			);
-
-		$samplingRate = unserialize( $samplingRateVariable->cv_value ) ?: 0;
+		$enableShadowing = $this->getCentralVariableValue( self::ENABLE_SEARCH_REQUEST_SHADOWING );
+		$samplingRate = $this->getCentralVariableValue( self::SEARCH_REQUEST_SAMPLING_RATE ) ?: 0;
 
 		return function () use (
 			$query, $enableShadowing, $samplingRate
