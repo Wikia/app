@@ -36,11 +36,7 @@ class DesignSystemSharedLinks {
 	 * @return array list of social urls for given language. In case of no url is defined for given language, english urls are returned.
 	 */
 	public function getSocialHrefs( $lang ) {
-		if ( isset( $this->socialHrefs[ $lang ] ) && !empty( $this->socialHrefs[ $lang ] ) ) {
-			return $this->socialHrefs[ $lang ];
-		}
-
-		return $this->socialHrefs[ 'en' ];
+		return $this->socialHrefs[ $lang ] ?? $this->socialHrefs[ 'en' ];
 	}
 
 	private function getLangWithFallback( $lang ) {
