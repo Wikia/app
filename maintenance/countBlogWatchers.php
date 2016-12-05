@@ -27,7 +27,7 @@ class CountBlogWatchers extends Maintenance {
 			SELECT DISTINCT(wl_user) user_id
 			FROM watchlist 
 			WHERE 
-				wl_title LIKE "' . $dbWikia->strencode( trim( $blog ) ) . '"
+				wl_title = "' . $dbWikia->strencode( trim( $blog ) ) . '"
 			AND wl_namespace = 502;
 		';
 
@@ -63,9 +63,9 @@ class CountBlogWatchers extends Maintenance {
 			   user_id IN (' . implode( ',', $userIds ) . ')
 			AND
 			   (
-			         CONCAT(preference_name, preference_value) LIKE "disablemail0"
-			      OR CONCAT(preference_name, preference_value) LIKE "disablemail"
-			      OR CONCAT(preference_name, preference_value) LIKE "marketingallowed1"
+			         CONCAT(preference_name, preference_value) = "disablemail0"
+			      OR CONCAT(preference_name, preference_value) = "disablemail"
+			      OR CONCAT(preference_name, preference_value) = "marketingallowed1"
 			   )
 		';
 
