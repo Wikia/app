@@ -31,6 +31,18 @@ class DesignSystemSharedLinks {
 		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
 	}
 
+	/**
+	 * @param $lang string two letter language code
+	 * @return array list of social urls for given language. In case of no url is defined for given language, english urls are returned.
+	 */
+	public function getSocialHrefs( $lang ) {
+		if ( isset( $this->socialHrefs[ $lang ] ) && !empty( $this->socialHrefs[ $lang ] ) ) {
+			return $this->socialHrefs[ $lang ];
+		}
+
+		return $this->socialHrefs[ 'en' ];
+	}
+
 	private function getLangWithFallback( $lang ) {
 		if ( isset( $this->hrefs[ $lang ] ) ) {
 			return $lang;
@@ -69,12 +81,6 @@ class DesignSystemSharedLinks {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => null,
-			'social-facebook' => null,
-			'social-twitter' => null,
-			'social-youtube' => null,
-			'social-instagram' => null,
-			'social-linkedin' => null,
-			'social-vk' => null,
 			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia',
 			'fandom-logo' => 'http://fandom.wikia.com',
@@ -101,9 +107,6 @@ class DesignSystemSharedLinks {
 			'wam' => 'http://de.wikia.com/WAM?langCode=de',
 			'help' => 'http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=de',
-			'social-facebook' => 'https://www.facebook.com/de.fandom',
-			'social-twitter' => 'https://twitter.com/fandom_deutsch',
-			'social-instagram' => 'https://www.instagram.com/de_fandom',
 			'app-store' => 'https://itunes.apple.com/de/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=de',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=de',
@@ -112,11 +115,6 @@ class DesignSystemSharedLinks {
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
 			'media-kit-contact' => 'http://www.wikia.com/mediakit/contact',
-			'social-facebook' => 'https://www.facebook.com/getfandom',
-			'social-twitter' => 'https://twitter.com/getfandom',
-			'social-youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
-			'social-instagram' => 'https://www.instagram.com/getfandom/',
-			'social-linkedin' => 'https://www.linkedin.com/company/157252',
 		],
 		'es' => [
 			'explore-wikis' => 'http://fandom.wikia.com/explore-es',
@@ -132,8 +130,6 @@ class DesignSystemSharedLinks {
 			'wam' => 'http://es.wikia.com/WAM?langCode=es',
 			'help' => 'http://comunidad.wikia.com/wiki/Ayuda:Contenidos',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=es',
-			'social-facebook' => 'https://www.facebook.com/Fandom.espanol/',
-			'social-twitter' => 'https://twitter.com/es_fandom',
 			'app-store' => 'https://itunes.apple.com/es/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=es',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=es',
@@ -152,8 +148,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=fr',
 			'wam' => 'http://fr.wikia.com/WAM?langCode=fr',
 			'help' => 'http://communaute.wikia.com/wiki/Aide:Contenu',
-			'social-facebook' => 'https://www.facebook.com/fandom.fr',
-			'social-twitter' => 'https://twitter.com/fandom_fr',
 			'app-store' => 'https://itunes.apple.com/fr/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=fr',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=fr',
@@ -172,8 +166,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=it',
 			'wam' => 'http://www.wikia.com/WAM?langCode=it',
 			'help' => 'http://it.community.wikia.com/wiki/Aiuto:Contenuti',
-			'social-facebook' => 'https://www.facebook.com/fandom.italy',
-			'social-twitter' => 'https://twitter.com/fandom_italy',
 			'app-store' => 'https://itunes.apple.com/it/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=it',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=it',
@@ -193,8 +185,6 @@ class DesignSystemSharedLinks {
 			'wam' => 'http://ja.wikia.com/WAM?langCode=ja',
 			'help' => 'http://ja.community.wikia.com/wiki/%E3%83%98%E3%83%AB%E3%83%97:%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
-			'social-facebook' => 'https://www.facebook.com/FandomJP',
-			'social-twitter' => 'https://twitter.com/FandomJP',
 			'app-store' => 'https://itunes.apple.com/jp/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=ja',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=ja',
@@ -212,8 +202,6 @@ class DesignSystemSharedLinks {
 			'support' => 'http://spolecznosc.wikia.com/wiki/Specjalna:Kontakt',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=pl',
 			'wam' => 'http://pl.wikia.com/WAM?langCode=pl',
-			'social-facebook' => 'https://www.facebook.com/pl.fandom',
-			'social-twitter' => 'https://twitter.com/pl_fandom',
 			'help' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87',
 			'app-store' => 'https://itunes.apple.com/pl/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=pl',
@@ -233,8 +221,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=pt-br',
 			'wam' => 'http://www.wikia.com/WAM?langCode=pt-br',
 			'help' => 'http://comunidade.wikia.com/wiki/Ajuda:Conte%C3%BAdos',
-			'social-facebook' => 'https://www.facebook.com/getfandom.br',
-			'social-twitter' => 'https://twitter.com/getfandom_br',
 			'app-store' => 'https://itunes.apple.com/br/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=pt-br',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=pt-br',
@@ -253,9 +239,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ru',
 			'wam' => 'http://www.wikia.com/WAM?langCode=ru',
 			'help' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5',
-			'social-facebook' => 'https://www.facebook.com/ru.fandom',
-			'social-twitter' => 'https://twitter.com/ru_fandom',
-			'social-vk' => 'https://vk.com/ru_fandom',
 			'app-store' => 'https://itunes.apple.com/ru/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=ru',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=ru',
@@ -274,7 +257,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh',
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
-			'social-facebook' => 'https://www.facebook.com/fandom.zh',
 			'app-store' => 'https://itunes.apple.com/cn/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=zh',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh',
@@ -293,7 +275,6 @@ class DesignSystemSharedLinks {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh-tw',
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh-tw',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
-			'social-facebook' => 'https://www.facebook.com/fandom.zh',
 			'app-store' => 'https://itunes.apple.com/tw/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia&hl=zh-tw',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh-tw',
@@ -322,6 +303,56 @@ class DesignSystemSharedLinks {
 			'support' => 'http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:%EB%AC%B8%EC%9D%98',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ko',
 			'help' => 'http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:%EB%AC%B8%EC%9D%98',
+		],
+	];
+
+	private $socialHrefs = [
+		'en' => [
+			'facebook' => 'https://www.facebook.com/getfandom',
+			'twitter' => 'https://twitter.com/getfandom',
+			'youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
+			'instagram' => 'https://www.instagram.com/getfandom/',
+			'linkedin' => 'https://www.linkedin.com/company/157252',
+		],
+		'de' => [
+			'facebook' => 'https://www.facebook.com/de.fandom',
+			'twitter' => 'https://twitter.com/fandom_deutsch',
+			'instagram' => 'https://www.instagram.com/de_fandom',
+		],
+		'es' => [
+			'facebook' => 'https://www.facebook.com/Fandom.espanol/',
+			'twitter' => 'https://twitter.com/es_fandom',
+		],
+		'fr' => [
+			'facebook' => 'https://www.facebook.com/fandom.fr',
+			'twitter' => 'https://twitter.com/fandom_fr',
+		],
+		'it' => [
+			'facebook' => 'https://www.facebook.com/fandom.italy',
+			'twitter' => 'https://twitter.com/fandom_italy',
+		],
+		'ja' => [
+			'facebook' => 'https://www.facebook.com/FandomJP',
+			'twitter' => 'https://twitter.com/FandomJP',
+		],
+		'pl' => [
+			'facebook' => 'https://www.facebook.com/pl.fandom',
+			'twitter' => 'https://twitter.com/pl_fandom',
+		],
+		'pt-br' => [
+			'facebook' => 'https://www.facebook.com/getfandom.br',
+			'twitter' => 'https://twitter.com/getfandom_br',
+		],
+		'ru' => [
+			'facebook' => 'https://www.facebook.com/ru.fandom',
+			'twitter' => 'https://twitter.com/ru_fandom',
+			'vkontakte' => 'https://vk.com/ru_fandom',
+		],
+		'zh-hans' => [
+			'facebook' => 'https://www.facebook.com/fandom.zh',
+		],
+		'zh-hant' => [
+			'facebook' => 'https://www.facebook.com/fandom.zh',
 		],
 	];
 }
