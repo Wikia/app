@@ -23,17 +23,9 @@ class ImportStarterData extends Task {
 	public function run() {
 		$language = $this->taskContext->getLanguage();
 
-		// ddd(
-		// 	'dump: run',
-		// 	$this->taskContext->getVertical(),
-		// 	$this->taskContext,
-		// 	(int) $this->taskContext->getVertical() === \WikiFactoryHub::VERTICAL_ID_TV,
-		// 	$language === 'en'
-		// );
-
-		// TODO: XW-2393
+		// TODO Clean up in XW-2393
 		if ( (int) $this->taskContext->getVertical() === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {
-			$starterDatabase = 'secondaryczechlab';
+			$starterDatabase = Starters::STARTER_EN_TV;
 		} else {
 			// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
 			$starterDatabase = Starters::getStarterByLanguage( $language );

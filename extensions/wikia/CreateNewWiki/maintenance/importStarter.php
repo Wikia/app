@@ -156,20 +156,13 @@ class ImportStarter extends Maintenance {
 
 	public function execute() {
 		/* @var Language $wgContLang */
-		global $wgContLang, $wgCityId, $wgDBname, $wgWikiVertical;
+		global $wgContLang, $wgCityId, $wgDBname;
 		$language = $wgContLang->getCode();
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['id'];
 
-		// ddd(
-		// 	'dump: execute',
-		// 	$wgWikiVertical,
-		// 	$language,
-		// 	$wgWikiVertical === 'tv',
-		// 	$language === 'en'
-		// );
-
-		// TODO: XW-2393
-		if ( $wgWikiVertical === 'tv' && $language === 'en' ) {
-			$starter = 'secondaryczechlab';
+		// TODO Clean up in XW-2393
+		if ( $wikiVertical === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {
+			$starter = Wikia\CreateNewWiki\Starters::STARTER_EN_TV;
 		} else {
 			$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
 		}

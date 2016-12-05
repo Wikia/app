@@ -12,6 +12,8 @@ use Wikia\SwiftStorage;
 class Starters {
 
 	const STARTER_DUMPS_BUCKET = 'starter';
+	// TODO Clean up in XW-2393
+	const STARTER_EN_TV = 'secondaryczechlab';
 
 	/**
 	 * starters map: langcode => database name
@@ -22,7 +24,6 @@ class Starters {
 		'*'  => 'aastarter',
 		'de' => 'destarter',
 		'en' => 'starter',
-		'en:tv' => 'secondaryczechlab',
 		'es' => 'esstarter',
 		'fi' => 'fistarter',
 		'fr' => 'starterbeta',
