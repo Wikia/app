@@ -57,6 +57,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	const NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE = 5;
 
+	const DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING = 'wgDisableFandomStoriesSearchResultsCaching';
+	const ENABLE_FANDOM_STORIES_SEARCH_LOGGING = 'wgEnableFandomStoriesSearchLogging';
+	const ENABLE_SEARCH_REQUEST_SHADOWING = 'wgEnableSearchRequestShadowing';
+	const SEARCH_REQUEST_SAMPLING_RATE = 'wgSearchRequestSamplingRate';
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -648,8 +653,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->addRightRailModules( $searchConfig );
 	}
 
+	// ST-78: temporary code to use globals from community central because we can't
+	// deploy config during code freeze
+	protected function getCentralVariableValue( $variableName ) {
+		$variable =
+			WikiFactory::getVarByName( $variableName, WikiFactory::COMMUNITY_CENTRAL,
+				true  // ignore cached value
+			);
+
+		return unserialize( $variable->cv_value );
+	}
+
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
-		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage, $wgDisableFandomStoriesSearchResultsCaching, $wgEnableFandomStoriesSearchLogging;
+		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$this->response->setValues( [
@@ -668,7 +684,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		) {
 			$query = $searchConfig->getQuery()->getSanitizedQuery();
 
-			if ( $wgEnableFandomStoriesSearchLogging ) {
+			// ST-78: temporary code to use globals from community central because we can't
+			// deploy config during code freeze
+			$enableSearchLogging =
+				$this->getCentralVariableValue( self::ENABLE_FANDOM_STORIES_SEARCH_LOGGING );
+			if ( $enableSearchLogging ) {
 				WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
 					'query' => $query,
 				] );
@@ -676,7 +696,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$searchCommand = $this->buildSearchCommand( $query );
 
-			if ( !$wgDisableFandomStoriesSearchResultsCaching ) {
+			// ST-78: temporary code to use globals from community central because we can't
+			// deploy config during code freeze
+			$disableResultsCaching =
+				$this->getCentralVariableValue( self::DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING );
+			if ( !$disableResultsCaching ) {
 				$fandomStories =
 					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
 						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand );
@@ -714,15 +738,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function buildSearchCommand( $query ) {
-		global $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate;
+
+		// ST-78: temporary code to use globals from community central because we can't
+		// deploy config during code freeze
+		$enableShadowing = $this->getCentralVariableValue( self::ENABLE_SEARCH_REQUEST_SHADOWING );
+		$samplingRate = $this->getCentralVariableValue( self::SEARCH_REQUEST_SAMPLING_RATE ) ?: 0;
 
 		return function () use (
-			$query, $wgEnableSearchRequestShadowing, $wgSearchRequestSamplingRate
+			$query, $enableShadowing, $samplingRate
 		) {
 			$searchService =
 				\Wikia\Util\SamplerProxy::createBuilder()
-					->setEnableShadowing( $wgEnableSearchRequestShadowing )
-					->setMethodSamplingRate( $wgSearchRequestSamplingRate )
+					->setEnableShadowing( $enableShadowing )
+					->setMethodSamplingRate( $samplingRate )
 					->setOriginalCallable( [
 						new \Wikia\Search\Services\FandomSearchService(),
 						'query',
