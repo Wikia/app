@@ -3,6 +3,12 @@
 		<div class="embeddable-discussions-heading">
 			{{heading}}
 		</div>
+		{{#editText}}
+			<a href="#" class="embeddable-discussions-edit">
+				{{editText}}
+				{{{editIcon}}}
+			</a>
+		{{/editLink}}
 		<div class="embeddable-discussions-show-all">
 			<a href="{{discussionsUrl}}">
 				{{showAll}}

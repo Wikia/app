@@ -44,7 +44,9 @@ class EmbeddableDiscussionsController {
 		// mostrecent must be bool
 		if ( isset( $args['mostrecent'] ) &&
 			$args['mostrecent'] !== 'true' &&
-			$args['mostrecent'] !== 'false'
+			$args['mostrecent'] !== 'false' &&
+			$args['mostrecent'] !== true &&
+			$args['mostrecent'] !== false
 		) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent',
 				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->inContentLanguage()->plain()
@@ -57,7 +59,7 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['size'] ) ) {
 			$size = $args['size'];
 
-			if ( !ctype_digit( $size ) ||
+			if ( !is_numeric( $size ) ||
 				intval( $size ) > self::ITEMS_MAX ||
 				intval( $size ) < self::ITEMS_MIN
 			) {
@@ -74,7 +76,7 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['columns'] ) ) {
 			$columns = $args['columns'];
 
-			if ( !ctype_digit( $columns ) ||
+			if ( !is_numeric( $columns ) ||
 				intval( $columns ) > self::COLUMNS_MAX ||
 				intval( $columns ) < self::COLUMNS_MIN
 			) {
@@ -116,7 +118,7 @@ class EmbeddableDiscussionsController {
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
 
-	private function renderDesktop( $modelData, $showLatest, $categoryName, $columns ) {
+	private function renderDesktop( $modelData, $showLatest, $categoryName, $columns, $withEditLink ) {
 		$modelData['requestData'] = json_encode( [
 			'category' => $categoryName,
 			'columns' => $columns,
@@ -135,15 +137,21 @@ class EmbeddableDiscussionsController {
 		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->inContentLanguage()->plain();
 		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->inContentLanguage()->plain();
 
+		if ( $withEditLink ) {
+			$modelData['editText'] = wfMessage( 'embeddable-discussions-timestamp-edit' )->inContentLanguage()->plain();
+			$modelData['editIcon'] = DesignSystemHelper::renderSvg( 'wds-icons-pencil', 'embeddable-discussions-edit-icon' );
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadDesktop.mustache' );
 	}
 
-	public function render( $input, array $args ) {
+	public function renderWrapper( array $args, $withEditLink ) {
 		global $wgCityId;
 
-		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
+		$showLatest = !empty( $args['mostrecent'] ) &&
+			( $args['mostrecent'] === true || filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN ) );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
 		$categoryIds = empty( $args['catid'] ) ? '' :  $args['catid'];
@@ -161,7 +169,26 @@ class EmbeddableDiscussionsController {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			return $this->renderMobile( $modelData, $showLatest, $itemCount );
 		} else {
-			return $this->renderDesktop( $modelData, $showLatest, $modelData['categoryName'], $columns );
+			return $this->renderDesktop( $modelData, $showLatest, $modelData['categoryName'], $columns, $withEditLink );
 		}
+	}
+
+	public function renderWithSavedConfig( array $args ) {
+		$apiController = new EmbeddableDiscussionsApiController();
+
+		$args['mostrecent'] = ( $apiController->readSortBy() === EmbeddableDiscussionsApiController::SORT_BY_LATEST );
+
+		$args['catid'] = array_reduce( $apiController->readSelectedCategories(), function( $carry, $item ) {
+			if ( $carry ) {
+				return $carry . ',' . $item['id'];
+			}
+			return $item['id'];
+		} );
+
+		return $this->renderWrapper( $args, true );
+	}
+
+	public function render( $input, array $args ) {
+		return $this->renderWrapper( $args, false );
 	}
 }

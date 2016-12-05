@@ -30,30 +30,48 @@ class DiscussionsThreadModel {
 	}
 
 	/**
-	 * Get category names for all requested categoryIds
-	 * @param $categoryIds requested category ids
-	 * @return array with name and id pairs for all valid requested categories
+	 * Get raw api response for all categories
+	 * @return raw api response with category names and ids
 	 */
-	public function getCategoryNames( $categoryIds ) {
+	private function getRawCategories() {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
-		$rawData = WikiaDataAccess::cache(
+		return WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_STANDARD,
 			function() {
 				return $this->apiRequest( $this->getCategoryRequestUrl() );
 			}
 		);
-
-		return $this->categoryNameLookup( $categoryIds, $rawData );
 	}
 
 	/**
-	 * Helper function for matching category data from API with requested Ids
-	 * @param $categoryIds requested category ids
-	 * @param $rawData response from API
-	 * @return array
+	 * Gets all valid category name and category id pairs
+	 * @return array with name and id pairs for all valid categories
 	 */
-	private function categoryNameLookup( $categoryIds, $rawData ) {
+	public function getAllCategories() {
+		$rawData = $this->getRawCategories();
+		$ret = [];
+
+		$categories = $rawData['_embedded']['doc:forum'];
+		if ( is_array( $categories ) ) {
+			foreach ( $categories as $value ) {
+				$ret[] = [
+					'id' => $value['id'],
+					'name' => $value['name'],
+				];
+			}
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * Get category names for all requested categoryIds
+	 * @param $categoryIds requested category ids
+	 * @return array with name and id pairs for all valid requested categories
+	 */
+	public function getCategoryNames( $categoryIds ) {
+		$rawData =  $this->getRawCategories();
 		$explodedIds = explode( ',', $categoryIds );
 		$ret = [];
 
