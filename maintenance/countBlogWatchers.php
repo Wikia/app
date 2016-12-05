@@ -27,7 +27,7 @@ class CountBlogWatchers extends Maintenance {
 			SELECT DISTINCT(wl_user) user_id
 			FROM watchlist 
 			WHERE 
-				wl_title LIKE "' . trim( $blog ) . '"
+				wl_title LIKE "' . $dbWikia->strencode( trim( $blog ) ) . '"
 			AND wl_namespace = 502;
 		';
 
