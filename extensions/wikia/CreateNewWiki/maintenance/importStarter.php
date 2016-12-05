@@ -156,9 +156,23 @@ class ImportStarter extends Maintenance {
 
 	public function execute() {
 		/* @var Language $wgContLang */
-		global $wgContLang, $wgCityId, $wgDBname;
+		global $wgContLang, $wgCityId, $wgDBname, $wgWikiVertical;
 		$language = $wgContLang->getCode();
-		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
+
+		// ddd(
+		// 	'dump: execute',
+		// 	$wgWikiVertical,
+		// 	$language,
+		// 	$wgWikiVertical === 'tv',
+		// 	$language === 'en'
+		// );
+
+		// TODO: XW-2393
+		if ( $wgWikiVertical === 'tv' && $language === 'en' ) {
+			$starter = 'secondaryczechlab';
+		} else {
+			$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
+		}
 
 		// set up the logger to work similar to the one in CreateWiki class
 		$this->logger = Wikia\Logger\WikiaLogger::instance();

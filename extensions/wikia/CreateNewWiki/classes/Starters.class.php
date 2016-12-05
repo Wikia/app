@@ -22,6 +22,7 @@ class Starters {
 		'*'  => 'aastarter',
 		'de' => 'destarter',
 		'en' => 'starter',
+		'en:tv' => 'secondaryczechlab',
 		'es' => 'esstarter',
 		'fi' => 'fistarter',
 		'fr' => 'starterbeta',
