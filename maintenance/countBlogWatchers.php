@@ -3,6 +3,8 @@ require_once __DIR__ . '/Maintenance.php';
 
 class CountBlogWatchers extends Maintenance {
 
+	const COUNT_BLOG_WATCHERS_EXECUTE = 'CountBlogWatchers::execute';
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'blog', 'The blog watchlist to recount', true, true );
@@ -29,7 +31,7 @@ class CountBlogWatchers extends Maintenance {
 			AND wl_namespace = 502;
 		';
 
-		$res = $dbWikia->query( $watchlistSQL, 'CountBlogWatchers::execute' );
+		$res = $dbWikia->query( $watchlistSQL, self::COUNT_BLOG_WATCHERS_EXECUTE );
 		$userIds = [];
 		while ( $userId = $dbWikia->fetchObject( $res ) ) {
 			$userIds[] = $userId->user_id;
@@ -46,7 +48,7 @@ class CountBlogWatchers extends Maintenance {
 			AND user_id IN (' . implode( ',', $userIds ) . ')
 		';
 
-		$res = $dbWikicities->query( $userSQL, 'CountBlogWatchers::execute' );
+		$res = $dbWikicities->query( $userSQL, self::COUNT_BLOG_WATCHERS_EXECUTE );
 		$userIds = [];
 		while ( $userId = $dbWikicities->fetchObject( $res ) ) {
 			$userIds[] = $userId->user_id;
@@ -67,7 +69,7 @@ class CountBlogWatchers extends Maintenance {
 			   )
 		';
 
-		$res = $dbUserPreferences->query( $permissionsSQL, 'CountBlogWatchers::execute' );
+		$res = $dbUserPreferences->query( $permissionsSQL, self::COUNT_BLOG_WATCHERS_EXECUTE );
 		$userIds = [];
 		while ( $userId = $dbUserPreferences->fetchObject( $res ) ) {
 			$userIds[] = $userId->user_id;
