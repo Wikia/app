@@ -329,7 +329,7 @@ class LinkSuggest {
 		global $wgLinkSuggestLimit;
 		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
 
-			if (strtolower($row->page_title) == $query) {
+			if ( is_null( $exactMatchRow ) && strtolower($row->page_title) == $query) {
 				$exactMatchRow = $row;
 				continue;
 			}
