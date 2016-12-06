@@ -9,7 +9,8 @@
 		var cookieName = 'Geo',
 			earth = 'XX',
 			geoData = false,
-			negativePrefix = 'non-';
+			negativePrefix = 'non-',
+			forcedCountryCode = context.ads.context.forcedCountry;
 
 		/**
 		 * Gets the whole data as an object representation
@@ -41,8 +42,7 @@
 		 * @return {String} The country code
 		 */
 		function getCountryCode() {
-			var data = getGeoData();
-			return context.ads.context.forcedCountry || data.country;
+			return forcedCountryCode || getGeoData().country;
 		}
 
 		/**
