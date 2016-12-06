@@ -305,7 +305,7 @@ $messages['de'] = array(
 	'preferences-v2-skin' => 'Gestaltung:',
 	'prefs-emailv2' => 'E-Mail',
 	'prefs-email-me-v2' => 'Sende mir eine E-Mail, wenn …',
-	'tog-enotifwatchlistpages-v2' => '… eine Seite, die ich verfolge, geändert wurde',
+	'tog-enotifwatchlistpages-v2' => '...sich eine von mir verfolgte Seite ändert',
 	'tog-enotifusertalkpages-v2' => '… meine Benutzerdiskussionsseite geändert wurde',
 	'tog-enotifminoredits-v2' => '… eine von mir verfolgte Seite geringfügig verändert wurde',
 	'tog-marketingallowed-v2' => '… es auf Fandom Nachrichten und Ereignisse gegeben hat',
@@ -462,8 +462,8 @@ $messages['es'] = array(
 	'prefs-wikiemail' => 'Opciones de {{SITENAME}}. Envíame un correo electrónico cuando...',
 	'preferences-v2-redirect-community-page' => 'Página Comunitaria (donde esté disponible)',
 	'tog-enotifdiscussions-v2' => '... mis discusiones tengan respuestas y votos',
-	'tog-enotifdiscussions-follows-v2' => '...discusiones que estoy siguiendo tengan nuevas respuestas',
-	'tog-enotifdiscussions-votes-v2' => '...mis discusiones reciban votos',
+	'tog-enotifdiscussions-follows-v2' => '... discusiones que estoy siguiendo tengan nuevas respuestas',
+	'tog-enotifdiscussions-votes-v2' => '... mis discusiones reciban votos',
 );
 
 $messages['eu'] = array(
@@ -784,8 +784,8 @@ $messages['ja'] = array(
 	'tog-editondblclick-v2' => 'ダブルクリックでページの編集を開始する',
 	'tog-hidefollowedpages-v2' => 'フォローしているページのリストを非公開にする',
 	'tog-enotifdiscussions-v2' => '...自分の投稿に返信や賛成があったとき',
-	'tog-enotifdiscussions-follows-v2' => '自分がフォローしているトークに新しい返信があった場合、',
-	'tog-enotifdiscussions-votes-v2' => '自分のトークの投稿に賛成票が入れられた際に',
+	'tog-enotifdiscussions-follows-v2' => '自分がフォローしているディスカッションに新しい返信があった場合',
+	'tog-enotifdiscussions-votes-v2' => '自分のディスカッションの投稿に賛成票が入れられた場合',
 );
 
 $messages['ko'] = array(
