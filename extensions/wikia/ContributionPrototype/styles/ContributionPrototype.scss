@@ -6,9 +6,17 @@ body {
   overflow-y: visible !important;
 }
 
-#app button, .desktop_modal_dialog button {
+#app button, .desktop_modal_dialog button, .quill_toolbar_popover button {
   height: auto;
   background-image: none;
+}
+
+.quill_toolbar_popover button {
+  color: black;
+
+  h2 {
+    line-height: 20px !important;
+  }
 }
 
 #WikiaPageHeader {
@@ -32,7 +40,7 @@ body {
     fill: black;
   }
 
-  .dropdown {
+  .dropdown, .controls {
     > button {
       color: black;
 
