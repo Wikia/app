@@ -17,7 +17,7 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment, $wgDevelEnvironment;
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
@@ -38,6 +38,9 @@ class Optimizely {
 				$scripts .= static::loadOriginal();
 			}
 		}
+
+		// for TMS to know which version of optimizely to load
+		$vars['wgDevelEnvironment'] = $wgDevelEnvironment;
 
 		return true;
 	}
