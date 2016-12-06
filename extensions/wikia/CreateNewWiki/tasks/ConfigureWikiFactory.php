@@ -48,10 +48,9 @@ class ConfigureWikiFactory extends Task {
 		$sharedDBW = $this->taskContext->getSharedDBW();
 		$cityId = $this->taskContext->getCityId();
 		$url = $this->taskContext->getURL();
-		$vertical = $this->taskContext->getVertical();
 
 		$staticWikiFactoryVariables = $this->getStaticVariables(
-			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url, $vertical
+			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url
 		);
 		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $sharedDBW, $staticWikiFactoryVariables );
 
@@ -60,7 +59,7 @@ class ConfigureWikiFactory extends Task {
 		return TaskResult::createForSuccess();
 	}
 
-	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $vertical ) {
+	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url ) {
 		$wikiFactoryVariables = [
 			'wgSitename' => $siteName,
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
@@ -80,11 +79,6 @@ class ConfigureWikiFactory extends Task {
 		// Set wgMetaNamespace
 		if ( mb_strpos( $siteName, ':' ) !== false ) {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
-		}
-
-		// TODO Clean up in XW-2393
-		if ( (int) $vertical === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {
-			$wikiFactoryVariables['wgWikiaEnableDPLExt'] = true;
 		}
 
 		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = \F::app()->wg->CreateDatabaseActiveCluster;
