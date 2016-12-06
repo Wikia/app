@@ -24,6 +24,9 @@ class Starters {
 		'*'  => 'aastarter',
 		'de' => 'destarter',
 		'en' => 'starter',
+		// TODO Clean up in XW-2393
+		// It's required here for dumpStarters.php
+		'en:tv' => 'secondaryczechlab',
 		'es' => 'esstarter',
 		'fi' => 'fistarter',
 		'fr' => 'starterbeta',
