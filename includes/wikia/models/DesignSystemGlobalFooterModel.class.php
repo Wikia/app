@@ -370,111 +370,23 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [ ]
 		];
 
-		if ( $this->getHref( 'social-facebook' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-facebook',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-facebook',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-facebook'
-				],
-				'href' => $this->getHref( 'social-facebook' ),
-				'tracking_label' => 'follow-us.facebook',
-			];
-		}
+		$hrefs = $this->getSocialHrefs();
 
-		if ( $this->getHref( 'social-twitter' ) ) {
+		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
 			$data['links'][] = [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-twitter',
+				'image' => 'wds-icons-' . $hrefKey,
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-twitter',
+					'name' => 'wds-icons-' . $hrefKey,
 				],
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-twitter'
+					'key' => 'global-footer-follow-us-link-' . $hrefKey
 				],
-				'href' => $this->getHref( 'social-twitter' ),
-				'tracking_label' => 'follow-us.twitter',
-			];
-		}
-
-		if ( $this->getHref( 'social-youtube' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-youtube',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-youtube',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-youtube'
-				],
-				'href' => $this->getHref( 'social-youtube' ),
-				'tracking_label' => 'follow-us.youtube',
-			];
-		}
-
-		if ( $this->getHref( 'social-instagram' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-instagram',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-instagram',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-instagram'
-				],
-				'href' => $this->getHref( 'social-instagram' ),
-				'tracking_label' => 'follow-us.instagram',
-			];
-		}
-
-		if ( $this->getHref( 'social-linkedin' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-linkedin',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-linkedin',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-linkedin'
-				],
-				'href' => $this->getHref( 'social-linkedin' ),
-				'tracking_label' => 'follow-us.linkedin',
-			];
-		}
-
-		if ( $this->getHref( 'social-vk' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-vkontakte',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-vkontakte',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-vk'
-				],
-				'href' => $this->getHref( 'social-vk' ),
-				'tracking_label' => 'follow-us.vk',
+				'href' => $hrefUrl,
+				'tracking_label' => 'follow-us.' . $hrefKey,
 			];
 		}
 
@@ -628,5 +540,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	}
+
+	private function getSocialHrefs() {
+		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
 	}
 }
