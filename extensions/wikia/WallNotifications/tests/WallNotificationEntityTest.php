@@ -5,18 +5,21 @@
  */
 class WallNotificationEntityTest extends WikiaBaseTest {
 
+	const OASIS_ANON_MESSAGE = 'A Fandom User';
+
 	/**
 	 * @param $params
 	 *
 	 * @dataProvider loadDataFromRevDataProvider
 	 */
-	public function testLoadDataFromRev( $params ) {
-		F::app()->wg->Sitename = $params['wgSitename'];
-		F::app()->wg->CityId = $params['wgCityId'];
+	public function testLoadDataFromRev( array $params ) {
+		$this->mockGlobalVariable( 'wgSitename', 'wgSitename' );
+		$this->mockGlobalVariable( 'wgCityId', $params['wgCityId'] );
 
 		$rev = $this->getRevisionMock( $params );
-		$entity = $this->getEntityMock( $rev, $params );
+		$this->mockClassesForEntity( $params );
 
+		$entity = new WallNotificationEntity();
 		$entity->loadDataFromRev( $rev );
 
 		$this->assertEquals( $entity->id, $params['id'], 'Testing "id" matches' );
@@ -27,31 +30,26 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param Revision $rev
 	 * @param array $params
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject|WallNotificationEntity
 	 */
-	private function getEntityMock( Revision $rev, array $params ) {
+	private function mockClassesForEntity( array $params ) {
 		$wm = $this->getWallMessageMock( $params );
 
-		$entity = $this->getMockBuilder( 'WallNotificationEntity' )
-			->setMethods( [
-				'getUserName',
-				'getWallMessageFromRev',
-			] )
+		$userMock = $this->getMock( User::class, [ 'getName' ] );
+		$userMock->expects( $this->once() )
+			->method( 'getName' )
+			->willReturn( $params['entity']['username'] );
+
+		$messageMock = $this->getMockBuilder( Message::class )
 			->disableOriginalConstructor()
 			->getMock();
+		$messageMock->expects( $this->any() )
+			->method( 'escaped' )
+			->willReturn( static::OASIS_ANON_MESSAGE );
 
-		$entity->expects( $this->once() )
-			->method( 'getUserName' )
-			->willReturn( $params['entity']['userName'] );
-		$entity->expects( $this->once() )
-			->method( 'getWallMessageFromRev' )
-			->with( $this->equalTo( $rev ) )
-			->willReturn( $wm );
-
-		return $entity;
+		$this->mockClass( User::class, $userMock, 'newFromId' );
+		$this->mockClass( WallMessage::class, $wm, 'newFromTitle' );
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
 	}
 
 	private function getWallMessageMock( array $params ) {
@@ -72,6 +70,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'isEdited',
 				'getLastEditSummary',
 				'getMetaTitle',
+				'load',
 			] )
 			->disableOriginalConstructor()
 			->getMock();
