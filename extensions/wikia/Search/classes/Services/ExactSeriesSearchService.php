@@ -31,10 +31,13 @@ class ExactSeriesSearchService extends EntitySearchService {
 					'title' => $item['titleStrict'],
 					'url' => $this->replaceHostUrl( $item['url'] ),
 					'quality' => $item['article_quality_i'],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . static::API_URL . $item['pageid'] ),
+					'contentUrl' => $this->replaceHostUrl(
+						'http://' . $item['host'] . '/' . static::API_URL . $item['pageid']
+					),
 				];
 			}
 		}
+
 		return null;
 	}
 

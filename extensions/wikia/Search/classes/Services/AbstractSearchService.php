@@ -2,7 +2,6 @@
 
 namespace Wikia\Search\Services;
 
-
 abstract class AbstractSearchService {
 
 	public function query( $phrase ) {

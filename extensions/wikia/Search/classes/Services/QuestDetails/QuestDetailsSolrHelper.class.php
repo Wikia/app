@@ -20,7 +20,7 @@ class QuestDetailsSolrHelper {
 	 */
 	protected $abstractLength = self::DEFAULT_ABSTRACT_LENGTH;
 
-	protected $metadataBlacklistFields = [ "id" => true, "wid_i"=>true, "_version_" => true ];
+	protected $metadataBlacklistFields = [ "id" => true, "wid_i" => true, "_version_" => true ];
 
 	/**
 	 * @param int $abstractLength
@@ -34,37 +34,38 @@ class QuestDetailsSolrHelper {
 	}
 
 	public function processMetadata( $metadata ) {
-		$out = [ ];
+		$out = [];
 		foreach ( $metadata as $id => $row ) {
 			$meta = $this->getMetadata( $row );
 			if ( !empty( $meta ) ) {
-				$out[ $id ] = $meta;
+				$out[$id] = $meta;
 			}
 		}
+
 		return $out;
 	}
 
 	public function consumeResponse( $response ) {
-		$result = [ ];
+		$result = [];
 		foreach ( $response as $item ) {
 			$resultItem = [
 				// These fields must be present always
-				'id' => $item[ 'pageid' ],
+				'id' => $item['pageid'],
 				'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
-				'url' => $item[ 'url' ],
-				'ns' => $item[ 'ns' ],
+				'url' => $item['url'],
+				'ns' => $item['ns'],
 				'revision' => $this->getRevision( $item )
 			];
 
 			$comments = $this->getCommentsNumber( $item );
-			if( isset( $comments ) ) {
-				$resultItem[ 'comments' ] = $comments;
+			if ( isset( $comments ) ) {
+				$resultItem['comments'] = $comments;
 			}
 
-			$type = $item[ 'article_type_s' ];
+			$type = $item['article_type_s'];
 			$this->addIfNotEmpty( $resultItem, 'type', $type );
 
-			$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
+			$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [] );
 			$this->addIfNotEmpty( $resultItem, 'categories', $categories );
 
 			$abstract = $this->getAbstract( $item );
@@ -73,7 +74,7 @@ class QuestDetailsSolrHelper {
 			$metadata = $this->getMetadata( $item["metadata"] );
 			$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
 
-			$result[ ] = $resultItem;
+			$result[] = $resultItem;
 		}
 
 		$this->addThumbnailsInfo( $result );
@@ -83,39 +84,46 @@ class QuestDetailsSolrHelper {
 
 	public function addCategories( $resultArray, $categoriesArray ) {
 		foreach ( $resultArray as $key => $item ) {
-			if ( isset( $categoriesArray[ $item[ 'id' ] ] ) ) {
-				$resultArray[ $key ][ 'categories' ] = $categoriesArray[ $item[ 'id' ] ];
+			if ( isset( $categoriesArray[$item['id']] ) ) {
+				$resultArray[$key]['categories'] = $categoriesArray[$item['id']];
 			}
 		}
+
 		return $resultArray;
 	}
 
 	public function filterIdsByCategory( array $categriesIDArray, $category ) {
 		foreach ( $categriesIDArray as $id => $categories ) {
 			if ( !in_array( $category, $categories ) ) {
-				unset ( $categriesIDArray[ $id ] );
+				unset ( $categriesIDArray[$id] );
 			}
 		}
+
 		return $categriesIDArray;
 	}
 
 	public function findCategoriesForIds( array $ids ) {
 		$db = wfGetDB( DB_SLAVE );
-		$out = ( new WikiaSQL() )
-			->SELECT( "cl_to, cl_from" )
+		$out = ( new WikiaSQL() )->SELECT( "cl_to, cl_from" )
 			->FROM( 'categorylinks' )
-			->WHERE( 'cl_from' )->IN( $ids )
+			->WHERE( 'cl_from' )
+			->IN( $ids )
 			->cache( self::SQL_CACHE_TIME )
-			->runLoop( $db, function ( &$out, $row ) {
-				$out[ $row->cl_from ][ ] = $row->cl_to;
-			} );
+			->runLoop(
+				$db,
+				function ( &$out, $row ) {
+					$out[$row->cl_from][] = $row->cl_to;
+				}
+			);
+
 		return $out;
 	}
 
 	public function fixUrls( array $results, $basepath ) {
 		foreach ( $results as $k => &$item ) {
-			$item[ "url" ] = $basepath . $item[ "url" ];
+			$item["url"] = $basepath . $item["url"];
 		}
+
 		return $results;
 	}
 
@@ -127,6 +135,7 @@ class QuestDetailsSolrHelper {
 	 */
 	protected function getAbstract( $item ) {
 		$html = $this->findFirstValueByKeyPrefix( $item, 'html_', '' );
+
 		return wfShortenText( $html, $this->abstractLength, true );
 	}
 
@@ -166,7 +175,7 @@ class QuestDetailsSolrHelper {
 	 */
 	protected function getMetadata( $metadata ) {
 
-		$output = [ "map_location" => [ ] ];
+		$output = [ "map_location" => [] ];
 		foreach ( $metadata as $field => $value ) {
 			if ( is_array( $value ) ) {
 				$value = $this->removeEmptyItems( $value );
@@ -176,7 +185,7 @@ class QuestDetailsSolrHelper {
 				continue;
 			}
 
-			if ( isset( $this->metadataBlacklistFields[ $field ] ) ) {
+			if ( isset( $this->metadataBlacklistFields[$field] ) ) {
 				continue;
 			}
 
@@ -185,21 +194,21 @@ class QuestDetailsSolrHelper {
 				$newName = substr( $newName, 4 );
 				if ( $newName === "location" ) {
 					$coordinates = $this->parseCoordinates( $value );
-					$output[ "map_location" ][ 'latitude' ] = $coordinates[ 'x' ];
-					$output[ "map_location" ][ 'longitude' ] = $coordinates[ 'y' ];
-				}else{
-					$output[ "map_location" ] [ $newName ] = $value;
+					$output["map_location"]['latitude'] = $coordinates['x'];
+					$output["map_location"]['longitude'] = $coordinates['y'];
+				} else {
+					$output["map_location"] [$newName] = $value;
 				}
 			} else {
 				if ( $newName == "fingerprint_ids" ) {
 					$newName = "fingerprints";
 				}
-				$output[ $newName ] = $value;
+				$output[$newName] = $value;
 			}
 		}
 
-		if ( empty( $output[ "map_location" ] ) ) {
-			unset( $output[ "map_location" ] );
+		if ( empty( $output["map_location"] ) ) {
+			unset( $output["map_location"] );
 		}
 
 		return $output;
@@ -208,20 +217,22 @@ class QuestDetailsSolrHelper {
 
 	/**
 	 * Parsing string with coordinates
+	 *
 	 * @param $str - e.g. "12.3, 45.6"
+	 *
 	 * @return array - e.g. [ 'x' => 12.3, 'y' => 45.6 ]
 	 * @throws Exception - when string has invalid format
 	 */
 	protected function parseCoordinates( $str ) {
 
 		// e.g. matches: "12.3, 45.6"
-		if(preg_match( '/-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/i', $str )) {
+		if ( preg_match( '/-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/i', $str ) ) {
 
 			// "12.3, 45.6" => [ "12.3", "45.6" ]
 			$parts = preg_split( "/\s*,\s*/", $str );
 
-			$x = $parts[ 0 ];
-			$y = $parts[ 1 ];
+			$x = $parts[0];
+			$y = $parts[1];
 
 			return [
 				'x' => floatval( $x ),
@@ -232,11 +243,11 @@ class QuestDetailsSolrHelper {
 	}
 
 	protected function getRevision( $item ) {
-		$titles = Title::newFromIDs( $item[ 'pageid' ] );
-		if( empty( $titles ) ) {
+		$titles = Title::newFromIDs( $item['pageid'] );
+		if ( empty( $titles ) ) {
 			return null;
 		}
-		$title = $titles[ 0 ];
+		$title = $titles[0];
 		$revId = $title->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
 
@@ -251,32 +262,34 @@ class QuestDetailsSolrHelper {
 	}
 
 	protected function getCommentsNumber( $item ) {
-		$titles = Title::newFromIDs( $item[ 'pageid' ] );
-		if( empty( $titles ) ) {
+		$titles = Title::newFromIDs( $item['pageid'] );
+		if ( empty( $titles ) ) {
 			return null;
 		}
-		$title = $titles[ 0 ];
+		$title = $titles[0];
 		if ( class_exists( 'ArticleCommentList' ) ) {
 			$commentsList = ArticleCommentList::newFromTitle( $title );
+
 			return $commentsList->getCountAllNested();
 		}
+
 		return null;
 	}
 
 	protected function addThumbnailsInfo( &$result ) {
-		$articleIds = [ ];
+		$articleIds = [];
 		foreach ( $result as &$item ) {
-			$articleIds[ ] = $item[ 'id' ];
+			$articleIds[] = $item['id'];
 		}
 
 		$thumbnails = $this->getArticlesThumbnails( $articleIds );
 
 		foreach ( $result as &$item ) {
-			$id = $item[ 'id' ];
-			$thumbnailProps = $thumbnails[ $id ];
+			$id = $item['id'];
+			$thumbnailProps = $thumbnails[$id];
 			foreach ( $thumbnailProps as $key => $value ) {
-				if( !empty( $value ) ) {
-					$item[ $key ] = $value;
+				if ( !empty( $value ) ) {
+					$item[$key] = $value;
 				}
 			}
 		}
@@ -284,7 +297,7 @@ class QuestDetailsSolrHelper {
 
 	protected function getArticlesThumbnails( $articles ) {
 		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
-		$result = [ ];
+		$result = [];
 		if ( self::DEFAULT_THUMBNAIL_WIDTH > 0 && self::DEFAULT_THUMBNAIL_HEIGHT > 0 ) {
 			$is = $this->getImageServing( $ids, self::DEFAULT_THUMBNAIL_WIDTH, self::DEFAULT_THUMBNAIL_HEIGHT );
 			//only one image max is returned
@@ -292,19 +305,20 @@ class QuestDetailsSolrHelper {
 			//parse results
 			foreach ( $ids as $id ) {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
-				if ( isset( $images[ $id ] ) ) {
-					$data[ 'thumbnail' ] = $images[ $id ][ 0 ][ 'url' ];
-					if ( is_array( $images[ $id ][ 0 ][ 'original_dimensions' ] ) ) {
-						array_walk( $images[ $id ][ 0 ][ 'original_dimensions' ], [ $this, 'normalizeDimension' ] );
+				if ( isset( $images[$id] ) ) {
+					$data['thumbnail'] = $images[$id][0]['url'];
+					if ( is_array( $images[$id][0]['original_dimensions'] ) ) {
+						array_walk( $images[$id][0]['original_dimensions'], [ $this, 'normalizeDimension' ] );
 
-						$data[ 'original_dimensions' ] = $images[ $id ][ 0 ][ 'original_dimensions' ];
+						$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
 					} else {
-						$data[ 'original_dimensions' ] = null;
+						$data['original_dimensions'] = null;
 					}
 				}
-				$result[ $id ] = $data;
+				$result[$id] = $data;
 			}
 		}
+
 		return $result;
 	}
 
@@ -328,6 +342,7 @@ class QuestDetailsSolrHelper {
 				return $value;
 			}
 		}
+
 		return $defaultValue;
 	}
 
@@ -339,32 +354,32 @@ class QuestDetailsSolrHelper {
 		$prefixLen = mb_strlen( $prefix );
 		$suffixLen = mb_strlen( $suffix );
 		$strLen = mb_strlen( $str );
+
 		return substr( $str, $prefixLen, $strLen - $prefixLen - $suffixLen );
 	}
 
 	protected function addIfNotEmpty( &$hashMap, $key, $value ) {
-		if( !empty( $value ) ) {
+		if ( !empty( $value ) ) {
 
-			if( is_array( $value ) ) {
+			if ( is_array( $value ) ) {
 
 				$cleanedArray = $this->removeEmptyItems( $value );
 
-				if( !empty( $cleanedArray ) ) {
-					$hashMap[ $key ] = $cleanedArray;
+				if ( !empty( $cleanedArray ) ) {
+					$hashMap[$key] = $cleanedArray;
 				}
-
 			} else {
-				$hashMap[ $key ] = $value;
+				$hashMap[$key] = $value;
 			}
 		}
 	}
 
 	protected function removeEmptyItems( $array ) {
-		$cleanedArray = [ ];
+		$cleanedArray = [];
 
-		foreach( $array as $key => $value ) {
-			if( !empty( $value ) ) {
-				$cleanedArray[ $key ] = $value;
+		foreach ( $array as $key => $value ) {
+			if ( !empty( $value ) ) {
+				$cleanedArray[$key] = $value;
 			}
 		}
 
