@@ -42,7 +42,7 @@
 		 */
 		function getCountryCode() {
 			var data = getGeoData();
-			return data.country;
+			return context.ads.context.forcedCountry || data.country;
 		}
 
 		/**

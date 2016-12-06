@@ -94,7 +94,9 @@ class AdEngine2Hooks {
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		global $wgTitle;
-		$skin = RequestContext::getMain()->getSkin();
+		$request = RequestContext::getMain();
+
+		$skin = $request->getSkin();
 		$skinName = $skin->getSkinName();
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
