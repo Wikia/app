@@ -10,18 +10,40 @@ describe('Geo', function () {
 		Cookies: {}
 	};
 
+	function getModule(cookiesMock) {
+		return modules['wikia.geo'](cookiesMock);
+	}
+
 	// mock geo cookie
-	var cookieData = '{"city":"Poznan","country":"PL","continent":"EU","region":"72"}',
-		cookieName = 'Geo',
-		cookiesMock = {
-			get: function (name) {
-				expect(name).toBe(cookieName);
-				return cookieData;
+	var geoCookieData = '{"city":"Poznan","country":"PL","continent":"EU","region":"72"}',
+		cookiesMockForcedCountryNotSet = {
+			get: function(cookieName){
+				switch (cookieName) {
+					case 'Geo':
+						return geoCookieData;
+					case 'forcedCountry':
+						return null;
+					default:
+						return null;
+				}
 			}
 		},
-		geo = modules['wikia.geo'](cookiesMock);
+		cookiesMockForcedCountrySet = {
+			get: function(cookieName){
+				switch (cookieName) {
+					case 'Geo':
+						return geoCookieData;
+					case 'forcedCountry':
+						return 'AU';
+					default:
+						return null;
+				}
+			}
+		},
+		geo = getModule(cookiesMockForcedCountryNotSet);
 
 	it('registers AMD module', function () {
+		geo = getModule(cookiesMockForcedCountryNotSet);
 		expect(typeof geo).toBe('object');
 
 		expect(typeof geo.getGeoData).toBe('function');
@@ -80,5 +102,11 @@ describe('Geo', function () {
 		expect(geo.isProperGeo(['XX', 'non-PL'])).toBeFalsy();
 		expect(geo.isProperGeo(['XX', 'non-XX-SA'])).toBeTruthy();
 		expect(geo.isProperGeo(['XX', 'non-XX-EU'])).toBeFalsy();
+	});
+
+	it('returns country when forcedCountry cookie set', function () {
+		geo = getModule(cookiesMockForcedCountrySet);
+		expect(geo.getCountryCode()).toBe('AU');
+		expect(geo.getContinentCode()).toBe('EU');
 	});
 });
