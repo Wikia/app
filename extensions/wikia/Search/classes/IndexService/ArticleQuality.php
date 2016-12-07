@@ -5,17 +5,20 @@
 namespace Wikia\Search\IndexService;
 /**
  * Allows us to access article quality service
+ *
  * @package Search
  * @subpackage IndexService
  */
 class ArticleQuality extends AbstractService {
 	/**
 	 * Queries the API for article quality
+	 *
+	 * @throws \WikiaException
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 * @return array
 	 */
 	public function execute() {
-		$result = array();
+		$result = [];
 
 		$aqService = new \ArticleQualityService();
 		$pageId = $this->currentPageId;
@@ -24,7 +27,7 @@ class ArticleQuality extends AbstractService {
 		}
 
 		$aqService->setArticleById( $pageId );
-		$result[ 'article_quality_i' ] = $aqService->getArticleQuality();
+		$result['article_quality_i'] = $aqService->getArticleQuality();
 
 		return $result;
 	}

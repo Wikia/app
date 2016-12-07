@@ -3,8 +3,7 @@ namespace Wikia\Search\Result;
 
 use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, PromoImage;
 
-class ResultHelper
-{
+class ResultHelper {
 	const MAX_WORD_COUNT_EXACT_MATCH = 40;
 	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
 
@@ -16,6 +15,7 @@ class ResultHelper
 	 * @param $descWordLimit
 	 * @param $imageSizes
 	 * @param query
+	 *
 	 * @return array
 	 */
 	public static function extendResult( $result, $pos, $descWordLimit, $imageSizes, $query = null ) {
@@ -32,11 +32,10 @@ class ResultHelper
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
 		//TODO: Remove after DAT-3642 is done
 		if ( empty( $imageURL ) ) {
-			$imageFileName = PromoImage::fromPathname( $result['image_s'] )
-				->ensureCityIdIsSet( $result['id'] )
-				->getPathname();
+			$imageFileName =
+				PromoImage::fromPathname( $result['image_s'] )->ensureCityIdIsSet( $result['id'] )->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle(
-				( new \CityVisualization)->getTargetWikiId( $result['lang_s'] ),
+				( new \CityVisualization )->getTargetWikiId( $result['lang_s'] ),
 				$imageFileName,
 				$imageSizes['width'],
 				$imageSizes['height']
@@ -58,10 +57,12 @@ class ResultHelper
 		if ( $query ) {
 			$lang = $wikiaSearchHelper->getLangForSearchResults();
 			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query( [
-					'search' => $query,
-					'resultsLang'=> $lang,
-				] );
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?' . http_build_query(
+					[
+						'search' => $query,
+						'resultsLang' => $lang,
+					]
+				);
 		}
 
 		return [
