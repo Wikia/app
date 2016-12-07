@@ -1,9 +1,11 @@
-#WikiaPageHeader nav.wikia-menu-button {
-  /* display: none; */
-}
-
 body {
   overflow-y: visible !important;
+}
+
+#app h2 {
+  border-bottom: none;
+  margin-top: 0;
+  padding-bottom: 0;
 }
 
 #app button, .desktop_modal_dialog button, .quill_toolbar_popover button {
@@ -27,7 +29,7 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  background: white;
+  background: #030f1d;
 
   h2 {
     flex-grow: 1;
@@ -78,7 +80,7 @@ body {
 }
 
 .entity_editor.fixed_toolbar .quill_toolbar {
-  top: 114px !important;
+  top: 110px !important;
 }
 
 #WikiHeader .buttons .contribute {
@@ -89,4 +91,32 @@ body {
   .WikiaMenuElement a {
     height: auto;
   }
+}
+
+.ql-editor, .wikia_color-app_background, .wikia_color-card_background {
+  background-color: #030f1d;
+}
+
+.wikia_color-headers, h1, h2, h3 {
+  color: #D5D4D4 !important;
+}
+
+.expandable_infobox {
+  background-color: inherit;
+  border: 1px solid #D5D4D4;
+
+  +.expander_button {
+    border-top: none;
+    border-left: 1px solid #D5D4D4;
+    border-right: 1px solid #D5D4D4;
+    border-bottom: 1px solid #D5D4D4;
+  }
+}
+
+.related_entities {
+  display: none;
+}
+
+.table_of_contents {
+  margin-top: 0;
 }
