@@ -5,15 +5,17 @@ define('ext.wikia.adEngine.template.porvata', [
 	'use strict';
 
 	function loadVideoAd(params) {
+		var vastTargeting = params.vastTargeting || {
+				src: params.src,
+				pos: params.slotName,
+				passback: 'porvata'
+			};
+
 		return videoAdFactory.create(
 			params.width,
 			params.height,
 			params.container,
-			{
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			},
+			vastTargeting,
 			params.vastUrl
 		);
 	}
@@ -29,7 +31,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
-		videoAdFactory.init()
+		return videoAdFactory.init()
 			.then(function () {
 				var video = loadVideoAd(params);
 
@@ -40,6 +42,8 @@ define('ext.wikia.adEngine.template.porvata', [
 				if (params.autoPlay) {
 					video.play();
 				}
+
+				return video;
 			});
 	}
 

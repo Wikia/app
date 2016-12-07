@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.video.playwire', [
 			});
 		}
 
-		win.onReady = function () {
+		win[playerId + '_ready'] = function () {
 			params.onReady(win.Bolt, playerId);
 		};
 
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.video.playwire', [
 		script.setAttribute('data-ad-tag', vastUrl);
 
 		if (params.onReady) {
-			script.setAttribute('data-onready', 'onReady');
+			script.setAttribute('data-onready', playerId + '_ready');
 		}
 
 		script.setAttribute('type', 'text/javascript');
