@@ -54,6 +54,7 @@ class BlacklistFilter {
 		if ( class_exists( 'LicensedWikisService' ) ) {
 			return function () {
 				$licencedService = new \LicensedWikisService();
+
 				return array_keys( $licencedService->getCommercialUseNotAllowedWikis() );
 			};
 		} else {
@@ -63,13 +64,15 @@ class BlacklistFilter {
 
 	public function addBlacklistedHostsProvider( callable $newProvider = null ) {
 		$this->blacklistedHostsProvider = self::unionSetProvider(
-			$this->blacklistedHostsProvider, $newProvider
+			$this->blacklistedHostsProvider,
+			$newProvider
 		);
 	}
 
 	public function addBlacklistedIdsProvider( callable $newProvider = null ) {
 		$this->blacklistedIdsProvider = self::unionSetProvider(
-			$this->blacklistedIdsProvider, $newProvider
+			$this->blacklistedIdsProvider,
+			$newProvider
 		);
 	}
 
@@ -91,7 +94,9 @@ class BlacklistFilter {
 
 	/**
 	 * Apply excluded wiki IDs and HOSTs.
+	 *
 	 * @param $select \Solarium_Query_Select
+	 *
 	 * @return \Solarium_Query_Select
 	 */
 	public function applyFilters( \Solarium_Query_Select $select ) {
@@ -104,6 +109,7 @@ class BlacklistFilter {
 		if ( !empty( $blacklistIdsQuery ) ) {
 			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistIdsQuery );
 		}
+
 		return $select;
 	}
 
@@ -112,10 +118,11 @@ class BlacklistFilter {
 		$blacklistedWikiHosts = self::materializeProvider( $this->blacklistedHostsProvider );
 
 		if ( !empty( $blacklistedWikiHosts ) ) {
-			$excluded = [ ];
+			$excluded = [];
 			foreach ( $blacklistedWikiHosts as $ex ) {
 				$excluded[] = "-({$coreFieldNames[SearchCores::F_WIKI_HOST]}:{$ex})";
 			}
+
 			return implode( ' AND ', $excluded );
 		} else {
 			return null;
@@ -127,10 +134,11 @@ class BlacklistFilter {
 		$blacklistedWikiIds = self::materializeProvider( $this->blacklistedIdsProvider );
 
 		if ( !empty( $blacklistedWikiIds ) ) {
-			$excluded = [ ];
+			$excluded = [];
 			foreach ( $blacklistedWikiIds as $wikiId ) {
 				$excluded[] = "-({$coreFieldNames[SearchCores::F_WIKI_ID]}:{$wikiId})";
 			}
+
 			return implode( ' AND ', $excluded );
 		} else {
 			return null;

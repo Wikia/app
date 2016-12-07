@@ -8,8 +8,9 @@ class ESFandomSearchService extends AbstractSearchService {
 	protected function getConsulUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new \Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl,
-				$wgConsulServiceTag ) )->getUrl( 'fandom-search' );
+		return ( new \Wikia\Service\Gateway\ConsulUrlProvider(
+			$wgConsulUrl, $wgConsulServiceTag
+		) )->getUrl( 'fandom-search' );
 	}
 
 	protected function prepareQuery( string $query ) {
@@ -20,33 +21,45 @@ class ESFandomSearchService extends AbstractSearchService {
 
 		$consulUrl = $this->getConsulUrl();
 
-		$response = \Http::post( "http://$consulUrl/fandom", array(
-			'noProxy' => true,
-			'postData' => "queryTerms=$query",
-			'headers' => [
-				'Content-Type' => 'application/x-www-form-urlencoded',
-			],
-		) );
+		$response = \Http::post(
+			"http://$consulUrl/fandom",
+			[
+				'noProxy' => true,
+				'postData' => "queryTerms=$query",
+				'headers' => [
+					'Content-Type' => 'application/x-www-form-urlencoded',
+				],
+			]
+		);
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				\WikiaLogger::instance()->error( " Fandom Stories Search: error decoding response", [
-					'query' => $query,
-					'response' => $response,
-					'error' => json_last_error(),
-				] );
+				\WikiaLogger::instance()->error(
+					" Fandom Stories Search: error decoding response",
+					[
+						'query' => $query,
+						'response' => $response,
+						'error' => json_last_error(),
+					]
+				);
 			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
 				return $decodedResponse['hits']['hits'];
 			} else {
-				\WikiaLogger::instance()->error( " Fandom Stories Search: invalid response", [
-					'query' => $query,
-					'response' => $response
-				] );
+				\WikiaLogger::instance()->error(
+					" Fandom Stories Search: invalid response",
+					[
+						'query' => $query,
+						'response' => $response
+					]
+				);
 			}
 		} else {
-			\WikiaLogger::instance()->error( " Fandom Stories Search: empty response", [
-				'query' => $query,
-			] );
+			\WikiaLogger::instance()->error(
+				" Fandom Stories Search: empty response",
+				[
+					'query' => $query,
+				]
+			);
 		}
 
 		// Must return an array of results or an empty array - don't return any errors here
@@ -62,8 +75,7 @@ class ESFandomSearchService extends AbstractSearchService {
 
 				$results[] = [
 					'title' => html_entity_decode( $source['title'] ),
-					'excerpt' => isset( $source['excerpt'] )
-						? html_entity_decode( $source['excerpt'] ) : '',
+					'excerpt' => isset( $source['excerpt'] ) ? html_entity_decode( $source['excerpt'] ) : '',
 					'vertical' => html_entity_decode( $source['vertical'] ),
 					'image' => html_entity_decode( $source['image_url'] ),
 					'url' => html_entity_decode( $source['url'] ),
