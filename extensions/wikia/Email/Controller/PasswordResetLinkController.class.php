@@ -19,6 +19,7 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
+	// TODO: use real page address, also differentiate between dev and prod envs.
 	const URL_NO_RETURN = 'http://dummy-address/?user=%s&token=%s';
 	const URL_WITH_RETURN = 'http://dummy-address/?user=%s&token=%s&return_url=%s';
 
