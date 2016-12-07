@@ -9,7 +9,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 
 	const SUCCESS = 'success';
 
-	const TOKEN = 'token';
+	const TOKEN = 'reset_token';
 
 	const WIKIA_HELIOS_HELPER_CONTROLLER = 'Wikia\Helios\HelperController';
 

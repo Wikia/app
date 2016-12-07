@@ -11,7 +11,7 @@ use Wikia\Service\User\Auth\AuthService;
  */
 class HelperController extends \WikiaController {
 	const SCHWARTZ_PARAM = 'secret';
-	const EXTERNAL_SCHWARTZ_PARAM = self::FIELD_TOKEN;
+	const EXTERNAL_SCHWARTZ_PARAM = 'token';
 	const ERR_USER_NOT_FOUND = 'user not found';
 	const ERR_INVALID_EMAIL = 'invalid email';
 	const ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE = 'could not send an email message';
@@ -19,7 +19,7 @@ class HelperController extends \WikiaController {
 	const ERR_INVALID_USER_ID = 'invalid user_id';
 	const FIELD_MESSAGE = 'message';
 	const FIELD_ALLOW = 'allow';
-	const FIELD_TOKEN = 'token';
+	const FIELD_RESET_TOKEN = 'reset_token';
 	const FIELD_RESULT = 'result';
 	const FIELD_SUCCESS = 'success';
 	const FIELD_USERNAME = 'username';
@@ -218,7 +218,7 @@ class HelperController extends \WikiaController {
 		}
 
 		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
-		$token = $this->getFieldFromRequest( self::FIELD_TOKEN, self::ERR_INVALID_TOKEN );
+		$token = $this->getFieldFromRequest( self::FIELD_RESET_TOKEN, self::ERR_INVALID_TOKEN );
 		$returnUrl = $this->getVal( 'return_url', null );
 
 		if ( empty( $userId ) || empty ( $token ) ) {
@@ -242,9 +242,9 @@ class HelperController extends \WikiaController {
 		}
 
 		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
-			'targetUserId'    => $userId,
-			self::FIELD_TOKEN => $token,
-			'returnUrl'       => $returnUrl,
+			'targetUserId'    		=> $userId,
+			self::FIELD_RESET_TOKEN => $token,
+			'returnUrl'       		=> $returnUrl,
 		] );
 
 		$data = $resp->getData();

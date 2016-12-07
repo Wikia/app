@@ -36,7 +36,7 @@ class PasswordResetLinkController extends EmailController {
 	}
 
 	public function initEmail() {
-		$this->token = $this->request->getVal( 'token' );
+		$this->token = $this->request->getVal( 'reset_token' );
 		$this->returnUrl = $this->request->getVal( 'return_url' );
 
 		if ( empty( $this->token ) ) {
