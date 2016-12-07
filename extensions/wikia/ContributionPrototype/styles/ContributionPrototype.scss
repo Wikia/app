@@ -1,3 +1,92 @@
 #WikiaPageHeader nav.wikia-menu-button {
+  /* display: none; */
+}
+
+body {
+  overflow-y: visible !important;
+}
+
+#app button, .desktop_modal_dialog button, .quill_toolbar_popover button {
+  height: auto;
+  background-image: none;
+}
+
+.quill_toolbar_popover button {
+  color: black;
+
+  h2 {
+    line-height: 20px !important;
+  }
+}
+
+#WikiaPageHeader {
   display: none;
+}
+
+.cms_article_header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: white;
+
+  h2 {
+    flex-grow: 1;
+    border-bottom: none;
+  }
+}
+
+.quill_toolbar {
+  .wds-icon {
+    fill: black;
+  }
+
+  .dropdown, .controls {
+    > button {
+      color: black;
+
+      > i {
+        font-style: normal;
+      }
+    }
+  }
+
+  .dropdown-content {
+    .ql-header h2 {
+      border-bottom: none !important;
+      line-height: 20px !important;
+      margin-top: 0 !important;
+    }
+
+    button {
+      color: black;
+
+      > i {
+        font-style: normal;
+      }
+    }
+  }
+}
+
+.wds-global-navigation {
+  position: fixed !important;
+}
+
+.cms_fixed_header {
+  position: fixed;
+  top: 55px;
+  z-index: 2;
+}
+
+.entity_editor.fixed_toolbar .quill_toolbar {
+  top: 114px !important;
+}
+
+#WikiHeader .buttons .contribute {
+  > .drop > .chevron {
+    vertical-align: middle !important;
+  }
+
+  .WikiaMenuElement a {
+    height: auto;
+  }
 }

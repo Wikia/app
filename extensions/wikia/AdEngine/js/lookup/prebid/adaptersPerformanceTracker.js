@@ -1,8 +1,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, timeBuckets, prebid) {
+], function (adTracker, adaptersRegistry, timeBuckets, prebid) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
@@ -10,8 +11,9 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		notRespondedMsg = 'NO_RESPONSE',
 		responseErrorCode = 2;
 
-	function setupPerformanceMap(skin, adapters) {
-		var biddersPerformanceMap = {};
+	function setupPerformanceMap(skin) {
+		var biddersPerformanceMap = {},
+			adapters = adaptersRegistry.getAdapters();
 
 		adapters.forEach(function (adapter) {
 			var slots = adapter.getSlots(skin),

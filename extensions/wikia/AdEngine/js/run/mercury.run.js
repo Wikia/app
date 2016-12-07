@@ -1,6 +1,7 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -9,25 +10,30 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
+	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
-], function (adContext,
-			 amazon,
-			 oxBidder,
-			 prebid,
-			 rubiconFastlane,
-			 rubiconVulcan,
-			 customAdsLoader,
-			 messageListener,
-			 mercuryListener,
-			 scrollHandler,
-			 yavliTag,
-			 geo,
-			 instantGlobals,
-			 win) {
+], function (
+	adContext,
+	adInfoTracker,
+	amazon,
+	oxBidder,
+	prebid,
+	rubiconFastlane,
+	rubiconVulcan,
+	customAdsLoader,
+	messageListener,
+	mercuryListener,
+	slotTweaker,
+	scrollHandler,
+	yavliTag,
+	geo,
+	instantGlobals,
+	win
+) {
 	'use strict';
 
 	messageListener.init();
@@ -60,11 +66,26 @@ require([
 		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
+		
+		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
+			adInfoTracker.run();
+		}
+
+		slotTweaker.registerMessageListener();
 	});
 
 	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 		mercuryListener.onEveryPageChange(function () {
 			prebid.call();
+		});
+	}
+
+	if (
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+	) {
+		mercuryListener.onEveryPageChange(function () {
+			rubiconFastlane.call();
 		});
 	}
 });

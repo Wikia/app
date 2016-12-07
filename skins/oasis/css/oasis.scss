@@ -5,6 +5,9 @@
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
 
+// TODO: remove after test ends (XW-2375)
+@import 'extensions/wikia/CreatePage/css/CreatePageTest';
+
 // Layout
 @import 'core/layout';
 @import 'wikiagrid';
@@ -58,6 +61,9 @@
 @import 'resources/wikia/libraries/bootstrap/tooltip';
 @import 'resources/wikia/libraries/bootstrap/popover';
 
+// UI Components initial scss
+@import 'resources/wikia/ui_components/modal/css/modal-initial.scss';
+
 // Extensions (only include here if used on the majority of page views!)
 @import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
@@ -73,6 +79,7 @@
 @import 'extensions/wikia/TOC/css/toc';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
+@import 'extensions/wikia/PageShare/styles/PageShare';
 
 //Site Optimizations
 @import 'extensions/wikia/Rail/styles/RailElement';

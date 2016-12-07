@@ -29,6 +29,7 @@ class PageHeaderController extends WikiaController {
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
 		$this->subtitle = $skinVars['subtitle'];
+		$this->skinname = $skinVars['skinname'];
 	}
 
 	/**
@@ -80,12 +81,7 @@ class PageHeaderController extends WikiaController {
 
 			$this->actionImage = MenuButtonController::ADD_ICON;
 			$this->actionName = 'addtopic';
-		} // "Edit with form" (SMW)
-		else if ( isset( $this->content_actions['formedit'] ) ) {
-			$this->action = $this->content_actions['formedit'];
-			$this->actionImage = MenuButtonController::EDIT_ICON;
-			$this->actionName = 'form-edit';
-		} // ve-edit
+		}  // ve-edit
 		else if ( isset( $this->content_actions['ve-edit'] ) && $this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
@@ -124,6 +120,9 @@ class PageHeaderController extends WikiaController {
 			} else {
 				array_push( $editActions, 've-edit' );
 			}
+		}
+		if ( isset( $this->content_actions['formedit'] ) ) {
+			array_push( $editActions, 'formedit' ); // SUS-533
 		}
 
 		// items to be added to "edit" dropdown

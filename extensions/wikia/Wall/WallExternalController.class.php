@@ -202,6 +202,19 @@ class WallExternalController extends WikiaController {
 		}
 	}
 
+	/**
+	 * Main entry point for starting a new Wall or Forum thread
+	 * @requestParam string[] relatedTopics
+	 * @requestParam string token MediaWiki edit token
+	 * @requestParam string messagetitle Title of new thread
+	 * @requestParam string body Message body
+	 * @requestParam int pagenamespace 1200 for Message Wall, 2000 for Forum threads
+	 * @requestParam string pagetitle title of parent page (Message Wall or Forum Board)
+	 * @requestParam bool notifyeveryone whether to notify everyone on the wiki
+	 *
+	 * @responseParam bool status
+	 * @responseParam string message rendered message HTML
+	 */
 	public function postNewMessage() {
 		try {
 			$this->checkWriteRequest();
@@ -230,13 +243,16 @@ class WallExternalController extends WikiaController {
 			$titleMeta = $helper->getDefaultTitle();
 		}
 
-		if ( empty( $body ) ) {
+		$ns = $this->request->getInt( 'pagenamespace' );
+
+		// SUS-1387: Namespace parameter must be valid Wall or Forum namespace
+		if ( empty( $body ) || !WallHelper::isWallNamespace( $ns ) ) {
 			$this->response->setVal( 'status', false );
-			$this->response->setCode(WikiaResponse::RESPONSE_CODE_BAD_REQUEST);
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
 
-		$ns = $this->request->getVal( 'pagenamespace' );
+
 		$notifyEveryone = false;
 		if ( $helper->isAllowedNotifyEveryone( $ns, $this->wg->User ) ) {
 			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
