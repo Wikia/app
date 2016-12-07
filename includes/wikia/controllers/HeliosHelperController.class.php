@@ -272,7 +272,7 @@ class HelperController extends \WikiaController {
 
 		$user = \User::newFromName( $username );
 		if (
-			!$user instanceof User ||
+			!$user instanceof \User ||
 			$user->getId() == 0
 		) {
 			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_USER_NOT_FOUND );
