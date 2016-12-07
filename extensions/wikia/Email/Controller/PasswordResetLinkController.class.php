@@ -19,8 +19,8 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
-	const URL_NO_RETURN = 'http://dummy-address/%s/%s';
-	const URL_WITH_RETURN = 'http://dummy-address/%s/%s?return_url=%s';
+	const URL_NO_RETURN = 'http://dummy-address/?user=%s&token=%s';
+	const URL_WITH_RETURN = 'http://dummy-address/?user=%s&token=%s&return_url=%s';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
