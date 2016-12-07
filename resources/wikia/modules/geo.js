@@ -10,7 +10,7 @@
 			earth = 'XX',
 			geoData = false,
 			negativePrefix = 'non-',
-			forcedCountryCode = context.ads.context.forcedCountry;
+			forcedCountryCookieName = 'forcedCountry';
 
 		/**
 		 * Gets the whole data as an object representation
@@ -21,13 +21,18 @@
 		 */
 		function getGeoData() {
 			if (geoData === false) {
-				var jsonData = decodeURIComponent(cookies.get(cookieName));
+				var jsonData = decodeURIComponent(cookies.get(cookieName)),
+					forcedCountry = cookies.get(forcedCountryCookieName);
 
 				// Fix for broken json in cookie
 				try {
 					geoData = JSON.parse(jsonData) || {};
 				} catch (e) {
 					geoData = {};
+				}
+
+				if (forcedCountry) {
+					geoData.country = decodeURIComponent(forcedCountry);
 				}
 			}
 
@@ -42,7 +47,7 @@
 		 * @return {String} The country code
 		 */
 		function getCountryCode() {
-			return forcedCountryCode || getGeoData().country;
+			return getGeoData().country;
 		}
 
 		/**
