@@ -21,11 +21,11 @@ class ImportStarterData extends Task {
 	}
 
 	public function run() {
-		$language = $this->taskContext->getLanguage();
-		$vertical = (int) $this->taskContext->getVertical();
-
 		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
-		$starterDatabase = Starters::getStarterByLanguageAndVertical( $language, $vertical );
+		$starterDatabase = Starters::getStarterByLanguageAndVertical(
+			$this->taskContext->getLanguage(),
+			(int) $this->taskContext->getVertical()
+		);
 		$this->taskContext->setStarterDb( $starterDatabase );
 
 		// import a starter database XML dump from DFS
