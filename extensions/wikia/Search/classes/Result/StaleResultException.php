@@ -1,4 +1,5 @@
 <?php
 namespace Wikia\Search\Result;
 
-class StaleResultException extends \WikiaException {}
+class StaleResultException extends \WikiaException {
+}
