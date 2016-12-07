@@ -92,7 +92,26 @@
 	</script>
 	<script type='text/template' id='user-template'>
 		<img src="<%= avatarSrc %>"/>
-		<span class="username"><%= name %></span>
+		<span class="username" data-name="<%= name %>">
+			<%= name %>
+			<span class="badge">
+				<% if(groups.indexOf('staff') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-staff'); ?>
+				<% } else if (groups.indexOf('sysop') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-admin'); ?>
+				<% } else if (
+					groups.indexOf('chatmoderator') !== -1 ||
+					groups.indexOf('threadmoderator') !== -1
+				) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-discussion-moderator'); ?>
+				<% } else if (groups.indexOf('vstf') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-vstf', 'wds-icon wds-icon-small'); ?>
+				<% }
+				else if (groups.indexOf('helper') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-helper', 'wds-icon wds-icon-small'); ?>
+				<% } %>
+			</span>
+		</span>
 		<div class="details">
 			<span class="status"><?= wfMessage( 'chat-status-away' )->escaped(); ?></span>
 		</div>

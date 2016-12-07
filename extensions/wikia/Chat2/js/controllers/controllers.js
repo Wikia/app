@@ -854,7 +854,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	onUpdateUser: function (message) {
 		var updatedUser = new models.User();
 		updatedUser.mport(message.data);
-
+console.log(updatedUser);
 		var connectedUser = this.model.users.findByName(updatedUser.get('name'));
 
 		if (typeof connectedUser != "undefined") {

@@ -98,6 +98,7 @@ a {
 	height: 40px;
 	margin: 10px;
 	position: relative;
+
 	.User {
 		border-left: 1px solid $color-page-border;
 		height: 26px;
@@ -107,18 +108,26 @@ a {
 		right: 0;
 		top: 5px;
 		width: 113px;
+
 		img {
 			vertical-align: middle;
 		}
+
 		.username {
 			font-weight: bold;
+
+			.badge {
+				top: 0;
+			}
 		}
+
 		&.chat-mod, &.staff {
 			.username:after {
 				top: 1px;
 			}
 		}
 	}
+
 	.private {
 		font-size: 16px;
 		font-weight: bold;
@@ -131,20 +140,24 @@ a {
 	font-size: 11px;
 	padding: 7px 5px 7px 32px;
 	position: relative;
+
 	&.away {
 		color: $color-chat-gray;
+
 		.status {
 			display: inline;
 		}
 	}
+
 	img {
 		border: 1px solid $color-page-border;
 		height: 22px;
-		position: absolute;
 		left: 5px;
+		position: absolute;
 		vertical-align: middle;
 		width: 22px;
 	}
+
 	.username {
 		display: block;
 		margin-right: 15px;
@@ -152,8 +165,7 @@ a {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
-		&:after {
-			content: '';
+		.badge {
 			height: 18px;
 			position: absolute;
 			right: 5px;
@@ -161,21 +173,15 @@ a {
 			width: 18px;
 		}
 	}
-	&.chat-mod .username:after, &.staff .username:after {
 
-	}
-	&.chat-mod .username:after {
-		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-admin.svg'); /* inline */
-	}
-	&.staff .username:after {
-		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-staff.svg'); /* inline */
-	}
 	.details {
 		font-size: 11px;
 	}
+
 	.status {
 		display: none;
 	}
+
 	.UserStatsMenu {
 		display: none;
 	}

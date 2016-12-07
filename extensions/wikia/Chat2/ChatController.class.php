@@ -45,7 +45,7 @@ class ChatController extends WikiaController {
 		$this->bodyClasses = "";
 		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
 			$this->isModerator = 1;
-			$this->bodyClasses .= ' chat-mod ';
+			$this->bodyClasses .= ' chatmoderator ';
 		} else {
 			$this->isModerator = 0;
 		}

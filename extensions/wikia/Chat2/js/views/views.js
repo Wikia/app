@@ -211,8 +211,9 @@ var UserView = Backbone.View.extend({
 	render: function(){
 		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
 
-		var model = this.model.toJSON();
-		$().log(model, model.name);
+		var model = this.model.toJSON(),
+			groups = this.model.get('groups');
+		// $().log(model, model.name);
 		if(model['since']) {
 			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
 		}
@@ -224,15 +225,16 @@ var UserView = Backbone.View.extend({
 		$(this.el).attr('id', this.liId());
 		$(this.el).attr('data-user', this.model.get('name'));
 
-		// If this is a chat moderator, add the chat-mod class so that kick-ban links don't show up, etc.
-		if(this.model.get('isModerator') === true){
-			$(this.el).addClass('chat-mod');
-		}
+		// Check user groups so that kick-ban links don't show up, etc. & user gets a proper badge
+		$(this.el).addClass(groups.join(' '));
 
-		if(this.model.get('isStaff') === true){
-			$(this.el).addClass('staff');
-		}
-
+		// if(this.model.get('isModerator') === true){
+		// 	$(this.el).addClass('chatmoderator');
+		// }
+		//
+		// if(groups.indexOf("staff") != -1){
+		// 	$(this.el).addClass('staff');
+		// }
 
 		// If the user is away, add a certain class to them, if not, remove the away class.
 		if(this.model.get('statusState') == STATUS_STATE_AWAY){
@@ -428,7 +430,7 @@ var NodeChatUsers = Backbone.View.extend({
     		e.preventDefault();
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
     		if(!(name.length > 0)) {
-    			name = $(e.target).closest('li').find('.username').first().text();
+    			name = $(e.target).closest('li').find('.username').first().data('name');
     		}
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
 		});
@@ -541,7 +543,7 @@ var NodeChatUsers = Backbone.View.extend({
 			offset = $element.offset(),
 			menu = $('#UserStatsMenu').html($(element).find('.UserStatsMenu').html()),
 			menuActions = menu.find('.actions'),
-			username = menu.find('.username').text(),
+			username = menu.find('.username').data('name'),
 			ul = $('<ul>');
 
 		// position menu
@@ -580,7 +582,7 @@ var NodeChatUsers = Backbone.View.extend({
 		// admin actions
 		if (actions.admin && actions.admin.length) {
 			var adminActions = ul.clone().addClass('admin-actions');
-			for (var i in actions.admin) { 
+			for (var i in actions.admin) {
 				var action = actions.admin[i],
 					template = _.template( $('#user-action-'+action+'-template').html() );
 				adminActions.append(
@@ -601,7 +603,9 @@ var NodeChatUsers = Backbone.View.extend({
 		}
 
 		// Add chat-mod class if necessary
-		$element.hasClass('chat-mod') ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
+		$element.hasClass('chatmoderator') ?
+			menu.addClass('chatmoderator') :
+			menu.removeClass('chatmoderator');
 
 		menu.show();
 
@@ -619,7 +623,7 @@ var NodeChatUsers = Backbone.View.extend({
 			event.preventDefault();
 			var target = $(event.currentTarget),
 				menu = target.closest('.UserStatsMenu'),
-				username = menu.find('.username').text(),
+				username = menu.find('.username').data('name'),
 				location = '';
 
 			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
