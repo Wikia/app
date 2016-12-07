@@ -21,6 +21,7 @@ class HelperController extends \WikiaController {
 	const FIELD_ALLOW = 'allow';
 	const FIELD_RESET_TOKEN = 'reset_token';
 	const FIELD_RESULT = 'result';
+	const FIELD_RETURN_URL = 'return_url';
 	const FIELD_SUCCESS = 'success';
 	const FIELD_USERNAME = 'username';
 
@@ -219,7 +220,7 @@ class HelperController extends \WikiaController {
 
 		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
 		$token = $this->getFieldFromRequest( self::FIELD_RESET_TOKEN, self::ERR_INVALID_TOKEN );
-		$returnUrl = $this->getVal( 'return_url', null );
+		$returnUrl = $this->getVal( self::FIELD_RETURN_URL, null );
 
 		if ( empty( $userId ) || empty ( $token ) ) {
 			return;
@@ -244,7 +245,7 @@ class HelperController extends \WikiaController {
 		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
 			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
-			'returnUrl'             => $returnUrl,
+			self::FIELD_RETURN_URL  => $returnUrl,
 		] );
 
 		$data = $resp->getData();
