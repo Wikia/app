@@ -129,7 +129,11 @@ class PortableInfoboxDataService {
 	public function save( NodeInfobox $raw ) {
 		if ( $raw ) {
 			$stored = $this->get();
-			$stored[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
+			$stored[] = [
+				'data' => $raw->getRenderData(),
+				'sources' => $raw->getSource(),
+				'sourcetypes' => $raw->getSourceType()
+			];
 			$this->set( $stored );
 		}
 

@@ -47,4 +47,8 @@ class NodeInfobox extends Node {
 	public function getSourceLabel() {
 		return $this->getSourceLabelForChildren();
 	}
+
+	public function getSourceType() {
+		return $this->getSourceTypeForChildren();
+	}
 }

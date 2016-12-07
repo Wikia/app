@@ -97,7 +97,10 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				for ( j = 0; j < page.infoboxes[i].sources.length; j++ ) {
 					source = page.infoboxes[i].sources[j];
 
-					specs[page.title].params[ source ] = { label: page.infoboxes[i].sourcelabels[source] };
+					specs[page.title].params[source] = {
+						label: page.infoboxes[i].sourcelabels[source],
+						type: page.infoboxes[i].sourcetypes[source]
+					};
 					specs[page.title].paramOrder.push( page.infoboxes[i].sources[j] );
 				}
 			}

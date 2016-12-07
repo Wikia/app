@@ -48,6 +48,19 @@ class Node {
 		return $sourceLabels;
 	}
 
+	// TODO what happens when there are multiple sources?
+	public function getSourceType() {
+		$sourceTypes = [];
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
+		$type = $this->getType();
+
+		if ( !empty( $sources[0] ) ) {
+			$sourceTypes[$sources[0]] = $type;
+		}
+
+		return $sourceTypes;
+	}
+
 	/**
 	 * @return ExternalParser
 	 */
@@ -166,6 +179,16 @@ class Node {
 		$result = [ ];
 		foreach ( $this->getChildNodes() as $item ) {
 			$result = array_merge( $result, $item->getSourceLabel() );
+		}
+
+		return $result;
+	}
+
+	protected function getSourceTypeForChildren() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$result = array_merge( $result, $item->getSourceType() );
 		}
 
 		return $result;

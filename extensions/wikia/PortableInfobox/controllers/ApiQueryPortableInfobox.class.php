@@ -38,6 +38,14 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 					$pageSet->getResult()->addValue(
 						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
 					);
+
+					// TODO is this even needed? Seems to work without this code
+					if ( isset( $infobox[ 'sourcetypes' ] ) ) {
+						$pageSet->getResult()->addValue(
+							[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcetypes', $infobox[ 'sourcetypes' ]
+						);
+					}
+
 				}
 			}
 		}

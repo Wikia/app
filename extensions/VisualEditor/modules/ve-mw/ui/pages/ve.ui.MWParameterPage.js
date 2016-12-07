@@ -159,6 +159,15 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 	} else {
 		this.infoButton.getPopup().$body.append( this.$description );
 	}
+
+	// TODO no!
+	if (this.spec.params[paramName]['type'] === 'image') {
+		this.statusIndicator
+			.setIndicator( 'alert' )
+			.setIndicatorTitle(
+				'This is an image'
+			);
+	}
 };
 
 /* Inheritance */
