@@ -39,15 +39,22 @@ class Starters {
 	];
 
 	/**
-	 * Get the starter database for a given language code
+	 * Get the starter database for a given language code and vertical
 	 *
 	 * @param string $lang language code
+	 * @param int $vertical vertical id
+	 *
 	 * @return string
 	 */
-	public static function getStarterByLanguage( $lang ) {
-		return ( isset( self::$mStarters[ $lang ] ) )
-			? self::$mStarters[ $lang ]
-			: self::$mStarters[ '*' ];
+	public static function getStarterByLanguageAndVertical( $lang, int $vertical ) {
+		// TODO Clean up in XW-2393
+		if ( $vertical === \WikiFactoryHub::VERTICAL_ID_TV && $lang === 'en' ) {
+			return self::STARTER_EN_TV;
+		} else {
+			return ( isset( self::$mStarters[ $lang ] ) )
+				? self::$mStarters[ $lang ]
+				: self::$mStarters[ '*' ];
+		}
 	}
 
 	/**

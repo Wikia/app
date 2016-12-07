@@ -158,14 +158,8 @@ class ImportStarter extends Maintenance {
 		/* @var Language $wgContLang */
 		global $wgContLang, $wgCityId, $wgDBname;
 		$language = $wgContLang->getCode();
-		$wikiVertical = (int) getopt( '', [ 'vertical:' ] )['vertical'];
-
-		// TODO Clean up in XW-2393
-		if ( $wikiVertical === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {
-			$starter = Wikia\CreateNewWiki\Starters::STARTER_EN_TV;
-		} else {
-			$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
-		}
+		$vertical = (int) getopt( '', [ 'vertical:' ] )['vertical'];
+		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguageAndVertical( $language, $vertical );
 
 		// set up the logger to work similar to the one in CreateWiki class
 		$this->logger = Wikia\Logger\WikiaLogger::instance();

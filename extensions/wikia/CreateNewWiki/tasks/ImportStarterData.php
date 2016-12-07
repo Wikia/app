@@ -22,14 +22,10 @@ class ImportStarterData extends Task {
 
 	public function run() {
 		$language = $this->taskContext->getLanguage();
+		$vertical = (int) $this->taskContext->getVertical();
 
-		// TODO Clean up in XW-2393
-		if ( (int) $this->taskContext->getVertical() === \WikiFactoryHub::VERTICAL_ID_TV && $language === 'en' ) {
-			$starterDatabase = Starters::STARTER_EN_TV;
-		} else {
-			// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
-			$starterDatabase = Starters::getStarterByLanguage( $language );
-		}
+		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
+		$starterDatabase = Starters::getStarterByLanguageAndVertical( $language, $vertical );
 		$this->taskContext->setStarterDb( $starterDatabase );
 
 		// import a starter database XML dump from DFS
