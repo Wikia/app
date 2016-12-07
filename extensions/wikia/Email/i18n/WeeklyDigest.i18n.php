@@ -72,12 +72,12 @@ $messages['zh-hant'] = array(
 );
 
 $messages['zh-hk'] = array(
-	'emailext-weeklydigest-subject' => '看看您最喜歡的Wikia頁面上本週有什麼新内容',
-	'emailext-weeklydigest-summary' => '自您上次訪問之後，Wikia社區成員對你關注的頁面做了改進。',
+	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
+	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
 );
 
 $messages['zh-tw'] = array(
-	'emailext-weeklydigest-subject' => '看看您最喜歡的Wikia頁面上本週有什麼新内容',
-	'emailext-weeklydigest-summary' => '自你上次訪問之後，Wikia社區成員對你關注的頁面做了改進。',
+	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
+	'emailext-weeklydigest-summary' => '自您上次訪問之後，有Fandom用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
 );
 
