@@ -226,7 +226,6 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromId( $userId );
 		if ( !$user instanceof \User ) {
 			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_USER_NOT_FOUND );
