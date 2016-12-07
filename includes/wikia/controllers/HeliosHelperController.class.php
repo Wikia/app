@@ -242,9 +242,9 @@ class HelperController extends \WikiaController {
 		}
 
 		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
-			'targetUserId'    		=> $userId,
+			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
-			'returnUrl'       		=> $returnUrl,
+			'returnUrl'             => $returnUrl,
 		] );
 
 		$data = $resp->getData();
