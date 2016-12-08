@@ -122,6 +122,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/pageFair.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
