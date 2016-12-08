@@ -64,18 +64,15 @@ It may have been moved or deleted while you were viewing the page.',
 	'newarticle' => '(New)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletext' => '{{#ifeq:{{NAMESPACE}}|Category||=== \'\'\'Article {{FULLPAGENAME}} was not found\'\'\' ===
+	'noarticletext' => '{{#ifeq:{{NAMESPACE}}||
+=== \'\'\'Article {{FULLPAGENAME}} was not found\'\'\' ===
 
 What do you want to do?
 
 * Search existing articles for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
-* Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}',
-	'noarticletext-nopermission' => '=== \'\'\'Article {{FULLPAGENAME}} was not found\'\'\' ===
-
-What do you want to do?
-
-* Search existing articles for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
-* Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>',
+* Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
+}}',
+	'noarticletext-nopermission' => '{{int:noarticletext}}',
 	'noarticletextanon' => '{{int:noarticletext}}',
 	'note' => '\'\'\'Note:\'\'\'',
 	'nonunicodebrowser' => '\'\'\'Warning: Your browser is not unicode compliant.\'\'\'
