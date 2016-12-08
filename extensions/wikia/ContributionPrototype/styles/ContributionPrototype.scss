@@ -14,8 +14,6 @@ body {
 }
 
 .quill_toolbar_popover button {
-  color: black;
-
   h2 {
     line-height: 20px !important;
   }
@@ -34,18 +32,13 @@ body {
   h2 {
     flex-grow: 1;
     border-bottom: none;
+    font-size: 1rem;
   }
 }
 
 .quill_toolbar {
-  .wds-icon {
-    fill: black;
-  }
-
   .dropdown, .controls {
     > button {
-      color: black;
-
       > i {
         font-style: normal;
       }
@@ -95,6 +88,7 @@ body {
 
 .ql-editor, .wikia_color-app_background, .wikia_color-card_background {
   background-color: #030f1d;
+  color: #D5D4D4;
 }
 
 .wikia_color-headers, h1, h2, h3 {
@@ -102,8 +96,8 @@ body {
 }
 
 .expandable_infobox {
-  background-color: inherit;
-  border: 1px solid #D5D4D4;
+  background-color: #13202d !important;
+  border: none !important;
 
   +.expander_button {
     border-top: none;
@@ -124,5 +118,56 @@ body {
 .dialog_body {
   input, .entity_autosuggest {
     background-color: white;
+  }
+}
+
+.article.ql-editor {
+  border: 1px solid rgba(0,0,0,0);  /* work around a bizarre webkit bug that was causing a white bar to appear at the bottom of this element */
+}
+
+.cms_article_header > .wds-button {
+  border-color: transparent;
+}
+
+i.fa {
+  font-style: normal !important;
+}
+
+.WikiHeader > nav.WikiNav .subnav-2 {
+  width: 729px !important;
+}
+
+.infobox_section_header {
+  background-color: #40787e !important;
+}
+
+.editable_infobox {
+  background-color: white;
+}
+
+.footnotes {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.view_entity {
+  background-color: #030f1d !important;
+}
+
+.table_of_contents {
+  .wds-list {
+    margin: 0;
+    list-style: none;
+    li {
+      padding: 0 !important;
+      a {
+        padding: 0 !important;
+      }
+    }
+
+    ul {
+       padding-top: 0 !important;
+       padding-bottom: 0 !important;
+    }
   }
 }
