@@ -96,7 +96,6 @@ class AdEngine2Hooks {
 		global $wgTitle;
 
 		$skin = RequestContext::getMain()->getSkin();
-		$forcedCountry = RequestContext::getMain()->getRequest()->getVal( 'forcecountry' );
 		$skinName = $skin->getSkinName();
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
@@ -107,12 +106,6 @@ class AdEngine2Hooks {
 				'disableBtf' => false,
 			],
 		];
-
-		if ( !empty($forcedCountry) ) {
-			setcookie( 'forcedCountry', $forcedCountry, 0, '/' );
-		} else {
-			setcookie( 'forcedCountry', $forcedCountry, -1, '/' );
-		}
 
 		// Legacy vars:
 		// Queue for ads registration
