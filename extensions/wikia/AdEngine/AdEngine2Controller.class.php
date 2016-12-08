@@ -15,7 +15,6 @@ class AdEngine2Controller extends WikiaController {
 		$this->pageTypes = $this->request->getVal('pageTypes');
 		$this->slotName = $this->request->getVal('slotName');
 		$this->showAd = AdEngine2Service::shouldShowAd($this->pageTypes);
-		$this->slotMarker = ARecoveryBootstrapCode::getSlotMarker($this->slotName);
 	}
 
 	/**
@@ -28,6 +27,5 @@ class AdEngine2Controller extends WikiaController {
 		$this->pageTypes = $this->request->getVal('pageTypes');
 		$this->slotName = $this->request->getVal('slotName');
 		$this->showAd = AdEngine2Service::shouldShowAd($this->pageTypes);
-		$this->slotMarker = ARecoveryBootstrapCode::getSlotMarker($this->slotName);
 	}
 }
