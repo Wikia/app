@@ -123,14 +123,17 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	protected function fallback( $method, $type ) {
-		$fallback = "{$method}_{$type}_old";
-		$ret = false;
-		if ( method_exists( $this, $fallback ) ) {
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
-				'method' => $method,
-				'exception' => new Exception( 'Phalanx fallback triggered' )
-			] );
+		// SUS-837: Phalanx fallback sunset
+		// Introduce config var to allow disabling Phalanx fallback
+		global $wgEnablePhalanxFallback;
+		\Wikia\Logger\WikiaLogger::instance()->error( 'Phalanx service failed', [
+			'method' => $method,
+			'type' => $type
+		] );
 
+		$fallback = "{$method}_{$type}_old";
+		$ret = true;
+		if ( $wgEnablePhalanxFallback && method_exists( $this, $fallback ) ) {
 			$ret = call_user_func( array( $this, $fallback ) );
 		}
 		return $ret;
