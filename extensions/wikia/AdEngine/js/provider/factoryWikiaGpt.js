@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adContext, btfBlocker, gptHelper, adUnitBuilder, log, lookups) {
+	require.optional('ext.wikia.adEngine.lookup.services'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
+], function (adContext, btfBlocker, gptHelper, adUnitBuilder, log, lookups, pageFair) {
 	'use strict';
 
 	function overrideSizes(slotMap) {
@@ -77,6 +78,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 			if (lookups) {
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
+			}
+
+			if (pageFair && pageFair.isSlotRecoverable(slot)) {
+				pageFair.addMarker(slot);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {

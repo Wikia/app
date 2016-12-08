@@ -13,7 +13,12 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', ['wikia.log'], function (l
 		return result;
 	}
 
+	function addMarker(slot) {
+		slot.container.setAttribute('adonis-marker', '');
+	}
+
 	return {
-		isSlotRecoverable: isSlotRecoverable
+		isSlotRecoverable: isSlotRecoverable,
+		addMarker: addMarker
 	};
 });
