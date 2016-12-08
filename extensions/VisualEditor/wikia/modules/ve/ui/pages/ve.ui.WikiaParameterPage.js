@@ -17,10 +17,15 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, config ) {
+	var paramName = parameter.getName(),
+		paramType;
+
 	// Parent constructor
 	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
-	if (this.spec.params && this.spec.params[name] && this.spec.params[name]['type'] === 'image') {
+	paramType = this.spec.params && this.spec.params[paramName] && this.spec.params[paramName]['type'];
+
+	if (paramType === 'image') {
 		// TODO display something nice
 		this.statusIndicator
 			.setIndicator( 'alert' )
