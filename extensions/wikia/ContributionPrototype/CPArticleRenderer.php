@@ -71,6 +71,7 @@ class CPArticleRenderer {
 	private function addScripts(OutputPage $output) {
 		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
 		$output->addHTML("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
+		$output->addHTML('<link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">');
 
 		// This is not the intended use of renderSvg but it conveniently does what we want because
 		// the sprite is stored alongside the individual SVGs. The alternative would be to provide
