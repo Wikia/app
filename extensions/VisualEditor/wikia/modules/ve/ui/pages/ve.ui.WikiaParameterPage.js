@@ -20,6 +20,15 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 	// Parent constructor
 	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
+	if (this.spec.params && this.spec.params[name] && this.spec.params[name]['type'] === 'image') {
+		// TODO display something nice
+		this.statusIndicator
+			.setIndicator( 'alert' )
+			.setIndicatorTitle(
+				'This is an image'
+			);
+	}
+
 	// Properties
 	this.templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parameter.getTemplate() } );
 
