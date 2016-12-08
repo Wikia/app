@@ -3,11 +3,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.template.porvata',
+	'ext.wikia.adEngine.template.playwire',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, uapVideoAnimation, videoAdFactory, log, win) {
+], function (adHelper, uapContext, porvata, playwire, uapVideoAnimation, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -45,9 +47,56 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	function loadPorvata(params, adSlot, imageContainer) {
-		var videoWidth = getSlotWidth(adSlot);
-
 		params.container = adSlot;
+
+		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
+		return porvata.show(params)
+			.then(function (video) {
+				addProgressListeners(video);
+
+				video.addEventListener('loaded', function () {
+					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
+				});
+
+				video.addEventListener('allAdsCompleted', function () {
+					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
+					video.reload();
+				});
+
+				return video;
+			});
+	}
+
+	function loadPlaywire(params, adSlot, imageContainer) {
+		var container = doc.createElement('div');
+
+		container.id = 'playwire_player';
+		container.classList.add('hidden');
+		adSlot.appendChild(container);
+
+		params.container = container;
+		params.disableAds = true;
+
+		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
+		return playwire.show(params)
+			.then(function (video) {
+				video.addEventListener('boltContentStarted', function () {
+					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
+				});
+
+				video.addEventListener('boltContentComplete', function () {
+					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
+					video.stop();
+				});
+
+				return video;
+			});
+	}
+
+	function loadVideoAd(params, adSlot, imageContainer) {
+		var loadedPlayer,
+			videoWidth = getSlotWidth(adSlot);
+
 		params.width = videoWidth;
 		params.height = getVideoHeight(videoWidth, params);
 		params.vastTargeting = {
@@ -57,43 +106,27 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			uap: params.uap || uapContext.getUapId()
 		};
 
-		porvata.show(params)
-			.then(function (video) {
-				addProgressListeners(video);
-
-				win.addEventListener('resize', adHelper.throttle(function () {
-					var slotWidth = getSlotWidth(adSlot);
-					video.resize(slotWidth, getVideoHeight(slotWidth, params));
-				}));
-
-				video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
-					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
-				});
-
-				video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
-					video.reload();
-				});
-
-				params.videoTriggerElement.addEventListener('click', function () {
-					var slotWidth = getSlotWidth(adSlot);
-					video.play(slotWidth, getVideoHeight(slotWidth, params));
-				});
-
-				return video;
-			});
-
-		log(['loadVideoAd', 'playwire'], log.levels.debug, logGroup);
-	}
-
-	function loadVideoAd(params, adSlot, imageContainer) {
 		switch (params.player) {
 			case 'playwire':
-				log(['loadVideoAd', 'playwire']);
+				loadedPlayer = loadPlaywire(params, adSlot, imageContainer);
 				break;
 			default:
-				loadPorvata(params, adSlot, imageContainer);
+				loadedPlayer = loadPorvata(params, adSlot, imageContainer);
 		}
+
+		loadedPlayer.then(function (video) {
+			win.addEventListener('resize', adHelper.throttle(function () {
+				var slotWidth = getSlotWidth(adSlot);
+				video.resize(slotWidth, getVideoHeight(slotWidth, params));
+			}));
+
+			params.videoTriggerElement.addEventListener('click', function () {
+				var slotWidth = getSlotWidth(adSlot);
+				video.play(slotWidth, getVideoHeight(slotWidth, params));
+			});
+
+			return video;
+		});
 	}
 
 	function isEnabled(params) {

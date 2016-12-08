@@ -18,8 +18,8 @@ define('ext.wikia.adEngine.template.playwire', [
 		params.configUrl = params.configUrl || player.getConfigUrl(params.publisherId, params.videoId);
 
 		if (params.container) {
-			player.inject(params);
 			log(['show', params.configUrl], 'info', logGroup);
+			return player.inject(params);
 		}
 	}
 

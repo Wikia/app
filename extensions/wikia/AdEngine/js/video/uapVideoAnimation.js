@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.video.uapVideoAnimation', [
 	}
 
 	function hideVideo(video, imageContainer, adSlot, params) {
-		var videoContainer = video.ima.container;
+		var videoContainer = video.container;
 
 		updateHeight(adSlot, getVideoHeight(adSlot.clientWidth, params));
 		updateHeight(adSlot, getAdHeight(adSlot.clientWidth, params));
@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.video.uapVideoAnimation', [
 	}
 
 	function showVideo(video, imageContainer, adSlot, params) {
-		var videoContainer = video.ima.container;
+		var videoContainer = video.container;
 
 		updateHeight(adSlot, getAdHeight(adSlot.clientWidth, params));
 		updateHeight(adSlot, getVideoHeight(adSlot.clientWidth, params));

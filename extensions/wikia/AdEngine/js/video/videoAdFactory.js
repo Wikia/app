@@ -15,11 +15,14 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		vastUrl = vastUrl || vastUrlBuilder.build(width / height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
+		var ima = googleIma.setupIma(vastUrl, adSlot, width, height);
+
 		return {
 			adSlot: adSlot,
 			width: width,
 			height: height,
-			ima: googleIma.setupIma(vastUrl, adSlot, width, height),
+			ima: ima,
+			container: ima.container,
 			addEventListener: function (eventName, callback) {
 				this.ima.addEventListener(eventName, callback);
 			},
@@ -34,6 +37,7 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				var events = this.ima.events;
 				this.ima = googleIma.setupIma(vastUrl, adSlot, this.width, this.height);
 				this.ima.events = events;
+				this.container = this.ima.container;
 			},
 			resize: function (width, height) {
 				this.width = width;
