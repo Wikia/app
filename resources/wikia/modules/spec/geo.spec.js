@@ -6,44 +6,34 @@
 describe('Geo', function () {
 	'use strict';
 
-	window.Wikia = {
-		Cookies: {}
-	};
+	function getModule(cookiesMock, queryStringMock) {
+		return modules['wikia.geo'](cookiesMock, queryStringMock);
+	}
 
-	function getModule(cookiesMock) {
-		return modules['wikia.geo'](cookiesMock);
+	function queryStringMock() {
+		return {
+			getVal: function() {}
+		}
+	}
+
+	function queryStringCountrySetMock() {
+		return {
+			getVal: function() {
+				return 'AU';
+			}
+		}
 	}
 
 	// mock geo cookie
 	var geoCookieData = '{"city":"Poznan","country":"PL","continent":"EU","region":"72"}',
-		cookiesMockForcedCountryNotSet = {
-			get: function(cookieName){
-				switch (cookieName) {
-					case 'Geo':
-						return geoCookieData;
-					case 'forcedCountry':
-						return null;
-					default:
-						return null;
-				}
+		cookiesMock = {
+			get: function () {
+				return geoCookieData;
 			}
 		},
-		cookiesMockForcedCountrySet = {
-			get: function(cookieName){
-				switch (cookieName) {
-					case 'Geo':
-						return geoCookieData;
-					case 'forcedCountry':
-						return 'AU';
-					default:
-						return null;
-				}
-			}
-		},
-		geo = getModule(cookiesMockForcedCountryNotSet);
+		geo = getModule(cookiesMock, queryStringMock);
 
 	it('registers AMD module', function () {
-		geo = getModule(cookiesMockForcedCountryNotSet);
 		expect(typeof geo).toBe('object');
 
 		expect(typeof geo.getGeoData).toBe('function');
@@ -88,10 +78,10 @@ describe('Geo', function () {
 
 		// Continent
 		expect(geo.isProperGeo(['XX-EU'])).toBeTruthy();
-		expect(geo.isProperGeo(['XX-NA','XX-EU', 'non-XX-SA'])).toBeTruthy();
-		expect(geo.isProperGeo(['XX-NA','XX-SA'])).toBeFalsy();
-		expect(geo.isProperGeo(['XX-NA','XX-SA', 'non-XX-EU'])).toBeFalsy();
-		expect(geo.isProperGeo(['XX-NA','XX-EU', 'non-XX-EU'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-EU', 'non-XX-SA'])).toBeTruthy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-SA'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-SA', 'non-XX-EU'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-EU', 'non-XX-EU'])).toBeFalsy();
 		expect(geo.isProperGeo(['non-XX-EU'])).toBeFalsy();
 
 		// Earth
@@ -105,7 +95,7 @@ describe('Geo', function () {
 	});
 
 	it('returns country when forcedCountry cookie set', function () {
-		geo = getModule(cookiesMockForcedCountrySet);
+		geo = getModule(cookiesMock, queryStringCountrySetMock);
 		expect(geo.getCountryCode()).toBe('AU');
 		expect(geo.getContinentCode()).toBe('EU');
 	});
