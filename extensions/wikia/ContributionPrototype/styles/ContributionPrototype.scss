@@ -83,7 +83,10 @@ body {
     position: relative;
     top: -10px;
     color: white;
-    border-color: white;
+  }
+
+  .wds-button:hover {
+    color: #D5D4D4;
   }
 }
 
