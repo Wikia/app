@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				{
 					src: params.src,
 					pos: params.slotName,
-					uap: params.uap || uapContext.getUapId(),
+					uap: uapContext.getUapId(),
 					passback: 'vuap'
 				}
 			);
