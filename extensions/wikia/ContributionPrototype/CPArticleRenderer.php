@@ -59,10 +59,7 @@ class CPArticleRenderer {
 	}
 
 	private function addStyles(OutputPage $output) {
-		$output->addLink([
-				'rel' => 'stylesheet',
-				'href'=> "{$this->publicHost}/public/assets/styles/main.css",
-		]);
+		$output->addStyle("{$this->publicHost}/public/assets/styles/main.css");
 
 		// this ends up using $wgOut, but we need it for the assets manager integration, no point in duplicating :(
 		Wikia::addAssetsToOutput('contribution_prototype_scss');
