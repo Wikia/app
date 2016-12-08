@@ -76,13 +76,14 @@ body {
   top: 89px !important;
 }
 
-#WikiHeader .buttons .contribute {
-  > .drop > .chevron {
-    vertical-align: middle !important;
-  }
-
-  .WikiaMenuElement a {
+#WikiHeader .buttons {
+  .wds-button {
+    background-image: none;
     height: auto;
+    position: relative;
+    top: -10px;
+    color: white;
+    border-color: white;
   }
 }
 
