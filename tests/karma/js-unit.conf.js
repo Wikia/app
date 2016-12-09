@@ -24,6 +24,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/wikia/polyfills/promise.js',
 			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
@@ -96,7 +97,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
-			'extensions/wikia/AdEngine/js/video/*.js',
+			'extensions/wikia/AdEngine/js/video/**/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
