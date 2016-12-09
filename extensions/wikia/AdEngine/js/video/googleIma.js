@@ -78,6 +78,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
 						log('Video play: stared', log.levels.debug, logGroup);
+						self.adsLoader.removeEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback);
 					};
 
 				if (this.isAdsManagerLoaded) {
