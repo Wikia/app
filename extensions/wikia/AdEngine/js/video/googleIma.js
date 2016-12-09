@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
 		videoMock = doc.createElement('video');
 
-	function init() {
+	function load() {
 		if (win.google && win.google.ima) {
 			return new Promise(function (resolve) {
 				log('Google IMA library already loaded', log.levels.info, logGroup);
@@ -118,7 +118,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	function setupIma(vastUrl, adContainer, width, height) {
 		var ima = createIma(vastUrl, width, height);
 
-		function adsManagerLoadedCallback(adsManagerLoadedEvent){
+		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima, google.ima.AdEvent.Type);
 			registerEvents(ima, google.ima.AdErrorEvent.Type);
@@ -136,7 +136,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	}
 
 	return {
-		init: init,
+		load: load,
 		setupIma: setupIma
 	};
 });
