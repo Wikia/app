@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		porvata.inject(params)
+		return porvata.inject(params)
 			.then(function (video) {
 				videoInterface.setup(video, [
 					'progressBar',
