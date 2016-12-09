@@ -34,43 +34,19 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				foreach ( $parsedInfoboxes as $count => $infobox ) {
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
 
-					$metadata = $infobox['metadata'] ?? $this->metadataFallback( $infobox, $articleTitle );
-
-					$pageSet->getResult()->setIndexedTagName( $metadata, 'metadata' );
 					$pageSet->getResult()->addValue(
-						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $metadata
+						[ 'query', 'pages', $id, 'infoboxes', $count ],
+						'parser_tag_version',
+						$infobox['parser_tag_version']
+					);
+
+					// FIXME ?format=xml throws error
+					$pageSet->getResult()->setIndexedTagName( $infobox['metadata'], 'metadata' );
+					$pageSet->getResult()->addValue(
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $infobox['metadata']
 					);
 				}
 			}
 		}
-	}
-
-	/**
-	 * We still have old infobox sources in page properties, so we need this fallback.
-	 * Monitor kibana and remove it after logs stop appear
-	 *
-	 * @param $infobox
-	 * @param $title
-	 * @return array
-	 */
-	private function metadataFallback( $infobox, $title ) {
-		global $wgCityId;
-
-		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery metadata fallback' );
-
-		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
-		$task->setTitle( $title );
-		$task->title( $title );
-		$task->call( 'refresh' );
-		$task->wikiId( $wgCityId );
-		$task->queue();
-
-		// TODO reparse and get fresh data
-		$data = PortableInfoboxDataService::newFromTitle( $title )->purge()->getData();
-		var_dump($infobox);
-		var_dump($data);
-		die;
-
-		return $infobox[ 'sources' ] ? array_fill_keys( $infobox[ 'sources' ], '' ) : [ ];
 	}
 }

@@ -16,7 +16,7 @@ class PortableInfoboxTemplatesHelper {
 	 *
 	 * @return mixed false when no infoboxes found, Array with infoboxes on success
 	 */
-	public function parseInfoboxes( $title ) {
+	public function parseInfoboxesRefactorMe( $title ) {
 		// for templates we need to check for include tags
 		$templateText = $this->fetchContent( $title );
 		$includeonlyText = $this->getIncludeonlyText( $templateText );
@@ -42,6 +42,33 @@ class PortableInfoboxTemplatesHelper {
 				return json_decode( $parser->getOutput()
 					->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
 			}
+		}
+
+		return false;
+	}
+
+	public function parseInfoboxes( $title ) {
+		// for templates we need to check for include tags
+		$templateText = $this->fetchContent( $title );
+
+		$parser = new \Parser();
+		$parserOptions = new \ParserOptions();
+		$parser->startExternalParse( $title, $parserOptions );
+		$frame = $parser->getPreprocessor()->newFrame();
+		$infoboxes = $this->getInfoboxes( $templateText );
+
+		if ( $infoboxes ) {
+			// clear up cache before parsing
+			foreach ( $infoboxes as $infobox ) {
+				try {
+					\PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+				} catch ( \Exception $e ) {
+					\Wikia\Logger\WikiaLogger::instance()->info( 'Invalid infobox syntax' );
+				}
+			}
+
+			return json_decode( $parser->getOutput()
+				->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
 		}
 
 		return false;

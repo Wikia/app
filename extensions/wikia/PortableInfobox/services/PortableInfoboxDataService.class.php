@@ -24,7 +24,12 @@ class PortableInfoboxDataService {
 		$this->title = $title !== null ? $title : new Title();
 		$this->templateHelper = new PortableInfoboxTemplatesHelper();
 		$this->propsProxy = new PagePropsProxy();
-		$this->cachekey = wfMemcKey( __CLASS__, $this->title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
+		$this->cachekey = wfMemcKey(
+			__CLASS__,
+			$this->title->getArticleID(),
+			self::INFOBOXES_PROPERTY_NAME,
+			PortableInfoboxParserTagController::PARSER_TAG_VERSION
+		);
 	}
 
 	public static function newFromTitle( $title ) {
@@ -55,7 +60,7 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title );
+			$incOnlyTemplates = $this->templateHelper->parseInfoboxesRefactorMe( $this->title );
 			if ( $incOnlyTemplates ) {
 				$this->delete();
 				$this->set( $incOnlyTemplates );
@@ -121,6 +126,7 @@ class PortableInfoboxDataService {
 
 	/**
 	 * Save infobox data, permanently
+	 * NOTICE: This method isn't currently used anywhere
 	 *
 	 * @param NodeInfobox $raw infobox parser output
 	 *
@@ -131,8 +137,7 @@ class PortableInfoboxDataService {
 			$stored = $this->get();
 			$stored[] = [
 				'data' => $raw->getRenderData(),
-				'sources' => $raw->getSource(),
-				'sourcetypes' => $raw->getSourceType()
+				'metadata' => $raw->getMetadata()
 			];
 			$this->set( $stored );
 		}
@@ -179,11 +184,41 @@ class PortableInfoboxDataService {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
 			return WikiaDataAccess::cache( $this->cachekey, WikiaResponse::CACHE_STANDARD, function () use ( $id ) {
-				return json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
+				$props = json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
+				$props = $this->loadFreshDataIfNeeded( $props );
+
+				return $props;
 			} );
 		}
 
 		return [ ];
+	}
+
+	/**
+	 * If PageProps doesn't have infoboxes' metadata or has an old version then reparse the page and store fresh data
+	 *
+	 * @param $props
+	 *
+	 * @return array
+	 */
+	protected function loadFreshDataIfNeeded( $props ) {
+		foreach ( $props as $infobox ) {
+			if (
+				empty( $infobox ) ||
+				$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
+			) {
+				$freshData = $this->templateHelper->parseInfoboxes( $this->title );
+				break;
+			}
+		}
+
+		if ( !empty( $freshData ) ) {
+			$this->set( $freshData );
+
+			return $freshData;
+		}
+
+		return $props;
 	}
 
 	protected function store( $data ) {
