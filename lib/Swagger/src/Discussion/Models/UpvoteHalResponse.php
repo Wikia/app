@@ -66,7 +66,7 @@ class UpvoteHalResponse implements ArrayAccess
         'upvote_count' => 'int',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
-        '_embedded' => '\Swagger\Client\Discussion\Models\Embeddable[]'
+        '_embedded' => 'map[string,\Swagger\Client\Discussion\Models\Embeddable[]]'
     );
 
     public static function swaggerTypes()
@@ -238,7 +238,7 @@ class UpvoteHalResponse implements ArrayAccess
 
     /**
      * Gets _embedded
-     * @return \Swagger\Client\Discussion\Models\Embeddable[]
+     * @return map[string,\Swagger\Client\Discussion\Models\Embeddable[]]
      */
     public function getEmbedded()
     {
@@ -247,7 +247,7 @@ class UpvoteHalResponse implements ArrayAccess
 
     /**
      * Sets _embedded
-     * @param \Swagger\Client\Discussion\Models\Embeddable[] $_embedded
+     * @param map[string,\Swagger\Client\Discussion\Models\Embeddable[]] $_embedded
      * @return $this
      */
     public function setEmbedded($_embedded)
@@ -314,3 +314,5 @@ class UpvoteHalResponse implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

@@ -3,6 +3,9 @@
  * NOTE: PLEASE TAKE CARE WHILE EDITING THIS FILE.
  *       BAD CHANGE AND WE CAN CLOSE MANY WIKIS BY ACCIDENT.
  */
+use Swagger\Client\Discussion\Api\SitesApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
 
 /**
  * @package MediaWiki
@@ -356,6 +359,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
+				$this->disableDiscussion( $id );
 				$this->deleteWikiStats($id);
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
@@ -364,6 +368,28 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$notDeleted[$id] = $wiki;
 			}
 		}
+	}
+
+	private function disableDiscussion( $cityId ) {
+		try {
+			$this->getSitesApi()->softDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+		}
+		catch ( \Swagger\Client\ApiException $e ) {
+			echo "{$cityId} Failed to soft delete Discussion site: {$e->getMessage()}\n";
+		}
+	}
+
+	/**
+	 * @return SitesApi
+	 */
+	private function getSitesApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		/** @var SitesApi $api */
+		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );
+
+		return $api;
 	}
 
 	protected function batchProcess( $wikis ) {

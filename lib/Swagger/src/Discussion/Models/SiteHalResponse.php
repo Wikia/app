@@ -63,9 +63,9 @@ class SiteHalResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'shard_id' => 'int',
         'name' => 'string',
         'id' => 'int',
+        'shard_id' => 'int',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
         '_embedded' => '\Swagger\Client\Discussion\Models\Embeddable[]'
@@ -81,9 +81,9 @@ class SiteHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'shard_id' => 'shardId',
         'name' => 'name',
         'id' => 'id',
+        'shard_id' => 'shardId',
         '_links' => '_links',
         'requester_id' => 'requesterId',
         '_embedded' => '_embedded'
@@ -99,9 +99,9 @@ class SiteHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'shard_id' => 'setShardId',
         'name' => 'setName',
         'id' => 'setId',
+        'shard_id' => 'setShardId',
         '_links' => 'setLinks',
         'requester_id' => 'setRequesterId',
         '_embedded' => 'setEmbedded'
@@ -117,9 +117,9 @@ class SiteHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'shard_id' => 'getShardId',
         'name' => 'getName',
         'id' => 'getId',
+        'shard_id' => 'getShardId',
         '_links' => 'getLinks',
         'requester_id' => 'getRequesterId',
         '_embedded' => 'getEmbedded'
@@ -146,9 +146,9 @@ class SiteHalResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['shard_id'] = isset($data['shard_id']) ? $data['shard_id'] : null;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['shard_id'] = isset($data['shard_id']) ? $data['shard_id'] : null;
         $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
         $this->container['requester_id'] = isset($data['requester_id']) ? $data['requester_id'] : null;
         $this->container['_embedded'] = isset($data['_embedded']) ? $data['_embedded'] : null;
@@ -182,27 +182,6 @@ class SiteHalResponse implements ArrayAccess
         return true;
     }
 
-
-    /**
-     * Gets shard_id
-     * @return int
-     */
-    public function getShardId()
-    {
-        return $this->container['shard_id'];
-    }
-
-    /**
-     * Sets shard_id
-     * @param int $shard_id
-     * @return $this
-     */
-    public function setShardId($shard_id)
-    {
-        $this->container['shard_id'] = $shard_id;
-
-        return $this;
-    }
 
     /**
      * Gets name
@@ -242,6 +221,27 @@ class SiteHalResponse implements ArrayAccess
     public function setId($id)
     {
         $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets shard_id
+     * @return int
+     */
+    public function getShardId()
+    {
+        return $this->container['shard_id'];
+    }
+
+    /**
+     * Sets shard_id
+     * @param int $shard_id
+     * @return $this
+     */
+    public function setShardId($shard_id)
+    {
+        $this->container['shard_id'] = $shard_id;
 
         return $this;
     }
@@ -366,3 +366,5 @@ class SiteHalResponse implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

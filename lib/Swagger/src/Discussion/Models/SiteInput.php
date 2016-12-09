@@ -150,9 +150,10 @@ class SiteInput implements ArrayAccess
         if ($this->container['id'] === null) {
             $invalid_properties[] = "'id' can't be null";
         }
-        if ($this->container['id'] < 1.0) {
+        if (($this->container['id'] < 1.0)) {
             $invalid_properties[] = "invalid value for 'id', must be bigger than or equal to 1.0.";
         }
+
         if ($this->container['name'] === null) {
             $invalid_properties[] = "'name' can't be null";
         }
@@ -304,3 +305,5 @@ class SiteInput implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

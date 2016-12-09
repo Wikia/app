@@ -103,11 +103,10 @@ class ForumsApi
     /**
      * Operation createForum
      *
-     * Create a new forum for a site.
+     * Create a new forum for a site
      *
-     * @param int $site_id The id of the site to list the forums (required)
+     * @param int $site_id The id of the site (required)
      * @param \Swagger\Client\Discussion\Models\ForumInput $forum_input Forum input json (required)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -117,31 +116,26 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation createForumWithHttpInfo
      *
-     * Create a new forum for a site.
+     * Create a new forum for a site
      *
-     * @param int $site_id The id of the site to list the forums (required)
+     * @param int $site_id The id of the site (required)
      * @param \Swagger\Client\Discussion\Models\ForumInput $forum_input Forum input json (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function createForumWithHttpInfo($site_id, $forum_input)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling createForum');
         }
-
         // verify the required parameter 'forum_input' is set
         if ($forum_input === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_input when calling createForum');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums";
         $httpBody = '';
@@ -154,8 +148,6 @@ class ForumsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -167,7 +159,6 @@ class ForumsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($forum_input)) {
@@ -180,20 +171,16 @@ class ForumsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -202,16 +189,13 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumHalResponse',
+                '/{siteId}/forums'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\ForumHalResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
                 case 201:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\ForumHalResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
@@ -225,48 +209,49 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation deleteForum
      *
-     * Delete a forum for a site.
+     * Delete a forum and move its threads to another forum
      *
-     * @param int $site_id The id of the site to list the forums (required)
-     * @param int $forum_id The id of a specific forum (required)
-     *
-     * @return \Swagger\Client\Discussion\Models\HalResponse
+     * @param int $site_id The id of the site (required)
+     * @param int $forum_id The id of forum to delete (required)
+     * @param \Swagger\Client\Discussion\Models\MoveForumInput $body The forum to house the threads under the forum being deleted (required)
+     * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteForum($site_id, $forum_id)
+    public function deleteForum($site_id, $forum_id, $body)
     {
-        list($response) = $this->deleteForumWithHttpInfo($site_id, $forum_id);
+        list($response) = $this->deleteForumWithHttpInfo($site_id, $forum_id, $body);
         return $response;
     }
-
 
     /**
      * Operation deleteForumWithHttpInfo
      *
-     * Delete a forum for a site.
+     * Delete a forum and move its threads to another forum
      *
-     * @param int $site_id The id of the site to list the forums (required)
-     * @param int $forum_id The id of a specific forum (required)
-     *
-     * @return Array of \Swagger\Client\Discussion\Models\HalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @param int $site_id The id of the site (required)
+     * @param int $forum_id The id of forum to delete (required)
+     * @param \Swagger\Client\Discussion\Models\MoveForumInput $body The forum to house the threads under the forum being deleted (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteForumWithHttpInfo($site_id, $forum_id)
+    public function deleteForumWithHttpInfo($site_id, $forum_id, $body)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling deleteForum');
         }
-
         // verify the required parameter 'forum_id' is set
         if ($forum_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling deleteForum');
         }
-
+        // verify the required parameter 'body' is set
+        if ($body === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling deleteForum');
+        }
         // parse inputs
         $resourcePath = "/{siteId}/forums/{forumId}";
         $httpBody = '';
@@ -279,8 +264,6 @@ class ForumsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -288,7 +271,8 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($forum_id !== null) {
             $resourcePath = str_replace(
                 "{" . "forumId" . "}",
@@ -299,8 +283,11 @@ class ForumsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
-        
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
 
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -308,20 +295,16 @@ class ForumsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -330,14 +313,23 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\HalResponse'
+                null,
+                '/{siteId}/forums/{forumId}'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\HalResponse', $httpHeader), $statusCode, $httpHeader);
+            return array(null, $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalResponse', $e->getResponseHeaders());
+                case 400:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 404:
@@ -349,16 +341,16 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation getContributors
      *
-     * Get a list of unique contributors to the forum..
+     * Get a list of unique contributors to the forum.
      *
      * @param int $site_id The id of the site (required)
      * @param string $forum_id The id of a specific forum (required)
      * @param int $limit The number of unique users to return (optional, default to 10)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -368,33 +360,28 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation getContributorsWithHttpInfo
      *
-     * Get a list of unique contributors to the forum..
+     * Get a list of unique contributors to the forum.
      *
      * @param int $site_id The id of the site (required)
      * @param string $forum_id The id of a specific forum (required)
      * @param int $limit The number of unique users to return (optional, default to 10)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getContributorsWithHttpInfo($site_id, $forum_id, $limit = null, $viewable_only = null)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getContributors');
         }
-
         // verify the required parameter 'forum_id' is set
         if ($forum_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling getContributors');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums/{forumId}/contributors";
         $httpBody = '';
@@ -410,11 +397,11 @@ class ForumsApi
         // query params
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
-        }// query params
+        }
+        // query params
         if ($viewable_only !== null) {
             $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -422,7 +409,8 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($forum_id !== null) {
             $resourcePath = str_replace(
                 "{" . "forumId" . "}",
@@ -434,28 +422,22 @@ class ForumsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -464,7 +446,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumHalResponse',
+                '/{siteId}/forums/{forumId}/contributors'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -483,10 +466,11 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation getForum
      *
-     * Get a specific forum for a site.
+     * Get a specific forum for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $forum_id The id of a specific forum (required)
@@ -494,10 +478,9 @@ class ForumsApi
      * @param string $sort_direction The sort direction for which sort key applies to thread list order (optional)
      * @param int $limit The number of threads to return (optional, default to 10)
      * @param int $page The pagination position (optional, default to 0)
-     * @param string $pivot Pagination pivot id - the id of the thread which represents the origin for all page offset calculations (optional)
+     * @param string $pivot Pagination pivot id - the id of the thread which represents the originfor all page offset calculations (optional)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -507,11 +490,10 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation getForumWithHttpInfo
      *
-     * Get a specific forum for a site.
+     * Get a specific forum for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $forum_id The id of a specific forum (required)
@@ -519,26 +501,22 @@ class ForumsApi
      * @param string $sort_direction The sort direction for which sort key applies to thread list order (optional)
      * @param int $limit The number of threads to return (optional, default to 10)
      * @param int $page The pagination position (optional, default to 0)
-     * @param string $pivot Pagination pivot id - the id of the thread which represents the origin for all page offset calculations (optional)
+     * @param string $pivot Pagination pivot id - the id of the thread which represents the originfor all page offset calculations (optional)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getForumWithHttpInfo($site_id, $forum_id, $sort_key = null, $sort_direction = null, $limit = null, $page = null, $pivot = null, $response_group = null, $viewable_only = null)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getForum');
         }
-
         // verify the required parameter 'forum_id' is set
         if ($forum_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling getForum');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums/{forumId}";
         $httpBody = '';
@@ -554,26 +532,31 @@ class ForumsApi
         // query params
         if ($sort_key !== null) {
             $queryParams['sortKey'] = $this->apiClient->getSerializer()->toQueryValue($sort_key);
-        }// query params
+        }
+        // query params
         if ($sort_direction !== null) {
             $queryParams['sortDirection'] = $this->apiClient->getSerializer()->toQueryValue($sort_direction);
-        }// query params
+        }
+        // query params
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
-        }// query params
+        }
+        // query params
         if ($page !== null) {
             $queryParams['page'] = $this->apiClient->getSerializer()->toQueryValue($page);
-        }// query params
+        }
+        // query params
         if ($pivot !== null) {
             $queryParams['pivot'] = $this->apiClient->getSerializer()->toQueryValue($pivot);
-        }// query params
+        }
+        // query params
         if ($response_group !== null) {
             $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
+        }
+        // query params
         if ($viewable_only !== null) {
             $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -581,7 +564,8 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($forum_id !== null) {
             $resourcePath = str_replace(
                 "{" . "forumId" . "}",
@@ -593,28 +577,22 @@ class ForumsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -623,7 +601,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumHalResponse',
+                '/{siteId}/forums/{forumId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -642,15 +621,15 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation getForums
      *
-     * Returns all the forums for a site.
+     * Returns all the forums for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -660,27 +639,23 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation getForumsWithHttpInfo
      *
-     * Returns all the forums for a site.
+     * Returns all the forums for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getForumsWithHttpInfo($site_id, $response_group = null, $viewable_only = null)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getForums');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums";
         $httpBody = '';
@@ -696,150 +671,11 @@ class ForumsApi
         // query params
         if ($response_group !== null) {
             $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
-        if ($viewable_only !== null) {
-            $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
-        // path params
-        if ($site_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "siteId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($site_id),
-                $resourcePath
-            );
-        }
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-
-        
-        
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (strlen($apiKey) !== 0) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (strlen($apiKey) !== 0) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        // make the API Call
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
-            );
-
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\ForumHalResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-
-            throw $e;
-        }
-    }
-    /**
-     * Operation getNewer
-     *
-     * Get all threads belonging to a forum which are newer than given thread.
-     *
-     * @param int $site_id The id of the site (required)
-     * @param string $forum_id The id of a specific forum (required)
-     * @param string $thread_id The id of a thread to mark all the newer threads to be returned (required)
-     * @param int $limit The number of unique users to return (optional, default to 10)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
-     * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
-     * @return \Swagger\Client\Discussion\Models\ForumHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getNewer($site_id, $forum_id, $thread_id, $limit = null, $response_group = null, $viewable_only = null)
-    {
-        list($response) = $this->getNewerWithHttpInfo($site_id, $forum_id, $thread_id, $limit, $response_group, $viewable_only);
-        return $response;
-    }
-
-
-    /**
-     * Operation getNewerWithHttpInfo
-     *
-     * Get all threads belonging to a forum which are newer than given thread.
-     *
-     * @param int $site_id The id of the site (required)
-     * @param string $forum_id The id of a specific forum (required)
-     * @param string $thread_id The id of a thread to mark all the newer threads to be returned (required)
-     * @param int $limit The number of unique users to return (optional, default to 10)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
-     * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
-     * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getNewerWithHttpInfo($site_id, $forum_id, $thread_id, $limit = null, $response_group = null, $viewable_only = null)
-    {
-        
-        // verify the required parameter 'site_id' is set
-        if ($site_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getNewer');
-        }
-
-        // verify the required parameter 'forum_id' is set
-        if ($forum_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling getNewer');
-        }
-
-        // verify the required parameter 'thread_id' is set
-        if ($thread_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $thread_id when calling getNewer');
-        }
-
-        // parse inputs
-        $resourcePath = "/{siteId}/forums/{forumId}/newerthan/{threadId}";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
-
         // query params
-        if ($limit !== null) {
-            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
-        }// query params
-        if ($response_group !== null) {
-            $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
         if ($viewable_only !== null) {
             $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -847,47 +683,27 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
-        if ($forum_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "forumId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($forum_id),
-                $resourcePath
-            );
-        }// path params
-        if ($thread_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "threadId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($thread_id),
-                $resourcePath
-            );
         }
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -896,7 +712,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumHalResponse',
+                '/{siteId}/forums'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -904,10 +721,6 @@ class ForumsApi
             switch ($e->getCode()) {
                 case 200:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\ForumHalResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 404:
@@ -919,172 +732,15 @@ class ForumsApi
             throw $e;
         }
     }
-    /**
-     * Operation getOlder
-     *
-     * Get all threads belonging to a forum which are older than given thread.
-     *
-     * @param int $site_id The id of the site (required)
-     * @param string $forum_id The id of a specific forum (required)
-     * @param string $thread_id The id of a thread to mark all the older threads to be returned (required)
-     * @param int $limit The number of unique users to return (optional, default to 10)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
-     * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
-     * @return \Swagger\Client\Discussion\Models\ForumHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getOlder($site_id, $forum_id, $thread_id, $limit = null, $response_group = null, $viewable_only = null)
-    {
-        list($response) = $this->getOlderWithHttpInfo($site_id, $forum_id, $thread_id, $limit, $response_group, $viewable_only);
-        return $response;
-    }
 
-
-    /**
-     * Operation getOlderWithHttpInfo
-     *
-     * Get all threads belonging to a forum which are older than given thread.
-     *
-     * @param int $site_id The id of the site (required)
-     * @param string $forum_id The id of a specific forum (required)
-     * @param string $thread_id The id of a thread to mark all the older threads to be returned (required)
-     * @param int $limit The number of unique users to return (optional, default to 10)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
-     * @param bool $viewable_only viewableOnly (optional, default to true)
-     *
-     * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getOlderWithHttpInfo($site_id, $forum_id, $thread_id, $limit = null, $response_group = null, $viewable_only = null)
-    {
-        
-        // verify the required parameter 'site_id' is set
-        if ($site_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getOlder');
-        }
-
-        // verify the required parameter 'forum_id' is set
-        if ($forum_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling getOlder');
-        }
-
-        // verify the required parameter 'thread_id' is set
-        if ($thread_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $thread_id when calling getOlder');
-        }
-
-        // parse inputs
-        $resourcePath = "/{siteId}/forums/{forumId}/olderthan/{threadId}";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
-
-        // query params
-        if ($limit !== null) {
-            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
-        }// query params
-        if ($response_group !== null) {
-            $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
-        if ($viewable_only !== null) {
-            $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
-        }
-        
-        // path params
-        if ($site_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "siteId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($site_id),
-                $resourcePath
-            );
-        }// path params
-        if ($forum_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "forumId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($forum_id),
-                $resourcePath
-            );
-        }// path params
-        if ($thread_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "threadId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($thread_id),
-                $resourcePath
-            );
-        }
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-
-        
-        
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (strlen($apiKey) !== 0) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (strlen($apiKey) !== 0) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        // make the API Call
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
-            );
-
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\ForumHalResponse', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-
-            throw $e;
-        }
-    }
     /**
      * Operation moveThreadsIntoForum
      *
-     * Move threads into a forum.
+     * Move threads into a forum
      *
-     * @param int $site_id The id of the site of the forum to change the display order (required)
+     * @param int $site_id The id of the site (required)
      * @param int $forum_id The id of the destination forum (required)
      * @param \Swagger\Client\Discussion\Models\MoveThreadsInput $thread_id_list List of thread ids to move to destination forum (required)
-     *
      * @return \Swagger\Client\Discussion\Models\HalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -1094,37 +750,31 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation moveThreadsIntoForumWithHttpInfo
      *
-     * Move threads into a forum.
+     * Move threads into a forum
      *
-     * @param int $site_id The id of the site of the forum to change the display order (required)
+     * @param int $site_id The id of the site (required)
      * @param int $forum_id The id of the destination forum (required)
      * @param \Swagger\Client\Discussion\Models\MoveThreadsInput $thread_id_list List of thread ids to move to destination forum (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\HalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function moveThreadsIntoForumWithHttpInfo($site_id, $forum_id, $thread_id_list)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling moveThreadsIntoForum');
         }
-
         // verify the required parameter 'forum_id' is set
         if ($forum_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling moveThreadsIntoForum');
         }
-
         // verify the required parameter 'thread_id_list' is set
         if ($thread_id_list === null) {
             throw new \InvalidArgumentException('Missing the required parameter $thread_id_list when calling moveThreadsIntoForum');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums/{forumId}/movethreads";
         $httpBody = '';
@@ -1137,8 +787,6 @@ class ForumsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -1146,7 +794,8 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($forum_id !== null) {
             $resourcePath = str_replace(
                 "{" . "forumId" . "}",
@@ -1157,7 +806,6 @@ class ForumsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($thread_id_list)) {
@@ -1170,20 +818,16 @@ class ForumsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -1192,7 +836,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\HalResponse'
+                '\Swagger\Client\Discussion\Models\HalResponse',
+                '/{siteId}/forums/{forumId}/movethreads'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\HalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -1215,15 +860,15 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation updateForum
      *
-     * Partial forum update only allows name/description.
+     * Partial forum update only allows name/description
      *
      * @param int $site_id The id of the site of the forums to update (required)
      * @param int $forum_id The id of the forum to update (required)
      * @param \Swagger\Client\Discussion\Models\EditForumInput $edit_forum_input Forum input json (required)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -1233,37 +878,31 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation updateForumWithHttpInfo
      *
-     * Partial forum update only allows name/description.
+     * Partial forum update only allows name/description
      *
      * @param int $site_id The id of the site of the forums to update (required)
      * @param int $forum_id The id of the forum to update (required)
      * @param \Swagger\Client\Discussion\Models\EditForumInput $edit_forum_input Forum input json (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function updateForumWithHttpInfo($site_id, $forum_id, $edit_forum_input)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling updateForum');
         }
-
         // verify the required parameter 'forum_id' is set
         if ($forum_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_id when calling updateForum');
         }
-
         // verify the required parameter 'edit_forum_input' is set
         if ($edit_forum_input === null) {
             throw new \InvalidArgumentException('Missing the required parameter $edit_forum_input when calling updateForum');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums/{forumId}";
         $httpBody = '';
@@ -1276,8 +915,6 @@ class ForumsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -1285,7 +922,8 @@ class ForumsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($forum_id !== null) {
             $resourcePath = str_replace(
                 "{" . "forumId" . "}",
@@ -1296,7 +934,6 @@ class ForumsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($edit_forum_input)) {
@@ -1309,20 +946,16 @@ class ForumsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -1331,7 +964,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumHalResponse',
+                '/{siteId}/forums/{forumId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -1350,14 +984,14 @@ class ForumsApi
             throw $e;
         }
     }
+
     /**
      * Operation updateForumDisplayOrder
      *
-     * Update the Forum's display order.
+     * Update the Forum's display order
      *
      * @param int $site_id The id of the site of the forum to change the display order (required)
      * @param \Swagger\Client\Discussion\Models\ForumDisplayOrder $forum_display_order Full or partial List of forum ids in order of which they should be displayed (required)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumDisplayOrder
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -1367,31 +1001,26 @@ class ForumsApi
         return $response;
     }
 
-
     /**
      * Operation updateForumDisplayOrderWithHttpInfo
      *
-     * Update the Forum's display order.
+     * Update the Forum's display order
      *
      * @param int $site_id The id of the site of the forum to change the display order (required)
      * @param \Swagger\Client\Discussion\Models\ForumDisplayOrder $forum_display_order Full or partial List of forum ids in order of which they should be displayed (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumDisplayOrder, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function updateForumDisplayOrderWithHttpInfo($site_id, $forum_display_order)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling updateForumDisplayOrder');
         }
-
         // verify the required parameter 'forum_display_order' is set
         if ($forum_display_order === null) {
             throw new \InvalidArgumentException('Missing the required parameter $forum_display_order when calling updateForumDisplayOrder');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/forums/displayorder";
         $httpBody = '';
@@ -1404,8 +1033,6 @@ class ForumsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -1417,7 +1044,6 @@ class ForumsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($forum_display_order)) {
@@ -1430,20 +1056,16 @@ class ForumsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -1452,7 +1074,8 @@ class ForumsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumDisplayOrder'
+                '\Swagger\Client\Discussion\Models\ForumDisplayOrder',
+                '/{siteId}/forums/displayorder'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumDisplayOrder', $httpHeader), $statusCode, $httpHeader);
@@ -1475,4 +1098,5 @@ class ForumsApi
             throw $e;
         }
     }
+
 }

@@ -63,15 +63,16 @@ class PostInput implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'body' => 'string',
-        'thread_id' => 'int',
+        'id' => 'int',
         'position' => 'int',
-        'title' => 'string',
         'site_id' => 'int',
-        'open_graph' => '\Swagger\Client\Discussion\Models\OpenGraphInput',
-        'creator_id' => 'int',
         'deleted_position' => 'int',
-        'id' => 'int'
+        'open_graph' => '\Swagger\Client\Discussion\Models\OpenGraph',
+        'content_images' => '\Swagger\Client\Discussion\Models\ContentImage[]',
+        'thread_id' => 'int',
+        'creator_id' => 'int',
+        'title' => 'string',
+        'body' => 'string'
     );
 
     public static function swaggerTypes()
@@ -84,15 +85,16 @@ class PostInput implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'body' => 'body',
-        'thread_id' => 'threadId',
+        'id' => 'id',
         'position' => 'position',
-        'title' => 'title',
         'site_id' => 'siteId',
-        'open_graph' => 'openGraph',
-        'creator_id' => 'creatorId',
         'deleted_position' => 'deletedPosition',
-        'id' => 'id'
+        'open_graph' => 'openGraph',
+        'content_images' => 'contentImages',
+        'thread_id' => 'threadId',
+        'creator_id' => 'creatorId',
+        'title' => 'title',
+        'body' => 'body'
     );
 
     public static function attributeMap()
@@ -105,15 +107,16 @@ class PostInput implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'body' => 'setBody',
-        'thread_id' => 'setThreadId',
+        'id' => 'setId',
         'position' => 'setPosition',
-        'title' => 'setTitle',
         'site_id' => 'setSiteId',
-        'open_graph' => 'setOpenGraph',
-        'creator_id' => 'setCreatorId',
         'deleted_position' => 'setDeletedPosition',
-        'id' => 'setId'
+        'open_graph' => 'setOpenGraph',
+        'content_images' => 'setContentImages',
+        'thread_id' => 'setThreadId',
+        'creator_id' => 'setCreatorId',
+        'title' => 'setTitle',
+        'body' => 'setBody'
     );
 
     public static function setters()
@@ -126,15 +129,16 @@ class PostInput implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'body' => 'getBody',
-        'thread_id' => 'getThreadId',
+        'id' => 'getId',
         'position' => 'getPosition',
-        'title' => 'getTitle',
         'site_id' => 'getSiteId',
-        'open_graph' => 'getOpenGraph',
-        'creator_id' => 'getCreatorId',
         'deleted_position' => 'getDeletedPosition',
-        'id' => 'getId'
+        'open_graph' => 'getOpenGraph',
+        'content_images' => 'getContentImages',
+        'thread_id' => 'getThreadId',
+        'creator_id' => 'getCreatorId',
+        'title' => 'getTitle',
+        'body' => 'getBody'
     );
 
     public static function getters()
@@ -158,15 +162,16 @@ class PostInput implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['body'] = isset($data['body']) ? $data['body'] : null;
-        $this->container['thread_id'] = isset($data['thread_id']) ? $data['thread_id'] : null;
-        $this->container['position'] = isset($data['position']) ? $data['position'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
-        $this->container['open_graph'] = isset($data['open_graph']) ? $data['open_graph'] : null;
-        $this->container['creator_id'] = isset($data['creator_id']) ? $data['creator_id'] : null;
-        $this->container['deleted_position'] = isset($data['deleted_position']) ? $data['deleted_position'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['position'] = isset($data['position']) ? $data['position'] : null;
+        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
+        $this->container['deleted_position'] = isset($data['deleted_position']) ? $data['deleted_position'] : null;
+        $this->container['open_graph'] = isset($data['open_graph']) ? $data['open_graph'] : null;
+        $this->container['content_images'] = isset($data['content_images']) ? $data['content_images'] : null;
+        $this->container['thread_id'] = isset($data['thread_id']) ? $data['thread_id'] : null;
+        $this->container['creator_id'] = isset($data['creator_id']) ? $data['creator_id'] : null;
+        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['body'] = isset($data['body']) ? $data['body'] : null;
     }
 
     /**
@@ -199,43 +204,22 @@ class PostInput implements ArrayAccess
 
 
     /**
-     * Gets body
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->container['body'];
-    }
-
-    /**
-     * Sets body
-     * @param string $body
-     * @return $this
-     */
-    public function setBody($body)
-    {
-        $this->container['body'] = $body;
-
-        return $this;
-    }
-
-    /**
-     * Gets thread_id
+     * Gets id
      * @return int
      */
-    public function getThreadId()
+    public function getId()
     {
-        return $this->container['thread_id'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets thread_id
-     * @param int $thread_id
+     * Sets id
+     * @param int $id
      * @return $this
      */
-    public function setThreadId($thread_id)
+    public function setId($id)
     {
-        $this->container['thread_id'] = $thread_id;
+        $this->container['id'] = $id;
 
         return $this;
     }
@@ -262,27 +246,6 @@ class PostInput implements ArrayAccess
     }
 
     /**
-     * Gets title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->container['title'];
-    }
-
-    /**
-     * Sets title
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->container['title'] = $title;
-
-        return $this;
-    }
-
-    /**
      * Gets site_id
      * @return int
      */
@@ -299,48 +262,6 @@ class PostInput implements ArrayAccess
     public function setSiteId($site_id)
     {
         $this->container['site_id'] = $site_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets open_graph
-     * @return \Swagger\Client\Discussion\Models\OpenGraphInput
-     */
-    public function getOpenGraph()
-    {
-        return $this->container['open_graph'];
-    }
-
-    /**
-     * Sets open_graph
-     * @param \Swagger\Client\Discussion\Models\OpenGraphInput $open_graph
-     * @return $this
-     */
-    public function setOpenGraph($open_graph)
-    {
-        $this->container['open_graph'] = $open_graph;
-
-        return $this;
-    }
-
-    /**
-     * Gets creator_id
-     * @return int
-     */
-    public function getCreatorId()
-    {
-        return $this->container['creator_id'];
-    }
-
-    /**
-     * Sets creator_id
-     * @param int $creator_id
-     * @return $this
-     */
-    public function setCreatorId($creator_id)
-    {
-        $this->container['creator_id'] = $creator_id;
 
         return $this;
     }
@@ -367,22 +288,127 @@ class PostInput implements ArrayAccess
     }
 
     /**
-     * Gets id
-     * @return int
+     * Gets open_graph
+     * @return \Swagger\Client\Discussion\Models\OpenGraph
      */
-    public function getId()
+    public function getOpenGraph()
     {
-        return $this->container['id'];
+        return $this->container['open_graph'];
     }
 
     /**
-     * Sets id
-     * @param int $id
+     * Sets open_graph
+     * @param \Swagger\Client\Discussion\Models\OpenGraph $open_graph
      * @return $this
      */
-    public function setId($id)
+    public function setOpenGraph($open_graph)
     {
-        $this->container['id'] = $id;
+        $this->container['open_graph'] = $open_graph;
+
+        return $this;
+    }
+
+    /**
+     * Gets content_images
+     * @return \Swagger\Client\Discussion\Models\ContentImage[]
+     */
+    public function getContentImages()
+    {
+        return $this->container['content_images'];
+    }
+
+    /**
+     * Sets content_images
+     * @param \Swagger\Client\Discussion\Models\ContentImage[] $content_images
+     * @return $this
+     */
+    public function setContentImages($content_images)
+    {
+        $this->container['content_images'] = $content_images;
+
+        return $this;
+    }
+
+    /**
+     * Gets thread_id
+     * @return int
+     */
+    public function getThreadId()
+    {
+        return $this->container['thread_id'];
+    }
+
+    /**
+     * Sets thread_id
+     * @param int $thread_id
+     * @return $this
+     */
+    public function setThreadId($thread_id)
+    {
+        $this->container['thread_id'] = $thread_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets creator_id
+     * @return int
+     */
+    public function getCreatorId()
+    {
+        return $this->container['creator_id'];
+    }
+
+    /**
+     * Sets creator_id
+     * @param int $creator_id
+     * @return $this
+     */
+    public function setCreatorId($creator_id)
+    {
+        $this->container['creator_id'] = $creator_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets title
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->container['title'];
+    }
+
+    /**
+     * Sets title
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->container['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets body
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->container['body'];
+    }
+
+    /**
+     * Sets body
+     * @param string $body
+     * @return $this
+     */
+    public function setBody($body)
+    {
+        $this->container['body'] = $body;
 
         return $this;
     }
@@ -444,3 +470,5 @@ class PostInput implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+
