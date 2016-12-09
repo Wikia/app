@@ -72,7 +72,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 				video.addEventListener('allAdsCompleted', function () {
 					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
-					video.stop();
+					video.ima.reload();
 				});
 
 				return video;

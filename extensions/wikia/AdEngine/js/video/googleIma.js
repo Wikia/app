@@ -66,7 +66,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
-	function createIma() {
+	function createIma(vastUrl, width, height) {
 		return {
 			status: null,
 			adDisplayContainer: null,
@@ -101,6 +101,11 @@ define('ext.wikia.adEngine.video.googleIma', [
 					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
 				}
 			},
+			reload: function () {
+				this.adsManager.destroy();
+				this.adsLoader.contentComplete();
+				this.adsLoader.requestAds(createRequest(vastUrl, width, height));
+			},
 			resize: function (width, height) {
 				if (this.adsManager) {
 					this.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
@@ -123,18 +128,11 @@ define('ext.wikia.adEngine.video.googleIma', [
 	}
 
 	function setupIma(vastUrl, adContainer, width, height) {
-		var ima = createIma();
+		var ima = createIma(vastUrl, width, height);
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima);
-			if (!ima.isAdsManagerLoaded) {
-				ima.addEventListener('allAdsCompleted', function () {
-					ima.adsManager.destroy();
-					ima.adsLoader.contentComplete();
-					ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
-				});
-			}
 			ima.isAdsManagerLoaded = true;
 		}
 
