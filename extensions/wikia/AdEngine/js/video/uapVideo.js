@@ -7,13 +7,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
 	'ext.wikia.adEngine.video.player.ui.pauseOverlayFactory',
 	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
+	'ext.wikia.adEngine.video.player.ui.toggleAnimation',
 	'ext.wikia.adEngine.video.player.ui.volumeControlFactory',
-	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, volumeControlFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, toggleAnimation, volumeControlFactory, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -55,6 +55,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		video.container.appendChild(volumeControl);
 	}
 
+	function addToggleAnimation(video, params) {
+		toggleAnimation.add(video, params);
+	}
+
 	function loadPorvata(params, adSlot, imageContainer) {
 		params.container = adSlot;
 
@@ -65,14 +69,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				addPauseOverlay(video);
 				addVolumeControls(video);
 				addCloseButton(video);
-
-				video.addEventListener('loaded', function () {
-					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
-				});
-
-				video.addEventListener('allAdsCompleted', function () {
-					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
-					video.ima.reload();
+				addToggleAnimation(video, {
+					image: imageContainer,
+					container: adSlot,
+					aspectRatio: params.aspectRatio,
+					videoAspectRatio: params.videoAspectRatio
 				});
 
 				return video;
@@ -92,13 +93,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
 		return playwire.show(params)
 			.then(function (video) {
-				video.addEventListener('boltContentStarted', function () {
-					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
-				});
-
-				video.addEventListener('boltContentComplete', function () {
-					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
-					video.stop();
+				addToggleAnimation(video, {
+					image: imageContainer,
+					container: adSlot,
+					aspectRatio: params.aspectRatio,
+					videoAspectRatio: params.videoAspectRatio
 				});
 
 				return video;

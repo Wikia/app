@@ -45,6 +45,9 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				}
 				this.ima.playVideo(this.width, this.height);
 			},
+			reload: function () {
+				this.ima.reload();
+			},
 			resize: function (width, height) {
 				this.width = width;
 				this.height = height;

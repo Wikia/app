@@ -5,7 +5,11 @@ define('ext.wikia.adEngine.video.playwire', [
 	'wikia.log'
 ], function (vastUrlBuilder, doc, log) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.playwire',
+	var eventsMapping = {
+			allAdsCompleted: 'boltContentComplete',
+			loaded: 'boltContentStarted'
+		},
+		logGroup = 'ext.wikia.adEngine.video.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
 
 	function getConfigUrl(publisherId, videoId) {
@@ -18,6 +22,12 @@ define('ext.wikia.adEngine.video.playwire', [
 			id: playerId,
 			container: params.container,
 			addEventListener: function (eventName, callback) {
+				if (eventsMapping[eventName]) {
+					eventName = eventsMapping[eventName];
+				} else {
+					log(['addEventListener', 'not mapped event used', eventName], 'debug', logGroup);
+				}
+
 				this.api.on(this.id, eventName, callback);
 			},
 			play: function (width, height) {
@@ -26,6 +36,9 @@ define('ext.wikia.adEngine.video.playwire', [
 			},
 			stop: function () {
 				this.api.stopMedia(this.id);
+			},
+			reload: function () {
+				this.stop();
 			},
 			resize: function (width, height) {
 				this.api.resizeVideo(this.id, width + 'px', height + 'px');
