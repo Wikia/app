@@ -2,60 +2,37 @@
 
 namespace Wikia\PortableInfobox\Helpers;
 
-/**
- * Helper used for checking if template consist any hidden infoboxes (eg. put into <includeonly> tag)
- *
- * Class PortableInfoboxTemplatesHelper
- */
 class PortableInfoboxTemplatesHelper {
 
 	/**
-	 * @desc Try to find out if infobox got "hidden" inside includeonly tag. Parse it if that's the case.
-	 *
 	 * @param $title \Title
+	 * @param $includeonly bool check if template consists any hidden infoboxes (eg. put into <includeonly> tag)
 	 *
 	 * @return mixed false when no infoboxes found, Array with infoboxes on success
 	 */
-	public function parseInfoboxesRefactorMe( $title ) {
-		// for templates we need to check for include tags
+	public function parseInfoboxes( $title, $includeonly = false ) {
 		$templateText = $this->fetchContent( $title );
-		$includeonlyText = $this->getIncludeonlyText( $templateText );
 
-		if ( $includeonlyText ) {
-			$parser = new \Parser();
-			$parserOptions = new \ParserOptions();
-			$frame = $parser->getPreprocessor()->newFrame();
+		if ( $includeonly === true ) {
+			$includeonlyText = $this->getIncludeonlyText( $templateText );
 
-			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $title, $parserOptions );
-			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
-
-			if ( $infoboxes ) {
-				// clear up cache before parsing
-				foreach ( $infoboxes as $infobox ) {
-					try {
-						\PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
-					} catch ( \Exception $e ) {
-						\Wikia\Logger\WikiaLogger::instance()->info( 'Invalid infobox syntax in includeonly tag' );
-					}
-				}
-
-				return json_decode( $parser->getOutput()
-					->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+			if ( !$includeonlyText ) {
+				return false;
 			}
 		}
 
-		return false;
-	}
-
-	public function parseInfoboxes( $title ) {
-		// for templates we need to check for include tags
-		$templateText = $this->fetchContent( $title );
-
 		$parser = new \Parser();
 		$parserOptions = new \ParserOptions();
-		$parser->startExternalParse( $title, $parserOptions );
+
+		if ( $includeonly ) {
+			$templateTextWithoutIncludeonly = $parser->getPreloadText( $templateText, $title, $parserOptions );
+			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
+		} else {
+			$parser->startExternalParse( $title, $parserOptions );
+			$infoboxes = $this->getInfoboxes( $templateText );
+		}
+
 		$frame = $parser->getPreprocessor()->newFrame();
-		$infoboxes = $this->getInfoboxes( $templateText );
 
 		if ( $infoboxes ) {
 			// clear up cache before parsing

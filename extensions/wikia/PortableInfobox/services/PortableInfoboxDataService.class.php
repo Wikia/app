@@ -60,7 +60,7 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$incOnlyTemplates = $this->templateHelper->parseInfoboxesRefactorMe( $this->title );
+			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title, true );
 			if ( $incOnlyTemplates ) {
 				$this->delete();
 				$this->set( $incOnlyTemplates );
@@ -72,11 +72,10 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	* @param $title
 	* @return array of strings (infobox markups)
 	*/
 	public function getInfoboxes() {
-		return $this->templateHelper->getMarkup($this->title);
+		return $this->templateHelper->getMarkup( $this->title );
 	}
 
 	/**
