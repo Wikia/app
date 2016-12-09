@@ -63,6 +63,28 @@ class Node {
 		return $metadata;
 	}
 
+	public function getMetadata() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$type = $item->getType();
+
+			if ( $type === 'group' ) {
+				$result[] = [
+					'type' => $type,
+					'metadata' => $item->getMetadata()
+				];
+			} else {
+				$result[] = [
+					'type' => $type,
+					'sources' => $item->getSourcesMetadata()
+				];
+			}
+		}
+
+		return $result;
+	}
+
 	/**
 	 * @return ExternalParser
 	 */
