@@ -26,12 +26,15 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 	paramType = this.spec.params && this.spec.params[paramName] && this.spec.params[paramName]['type'];
 
 	if (paramType === 'image') {
-		// TODO display something nice
-		this.statusIndicator
-			.setIndicator( 'alert' )
-			.setIndicatorTitle(
-				'This is an image'
-			);
+		this.uploadImageButton = new OO.ui.ButtonWidget( {
+			$: this.$,
+			framed: true,
+			icon: 'upload',
+			label: ve.msg( 'visualeditor-dialog-transclusion-upload-image' )
+		} );
+
+		this.$field
+			.append(this.uploadImageButton.$element);
 	}
 
 	// Properties

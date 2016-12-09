@@ -377,6 +377,7 @@ $messages['en'] = [
 	'visualeditor-dialog-transclusion-required-parameter-is-blank' => 'Are you sure you want to continue without filling the $1 {{PLURAL:$2|parameter|parameters}}?',
 	'visualeditor-dialog-transclusion-single-mode' => 'Hide options',
 	'visualeditor-dialog-transclusion-title' => 'Transclusion',
+	'visualeditor-dialog-transclusion-upload-image' => 'Upload image',
 	'visualeditor-dialogbutton-media-tooltip' => 'Media',
 	'visualeditor-dialogbutton-meta-tooltip' => 'Page settings',
 	'visualeditor-dialogbutton-reference-tooltip' => 'Reference',
