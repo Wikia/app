@@ -34,18 +34,17 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 						$this->sourceLabelsFallback( $infobox, $articleTitle );
 
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
+
 					$pageSet->getResult()->setIndexedTagName( $sl, "sourcelabels" );
 					$pageSet->getResult()->addValue(
 						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
 					);
 
-					// TODO is this even needed? Seems to work without this code
 					if ( isset( $infobox[ 'sourcetypes' ] ) ) {
 						$pageSet->getResult()->addValue(
 							[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcetypes', $infobox[ 'sourcetypes' ]
 						);
 					}
-
 				}
 			}
 		}
@@ -65,6 +64,7 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery sourcelabels fallback' );
 
 		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
+		$task->setTitle( $title );
 		$task->title( $title );
 		$task->call( 'refresh' );
 		$task->wikiId( $wgCityId );
