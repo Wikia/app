@@ -40,28 +40,16 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return videoAdContainer;
 	}
 
-	function registerEvents(ima) {
-		Object.keys(google.ima.AdEvent.Type).forEach(function (eventKey) {
-			var eventName = google.ima.AdEvent.Type[eventKey];
+	function registerEvents(ima, types) {
+		Object.keys(types).forEach(function (eventKey) {
+			var eventName = types[eventKey];
 			ima.adsManager.addEventListener(eventName, function (event) {
 				ima.events[eventName] = ima.events[eventName] || [];
 
 				ima.events[eventName].map(function (callback) {
 					callback(ima, event);
 				});
-				log([eventName, event.getAdData()], log.levels.debug, logGroup);
-			}, false);
-		});
-
-		Object.keys(google.ima.AdErrorEvent.Type).forEach(function (eventKey) {
-			var eventName = google.ima.AdErrorEvent.Type[eventKey];
-			ima.adsLoader.addEventListener(eventName, function (event) {
-				ima.events[eventName] = ima.events[eventName] || [];
-
-				ima.events[eventName].map(function (callback) {
-					callback(ima, event);
-				});
-				log([eventName, event.getError()], log.levels.debug, logGroup);
+				log([eventName, event], log.levels.debug, logGroup);
 			}, false);
 		});
 	}
@@ -132,7 +120,8 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
-			registerEvents(ima);
+			registerEvents(ima, google.ima.AdEvent.Type);
+			registerEvents(ima, google.ima.AdErrorEvent.Type);
 			ima.isAdsManagerLoaded = true;
 		}
 

@@ -8,7 +8,16 @@
 	</nav>
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
-			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+      <? if ($useAddPageButton) { ?>
+        <button id="add-page" class="wds-button wds-is-squished wds-is-secondary">
+          <svg class="wds-icon wds-icon-tiny">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-plus" />
+          </svg>
+          <span>Add Page</span>
+        </button>
+      <? } else { ?>
+				<?= $app->renderView('ContributeMenu', 'Index'); ?>
+      <? } ?>
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">

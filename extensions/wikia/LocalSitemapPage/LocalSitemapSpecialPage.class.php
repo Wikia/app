@@ -9,18 +9,24 @@
  *  * No forms and prev/next links
  *  * Better format of the from A to B links
  *  * Use alternative from/to params to overcome ?from robot.txt block
+ *  * Hide MediaWiki redirects
  *
  */
 class LocalSitemapSpecialPage extends SpecialAllpages {
+	/**
+	 * Setting this flag causes the Special:AllPages to skip over redirects when displaying the list of pages.
+	 * It has a matching Wikia change in SpecialAllpages class. Note it only works when including() returns true.
+	 *
+	 * @var bool
+	 */
+	public $skipRedirects = true;
 
 	/**
 	 * Generate chunks as the page was included. This removes the UI around the lists.
 	 *
-	 * @return bool
+	 * @var bool
 	 */
-	public function including() {
-		return true;
-	}
+	protected $mIncluding = true;
 
 	/**
 	 * Use alternative line format for "from A to B" links

@@ -1,9 +1,11 @@
-#WikiaPageHeader nav.wikia-menu-button {
-  /* display: none; */
-}
-
 body {
   overflow-y: visible !important;
+}
+
+#app h2 {
+  border-bottom: none;
+  margin-top: 0;
+  padding-bottom: 0;
 }
 
 #app button, .desktop_modal_dialog button, .quill_toolbar_popover button {
@@ -12,8 +14,6 @@ body {
 }
 
 .quill_toolbar_popover button {
-  color: black;
-
   h2 {
     line-height: 20px !important;
   }
@@ -27,23 +27,18 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  background: white;
+  background: #030f1d;
 
   h2 {
     flex-grow: 1;
     border-bottom: none;
+    font-size: 1rem;
   }
 }
 
 .quill_toolbar {
-  .wds-icon {
-    fill: black;
-  }
-
   .dropdown, .controls {
     > button {
-      color: black;
-
       > i {
         font-style: normal;
       }
@@ -78,15 +73,105 @@ body {
 }
 
 .entity_editor.fixed_toolbar .quill_toolbar {
-  top: 114px !important;
+  top: 89px !important;
 }
 
-#WikiHeader .buttons .contribute {
-  > .drop > .chevron {
-    vertical-align: middle !important;
+#WikiHeader .buttons {
+  .wds-button {
+    background-image: none;
+    height: auto;
+    position: relative;
+    top: -10px;
+    color: white;
   }
 
-  .WikiaMenuElement a {
-    height: auto;
+  .wds-button:hover {
+    color: #D5D4D4;
+  }
+}
+
+.ql-editor, .wikia_color-app_background, .wikia_color-card_background {
+  background-color: #030f1d;
+  color: #D5D4D4;
+}
+
+.wikia_color-headers, h1, h2, h3 {
+  color: #D5D4D4 !important;
+}
+
+.expandable_infobox {
+  background-color: #13202d !important;
+  border: none !important;
+
+  +.expander_button {
+    border-top: none;
+    border-left: 1px solid #D5D4D4;
+    border-right: 1px solid #D5D4D4;
+    border-bottom: 1px solid #D5D4D4;
+  }
+}
+
+.related_entities {
+  display: none;
+}
+
+.table_of_contents {
+  margin-top: 0;
+}
+
+.dialog_body {
+  input, .entity_autosuggest {
+    background-color: white;
+  }
+}
+
+.article.ql-editor {
+  border: 1px solid rgba(0,0,0,0);  /* work around a bizarre webkit bug that was causing a white bar to appear at the bottom of this element */
+}
+
+.cms_article_header > .wds-button {
+  border-color: transparent;
+}
+
+i.fa {
+  font-style: normal !important;
+}
+
+.WikiHeader > nav.WikiNav .subnav-2 {
+  width: 729px !important;
+}
+
+.infobox_section_header {
+  background-color: #40787e !important;
+}
+
+.editable_infobox {
+  background-color: white;
+}
+
+.footnotes {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.view_entity {
+  background-color: #030f1d !important;
+}
+
+.table_of_contents {
+  .wds-list {
+    margin: 0;
+    list-style: none;
+    li {
+      padding: 0 !important;
+      a {
+        padding: 0 !important;
+      }
+    }
+
+    ul {
+       padding-top: 0 !important;
+       padding-bottom: 0 !important;
+    }
   }
 }
