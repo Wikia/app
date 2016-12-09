@@ -1,35 +1,37 @@
 /*global define*/
-define('ext.wikia.adEngine.video.volumeControlHandler', [
+define('ext.wikia.adEngine.video.player.ui.volumeControlFactory', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (doc, log, win) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.volumeControlHandler';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.volumeControlFactory';
 
-	function init(ima) {
+	function create(video) {
 		var muteDiv,
 			speaker;
 
-		muteDiv = createMuteDiv(ima.container);
+		muteDiv = createMuteDiv();
 		speaker = muteDiv.querySelector('.speaker');
 
 		muteDiv.addEventListener('click', function(e) {
 			e.preventDefault();
-			onAdMuteClick(ima, speaker);
+			onAdMuteClick(video, speaker);
 		});
 
-		ima.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
-			unmute(ima, speaker);
+		video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+			unmute(video, speaker);
 			muteDiv.classList.remove('hidden');
 		});
-		ima.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-			unmute(ima, speaker);
+		video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+			unmute(video, speaker);
 			muteDiv.classList.add('hidden');
 		});
+
+		return muteDiv;
 	}
 
-	function createMuteDiv(container) {
+	function createMuteDiv() {
 		var muteDiv,
 			speaker;
 
@@ -40,35 +42,32 @@ define('ext.wikia.adEngine.video.volumeControlHandler', [
 		speaker.className = 'speaker';
 		speaker.appendChild(doc.createElement('span'));
 		muteDiv.appendChild(speaker);
-		container.appendChild(muteDiv);
 		log('volume control is added', log.levels.info, logGroup);
 
 		return muteDiv;
 	}
 
-	function onAdMuteClick(ima, speaker) {
-		if (ima.adMuted) {
-			unmute(ima, speaker);
+	function onAdMuteClick(video, speaker) {
+		if (video.isMuted()) {
+			unmute(video, speaker);
 		} else {
-			mute(ima, speaker);
+			mute(video, speaker);
 		}
 	}
 
-	function mute(ima, speaker) {
+	function mute(video, speaker) {
 		log('mute', log.levels.info, logGroup);
 		speaker.classList.add('mute');
-		ima.adMuted = true;
-		ima.adsManager.setVolume(0);
+		video.setVolume(0);
 	}
 
-	function unmute(ima, speaker) {
+	function unmute(video, speaker) {
 		log('unmute', log.levels.info, logGroup);
 		speaker.classList.remove('mute');
-		ima.adMuted = false;
-		ima.adsManager.setVolume(0.75);
+		video.setVolume(0.75);
 	}
 
 	return {
-		init: init
+		create: create
 	};
 });

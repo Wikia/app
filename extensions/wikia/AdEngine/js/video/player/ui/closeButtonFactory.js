@@ -11,8 +11,9 @@ define('ext.wikia.adEngine.video.player.ui.closeButtonFactory', [
 		var closeButton = doc.createElement('div');
 		closeButton.classList.add('close-ad');
 
-		closeButton.addEventListener('click', function () {
+		closeButton.addEventListener('click', function (event) {
 			video.stop();
+			event.preventDefault();
 			log(['stop', log.levels.debug, logGroup]);
 		});
 

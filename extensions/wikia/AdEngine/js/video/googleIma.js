@@ -2,12 +2,11 @@
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.googleImaAdStatus',
-	'ext.wikia.adEngine.video.volumeControlHandler',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, googleImaAdStatus, volumeControlHandler, browserDetect, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, browserDetect, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
@@ -71,7 +70,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return {
 			status: null,
 			adDisplayContainer: null,
-			adMuted: false,
 			adsLoader: null,
 			adsManager: null,
 			container: null,
@@ -86,7 +84,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 					callback = function () {
 						log('Video play: prepare player UI', log.levels.debug, logGroup);
 						self.status = googleImaAdStatus.create(self);
-						volumeControlHandler.init(self);
 
 						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 						self.adDisplayContainer.initialize();

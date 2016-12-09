@@ -7,12 +7,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
 	'ext.wikia.adEngine.video.player.ui.pauseOverlayFactory',
 	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
+	'ext.wikia.adEngine.video.player.ui.volumeControlFactory',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, volumeControlFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -49,7 +50,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	function addVolumeControls(video) {
+		var volumeControl = volumeControlFactory.create(video);
 
+		video.container.appendChild(volumeControl);
 	}
 
 	function loadPorvata(params, adSlot, imageContainer) {
@@ -60,6 +63,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			.then(function (video) {
 				addProgressBar(video);
 				addPauseOverlay(video);
+				addVolumeControls(video);
 				addCloseButton(video);
 
 				video.addEventListener('loaded', function () {

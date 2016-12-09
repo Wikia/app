@@ -16,7 +16,10 @@ describe('ext.wikia.adEngine.video.player.ui.closeButtonFactory', function () {
 							add: noop
 						},
 						click: function () {
-							this.callback();
+							var event = {
+								preventDefault: noop
+							};
+							this.callback(event);
 						},
 						style: {}
 					};
