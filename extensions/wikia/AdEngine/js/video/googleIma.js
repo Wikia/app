@@ -35,25 +35,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return adsRequest;
 	}
 
-	function createProgressBar() {
-		var progressBar = doc.createElement('div'),
-			currentTime = doc.createElement('div');
-
-		progressBar.classList.add('progress-bar');
-		currentTime.classList.add('current-time');
-
-		progressBar.appendChild(currentTime);
-
-		return progressBar;
-	}
-
 	function prepareVideoAdContainer(videoAdContainer) {
-		var progressBar = createProgressBar();
-
 		videoAdContainer.style.position = 'relative';
 		videoAdContainer.classList.add('hidden');
 		videoAdContainer.classList.add('video-ima-container');
-		videoAdContainer.appendChild(progressBar);
 
 		return videoAdContainer;
 	}
@@ -168,6 +153,13 @@ define('ext.wikia.adEngine.video.googleIma', [
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima);
+			if (!ima.isAdsManagerLoaded) {
+				ima.addEventListener('allAdsCompleted', function () {
+					ima.adsManager.destroy();
+					ima.adsLoader.contentComplete();
+					ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
+				});
+			}
 			ima.isAdsManagerLoaded = true;
 		}
 

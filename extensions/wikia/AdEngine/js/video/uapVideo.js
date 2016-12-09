@@ -4,12 +4,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.template.porvata',
 	'ext.wikia.adEngine.template.playwire',
+	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, uapVideoAnimation, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, progressBarFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -22,28 +23,15 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return slot.clientWidth;
 	}
 
-	function updateProgressBar(ima) {
-		var currentTime = ima.container.querySelector('.progress-bar > .current-time'),
-			remainingTime = ima.adsManager.getRemainingTime();
+	function addProgressBar(video) {
+		var progressBar = progressBarFactory.create(video);
 
-		if (remainingTime) {
-			currentTime.style.transitionDuration = remainingTime + 's';
-			currentTime.style.width = '100%';
-		} else {
-			currentTime.style.width = '0';
-		}
-	}
+		video.addEventListener('start', progressBar.start);
+		video.addEventListener('resume', progressBar.start);
+		video.addEventListener('complete', progressBar.reset);
+		video.addEventListener('pause', progressBar.pause);
 
-	function addProgressListeners(video) {
-		video.addEventListener('start', updateProgressBar);
-		video.addEventListener('resume', updateProgressBar);
-		video.addEventListener('complete', updateProgressBar);
-		video.addEventListener('pause', function (ima) {
-			var progressBar = ima.container.querySelector('.progress-bar'),
-				currentTime = progressBar.querySelector('.current-time');
-
-			currentTime.style.width = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
-		});
+		video.container.appendChild(progressBar.container);
 	}
 
 	function loadPorvata(params, adSlot, imageContainer) {
@@ -52,7 +40,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 		return porvata.show(params)
 			.then(function (video) {
-				addProgressListeners(video);
+				addProgressBar(video);
 
 				video.addEventListener('loaded', function () {
 					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
@@ -60,7 +48,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 				video.addEventListener('allAdsCompleted', function () {
 					uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params);
-					video.reload();
+					video.stop();
 				});
 
 				return video;

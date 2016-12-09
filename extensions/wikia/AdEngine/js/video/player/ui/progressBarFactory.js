@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.video.player.ui.progressBarFactory', [
 
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBarFactory';
 
-	function create() {
+	function create(video) {
 		var progressBar = doc.createElement('div'),
 			currentTime = doc.createElement('div');
 
@@ -20,19 +20,23 @@ define('ext.wikia.adEngine.video.player.ui.progressBarFactory', [
 			container: progressBar,
 			currentTime: currentTime,
 			pause: function () {
-				var currentStatus = (this.currentTime.offsetWidth / this.container.offsetWidth * 100) + '%';
+				var currentStatus = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
 
-				this.currentTime.style.width = currentStatus;
+				currentTime.style.width = currentStatus;
 				log(['pause', currentStatus], log.levels.debug, logGroup);
 			},
-			update: function (video) {
+			reset: function () {
+				currentTime.style.transitionDuration = '';
+				currentTime.style.width = '0';
+			},
+			start: function () {
 				var remainingTime = video.getRemainingTime();
 
 				if (remainingTime) {
-					this.currentTime.style.transitionDuration = remainingTime + 's';
-					this.currentTime.style.width = '100%';
+					currentTime.style.transitionDuration = remainingTime + 's';
+					currentTime.style.width = '100%';
 				} else {
-					this.currentTime.style.width = '0';
+					currentTime.style.width = '0';
 				}
 				log(['update, remaining time:', remainingTime], log.levels.debug, logGroup);
 			}

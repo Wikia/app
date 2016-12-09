@@ -26,18 +26,15 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			addEventListener: function (eventName, callback) {
 				this.ima.addEventListener(eventName, callback);
 			},
+			getRemainingTime: function () {
+				return this.ima.adsManager.getRemainingTime();
+			},
 			play: function (width, height) {
 				if (width !== undefined && height !== undefined) {
 					this.width = width;
 					this.height = height;
 				}
 				this.ima.playVideo(this.width, this.height);
-			},
-			reload: function () {
-				var events = this.ima.events;
-				this.ima = googleIma.setupIma(vastUrl, adSlot, this.width, this.height);
-				this.ima.events = events;
-				this.container = this.ima.container;
 			},
 			resize: function (width, height) {
 				this.width = width;
