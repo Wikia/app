@@ -4,16 +4,16 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.template.porvata',
 	'ext.wikia.adEngine.template.playwire',
-	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
-	'ext.wikia.adEngine.video.player.ui.pauseOverlayFactory',
-	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
+	'ext.wikia.adEngine.video.player.ui.closeButton',
+	'ext.wikia.adEngine.video.player.ui.pauseOverlay',
+	'ext.wikia.adEngine.video.player.ui.progressBar',
 	'ext.wikia.adEngine.video.player.ui.toggleAnimation',
-	'ext.wikia.adEngine.video.player.ui.volumeControlFactory',
+	'ext.wikia.adEngine.video.player.ui.volumeControl',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, toggleAnimation, volumeControlFactory, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, closeButton, pauseOverlay, progressBar, toggleAnimation, volumeControl, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -26,50 +26,17 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return slot.clientWidth;
 	}
 
-	function addProgressBar(video) {
-		var progressBar = progressBarFactory.create(video);
-
-		video.addEventListener('start', progressBar.start);
-		video.addEventListener('resume', progressBar.start);
-		video.addEventListener('allAdsCompleted', progressBar.reset);
-		video.addEventListener('pause', progressBar.pause);
-
-		video.container.appendChild(progressBar.container);
-	}
-
-	function addCloseButton(video) {
-		var closeButton = closeButtonFactory.create(video);
-
-		video.container.appendChild(closeButton);
-	}
-
-	function addPauseOverlay(video) {
-		var pauseOverlay = pauseOverlayFactory.create(video);
-
-		video.container.appendChild(pauseOverlay);
-	}
-
-	function addVolumeControls(video) {
-		var volumeControl = volumeControlFactory.create(video);
-
-		video.container.appendChild(volumeControl);
-	}
-
-	function addToggleAnimation(video, params) {
-		toggleAnimation.add(video, params);
-	}
-
 	function loadPorvata(params, adSlot, imageContainer) {
 		params.container = adSlot;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 		return porvata.show(params)
 			.then(function (video) {
-				addProgressBar(video);
-				addPauseOverlay(video);
-				addVolumeControls(video);
-				addCloseButton(video);
-				addToggleAnimation(video, {
+				progressBar.add(video);
+				pauseOverlay.add(video);
+				volumeControl.add(video);
+				closeButton.add(video);
+				toggleAnimation.add(video, {
 					image: imageContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,
@@ -93,7 +60,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
 		return playwire.show(params)
 			.then(function (video) {
-				addToggleAnimation(video, {
+				toggleAnimation.add(video, {
 					image: imageContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,

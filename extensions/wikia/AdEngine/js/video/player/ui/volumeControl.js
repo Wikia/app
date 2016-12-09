@@ -1,13 +1,13 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.ui.volumeControlFactory', [
+define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (doc, log, win) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.player.ui.volumeControlFactory';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.volumeControl';
 
-	function create(video) {
+	function add(video) {
 		var muteDiv,
 			speaker;
 
@@ -19,16 +19,16 @@ define('ext.wikia.adEngine.video.player.ui.volumeControlFactory', [
 			onAdMuteClick(video, speaker);
 		});
 
-		video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+		video.addEventListener('loaded', function () {
 			unmute(video, speaker);
 			muteDiv.classList.remove('hidden');
 		});
-		video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+		video.addEventListener('allAdsCompleted', function () {
 			unmute(video, speaker);
 			muteDiv.classList.add('hidden');
 		});
 
-		return muteDiv;
+		video.container.appendChild(muteDiv);
 	}
 
 	function createMuteDiv() {
@@ -68,6 +68,6 @@ define('ext.wikia.adEngine.video.player.ui.volumeControlFactory', [
 	}
 
 	return {
-		create: create
+		add: add
 	};
 });

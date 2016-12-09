@@ -1,26 +1,25 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.ui.progressBarFactory', [
+define('ext.wikia.adEngine.video.player.ui.progressBar', [
 	'wikia.document',
 	'wikia.log'
 ], function (doc, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBarFactory';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBar';
 
-	function create(video) {
-		var progressBar = doc.createElement('div'),
-			currentTime = doc.createElement('div');
+	function add(video) {
+		var container = doc.createElement('div'),
+			currentTime = doc.createElement('div'),
+			progressBar;
 
-		progressBar.classList.add('progress-bar');
+		container.classList.add('progress-bar');
 		currentTime.classList.add('current-time');
 
-		progressBar.appendChild(currentTime);
+		container.appendChild(currentTime);
 
-		return {
-			container: progressBar,
-			currentTime: currentTime,
+		progressBar = {
 			pause: function () {
-				var currentStatus = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
+				var currentStatus = (currentTime.offsetWidth / container.offsetWidth * 100) + '%';
 
 				currentTime.style.width = currentStatus;
 				log(['pause', currentStatus], log.levels.debug, logGroup);
@@ -41,9 +40,18 @@ define('ext.wikia.adEngine.video.player.ui.progressBarFactory', [
 				log(['update, remaining time:', remainingTime], log.levels.debug, logGroup);
 			}
 		};
+
+		video.addEventListener('start', progressBar.start);
+		video.addEventListener('resume', progressBar.start);
+		video.addEventListener('allAdsCompleted', progressBar.reset);
+		video.addEventListener('pause', progressBar.pause);
+
+		video.container.appendChild(container);
+
+		return progressBar;
 	}
 
 	return {
-		create: create
+		add: add
 	};
 });

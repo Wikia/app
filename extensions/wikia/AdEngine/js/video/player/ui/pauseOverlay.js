@@ -1,13 +1,13 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.ui.pauseOverlayFactory', [
+define('ext.wikia.adEngine.video.player.ui.pauseOverlay', [
 	'wikia.document',
 	'wikia.log'
 ], function (doc, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.player.ui.pauseOverlayFactory';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.pauseOverlay';
 
-	function create(video) {
+	function add(video) {
 		var overlay = doc.createElement('div');
 
 		overlay.classList.add('pause-overlay');
@@ -22,10 +22,10 @@ define('ext.wikia.adEngine.video.player.ui.pauseOverlayFactory', [
 			}
 		});
 
-		return overlay;
+		video.container.appendChild(overlay);
 	}
 
 	return {
-		create: create
+		add: add
 	};
 });
