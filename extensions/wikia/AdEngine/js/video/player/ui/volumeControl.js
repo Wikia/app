@@ -1,70 +1,55 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	'wikia.document',
-	'wikia.log',
-	'wikia.window'
-], function (doc, log, win) {
+	'wikia.log'
+], function (doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.volumeControl';
 
+	function createVolumeControl() {
+		var volume = doc.createElement('div'),
+			speaker = doc.createElement('a');
+
+		speaker.className = 'speaker';
+		speaker.appendChild(doc.createElement('span'));
+		volume.className = 'ima-mute-div hidden';
+
+		volume.appendChild(speaker);
+		volume.speaker = speaker;
+		log('volume control is added', log.levels.info, logGroup);
+
+		return volume;
+	}
+
 	function add(video) {
-		var muteDiv,
-			speaker;
+		var volume = createVolumeControl();
 
-		muteDiv = createMuteDiv();
-		speaker = muteDiv.querySelector('.speaker');
+		volume.mute = function () {
+			volume.speaker.classList.add('mute');
+			video.setVolume(0);
+			log('mute', log.levels.info, logGroup);
+		};
+		volume.unmute = function () {
+			volume.speaker.classList.remove('mute');
+			video.setVolume(0.75);
+			log('unmute', log.levels.info, logGroup);
+		};
 
-		muteDiv.addEventListener('click', function(e) {
+		volume.addEventListener('click', function(e) {
+			if (video.isMuted()) {
+				volume.unmute();
+			} else {
+				volume.mute();
+			}
 			e.preventDefault();
-			onAdMuteClick(video, speaker);
 		});
 
 		video.addEventListener('loaded', function () {
-			unmute(video, speaker);
-			muteDiv.classList.remove('hidden');
-		});
-		video.addEventListener('allAdsCompleted', function () {
-			unmute(video, speaker);
-			muteDiv.classList.add('hidden');
+			volume.unmute();
+			volume.classList.remove('hidden');
 		});
 
-		video.container.appendChild(muteDiv);
-	}
-
-	function createMuteDiv() {
-		var muteDiv,
-			speaker;
-
-		muteDiv = doc.createElement('div');
-		muteDiv.className = 'ima-mute-div';
-		muteDiv.classList.add('hidden');
-		speaker = doc.createElement('a');
-		speaker.className = 'speaker';
-		speaker.appendChild(doc.createElement('span'));
-		muteDiv.appendChild(speaker);
-		log('volume control is added', log.levels.info, logGroup);
-
-		return muteDiv;
-	}
-
-	function onAdMuteClick(video, speaker) {
-		if (video.isMuted()) {
-			unmute(video, speaker);
-		} else {
-			mute(video, speaker);
-		}
-	}
-
-	function mute(video, speaker) {
-		log('mute', log.levels.info, logGroup);
-		speaker.classList.add('mute');
-		video.setVolume(0);
-	}
-
-	function unmute(video, speaker) {
-		log('unmute', log.levels.info, logGroup);
-		speaker.classList.remove('mute');
-		video.setVolume(0.75);
+		video.container.appendChild(volume);
 	}
 
 	return {
