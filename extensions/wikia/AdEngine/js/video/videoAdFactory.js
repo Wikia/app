@@ -43,6 +43,9 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				this.width = width;
 				this.height = height;
 				this.ima.resize(width, height);
+			},
+			stop: function () {
+				this.ima.adsManager.stop();
 			}
 		};
 	}

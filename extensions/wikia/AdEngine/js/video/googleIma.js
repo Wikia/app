@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.googleImaAdStatus',
-	'ext.wikia.adEngine.video.player.ui.closeButton',
+	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
 	'ext.wikia.adEngine.video.volumeControlHandler',
 	'wikia.browserDetect',
 	'wikia.document',

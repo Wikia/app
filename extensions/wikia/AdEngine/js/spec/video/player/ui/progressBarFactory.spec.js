@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, beforeEach*/
-describe('ext.wikia.adEngine.video.player.ui.progressBar', function () {
+describe('ext.wikia.adEngine.video.player.ui.progressBarFactory', function () {
 	'use strict';
 
 	function noop () {}
@@ -29,7 +29,7 @@ describe('ext.wikia.adEngine.video.player.ui.progressBar', function () {
 		progressBar;
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.ui.progressBar'](
+		return modules['ext.wikia.adEngine.video.player.ui.progressBarFactory'](
 			mocks.doc,
 			mocks.log
 		);

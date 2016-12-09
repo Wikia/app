@@ -1,11 +1,11 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.ui.progressBar', [
+define('ext.wikia.adEngine.video.player.ui.progressBarFactory', [
 	'wikia.document',
 	'wikia.log'
 ], function (doc, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBar';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBarFactory';
 
 	function create() {
 		var progressBar = doc.createElement('div'),
