@@ -51,7 +51,7 @@ class PortableInfoboxDataService {
 	/**
 	 * Returns infobox data, chain terminator method
 	 *
-	 * @return array in format [ [ 'data' => [], 'sources' => [] ] or [] will be returned
+	 * @return array in format [ [ 'data' => [], 'metadata' => [] ] or [] will be returned
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {

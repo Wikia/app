@@ -70,12 +70,8 @@ class NodeGroup extends Node {
 		return true;
 	}
 
-	public function getSource() {
-		return $this->getSourceForChildren();
-	}
-
-	public function getSourceLabel() {
-		return $this->getSourceLabelForChildren();
+	public function getSources() {
+		return $this->getSourcesForChildren();
 	}
 
 	protected function showIncomplete() {

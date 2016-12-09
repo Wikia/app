@@ -23,28 +23,23 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 
 			if ( is_array( $parsedInfoboxes ) && count( $parsedInfoboxes ) ) {
 				$inf = [ ];
+
 				foreach ( array_keys( $parsedInfoboxes ) as $k => $v ) {
 					$inf[ $k ] = [ ];
 				}
+
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
-				foreach ( $parsedInfoboxes as $count => $infobox ) {
-					$sl = isset( $infobox[ 'sourcelabels' ] ) ?
-						$infobox[ 'sourcelabels' ] :
-						$this->sourceLabelsFallback( $infobox, $articleTitle );
 
+				foreach ( $parsedInfoboxes as $count => $infobox ) {
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
 
-					$pageSet->getResult()->setIndexedTagName( $sl, "sourcelabels" );
-					$pageSet->getResult()->addValue(
-						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
-					);
+					$metadata = $infobox['metadata'] ?? $this->metadataFallback( $infobox, $articleTitle );
 
-					if ( isset( $infobox[ 'sourcetypes' ] ) ) {
-						$pageSet->getResult()->addValue(
-							[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcetypes', $infobox[ 'sourcetypes' ]
-						);
-					}
+					$pageSet->getResult()->setIndexedTagName( $metadata, 'metadata' );
+					$pageSet->getResult()->addValue(
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $metadata
+					);
 				}
 			}
 		}
@@ -58,10 +53,10 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	 * @param $title
 	 * @return array
 	 */
-	private function sourceLabelsFallback( $infobox, $title ) {
+	private function metadataFallback( $infobox, $title ) {
 		global $wgCityId;
 
-		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery sourcelabels fallback' );
+		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery metadata fallback' );
 
 		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
 		$task->setTitle( $title );
@@ -69,6 +64,12 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		$task->call( 'refresh' );
 		$task->wikiId( $wgCityId );
 		$task->queue();
+
+		// TODO reparse and get fresh data
+		$data = PortableInfoboxDataService::newFromTitle( $title )->purge()->getData();
+		var_dump($infobox);
+		var_dump($data);
+		die;
 
 		return $infobox[ 'sources' ] ? array_fill_keys( $infobox[ 'sources' ], '' ) : [ ];
 	}

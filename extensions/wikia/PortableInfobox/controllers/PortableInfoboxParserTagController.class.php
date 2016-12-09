@@ -149,13 +149,18 @@ class PortableInfoboxParserTagController extends WikiaController {
 		// parser output stores this in page_props table, therefore we can reuse the data in data provider service
 		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
-			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+			$infoboxes = json_decode(
+				$parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ),
+				true
+			);
 			$infoboxes[] = [
 				'data' => $raw->getRenderData(),
-				'sourcelabels' => $raw->getSourceLabel(),
-				'sourcetypes' => $raw->getSourceType()
+				'metadata' => $raw->getMetadata()
 			];
-			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
+			$parserOutput->setProperty(
+				PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME,
+				json_encode( $infoboxes )
+			);
 		}
 	}
 

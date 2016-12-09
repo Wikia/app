@@ -173,15 +173,15 @@ class NodeImage extends Node {
 		return true;
 	}
 
-	public function getSource() {
-		$sources = $this->extractSourceFromNode( $this->xmlNode );
+	public function getSources() {
+		$sources = $this->extractSourcesFromNode( $this->xmlNode );
 		if ( $this->xmlNode->{self::ALT_TAG_NAME} ) {
 			$sources = array_merge( $sources,
-				$this->extractSourceFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
+				$this->extractSourcesFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
 		}
 		if ( $this->xmlNode->{self::CAPTION_TAG_NAME} ) {
 			$sources = array_merge( $sources,
-				$this->extractSourceFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
+				$this->extractSourcesFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
 		}
 
 		return array_unique( $sources );

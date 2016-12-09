@@ -70,7 +70,8 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
  * extend their param array with received infobox params.
  */
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var id, page, i, j, denormalizedData, source;
+	var self = this,
+		id, page, denormalizedData;
 
 	if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
 		denormalizedData = this.denormalizeInfoboxTemplateTitles( data );
@@ -91,23 +92,45 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				};
 			}
 
-			for ( i = 0; i < page.infoboxes.length; i++ ) {
-				page.infoboxes[i].sources = Object.keys( page.infoboxes[i].sourcelabels );
-
-				for ( j = 0; j < page.infoboxes[i].sources.length; j++ ) {
-					source = page.infoboxes[i].sources[j];
-
-					specs[page.title].params[source] = {
-						label: page.infoboxes[i].sourcelabels[source],
-						type: page.infoboxes[i].sourcetypes[source]
-					};
-					specs[page.title].paramOrder.push( page.infoboxes[i].sources[j] );
-				}
-			}
+			page.infoboxes.forEach( function ( infobox ) {
+				infobox.metadata.forEach( self.parseInfoboxMetadata.bind( {
+					addInfoboxSourceParam: self.addInfoboxSourceParam,
+					parseInfoboxMetadata: self.parseInfoboxMetadata,
+					specs: specs[page.title]
+				} ) );
+			} );
 		}
 
 		ve.extendObject( this.specCache, specs );
 	}
+};
+
+ve.dm.WikiaTransclusionModel.prototype.parseInfoboxMetadata = function ( node ) {
+	var self = this;
+
+	if ( node.type === 'group' ) {
+		node.metadata.forEach( self.parseInfoboxMetadata.bind( {
+			addInfoboxSourceParam: self.addInfoboxSourceParam,
+			specs: self.specs
+		} ) );
+	} else {
+		Object.keys( node.sources ).map( function( sourceName ) {
+			var sourceMetadata = node.sources[sourceName];
+			self.addInfoboxSourceParam( self.specs, node, sourceName, sourceMetadata );
+		} );
+	}
+};
+
+ve.dm.WikiaTransclusionModel.prototype.addInfoboxSourceParam = function ( specs, node, sourceName, sourceMetadata ) {
+	specs.params[sourceName] = {
+		label: sourceMetadata.label
+	};
+
+	if ( sourceMetadata.primary === true ) {
+		specs.params[sourceName].type = node.type;
+	}
+
+	specs.paramOrder.push( sourceName );
 };
 
 /**
