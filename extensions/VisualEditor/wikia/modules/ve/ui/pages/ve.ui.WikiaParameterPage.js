@@ -32,10 +32,7 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 			icon: 'image',
 			flags: [ 'primary' ],
 			title: ve.msg( 'visualeditor-dialog-transclusion-upload-image' )
-		} )
-			.connect( this, { click: function () {
-				ve.ui.commandRegistry.registry.wikiaImageInsert.execute(ve.init.target.getSurface());
-			} } );
+		} );
 
 		this.$field
 			.addClass( 've-ui-imageField' )
