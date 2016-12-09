@@ -2,13 +2,12 @@
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.googleImaAdStatus',
-	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
 	'ext.wikia.adEngine.video.volumeControlHandler',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, googleImaAdStatus, closeButton, volumeControlHandler, browserDetect, doc, log, win) {
+], function (scriptLoader, googleImaAdStatus, volumeControlHandler, browserDetect, doc, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
@@ -73,7 +72,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		var layer = document.createElement('div');
 
 		layer.classList.add(videoLayerClassName);
-		layer.appendChild(closeButton.create(ad));
 		ad.container.appendChild(layer);
 
 		layer.addEventListener('click', function () {

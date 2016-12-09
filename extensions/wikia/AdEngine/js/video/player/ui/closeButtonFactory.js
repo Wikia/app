@@ -7,12 +7,12 @@ define('ext.wikia.adEngine.video.player.ui.closeButtonFactory', [
 
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.closeButtonFactory';
 
-	function create(ima) {
+	function create(video) {
 		var closeButton = doc.createElement('div');
 		closeButton.classList.add('close-ad');
 
 		closeButton.addEventListener('click', function () {
-			ima.adsManager.stop();
+			video.stop();
 			log(['stop', log.levels.debug, logGroup]);
 		});
 

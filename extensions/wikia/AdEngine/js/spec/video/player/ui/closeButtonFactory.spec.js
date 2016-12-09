@@ -23,10 +23,8 @@ describe('ext.wikia.adEngine.video.player.ui.closeButtonFactory', function () {
 				}
 			},
 			log: noop,
-			ima: {
-				adsManager: {
-					stop: noop
-				}
+			video: {
+				stop: noop
 			}
 		},
 		closeButton;
@@ -41,15 +39,15 @@ describe('ext.wikia.adEngine.video.player.ui.closeButtonFactory', function () {
 	beforeEach(function () {
 		var closeButtonFactory = getModule();
 
-		closeButton = closeButtonFactory.create(mocks.ima);
+		closeButton = closeButtonFactory.create(mocks.video);
 		mocks.log.levels = {};
 	});
 
 	it('Click on closeButton triggers video stop method', function () {
-		spyOn(mocks.ima.adsManager, 'stop');
+		spyOn(mocks.video, 'stop');
 
 		closeButton.click();
 
-		expect(mocks.ima.adsManager.stop).toHaveBeenCalled();
+		expect(mocks.video.stop).toHaveBeenCalled();
 	});
 });

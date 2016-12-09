@@ -4,13 +4,14 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.template.porvata',
 	'ext.wikia.adEngine.template.playwire',
+	'ext.wikia.adEngine.video.player.ui.closeButtonFactory',
 	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, progressBarFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, progressBarFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -34,6 +35,20 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		video.container.appendChild(progressBar.container);
 	}
 
+	function addCloseButton(video) {
+		var closeButton = closeButtonFactory.create(video);
+
+		video.container.appendChild(closeButton);
+	}
+
+	function addPauseOverlay(video) {
+
+	}
+
+	function addVolumeControls(video) {
+
+	}
+
 	function loadPorvata(params, adSlot, imageContainer) {
 		params.container = adSlot;
 
@@ -41,6 +56,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return porvata.show(params)
 			.then(function (video) {
 				addProgressBar(video);
+				addCloseButton(video);
 
 				video.addEventListener('loaded', function () {
 					uapVideoAnimation.showVideo(video, imageContainer, adSlot, params);
