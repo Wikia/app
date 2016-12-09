@@ -53,20 +53,6 @@ class UserPasswordTest extends WikiaBaseTest {
 		$this->assertTrue( $this->testUser->setPassword( 'goodpassword123' ) );
 	}
 
-	public function testSetPasswordDeletePassword() {
-		$response = new StdClass();
-		$response->success = true;
-
-		$this->heliosClientMock->expects( $this->never() )
-			->method( 'setPassword' );
-
-		$this->heliosClientMock->expects( $this->once() )
-			->method( 'deletePassword' )
-			->willReturn( $response );
-
-		$this->assertTrue( $this->testUser->setPassword( null ) );
-	}
-
 	/**
 	 * @expectedException PasswordError
 	 */
@@ -94,7 +80,82 @@ class UserPasswordTest extends WikiaBaseTest {
 			->method( 'setPassword' )
 			->willReturn( $response );
 
-		$this->assertTrue( $this->testUser->setPassword( '' ) );
+		$this->testUser->setPassword( '' );
+	}
+
+	public function testSetPasswordDeletePassword() {
+		$response = new StdClass();
+		$response->success = true;
+
+		$this->heliosClientMock->expects( $this->never() )
+			->method( 'setPassword' );
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'deletePassword' )
+			->willReturn( $response );
+
+		$this->assertTrue( $this->testUser->setPassword( null ) );
+	}
+
+	/**
+	 * @expectedException PasswordError
+	 */
+	public function testSetPasswordDeletePasswordError() {
+		$error = new StdClass();
+		$error->description = 'server_error';
+		$response = new StdClass();
+		$response->errors = [ $error ];
+
+		$mockMessage = $this->getMockBuilder( 'Message' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'text' ] )
+			->getMock();
+		$mockMessage->expects( $this->once() )
+			->method( 'text' )
+			->willReturn( '' );
+
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->once() )
+			->method( 'wfMessage' )
+			->with( $error->description )
+			->willReturn( $mockMessage );
+
+		$this->heliosClientMock->expects( $this->never() )
+			->method( 'setPassword' );
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'deletePassword' )
+			->willReturn( $response );
+
+		$this->testUser->setPassword( null );
+	}
+
+	/**
+	 * @expectedException PasswordError
+	 */
+	public function testSetPasswordDeletePasswordUnknownError() {
+		$mockMessage = $this->getMockBuilder( 'Message' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'text' ] )
+			->getMock();
+		$mockMessage->expects( $this->once() )
+			->method( 'text' )
+			->willReturn( '' );
+
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->once() )
+			->method( 'wfMessage' )
+			->with( 'externaldberror' )
+			->willReturn( $mockMessage );
+
+		$this->heliosClientMock->expects( $this->never() )
+			->method( 'setPassword' );
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'deletePassword' )
+			->willReturn( null );
+
+		$this->testUser->setPassword( null );
 	}
 
 	public function testGetPasswordValidity() {

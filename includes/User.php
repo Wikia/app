@@ -2116,14 +2116,14 @@ class User {
 		$heliosPasswordChange = self::heliosClient()->setPassword( $this->getId(), $password );
 
 		if ( empty( $heliosPasswordChange ) ) {
-			WikiaLogger::instance()->error( 'Helios password set communication failed', [
+			$this->error( 'Helios password set communication failed', [
 				'userId' => $this->getId(),
 			] );
 			throw new PasswordError( wfMessage( 'externaldberror' )->text() );
 		}
 
 		if ( !empty( $heliosPasswordChange->errors ) ) {
-			WikiaLogger::instance()->error( 'Helios password set failed', [
+			$this->error( 'Helios password set failed', [
 				'userId' => $this->getId(),
 				'err'    => $heliosPasswordChange,
 			] );
@@ -2132,7 +2132,22 @@ class User {
 	}
 
 	private function heliosDeletePassword() {
-		self::heliosClient()->deletePassword( $this->getId() );
+		$result = self::heliosClient()->deletePassword( $this->getId() );
+
+		if ( empty( $result ) ) {
+			$this->error( 'Helios password deletion communication failed', [
+				'userId' => $this->getId(),
+			] );
+			throw new PasswordError( wfMessage( 'externaldberror' )->text() );
+		}
+
+		if ( !empty( $result->errors ) ) {
+			$this->error( 'Helios password deletion failed', [
+				'userId' => $this->getId(),
+				'err'    => $result,
+			] );
+			throw new PasswordError( wfMessage( $result->errors[0]->description )->text() );
+		}
 	}
 
 	/**
