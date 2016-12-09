@@ -4,16 +4,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.template.porvata',
 	'ext.wikia.adEngine.template.playwire',
-	'ext.wikia.adEngine.video.player.ui.closeButton',
-	'ext.wikia.adEngine.video.player.ui.pauseOverlay',
-	'ext.wikia.adEngine.video.player.ui.progressBar',
-	'ext.wikia.adEngine.video.player.ui.toggleAnimation',
-	'ext.wikia.adEngine.video.player.ui.volumeControl',
+	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, closeButton, pauseOverlay, progressBar, toggleAnimation, volumeControl, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, videoInterface, videoAdFactory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -32,11 +28,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 		return porvata.show(params)
 			.then(function (video) {
-				progressBar.add(video);
-				pauseOverlay.add(video);
-				volumeControl.add(video);
-				closeButton.add(video);
-				toggleAnimation.add(video, {
+				videoInterface.setup(video, [
+					'progressBar',
+					'pauseOverlay',
+					'volumeControl',
+					'closeButton',
+					'toggleAnimation'
+				], {
 					image: imageContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,
@@ -50,8 +48,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function loadPlaywire(params, adSlot, imageContainer) {
 		var container = doc.createElement('div');
 
-		container.id = 'playwire_player';
-		container.classList.add('hidden');
+		container.classList.add('video-player', 'hidden');
 		adSlot.appendChild(container);
 
 		params.container = container;
@@ -60,7 +57,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
 		return playwire.show(params)
 			.then(function (video) {
-				toggleAnimation.add(video, {
+				videoInterface.setup(video, [
+					'closeButton',
+					'toggleAnimation'
+				], {
 					image: imageContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,

@@ -177,7 +177,9 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-.video-ima-container {
+.video-player {
+	position: relative;
+
 	video {
 		left: 0;
 	}

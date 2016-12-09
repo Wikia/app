@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	function prepareVideoAdContainer(videoAdContainer) {
 		videoAdContainer.style.position = 'relative';
 		videoAdContainer.classList.add('hidden');
-		videoAdContainer.classList.add('video-ima-container');
+		videoAdContainer.classList.add('video-player');
 
 		return videoAdContainer;
 	}
