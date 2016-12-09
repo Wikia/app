@@ -112,7 +112,6 @@ class User {
 		'mId',
 		'mName',
 		'mRealName',
-		'mPassword',
 		'mNewpassword',
 		'mNewpassTime',
 		'mEmail',
@@ -132,7 +131,7 @@ class User {
 
 	/** @name Cache variables */
 	//@{
-	var $mId, $mName, $mRealName, $mPassword, $mNewpassword, $mNewpassTime,
+	var $mId, $mName, $mRealName, $mNewpassword, $mNewpassTime,
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
@@ -829,10 +828,10 @@ class User {
 		}
 
 		if ( empty( $result->errors ) ) {
-			return false;
+			return 'unknown-error';
 		}
 
-		if ( count( $result->errors ) == 1 ) {
+		if ( count( $result->errors ) === 1 ) {
 			return $result->errors[0]->description;
 		}
 
@@ -1017,7 +1016,7 @@ class User {
 		$this->mId = 0;
 		$this->mName = $name;
 		$this->mRealName = '';
-		$this->mPassword = $this->mNewpassword = '';
+		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
 		$this->mEmail = '';
 		$this->mOptionOverrides = null;
@@ -1058,7 +1057,7 @@ class User {
 	 */
 	public function isItemLoaded( $item, $all = 'all' ) {
 		return ( $this->mLoadedItems === true && $all === 'all' ) ||
-		( isset( $this->mLoadedItems[$item] ) && $this->mLoadedItems[$item] === true );
+			( isset( $this->mLoadedItems[$item] ) && $this->mLoadedItems[$item] === true );
 	}
 
 	/**
@@ -1170,7 +1169,6 @@ class User {
 		}
 
 		if ( isset( $row->user_password ) ) {
-			$this->mPassword = $row->user_password;
 			$this->mNewpassword = $row->user_newpassword;
 			$this->mNewpassTime = wfTimestampOrNull( TS_MW, $row->user_newpass_time );
 			$this->mEmail = $row->user_email;
@@ -1383,7 +1381,7 @@ class User {
 	 */
 	public function isDnsBlacklisted( $ip, $checkWhitelist = false ) {
 		global $wgEnableSorbs, $wgEnableDnsBlacklist,
-			   $wgSorbsUrl, $wgDnsBlacklistUrls, $wgProxyWhitelist;
+			$wgSorbsUrl, $wgDnsBlacklistUrls, $wgProxyWhitelist;
 
 		if ( !$wgEnableDnsBlacklist && !$wgEnableSorbs )
 			return false;
@@ -2097,13 +2095,13 @@ class User {
 	 * @throws PasswordError on failure
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
-		if(is_null($password)){
+		if ( is_null( $password ) ) {
 			$this->heliosDeletePassword();
-		}else{
-			$this->heliosSetNewPassword($password);
+		} else {
+			$this->heliosSetNewPassword( $password );
 		}
 
-		$this->resetNewPasswordAndSetToken();
+		$this->clearNewPasswordAndSetToken();
 
 		if ( $forceLogout ) {
 			self::heliosClient()->forceLogout( $this->getId() );
@@ -2112,12 +2110,12 @@ class User {
 		return true;
 	}
 
-	private function heliosSetNewPassword($password){
+	private function heliosSetNewPassword( $password ) {
 		$heliosPasswordChange = null;
 
 		$heliosPasswordChange = self::heliosClient()->setPassword( $this->getId(), $password );
 
-		if ( !$heliosPasswordChange ) {
+		if ( empty( $heliosPasswordChange ) ) {
 			WikiaLogger::instance()->error( 'Helios password set communication failed', [
 				'userId' => $this->getId(),
 			] );
@@ -2133,14 +2131,14 @@ class User {
 		}
 	}
 
-	private function heliosDeletePassword(){
-		self::heliosClient()->deletePassword($this->getId());
+	private function heliosDeletePassword() {
+		self::heliosClient()->deletePassword( $this->getId() );
 	}
 
 	/**
 	 * Set the password and reset the random token unconditionally.
 	 */
-	public function resetNewPasswordAndSetToken() {
+	private function clearNewPasswordAndSetToken() {
 		$this->setToken();
 
 		$this->mNewpassword = '';
@@ -2987,9 +2985,9 @@ class User {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'watchlist',
 				array( /* SET */
-					   'wl_notificationtimestamp' => null
+					'wl_notificationtimestamp' => null
 				), array( /* WHERE */
-						  'wl_user' => $id
+					'wl_user' => $id
 				), __METHOD__
 			);
 
@@ -3182,18 +3180,18 @@ class User {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
-				   'user_name' => $this->mName,
-				   'user_newpassword' => $this->mNewpassword,
-				   'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
-				   'user_real_name' => $this->mRealName,
-				   'user_email' => $this->mEmail,
-				   'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
-				   'user_touched' => $dbw->timestamp( $this->mTouched ),
-				   'user_token' => strval( $this->mToken ),
-				   'user_email_token' => $this->mEmailToken,
-				   'user_email_token_expires' => $dbw->timestampOrNull( $this->mEmailTokenExpires ),
+				'user_name' => $this->mName,
+				'user_newpassword' => $this->mNewpassword,
+				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
+				'user_real_name' => $this->mRealName,
+				'user_email' => $this->mEmail,
+				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
+				'user_touched' => $dbw->timestamp( $this->mTouched ),
+				'user_token' => strval( $this->mToken ),
+				'user_email_token' => $this->mEmailToken,
+				'user_email_token_expires' => $dbw->timestampOrNull( $this->mEmailTokenExpires ),
 			), array( /* WHERE */
-					  'user_id' => $this->mId
+				'user_id' => $this->mId
 			), __METHOD__
 		);
 
@@ -3948,7 +3946,7 @@ class User {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if( ! wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if ( wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}
@@ -3970,9 +3968,9 @@ class User {
 	public function isEmailConfirmationPending() {
 		global $wgEmailAuthentication;
 		return $wgEmailAuthentication &&
-		!$this->isEmailConfirmed() &&
-		$this->mEmailToken &&
-		$this->mEmailTokenExpires > wfTimestamp();
+			!$this->isEmailConfirmed() &&
+			$this->mEmailToken &&
+			$this->mEmailTokenExpires > wfTimestamp();
 	}
 
 	/**
@@ -4261,7 +4259,7 @@ class User {
 			(new WikiaSQL())
 				->DELETE('user_properties')
 				->WHERE('up_user')->EQUAL_TO($this->getId())
-				->AND_('up_property')->IN($deletePrefs)
+					->AND_('up_property')->IN($deletePrefs)
 				->run($dbw);
 		}
 

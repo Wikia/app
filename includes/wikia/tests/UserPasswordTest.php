@@ -3,13 +3,16 @@
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\DependencyInjection\Injector;
+use Wikia\DependencyInjection\InjectorBuilder;
 
 class UserPasswordTest extends WikiaBaseTest {
 
 	const TEST_USER_ID = 4;
 
 	/** @var User */
-	protected $testUser;
+	private $testUser;
+
+	private $heliosClientMock;
 
 	protected static $currentInjector;
 
@@ -19,6 +22,8 @@ class UserPasswordTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
+		$this->setupAndInjectServiceMocks();
+
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
@@ -26,47 +31,116 @@ class UserPasswordTest extends WikiaBaseTest {
 		Injector::setInjector( self::$currentInjector );
 	}
 
-	public function testShouldSetNewPassword() {
+	private function setupAndInjectServiceMocks() {
+		$this->heliosClientMock = $this->getMock( HeliosClient::class,
+			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken',
+				'setPassword', 'validatePassword', 'deletePassword' ] );
+
+		$container = ( new InjectorBuilder() )
+			->bind( HeliosClient::class )->to( $this->heliosClientMock )
+			->build();
+		Injector::setInjector( $container );
+	}
+
+	public function testSetPassword() {
+		$response = new StdClass();
+		$response->success = true;
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'setPassword' )
+			->willReturn( $response );
+
 		$this->assertTrue( $this->testUser->setPassword( 'goodpassword123' ) );
 	}
 
-	public function testShouldDeletePassword() {
-		$password = "fhsdakljhasfdhjjfdjh2345";
-		$this->testUser->setPassword( $password );
+	public function testSetPasswordDeletePassword() {
+		$response = new StdClass();
+		$response->success = true;
+
+		$this->heliosClientMock->expects( $this->never() )
+			->method( 'setPassword' );
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'deletePassword' )
+			->willReturn( $response );
+
 		$this->assertTrue( $this->testUser->setPassword( null ) );
-		$this->assertEquals(
-			'401',
-			Injector::getInjector()->get( HeliosClient::class )
-				->login( $this->testUser->getName(), $password )[0]
-		);
 	}
 
 	/**
 	 * @expectedException PasswordError
-	 * @expectedExceptionMessage Passwords must be at least $1 characters.
 	 */
-	public function testShouldNotSetEmptyPassword() {
+	public function testSetPasswordError() {
+		$error = new StdClass();
+		$error->description = 'passwordtooshort';
+		$response = new StdClass();
+		$response->errors = [ $error ];
+
+		$mockMessage = $this->getMockBuilder( 'Message' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'text' ] )
+			->getMock();
+		$mockMessage->expects( $this->once() )
+			->method( 'text' )
+			->willReturn( '' );
+
+		$this->getGlobalFunctionMock( 'wfMessage' )
+			->expects( $this->once() )
+			->method( 'wfMessage' )
+			->with( 'passwordtooshort' )
+			->willReturn( $mockMessage );
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'setPassword' )
+			->willReturn( $response );
+
 		$this->assertTrue( $this->testUser->setPassword( '' ) );
 	}
 
-	/**
-	 * @expectedException PasswordError
-	 * @expectedExceptionMessage Your password must be different from your username.
-	 */
-	public function testShouldNotSetNewPasswordEqualToUsername() {
-		$this->assertTrue( $this->testUser->setPassword( $this->testUser->getName() ) );
-	}
+	public function testGetPasswordValidity() {
+		$response = new StdClass();
+		$response->success = true;
 
-	public function testShouldReturnPasswordIsTooShort() {
-		$this->assertEquals( 'passwordtooshort', $this->testUser->getPasswordValidity( '' ) );
-	}
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'validatePassword' )
+			->willReturn( $response );
 
-	public function testShouldReturnOkay() {
 		$this->assertTrue( $this->testUser->getPasswordValidity( 'abc' ) );
 	}
 
-	public function testRefuseToSetPasswordLikeUsername() {
-		$this->testUser->setName( 'johnkrasinsky' );
-		$this->assertEquals( 'password-name-match', $this->testUser->getPasswordValidity( 'johnKRasinsky' ) );
+	public function testGetPasswordValidityOneError() {
+		$error = new StdClass();
+		$error->description = 'passwordtooshort';
+		$response = new StdClass();
+		$response->errors = [ $error ];
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'validatePassword' )
+			->willReturn( $response );
+
+		$this->assertEquals( 'passwordtooshort', $this->testUser->getPasswordValidity( '' ) );
+	}
+
+	public function testGetPasswordValidityMultipleErrors() {
+		$error = new StdClass();
+		$error->description = 'passwordtooshort';
+		$errorTwo = new StdClass();
+		$errorTwo->description = 'password-name-match';
+		$response = new StdClass();
+		$response->errors = [ $error, $errorTwo ];
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'validatePassword' )
+			->willReturn( $response );
+
+		$this->assertEquals( [ 'passwordtooshort', 'password-name-match' ], $this->testUser->getPasswordValidity( 'foo' ) );
+	}
+
+	public function testGetPasswordValidityUnknownError() {
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'validatePassword' )
+			->willReturn( null );
+
+		$this->assertEquals( 'unknown-error', $this->testUser->getPasswordValidity( 'abc' ) );
 	}
 }

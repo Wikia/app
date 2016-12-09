@@ -1273,7 +1273,7 @@ class AbuseFilter {
 	public static function getFilterUser() {
 		$user = User::newFromName( wfMsgForContent( 'abusefilter-blocker' ) );
 		$user->load();
-		if ( $user->getId() && $user->mPassword == '' ) {
+		if ( $user->getId() ) {
 			// Already set up.
 			return $user;
 		}

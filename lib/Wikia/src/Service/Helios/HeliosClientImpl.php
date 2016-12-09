@@ -116,11 +116,6 @@ class HeliosClientImpl implements HeliosClient {
 		global $wgContLang;
 		$wrapper = new GlobalStateWrapper( [ 'wgLang' => $wgContLang ] );
 
-		// Request execution.
-		/** @var \MWHttpRequest $request */
-		$request = $wrapper->wrap( function () use ( $options, $uri ) {
-			return \Http::request( $options[ self::METHOD ], $uri, $options );
-		} );
 		/*
 		 * We have self::HELIOS_REQUEST_RETRIES tries to receive an HTTP response from Helios.
 		 * One thing to keep in mind is that Helios address resolution is done by AuthModule
@@ -133,7 +128,7 @@ class HeliosClientImpl implements HeliosClient {
 			// Request execution.
 			/** @var \MWHttpRequest $request */
 			$request = $wrapper->wrap( function () use ( $options, $uri ) {
-				return \Http::request( $options['method'], $uri, $options );
+				return \Http::request( $options[ self::METHOD ], $uri, $options );
 			} );
 
 			/*
