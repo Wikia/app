@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, beforeEach, spyOn*/
-describe('ext.wikia.adEngine.video.player.ui.closeButtonFactory', function () {
+describe('ext.wikia.adEngine.video.player.ui.closeButton', function () {
 	'use strict';
 
 	function noop () {}
@@ -27,29 +27,35 @@ describe('ext.wikia.adEngine.video.player.ui.closeButtonFactory', function () {
 			},
 			log: noop,
 			video: {
+				container: {
+					appendChild: function (element) {
+						mocks.video.closeButton = element;
+					}
+				},
 				stop: noop
 			}
 		},
 		closeButton;
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.ui.closeButtonFactory'](
+		return modules['ext.wikia.adEngine.video.player.ui.closeButton'](
 			mocks.doc,
 			mocks.log
 		);
 	}
 
 	beforeEach(function () {
-		var closeButtonFactory = getModule();
-
-		closeButton = closeButtonFactory.create(mocks.video);
 		mocks.log.levels = {};
+		mocks.video.closeButton = null;
+
+		closeButton = getModule();
 	});
 
 	it('Click on closeButton triggers video stop method', function () {
 		spyOn(mocks.video, 'stop');
+		closeButton.add(mocks.video);
 
-		closeButton.click();
+		mocks.video.closeButton.click();
 
 		expect(mocks.video.stop).toHaveBeenCalled();
 	});
