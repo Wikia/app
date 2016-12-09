@@ -16,6 +16,7 @@
  * @param {string} name Unique symbolic name of page
  * @param {Object} [config] Configuration options
  */
+
 ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, config ) {
 	var paramName = parameter.getName(),
 		paramType;
@@ -31,7 +32,10 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 			framed: true,
 			icon: 'upload',
 			label: ve.msg( 'visualeditor-dialog-transclusion-upload-image' )
-		} );
+		} )
+			.connect( this, { click: function () {
+				ve.ui.commandRegistry.registry.wikiaImageInsert.execute(ve.init.target.getSurface());
+			} } );
 
 		this.$field
 			.append(this.uploadImageButton.$element);
