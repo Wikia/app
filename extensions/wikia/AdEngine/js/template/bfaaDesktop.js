@@ -9,17 +9,15 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (
-	adHelper,
-	uapContext,
-	btfBlocker,
-	slotTweaker,
-	uapVideo,
-	doc,
-	log,
-	win,
-	recoveryTweaker
-) {
+], function (adHelper,
+			 uapContext,
+			 btfBlocker,
+			 slotTweaker,
+			 uapVideo,
+			 doc,
+			 log,
+			 win,
+			 recoveryTweaker) {
 	'use strict';
 
 	var adSlot,
@@ -74,10 +72,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.init()
-				.then(function () {
-					uapVideo.loadVideoAd(params, adSlot, imageContainer);
-				});
+			uapVideo.loadVideoAd(params, adSlot, imageContainer);
 		}
 	}
 

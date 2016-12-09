@@ -9,11 +9,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.ui.progressBarFactory',
 	'ext.wikia.adEngine.video.player.ui.volumeControlFactory',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
-	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, volumeControlFactory, uapVideoAnimation, videoAdFactory, doc, log, win) {
+], function (adHelper, uapContext, porvata, playwire, closeButtonFactory, pauseOverlayFactory, progressBarFactory, volumeControlFactory, uapVideoAnimation, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -146,7 +145,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	return {
-		init: videoAdFactory.init,
 		isEnabled: isEnabled,
 		loadVideoAd: loadVideoAd
 	};
