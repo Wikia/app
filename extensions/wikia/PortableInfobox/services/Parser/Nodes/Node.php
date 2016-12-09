@@ -14,6 +14,7 @@ class Node {
 
 	protected $xmlNode;
 	protected $children;
+	protected $cachedSources = null;
 	protected $data = null;
 
 	/**
@@ -26,39 +27,40 @@ class Node {
 		$this->infoboxData = $infoboxData;
 	}
 
-	public function getSource() {
-		return $this->extractSourceFromNode( $this->xmlNode );
+	public function getSources() {
+		if ( is_null( $this->cachedSources ) ) {
+			$this->cachedSources = $this->extractSourcesFromNode( $this->xmlNode );
+		}
+
+		return $this->cachedSources;
 	}
 
-	public function getSourceLabel() {
-		$sourceLabels = [];
-		$sources = $this->extractSourceFromNode( $this->xmlNode );
-		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+	public function getSourcesMetadata() {
+		$metadata = [];
+		$sources = $this->getSources();
+		$baseLabel = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
 
 		if ( count( $sources ) > 1 ) {
+			$firstPass = true;
+
 			foreach ( $sources as $source ) {
-				if ( !empty( $source ) ) {
-					$sourceLabels[$source] = !empty( $label ) ? "{$label} ({$source})" : '';
+				$metadata[$source] = [];
+				$metadata[$source]['label'] = !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '';
+
+				// The first source is the one from the `source` attribute
+				if ( $firstPass ) {
+					$metadata[$source]['primary'] = true;
+					$firstPass = false;
 				}
 			}
 		} elseif ( !empty( $sources[0] ) ) {
-			$sourceLabels[$sources[0]] = $label;
+			$source = $sources[0];
+			$metadata[$source] = [];
+			$metadata[$source]['label'] = $baseLabel;
+			$metadata[$source]['primary'] = true;
 		}
 
-		return $sourceLabels;
-	}
-
-	// TODO what happens when there are multiple sources?
-	public function getSourceType() {
-		$sourceTypes = [];
-		$sources = $this->extractSourceFromNode( $this->xmlNode );
-		$type = $this->getType();
-
-		if ( !empty( $sources[0] ) ) {
-			$sourceTypes[$sources[0]] = $type;
-		}
-
-		return $sourceTypes;
+		return $metadata;
 	}
 
 	/**
@@ -148,7 +150,7 @@ class Node {
 					'type' => $item->getType(),
 					'data' => $item->getData(),
 					'isEmpty' => $item->isEmpty(),
-					'source' => $item->getSource()
+					'source' => $item->getSources()
 				];
 			},
 			$this->getChildNodes()
@@ -163,35 +165,15 @@ class Node {
 		} ) );
 	}
 
-	protected function getSourceForChildren() {
+	protected function getSourcesForChildren() {
 		/** @var Node $item */
 		$result = [ ];
 		foreach ( $this->getChildNodes() as $item ) {
-			$result = array_merge( $result, $item->getSource() );
+			$result = array_merge( $result, $item->getSources() );
 		}
 		$uniqueParams = array_unique( $result );
 
 		return array_values( $uniqueParams );
-	}
-
-	protected function getSourceLabelForChildren() {
-		/** @var Node $item */
-		$result = [ ];
-		foreach ( $this->getChildNodes() as $item ) {
-			$result = array_merge( $result, $item->getSourceLabel() );
-		}
-
-		return $result;
-	}
-
-	protected function getSourceTypeForChildren() {
-		/** @var Node $item */
-		$result = [ ];
-		foreach ( $this->getChildNodes() as $item ) {
-			$result = array_merge( $result, $item->getSourceType() );
-		}
-
-		return $result;
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -258,17 +240,18 @@ class Node {
 	 * @return array
 	 *
 	 */
-	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [ ];
+	protected function extractSourcesFromNode( \SimpleXMLElement $xmlNode ) {
+		$sources = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ?
+			[ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
-			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
+			$sources = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $sources );
 		}
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $source );
+			$sources = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
 		}
 
-		return $source;
+		return $sources;
 	}
 
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {

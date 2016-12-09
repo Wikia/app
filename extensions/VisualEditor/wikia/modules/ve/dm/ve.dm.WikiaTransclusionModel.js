@@ -91,19 +91,23 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				};
 			}
 
-			for ( i = 0; i < page.infoboxes.length; i++ ) {
-				page.infoboxes[i].sources = Object.keys( page.infoboxes[i].sourcelabels );
+			page.infoboxes.forEach( function ( infobox ) {
+				infobox.metadata.forEach( function ( node ) {
+					Object.keys( node.sources ).map( function( sourceName ) {
+						var sourceMetadata = node.sources[sourceName];
 
-				for ( j = 0; j < page.infoboxes[i].sources.length; j++ ) {
-					source = page.infoboxes[i].sources[j];
+						specs[page.title].params[sourceName] = {
+							label: sourceMetadata.label
+						};
 
-					specs[page.title].params[source] = {
-						label: page.infoboxes[i].sourcelabels[source],
-						type: page.infoboxes[i].sourcetypes[source]
-					};
-					specs[page.title].paramOrder.push( page.infoboxes[i].sources[j] );
-				}
-			}
+						if ( sourceMetadata.primary === true ) {
+							specs[page.title].params[sourceName].type = node.type;
+						}
+
+						specs[page.title].paramOrder.push( sourceName );
+					} );
+				} );
+			} );
 		}
 
 		ve.extendObject( this.specCache, specs );

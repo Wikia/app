@@ -40,15 +40,20 @@ class NodeInfobox extends Node {
 		return $this->params;
 	}
 
-	public function getSource() {
-		return $this->getSourceForChildren();
+	public function getSources() {
+		return $this->getSourcesForChildren();
 	}
 
-	public function getSourceLabel() {
-		return $this->getSourceLabelForChildren();
-	}
+	public function getMetadata() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$result[] = [
+				'type' => $item->getType(),
+				'sources' => $item->getSourcesMetadata()
+			];
+		}
 
-	public function getSourceType() {
-		return $this->getSourceTypeForChildren();
+		return $result;
 	}
 }
