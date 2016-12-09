@@ -71,6 +71,17 @@ define('ext.wikia.adEngine.video.porvata', [
 						ima.adsManager.stop();
 					}
 				}
+			}).then(function (video) {
+
+				if (params.onReady) {
+					params.onReady(video);
+				}
+
+				if (params.autoPlay) {
+					video.play();
+				}
+
+				return video;
 			});
 	}
 

@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.template.porvata',
+	'ext.wikia.adEngine.video.porvata',
 	'ext.wikia.adEngine.template.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
@@ -25,7 +25,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		params.container = adSlot;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
-		return porvata.show(params)
+
+		porvata.inject(params)
 			.then(function (video) {
 				videoInterface.setup(video, [
 					'progressBar',
@@ -114,4 +115,5 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		isEnabled: isEnabled,
 		loadVideoAd: loadVideoAd
 	};
-});
+})
+;
