@@ -199,7 +199,7 @@ $uap-video-animation-duration: 0.4s;
 		width: 0;
 	}
 
-	.overVideoLayer {
+	.pause-overlay {
 		cursor: pointer;
 		height: 100%;
 		position: absolute;
@@ -209,6 +209,7 @@ $uap-video-animation-duration: 0.4s;
 
 	.close-ad {
 		background-image: url('/skins/oasis/images/player/collapse_light.svg');
+		cursor: pointer;
 		height: 30px;
 		margin: 10px 10px 30px 30px;
 		position: absolute;

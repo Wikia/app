@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma',
-		videoLayerClassName = 'overVideoLayer',
 		videoMock = doc.createElement('video');
 
 	function init() {
@@ -68,23 +67,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
-	function addLayerOverVideo(ad) {
-		var layer = document.createElement('div');
-
-		layer.classList.add(videoLayerClassName);
-		ad.container.appendChild(layer);
-
-		layer.addEventListener('click', function () {
-			if (ad && ad.adsManager && ad.status) {
-				if (ad.status.get() === 'paused') {
-					ad.adsManager.resume();
-				} else {
-					ad.adsManager.pause();
-				}
-			}
-		});
-	}
-
 	function createIma() {
 		return {
 			status: null,
@@ -95,7 +77,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 			container: null,
 			events: {},
 			isAdsManagerLoaded: false,
-			layerOverVideo: null,
 			addEventListener: function (eventName, callback) {
 				this.events[eventName] = this.events[eventName] || [];
 				this.events[eventName].push(callback);
@@ -105,7 +86,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 					callback = function () {
 						log('Video play: prepare player UI', log.levels.debug, logGroup);
 						self.status = googleImaAdStatus.create(self);
-						addLayerOverVideo(self);
 						volumeControlHandler.init(self);
 
 						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize

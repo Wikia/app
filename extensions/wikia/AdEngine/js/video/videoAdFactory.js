@@ -29,6 +29,12 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			getRemainingTime: function () {
 				return this.ima.adsManager.getRemainingTime();
 			},
+			isPaused: function () {
+				return this.ima.status && this.ima.status.get() === 'paused';
+			},
+			pause: function () {
+				this.ima.adsManager.pause();
+			},
 			play: function (width, height) {
 				if (width !== undefined && height !== undefined) {
 					this.width = width;
@@ -40,6 +46,9 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				this.width = width;
 				this.height = height;
 				this.ima.resize(width, height);
+			},
+			resume: function () {
+				this.ima.adsManager.resume();
 			},
 			stop: function () {
 				this.ima.adsManager.stop();
