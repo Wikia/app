@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.video.porvata',
-	'ext.wikia.adEngine.template.playwire',
+	'ext.wikia.adEngine.video.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		params.container = container;
 
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
-		return playwire.show(params)
+		return playwire.inject(params)
 			.then(function (video) {
 				videoInterface.setup(video, [
 					'closeButton',

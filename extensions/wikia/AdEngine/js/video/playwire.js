@@ -36,20 +36,23 @@ define('ext.wikia.adEngine.video.playwire', [
 	}
 
 	function inject(params) {
-		return new Promise(function (resolve) {
-			var configUrl = params.configUrl,
-				container = params.container,
-				height = params.height,
-				playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
-				script = doc.createElement('script'),
-				vastUrl = params.vastUrl,
-				vastTargeting = params.vastTargeting || {
+		var configUrl = params.configUrl,
+			container = params.container,
+			height = params.height,
+			playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
+			script = doc.createElement('script'),
+			vastUrl = params.vastUrl,
+			vastTargeting = params.vastTargeting || {
 					passback: 'playwire',
 					pos: params.slotName,
 					src: params.src
 				},
-				width = params.width,
-				win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
+			width = params.width,
+			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
+
+		return new Promise(function (resolve) {
+			configUrl = configUrl || getConfigUrl(params.publisherId, params.videoId);
+			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
 
 			win[playerId + '_ready'] = function () {
 				var video = getVideo(win.Bolt, playerId, params);
@@ -66,8 +69,6 @@ define('ext.wikia.adEngine.video.playwire', [
 					params.onReady(win.Bolt, playerId, video);
 				}
 			};
-
-			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
 
 			script.setAttribute('data-id', playerId);
 			script.setAttribute('data-config', configUrl);
