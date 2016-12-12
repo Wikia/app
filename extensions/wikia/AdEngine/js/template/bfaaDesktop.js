@@ -46,6 +46,13 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
+	function getRecoveredSlot(adSlot) {
+		var id = "wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD";
+		id = _sp_.getElementId(id);
+		adSlot = document.getElementById(id).parentNode.parentNode;
+		return adSlot;
+	}
+
 	function runOnReady(iframe, params) {
 		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
@@ -55,9 +62,10 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
-		updateNavBar(adSlot.offsetHeight);
+		var recoveredAdSlot = getRecoveredSlot(adSlot);
+		updateNavBar(recoveredAdSlot.offsetHeight);
 		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(adSlot.offsetHeight);
+			updateNavBar(recoveredAdSlot.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {

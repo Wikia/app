@@ -22,7 +22,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 				resolve();
 			});
 		}
-		return scriptLoader.loadScript(imaLibraryUrl);
+
+		var imaLib = _sp_.getSafeUri(imaLibraryUrl);
+
+		return scriptLoader.loadScript(imaLib);
 	}
 
 	function createRequest(vastUrl, width, height) {
