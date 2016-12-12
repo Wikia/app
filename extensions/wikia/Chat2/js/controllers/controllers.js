@@ -100,12 +100,10 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				break;
 			case 'initial':
 				this.firstConnected = true;	//we are 100% sure about conenction
-				// fall through
-			default:
-				if (this.firstConnected) {
-					this.fire(message.event, message);
-				}
 				break;
+		}
+		if (this.firstConnected) {
+			this.fire(message.event, message);
 		}
 	}
 });
