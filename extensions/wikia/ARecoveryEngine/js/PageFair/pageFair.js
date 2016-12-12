@@ -7,14 +7,15 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', ['wikia.log'], function (l
 		'TOP_RIGHT_BOXAD': true
 	};
 
-	function isSlotRecoverable(slot) {
-		var result = !!recoverableSlots[slot.name];
+	function isSlotRecoverable(slotName) {
+		var result = !!recoverableSlots[slotName];
 		log(['isSlotRecoverable', result], log.levels.info, logGroup);
 		return result;
 	}
 
-	function addMarker(slot) {
-		slot.container.setAttribute('adonis-marker', '');
+	function addMarker(slotId) {
+		var slot = document.getElementById(slotId);
+		slot.setAttribute('adonis-marker', '');
 	}
 
 	return {

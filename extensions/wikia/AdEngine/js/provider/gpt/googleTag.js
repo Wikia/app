@@ -6,8 +6,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (googleSlots, adSlot, recovery, doc, log, window) {
+	'wikia.window',
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
+], function (googleSlots, adSlot, recovery, doc, log, window, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -112,6 +113,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
 				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+
+				if (pageFair) {
+					Object.keys(slotQueue).forEach(function (key) {
+						var slot = slotQueue[key];
+						if (pageFair.isSlotRecoverable(slot.getTargeting('pos')[0])) {
+							pageFair.addMarker(slot.getSlotElementId());
+						}
+					});
+				} else {
+					log('PageFair is disabled.', 'info', logGroup);
+				}
+
 				slotQueue = [];
 			}
 
