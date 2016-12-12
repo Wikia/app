@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, Promise*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.messageListener',
@@ -137,6 +137,17 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function calculateIframeAspectRatio(iframe) {
+		var height = iframe.contentWindow.document.body.scrollHeight,
+			width = iframe.contentWindow.document.body.scrollWidth;
+
+		return width / height;
+	}
+
+	function isAspectRatioCorrect(aspectRatio) {
+		return aspectRatio > 0 && !isNaN(aspectRatio) && aspectRatio !== undefined;
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
 		var slot = doc.getElementById(slotName),
 			providerContainer = slot.lastElementChild,
@@ -153,17 +164,22 @@ define('ext.wikia.adEngine.slotTweaker', [
 		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
 		slot.classList.add('slot-responsive');
 
-		onReady(slotName, function (iframe) {
-			log(['makeResponsive', slotName], 'debug', logGroup);
-			if (!aspectRatio) {
-				var height = iframe.contentWindow.document.body.scrollHeight,
-					width = iframe.contentWindow.document.body.scrollWidth;
+		return new Promise(function (resolve) {
+			onReady(slotName, function (iframe) {
+				log(['makeResponsive', slotName], 'debug', logGroup);
+				if (!aspectRatio) {
+					aspectRatio = calculateIframeAspectRatio(iframe);
+				}
 
-				aspectRatio = width/height;
-			}
+				log(['Slot ratio', aspectRatio], 'debug', logGroup);
 
-			log(['Slot ratio', aspectRatio], 'debug', logGroup);
-			providerContainer.style.paddingBottom = 100/aspectRatio + '%';
+				if (!isAspectRatioCorrect(aspectRatio)) {
+					throw Error('Slot aspect ratio is not correct');
+				}
+				providerContainer.style.paddingBottom = 100 / aspectRatio + '%';
+
+				resolve(iframe);
+			});
 		});
 	}
 
