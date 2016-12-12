@@ -2,8 +2,6 @@
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.googleImaPlayer',
-	'wikia.browserDetect',
-	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (scriptLoader, imaPlayer, log, win) {

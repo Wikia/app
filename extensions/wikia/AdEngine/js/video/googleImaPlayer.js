@@ -1,13 +1,13 @@
-require('ext.wikia.adEngine.video.googleImaPlayer', [
+define('ext.wikia.adEngine.video.googleImaPlayer', [
 	'wikia.browserDetect',
 	'wikia.document',
-	'wikia.log',
+	'wikia.log'
 ], function (browserDetect, doc, log) {
 
 	function create(vastUrl, adContainer, width, height) {
 		var adDisplayContainer = new google.ima.AdDisplayContainer(adContainer),
 			adsLoader = new google.ima.AdsLoader(adDisplayContainer),
-			adsManager = {}, isAdsManagerLoaded, container = prepareVideoAdContainer(adContainer),
+			adsManager, isAdsManagerLoaded, container = prepareVideoAdContainer(adContainer),
 			videoMock = doc.createElement('video'),
 			status = '';
 
