@@ -16,6 +16,9 @@ describe('ext.wikia.adEngine.video.player.ui.progressBar', function () {
 					};
 				}
 			},
+			domElementTweaker: {
+				forceRepaint: noop
+			},
 			log: noop,
 			video: {
 				container: {
@@ -42,6 +45,7 @@ describe('ext.wikia.adEngine.video.player.ui.progressBar', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.ui.progressBar'](
+			mocks.domElementTweaker,
 			mocks.doc,
 			mocks.log
 		);
