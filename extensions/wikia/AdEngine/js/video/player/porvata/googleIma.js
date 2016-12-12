@@ -27,7 +27,6 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 			adsLoader = new google.ima.AdsLoader(adDisplayContainer),
 			adsRenderingSettings = imaSetup.getRenderingSettings();
 
-		console.log(adsLoader);
 		return imaPlayerFactory.create(adsRequestUrl, adDisplayContainer, adsLoader, adsRenderingSettings);
 	}
 
