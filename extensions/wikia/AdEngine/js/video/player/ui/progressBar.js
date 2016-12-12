@@ -32,11 +32,12 @@ define('ext.wikia.adEngine.video.player.ui.progressBar', [
 		progressBar.start = function () {
 			var remainingTime = video.getRemainingTime();
 
-			currentTime.style.width = '0';
 			if (remainingTime) {
 				currentTime.style.transitionDuration = remainingTime + 's';
 				DOMElementTweaker.forceRepaint(currentTime);
 				currentTime.style.width = '100%';
+			} else {
+				currentTime.style.width = '0';
 			}
 			log(['update, remaining time:', remainingTime], log.levels.debug, logGroup);
 		};
