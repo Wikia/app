@@ -92,7 +92,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			container: mocks.slotElement,
 			success: noop,
 			collapse: noop,
-			pre: noop
+			pre: noop,
+			renderEnded: noop
 		};
 	}
 

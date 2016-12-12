@@ -370,93 +370,23 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [ ]
 		];
 
-		if ( $this->getHref( 'social-facebook' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-facebook',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-facebook',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-facebook'
-				],
-				'href' => $this->getHref( 'social-facebook' ),
-				'tracking_label' => 'follow-us.facebook',
-			];
-		}
+		$hrefs = $this->getSocialHrefs();
 
-		if ( $this->getHref( 'social-twitter' ) ) {
+		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
 			$data['links'][] = [
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-twitter',
+				'image' => 'wds-icons-' . $hrefKey,
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-twitter',
+					'name' => 'wds-icons-' . $hrefKey,
 				],
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-twitter'
+					'key' => 'global-footer-follow-us-link-' . $hrefKey
 				],
-				'href' => $this->getHref( 'social-twitter' ),
-				'tracking_label' => 'follow-us.twitter',
-			];
-		}
-
-		if ( $this->getHref( 'social-reddit' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-reddit',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-reddit',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-reddit'
-				],
-				'href' => $this->getHref( 'social-reddit' ),
-				'tracking_label' => 'follow-us.reddit',
-			];
-		}
-
-		if ( $this->getHref( 'social-youtube' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-youtube',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-youtube',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-youtube'
-				],
-				'href' => $this->getHref( 'social-youtube' ),
-				'tracking_label' => 'follow-us.youtube',
-			];
-		}
-
-		if ( $this->getHref( 'social-instagram' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-instagram',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-instagram',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-instagram'
-				],
-				'href' => $this->getHref( 'social-instagram' ),
-				'tracking_label' => 'follow-us.instagram',
+				'href' => $hrefUrl,
+				'tracking_label' => 'follow-us.' . $hrefKey,
 			];
 		}
 
@@ -610,5 +540,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	}
+
+	private function getSocialHrefs() {
+		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
 	}
 }

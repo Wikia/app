@@ -3,6 +3,7 @@
 use Wikia\RobotsTxt\WikiaRobots;
 
 class WikiaRobotsTest extends WikiaBaseTest {
+
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php";
@@ -59,6 +60,20 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		return new RobotsTxtMock();
 	}
 
+	/**
+	 * Get Wikia RobotsTxt
+	 * @return RobotsTxt
+	 */
+	private function getWikiaRobotsTxt() {
+		$robotsTxtMock = $this->getRobotsTxtMock();
+		$pathBuilderMock = $this->getPathBuilderMock();
+
+		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
+		$robotsTxt = $wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+
+		return $robotsTxt;
+	}
+
 	private function isNamespaceDisallowed( RobotsTxtMock $robotsTxtSpy, $ns ) {
 		$path = '/path/for/ns/' . $ns;
 		$isAllowed = false;
@@ -100,12 +115,9 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 */
 	public function testNonProductionEnvironment( $env ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', $env );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertEquals( $robotsTxtMock->spiedDisallowedPaths, [ [ '/' ] ] );
 		$this->assertEquals( $robotsTxtMock->spiedAllowedPaths, [] );
@@ -130,16 +142,13 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 */
 	public function testSitemap( $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
 		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', $wgEnableSpecialSitemapExt );
 		$this->mockGlobalVariable( 'wgEnableSitemapXmlExt', $wgEnableSitemapXmlExt );
 		$this->mockGlobalVariable( 'wgSitemapXmlExposeInRobots', $wgSitemapXmlExposeInRobots );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertEquals( $robotsTxtMock->spiedSitemap, $sitemapUrls );
 	}
@@ -160,13 +169,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testDisallowedNamespaces() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', null );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
@@ -178,13 +184,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testCustomRobotsRulesSingleNamespace() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => NS_HELP ] );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
@@ -196,13 +199,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testCustomRobotsRulesMultipleNamespaces() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'disallowNamespace' => [ NS_USER, NS_HELP ] ] );
 
-		$pathBuilderMock = $this->getPathBuilderMock();
-		$robotsTxtMock = $this->getRobotsTxtMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_SPECIAL ) );
 		$this->assertTrue( $this->isNamespaceDisallowed( $robotsTxtMock, NS_TEMPLATE ) );
@@ -214,13 +214,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testAllowedSpecialPages() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', null );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
@@ -231,13 +228,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testCustomRobotsRulesSingleSpecialPage() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'allowSpecialPage' => 'MyPage1' ] );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
@@ -248,13 +242,10 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testCustomRobotsRulesMultipleSpecialPages() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', [ 'allowSpecialPage' => [ 'MyPage1', 'MyPage2' ] ] );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Forum' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Sitemap' ) );
@@ -265,16 +256,39 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function testSpecialImagesAllowed() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgAllowSpecialImagesInRobots', true );
 
-		$robotsTxtMock = $this->getRobotsTxtMock();
-		$pathBuilderMock = $this->getPathBuilderMock();
-
-		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
-		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
 
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Images' ) );
 		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
 		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
+
+	/**
+	 * Test building robots.txt for blocked wiki
+	 *
+	 * @dataProvider dataProviderBlockedWiki
+	 */
+	public function testBlockedWiki( $mockWgWikiaEnvironment, $mockWgRobotsTxtBlockedWiki ) {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $mockWgWikiaEnvironment );
+		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', $mockWgRobotsTxtBlockedWiki );
+
+		$robotsTxtMock = $this->getWikiaRobotsTxt();
+
+		$this->assertEquals( $robotsTxtMock->spiedDisallowedPaths, [ [ '/' ] ] );
+		$this->assertEquals( $robotsTxtMock->spiedAllowedPaths, [] );
+		$this->assertEquals( $robotsTxtMock->spiedBlockedRobots, [] );
+		$this->assertEquals( $robotsTxtMock->spiedSitemap, [] );
+	}
+
+	public function dataProviderBlockedWiki() {
+		return [
+			[ WIKIA_ENV_DEV, true ],
+			[ WIKIA_ENV_DEV, false ],
+			[ WIKIA_ENV_PROD, true ],
+		];
+	}
+
 }

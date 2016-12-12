@@ -12,6 +12,10 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 	'version' => 1
 ];
 
+
+//i18n
+$wgExtensionMessagesFiles['PageShare'] = __DIR__ . '/PageShare.i18n.php';
+
 // controller classes
 $wgAutoloadClasses[ 'PageShareController' ] =  __DIR__ . '/PageShareController.class.php';
 $wgAutoloadClasses[ 'PageShareHelper' ] =  __DIR__ . '/PageShareHelper.class.php';

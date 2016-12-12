@@ -6,20 +6,32 @@
 describe('Geo', function () {
 	'use strict';
 
-	window.Wikia = {
-		Cookies: {}
-	};
+	function getModule(cookiesMock, queryStringMock) {
+		return modules['wikia.geo'](cookiesMock, queryStringMock);
+	}
+
+	function queryStringMock() {
+		return {
+			getVal: function() {}
+		}
+	}
+
+	function queryStringCountrySetMock() {
+		return {
+			getVal: function() {
+				return 'AU';
+			}
+		}
+	}
 
 	// mock geo cookie
-	var cookieData = '{"city":"Poznan","country":"PL","continent":"EU","region":"72"}',
-		cookieName = 'Geo',
+	var geoCookieData = '{"city":"Poznan","country":"PL","continent":"EU","region":"72"}',
 		cookiesMock = {
-			get: function (name) {
-				expect(name).toBe(cookieName);
-				return cookieData;
+			get: function () {
+				return geoCookieData;
 			}
 		},
-		geo = modules['wikia.geo'](cookiesMock);
+		geo = getModule(cookiesMock, queryStringMock);
 
 	it('registers AMD module', function () {
 		expect(typeof geo).toBe('object');
@@ -66,10 +78,10 @@ describe('Geo', function () {
 
 		// Continent
 		expect(geo.isProperGeo(['XX-EU'])).toBeTruthy();
-		expect(geo.isProperGeo(['XX-NA','XX-EU', 'non-XX-SA'])).toBeTruthy();
-		expect(geo.isProperGeo(['XX-NA','XX-SA'])).toBeFalsy();
-		expect(geo.isProperGeo(['XX-NA','XX-SA', 'non-XX-EU'])).toBeFalsy();
-		expect(geo.isProperGeo(['XX-NA','XX-EU', 'non-XX-EU'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-EU', 'non-XX-SA'])).toBeTruthy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-SA'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-SA', 'non-XX-EU'])).toBeFalsy();
+		expect(geo.isProperGeo(['XX-NA', 'XX-EU', 'non-XX-EU'])).toBeFalsy();
 		expect(geo.isProperGeo(['non-XX-EU'])).toBeFalsy();
 
 		// Earth
@@ -80,5 +92,11 @@ describe('Geo', function () {
 		expect(geo.isProperGeo(['XX', 'non-PL'])).toBeFalsy();
 		expect(geo.isProperGeo(['XX', 'non-XX-SA'])).toBeTruthy();
 		expect(geo.isProperGeo(['XX', 'non-XX-EU'])).toBeFalsy();
+	});
+
+	it('returns country when forcedCountry cookie set', function () {
+		geo = getModule(cookiesMock, queryStringCountrySetMock);
+		expect(geo.getCountryCode()).toBe('AU');
+		expect(geo.getContinentCode()).toBe('EU');
 	});
 });

@@ -37,7 +37,9 @@ define('ext.wikia.adEngine.template.porvata', [
 					params.onReady(video);
 				}
 
-				video.play();
+				if (params.autoPlay) {
+					video.play();
+				}
 			});
 	}
 

@@ -152,10 +152,13 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $wgServer;
+		global $wgEnableSpecialSitemapExt,
+		       $wgEnableSitemapXmlExt,
+		       $wgRobotsTxtBlockedWiki,
+		       $wgSitemapXmlExposeInRobots,
+		       $wgServer;
 
-
-		if ( !$this->accessAllowed ) {
+		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ '/' ] );
 			return $robots;

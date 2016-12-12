@@ -12,5 +12,5 @@ spl_autoload_register(function($class) {
 	}
 });
 
-// take over actions
 $wgActions['view'] = ContributionPrototype\CPViewAction::class;
+$wgActions['edit'] = ContributionPrototype\CPEditAction::class;

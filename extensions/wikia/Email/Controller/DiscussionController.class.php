@@ -57,24 +57,6 @@ abstract class DiscussionController extends EmailController {
         ] );
     }
 
-    public function assertCanEmail() {
-        parent::assertCanEmail();
-        $this->assertSubscribedToDiscussionsEmail();
-    }
-
-    /**
-     * Asserts that target user is subscribed to Discussions emails.
-     *
-     * @throws \Email\Check
-     */
-    protected function assertSubscribedToDiscussionsEmail() {
-	    $wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussions' );
-
-        if ( !$wantsDiscussionEmails ) {
-            throw new Check( 'User is not subscribed to Discussions emails.' );
-        }
-    }
-
     protected abstract function getSummary();
 
     protected function getDetails() {
@@ -168,6 +150,25 @@ class DiscussionReplyController extends DiscussionController {
 
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
+
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+		$this->assertSubscribedToEmail();
+	}
+
+	/**
+	 * Asserts that target user is subscribed to Discussions Follow emails.
+	 *
+	 * @throws \Email\Check
+	 */
+	protected function assertSubscribedToEmail() {
+		$wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussionsfollows' );
+
+		if ( !$wantsDiscussionEmails ) {
+			throw new Check( 'User is not subscribed to Discussions Follow emails.' );
+		}
+	}
+
 }
 
 class DiscussionUpvoteController extends DiscussionController {
@@ -265,4 +266,23 @@ class DiscussionUpvoteController extends DiscussionController {
 
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
+
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+		$this->assertSubscribedToDiscussionsEmail();
+	}
+
+	/**
+	 * Asserts that target user is subscribed to Discussions Upvote emails.
+	 *
+	 * @throws \Email\Check
+	 */
+	protected function assertSubscribedToDiscussionsEmail() {
+		$wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussionsvotes' );
+
+		if ( !$wantsDiscussionEmails ) {
+			throw new Check( 'User is not subscribed to Discussions Upvote emails.' );
+		}
+	}
+
 }

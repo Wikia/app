@@ -67,8 +67,13 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		});
 	}
 
+	function forceRepaint(domElement) {
+		return domElement.offsetWidth;
+	}
+
 	return {
 		addClass: addClass,
+		forceRepaint: forceRepaint,
 		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
