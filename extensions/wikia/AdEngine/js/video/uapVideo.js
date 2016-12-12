@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.video.porvata',
-	'ext.wikia.adEngine.video.playwire',
+	'ext.wikia.adEngine.video.player.playwire.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',
@@ -92,12 +92,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			uap: params.uap || uapContext.getUapId()
 		};
 
-		switch (params.player) {
-			case 'playwire':
-				loadedPlayer = loadPlaywire(params, adSlot, imageContainer);
-				break;
-			default:
-				loadedPlayer = loadPorvata(params, adSlot, imageContainer);
+		if (params.player === 'playwire') {
+			loadedPlayer = loadPlaywire(params, adSlot, imageContainer);
+		} else {
+			loadedPlayer = loadPorvata(params, adSlot, imageContainer);
 		}
 
 		loadedPlayer.then(function (video) {
