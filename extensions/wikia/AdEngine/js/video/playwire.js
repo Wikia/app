@@ -5,11 +5,7 @@ define('ext.wikia.adEngine.video.playwire', [
 	'wikia.log'
 ], function (vastUrlBuilder, doc, log) {
 	'use strict';
-	var eventsMapping = {
-			allAdsCompleted: 'boltContentComplete',
-			loaded: 'boltContentStarted'
-		},
-		logGroup = 'ext.wikia.adEngine.video.playwire',
+	var logGroup = 'ext.wikia.adEngine.video.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
 
 	function getConfigUrl(publisherId, videoId) {
@@ -22,20 +18,16 @@ define('ext.wikia.adEngine.video.playwire', [
 			id: playerId,
 			container: params.container,
 			addEventListener: function (eventName, callback) {
-				eventName = eventsMapping[eventName] || eventName;
-
 				this.api.on(this.id, eventName, callback);
 			},
 			play: function (width, height) {
 				this.resize(width, height);
 				this.api.playMedia(this.id);
+				this.api.dispatchEvent(this.id, 'wikiaAdStarted');
 			},
 			stop: function () {
 				this.api.stopMedia(this.id);
-			},
-			reload: function () {
-				this.stop();
-				this.api.dispatchEvent(this.id, 'boltContentComplete');
+				this.api.dispatchEvent(this.id, 'wikiaAdCompleted');
 			},
 			resize: function (width, height) {
 				this.api.resizeVideo(this.id, width + 'px', height + 'px');
@@ -61,21 +53,28 @@ define('ext.wikia.adEngine.video.playwire', [
 
 			win[playerId + '_ready'] = function () {
 				var video = getVideo(win.Bolt, playerId, params);
+
+				video.addEventListener('boltContentStarted', function () {
+					video.api.dispatchEvent(video.id, 'wikiaAdStarted');
+				});
+				video.addEventListener('boltContentComplete', function () {
+					video.api.dispatchEvent(video.id, 'wikiaAdCompleted');
+				});
+
 				resolve(video);
 				if (params.onReady) {
 					params.onReady(win.Bolt, playerId, video);
 				}
 			};
 
+			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
+
 			script.setAttribute('data-id', playerId);
 			script.setAttribute('data-config', configUrl);
 			script.setAttribute('data-onready', playerId + '_ready');
+			script.setAttribute('data-ad-tag', vastUrl);
 			if (params.volume !== undefined) {
 				script.setAttribute('data-volume', params.volume);
-			}
-			if (!params.disableAds) {
-				vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
-				script.setAttribute('data-ad-tag', vastUrl);
 			}
 
 			script.setAttribute('type', 'text/javascript');

@@ -41,6 +41,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					videoAspectRatio: params.videoAspectRatio
 				});
 
+				video.addEventListener('wikiaAdCompleted', function () {
+					video.reload();
+				});
+
 				return video;
 			});
 	}
@@ -52,7 +56,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		adSlot.appendChild(container);
 
 		params.container = container;
-		params.disableAds = true;
 
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
 		return playwire.show(params)
@@ -65,6 +68,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					container: adSlot,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio
+				});
+
+				video.addEventListener('wikiaAdStarted', function () {
+					var slotWidth = getSlotWidth(adSlot);
+					video.resize(slotWidth, getVideoHeight(slotWidth, params));
 				});
 
 				return video;

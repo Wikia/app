@@ -56,7 +56,6 @@ define('ext.wikia.adEngine.video.player.ui.toggleAnimation', [
 
 		video.addEventListener('wikiaAdCompleted', function () {
 			hideVideo(video, params);
-			video.reload();
 		});
 	}
 
