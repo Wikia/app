@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.ui.progressBar', [
+	'ext.wikia.adEngine.domElementTweaker',
 	'wikia.document',
 	'wikia.log'
-], function (doc, log) {
+], function (DOMElementTweaker, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBar';
@@ -34,6 +35,7 @@ define('ext.wikia.adEngine.video.player.ui.progressBar', [
 			currentTime.style.width = '0';
 			if (remainingTime) {
 				currentTime.style.transitionDuration = remainingTime + 's';
+				DOMElementTweaker.forceRepaint(currentTime);
 				currentTime.style.width = '100%';
 			}
 			log(['update, remaining time:', remainingTime], log.levels.debug, logGroup);
