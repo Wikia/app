@@ -56,6 +56,16 @@ class Indexer {
 		'WikiViews'
 	];
 
+    /**
+     * A list of article descendant namespaces which are not allowed to be indexed for searching:
+     * Article Comments
+     * Forum
+     * Message Wall
+     *
+     * @var array
+     */
+    protected static $excludedNamespaces =  [1, 1200, 1201, 1202, 2000, 2001, 2002];
+
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 *
@@ -176,7 +186,8 @@ class Indexer {
 		try {
 			$dataSource = new WikiDataSource( $wid );
 			$dbHandler = $dataSource->getDB();
-			$rows = $dbHandler->query( "SELECT page_id FROM page" );
+			$rows = $dbHandler->query( 'SELECT page_id FROM page WHERE page_namespace NOT IN ('
+                . implode( ',', self::$excludedNamespaces ) . ')' );
 			while ( $page = $dbHandler->fetchObject( $rows ) ) {
 				$sp = new ScribeProducer( 'reindex', $page->page_id );
 				$sp->reindexPage();

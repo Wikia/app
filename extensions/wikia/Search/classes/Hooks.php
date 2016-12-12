@@ -40,7 +40,11 @@ class Hooks {
 	 * @return true
 	 */
 	public static function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
-		return ( new Indexer )->deleteArticle( $id );
+		if ( $this->canIndex($article->getTitle()) ) {
+			return ( new Indexer )->deleteArticle( $id );
+		}
+
+		return true;
 	}
 
 	/**
@@ -73,7 +77,11 @@ class Hooks {
 		&$status,
 		$baseRevId
 	) {
-		return ( new Indexer )->reindexBatch( [ $article->getTitle()->getArticleID() ] );
+		if ( $this->canIndex($article->getTitle()) ) {
+			return ( new Indexer )->reindexBatch( [ $article->getTitle()->getArticleID() ] );
+		}
+
+		return true;
 	}
 
 	/**
@@ -85,7 +93,19 @@ class Hooks {
 	 * @return true
 	 */
 	public static function onArticleUndelete( $title, $create ) {
-		return ( new Indexer )->reindexBatch( [ $title->getArticleID() ] );
+		if ( $this->canIndex($title) ) {
+			return ( new Indexer )->reindexBatch( [ $title->getArticleID() ] );
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param $title
+	 * @return bool
+	 */
+	public static function canIndex( $title ) {
+		return !in_array($title()->getNamespace(), Indexer::$excludedNamespaces);
 	}
 
 	/**
