@@ -99,7 +99,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				this.forceReconnect();
 				break;
 			case 'initial':
-				this.firstConnected = true; //we are 100% sure about conenction
+				this.firstConnected = true;	//we are 100% sure about conenction
+			// fall through
 			default:
 				if (this.firstConnected) {
 					this.fire(message.event, message);
@@ -854,7 +855,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 	onUpdateUser: function (message) {
 		var updatedUser = new models.User();
 		updatedUser.mport(message.data);
-console.log(updatedUser);
+
 		var connectedUser = this.model.users.findByName(updatedUser.get('name'));
 
 		if (typeof connectedUser != "undefined") {

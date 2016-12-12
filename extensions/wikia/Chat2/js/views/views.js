@@ -209,11 +209,9 @@ var UserView = Backbone.View.extend({
 	},
 
 	render: function(){
-		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
-
 		var model = this.model.toJSON(),
 			groups = this.model.get('groups');
-		// $().log(model, model.name);
+
 		if(model['since']) {
 			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
 		}
@@ -226,15 +224,13 @@ var UserView = Backbone.View.extend({
 		$(this.el).attr('data-user', this.model.get('name'));
 
 		// Check user groups so that kick-ban links don't show up, etc. & user gets a proper badge
-		$(this.el).addClass(groups.join(' '));
+		if(this.model.get('isModerator') === true){
+			$(this.el).addClass('chatmoderator');
+		}
 
-		// if(this.model.get('isModerator') === true){
-		// 	$(this.el).addClass('chatmoderator');
-		// }
-		//
-		// if(groups.indexOf("staff") != -1){
-		// 	$(this.el).addClass('staff');
-		// }
+		if(groups.indexOf("staff") != -1){
+			$(this.el).addClass('staff');
+		}
 
 		// If the user is away, add a certain class to them, if not, remove the away class.
 		if(this.model.get('statusState') == STATUS_STATE_AWAY){
