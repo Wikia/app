@@ -224,16 +224,16 @@ var UserView = Backbone.View.extend({
 		$(this.el).attr('data-user', this.model.get('name'));
 
 		// Check user groups so that kick-ban links don't show up, etc. & user gets a proper badge
-		if(this.model.get('isModerator') === true){
+		if(groups.indexOf("chatmoderator") !== -1){
 			$(this.el).addClass('chatmoderator');
 		}
 
-		if(groups.indexOf("staff") != -1){
+		if(groups.indexOf("staff") !== -1){
 			$(this.el).addClass('staff');
 		}
 
 		// If the user is away, add a certain class to them, if not, remove the away class.
-		if(this.model.get('statusState') == STATUS_STATE_AWAY){
+		if(this.model.get('statusState') === STATUS_STATE_AWAY){
 			$(this.el).addClass('away');
 		} else {
 			$(this.el).removeClass('away');

@@ -73,7 +73,7 @@ class ChatAjax {
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
 		];
-wfDebug('CHAT: ' . json_encode($res['groups']) . "\n");
+
 		// Figure out the error message to return (i18n is done on this side).
 		if ( !$user->isLoggedIn() ) {
 			$res['errorMsg'] = wfMessage( 'chat-no-login' )->text();
