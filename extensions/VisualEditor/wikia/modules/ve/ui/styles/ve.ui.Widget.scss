@@ -70,7 +70,7 @@
 		}
 	}
 
-	.oo-ui-buttonElement, .oo-ui-buttonElement.oo-ui-flaggedElement-primary {
+	.oo-ui-buttonElement.oo-ui-flaggedElement-primary {
 		.oo-ui-buttonElement-button {
 			border-bottom-left-radius: 0;
 			border-left: 0;
@@ -81,6 +81,17 @@
 			margin: 0;
 			padding: .2em 1.25em;
 		}
-	}
 
+		.oo-ui-iconElement-icon {
+			$iconsPath: '/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/';
+
+			opacity: 1;
+
+			@if lightness($color-buttons) <= 55 {
+				background-image: url($iconsPath + 'image-white.svg'); /* $wgCdnStylePath */
+			} @else {
+				background-image: url($iconsPath + 'image.svg'); /* $wgCdnStylePath */
+			}
+		}
+	}
 }
