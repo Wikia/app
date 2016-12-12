@@ -8,16 +8,14 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (
-	uapContext,
-	btfBlocker,
-	slotTweaker,
-	uapVideo,
-	doc,
-	log,
-	win,
-	mercuryListener
-) {
+], function (uapContext,
+			 btfBlocker,
+			 slotTweaker,
+			 uapVideo,
+			 doc,
+			 log,
+			 win,
+			 mercuryListener) {
 	'use strict';
 
 	var adSlot,
@@ -60,18 +58,15 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.init()
-				.then(function () {
-					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
+			var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
 
-					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
-						onResize(params.videoAspectRatio);
-					});
+			video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+				onResize(params.videoAspectRatio);
+			});
 
-					video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-						onResize(params.aspectRatio);
-					});
-				});
+			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+				onResize(params.aspectRatio);
+			});
 		}
 	}
 
