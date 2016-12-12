@@ -1,38 +1,16 @@
 /*global define, Promise*/
 define('ext.wikia.adEngine.video.playwire', [
+	'ext.wikia.adEngine.video.player.playwire.playwirePlayerFactory',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (vastUrlBuilder, doc, log) {
+], function (playerFactory, vastUrlBuilder, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
 
 	function getConfigUrl(publisherId, videoId) {
 		return '//config.playwire.com/' + publisherId + '/videos/v2/' + videoId + '/zeus.json';
-	}
-
-	function getVideo(Bolt, playerId, params) {
-		return {
-			api: Bolt,
-			id: playerId,
-			container: params.container,
-			addEventListener: function (eventName, callback) {
-				this.api.on(this.id, eventName, callback);
-			},
-			play: function (width, height) {
-				this.resize(width, height);
-				this.api.playMedia(this.id);
-				this.api.dispatchEvent(this.id, 'wikiaAdStarted');
-			},
-			stop: function () {
-				this.api.stopMedia(this.id);
-				this.api.dispatchEvent(this.id, 'wikiaAdCompleted');
-			},
-			resize: function (width, height) {
-				this.api.resizeVideo(this.id, width + 'px', height + 'px');
-			}
-		};
 	}
 
 	function inject(params) {
@@ -43,10 +21,10 @@ define('ext.wikia.adEngine.video.playwire', [
 			script = doc.createElement('script'),
 			vastUrl = params.vastUrl,
 			vastTargeting = params.vastTargeting || {
-					passback: 'playwire',
-					pos: params.slotName,
-					src: params.src
-				},
+				passback: 'playwire',
+				pos: params.slotName,
+				src: params.src
+			},
 			width = params.width,
 			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 
@@ -55,7 +33,7 @@ define('ext.wikia.adEngine.video.playwire', [
 			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
 
 			win[playerId + '_ready'] = function () {
-				var video = getVideo(win.Bolt, playerId, params);
+				var video = playerFactory.create(win.Bolt, playerId, params);
 
 				video.addEventListener('boltContentStarted', function () {
 					video.api.dispatchEvent(video.id, 'wikiaAdStarted');

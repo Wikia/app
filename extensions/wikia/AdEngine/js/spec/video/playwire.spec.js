@@ -25,11 +25,15 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 				ownerDocument: {
 					defaultView: {}
 				}
+			},
+			playerFactory: {
+				create: noop
 			}
 		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.playwire'](
+			mocks.playerFactory,
 			mocks.dfpVastUrl,
 			mocks.doc,
 			mocks.log
