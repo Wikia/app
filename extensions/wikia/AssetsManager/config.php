@@ -110,17 +110,15 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/player/playwire/playwirePlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/playwire/playwire.js',
+		'#group_adengine2_porvata_js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
-		'//extensions/wikia/AdEngine/js/video/googleIma.js',
-		'//extensions/wikia/AdEngine/js/video/googleImaPlayer.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/AdEngine/js/video/porvata.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
@@ -299,6 +297,18 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+	],
+];
+
+$config['adengine2_porvata_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
 	],
 ];
 
@@ -941,9 +951,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
-		'//extensions/wikia/AdEngine/js/video/porvata.js',
-		'//extensions/wikia/AdEngine/js/video/googleIma.js',
-		'//extensions/wikia/AdEngine/js/video/googleImaPlayer.js',
+		'#group_adengine2_porvata_js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',

@@ -1,26 +1,29 @@
-define('ext.wikia.adEngine.video.googleImaPlayer', [
+define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
-], function (browserDetect, doc, log) {
-	var logGroup = 'ext.wikia.adEngine.video.googleImaPlayer';
+], function(browserDetect, doc, log) {
+	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
-	function create(vastUrl, adContainer, width, height) {
-		var adDisplayContainer = new google.ima.AdDisplayContainer(adContainer),
-			adsLoader = new google.ima.AdsLoader(adDisplayContainer),
-			adsManager, isAdsManagerLoaded, container = prepareVideoAdContainer(adContainer.querySelector('div')),
+	function create(adsRequestUrl, adDisplayContainer, adsLoader, adsRenderingSettings) {
+			var isAdsManagerLoaded = false,
+			status = '',
 			videoMock = doc.createElement('video'),
-			status = '';
+			adsManager;
 
-		adsLoader.requestAds(createRequest(vastUrl, width, height));
 		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
+		adsLoader.requestAds(adsRequestUrl);
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
-			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
+			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
 			isAdsManagerLoaded = true;
+
+			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
 
 		function addEventListener(eventName, callback) {
+			log(['addEventListener to AdManager', eventName], log.levels.debug, logGroup);
+
 			if (isAdsManagerLoaded) {
 				adsManager.addEventListener(eventName, callback);
 			} else {
@@ -39,6 +42,7 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 				adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 				adsManager.start();
 				adsLoader.removeEventListener('adsManagerLoaded', callback);
+
 				log('Video play: started', log.levels.debug, logGroup);
 			}
 
@@ -55,12 +59,16 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 		function reload() {
 			adsManager.destroy();
 			adsLoader.contentComplete();
-			adsLoader.requestAds(createRequest(vastUrl, width, height));
+			adsLoader.requestAds(adsRequestUrl);
+
+			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
 
 		function resize(width, height) {
 			if (adsManager) {
 				adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+
+				log(['IMA player resized', width, height], log.levels.debug, logGroup);
 			}
 		}
 
@@ -74,55 +82,23 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 			}
 		}
 
-		addEventListener(google.ima.AdEvent.Type.RESUMED, setStatus('playing'));
-		addEventListener(google.ima.AdEvent.Type.STARTED, setStatus('playing'));
-		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
-
 		function getAdsManager() {
 			return adsManager;
 		}
 
+		addEventListener(google.ima.AdEvent.Type.RESUMED, setStatus('playing'));
+		addEventListener(google.ima.AdEvent.Type.STARTED, setStatus('playing'));
+		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
+
 		return {
-			container: container,
 			status: status,
-			reload: reload,
-			resize: resize,
-			playVideo: playVideo,
 			addEventListener: addEventListener,
 			dispatchEvent: dispatchEvent,
-			getAdsManager: getAdsManager
+			getAdsManager: getAdsManager,
+			playVideo: playVideo,
+			reload: reload,
+			resize: resize
 		}
-	}
-
-	function createRequest(vastUrl, width, height) {
-		var adsRequest = new google.ima.AdsRequest();
-
-		adsRequest.adTagUrl = vastUrl;
-		adsRequest.linearAdSlotWidth = width;
-		adsRequest.linearAdSlotHeight = height;
-
-		return adsRequest;
-	}
-
-	function prepareVideoAdContainer(videoAdContainer) {
-		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden');
-		videoAdContainer.classList.add('video-player');
-
-		return videoAdContainer;
-	}
-
-	function getRenderingSettings() {
-		var adsRenderingSettings = new google.ima.AdsRenderingSettings(),
-			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
-
-		if (!browserDetect.isMobile()) {
-			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
-		}
-
-		adsRenderingSettings.enablePreloading = true;
-		adsRenderingSettings.uiElements = [];
-		return adsRenderingSettings;
 	}
 
 	return {
