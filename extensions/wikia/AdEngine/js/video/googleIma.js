@@ -40,20 +40,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return videoAdContainer;
 	}
 
-	function registerEvents(ima, types) {
-		Object.keys(types).forEach(function (eventKey) {
-			var eventName = types[eventKey];
-			ima.adsManager.addEventListener(eventName, function (event) {
-				ima.events[eventName] = ima.events[eventName] || [];
-
-				ima.events[eventName].map(function (callback) {
-					callback(ima, event);
-				});
-				log([eventName, event], log.levels.debug, logGroup);
-			}, false);
-		});
-	}
-
 	function createIma(vastUrl, width, height) {
 		return {
 			status: null,
@@ -61,11 +47,15 @@ define('ext.wikia.adEngine.video.googleIma', [
 			adsLoader: null,
 			adsManager: null,
 			container: null,
-			events: {},
 			isAdsManagerLoaded: false,
 			addEventListener: function (eventName, callback) {
-				this.events[eventName] = this.events[eventName] || [];
-				this.events[eventName].push(callback);
+				if (this.isAdsManagerLoaded) {
+					this.adsManager.addEventListener(eventName, callback);
+				} else {
+					this.adsLoader.addEventListener('adsManagerLoaded', function () {
+						this.adsManager.addEventListener(eventName, callback);
+					}.bind(this));
+				}
 			},
 			playVideo: function (width, height) {
 				var self = this,
@@ -77,15 +67,15 @@ define('ext.wikia.adEngine.video.googleIma', [
 						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
-						log('Video play: stared', log.levels.debug, logGroup);
-						self.adsLoader.removeEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback);
+						self.adsLoader.removeEventListener('adsManagerLoaded', callback);
+						log('Video play: started', log.levels.debug, logGroup);
 					};
 
 				if (this.isAdsManagerLoaded) {
 					callback();
 				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
 					log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
-					this.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
+					this.adsLoader.addEventListener('adsManagerLoaded', callback, false);
 				} else {
 					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
 				}
@@ -121,15 +111,12 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
-			registerEvents(ima, google.ima.AdEvent.Type);
-			registerEvents(ima, google.ima.AdErrorEvent.Type);
 			ima.isAdsManagerLoaded = true;
 		}
 
 		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
 		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);
-		ima.adsLoader.addEventListener(
-			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, adsManagerLoadedCallback, false);
+		ima.adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
 		ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
 		ima.container = prepareVideoAdContainer(adContainer.querySelector('div'));
 

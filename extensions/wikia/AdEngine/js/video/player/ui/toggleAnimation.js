@@ -50,11 +50,11 @@ define('ext.wikia.adEngine.video.player.ui.toggleAnimation', [
 	}
 
 	function add(video, params) {
-		video.addEventListener('loaded', function () {
+		video.addEventListener('wikiaAdStarted', function () {
 			showVideo(video, params);
 		});
 
-		video.addEventListener('allAdsCompleted', function () {
+		video.addEventListener('wikiaAdCompleted', function () {
 			hideVideo(video, params);
 			video.reload();
 		});

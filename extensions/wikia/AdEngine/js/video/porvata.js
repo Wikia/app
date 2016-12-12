@@ -70,8 +70,23 @@ define('ext.wikia.adEngine.video.porvata', [
 					stop: function () {
 						ima.adsManager.stop();
 					}
-				}
+				};
 			}).then(function (video) {
+				video.addEventListener('adCanPlay', function () {
+					video.ima.adsManager.dispatchEvent('wikiaAdStarted');
+				});
+				video.addEventListener('allAdsCompleted', function () {
+					video.ima.adsManager.dispatchEvent('wikiaAdCompleted');
+				});
+				video.addEventListener('start', function () {
+					video.ima.adsManager.dispatchEvent('wikiaAdPlay');
+				});
+				video.addEventListener('resume', function () {
+					video.ima.adsManager.dispatchEvent('wikiaAdPlay');
+				});
+				video.addEventListener('pause', function () {
+					video.ima.adsManager.dispatchEvent('wikiaAdPause');
+				});
 
 				if (params.onReady) {
 					params.onReady(video);

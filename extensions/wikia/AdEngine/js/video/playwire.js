@@ -22,11 +22,7 @@ define('ext.wikia.adEngine.video.playwire', [
 			id: playerId,
 			container: params.container,
 			addEventListener: function (eventName, callback) {
-				if (eventsMapping[eventName]) {
-					eventName = eventsMapping[eventName];
-				} else {
-					log(['addEventListener', 'not mapped event used', eventName], 'debug', logGroup);
-				}
+				eventName = eventsMapping[eventName] || eventName;
 
 				this.api.on(this.id, eventName, callback);
 			},
@@ -39,6 +35,7 @@ define('ext.wikia.adEngine.video.playwire', [
 			},
 			reload: function () {
 				this.stop();
+				this.api.dispatchEvent(this.id, 'boltContentComplete');
 			},
 			resize: function (width, height) {
 				this.api.resizeVideo(this.id, width + 'px', height + 'px');
@@ -58,7 +55,7 @@ define('ext.wikia.adEngine.video.playwire', [
 					passback: 'playwire',
 					pos: params.slotName,
 					src: params.src
-					},
+				},
 				width = params.width,
 				win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 

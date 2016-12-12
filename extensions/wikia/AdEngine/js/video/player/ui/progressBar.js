@@ -39,10 +39,9 @@ define('ext.wikia.adEngine.video.player.ui.progressBar', [
 			log(['update, remaining time:', remainingTime], log.levels.debug, logGroup);
 		};
 
-		video.addEventListener('start', progressBar.start);
-		video.addEventListener('resume', progressBar.start);
-		video.addEventListener('allAdsCompleted', progressBar.reset);
-		video.addEventListener('pause', progressBar.pause);
+		video.addEventListener('wikiaAdPlay', progressBar.start);
+		video.addEventListener('wikiaAdCompleted', progressBar.reset);
+		video.addEventListener('wikiaAdPause', progressBar.pause);
 
 		video.container.appendChild(progressBar);
 	}

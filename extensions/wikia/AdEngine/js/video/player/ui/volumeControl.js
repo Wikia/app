@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 			e.preventDefault();
 		});
 
-		video.addEventListener('loaded', function () {
+		video.addEventListener('wikiaAdStarted', function () {
 			volume.unmute();
 			volume.classList.remove('hidden');
 		});
