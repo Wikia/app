@@ -19,16 +19,16 @@ define('ext.wikia.adEngine.video.porvata', [
 				ima.addEventListener(eventName, callback);
 			},
 			getRemainingTime: function () {
-				return ima.adsManager.getRemainingTime();
+				return ima.getAdsManager().getRemainingTime();
 			},
 			isMuted: function () {
-				return ima.adsManager.getVolume() === 0;
+				return ima.getAdsManager().getVolume() === 0;
 			},
 			isPaused: function () {
 				return ima.status === 'paused';
 			},
 			pause: function () {
-				ima.adsManager.pause();
+				ima.getAdsManager().pause();
 			},
 			play: function (width, height) {
 				if (width !== undefined && height !== undefined) {
@@ -46,25 +46,27 @@ define('ext.wikia.adEngine.video.porvata', [
 				ima.resize(width, height);
 			},
 			resume: function () {
-				ima.adsManager.resume();
+				ima.getAdsManager().resume();
 			},
 			setVolume: function (volume) {
-				return ima.adsManager.setVolume(volume);
+				return ima.getAdsManager().setVolume(volume);
 			},
 			stop: function () {
-				ima.adsManager.stop();
+				ima.getAdsManager().stop();
 			}
 		}
 	}
 
 	function inject(params) {
+		var vastUrl;
+
 		params.vastTargeting = params.vastTargeting || {
 				src: params.src,
 				pos: params.slotName,
 				passback: 'porvata'
 			};
 
-		var vastUrl = params.vastUrl || vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
+		vastUrl = params.vastUrl || vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
 
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
@@ -75,19 +77,19 @@ define('ext.wikia.adEngine.video.porvata', [
 				return createPlayer(params, ima);
 			}).then(function (video) {
 				video.addEventListener('adCanPlay', function () {
-					video.ima.adsManager.dispatchEvent('wikiaAdStarted');
+					video.ima.getAdsManager().dispatchEvent('wikiaAdStarted');
 				});
 				video.addEventListener('allAdsCompleted', function () {
-					video.ima.adsManager.dispatchEvent('wikiaAdCompleted');
+					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
 				});
 				video.addEventListener('start', function () {
-					video.ima.adsManager.dispatchEvent('wikiaAdPlay');
+					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
 				});
 				video.addEventListener('resume', function () {
-					video.ima.adsManager.dispatchEvent('wikiaAdPlay');
+					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
 				});
 				video.addEventListener('pause', function () {
-					video.ima.adsManager.dispatchEvent('wikiaAdPause');
+					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
 				});
 
 				if (params.onReady) {

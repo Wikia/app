@@ -3,11 +3,12 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 	'wikia.document',
 	'wikia.log'
 ], function (browserDetect, doc, log) {
+	var logGroup = 'ext.wikia.adEngine.video.googleImaPlayer';
 
 	function create(vastUrl, adContainer, width, height) {
 		var adDisplayContainer = new google.ima.AdDisplayContainer(adContainer),
 			adsLoader = new google.ima.AdsLoader(adDisplayContainer),
-			adsManager, isAdsManagerLoaded, container = prepareVideoAdContainer(adContainer),
+			adsManager, isAdsManagerLoaded, container = prepareVideoAdContainer(adContainer.querySelector('div')),
 			videoMock = doc.createElement('video'),
 			status = '';
 
@@ -25,7 +26,7 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 			} else {
 				adsLoader.addEventListener('adsManagerLoaded', function () {
 					adsManager.addEventListener(eventName, callback);
-				}.bind(this));
+				});
 			}
 		}
 
@@ -68,22 +69,28 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 		}
 
 		function setStatus(newStatus) {
-			status = newStatus;
+			return function () {
+				status = newStatus;
+			}
 		}
 
 		addEventListener(google.ima.AdEvent.Type.RESUMED, setStatus('playing'));
 		addEventListener(google.ima.AdEvent.Type.STARTED, setStatus('playing'));
 		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
 
+		function getAdsManager() {
+			return adsManager;
+		}
+
 		return {
 			container: container,
-			adsManager: adsManager,
 			status: status,
 			reload: reload,
 			resize: resize,
 			playVideo: playVideo,
 			addEventListener: addEventListener,
-			dispatchEvent: dispatchEvent
+			dispatchEvent: dispatchEvent,
+			getAdsManager: getAdsManager
 		}
 	}
 
@@ -121,6 +128,4 @@ define('ext.wikia.adEngine.video.googleImaPlayer', [
 	return {
 		create: create
 	}
-}
-)
-;
+});
