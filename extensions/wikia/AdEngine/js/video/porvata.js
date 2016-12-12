@@ -7,6 +7,56 @@ define('ext.wikia.adEngine.video.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.porvata';
 
+	function createPlayer(params, ima) {
+		log(['ima set up'], log.levels.debug, logGroup);
+		return {
+			adSlot: params.container,
+			width: params.width,
+			height: params.height,
+			ima: ima,
+			container: ima.container,
+			addEventListener: function (eventName, callback) {
+				ima.addEventListener(eventName, callback);
+			},
+			getRemainingTime: function () {
+				return ima.adsManager.getRemainingTime();
+			},
+			isMuted: function () {
+				return ima.adsManager.getVolume() === 0;
+			},
+			isPaused: function () {
+				return ima.status === 'paused';
+			},
+			pause: function () {
+				ima.adsManager.pause();
+			},
+			play: function (width, height) {
+				if (width !== undefined && height !== undefined) {
+					this.width = width;
+					this.height = height;
+				}
+				ima.playVideo(this.width, this.height);
+			},
+			reload: function () {
+				ima.reload();
+			},
+			resize: function (width, height) {
+				this.width = width;
+				this.height = height;
+				ima.resize(width, height);
+			},
+			resume: function () {
+				ima.adsManager.resume();
+			},
+			setVolume: function (volume) {
+				return ima.adsManager.setVolume(volume);
+			},
+			stop: function () {
+				ima.adsManager.stop();
+			}
+		}
+	}
+
 	function inject(params) {
 		params.vastTargeting = params.vastTargeting || {
 				src: params.src,
@@ -20,57 +70,9 @@ define('ext.wikia.adEngine.video.porvata', [
 
 		return googleIma.load()
 			.then(function () {
-				log(['ima library loaded'], log.levels.debug, logGroup);
-
-				return googleIma.setupIma(vastUrl, params.container, params.width, params.height);
+				return googleIma.setup(vastUrl, params.container, params.width, params.height);
 			}).then(function (ima) {
-				log(['ima set up'], log.levels.debug, logGroup);
-				return {
-					adSlot: params.container,
-					width: params.width,
-					height: params.height,
-					ima: ima,
-					container: ima.container,
-					addEventListener: function (eventName, callback) {
-						ima.addEventListener(eventName, callback);
-					},
-					getRemainingTime: function () {
-						return ima.adsManager.getRemainingTime();
-					},
-					isMuted: function () {
-						return ima.adsManager.getVolume() === 0;
-					},
-					isPaused: function () {
-						return ima.status && this.ima.status.get() === 'paused';
-					},
-					pause: function () {
-						ima.adsManager.pause();
-					},
-					play: function (width, height) {
-						if (width !== undefined && height !== undefined) {
-							this.width = width;
-							this.height = height;
-						}
-						ima.playVideo(this.width, this.height);
-					},
-					reload: function () {
-						ima.reload();
-					},
-					resize: function (width, height) {
-						this.width = width;
-						this.height = height;
-						ima.resize(width, height);
-					},
-					resume: function () {
-						ima.adsManager.resume();
-					},
-					setVolume: function (volume) {
-						return ima.adsManager.setVolume(volume);
-					},
-					stop: function () {
-						ima.adsManager.stop();
-					}
-				};
+				return createPlayer(params, ima);
 			}).then(function (video) {
 				video.addEventListener('adCanPlay', function () {
 					video.ima.adsManager.dispatchEvent('wikiaAdStarted');

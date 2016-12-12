@@ -1,16 +1,15 @@
 /*global define, google, Promise*/
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
-	'ext.wikia.adEngine.video.googleImaAdStatus',
+	'ext.wikia.adEngine.video.googleImaPlayer',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, googleImaAdStatus, browserDetect, doc, log, win) {
+], function (scriptLoader, imaPlayer, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
-		logGroup = 'ext.wikia.adEngine.video.googleIma',
-		videoMock = doc.createElement('video');
+		logGroup = 'ext.wikia.adEngine.video.googleIma';
 
 	function load() {
 		if (win.google && win.google.ima) {
@@ -22,109 +21,12 @@ define('ext.wikia.adEngine.video.googleIma', [
 		return scriptLoader.loadScript(imaLibraryUrl);
 	}
 
-	function createRequest(vastUrl, width, height) {
-		var adsRequest = new google.ima.AdsRequest();
-
-		adsRequest.adTagUrl = vastUrl;
-		adsRequest.linearAdSlotWidth = width;
-		adsRequest.linearAdSlotHeight = height;
-
-		return adsRequest;
-	}
-
-	function prepareVideoAdContainer(videoAdContainer) {
-		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden');
-		videoAdContainer.classList.add('video-player');
-
-		return videoAdContainer;
-	}
-
-	function createIma(vastUrl, width, height) {
-		return {
-			status: null,
-			adDisplayContainer: null,
-			adsLoader: null,
-			adsManager: null,
-			container: null,
-			isAdsManagerLoaded: false,
-			addEventListener: function (eventName, callback) {
-				if (this.isAdsManagerLoaded) {
-					this.adsManager.addEventListener(eventName, callback);
-				} else {
-					this.adsLoader.addEventListener('adsManagerLoaded', function () {
-						this.adsManager.addEventListener(eventName, callback);
-					}.bind(this));
-				}
-			},
-			playVideo: function (width, height) {
-				var self = this,
-					callback = function () {
-						log('Video play: prepare player UI', log.levels.debug, logGroup);
-						self.status = googleImaAdStatus.create(self);
-
-						// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
-						self.adDisplayContainer.initialize();
-						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
-						self.adsManager.start();
-						self.adsLoader.removeEventListener('adsManagerLoaded', callback);
-						log('Video play: started', log.levels.debug, logGroup);
-					};
-
-				if (this.isAdsManagerLoaded) {
-					callback();
-				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
-					log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
-					this.adsLoader.addEventListener('adsManagerLoaded', callback, false);
-				} else {
-					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
-				}
-			},
-			reload: function () {
-				this.adsManager.destroy();
-				this.adsLoader.contentComplete();
-				this.adsLoader.requestAds(createRequest(vastUrl, width, height));
-			},
-			resize: function (width, height) {
-				if (this.adsManager) {
-					this.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
-				}
-			}
-		};
-	}
-
-	function getRenderingSettings() {
-		var adsRenderingSettings = new google.ima.AdsRenderingSettings(),
-			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
-
-		if (!browserDetect.isMobile()) {
-			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
-		}
-
-		adsRenderingSettings.enablePreloading = true;
-		adsRenderingSettings.uiElements = [];
-		return adsRenderingSettings;
-	}
-
-	function setupIma(vastUrl, adContainer, width, height) {
-		var ima = createIma(vastUrl, width, height);
-
-		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
-			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
-			ima.isAdsManagerLoaded = true;
-		}
-
-		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
-		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);
-		ima.adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
-		ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
-		ima.container = prepareVideoAdContainer(adContainer.querySelector('div'));
-
-		return ima;
+	function setup(vastUrl, adContainer, width, height) {
+		return imaPlayer.create(vastUrl, adContainer, width, height);
 	}
 
 	return {
 		load: load,
-		setupIma: setupIma
+		setup: setup
 	};
 });
