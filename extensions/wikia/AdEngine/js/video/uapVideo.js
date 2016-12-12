@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					videoAspectRatio: params.videoAspectRatio
 				});
 
-				video.addEventListener('wikiaAdCompleted', function () {
+				video.addEventListener('allAdsCompleted', function () {
 					video.reload();
 				});
 

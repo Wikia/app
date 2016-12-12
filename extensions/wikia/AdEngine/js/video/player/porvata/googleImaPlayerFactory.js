@@ -79,7 +79,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setStatus(newStatus) {
 			return function () {
 				status = newStatus;
-			}
+			};
+		}
+
+		function getStatus() {
+			return status;
 		}
 
 		function getAdsManager() {
@@ -91,14 +95,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
 
 		return {
-			status: status,
 			addEventListener: addEventListener,
 			dispatchEvent: dispatchEvent,
 			getAdsManager: getAdsManager,
+			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
 			resize: resize
-		}
+		};
 	}
 
 	return {

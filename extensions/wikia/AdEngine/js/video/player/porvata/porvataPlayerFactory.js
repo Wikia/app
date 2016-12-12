@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 				return ima.getAdsManager().getVolume() === 0;
 			},
 			isPaused: function () {
-				return ima.status === 'paused';
+				return ima.getStatus() === 'paused';
 			},
 			pause: function () {
 				ima.getAdsManager().pause();
