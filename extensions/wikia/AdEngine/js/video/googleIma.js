@@ -22,7 +22,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 				resolve();
 			});
 		}
-		return scriptLoader.loadScript(imaLibraryUrl);
+
+		var imaLib = _sp_.getSafeUri(imaLibraryUrl);
+
+		return scriptLoader.loadScript(imaLib);
 	}
 
 	function createRequest(vastUrl, width, height) {
@@ -106,8 +109,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 				this.events[eventName].push(callback);
 			},
 			playVideo: function (width, height) {
+				console.log('***** IMA PLAY VIDEO');
 				var self = this,
 					callback = function () {
+						console.log('***** IMA CALLBACK PLAY VIDEO');
 						log('Video play: prepare player UI', log.levels.debug, logGroup);
 						self.status = googleImaAdStatus.create(self);
 						addLayerOverVideo(self);
@@ -117,13 +122,18 @@ define('ext.wikia.adEngine.video.googleIma', [
 						self.adDisplayContainer.initialize();
 						self.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 						self.adsManager.start();
+						console.log('***** VIDEO PLAY STARTED');
 						log('Video play: stared', log.levels.debug, logGroup);
 					};
 
 				if (this.isAdsManagerLoaded) {
+					console.log('***** ADS MANAGER LOADED');
 					callback();
 				} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
 					log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
+					console.log('***** WAITING FOR ADS MANAGER');
+					console.log('*** ADS LOADER', this.adsLoader);
+					console.log('***** ADS MANAGER', this.adsManager);
 					this.adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
 				} else {
 					log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
@@ -153,7 +163,10 @@ define('ext.wikia.adEngine.video.googleIma', [
 	function setupIma(vastUrl, adContainer, width, height) {
 		var ima = createIma();
 
+		console.log('**** SETUP IMA');
+
 		function adsManagerLoadedCallback(adsManagerLoadedEvent){
+			console.log('*******ADS MANAGER LOADED CALLBACK');
 			ima.adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, getRenderingSettings());
 			registerEvents(ima, google.ima.AdEvent.Type);
 			registerEvents(ima, google.ima.AdErrorEvent.Type);
@@ -161,10 +174,14 @@ define('ext.wikia.adEngine.video.googleIma', [
 		}
 
 		ima.adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
+		console.log('**** DISPLAY CONTAINER', ima.adDisplayContainer);
 		ima.adsLoader = new google.ima.AdsLoader(ima.adDisplayContainer);
+		console.log('**** ADS LOADER', ima.adsLoader);
 		ima.adsLoader.addEventListener(
 			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, adsManagerLoadedCallback, false);
 		ima.adsLoader.requestAds(createRequest(vastUrl, width, height));
+		console.log('**** REQUSEST ADS, VAST', vastUrl);
+		console.log('***** ADS REQUEST', createRequest(vastUrl, width, height));
 		ima.container = prepareVideoAdContainer(adContainer.querySelector('div'));
 
 		return ima;

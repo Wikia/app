@@ -3,10 +3,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.video.uapVideoAnimation',
+	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, uapVideoAnimation, videoAdFactory, log, win) {
+], function (adHelper, uapContext, uapVideoAnimation, vastUrlBuilder, videoAdFactory, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -43,21 +44,37 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		});
 	}
 
+	function getRecoveredSlot(adSlot) {
+		var id = "wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD";
+		id = _sp_.getElementId(id);
+		adSlot = document.getElementById(id).parentNode.parentNode;
+		return adSlot;
+	}
+
+	 function getSlotParams(params) {
+		return {
+			src: params.src,
+			pos: params.slotName,
+			uap: params.uap || uapContext.getUapId(),
+			passback: 'vuap'
+		};
+	}
+
 	function loadVideoAd(params, adSlot, imageContainer, getSlotWidth) {
+		adSlot = getRecoveredSlot(adSlot);
+
 		getSlotWidth = getSlotWidth || defaultGetSlotWidth;
 
 		try {
-			var video = videoAdFactory.create(
-				getSlotWidth(adSlot),
-				getVideoHeight(getSlotWidth(adSlot), params),
-				adSlot,
-				{
-					src: params.src,
-					pos: params.slotName,
-					uap: params.uap || uapContext.getUapId(),
-					passback: 'vuap'
-				}
-			);
+
+			var slotParams = getSlotParams(params),
+				width = getSlotWidth(adSlot),
+				height = getVideoHeight(width, params),
+				vastUrl = vastUrlBuilder.build(width / height, slotParams);
+
+			vastUrl = _sp_.getSafeUri(vastUrl);
+
+			var video = videoAdFactory.create(width, height, adSlot, slotParams, vastUrl);
 			addProgressListeners(video);
 
 			win.addEventListener('resize', adHelper.throttle(function () {
@@ -70,11 +87,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 
 			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+				console.log("**** cALLING RELOAD");
 				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
 				video.reload();
 			});
 
 			params.videoTriggerElement.addEventListener('click', function () {
+				console.log('******CLICK BUTTON');
 				var slotWidth = getSlotWidth(adSlot);
 				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});

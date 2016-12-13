@@ -29,4 +29,11 @@ class ResourceLoaderAdEngineSourcePointCSDelivery extends ResourceLoaderAdEngine
 
 		return $content;
 	}
+
+	protected function getData() // TODO: remove me, I'm hack because current version of SP has bugs
+	{
+		return $this->getFallbackDataWhenRequestFails();
+	}
+
+
 }

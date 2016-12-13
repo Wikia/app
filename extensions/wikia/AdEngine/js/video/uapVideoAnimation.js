@@ -1,8 +1,9 @@
 /* global define */
 define('ext.wikia.adEngine.video.uapVideoAnimation', [
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.domElementTweaker'
-], function (adHelper, DOMElementTweaker) {
+	'ext.wikia.adEngine.domElementTweaker',
+	'wikia.window'
+], function (adHelper, DOMElementTweaker, win) {
 	'use strict';
 
 	var animationDuration = 400;
@@ -32,23 +33,25 @@ define('ext.wikia.adEngine.video.uapVideoAnimation', [
 	}
 
 	function hideVideo(video, imageContainer, adSlot, params, getSlotWidth) {
-		var videoContainer = video.ima.container;
+		var videoContainer = video.ima.container,
+		recoveredImageContainer = document.getElementById(win._sp_.getElementId('wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD')).parentNode;
 		updateHeight(adSlot, getVideoHeight(getSlotWidth(adSlot), params));
 		updateHeight(adSlot, getAdHeight(getSlotWidth(adSlot), params));
 
 		setTimeout(function () {
-			toggle(imageContainer, videoContainer);
+			toggle(recoveredImageContainer, videoContainer);
 		}, animationDuration);
 
 		clearHeight(adSlot);
 	}
 
 	function showVideo(video, imageContainer, adSlot, params, getSlotWidth) {
-		var videoContainer = video.ima.container;
+		var videoContainer = video.ima.container,
+			recoveredImageContainer = document.getElementById(win._sp_.getElementId('wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD')).parentNode;
 		updateHeight(adSlot, getAdHeight(getSlotWidth(adSlot), params));
 		updateHeight(adSlot, getVideoHeight(getSlotWidth(adSlot), params));
 
-		toggle(videoContainer, imageContainer);
+		toggle(videoContainer, recoveredImageContainer);
 		clearHeight(adSlot);
 	}
 
