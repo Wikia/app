@@ -2,13 +2,15 @@
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.browserDetect',
-	'wikia.log'
-], function (vastUrlBuilder, browserDetect, log) {
+	'wikia.log',
+	'wikia.window'
+], function (vastUrlBuilder, browserDetect, log, win) {
 	'use strict';
+
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
 	function createRequest(vastUrl, width, height) {
-		var adsRequest = new google.ima.AdsRequest();
+		var adsRequest = new win.google.ima.AdsRequest();
 
 		adsRequest.adTagUrl = vastUrl;
 		adsRequest.linearAdSlotWidth = width;
@@ -20,7 +22,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	}
 
 	function getRenderingSettings() {
-		var adsRenderingSettings = new google.ima.AdsRenderingSettings(),
+		var adsRenderingSettings = new win.google.ima.AdsRenderingSettings(),
 			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
 
 		if (!browserDetect.isMobile()) {
