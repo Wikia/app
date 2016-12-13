@@ -74,11 +74,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					var slotWidth = getSlotWidth(adSlot);
 					video.resize(slotWidth, getVideoHeight(slotWidth, params));
 				});
-				video.addEventListener('boltContentStateChanged', function (playerId, data) {
-					if (data.state === 'playing' && video.containter.classList.contains('hidden')) {
-						video.api.dispatchEvent(playerId, 'wikiaAdStarted');
-					}
-				});
 
 				return video;
 			});

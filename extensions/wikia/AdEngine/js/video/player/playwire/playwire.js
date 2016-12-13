@@ -41,6 +41,9 @@ define('ext.wikia.adEngine.video.player.playwire.playwire', [
 				video.addEventListener('boltContentComplete', function () {
 					video.api.dispatchEvent(video.id, 'wikiaAdCompleted');
 				});
+				if (params.autoplay) {
+					video.api.dispatchEvent(playerId, 'wikiaAdStarted');
+				}
 
 				resolve(video);
 				if (params.onReady) {
