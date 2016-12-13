@@ -14,14 +14,14 @@
  * @param {string} paramName - Name of a field (e.g. image1)
  */
 function restoreInfoboxDialog(win, model, imageName, paramName) {
-		if (imageName) {
-			model.parts[0].params[paramName].value = imageName;
-		}
+	if (imageName) {
+		model.parts[0].params[paramName].value = imageName;
+	}
 
-		win.transclusionModel = model;
+	win.transclusionModel = model;
 
-		win.bookletLayout.$element.html('');
-		win.initializeTemplateParameters();
+	win.bookletLayout.$element.html('');
+	win.initializeTemplateParameters();
 }
 
 /**
