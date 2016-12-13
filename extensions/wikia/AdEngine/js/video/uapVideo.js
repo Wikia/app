@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			loadedPlayer = loadPorvata(params, adSlot, imageContainer);
 		}
 
-		loadedPlayer.then(function (video) {
+		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(adSlot);
 				video.resize(slotWidth, getVideoHeight(slotWidth, params));

@@ -58,15 +58,17 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
+			uapVideo.loadVideoAd(params, adSlot, imageContainer)
+				.then(function (video) {
+					video.addEventListener('loaded', function () {
+						onResize(params.videoAspectRatio);
+					});
 
-			video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
-				onResize(params.videoAspectRatio);
-			});
+					video.addEventListener('allAdsCompleted', function () {
+						onResize(params.aspectRatio);
+					});
+				});
 
-			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-				onResize(params.aspectRatio);
-			});
 		}
 	}
 
