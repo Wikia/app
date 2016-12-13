@@ -2,50 +2,46 @@
 
 namespace Wikia\PortableInfobox\Helpers;
 
+/**
+ * Helper used for checking if template consist any hidden infoboxes (eg. put into <includeonly> tag)
+ *
+ * Class PortableInfoboxTemplatesHelper
+ */
 class PortableInfoboxTemplatesHelper {
 
 	/**
+	 * @desc Try to find out if infobox got "hidden" inside includeonly tag. Parse it if that's the case.
+	 *
 	 * @param $title \Title
-	 * @param $includeonly bool check if template consists any hidden infoboxes (eg. put into <includeonly> tag)
 	 *
 	 * @return mixed false when no infoboxes found, Array with infoboxes on success
 	 */
-	public function parseInfoboxes( $title, $includeonly = false ) {
-		$templateText = $this->fetchContent( $title );
+	public function parseInfoboxes( $title ) {
+		// for templates we need to check for include tags
+		$templateText = \PortableInfoboxDataService::fetchArticleContent( $title );
+		$includeonlyText = $this->getIncludeonlyText( $templateText );
 
-		if ( $includeonly === true ) {
-			$includeonlyText = $this->getIncludeonlyText( $templateText );
+		if ( $includeonlyText ) {
+			$parser = new \Parser();
+			$parserOptions = new \ParserOptions();
+			$frame = $parser->getPreprocessor()->newFrame();
 
-			if ( !$includeonlyText ) {
-				return false;
-			}
-		}
-
-		$parser = new \Parser();
-		$parserOptions = new \ParserOptions();
-
-		if ( $includeonly ) {
-			$templateTextWithoutIncludeonly = $parser->getPreloadText( $templateText, $title, $parserOptions );
+			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $title, $parserOptions );
 			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
-		} else {
-			$parser->startExternalParse( $title, $parserOptions );
-			$infoboxes = $this->getInfoboxes( $templateText );
-		}
 
-		$frame = $parser->getPreprocessor()->newFrame();
-
-		if ( $infoboxes ) {
-			// clear up cache before parsing
-			foreach ( $infoboxes as $infobox ) {
-				try {
-					\PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
-				} catch ( \Exception $e ) {
-					\Wikia\Logger\WikiaLogger::instance()->info( 'Invalid infobox syntax' );
+			if ( $infoboxes ) {
+				// clear up cache before parsing
+				foreach ( $infoboxes as $infobox ) {
+					try {
+						\PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+					} catch ( \Exception $e ) {
+						\Wikia\Logger\WikiaLogger::instance()->info( 'Invalid infobox syntax in includeonly tag' );
+					}
 				}
-			}
 
-			return json_decode( $parser->getOutput()
-				->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+				return json_decode( $parser->getOutput()
+					->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+			}
 		}
 
 		return false;
@@ -56,25 +52,10 @@ class PortableInfoboxTemplatesHelper {
 	 * @return array of strings (infobox markups)
 	 */
 	public function getMarkup( $title ) {
-		$content = $this->fetchContent( $title );
+		$content = \PortableInfoboxDataService::fetchArticleContent( $title );
 		return $this->getInfoboxes( $content );
 	}
 
-	/**
-	 * @param $title \Title
-	 *
-	 * @return string
-	 */
-	protected function fetchContent( $title ) {
-		if ( $title && $title->exists() ) {
-			$article = \Article::newFromTitle( $title, \RequestContext::getMain() );
-			if ( $article && $article->exists() ) {
-				$content = $article->fetchContent();
-			}
-		}
-
-		return isset( $content ) && $content ? $content : '';
-	}
 
 	/**
 	 * @desc for given template text returns it without text in <nowiki> and <pre> tags

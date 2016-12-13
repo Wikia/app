@@ -60,7 +60,7 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title, true );
+			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
 				$this->delete();
 				$this->set( $incOnlyTemplates );
@@ -91,6 +91,23 @@ class PortableInfoboxDataService {
 			}
 		}
 		return array_unique( $images );
+	}
+
+	/**
+	 * @param $title \Title
+	 *
+	 * @return string
+	 */
+	public static function fetchArticleContent( \Title $title ) {
+		if ( $title && $title->exists() ) {
+			$article = \Article::newFromTitle( $title, \RequestContext::getMain() );
+
+			if ( $article && $article->exists() ) {
+				$content = $article->fetchContent();
+			}
+		}
+
+		return isset( $content ) && $content ? $content : '';
 	}
 
 	/**
@@ -183,10 +200,9 @@ class PortableInfoboxDataService {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
 			return WikiaDataAccess::cache( $this->cachekey, WikiaResponse::CACHE_STANDARD, function () use ( $id ) {
-				$props = json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
-				$props = $this->loadFreshDataIfNeeded( $props );
-
-				return $props;
+				return $this->reparseIfNeeded(
+					json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true )
+				);
 			} );
 		}
 
@@ -196,28 +212,38 @@ class PortableInfoboxDataService {
 	/**
 	 * If PageProps doesn't have infoboxes' metadata or has an old version then reparse the page and store fresh data
 	 *
-	 * @param $props
+	 * @param $infoboxes
 	 *
 	 * @return array
 	 */
-	protected function loadFreshDataIfNeeded( $props ) {
-		foreach ( $props as $infobox ) {
+	protected function reparseIfNeeded( $infoboxes ) {
+		if ( is_null( $infoboxes ) ) {
+			return $this->reparse();
+		}
+
+		foreach ( $infoboxes as $infobox ) {
 			if (
 				empty( $infobox ) ||
 				$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
 			) {
-				$freshData = $this->templateHelper->parseInfoboxes( $this->title );
-				break;
+				return $this->reparse();
 			}
 		}
 
-		if ( !empty( $freshData ) ) {
-			$this->set( $freshData );
+		return $infoboxes;
+	}
 
-			return $freshData;
-		}
+	protected function reparse() {
+		$parser = new \Parser();
+		$parserOptions = new \ParserOptions();
+		$parser->parse( $this->fetchArticleContent( $this->title ), $this->title, $parserOptions );
 
-		return $props;
+		$infoboxes = json_decode( $parser->getOutput()
+			->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+
+		$this->set( $infoboxes );
+
+		return $infoboxes;
 	}
 
 	protected function store( $data ) {

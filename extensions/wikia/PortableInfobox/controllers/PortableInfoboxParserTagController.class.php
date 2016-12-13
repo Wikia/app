@@ -4,7 +4,7 @@ use Wikia\PortableInfobox\Parser\Nodes;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
-	const PARSER_TAG_VERSION = 1;
+	const PARSER_TAG_VERSION = 2;
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'pi-theme-';
