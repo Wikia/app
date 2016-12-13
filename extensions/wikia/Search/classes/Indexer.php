@@ -64,7 +64,7 @@ class Indexer {
      *
      * @var array
      */
-    protected static $excludedNamespaces =  [1, 1201, 2001];
+    public static $excludedNamespaces =  [1, 1201, 2001];
 
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki

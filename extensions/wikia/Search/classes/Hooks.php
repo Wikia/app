@@ -101,7 +101,7 @@ class Hooks {
 	}
 
 	/**
-	 * @param $title
+	 * @param Title $title
 	 * @return bool
 	 */
 	public static function canIndex( $title ) {
