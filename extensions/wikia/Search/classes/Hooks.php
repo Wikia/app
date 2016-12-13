@@ -40,7 +40,7 @@ class Hooks {
 	 * @return true
 	 */
 	public static function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
-		if ( self::canIndex($article->getTitle()) ) {
+		if ( Indexer::canIndex($article->getTitle()) ) {
 			return ( new Indexer )->deleteArticle( $id );
 		}
 
@@ -77,7 +77,7 @@ class Hooks {
 		&$status,
 		$baseRevId
 	) {
-		if ( self::canIndex($article->getTitle()) ) {
+		if ( Indexer::canIndex($article->getTitle()) ) {
 			return ( new Indexer )->reindexBatch( [ $article->getTitle()->getArticleID() ] );
 		}
 
@@ -93,19 +93,11 @@ class Hooks {
 	 * @return true
 	 */
 	public static function onArticleUndelete( $title, $create ) {
-		if ( self::canIndex($title) ) {
+		if ( Indexer::canIndex($title) ) {
 			return ( new Indexer )->reindexBatch( [ $title->getArticleID() ] );
 		}
 
 		return true;
-	}
-
-	/**
-	 * @param \Title $title
-	 * @return bool
-	 */
-	public static function canIndex( $title ) {
-		return !in_array($title->getNamespace(), Indexer::$excludedNamespaces);
 	}
 
 	/**

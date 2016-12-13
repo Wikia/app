@@ -67,6 +67,14 @@ class Indexer {
     public static $excludedNamespaces =  [1, 1201, 2001];
 
 	/**
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public static function canIndex( $title ) {
+		return !in_array($title->getNamespace(), Indexer::$excludedNamespaces);
+	}
+
+	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 *
 	 * @see WikiaSearchController::getPages()

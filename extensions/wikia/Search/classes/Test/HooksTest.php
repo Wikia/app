@@ -86,6 +86,7 @@ class HooksTest extends BaseTest {
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
+		$this->mockStaticMethod( 'Wikia\Search\Indexer', 'canIndex', true );
 		$this->assertTrue(
 				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
 		);
@@ -113,7 +114,7 @@ class HooksTest extends BaseTest {
 		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
 		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexBatch' ) );
 		$mockArticle
-		    ->expects( $this->once() )
+		    ->expects( $this->exactly(2) )
 		    ->method ( 'getTitle' )
 		    ->will   ( $this->returnValue( $mockTitle ) )
 		;
@@ -131,6 +132,7 @@ class HooksTest extends BaseTest {
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$whatevs = array();
 		$whatevs2 = 0;
+		$this->mockStaticMethod( 'Wikia\Search\Indexer', 'canIndex', true );
 		$this->assertTrue(
 				$mockHooks->onArticleSaveComplete( $mockArticle, $mockUser, 'why not', 'yup', 0, 0, 'foo', $whatevs, $mockRev, $whatevs2, $whatevs2 )
 		);
@@ -159,12 +161,14 @@ class HooksTest extends BaseTest {
 		    ->with   ( array( 123 ) )
 		    ->will   ( $this->returnValue( true ) )
 		;
+
+		$this->mockStaticMethod( 'Wikia\Search\Indexer', 'canIndex', true );
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
 		$this->assertTrue(
 				$mockHooks->onArticleUndelete( $mockTitle, 0 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08024 ms
