@@ -40,12 +40,39 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 						$infobox['parser_tag_version']
 					);
 
-					// FIXME ?format=xml throws error
-					$pageSet->getResult()->setIndexedTagName( $infobox['metadata'], 'metadata' );
+					$metadata = $infobox['metadata'];
+
 					$pageSet->getResult()->addValue(
-						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $infobox['metadata']
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $metadata
+					);
+					$pageSet->getResult()->setIndexedTagName_internal(
+						[ 'query', 'pages', $id, 'infoboxes', $count, 'metadata' ],
+						'metadata'
+					);
+					$this->setIndexedTagNamesForGroupMetadata(
+						$metadata,
+						[ 'query', 'pages', $id, 'infoboxes', $count, 'metadata' ],
+						$pageSet->getResult()
 					);
 				}
+			}
+		}
+	}
+
+	/**
+	 * XML format requires all indexed arrays to have _element defined
+	 * This method adds it recursively for all groups
+	 *
+	 * @param array $metadata
+	 * @param array $rootPath
+	 * @param ApiResult $result
+	 */
+	private function setIndexedTagNamesForGroupMetadata( array $metadata, array $rootPath, ApiResult $result ) {
+		foreach ( $metadata as $nodeCount => $node ) {
+			if ( $node['type'] === 'group' ) {
+				$path = array_merge( $rootPath, [ $nodeCount, 'metadata' ] );
+				$result->setIndexedTagName_internal( $path, 'metadata' );
+				$this->setIndexedTagNamesForGroupMetadata( $node[ 'metadata' ], $path, $result );
 			}
 		}
 	}
