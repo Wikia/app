@@ -88,7 +88,7 @@
 			opacity: 1;
 
 			@if lightness($color-buttons) <= 55 {
-				background-image: url($iconsPath + 'image-white.svg'); /* $wgCdnStylePath */
+				background-image: url($iconsPath + 'image-white-no-opacity.svg'); /* $wgCdnStylePath */
 			} @else {
 				background-image: url($iconsPath + 'image.svg'); /* $wgCdnStylePath */
 			}
