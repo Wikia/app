@@ -160,8 +160,6 @@ class HooksTest extends BaseTest {
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$whatevs = array();
-		$whatevs2 = 0;
 		$this->assertTrue(
 				$mockHooks->onArticleUndelete( $mockTitle, 0 )
 		);
