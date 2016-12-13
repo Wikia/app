@@ -71,6 +71,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 
 				video.addEventListener('wikiaAdStarted', function () {
+					console.log('****WIKIA AD STARTED');
 					var slotWidth = getSlotWidth(adSlot);
 					video.resize(slotWidth, getVideoHeight(slotWidth, params));
 				});
@@ -96,10 +97,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			uap: params.uap || uapContext.getUapId()
 		};
 
+		var recoveredAdSlot = getRecoveredTepLeaderboard();
+
 		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, adSlot, imageContainer);
+			loadedPlayer = loadPlaywire(params, recoveredAdSlot, imageContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, adSlot, imageContainer);
+			loadedPlayer = loadPorvata(params, recoveredAdSlot, imageContainer);
 		}
 
 		return loadedPlayer.then(function (video) {
@@ -109,12 +112,18 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(adSlot);
+				var slotWidth = getSlotWidth(getRecoveredTepLeaderboard());
 				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});
 
 			return video;
 		});
+	}
+
+	function getRecoveredTepLeaderboard() {
+		var id = "wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD";
+		id = _sp_.getElementId(id);
+		return document.getElementById(id).parentNode.parentNode;
 	}
 
 	function isEnabled(params) {

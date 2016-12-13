@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 					height = newHeight;
 				}
 
+				console.log('********** PLAY', newWidth, newHeight);
 				ima.playVideo(width, height);
 			},
 			reload: function () {
@@ -50,6 +51,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 				width = newWidth;
 				height = newHeight;
 
+				console.log('****** RESIZE' ,newHeight, newWidth);
 				ima.resize(width, height);
 			},
 			resume: function () {

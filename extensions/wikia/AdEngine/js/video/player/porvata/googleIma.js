@@ -17,7 +17,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 				resolve();
 			});
 		}
-		return scriptLoader.loadScript(imaLibraryUrl);
+
+		var safeImaURL = win._sp_.getSafeUri(imaLibraryUrl);
+
+		return scriptLoader.loadScript(safeImaURL);
 	}
 
 	function getPlayer(params) {

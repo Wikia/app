@@ -40,11 +40,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				adDisplayContainer.initialize();
 				adsManager.init(width, height, google.ima.ViewMode.NORMAL);
 				adsManager.start();
-				adsLoader.removeEventListener('adsManagerLoaded', callback);
 
+				console.log('**** ADS MANAGER',adsManager);
 				log('Video play: started', log.levels.debug, logGroup);
 			}
 
+			console.log('**** IS ADS MANAGER LOADED?', isAdsManagerLoaded);
 			if (isAdsManagerLoaded) {
 				callback();
 			} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix

@@ -45,8 +45,10 @@ define('ext.wikia.adEngine.video.player.ui.toggleAnimation', [
 		updateHeight(params.container, getAdHeight(params));
 		updateHeight(params.container, getVideoHeight(params));
 
+		params.image = document.getElementById(_sp_.getElementId('wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD')).parentNode;
+
 		toggle(video.container, params.image);
-		clearHeight(params.container);
+		//clearHeight(params.container);
 	}
 
 	function add(video, params) {

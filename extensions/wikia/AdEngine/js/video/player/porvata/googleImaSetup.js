@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 		log(['VAST URL: ', vastUrl, 'params: ', params], log.levels.debug, logGroup);
 
-		return vastUrl;
+		return win._sp_.getSafeUri(vastUrl);
 	}
 
 	return {
