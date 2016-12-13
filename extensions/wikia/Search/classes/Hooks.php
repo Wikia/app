@@ -101,11 +101,11 @@ class Hooks {
 	}
 
 	/**
-	 * @param Title $title
+	 * @param \Title $title
 	 * @return bool
 	 */
 	public static function canIndex( $title ) {
-		return !in_array($title()->getNamespace(), Indexer::$excludedNamespaces);
+		return !in_array($title->getNamespace(), Indexer::$excludedNamespaces);
 	}
 
 	/**
