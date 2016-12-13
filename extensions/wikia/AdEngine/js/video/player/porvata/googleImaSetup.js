@@ -1,8 +1,10 @@
+/*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.browserDetect',
 	'wikia.log'
 ], function (vastUrlBuilder, browserDetect, log) {
+	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
 	function createRequest(vastUrl, width, height) {
@@ -47,5 +49,5 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		buildVastUrl: buildVastUrl,
 		createRequest: createRequest,
 		getRenderingSettings: getRenderingSettings
-	}
+	};
 });

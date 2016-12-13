@@ -1,5 +1,6 @@
+/*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.log'], function(log) {
-
+	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory';
 
 	function prepareVideoAdContainer(videoAdContainer) {
@@ -60,10 +61,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 			stop: function () {
 				ima.getAdsManager().stop();
 			}
-		}
+		};
 	}
 
 	return {
 		create: create
-	}
+	};
 });

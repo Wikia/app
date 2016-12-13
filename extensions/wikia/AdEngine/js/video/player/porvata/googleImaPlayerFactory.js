@@ -1,8 +1,10 @@
+/*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
 ], function(browserDetect, doc, log) {
+	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
 	function create(adsRequestUrl, adDisplayContainer, adsLoader, adsRenderingSettings) {
@@ -10,9 +12,6 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			status = '',
 			videoMock = doc.createElement('video'),
 			adsManager;
-
-		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
-		adsLoader.requestAds(adsRequestUrl);
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
@@ -73,7 +72,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		}
 
 		function dispatchEvent(eventName) {
-			adsManager.dispatchEvent(eventName)
+			adsManager.dispatchEvent(eventName);
 		}
 
 		function setStatus(newStatus) {
@@ -90,9 +89,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
-		addEventListener(google.ima.AdEvent.Type.RESUMED, setStatus('playing'));
-		addEventListener(google.ima.AdEvent.Type.STARTED, setStatus('playing'));
-		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
+		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
+		adsLoader.requestAds(adsRequestUrl);
+
+		addEventListener('resume', setStatus('playing'));
+		addEventListener('start', setStatus('playing'));
+		addEventListener('pause', setStatus('paused'));
 
 		return {
 			addEventListener: addEventListener,
@@ -107,5 +109,5 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 	return {
 		create: create
-	}
+	};
 });

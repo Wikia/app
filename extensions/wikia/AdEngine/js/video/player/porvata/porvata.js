@@ -11,10 +11,10 @@ define('ext.wikia.adEngine.video.porvata', [
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
 
 		params.vastTargeting = params.vastTargeting || {
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			};
+			src: params.src,
+			pos: params.slotName,
+			passback: 'porvata'
+		};
 
 		return googleIma.load()
 			.then(function () {
