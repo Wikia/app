@@ -91,16 +91,16 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
+		uapContext.setUapId(params.uap);
+
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			runOnReady(iframe, params);
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], log.levels.info, logGroup);
-
-		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
+		log(['show', params.uap], log.levels.info, logGroup);
 	}
 
 	return {
