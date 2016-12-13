@@ -24,6 +24,7 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 				this.ima.addEventListener(eventName, callback);
 			},
 			play: function (width, height) {
+				console.log('***** VIDEO AD FACTORY CLICK');
 				if (width !== undefined && height !== undefined) {
 					this.width = width;
 					this.height = height;

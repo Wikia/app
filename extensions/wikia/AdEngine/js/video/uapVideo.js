@@ -87,11 +87,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 
 			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
+				console.log("**** cALLING RELOAD");
 				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
 				video.reload();
 			});
 
 			params.videoTriggerElement.addEventListener('click', function () {
+				console.log('******CLICK BUTTON');
 				var slotWidth = getSlotWidth(adSlot);
 				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});
