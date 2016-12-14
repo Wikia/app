@@ -23,7 +23,7 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 	// Parent constructor
 	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
-	paramType = this.spec.params && this.spec.params[paramName] && this.spec.params[paramName]['type'];
+	paramType = this.spec.params && this.spec.params[paramName] && this.spec.params[paramName].type;
 
 	if (paramType === 'image') {
 		// TODO display something nice

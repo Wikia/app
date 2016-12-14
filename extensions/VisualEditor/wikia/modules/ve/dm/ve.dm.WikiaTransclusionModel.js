@@ -65,6 +65,31 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 	}
 };
 
+function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
+	specs.params[sourceName] = {
+		label: sourceMetadata.label
+	};
+
+	if ( sourceMetadata.primary === true ) {
+		specs.params[sourceName].type = node.type;
+	}
+
+	specs.paramOrder.push( sourceName );
+}
+
+function parseInfoboxMetadata( node, specs ) {
+	if ( node.type === 'group' ) {
+		node.metadata.forEach( function ( childNode ) {
+			parseInfoboxMetadata( childNode, specs );
+		} );
+	} else {
+		Object.keys( node.sources ).map( function ( sourceName ) {
+			var sourceMetadata = node.sources[sourceName];
+			addInfoboxSourceParam( specs, node, sourceName, sourceMetadata );
+		} );
+	}
+}
+
 /**
  * @desc process the infobox params received from API. For all requested pages, if they contain infoboxes,
  * extend their param array with received infobox params.
@@ -101,31 +126,6 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 		ve.extendObject( this.specCache, specs );
 	}
 };
-
-function parseInfoboxMetadata( node, specs ) {
-	if ( node.type === 'group' ) {
-		node.metadata.forEach( function ( childNode ) {
-			parseInfoboxMetadata( childNode, specs );
-		} );
-	} else {
-		Object.keys( node.sources ).map( function( sourceName ) {
-			var sourceMetadata = node.sources[sourceName];
-			addInfoboxSourceParam( specs, node, sourceName, sourceMetadata );
-		} );
-	}
-}
-
-function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
-	specs.params[sourceName] = {
-		label: sourceMetadata.label
-	};
-
-	if ( sourceMetadata.primary === true ) {
-		specs.params[sourceName].type = node.type;
-	}
-
-	specs.paramOrder.push( sourceName );
-}
 
 /**
  * @desc The template names which contain _ are normalized in infobox API and the title from response contain spaces.
