@@ -58,7 +58,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
 	this.$label.attr( 'title', this.mwTitle );
-	this.previewButton.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
+	this.previewButton.$element.addClass( 've-ui-wikiaMediaOptionWidget-previewButton' );
 	this.$previewIcon.addClass( 've-ui-wikiaMediaOptionWidget-preview-icon' );
 	this.$previewText.addClass( 've-ui-wikiaMediaOptionWidget-preview-text' );
 	this.$preview
