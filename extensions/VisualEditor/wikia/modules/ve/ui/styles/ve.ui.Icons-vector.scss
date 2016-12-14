@@ -397,6 +397,9 @@
 .oo-ui-icon-video {
 	@include ve-icon(video, wikia);
 }
+.oo-ui-icon-video-preview {
+	@include ve-icon(video-preview, wikia);
+}
 .oo-ui-icon-upload {
 	@include ve-icon(upload, wikia);
 }
