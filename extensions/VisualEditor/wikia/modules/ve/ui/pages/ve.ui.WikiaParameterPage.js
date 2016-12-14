@@ -13,14 +13,14 @@
  * @param {string} imageName - image name from media dialog
  * @param {string} paramName - Name of a field (e.g. image1)
  */
-function restoreInfoboxDialog(win, model, imageName, paramName) {
-	if (imageName) {
+function restoreInfoboxDialog( win, model, imageName, paramName ) {
+	if ( imageName ) {
 		model.parts[0].params[paramName].value = imageName;
 	}
 
 	win.transclusionModel = model;
 
-	win.bookletLayout.$element.html('');
+	win.bookletLayout.$element.html( '' );
 	win.initializeTemplateParameters();
 }
 
@@ -30,10 +30,10 @@ function restoreInfoboxDialog(win, model, imageName, paramName) {
  * @param {string} name - Name of a dialog to open
  */
 
-function openDialog(name) {
+function openDialog( name ) {
 	ve.ui.actionFactory
-		.create('window', ve.init.target.getSurface())
-		.open(name);
+		.create( 'window', ve.init.target.getSurface() )
+		.open( name );
 }
 /**
  *
@@ -41,7 +41,7 @@ function openDialog(name) {
  * @param {ve.dm.WikiaCart} cartItems
  * @returns {string|null}
  */
-function getImageName(currentWindow, cartItems) {
+function getImageName( currentWindow, cartItems ) {
 	if (
 		currentWindow.currentAction &&
 		currentWindow.currentAction.getAction() === 'goback' &&
@@ -59,7 +59,7 @@ function getImageName(currentWindow, cartItems) {
  *
  * @param {string} action action name (e.g. goback, apply)
  */
-function setDefaultMediaInsertDialogAction(action) {
+function setDefaultMediaInsertDialogAction( action ) {
 	ve.ui.WikiaMediaInsertDialog.static.actions[0].action = action;
 }
 
@@ -70,22 +70,22 @@ function setDefaultMediaInsertDialogAction(action) {
  *
  * @param {string} paramName Name of a field (e.g. image1)
  */
-function handleClickOnImageButton(paramName) {
+function handleClickOnImageButton( paramName ) {
 	var windowManager = ve.init.target.getSurface().getDialogs(),
 		transclusionModel = windowManager.currentWindow.transclusionModel;
 
-	windowManager.closeWindow('wikiaInfobox').done(function () {
-		openDialog('wikiaMediaInsert');
-		setDefaultMediaInsertDialogAction('goback');
+	windowManager.closeWindow( 'wikiaInfobox' ).done( function () {
+		openDialog( 'wikiaMediaInsert' );
+		setDefaultMediaInsertDialogAction( 'goback' );
 
-		windowManager.once('closing', function (currentWindow) {
+		windowManager.once( 'closing', function ( currentWindow ) {
 			var imageName;
 
-			if (currentWindow instanceof ve.ui.WikiaMediaInsertDialog) {
-				imageName = getImageName(currentWindow, currentWindow.cart.getItems());
+			if ( currentWindow instanceof ve.ui.WikiaMediaInsertDialog ) {
+				imageName = getImageName( currentWindow, currentWindow.cart.getItems() );
 
-				setDefaultMediaInsertDialogAction('apply');
-				openDialog('wikiaInfobox');
+				setDefaultMediaInsertDialogAction( 'apply' );
+				openDialog( 'wikiaInfobox' );
 
 				/**
 				 * first 'opening' is an event fired when a dialog is opening
@@ -93,9 +93,9 @@ function handleClickOnImageButton(paramName) {
 				 * windowManager.opening is actually a promise
 				 * before that windowManager is null
 				 */
-				windowManager.once('opening', function (win) {
+				windowManager.once( 'opening', function ( win ) {
 					windowManager.opening.done(
-						restoreInfoboxDialog.bind(this, win, transclusionModel, imageName, paramName)
+						restoreInfoboxDialog.bind( this, win, transclusionModel, imageName, paramName )
 					);
 				});
 			}
@@ -114,39 +114,41 @@ function handleClickOnImageButton(paramName) {
  * @param {string} name Unique symbolic name of page
  * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage(parameter, name, config) {
+ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, config ) {
 	var paramName = parameter.getName(),
 		paramType;
 
 	// Parent constructor
-	ve.ui.WikiaParameterPage.super.call(this, parameter, name, config);
+	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
 	paramType = this.spec.params && this.spec.params[paramName] && this.spec.params[paramName].type;
 
-	if (paramType === 'image') {
-		this.uploadImageButton = new OO.ui.ButtonWidget({
+	if ( paramType === 'image' ) {
+		this.uploadImageButton = new OO.ui.ButtonWidget( {
 			$: this.$,
 			icon: 'add-image',
 			flags: ['primary'],
 			title: ve.msg('visualeditor-dialog-transclusion-upload-image')
-		});
+		} );
 
-		this.uploadImageButton.on('click', handleClickOnImageButton.bind(this, paramName));
+		this.uploadImageButton.on( 'click', handleClickOnImageButton.bind( this, paramName ) );
 
 		this.$field
-			.addClass('ve-ui-imageField')
-			.append(this.uploadImageButton.$element);
+			.addClass( 've-ui-imageField' )
+			.append( this.uploadImageButton.$element );
 	}
 
 	// Properties
-	this.templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget({template: parameter.getTemplate()});
+	this.templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( {
+		template: parameter.getTemplate()
+	} );
 
 	// Initialization
 	this.addButton.$element
-		.addClass('ve-ui-mwParameterPage-addButton')
-		.after(this.templateGetInfoWidget.$element);
+		.addClass( 've-ui-mwParameterPage-addButton' )
+		.after( this.templateGetInfoWidget.$element );
 };
 
 /* Inheritance */
 
-OO.inheritClass(ve.ui.WikiaParameterPage, ve.ui.MWParameterPage);
+OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
