@@ -60,6 +60,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return string
 	 */
 	private function normalizeHTML( $html ) {
+		if ( empty( $html ) ) {
+			return '';
+		}
+
 		$DOM = new DOMDocument( '1.0' );
 		$DOM->formatOutput = true;
 		$DOM->preserveWhiteSpace = false;
@@ -107,7 +111,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [ ],
 				'output' => '',
-				'description' => 'Empty data should yield no infobox markup'
+				'description' => 'Empty data should yield no infobox markup',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -121,7 +126,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
-				'description' => 'Only title'
+				'description' => 'Only title',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -226,7 +232,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
-				'description' => 'navigation only'
+				'description' => 'navigation only',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -244,7 +251,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
-				'description' => 'Only pair'
+				'description' => 'Only pair',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -330,7 +338,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 									</div>
 							</aside>',
-				'description' => 'Simple infobox with title, INVALID image and key-value pair'
+				'description' => 'Simple infobox with title, INVALID image and key-value pair',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -355,7 +364,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
-				'description' => 'Simple infobox with title, empty image and key-value pair'
+				'description' => 'Simple infobox with title, empty image and key-value pair',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -407,7 +417,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, group with header and two key-value pairs'
+				'description' => 'Infobox with title, group with header and two key-value pairs',
+				'mockParams' => []
 			],
 			[
 				'input' => [
@@ -536,7 +547,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<p>Links</p>
 								</nav>
 							</aside>',
-				'description' => 'Infobox with navigation'
+				'description' => 'Infobox with navigation',
+				'mockParams' => []
 			],
 			[
 				'input' => [
