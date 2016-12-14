@@ -20,7 +20,7 @@ ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( config ) {
 	ve.ui.WikiaVideoOptionWidget.super.call( this, config );
 
 	// Initialization
-	this.previewButton.setIcon('video-preview');
+	this.previewButton.setIcon('preview-video');
 
 	$duration = this.$( '<span>' )
 		.addClass( 've-ui-wikiaVideoOptionWidget-duration' )
