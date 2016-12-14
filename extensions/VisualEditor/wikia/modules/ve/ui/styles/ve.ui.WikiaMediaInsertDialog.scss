@@ -253,11 +253,6 @@ $width-cart: 120px;
 				opacity: 1;
 				position: static;
 				width: 40px;
-
-				&.oo-ui-icon-checked {
-					@include ve-icon(checked, wikia, $color-buttons);
-					background-color: $color-buttons;
-				}
 			}
 		}
 	}
@@ -295,17 +290,9 @@ $width-cart: 120px;
 	}
 
 	.ve-ui-wikiaMediaOptionWidget-selected .ve-ui-mwMediaResultWidget-thumbnail.ve-ui-texture-transparency {
-		$iconsPath: '/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/';
-
+		@include ve-icon(checked, wikia, $color-buttons);
 		background: rgba($color-buttons, .4) no-repeat center center;
 		border: 2px solid $color-buttons;
-
-		@if lightness($color-buttons) <= 55 {
-			background-image: url($iconsPath + 'checked-white.svg'); /* $wgCdnStylePath */
-		} @else {
-			background-image: url($iconsPath + 'checked.svg'); /* $wgCdnStylePath */
-		}
-
 		z-index: 1;
 	}
 
