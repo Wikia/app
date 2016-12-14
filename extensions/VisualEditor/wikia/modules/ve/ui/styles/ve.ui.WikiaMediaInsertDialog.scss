@@ -318,23 +318,8 @@ $width-cart: 120px;
 		line-height: 17px;
 		opacity: 0.7;
 		padding: 0 6px;
-		position: absolute;
 		right: 0;
 		text-align: center;
-	}
-
-	.ve-ui-wikiaVideoOptionWidget-icon {
-		background: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/play.png) no-repeat;
-		display: block;
-		height: 29px;
-		margin-left: 9px;
-		margin-top: 124px;
-		position: absolute;
-		width: 29px;
-	}
-
-	.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .ve-ui-wikiaVideoOptionWidget-icon {
-		background: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/play-hover.png) no-repeat;
 	}
 }
 
