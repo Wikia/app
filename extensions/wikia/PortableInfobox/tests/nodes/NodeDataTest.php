@@ -288,6 +288,166 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getMetadata
+	 * @dataProvider metadataDataProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testMetadata( $markup, $params, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, $params );
+
+		$this->assertEquals( $expected, $node->getMetadata() );
+	}
+
+	public function metadataDataProvider() {
+		return [
+			[
+				'<infobox><data source="test"></data></infobox>',
+				[],
+				[
+					[
+						'type' => 'data',
+						'sources' => [
+							'test' => [
+								'label' => '',
+								'primary' => true
+							]
+						]
+					]
+				]
+			],
+			[
+				'<infobox><image source="test"/></infobox>',
+				[],
+				[
+					[
+						'type' => 'image',
+						'sources' => [
+							'test' => [
+								'label' => '',
+								'primary' => true
+							]
+						]
+					]
+				]
+			],
+			[
+				'<infobox><title source="test"/></infobox>',
+				[],
+				[
+					[
+						'type' => 'title',
+						'sources' => [
+							'test' => [
+								'label' => '',
+								'primary' => true
+							]
+						]
+					]
+				]
+			],
+			[
+				'<infobox><data source="test"><default>{{{test}}}</default></data></infobox>',
+				[],
+				[
+					[
+						'type' => 'data',
+						'sources' => [
+							'test' => [
+								'label' => '',
+								'primary' => true
+							]
+						]
+					]
+				]
+			],
+			[
+				'<infobox><group>' .
+				'<image source="test1" />' .
+				'<title source="test2" />' .
+				'</group></infobox>',
+				[],
+				[
+					[
+						'type' => 'group',
+						'metadata' => [
+							[
+								'type' => 'image',
+								'sources' => [
+									'test1' => [
+										'label' => '',
+										'primary' => true
+									]
+								]
+							],
+							[
+								'type' => 'title',
+								'sources' => [
+									'test2' => [
+										'label' => '',
+										'primary' => true
+									]
+								]
+							]
+						]
+					]
+				]
+			],
+			[
+				'<infobox><group>' .
+				'<data source="test1"><label>Label</label></data>' .
+				'<group>' .
+				'<image source="test2" />' .
+				'<title source="test3" />' .
+				'</group>' .
+				'</group></infobox>',
+				[],
+				[
+					[
+						'type' => 'group',
+						'metadata' => [
+							[
+								'type' => 'data',
+								'sources' => [
+									'test1' => [
+										'label' => 'Label',
+										'primary' => true
+									]
+								]
+							],
+							[
+								'type' => 'group',
+								'metadata' => [
+									[
+										'type' => 'image',
+										'sources' => [
+											'test2' => [
+												'label' => '',
+												'primary' => true
+											]
+										]
+									],
+									[
+										'type' => 'title',
+										'sources' => [
+											'test3' => [
+												'label' => '',
+												'primary' => true
+											]
+										]
+									]
+								]
+							]
+						]
+					]
+				]
+			]
+		];
+	}
+
+	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getExternalParser
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::setExternalParser
 	 * @dataProvider parserTestDataProvider
