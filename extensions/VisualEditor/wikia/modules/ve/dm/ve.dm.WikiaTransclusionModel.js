@@ -65,6 +65,12 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 	}
 };
 
+/**
+ * @param {Object} specs
+ * @param {Object} node
+ * @param {string} sourceName
+ * @param {Object} sourceMetadata
+ */
 function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
 	specs.params[sourceName] = {
 		label: sourceMetadata.label
@@ -77,6 +83,10 @@ function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
 	specs.paramOrder.push( sourceName );
 }
 
+/**
+ * @param {Object} node
+ * @param {Object} specs
+ */
 function parseInfoboxMetadata( node, specs ) {
 	if ( node.type === 'group' ) {
 		node.metadata.forEach( function ( childNode ) {
