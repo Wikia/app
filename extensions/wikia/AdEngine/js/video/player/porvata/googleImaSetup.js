@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (vastUrlBuilder, browserDetect, log, win) {
+], function (vastUrlBuilder, recoveryHelper, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
@@ -15,7 +16,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 
-		return win._sp_.getSafeUri(vastUrl);
+		return recoveryHelper.getSafeUri(vastUrl);
 	}
 
 	function createRequest(params) {

@@ -26,7 +26,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
-		providerContainer,
 		slotContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
@@ -74,13 +73,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params, slotContainer, providerContainer);
+			uapVideo.loadVideoAd(params);
 		}
 	}
 
 	function show(params) {
-		providerContainer = adSlot.getProviderContainer(params.slotName);
-		slotContainer = providerContainer.parentNode;
+		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');

@@ -2,13 +2,14 @@
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.porvata',
 	'ext.wikia.adEngine.video.player.playwire.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, videoInterface, doc, log, win) {
+], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -21,8 +22,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return slot.clientWidth;
 	}
 
-	function loadPorvata(params, adSlot, imageContainer) {
-		params.container = adSlot;
+	function loadPorvata(params, slotContainer, providerContainer) {
+		params.container = slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
@@ -35,8 +36,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					'closeButton',
 					'toggleAnimation'
 				], {
-					image: imageContainer,
-					container: adSlot,
+					image: providerContainer,
+					container: slotContainer,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio
 				});
@@ -71,7 +72,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 
 				video.addEventListener('wikiaAdStarted', function () {
-					console.log('****WIKIA AD STARTED');
 					var slotWidth = getSlotWidth(adSlot);
 					video.resize(slotWidth, getVideoHeight(slotWidth, params));
 				});
@@ -84,8 +84,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params, slotContainer, providerContainer) {
+	function loadVideoAd(params) {
 		var loadedPlayer,
+			providerContainer = adSlot.getProviderContainer(params.slotName),
+			slotContainer = providerContainer.parentNode,
 			videoWidth = getSlotWidth(slotContainer);
 
 		params.width = videoWidth;

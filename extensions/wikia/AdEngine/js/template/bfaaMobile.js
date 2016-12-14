@@ -18,11 +18,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			 mercuryListener) {
 	'use strict';
 
-	var adSlot,
-		adsModule,
+	var adsModule,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
-		imageContainer,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
@@ -58,7 +56,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params, adSlot, imageContainer)
+			uapVideo.loadVideoAd(params)
 				.then(function (video) {
 					video.addEventListener('loaded', function () {
 						onResize(params.videoAspectRatio);
@@ -68,14 +66,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 						onResize(params.aspectRatio);
 					});
 				});
-
 		}
 	}
 
 	function show(params) {
-		adSlot = doc.getElementById(params.slotName);
-		imageContainer = adSlot.querySelector('div:last-of-type');
-
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
