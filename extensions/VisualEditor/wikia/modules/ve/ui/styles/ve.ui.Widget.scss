@@ -84,15 +84,7 @@
 		}
 
 		.oo-ui-iconElement-icon {
-			$iconsPath: '/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/';
-
 			opacity: 1;
-
-			@if lightness($color-buttons) <= 55 {
-				background-image: url($iconsPath + 'image-white-no-opacity.svg'); /* $wgCdnStylePath */
-			} @else {
-				background-image: url($iconsPath + 'image.svg'); /* $wgCdnStylePath */
-			}
 		}
 	}
 }
