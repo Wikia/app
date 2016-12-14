@@ -2,12 +2,7 @@
 
 namespace Wikia\PortableInfobox\Helpers;
 
-/**
- * Helper used for checking if template consist any hidden infoboxes (eg. put into <includeonly> tag)
- *
- * Class PortableInfoboxTemplatesHelper
- */
-class PortableInfoboxTemplatesHelper {
+class PortableInfoboxParsingHelper {
 
 	/**
 	 * @desc Try to find out if infobox got "hidden" inside includeonly tag. Parse it if that's the case.
@@ -16,9 +11,9 @@ class PortableInfoboxTemplatesHelper {
 	 *
 	 * @return mixed false when no infoboxes found, Array with infoboxes on success
 	 */
-	public function parseInfoboxes( $title ) {
+	public function parseIncludeonlyInfoboxes( $title ) {
 		// for templates we need to check for include tags
-		$templateText = \PortableInfoboxDataService::fetchArticleContent( $title );
+		$templateText = $this->fetchArticleContent( $title );
 		$includeonlyText = $this->getIncludeonlyText( $templateText );
 
 		if ( $includeonlyText ) {
@@ -47,12 +42,38 @@ class PortableInfoboxTemplatesHelper {
 		return false;
 	}
 
+	public function reparseArticle( $title ) {
+		$parser = new \Parser();
+		$parserOptions = new \ParserOptions();
+		$parser->parse( $this->fetchArticleContent( $title ), $title, $parserOptions );
+
+		return json_decode( $parser->getOutput()
+			->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+	}
+
+	/**
+	 * @param $title \Title
+	 *
+	 * @return string
+	 */
+	protected function fetchArticleContent( \Title $title ) {
+		if ( $title && $title->exists() ) {
+			$article = \Article::newFromTitle( $title, \RequestContext::getMain() );
+
+			if ( $article && $article->exists() ) {
+				$content = $article->fetchContent();
+			}
+		}
+
+		return isset( $content ) && $content ? $content : '';
+	}
+
 	/**
 	 * @param $title
 	 * @return array of strings (infobox markups)
 	 */
 	public function getMarkup( $title ) {
-		$content = \PortableInfoboxDataService::fetchArticleContent( $title );
+		$content = $this->fetchArticleContent( $title );
 		return $this->getInfoboxes( $content );
 	}
 
