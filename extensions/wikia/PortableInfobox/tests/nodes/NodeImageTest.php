@@ -127,19 +127,19 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getSource
-	 * @dataProvider sourceProvider
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getSources
+	 * @dataProvider sourcesProvider
 	 *
 	 * @param $markup
 	 * @param $expected
 	 */
-	public function testSource( $markup, $expected ) {
+	public function testSources( $markup, $expected ) {
 		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, [ ] );
 
-		$this->assertEquals( $expected, $node->getSource() );
+		$this->assertEquals( $expected, $node->getSources() );
 	}
 
-	public function sourceProvider() {
+	public function sourcesProvider() {
 		return [
 			[
 				'<image source="img"/>',

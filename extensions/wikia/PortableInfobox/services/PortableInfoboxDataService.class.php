@@ -135,6 +135,7 @@ class PortableInfoboxDataService {
 		if ( $raw ) {
 			$stored = $this->get();
 			$stored[] = [
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
 				'data' => $raw->getRenderData(),
 				'metadata' => $raw->getMetadata()
 			];
