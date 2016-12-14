@@ -70,7 +70,7 @@ class Indexer {
 	 * @param \Title $title
 	 * @return bool
 	 */
-	public static function canIndex( $title ) {
+	public static function canIndex( \Title $title ) {
 		return !in_array($title->getNamespace(), Indexer::$excludedNamespaces);
 	}
 
