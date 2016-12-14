@@ -11,6 +11,11 @@ describe('ext.wikia.adEngine.video.porvata.googleImaSetup', function () {
 				build: noop
 			},
 			log: noop,
+			recoveryHelper: {
+				getSafeUri: function (url) {
+					return url;
+				}
+			},
 			win: {
 				google: {
 					ima: {
@@ -23,6 +28,7 @@ describe('ext.wikia.adEngine.video.porvata.googleImaSetup', function () {
 	function getModule(vasUrlBuilder, browserDetect, log, win) {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaSetup'](
 			vasUrlBuilder,
+			mocks.recoveryHelper,
 			browserDetect,
 			log,
 			win
