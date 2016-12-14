@@ -226,19 +226,22 @@ $width-cart: 120px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: absolute;
-	top: 0;
 	right: 0;
+	top: 0;
 
 	.oo-ui-buttonElement-framed.ve-ui-wikiaMediaOptionWidget-check {
+		bottom: 0;
 		cursor: pointer;
 		position: absolute;
 		right: 0;
-		top: 0;
+		z-index: 1;
 
 		.oo-ui-buttonElement-button {
 			border: 0;
+			height: auto;
 			margin: 0;
 			padding: 0;
+
 			.oo-ui-iconElement-icon {
 				@if lightness($color-page) < 50 {
 					background-color: lighten($color-page, 9%);
@@ -292,7 +295,18 @@ $width-cart: 120px;
 	}
 
 	.ve-ui-wikiaMediaOptionWidget-selected .ve-ui-mwMediaResultWidget-thumbnail.ve-ui-texture-transparency {
+		$iconsPath: '/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/';
+
+		background: rgba($color-buttons, .25);
 		border: 2px solid $color-buttons;
+
+		@if lightness($color-buttons) <= 55 {
+			background-image: url($iconsPath + 'checked-white.svg'); /* $wgCdnStylePath */
+		} @else {
+			background-image: url($iconsPath + 'checked.svg'); /* $wgCdnStylePath */
+		}
+
+		z-index: 1;
 	}
 
 	.ve-ui-wikiaVideoOptionWidget-duration {
