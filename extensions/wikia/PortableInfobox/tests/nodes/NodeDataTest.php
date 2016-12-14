@@ -39,94 +39,249 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSourceLabel
-	 * @dataProvider sourceLabelDataProvider
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSourcesMetadata
+	 * @dataProvider sourcesMetadataDataProvider
 	 *
 	 * @param $markup
 	 * @param $params
 	 * @param $expected
 	 */
-	// TODO
-	//public function testSourceLabel( $markup, $params, $expected ) {
-	//	$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, $params );
-	//
-	//	$this->assertEquals( $expected, $node->getSourceLabel() );
-	//}
+	public function testSourcesMetadata( $markup, $params, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, $params );
 
-	public function sourceLabelDataProvider() {
+		$this->assertEquals( $expected, $node->getSourcesMetadata() );
+	}
+
+	public function sourcesMetadataDataProvider() {
 		return [
-			[ '<data source="test"></data>', [ ], ['test' => ''] ],
-			[ '<image source="test"/>', [ ], ['test' => ''] ],
-			[ '<title source="test"/>', [ ], ['test' => ''] ],
-			[ '<data source="test"><default>{{{test}}}</default></data>',
-				[ ], ['test' => ''] ],
-			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
-				[ ], ['test' => '{{{test}}}'] ],
-			[ '<data source="test"><label>testLabel</label></data>', [ ], ['test' => 'testLabel'] ],
-			[ '<data></data>', [ ], [ ] ],
-			[ '<group><data source="test"><label>labelInsideGroup</label></data></group>', [], ['test' =>'labelInsideGroup'] ],
-			[ '<group>' .
-				'<data source="test"><label>labelInsideGroup</label></data>' .
-				'<data source="test2"><label>labelInsideGroup2</label></data>' .
-				'</group>',
-				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2'] ],
-			[ '<group>' .
-				'<title source="title"/>' .
-				'<image source="image"/>' .
-				'<data source="test"><label>labelInsideGroup</label></data>' .
-				'<data source="test2"><label>labelInsideGroup2</label></data>' .
-				'</group>',
-				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2', 'title' => '', 'image' => ''] ],
-			[ '<data source="test"><default>{{{test 2}}}</default></data>', [ ], [ 'test' => '', 'test 2' => '' ] ],
-			[ '<data source="test1"><default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default></data>',
-				[ ], [ 'test1' => '', 'test2' => '' ] ],
-			[ '<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
-				[ ], [ 'test2' => '', 'test3' => '', 'test4' => '' ] ],
-			[ '<data source="test1">' .
+			[
+				'<data source="test"></data>',
+				[],
+				[
+					'test' => [
+						'label' => '',
+						'primary' => true
+					]
+				]
+			],
+			[
+				'<image source="test"/>',
+				[],
+				[
+					'test' => [
+						'label' => '',
+						'primary' => true
+					]
+				]
+			],
+			[
+				'<title source="test"/>',
+				[],
+				[
+					'test' => [
+						'label' => '',
+						'primary' => true
+					]
+				]
+			],
+			[
+				'<data source="test"><default>{{{test}}}</default></data>',
+				[],
+				[
+					'test' => [
+						'label' => '',
+						'primary' => true
+					]
+				]
+			],
+			[
+				'<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
+				[],
+				[
+					'test' => [
+						'label' => '{{{test}}}',
+						'primary' => true
+					]
+				]
+			],
+			[
+				'<data source="test"><label>testLabel</label></data>',
+				[],
+				[
+					'test' => [
+						'label' => 'testLabel',
+						'primary' => true
+					]
+				]
+			],
+			[ '<data></data>', [], [] ],
+			[
+				'<data source="test"><default>{{{test 2}}}</default></data>',
+				[],
+				[
+					'test' => [
+						'label' => '',
+						'primary' => true
+					],
+					'test 2' => [
+						'label' => ''
+					]
+				]
+			],
+			[
+				'<data source="test1"><default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default></data>',
+				[],
+				[
+					'test1' => [
+						'label' => '',
+						'primary' => true
+					],
+					'test2' => [
+						'label' => ''
+					]
+				]
+			],
+			[
+				'<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[],
+				[
+					'test2' => [
+						'label' => ''
+					],
+					'test3' => [
+						'label' => ''
+					],
+					'test4' => [
+						'label' => ''
+					]
+				]
+			],
+			[
+				'<data source="test1">' .
 				'<format>my {{{test2}}}$$$</format>' .
 				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
 				'</data>',
-				[ 'test1' => 'blabla' ], [ 'test1' => '', 'test2' => '', 'test3' => '', 'test4' => '', 'test5' => '' ] ],
-			[ '<data>' .
+				[ 'test1' => 'blabla' ],
+				[
+					'test1' => [
+						'label' => '',
+						'primary' => true
+					],
+					'test2' => [
+						'label' => ''
+					],
+					'test3' => [
+						'label' => ''
+					],
+					'test4' => [
+						'label' => ''
+					],
+					'test5' => [
+						'label' => ''
+					]
+				]
+			],
+			[
+				'<data>' .
 				'<format>my {{{test2}}}$$$</format>' .
 				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
 				'</data>',
-				[ ], [ 'test2' => '', 'test3' => '', 'test4' => '', 'test5' => '' ] ],
-			[ '<data source="test1">' .
+				[],
+				[
+					'test2' => [
+						'label' => ''
+					],
+					'test3' => [
+						'label' => ''
+					],
+					'test4' => [
+						'label' => ''
+					],
+					'test5' => [
+						'label' => ''
+					]
+				]
+			],
+			[
+				'<data source="test1">' .
 				'<label>label</label>' .
 				'<default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default>' .
 				'</data>',
-				[ ], [ 'test1' => 'label (test1)', 'test2' => 'label (test2)' ] ],
-			[ '<data>' .
+				[],
+				[
+					'test1' => [
+						'label' => 'label (test1)',
+						'primary' => true
+					],
+					'test2' => [
+						'label' => 'label (test2)'
+					],
+				]
+			],
+			[
+				'<data>' .
 				'<label>other label</label>' .
 				'<default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default>' .
 				'</data>',
-				[ ], [ 'test2' => 'other label (test2)', 'test3' => 'other label (test3)', 'test4' => 'other label (test4)' ] ],
-			[ '<data source="test1">' .
+				[],
+				[
+					'test2' => [
+						'label' => 'other label (test2)'
+					],
+					'test3' => [
+						'label' => 'other label (test3)'
+					],
+					'test4' => [
+						'label' => 'other label (test4)'
+					],
+				]
+			],
+			[
+				'<data source="test1">' .
 				'<label>next label</label>' .
 				'<format>my {{{test2}}}$$$</format>' .
 				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
 				'</data>',
 				[ 'test1' => 'blabla' ],
 				[
-					'test1' => 'next label (test1)',
-					'test2' => 'next label (test2)',
-					'test3' => 'next label (test3)',
-					'test4' => 'next label (test4)',
-					'test5' => 'next label (test5)'
+					'test1' => [
+						'label' => 'next label (test1)',
+						'primary' => true
+					],
+					'test2' => [
+						'label' => 'next label (test2)'
+					],
+					'test3' => [
+						'label' => 'next label (test3)'
+					],
+					'test4' => [
+						'label' => 'next label (test4)'
+					],
+					'test5' => [
+						'label' => 'next label (test5)'
+					]
 				]
 			],
-			[ '<data>' .
+			[
+				'<data>' .
 				'<label>last label</label>' .
 				'<format>my {{{test2}}}$$$</format>' .
 				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
 				'</data>',
-				[ ],
+				[],
 				[
-					'test2' => 'last label (test2)',
-					'test3' => 'last label (test3)',
-					'test4' => 'last label (test4)',
-					'test5' => 'last label (test5)'
+					'test2' => [
+						'label' => 'last label (test2)'
+					],
+					'test3' => [
+						'label' => 'last label (test3)'
+					],
+					'test4' => [
+						'label' => 'last label (test4)'
+					],
+					'test5' => [
+						'label' => 'last label (test5)'
+					]
 				]
 			]
 		];
