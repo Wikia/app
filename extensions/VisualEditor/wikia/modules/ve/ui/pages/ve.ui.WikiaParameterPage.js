@@ -126,7 +126,7 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage(parameter, name, conf
 	if (paramType === 'image') {
 		this.uploadImageButton = new OO.ui.ButtonWidget({
 			$: this.$,
-			icon: 'image',
+			icon: 'add-image',
 			flags: ['primary'],
 			title: ve.msg('visualeditor-dialog-transclusion-upload-image')
 		});
