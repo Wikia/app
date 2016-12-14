@@ -195,7 +195,7 @@ class Indexer {
 			$dataSource = new WikiDataSource( $wid );
 			$dbHandler = $dataSource->getDB();
 			$rows = $dbHandler->query( 'SELECT page_id FROM page WHERE page_namespace NOT IN ('
-                . implode( ',', self::$excludedNamespaces ) . ')' );
+                .implode( ',', self::$excludedNamespaces ) . ')' );
 			while ( $page = $dbHandler->fetchObject( $rows ) ) {
 				$sp = new ScribeProducer( 'reindex', $page->page_id );
 				$sp->reindexPage();
