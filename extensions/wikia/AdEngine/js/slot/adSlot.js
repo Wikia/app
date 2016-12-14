@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 				if (typeof callbacks[name] ===  'function') {
 					callbacks[name](adInfo);
 				}
-			}
+			};
 		}
 
 		return {
@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			hop: registerHook('hop'),
 			renderEnded: registerHook('renderEnded'),
 			success: registerHook('success')
-		}
+		};
 	}
 
 	function getShortSlotName(slotName) {
@@ -56,9 +56,35 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		return iframe;
 	}
 
+	function getRecoveredProviderContainer(providerContainer) {
+		var elementId = providerContainer.childNodes.length > 0 && providerContainer.childNodes[0].id,
+			recoveredElementId = win._sp_.getElementId(elementId),
+			element = doc.getElementById(recoveredElementId);
+
+		if (element && element.parentNode) {
+			return element.parentNode;
+		}
+
+		return null;
+	}
+
+	function getProviderContainer(slotName) {
+		var isRecovering = recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking(),
+			providerContainer,
+			slotContainer = doc.getElementById(slotName);
+
+		providerContainer = slotContainer.lastElementChild;
+		if (isRecovering && providerContainer.hasAttribute('data-sp-clone')) {
+			providerContainer = getRecoveredProviderContainer(providerContainer);
+		}
+
+		return providerContainer;
+	}
+
 	return {
 		create: create,
 		getIframe: getIframe,
+		getProviderContainer: getProviderContainer,
 		getShortSlotName: getShortSlotName
 	};
 });

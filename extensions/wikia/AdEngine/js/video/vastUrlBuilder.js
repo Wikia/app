@@ -44,7 +44,8 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 
 	function build(aspectRatio, slotParams) {
 		slotParams = slotParams || {};
-		var params = [
+		var correlator = Math.round(Math.random() * 10000000000),
+			params = [
 				'output=vast',
 				'env=vp',
 				'gdfp_req=1',

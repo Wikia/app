@@ -84,9 +84,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params, adSlot, imageContainer) {
+	function loadVideoAd(params, slotContainer, providerContainer) {
 		var loadedPlayer,
-			videoWidth = getSlotWidth(adSlot);
+			videoWidth = getSlotWidth(slotContainer);
 
 		params.width = videoWidth;
 		params.height = getVideoHeight(videoWidth, params);
@@ -97,33 +97,25 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			uap: uapContext.getUapId()
 		};
 
-		var recoveredAdSlot = getRecoveredTepLeaderboard();
-
 		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, recoveredAdSlot, imageContainer);
+			loadedPlayer = loadPlaywire(params, slotContainer, providerContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, recoveredAdSlot, imageContainer);
+			loadedPlayer = loadPorvata(params, slotContainer, providerContainer);
 		}
 
 		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
-				var slotWidth = getSlotWidth(adSlot);
+				var slotWidth = getSlotWidth(slotContainer);
 				video.resize(slotWidth, getVideoHeight(slotWidth, params));
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(getRecoveredTepLeaderboard());
+				var slotWidth = getSlotWidth(slotContainer);
 				video.play(slotWidth, getVideoHeight(slotWidth, params));
 			});
 
 			return video;
 		});
-	}
-
-	function getRecoveredTepLeaderboard() {
-		var id = "wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD";
-		id = _sp_.getElementId(id);
-		return document.getElementById(id).parentNode.parentNode;
 	}
 
 	function isEnabled(params) {

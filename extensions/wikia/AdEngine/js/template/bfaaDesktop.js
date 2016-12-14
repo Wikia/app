@@ -4,6 +4,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
@@ -13,6 +14,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			 uapContext,
 			 btfBlocker,
 			 slotTweaker,
+			 adSlot,
 			 uapVideo,
 			 doc,
 			 log,
@@ -20,12 +22,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			 recoveryTweaker) {
 	'use strict';
 
-	var adSlot,
-		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
-		imageContainer,
+		providerContainer,
+		slotContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
@@ -44,13 +46,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function getRecoveredSlot(adSlot) {
-		var id = "wikia_gpt/5441/wka.life/_project43//article/gpt/TOP_LEADERBOARD";
-		id = _sp_.getElementId(id);
-		adSlot = document.getElementById(id).parentNode.parentNode;
-		return adSlot;
-	}
-
 	function runOnReady(iframe, params) {
 		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
@@ -60,10 +55,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
-		var recoveredAdSlot = getRecoveredSlot(adSlot);
-		updateNavBar(adSlot.offsetHeight);
+		updateNavBar(slotContainer.offsetHeight);
 		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(recoveredAdSlot.offsetHeight);
+			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {
@@ -80,13 +74,13 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params, adSlot, imageContainer);
+			uapVideo.loadVideoAd(params, slotContainer, providerContainer);
 		}
 	}
 
 	function show(params) {
-		adSlot = doc.getElementById(params.slotName);
-		imageContainer = adSlot.querySelector('div:last-of-type');
+		providerContainer = adSlot.getProviderContainer(params.slotName);
+		slotContainer = providerContainer.parentNode;
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
