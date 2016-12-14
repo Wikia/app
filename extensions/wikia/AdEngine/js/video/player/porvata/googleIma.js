@@ -1,11 +1,10 @@
-/*global define, google, Promise*/
+/*global define, Promise*/
 define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory',
-	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, imaPlayerFactory, imaSetup, log, win) {
+], function (scriptLoader, imaPlayerFactory, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.googleIma';
@@ -24,13 +23,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	}
 
 	function getPlayer(params) {
-		var vastUrl = imaSetup.buildVastUrl(params),
-			adsRequestUrl = imaSetup.createRequest(vastUrl, params.width, params.height),
-			adDisplayContainer =  new win.google.ima.AdDisplayContainer(params.container),
-			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer),
-			adsRenderingSettings = imaSetup.getRenderingSettings();
+		var adDisplayContainer =  new win.google.ima.AdDisplayContainer(params.container),
+			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
 
-		return imaPlayerFactory.create(adsRequestUrl, adDisplayContainer, adsLoader, adsRenderingSettings);
+		return imaPlayerFactory.create(adDisplayContainer, adsLoader, params);
 	}
 
 	return {

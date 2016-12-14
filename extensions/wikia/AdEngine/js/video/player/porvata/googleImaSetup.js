@@ -1,4 +1,4 @@
-/*global define, google*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.browserDetect',
@@ -6,15 +6,24 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'wikia.window'
 ], function (vastUrlBuilder, browserDetect, log, win) {
 	'use strict';
-
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
-	function createRequest(vastUrl, width, height) {
+	function buildVastUrl(params) {
+		var vastUrl;
+
+		vastUrl = params.vastUrl || vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
+
+		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
+
+		return win._sp_.getSafeUri(vastUrl);
+	}
+
+	function createRequest(params) {
 		var adsRequest = new win.google.ima.AdsRequest();
 
-		adsRequest.adTagUrl = vastUrl;
-		adsRequest.linearAdSlotWidth = width;
-		adsRequest.linearAdSlotHeight = height;
+		adsRequest.adTagUrl = buildVastUrl(params);
+		adsRequest.linearAdSlotWidth = params.width;
+		adsRequest.linearAdSlotHeight = params.height;
 
 		log(['ads request created', adsRequest], log.levels.debug, logGroup);
 
@@ -37,18 +46,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		return adsRenderingSettings;
 	}
 
-	function buildVastUrl(params) {
-		var vastUrl;
-
-		vastUrl = params.vastUrl || vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
-
-		log(['VAST URL: ', vastUrl, 'params: ', params], log.levels.debug, logGroup);
-
-		return win._sp_.getSafeUri(vastUrl);
-	}
-
 	return {
-		buildVastUrl: buildVastUrl,
 		createRequest: createRequest,
 		getRenderingSettings: getRenderingSettings
 	};
