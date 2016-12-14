@@ -297,7 +297,7 @@ $width-cart: 120px;
 	.ve-ui-wikiaMediaOptionWidget-selected .ve-ui-mwMediaResultWidget-thumbnail.ve-ui-texture-transparency {
 		$iconsPath: '/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/';
 
-		background: rgba($color-buttons, .25);
+		background: rgba($color-buttons, .4);
 		border: 2px solid $color-buttons;
 
 		@if lightness($color-buttons) <= 55 {
