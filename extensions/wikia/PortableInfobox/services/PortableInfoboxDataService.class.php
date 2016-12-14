@@ -193,25 +193,23 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * If PageProps doesn't have infoboxes' metadata or has an old version then reparse the page and store fresh data
+	 * If PageProps has an old version of infobox data/metadata then reparse the page and store fresh data
+	 * If it doesn't have infoboxes property, we treat it as a page without infoboxes - there might be false negatives
 	 *
 	 * @param $infoboxes
 	 *
 	 * @return array
 	 */
 	protected function reparseArticleIfNeeded( $infoboxes ) {
-		if ( is_null( $infoboxes ) ) {
-			$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
-			$this->set( $infoboxes );
-		}
-
-		foreach ( $infoboxes as $infobox ) {
-			if (
-				empty( $infobox ) ||
-				$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
-			) {
-				$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
-				$this->set( $infoboxes );
+		if ( is_array( $infoboxes ) ) {
+			foreach ( $infoboxes as $infobox ) {
+				if (
+					empty( $infobox ) ||
+					$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
+				) {
+					$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
+					$this->set( $infoboxes );
+				}
 			}
 		}
 
