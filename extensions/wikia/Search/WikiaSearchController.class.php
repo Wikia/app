@@ -1020,17 +1020,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This handles pagination via a template script.
 	 *
 	 * @see    SearchControllerTest::testPagination
-	 * @throws Exception
-	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want
-	 *     pagination)
+	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
 	 */
 	public function pagination() {
 		$config = $this->getVal( 'config', false );
-		if ( !$config || ( !$config instanceOf Wikia\Search\Config ) ) {
-			throw new Exception( "This should not be called outside of self-request context." );
+		if ( ( !$config instanceof Wikia\Search\Config ) || !$this->request->isInternal() ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			$this->skipRendering();
+			return false;
 		}
 
 		if ( !$config->getResultsFound() ) {
+			$this->skipRendering();
 			return false;
 		}
 
@@ -1042,20 +1043,50 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) ? ( $page + self::PAGES_PER_WINDOW ) :
 				$config->getNumPages() );
 
+		if ( $windowLastPage <= 1 ) {
+			$this->skipRendering();
+			return false;
+		}
+
 		$pageTitle = SpecialPage::getTitleFor( 'Search' );
 
-		$this->setVal( 'query', $config->getQuery()->getSanitizedQuery() );
-		$this->setVal( 'pagesNum', $config->getNumPages() );
-		$this->setVal( 'currentPage', $page );
-		$this->setVal( 'windowFirstPage', $windowFirstPage );
-		$this->setVal( 'windowLastPage', $windowLastPage );
-		$this->setVal( 'pageTitle', $pageTitle );
-		$this->setVal( 'crossWikia', $config->getInterWiki() );
-		$this->setVal( 'resultsCount', $config->getResultsFound() );
-		$this->setVal( 'namespaces', $config->getNamespaces() );
-		$this->setVal( 'limit', $config->getLimit() );
-		$this->setVal( 'filters', $config->getPublicFilterKeys() );
-		$this->setVal( 'by_category', $this->getVal( 'by_category', false ) );
+		// set up extra query string parameters to be appended to each pagination link
+		$extraParams = [];
+
+		if ( $config->getInterWiki() ) {
+			$extraParams['crossWikia'] = 1;
+		}
+
+		foreach ( $config->getPublicFilterKeys() as $filter ) {
+			$extraParams['filters'][] = $filter;
+		}
+
+		foreach ( $config->getNamespaces() as $ns ) {
+			$extraParams['ns'.$ns] = 1;
+		}
+
+		if ( $this->request->getVal( 'by_category', false ) ) {
+			$extraParams['by_category'] = 1;
+		}
+
+		$limit = $config->getLimit();
+		if (  $limit !== WikiaSearchController::RESULTS_PER_PAGE ) {
+			$extraParams['limit'] = $limit;
+		}
+
+		// SUS-495: add resultsLang parameter if present in original request (global search)
+		$resultsLang = $this->getContext()->getRequest()->getVal( 'resultsLang' );
+		if ( !empty( $resultsLang ) ) {
+			$extraParams['resultsLang'] = $resultsLang;
+		}
+
+		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );
+		$this->setVal( 'pagesNum', 			$config->getNumPages() );
+		$this->setVal( 'currentPage', 		$page );
+		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
+		$this->setVal( 'windowLastPage', 	$windowLastPage );
+		$this->setVal( 'pageTitle', 		$pageTitle );
+		$this->setVal( 'extraParams',       $extraParams );
 	}
 }
 

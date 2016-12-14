@@ -93,7 +93,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			src: params.src,
 			pos: params.slotName,
 			passback: 'vuap',
-			uap: params.uap || uapContext.getUapId()
+			uap: uapContext.getUapId()
 		};
 
 		if (params.player === 'playwire') {
