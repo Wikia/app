@@ -140,8 +140,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', this.onQueryInputKeydown.bind( this ) );
 	this.search.connect( this, {
 		nearingEnd: 'onSearchNearingEnd',
-		check: 'onSearchCheck',
-		select: 'onMediaPreview'
+		select: 'onSearchCheck',
+		check: 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
