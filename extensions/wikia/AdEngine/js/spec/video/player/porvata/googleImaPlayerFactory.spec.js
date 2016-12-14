@@ -1,3 +1,4 @@
+/*global describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.video.porvata.googleImaPlayerFactory', function () {
 	'use strict';
 
@@ -24,27 +25,35 @@ describe('ext.wikia.adEngine.video.porvata.googleImaPlayerFactory', function () 
 			addEventListener: noop,
 			requestAds: noop
 		},
-		adsRenderingSettings: {},
-		adsRequestUrl: 'foo',
 		adDisplayContainer: {
 			initialize: noop
-		}
+		},
+		imaSetup: {
+			getRenderingSettings: noop,
+			createRequest: function () {
+				return 'foo';
+			}
+		},
+		log: noop
 	};
 
-	function logMock() {
-	}
-
-	logMock.levels = {};
+	mocks.log.levels = {};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](mocks.browserDetect, mocks.document, logMock, mocks.window);
+		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](
+			mocks.imaSetup,
+			mocks.browserDetect,
+			mocks.document,
+			mocks.log,
+			mocks.window
+		);
 	}
 
 	it('module has correct API', function () {
 		var addEventListenerSpy = spyOn(mocks.adsLoaderMock, 'addEventListener'),
 			requestAdsSpy = spyOn(mocks.adsLoaderMock, 'requestAds'),
 			module = getModule(),
-			createdPlayer = module.create(mocks.adsRequestUrl, mocks.adDisplayContainer, mocks.adsLoaderMock, mocks.adsRenderingSettings);
+			createdPlayer = module.create(mocks.adDisplayContainer, mocks.adsLoaderMock, {});
 
 		expect(typeof createdPlayer.addEventListener).toBe('function');
 		expect(typeof createdPlayer.dispatchEvent).toBe('function');
@@ -55,6 +64,6 @@ describe('ext.wikia.adEngine.video.porvata.googleImaPlayerFactory', function () 
 		expect(typeof createdPlayer.resize).toBe('function');
 
 		expect(addEventListenerSpy).toHaveBeenCalled();
-		expect(requestAdsSpy).toHaveBeenCalledWith(mocks.adsRequestUrl);
+		expect(requestAdsSpy).toHaveBeenCalledWith('foo');
 	});
 });
