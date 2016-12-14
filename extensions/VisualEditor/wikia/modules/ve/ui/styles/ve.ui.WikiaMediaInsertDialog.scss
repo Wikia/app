@@ -291,7 +291,9 @@ $width-cart: 120px;
 
 	.ve-ui-wikiaMediaOptionWidget-selected .ve-ui-mwMediaResultWidget-thumbnail.ve-ui-texture-transparency {
 		@include ve-icon(checked, wikia, $color-buttons);
-		background: rgba($color-buttons, .4) no-repeat center center;
+		background-color: rgba($color-buttons, .4);
+		background-repeat: no-repeat;
+		background-position: center center;
 		border: 2px solid $color-buttons;
 		z-index: 1;
 	}
