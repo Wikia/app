@@ -45,7 +45,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 		.load( this.onThumbnailLoad.bind( this ) )
 		.error(this.onThumbnailError.bind( this ) );
 	this.previewButton.on( 'click', function () {
-		this.emit( 'check', this );
+		this.emit( 'preview', this );
 	}.bind( this ) );
 	this.$metaData.on( 'mousedown', function ( event ) {
 		this.emit( 'metadata', this, event );

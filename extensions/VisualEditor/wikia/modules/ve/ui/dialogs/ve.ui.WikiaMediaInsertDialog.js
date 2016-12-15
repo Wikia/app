@@ -141,7 +141,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.search.connect( this, {
 		nearingEnd: 'onSearchNearingEnd',
 		select: 'onSearchResultSelection',
-		check: 'onMediaPreview'
+		preview: 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
