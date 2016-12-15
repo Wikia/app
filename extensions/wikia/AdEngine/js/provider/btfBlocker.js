@@ -73,6 +73,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				pendingAtfSlots.splice(index, 1);
 
 				// If pendingAtfSlots is empty, start BTF slots
+				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
 					startBtfQueue();
 				}
@@ -95,9 +96,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			if (config.atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
-				slot.pre('success', fillInSlotOnResponse);
+				slot.pre('renderEnded', fillInSlotOnResponse);
 				slot.pre('collapse', fillInSlotOnResponse);
 				slot.pre('hop', fillInSlotOnResponse);
+				slot.pre('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;

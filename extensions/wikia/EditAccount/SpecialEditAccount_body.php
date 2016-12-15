@@ -410,7 +410,12 @@ class EditAccount extends SpecialPage {
 		}
 
 		// close account and invalidate cache + cluster data
-		Wikia::invalidateUser( $user, true, $keepEmail, true );
+		try {
+			Wikia::invalidateUser( $user, true, $keepEmail, true );
+		} catch ( PasswordError $e ) {
+			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
+			return false;
+		}
 
 		// if they are connected from facebook, disconnect them
 		self::disconnectFromFacebook( $user );

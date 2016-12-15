@@ -18237,8 +18237,8 @@ $messages['ja'] = array(
 	'tog-enablerichtext' => 'リッチテキストエディタを有効にする',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
 	'tog-marketingallowed' => 'ウィキアのニュースやイベントなどについての情報を受け取る',
-	'tog-enotifdiscussions-follows' => '自分がフォローしているトークに新しい返信があった場合、メールで新着通知を受け取る。',
-	'tog-enotifdiscussions-votes' => '自分のトークの投稿に賛成票が入れられた際にメールで通知を受け取る。',
+	'tog-enotifdiscussions-follows' => '自分がフォローしているディスカッションに新しい返信があった場合、メールで新着通知を受け取る。',
+	'tog-enotifdiscussions-votes' => '自分のディスカッションの投稿に賛成票が入れられた場合、メールで通知を受け取る。',
 );
 
 $messages['jam'] = array(

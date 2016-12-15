@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [], function() {
+define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry'
+], function(adaptersRegistry) {
 	'use strict';
 	var adUnits = [];
 
@@ -23,7 +25,9 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [], function() {
 		});
 	}
 
-	function setupAdUnits(adapters, skin) {
+	function setupAdUnits(skin) {
+		var adapters = adaptersRegistry.getAdapters();
+
 		adapters.forEach(function (adapter) {
 			if (adapter && adapter.isEnabled()) {
 				addAdUnits(getAdapterAdUnits(adapter, skin));

@@ -408,8 +408,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard', 'fancontributor-staff', 'fancontributor-contributor' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard', 'fancontributor-staff', 'fancontributor-contributor' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fancontributor-staff', 'fancontributor-contributor' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fancontributor-staff', 'fancontributor-contributor' ];
 
 		$this->groupsSelfAddableByGroup['fancontributor-staff'] = [ 'fancontributor-contributor' ];
 		$this->groupsSelfRemovableByGroup['fancontributor-staff'] = [ 'fancontributor-staff', 'fancontributor-contributor' ];

@@ -1,6 +1,7 @@
 <?php
 
 class ARecoveryModule {
+	const DISABLED_MESSAGE = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
 
 	/**
 	 * Checks whether recovery is enabled (on current wiki)
@@ -16,16 +17,16 @@ class ARecoveryModule {
 
 		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
 	}
-	
+
 	public static function getSourcePointBootstrapCode() {
-		if ( static::isDisabled() ) {
-			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
-		}
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		return static::isDisabled() ? self::DISABLED_MESSAGE : self::getBootstrapCode();
 	}
-	
 
 	public static function isLockEnabled() {
 		return !self::isDisabled();
+	}
+
+	private static function getBootstrapCode() {
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
 }

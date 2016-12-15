@@ -3,21 +3,23 @@
  * Class definition for Wikia\Search\Test\ResultTest
  */
 namespace Wikia\Search\Test;
+
 use Wikia\Search\Result, \ReflectionProperty, \ReflectionMethod, Wikia\Search\Utilities;
+
 /**
  * Tests functionality related to Wikia\Search\Result
  */
 class ResultTest extends BaseTest {
 
-	protected $defaultFields = array(
-		'wid'	=>	123
-	);
+	protected $defaultFields = [
+		'wid' => 123
+	];
 
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09897 ms
-	 * @covers Wikia\Search\Result::getCityId
-	 * @covers Wikia\Search\Result::__construct
+	 * @covers \Wikia\Search\Result::getCityId
+	 * @covers \Wikia\Search\Result::__construct
 	 */
 	public function testGetCityId() {
 
@@ -38,8 +40,8 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09922 ms
-	 * @covers Wikia\Search\Result::getText
-	 * @covers Wikia\Search\Result::setText
+	 * @covers \Wikia\Search\Result::getText
+	 * @covers \Wikia\Search\Result::setText
 	 */
 	public function testTextFieldMethods() {
 
@@ -71,7 +73,7 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0989 ms
-	 * @covers Wikia\Search\Result::getText
+	 * @covers \Wikia\Search\Result::getText
 	 */
 	public function testGetTextWithWordLimit() {
 		$text = "we're no strangers to love. you know the rules and so do i.";
@@ -90,27 +92,27 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10056 ms
-	 * @covers Wikia\Search\Result::getEscapedUrl
+	 * @covers \Wikia\Search\Result::getEscapedUrl
 	 */
 	public function testGetEscapedUrl() {
 		$mock = $this->getMockBuilder( 'Wikia\Search\Result' )
 			->disableOriginalConstructor()
-			->setMethods( ['getUrl'] )
+			->setMethods( [ 'getUrl' ] )
 			->getMock();
 
-		$mock->expects( $this->once() )
-			->method( 'getUrl' )
-			->will( $this->returnValue( 'test&amp;this_is_"' ) );
+		$mock->expects( $this->once() )->method( 'getUrl' )->will( $this->returnValue( 'test&amp;this_is_"' ) );
 
-		$this->assertEquals( 'test&amp;this_is_&quot;',
-			$mock->getEscapedUrl() );
+		$this->assertEquals(
+			'test&amp;this_is_&quot;',
+			$mock->getEscapedUrl()
+		);
 	}
 
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10045 ms
-	 * @covers Wikia\Search\Result::getTitle
-	 * @covers Wikia\Search\Result::setTitle
+	 * @covers \Wikia\Search\Result::getTitle
+	 * @covers \Wikia\Search\Result::setTitle
 	 */
 	public function testTitleFieldMethods() {
 
@@ -118,8 +120,8 @@ class ResultTest extends BaseTest {
 		$wgLanguageCode = 'fr';
 
 		$fieldsCopy = $this->defaultFields;
-		unset($fieldsCopy['title']);
-		unset($fieldsCopy[Utilities::field('title')]);
+		unset( $fieldsCopy['title'] );
+		unset( $fieldsCopy[Utilities::field( 'title' )] );
 
 		$result = new Result( $fieldsCopy );
 
@@ -129,8 +131,8 @@ class ResultTest extends BaseTest {
 			'A result with no title or language title field should return an empty string during getTitle().'
 		);
 
-		$title				= 'Foo';
-		$result['title']	= $title;
+		$title = 'Foo';
+		$result['title'] = $title;
 
 		$this->assertEquals(
 			$title,
@@ -138,8 +140,8 @@ class ResultTest extends BaseTest {
 			'A result with no language title field should return a normal title field during getTitle() if it exists.'
 		);
 
-		$languageTitle							= 'LangFoo';
-		$result[Utilities::field('title')]	= $languageTitle;
+		$languageTitle = 'LangFoo';
+		$result[Utilities::field( 'title' )] = $languageTitle;
 
 		$this->assertEquals(
 			$languageTitle,
@@ -169,28 +171,27 @@ class ResultTest extends BaseTest {
 		global $wgLanguageCode;
 		$oldCode = $wgLanguageCode;
 		$wgLanguageCode = 'fr';
-		$result = new Result( array( 'title_en' => $languageTitle ) );
+		$result = new Result( [ 'title_en' => $languageTitle ] );
 		$this->assertEquals(
 			$languageTitle,
 			$result->getTitle(),
 			'A result should return the english language title field during getTitle() if it exists, but the non-english field doesn\'t (video support).'
 		);
 		$wgLanguageCode = $oldCode;
-
 	}
 
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10152 ms
-	 * @covers Wikia\Search\Result::getUrl
-	 * @covers Wikia\Search\Result::setUrl
-	 * @covers Wikia\Search\Result::getTextUrl
+	 * @covers \Wikia\Search\Result::getUrl
+	 * @covers \Wikia\Search\Result::setUrl
+	 * @covers \Wikia\Search\Result::getTextUrl
 	 */
 	public function testUrlMethods() {
 
-		$result		= new Result( $this->defaultFields );
-		$urlNormal	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today?';
-		$urlEncoded	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today' . urlencode('?');
+		$result = new Result( $this->defaultFields );
+		$urlNormal = 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today?';
+		$urlEncoded = 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today' . urlencode( '?' );
 
 		$this->assertEquals(
 			'',
@@ -213,6 +214,7 @@ class ResultTest extends BaseTest {
 			'Wikia\Search\Result::getUrl should return exactly what was stored in Wikia\Search\Result::setUrl'
 		);
 	}
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.1001 ms
@@ -220,24 +222,24 @@ class ResultTest extends BaseTest {
 	 */
 
 	public function testGetHub() {
-		$result	= new Result( $this->defaultFields );
+		$result = new Result( $this->defaultFields );
 		$hubs = [ 'Gaming' => 'Video Games', 'Entertainment' => 'Entertainment', 'Lifestyle' => 'Lifestyle' ];
-		foreach ($hubs as $key => $value) {
-			$result->setField("hub_s", $key);
-			$this->assertEquals($result->getHub(),  $value);
+		foreach ( $hubs as $key => $value ) {
+			$result->setField( "hub_s", $key );
+			$this->assertEquals( $result->getHub(), $value );
 		}
 	}
 
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09943 ms
-	 * @covers Wikia\Search\Result::setVar
-	 * @covers Wikia\Search\Result::getVar
-	 * @covers Wikia\Search\Result::getVars
+	 * @covers \Wikia\Search\Result::setVar
+	 * @covers \Wikia\Search\Result::getVar
+	 * @covers \Wikia\Search\Result::getVars
 	 */
 	public function testVarMethods() {
 
-		$result		= new Result( $this->defaultFields );
+		$result = new Result( $this->defaultFields );
 
 		$this->assertEquals(
 			$this->defaultFields,
@@ -273,10 +275,10 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09992 ms
-	 * @covers Wikia\Search\Result::fixSnippeting
+	 * @covers \Wikia\Search\Result::fixSnippeting
 	 */
 	public function testFixSnippeting() {
-		$method		= new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
+		$method = new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 
 		$text = '�foo';
@@ -363,7 +365,7 @@ class ResultTest extends BaseTest {
 		$fields = $this->defaultFields;
 		$fields['foo'] = 'bar';
 		$result = new Result( $fields );
-		$array  = $result->toArray( array( 'wid', 'foo' => 'roseanne' ) );
+		$array = $result->toArray( [ 'wid', 'foo' => 'roseanne' ] );
 		$this->assertArrayHasKey(
 			'wid',
 			$array
@@ -381,8 +383,8 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0991 ms
-	 * @covers Wikia\Search\Result::replaceUnusualEscapes
-	 * @covers Wikia\Search\Result::replaceUnusualEscapesCallback
+	 * @covers \Wikia\Search\Result::replaceUnusualEscapes
+	 * @covers \Wikia\Search\Result::replaceUnusualEscapesCallback
 	 */
 	public function testReplaceUnusualEscapes() {
 		$this->assertEquals(
@@ -394,34 +396,30 @@ class ResultTest extends BaseTest {
 			'100%25+Completion',
 			Result::replaceUnusualEscapes( urlencode( '100% Completion' ) )
 		);
-
 	}
 
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10111 ms
-	 * @covers Wikia\Search\Result::getVideoViews
+	 * @covers \Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViews() {
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-			->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
-			->setMethods( null )
-			->getMock();
-		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'getFormattedVideoViewsForPageId' ) )
-			->getMock();
+		$mockResult =
+			$this->getMockBuilder( 'Wikia\Search\Result' )->setConstructorArgs( [ [ 'pageid' => 123 ] ] )->setMethods(
+					null
+				)->getMock();
+		$mockService =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )->disableOriginalConstructor()->setMethods(
+					[ 'getFormattedVideoViewsForPageId' ]
+				)->getMock();
 
 		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflService->setAccessible( true );
 		$reflService->setValue( $mockResult, $mockService );
 
-		$mockService
-			->expects( $this->at( 0 ) )
-			->method ( 'getFormattedVideoViewsForPageId' )
-			->with   ( 123 )
-			->will   ( $this->returnValue( "50 views" ) )
-		;
+		$mockService->expects( $this->at( 0 ) )->method( 'getFormattedVideoViewsForPageId' )->with( 123 )->will(
+				$this->returnValue( "50 views" )
+			);
 		$this->assertEquals(
 			"50 views",
 			$mockResult->getVideoViews()
@@ -431,31 +429,26 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10026 ms
-	 * @covers Wikia\Search\Result::getVideoViews
+	 * @covers \Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViewsException() {
-		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
-			->setConstructorArgs( array( array( 'pageid' => 123 ) ) )
-			->setMethods( null )
-			->getMock();
-		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'getFormattedVideoViewsForPageId' ) )
-			->getMock();
-		$mockException = $this->getMockBuilder( '\Exception' )
-			->disableOriginalConstructor()
-			->getMock();
+		$mockResult =
+			$this->getMockBuilder( 'Wikia\Search\Result' )->setConstructorArgs( [ [ 'pageid' => 123 ] ] )->setMethods(
+					null
+				)->getMock();
+		$mockService =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )->disableOriginalConstructor()->setMethods(
+					[ 'getFormattedVideoViewsForPageId' ]
+				)->getMock();
+		$mockException = $this->getMockBuilder( '\Exception' )->disableOriginalConstructor()->getMock();
 
 		$reflService = new ReflectionProperty( 'Wikia\Search\Result', 'service' );
 		$reflService->setAccessible( true );
 		$reflService->setValue( $mockResult, $mockService );
 
-		$mockService
-			->expects( $this->at( 0 ) )
-			->method ( 'getFormattedVideoViewsForPageId' )
-			->with   ( 123 )
-			->will   ( $this->throwException( $mockException ) )
-		;
+		$mockService->expects( $this->at( 0 ) )->method( 'getFormattedVideoViewsForPageId' )->with( 123 )->will(
+				$this->throwException( $mockException )
+			);
 		$this->assertEquals(
 			0,
 			$mockResult->getVideoViews()
@@ -465,15 +458,11 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09983 ms
-	 * @covers Wikia\Search\Result::offsetGet
+	 * @covers \Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetTitle() {
 		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getTitle' ] );
-		$result
-			->expects( $this->any() )
-			->method ( 'getTitle' )
-			->will   ( $this->returnValue( 'my title' ) )
-		;
+		$result->expects( $this->any() )->method( 'getTitle' )->will( $this->returnValue( 'my title' ) );
 		$this->assertEquals(
 			'my title',
 			$result['title']
@@ -487,15 +476,11 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09947 ms
-	 * @covers Wikia\Search\Result::offsetGet
+	 * @covers \Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetText() {
 		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getText' ] );
-		$result
-			->expects( $this->any() )
-			->method ( 'getText' )
-			->will   ( $this->returnValue( 'my text' ) )
-		;
+		$result->expects( $this->any() )->method( 'getText' )->will( $this->returnValue( 'my text' ) );
 		$this->assertEquals(
 			'my text',
 			$result['text']
@@ -509,15 +494,11 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09998 ms
-	 * @covers Wikia\Search\Result::offsetGet
+	 * @covers \Wikia\Search\Result::offsetGet
 	 */
 	public function testoffsetGetVideoViews() {
 		$result = $this->getMock( 'Wikia\\Search\\Result', [ 'getVideoViews' ] );
-		$result
-			->expects( $this->any() )
-			->method ( 'getVideoViews' )
-			->will   ( $this->returnValue( '1,000' ) )
-		;
+		$result->expects( $this->any() )->method( 'getVideoViews' )->will( $this->returnValue( '1,000' ) );
 		$this->assertEquals(
 			'1,000',
 			$result['videoViews']
@@ -527,7 +508,7 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09933 ms
-	 * @covers Wikia\Search\Result::offsetGet
+	 * @covers \Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetDefaultLanguageField() {
 		$result = new Result( [ 'html_en' => 'html', 'wam' => 100 ] );
@@ -544,7 +525,7 @@ class ResultTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09844 ms
-	 * @covers Wikia\Search\Result::offsetGet
+	 * @covers \Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetDynamicNonLanguageField() {
 		$result = new Result( [ 'infoboxes_txt' => [ 'foo bar' ] ] );

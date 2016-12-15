@@ -152,6 +152,7 @@ return [
 		'dependencies' => [
 			'amd',
 			'wikia.cookies',
+			'wikia.querystring'
 		],
 	],
 	'wikia.tracker' => [

@@ -6,7 +6,6 @@
  */
 class InspectletService extends WikiaService {
 	const MAIN_PAGE = 'MainPage';
-	const ADD_NEW_PAGE = 'AddNewPage';
 
 	private static $applicationIds = [
 		/**
@@ -20,8 +19,7 @@ class InspectletService extends WikiaService {
 		 * - titanfall.wikia.com
 		 * - overwatch.wikia.com
 		 */
-		self::MAIN_PAGE => 1469642463,
-		self::ADD_NEW_PAGE => 1424713574,
+		self::MAIN_PAGE => 1469642463
 	];
 
 	private $inspectletExperimentId;

@@ -71,12 +71,13 @@ class SitemapPage extends UnlistedSpecialPage {
 	public function execute( $subpage ) {
 		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots;
 
+		$showIndex = strpos( $subpage, '-index.xml' ) !== false;
 		$isNewSitemapDefault = !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots );
 
 		$forceOldSitemap = strpos( $subpage, '-oldsitemapxml-' ) !== false;
 		$forceNewSitemap = strpos( $subpage, '-newsitemapxml-' ) !== false;
 
-		if ( ( $isNewSitemapDefault && !$forceOldSitemap ) || $forceNewSitemap ) {
+		if ( ( $showIndex && $isNewSitemapDefault && !$forceOldSitemap ) || $forceNewSitemap ) {
 			if ( empty( $wgEnableSitemapXmlExt ) ) {
 				$this->print404();
 				return;

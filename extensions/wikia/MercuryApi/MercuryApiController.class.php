@@ -411,12 +411,16 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data['articleType'] = WikiaPageType::getArticleType( $title );
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
-		$otherLanguages = $this->getOtherLanguages( $title );
+		// These operations slow the API response time by 50 times
+		// There is no need to perform them on the file pages as they're not supported by Mercury anyway
+		if ( $title->getNamespace() !== NS_FILE ) {
+			$data['articleType'] = WikiaPageType::getArticleType( $title );
+			$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+			$otherLanguages = $this->getOtherLanguages( $title );
 
-		if ( !empty( $otherLanguages ) ) {
-			$data['otherLanguages'] = $otherLanguages;
+			if ( !empty( $otherLanguages ) ) {
+				$data['otherLanguages'] = $otherLanguages;
+			}
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

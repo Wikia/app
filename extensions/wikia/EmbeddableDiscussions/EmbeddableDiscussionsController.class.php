@@ -124,14 +124,8 @@ class EmbeddableDiscussionsController {
 			'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
 		] );
 
-		if ( $showLatest && $categoryName ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category',
-				$categoryName )->inContentLanguage()->plain();
-		} elseif ( $showLatest ) {
+		if ( $showLatest ) {
 			$heading = wfMessage( 'embeddable-discussions-show-latest' )->inContentLanguage()->plain();
-		} elseif ( $categoryName ) {
-			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category',
-				$categoryName )->inContentLanguage()->plain();
 		} else {
 			$heading = wfMessage( 'embeddable-discussions-show-trending' )->inContentLanguage()->plain();
 		}

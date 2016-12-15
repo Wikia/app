@@ -2,11 +2,11 @@
 define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
-	'ext.wikia.adEngine.utils.math',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTier',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (factory, rubiconTargeting, math, doc, log, win) {
+], function (factory, rubiconTargeting, rubiconTier, doc, log, win) {
 	'use strict';
 
 	var accountId = 7450,
@@ -43,24 +43,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 				}
 			}
 		},
-		cpmBuckets = [
-			{
-				maxValue: 4,
-				bucket: 1
-			},
-			{
-				maxValue: 99,
-				bucket: 5
-			},
-			{
-				maxValue: 499,
-				bucket: 10
-			},
-			{
-				maxValue: 1999,
-				bucket: 50
-			}
-		],
 		libraryUrl = '//ads.aws.rubiconproject.com/video/vulcan.min.js',
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
@@ -105,22 +87,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		win.rubiconVulcan.run(onResponse);
 	}
 
-	function getTier(slotName, cpm) {
-		var index = 0,
-			sizeId = slots[slotName].sizeId,
-			tier = 2000;
-
-		while (cpmBuckets[index] && cpm > cpmBuckets[index].maxValue) {
-			index += 1;
-		}
-		if (cpmBuckets[index]) {
-			tier = math.getBucket(cpm, cpmBuckets[index].bucket);
-		}
-		tier = parseInt(tier, 10);
-
-		return sizeId + '_tier' + math.leftPad(tier, 4);
-	}
-
 	function getSlotParams(slotName) {
 		var parameters = {};
 
@@ -132,6 +98,20 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		}
 
 		return parameters;
+	}
+
+	function getBestSlotPrice(slotName) {
+		var cpm,
+			price;
+
+		if (priceMap[slotName]) {
+			cpm = rubiconTier.parsePrice(priceMap[slotName]) / 100;
+			price = cpm.toFixed(2).toString();
+		}
+
+		return {
+			vulcan: price
+		};
 	}
 
 	function encodeParamsForTracking(params) {
@@ -148,6 +128,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		allSlots.forEach(function (slot) {
 			var ad = slot.getBestCpm(),
 				slotName = slot.id,
+				sizeId = slots[slotName].sizeId,
 				cpm,
 				tier,
 				vastUrl;
@@ -155,7 +136,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			log(['onResponse', slotName, ad.status, ad], 'debug', logGroup);
 			if (ad.status === 'ok' && ad.type === 'vast') {
 				cpm = ad[vulcanCpmKey] || 0;
-				tier = getTier(slotName, cpm * 100);
+				tier = rubiconTier.create(sizeId, cpm * 100);
 				vastUrl = ad[vulcanUrlKey];
 
 				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
@@ -195,6 +176,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		name: 'rubicon_vulcan',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
