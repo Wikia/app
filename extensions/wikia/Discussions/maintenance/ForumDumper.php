@@ -4,7 +4,10 @@ namespace Discussions;
 
 class ForumDumper {
 
-	const FORUM_NAMESPACES = [ 2000, 2001 ];
+	const FORUM_NAMESPACES = [
+		NS_WIKIA_FORUM_BOARD,
+		NS_WIKIA_FORUM_BOARD_THREAD
+	];
 
 	const TABLE_PAGE = 'page';
 	const TABLE_COMMENTS = 'comments_index';
