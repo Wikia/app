@@ -39,6 +39,7 @@ $messages['en'] = [
 	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Add a new template',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry. No infoboxes found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes into new format',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Add an image',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restore page',
 	'wikia-visualeditor-toolbar-savedialog' => 'Publish',
@@ -145,6 +146,7 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Information that no indfoboxes were found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Call to action link to
 	convert old infoboxes to new format so they will appear in this dialog',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Tooltip for the button that allows to add an image to a template invocation',
 	'wikia-visualeditor-savedialog-label-save' => 'Label text for save button when the user is editing a current revision of an extant page.
 {{Identical|Publish}}',
 	'wikia-visualeditor-savedialog-label-restore' => 'Label text for save button when the user is editing a previous revision.

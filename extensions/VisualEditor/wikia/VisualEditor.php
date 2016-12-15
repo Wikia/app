@@ -200,6 +200,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-infobox-insert-add-new-template',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes',
+			'wikia-visualeditor-dialog-transclusion-add-image',
 			'wikia-visualeditor-savedialog-label-save',
 			'wikia-visualeditor-savedialog-label-restore',
 			'wikia-visualeditor-toolbar-savedialog',

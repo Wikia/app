@@ -132,7 +132,7 @@
 				$: this.$,
 				icon: 'add-image',
 				flags: ['primary'],
-				title: ve.msg('visualeditor-dialog-transclusion-upload-image')
+				title: ve.msg( 'wikia-visualeditor-dialog-transclusion-add-image' )
 			} );
 
 			this.uploadImageButton.on( 'click', handleClickOnImageButton.bind( this, paramName ) );

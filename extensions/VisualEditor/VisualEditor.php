@@ -1390,7 +1390,6 @@ $wgResourceModules += array(
 			'visualeditor-dialog-transclusion-required-parameter-is-blank',
 			'visualeditor-dialog-transclusion-single-mode',
 			'visualeditor-dialog-transclusion-title',
-			'visualeditor-dialog-transclusion-upload-image',
 			'visualeditor-dialog-transclusion-wikitext-label',
 			'visualeditor-dialogbutton-template-tooltip',
 			'visualeditor-dialogbutton-transclusion-tooltip',
