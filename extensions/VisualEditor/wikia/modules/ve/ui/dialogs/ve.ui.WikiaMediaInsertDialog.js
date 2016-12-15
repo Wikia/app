@@ -647,7 +647,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		}
 	}
 
-	if ( count.image && count.video ) {
+	if ( count && count.image && count.video ) {
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
 			label: label + '-multiple'
