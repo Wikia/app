@@ -27,7 +27,7 @@ ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( config ) {
 		.text( this.constructor.static.formatDuration( this.data.duration ) );
 
 	// DOM changes
-	this.previewButton.$element.append( $duration );
+	this.previewButton.$element.prepend( $duration );
 };
 
 /* Inheritance */
