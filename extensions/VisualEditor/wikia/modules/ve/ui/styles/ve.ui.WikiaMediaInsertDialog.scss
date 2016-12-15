@@ -240,7 +240,13 @@ $width-cart: 120px;
 			border: 0;
 			height: auto;
 			margin: 0;
+			opacity: .8;
 			padding: 0;
+			transition: opacity .2s linear;
+
+			&:hover, &:focus {
+				opacity: 1;
+			}
 
 			.oo-ui-iconElement-icon {
 				@if lightness($color-page) < 50 {
@@ -262,7 +268,6 @@ $width-cart: 120px;
 	}
 
 	.ve-ui-mwMediaResultWidget {
-		@include cursor( 'zoom-in' );
 		margin: 0 10px 60px 0;
 		overflow: visible;
 
