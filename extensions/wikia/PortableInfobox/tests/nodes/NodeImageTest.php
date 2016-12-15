@@ -127,19 +127,19 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getSource
-	 * @dataProvider sourceProvider
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getSources
+	 * @dataProvider sourcesProvider
 	 *
 	 * @param $markup
 	 * @param $expected
 	 */
-	public function testSource( $markup, $expected ) {
+	public function testSources( $markup, $expected ) {
 		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, [ ] );
 
-		$this->assertEquals( $expected, $node->getSource() );
+		$this->assertEquals( $expected, $node->getSources() );
 	}
 
-	public function sourceProvider() {
+	public function sourcesProvider() {
 		return [
 			[
 				'<image source="img"/>',
@@ -171,23 +171,13 @@ class NodeImageTest extends WikiaBaseTest {
 	 * @throws \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException
 	 */
 	public function testVideo( $markup, $params, $expected ) {
-		global $wgHooks;
-
-		// backup the hooks
-		$tmpHooks = $wgHooks[ 'PortableInfoboxNodeImage::getData' ];
-		$wgHooks[ 'PortableInfoboxNodeImage::getData' ] = [ ];
-
 		$fileMock = new FileMock();
 		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
-
 
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
 		$nodeImage = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xmlObj, $params );
 
 		$this->assertEquals( $expected, $nodeImage->getData() );
-
-		// restore the hooks
-		$wgHooks[ 'PortableInfoboxNodeImage::getData' ] = $tmpHooks;
 	}
 
 	public function testVideoProvider() {

@@ -38,26 +38,20 @@ class Node {
 	public function getSourcesMetadata() {
 		$metadata = [];
 		$sources = $this->getSources();
+		$sourcesLength = count( $sources );
 		$baseLabel = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
 
-		if ( count( $sources ) > 1 ) {
-			$firstPass = true;
-
-			foreach ( $sources as $source ) {
-				$metadata[$source] = [];
-				$metadata[$source]['label'] = !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '';
-
-				// The first source is the one from the `source` attribute
-				if ( $firstPass ) {
-					$metadata[$source]['primary'] = true;
-					$firstPass = false;
-				}
-			}
-		} elseif ( !empty( $sources[0] ) ) {
-			$source = $sources[0];
+		foreach ( $sources as $source ) {
 			$metadata[$source] = [];
-			$metadata[$source]['label'] = $baseLabel;
-			$metadata[$source]['primary'] = true;
+			$metadata[$source]['label'] = ( $sourcesLength > 1 ) ?
+				( !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '' ) :
+				$baseLabel ;
+		}
+
+		if ( $sourcesLength > 0 && $this->hasPrimarySource( $this->xmlNode ) ) {
+			// self::extractSourcesFromNode() puts the value of the `source` attribute as the first element of $sources
+			$firstSource = reset( $sources );
+			$metadata[$firstSource]['primary'] = true;
 		}
 
 		return $metadata;
@@ -263,7 +257,7 @@ class Node {
 	 *
 	 */
 	protected function extractSourcesFromNode( \SimpleXMLElement $xmlNode ) {
-		$sources = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ?
+		$sources = $this->hasPrimarySource( $xmlNode ) ?
 			[ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
@@ -274,6 +268,10 @@ class Node {
 		}
 
 		return $sources;
+	}
+
+	protected function hasPrimarySource( \SimpleXMLElement $xmlNode ) {
+		return (bool) $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 	}
 
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {

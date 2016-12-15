@@ -22,7 +22,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		$fileHeight = isset( $input[ 'fileHeight' ] ) ? $input[ 'fileHeight' ] : null;
 
 		$fileMock = $this->getMockBuilder( 'File' )
-			->setConstructorArgs( [ 'TestFile' ] )
+			->setConstructorArgs( [ 'TestFile', false ] )
 			->setMethods( [ 'getWidth', 'getHeight' ] )
 			->getMock();
 		$fileMock->expects( $this->any() )

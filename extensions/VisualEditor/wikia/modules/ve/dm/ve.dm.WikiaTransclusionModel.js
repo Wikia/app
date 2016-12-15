@@ -66,12 +66,46 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 };
 
 /**
+ * @param {Object} specs
+ * @param {Object} node
+ * @param {string} sourceName
+ * @param {Object} sourceMetadata
+ */
+function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
+	specs.params[sourceName] = {
+		label: sourceMetadata.label
+	};
+
+	if ( sourceMetadata.primary === true ) {
+		specs.params[sourceName].type = node.type;
+	}
+
+	specs.paramOrder.push( sourceName );
+}
+
+/**
+ * @param {Object} node
+ * @param {Object} specs
+ */
+function parseInfoboxMetadata( node, specs ) {
+	if ( node.type === 'group' ) {
+		node.metadata.forEach( function ( childNode ) {
+			parseInfoboxMetadata( childNode, specs );
+		} );
+	} else {
+		Object.keys( node.sources ).map( function ( sourceName ) {
+			var sourceMetadata = node.sources[sourceName];
+			addInfoboxSourceParam( specs, node, sourceName, sourceMetadata );
+		} );
+	}
+}
+
+/**
  * @desc process the infobox params received from API. For all requested pages, if they contain infoboxes,
  * extend their param array with received infobox params.
  */
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var self = this,
-		id, page, denormalizedData;
+	var id, page, denormalizedData;
 
 	if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
 		denormalizedData = this.denormalizeInfoboxTemplateTitles( data );
@@ -93,44 +127,14 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 			}
 
 			page.infoboxes.forEach( function ( infobox ) {
-				infobox.metadata.forEach( self.parseInfoboxMetadata.bind( {
-					addInfoboxSourceParam: self.addInfoboxSourceParam,
-					parseInfoboxMetadata: self.parseInfoboxMetadata,
-					specs: specs[page.title]
-				} ) );
+				infobox.metadata.forEach( function ( node ) {
+					parseInfoboxMetadata( node, specs[page.title] );
+				} );
 			} );
 		}
 
 		ve.extendObject( this.specCache, specs );
 	}
-};
-
-ve.dm.WikiaTransclusionModel.prototype.parseInfoboxMetadata = function ( node ) {
-	var self = this;
-
-	if ( node.type === 'group' ) {
-		node.metadata.forEach( self.parseInfoboxMetadata.bind( {
-			addInfoboxSourceParam: self.addInfoboxSourceParam,
-			specs: self.specs
-		} ) );
-	} else {
-		Object.keys( node.sources ).map( function( sourceName ) {
-			var sourceMetadata = node.sources[sourceName];
-			self.addInfoboxSourceParam( self.specs, node, sourceName, sourceMetadata );
-		} );
-	}
-};
-
-ve.dm.WikiaTransclusionModel.prototype.addInfoboxSourceParam = function ( specs, node, sourceName, sourceMetadata ) {
-	specs.params[sourceName] = {
-		label: sourceMetadata.label
-	};
-
-	if ( sourceMetadata.primary === true ) {
-		specs.params[sourceName].type = node.type;
-	}
-
-	specs.paramOrder.push( sourceName );
 };
 
 /**

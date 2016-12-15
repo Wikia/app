@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\PortableInfobox\Helpers\PagePropsProxy;
-use Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper;
 use Wikia\PortableInfobox\Parser\Nodes\NodeInfobox;
 
 class PortableInfoboxDataService {
@@ -10,7 +10,7 @@ class PortableInfoboxDataService {
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	protected $title;
-	protected $templateHelper;
+	protected $parsingHelper;
 	protected $propsProxy;
 	protected $cache;
 	protected $cachekey;
@@ -22,7 +22,7 @@ class PortableInfoboxDataService {
 	 */
 	protected function __construct( $title ) {
 		$this->title = $title !== null ? $title : new Title();
-		$this->templateHelper = new PortableInfoboxTemplatesHelper();
+		$this->parsingHelper = new PortableInfoboxParsingHelper();
 		$this->propsProxy = new PagePropsProxy();
 		$this->cachekey = wfMemcKey(
 			__CLASS__,
@@ -41,8 +41,8 @@ class PortableInfoboxDataService {
 	}
 
 	// set internal helpers methods
-	public function setTemplatesHelper( $helper ) {
-		$this->templateHelper = $helper;
+	public function setParsingHelper( $helper ) {
+		$this->parsingHelper = $helper;
 
 		return $this;
 	}
@@ -60,7 +60,7 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$incOnlyTemplates = $this->templateHelper->parseInfoboxesRefactorMe( $this->title );
+			$incOnlyTemplates = $this->parsingHelper->parseIncludeonlyInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
 				$this->delete();
 				$this->set( $incOnlyTemplates );
@@ -72,11 +72,10 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	* @param $title
 	* @return array of strings (infobox markups)
 	*/
 	public function getInfoboxes() {
-		return $this->templateHelper->getMarkup($this->title);
+		return $this->parsingHelper->getMarkup( $this->title );
 	}
 
 	/**
@@ -136,6 +135,7 @@ class PortableInfoboxDataService {
 		if ( $raw ) {
 			$stored = $this->get();
 			$stored[] = [
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
 				'data' => $raw->getRenderData(),
 				'metadata' => $raw->getMetadata()
 			];
@@ -184,10 +184,9 @@ class PortableInfoboxDataService {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
 			return WikiaDataAccess::cache( $this->cachekey, WikiaResponse::CACHE_STANDARD, function () use ( $id ) {
-				$props = json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
-				$props = $this->loadFreshDataIfNeeded( $props );
-
-				return $props;
+				return $this->reparseArticleIfNeeded(
+					json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true )
+				);
 			} );
 		}
 
@@ -195,30 +194,27 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * If PageProps doesn't have infoboxes' metadata or has an old version then reparse the page and store fresh data
+	 * If PageProps has an old version of infobox data/metadata then reparse the page and store fresh data
+	 * If it doesn't have infoboxes property, we treat it as a page without infoboxes - there might be false negatives
 	 *
-	 * @param $props
+	 * @param $infoboxes
 	 *
 	 * @return array
 	 */
-	protected function loadFreshDataIfNeeded( $props ) {
-		foreach ( $props as $infobox ) {
-			if (
-				empty( $infobox ) ||
-				$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
-			) {
-				$freshData = $this->templateHelper->parseInfoboxes( $this->title );
-				break;
+	protected function reparseArticleIfNeeded( $infoboxes ) {
+		if ( is_array( $infoboxes ) ) {
+			foreach ( $infoboxes as $infobox ) {
+				if (
+					empty( $infobox ) ||
+					$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
+				) {
+					$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
+					$this->set( $infoboxes );
+				}
 			}
 		}
 
-		if ( !empty( $freshData ) ) {
-			$this->set( $freshData );
-
-			return $freshData;
-		}
-
-		return $props;
+		return $infoboxes;
 	}
 
 	protected function store( $data ) {
