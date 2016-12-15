@@ -15,19 +15,25 @@ class DumpForumData extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Dumps a set of INSERT statements suitable for importing into 
-		Discussion "import" tables';
+		$this->mDescription = 'Dumps a set of INSERT statements suitable for importing into Discussion "import" tables';
 
 		$this->dumper = new Discussions\ForumDumper();
 	}
 
 	public function execute() {
 
+		$this->clearImportTables();
 		$this->dumpPages();
 		$this->dumpRevisions();
 		$this->dumpVotes();
 	}
-	
+
+	public function clearImportTables() {
+		echo "DELETE FROM import_page;\n";
+		echo "DELETE FROM import_revision;\n";
+		echo "DELETE FROM import_vote;\n";
+	}
+
 	public function dumpPages() {
 		$pages = $this->dumper->getPages();
 		
