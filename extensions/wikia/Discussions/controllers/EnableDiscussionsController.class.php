@@ -3,13 +3,7 @@
 class EnableDiscussionsController extends \WikiaController {
 
 	const ROLLBACK = 'rollback';
-
-	private $toggler;
-
-	public function __construct() {
-		parent::__construct();
-		$this->toggler = new DiscussionsVarToggler( $this->wg->CityId );
-	}
+	const SITE_ID = 'siteId';
 
 	public function init() {
 		$this->assertCanAccessController();
@@ -17,7 +11,9 @@ class EnableDiscussionsController extends \WikiaController {
 
 	public function index() {
 		$isRollback = $this->request->getBool( self::ROLLBACK );
-		$this->toggler
+		$cityId = $this->request->getInt( self::SITE_ID, $this->wg->CityId );
+
+		( new DiscussionsVarToggler( $cityId ) )
 			->setEnableDiscussions( !$isRollback )
 			->setEnableDiscussionsNav( !$isRollback )
 			->setArchiveWikiForums( !$isRollback )
