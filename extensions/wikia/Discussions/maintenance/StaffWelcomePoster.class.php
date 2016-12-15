@@ -3,7 +3,7 @@
 class StaffWelcomePoster {
 
 	const LANG_TO_STAFF_MAP = [
-		'de' => 24961680,      // ForestFairy
+		'de' => 26339491,      // Mira Laime
 		'en' => 26339491,      // Mira Laime
 		'es' => 12648798,      // Luchofigo85
 		'fr' => 26442523,      // Hypsoline
