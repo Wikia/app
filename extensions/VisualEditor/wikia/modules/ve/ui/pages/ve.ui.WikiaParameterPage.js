@@ -14,7 +14,7 @@
  * @param {string} paramName - Name of a field (e.g. image1)
  */
 function restoreInfoboxDialog( win, model, imageName, paramName ) {
-    win.transclusionModel = model;
+	win.transclusionModel = model;
 
 	if ( imageName ) {
 		win.transclusionModel.parts[0].params[paramName].setValue( imageName );
@@ -85,22 +85,22 @@ function handleClickOnImageButton( paramName ) {
 			if ( currentWindow instanceof ve.ui.WikiaMediaInsertDialog ) {
 				imageName = getImageName( currentWindow, currentWindow.cart.getItems() );
 
-                windowManager.closing.done( function () {
-                    /**
-                     * first 'opening' is an event fired when a dialog is opening
-                     * in the callback to this event I get a windowManager in a state where
-                     * windowManager.opening is actually a promise
-                     * before that windowManager is null
-                     */
-                    windowManager.once( 'opening', function ( win ) {
-                        windowManager.opening.done(
-                            restoreInfoboxDialog.bind( this, win, transclusionModel, imageName, paramName )
-                        );
-                    });
+				windowManager.closing.done( function () {
+					/**
+					 * first 'opening' is an event fired when a dialog is opening
+					 * in the callback to this event I get a windowManager in a state where
+					 * windowManager.opening is actually a promise
+					 * before that windowManager is null
+					 */
+					windowManager.once( 'opening', function ( win ) {
+						windowManager.opening.done(
+							restoreInfoboxDialog.bind( this, win, transclusionModel, imageName, paramName )
+						);
+					});
 
-                    setDefaultMediaInsertDialogAction( 'apply' );
-                    openDialog( windowName );
-                });
+					setDefaultMediaInsertDialogAction( 'apply' );
+					openDialog( windowName );
+				});
 			}
 		});
 	});
