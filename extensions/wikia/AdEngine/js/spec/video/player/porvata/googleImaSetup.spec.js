@@ -1,5 +1,5 @@
 /*global beforeEach, describe, expect, it, modules, spyOn*/
-describe('ext.wikia.adEngine.video.porvata.googleImaSetup', function () {
+describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	'use strict';
 
 	function noop() {
@@ -20,9 +20,9 @@ describe('ext.wikia.adEngine.video.porvata.googleImaSetup', function () {
 			}
 		};
 
-	function getModule(vasUrlBuilder, browserDetect, log, win) {
+	function getModule(vastUrlBuilder, browserDetect, log, win) {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaSetup'](
-			vasUrlBuilder,
+			vastUrlBuilder,
 			browserDetect,
 			log,
 			win
@@ -45,14 +45,16 @@ describe('ext.wikia.adEngine.video.porvata.googleImaSetup', function () {
 
 	it('createRequest with adTagUrl - vast URL not in params', function () {
 		var buildSpy = spyOn(mocks.vastUrlBuilder, 'build').and.returnValue('foo/bar'),
+			slotWidth  = 100,
+			slotHeight = 100,
 			request = imaSetup.createRequest({
-				width: 100,
-				height: 100,
+				width: slotWidth,
+				height: slotHeight,
 				vastTargeting: 'porvata/foo'
 			});
 
 		expect(request.adTagUrl).toBe('foo/bar');
 
-		expect(buildSpy).toHaveBeenCalledWith(100 / 100, 'porvata/foo');
+		expect(buildSpy).toHaveBeenCalledWith(slotWidth / slotHeight, 'porvata/foo');
 	});
 });

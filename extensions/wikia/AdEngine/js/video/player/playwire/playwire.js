@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.playwire.playwire', [
 			script.src = playerUrl;
 
 			container.appendChild(script);
-			log(['inject', configUrl], 'debug', logGroup);
+			log(['inject', configUrl], log.levels.debug, logGroup);
 		});
 	}
 

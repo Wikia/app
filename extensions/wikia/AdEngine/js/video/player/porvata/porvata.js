@@ -1,11 +1,11 @@
 /*global define*/
-define('ext.wikia.adEngine.video.porvata', [
+define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'wikia.log'
 ], function (porvataPlayerFactory, googleIma, log) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.porvata';
+	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
 	function inject(params) {
 		log(['injecting porvata player', params], log.levels.debug, logGroup);

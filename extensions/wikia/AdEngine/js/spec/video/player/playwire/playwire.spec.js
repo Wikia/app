@@ -31,6 +31,8 @@ describe('ext.wikia.adEngine.video.player.playwire.playwire', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.playwire.playwire'](
 			mocks.playerFactory,

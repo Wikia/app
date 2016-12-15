@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 ], function (scriptLoader, imaPlayerFactory, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
-		logGroup = 'ext.wikia.adEngine.video.googleIma';
+		logGroup = 'ext.wikia.adEngine.video.player.porvata.googleIma';
 
 	function load() {
 		if (win.google && win.google.ima) {
