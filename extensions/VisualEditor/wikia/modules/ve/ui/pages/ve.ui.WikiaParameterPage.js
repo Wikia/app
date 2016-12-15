@@ -14,11 +14,11 @@
  * @param {string} paramName - Name of a field (e.g. image1)
  */
 function restoreInfoboxDialog( win, model, imageName, paramName ) {
-	if ( imageName ) {
-		model.parts[0].params[paramName].value = imageName;
-	}
+    win.transclusionModel = model;
 
-	win.transclusionModel = model;
+	if ( imageName ) {
+		win.transclusionModel.parts[0].params[paramName].setValue( imageName );
+	}
 
 	win.bookletLayout.$element.html( '' );
 	win.initializeTemplateParameters();
@@ -72,9 +72,10 @@ function setDefaultMediaInsertDialogAction( action ) {
  */
 function handleClickOnImageButton( paramName ) {
 	var windowManager = ve.init.target.getSurface().getDialogs(),
-		transclusionModel = windowManager.currentWindow.transclusionModel;
+		transclusionModel = windowManager.currentWindow.transclusionModel,
+		windowName = windowManager.currentWindow.constructor.static.name;
 
-	windowManager.closeWindow( 'wikiaInfobox' ).done( function () {
+	windowManager.closeWindow( windowName ).done( function () {
 		openDialog( 'wikiaMediaInsert' );
 		setDefaultMediaInsertDialogAction( 'goback' );
 
@@ -84,20 +85,22 @@ function handleClickOnImageButton( paramName ) {
 			if ( currentWindow instanceof ve.ui.WikiaMediaInsertDialog ) {
 				imageName = getImageName( currentWindow, currentWindow.cart.getItems() );
 
-				setDefaultMediaInsertDialogAction( 'apply' );
-				openDialog( 'wikiaInfobox' );
+                windowManager.closing.done( function () {
+                    /**
+                     * first 'opening' is an event fired when a dialog is opening
+                     * in the callback to this event I get a windowManager in a state where
+                     * windowManager.opening is actually a promise
+                     * before that windowManager is null
+                     */
+                    windowManager.once( 'opening', function ( win ) {
+                        windowManager.opening.done(
+                            restoreInfoboxDialog.bind( this, win, transclusionModel, imageName, paramName )
+                        );
+                    });
 
-				/**
-				 * first 'opening' is an event fired when a dialog is opening
-				 * in the callback to this event I get a windowManager in a state where
-				 * windowManager.opening is actually a promise
-				 * before that windowManager is null
-				 */
-				windowManager.once( 'opening', function ( win ) {
-					windowManager.opening.done(
-						restoreInfoboxDialog.bind( this, win, transclusionModel, imageName, paramName )
-					);
-				});
+                    setDefaultMediaInsertDialogAction( 'apply' );
+                    openDialog( windowName );
+                });
 			}
 		});
 	});
