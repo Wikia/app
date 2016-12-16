@@ -17,6 +17,11 @@ class ForumDumper {
 
 	const REGEXP_MATCH_TITLE = '/<ac_metadata.*title="([^"]*)".*>.*<\/ac_metadata>/';
 
+	// A very loose interpretation of markup favoring false positives for markup.  Match
+	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
+	// doesn't match, assume there is wiki text and parse it.
+	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%" ]/';
+
 	const COLUMNS_PAGE = [
 		"page_id",
 		"namespace",
@@ -68,6 +73,15 @@ class ForumDumper {
 	private $revisions = [];
 	private $votes = [];
 
+	private $dummyTitle;
+	private $parserOptions;
+
+	public function __construct() {
+		$this->dummyTitle = \Title::newFromText( "Dummy" );
+		$this->parserOptions = new \ParserOptions();
+		$this->parserOptions->setEditSection( false );
+	}
+
 	private function getForumNamespaces() {
 		return [
 			NS_WIKIA_FORUM_BOARD,
@@ -92,15 +106,14 @@ class ForumDumper {
 			return $this->pages;
 		}
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
 			->WHERE( 'page_namespace' )->IN( $this->getForumNamespaces() )
-			->runLoop( $dbh, function ( &$pages, $row ) use ( $dumper ) {
-				$dumper->addPage( $row->page_id, [
+			->runLoop( $dbh, function ( &$pages, $row ) {
+				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
 						"namespace" => $row->page_namespace,
 						"raw_title" => $row->page_title,
@@ -134,26 +147,25 @@ class ForumDumper {
 		
 		$pageIds = array_keys( $this->getPages() );
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::TABLE_REVISION )
 			->JOIN( self::TABLE_TEXT )->ON( 'rev_text_id', 'old_id' )
 			->WHERE( 'rev_page' )->IN( $pageIds )
-			->runLoop( $dbh, function ( &$revisions, $row ) use ( $dumper ) {
+			->runLoop( $dbh, function ( &$revisions, $row ) {
 				$textId = $row->old_text;
-				list( $parsedText, $plainText, $title ) = $dumper->getTextAndTitle( $textId );
+				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $textId );
 
-				$pages = $dumper->getPages();
+				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
 				
-				$dumper->addRevision( [
+				$this->addRevision( [
 					"revision_id" => $row->rev_id,
 					"page_id" => $row->rev_page,
 					"page_namespace" => $curPage['namespace'],
 					"title" => $title,
-					"user_type" => $dumper->getContributorType( $row ),
+					"user_type" => $this->getContributorType( $row ),
 					"user_identifier" => $row->rev_user,
 					"timestamp" => $row->rev_timestamp,
 					"is_minor_edit" => $row->rev_minor_edit,
@@ -191,10 +203,16 @@ class ForumDumper {
 	}
 
 	private function getParsedText( $wikiText ) {
-		$dummyTitle = \Title::newFromText( "Dummy" );
-		$parserOptions = new \ParserOptions();
-		$parserOptions->setEditSection( false );
-		$parserOut = \F::app()->wg->Parser->parse( $wikiText, $dummyTitle, $parserOptions );
+		// If this text appears not to have any markup, just return the text as is.
+		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
+			return $wikiText;
+		}
+
+		$parserOut = \F::app()->wg->Parser->parse(
+			$wikiText,
+			$this->dummyTitle,
+			$this->parserOptions
+		);
 		return $parserOut->getText();
 	}
 
@@ -237,7 +255,7 @@ class ForumDumper {
 			->SELECT_ALL()
 			->FROM( self::TABLE_VOTE )
 			->WHERE( 'article_id' )->IN( $pageIds )
-			->runLoop( $dbh, function ( &$pages, $row ) use ( $dumper ) {
+			->runLoop( $dbh, function ( &$pages, $row ) {
 
 				$this->addVote( [
 					"page_id" => $row->article_id,
