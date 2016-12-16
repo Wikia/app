@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.video.player.porvata',
-	'ext.wikia.adEngine.video.player.playwire.playwire',
+	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',

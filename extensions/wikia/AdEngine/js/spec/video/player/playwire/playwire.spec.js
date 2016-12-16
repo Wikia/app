@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, beforeEach, spyOn*/
-describe('ext.wikia.adEngine.video.player.playwire.playwire', function () {
+describe('ext.wikia.adEngine.video.player.playwire', function () {
 	'use strict';
 
 	function noop () {}
@@ -34,7 +34,7 @@ describe('ext.wikia.adEngine.video.player.playwire.playwire', function () {
 	mocks.log.levels = {};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.playwire.playwire'](
+		return modules['ext.wikia.adEngine.video.player.playwire'](
 			mocks.playerFactory,
 			mocks.dfpVastUrl,
 			mocks.doc,
