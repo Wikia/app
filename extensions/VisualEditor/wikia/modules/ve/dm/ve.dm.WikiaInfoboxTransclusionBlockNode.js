@@ -24,16 +24,14 @@ OO.inheritClass( ve.dm.WikiaInfoboxTransclusionBlockNode, ve.dm.MWTransclusionBl
 
 ve.dm.WikiaInfoboxTransclusionBlockNode.static.name = 'wikiaInfoboxTransclusionBlock';
 
-ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchTagNames = [ 'aside' ];
+ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchTagNames = null;
 
 ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchRdfaTypes = [ 'mw:Transclusion' ];
 
 ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchFunction = function ( domElement ) {
-	var portableInfoboxClass = 'portable-infobox';
+	var about = domElement.getAttribute( 'about' );
 
-	return ve.indexOf( portableInfoboxClass,
-			( domElement.getAttribute( 'class' ) || '' ).split( ' ' )
-		) !== -1;
+	return ve.init.target.doc.querySelector('aside[about="' + about + '"].portable-infobox');
 };
 
 /* Registration */

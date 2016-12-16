@@ -493,7 +493,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 			this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
 			this.close( { action: action } );
 		}, this );
+	/**
+	 * goback action is used in InfoboxInsert flow
+	 * where we do not want images to be added to an article
+	 * we just want to have access to what images have been chosen
+	 */
+	} else if (action === 'goback') {
+		return new OO.ui.Process( function () {
+			this.close( { action: action } );
+		}, this );
 	}
+
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getActionProcess.call( this, action );
 };
 
@@ -647,7 +657,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		}
 	}
 
-	if ( count.image && count.video ) {
+	if ( count && count.image && count.video ) {
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
 			label: label + '-multiple'
