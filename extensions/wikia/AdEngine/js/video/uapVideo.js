@@ -14,8 +14,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
-	function getVideoHeight(width, params) {
-		return width / params.videoAspectRatio;
+	function getVideoHeight(params) {
+		return params.width / params.videoAspectRatio;
 	}
 
 	function getSlotWidth(slot) {
@@ -73,11 +73,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 				video.addEventListener('wikiaAdStarted', function () {
 					var slotWidth = getSlotWidth(adSlot);
-					video.resize(slotWidth, getVideoHeight(slotWidth, params));
+					video.resize(slotWidth, getVideoHeight(params));
 				});
 				if (params.autoplay) {
 					var slotWidth = getSlotWidth(adSlot);
-					video.play(slotWidth, getVideoHeight(slotWidth, params));
+					video.play(slotWidth, getVideoHeight(params));
 				}
 
 				return video;
@@ -90,14 +90,18 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			slotContainer = providerContainer.parentNode,
 			videoWidth = getSlotWidth(slotContainer);
 
-		params.width = videoWidth;
-		params.height = getVideoHeight(videoWidth, params);
+		log(['loadVideoAd params', params], log.levels.debug, logGroup);
+
+		params.width = getSlotWidth(slotContainer);
+		params.height = getVideoHeight(params);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
 			passback: 'vuap',
 			uap: uapContext.getUapId()
 		};
+
+		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
 
 		if (params.player === 'playwire') {
 			loadedPlayer = loadPlaywire(params, slotContainer, providerContainer);
@@ -108,12 +112,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(slotContainer);
-				video.resize(slotWidth, getVideoHeight(slotWidth, params));
+				video.resize(slotWidth, getVideoHeight(params));
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
 				var slotWidth = getSlotWidth(slotContainer);
-				video.play(slotWidth, getVideoHeight(slotWidth, params));
+				video.play(slotWidth, getVideoHeight(params));
 			});
 
 			return video;

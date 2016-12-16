@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	function create(name, container, callbacks) {
 
 		function registerHook(name) {
-			return function(adInfo) {
-				if (typeof callbacks[name] ===  'function') {
+			return function (adInfo) {
+				if (typeof callbacks[name] === 'function') {
 					callbacks[name](adInfo);
 				}
 			};
@@ -61,7 +61,12 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			recoveredElementId = win._sp_.getElementId(elementId),
 			element = doc.getElementById(recoveredElementId);
 
+		log(['getRecoveredProviderContainer for container', providerContainer], log.levels.debug, logGroup);
+		log(['getRecoveredProviderContainer recovered element ID', recoveredElementId], log.levels.debug, logGroup);
+		log(['getRecoveredProviderContainer recovered element', element], log.levels.debug, logGroup);
+
 		if (element && element.parentNode) {
+			log(['getRecoveredProviderContainer recovered provider container', element.parentNode], log.levels.debug, logGroup);
 			return element.parentNode;
 		}
 
