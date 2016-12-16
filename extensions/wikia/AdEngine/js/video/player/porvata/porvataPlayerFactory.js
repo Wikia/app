@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 
 	function prepareVideoAdContainer(videoAdContainer) {
 		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden');
+		videoAdContainer.style.display = 'none';
 		videoAdContainer.classList.add('video-player');
 
 		return videoAdContainer;

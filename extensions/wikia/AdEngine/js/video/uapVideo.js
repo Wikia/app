@@ -87,8 +87,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
-			slotContainer = providerContainer.parentNode,
-			videoWidth = getSlotWidth(slotContainer);
+			slotContainer = providerContainer.parentNode;
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
