@@ -9,7 +9,21 @@ class EnableDiscussionsController extends \WikiaController {
 		$this->assertCanAccessController();
 	}
 
-	public function index() {
+	public function activateDiscussions() {
+		$cityId = $this->request->getInt( self::SITE_ID );
+		if ( empty( $cityId ) ) {
+			throw new BadRequestException();
+		}
+
+		$wiki = WikiFactory::getWikiByID( $cityId );
+		if ( empty( $wiki ) ) {
+			throw new NotFoundException();
+		}
+
+		( new \DiscussionsActivator($wiki->city_id, $wiki->city_title, $wiki->city_lang ) )->activateDiscussions();
+	}
+
+	public function toggleVars() {
 		$isRollback = $this->request->getBool( self::ROLLBACK );
 		$cityId = $this->request->getInt( self::SITE_ID, $this->wg->CityId );
 
