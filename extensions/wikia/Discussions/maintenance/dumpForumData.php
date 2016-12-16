@@ -11,14 +11,22 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 include_once( __DIR__ . '/ForumDumper.php' );
 
 class DumpForumData extends Maintenance {
+	/** @var  \Discussions\ForumDumper */
 	private $dumper;
+	private $fh;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Dumps a set of INSERT statements suitable for importing into Discussion "import" tables';
+		$this->addArg( 'out', "Output file for SQL statements", $required = false );
 	}
 
 	public function execute() {
+		if ( $this->hasOption( 'out' ) ) {
+			$this->fh = fopen( $this->getArg(), 'w' );
+		} else {
+			$this->fh = STDOUT;
+		}
 		$this->dumper = new Discussions\ForumDumper();
 
 		$this->clearImportTables();
@@ -28,21 +36,22 @@ class DumpForumData extends Maintenance {
 	}
 
 	public function clearImportTables() {
-		echo "DELETE FROM import_page;\n";
-		echo "DELETE FROM import_revision;\n";
-		echo "DELETE FROM import_vote;\n";
+		fwrite( $this->fh, "DELETE FROM import_page;\n" );
+		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
+		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
 	}
 
 	public function dumpPages() {
 		$pages = $this->dumper->getPages();
-		
+
 		foreach ( $pages as $id => $data ) {
 			$insert = $this->createInsert(
 				'import_page',
 				Discussions\ForumDumper::COLUMNS_PAGE,
 				$data
 			);
-			echo $insert . "\n";
+
+			fwrite( $this->fh, $insert . "\n" );
 		}
 	}
 
@@ -55,7 +64,7 @@ class DumpForumData extends Maintenance {
 				Discussions\ForumDumper::COLUMNS_REVISION,
 				$data
 			);
-			echo $insert . "\n";
+			fwrite( $this->fh, $insert . "\n" );
 		}
 	}
 
@@ -68,7 +77,7 @@ class DumpForumData extends Maintenance {
 				Discussions\ForumDumper::COLUMNS_VOTE,
 				$data
 			);
-			echo $insert . "\n";
+			fwrite( $this->fh, $insert . "\n" );
 		}
 	}
 
