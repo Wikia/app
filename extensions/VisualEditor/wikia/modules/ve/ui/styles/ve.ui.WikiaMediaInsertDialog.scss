@@ -226,19 +226,28 @@ $width-cart: 120px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: absolute;
-	top: 0;
 	right: 0;
+	top: 0;
 
-	.oo-ui-buttonElement-framed.ve-ui-wikiaMediaOptionWidget-check {
+	.oo-ui-buttonElement-framed.ve-ui-wikiaMediaOptionWidget-previewButton {
+		bottom: 0;
 		cursor: pointer;
 		position: absolute;
 		right: 0;
-		top: 0;
+		z-index: 1;
 
 		.oo-ui-buttonElement-button {
 			border: 0;
+			height: auto;
 			margin: 0;
+			opacity: .8;
 			padding: 0;
+			transition: opacity .2s linear;
+
+			&:hover, &:focus {
+				opacity: 1;
+			}
+
 			.oo-ui-iconElement-icon {
 				@if lightness($color-page) < 50 {
 					background-color: lighten($color-page, 9%);
@@ -250,17 +259,15 @@ $width-cart: 120px;
 				opacity: 1;
 				position: static;
 				width: 40px;
+			}
 
-				&.oo-ui-icon-checked {
-					@include ve-icon(checked, wikia, $color-buttons);
-					background-color: $color-buttons;
-				}
+			.oo-ui-labelElement-label {
+				display: none;
 			}
 		}
 	}
 
 	.ve-ui-mwMediaResultWidget {
-		@include cursor( 'zoom-in' );
 		margin: 0 10px 60px 0;
 		overflow: visible;
 
@@ -292,7 +299,12 @@ $width-cart: 120px;
 	}
 
 	.ve-ui-wikiaMediaOptionWidget-selected .ve-ui-mwMediaResultWidget-thumbnail.ve-ui-texture-transparency {
+		@include ve-icon(checked, wikia, $color-buttons);
+		background-color: rgba($color-buttons, .4);
+		background-repeat: no-repeat;
+		background-position: center center;
 		border: 2px solid $color-buttons;
+		z-index: 1;
 	}
 
 	.ve-ui-wikiaVideoOptionWidget-duration {
@@ -304,23 +316,8 @@ $width-cart: 120px;
 		line-height: 17px;
 		opacity: 0.7;
 		padding: 0 6px;
-		position: absolute;
 		right: 0;
 		text-align: center;
-	}
-
-	.ve-ui-wikiaVideoOptionWidget-icon {
-		background: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/play.png) no-repeat;
-		display: block;
-		height: 29px;
-		margin-left: 9px;
-		margin-top: 124px;
-		position: absolute;
-		width: 29px;
-	}
-
-	.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .ve-ui-wikiaVideoOptionWidget-icon {
-		background: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/play-hover.png) no-repeat;
 	}
 }
 

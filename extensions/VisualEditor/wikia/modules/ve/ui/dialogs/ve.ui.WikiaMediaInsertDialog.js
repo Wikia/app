@@ -140,8 +140,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', this.onQueryInputKeydown.bind( this ) );
 	this.search.connect( this, {
 		nearingEnd: 'onSearchNearingEnd',
-		check: 'onSearchCheck',
-		select: 'onMediaPreview'
+		select: 'onSearchResultSelection',
+		preview: 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
@@ -307,12 +307,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 };
 
 /**
- * Handle check/uncheck of items in search results.
+ * Handle selecting/deselecting of items in search results.
  *
  * @method
  * @param {Object} item The search result item.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchResultSelection = function ( item ) {
 	var data = item.getData(),
 		cartItem = this.cart.getItemFromData( data.title );
 
@@ -647,7 +647,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		}
 	}
 
-	if ( count.image && count.video ) {
+	if ( count && count.image && count.video ) {
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
 			label: label + '-multiple'
