@@ -8,7 +8,7 @@
 error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
-require_once( __DIR__ . '/ForumDumper.php' );
+include_once( __DIR__ . '/ForumDumper.php' );
 
 class DumpForumData extends Maintenance {
 	private $dumper;

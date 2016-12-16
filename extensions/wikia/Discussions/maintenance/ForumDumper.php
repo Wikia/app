@@ -4,11 +4,6 @@ namespace Discussions;
 
 class ForumDumper {
 
-	const FORUM_NAMESPACES = [
-		NS_WIKIA_FORUM_BOARD,
-		NS_WIKIA_FORUM_BOARD_THREAD
-	];
-
 	const TABLE_PAGE = 'page';
 	const TABLE_COMMENTS = 'comments_index';
 	const TABLE_REVISION = 'revision';
@@ -73,6 +68,13 @@ class ForumDumper {
 	private $revisions = [];
 	private $votes = [];
 
+	private function getForumNamespaces() {
+		return [
+			NS_WIKIA_FORUM_BOARD,
+			NS_WIKIA_FORUM_BOARD_THREAD
+		];
+	}
+
 	public function addPage( $id, $data ) {
 		$this->pages[$id] = $data;
 	}
@@ -96,7 +98,7 @@ class ForumDumper {
 			->SELECT_ALL()
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
-			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMESPACES )
+			->WHERE( 'page_namespace' )->IN( $this->getForumNamespaces() )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( $dumper ) {
 				$dumper->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
