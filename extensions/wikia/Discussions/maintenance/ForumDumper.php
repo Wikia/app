@@ -15,6 +15,11 @@ class ForumDumper {
 	const CONTRIBUTOR_TYPE_DELETED = "[deleted]";
 	const CONTRIBUTOR_TYPE_UNKNOWN = "[unknown]";
 
+	// Discussions uses TEXT columns for content, which are limited to 2**16 bytes.  Also
+	// subtracting 16 bytes from the max size since going right up to the limit still causes
+	// MySQL to fail the insert.
+	const MAX_CONTENT_SIZE = 65520;
+
 	const REGEXP_MATCH_TITLE = '/<ac_metadata.*title="([^"]*)".*>.*<\/ac_metadata>/';
 
 	// A very loose interpretation of markup favoring false positives for markup.  Match
@@ -193,6 +198,14 @@ class ForumDumper {
 
 		// Get a plain text version as well
 		$plainText = strip_tags( $parsedText );
+
+		// Truncate the strings if they are too big
+		if ( strlen($parsedText) > self::MAX_CONTENT_SIZE ) {
+			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
+		}
+		if ( strlen($plainText) > self::MAX_CONTENT_SIZE ) {
+			$plainText = substr( $plainText, 0, self::MAX_CONTENT_SIZE );
+		}
 
 		return [ $parsedText, $plainText, $title ];
 	}
