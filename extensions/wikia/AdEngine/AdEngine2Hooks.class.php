@@ -76,7 +76,7 @@ class AdEngine2Hooks {
 
 		/**
 		 * Disaster Recovery
-		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
