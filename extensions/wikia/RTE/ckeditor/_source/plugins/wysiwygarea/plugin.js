@@ -734,6 +734,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						domDocument.on( 'click', function( ev )
 							{
 								ev = ev.data;
+								// .hasAscendant() by default checks current node and parents
 								if ( ev.getTarget().hasAscendant( 'a' ) && ev.$.button != 2 )
 									ev.preventDefault();
 							});
