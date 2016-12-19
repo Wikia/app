@@ -19,31 +19,24 @@
 	 * @inheritdoc
 	 */
 	ve.dm.WikiaTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
-		//if we want to make another request, we should update the requests array as well
-		this.requests.push( this.fetchInfoboxParamsRequest( titles, specs, queue ) );
+		var templateParamsRequest = ve.init.target.constructor.static.apiRequest( {
+				action: 'templateparameters',
+				titles: titles.join( '|' )
+			} ).done( this.templateParamsRequestDone.bind( this, specs ) ),
+			infoboxParamsRequest = ve.init.target.constructor.static.apiRequest( {
+				action: 'query',
+				prop: 'infobox',
+				titles: titles.join( '|' )
+			} ).done( this.infoboxParamsRequestDone.bind( this, specs ) );
 
-		return ve.init.target.constructor.static.apiRequest( {
-			action: 'templateparameters',
-			titles: titles.join( '|' )
-		} )
-		.done( this.fetchRequestDone.bind( this, specs ) )
-		.always( this.fetchRequestAlways.bind( this, queue ) );
-	};
-
-	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
-		return ve.init.target.constructor.static.apiRequest( {
-			action: 'query',
-			prop: 'infobox',
-			titles: titles.join( '|' )
-		} )
-		.done( this.fetchInfoboxParamsRequestDone.bind( this, specs ) )
-		.always( this.fetchRequestAlways.bind( this, queue ) );
+		return $.when( templateParamsRequest, infoboxParamsRequest )
+			.always( this.fetchRequestAlways.bind( this, queue ) );
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data ) {
+	ve.dm.WikiaTransclusionModel.prototype.templateParamsRequestDone = function ( specs, data ) {
 		var page, i, id;
 		if ( data && data.pages ) {
 			for ( id in data.pages ) {
@@ -113,7 +106,7 @@
 	 * @desc process the infobox params received from API. For all requested pages, if they contain infoboxes,
 	 * extend their param array with received infobox params.
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
+	ve.dm.WikiaTransclusionModel.prototype.infoboxParamsRequestDone = function ( specs, data ) {
 		var id, page, denormalizedData;
 
 		if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
