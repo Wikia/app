@@ -73,6 +73,14 @@
 	 * @param {Object} sourceMetadata
 	 */
 	function addInfoboxSourceParam( specs, node, sourceName, sourceMetadata ) {
+		// Single source can be used in multiple nodes.
+		// We override its spec with every usage, so only the last one stays.
+		// `data` node is the most generic one and doesn't give us any value.
+		// Let's ignore it if the source has already a meaningful type.
+		if ( specs.params[sourceName] && specs.params[sourceName].type !== 'data' ) {
+			return;
+		}
+
 		specs.params[sourceName] = {
 			label: sourceMetadata.label
 		};
