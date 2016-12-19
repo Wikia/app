@@ -20,8 +20,8 @@ class PasswordResetLinkController extends EmailController {
 	const MAX_LINK_LENGTH = 40;
 
 	// TODO: use real page address, also differentiate between dev and prod envs.
-	const URL_NO_RETURN = 'http://dummy-address/?user=%s&token=%s';
-	const URL_WITH_RETURN = 'http://dummy-address/?user=%s&token=%s&return_url=%s';
+	const URL_NO_RETURN = 'http://starwars.grunny.wikia-dev.com/resetpassword?username=%s&token=%s';
+	const URL_WITH_RETURN = 'http://starwars.grunny.wikia-dev.com/resetpassword?username=%s&token=%s&redirect=%s';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
