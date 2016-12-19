@@ -130,7 +130,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[0];
+			$firstMarker = array_keys( $this->markers )[ 0 ];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
@@ -181,9 +181,15 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getThemeName( $params, $value ) {
-		return !empty( $value ) ? $value :
-			// default logic
-			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
+		$themes = [ ];
+		if ( isset( $params[ 'theme' ] ) ) {
+			$themes[] = $params[ 'theme' ];
+		}
+		if ( !empty( $value ) ) {
+			$themes[] = $value;
+		}
+
+		return !empty( $themes ) ? implode( " ", $themes ) : self::DEFAULT_THEME_NAME;
 	}
 
 	private function getLayout( $params ) {
