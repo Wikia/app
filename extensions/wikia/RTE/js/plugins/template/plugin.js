@@ -58,7 +58,7 @@ CKEDITOR.plugins.add('rte-template',
 						RTE.templateHelpers.showUsedList(editor);
 						break;
 					case '--make-layout--':
-						RTE.templateHelpers.makerte-templateLayout(editor);
+						RTE.templateHelpers.makeLayout(editor);
 						break;
 					default:
 						// show template editor with selected template
