@@ -91,7 +91,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 						intro = info.exists ? lang.template.intro : lang.template.notExisting;
 
 						// show wikitext, if template does not exist
-						code = info.exists ? info.html : data.wikitext;
+						code = data.wikitext;
 						preformattedCode = !info.exists;
 
 						// is this template editable?
