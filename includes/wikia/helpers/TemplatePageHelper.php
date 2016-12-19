@@ -125,6 +125,22 @@ class TemplatePageHelper {
 			}
 		}
 
+		if ( empty( $params ) ) {
+			$infoboxes = PortableInfoboxDataService::newFromTitle( $this->getTitle() )->getData();
+			if ( !empty( $infoboxes ) ) {
+				foreach ( $infoboxes as $infobox ) {
+					foreach ( $infobox['metadata'] as $nodeMetadata ) {
+						// TODO handle groups, use recursion like in https://github.com/Wikia/app/pull/12095/files#diff-14bd00400eb5fbf7b482fe6a5b3df21eR99
+						foreach ( $nodeMetadata['sources'] as $sourceName => $sourceMetadata ) {
+							if ( !isset( $params[$sourceName] ) ) {
+								$params[$sourceName] = 1;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		wfProfileOut(__METHOD__);
 		return array_keys( $params );
 	}
