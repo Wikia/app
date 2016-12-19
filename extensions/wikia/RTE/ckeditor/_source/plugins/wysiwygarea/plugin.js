@@ -734,7 +734,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						domDocument.on( 'click', function( ev )
 							{
 								ev = ev.data;
-								if ( ev.getTarget().is( 'a' ) && ev.$.button != 2 )
+								if ( ev.getTarget().hasAscendant( 'a' ) && ev.$.button != 2 )
 									ev.preventDefault();
 							});
 
@@ -806,7 +806,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							});
 
 						var keystrokeHandler = editor.keystrokeHandler;
-						// Prevent backspace from navigating off the page. 
+						// Prevent backspace from navigating off the page.
 						keystrokeHandler.blockedKeystrokes[ 8 ] = !editable;
 						keystrokeHandler.attach( domDocument );
 
