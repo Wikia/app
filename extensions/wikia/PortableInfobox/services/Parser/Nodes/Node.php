@@ -36,22 +36,22 @@ class Node {
 	}
 
 	public function getSourcesMetadata() {
-		$metadata = [];
+		$metadata = [ ];
 		$sources = $this->getSources();
 		$sourcesLength = count( $sources );
 		$baseLabel = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
 
 		foreach ( $sources as $source ) {
-			$metadata[$source] = [];
-			$metadata[$source]['label'] = ( $sourcesLength > 1 ) ?
+			$metadata[ $source ] = [ ];
+			$metadata[ $source ][ 'label' ] = ( $sourcesLength > 1 ) ?
 				( !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '' ) :
-				$baseLabel ;
+				$baseLabel;
 		}
 
 		if ( $sourcesLength > 0 && $this->hasPrimarySource( $this->xmlNode ) ) {
 			// self::extractSourcesFromNode() puts the value of the `source` attribute as the first element of $sources
 			$firstSource = reset( $sources );
-			$metadata[$firstSource]['primary'] = true;
+			$metadata[ $firstSource ][ 'primary' ] = true;
 		}
 
 		return $metadata;
@@ -174,11 +174,13 @@ class Node {
 	}
 
 	protected function getRenderDataForChildren() {
-		return array_map( function ( Node $item ) {
+		$renderData = array_map( function ( Node $item ) {
 			return $item->getRenderData();
 		}, array_filter( $this->getChildNodes(), function ( Node $item ) {
 			return !$item->isEmpty();
 		} ) );
+		// rebase keys
+		return array_values( $renderData );
 	}
 
 	protected function getSourcesForChildren() {
@@ -258,7 +260,7 @@ class Node {
 	 */
 	protected function extractSourcesFromNode( \SimpleXMLElement $xmlNode ) {
 		$sources = $this->hasPrimarySource( $xmlNode ) ?
-			[ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [];
+			[ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [ ];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			$sources = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $sources );
@@ -271,7 +273,7 @@ class Node {
 	}
 
 	protected function hasPrimarySource( \SimpleXMLElement $xmlNode ) {
-		return (bool) $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		return (bool)$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 	}
 
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
