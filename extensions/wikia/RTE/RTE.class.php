@@ -67,7 +67,7 @@ class RTE {
 			wfProfileIn(__METHOD__);
 
 			// XW-2433 - hack starts
-			if ($data['type'] == 'double-brackets') {
+			if ($data['type'] == 'double-brackets' || $data['type'] == 'ext') {
 				global $wgTitle;
 
 				$wikitext = RTEData::get('wikitext', intval($data['wikitextIdx']));
@@ -77,8 +77,6 @@ class RTE {
 				$opts = ParserOptions::newFromContext( RequestContext::getMain() );
 
 				$parserOutput = $parser->parse( $wikitext, $wgTitle, $opts );
-
-				#var_dump(__METHOD__, $data, $wikitext, $parserOutput->getText());
 
 				// store data
 				$data['placeholder'] = 1;
