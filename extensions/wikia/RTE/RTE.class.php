@@ -81,6 +81,7 @@ class RTE {
 				#var_dump(__METHOD__, $data, $wikitext, $parserOutput->getText());
 
 				// store data
+				$data['placeholder'] = 1;
 				$dataIdx = RTEData::put('data', $data);
 
 				// wrap a template in contenteditable="false" element
