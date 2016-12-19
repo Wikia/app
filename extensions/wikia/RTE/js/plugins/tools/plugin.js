@@ -206,7 +206,7 @@ window.RTE.tools = {
 
 	// get list of placeholders of given type (or all if no type is provided)
 	getPlaceholders: function(type) {
-		var query = type ? ('img[type=' + type + ']') : 'img.placeholder';
+		var query = type ? ('*[type=' + type + ']') : '.placeholder';
 		var placeholders = RTE.getEditor().find(query);
 		return placeholders;
 	},
