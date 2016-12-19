@@ -49,7 +49,8 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function isRecoverable(slotName, recoverableSlots) {
-		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+		//@TODO ADEN-3893 - this should take pagefair var under consideration as well - SP recovery is disabled
+		return true && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
 	function track(type) {
