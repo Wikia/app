@@ -72,8 +72,8 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	* @return array of strings (infobox markups)
-	*/
+	 * @return array of strings (infobox markups)
+	 */
 	public function getInfoboxes() {
 		return $this->parsingHelper->getMarkup( $this->title );
 	}
@@ -84,7 +84,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	public function getImages() {
-		$images = [];
+		$images = [ ];
 		foreach ( $this->getData() as $infobox ) {
 			if ( is_array( $infobox[ 'data' ] ) ) {
 				$images = array_merge( $images, $this->getImageFromOneInfoboxData( $infobox[ 'data' ] ) );
@@ -99,7 +99,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	private function getImageFromOneInfoboxData( $infoboxData ) {
-		$images = [];
+		$images = [ ];
 		foreach ( $infoboxData as $infoboxDataField ) {
 			if ( $infoboxDataField[ 'type' ] === self::IMAGE_FIELD_TYPE && isset( $infoboxDataField[ 'data' ] ) ) {
 				$images = array_merge( $images, $this->getImagesFromOneNodeImageData( $infoboxDataField[ 'data' ] ) );
@@ -114,7 +114,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	private function getImagesFromOneNodeImageData( $nodeImageData ) {
-		$images = [];
+		$images = [ ];
 		for ( $i = 0; $i < count( $nodeImageData ); $i++ ) {
 			if ( !empty( $nodeImageData[ $i ] [ 'key' ] ) ) {
 				$images[] = $nodeImageData[ $i ][ 'key' ];
@@ -206,7 +206,8 @@ class PortableInfoboxDataService {
 			foreach ( $infoboxes as $infobox ) {
 				if (
 					empty( $infobox ) ||
-					$infobox['parser_tag_version'] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
+					!isset( $infobox[ 'parser_tag_version' ] ) ||
+					$infobox[ 'parser_tag_version' ] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
 				) {
 					$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
 					$this->set( $infoboxes );
