@@ -64,6 +64,38 @@ class RTE {
 		$data = RTEData::get('placeholder', intval($var[1]));
 
 		if($data) {
+			wfProfileIn(__METHOD__);
+
+			// XW-2433 - hack starts
+			if ($data['type'] == 'double-brackets') {
+				global $wgTitle;
+
+				$wikitext = RTEData::get('wikitext', intval($data['wikitextIdx']));
+
+				// render template's wikitext
+				$parser = ParserPool::get();
+				$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+
+				$parserOutput = $parser->parse( $wikitext, $wgTitle, $opts );
+
+				#var_dump(__METHOD__, $data, $wikitext, $parserOutput->getText());
+
+				// store data
+				$dataIdx = RTEData::put('data', $data);
+
+				// wrap a template in contenteditable="false" element
+				$wrapper = Html::openElement('div', [
+					'_rte_dataidx' => sprintf('%04d', $dataIdx),
+					'class' => "placeholder placeholder-{$data['type']}",
+					'type' => $data['type'],
+					'contenteditable' => 'false',
+				]);
+
+				return $wrapper . $parserOutput->getText() . Html::closeElement('div');
+			}
+			// hack ends here
+
+			wfProfileOut(__METHOD__);
 			return RTE::renderPlaceholder($data['type'], $data);
 		}
 	}
