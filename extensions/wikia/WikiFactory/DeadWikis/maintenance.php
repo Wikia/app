@@ -460,7 +460,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 
 		// extract post creation date from response
-		$mostRecentPostCreationDate = $response['_embedded']['doc:posts'][0]['creationDate']['epochSecond'];
+		$mostRecentPostCreationDate = $response['_embedded']->{'doc:posts'}[0]->creationDate->epochSecond;
 		$sixtyDaysAgo = time() - 60*60*24*60;
 
 		return $mostRecentPostCreationDate > $sixtyDaysAgo;
