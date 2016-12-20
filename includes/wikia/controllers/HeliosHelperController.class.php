@@ -20,6 +20,7 @@ class HelperController extends \WikiaController {
 	const FIELD_MESSAGE = 'message';
 	const FIELD_ALLOW = 'allow';
 	const FIELD_RESET_TOKEN = 'reset_token';
+	const FIELD_TOKEN_CTX = 'token_ctx';
 	const FIELD_RESULT = 'result';
 	const FIELD_RETURN_URL = 'return_url';
 	const FIELD_SUCCESS = 'success';
@@ -207,7 +208,8 @@ class HelperController extends \WikiaController {
 	/**
 	 * Api endpoint to send a password reset e-mail.
 	 * @requestParam user_id : \User::id
-	 * @requestParam token : user identification token
+	 * @requestParam reset_token : user identification token
+	 * @requestParam token_ctx : token context identifying the email content.
 	 */
 	public function sendPasswordResetLinkEmail() {
 		$this->response->setFormat( 'json' );
@@ -221,6 +223,7 @@ class HelperController extends \WikiaController {
 		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
 		$token = $this->getFieldFromRequest( self::FIELD_RESET_TOKEN, self::ERR_INVALID_TOKEN );
 		$returnUrl = $this->getVal( self::FIELD_RETURN_URL, null );
+		$tokenContext = $this->getVal( self::FIELD_TOKEN_CTX, null );
 
 		if ( empty( $userId ) || empty ( $token ) ) {
 			return;
@@ -241,7 +244,8 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$resp = $this->app->sendRequest( 'Email\Controller\PasswordResetLink', 'handle', [
+		$emailController = ( $tokenContext == "facebook" ) ? 'Email\Controller\FacebookDisconnect' : 'Email\Controller\PasswordResetLink';
+		$resp = $this->app->sendRequest( $emailController, 'handle', [
 			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
 			self::FIELD_RETURN_URL  => $returnUrl,

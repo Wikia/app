@@ -1,4 +1,8 @@
 <?php
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\HeliosClient;
+
 class UserService extends Service {
 
 	const CACHE_EXPIRATION = 86400;//1 day
@@ -62,6 +66,8 @@ class UserService extends Service {
 	 * means the method User::isPasswordReminderThrottled will return true for the next
 	 * $wgPasswordReminderResendTime hours
 	 *
+	 * @todo remove after we deprecate temporary passwords
+	 *
 	 * @param User $targetUser
 	 *
 	 * @return String
@@ -84,6 +90,35 @@ class UserService extends Service {
 		$targetUser->saveSettings();
 
 		return $tempPass;
+	}
+
+	/**
+	 * Generates password reset token and sends it to user via email
+	 *
+	 * @param User $targetUser
+	 * @param string $returnUrl Url the user will be redirected to after setting new password
+	 * @param string $tokenContext Used to choose the correct email template, so far only "facebook" value causes to use
+	 *                             a dedicated facebook-disconnect email
+	 *
+	 * @return boolean true for success, false otherwise
+	 */
+	public function requestResetToken( User $targetUser, $returnUrl, $tokenContext ) {
+		/** @var HeliosClient $heliosClient */
+		$heliosClient = Injector::getInjector()->get( HeliosClient::class );
+		$result = $heliosClient->requestPasswordReset( $targetUser->getId(), $returnUrl, $tokenContext );
+
+		if (!empty( $result->success ) && $result->success) {
+			return true;
+		}
+
+		$log = WikiaLogger::instance();
+		$log->error( 'Failed to request a password reset token', [
+			'tokenContext' => $tokenContext,
+			'user_id' => $targetUser->getId(),
+			'error' => empty( $result->errors ) ? 'unknown-error' : $result->errors[0]->description
+
+		] );
+		return false;
 	}
 
 	/** Helper methods for getUsers */

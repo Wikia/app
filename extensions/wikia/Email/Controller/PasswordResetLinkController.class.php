@@ -9,7 +9,8 @@ use Email\Fatal;
  * Class PasswordResetLinkController
  *
  * @requestParam int targetUserId : The user id to send the password reset link email to
- * @requestParam string token : The token by which a user will be identified
+ * @requestParam string reset_token : The token by which a user will be identified
+ * @requestParam string return_url : The url user will be redirected to after setting a password
  *
  * @package      Email\Controller
  */
@@ -61,7 +62,7 @@ class PasswordResetLinkController extends EmailController {
 			'passwordIntro'    => $this->getIntro(),
 			'resetLink'        => $url,
 			'resetLinkCaption' => $this->getResetLinkCaption( $url ),
-			'instructions'     => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'instructions'     => $this->getUnrequested(),
 			'questions'        => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature'        => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
@@ -94,5 +95,9 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getIntro() {
 		return $this->getMessage( 'emailext-password-reset-link-intro' )->text();
+	}
+
+	protected function getUnrequested() {
+		return $this->getMessage( 'emailext-password-unrequested' )->text();
 	}
 }

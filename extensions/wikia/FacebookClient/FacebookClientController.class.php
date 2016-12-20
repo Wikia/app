@@ -151,18 +151,9 @@ class FacebookClientController extends WikiaController {
 
 		FacebookMapModel::deleteFromWikiaID( $user->getId() );
 
-		// Create a temporary password for the user
+		// Send user token for setting a password
 		$userService = new \UserService();
-		$tempPass = $userService->resetPassword( $user );
-
-		// Send email to user with temp password, telling them their FB account is disconnected
-		$emailParams = [
-			'targetUser' => $user,
-			'tempPass' => $tempPass,
-		];
-		$response = F::app()->sendRequest( 'Email\Controller\FacebookDisconnect', 'handle', $emailParams );
-
-		if ( $response->getData()['result'] === 'ok' ) {
+		if ($userService->requestResetToken( $user, "", "facebook" )) {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';

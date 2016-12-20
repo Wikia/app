@@ -163,7 +163,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isControllerBlacklisted( $baseName ) {
-		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect' ] );
+		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect', 'PasswordResetLink' ] );
 	}
 
 	/**
