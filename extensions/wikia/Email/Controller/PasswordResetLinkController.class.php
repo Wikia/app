@@ -62,7 +62,7 @@ class PasswordResetLinkController extends EmailController {
 			'passwordIntro'    => $this->getIntro(),
 			'resetLink'        => $url,
 			'resetLinkCaption' => $this->getResetLinkCaption( $url ),
-			'instructions'     => $this->getUnrequested(),
+			'instructions'     => $this->getInstructions(),
 			'questions'        => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature'        => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
@@ -97,7 +97,7 @@ class PasswordResetLinkController extends EmailController {
 		return $this->getMessage( 'emailext-password-reset-link-intro' )->text();
 	}
 
-	protected function getUnrequested() {
+	protected function getInstructions() {
 		return $this->getMessage( 'emailext-password-unrequested' )->text();
 	}
 }

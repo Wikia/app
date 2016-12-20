@@ -25,7 +25,7 @@ class FacebookDisconnectController extends PasswordResetLinkController {
 		return $this->getMessage( 'emailext-fbdisconnect-intro' )->text();
 	}
 
-	protected function getUnrequested() {
+	protected function getInstructions() {
 		return $this->getMessage( 'emailext-fbdisconnect-instructions' )->text();
 	}
 }
