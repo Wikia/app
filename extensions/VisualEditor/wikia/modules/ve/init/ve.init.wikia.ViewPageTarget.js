@@ -92,6 +92,7 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
+	this.setupAnonWarning();
 	this.setupLicense( surface );
 };
 
@@ -466,4 +467,19 @@ ve.init.wikia.ViewPageTarget.prototype.getLicense = function () {
  */
 ve.init.wikia.ViewPageTarget.prototype.setupLicense = function ( surface ) {
 	this.getLicense().insertAfter( surface.$element.closest( '.WikiaArticle' ) );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.getAnonWarning = function () {
+	if ( !this.$anonWarning ) {
+		this.$anonWarning = this.$( '<div>' )
+			.addClass( 've-ui-wikia-anon-warning' )
+			.text( ve.msg( 'visualeditor-anon-warning' ) );
+	}
+	return this.$anonWarning;
+};
+
+ve.init.wikia.ViewPageTarget.prototype.setupAnonWarning = function () {
+	if ( mw.user.anonymous() ) {
+		this.getAnonWarning().insertAfter( this.getToolbar().$element );
+	}
 };
