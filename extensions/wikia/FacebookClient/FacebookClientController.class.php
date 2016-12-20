@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Helios\HelperController;
 use Wikia\Logger\WikiaLogger;
 
 class FacebookClientController extends WikiaController {
@@ -153,7 +154,7 @@ class FacebookClientController extends WikiaController {
 
 		// Send user token for setting a password
 		$userService = new \UserService();
-		if ($userService->requestResetToken( $user, "", "facebook" ) ) {
+		if ($userService->requestResetToken( $user, '', HelperController::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ) {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';

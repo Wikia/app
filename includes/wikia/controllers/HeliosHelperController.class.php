@@ -25,6 +25,7 @@ class HelperController extends \WikiaController {
 	const FIELD_RETURN_URL = 'return_url';
 	const FIELD_SUCCESS = 'success';
 	const FIELD_USERNAME = 'username';
+	const FACEBOOK_DISCONNECT_TOKEN_CONTEXT = 'facebook';
 
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
@@ -244,7 +245,9 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$emailController = ( $tokenContext == "facebook" ) ? 'Email\Controller\FacebookDisconnect' : 'Email\Controller\PasswordResetLink';
+		$emailController = ( $tokenContext == self::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ?
+			'Email\Controller\FacebookDisconnect' :
+			'Email\Controller\PasswordResetLink';
 		$resp = $this->app->sendRequest( $emailController, 'handle', [
 			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
