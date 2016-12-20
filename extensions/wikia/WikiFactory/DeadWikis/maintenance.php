@@ -3,9 +3,6 @@
  * NOTE: PLEASE TAKE CARE WHILE EDITING THIS FILE.
  *       BAD CHANGE AND WE CAN CLOSE MANY WIKIS BY ACCIDENT.
  */
-use Swagger\Client\Discussion\Api\SitesApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
 
 /**
  * @package MediaWiki
@@ -15,6 +12,11 @@ use Wikia\Service\Swagger\ApiProvider;
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+
+use Swagger\Client\Discussion\Api\SitesApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Swagger\ApiProvider;
 
 $optionsWithArgs = array(
 	'action',
@@ -375,7 +377,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$this->getSitesApi()->softDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
-			echo "{$cityId} Failed to soft delete Discussion site: {$e->getMessage()}\n";
+			WikiaLogger::instance()
+				->error( "{$cityId} Failed to soft delete Discussion site: {$e->getMessage()}\n" );
 		}
 	}
 

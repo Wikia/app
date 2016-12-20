@@ -7,11 +7,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
+ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
+
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
-
-ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
 
 $optionsWithArgs = array( "limit", "sleep" );
 
@@ -520,7 +521,8 @@ class CloseWikiMaintenance {
 			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
-			$this->log( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
+			WikiaLogger::instance()
+				->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
 		}
 	}
 

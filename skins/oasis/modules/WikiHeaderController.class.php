@@ -41,7 +41,9 @@ class WikiHeaderController extends WikiaController {
 
 		$this->displaySearch = $this->wg->Title->isSpecial( 'AdminDashboard' );
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
+
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
+		$this->useAddPageButton = $this->wg->EnableContributionPrototypeViewing;
 
 		$this->hiddenLinks = [
 			'watchlist' => SpecialPage::getTitleFor( 'Watchlist' )->getLocalURL(),

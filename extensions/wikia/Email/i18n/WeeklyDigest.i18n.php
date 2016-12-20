@@ -12,7 +12,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-weeklydigest-subject' => 'Hier kannst du sehen, welche Neuigkeiten es diese Woche auf deinen Lieblingsseiten bei Fandom gegeben hat',
+	'emailext-weeklydigest-subject' => 'Das gibt es Neues diese Woche auf deinen Lieblingsseiten bei Fandom',
 	'emailext-weeklydigest-summary' => 'Seit deinem letzten Besuch haben Fandom-Benutzer Änderungen an Seiten vorgenommen, denen du folgst. Hier kannst du die Änderungen ansehen:',
 );
 
@@ -32,7 +32,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-weeklydigest-subject' => 'お気に入りのコミュニティの今週の更新をチェック',
+	'emailext-weeklydigest-subject' => 'お気に入りのFandomコミュニティの更新情報',
 	'emailext-weeklydigest-summary' => 'あなたがフォローしているページに変更が加えられました。チェックしてみましょう！',
 );
 
