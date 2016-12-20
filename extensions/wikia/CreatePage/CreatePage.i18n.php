@@ -371,7 +371,15 @@ Bitte wähle einen anderen Namen.',
 	'tog-createpagedefaultblank' => 'Wähle „Leere Seite“ als Standard bei Erstellung neuer Seiten',
 	'tog-createpagepopupdisabled' => 'Den Hinweis „Seite erstellen” deaktivieren (Nicht empfohlen)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Schreibe deinen ersten Abschnitt hier.
+
+==Überschrift==
+
+Schreibe deinen zweiten Artikelabschnitt hier. Vergiss nicht Links zu anderen Seiten im Wiki hinzuzufügen.
+
+==Überschrift==
+
+Dritter Artikelabschnitt. Vergiss nicht den Artikel in eine Kategorie einzuordnen, damit andere Benutzer ihn leichter finden können.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schreibe den ersten Absatz deines Artikels hier.
 
@@ -472,7 +480,15 @@ $messages['es'] = [
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la creación de nuevas páginas',
 	'tog-createpagepopupdisabled' => 'Desactivar el proceso "Crear una nueva página" (no recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Escribe el primer párrafo de tu artículo aquí.
+
+==Título de la sección==
+
+Escribe la primera sección de tu artículo aquí.
+
+==Título de la sección==
+
+Escribe la segunda sección de tu artículo aquí.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escribe aquí el primer párrafo de tu página.
 
@@ -627,7 +643,15 @@ $messages['fr'] = [
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
 	'tog-createpagepopupdisabled' => 'Désactiver le flux « Créer un nouvel article » (non recommandé)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Écrivez le premier paragraphe de votre article ici.
+
+== Titre de section ==
+
+Écrivez la première section de votre article ici.
+
+== Titre de section ==
+
+Écrivez la deuxième section de votre article ici.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Écrivez le premier paragraphe de votre article ici.
 
@@ -927,7 +951,15 @@ Seleziona un nome diverso.',
 	'tog-createpagedefaultblank' => 'Utilizza una pagina vuota come default per la creazione di una nuova pagina',
 	'tog-createpagepopupdisabled' => 'Disabilita il processo guidato "Crea nuova pagina" (non raccomandato)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Scrivi qui il primo paragrafo del tuo articolo.
+
+==Titolo della sezione==
+
+Scrivi qui la prima sezione del tuo articolo.
+
+==Titolo della sezione==
+
+Scrivi qui la seconda sezione del tuo articolo.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]]
 [[File:Placeholder|right|300px]]
 Scrivi qui il primo paragrafo del tuo articolo.
@@ -971,7 +1003,13 @@ $messages['ja'] = [
 	'tog-createpagedefaultblank' => '白紙ページを新規記事の作成にデフォルトで使用する',
 	'tog-createpagepopupdisabled' => '新規ページ作成支援の機能を無効にする（非推奨）',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+ここに導入部分（第一段落）を書く。
+
+== 節見出し ==
+ここに1番目の節を書く。
+
+== 節見出し ==
+ここに2番目の節を書く。',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 ここに導入部分（第一段落）を書く。
 
@@ -1438,7 +1476,13 @@ Kies alstublieft een andere paginanaam.',
 	'tog-createpagedefaultblank' => 'Lege pagina als standaard nieuwe pagina gebruiken',
 	'tog-createpagepopupdisabled' => 'Workflow voor "Pagina aanmaken" uitschakelen (niet aanbevolen)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Schrijf hier de eerste alinea van je pagina.
+
+==Paragraafkop==
+Schrijf hier de eerste paragraaf van je pagina.
+
+==Paragraafkop==
+Schrijf hier de tweede paragraaf van je pagina.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schrijf hier de eerste alinea van uw pagina.
 
@@ -1537,7 +1581,15 @@ Wybierz inną nazwę.',
 	'tog-createpagedefaultblank' => 'Domyślnie twórz nowe strony puste',
 	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowego artykułu (niezalecane)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Tutaj umieść treść pierwszego paragrafu.
+  
+==Nagłówek sekcji==
+
+Tutaj napisz treść pierwszej sekcji strony.
+
+==Nagłówek sekcji==
+
+Tutaj napisz treść drugiej sekcji strony.',
 	'createpage-with-video' => '[[Plik:Placeholder|video|right|300px]] [[Plik:Placeholder|right|300px]]
 Tutaj umieść treść pierwszego paragrafu.
 
@@ -1663,7 +1715,15 @@ Por favor, selecione um nome diferente.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
 	'tog-createpagepopupdisabled' => 'Desativar o processo "Criar novo artigo" (não recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Escreva aqui o primeiro parágrafo da sua página.
+
+==Cabeçalho de secção==
+
+Escreva aqui a primeira secção da sua página.
+
+==Cabeçalho de secção==
+
+Escreva aqui a segunda secção da sua página.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 
@@ -1772,7 +1832,15 @@ $messages['ru'] = [
 	'tog-createpagedefaultblank' => 'Использовать пустую страницу по умолчанию при создании новой страницы',
 	'tog-createpagepopupdisabled' => 'Отключить всплывающее окно «Создать новую статью» (не рекомендуется)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+Напишите здесь первый параграф вашей статьи.
+
+==Заголовок секции==
+
+Напишите здесь первую секцию вашей статьи.
+
+==Заголовок секции==
+
+Напишите здесь вторую секцию вашей статьи.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] 
 Напишите здесь первый параграф вашей статьи.
 
@@ -2174,7 +2242,15 @@ $messages['zh-hans'] = [
 	'createpage-error-invalid-title' => '此标题无效。请不要使用这些字符: # < > [ ] | { }，并且不要在标题处使用“特殊："。',
 	'createpage-error-article-exists' => '关于<a href="$1">$2</a>的页面已经存在。请重新命名或者选择其他标题。',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the text of your article here!',
+在这里撰写第一段落。
+
+==标题项==
+
+在这里撰写第一项。
+
+==标题项==
+
+在这里撰写第二项。',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 在这里撰写第一段落。
 
