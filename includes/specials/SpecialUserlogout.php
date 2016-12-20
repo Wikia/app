@@ -66,42 +66,25 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		// long running requests logging the user back in (@see PLATFORM-1028)
 		wfResetSessionID();
 
+		wfRunHooks( 'UserLogoutComplete', array( &$user, null, $oldName ) );
+
+		// redirection
+
+		$headers = $this->getRequest()->getAllHeaders();
+		$redirectUrl = 'http://www.wikia.com/';
+		if(isset($headers['REFERER'])) {
+			$parsedReferer = parse_url($headers['REFERER']);
+			$redirectUrl = $this->getHostname($parsedReferer);
+			if(strpos($parsedReferer['path'], '/d') === 0) {
+				$redirectUrl = $this->getHostname($parsedReferer) . '/d';
+			}
+		}
+
 		$out = $this->getOutput();
+		$out->redirect($redirectUrl);
+		return;
 
-		$loginUrl = ( F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
-			? ( new UserLoginHelper() )->getNewAuthUrl()
-			: SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
-		$loginLink = '<a href="' . $loginUrl . '">' . wfMessage( 'logouttext-link-text' )->escaped() . '</a>';
-		$out->addHTML( wfMessage( 'logouttext' )->rawParams( $loginLink )->parse() );
 
-		// Hook.
-		$injected_html = '';
-		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injected_html, $oldName ) );
-		$out->addHTML( $injected_html );
-
-		$mReturnTo = $this->getRequest()->getVal( 'returnto' );
-		$mReturnToQuery = $this->getRequest()->getVal( 'returntoquery' );
-
-		$title = Title::newFromText($mReturnTo);
-		if ( !empty($title) ) {
-			$mResolvedReturnTo = strtolower( array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) ) );
-			if ( in_array( $mResolvedReturnTo,array('userlogout','signup','connect') ) ) {
-				$titleObj = Title::newMainPage();
-				$mReturnTo = $titleObj->getText( );
-				$mReturnToQuery = '';
-			}
-		}
-
-		if ( empty( $mReturnTo ) && empty( $mReturnToQuery ) ) {
-			$redirectUrl = $this->getRequest()->getVal( 'redirect' );
-
-			if ( $redirectUrl && $this->isValidRedirectUrl( $redirectUrl ) ) {
-				$out->redirect( $redirectUrl );
-				return;
-			}
-		}
-
-		$out->returnToMain( false, $mReturnTo, $mReturnToQuery );
 	}
 
 	/**
@@ -113,5 +96,16 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	protected function isValidRedirectUrl( $url ) {
 		$hostname = parse_url( $url, PHP_URL_HOST );
 		return preg_match( '/(\.|^)(wikia|fandom)\.com$/', $hostname );
+	}
+
+	/**
+	 * @param $parsed_url
+	 * @return string hostname url
+	 */
+	protected function getHostname($parsed_url) {
+		$scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+		$host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+		$port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+		return "$scheme$host$port";
 	}
 }
