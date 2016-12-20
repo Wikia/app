@@ -153,7 +153,7 @@ class FacebookClientController extends WikiaController {
 
 		// Send user token for setting a password
 		$userService = new \UserService();
-		if ($userService->requestResetToken( $user, "", "facebook" )) {
+		if ($userService->requestResetToken( $user, "", "facebook" ) ) {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';
