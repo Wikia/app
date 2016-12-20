@@ -16,60 +16,31 @@
 
 	/* Methods */
 
-	/**
-	 * This is called at the end of ve.dm.MWTransclusionModel.prototype.fetch() and added to its list of requests.
-	 * The parent's logic is to have a list of independent requests which don't depend on each other.
-	 * Here are two parallel requests and we need to know when they both are finished to combine the results.
-	 * Therefore, fetchRequest() method and the callbacks it uses are overriden to have a separate list of requests.
-	 * The list itself is needed for abortRequests() method.
-	 */
-	ve.dm.WikiaTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
-		var templateParamsRequest = ve.init.target.constructor.static.apiRequest( {
-				action: 'templateparameters',
-				titles: titles.join( '|' )
-			} )
-				.done( this.templateParamsRequestDone.bind( this, specs ) )
-				.always( this.parallelRequestAlways.bind( this ) ),
-			infoboxParamsRequest = ve.init.target.constructor.static.apiRequest( {
-				action: 'query',
-				prop: 'infobox',
-				titles: titles.join( '|' )
-			} )
-				.done( this.infoboxParamsRequestDone.bind( this, specs ) )
-				.always( this.parallelRequestAlways.bind( this ) );
-
-		this.parallelRequests.push( templateParamsRequest );
-		this.parallelRequests.push( infoboxParamsRequest );
-
-		return $.when( templateParamsRequest, infoboxParamsRequest )
-			.always( function () {
-				this.process( queue );
-			}.bind( this, queue ) );
+	ve.dm.WikiaTransclusionModel.prototype.pushFetchRequests = function ( titles, specs, queue ) {
+		this.requests.push( this.fetchTemplateParamsRequest( titles, specs, queue ) );
+		this.requests.push( this.fetchInfoboxParamsRequest( titles, specs, queue ) );
 	};
 
 	/**
-	 * @param {Object} data
-	 * @param {string} textStatus
-	 * @param { jQuery.jqXHR } jqXHR
+	 * @inheritdoc
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.parallelRequestAlways = function ( data, textStatus, jqXHR ) {
-		// Prune completed request
-		var index = ve.indexOf( jqXHR, this.parallelRequests );
-		if ( index !== -1 ) {
-			this.parallelRequests.splice( index, 1 );
-		}
+	ve.dm.WikiaTransclusionModel.prototype.fetchTemplateParamsRequest = function ( titles, specs, queue ) {
+		return ve.init.target.constructor.static.apiRequest( {
+			action: 'templateparameters',
+			titles: titles.join( '|' )
+		} )
+		.done( this.templateParamsRequestDone.bind( this, specs ) )
+		.always( this.fetchRequestAlways.bind( this, queue ) );
 	};
 
-	/**
-	 * Abort any pending requests.
-	 */
-	ve.dm.WikiaTransclusionModel.prototype.abortRequests = function () {
-		var i, len;
-
-		for ( i = 0, len = this.parallelRequests.length; i < len; i++ ) {
-			this.parallelRequests[i].abort();
-		}
-		this.parallelRequests.length = 0;
+	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
+		return ve.init.target.constructor.static.apiRequest( {
+			action: 'query',
+			prop: 'infobox',
+			titles: titles.join( '|' )
+		} )
+		.done( this.infoboxParamsRequestDone.bind( this, specs ) )
+		.always( this.fetchRequestAlways.bind( this, queue ) );
 	};
 
 	/**
