@@ -7,7 +7,6 @@
 	ve.dm.WikiaTransclusionModel = function VeDmWikiaTransclusionModel() {
 		// Parent constructor
 		ve.dm.WikiaTransclusionModel.super.call( this );
-		this.parallelRequests = [];
 	};
 
 	/* Inheritance */
@@ -17,8 +16,16 @@
 	/* Methods */
 
 	ve.dm.WikiaTransclusionModel.prototype.pushFetchRequests = function ( titles, specs, queue ) {
-		this.requests.push( this.fetchTemplateParamsRequest( titles, specs, queue ) );
-		this.requests.push( this.fetchInfoboxParamsRequest( titles, specs, queue ) );
+		var templateParamsRequest = this.fetchTemplateParamsRequest( titles, specs, queue ),
+			infoboxParamsRequest = this.fetchInfoboxParamsRequest( titles, specs, queue );
+
+		$.when( templateParamsRequest, infoboxParamsRequest )
+			.always( function ( queue ) {
+				this.process( queue );
+			}.bind( this, queue ) );
+
+		this.requests.push( templateParamsRequest );
+		this.requests.push( infoboxParamsRequest );
 	};
 
 	/**
@@ -29,8 +36,7 @@
 			action: 'templateparameters',
 			titles: titles.join( '|' )
 		} )
-		.done( this.templateParamsRequestDone.bind( this, specs ) )
-		.always( this.fetchRequestAlways.bind( this, queue ) );
+		.done( this.templateParamsRequestDone.bind( this, specs ) );
 	};
 
 	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
@@ -39,8 +45,7 @@
 			prop: 'infobox',
 			titles: titles.join( '|' )
 		} )
-		.done( this.infoboxParamsRequestDone.bind( this, specs ) )
-		.always( this.fetchRequestAlways.bind( this, queue ) );
+		.done( this.infoboxParamsRequestDone.bind( this, specs ) );
 	};
 
 	/**
