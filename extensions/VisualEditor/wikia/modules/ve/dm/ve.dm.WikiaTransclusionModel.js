@@ -20,6 +20,14 @@
 			infoboxParamsRequest = this.fetchInfoboxParamsRequest( titles, specs, queue );
 
 		$.when( templateParamsRequest, infoboxParamsRequest )
+			.then( function( templateParamsResponse, infoboxParamsResponse ) {
+				if ( templateParamsResponse[1] === 'success' ) {
+					this.templateParamsRequestDone( specs, templateParamsResponse[0] );
+				}
+				if ( infoboxParamsResponse[1] === 'success' ) {
+					this.infoboxParamsRequestDone( specs, infoboxParamsResponse[0] );
+				}
+			}.bind( this ) )
 			.always( function ( queue ) {
 				this.process( queue );
 			}.bind( this, queue ) );
@@ -35,8 +43,7 @@
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'templateparameters',
 			titles: titles.join( '|' )
-		} )
-		.done( this.templateParamsRequestDone.bind( this, specs ) );
+		} );
 	};
 
 	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
@@ -44,15 +51,14 @@
 			action: 'query',
 			prop: 'infobox',
 			titles: titles.join( '|' )
-		} )
-		.done( this.infoboxParamsRequestDone.bind( this, specs ) );
+		} );
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.templateParamsRequestDone = function ( specs, data ) {
-		var page, i, id;
+	ve.dm.WikiaTransclusionModel.prototype.templateParamsRequestDone = function ( originalSpecs, data ) {
+		var page, i, id, specs = ve.extendObject( {}, originalSpecs );
 		if ( data && data.pages ) {
 			for ( id in data.pages ) {
 				page = data.pages[id];
@@ -121,8 +127,8 @@
 	 * @desc process the infobox params received from API. For all requested pages, if they contain infoboxes,
 	 * extend their param array with received infobox params.
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.infoboxParamsRequestDone = function ( specs, data ) {
-		var id, page, denormalizedData;
+	ve.dm.WikiaTransclusionModel.prototype.infoboxParamsRequestDone = function ( originalSpecs, data ) {
+		var id, page, denormalizedData, specs = ve.extendObject( {}, originalSpecs );
 
 		if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
 			denormalizedData = this.denormalizeInfoboxTemplateTitles( data );
@@ -149,7 +155,6 @@
 					} );
 				} );
 			}
-
 			ve.extendObject( this.specCache, specs );
 		}
 	};
