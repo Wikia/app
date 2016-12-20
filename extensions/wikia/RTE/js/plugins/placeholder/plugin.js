@@ -90,10 +90,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 						title = info.title.replace(/_/g, ' ').replace(/^Template:/, window.RTEMessages.template + ':');
 						intro = info.exists ? lang.template.intro : lang.template.notExisting;
 
-						// show wikitext, if template does not exist
-						code = data.wikitext;
-						preformattedCode = !info.exists;
-
 						// is this template editable?
 						isEditable = (typeof info.availableParams != 'undefined' && info.availableParams.length);
 						break;
