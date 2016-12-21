@@ -81,10 +81,7 @@ ve.ui.commandRegistry.register(
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaInfobox', 'window', 'open',
-		{
-			args: ['wikiaInfobox'],
-			supportedSelections: ['linear']
-		}
+		{ args: ['wikiaInfobox'] }
 	)
 );
 
