@@ -230,7 +230,7 @@ class RunOnCluster extends Maintenance {
 	 * @return array An array of database names
 	 */
 	private function getClusterWikis( $dbname = '' ) {
-		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+		$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
 		if ( empty( $dbname ) ) {
 			$sqlWhere = 'city_cluster = '.$db->addQuotes( 'c'.$this->cluster );
@@ -245,7 +245,7 @@ class RunOnCluster extends Maintenance {
 
 		$result = $db->query( $sql, __METHOD__ );
 
-		$wikis = array();
+		$wikis = [];
 		while ( $row = $db->fetchObject( $result ) ) {
 			$wikis[$row->city_id] = $row->city_dbname;
 		}
@@ -262,7 +262,7 @@ class RunOnCluster extends Maintenance {
 		$target = $this->master ? DB_MASTER : DB_SLAVE;
 
 		$name = 'wikicities_c'.$this->cluster;
-		$this->db = wfGetDB( $target, array(), $name );
+		$this->db = wfGetDB( $target, [], $name );
 
 		return $this->db ? true : false;
 	}
