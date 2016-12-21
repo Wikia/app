@@ -28,7 +28,10 @@ ve.ui.WikiaLoginWidget.prototype.getAnonWarning = function () {
 };
 
 ve.ui.WikiaLoginWidget.prototype.removeAnonWarning = function () {
-	this.$anonWarning.remove();
+	if ( this.$anonWarning ) {
+		this.$anonWarning.remove();
+		this.$anonWarning = null;
+	}
 };
 
 ve.ui.WikiaLoginWidget.prototype.onAuthSuccess = function () {

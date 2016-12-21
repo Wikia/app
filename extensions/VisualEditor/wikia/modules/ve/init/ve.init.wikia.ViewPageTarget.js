@@ -110,6 +110,11 @@ ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) 
 		this.$license = null;
 	}
 
+	if ( this.loginWidget ) {
+		this.loginWidget.removeAnonWarning();
+		this.loginWidget = null;
+	}
+
 	// Parent method
 	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
 };
