@@ -93,30 +93,53 @@ ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
 
-	if ( !this.loginWidget ) {
-		this.loginWidget = new ve.ui.WikiaLoginWidget();
-		this.loginWidget.setupAnonWarning( this.getToolbar() );
+	if ( !this.isSaving ) {
+		if (!this.loginWidget) {
+			this.loginWidget = new ve.ui.WikiaLoginWidget();
+			this.loginWidget.setupAnonWarning(this.getToolbar());
+		}
+		
+		this.setupLicense( surface );
 	}
+};
 
-	this.setupLicense( surface );
+/**
+ * @inheritdoc
+ */
+ve.init.wikia.ViewPageTarget.prototype.onSave = function (
+	html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub
+) {
+	this.tearDownLicense();
+	this.tearDownAnonWarning();
+	this.isSaving = true;
+
+	// Parent method
+	return ve.init.mw.ViewPageTarget.prototype.onSave.call(this, html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub);
 };
 
 /**
  * @inheritdoc
  */
 ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
+	this.tearDownLicense();
+	this.tearDownAnonWarning();
+
+	// Parent method
+	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function() {
 	if ( this.$license ) {
 		this.$license.remove();
 		this.$license = null;
 	}
+};
 
+ve.init.wikia.ViewPageTarget.prototype.tearDownAnonWarning = function() {
 	if ( this.loginWidget ) {
 		this.loginWidget.removeAnonWarning();
 		this.loginWidget = null;
 	}
-
-	// Parent method
-	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
 };
 
 //ve.init.wikia.ViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
