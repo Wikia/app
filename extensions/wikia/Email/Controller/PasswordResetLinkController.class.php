@@ -19,9 +19,7 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
-	// TODO: use real page address, also differentiate between dev and prod envs.
-	const URL_NO_RETURN = 'http://dummy-address/?user=%s&token=%s';
-	const URL_WITH_RETURN = 'http://dummy-address/?user=%s&token=%s&return_url=%s';
+	const RESET_URL = 'https://www.wikia.com/resetpassword';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
@@ -69,17 +67,15 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getResetLink() {
 		$query = [
-			urlencode( $this->getTargetUserName() ),
-			urlencode( $this->token ),
+			'username' => $this->getTargetUserName(),
+			'token' => $this->token,
 		];
-		$url = self::URL_NO_RETURN;
 
 		if ( !empty( $this->returnUrl ) ) {
-			$query[] = urlencode( $this->returnUrl );
-			$url = self::URL_WITH_RETURN;
+			$query['redirect'] = $this->returnUrl;
 		}
 
-		return vsprintf( $url, $query );
+		return wfAppendQuery( $this->getResetURL(), $query );
 	}
 
 	protected function getResetLinkCaption( $resetLink ) {
@@ -94,5 +90,20 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getIntro() {
 		return $this->getMessage( 'emailext-password-reset-link-intro' )->text();
+	}
+
+	private function getResetURL() {
+		global $wgDevelEnvironment;
+
+		if ( !empty( $wgDevelEnvironment ) && !empty( $this->returnUrl ) ) {
+			$parts = wfParseUrl( $this->returnUrl );
+			if ( !empty( $parts ) &&
+				preg_match( '/\.wikia-dev\.(com|us|pl)$/', $parts['host'] )
+			) {
+				return "{$parts['scheme']}://{$parts['host']}/resetpassword";
+			}
+		}
+
+		return self::RESET_URL;
 	}
 }
