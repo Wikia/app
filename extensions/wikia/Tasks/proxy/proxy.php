@@ -38,7 +38,6 @@ $command = "{$env}php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_l
 //                        TaskRunnerMaintenance directly. For now I'm removing the lines below as the composer autoload
 //                        fails to load some classes without MW and the whole script crashed on devboxes.
 /*
- *
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 	require_once( __DIR__ . '/../../../../lib/Wikia/autoload.php' );
