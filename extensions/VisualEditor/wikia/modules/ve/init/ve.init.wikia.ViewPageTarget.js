@@ -101,10 +101,10 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.onSurfaceReady.call( this );
 
-	if ( !this.loginWidget ) {
-		this.loginWidget = new ve.ui.WikiaAnonWarningWidget();
-		this.loginWidget.setupAnonWarning( this.getToolbar() );
-		this.loginWidget.connect( this, {
+	if ( !this.anonWarningWidget ) {
+		this.anonWarningWidget = new ve.ui.WikiaAnonWarningWidget();
+		this.anonWarningWidget.setupAnonWarning( this.getToolbar() );
+		this.anonWarningWidget.connect( this, {
 			logInSuccess: 'onLogInSuccess'
 		} );
 	}
@@ -142,9 +142,9 @@ ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function () {
 };
 
 ve.init.wikia.ViewPageTarget.prototype.tearDownAnonWarning = function () {
-	if ( this.loginWidget ) {
-		this.loginWidget.removeAnonWarning();
-		this.loginWidget = null;
+	if ( this.anonWarningWidget ) {
+		this.anonWarningWidget.removeAnonWarning();
+		this.anonWarningWidget = null;
 	}
 };
 
