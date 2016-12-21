@@ -93,6 +93,7 @@ ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
 
+	// This has to be invoked here as for some reason it does not work within 'onSurfaceReady'
 	this.setupLicense( surface );
 };
 
