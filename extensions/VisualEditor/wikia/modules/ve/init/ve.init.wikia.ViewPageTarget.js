@@ -93,13 +93,16 @@ ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
 
-	if ( !this.isSaving ) {
-		if (!this.loginWidget) {
-			this.loginWidget = new ve.ui.WikiaLoginWidget();
-			this.loginWidget.setupAnonWarning(this.getToolbar());
-		}
-		
-		this.setupLicense( surface );
+	this.setupLicense( surface );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
+	// Parent method
+	ve.init.mw.ViewPageTarget.prototype.onSurfaceReady.call( this );
+
+	if ( !this.loginWidget ) {
+		this.loginWidget = new ve.ui.WikiaLoginWidget();
+		this.loginWidget.setupAnonWarning( this.getToolbar() );
 	}
 };
 
@@ -111,10 +114,9 @@ ve.init.wikia.ViewPageTarget.prototype.onSave = function (
 ) {
 	this.tearDownLicense();
 	this.tearDownAnonWarning();
-	this.isSaving = true;
 
 	// Parent method
-	return ve.init.mw.ViewPageTarget.prototype.onSave.call(this, html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub);
+	ve.init.mw.ViewPageTarget.prototype.onSave.call( this, html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub );
 };
 
 /**
