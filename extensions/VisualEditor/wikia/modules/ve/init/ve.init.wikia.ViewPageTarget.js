@@ -471,3 +471,27 @@ ve.init.wikia.ViewPageTarget.prototype.getLicense = function () {
 ve.init.wikia.ViewPageTarget.prototype.setupLicense = function ( surface ) {
 	this.getLicense().insertAfter( surface.$element.closest( '.WikiaArticle' ) );
 };
+
+ve.init.wikia.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
+	return this.userLoggedInDuringEdit ||
+		ve.init.wikia.ViewPageTarget.super.prototype.shouldReloadPageAfterSave.call( this );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
+	if ( this.restoring ) {
+		return 'restored';
+	} else if ( this.pageExists ) {
+		return 'saved';
+	} else {
+		return 'created';
+	}
+};
+
+ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
+	if ( this.userLoggedInDuringEdit === true ) {
+		// Reload the page so we don't need to worry about the user's state
+		window.location = this.viewUri;
+	} else {
+		ve.init.wikia.ViewPageTarget.super.prototype.updatePageOnCancel.call( this );
+	}
+};
