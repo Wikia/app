@@ -491,6 +491,8 @@ ve.init.wikia.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
 
 ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
 	if ( this.userLoggedInDuringEdit === true ) {
+		this.deactivating = true;
+		this.tearDownBeforeUnloadHandler();
 		// Reload the page so we don't need to worry about the user's state
 		window.location = this.viewUri;
 	} else {

@@ -1,9 +1,14 @@
-
 ve.ui.WikiaLoginWidget = function VeUiWikiaLoginWidget() {
 	ve.ui.WikiaLoginWidget.super.call( this );
 };
 
 OO.inheritClass( ve.ui.WikiaLoginWidget, OO.ui.Widget );
+
+ve.ui.WikiaLoginWidget.prototype.setupAnonWarning = function ( predecessor ) {
+	if ( mw.user.anonymous() ) {
+		this.getAnonWarning().insertAfter( predecessor.$element );
+	}
+};
 
 ve.ui.WikiaLoginWidget.prototype.getAnonWarning = function () {
 	this.$anonWarning = this.$( '<div>' )
@@ -24,12 +29,6 @@ ve.ui.WikiaLoginWidget.prototype.getAnonWarning = function () {
 
 ve.ui.WikiaLoginWidget.prototype.removeAnonWarning = function () {
 	this.$anonWarning.remove();
-};
-
-ve.ui.WikiaLoginWidget.prototype.setupAnonWarning = function ( predecessor ) {
-	if ( mw.user.anonymous() ) {
-		this.getAnonWarning().insertAfter( predecessor.$element );
-	}
 };
 
 ve.ui.WikiaLoginWidget.prototype.onAuthSuccess = function () {
