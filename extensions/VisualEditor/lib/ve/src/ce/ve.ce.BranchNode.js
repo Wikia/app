@@ -64,8 +64,15 @@ ve.ce.BranchNode.inlineSlugTemplate = $( '<span>' )
 	.append(
 		$( '<img>' )
 			.attr( 'src', ve.ce.minImgDataUri )
-			.css( 'opacity', 0 )
-			.addClass( 've-ce-chimera' )
+			// The following classes can be used here:
+			// ve-ce-chimera-gecko
+			// ve-ce-chimera-konqueror
+			// ve-ce-chimera-msie
+			// ve-ce-chimera-trident
+			// ve-ce-chimera-edge
+			// ve-ce-chimera-opera
+			// ve-ce-chimera-webkit
+			.addClass( 've-ce-chimera ve-ce-chimera-' + $.client.profile().layout )
 	)
 	.get( 0 );
 
@@ -82,7 +89,7 @@ ve.ce.BranchNode.inputDebugInlineSlugTemplate = $( '<span>' )
 	.append(
 		$( '<img>' )
 			.attr( 'src', ve.ce.chimeraImgDataUri )
-			.addClass( 've-ce-chimera' )
+			.addClass( 've-ce-chimera ve-ce-chimera-debug' )
 	)
 	.get( 0 );
 
