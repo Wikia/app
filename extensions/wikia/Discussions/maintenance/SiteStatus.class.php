@@ -170,7 +170,7 @@ class SiteStatus {
 		if ( empty( $this->discussionsFound ) ) {
 			return '';
 		}
-gmark("Setting: ".$this->discussionsFound->format('Y-m-d H:i:s'));
+
 		return $this->discussionsFound->format('Y-m-d H:i:s');
 	}
 
