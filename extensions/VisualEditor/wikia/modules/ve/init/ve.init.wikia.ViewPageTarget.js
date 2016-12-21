@@ -92,7 +92,10 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
-	(new ve.ui.WikiaLoginWidget()).setupAnonWarning(this.getToolbar());
+	if (!this.loginWidget) {
+		this.loginWidget = new ve.ui.WikiaLoginWidget();
+		this.loginWidget.setupAnonWarning(this.getToolbar());
+	}
 	this.setupLicense( surface );
 };
 

@@ -26,22 +26,3 @@
 		z-index: $zTop - 1;
 	}
 }
-
-$padding-top-bottom: 8px;
-$padding-left-right: 13px;
-.ve-ui-wikia-anon-warning {
-	background-color: rgba($color-buttons, 0.5);
-	color: $color-button-text;
-	font-size: 14px;
-	height: 35px - 2 * $padding-top-bottom;
-	padding: $padding-top-bottom $padding-left-right;
-	width: calc(100% - 26px);
-
-	a {
-		color: $color-button-text;
-		cursor: pointer;
-		font-weight: bold;
-		margin-left: 5px;
-		text-decoration: underline;
-	}
-}
