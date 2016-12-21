@@ -26,7 +26,6 @@ $messages['en'] = [
 	'visualeditor-annotationbutton-subscript-tooltip' => 'Subscript',
 	'visualeditor-annotationbutton-superscript-tooltip' => 'Superscript',
 	'visualeditor-annotationbutton-underline-tooltip' => 'Underline',
-	'visualeditor-anon-warning' => 'You are not logged in. Some features will be unavailable to you while editing.',
 	'visualeditor-clearbutton-tooltip' => 'Clear styling',
 	'visualeditor-clipboard-copy' => 'Copy',
 	'visualeditor-clipboard-cut' => 'Cut',

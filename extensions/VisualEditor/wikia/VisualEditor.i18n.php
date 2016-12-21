@@ -4,6 +4,8 @@ $messages = [];
 
 $messages['en'] = [
 	'visualeditor-ca-classiceditor' => 'Classic editor',
+	'wikia-visualeditor-anon-warning' => 'You are not logged in. Some features will be unavailable to you while editing.',
+	'wikia-visualeditor-anon-log-in' => 'Log in',
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',

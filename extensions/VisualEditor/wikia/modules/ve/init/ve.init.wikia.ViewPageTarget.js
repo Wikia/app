@@ -473,10 +473,10 @@ ve.init.wikia.ViewPageTarget.prototype.getAnonWarning = function () {
 	if ( !this.$anonWarning ) {
 		this.$anonWarning = this.$( '<div>' )
 			.addClass( 've-ui-wikia-anon-warning' )
-			.text( ve.msg( 'visualeditor-anon-warning' ) )
+			.text( ve.msg( 'wikia-visualeditor-anon-warning' ) )
 			.append(
 				this.$( '<a>' )
-					.text( ve.msg( 'visualeditor-anon-log-in' ) )
+					.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) )
 					.on( 'click', function () {
 						window.wikiaAuthModal.load( {
 							forceLogin: true,
