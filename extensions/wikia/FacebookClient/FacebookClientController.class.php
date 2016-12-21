@@ -31,20 +31,20 @@ class FacebookClientController extends WikiaController {
 
 		$connectButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'sso-login-facebook',
-			'text' => wfMessage( 'prefs-fbconnect-prefstext' )->escaped()
+			'text'  => wfMessage( 'prefs-fbconnect-prefstext' )->escaped(),
 		] );
 		$disconnectButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'fb-disconnect',
-			'text' => wfMessage( 'prefs-fbconnect-disconnect-prefstext' )->escaped()
+			'text'  => wfMessage( 'prefs-fbconnect-disconnect-prefstext' )->escaped(),
 		] );
 
 		$this->response->setData( [
-			'isConnected' => $isUserConnected,
-			'fbFromExist' => $fbFromExist,
-			'connectButton' => $connectButton,
+			'isConnected'      => $isUserConnected,
+			'fbFromExist'      => $fbFromExist,
+			'connectButton'    => $connectButton,
 			'disconnectButton' => $disconnectButton,
-			'convertMessage' => $convertMessage,
-			'disconnectLink' => $disconnectLink,
+			'convertMessage'   => $convertMessage,
+			'disconnectLink'   => $disconnectLink,
 		] );
 	}
 
@@ -78,6 +78,7 @@ class FacebookClientController extends WikiaController {
 			$log->info( 'Deauthorization callback received with invalid signature', [
 				'method' => __METHOD__,
 			] );
+
 			return;
 		}
 
@@ -85,6 +86,7 @@ class FacebookClientController extends WikiaController {
 			$log->warning( 'Deauthorization callback received with missing user ID', [
 				'method' => __METHOD__,
 			] );
+
 			return;
 		}
 
@@ -92,19 +94,20 @@ class FacebookClientController extends WikiaController {
 		$map = FacebookMapModel::lookupFromFacebookID( $facebookUserId );
 		if ( empty( $map ) ) {
 			$log->info( 'Deauthorization callback received with no matching Wikia ID mapping found', [
-				'method' => __METHOD__,
+				'method'     => __METHOD__,
 				'facebookId' => $facebookUserId,
 			] );
+
 			return;
 		}
 
 		// Send this to the normal disconnect action
-		$res = $this->sendSelfRequest( 'disconnectFromFB', [ 'user' => $map->getWikiaUserId() ]);
+		$res = $this->sendSelfRequest( 'disconnectFromFB', [ 'user' => $map->getWikiaUserId() ] );
 		$status = $res->getVal( 'status', '' );
 
 		$logResultParams = [
-			'method' => __METHOD__,
-			'facebookId' => $facebookUserId,
+			'method'      => __METHOD__,
+			'facebookId'  => $facebookUserId,
 			'wikiaUserId' => $map->getWikiaUserId(),
 		];
 
@@ -147,6 +150,7 @@ class FacebookClientController extends WikiaController {
 		} else {
 			$this->status = 'error';
 			$this->msg = wfMessage( 'fbconnect-unknown-error' )->escaped();
+
 			return;
 		}
 
@@ -154,7 +158,7 @@ class FacebookClientController extends WikiaController {
 
 		// Send user token for setting a password
 		$userService = new \UserService();
-		if ($userService->requestResetToken( $user, '', HelperController::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ) {
+		if ( $userService->requestResetToken( $user, '', HelperController::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ) {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';
@@ -184,6 +188,7 @@ class FacebookClientController extends WikiaController {
 		// The user must be logged into Facebook and Wikia
 		if ( !$fbUserId || !$wg->User->isLoggedIn() ) {
 			$this->status = 'error';
+
 			return;
 		}
 
@@ -192,6 +197,7 @@ class FacebookClientController extends WikiaController {
 		if ( !$status->isGood() ) {
 			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
 			$this->setErrorResponse( $message, $params );
+
 			return;
 		}
 
@@ -204,12 +210,12 @@ class FacebookClientController extends WikiaController {
 	 * Set a normalized error response meant for Ajax calls
 	 *
 	 * @param string $messageKey i18n error message key
-	 * @param array $messageParams
+	 * @param array  $messageParams
 	 */
 	protected function setErrorResponse( $messageKey, array $messageParams = [] ) {
 		$this->response->setData( [
 			'status' => 'error',
-			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
+			'msg'    => wfMessage( $messageKey, $messageParams )->escaped(),
 		] );
 	}
 

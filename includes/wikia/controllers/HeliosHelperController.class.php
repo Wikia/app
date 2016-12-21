@@ -245,7 +245,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$emailController = ( $tokenContext == self::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ?
+		$emailController = ( $tokenContext === self::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ?
 			'Email\Controller\FacebookDisconnect' :
 			'Email\Controller\PasswordResetLink';
 		$resp = $this->app->sendRequest( $emailController, 'handle', [
