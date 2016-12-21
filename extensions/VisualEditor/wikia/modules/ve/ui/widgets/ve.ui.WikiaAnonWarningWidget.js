@@ -1,16 +1,16 @@
-ve.ui.WikiaLoginWidget = function VeUiWikiaLoginWidget() {
-	ve.ui.WikiaLoginWidget.super.call( this );
+ve.ui.WikiaAnonWarningWidget = function VeUiWikiaAnonWarningWidget() {
+	ve.ui.WikiaAnonWarningWidget.super.call( this );
 };
 
-OO.inheritClass( ve.ui.WikiaLoginWidget, OO.ui.Widget );
+OO.inheritClass( ve.ui.WikiaAnonWarningWidget, OO.ui.Widget );
 
-ve.ui.WikiaLoginWidget.prototype.setupAnonWarning = function ( predecessor ) {
+ve.ui.WikiaAnonWarningWidget.prototype.setupAnonWarning = function (predecessor ) {
 	if ( mw.user.anonymous() ) {
 		this.getAnonWarning().insertAfter( predecessor.$element );
 	}
 };
 
-ve.ui.WikiaLoginWidget.prototype.getAnonWarning = function () {
+ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 	this.$anonWarning = this.$( '<div>' )
 		.addClass( 've-ui-wikia-anon-warning' )
 		.text( ve.msg( 'wikia-visualeditor-anon-warning' ) )
@@ -29,7 +29,7 @@ ve.ui.WikiaLoginWidget.prototype.getAnonWarning = function () {
 	return this.$anonWarning;
 };
 
-ve.ui.WikiaLoginWidget.prototype.removeAnonWarning = function () {
+ve.ui.WikiaAnonWarningWidget.prototype.removeAnonWarning = function () {
 	if ( this.$anonWarning ) {
 		this.$anonWarning.remove();
 		this.$anonWarning = null;

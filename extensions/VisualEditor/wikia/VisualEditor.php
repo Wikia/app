@@ -148,7 +148,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
-			've/ui/widgets/ve.ui.WikiaLoginWidget.js',
+			've/ui/widgets/ve.ui.WikiaAnonWarningWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',

@@ -102,7 +102,7 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 	ve.init.mw.ViewPageTarget.prototype.onSurfaceReady.call( this );
 
 	if ( !this.loginWidget ) {
-		this.loginWidget = new ve.ui.WikiaLoginWidget();
+		this.loginWidget = new ve.ui.WikiaAnonWarningWidget();
 		this.loginWidget.setupAnonWarning( this.getToolbar() );
 		this.loginWidget.connect( this, {
 			logInSuccess: 'onLogInSuccess'
