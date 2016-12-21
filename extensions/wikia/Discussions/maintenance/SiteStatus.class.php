@@ -371,14 +371,14 @@ gmark("Setting: ".$this->discussionsFound->format('Y-m-d H:i:s'));
 
 	private function getCentralDbr() {
 		if ( empty( $this->centralDbr ) ) {
-			$this->centralDbr = wfGetDB( DB_SLAVE );
+			$this->centralDbr = wfGetDB( DB_SLAVE, null, 'wikicities');
 		}
 		return $this->centralDbr;
 	}
 
 	private function getCentralDbw() {
 		if ( empty( $this->centralDbw ) ) {
-			$this->centralDbw = wfGetDB( DB_MASTER );
+			$this->centralDbw = wfGetDB( DB_MASTER, null, 'wikicities' );
 		}
 		return $this->centralDbw;
 	}
