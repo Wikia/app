@@ -104,6 +104,9 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 	if ( !this.loginWidget ) {
 		this.loginWidget = new ve.ui.WikiaLoginWidget();
 		this.loginWidget.setupAnonWarning( this.getToolbar() );
+		this.loginWidget.connect( this, {
+			logInSuccess: 'onLogInSuccess'
+		} );
 	}
 };
 
@@ -131,14 +134,14 @@ ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) 
 	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
 };
 
-ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function() {
+ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function () {
 	if ( this.$license ) {
 		this.$license.remove();
 		this.$license = null;
 	}
 };
 
-ve.init.wikia.ViewPageTarget.prototype.tearDownAnonWarning = function() {
+ve.init.wikia.ViewPageTarget.prototype.tearDownAnonWarning = function () {
 	if ( this.loginWidget ) {
 		this.loginWidget.removeAnonWarning();
 		this.loginWidget = null;
@@ -529,4 +532,32 @@ ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
 	} else {
 		ve.init.wikia.ViewPageTarget.super.prototype.updatePageOnCancel.call( this );
 	}
+};
+
+ve.init.wikia.ViewPageTarget.prototype.onLogInSuccess = function () {
+	var getEditTokenUrl = '/api.php?action=query&prop=info&titles=' +
+		window.wgPageName +
+		'&intoken=edit&format=json';
+
+	$.ajax( getEditTokenUrl )
+		.done( function ( response ) {
+			// wgArticleId returns 0 for new articles but the API returns -1
+			var articleId = window.wgArticleId || -1,
+				editToken = response.query.pages[articleId].edittoken;
+
+			mw.user.tokens.set( 'editToken', editToken );
+			/**
+			 * If we want to get the real user name, we would have to make two service calls:
+			 * - to whoami for the user id
+			 * - to user-attribute for the user name
+			 * For now we don't need it, as the page is reloaded anyway after recently logged in user closes the editor.
+			 * We just need it to not be empty to make mw.user.anonymous() work as expected.
+			 */
+			mw.config.set( 'wgUserName', 'FAKE_NAME_VE_LOGGED_IN' );
+
+			// This is used to reload the page after recently logged in user closes the editor
+			this.userLoggedInDuringEdit = true;
+		}.bind( this ) );
+
+	this.tearDownAnonWarning();
 };

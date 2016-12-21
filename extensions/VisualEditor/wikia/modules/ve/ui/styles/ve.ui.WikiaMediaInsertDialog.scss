@@ -331,6 +331,11 @@ $width-cart: 120px;
 	text-align: center;
 	width: 100%;
 
+	&.ve-ui-wikiaUploadButtonWidgetLogIn {
+		border: none;
+		cursor: default;
+	}
+
 	> span {
 		display: block;
 		font-size: 1.7em;

@@ -77,9 +77,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.getBodyHeight = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	var uploadEvents = {
-		change: 'onUploadChange',
-		upload: 'onUploadSuccess'
-	};
+			change: 'onUploadChange',
+			upload: 'onUploadSuccess'
+		},
+		logInEvents = {
+			logInClick: 'onLogInClick'
+		};
 
 	// Parent method
 	ve.ui.WikiaMediaInsertDialog.super.prototype.initialize.call( this );
@@ -144,6 +147,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		preview: 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
+	this.upload.connect( this, logInEvents );
 	this.queryUpload.connect( this, uploadEvents );
 	this.$policyReadMoreLink.on( 'click', this.onReadMoreLinkClick.bind( this ) );
 	this.dropTarget.on( 'drop', this.onFileDropped.bind( this ) );
@@ -226,7 +230,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
 	if ( this.pages.getCurrentPageName() === 'main' ) {
 		this.query.hideUpload();
-	} else {
+	} else if ( !mw.user.anonymous() ) {
 		this.query.showUpload();
 	}
 };
@@ -755,6 +759,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onDocumentKeyDown = function ( e ) {
 		return false; // stop propagation
 	}
 	ve.ui.WikiaMediaInsertDialog.super.prototype.onDocumentKeyDown.call( this, e );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onLogInClick = function () {
+	window.wikiaAuthModal.load( {
+		onAuthSuccess: this.onLogInSuccess.bind( this )
+	} );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onLogInSuccess = function () {
+	ve.init.target.onLogInSuccess();
+	this.upload.onLogInSuccess();
+	this.query.onLogInSuccess();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );
