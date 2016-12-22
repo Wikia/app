@@ -98,7 +98,11 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 		} );
 	}
 
-	this.setupLicense();
+	if ( !this.licenseWidget ) {
+		this.licenseWidget = new ve.ui.WikiaLicenseWidget();
+		this.licenseWidget.setupLicense( "#WikiaArticle" );
+	}
+
 };
 
 /**
@@ -126,9 +130,9 @@ ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) 
 };
 
 ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function () {
-	if ( this.$license ) {
-		this.$license.remove();
-		this.$license = null;
+	if ( this.licenseWidget ) {
+		this.licenseWidget.removeLicense();
+		this.licenseWidget = null;
 	}
 };
 
@@ -471,32 +475,6 @@ ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function ( $cont
 	).done( function ( getFancyCaptchaResolved ) {
 		$container.append( getFancyCaptchaResolved.form );
 	} );
-};
-
-/**
- * Get the licensing
- *
- * @returns {jQuery}
- */
-ve.init.wikia.ViewPageTarget.prototype.getLicense = function () {
-	if ( !this.$license ) {
-		this.$license = this.$('<div>')
-			.append(
-				this.$( '<p>' ).addClass( 've-ui-wikia-license' )
-					.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
-					.find( 'a' ).attr( 'target', '_blank' ).end()
-			);
-	}
-	return this.$license;
-};
-
-/**
- * Set up the license, attaching it after a surface.
- *
- * @param {ve.ui.Surface} surface Surface
- */
-ve.init.wikia.ViewPageTarget.prototype.setupLicense = function () {
-	this.getLicense().insertAfter('#WikiaArticle');
 };
 
 ve.init.wikia.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
