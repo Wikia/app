@@ -190,6 +190,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-policy-message',
 			'wikia-visualeditor-dialog-wikiamediainsert-read-more',
 			'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice',
+			'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice',
 			'wikia-visualeditor-dialog-wikiamediainsert-log-in-button',
 			'wikia-visualeditor-dialog-drop-target-callout',
 			'wikia-visualeditor-help-label',

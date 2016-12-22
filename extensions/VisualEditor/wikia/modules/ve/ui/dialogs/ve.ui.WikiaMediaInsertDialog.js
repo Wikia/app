@@ -227,8 +227,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
+	var currentPageName = this.pages.getCurrentPageName();
+
 	this.queryInput.$input.focus();
-	if ( this.pages.getCurrentPageName() === 'main' ) {
+	if ( currentPageName === 'main' || currentPageName === 'videoMain' ) {
 		this.query.hideUpload();
 	} else if ( !mw.user.anonymous() ) {
 		this.query.showUpload();
@@ -445,7 +447,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			this.pages.setPage( 'main' );
+			this.pages.setPage( this.getDefaultPage() );
 			// If the policy height (which has a max-height property set) is the same as the first child of the policy
 			// then there is no more of the policy to show and the read more link can be hidden.
 			if ( this.$policy.height() === this.$policy.children().first().height() ) {
