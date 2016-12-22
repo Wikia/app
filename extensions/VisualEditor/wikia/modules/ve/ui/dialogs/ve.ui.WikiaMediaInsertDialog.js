@@ -230,6 +230,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	var currentPageName = this.pages.getCurrentPageName();
 
 	this.queryInput.$input.focus();
+
+	/**
+	 * By default, we hide the query's upload button using CSS.
+	 * After we use hideUpload() or showUpload(), there is an inline style that overrides the CSS rule.
+	 */
 	if ( currentPageName === 'main' || currentPageName === 'videoMain' ) {
 		this.query.hideUpload();
 	} else if ( !mw.user.anonymous() ) {
