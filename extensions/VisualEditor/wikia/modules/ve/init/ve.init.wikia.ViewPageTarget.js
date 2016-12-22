@@ -86,17 +86,6 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
-/**
- * @inheritdoc
- */
-ve.init.wikia.ViewPageTarget.prototype.setSurface = function ( surface ) {
-	// Parent method
-	ve.init.mw.ViewPageTarget.prototype.setSurface.call( this, surface );
-
-	// This has to be invoked here as for some reason it does not work within 'onSurfaceReady'
-	this.setupLicense( surface );
-};
-
 ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.onSurfaceReady.call( this );
@@ -108,6 +97,8 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 			logInSuccess: 'onLogInSuccess'
 		} );
 	}
+
+	this.setupLicense();
 };
 
 /**
@@ -504,8 +495,8 @@ ve.init.wikia.ViewPageTarget.prototype.getLicense = function () {
  *
  * @param {ve.ui.Surface} surface Surface
  */
-ve.init.wikia.ViewPageTarget.prototype.setupLicense = function ( surface ) {
-	this.getLicense().insertAfter( surface.$element.closest( '.WikiaArticle' ) );
+ve.init.wikia.ViewPageTarget.prototype.setupLicense = function () {
+	this.getLicense().insertAfter('#WikiaArticle');
 };
 
 ve.init.wikia.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
