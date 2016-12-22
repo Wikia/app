@@ -43,7 +43,6 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		tag: 'visualeditor'
 	};
 	this.scrollTop = null;
-	this.userLoggedInDuringEdit = false;
 	this.currentUri = currentUri;
 	this.section = currentUri.query.vesection;
 	this.initialEditSummary = currentUri.query.summary;

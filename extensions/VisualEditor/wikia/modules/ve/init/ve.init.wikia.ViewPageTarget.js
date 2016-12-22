@@ -24,6 +24,7 @@ ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
 
 	// Properties
 	this.toolbarSaveButtonEnableTracked = false;
+	this.userLoggedInDuringEdit = false;
 	this.$license = null;
 };
 
