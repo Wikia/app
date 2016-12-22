@@ -628,7 +628,13 @@ ve.init.mw.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
 };
 
 ve.init.mw.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
-	return this.restoring ? 'restored' : 'created';
+	if ( this.restoring ) {
+		return 'restored';
+	} else if ( this.pageExists ) {
+		return 'saved';
+	} else {
+		return 'created';
+	}
 };
 
 /**

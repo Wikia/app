@@ -470,16 +470,6 @@ ve.init.wikia.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
 		ve.init.wikia.ViewPageTarget.super.prototype.shouldReloadPageAfterSave.call( this );
 };
 
-ve.init.wikia.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
-	if ( this.restoring ) {
-		return 'restored';
-	} else if ( this.pageExists ) {
-		return 'saved';
-	} else {
-		return 'created';
-	}
-};
-
 ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
 	if ( this.userLoggedInDuringEdit === true ) {
 		this.deactivating = true;
