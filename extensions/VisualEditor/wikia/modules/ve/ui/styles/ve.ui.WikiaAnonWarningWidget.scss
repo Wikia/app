@@ -1,10 +1,11 @@
 $padding-top-bottom: 8px;
 $padding-left-right: 13px;
 .ve-ui-wikia-anon-warning {
-	background-color: rgba($color-buttons, 0.5);
+	background-color: rgba($wds-color-warning, .8);
 	color: $color-button-text;
 	font-size: 14px;
 	height: 35px - 2 * $padding-top-bottom;
+	margin: 10px 0;
 	padding: $padding-top-bottom $padding-left-right;
 	width: calc(100% - 26px);
 
