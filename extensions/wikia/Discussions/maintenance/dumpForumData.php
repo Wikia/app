@@ -27,11 +27,11 @@ class DumpForumData extends Maintenance {
 		} else {
 			$this->fh = STDOUT;
 		}
-		$this->dumper = new Discussions\ForumDumper();
+		$this->dumper = new Discussions\ForumDumper($this);
 
 		$this->clearImportTables();
 		$this->dumpPages();
-		$this->dumpRevisions();
+		$this->dumper->saveRevisions();
 		$this->dumpVotes();
 	}
 
@@ -55,17 +55,13 @@ class DumpForumData extends Maintenance {
 		}
 	}
 
-	public function dumpRevisions() {
-		$revisions = $this->dumper->getRevisions();
-
-		foreach ( $revisions as $data ) {
-			$insert = $this->createInsert(
-				'import_revision',
-				Discussions\ForumDumper::COLUMNS_REVISION,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n" );
-		}
+	public function dumpRevision($data) {
+		$insert = $this->createInsert(
+			'import_revision',
+			Discussions\ForumDumper::COLUMNS_REVISION,
+			$data
+		);
+		fwrite( $this->fh, $insert . "\n" );
 	}
 
 	public function dumpVotes() {
