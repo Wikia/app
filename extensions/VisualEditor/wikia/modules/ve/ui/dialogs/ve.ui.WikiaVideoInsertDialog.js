@@ -14,6 +14,8 @@
 ve.ui.WikiaVideoInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaVideoInsertDialog.super.call( this, config );
+
+	this.searchInputPlaceholder = ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' );
 };
 
 /* Inheritance */

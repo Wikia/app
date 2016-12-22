@@ -14,6 +14,8 @@
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
+
+	this.searchInputPlaceholder = ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' );
 };
 
 /* Inheritance */
@@ -100,7 +102,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new OO.ui.BookletLayout( { $: this.$ } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		$: this.$,
-		placeholder: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
+		placeholder: this.searchInputPlaceholder
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();

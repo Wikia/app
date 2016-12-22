@@ -184,6 +184,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error',
 			'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder',
+			'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder',
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
