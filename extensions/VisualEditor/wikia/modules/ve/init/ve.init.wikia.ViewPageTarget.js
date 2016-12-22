@@ -108,19 +108,6 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 /**
  * @inheritdoc
  */
-ve.init.wikia.ViewPageTarget.prototype.onSave = function (
-	html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub
-) {
-	this.tearDownLicense();
-	this.tearDownAnonWarning();
-
-	// Parent method
-	ve.init.mw.ViewPageTarget.prototype.onSave.call( this, html, categoriesHtml, newid, isRedirect, displayTitle, lastModified, contentSub );
-};
-
-/**
- * @inheritdoc
- */
 ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
 	this.tearDownLicense();
 	this.tearDownAnonWarning();
