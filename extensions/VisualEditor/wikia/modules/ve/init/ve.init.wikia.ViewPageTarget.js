@@ -100,7 +100,7 @@ ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
 
 	if ( !this.licenseWidget ) {
 		this.licenseWidget = new ve.ui.WikiaLicenseWidget();
-		this.licenseWidget.setupLicense( "#WikiaArticle" );
+		this.licenseWidget.setupLicense( '#WikiaArticle' );
 	}
 
 };

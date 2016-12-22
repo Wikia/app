@@ -4,11 +4,11 @@ ve.ui.WikiaLicenseWidget = function VeUiWikiaLicenseWidget() {
 
 OO.inheritClass( ve.ui.WikiaLicenseWidget, OO.ui.Widget );
 
-ve.ui.WikiaLicenseWidget.prototype.setupLicense = function( predecessor ) {
+ve.ui.WikiaLicenseWidget.prototype.setupLicense = function ( predecessor ) {
 	this.getLicense().insertAfter( predecessor );
 };
 
-ve.ui.WikiaLicenseWidget.prototype.getLicense = function() {
+ve.ui.WikiaLicenseWidget.prototype.getLicense = function () {
 	if ( !this.$license ) {
 		this.$license = this.$('<div>')
 			.append(
@@ -20,7 +20,7 @@ ve.ui.WikiaLicenseWidget.prototype.getLicense = function() {
 	return this.$license;
 };
 
-ve.ui.WikiaLicenseWidget.prototype.removeLicense = function() {
+ve.ui.WikiaLicenseWidget.prototype.removeLicense = function () {
 	if ( this.$license ) {
 		this.$license.remove();
 	}
