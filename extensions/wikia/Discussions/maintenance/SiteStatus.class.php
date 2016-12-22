@@ -109,27 +109,39 @@ class SiteStatus {
 					}
 
 					$row = $result->fetchObject();
-
 					if ( empty( $row ) ) {
 						return;
 					}
 
-					$this->hasStatusRecord = true;
-					$this->status = $row->status;
-					$this->siteAvailable = $row->site_available;
-					$this->discussionsEnabled = $row->discussions_enabled;
-					$this->navigationEnabled = $row->navigation_enabled;
-					$this->forumsEnabled = $row->forums_enabled;
-					$this->numThreadedForumPosts = $row->tf_posts;
-					$this->numWikiForumPosts = $row->wf_posts;
-					$this->discussionsFound = new \DateTime( $row->discussions_found );
-					$this->firstPostFound = new \DateTime( $row->first_post_found );
-					$this->lastMigrated = new \DateTime( $row->last_migrated );
-					$this->lastUpdated = new \DateTime( $row->last_updated );
+					$this->loadRow( $row );
 				}
 			);
 
 		$this->cityInfo = \WikiFactory::getWikiByDB( $this->dbName );
+	}
+
+	private function loadRow( $row ) {
+		$this->hasStatusRecord = true;
+		$this->status = $row->status;
+		$this->siteAvailable = $row->site_available;
+		$this->discussionsEnabled = $row->discussions_enabled;
+		$this->navigationEnabled = $row->navigation_enabled;
+		$this->forumsEnabled = $row->forums_enabled;
+		$this->numThreadedForumPosts = $row->tf_posts;
+		$this->numWikiForumPosts = $row->wf_posts;
+
+		if ( !empty( $row->discussion_found ) ) {
+			$this->discussionsFound = new \DateTime( $row->discussions_found );
+		}
+		if ( !empty ( $row->first_post_found ) ) {
+			$this->firstPostFound = new \DateTime( $row->first_post_found );
+		}
+		if ( !empty ( $row->last_migrated ) ) {
+			$this->lastMigrated = new \DateTime( $row->last_migrated );
+		}
+		if ( !empty ( $row->last_updated ) ) {
+			$this->lastUpdated = new \DateTime( $row->last_updated );
+		}
 	}
 
 	public function update() {
@@ -153,6 +165,15 @@ class SiteStatus {
 				->SET( 'site_id', $this->siteId );
 		}
 
+		// Conditionally set these date columns only if we've found something
+		if ( !empty( $this->discussionsFound ) ) {
+			$statement->SET( 'discussions_found', $this->discussionsFoundString() );
+		}
+
+		if ( !empty( $this->firstPostFound ) ) {
+			$statement->SET( 'first_post_found', $this->firstPostFoundString() );
+		}
+
 		$now = (new \DateTime())->format('Y-m-d H:i:s');
 		$statement->SET( 'site_available', $this->siteAvailable )
 			->SET( 'discussions_enabled', $this->discussionsEnabled )
@@ -160,8 +181,6 @@ class SiteStatus {
 			->SET( 'forums_enabled', $this->forumsEnabled )
 			->SET( 'tf_posts', $this->numThreadedForumPosts )
 			->SET( 'wf_posts', $this->numWikiForumPosts )
-			->SET( 'discussions_found', $this->discussionsFoundString() )
-			->SET( 'first_post_found', $this->firstPostFoundString() )
 			->SET( 'last_updated', $now )
 			->run( $this->getCentralDbw() );
 	}
