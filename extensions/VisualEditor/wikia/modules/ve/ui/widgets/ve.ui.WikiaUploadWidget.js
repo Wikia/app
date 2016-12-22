@@ -240,7 +240,7 @@ ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' ) );
 
 	this.logInButton.on( 'click', function () {
-		this.emit( 'logInClick' )
+		this.emit( 'logInClick' );
 	}.bind( this ) );
 
 	this.$uploadLabel.hide();

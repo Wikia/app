@@ -20,7 +20,7 @@ ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 				.on( 'click', function () {
 					window.wikiaAuthModal.load( {
 						onAuthSuccess: function () {
-							this.emit( 'logInSuccess' )
+							this.emit( 'logInSuccess' );
 						}.bind( this )
 					} );
 				}.bind( this ) )
