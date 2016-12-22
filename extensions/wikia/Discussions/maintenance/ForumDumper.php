@@ -77,7 +77,6 @@ class ForumDumper {
 	];
 
 	private $pages = [];
-	private $votes = [];
 
 	private $dummyTitle;
 	private $parserOptions;
@@ -101,10 +100,6 @@ class ForumDumper {
 
 	public function addPage( $id, $data ) {
 		$this->pages[$id] = $data;
-	}
-
-	public function addVote( $data ) {
-		$this->votes[] = $data;
 	}
 
 	public function getPages() {
@@ -257,28 +252,20 @@ class ForumDumper {
 		return self::CONTRIBUTOR_TYPE_USER;
 	}
 
-	public function getVotes() {
-		if ( !empty( $this->votes ) ) {
-			return $this->votes;
-		}
-
+	public function saveVotes() {
 		$pageIds = array_keys( $this->getPages() );
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::TABLE_VOTE )
 			->WHERE( 'article_id' )->IN( $pageIds )
 			->runLoop( $dbh, function ( &$pages, $row ) {
-
-				$this->addVote( [
+				$this->saver->dumpVote( [
 					"page_id" => $row->article_id,
 					"user_identifier" => $row->user_id,
 					"timestamp" => $row->time
 				] );
 			} );
-
-		return $this->votes;
 	}
 }

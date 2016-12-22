@@ -5,6 +5,8 @@
  * @ingroup Maintenance
  */
 
+use Discussions\ForumDumper;
+
 error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
@@ -32,7 +34,7 @@ class DumpForumData extends Maintenance {
 		$this->clearImportTables();
 		$this->dumpPages();
 		$this->dumper->saveRevisions();
-		$this->dumpVotes();
+		$this->dumper->saveVotes();
 	}
 
 	public function clearImportTables() {
@@ -45,36 +47,19 @@ class DumpForumData extends Maintenance {
 		$pages = $this->dumper->getPages();
 
 		foreach ( $pages as $id => $data ) {
-			$insert = $this->createInsert(
-				'import_page',
-				Discussions\ForumDumper::COLUMNS_PAGE,
-				$data
-			);
-
+			$insert = $this->createInsert( 'import_page', ForumDumper::COLUMNS_PAGE, $data );
 			fwrite( $this->fh, $insert . "\n" );
 		}
 	}
 
-	public function dumpRevision($data) {
-		$insert = $this->createInsert(
-			'import_revision',
-			Discussions\ForumDumper::COLUMNS_REVISION,
-			$data
-		);
+	public function dumpRevision( $data ) {
+		$insert = $this->createInsert( 'import_revision', ForumDumper::COLUMNS_REVISION, $data );
 		fwrite( $this->fh, $insert . "\n" );
 	}
 
-	public function dumpVotes() {
-		$votes = $this->dumper->getVotes();
-
-		foreach ( $votes as $data ) {
-			$insert = $this->createInsert(
-				'import_vote',
-				Discussions\ForumDumper::COLUMNS_VOTE,
-				$data
-			);
-			fwrite( $this->fh, $insert . "\n" );
-		}
+	public function dumpVote( $data ) {
+		$insert = $this->createInsert( 'import_vote', ForumDumper::COLUMNS_VOTE, $data );
+		fwrite( $this->fh, $insert . "\n" );
 	}
 
 	private function createInsert( $table, $cols, $data ) {
