@@ -482,29 +482,28 @@ ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
 };
 
 ve.init.wikia.ViewPageTarget.prototype.onLogInSuccess = function () {
-	var getEditTokenUrl = '/api.php?action=query&prop=info&titles=' +
-		window.wgPageName +
-		'&intoken=edit&format=json';
+	new mw.Api().get( {
+		action: 'query',
+		meta: 'userinfo',
+		prop: 'info',
+		// Try to send the normalised form so that it is less likely we get extra data like
+		// data.normalised back that we don't need.
+		titles: new mw.Title( this.pageName ).toText(),
+		indexpageids: '',
+		intoken: 'edit'
+	} ).done( function ( data ) {
+		var userInfo = data.query && data.query.userinfo,
+			pageInfo = data.query && data.query.pages && data.query.pageids &&
+				data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
+			editToken = pageInfo && pageInfo.edittoken;
 
-	$.ajax( getEditTokenUrl )
-		.done( function ( response ) {
-			// wgArticleId returns 0 for new articles but the API returns -1
-			var articleId = window.wgArticleId || -1,
-				editToken = response.query.pages[articleId].edittoken;
-
+		if ( userInfo && editToken ) {
 			mw.user.tokens.set( 'editToken', editToken );
-			/**
-			 * If we want to get the real user name, we would have to make two service calls:
-			 * - to whoami for the user id
-			 * - to user-attribute for the user name
-			 * For now we don't need it, as the page is reloaded anyway after recently logged in user closes the editor.
-			 * We just need it to not be empty to make mw.user.anonymous() work as expected.
-			 */
-			mw.config.set( 'wgUserName', 'FAKE_NAME_VE_LOGGED_IN' );
-
+			mw.config.set( { wgUserId: userInfo.id, wgUserName: userInfo.name } );
 			// This is used to reload the page after recently logged in user closes the editor
 			this.userLoggedInDuringEdit = true;
-		}.bind( this ) );
+		}
+	} );
 
 	this.tearDownAnonWarning();
 };
