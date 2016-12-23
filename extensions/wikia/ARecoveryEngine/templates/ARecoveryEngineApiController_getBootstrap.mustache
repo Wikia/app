@@ -52,6 +52,7 @@
 
 			window.addEventListener('load', function() {
 				window._sp_.config.mms_domain = mmsDomain;
+				window._sp_.config.msg_z_index = 5000101;
 				window._sp_.config.mms_client_data_callback = function () {
 					window.Wikia.log(['getBootstrap', 'mms_client_data_callback called', arguments], window.Wikia.log.levels.debug, logGroup);
 				};
