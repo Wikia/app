@@ -33,15 +33,18 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgUser;		/* wikia change */
+		global $wgUser;        /* wikia change */
 
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
 		 */
-		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '&amp;' ) !== false ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) &&
+		     strpos( $_SERVER['REQUEST_URI'], '&amp;' ) !== false
+		) {
 			wfDebug( "Special:Userlogout request {$_SERVER['REQUEST_URI']} looks suspicious, denying.\n" );
-			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ), wfMessage( 'loginerror' ) );
+			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ),
+				wfMessage( 'loginerror' ) );
 		}
 
 		$this->setHeaders();
@@ -59,7 +62,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		 *
 		 * Once the old-style global wgUser object is fully deprecated, this line can be removed.
 		*/
-		$wgUser->logout();	 /* wikia change */
+		$wgUser->logout();     /* wikia change */
 
 		// Wikia change
 		// regenerate session ID on user logout to avoid race conditions with
@@ -72,16 +75,17 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 
 		$headers = $this->getRequest()->getAllHeaders();
 		$redirectUrl = 'http://www.wikia.com/';
-		if(isset($headers['REFERER'])) {
-			$parsedReferer = parse_url($headers['REFERER']);
-			$redirectUrl = $this->getHostname($parsedReferer);
-			if(strpos($parsedReferer['path'], '/d') === 0) {
-				$redirectUrl = $this->getHostname($parsedReferer) . '/d';
+		if ( isset( $headers['REFERER'] ) ) {
+			$parsedReferer = parse_url( $headers['REFERER'] );
+			$redirectUrl = $this->getHostname( $parsedReferer );
+			if ( strpos( $parsedReferer['path'], '/d' ) === 0 ) {
+				$redirectUrl = $this->getHostname( $parsedReferer ) . '/d';
 			}
 		}
 
 		$out = $this->getOutput();
-		$out->redirect($redirectUrl);
+		$out->redirect( $redirectUrl );
+
 		return;
 
 
@@ -95,6 +99,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	 */
 	protected function isValidRedirectUrl( $url ) {
 		$hostname = parse_url( $url, PHP_URL_HOST );
+
 		return preg_match( '/(\.|^)(wikia|fandom)\.com$/', $hostname );
 	}
 
@@ -102,10 +107,11 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	 * @param $parsed_url
 	 * @return string hostname url
 	 */
-	protected function getHostname($parsed_url) {
-		$scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
-		$host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-		$port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+	protected function getHostname( $parsed_url ) {
+		$scheme = isset( $parsed_url['scheme'] ) ? $parsed_url['scheme'] . '://' : '';
+		$host = isset( $parsed_url['host'] ) ? $parsed_url['host'] : '';
+		$port = isset( $parsed_url['port'] ) ? ':' . $parsed_url['port'] : '';
+
 		return "$scheme$host$port";
 	}
 }
