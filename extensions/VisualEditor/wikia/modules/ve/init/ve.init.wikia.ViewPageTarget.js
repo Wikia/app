@@ -503,7 +503,7 @@ ve.init.wikia.ViewPageTarget.prototype.onLogInSuccess = function () {
 			// This is used to reload the page after recently logged in user closes the editor
 			this.userLoggedInDuringEdit = true;
 		}
-	} );
+	}.bind( this ) );
 
 	this.tearDownAnonWarning();
 };
