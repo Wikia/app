@@ -399,34 +399,48 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 
 	// Gets the most recent post from the specified site and returns whether it was made less than 60 days ago
-	private function isActiveSite($site_id)
+	private function isActiveSite($siteId)
 	{
+		$response = $this->getMostRecentPostForSite($siteId);
+
+		if ($response['postCount'] == 0) {
+			// no posts
+			return false;
+		}
+
+		// extract post creation date from response
+		$mostRecentPostCreationDate = $response['_embedded']['doc:posts'][0]['creationDate']['epochSecond'];
+
+		$sixtyDaysAgo = time() - 60*60*24*60;
+
+		return $mostRecentPostCreationDate > $sixtyDaysAgo;
+	}
+
+	private function getMostRecentPostForSite($siteId) {
 		$apiClient = $this->getSitesApi()->getApiClient();
 
 		$resourcePathTemplate = "/{siteId}/posts";
 		$httpBody = '';
-		$queryParams = array();
-		$headerParams = array();
 
 		// header params
-		$_header_accept = $apiClient->selectHeaderAccept(array('application/hal+json'));
-		if (!is_null($_header_accept)) {
-			$headerParams['Accept'] = $_header_accept;
+		$headerParams = ['Content-Type' => $apiClient->selectHeaderContentType(array('application/json'))];
+
+		$headerAccept = $apiClient->selectHeaderAccept(array('application/hal+json'));
+		if (!is_null($headerAccept)) {
+			$headerParams['Accept'] = $headerAccept;
 		}
-		$headerParams['Content-Type'] = $apiClient->selectHeaderContentType(array('application/json'));
 
 		// path params
 		$resourcePath = str_replace(
 				"{siteId}",
-				$apiClient->getSerializer()->toPathValue($site_id),
+				$apiClient->getSerializer()->toPathValue($siteId),
 				$resourcePathTemplate
 		);
 
 		// only need most recent post
-		$queryParams['limit'] = 1;
-
-
-		$response = null;
+		$queryParams = [
+				'limit' => 1
+		];
 
 		// make the API Call
 		try {
@@ -441,29 +455,27 @@ class AutomatedDeadWikisDeletionMaintenance {
 			);
 			$response = $apiClient->getSerializer()->deserialize($rawResponse, 'object', $httpHeader);
 		} catch (\Swagger\Client\ApiException $e) {
-			switch ($e->getCode()) {
-				case 204:
-					$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(), 'object', $e->getResponseHeaders());
-					$e->setResponseObject($data);
-					break;
-				case 403:
-					$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-					$e->setResponseObject($data);
-					break;
-			}
-			throw $e;
+			throw $this->processApiException($e, $apiClient);
 		}
 
-		if ($response['postCount'] == 0) {
-			// no posts
-			return false;
+		return $response;
+	}
+
+	private function processApiException($e, $apiClient) {
+		switch ($e->getCode()) {
+			case 204:
+				$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(), 'object',
+						$e->getResponseHeaders());
+				$e->setResponseObject($data);
+				break;
+			case 403:
+				$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(),
+						'\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+				$e->setResponseObject($data);
+				break;
 		}
 
-		// extract post creation date from response
-		$mostRecentPostCreationDate = $response['_embedded']->{'doc:posts'}[0]->creationDate->epochSecond;
-		$sixtyDaysAgo = time() - 60*60*24*60;
-
-		return $mostRecentPostCreationDate > $sixtyDaysAgo;
+		return $e;
 	}
 
 	/**
