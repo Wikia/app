@@ -31,7 +31,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		return $parser;
 	}
 
-	protected function checkClassName( $output, $class ) {
+	protected function containsClassName( $output, $class ) {
 		$xpath = $this->getXPath( $output );
 
 		return $xpath->query( '//aside[contains(@class, \'' . $class . '\')]' )->length > 0 ? true : false;
@@ -51,7 +51,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertEquals( $output, '' );
+		$this->assertEquals( $output, '', 'Should be empty' );
 	}
 
 	public function testThemedInfobox() {
@@ -62,10 +62,12 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
+			), "Should contain static theme"
+		);
 	}
 
 	public function testSourceThemedInfobox() {
@@ -77,13 +79,15 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newCustomFrame( [ $themeVariableName => $themeName ] ) )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
+			), "Should contain theme from params"
+		);
 	}
 
-	public function testEmptySourceDefaultThemedInfobox() {
+	public function testSourceDefaultThemedInfobox() {
 		$text = '<data><default>test</default></data>';
 		$themeVariableName = 'variableName';
 		$themeName = 'variable';
@@ -92,13 +96,19 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$marker = $this->controller->renderInfobox( $text,
 			[ 'theme' => $defaultTheme, 'theme-source' => $themeVariableName ],
 			$this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+			$this->parser->getPreprocessor()->newCustomFrame( [ $themeVariableName => $themeName ] ) )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
+			) &&
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
+			), "Should contain static and param themes"
+		);
 	}
 
 	public function testNoThemeInfobox() {
@@ -108,10 +118,12 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
+			), "Should contain default theme"
+		);
 	}
 
 	public function testWhiteSpacedThemeInfobox() {
@@ -123,10 +135,12 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+			), "Should sanitize infobox theme name"
+		);
 	}
 
 	public function testMultiWhiteSpacedThemeInfobox() {
@@ -138,10 +152,12 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
-		) );
+		$this->assertTrue(
+			$this->containsClassName(
+				$output,
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+			), "Should sanitize multiline infobox theme name"
+		);
 	}
 
 	/**
@@ -152,11 +168,10 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue( $this->checkClassName(
+		$this->assertTrue( $this->containsClassName(
 			$output,
-			$expectedOutput,
-			$message
-		) );
+			$expectedOutput
+		), $message );
 	}
 
 	public function testGetLayoutDataProvider() {
@@ -232,13 +247,13 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		return [
 			[ [ 0 => 'zero', 1 => 'one', 2 => 'two' ], [ 'zero', 'one', 'two' ] ],
 			[ [ 1 => 'three', 2 => 'four', 3 => 'five' ],
-			  // this is actual mw way of handling params provided as "1=one|2=two|three|four|five"
-			  [ '1' => 'one', '2' => 'two', 1 => 'three', 2 => 'four', 3 => 'five' ] ],
+				// this is actual mw way of handling params provided as "1=one|2=two|three|four|five"
+				[ '1' => 'one', '2' => 'two', 1 => 'three', 2 => 'four', 3 => 'five' ] ],
 			[ [ 1 => 'one', 2 => 'two', 3 => 'three' ], [ '1' => 'one', '2' => 'two', '3' => 'three' ] ],
 			[ [ 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' ],
-			  [ '-1' => 'minus one', '0' => 'zero', '1' => 'one', '2' => 'two', '3' => 'three' ] ],
+				[ '-1' => 'minus one', '0' => 'zero', '1' => 'one', '2' => 'two', '3' => 'three' ] ],
 			[ [ 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' ],
-			  [ 'abc' => 'minus one', '0' => 'zero', '1' => 'one', '2' => 'two', '3' => 'three' ] ],
+				[ 'abc' => 'minus one', '0' => 'zero', '1' => 'one', '2' => 'two', '3' => 'three' ] ],
 		];
 	}
 

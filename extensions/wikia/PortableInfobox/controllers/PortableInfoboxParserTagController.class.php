@@ -87,10 +87,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
-		$theme = $this->getThemeWithDefault( $params, $frame );
+		$themeList = $this->getThemes( $params, $frame );
 		$layout = $this->getLayout( $params );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, implode( " ", $themeList ), $layout );
 	}
 
 	/**
@@ -172,24 +172,22 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
-	private function getThemeWithDefault( $params, PPFrame $frame ) {
-		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
-		$themeName = $this->getThemeName( $params, $value );
-
-		//make sure no whitespaces, prevents side effects
-		return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName ) );
-	}
-
-	private function getThemeName( $params, $value ) {
+	private function getThemes( $params, PPFrame $frame ) {
 		$themes = [ ];
+
 		if ( isset( $params[ 'theme' ] ) ) {
 			$themes[] = $params[ 'theme' ];
 		}
-		if ( !empty( $value ) ) {
-			$themes[] = $value;
+		if ( isset( $params[ 'theme-source' ] ) ) {
+			$themes[] = $frame->getArgument( $params[ 'theme-source' ] );
 		}
 
-		return !empty( $themes ) ? implode( " ", $themes ) : self::DEFAULT_THEME_NAME;
+		// use default global theme if not present
+		$themes = !empty( $themes ) ? $themes : [ self::DEFAULT_THEME_NAME ];
+
+		return array_map( function ( $name ) {
+			return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $name ) );
+		}, $themes );
 	}
 
 	private function getLayout( $params ) {
