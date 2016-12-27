@@ -175,8 +175,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 	private function getThemes( $params, PPFrame $frame ) {
 		$themes = [ ];
 
-		if ( isset( $params[ 'theme' ] ) && !empty( trim( $params[ 'theme' ] ) ) ) {
-			$themes[] = trim( $params[ 'theme' ] );
+		if ( isset( $params[ 'theme' ] ) ) {
+			$staticTheme = trim( $params[ 'theme' ] );
+			if ( !empty ( $staticTheme ) ) {
+				$themes[] = $staticTheme;
+			}
 		}
 		if ( !empty( $params[ 'theme-source' ] ) ) {
 			$variableTheme = trim( $frame->getArgument( $params[ 'theme-source' ] ) );
