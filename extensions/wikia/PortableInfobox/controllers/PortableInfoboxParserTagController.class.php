@@ -202,12 +202,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$sourceParam = $colorName . '-source';
 		$defaultParam = $colorName . '-default';
 
-		$sourceParamValue = $frame->getArgument( $params[ $sourceParam ] );
+		$sourceParamValue = trim($frame->getArgument( $params[ $sourceParam ] ));
 
 		if ( isset( $params[ $sourceParam ] ) && !empty( $sourceParamValue ) ) {
 			$color = $sourceParamValue;
 		} else {
-			$color = isset( $params[ $defaultParam ] ) ? $params[ $defaultParam ] : '';
+			$color = isset( $params[ $defaultParam ] ) ? trim($params[ $defaultParam ]) : '';
 		}
 
 		return $this->isValidHexColor( $color ) ? $color : '';
