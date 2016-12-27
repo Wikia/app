@@ -39,7 +39,9 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 	protected function getXPath( $output ) {
 		$result = new DOMDocument();
+		$setting = libxml_use_internal_errors( true );
 		$result->loadHTML( $output );
+		libxml_use_internal_errors( $setting );
 
 		return new DOMXPath( $result );
 	}
@@ -54,110 +56,47 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$this->assertEquals( $output, '', 'Should be empty' );
 	}
 
-	public function testThemedInfobox() {
+	/**
+	 * @dataProvider themeNamesProvider
+	 */
+	public function testThemes( $staticTheme, $variableTheme, $classes, $message ) {
 		$text = '<data><default>test</default></data>';
-		$defaultTheme = 'test';
-
-		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
-			), "Should contain static theme"
-		);
-	}
-
-	public function testSourceThemedInfobox() {
-		$text = '<data><default>test</default></data>';
-		$themeVariableName = 'variableName';
-		$themeName = 'variable';
-
-		$marker = $this->controller->renderInfobox( $text, [ 'theme-source' => $themeVariableName ], $this->parser,
-			$this->parser->getPreprocessor()->newCustomFrame( [ $themeVariableName => $themeName ] ) )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
-			), "Should contain theme from params"
-		);
-	}
-
-	public function testSourceDefaultThemedInfobox() {
-		$text = '<data><default>test</default></data>';
-		$themeVariableName = 'variableName';
-		$themeName = 'variable';
-		$defaultTheme = 'default';
 
 		$marker = $this->controller->renderInfobox( $text,
-			[ 'theme' => $defaultTheme, 'theme-source' => $themeVariableName ],
+			[ 'theme' => $staticTheme, 'theme-source' => 'testVar' ],
 			$this->parser,
-			$this->parser->getPreprocessor()->newCustomFrame( [ $themeVariableName => $themeName ] ) )[ 0 ];
+			$this->parser->getPreprocessor()->newCustomFrame( [ 'testVar' => $variableTheme ] ) )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
-			) &&
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
-			), "Should contain static and param themes"
-		);
+		$this->assertTrue( array_reduce( $classes, function ( $result, $class ) use ( $output ) {
+			return $result && $this->containsClassName( $output, $class );
+		}, true ), $message );
 	}
 
-	public function testNoThemeInfobox() {
-		$text = '<data><default>test</default></data>';
-
-		$marker = $this->controller->renderInfobox( $text, [ ], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
+	public function themeNamesProvider() {
+		return [
+			// static theme, variable name, variable theme, [ classes ], message
+			[ ' ', '', [
 				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
-			), "Should contain default theme"
-		);
-	}
-
-	public function testWhiteSpacedThemeInfobox() {
-		$text = '<data><default>test</default></data>';
-		$defaultTheme = 'test test';
-		$expectedName = 'test-test';
-
-		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
-			), "Should sanitize infobox theme name"
-		);
-	}
-
-	public function testMultiWhiteSpacedThemeInfobox() {
-		$text = '<data><default>test</default></data>';
-		$defaultTheme = "test    test\n test\ttest";
-		$expectedName = 'test-test-test-test';
-
-		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue(
-			$this->containsClassName(
-				$output,
-				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
-			), "Should sanitize multiline infobox theme name"
-		);
+			], "Should use default when theme names are invalid" ],
+			[ 'test', null, [ PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'test' ],
+				"Should contain static theme" ],
+			[ null, 'variable', [
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'variable'
+			], "Should contain theme from params" ],
+			[ 'default', 'variable', [
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'default',
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'variable'
+			], "Should contain static and param themes" ],
+			[ null, null, [
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
+			], "Should contain default theme" ],
+			[ ' test test', null, [ PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'test-test' ],
+				"Should sanitize infobox theme name" ],
+			[ "test    test\n test\ttest", null, [
+				PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . 'test-test-test-test'
+			], "Should sanitize multiline infobox theme name" ]
+		];
 	}
 
 	/**
