@@ -117,6 +117,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
 		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
+		} catch ( InvalidParamValueException $e ) {
+			return $this->handleError(wfMessage( "portable-infobox-unsupported-color-format" )->escaped() );
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
@@ -210,7 +212,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$color = isset( $params[ $defaultParam ] ) ? trim($params[ $defaultParam ]) : '';
 		}
 
-		return $this->isValidHexColor( $color ) ? $color : '';
+		if ( !$this->isValidHexColor( $color ) ) {
+			throw new InvalidParamValueException();
+		}
+
+		return $color;
 	}
 
 	private function isValidHexColor( $color ) {

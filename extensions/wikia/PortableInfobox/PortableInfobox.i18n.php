@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
+	'portable-infobox-unsupported-color-format' => 'Unsupported color format. Currently, only hexadecimal values are supported.'
 );
 
 $messages['qqq'] = array(
@@ -34,6 +35,7 @@ $messages['qqq'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.',
+	'portable-infobox-unsupported-color-format' => 'Error message displayed if user typed color in unsupported format'
 );
 
 $messages['de'] = array(
