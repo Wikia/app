@@ -6,7 +6,10 @@ class InfoboxParamsValidator {
 		'theme',
 		'theme-source',
 		'layout',
-		'accent-color-default'
+		'accent-color-default',
+		'accent-color-source',
+		'accent-color-text-default',
+		'accent-color-text-source'
 	];
 
 	/**

@@ -50,7 +50,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param $layout
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
@@ -70,7 +70,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			switch ( $type ) {
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data, $accentColor );
+					$infoboxHtmlContent .= $this->renderGroup( $data, $accentColor, $accentColorText );
 					break;
 				case 'navigation':
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
@@ -78,6 +78,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				case 'title':
 					if ( !$helper->isMercury() ) {
 						$data['accentColor'] = $accentColor;
+						$data['accentColorText'] = $accentColorText;
 					}
 					$infoboxHtmlContent .= $this->renderItem( 'title', $data );
 					break;
@@ -122,7 +123,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData, $accentColor ) {
+	private function renderGroup( $groupData, $accentColor, $accentColorText ) {
 		$cssClasses = [ ];
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
@@ -141,6 +142,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 				if ( $type === 'header' && !$helper->isMercury() ) {
 					$item[ 'data' ][ 'accentColor' ] = $accentColor;
+					$item[ 'data' ][ 'accentColorText' ] = $accentColorText;
 				}
 
 				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {

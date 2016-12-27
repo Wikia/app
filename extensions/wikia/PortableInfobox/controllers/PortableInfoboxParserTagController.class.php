@@ -89,9 +89,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
-		$accentColor = $this->getAccentColorWithDefault( $params, $frame );
+		$accentColor = $this->getColor( 'accent-color', $params, $frame );
+		$accentColorText = $this->getColor( 'accent-color-text', $params, $frame );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout, $accentColor );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
 	}
 
 	/**
@@ -197,15 +198,23 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
 	}
 
-	private function getAccentColorWithDefault( $params, PPFrame $frame ) {
-		$value = isset( $params[ 'accent-color-source' ] ) ? $frame->getArgument( $params[ 'accent-color-source' ] ) : false;
+	private function getColor( $colorName, $params, PPFrame $frame ) {
+		$sourceParam = $colorName . '-source';
+		$defaultParam = $colorName . '-default';
 
-		return $this->getAccentColor( $params, $value );
+		$sourceParamValue = $frame->getArgument( $params[ $sourceParam ] );
+
+		if ( isset( $params[ $sourceParam ] ) && !empty( $sourceParamValue ) ) {
+			$color = $sourceParamValue;
+		} else {
+			$color = isset( $params[ $defaultParam ] ) ? $params[ $defaultParam ] : '';
+		}
+
+		return $this->isValidHexColor( $color ) ? $color : '';
 	}
 
-	private function getAccentColor( $params, $value ) {
-		// TODO: hex validation
-
-		return !empty( $value ) ? $value : ( isset( $params[ 'accent-color-default' ] ) ? $params[ 'accent-color-default' ] : '' );
+	private function isValidHexColor( $color ) {
+		return preg_match('/^(#?[a-f0-9]{3}([a-f0-9]{3})?)$/i', $color);
 	}
+
 }
