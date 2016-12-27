@@ -34,7 +34,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	protected function containsClassName( $output, $class ) {
 		$xpath = $this->getXPath( $output );
 
-		return $xpath->query( '//aside[contains(@class, \'' . $class . '\')]' )->length > 0 ? true : false;
+		return $xpath->query( '//aside[contains(@class, \'' . $class . '\')]' )->length > 0;
 	}
 
 	protected function getXPath( $output ) {
