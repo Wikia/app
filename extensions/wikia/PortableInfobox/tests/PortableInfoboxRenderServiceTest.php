@@ -74,11 +74,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$infoboxRenderService = new PortableInfoboxRenderService();
 		$output = $wrapper->wrap( function () use ( $infoboxRenderService ) {
 			return $infoboxRenderService->renderInfobox(
-				[ [ 'type' => 'title', 'data' => [ 'value' => 'Test' ] ] ], '', '' );
+				[ [ 'type' => 'title', 'data' => [ 'value' => 'Test' ] ] ], '', '', '', '' );
 		} );
 
 		$expected = $this->normalizeHTML( '<aside class="portable-infobox pi-background pi-europa">
-								<h2 class="pi-item pi-item-spacing pi-title">Test</h2>
+								<h2 class="pi-item pi-item-spacing pi-title" style="">Test</h2>
 							</aside>' );
 		$result = $this->normalizeHTML( $output );
 		$this->assertEquals( $expected, $result );
@@ -95,7 +95,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '' );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 
@@ -119,7 +119,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<h2 class="pi-item pi-item-spacing pi-title" style="">Test Title</h2>
 							</aside>',
 				'description' => 'Only title'
 			],
@@ -275,7 +275,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<h2 class="pi-item pi-item-spacing pi-title" style="">Test Title</h2>
 								<figure class="pi-item pi-image">
 									<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
 										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail" alt="image alt"
@@ -324,7 +324,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<h2 class="pi-item pi-item-spacing pi-title" style="">Test Title</h2>
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
@@ -349,7 +349,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<h2 class="pi-item pi-item-spacing pi-title" style="">Test Title</h2>
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>

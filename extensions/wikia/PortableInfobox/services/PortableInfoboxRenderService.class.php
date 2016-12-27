@@ -64,24 +64,29 @@ class PortableInfoboxRenderService extends WikiaService {
 			$helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
 				PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
+		$colors = [
+			'hasAccentColor' => !empty( $accentColor ),
+			'hasAccentColorText' => !empty( $accentColorText),
+			'accentColor' => $accentColor,
+			'accentColorText' => $accentColorText,
+		];
+
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
 			switch ( $type ) {
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data, $accentColor, $accentColorText );
+					$infoboxHtmlContent .= $this->renderGroup( $data, $colors );
 					break;
 				case 'navigation':
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				case 'title':
-					if ( !$helper->isMercury() ) {
-						$data['accentColor'] = $accentColor;
-						$data['accentColorText'] = $accentColorText;
+					if ( !$helper->isMobile() ) {
+						$data = array_merge( $data, $colors );
 					}
-					$infoboxHtmlContent .= $this->renderItem( 'title', $data );
-					break;
+					// intentionally missing break statement
 				default:
 					if ( $helper->isMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
 						$heroData[ $type ] = $data;
@@ -95,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $heroData ) ) {
-			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData, $accentColor ) . $infoboxHtmlContent;
+			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
@@ -123,7 +128,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData, $accentColor, $accentColorText ) {
+	private function renderGroup( $groupData, $colors) {
 		$cssClasses = [ ];
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
@@ -140,9 +145,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			foreach ( $dataItems as $item ) {
 				$type = $item[ 'type' ];
 
-				if ( $type === 'header' && !$helper->isMercury() ) {
-					$item[ 'data' ][ 'accentColor' ] = $accentColor;
-					$item[ 'data' ][ 'accentColorText' ] = $accentColorText;
+				if ( ($type === 'header' || $type === 'title') && !$helper->isMobile() ) {
+					$item[ 'data' ] = array_merge( $item[ 'data' ], $colors );
 				}
 
 				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
@@ -169,7 +173,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string
 	 */
-	private function renderInfoboxHero( $data, $accentColor ) {
+	private function renderInfoboxHero( $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
