@@ -149,14 +149,6 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * required for testing mobile template rendering
-	 * @return bool
-	 */
-	public function isMobile() {
-		return \F::app()->checkSkin( 'wikiamobile' );
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function isMercury() {

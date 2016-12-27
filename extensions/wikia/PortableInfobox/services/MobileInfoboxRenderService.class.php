@@ -2,7 +2,10 @@
 
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
-class PortableInfoboxRenderService extends WikiaService {
+class MobileInfoboxRenderService extends WikiaService {
+	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
+
 	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
@@ -27,7 +30,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		parent::__construct();
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
 			->setPrefix( self::getTemplatesDir() );
-		$this->imagesWidth = PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+		$this->imagesWidth = PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH;
 	}
 
 	public static function getTemplatesDir() {
@@ -52,29 +55,31 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
-
-		// decide on image width, if europa go with bigger images! else default size
-		$this->imagesWidth = $helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
-			PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+		$heroData = [ ];
 
 		foreach ( $infoboxdata as $item ) {
+			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
-			if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
-				$infoboxHtmlContent .= $this->renderItem( $type, $item[ 'data' ] );
+			if ( $helper->isValidHeroDataItem( $item, $heroData ) ) {
+				$heroData[ $type ] = $data;
+				continue;
+			} elseif ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
+				$infoboxHtmlContent .= $this->renderItem( $type, $data );
 			}
 		}
 
+		if ( !empty( $heroData ) ) {
+			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+		}
+
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper', [
-				'content' => $infoboxHtmlContent,
-				'theme' => $theme,
-				'layout' => $layout,
-				'isEuropaEnabled' => $helper->isEuropaTheme()
-			] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
 		} else {
 			$output = '';
 		}
+
+		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
 
 		wfProfileOut( __METHOD__ );
 
@@ -85,13 +90,16 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * Produces HTML output for item type and data
 	 *
 	 * @param $type
+	 * @param $template
 	 * @param array $data
 	 * @return string
 	 */
-	private function render( $type, array $data ) {
+	private function render( $type, $template, array $data ) {
+		$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
-			->render( self::getTemplates()[ $type ] );
+			->render( self::getTemplates()[ $template ] );
 	}
 
 	/**
@@ -106,11 +114,12 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( $type === 'group' ) {
 			return $this->renderGroup( $data );
 		}
+
 		if ( $type === 'image' ) {
 			return $this->renderImage( $data );
 		}
 
-		return $this->render( $type, $data );
+		return $this->render( $type, $type, $data );
 	}
 
 	/**
@@ -148,23 +157,50 @@ class PortableInfoboxRenderService extends WikiaService {
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
 
-		return $this->render( 'group', [
+		return $this->render( 'group', 'group', [
 			'content' => $groupHTMLContent,
 			'cssClasses' => implode( ' ', $cssClasses )
 		] );
 	}
 
 	/**
-	 * If image element has invalid thumbnail, doesn't render this element at all.
+	 * renders infobox hero component
 	 *
-	 * @param $data
+	 * @param array $data - infobox hero component data
+	 *
 	 * @return string
 	 */
-	private function renderImage( $data ) {
+	private function renderInfoboxHero( $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
+
+		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
+		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
+			->isFirstInfoboxAlredyRendered();
+
+		if ( array_key_exists( 'image', $data ) ) {
+			$image = $data[ 'image' ][ 0 ];
+			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
+			$data[ 'image' ] = $image;
+
+			if ( !$helper->isMercury() ) {
+				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
+			} elseif ( $firstInfoboxAlredyRendered ) {
+				return $this->renderItem( 'hero-mobile', $data );
+			}
+		} elseif ( !$helper->isMercury() || $firstInfoboxAlredyRendered ) {
+			return $this->renderItem( 'title', $data[ 'title' ] );
+		}
+
+		return '';
+	}
+
+	private function renderImage( $data ) {
 		$images = [ ];
+		$helper = new PortableInfoboxRenderServiceHelper();
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
+			$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 			$data[ $i ] = $helper->extendImageData( $data[ $i ], $this->imagesWidth );
 
 			if ( !!$data[ $i ] ) {
@@ -176,15 +212,22 @@ class PortableInfoboxRenderService extends WikiaService {
 			return '';
 		}
 
-		if ( count( $images ) === 1 ) {
+		// use different template for wikiamobile
+		if ( !$helper->isMercury() ) {
+			// always display only the first image on WikiaMobile
 			$data = $images[ 0 ];
-			$templateName = 'image';
+			$templateName = 'image-mobile-wikiamobile';
 		} else {
-			// More than one image means image collection
-			$data = $helper->extendImageCollectionData( $images );
-			$templateName = 'image-collection';
+			if ( count( $images ) === 1 ) {
+				$data = $images[ 0 ];
+				$templateName = 'image-mobile';
+			} else {
+				// more than one image means image collection
+				$data = $helper->extendImageCollectionData( $images );
+				$templateName = 'image-collection-mobile';
+			}
 		}
 
-		return $this->render( $templateName, $data );
+		return $this->render( 'image', $templateName, $data );
 	}
 }

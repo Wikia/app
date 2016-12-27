@@ -90,7 +90,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
+		$renderSerivce = \F::app()->checkSkin( 'wikiamobile' ) ?
+			new MobileInfoboxRenderService() : new PortableInfoboxRenderService();
+		return $renderSerivce->renderInfobox( $data, $theme, $layout );
 	}
 
 	/**
@@ -130,7 +132,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[0];
+			$firstMarker = array_keys( $this->markers )[ 0 ];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
