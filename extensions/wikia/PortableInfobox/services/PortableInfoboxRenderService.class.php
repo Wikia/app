@@ -1,40 +1,15 @@
 <?php
 
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
-	protected static $templates = [
-		'wrapper' => 'PortableInfoboxWrapper.mustache',
-		'title' => 'PortableInfoboxItemTitle.mustache',
-		'header' => 'PortableInfoboxItemHeader.mustache',
-		'image' => 'PortableInfoboxItemImage.mustache',
-		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
-		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
-		'data' => 'PortableInfoboxItemData.mustache',
-		'group' => 'PortableInfoboxItemGroup.mustache',
-		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
-		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
-		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
-		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
-		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
-		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
-	];
 	protected $templateEngine;
 	protected $imagesWidth;
 
 	function __construct() {
 		parent::__construct();
-		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( self::getTemplatesDir() );
-	}
-
-	public static function getTemplatesDir() {
-		return dirname( __FILE__ ) . '/../templates';
-	}
-
-	public static function getTemplates() {
-		return self::$templates;
+		$this->templateEngine = new PortableInfoboxMustacheEngine();
 	}
 
 	/**
@@ -59,7 +34,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $infoboxdata as $item ) {
 			$type = $item[ 'type' ];
 
-			if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
+			if ( $this->templateEngine->isSupportedType( $type ) ) {
 				$infoboxHtmlContent .= $this->renderItem( $type, $item[ 'data' ] );
 			}
 		}
@@ -88,9 +63,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	protected function render( $type, array $data ) {
-		return $this->templateEngine->clearData()
-			->setData( $data )
-			->render( self::getTemplates()[ $type ] );
+		return $this->templateEngine->render( $type, $data );
 	}
 
 	/**
@@ -136,7 +109,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			foreach ( $dataItems as $item ) {
 				$type = $item[ 'type' ];
 
-				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
+				if ( $this->templateEngine->isSupportedType( $type ) ) {
 					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
 				}
 			}

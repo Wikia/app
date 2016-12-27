@@ -29,7 +29,7 @@ class MobileInfoboxRenderService extends PortableInfoboxRenderService {
 			if ( $helper->isValidHeroDataItem( $item, $heroData ) ) {
 				$heroData[ $type ] = $data;
 				continue;
-			} elseif ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
+			} elseif ( $this->templateEngine->isSupportedType( $type ) ) {
 				$infoboxHtmlContent .= $this->renderItem( $type, $data );
 			}
 		}

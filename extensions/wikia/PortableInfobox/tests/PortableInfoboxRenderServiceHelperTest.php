@@ -37,23 +37,6 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		return $fileMock;
 	}
 
-	private function getThumbnailMock( $thumbnailSizes ) {
-		$thumbnailWidth = isset( $thumbnailSizes[ 'width' ] ) ? $thumbnailSizes[ 'width' ] : null;
-		$thumbnailHeight = isset( $thumbnailSizes[ 'height' ] ) ? $thumbnailSizes[ 'height' ] : null;
-
-		$thumbnailMock = $this->getMockBuilder( 'ThumbnailImage' )
-			->setMethods( [ 'getWidth', 'getHeight' ] )
-			->getMock();
-		$thumbnailMock->expects( $this->any() )
-			->method( 'getWidth' )
-			->will( $this->returnValue( $thumbnailWidth ) );
-		$thumbnailMock->expects( $this->any() )
-			->method( 'getHeight' )
-			->will( $this->returnValue( $thumbnailHeight ) );
-
-		return $thumbnailMock;
-	}
-
 	/**
 	 * @param array $input
 	 * @param array $expectedOutput
@@ -258,39 +241,6 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'mockParams' => [
 					'fileWidth' => 299
 				]
-			]
-		];
-	}
-
-	/**
-	 * @param string $type
-	 * @param boolean $result
-	 * @param string $description
-	 * @dataProvider testIsTypeSupportedInTemplatesDataProvider
-	 */
-	public function testIsTypeSupportedInTemplates( $type, $result, $description ) {
-		$templates = [
-			'testType' => 'testType.mustache'
-		];
-
-		$this->assertEquals(
-			$result,
-			$this->helper->isTypeSupportedInTemplates( $type, $templates ),
-			$description
-		);
-	}
-
-	public function testIsTypeSupportedInTemplatesDataProvider() {
-		return [
-			[
-				'type' => 'testType',
-				'result' => true,
-				'description' => 'valid data type'
-			],
-			[
-				'type' => 'invalidTestType',
-				'result' => false,
-				'description' => 'invalid data type'
 			]
 		];
 	}
