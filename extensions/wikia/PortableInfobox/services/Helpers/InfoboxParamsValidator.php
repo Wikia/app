@@ -5,7 +5,8 @@ class InfoboxParamsValidator {
 	private $supportedParams = [
 		'theme',
 		'theme-source',
-		'layout'
+		'layout',
+		'accent-color-default'
 	];
 
 	/**

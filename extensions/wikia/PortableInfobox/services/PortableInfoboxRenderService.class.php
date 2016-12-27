@@ -50,7 +50,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param $layout
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor ) {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
@@ -70,10 +70,16 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			switch ( $type ) {
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data );
+					$infoboxHtmlContent .= $this->renderGroup( $data, $accentColor );
 					break;
 				case 'navigation':
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
+					break;
+				case 'title':
+					if ( !$helper->isMercury() ) {
+						$data['accentColor'] = $accentColor;
+					}
+					$infoboxHtmlContent .= $this->renderItem( 'title', $data );
 					break;
 				default:
 					if ( $helper->isMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
@@ -88,7 +94,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $heroData ) ) {
-			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData, $accentColor ) . $infoboxHtmlContent;
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
@@ -116,7 +122,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData ) {
+	private function renderGroup( $groupData, $accentColor ) {
 		$cssClasses = [ ];
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
@@ -132,6 +138,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		} else {
 			foreach ( $dataItems as $item ) {
 				$type = $item[ 'type' ];
+
+				if ( $type === 'header' && !$helper->isMercury() ) {
+					$item[ 'data' ][ 'accentColor' ] = $accentColor;
+				}
 
 				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
 					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
@@ -157,7 +167,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string
 	 */
-	private function renderInfoboxHero( $data ) {
+	private function renderInfoboxHero( $data, $accentColor ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.

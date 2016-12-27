@@ -89,8 +89,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
+		$accentColor = $this->getAccentColorWithDefault( $params, $frame );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout, $accentColor );
 	}
 
 	/**
@@ -194,5 +195,17 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
+	private function getAccentColorWithDefault( $params, PPFrame $frame ) {
+		$value = isset( $params[ 'accent-color-source' ] ) ? $frame->getArgument( $params[ 'accent-color-source' ] ) : false;
+
+		return $this->getAccentColor( $params, $value );
+	}
+
+	private function getAccentColor( $params, $value ) {
+		// TODO: hex validation
+
+		return !empty( $value ) ? $value : ( isset( $params[ 'accent-color-default' ] ) ? $params[ 'accent-color-default' ] : '' );
 	}
 }
