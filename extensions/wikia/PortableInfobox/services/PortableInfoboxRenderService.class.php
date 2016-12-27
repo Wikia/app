@@ -3,7 +3,7 @@
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
-	private static $templates = [
+	protected static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
@@ -20,14 +20,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
 		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
 	];
-	private $templateEngine;
-	private $imagesWidth;
+	protected $templateEngine;
+	protected $imagesWidth;
 
 	function __construct() {
 		parent::__construct();
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
 			->setPrefix( self::getTemplatesDir() );
-		$this->imagesWidth = PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 	}
 
 	public static function getTemplatesDir() {
@@ -88,7 +87,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $data
 	 * @return string
 	 */
-	private function render( $type, array $data ) {
+	protected function render( $type, array $data ) {
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( self::getTemplates()[ $type ] );
@@ -100,9 +99,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param string $type
 	 * @param array $data
 	 *
-	 * @return bool|string - HTML
+	 * @return string - HTML
 	 */
-	private function renderItem( $type, array $data ) {
+	protected function renderItem( $type, array $data ) {
 		if ( $type === 'group' ) {
 			return $this->renderGroup( $data );
 		}
@@ -120,7 +119,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData ) {
+	protected function renderGroup( $groupData ) {
 		$cssClasses = [ ];
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
@@ -160,7 +159,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param $data
 	 * @return string
 	 */
-	private function renderImage( $data ) {
+	protected function renderImage( $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$images = [ ];
 
