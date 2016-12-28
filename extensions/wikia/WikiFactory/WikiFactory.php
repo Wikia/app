@@ -1230,7 +1230,7 @@ class WikiFactory {
 		}
 
 		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/^(preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
 		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
 
 		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
