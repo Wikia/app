@@ -6,6 +6,7 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 class PortableInfoboxRenderService extends WikiaService {
 	protected $templateEngine;
 	protected $imagesWidth;
+	protected $inlineStyles;
 
 	function __construct() {
 		parent::__construct();
@@ -19,12 +20,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param $theme
 	 * @param $layout
+	 * @param $accentColor
+	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
+		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 		$infoboxHtmlContent = '';
 
 		// decide on image width, if europa go with bigger images! else default size
@@ -35,6 +39,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			$type = $item[ 'type' ];
 
 			if ( $this->templateEngine->isSupportedType( $type ) ) {
+				if ( $type === 'title' || $type === 'header' ) {
+					$item[ 'data' ][ 'inlineStyles' ] = $this->inlineStyles;
+				}
+
 				$infoboxHtmlContent .= $this->renderItem( $type, $item[ 'data' ] );
 			}
 		}
@@ -110,6 +118,10 @@ class PortableInfoboxRenderService extends WikiaService {
 				$type = $item[ 'type' ];
 
 				if ( $this->templateEngine->isSupportedType( $type ) ) {
+					if ( $type === 'title' || $type === 'header' ) {
+						$item[ 'data' ][ 'inlineStyles' ] = $this->inlineStyles;
+					}
+
 					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
 				}
 			}
@@ -158,5 +170,16 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $this->render( $templateName, $data );
+	}
+
+	private function getInlineStyles( $accentColor, $accentColorText ) {
+		$backgroundColor = empty( $accentColor ) ? '' : "background-color:{$accentColor};";
+		$color = empty( $accentColorText ) ? '' : "color:{$accentColorText};";
+
+		if ( empty( $backgroundColor ) && empty( $color ) ) {
+			return '';
+		}
+
+		return "style={$backgroundColor}{$color}";
 	}
 }

@@ -94,7 +94,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		//TODO: pass colors to render service
 		$renderSerivce = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new MobileInfoboxRenderService() : new PortableInfoboxRenderService();
-		return $renderSerivce->renderInfobox( $data, $theme, $layout );
+		return $renderSerivce->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
 
 	}
 

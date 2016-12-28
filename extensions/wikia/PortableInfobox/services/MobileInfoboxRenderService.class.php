@@ -15,9 +15,11 @@ class MobileInfoboxRenderService extends PortableInfoboxRenderService {
 	 *
 	 * @param $theme
 	 * @param $layout
+	 * @param $accentColor
+	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
