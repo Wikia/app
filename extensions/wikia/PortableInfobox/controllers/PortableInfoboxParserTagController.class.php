@@ -11,6 +11,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'pi-theme-';
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
+	const ACCENT_COLOR = 'accent-color';
+	const ACCENT_COLOR_TEXT = 'accent-color-text';
 
 	private $markerNumber = 0;
 
@@ -88,8 +90,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
-		$accentColor = $this->getColor( 'accent-color', $params, $frame );
-		$accentColorText = $this->getColor( 'accent-color-text', $params, $frame );
+		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
+		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
 
 		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
@@ -120,7 +122,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		} catch ( InvalidColorValueException $e ) {
-			return $this->handleError(wfMessage( "portable-infobox-unsupported-color-format" )->escaped() );
+			return $this->handleError(wfMessage( 'portable-infobox-unsupported-color-format' )->escaped() );
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;

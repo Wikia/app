@@ -123,6 +123,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 
 	public function testFailValidateColorValueDataProvider() {
 		return [
+			['color' => ''],
 			['color' => 'ggg'],
 			['color' => 'asd'],
 			['color' => '12g'],
