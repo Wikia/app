@@ -61,10 +61,10 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
 			$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-			$data[ $i ] = $helper->extendImageData( $data[ $i ], $this->imagesWidth );
+			$data[ $i ] = $helper->extendImageData( $data[$i], $this->imagesWidth );
 
-			if ( !!$data[ $i ] ) {
-				$images[] = $data[ $i ];
+			if ( !!$data[$i] ) {
+				$images[] = $data[$i];
 			}
 		}
 

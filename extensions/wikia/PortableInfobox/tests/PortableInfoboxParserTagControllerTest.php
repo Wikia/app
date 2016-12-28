@@ -314,6 +314,23 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 				],
 				'message' => 'accent-color-text-default and accent-color-text-source, accent-color-default, accent-color-source set'
 			],
+			[
+				'params' => [
+					'accent-color-text-default' => 'fff' ,
+					'accent-color-text-source' => 'color-source',
+					'accent-color-default' => 'fff' ,
+					'accent-color-source' => 'color-source2'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#001;color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '000',
+					'color-source2' => '001'
+				],
+				'message' => 'colors without #'
+			],
 		];
 	}
 
