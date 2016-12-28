@@ -210,10 +210,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$sourceParam = $colorName . '-source';
 		$defaultParam = $colorName . '-default';
 
-		$sourceParamValue = trim( $frame->getArgument( $params[ $sourceParam ] ) );
-
-		if ( isset( $params[ $sourceParam ] ) && !empty( $sourceParamValue ) ) {
-			$color = $sourceParamValue;
+		if ( isset( $params[ $sourceParam ] ) && !empty( $frame->getArgument( $params[ $sourceParam ] ) ) ) {
+			$color = trim( $frame->getArgument( $params[ $sourceParam ] ) );
 		} else if ( isset( $params[ $defaultParam ] ) ) {
 			$color = trim( $params[ $defaultParam ] );
 		} else {
