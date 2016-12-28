@@ -20,6 +20,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	protected $markers = [ ];
 	protected static $instance;
+	private static $infoboxParamsValidator;
 
 	/**
 	 * @return PortableInfoboxParserTagController
@@ -27,6 +28,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	public static function getInstance() {
 		if ( !isset( static::$instance ) ) {
 			static::$instance = new PortableInfoboxParserTagController();
+			static::$infoboxParamsValidator = new InfoboxParamsValidator();
 		}
 
 		return static::$instance;
@@ -83,8 +85,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new InfoboxParamsValidator();
-		$infoboxParamsValidator->validateParams( $params );
+		static::$infoboxParamsValidator->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
 		//save for later api usage
@@ -197,9 +198,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getLayout( $params ) {
-		$validator = new InfoboxParamsValidator();
 		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
-		if ( $validator->validateLayout( $layoutName ) ) {
+		if ( static::$infoboxParamsValidator->validateLayout( $layoutName ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
@@ -208,8 +208,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getColor( $colorParam, $params, PPFrame $frame ) {
-		$validator = new InfoboxParamsValidator();
-
 		$sourceParam = $colorParam . '-source';
 		$defaultParam = $colorParam . '-default';
 
@@ -223,7 +221,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
 
-		$validator->validateColorValue( $color );
+		static::$infoboxParamsValidator->validateColorValue( $color );
 
 		return $color;
 	}

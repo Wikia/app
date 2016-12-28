@@ -3,13 +3,13 @@ namespace Wikia\PortableInfobox\Helpers;
 
 class InfoboxParamsValidator {
 	private $supportedParams = [
-		'theme',
-		'theme-source',
-		'layout',
 		'accent-color-default',
 		'accent-color-source',
 		'accent-color-text-default',
-		'accent-color-text-source'
+		'accent-color-text-source',
+		'layout',
+		'theme',
+		'theme-source',
 	];
 
 	private $supportedLayouts = [
