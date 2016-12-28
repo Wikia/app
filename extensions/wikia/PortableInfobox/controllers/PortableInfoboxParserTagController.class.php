@@ -4,6 +4,8 @@ use \Wikia\PortableInfobox\Parser\Nodes;
 use \Wikia\PortableInfobox\Helpers\InvalidColorValueException;
 use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
 use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
+use \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
+use \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
@@ -115,9 +117,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		try {
 			$renderedValue = $this->render( $markup, $parser, $frame, $params );
-		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
+		} catch ( UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
-		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+		} catch ( XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
 		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
@@ -205,11 +207,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
 	}
 
-	private function getColor( $colorName, $params, PPFrame $frame ) {
+	private function getColor( $colorParam, $params, PPFrame $frame ) {
 		$validator = new InfoboxParamsValidator();
 
-		$sourceParam = $colorName . '-source';
-		$defaultParam = $colorName . '-default';
+		$sourceParam = $colorParam . '-source';
+		$defaultParam = $colorParam . '-default';
 
 		if ( isset( $params[ $sourceParam ] ) && !empty( $frame->getArgument( $params[ $sourceParam ] ) ) ) {
 			$color = trim( $frame->getArgument( $params[ $sourceParam ] ) );
