@@ -205,6 +205,18 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.wikia.com'
 			],
+			[
+				'env' => WIKIA_ENV_STABLE,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://stable.gta.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_STABLE,
+				'forcedEnv' => null,
+				'url' => 'http://stable.gta.wikia.com/wiki/test',
+				'expected' => 'http://stable.gta.wikia.com/wiki/test'
+			],
 		];
 	}
 

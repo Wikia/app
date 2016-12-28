@@ -321,7 +321,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( noDialog, trackMecha
  * @param {string} [trackMechanism] Abort mechanism; used for event tracking if present
  */
 ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
-	var abortType, promises = [];
+	var abortType;
 
 	// Event tracking
 	if ( trackMechanism ) {
@@ -341,6 +341,12 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
 			mechanism: trackMechanism
 		} );
 	}
+
+	this.updatePageOnCancel();
+};
+
+ve.init.mw.ViewPageTarget.prototype.updatePageOnCancel = function () {
+	var promises = [];
 
 	this.deactivating = true;
 	// User interface changes
@@ -559,10 +565,10 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 ) {
 	var newUrlParams, watchChecked;
 	this.saveDeferred.resolve();
-	if ( !this.pageExists || this.restoring ) {
+	if ( this.shouldReloadPageAfterSave() ) {
 		// This is a page creation or restoration, refresh the page
 		this.tearDownBeforeUnloadHandler();
-		newUrlParams = newid === undefined ? {} : { venotify: this.restoring ? 'restored' : 'created' };
+		newUrlParams = newid === undefined ? {} : { venotify: this.getVeNotifyAfterSave() };
 
 		if ( isRedirect ) {
 			newUrlParams.redirect = 'no';
@@ -614,6 +620,20 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 				message: ve.msg( 'postedit-confirmation-saved', mw.user )
 			} );
 		}
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
+	return Boolean( !this.pageExists || this.restoring );
+};
+
+ve.init.mw.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
+	if ( this.restoring ) {
+		return 'restored';
+	} else if ( this.pageExists ) {
+		return 'saved';
+	} else {
+		return 'created';
 	}
 };
 

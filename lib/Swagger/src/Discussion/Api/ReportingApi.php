@@ -103,12 +103,11 @@ class ReportingApi
     /**
      * Operation createPostReport
      *
-     * Report a post.
+     * Report a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id  (required)
      * @param \Swagger\Client\Discussion\Models\SingleValueInput $value post report json input (required)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -118,51 +117,43 @@ class ReportingApi
         return $response;
     }
 
-
     /**
      * Operation createPostReportWithHttpInfo
      *
-     * Report a post.
+     * Report a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id  (required)
      * @param \Swagger\Client\Discussion\Models\SingleValueInput $value post report json input (required)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function createPostReportWithHttpInfo($site_id, $post_id, $value)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling createPostReport');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling createPostReport');
         }
-
         // verify the required parameter 'value' is set
         if ($value === null) {
             throw new \InvalidArgumentException('Missing the required parameter $value when calling createPostReport');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/report";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = $this->apiClient->selectHeaderAccept(array('*/*'));
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('*_/_*'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -170,7 +161,8 @@ class ReportingApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -181,7 +173,6 @@ class ReportingApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($value)) {
@@ -194,20 +185,16 @@ class ReportingApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -215,7 +202,9 @@ class ReportingApi
                 'PUT',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/posts/{postId}/report'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -242,14 +231,14 @@ class ReportingApi
             throw $e;
         }
     }
+
     /**
      * Operation getPostListReporters
      *
-     * Retrieve reports for a multiple posts.
+     * Retrieve reports for a multiple posts
      *
      * @param int $site_id The id of the site (required)
      * @param int[] $post_id The id of the post (optional)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -259,26 +248,22 @@ class ReportingApi
         return $response;
     }
 
-
     /**
      * Operation getPostListReportersWithHttpInfo
      *
-     * Retrieve reports for a multiple posts.
+     * Retrieve reports for a multiple posts
      *
      * @param int $site_id The id of the site (required)
      * @param int[] $post_id The id of the post (optional)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getPostListReportersWithHttpInfo($site_id, $post_id = null)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getPostListReporters');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/reports";
         $httpBody = '';
@@ -298,7 +283,6 @@ class ReportingApi
         if ($post_id !== null) {
             $queryParams['postId'] = $this->apiClient->getSerializer()->toQueryValue($post_id);
         }
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -311,28 +295,22 @@ class ReportingApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -340,7 +318,9 @@ class ReportingApi
                 'GET',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/reports'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -355,14 +335,14 @@ class ReportingApi
             throw $e;
         }
     }
+
     /**
      * Operation getPostReporters
      *
-     * Retrieve reports for a post.
+     * Retrieve reports for a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of the post (required)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -372,31 +352,26 @@ class ReportingApi
         return $response;
     }
 
-
     /**
      * Operation getPostReportersWithHttpInfo
      *
-     * Retrieve reports for a post.
+     * Retrieve reports for a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of the post (required)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getPostReportersWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getPostReporters');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling getPostReporters');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/report/details";
         $httpBody = '';
@@ -409,8 +384,6 @@ class ReportingApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -418,7 +391,8 @@ class ReportingApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -430,28 +404,22 @@ class ReportingApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -459,7 +427,9 @@ class ReportingApi
                 'GET',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/posts/{postId}/report/details'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -474,14 +444,14 @@ class ReportingApi
             throw $e;
         }
     }
+
     /**
      * Operation validatePostReport
      *
-     * Validate a post.
+     * Validate a post
      *
      * @param int $site_id  (required)
      * @param int $post_id  (required)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -491,45 +461,38 @@ class ReportingApi
         return $response;
     }
 
-
     /**
      * Operation validatePostReportWithHttpInfo
      *
-     * Validate a post.
+     * Validate a post
      *
      * @param int $site_id  (required)
      * @param int $post_id  (required)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function validatePostReportWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling validatePostReport');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling validatePostReport');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/report/valid";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = $this->apiClient->selectHeaderAccept(array('*/*'));
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('*_/_*'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -537,7 +500,8 @@ class ReportingApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -549,28 +513,22 @@ class ReportingApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -578,7 +536,9 @@ class ReportingApi
                 'PUT',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/posts/{postId}/report/valid'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -605,4 +565,5 @@ class ReportingApi
             throw $e;
         }
     }
+
 }

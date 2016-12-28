@@ -103,11 +103,10 @@ class PermalinksApi
     /**
      * Operation getThread
      *
-     * Get the post link page containing the post for a site.
+     * Get the post link page containing the post for a site
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of a specific post (required)
-     *
      * @return \Swagger\Client\Discussion\Models\ForumThreadHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -117,31 +116,26 @@ class PermalinksApi
         return $response;
     }
 
-
     /**
      * Operation getThreadWithHttpInfo
      *
-     * Get the post link page containing the post for a site.
+     * Get the post link page containing the post for a site
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of a specific post (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\ForumThreadHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getThreadWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getThread');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling getThread');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/permalinks/posts/{postId}";
         $httpBody = '';
@@ -154,8 +148,6 @@ class PermalinksApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -163,7 +155,8 @@ class PermalinksApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -175,28 +168,22 @@ class PermalinksApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -205,7 +192,8 @@ class PermalinksApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\ForumThreadHalResponse'
+                '\Swagger\Client\Discussion\Models\ForumThreadHalResponse',
+                '/{siteId}/permalinks/posts/{postId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\ForumThreadHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -228,4 +216,5 @@ class PermalinksApi
             throw $e;
         }
     }
+
 }
