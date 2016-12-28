@@ -42,9 +42,9 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		// Surpress `Warning: DOMDocument::loadHTML(): Tag aside invalid in Entity`
 		// http://stackoverflow.com/questions/9149180/domdocumentloadhtml-error
-		libxml_use_internal_errors( true );
+		$setting = libxml_use_internal_errors( true );
 		$result->loadHTML( $output );
-		libxml_use_internal_errors( false );
+		libxml_use_internal_errors( $setting );
 
 		return new DOMXPath( $result );
 	}
