@@ -210,8 +210,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		if ( isset( $params[ $sourceParam ] ) && !empty( $sourceParamValue ) ) {
 			$color = $sourceParamValue;
+		} else if ( isset( $params[ $defaultParam ] ) ) {
+			$color = trim( $params[ $defaultParam ] );
 		} else {
-			$color = isset( $params[ $defaultParam ] ) ? trim( $params[ $defaultParam ] ) : '';
+			return '';
 		}
 
 		$validator->validateColorValue( $color );
