@@ -67,8 +67,6 @@ $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPo
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 $wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
 
-$wgAutoloadClasses[ 'InvalidParamValueException' ] = $dir . 'controllers/InvalidParamValueException.php';
-
 
 // query pages
 $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQueryPage.php';

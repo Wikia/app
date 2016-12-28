@@ -12,6 +12,11 @@ class InfoboxParamsValidator {
 		'accent-color-text-source'
 	];
 
+	private $supportedLayouts = [
+		'default',
+		'stacked'
+	];
+
 	/**
 	 * validates infobox tags attribute names
 	 * @param array $params
@@ -28,7 +33,34 @@ class InfoboxParamsValidator {
 
 		return true;
 	}
+
+	/**
+	 * validates if argument is valid color value. Currently only hex values are supported
+	 * @param $color
+	 * @return bool
+	 * @throws InvalidColorValueException
+	 */
+	public function validateColorValue( $color ) {
+		if ( preg_match('/^(#?[a-f0-9]{3}([a-f0-9]{3})?)$/i', $color) ) {
+			return true;
+		}
+
+		throw new InvalidColorValueException();
+	}
+
+	/**
+	 * checks if given layout name is supported
+	 * @param $layoutName
+	 * @return bool
+	 */
+	public function validateLayout( $layoutName ) {
+		return $layoutName && in_array( $layoutName, $this->supportedLayouts );
+	}
 }
 
 class InvalidInfoboxParamsException extends \Exception {
+}
+
+
+class InvalidColorValueException extends \Exception {
 }

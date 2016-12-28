@@ -1,6 +1,9 @@
 <?php
 
 use Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Helpers\InvalidColorValueException;
+use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
+use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
@@ -10,10 +13,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
-	private $supportedLayouts = [
-		'default',
-		'stacked'
-	];
 
 	protected $markers = [ ];
 	protected static $instance;
@@ -80,7 +79,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
+		$infoboxParamsValidator = new InfoboxParamsValidator();
 		$infoboxParamsValidator->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
@@ -115,9 +114,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
-		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
-		} catch ( InvalidParamValueException $e ) {
+		} catch ( InvalidColorValueException $e ) {
 			return $this->handleError(wfMessage( "portable-infobox-unsupported-color-format" )->escaped() );
 		}
 
@@ -191,8 +190,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getLayout( $params ) {
+		$validator = new InfoboxParamsValidator();
 		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
-		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
+		if ( $validator->validateLayout( $layoutName ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
@@ -201,26 +201,21 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getColor( $colorName, $params, PPFrame $frame ) {
+		$validator = new InfoboxParamsValidator();
+
 		$sourceParam = $colorName . '-source';
 		$defaultParam = $colorName . '-default';
 
-		$sourceParamValue = trim($frame->getArgument( $params[ $sourceParam ] ));
+		$sourceParamValue = trim( $frame->getArgument( $params[ $sourceParam ] ) );
 
 		if ( isset( $params[ $sourceParam ] ) && !empty( $sourceParamValue ) ) {
 			$color = $sourceParamValue;
 		} else {
-			$color = isset( $params[ $defaultParam ] ) ? trim($params[ $defaultParam ]) : '';
+			$color = isset( $params[ $defaultParam ] ) ? trim( $params[ $defaultParam ] ) : '';
 		}
 
-		if ( !$this->isValidHexColor( $color ) ) {
-			throw new InvalidParamValueException();
-		}
+		$validator->validateColorValue( $color );
 
 		return $color;
 	}
-
-	private function isValidHexColor( $color ) {
-		return preg_match('/^(#?[a-f0-9]{3}([a-f0-9]{3})?)$/i', $color);
-	}
-
 }
