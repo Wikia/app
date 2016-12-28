@@ -118,7 +118,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
-		$this->markers[ $marker ] = $renderedValue;
+		$this->markers[$marker] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
@@ -130,7 +130,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[ 0 ];
+			$firstMarker = array_keys( $this->markers )[0];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
@@ -175,14 +175,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 	private function getThemes( $params, PPFrame $frame ) {
 		$themes = [ ];
 
-		if ( isset( $params[ 'theme' ] ) ) {
-			$staticTheme = trim( $params[ 'theme' ] );
+		if ( isset( $params['theme'] ) ) {
+			$staticTheme = trim( $params['theme'] );
 			if ( !empty ( $staticTheme ) ) {
 				$themes[] = $staticTheme;
 			}
 		}
-		if ( !empty( $params[ 'theme-source' ] ) ) {
-			$variableTheme = trim( $frame->getArgument( $params[ 'theme-source' ] ) );
+		if ( !empty( $params['theme-source'] ) ) {
+			$variableTheme = trim( $frame->getArgument( $params['theme-source'] ) );
 			if ( !empty( $variableTheme ) ) {
 				$themes[] = $variableTheme;
 			}
@@ -197,7 +197,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getLayout( $params ) {
-		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
+		$layoutName = isset( $params['layout'] ) ? $params['layout'] : false;
 		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;

@@ -50,7 +50,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$text = '';
 
 		$marker = $this->controller->renderInfobox( $text, [ ], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+			$this->parser->getPreprocessor()->newFrame() )[0];
 		$output = $this->controller->replaceMarkers( $marker );
 
 		$this->assertEquals( $output, '', 'Should be empty' );
@@ -65,7 +65,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$marker = $this->controller->renderInfobox( $text,
 			[ 'theme' => $staticTheme, 'theme-source' => 'testVar' ],
 			$this->parser,
-			$this->parser->getPreprocessor()->newCustomFrame( [ 'testVar' => $variableTheme ] ) )[ 0 ];
+			$this->parser->getPreprocessor()->newCustomFrame( [ 'testVar' => $variableTheme ] ) )[0];
 		$output = $this->controller->replaceMarkers( $marker );
 
 		$this->assertTrue( array_reduce( $classes, function ( $result, $class ) use ( $output ) {
@@ -104,7 +104,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetLayout( $layout, $expectedOutput, $text, $message ) {
 		$marker = $this->controller->renderInfobox( $text, $layout, $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+			$this->parser->getPreprocessor()->newFrame() )[0];
 		$output = $this->controller->replaceMarkers( $marker );
 
 		$this->assertTrue( $this->containsClassName(
@@ -164,7 +164,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
     <data source="3"><label>3</label></data>';
 
 		$marker = $this->controller->renderInfobox( $text, [ ], $this->parser,
-			$this->parser->getPreprocessor()->newCustomFrame( $params ) )[ 0 ];
+			$this->parser->getPreprocessor()->newCustomFrame( $params ) )[0];
 		$output = $this->controller->replaceMarkers( $marker );
 
 		$result = [ ];
@@ -173,8 +173,8 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$dataNodes = $xpath->query( '//aside/div[contains(@class,\'pi-data\')]' );
 		for ( $i = 0; $i < $dataNodes->length; $i++ ) {
 			// get map of label => value from parsed data node
-			$result[ $xpath->query( 'h3[contains(@class, \'pi-data-label\')]', $dataNodes->item( $i ) )
-				->item( 0 )->nodeValue ] =
+			$result[$xpath->query( 'h3[contains(@class, \'pi-data-label\')]', $dataNodes->item( $i ) )
+				->item( 0 )->nodeValue] =
 				$xpath->query( 'div[contains(@class, \'pi-data-value\')]', $dataNodes->item( $i ) )
 					->item( 0 )->nodeValue;
 		}
