@@ -149,42 +149,12 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * required for testing mobile template rendering
-	 * @return bool
-	 */
-	public function isMobile() {
-		return \F::app()->checkSkin( 'wikiamobile' );
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function isMercury() {
 		global $wgArticleAsJson;
 
 		return !empty( $wgArticleAsJson );
-	}
-
-	/**
-	 * check if item type is supported and logs unsupported types
-	 *
-	 * @param string $type - template type
-	 * @param array $templates - array of supported templates
-	 *
-	 * @return bool
-	 */
-	public function isTypeSupportedInTemplates( $type, $templates ) {
-		$isValid = true;
-
-		if ( !isset( $templates[ $type ] ) ) {
-			WikiaLogger::instance()->info( self::LOGGER_LABEL, [
-				'type' => $type
-			] );
-
-			$isValid = false;
-		}
-
-		return $isValid;
 	}
 
 	/**

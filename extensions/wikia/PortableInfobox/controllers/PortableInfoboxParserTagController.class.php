@@ -91,7 +91,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$accentColor = $this->getColor( 'accent-color', $params, $frame );
 		$accentColorText = $this->getColor( 'accent-color-text', $params, $frame );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
+		//TODO: pass colors to render service
+		$renderSerivce = \F::app()->checkSkin( 'wikiamobile' ) ?
+			new MobileInfoboxRenderService() : new PortableInfoboxRenderService();
+		return $renderSerivce->renderInfobox( $data, $theme, $layout );
+
 	}
 
 	/**
@@ -133,7 +137,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[0];
+			$firstMarker = array_keys( $this->markers )[ 0 ];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
