@@ -79,11 +79,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $mockParams
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
-	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
+	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams, $accentColor, $accentColorText ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', $accentColor, $accentColorText );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 
@@ -110,6 +110,23 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
 				'description' => 'Only title'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#FFF;color:#000;">Test Title</h2>
+							</aside>',
+				'description' => 'Only title with custom colors',
+				'mockParams' => [],
+				'accentColor' => '#FFF',
+				'accentColorText' => '#000'
 			],
 			[
 				'input' => [
@@ -396,6 +413,61 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with title, group with header and two key-value pairs'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'Test Header'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label',
+										'value' => 'test value'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label',
+										'value' => 'test value'
+									]
+								]
+							]
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#FFF;color:#000;">Test Title</h2>
+								<section class="pi-item pi-group pi-border-color">
+									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background" style="background-color:#FFF;color:#000;">Test Header</h2>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">test label</h3>
+										<div class="pi-data-value pi-font">test value</div>
+									</div>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">test label</h3>
+										<div class="pi-data-value pi-font">test value</div>
+									</div>
+								</section>
+							</aside>',
+				'description' => 'Infobox with title, group with header and two key-value pairs, custom accent color and accent text color',
+				'mockParams' => [],
+				'accentColor' => '#FFF',
+				'accentColorText' => '#000'
 			],
 			[
 				'input' => [

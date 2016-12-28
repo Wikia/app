@@ -176,10 +176,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		$backgroundColor = empty( $accentColor ) ? '' : "background-color:{$accentColor};";
 		$color = empty( $accentColorText ) ? '' : "color:{$accentColorText};";
 
-		if ( empty( $backgroundColor ) && empty( $color ) ) {
-			return '';
-		}
-
-		return "style={$backgroundColor}{$color}";
+		return "{$backgroundColor}{$color}";
 	}
 }
