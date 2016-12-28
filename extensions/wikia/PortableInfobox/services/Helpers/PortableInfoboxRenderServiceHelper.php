@@ -2,10 +2,8 @@
 
 namespace Wikia\PortableInfobox\Helpers;
 
-use Wikia\Logger\WikiaLogger;
 
 class PortableInfoboxRenderServiceHelper {
-	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
 	const EUROPA_THUMBNAIL_WIDTH = 300;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
