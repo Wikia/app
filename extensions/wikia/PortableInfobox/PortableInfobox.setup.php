@@ -18,7 +18,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 
 $wgAutoloadClasses[ 'PortableInfoboxQueryService' ] = $dir . 'services/PortableInfoboxQueryService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
-$wgAutoloadClasses[ 'MobileInfoboxRenderService' ] = $dir . 'services/MobileInfoboxRenderService.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxMobileRenderService' ] = $dir . 'services/PortableInfoboxMobileRenderService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxErrorRenderService' ] = $dir . 'services/PortableInfoboxErrorRenderService.class.php';
 
 // parser

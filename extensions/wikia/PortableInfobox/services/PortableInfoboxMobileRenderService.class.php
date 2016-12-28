@@ -2,7 +2,7 @@
 
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
-class MobileInfoboxRenderService extends PortableInfoboxRenderService {
+class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 

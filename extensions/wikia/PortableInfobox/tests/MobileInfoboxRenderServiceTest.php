@@ -1,6 +1,6 @@
 <?php
 
-class MobileInfoboxRenderServiceTest extends WikiaBaseTest {
+class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	//todo: https://wikia-inc.atlassian.net/browse/DAT-3076
 	//todo: we are testing a lot of functionality and have issues with mocking
 	//todo: we should move all render service test to API tests
@@ -73,7 +73,7 @@ class MobileInfoboxRenderServiceTest extends WikiaBaseTest {
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
-		$infoboxRenderService = new MobileInfoboxRenderService();
+		$infoboxRenderService = new PortableInfoboxMobileRenderService();
 		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '' );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );

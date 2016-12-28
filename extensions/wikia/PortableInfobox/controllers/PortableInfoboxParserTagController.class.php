@@ -91,9 +91,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$accentColor = $this->getColor( 'accent-color', $params, $frame );
 		$accentColorText = $this->getColor( 'accent-color-text', $params, $frame );
 
-		//TODO: pass colors to render service
 		$renderSerivce = \F::app()->checkSkin( 'wikiamobile' ) ?
-			new MobileInfoboxRenderService() : new PortableInfoboxRenderService();
+			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
 		return $renderSerivce->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
 
 	}

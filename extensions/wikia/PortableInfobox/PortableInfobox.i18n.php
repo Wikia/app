@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
 	// TODO: set proper copy
-	'portable-infobox-unsupported-color-format' => 'Unsupported color format. Currently, only hexadecimal values are supported.'
+	'portable-infobox-unsupported-color-format' => 'Unsupported color format. Only hexadecimal (i.e. #fff or #f234d2) values are supported.'
 );
 
 $messages['qqq'] = array(
