@@ -20,8 +20,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		wfProfileIn( __METHOD__ );
-
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
@@ -49,8 +47,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
-
-		wfProfileOut( __METHOD__ );
 
 		return $output;
 	}

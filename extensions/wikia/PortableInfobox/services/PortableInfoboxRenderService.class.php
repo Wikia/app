@@ -25,7 +25,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
@@ -57,8 +56,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		} else {
 			$output = '';
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $output;
 	}
