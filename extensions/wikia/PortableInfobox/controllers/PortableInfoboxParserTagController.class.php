@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Parser\Nodes;
 use \Wikia\PortableInfobox\Helpers\InvalidColorValueException;
 use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
 use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
@@ -91,9 +91,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$accentColor = $this->getColor( 'accent-color', $params, $frame );
 		$accentColorText = $this->getColor( 'accent-color-text', $params, $frame );
 
-		$renderSerivce = \F::app()->checkSkin( 'wikiamobile' ) ?
+		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
-		return $renderSerivce->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
+		return $renderService->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
 
 	}
 
