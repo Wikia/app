@@ -90,7 +90,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$themeList = $this->getThemes( $params, $frame );
 		$layout = $this->getLayout( $params );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, implode( " ", $themeList ), $layout );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, implode( ' ', $themeList ), $layout );
 	}
 
 	/**
