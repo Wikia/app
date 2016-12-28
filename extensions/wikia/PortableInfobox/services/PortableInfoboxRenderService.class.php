@@ -21,7 +21,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param $layout
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
@@ -30,13 +30,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		// decide on image width, if europa go with bigger images! else default size
 		$this->imagesWidth = $helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
 			PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
-
-		$colors = [
-			'hasAccentColor' => !empty( $accentColor ),
-			'hasAccentColorText' => !empty( $accentColorText),
-			'accentColor' => $accentColor,
-			'accentColorText' => $accentColorText,
-		];
 
 		foreach ( $infoboxdata as $item ) {
 			$type = $item[ 'type' ];
