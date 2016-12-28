@@ -266,6 +266,8 @@ class WallHistory extends WikiaModel {
 
 		while ( $row = $db->fetchRow( $result ) ) {
 			$data = $this->formatData( $row );
+			//MAIN-9141
+			unset( $data[ 'user' ] );
 			// This empty check shouldn't be necessary, but I'll leave it here just in case.
 			if ( !empty( $data ) ) {
 				$out[] = $data;
@@ -409,6 +411,8 @@ class WallHistory extends WikiaModel {
 		if ( ( $title instanceof Title ) && ( $message instanceof WallMessage ) ) {
 			return [
 				'user' => $user,
+				'username' => $user->getName(),
+				'user_page_full_url' => $user->getUserPage()->getFullUrl(),
 				'event_date' => $row['event_date'],
 				'event_iso' => wfTimestamp( TS_ISO_8601, $row['event_date'] ),
 				'event_mw' => wfTimestamp( TS_MW, $row['event_date'] ),

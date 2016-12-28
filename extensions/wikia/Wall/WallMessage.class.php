@@ -1412,9 +1412,11 @@ class WallMessage {
 		$info[ 'isotime' ] = wfTimestamp( TS_ISO_8601, $info[ 'time' ] );
 		$info[ 'mwtime' ] = wfTimestamp( TS_MW, $info[ 'time' ] );
 
-		$info[ 'user' ] = $user;
-
 		$displayname = $user->getName();
+
+		$info[ 'username' ] = $displayname;
+
+		$info[ 'user_page' ] = $user->getUserPage();
 
 		$user_link = $user->getUserPage()->getFullURL();
 
