@@ -1,4 +1,5 @@
 <?php
+
 class CheckUserHooks {
 	/**
 	 * Hook function for RecentChange_save
@@ -33,7 +34,7 @@ class CheckUserHooks {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
+		$rcRow = [
 			'cuc_id'         => $cuc_id,
 			'cuc_namespace'  => $rc_namespace,
 			'cuc_title'      => $rc_title,
@@ -50,8 +51,8 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
+			'cuc_agent'      => $agent,
+		];
 		# On PG, MW unsets cur_id due to schema incompatibilites. So it may not be set!
 		if ( isset( $rc_cur_id ) ) {
 			$rcRow['cuc_page_id'] = $rc_cur_id;
@@ -65,7 +66,7 @@ class CheckUserHooks {
 	 * Hook function to store password reset
 	 * Saves user data into the cu_changes table
 	 */
-	public static function updateCUPasswordResetData( User $user, $ip, $account ) {
+	public static function updateCUPasswordResetData( User $user, $ip, $account, $wiki = false ) {
 		global $wgRequest;
 
 		// Get XFF header
@@ -73,9 +74,9 @@ class CheckUserHooks {
 		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
 		// Get agent
 		$agent = $wgRequest->getHeader( 'User-Agent' );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, [], $wiki );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
+		$rcRow = [
 			'cuc_id'         => $cuc_id,
 			'cuc_namespace'  => NS_USER,
 			'cuc_title'      => '',
@@ -92,8 +93,8 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
+			'cuc_agent'      => $agent,
+		];
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
 		return true;
@@ -120,7 +121,7 @@ class CheckUserHooks {
 		$agent = $wgRequest->getHeader( 'User-Agent' );
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
+		$rcRow = [
 			'cuc_id'         => $cuc_id,
 			'cuc_namespace'  => NS_USER,
 			'cuc_title'      => '',
@@ -137,8 +138,8 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
+			'cuc_agent'      => $agent,
+		];
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
 		return true;
@@ -160,8 +161,9 @@ class CheckUserHooks {
 	 * Hook function to store registration data
 	 * Saves user data into the cu_changes table
 	 *
-	 * @param $user User
+	 * @param $user    User
 	 * @param $byEmail bool
+	 *
 	 * @return bool
 	 */
 	public static function onAddNewAccount( User $user, $byEmail ) {
@@ -169,8 +171,9 @@ class CheckUserHooks {
 	}
 
 	/**
-	 * @param $user User
+	 * @param $user       User
 	 * @param $actiontext string
+	 *
 	 * @return bool
 	 */
 	protected static function logUserAccountCreation( User $user, $actiontext ) {
@@ -185,7 +188,7 @@ class CheckUserHooks {
 		$agent = $wgRequest->getHeader( 'User-Agent' );
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
+		$rcRow = [
 			'cuc_id'         => $cuc_id,
 			'cuc_page_id'    => 0,
 			'cuc_namespace'  => NS_USER,
@@ -203,8 +206,8 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
+			'cuc_agent'      => $agent,
+		];
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
 		return true;
@@ -214,7 +217,8 @@ class CheckUserHooks {
 	 * Handler for non-standard (edit/log) entries that need IP data
 	 *
 	 * @param $context IContextSource
-	 * @param $data Array
+	 * @param $data    Array
+	 *
 	 * @return bool
 	 */
 	protected static function onLoggableUserIPData( IContextSource $context, array $data ) {
@@ -231,7 +235,7 @@ class CheckUserHooks {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
+		$rcRow = [
 			'cuc_id'         => $cuc_id,
 			'cuc_page_id'    => $data['pageid'], // may be 0
 			'cuc_namespace'  => $data['namespace'],
@@ -249,8 +253,8 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
+			'cuc_agent'      => $agent,
+		];
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
 		return true;
@@ -265,8 +269,9 @@ class CheckUserHooks {
 		if ( 0 == mt_rand( 0, 99 ) ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$encCutoff = $dbw->addQuotes( $dbw->timestamp( time() - $wgCUDMaxAge ) );
-			$dbw->delete( 'cu_changes', array( "cuc_timestamp < $encCutoff" ), __METHOD__ );
+			$dbw->delete( 'cu_changes', [ "cuc_timestamp < $encCutoff" ], __METHOD__ );
 		}
+
 		return true;
 	}
 
@@ -275,12 +280,12 @@ class CheckUserHooks {
 	public static function checkUserSchemaUpdates( DatabaseUpdater $updater ) {
 		$base = dirname( __FILE__ );
 
-		$updater->addExtensionUpdate( array( 'CheckUserHooks::checkUserCreateTables' ) );
+		$updater->addExtensionUpdate( [ 'CheckUserHooks::checkUserCreateTables' ] );
 		if ( $updater->getDB()->getType() == 'mysql' ) {
-			$updater->addExtensionUpdate( array( 'addIndex', 'cu_changes',
-				'cuc_ip_hex_time', "$base/archives/patch-cu_changes_indexes.sql", true ) );
-			$updater->addExtensionUpdate( array( 'addIndex', 'cu_changes',
-				'cuc_user_ip_time', "$base/archives/patch-cu_changes_indexes2.sql", true ) );
+			$updater->addExtensionUpdate( [ 'addIndex', 'cu_changes',
+											'cuc_ip_hex_time', "$base/archives/patch-cu_changes_indexes.sql", true ] );
+			$updater->addExtensionUpdate( [ 'addIndex', 'cu_changes',
+											'cuc_user_ip_time', "$base/archives/patch-cu_changes_indexes2.sql", true ] );
 		}
 
 		return true;
@@ -289,7 +294,7 @@ class CheckUserHooks {
 	public static function checkUserCreateTables( $updater ) {
 		$base = dirname( __FILE__ );
 
-        $db = $updater->getDB();
+		$db = $updater->getDB();
 		if ( $db->tableExists( 'cu_changes' ) ) {
 			$updater->output( "...cu_changes table already exists.\n" );
 		} else {
@@ -311,15 +316,18 @@ class CheckUserHooks {
 	 */
 	public static function checkUserParserTestTables( &$tables ) {
 		$tables[] = 'cu_changes';
+
 		return true;
 	}
 
 	/**
 	 * Add a link to Special:CheckUser on Special:Contributions/<username> for
 	 * privileged users.
-	 * @param $id Integer: user ID
-	 * @param $nt Title: user page title
+	 *
+	 * @param $id    Integer: user ID
+	 * @param $nt    Title: user page title
 	 * @param $links Array: tool links
+	 *
 	 * @return true
 	 */
 	public static function loadCheckUserLink( $id, $nt, &$links ) {
@@ -331,6 +339,7 @@ class CheckUserHooks {
 				'user=' . urlencode( $nt->getText() )
 			);
 		}
+
 		return true;
 	}
 
@@ -346,16 +355,16 @@ class CheckUserHooks {
 
 		$user = User::newFromName( (string)$block->getTarget(), false );
 		if ( !$user->getId() ) {
-			return array(); // user in an IP?
+			return []; // user in an IP?
 		}
 
-		$options = array( 'ORDER BY' => 'cuc_timestamp DESC' );
+		$options = [ 'ORDER BY' => 'cuc_timestamp DESC' ];
 		$options['LIMIT'] = 1; // just the last IP used
 
 		$res = $dbr->select( 'cu_changes',
-			array( 'cuc_ip' ),
-			array( 'cuc_user' => $user->getId() ),
-			__METHOD__ ,
+			[ 'cuc_ip' ],
+			[ 'cuc_user' => $user->getId() ],
+			__METHOD__,
 			$options
 		);
 
@@ -373,29 +382,30 @@ class CheckUserHooks {
 	/**
 	 * Register tables that need to be updated when a user is renamed
 	 *
-	 * @param DatabaseBase $dbw
-	 * @param int $userId
-	 * @param string $oldUsername
-	 * @param string $newUsername
+	 * @param DatabaseBase      $dbw
+	 * @param int               $userId
+	 * @param string            $oldUsername
+	 * @param string            $newUsername
 	 * @param UserRenameProcess $process
-	 * @param int $wgCityId
-	 * @param array $tasks
+	 * @param int               $wgCityId
+	 * @param array             $tasks
+	 *
 	 * @return bool
 	 */
 	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_user',
+		$tasks[] = [
+			'table'           => 'cu_log',
+			'userid_column'   => 'cul_user',
 			'username_column' => 'cul_user_text',
-		);
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_target_id',
+		];
+		$tasks[] = [
+			'table'           => 'cu_log',
+			'userid_column'   => 'cul_target_id',
 			'username_column' => 'cul_target_text',
-			'conds' => array(
-				'cul_type' => array( 'useredits', 'userips' ),
-			),
-		);
+			'conds'           => [
+				'cul_type' => [ 'useredits', 'userips' ],
+			],
+		];
 
 		return true;
 	}

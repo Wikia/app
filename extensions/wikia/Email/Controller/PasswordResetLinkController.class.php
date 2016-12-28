@@ -4,6 +4,8 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Fatal;
+use RequestContext;
+use WikiFactory;
 
 /**
  * Class PasswordResetLinkController
@@ -51,6 +53,25 @@ class PasswordResetLinkController extends EmailController {
 	 * @template passwordResetLink
 	 */
 	public function body() {
+		// PLATFORM-2762 - we need to log information about reset tokens
+		// this action should be triggered by anonymous user, so current user will most likely contain ip. as this
+		// will make the CheckUser logs harder to browse, we override currentUser with targetUser
+		$currentUser = $this->currentUser;
+		$targetUser = $this->targetUser;
+		if ( !$currentUser instanceof \User || !$currentUser->getId() ) {
+			if ( $targetUser instanceof \User && $targetUser->getId() ) {
+				$currentUser = $targetUser;
+			}
+		}
+		$context = RequestContext::getMain();
+		$currentIp = $context->getRequest()->getIP();
+		wfRunHooks( 'User::mailPasswordInternal', [
+			$currentUser,
+			$currentIp,
+			$targetUser,
+			WikiFactory::IDtoDB( WikiFactory::COMMUNITY_CENTRAL ),
+		] );
+
 		$url = $this->getResetLink();
 
 		$this->response->setData( [
@@ -68,7 +89,7 @@ class PasswordResetLinkController extends EmailController {
 	protected function getResetLink() {
 		$query = [
 			'username' => $this->getTargetUserName(),
-			'token' => $this->token,
+			'token'    => $this->token,
 		];
 
 		if ( !empty( $this->returnUrl ) ) {
