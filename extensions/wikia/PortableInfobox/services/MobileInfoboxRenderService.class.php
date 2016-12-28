@@ -6,6 +6,8 @@ class MobileInfoboxRenderService extends PortableInfoboxRenderService {
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
+	protected $imagesWidth = PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH;
+
 	/**
 	 * renders infobox
 	 *
