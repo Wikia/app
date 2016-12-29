@@ -4,9 +4,14 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
+	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
+	const EUROPA_THUMBNAIL_WIDTH = 300;
+
 	protected $templateEngine;
-	protected $imagesWidth;
+	protected $imagesWidth = self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 	protected $inlineStyles;
+
+	private $helper;
 
 	function __construct() {
 		parent::__construct();
@@ -25,26 +30,14 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = $this->getRenderHelper();
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
-		$infoboxHtmlContent = '';
 
 		// decide on image width, if europa go with bigger images! else default size
-		$this->imagesWidth = $helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
-			PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+		$this->imagesWidth = $helper->isEuropaTheme() ? self::EUROPA_THUMBNAIL_WIDTH :
+			self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
-		foreach ( $infoboxdata as $item ) {
-			$type = $item[ 'type' ];
-
-			if ( $this->templateEngine->isSupportedType( $type ) ) {
-				if ( $type === 'title' || $type === 'header' ) {
-					$item[ 'data' ][ 'inlineStyles' ] = $this->inlineStyles;
-				}
-
-				$infoboxHtmlContent .= $this->renderItem( $type, $item[ 'data' ] );
-			}
-		}
+		$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
 
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper', [
@@ -58,6 +51,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $output;
+	}
+
+	protected function getRenderHelper() {
+		if ( !isset( $this->helper ) ) {
+			$this->helper = new PortableInfoboxRenderServiceHelper();
+		}
+		return $this->helper;
 	}
 
 	/**
@@ -80,14 +80,25 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	protected function renderItem( $type, array $data ) {
-		if ( $type === 'group' ) {
-			return $this->renderGroup( $data );
-		}
-		if ( $type === 'image' ) {
-			return $this->renderImage( $data );
+		switch ( $type ) {
+			case 'group':
+				$result = $this->renderGroup( $data );
+				break;
+			case 'header':
+				$result = $this->renderHeader( $data );
+				break;
+			case 'image':
+				$result = $this->renderImage( $data );
+				break;
+			case 'title':
+				$result = $this->renderTitle( $data );
+				break;
+			default:
+				$result = $this->render( $type, $data );
+				break;
 		}
 
-		return $this->render( $type, $data );
+		return $result;
 	}
 
 	/**
@@ -99,32 +110,21 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	protected function renderGroup( $groupData ) {
 		$cssClasses = [ ];
-		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
-		$dataItems = $groupData[ 'value' ];
-		$layout = $groupData[ 'layout' ];
-		$collapse = $groupData[ 'collapse' ];
+		$dataItems = $groupData['value'];
+		$layout = $groupData['layout'];
+		$collapse = $groupData['collapse'];
 
 		if ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
-				$helper->createHorizontalGroupData( $dataItems )
+				$this->createHorizontalGroupData( $dataItems )
 			);
 		} else {
-			foreach ( $dataItems as $item ) {
-				$type = $item[ 'type' ];
-
-				if ( $this->templateEngine->isSupportedType( $type ) ) {
-					if ( $type === 'title' || $type === 'header' ) {
-						$item[ 'data' ][ 'inlineStyles' ] = $this->inlineStyles;
-					}
-
-					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
-				}
-			}
+			$groupHTMLContent .= $this->renderChildren( $dataItems );
 		}
 
-		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[ 0 ][ 'type' ] === 'header' ) {
+		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[0]['type'] === 'header' ) {
 			$cssClasses[] = 'pi-collapse';
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
@@ -142,14 +142,14 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	protected function renderImage( $data ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = $this->getRenderHelper();
 		$images = [ ];
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
-			$data[ $i ] = $helper->extendImageData( $data[ $i ], $this->imagesWidth );
+			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth );
 
-			if ( !!$data[ $i ] ) {
-				$images[] = $data[ $i ];
+			if ( !!$data[$i] ) {
+				$images[] = $data[$i];
 			}
 		}
 
@@ -158,7 +158,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( count( $images ) === 1 ) {
-			$data = $images[ 0 ];
+			$data = $images[0];
 			$templateName = 'image';
 		} else {
 			// More than one image means image collection
@@ -169,10 +169,59 @@ class PortableInfoboxRenderService extends WikiaService {
 		return $this->render( $templateName, $data );
 	}
 
+	protected function renderTitle( $data ) {
+		$data['inlineStyles'] = $this->inlineStyles;
+
+		return $this->render( 'title', $data );
+	}
+
+	protected function renderHeader( $data ) {
+		$data['inlineStyles'] = $this->inlineStyles;
+
+		return $this->render( 'header', $data );
+	}
+
+	protected function renderChildren( $children ) {
+		$result = '';
+		foreach ( $children as $child ) {
+			$type = $child['type'];
+			if ( $this->templateEngine->isSupportedType( $type ) ) {
+				$result .= $this->renderItem( $type, $child['data'] );
+			}
+		}
+
+		return $result;
+	}
+
 	private function getInlineStyles( $accentColor, $accentColorText ) {
 		$backgroundColor = empty( $accentColor ) ? '' : "background-color:{$accentColor};";
 		$color = empty( $accentColorText ) ? '' : "color:{$accentColorText};";
 
 		return "{$backgroundColor}{$color}";
+	}
+
+	private function createHorizontalGroupData( $groupData ) {
+		$horizontalGroupData = [
+			'labels' => [ ],
+			'values' => [ ],
+			'renderLabels' => false
+		];
+
+		foreach ( $groupData as $item ) {
+			$data = $item['data'];
+
+			if ( $item['type'] === 'data' ) {
+				array_push( $horizontalGroupData['labels'], $data['label'] );
+				array_push( $horizontalGroupData['values'], $data['value'] );
+
+				if ( !empty( $data['label'] ) ) {
+					$horizontalGroupData['renderLabels'] = true;
+				}
+			} elseif ( $item['type'] === 'header' ) {
+				$horizontalGroupData['header'] = $data['value'];
+			}
+		}
+
+		return $horizontalGroupData;
 	}
 }

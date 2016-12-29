@@ -5,8 +5,7 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
-
-	protected $imagesWidth = PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH;
+	const MOBILE_THUMBNAIL_WIDTH = 360;
 
 	/**
 	 * renders infobox
@@ -20,17 +19,16 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = $this->getRenderHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
 
 		foreach ( $infoboxdata as $item ) {
-			$data = $item[ 'data' ];
-			$type = $item[ 'type' ];
+			$data = $item['data'];
+			$type = $item['type'];
 
 			if ( $helper->isValidHeroDataItem( $item, $heroData ) ) {
-				$heroData[ $type ] = $data;
-				continue;
+				$heroData[$type] = $data;
 			} elseif ( $this->templateEngine->isSupportedType( $type ) ) {
 				$infoboxHtmlContent .= $this->renderItem( $type, $data );
 			}
@@ -53,11 +51,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 
 	protected function renderImage( $data ) {
 		$images = [ ];
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$count = count( $data );
+		$helper = $this->getRenderHelper();
 
-		for ( $i = 0; $i < count( $data ); $i++ ) {
-			$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-			$data[ $i ] = $helper->extendImageData( $data[$i], $this->imagesWidth );
+		for ( $i = 0; $i < $count; $i++ ) {
+			$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+			$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
 
 			if ( !!$data[$i] ) {
 				$images[] = $data[$i];
@@ -71,11 +70,11 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		// use different template for wikiamobile
 		if ( !$helper->isMercury() ) {
 			// always display only the first image on WikiaMobile
-			$data = $images[ 0 ];
+			$data = $images[0];
 			$templateName = 'image-mobile-wikiamobile';
 		} else {
 			if ( count( $images ) === 1 ) {
-				$data = $images[ 0 ];
+				$data = $images[0];
 				$templateName = 'image-mobile';
 			} else {
 				// more than one image means image collection
@@ -86,6 +85,14 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 
 		$data = SanitizerBuilder::createFromType( 'image' )->sanitize( $data );
 		return parent::render( $templateName, $data );
+	}
+
+	protected function renderTitle( $data ) {
+		return $this->render( 'title', $data );
+	}
+
+	protected function renderHeader( $data ) {
+		return $this->render( 'header', $data );
 	}
 
 	protected function render( $type, array $data ) {
@@ -102,17 +109,18 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = $this->getRenderHelper();
+		$template = '';
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
 			->isFirstInfoboxAlredyRendered();
 
-		if ( array_key_exists( 'image', $data ) ) {
-			$image = $data[ 'image' ][ 0 ];
-			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
-			$data[ 'image' ] = $image;
+		if ( isset( $data['image'] ) ) {
+			$image = $data['image'][0];
+			$image['context'] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
+			$data['image'] = $image;
 
 			if ( !$helper->isMercury() ) {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
@@ -120,9 +128,9 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 				return $this->renderItem( 'hero-mobile', $data );
 			}
 		} elseif ( !$helper->isMercury() || $firstInfoboxAlredyRendered ) {
-			return $this->renderItem( 'title', $data[ 'title' ] );
+			return $this->renderItem( 'title', $data['title'] );
 		}
 
-		return '';
+		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
 	}
 }

@@ -4,43 +4,8 @@ namespace Wikia\PortableInfobox\Helpers;
 
 
 class PortableInfoboxRenderServiceHelper {
-	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
-	const EUROPA_THUMBNAIL_WIDTH = 300;
-	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
-	const EUROPA_THEME_NAME = 'pi-theme-europa';
-
-	/**
-	 * creates special data structure for horizontal group from group data
-	 *
-	 * @param array $groupData
-	 * @return array
-	 */
-	public function createHorizontalGroupData( $groupData ) {
-		$horizontalGroupData = [
-			'labels' => [ ],
-			'values' => [ ],
-			'renderLabels' => false
-		];
-
-		foreach ( $groupData as $item ) {
-			$data = $item[ 'data' ];
-
-			if ( $item[ 'type' ] === 'data' ) {
-				array_push( $horizontalGroupData[ 'labels' ], $data[ 'label' ] );
-				array_push( $horizontalGroupData[ 'values' ], $data[ 'value' ] );
-
-				if ( !empty( $data[ 'label' ] ) ) {
-					$horizontalGroupData[ 'renderLabels' ] = true;
-				}
-			} elseif ( $item[ 'type' ] === 'header' ) {
-				$horizontalGroupData[ 'header' ] = $data[ 'value' ];
-			}
-		}
-
-		return $horizontalGroupData;
-	}
 
 	/**
 	 * extends image data
@@ -53,11 +18,13 @@ class PortableInfoboxRenderServiceHelper {
 		global $wgPortableInfoboxCustomImageWidth;
 
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
-		$title = $data[ 'name' ];
+		$title = $data['name'];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
-		if ( !$file || !$file->exists() ||
-			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] ) ) {
+		if (
+			!$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] )
+		) {
 			return false;
 		}
 
@@ -67,15 +34,15 @@ class PortableInfoboxRenderServiceHelper {
 			$width, self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $originalWidth, $file->getHeight() );
 		// if custom and big enough, scale thumbnail size
 		$ratio = !empty( $wgPortableInfoboxCustomImageWidth ) && $originalWidth > $wgPortableInfoboxCustomImageWidth ?
-			$wgPortableInfoboxCustomImageWidth / $dimensions[ 'width' ] : 1;
+			$wgPortableInfoboxCustomImageWidth / $dimensions['width'] : 1;
 		// get thumbnail
 		$thumbnail = $file->transform( [
-			'width' => round( $dimensions[ 'width' ] * $ratio ),
-			'height' => round( $dimensions[ 'height' ] * $ratio )
+			'width' => round( $dimensions['width'] * $ratio ),
+			'height' => round( $dimensions['height'] * $ratio )
 		] );
 		$thumbnail2x = $file->transform( [
-			'width' => round( $dimensions[ 'width' ] * $ratio * 2 ),
-			'height' => round( $dimensions[ 'height' ] * $ratio * 2 )
+			'width' => round( $dimensions['width'] * $ratio * 2 ),
+			'height' => round( $dimensions['height'] * $ratio * 2 )
 		] );
 		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
@@ -86,12 +53,12 @@ class PortableInfoboxRenderServiceHelper {
 
 		return array_merge( $data, [
 			'ref' => $ref,
-			'height' => $dimensions[ 'height' ],
-			'width' => $dimensions[ 'width' ],
+			'height' => $dimensions['height'],
+			'width' => $dimensions['width'],
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
-			'key' => urlencode( $data[ 'key' ] ),
-			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
+			'key' => urlencode( $data['key'] ?? '' ),
+			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'mercuryComponentAttrs' => json_encode( [
 				'itemContext' => 'portable-infobox',
 				'ref' => $ref
@@ -129,14 +96,14 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool
 	 */
 	public function isValidHeroDataItem( $item, $heroData ) {
-		$type = $item[ 'type' ];
+		$type = $item['type'];
 
 		if ( $type === 'title' && !array_key_exists( 'title', $heroData ) ) {
 			return true;
 		}
 
-		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) && count( $item[ 'data' ] ) === 1 ) {
-			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 0 ][ 'name' ] );
+		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) && count( $item['data'] ) === 1 ) {
+			$imageWidth = $this->getFileWidth( $item['data'][0]['name'] );
 
 			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;

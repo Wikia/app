@@ -14,35 +14,25 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	 * @param $input to check presence of some additional config fields. Possible fields:
 	 * 'isInvalidImage' - bool - if getThumbnail should return false
 	 * 'isMercury' - bool - if we want to test Mercury skin
-	 * 'isMercuryExperimentalMarkupEnabled' - bool
 	 * 'smallImageDimensions' - integer - size of small image (both width and height)
 	 *
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function mockInfoboxRenderServiceHelper( $input ) {
-		$isValidHeroDataItem = isset( $input[ 'isValidHeroDataItem' ] ) && $input[ 'isValidHeroDataItem' ];
-		$isMercury = isset( $input[ 'isMercury' ] ) && $input[ 'isMercury' ];
+		$isValidHeroDataItem = isset( $input['isValidHeroDataItem'] ) && $input['isValidHeroDataItem'];
+		$isMercury = isset( $input['isMercury'] ) && $input['isMercury'];
 
-		$createHorizontalGroupData = isset( $input[ 'createHorizontalGroupData' ] ) ?
-			$input[ 'createHorizontalGroupData' ] : null;
-		$extendImageData = isset( $input[ 'extendImageData' ] ) ? $input[ 'extendImageData' ] : null;
+		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isValidHeroDataItem', 'validateType', 'isMercury',
-				'isMercuryExperimentalMarkupEnabled', 'createHorizontalGroupData', 'extendImageData' ] )
+			->setMethods( [ 'isValidHeroDataItem', 'isMercury', 'extendImageData' ] )
 			->getMock();
 		$mock->expects( $this->any() )
 			->method( 'isValidHeroDataItem' )
 			->will( $this->returnValue( $isValidHeroDataItem ) );
 		$mock->expects( $this->any() )
-			->method( 'validateType' )
-			->will( $this->returnValue( true ) );
-		$mock->expects( $this->any() )
 			->method( 'isMercury' )
 			->will( $this->returnValue( $isMercury ) );
-		$mock->expects( $this->any() )
-			->method( 'createHorizontalGroupData' )
-			->will( $this->returnValue( $createHorizontalGroupData ) );
 		$mock->expects( $this->any() )
 			->method( 'extendImageData' )
 			->will( $this->returnValue( $extendImageData ) );
@@ -91,7 +81,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'input' => [ ],
 				'output' => '',
 				'description' => 'Empty data should yield no infobox markup',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -106,7 +96,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
 				'description' => 'Only title',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -121,7 +111,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
 				'description' => 'navigation only',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -140,7 +130,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								</div>
 							</aside>',
 				'description' => 'Only pair',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -225,7 +215,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, INVALID image and key-value pair',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -251,7 +241,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								</div>
 							</aside>',
 				'description' => 'Simple infobox with title, empty image and key-value pair',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -306,7 +296,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with title, group with header and two key-value pairs',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -438,7 +428,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								</nav>
 							</aside>',
 				'description' => 'Infobox with navigation',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'input' => [
@@ -554,7 +544,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Mercury: Only image. Image is not small- should render hero.',
 				'mockParams' => [
 					'isMercury' => true,
-					'isMercuryExperimentalMarkupEnabled' => true,
 					'isValidHeroDataItem' => true,
 					'extendImageData' => [
 						'alt' => 'image alt',
@@ -613,7 +602,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'isValidHeroDataItem' => true,
 					'isMercury' => true,
-					'isMercuryExperimentalMarkupEnabled' => true,
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
 						'name' => 'test1',

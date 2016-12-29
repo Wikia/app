@@ -45,7 +45,7 @@ class ArticleAsJson extends WikiaService {
 					'height' => $scaledSize['height'],
 					'width' => $scaledSize['width'],
 					'title' => $media['title'],
-					'link' => $media['link'],
+					'link' => $media['link'] ?? '',
 					'caption' => $media['caption'] ?? ''
 				]
 			)

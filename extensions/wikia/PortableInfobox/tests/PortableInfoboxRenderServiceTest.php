@@ -18,24 +18,16 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function mockInfoboxRenderServiceHelper( $input ) {
-		$isValidHeroDataItem = isset( $input[ 'isValidHeroDataItem' ] ) && $input[ 'isValidHeroDataItem' ];
+		$isValidHeroDataItem = isset( $input['isValidHeroDataItem'] ) && $input['isValidHeroDataItem'];
 
-		$createHorizontalGroupData = isset( $input[ 'createHorizontalGroupData' ] ) ?
-			$input[ 'createHorizontalGroupData' ] : null;
-		$extendImageData = isset( $input[ 'extendImageData' ] ) ? $input[ 'extendImageData' ] : null;
+		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isValidHeroDataItem', 'validateType', 'createHorizontalGroupData', 'extendImageData' ] )
+			->setMethods( [ 'isValidHeroDataItem', 'extendImageData' ] )
 			->getMock();
 		$mock->expects( $this->any() )
 			->method( 'isValidHeroDataItem' )
 			->will( $this->returnValue( $isValidHeroDataItem ) );
-		$mock->expects( $this->any() )
-			->method( 'validateType' )
-			->will( $this->returnValue( true ) );
-		$mock->expects( $this->any() )
-			->method( 'createHorizontalGroupData' )
-			->will( $this->returnValue( $createHorizontalGroupData ) );
 		$mock->expects( $this->any() )
 			->method( 'extendImageData' )
 			->will( $this->returnValue( $extendImageData ) );
@@ -98,7 +90,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'input' => [ ],
 				'output' => '',
 				'description' => 'Empty data should yield no infobox markup',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -115,7 +107,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
 				'description' => 'Only title',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -132,7 +124,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#FFF;color:#000;">Test Title</h2>
 							</aside>',
 				'description' => 'Only title with custom colors',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '#FFF',
 				'accentColorText' => '#000'
 			],
@@ -244,7 +236,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
 				'description' => 'navigation only',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -265,7 +257,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</div>
 							</aside>',
 				'description' => 'Only pair',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -356,7 +348,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, INVALID image and key-value pair',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -384,7 +376,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</div>
 							</aside>',
 				'description' => 'Simple infobox with title, empty image and key-value pair',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -441,7 +433,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with title, group with header and two key-value pairs',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -498,7 +490,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with title, group with header and two key-value pairs, custom accent color and accent text color',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '#FFF',
 				'accentColorText' => '#000'
 			],
@@ -559,14 +551,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with horizontal group',
-				'mockParams' => [
-					'createHorizontalGroupData' => [
-						'header' => 'Test header',
-						'labels' => [ 'test label', 'test label' ],
-						'values' => [ 'test value', 'test value' ],
-						'renderLabels' => true
-					]
-				],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -611,13 +596,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Infobox with horizontal group without header and labels',
-				'mockParams' => [
-					'createHorizontalGroupData' => [
-						'labels' => [ '', '' ],
-						'values' => [ 'test value', 'test value' ],
-						'renderLabels' => false
-					]
-				],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
@@ -636,10 +615,159 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</nav>
 							</aside>',
 				'description' => 'Infobox with navigation',
-				'mockParams' => [],
+				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
-			]
+			],
+			// horizontal group tests
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label 1',
+										'value' => 'test value 1'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label 2',
+										'value' => 'test value 2'
+									]
+								]
+							],
+							'layout' => 'horizontal',
+							'collapse' => null,
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<section class="pi-item pi-group pi-border-color">
+									<table class="pi-horizontal-group">
+										<thead>
+											<tr>
+												<th class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">test label 1</th>
+												<th class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">test label 2</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 1</td>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 2</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</aside>',
+				'description' => 'Horizontal group data without header',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'test header'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => '',
+										'value' => 'test value 1'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label 2',
+										'value' => 'test value 2'
+									]
+								]
+							],
+							'layout' => 'horizontal',
+							'collapse' => null,
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<section class="pi-item pi-group pi-border-color">
+									<table class="pi-horizontal-group">
+										<caption class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">test header</caption>
+										<thead>
+											<tr>
+												<th class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing"/>
+												<th class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">test label 2</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 1</td>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 2</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</aside>',
+				'description' => 'Horizontal group data with empty label',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => '',
+										'value' => 'test value 1'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => '',
+										'value' => 'test value 2'
+									]
+								]
+							],
+							'layout' => 'horizontal',
+							'collapse' => null,
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<section class="pi-item pi-group pi-border-color">
+									<table class="pi-horizontal-group pi-horizontal-group-no-labels">
+										<tbody>
+											<tr>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 1</td>
+												<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value 2</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</aside>',
+				'description' => 'Horizontal group data with empty label',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
 		];
 	}
 }
