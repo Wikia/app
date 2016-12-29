@@ -33,8 +33,6 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
-			case 'QuantServe':
-				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
 				return new AnalyticsProviderComscore();
 			case 'Exelate':

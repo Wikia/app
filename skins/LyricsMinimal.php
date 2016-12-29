@@ -856,13 +856,12 @@ $this->printCustomFooter();
 echo '</div>';
 
 // Quant serve moved *after* the ads because it depends on Athena/Provider values.
-// macbre: RT #25697 - hide Quantcast Tags on edit pages
+// macbre: RT #25697 - hide Comscore Tags on edit pages
 if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
-	echo '<!-- QuantServe and comscore hidden on edit page -->';
+	echo '<!-- Comscore hidden on edit page -->';
 }
 else {
 	echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-	echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	echo AnalyticsEngine::track('Exelate', AnalyticsEngine::EVENT_PAGEVIEW);
 }
 

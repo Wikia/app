@@ -134,11 +134,6 @@ class WikiaMobileService extends WikiaService {
 
 		if ( !in_array( $this->wg->Request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$trackingCode .= AnalyticsEngine::track(
-					'QuantServe',
-					AnalyticsEngine::EVENT_PAGEVIEW,
-					['extraLabels'=> ['Category.MobileWeb.WikiaMobile']]
-				) .
-				AnalyticsEngine::track(
 					'Comscore',
 					AnalyticsEngine::EVENT_PAGEVIEW
 				);

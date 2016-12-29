@@ -129,13 +129,6 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	}
 
 	/**
-	 * Return tracking code
-	 */
-	private function getAnalyticsCode() {
-		return AnalyticsEngine::track( 'QuantServe', AnalyticsEngine::EVENT_PAGEVIEW );
-	}
-
-	/**
 	 * Return Wikia specific toolbox
 	 */
 	function wikiaBox() {
@@ -225,14 +218,12 @@ HTML;
 
 	// HTML to be added between footer and end of page
 	public function bottomScripts() {
-		$analytics = $this->getAnalyticsCode();
 		$bottomScriptText = parent::bottomScripts();
 
 		$html = <<<HTML
 <!-- WikiaBottomScripts -->
 $bottomScriptText
 <!-- /WikiaBottomScripts -->
-$analytics
 <div id="positioned_elements"></div>
 HTML;
 

@@ -41,6 +41,21 @@
 	cookieExists = function (cookieName) {
 		return document.cookie.indexOf(cookieName) > -1;
 	};
+
+	var quantcastLabels = "";
+	if (window.wgWikiVertical) {
+		quantcastLabels += wgWikiVertical;
+		if (window.wgDartCustomKeyValues) {
+			var keyValues = wgDartCustomKeyValues.split(';');
+			for (var i=0; i<keyValues.length; i++) {
+				var keyValue = keyValues[i].split('=');
+				if (keyValue.length >= 2) {
+					quantcastLabels += ',' + wgWikiVertical + '.' + keyValue[1];
+				}
+			}
+		}
+	}
+
 	var dartGnreValues = window.dartGnreValues || [];
 
 	var utag_data = {
@@ -69,11 +84,10 @@
 		isDartGnreFps: dartGnreValues.indexOf('fps') > -1,
 		isDartGnreHorror: dartGnreValues.indexOf('horror') > -1,
 		isDartGnreDriving: dartGnreValues.indexOf('driving') > -1,
-		isDartGnreSports: dartGnreValues.indexOf('sports') > -1
+		isDartGnreSports: dartGnreValues.indexOf('sports') > -1,
+		quantcastId: 'p-8bG6eLqkH6Avk',
+		quantcastLabels: quantcastLabels
 	};
-
-	console.log("diana");
-	debugger
 </script>
 
 <!-- Loading script asynchronously -->
@@ -116,7 +130,6 @@
 <? endif ?>
 
 <?= $comScore ?>
-<?= $quantServe ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
