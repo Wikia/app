@@ -89,14 +89,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
-		$theme = $this->getThemeWithDefault( $params, $frame );
+		$themeList = $this->getThemes( $params, $frame );
 		$layout = $this->getLayout( $params );
 		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
 		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
 
 		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
 			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
-		return $renderService->renderInfobox( $data, $theme, $layout, $accentColor, $accentColorText );
+		return $renderService->renderInfobox( $data, implode( " ", $themeList ), $layout, $accentColor, $accentColorText );
 
 	}
 
@@ -125,7 +125,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
-		$this->markers[ $marker ] = $renderedValue;
+		$this->markers[$marker] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
@@ -179,18 +179,28 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
-	private function getThemeWithDefault( $params, PPFrame $frame ) {
-		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
-		$themeName = $this->getThemeName( $params, $value );
+	private function getThemes( $params, PPFrame $frame ) {
+		$themes = [ ];
 
-		//make sure no whitespaces, prevents side effects
-		return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName ) );
-	}
+		if ( isset( $params['theme'] ) ) {
+			$staticTheme = trim( $params['theme'] );
+			if ( !empty ( $staticTheme ) ) {
+				$themes[] = $staticTheme;
+			}
+		}
+		if ( !empty( $params['theme-source'] ) ) {
+			$variableTheme = trim( $frame->getArgument( $params['theme-source'] ) );
+			if ( !empty( $variableTheme ) ) {
+				$themes[] = $variableTheme;
+			}
+		}
 
-	private function getThemeName( $params, $value ) {
-		return !empty( $value ) ? $value :
-			// default logic
-			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
+		// use default global theme if not present
+		$themes = !empty( $themes ) ? $themes : [ self::DEFAULT_THEME_NAME ];
+
+		return array_map( function ( $name ) {
+			return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $name ) );
+		}, $themes );
 	}
 
 	private function getLayout( $params ) {
