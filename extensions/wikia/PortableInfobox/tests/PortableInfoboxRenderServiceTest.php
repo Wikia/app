@@ -77,6 +77,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $expectedOutput
 	 * @param $description
 	 * @param $mockParams
+	 * @param $accentColor
+	 * @param $accentColorText
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams, $accentColor, $accentColorText ) {
@@ -95,7 +97,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [ ],
 				'output' => '',
-				'description' => 'Empty data should yield no infobox markup'
+				'description' => 'Empty data should yield no infobox markup',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -109,7 +114,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
-				'description' => 'Only title'
+				'description' => 'Only title',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -168,7 +176,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'media-type' => 'image',
 						'isVideo' => false
 					]
-				]
+				],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -217,7 +227,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'isVideo' => true,
 						'duration' => '1:20'
 					]
-				]
+				],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -231,7 +243,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
-				'description' => 'navigation only'
+				'description' => 'navigation only',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -249,7 +264,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
-				'description' => 'Only pair'
+				'description' => 'Only pair',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -306,7 +324,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'media-type' => 'image',
 						'isVideo' => false
 					]
-				]
+				],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -335,7 +355,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 									</div>
 							</aside>',
-				'description' => 'Simple infobox with title, INVALID image and key-value pair'
+				'description' => 'Simple infobox with title, INVALID image and key-value pair',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -360,7 +383,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
-				'description' => 'Simple infobox with title, empty image and key-value pair'
+				'description' => 'Simple infobox with title, empty image and key-value pair',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -394,7 +420,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'value' => 'test value'
 									]
 								]
-							]
+							],
+							'layout' => 'default',
+							'collapse' => null,
 						]
 					]
 				],
@@ -412,7 +440,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, group with header and two key-value pairs'
+				'description' => 'Infobox with title, group with header and two key-value pairs',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -446,7 +477,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										'value' => 'test value'
 									]
 								]
-							]
+							],
+							'layout' => 'default',
+							'collapse' => null,
 						]
 					]
 				],
@@ -496,7 +529,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									]
 								]
 							],
-							'layout' => 'horizontal'
+							'layout' => 'horizontal',
+							'collapse' => null,
 						]
 					]
 				],
@@ -532,7 +566,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'values' => [ 'test value', 'test value' ],
 						'renderLabels' => true
 					]
-				]
+				],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -555,7 +591,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									]
 								]
 							],
-							'layout' => 'horizontal'
+							'layout' => 'horizontal',
+							'collapse' => null,
 						]
 					]
 				],
@@ -580,7 +617,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'values' => [ 'test value', 'test value' ],
 						'renderLabels' => false
 					]
-				]
+				],
+				'accentColor' => '',
+				'accentColorText' => ''
 			],
 			[
 				'input' => [
@@ -596,7 +635,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<p>Links</p>
 								</nav>
 							</aside>',
-				'description' => 'Infobox with navigation'
+				'description' => 'Infobox with navigation',
+				'mockParams' => [],
+				'accentColor' => '',
+				'accentColorText' => ''
 			]
 		];
 	}
