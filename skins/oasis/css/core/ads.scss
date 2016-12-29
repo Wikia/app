@@ -177,7 +177,9 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-.bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+.video-player {
+	position: relative;
+
 	video {
 		left: 0;
 	}
@@ -197,6 +199,25 @@ $uap-video-animation-duration: 0.4s;
 		height: 100%;
 		max-width: 100%;
 		width: 0;
+	}
+
+	.pause-overlay {
+		cursor: pointer;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.close-ad {
+		background-image: url('/skins/oasis/images/player/collapse_light.svg');
+		cursor: pointer;
+		height: 30px;
+		margin: 10px 10px 30px 30px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
 	}
 }
 
@@ -549,22 +570,6 @@ body > a > img[src$="noad.gif"] {
 	#WikiaArticleBottomAd {
 		clear: both;
 		margin: 0;
-	}
-}
-
-.overVideoLayer {
-	cursor: pointer;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	width: 100%;
-
-	.close-ad {
-		background-image: url('/skins/oasis/images/player/collapse_light.svg');
-		float: right;
-		height: 30px;
-		margin: 10px 10px 30px 30px;
-		width: 30px;
 	}
 }
 
