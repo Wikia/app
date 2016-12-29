@@ -41,11 +41,7 @@ class InfoboxParamsValidator {
 	 * @throws InvalidColorValueException
 	 */
 	public function validateColorValue( $color ) {
-		if ( !empty( preg_match('/^(#[a-f0-9]{3}([a-f0-9]{3})?)$/i', $color) ) ) {
-			return true;
-		}
-
-		throw new InvalidColorValueException();
+		return !empty( preg_match('/^(#[a-f0-9]{3}([a-f0-9]{3})?)$/i', $color) );
 	}
 
 	/**
@@ -59,8 +55,4 @@ class InfoboxParamsValidator {
 }
 
 class InvalidInfoboxParamsException extends \Exception {
-}
-
-
-class InvalidColorValueException extends \Exception {
 }

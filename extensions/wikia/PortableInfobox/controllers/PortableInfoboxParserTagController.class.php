@@ -1,7 +1,6 @@
 <?php
 
 use \Wikia\PortableInfobox\Parser\Nodes;
-use \Wikia\PortableInfobox\Helpers\InvalidColorValueException;
 use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
 use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
 use \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
@@ -123,8 +122,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
 		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
-		} catch ( InvalidColorValueException $e ) {
-			return $this->handleError(wfMessage( 'portable-infobox-unsupported-color-format' )->escaped() );
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
@@ -210,17 +207,19 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$sourceParam = $colorParam . '-source';
 		$defaultParam = $colorParam . '-default';
 
+		$color = '';
+
 		if ( isset( $params[$sourceParam] ) && !empty( $frame->getArgument( $params[$sourceParam] ) ) ) {
 			$color = trim( $frame->getArgument( $params[$sourceParam] ) );
-		} else if ( isset( $params[$defaultParam] ) ) {
-			$color = trim( $params[$defaultParam] );
-		} else {
-			return '';
+			$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
+			$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
 		}
 
-		$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
-
-		$this->getParamsValidator()->validateColorValue( $color );
+		if ( empty( $color ) && isset( $params[$defaultParam] ) ) {
+			$color = trim( $params[$defaultParam] );
+			$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
+			$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
+		}
 
 		return $color;
 	}

@@ -101,8 +101,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	 * @dataProvider testFailValidateColorValueDataProvider
 	 */
 	public function testFailValidateColorValue( $color ) {
-		$this->setExpectedException( $this->invalidColorValueExceptionName );
-		$this->InfoboxParamsValidator->validateColorValue( $color );
+		$this->assertFalse( $this->InfoboxParamsValidator->validateColorValue( $color ) );
 	}
 
 	public function testFailValidateColorValueDataProvider() {
