@@ -76,13 +76,11 @@ class PortableInfoboxImagesHelper {
 			}, $images )
 		];
 		$images[0]['isFirst'] = true;
-		$data = [
+		return [
 			'images' => $images,
 			'firstImage' => $images[0],
 			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
 		];
-
-		return $data;
 	}
 
 	/**

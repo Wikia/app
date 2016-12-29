@@ -50,7 +50,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	protected function renderImage( $data ) {
 		$images = [ ];
 		$count = count( $data );
-		$helper = $this->getRenderHelper();
+		$helper = $this->getImageHelper();
 
 		for ( $i = 0; $i < $count; $i++ ) {
 			$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
@@ -107,7 +107,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		$helper = $this->getRenderHelper();
+		$helper = $this->getImageHelper();
 		$template = '';
 
 		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.

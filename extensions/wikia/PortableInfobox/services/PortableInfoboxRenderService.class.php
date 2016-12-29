@@ -30,7 +30,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		$helper = $this->getRenderHelper();
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 
 		// decide on image width, if europa go with bigger images! else default size
@@ -53,7 +52,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		return $output;
 	}
 
-	protected function getRenderHelper() {
+	protected function getImageHelper() {
 		if ( !isset( $this->helper ) ) {
 			$this->helper = new PortableInfoboxImagesHelper();
 		}
@@ -142,7 +141,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	protected function renderImage( $data ) {
-		$helper = $this->getRenderHelper();
+		$helper = $this->getImageHelper();
 		$images = [ ];
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
