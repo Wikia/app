@@ -72,7 +72,7 @@ class PasswordError extends MWException {
  * for rendering normal pages are set in the cookie to minimize use
  * of the database.
  */
-class User {
+class User implements JsonSerializable {
 
 	# WIKIA CHANGE BEGIN
 	# adamk@wikia-inc.com
@@ -4719,5 +4719,17 @@ class User {
 			return $dbName ?: $name;
 		}
 		return $name;
+	}
+
+	/**
+	 * Returns a simple representation of user object.
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		return [
+			'mId' => $this->mId,
+			'mName' => $this->mName,
+		];
 	}
 }
