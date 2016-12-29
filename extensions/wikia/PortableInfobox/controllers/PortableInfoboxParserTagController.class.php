@@ -17,10 +17,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const ACCENT_COLOR_TEXT = 'accent-color-text';
 
 	private $markerNumber = 0;
+	private $infoboxParamsValidator = null;
 
 	protected $markers = [ ];
 	protected static $instance;
-	private static $infoboxParamsValidator;
 
 	/**
 	 * @return PortableInfoboxParserTagController
@@ -28,7 +28,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	public static function getInstance() {
 		if ( !isset( static::$instance ) ) {
 			static::$instance = new PortableInfoboxParserTagController();
-			static::$infoboxParamsValidator = new InfoboxParamsValidator();
 		}
 
 		return static::$instance;
@@ -85,7 +84,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		static::$infoboxParamsValidator->validateParams( $params );
+		$this->getParamsValidator()->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
 		//save for later api usage
@@ -199,7 +198,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function getLayout( $params ) {
 		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
-		if ( static::$infoboxParamsValidator->validateLayout( $layoutName ) ) {
+		if ( $this->getParamsValidator()->validateLayout( $layoutName ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
@@ -221,8 +220,16 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
 
-		static::$infoboxParamsValidator->validateColorValue( $color );
+		$this->getParamsValidator()->validateColorValue( $color );
 
 		return $color;
+	}
+
+	private function getParamsValidator() {
+		if ( empty( $this->infoboxParamsValidator ) ) {
+			$this->infoboxParamsValidator = new InfoboxParamsValidator();
+		}
+
+		return $this->infoboxParamsValidator;
 	}
 }
