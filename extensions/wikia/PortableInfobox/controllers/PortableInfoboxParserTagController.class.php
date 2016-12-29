@@ -211,16 +211,20 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		if ( isset( $params[$sourceParam] ) && !empty( $frame->getArgument( $params[$sourceParam] ) ) ) {
 			$color = trim( $frame->getArgument( $params[$sourceParam] ) );
-			$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
-			$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
+			$color = $this->sanitizeColor( $color );
 		}
 
 		if ( empty( $color ) && isset( $params[$defaultParam] ) ) {
 			$color = trim( $params[$defaultParam] );
-			$color = substr( $color, 0, 1) === '#' ? $color : '#' . $color;
-			$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
+			$color = $this->sanitizeColor( $color );
 		}
 
+		return $color;
+	}
+
+	private function sanitizeColor( $color ) {
+		$color = substr( $color, 0, 1 ) === '#' ? $color : '#' . $color;
+		$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
 		return $color;
 	}
 
