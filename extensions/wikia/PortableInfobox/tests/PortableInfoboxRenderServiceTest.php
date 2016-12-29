@@ -10,29 +10,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	/**
-	 * @param $input to check presence of some additional config fields. Possible fields:
-	 * 'isInvalidImage' - bool - if getThumbnail should return false
-	 * 'smallImageDimensions' - integer - size of small image (both width and height)
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
 	private function mockInfoboxRenderServiceHelper( $input ) {
-		$isValidHeroDataItem = isset( $input['isValidHeroDataItem'] ) && $input['isValidHeroDataItem'];
-
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
-		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isValidHeroDataItem', 'extendImageData' ] )
+		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
+			->setMethods( ['extendImageData' ] )
 			->getMock();
-		$mock->expects( $this->any() )
-			->method( 'isValidHeroDataItem' )
-			->will( $this->returnValue( $isValidHeroDataItem ) );
 		$mock->expects( $this->any() )
 			->method( 'extendImageData' )
 			->will( $this->returnValue( $extendImageData ) );
 
-		$this->mockClass( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper', $mock );
+		$this->mockClass( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper', $mock );
 	}
 
 	/**

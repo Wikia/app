@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
-use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
@@ -34,7 +34,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 
 		// decide on image width, if europa go with bigger images! else default size
-		$this->imagesWidth = $helper->isEuropaTheme() ? self::EUROPA_THUMBNAIL_WIDTH :
+		$this->imagesWidth = $this->isEuropaTheme() ? self::EUROPA_THUMBNAIL_WIDTH :
 			self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
 		$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
@@ -44,7 +44,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				'content' => $infoboxHtmlContent,
 				'theme' => $theme,
 				'layout' => $layout,
-				'isEuropaEnabled' => $helper->isEuropaTheme()
+				'isEuropaEnabled' => $this->isEuropaTheme()
 			] );
 		} else {
 			$output = '';
@@ -55,7 +55,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	protected function getRenderHelper() {
 		if ( !isset( $this->helper ) ) {
-			$this->helper = new PortableInfoboxRenderServiceHelper();
+			$this->helper = new PortableInfoboxImagesHelper();
 		}
 		return $this->helper;
 	}
@@ -223,5 +223,11 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $horizontalGroupData;
+	}
+
+	private function isEuropaTheme() {
+		global $wgEnablePortableInfoboxEuropaTheme;
+
+		return !empty( $wgEnablePortableInfoboxEuropaTheme );
 	}
 }

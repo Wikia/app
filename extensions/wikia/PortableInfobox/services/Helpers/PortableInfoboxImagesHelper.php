@@ -3,8 +3,7 @@
 namespace Wikia\PortableInfobox\Helpers;
 
 
-class PortableInfoboxRenderServiceHelper {
-	const MINIMAL_HERO_IMG_WIDTH = 300;
+class PortableInfoboxImagesHelper {
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
 
 	/**
@@ -87,52 +86,6 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * checks if infobox data item is valid hero component data.
-	 * If image is smaller than MINIMAL_HERO_IMG_WIDTH const, doesn't render the hero module.
-	 *
-	 * @param array $item - infobox data item
-	 * @param array $heroData - hero component data
-	 *
-	 * @return bool
-	 */
-	public function isValidHeroDataItem( $item, $heroData ) {
-		$type = $item['type'];
-
-		if ( $type === 'title' && !array_key_exists( 'title', $heroData ) ) {
-			return true;
-		}
-
-		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) && count( $item['data'] ) === 1 ) {
-			$imageWidth = $this->getFileWidth( $item['data'][0]['name'] );
-
-			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isMercury() {
-		global $wgArticleAsJson;
-
-		return !empty( $wgArticleAsJson );
-	}
-
-	/**
-	 * Checks if europa theme is enabled and used
-	 * @return bool
-	 */
-	public function isEuropaTheme() {
-		global $wgEnablePortableInfoboxEuropaTheme;
-
-		return !empty( $wgEnablePortableInfoboxEuropaTheme );
-	}
-
-	/**
 	 * Calculates image dimensions based on preferred width and max acceptable height
 	 *
 	 * @param int $preferredWidth
@@ -151,18 +104,5 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		return [ 'height' => round( $height ), 'width' => round( $width ) ];
-	}
-
-	/**
-	 * return real width of the image.
-	 * @param \Title $title
-	 * @return int number
-	 */
-	private function getFileWidth( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->getWidth();
-		}
 	}
 }

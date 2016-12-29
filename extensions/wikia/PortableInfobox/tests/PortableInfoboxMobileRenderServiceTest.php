@@ -10,34 +10,17 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	/**
-	 * @param $input to check presence of some additional config fields. Possible fields:
-	 * 'isInvalidImage' - bool - if getThumbnail should return false
-	 * 'isMercury' - bool - if we want to test Mercury skin
-	 * 'smallImageDimensions' - integer - size of small image (both width and height)
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
 	private function mockInfoboxRenderServiceHelper( $input ) {
-		$isValidHeroDataItem = isset( $input['isValidHeroDataItem'] ) && $input['isValidHeroDataItem'];
-		$isMercury = isset( $input['isMercury'] ) && $input['isMercury'];
-
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
-		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isValidHeroDataItem', 'isMercury', 'extendImageData' ] )
+		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
+			->setMethods( [ 'extendImageData' ] )
 			->getMock();
-		$mock->expects( $this->any() )
-			->method( 'isValidHeroDataItem' )
-			->will( $this->returnValue( $isValidHeroDataItem ) );
-		$mock->expects( $this->any() )
-			->method( 'isMercury' )
-			->will( $this->returnValue( $isMercury ) );
 		$mock->expects( $this->any() )
 			->method( 'extendImageData' )
 			->will( $this->returnValue( $extendImageData ) );
 
-		$this->mockClass( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper', $mock );
+		$this->mockClass( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper', $mock );
 	}
 
 	/**
@@ -65,10 +48,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
+		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgArticleAsJson' => $mockParams['isMercury'] ?? true ] );
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxMobileRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
+		$actualOutput = $wrapper->wrap( function () use ( $infoboxRenderService, $input ) {
+			return $infoboxRenderService->renderInfobox( $input, '', '', '', '' );
+		} );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput );
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 
@@ -543,7 +529,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 							</aside>',
 				'description' => 'Mercury: Only image. Image is not small- should render hero.',
 				'mockParams' => [
-					'isMercury' => true,
 					'isValidHeroDataItem' => true,
 					'extendImageData' => [
 						'alt' => 'image alt',
@@ -601,7 +586,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Mercury: Infobox with full hero module with title with HTML tags',
 				'mockParams' => [
 					'isValidHeroDataItem' => true,
-					'isMercury' => true,
 					'extendImageData' => [
 						'url' => 'http://image.jpg',
 						'name' => 'test1',

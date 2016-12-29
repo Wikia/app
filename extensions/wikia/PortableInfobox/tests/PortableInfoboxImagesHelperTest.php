@@ -1,15 +1,15 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 
-class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
+class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 	private $helper;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$this->helper = new PortableInfoboxRenderServiceHelper();
+		$this->helper = new PortableInfoboxImagesHelper();
 	}
 
 	/**
@@ -38,85 +38,6 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param array $item
-	 * @param array $heroData
-	 * @param boolean $result
-	 * @param string $description
-	 * @param array $mockParams
-	 * @dataProvider testIsValidHeroDataItemDataProvider
-	 */
-	public function testIsValidHeroDataItem( $item, $heroData, $result, $description, $mockParams ) {
-		$this->createWikiaFileHelperMock( $mockParams );
-
-		$this->assertEquals(
-			$result,
-			$this->helper->isValidHeroDataItem( $item, $heroData ),
-			$description
-		);
-	}
-
-	public function testIsValidHeroDataItemDataProvider() {
-		return [
-			[
-				'item' => [
-					'type' => 'title'
-				],
-				'heroData' => [ ],
-				'result' => true,
-				'description' => 'First title in infobox',
-				'mockParams' => [ ]
-			],
-			[
-				'item' => [
-					'type' => 'title'
-				],
-				'heroData' => [
-					'title' => 'first infobox title'
-				],
-				'result' => false,
-				'description' => 'not first title in infobox',
-				'mockParams' => [ ]
-			],
-			[
-				'item' => [
-					'type' => 'image',
-					'data' => array( null )
-				],
-				'heroData' => [ ],
-				'result' => true,
-				'description' => 'first image in infobox',
-				'mockParams' => [
-					'fileWidth' => 300
-				]
-			],
-			[
-				'item' => [
-					'type' => 'image'
-				],
-				'heroData' => [
-					'image' => 'first infobox image'
-				],
-				'result' => false,
-				'description' => 'not first image in infobox',
-				'mockParams' => [
-					'fileWidth' => 300
-				]
-			],
-			[
-				'item' => [
-					'type' => 'image'
-				],
-				'heroData' => [ ],
-				'result' => false,
-				'description' => 'too small image',
-				'mockParams' => [
-					'fileWidth' => 299
-				]
-			]
-		];
-	}
-
-	/**
 	 * @param $width
 	 * @param $max
 	 * @param $imageWidth
@@ -125,7 +46,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @dataProvider thumbnailSizesDataProvider
 	 */
 	public function testGetThumbnailSizes( $width, $max, $imageWidth, $imageHeight, $expected ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = new PortableInfoboxImagesHelper();
 		$result = $helper->getThumbnailSizes( $width, $max, $imageWidth, $imageHeight );
 
 		$this->assertEquals( $expected, $result );
@@ -224,7 +145,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			'wgPortableInfoboxCustomImageWidth' => $customWidth
 		] );
 
-		$helper = new PortableInfoboxRenderServiceHelper();
+		$helper = new PortableInfoboxImagesHelper();
 		$result = $globals->wrap( function () use ( $helper, $preferredWidth ) {
 			return $helper->extendImageData( [ 'name' => 'test' ], $preferredWidth );
 		} );

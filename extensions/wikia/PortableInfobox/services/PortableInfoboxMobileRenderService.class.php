@@ -1,11 +1,10 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
-
 class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 	const MOBILE_THUMBNAIL_WIDTH = 360;
+	const MINIMAL_HERO_IMG_WIDTH = 300;
 
 	/**
 	 * renders infobox
@@ -19,7 +18,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		$helper = $this->getRenderHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
 
@@ -27,7 +25,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			$data = $item['data'];
 			$type = $item['type'];
 
-			if ( $helper->isValidHeroDataItem( $item, $heroData ) ) {
+			if ( $this->isValidHeroDataItem( $item, $heroData ) ) {
 				$heroData[$type] = $data;
 			} elseif ( $this->templateEngine->isSupportedType( $type ) ) {
 				$infoboxHtmlContent .= $this->renderItem( $type, $data );
@@ -68,7 +66,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		// use different template for wikiamobile
-		if ( !$helper->isMercury() ) {
+		if ( !$this->isMercury() ) {
 			// always display only the first image on WikiaMobile
 			$data = $images[0];
 			$templateName = 'image-mobile-wikiamobile';
@@ -122,15 +120,62 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
 			$data['image'] = $image;
 
-			if ( !$helper->isMercury() ) {
+			if ( !$this->isMercury() ) {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
 				return $this->renderItem( 'hero-mobile', $data );
 			}
-		} elseif ( !$helper->isMercury() || $firstInfoboxAlredyRendered ) {
+		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );
 		}
 
 		return !empty( $template ) ? $this->renderItem( $template, $data['title'] ) : '';
+	}
+
+	/**
+	 * checks if infobox data item is valid hero component data.
+	 * If image is smaller than MINIMAL_HERO_IMG_WIDTH const, doesn't render the hero module.
+	 *
+	 * @param array $item - infobox data item
+	 * @param array $heroData - hero component data
+	 *
+	 * @return bool
+	 */
+	private function isValidHeroDataItem( $item, $heroData ) {
+		$type = $item['type'];
+
+		if ( $type === 'title' && !isset( $heroData['title'] ) ) {
+			return true;
+		}
+
+		if ( $type === 'image' && !isset( $heroData['image'] ) && count( $item['data'] ) === 1 ) {
+			$imageWidth = $this->getFileWidth( $item['data'][0]['name'] );
+
+			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * return real width of the image.
+	 * @param \Title $title
+	 * @return int number
+	 */
+	private function getFileWidth( $title ) {
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if ( $file ) {
+			return $file->getWidth();
+		}
+		return 0;
+	}
+
+	private function isMercury() {
+		global $wgArticleAsJson;
+
+		return !empty( $wgArticleAsJson );
 	}
 }
