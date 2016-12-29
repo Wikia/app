@@ -45,10 +45,10 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
 	$user = $wg->User; /** @var $user User */
-	if ($user->isAnon()) {
-		$vars['wgUserName'] = null;
-	} else {
-		$vars['wgUserName'] = $user->getName();
+	$vars['wgUserName'] = $user->isAnon() ? null : $user->getName();
+
+	if ( $title->isMainPage() ) {
+		$vars['wgIsMainPage'] = true;
 	}
 
 	if ($out->isArticle()) {
