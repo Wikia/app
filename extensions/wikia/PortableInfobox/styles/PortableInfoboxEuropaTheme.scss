@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/gradient';
 
 $background-color-mix: 10%;
 $black: #000;
@@ -105,8 +106,8 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 
 	.pi-data.pi-collapse-data {
 		&::before {
-			// TODO we need browser prefixes, maybe there is a mixin?
-			background: linear-gradient(to top, rgba($background-color, 1) 40%, rgba(0, 0, 0, 0));
+			// TODO how to share it between Europa and the standard theme? Background color is different
+			@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $background-color, 60%);
 		}
 	}
 

@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
@@ -115,17 +116,16 @@
 		max-height: $infobox-collapsible-data-max-height;
 
 		&::before {
-			// TODO we need browser prefixes, maybe there is a mixin?
-			background: linear-gradient(to top, rgba($infobox-background, 1) 40%, rgba(0, 0, 0, 0));
+			// TODO how to share it between Europa and the standard theme? Background color is different
+			@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $infobox-background, 60%);
 			content: '';
 			display: block;
-			fill: $color-links;
 			height: $infobox-collapsible-data-chevron-size;
 			left: 0;
-			padding: 30px 0 0;
+			padding: 40px 0 0;
 			position: absolute;
 			text-align: center;
-			top: 146px;
+			top: 136px;
 			width: 100%;
 			// TODO should this be a magic number or a variable?
 			z-index: 100;
@@ -144,7 +144,7 @@
 			margin-top: -($infobox-chevron-size / 2) + 2;
 			position: absolute;
 			right: calc(50% - #{$infobox-collapsible-data-chevron-size / 2});
-			top: 180px;
+			top: 175px;
 			z-index: 100;
 		}
 	}
