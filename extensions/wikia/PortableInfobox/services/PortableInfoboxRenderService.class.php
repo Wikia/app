@@ -80,6 +80,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	protected function renderItem( $type, array $data ) {
 		switch ( $type ) {
+			case 'data':
+				$result = $this->renderData( $data );
+				break;
 			case 'group':
 				$result = $this->renderGroup( $data );
 				break;
@@ -98,6 +101,14 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $result;
+	}
+
+	protected function renderData( $nodeData ) {
+		if ( $nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION ) {
+			$nodeData['cssClasses'] = 'pi-collapse-data';
+		}
+
+		return $this->render( 'data', $nodeData );
 	}
 
 	/**

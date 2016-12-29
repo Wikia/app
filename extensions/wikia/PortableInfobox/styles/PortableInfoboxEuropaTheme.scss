@@ -103,6 +103,13 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		}
 	}
 
+	.pi-data.pi-collapse-data {
+		&::before {
+			// TODO we need browser prefixes, maybe there is a mixin?
+			background: linear-gradient(to top, rgba($background-color, 1) 40%, rgba(0, 0, 0, 0));
+		}
+	}
+
 	.pi-data,
 	.pi-group {
 		border-bottom: 0;

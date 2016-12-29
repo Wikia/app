@@ -105,6 +105,52 @@
 	}
 }
 
+// **********  Collapsible data  ********** //
+
+.pi-data {
+	position: relative;
+
+	&.pi-collapse-data {
+		position: relative;
+		max-height: $infobox-collapsible-data-max-height;
+
+		&::before {
+			// TODO we need browser prefixes, maybe there is a mixin?
+			background: linear-gradient(to top, rgba($infobox-background, 1) 40%, rgba(0, 0, 0, 0));
+			content: '';
+			display: block;
+			fill: $color-links;
+			height: $infobox-collapsible-data-chevron-size;
+			left: 0;
+			padding: 30px 0 0;
+			position: absolute;
+			text-align: center;
+			top: 146px;
+			width: 100%;
+			// TODO should this be a magic number or a variable?
+			z-index: 100;
+		}
+
+		.pi-expand-icon {
+			display: none;
+		}
+	}
+
+	&.pi-collapse-data-closed {
+		@include right-chevron($infobox-collapsible-data-chevron-size, 2px, 'down', $color-links);
+
+		&::after {
+			display: block;
+			margin-top: -($infobox-chevron-size / 2) + 2;
+			position: absolute;
+			right: calc(50% - #{$infobox-collapsible-data-chevron-size / 2});
+			top: 180px;
+			z-index: 100;
+		}
+	}
+}
+
+
 // **********  Image Collection  ********** //
 
 ul.pi-image-collection-tabs {
