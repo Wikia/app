@@ -23,30 +23,6 @@
 	*/
 ?>
 
-<!-- One tag - Tealium IQ: start -->
-<script type="text/javascript">
-	cookieExists = function (cookieName) {
-		return document.cookie.indexOf(cookieName) > -1;
-	};
-
-	var utag_data = {
-		sampleRate: (cookieExists('qualaroo_survey_submission') ? 100 : 10),
-		loginStatus: !!window.wgUserName ? 'user' : 'anon'
-	};
-
-	console.log("diana");
-</script>
-
-<!-- Loading script asynchronously -->
-<script type="text/javascript">
-	(function(a,b,c,d){
-		a='//tags.tiqcdn.com/utag/wikia/main/dev/utag.js';
-		b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
-		a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
-	})();
-</script>
-<!-- One tag - Tealium IQ: end -->
-
 <? if ( !empty( $wg->OasisLastCssScripts ) ): ?>
 	<? foreach( $wg->OasisLastCssScripts as $src ): ?>
 		<link rel="stylesheet" href="<?= $src ?>">
@@ -59,6 +35,58 @@
 <? endif ?>
 
 <?= $topScripts ?>
+
+<!-- One tag - Tealium IQ: start -->
+<script type="text/javascript">
+	cookieExists = function (cookieName) {
+		return document.cookie.indexOf(cookieName) > -1;
+	};
+	var dartGnreValues = window.dartGnreValues || [];
+
+	var utag_data = {
+		sampleRate: (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+		loginStatus: !!window.wgUserName ? 'user' : 'anon',
+		isCorporatePage: (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
+		isPowerUserAdmin: !!window.wikiaIsPowerUserAdmin,
+		isPowerUserFrequent: !!window.wikiaIsPowerUserFrequent,
+		isPowerUserLifetime: !!window.wikiaIsPowerUserLifetime,
+		isLoggedIn: !!window.wgUserName,
+		cpBenefitsModalShown: cookieExists('cpBenefitsModalShown'),
+		isDartGnreAdventure: dartGnreValues.indexOf('adventure') > -1,
+		isDartGnreAction: dartGnreValues.indexOf('action') > -1,
+		isDartGnreFantasy: dartGnreValues.indexOf('fantasy') > -1,
+		isDartGnreRpg:dartGnreValues.indexOf('rpg') > -1,
+		isDartGnreScifi: dartGnreValues.indexOf('scifi') > -1,
+		isDartGnreOpenworld: dartGnreValues.indexOf('openworld') > -1,
+		isDartGnreFighting: dartGnreValues.indexOf('fighting') > -1,
+		isDartGnreDrama: dartGnreValues.indexOf('drama') > -1,
+		isDartGnreCasual: dartGnreValues.indexOf('casual') > -1,
+		isDartGnreAnime: dartGnreValues.indexOf('anime') > -1,
+		isDartGnreShooter: dartGnreValues.indexOf('shooter') > -1,
+		isDartGnreCartoon: dartGnreValues.indexOf('cartoon') > -1,
+		isDartGnreComedy: dartGnreValues.indexOf('comedy') > -1,
+		isDartGnre3rdpersonshooter: dartGnreValues.indexOf('3rdpersonshooter') > -1,
+		isDartGnreFps: dartGnreValues.indexOf('fps') > -1,
+		isDartGnreHorror: dartGnreValues.indexOf('horror') > -1,
+		isDartGnreDriving: dartGnreValues.indexOf('driving') > -1,
+		isDartGnreSports: dartGnreValues.indexOf('sports') > -1
+	};
+
+	console.log("diana");
+	debugger
+</script>
+
+<!-- Loading script asynchronously -->
+<script type="text/javascript">
+	(function(a,b,c,d){
+		a='//tags.tiqcdn.com/utag/wikia/main/dev/utag.js';
+		b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+		a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+	})();
+</script>
+<!-- One tag - Tealium IQ: end -->
+
+
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->

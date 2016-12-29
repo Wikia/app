@@ -75,12 +75,23 @@ class OasisController extends WikiaController {
 	 * Add global JS variables
 	 *
 	 * @param array $vars global variables list
-	 * @return boolean return true
+	 * @param OutputPage $outputPage
+	 * @return bool return true
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars, OutputPage $outputPage ) {
+		global $wgNoExternals, $wgQualarooDevUrl, $wgDevelEnvironment, $wgQualarooUrl, $wgUser, $wgCityId;
+
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
 		$vars['wgOasisBreakpoints'] = BodyController::isOasisBreakpoints();
 		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
+
+		if ( empty( $wgNoExternals ) && $outputPage->getSkin()->getSkinName() == 'oasis' ) {
+			$vars[ 'wgQualarooUrl' ] = ( $wgDevelEnvironment ) ? $wgQualarooDevUrl : $wgQualarooUrl;
+			$vars[ 'isContributor' ] = $wgUser->getEditCount() > 0;
+			$vars[ 'isCurrentWikiAdmin' ] = in_array( $wgUser->getId(), ( new WikiService() )->getWikiAdminIds() );
+			$vars[ 'fullVerticalName' ] = ( new WikiFactoryHub() )->getWikiVertical( $wgCityId )[ 'short' ];
+			$vars[ 'dartGnreValues' ] = AdTargeting::getRatingFromDartKeyValues( 'gnre' );
+		}
 		return true;
 	}
 
