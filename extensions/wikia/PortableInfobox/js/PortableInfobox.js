@@ -40,25 +40,23 @@
 	};
 
 	var CollapsibleData = {
+		magicNumber: 0,
 		init: function ($content) {
-			var $collapsibleDatas = $content.find('.pi-data-collapse'),
-				magicNumber = 0;
+			var $collapsibleDatas = $content.find(
+					'.portable-infobox > .pi-data-collapse, ' +
+					'.pi-group:not(.pi-collapse-closed) > .pi-data-collapse'
+				),
+				$collapsedGroups = $content.find('.pi-group.pi-collapse-closed');
 
 			if ($collapsibleDatas.length) {
 				// We assume that every collapsible data field has the same paddings
 				// This is being done to avoid multiple DOM queries
-				magicNumber = CollapsibleData.getMagicNumber($collapsibleDatas.eq(0));
+				CollapsibleData.magicNumber = CollapsibleData.getMagicNumber($collapsibleDatas.eq(0));
 			}
 
-			$collapsibleDatas.each(function () {
-				var $wrapper = $(this);
-
-				if ($wrapper.get(0).scrollHeight - magicNumber >= $wrapper.outerHeight()) {
-					$wrapper.addClass('pi-data-collapse-closed')
-						.on('click', CollapsibleData.onCollapsedDataClick);
-				} else {
-					$wrapper.removeClass('pi-data-collapse pi-data-collapse-closed');
-				}
+			$collapsibleDatas.each(CollapsibleData.handleCollapsibleData);
+			$collapsedGroups.each(function () {
+				$(this).on('click', CollapsibleData.onCollapsedGroupClick);
 			});
 		},
 		getMagicNumber: function ($wrapper) {
@@ -71,10 +69,28 @@
 
 			return verticalPaddingWrapper + maxInnerPadding;
 		},
+		handleCollapsibleData: function () {
+			var $wrapper = $(this);
+
+			if ($wrapper.get(0).scrollHeight - CollapsibleData.magicNumber >= $wrapper.outerHeight()) {
+				$wrapper.addClass('pi-data-collapse-closed')
+					.on('click', CollapsibleData.onCollapsedDataClick);
+			} else {
+				$wrapper.removeClass('pi-data-collapse pi-data-collapse-closed');
+			}
+		},
 		onCollapsedDataClick: function (event) {
 			event.preventDefault();
 			$(this).off('click', CollapsibleData.onCollapsedDataClick)
 				.removeClass('pi-data-collapse pi-data-collapse-closed');
+		},
+		onCollapsedGroupClick: function (event) {
+			var $group = $(this),
+				$collapsibleDatas = $group.find('.pi-data-collapse');
+
+			event.preventDefault();
+			$collapsibleDatas.each(CollapsibleData.handleCollapsibleData);
+			$group.off('click', CollapsibleData.onCollapsedGroupClick);
 		}
 	};
 
