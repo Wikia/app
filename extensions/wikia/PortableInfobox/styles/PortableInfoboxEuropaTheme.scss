@@ -104,11 +104,8 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		}
 	}
 
-	.pi-data.pi-collapse-data {
-		&::before {
-			// TODO how to share it between Europa and the standard theme? Background color is different
-			@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $background-color, 60%);
-		}
+	.pi-data-collapse::before {
+		@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $background-color, 60%);
 	}
 
 	.pi-data,

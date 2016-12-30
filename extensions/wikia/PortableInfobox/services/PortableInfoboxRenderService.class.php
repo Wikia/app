@@ -108,7 +108,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			!empty( $nodeData['collapse'] ) &&
 			$nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION
 		) {
-			$nodeData['cssClasses'] = 'pi-collapse-data';
+			$nodeData['cssClasses'] = 'pi-data-collapse';
 		}
 
 		return $this->render( 'data', $nodeData );

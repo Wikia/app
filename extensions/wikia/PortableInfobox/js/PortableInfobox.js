@@ -41,24 +41,24 @@
 
 	var CollapsibleData = {
 		init: function ($content) {
-			var $collapsibleDatas = $content.find('.pi-data.pi-collapse-data');
+			var $collapsibleDatas = $content.find('.pi-data-collapse');
 
 			$collapsibleDatas.each(function () {
 				var $element = $(this);
 
 				// FIXME scrollHeight is calculated incorrectly so we need to subtract a magic number
 				if ($element.get(0).scrollHeight - 38 >= $element.get(0).clientHeight) {
-					$element.addClass('pi-collapse-data-closed')
+					$element.addClass('pi-data-collapse-closed')
 						.on('click', CollapsibleData.onCollapsedDataClick);
 				} else {
-					$element.removeClass('pi-collapse-data pi-collapse-data-closed');
+					$element.removeClass('pi-data-collapse pi-data-collapse-closed');
 				}
 			});
 		},
 		onCollapsedDataClick: function (event) {
 			event.preventDefault();
 			$(this).off('click', CollapsibleData.onCollapsedDataClick)
-				.removeClass('pi-collapse-data pi-collapse-data-closed');
+				.removeClass('pi-data-collapse pi-data-collapse-closed');
 		}
 	};
 

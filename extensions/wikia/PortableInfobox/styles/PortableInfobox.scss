@@ -111,12 +111,11 @@
 .pi-data {
 	position: relative;
 
-	&.pi-collapse-data {
+	&.pi-data-collapse {
 		position: relative;
 		max-height: $infobox-collapsible-data-max-height;
 
 		&::before {
-			// TODO how to share it between Europa and the standard theme? Background color is different
 			@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $infobox-background, 60%);
 			content: '';
 			display: block;
@@ -136,7 +135,7 @@
 		}
 	}
 
-	&.pi-collapse-data-closed {
+	&.pi-data-collapse-closed {
 		@include right-chevron($infobox-collapsible-data-chevron-size, 2px, 'down', $color-links);
 
 		&::after {
@@ -149,7 +148,6 @@
 		}
 	}
 }
-
 
 // **********  Image Collection  ********** //
 
