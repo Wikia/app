@@ -34,11 +34,12 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleFundingChoices::onWi
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleUA::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderNielsen::onWikiaSkinTopScripts';
 
-//$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
+$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderGoogleFundingChoices::onInstantGlobalsGetVariables';
 
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlobalsGetVariables';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW3::onInstantGlobalsGetVariables';
 
+
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
-//$wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onWikiaMobileAssetsPackages';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onWikiaMobileAssetsPackages';

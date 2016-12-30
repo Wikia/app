@@ -39,7 +39,6 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		}
 	}
 
-	// DIANA: how to move it to frontend to enable in TMS?
 	private function getC7Value() {
 		global $wgCityId;
 

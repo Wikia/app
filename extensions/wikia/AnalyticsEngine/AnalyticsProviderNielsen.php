@@ -32,7 +32,6 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		}
 	}
 
-	// DIANA: to be removed?
 	static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		if ( !self::isEnabled() ) {
 			$scripts .= '<!-- Nielsen is disabled -->';
