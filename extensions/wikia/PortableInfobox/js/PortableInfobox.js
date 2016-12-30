@@ -41,19 +41,35 @@
 
 	var CollapsibleData = {
 		init: function ($content) {
-			var $collapsibleDatas = $content.find('.pi-data-collapse');
+			var $collapsibleDatas = $content.find('.pi-data-collapse'),
+				magicNumber = 0;
+
+			if ($collapsibleDatas.length) {
+				// We assume that every collapsible data field has the same paddings
+				// This is being done to avoid multiple DOM queries
+				magicNumber = CollapsibleData.getMagicNumber($collapsibleDatas.eq(0));
+			}
 
 			$collapsibleDatas.each(function () {
-				var $element = $(this);
+				var $wrapper = $(this);
 
-				// FIXME scrollHeight is calculated incorrectly so we need to subtract a magic number
-				if ($element.get(0).scrollHeight - 38 >= $element.get(0).clientHeight) {
-					$element.addClass('pi-data-collapse-closed')
+				if ($wrapper.get(0).scrollHeight - magicNumber >= $wrapper.outerHeight()) {
+					$wrapper.addClass('pi-data-collapse-closed')
 						.on('click', CollapsibleData.onCollapsedDataClick);
 				} else {
-					$element.removeClass('pi-data-collapse pi-data-collapse-closed');
+					$wrapper.removeClass('pi-data-collapse pi-data-collapse-closed');
 				}
 			});
+		},
+		getMagicNumber: function ($wrapper) {
+			var $label = $wrapper.find('.pi-data-label'),
+				$value = $wrapper.find('.pi-data-value'),
+				verticalPaddingWrapper = $wrapper.outerHeight() - $wrapper.height(),
+				verticalPaddingLabel = $label.outerHeight() - $label.height(),
+				verticalPaddingValue = $value.outerHeight() - $value.height(),
+				maxInnerPadding = Math.max(verticalPaddingLabel, verticalPaddingValue);
+
+			return verticalPaddingWrapper + maxInnerPadding;
 		},
 		onCollapsedDataClick: function (event) {
 			event.preventDefault();
