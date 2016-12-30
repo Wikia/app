@@ -1,7 +1,7 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
@@ -104,7 +104,10 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	protected function renderData( $nodeData ) {
-		if ( $nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION ) {
+		if (
+			!empty( $nodeData['collapse'] ) &&
+			$nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION
+		) {
 			$nodeData['cssClasses'] = 'pi-collapse-data';
 		}
 
