@@ -31,6 +31,19 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		return $parser;
 	}
 
+	/**
+	 * @param $html
+	 * @return string
+	 */
+	private function normalizeHTML( $html ) {
+		$DOM = new DOMDocument( '1.0' );
+		$DOM->formatOutput = true;
+		$DOM->preserveWhiteSpace = false;
+		$DOM->loadXML( $html );
+
+		return $DOM->saveXML();
+	}
+
 	protected function containsClassName( $output, $class ) {
 		$xpath = $this->getXPath( $output );
 
@@ -151,6 +164,127 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is not set'
 			]
+		];
+	}
+
+	/**
+	 * @dataProvider testGetColorDataProvider
+	 */
+	public function testGetColor( $params, $expectedOutput, $text, $templateInvocation, $message ) {
+		$marker = $this->controller->renderInfobox( $text, $params, $this->parser,
+			$this->parser->getPreprocessor()->newCustomFrame( $templateInvocation ) )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertEquals($this->normalizeHTML($expectedOutput), $this->normalizeHTML($output), $message);
+	}
+
+	public function testGetColorDataProvider() {
+		return [
+			[
+				'params' => [ 'accent-color-default' => '#fff' ],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#fff;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [],
+				'message' => 'accent-color-default set'
+			],
+			[
+				'params' => [ 'accent-color-source' => 'color-source' ],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '#000'
+				],
+				'message' => 'accent-color-source set'
+			],
+			[
+				'params' => [
+					'accent-color-default' => '#fff' ,
+					'accent-color-source' => 'color-source'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '#000'
+				],
+				'message' => 'accent-color-default and accent-color-source set'
+			],
+			[
+				'params' => [ 'accent-color-text-default' => '#fff' ],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="color:#fff;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [],
+				'message' => 'accent-color-text-default set'
+			],
+			[
+				'params' => [
+					'accent-color-text-default' => '#fff' ,
+					'accent-color-text-source' => 'color-source'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '#000'
+				],
+				'message' => 'accent-color-text-source set'
+			],
+			[
+				'params' => [
+					'accent-color-text-default' => '#fff' ,
+					'accent-color-text-source' => 'color-source'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '#000'
+				],
+				'message' => 'accent-color-text-default and accent-color-text-source set'
+			],
+			[
+				'params' => [
+					'accent-color-text-default' => '#fff' ,
+					'accent-color-text-source' => 'color-source',
+					'accent-color-default' => '#fff' ,
+					'accent-color-source' => 'color-source2'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#001;color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '#000',
+					'color-source2' => '#001'
+				],
+				'message' => 'accent-color-text-default and accent-color-text-source, accent-color-default, accent-color-source set'
+			],
+			[
+				'params' => [
+					'accent-color-text-default' => 'fff' ,
+					'accent-color-text-source' => 'color-source',
+					'accent-color-default' => 'fff' ,
+					'accent-color-source' => 'color-source2'
+				],
+				'expectedOutput' => '<aside class="portable-infobox pi-background pi-theme-wikia pi-layout-default">
+										<h2 class="pi-item pi-item-spacing pi-title" style="background-color:#001;color:#000;">test</h2>
+									</aside>',
+				'text' => '<title><default>test</default></title>',
+				'templateInvocation' => [
+					'color-source' => '000',
+					'color-source2' => '001'
+				],
+				'message' => 'colors without #'
+			],
 		];
 	}
 

@@ -1,6 +1,10 @@
 <?php
 
-use Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
+use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
+use \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
+use \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
@@ -8,12 +12,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'pi-theme-';
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
+	const ACCENT_COLOR = 'accent-color';
+	const ACCENT_COLOR_TEXT = 'accent-color-text';
 
 	private $markerNumber = 0;
-	private $supportedLayouts = [
-		'default',
-		'stacked'
-	];
+	private $infoboxParamsValidator = null;
 
 	protected $markers = [ ];
 	protected static $instance;
@@ -80,8 +83,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
-		$infoboxParamsValidator->validateParams( $params );
+		$this->getParamsValidator()->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
 		//save for later api usage
@@ -89,8 +91,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$themeList = $this->getThemes( $params, $frame );
 		$layout = $this->getLayout( $params );
+		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
+		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, implode( " ", $themeList ), $layout );
+		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
+			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
+		return $renderService->renderInfobox( $data, implode( " ", $themeList ), $layout, $accentColor, $accentColorText );
+
 	}
 
 	/**
@@ -109,11 +116,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		try {
 			$renderedValue = $this->render( $markup, $parser, $frame, $params );
-		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
+		} catch ( UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
-		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+		} catch ( XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
-		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
@@ -130,7 +137,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[0];
+			$firstMarker = array_keys( $this->markers )[ 0 ];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
@@ -197,12 +204,45 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	private function getLayout( $params ) {
-		$layoutName = isset( $params['layout'] ) ? $params['layout'] : false;
-		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
+		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
+		if ( $this->getParamsValidator()->validateLayout( $layoutName ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
+	private function getColor( $colorParam, $params, PPFrame $frame ) {
+		$sourceParam = $colorParam . '-source';
+		$defaultParam = $colorParam . '-default';
+
+		$color = '';
+
+		if ( isset( $params[$sourceParam] ) && !empty( $frame->getArgument( $params[$sourceParam] ) ) ) {
+			$color = trim( $frame->getArgument( $params[$sourceParam] ) );
+			$color = $this->sanitizeColor( $color );
+		}
+
+		if ( empty( $color ) && isset( $params[$defaultParam] ) ) {
+			$color = trim( $params[$defaultParam] );
+			$color = $this->sanitizeColor( $color );
+		}
+
+		return $color;
+	}
+
+	private function sanitizeColor( $color ) {
+		$color = substr( $color, 0, 1 ) === '#' ? $color : '#' . $color;
+		$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
+		return $color;
+	}
+
+	private function getParamsValidator() {
+		if ( empty( $this->infoboxParamsValidator ) ) {
+			$this->infoboxParamsValidator = new InfoboxParamsValidator();
+		}
+
+		return $this->infoboxParamsValidator;
 	}
 }
