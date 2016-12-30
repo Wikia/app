@@ -53,8 +53,8 @@ class ThemingCheck extends Maintenance {
 		global $wgCityId;
 		if ( !empty( $output ) ) {
 			foreach ( $output as $data ) {
-				$this->output( $wgCityId . ":" . $data['title'] . " uses themes "
-					. "with [theme] = " . $data['theme'] . " and [theme-source] = "
+				$this->output( $wgCityId . ":" . $data['title'] . "|"
+					. "|[theme]=" . $data['theme'] . "|[theme-source]="
 					. $data['theme-source'] . "\n" );
 			}
 		}
