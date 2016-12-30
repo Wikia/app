@@ -45,8 +45,8 @@ class ArticleAsJson extends WikiaService {
 					'height' => $scaledSize['height'],
 					'width' => $scaledSize['width'],
 					'title' => $media['title'],
-					'link' => $media['link'],
-					'caption' => $media['caption']
+					'link' => $media['link'] ?? '',
+					'caption' => $media['caption'] ?? ''
 				]
 			)
 		);
@@ -64,8 +64,8 @@ class ArticleAsJson extends WikiaService {
 					'url' => $media['url'],
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption'],
-					'link' => $media['link'],
+					'caption' => $media['caption'] ?? '',
+					'link' => $media['link'] ?? '',
 					/**
 					 * data-ref has to be set for now because it's read in
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
@@ -257,7 +257,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromText( $data['name'] );
-		if ( $title ) {
+		if ( $title && F::app()->checkSkin( 'wikiamobile' ) ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
