@@ -250,6 +250,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 	}
 
 	public function save() {
+		$this->checkPermissions();
+
 		$data = $this->request->getParams();
 
 		$id = $data['id'];
