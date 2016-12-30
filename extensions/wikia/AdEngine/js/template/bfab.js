@@ -28,10 +28,9 @@ define('ext.wikia.adEngine.template.bfab', [
 				recoveryTweaker.tweakSlot(slot.id, iframe);
 			}
 
-			uapVideo.init()
-				.then(function () {
-					uapVideo.loadVideoAd(params, slot, slot.querySelector('div'));
-				});
+			if (uapVideo.isEnabled(params)) {
+				uapVideo.loadVideoAd(params, slot, slot.querySelector('div'));
+			}
 		});
 
 		log('show', 'info', logGroup);
