@@ -91,6 +91,14 @@ class FlowTrackingHooks {
 		return true;
 	}
 
+	public static function onPageHeaderAfterAddNewPageButton( &$href ) {
+		$href = wfAppendQuery( $href, [
+			'flow' => static::CREATE_PAGE_CONTRIBUTE_BUTTON
+		] );
+
+		return true;
+	}
+
 	public static function getParamsFromUrlQuery( $url ) {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $queryParams );
 		return $queryParams;

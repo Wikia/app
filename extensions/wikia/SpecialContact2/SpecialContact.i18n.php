@@ -3269,10 +3269,10 @@ $messages['zh-tw'] = [
 
 $messages['pt-br'] = [
 	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada para o Suporte da Wikia',
-	'specialcontact-form-header' => 'Entre em contato com a Wikia',
+	'specialcontact-form-header' => 'Entre em contato com o Fandom',
 	'specialcontact-formtitle' => 'Entre em contato com a Equipe de Suporte da Wikia',
 	'specialcontact-label-close-account-confirm' => 'Eu confirmo que quero desativar a minha conta na Wikia',
-	'specialcontact-pagetitle' => 'Entre em contato com a Wikia',
+	'specialcontact-pagetitle' => 'Entre em contato com a equipe de suporte do Fandom',
 	'specialcontact-captchafail' => 'Código de confirmação incorreto ou não preenchido.',
 	'specialcontact-captchainfo' => 'Por favor, digite o texto da imagem.',
 	'specialcontact-captchatitle' => 'Palavra errada',

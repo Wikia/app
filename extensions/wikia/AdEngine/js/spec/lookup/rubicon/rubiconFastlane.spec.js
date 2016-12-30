@@ -76,6 +76,11 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 					};
 				}
 			},
+			rubiconTier: {
+				parsePrice: function () {
+					return 0;
+				}
+			},
 			slot: {
 				setFPI: function (key, value) {
 					slotParams[key] = value;
@@ -133,6 +138,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 			mocks.slotsContext,
 			getFactory(),
 			mocks.rubiconTargeting,
+			mocks.rubiconTier,
 			mocks.doc,
 			mocks.log,
 			mocks.win

@@ -2,7 +2,7 @@
 
 class EmbeddableDiscussionsController {
 	const TAG_NAME = 'discussions';
-	const ITEMS_DEFAULT = 5;
+	const ITEMS_DEFAULT = 4;
 	const ITEMS_MIN = 3;
 	const ITEMS_MAX = 6;
 	const COLUMNS_DEFAULT = 1;
@@ -124,14 +124,8 @@ class EmbeddableDiscussionsController {
 			'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
 		] );
 
-		if ( $showLatest && $categoryName ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category',
-				$categoryName )->inContentLanguage()->plain();
-		} elseif ( $showLatest ) {
+		if ( $showLatest ) {
 			$heading = wfMessage( 'embeddable-discussions-show-latest' )->inContentLanguage()->plain();
-		} elseif ( $categoryName ) {
-			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category',
-				$categoryName )->inContentLanguage()->plain();
 		} else {
 			$heading = wfMessage( 'embeddable-discussions-show-trending' )->inContentLanguage()->plain();
 		}

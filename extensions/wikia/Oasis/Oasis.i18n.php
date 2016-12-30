@@ -72,6 +72,7 @@ $messages['en'] = [
 	'oasis-button-contribute-tooltip' => 'Contribute',
 	'oasis-button-add-video' => 'Add video',
 	'oasis-button-create-page' => 'Add page',
+	'oasis-button-add-new-page' => 'Add New Page',
 	'oasis-button-add-photo' => 'Add image',
 	'oasis-button-edit-wikia-local-menu' => 'Edit local community menu',
 	'oasis-button-edit-wikia-global-menu' => 'Edit global Fandom menu',
@@ -284,6 +285,7 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-social-facebook-link' => 'Missing documentation',
 	'oasis-social-twitter-link' => 'Missing documentation',
 	'oasis-spotlights-footer-title' => 'Missing documentation',
+	'oasis-button-add-new-page' => 'Label for Add New Page button',
 ];
 
 $messages['af'] = [
@@ -823,6 +825,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Seite hinzufügen',
 ];
 
 $messages['de-formal'] = [
@@ -1048,6 +1051,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Crear una página',
 ];
 
 $messages['fa'] = [
@@ -1476,6 +1480,7 @@ Bonne lecture !
 ___________________________________________
 * Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.',
+	'oasis-button-add-new-page' => 'Ajouter une page',
 ];
 
 $messages['gl'] = [
@@ -2085,6 +2090,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Crea nuova pagina',
 ];
 
 $messages['ja'] = [
@@ -2286,6 +2292,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => '新しいページをつくる',
 ];
 
 $messages['ko'] = [
@@ -3391,6 +3398,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Dodaj nową stronę',
 ];
 
 $messages['pms'] = [
@@ -3628,6 +3636,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Adicione uma página',
 ];
 
 $messages['pt-br'] = [
@@ -3949,6 +3958,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Добавить новую страницу',
 ];
 
 $messages['sr-ec'] = [
@@ -4848,6 +4858,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => '添加新页面',
 ];
 
 $messages['zh-hant'] = [
@@ -5041,6 +5052,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => '增加新頁面',
 ];
 
 $messages['zh-hk'] = [

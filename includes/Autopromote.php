@@ -116,7 +116,11 @@ class Autopromote {
 				}
 				return false;
 			case APCOND_EDITCOUNT:
-				if ( !empty($wgEnableEditCountLocal) ) {
+				// Wikia change
+				// SUS-1290: If edit count condition is 0 skip edit count lookup
+				if ( $cond[1] === 0 ) {
+					return true;
+				} elseif ( !empty($wgEnableEditCountLocal) ) {
 					return $user->getEditCountLocal() >= $cond[1];
 				} else {
 					return $user->getEditCount() >= $cond[1];

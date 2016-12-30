@@ -66,22 +66,22 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 					}
 				}
 			],
-			adLogicZoneParams: {
-				getPageType: function () {
-					return 'article';
-				}
+			adaptersRegistry: {
+				getAdapters: function() {}
 			}
 		};
 
 	function getPrebidHelper() {
+		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
+
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
-			mocks.adLogicZoneParams
+			mocks.adaptersRegistry
 		);
 	}
 
 	it('SetupAdUnits returns data in correct shape', function () {
 		var prebidHelper = getPrebidHelper(),
-			result = prebidHelper.setupAdUnits(mocks.adapters);
+			result = prebidHelper.setupAdUnits();
 
 		expect(result).toEqual([{
 			code: 'TOP_LEADERBOARD',

@@ -8,10 +8,16 @@
 	</nav>
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
-			<? // TODO remove after XW-2226 is done ?>
-			<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
-			<? // TODO remove end ?>
-			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+      <? if ($useAddPageButton) { ?>
+        <button id="add-page" class="wds-button wds-is-squished wds-is-secondary">
+          <svg class="wds-icon wds-icon-tiny">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-plus" />
+          </svg>
+          <span>Add Page</span>
+        </button>
+      <? } else { ?>
+				<?= $app->renderView('ContributeMenu', 'Index'); ?>
+      <? } ?>
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">

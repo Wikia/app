@@ -85,8 +85,6 @@ $phalanxhooks = array(
 		array(
 			'ContributionsToolLinks'          => 'loadLinks',
 			'SpamFilterCheck'                 => 'onSpamFilterCheck',
-			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
-			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
 			// temp logging for PLATFORM-317
 			'GetBlockedStatus'                => 'onGetBlockedStatus',
@@ -94,7 +92,6 @@ $phalanxhooks = array(
 		)
 );
 
-// don't bother initializing hooks if user is immune to Phalanx
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
 		$wgHooks[$name][] = $class . '::' . $method;

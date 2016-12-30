@@ -4,22 +4,20 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.videoAdFactory',
+	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (
-	adHelper,
-	uapContext,
-	btfBlocker,
-	slotTweaker,
-	videoAdFactory,
-	doc,
-	log,
-	win,
-	recoveryTweaker
-) {
+], function (adHelper,
+			 uapContext,
+			 btfBlocker,
+			 slotTweaker,
+			 uapVideo,
+			 doc,
+			 log,
+			 win,
+			 recoveryTweaker) {
 	'use strict';
 
 	var adSlot,
@@ -27,6 +25,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
+		imageContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
@@ -50,6 +49,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
+		doc.body.classList.add('uap-skin');
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
@@ -71,48 +71,14 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (params.videoTriggerElement && params.videoAspectRatio) {
-			videoAdFactory.init()
-				.then(loadVideoAd(params));
+		if (uapVideo.isEnabled(params)) {
+			uapVideo.loadVideoAd(params, adSlot, imageContainer);
 		}
-	}
-
-	function getSlotSize(params) {
-		return {
-			width: document.body.clientWidth,
-			height: document.body.clientWidth / params.videoAspectRatio
-		};
-	}
-
-	function loadVideoAd(params) {
-		return function () {
-			try {
-				var video = videoAdFactory.create(
-					adSlot.querySelector('div:last-of-type'),
-					getSlotSize(params),
-					adSlot,
-					{
-						src: 'gpt',
-						slotName: params.slotName,
-						uap: params.uap,
-						passback: 'vuap'
-					}
-				);
-
-				window.addEventListener('resize', function () {
-					video.updateSize(getSlotSize(params));
-				});
-
-				params.videoTriggerElement.addEventListener('click', video.play.bind(video));
-
-			} catch (error) {
-				log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
-			}
-		};
 	}
 
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
+		imageContainer = adSlot.querySelector('div:last-of-type');
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
@@ -120,16 +86,16 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
+		uapContext.setUapId(params.uap);
+
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			runOnReady(iframe, params);
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], log.levels.info, logGroup);
-
-		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
+		log(['show', params.uap], log.levels.info, logGroup);
 	}
 
 	return {

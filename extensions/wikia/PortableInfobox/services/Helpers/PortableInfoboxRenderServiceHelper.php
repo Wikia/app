@@ -57,9 +57,12 @@ class PortableInfoboxRenderServiceHelper {
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
 		$title = $data[ 'name' ];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
-		if ( !$file || !$file->exists() ) {
+
+		if ( !$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] ) ) {
 			return false;
 		}
+
 		// get dimensions
 		$originalWidth = $file->getWidth();
 		$dimensions = $this->getThumbnailSizes(
@@ -114,7 +117,7 @@ class PortableInfoboxRenderServiceHelper {
 			'firstImage' => $images[0],
 			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
 		];
-		
+
 		return $data;
 	}
 
@@ -158,7 +161,7 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function isMercury() {
 		global $wgArticleAsJson;
-		
+
 		return !empty( $wgArticleAsJson );
 	}
 

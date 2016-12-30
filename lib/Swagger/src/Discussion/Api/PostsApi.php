@@ -103,11 +103,10 @@ class PostsApi
     /**
      * Operation createPost
      *
-     * Create a new post.
+     * Create a new post
      *
      * @param int $site_id The id of the site (required)
      * @param \Swagger\Client\Discussion\Models\PostInput $post_input Post input json (required)
-     *
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -117,31 +116,26 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation createPostWithHttpInfo
      *
-     * Create a new post.
+     * Create a new post
      *
      * @param int $site_id The id of the site (required)
      * @param \Swagger\Client\Discussion\Models\PostInput $post_input Post input json (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function createPostWithHttpInfo($site_id, $post_input)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling createPost');
         }
-
         // verify the required parameter 'post_input' is set
         if ($post_input === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_input when calling createPost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts";
         $httpBody = '';
@@ -154,8 +148,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -167,7 +159,6 @@ class PostsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($post_input)) {
@@ -180,20 +171,16 @@ class PostsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -202,7 +189,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -225,14 +213,14 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation deletePost
      *
-     * Delete a post from a site.
+     * Delete a post from a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -242,31 +230,26 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation deletePostWithHttpInfo
      *
-     * Delete a post from a site.
+     * Delete a post from a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function deletePostWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling deletePost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling deletePost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/delete";
         $httpBody = '';
@@ -279,8 +262,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -288,7 +269,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -300,28 +282,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -329,7 +305,9 @@ class PostsApi
                 'PUT',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/posts/{postId}/delete'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -344,53 +322,51 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation getAllPosts
      *
-     * A list of all posts.
+     * A list of all posts
      *
-     * @param int $site_id The id of the site (required)
-     * @param string $limit The number of results to return with this call (optional, default to 25)
-     * @param int $page The pagination position (optional, default to 0)
-     * @param string $pivot Pagination pivot id - the id of the post which represents the origin for all page offset calculations (optional)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
+     * @param int $param_site_id The id of the site (required)
      * @param bool $reported Show reported posts? (optional, default to false)
+     * @param int $limit The number of results to return with this call (optional, default to 10)
+     * @param int $page The pagination position (optional, default to 0)
      * @param bool $viewable_only Whether to show only visible posts or visible plus deleted posts (optional, default to true)
-     *
+     * @param int $pivot Pagination pivot id - the id of the post which represents the origin for all page offset calculations (optional)
+     * @param string $since Date since (optional)
+     * @param string $since2 Date until (optional)
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getAllPosts($site_id, $limit = null, $page = null, $pivot = null, $response_group = null, $reported = null, $viewable_only = null)
+    public function getAllPosts($param_site_id, $reported = null, $limit = null, $page = null, $viewable_only = null, $pivot = null, $since = null, $since2 = null)
     {
-        list($response) = $this->getAllPostsWithHttpInfo($site_id, $limit, $page, $pivot, $response_group, $reported, $viewable_only);
+        list($response) = $this->getAllPostsWithHttpInfo($param_site_id, $reported, $limit, $page, $viewable_only, $pivot, $since, $since2);
         return $response;
     }
-
 
     /**
      * Operation getAllPostsWithHttpInfo
      *
-     * A list of all posts.
+     * A list of all posts
      *
-     * @param int $site_id The id of the site (required)
-     * @param string $limit The number of results to return with this call (optional, default to 25)
-     * @param int $page The pagination position (optional, default to 0)
-     * @param string $pivot Pagination pivot id - the id of the post which represents the origin for all page offset calculations (optional)
-     * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
+     * @param int $param_site_id The id of the site (required)
      * @param bool $reported Show reported posts? (optional, default to false)
+     * @param int $limit The number of results to return with this call (optional, default to 10)
+     * @param int $page The pagination position (optional, default to 0)
      * @param bool $viewable_only Whether to show only visible posts or visible plus deleted posts (optional, default to true)
-     *
+     * @param int $pivot Pagination pivot id - the id of the post which represents the origin for all page offset calculations (optional)
+     * @param string $since Date since (optional)
+     * @param string $since2 Date until (optional)
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getAllPostsWithHttpInfo($site_id, $limit = null, $page = null, $pivot = null, $response_group = null, $reported = null, $viewable_only = null)
+    public function getAllPostsWithHttpInfo($param_site_id, $reported = null, $limit = null, $page = null, $viewable_only = null, $pivot = null, $since = null, $since2 = null)
     {
-        
-        // verify the required parameter 'site_id' is set
-        if ($site_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getAllPosts');
+        // verify the required parameter 'param_site_id' is set
+        if ($param_site_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $param_site_id when calling getAllPosts');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts";
         $httpBody = '';
@@ -404,30 +380,38 @@ class PostsApi
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
         // query params
-        if ($limit !== null) {
-            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
-        }// query params
-        if ($page !== null) {
-            $queryParams['page'] = $this->apiClient->getSerializer()->toQueryValue($page);
-        }// query params
-        if ($pivot !== null) {
-            $queryParams['pivot'] = $this->apiClient->getSerializer()->toQueryValue($pivot);
-        }// query params
-        if ($response_group !== null) {
-            $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
         if ($reported !== null) {
             $queryParams['reported'] = $this->apiClient->getSerializer()->toQueryValue($reported);
-        }// query params
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }
+        // query params
+        if ($page !== null) {
+            $queryParams['page'] = $this->apiClient->getSerializer()->toQueryValue($page);
+        }
+        // query params
         if ($viewable_only !== null) {
             $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
+        // query params
+        if ($pivot !== null) {
+            $queryParams['pivot'] = $this->apiClient->getSerializer()->toQueryValue($pivot);
+        }
+        // query params
+        if ($since !== null) {
+            $queryParams['since'] = $this->apiClient->getSerializer()->toQueryValue($since);
+        }
+        // query params
+        if ($since2 !== null) {
+            $queryParams['since'] = $this->apiClient->getSerializer()->toQueryValue($since2);
+        }
         // path params
-        if ($site_id !== null) {
+        if ($param_site_id !== null) {
             $resourcePath = str_replace(
-                "{" . "siteId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($site_id),
+                "{" . "PARAM_SITE_ID" . "}",
+                $this->apiClient->getSerializer()->toPathValue($param_site_id),
                 $resourcePath
             );
         }
@@ -435,28 +419,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -465,7 +443,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -475,25 +454,21 @@ class PostsApi
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\PostHalResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
-                case 404:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
             }
 
             throw $e;
         }
     }
+
     /**
      * Operation getPost
      *
-     * Get a specific post for a site.
+     * Get a specific post for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only Whether to show only visible posts or visible plus deleted posts (optional, default to true)
-     *
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -503,33 +478,28 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation getPostWithHttpInfo
      *
-     * Get a specific post for a site.
+     * Get a specific post for a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
      * @param string $response_group The responseGroup controls the level of details returned with this call (optional, default to small)
      * @param bool $viewable_only Whether to show only visible posts or visible plus deleted posts (optional, default to true)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getPostWithHttpInfo($site_id, $post_id, $response_group = null, $viewable_only = null)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling getPost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling getPost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}";
         $httpBody = '';
@@ -545,11 +515,11 @@ class PostsApi
         // query params
         if ($response_group !== null) {
             $queryParams['responseGroup'] = $this->apiClient->getSerializer()->toQueryValue($response_group);
-        }// query params
+        }
+        // query params
         if ($viewable_only !== null) {
             $queryParams['viewableOnly'] = $this->apiClient->getSerializer()->toQueryValue($viewable_only);
         }
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -557,7 +527,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -569,28 +540,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -599,7 +564,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts/{postId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -618,14 +584,14 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation lockPost
      *
-     * Lock this post.
+     * Lock this post
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -635,31 +601,26 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation lockPostWithHttpInfo
      *
-     * Lock this post.
+     * Lock this post
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function lockPostWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling lockPost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling lockPost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/lock";
         $httpBody = '';
@@ -672,8 +633,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -681,7 +640,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -693,28 +653,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -723,7 +677,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts/{postId}/lock'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -746,14 +701,14 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation undeletePost
      *
-     * Un-delete a post in a site.
+     * Un-delete a post in a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -763,31 +718,26 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation undeletePostWithHttpInfo
      *
-     * Un-delete a post in a site.
+     * Un-delete a post in a site
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function undeletePostWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling undeletePost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling undeletePost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/undelete";
         $httpBody = '';
@@ -800,8 +750,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -809,7 +757,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -821,28 +770,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -850,7 +793,9 @@ class PostsApi
                 'PUT',
                 $queryParams,
                 $httpBody,
-                $headerParams
+                $headerParams,
+                null,
+                '/{siteId}/posts/{postId}/undelete'
             );
 
             return array(null, $statusCode, $httpHeader);
@@ -865,14 +810,14 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation unlockPost
      *
-     * Unlock this post.
+     * Unlock this post
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -882,31 +827,26 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation unlockPostWithHttpInfo
      *
-     * Unlock this post.
+     * Unlock this post
      *
      * @param int $site_id The id of the site (required)
      * @param string $post_id The id of a specific post (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function unlockPostWithHttpInfo($site_id, $post_id)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling unlockPost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling unlockPost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}/unlock";
         $httpBody = '';
@@ -919,8 +859,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -928,7 +866,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -940,28 +879,22 @@ class PostsApi
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
-        
-
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -970,7 +903,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts/{postId}/unlock'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -993,15 +927,15 @@ class PostsApi
             throw $e;
         }
     }
+
     /**
      * Operation updatePost
      *
-     * Update a post.
+     * Update a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of the post (required)
      * @param \Swagger\Client\Discussion\Models\PostUpdateInput $post_update_input Post input json (required)
-     *
      * @return \Swagger\Client\Discussion\Models\PostHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
@@ -1011,37 +945,31 @@ class PostsApi
         return $response;
     }
 
-
     /**
      * Operation updatePostWithHttpInfo
      *
-     * Update a post.
+     * Update a post
      *
      * @param int $site_id The id of the site (required)
      * @param int $post_id The id of the post (required)
      * @param \Swagger\Client\Discussion\Models\PostUpdateInput $post_update_input Post input json (required)
-     *
      * @return Array of \Swagger\Client\Discussion\Models\PostHalResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function updatePostWithHttpInfo($site_id, $post_id, $post_update_input)
     {
-        
         // verify the required parameter 'site_id' is set
         if ($site_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $site_id when calling updatePost');
         }
-
         // verify the required parameter 'post_id' is set
         if ($post_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_id when calling updatePost');
         }
-
         // verify the required parameter 'post_update_input' is set
         if ($post_update_input === null) {
             throw new \InvalidArgumentException('Missing the required parameter $post_update_input when calling updatePost');
         }
-
         // parse inputs
         $resourcePath = "/{siteId}/posts/{postId}";
         $httpBody = '';
@@ -1054,8 +982,6 @@ class PostsApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
 
-        
-        
         // path params
         if ($site_id !== null) {
             $resourcePath = str_replace(
@@ -1063,7 +989,8 @@ class PostsApi
                 $this->apiClient->getSerializer()->toPathValue($site_id),
                 $resourcePath
             );
-        }// path params
+        }
+        // path params
         if ($post_id !== null) {
             $resourcePath = str_replace(
                 "{" . "postId" . "}",
@@ -1074,7 +1001,6 @@ class PostsApi
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
-        
         // body params
         $_tempBody = null;
         if (isset($post_update_input)) {
@@ -1087,20 +1013,16 @@ class PostsApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
-        
-
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-        
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -1109,7 +1031,8 @@ class PostsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Discussion\Models\PostHalResponse'
+                '\Swagger\Client\Discussion\Models\PostHalResponse',
+                '/{siteId}/posts/{postId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\PostHalResponse', $httpHeader), $statusCode, $httpHeader);
@@ -1140,4 +1063,5 @@ class PostsApi
             throw $e;
         }
     }
+
 }

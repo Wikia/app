@@ -164,7 +164,7 @@ class AchRankingService {
 			$user = User::newFromId($row->user_id);
 
 			if( $user && AchAwardingService::canEarnBadges( $user ) ) {
-				$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
+				$badges[] = array('badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
 			}
 		}
 

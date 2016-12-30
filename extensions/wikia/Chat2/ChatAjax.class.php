@@ -199,7 +199,7 @@ class ChatAjax {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;
 			if ( $mode == 'private' ) {
-				$result = Chat::blockPrivate( $subjectUserName, $dir, $adminUser );
+				$result = Chat::blockPrivate( $subjectUserName, $adminUser, $dir );
 			} else if ( $mode == 'global' ) {
 				$time = (int)$wgRequest->getVal( 'time', 0 );
 				$result = Chat::banUser( $subjectUserName, $adminUser, $time, $wgRequest->getVal( 'reason' ) );

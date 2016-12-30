@@ -113,20 +113,59 @@
 			<div class="actions"></div>
 		</div>
 	</script>
-	<script type='text/template' id='user-action-template'>
+	<script type='text/template' id='user-action-profile-template'>
 		<li class="<%= actionName %>">
 			<a href="<%= actionUrl %>">
-				<span class="icon">&nbsp;</span>
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' ) ?>
 				<span class="label"><%= actionDesc %></span>
 			</a>
 		</li>
 	</script>
-	<script type='text/template' id='user-action-template-no-url'>
+	<script type='text/template' id='user-action-contribs-template'>
 		<li class="<%= actionName %>">
-			<span class="icon">&nbsp;</span>
+			<a href="<%= actionUrl %>">
+				<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' ) ?>
+				<span class="label"><%= actionDesc %></span>
+			</a>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-user', 'wds-icon wds-icon-small' ) ?>
 			<span class="label"><%= actionDesc %></span>
 		</li>
 	</script>
+	<script type='text/template' id='user-action-give-chat-mod-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-plus', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-kick-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-alert-small', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-ban-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-lock-small', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-block-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-cross', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+	<script type='text/template' id='user-action-private-allow-template'>
+		<li class="<%= actionName %>">
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-checkmark-circle', 'wds-icon wds-icon-small' ) ?>
+			<span class="label"><%= actionDesc %></span>
+		</li>
+	</script>
+
 	<!-- Load these after the DOM is built -->
 	<?php
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_js2', array() );

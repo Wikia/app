@@ -102,6 +102,7 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getWiki( $msgName = false, $wikiText = '' ) {
+		global $wgUser, $wgOnTheWikiAsLastTab;
 
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
@@ -141,10 +142,18 @@ class NavigationModel extends WikiaModel {
 		}
 		$this->setShouldTranslateContent( true );
 
-		return [
-			'wikia' => $wikia,
-			'wiki' => $wiki
-		];
+		// if user is anon 'On The Wiki' tab is displayed as last tab
+		if ( $wgOnTheWikiAsLastTab && $wgUser->isAnon() ) {
+			return [
+				'wiki' => $wiki,
+				'wikia' => $wikia
+			];
+		} else {
+			return [
+				'wikia' => $wikia,
+				'wiki' => $wiki
+			];
+		}
 	}
 
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {

@@ -115,7 +115,7 @@ class PBLoginForm extends LoginForm {
 
 		$authResult = $cu->checkPassword( $this->mPassword );
 		if ( !$authResult->success() &&
-			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+			!$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
 		) {
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );

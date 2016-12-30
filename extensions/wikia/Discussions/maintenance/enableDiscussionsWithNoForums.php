@@ -26,11 +26,15 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
+			if ( empty( $wiki->city_id ) ) {
+				$this->error( "Unable to find wiki with ID $wikiId" );
+				continue;
+			}
 
 			try {
 				$count = $this->getForumThreadCount( $wiki );
 			} catch ( Exception $e ) {
-				$this->error("Failed to get forum thread count for $wikiId: ".$e->getMessage());
+				$this->error( "Failed to get forum thread count for $wikiId: " . $e->getMessage() );
 				continue;
 			}
 			if ( $count > 0 ) {

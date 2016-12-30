@@ -133,7 +133,7 @@ END;
 		if ( $page_title->exists() ) {
 			// It exists - see if page is a redirect; if
 			// it is, edit the target page instead.
-			$content = WikiPage::factory( $page_title )->getContent();
+			$content = WikiPage::factory( $page_title ); # Wikia change - SUS-1271 / use MW1.19 compatible call
 			if ( $content && $content->getRedirectTarget() ) {
 				$page_title = $content->getRedirectTarget();
 				$page_name = SFUtils::titleURLString( $page_title );

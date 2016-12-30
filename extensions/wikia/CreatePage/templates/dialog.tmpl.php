@@ -1,13 +1,16 @@
 <div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" >
-	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog(true); return false;">
+	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog('page-create-title-modal'); return false;">
 		<div id="CreatePageContainer">
-			<div id="CreatePageDialogHeader">
-				<?= wfMsg( 'createpage-dialog-message1' ) ?>
-			</div>
 			<div id="CreatePageDialogSub">
 				<?= wfMsg( 'createpage-dialog-message2' ) ?>
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
+			<?php // TODO: XW-2380 | remove the condition
+			if ( !wfMessage( 'createpage-dialog-message3' )->isDisabled() ): ?>
+				<div id="CreatePageDialogInputSub">
+					<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
+				</div>
+			<?php endif; ?>
 			<div id="CreatePageDialogTitleErrorMsg" class="CreatePageError hiddenStructure"></div>
 			<?php if( !$useFormatOnly ): ?>
 				<div id="CreatePageDialogChoose">
@@ -46,3 +49,15 @@
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 	</form>
 </div>
+<? if ( !empty( $wantedPages ) ): ?>
+	<div id="CreatePageTitleProposals">
+		<div id="CreatePageTitleProposalsHeader">
+			<?= wfMessage( 'createpage-dialog-redlinks-list-header' )->text() ?>
+		</div>
+		<ul>
+			<? foreach ( $wantedPages as $page ): ?>
+				<li><a href="<?= $page['url']; ?>" class="new"><?= $page['title']; ?></a></li>
+			<? endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>

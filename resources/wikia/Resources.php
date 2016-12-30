@@ -152,6 +152,7 @@ return [
 		'dependencies' => [
 			'amd',
 			'wikia.cookies',
+			'wikia.querystring'
 		],
 	],
 	'wikia.tracker' => [
@@ -254,6 +255,10 @@ return [
 
 	'jquery.autocomplete' => [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
+	],
+
+	'jquery.dataTables' => [
+		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
 
 	// moved here from AssetsManager by wladek
