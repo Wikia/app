@@ -19,15 +19,15 @@ class ThemingCheck extends Maintenance {
 			->run( $dbr, function ( ResultWrapper $result ) {
 				$out = [ ];
 				while ( $row = $result->fetchRow() ) {
-					$out[] = [ 'pageid' => $row[ 'qc_value' ],
-						'title' => $row[ 'qc_title' ]
+					$out[] = [ 'pageid' => $row['qc_value'],
+						'title' => $row['qc_title']
 					];
 				}
 
 				return $out;
 			} );
 		$theming = array_map( function ( $infobox ) {
-			$markups = PortableInfoboxDataService::newFromPageID( $infobox[ 'pageid' ] )
+			$markups = PortableInfoboxDataService::newFromPageID( $infobox['pageid'] )
 				->getInfoboxes();
 			foreach ( $markups as $markup ) {
 				$infoboxNode = NodeFactory::newFromXML( $markup );
@@ -35,27 +35,27 @@ class ThemingCheck extends Maintenance {
 					$attributes = $infoboxNode->getParams();
 
 					return array_merge( $infobox, [
-						't' => isset( $attributes[ 'theme' ] ) ?
-							count( explode( " ", trim( $attributes[ 'theme' ] ) ) ) : 0,
-						'theme' => $attributes[ 'theme' ] ?? "",
-						's' => isset( $attributes[ 'theme-source' ] ) ?
-							count( explode( " ", trim( $attributes[ 'theme-source' ] ) ) ) : 0,
-						'theme-source' => $attributes[ 'theme-source' ] ?? ""
+						't' => isset( $attributes['theme'] ) ?
+							count( explode( " ", trim( $attributes['theme'] ) ) ) : 0,
+						'theme' => $attributes['theme'] ?? "",
+						's' => isset( $attributes['theme-source'] ) ?
+							count( explode( " ", trim( $attributes['theme-source'] ) ) ) : 0,
+						'theme-source' => $attributes['theme-source'] ?? ""
 					] );
 				}
 			}
 		}, $result );
 
 		$output = array_filter( $theming, function ( $data ) {
-			return $data[ 't' ] > 0 && $data[ 's' ] > 0;
+			return $data['t'] > 1 || ( $data['t'] > 0 && $data['s'] > 0 );
 		} );
 
 		global $wgCityId;
 		if ( !empty( $output ) ) {
 			foreach ( $output as $data ) {
-				$this->output( $wgCityId . ":" . $data[ 'title' ] . " uses themes "
-					. "with [theme] = " . $data[ 'theme' ] . " and [theme-source] = "
-					. $data[ 'theme-source' ] ."\n" );
+				$this->output( $wgCityId . ":" . $data['title'] . " uses themes "
+					. "with [theme] = " . $data['theme'] . " and [theme-source] = "
+					. $data['theme-source'] . "\n" );
 			}
 		}
 	}
