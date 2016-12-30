@@ -40,7 +40,7 @@
 	};
 
 	var CollapsibleData = {
-		magicNumber: 0,
+		verticalPadding: 0,
 		init: function ($content) {
 			var $collapsibleDatas = $content.find(
 					'.portable-infobox > .pi-data-collapse, ' +
@@ -51,7 +51,7 @@
 			if ($collapsibleDatas.length) {
 				// We assume that every collapsible data field has the same paddings
 				// This is being done to avoid multiple DOM queries
-				CollapsibleData.magicNumber = CollapsibleData.getMagicNumber($collapsibleDatas.eq(0));
+				CollapsibleData.verticalPadding = CollapsibleData.getVerticalPadding($collapsibleDatas.eq(0));
 			}
 
 			$collapsibleDatas.each(CollapsibleData.handleCollapsibleData);
@@ -59,7 +59,7 @@
 				$(this).on('click', CollapsibleData.onCollapsedGroupClick);
 			});
 		},
-		getMagicNumber: function ($wrapper) {
+		getVerticalPadding: function ($wrapper) {
 			var $label = $wrapper.find('.pi-data-label'),
 				$value = $wrapper.find('.pi-data-value'),
 				verticalPaddingWrapper = $wrapper.outerHeight() - $wrapper.height(),
@@ -72,7 +72,7 @@
 		handleCollapsibleData: function () {
 			var $wrapper = $(this);
 
-			if ($wrapper.get(0).scrollHeight - CollapsibleData.magicNumber >= $wrapper.outerHeight()) {
+			if ($wrapper.get(0).scrollHeight - CollapsibleData.verticalPadding >= $wrapper.outerHeight()) {
 				$wrapper.addClass('pi-data-collapse-closed')
 					.on('click', CollapsibleData.onCollapsedDataClick);
 			} else {
@@ -84,11 +84,10 @@
 			$(this).off('click', CollapsibleData.onCollapsedDataClick)
 				.removeClass('pi-data-collapse pi-data-collapse-closed');
 		},
-		onCollapsedGroupClick: function (event) {
+		onCollapsedGroupClick: function () {
 			var $group = $(this),
 				$collapsibleDatas = $group.find('.pi-data-collapse');
 
-			event.preventDefault();
 			$collapsibleDatas.each(CollapsibleData.handleCollapsibleData);
 			$group.off('click', CollapsibleData.onCollapsedGroupClick);
 		}
