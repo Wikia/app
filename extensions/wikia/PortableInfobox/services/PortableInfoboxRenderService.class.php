@@ -106,7 +106,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	protected function renderData( $nodeData ) {
 		if (
 			!empty( $nodeData['collapse'] ) &&
-			$nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION
+			$nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION &&
+			// You can't predict image size before it's loaded, so don't collapse fields with images
+			!$this->getImageHelper()->doesHtmlContainImage( $nodeData['value'] )
 		) {
 			$nodeData['cssClasses'] = 'pi-data-collapse';
 		}
