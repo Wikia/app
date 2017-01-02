@@ -42,8 +42,8 @@ class Node {
 		$baseLabel = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
 
 		foreach ( $sources as $source ) {
-			$metadata[ $source ] = [ ];
-			$metadata[ $source ][ 'label' ] = ( $sourcesLength > 1 ) ?
+			$metadata[$source] = [ ];
+			$metadata[$source]['label'] = ( $sourcesLength > 1 ) ?
 				( !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '' ) :
 				$baseLabel;
 		}
@@ -51,32 +51,23 @@ class Node {
 		if ( $sourcesLength > 0 && $this->hasPrimarySource( $this->xmlNode ) ) {
 			// self::extractSourcesFromNode() puts the value of the `source` attribute as the first element of $sources
 			$firstSource = reset( $sources );
-			$metadata[ $firstSource ][ 'primary' ] = true;
+			$metadata[$firstSource]['primary'] = true;
 		}
 
 		return $metadata;
 	}
 
 	public function getMetadata() {
-		/** @var Node $item */
-		$result = [ ];
-		foreach ( $this->getChildNodes() as $item ) {
-			$type = $item->getType();
+		return [
+			'type' => $this->getType(),
+			'sources' => $this->getSourcesMetadata()
+		];
+	}
 
-			if ( $type === 'group' ) {
-				$result[] = [
-					'type' => $type,
-					'metadata' => $item->getMetadata()
-				];
-			} else {
-				$result[] = [
-					'type' => $type,
-					'sources' => $item->getSourcesMetadata()
-				];
-			}
-		}
-
-		return $result;
+	protected function getMetadataForChildren() {
+		return array_map( function ( Node $item ) {
+			return $item->getMetadata();
+		}, $this->getChildNodes() );
 	}
 
 	/**
@@ -142,7 +133,7 @@ class Node {
 	 * @return bool
 	 */
 	public function isEmpty() {
-		$data = $this->getData()[ 'value' ];
+		$data = $this->getData()['value'];
 
 		return ( empty( $data ) && $data != '0' );
 	}
@@ -227,12 +218,12 @@ class Node {
 	}
 
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		return ( isset( $xmlNode[ $attribute ] ) ) ? (string)$xmlNode[ $attribute ]
+		return ( isset( $xmlNode[$attribute] ) ) ? (string)$xmlNode[$attribute]
 			: null;
 	}
 
 	protected function getRawInfoboxData( $key ) {
-		return isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ]
+		return isset( $this->infoboxData[$key] ) ? $this->infoboxData[$key]
 			: null;
 	}
 
@@ -279,6 +270,6 @@ class Node {
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
 		preg_match_all( self::EXTRACT_SOURCE_REGEX, (string)$node, $sources );
 
-		return array_unique( array_merge( $source, $sources[ 1 ] ) );
+		return array_unique( array_merge( $source, $sources[1] ) );
 	}
 }
