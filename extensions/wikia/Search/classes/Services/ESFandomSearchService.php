@@ -57,9 +57,9 @@ class ESFandomSearchService extends AbstractSearchService {
 				WikiaLogger::instance()->error(
 					" Fandom Stories Search: error decoding response",
 					[
-						self::LOG_QUERY_MARKER => $query,
-						self::LOG_RESPONSE_MARKER => $response,
-						self::LOG_ERROR_MARKER => json_last_error(),
+						ESFandomSearchService::LOG_QUERY_MARKER => $query,
+						ESFandomSearchService::LOG_RESPONSE_MARKER => $response,
+						ESFandomSearchService::LOG_ERROR_MARKER => json_last_error(),
 					]
 				);
 			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
@@ -68,8 +68,8 @@ class ESFandomSearchService extends AbstractSearchService {
 				WikiaLogger::instance()->error(
 					" Fandom Stories Search: invalid response",
 					[
-						self::LOG_QUERY_MARKER => $query,
-						self::LOG_RESPONSE_MARKER => $response
+						ESFandomSearchService::LOG_QUERY_MARKER => $query,
+						ESFandomSearchService::LOG_RESPONSE_MARKER => $response
 					]
 				);
 			}
@@ -77,7 +77,7 @@ class ESFandomSearchService extends AbstractSearchService {
 			WikiaLogger::instance()->error(
 				" Fandom Stories Search: empty response",
 				[
-					self::LOG_QUERY_MARKER => $query,
+					ESFandomSearchService::LOG_QUERY_MARKER => $query,
 				]
 			);
 		}
@@ -90,24 +90,32 @@ class ESFandomSearchService extends AbstractSearchService {
 		$results = [];
 
 		foreach ( $response as $match ) {
-			if ( isset( $match[self::MATCHES_ITEM_KEY] ) &&
-			     isset( $match[self::MATCHES_ITEM_KEY][self::MATCHES_TITLE_KEY] ) &&
-			     isset( $match[self::MATCHES_ITEM_KEY][self::MATCHES_URL_KEY] )
+			if ( isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY] ) &&
+			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_TITLE_KEY] ) &&
+			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_URL_KEY] )
 			) {
 
-				$source = $match[self::MATCHES_ITEM_KEY];
+				$source = $match[ESFandomSearchService::MATCHES_ITEM_KEY];
 
 				$results[] = [
-					self::STORIES_TITLE_KEY => html_entity_decode( $source[self::MATCHES_TITLE_KEY] ),
-					self::STORIES_EXCERPT_KEY => isset( $source[self::MATCHES_EXCERPT_KEY] )
-						? html_entity_decode( $source[self::MATCHES_EXCERPT_KEY] ) : '',
-					self::STORIES_VERTICAL_KEY => isset( $source[self::MATCHES_VERTICAL_KEY] )
-						? html_entity_decode( $source[self::MATCHES_VERTICAL_KEY] ) : '',
-					self::STORIES_IMAGE_URL_KEY => isset( $source[self::MATCHES_IMAGE_URL_KEY] )
-						? html_entity_decode( $source[self::MATCHES_IMAGE_URL_KEY] ) : '',
-					self::STORIES_URL_KEY => html_entity_decode( $source[self::MATCHES_URL_KEY] ),
+					ESFandomSearchService::STORIES_TITLE_KEY =>
+						html_entity_decode( $source[ESFandomSearchService::MATCHES_TITLE_KEY] ),
+					ESFandomSearchService::STORIES_EXCERPT_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_VERTICAL_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_IMAGE_URL_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_URL_KEY =>
+						html_entity_decode( $source[ESFandomSearchService::MATCHES_URL_KEY] ),
 				];
-				if ( count( $results ) >= self::MATCHES_COUNT ) {
+				if ( count( $results ) >= ESFandomSearchService::MATCHES_COUNT ) {
 					break;
 				}
 			}
