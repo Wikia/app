@@ -4727,6 +4727,16 @@ class User implements JsonSerializable {
 	 * @return array
 	 */
 	public function jsonSerialize() {
+		// Detailed logging for PLATFORM-2770.
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'User::jsonSerialize was called',
+			[
+				'user_id' => $this->getId(),
+				'user_name' => $this->getName(),
+				'exception' => new Exception()
+			]
+		);
+
 		return [
 			'mId' => $this->mId,
 			'mName' => $this->mName,
