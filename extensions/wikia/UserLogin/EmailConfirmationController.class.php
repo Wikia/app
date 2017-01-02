@@ -13,9 +13,9 @@ class EmailConfirmationController extends WikiaController {
 			$user->confirmEmail();
 			$user->saveSettings();
 			wfRunHooks( 'ConfirmEmailComplete', array( &$user ) );
-			$this->response->setCode(200);
+			$this->response->setCode( 200 );
 		} else {
-			$this->response->setCode(404);
+			$this->response->setCode( 404 );
 		}
 	}
 }
