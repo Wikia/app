@@ -64,12 +64,6 @@ class Node {
 		];
 	}
 
-	protected function getMetadataForChildren() {
-		return array_map( function ( Node $item ) {
-			return $item->getMetadata();
-		}, $this->getChildNodes() );
-	}
-
 	/**
 	 * @return ExternalParser
 	 */
@@ -183,6 +177,12 @@ class Node {
 		$uniqueParams = array_unique( $result );
 
 		return array_values( $uniqueParams );
+	}
+
+	protected function getMetadataForChildren() {
+		return array_map( function ( Node $item ) {
+			return $item->getMetadata();
+		}, $this->getChildNodes() );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
