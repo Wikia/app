@@ -11,12 +11,12 @@ class NodeImageTest extends WikiaBaseTest {
 	 */
 	public function testGalleryData() {
 		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
-		$expected = array(
-			array(
+		$expected = [
+			[
 				'label' => '_caption_',
 				'title' => '_title_',
-			)
-		);
+			]
+		];
 		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData( $input ) );
 	}
 
@@ -25,12 +25,12 @@ class NodeImageTest extends WikiaBaseTest {
 	 */
 	public function testTabberData() {
 		$input = '<div class="tabber"><div class="tabbertab" title="_title_"><p><a><img data-image-key="_data-image-key_"></a></p></div></div>';
-		$expected = array(
-			array(
+		$expected = [
+			[
 				'label' => '_title_',
 				'title' => '_data-image-key_',
-			)
-		);
+			]
+		];
 		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData( $input ) );
 	}
 
@@ -160,6 +160,30 @@ class NodeImageTest extends WikiaBaseTest {
 				'<image/>',
 				[ ]
 			],
+			[
+				'<image source="img"><caption source="cap"><format>Test {{{cap}}} and {{{fcap}}}</format></caption></image>',
+				[ 'img', 'cap', 'fcap' ]
+			]
+		];
+	}
+
+	/** @dataProvider metadataProvider */
+	public function testMetadata( $markup, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, [ ] );
+
+		$this->assertEquals( $expected, $node->getMetadata() );
+	}
+
+	public function metadataProvider() {
+		return [
+			[
+				'<image source="img"><caption source="cap"><format>Test {{{cap}}} and {{{fcap}}}</format></caption></image>',
+				[ 'type' => 'image', 'sources' => [
+					'img' => [ 'label' => '', 'primary' => true ],
+					'cap' => [ 'label' => '' ],
+					'fcap' => [ 'label' => '' ]
+				] ]
+			]
 		];
 	}
 
