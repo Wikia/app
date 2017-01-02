@@ -216,7 +216,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		Wikia\Logger\WikiaLogger::instance()->debug(
 			'NEW_HASHING ExternalUser authenticate called',
 			[
-				'user_id' => $userId,
+				'user_id' => $this->getId(),
 				'caller' => wfGetCaller(),
 				'exception' => new Exception()
 			]
