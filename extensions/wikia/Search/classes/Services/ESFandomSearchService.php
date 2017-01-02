@@ -2,15 +2,17 @@
 
 namespace Wikia\Search\Services;
 
+use \Wikia\Logger\WikiaLogger;
+use \Wikia\Service\Gateway\ConsulUrlProvider;
+
 class ESFandomSearchService extends AbstractSearchService {
 	const RESULTS_COUNT = 6;
 
 	protected function getConsulUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new \Wikia\Service\Gateway\ConsulUrlProvider(
-			$wgConsulUrl, $wgConsulServiceTag
-		) )->getUrl( 'fandom-search' );
+		return ( new ConsulUrlProvider( $wgConsulUrl,
+			$wgConsulServiceTag ) )->getUrl( 'fandom-search' );
 	}
 
 	protected function prepareQuery( string $query ) {
@@ -34,7 +36,7 @@ class ESFandomSearchService extends AbstractSearchService {
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					" Fandom Stories Search: error decoding response",
 					[
 						'query' => $query,
@@ -45,7 +47,7 @@ class ESFandomSearchService extends AbstractSearchService {
 			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
 				return $decodedResponse['hits']['hits'];
 			} else {
-				\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					" Fandom Stories Search: invalid response",
 					[
 						'query' => $query,
@@ -54,7 +56,7 @@ class ESFandomSearchService extends AbstractSearchService {
 				);
 			}
 		} else {
-			\WikiaLogger::instance()->error(
+			WikiaLogger::instance()->error(
 				" Fandom Stories Search: empty response",
 				[
 					'query' => $query,
@@ -70,13 +72,16 @@ class ESFandomSearchService extends AbstractSearchService {
 		$results = [];
 
 		foreach ( $response as $item ) {
-			if ( isset( $item['_source'] ) ) {
+			if ( isset( $item['_source'] ) && isset( $item['_source']['title'] )
+			    && isset( $item['_source']['url'] ) ) {
 				$source = $item['_source'];
 
 				$results[] = [
 					'title' => html_entity_decode( $source['title'] ),
-					'excerpt' => isset( $source['excerpt'] ) ? html_entity_decode( $source['excerpt'] ) : '',
-					'vertical' => html_entity_decode( $source['vertical'] ),
+					'excerpt' => isset( $source['excerpt'] )
+						? html_entity_decode( $source['excerpt'] ) : '',
+					'vertical' => isset( $source['excerpt'] )
+						? html_entity_decode( $source['vertical'] ) : '',
 					'image' => html_entity_decode( $source['image_url'] ),
 					'url' => html_entity_decode( $source['url'] ),
 				];
