@@ -74,6 +74,13 @@ class NodeGroup extends Node {
 		return $this->getSourcesForChildren();
 	}
 
+	public function getMetadata() {
+		return [
+			'type' => $this->getType(),
+			'metadata' => $this->getMetadataForChildren()
+		];
+	}
+
 	protected function showIncomplete() {
 		return strcasecmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
 	}
