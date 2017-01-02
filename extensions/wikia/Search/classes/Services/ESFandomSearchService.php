@@ -6,7 +6,25 @@ use \Wikia\Logger\WikiaLogger;
 use \Wikia\Service\Gateway\ConsulUrlProvider;
 
 class ESFandomSearchService extends AbstractSearchService {
-	const RESULTS_COUNT = 6;
+
+	const LOG_QUERY_MARKER = 'query';
+	const LOG_RESPONSE_MARKER = 'response';
+	const LOG_ERROR_MARKER = 'error';
+
+	const STORIES_TITLE_KEY = 'title';
+	const STORIES_EXCERPT_KEY = 'excerpt';
+	const STORIES_VERTICAL_KEY = 'vertical';
+	const STORIES_IMAGE_URL_KEY = 'image';
+	const STORIES_URL_KEY = 'url';
+
+	const MATCHES_ITEM_KEY = '_source';
+	const MATCHES_TITLE_KEY = 'title';
+	const MATCHES_EXCERPT_KEY = 'excerpt';
+	const MATCHES_VERTICAL_KEY = 'vertical';
+	const MATCHES_IMAGE_URL_KEY = 'image_url';
+	const MATCHES_URL_KEY = 'url';
+
+	const MATCHES_COUNT = 6;
 
 	protected function getConsulUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
@@ -39,9 +57,9 @@ class ESFandomSearchService extends AbstractSearchService {
 				WikiaLogger::instance()->error(
 					" Fandom Stories Search: error decoding response",
 					[
-						'query' => $query,
-						'response' => $response,
-						'error' => json_last_error(),
+						self::LOG_QUERY_MARKER => $query,
+						self::LOG_RESPONSE_MARKER => $response,
+						self::LOG_ERROR_MARKER => json_last_error(),
 					]
 				);
 			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
@@ -50,8 +68,8 @@ class ESFandomSearchService extends AbstractSearchService {
 				WikiaLogger::instance()->error(
 					" Fandom Stories Search: invalid response",
 					[
-						'query' => $query,
-						'response' => $response
+						self::LOG_QUERY_MARKER => $query,
+						self::LOG_RESPONSE_MARKER => $response
 					]
 				);
 			}
@@ -59,7 +77,7 @@ class ESFandomSearchService extends AbstractSearchService {
 			WikiaLogger::instance()->error(
 				" Fandom Stories Search: empty response",
 				[
-					'query' => $query,
+					self::LOG_QUERY_MARKER => $query,
 				]
 			);
 		}
@@ -71,21 +89,25 @@ class ESFandomSearchService extends AbstractSearchService {
 	protected function consumeResponse( $response ) {
 		$results = [];
 
-		foreach ( $response as $item ) {
-			if ( isset( $item['_source'] ) && isset( $item['_source']['title'] )
-			    && isset( $item['_source']['url'] ) ) {
-				$source = $item['_source'];
+		foreach ( $response as $match ) {
+			if ( isset( $match[self::MATCHES_ITEM_KEY] ) &&
+			     isset( $match[self::MATCHES_ITEM_KEY][self::MATCHES_TITLE_KEY] ) &&
+			     isset( $match[self::MATCHES_ITEM_KEY][self::MATCHES_URL_KEY] )
+			) {
+
+				$source = $match[self::MATCHES_ITEM_KEY];
 
 				$results[] = [
-					'title' => html_entity_decode( $source['title'] ),
-					'excerpt' => isset( $source['excerpt'] )
-						? html_entity_decode( $source['excerpt'] ) : '',
-					'vertical' => isset( $source['excerpt'] )
-						? html_entity_decode( $source['vertical'] ) : '',
-					'image' => html_entity_decode( $source['image_url'] ),
-					'url' => html_entity_decode( $source['url'] ),
+					self::STORIES_TITLE_KEY => html_entity_decode( $source[self::MATCHES_TITLE_KEY] ),
+					self::STORIES_EXCERPT_KEY => isset( $source[self::MATCHES_EXCERPT_KEY] )
+						? html_entity_decode( $source[self::MATCHES_EXCERPT_KEY] ) : '',
+					self::STORIES_VERTICAL_KEY => isset( $source[self::MATCHES_VERTICAL_KEY] )
+						? html_entity_decode( $source[self::MATCHES_VERTICAL_KEY] ) : '',
+					self::STORIES_IMAGE_URL_KEY => isset( $source[self::MATCHES_IMAGE_URL_KEY] )
+						? html_entity_decode( $source[self::MATCHES_IMAGE_URL_KEY] ) : '',
+					self::STORIES_URL_KEY => html_entity_decode( $source[self::MATCHES_URL_KEY] ),
 				];
-				if ( count( $results ) >= ESFandomSearchService::RESULTS_COUNT ) {
+				if ( count( $results ) >= self::MATCHES_COUNT ) {
 					break;
 				}
 			}
