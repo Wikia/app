@@ -98,6 +98,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
 	'userlogin-logged-in-title' => 'Welcome to {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => 'You\'re logged in. Head over to the [[$1|homepage]] to see the latest or check out your [[$2|profile]].',
+	'userlogin-email-confirmed-notification' => 'Your email has been successfully confirmed!',
+	'userlogin-email-confirmation-error' => 'There was an error while confirming your email',
 ];
 
 $messages['qqq'] = [
@@ -178,6 +180,8 @@ $messages['qqq'] = [
 	'wikiamobile-facebook-connect-fail' => 'Shown when a user tries to log in via FBConnect but there\'s no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited',
 	'userlogin-logged-in-title' => 'Header (title) for user login or signup page when user is already logged in',
 	'userlogin-logged-in-message' => 'Message body for user login or signup page when user is already logged in',
+	'userlogin-email-confirmed-notification' => 'Banner Notification text informing that user\'s email has been confirmed',
+	'userlogin-email-confirmation-error' => 'Banner Notification text informing that there was an error while confirming user\'s email',
 ];
 
 $messages['an'] = [

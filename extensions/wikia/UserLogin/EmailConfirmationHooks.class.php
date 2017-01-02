@@ -12,12 +12,12 @@ class EmailConfirmationHooks {
 
 		if ( $emailConfirmedParam == '1' ) {
 			BannerNotificationsController::addConfirmation(
-				'Confirmed',
+				wfMessage('userlogin-email-confirmed-notification')->text(),
 				BannerNotificationsController::CONFIRMATION_CONFIRM
 			);
 		} else if ( $emailConfirmedParam == '0' ) {
 			BannerNotificationsController::addConfirmation(
-				'Declined',
+				wfMessage('userlogin-email-confirmation-error')->text(),
 				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 		}
