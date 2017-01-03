@@ -373,8 +373,9 @@ class WikiaView {
 	// For now, we will process the request normally, default to json and attach an exception message
 	protected function renderInvalid() {
 		WikiaLogger::instance()->warning( 'Invalid response type passed to WikiaView' );
-		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_ERROR ] ];
+		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_BAD_REQUEST ] ];
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON  );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 
 		return json_encode( $output );
 	}
