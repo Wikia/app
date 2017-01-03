@@ -10,6 +10,7 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+use Wikia\Logger\WikiaLogger;
 use Wikia\Tracer\WikiaTracer;
 
 class WikiaView {
@@ -371,8 +372,10 @@ class WikiaView {
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
 	protected function renderInvalid() {
-		$output = array( 'exception' => array( 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_ERROR ) );
-		return json_encode ( $output );
+		WikiaLogger::instance()->debug( 'Invalid response type passed to WikiaView' );
+		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_ERROR ] ];
+
+		return json_encode( $output );
 	}
 
 }
