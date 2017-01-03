@@ -284,9 +284,9 @@ class ExternalUser_Wikia extends ExternalUser {
                         'user_touched' => '',
                         'user_token' => '',
                         'user_options' => '',
-                        'user_registration' => $dbw->timestamp($User->mRegistration),
+                        'user_registration' => $dbw->timestamp($User->getRegistration()),
                         'user_editcount' => 0,
-                        'user_birthdate' => $User->mBirthDate
+                        'user_birthdate' => $User->getBirthDate()
                     ],
                     __METHOD__
                 );
@@ -442,21 +442,21 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$this->mUser->mTouched = User::newTouchedTimestamp();
+			$this->mUser->setTouched( User::newTouchedTimestamp() );
 			$dbw->update(
 				'`user`',
 				array( /* SET */
 					'user_name' => $this->mUser->mName,
-					'user_newpassword' => $this->mUser->mNewpassword,
-					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
-					'user_real_name' => $this->mUser->mRealName,
-					'user_email' => $this->mUser->mEmail,
-					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),
+					'user_newpassword' => $this->mUser->getNewPassword(),
+					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->getNewpassTime() ),
+					'user_real_name' => $this->mUser->getRealName(),
+					'user_email' => $this->mUser->getEmail(),
+					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->getEmailAuthenticated() ),
 					'user_options' => '',
-					'user_touched' => $dbw->timestamp( $this->mUser->mTouched ),
-					'user_token' => $this->mUser->mToken,
-					'user_email_token' => $this->mUser->mEmailToken,
-					'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->mEmailTokenExpires ),
+					'user_touched' => $dbw->timestamp( $this->mUser->getTouched() ),
+					'user_token' => $this->mUser->getToken(),
+					'user_email_token' => $this->mUser->getEmailToken(),
+					'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->getEmailTokenExpires() ),
 				),
 				array( /* WHERE */
 					'user_id' => $this->mUser->mId

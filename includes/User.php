@@ -131,11 +131,12 @@ class User {
 
 	/** @name Cache variables */
 	//@{
-	var $mId, $mName, $mRealName, $mNewpassword, $mNewpassTime,
+	private $mRealName, $mNewpassword, $mNewpassTime,
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
-		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
-		$mCookiePassword, $mEditCount, $mAllowUsertalk;
-	var $mBirthDate; // Wikia. Added to reflect our user table layout.
+		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups,
+		$mOptionOverrides, $mEditCount, $mAllowUsertalk;
+	private $mBirthDate; // Wikia. Added to reflect our user table layout.
+	var $mId, $mName;
 	//@}
 
 	/**
@@ -282,6 +283,128 @@ class User {
 		}
 
 		return $sampler;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getBirthDate() {
+		return $this->mBirthDate;
+	}
+
+	/**
+	 * @param mixed $birthDate
+	 */
+	public function setBirthDate( $birthDate ) {
+		$this->mBirthDate = $birthDate;
+	}
+
+	/**
+	 * @deprecated
+	 * @return mixed
+	 */
+	public function getNewpassword() {
+		return $this->mNewpassword;
+	}
+
+	/**
+	 * @deprecated
+	 * @return mixed
+	 */
+	public function getNewpassTime() {
+		return $this->mNewpassTime;
+	}
+
+	/**
+	 * @deprecated
+	 * @param mixed $newpassTime
+	 */
+	public function setNewpassTime( $newpassTime ) {
+		$this->mNewpassTime = $newpassTime;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmail() {
+		return $this->mEmail;
+	}
+
+	/**
+	 * @param mixed $email
+	 */
+	public function setEmail( $email ) {
+		$this->mEmail = $email;
+	}
+
+	/**
+	 * @param mixed $touched
+	 */
+	public function setTouched( $touched ) {
+		$this->mTouched = $touched;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getToken() {
+		return $this->mToken;
+	}
+
+	/**
+	 * @param mixed $token
+	 */
+	public function setToken( $token ) {
+		$this->mToken = $token;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmailAuthenticated() {
+		return $this->mEmailAuthenticated;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmailToken() {
+		return $this->mEmailToken;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmailTokenExpires() {
+		return $this->mEmailTokenExpires;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRegistration() {
+		return $this->mRegistration;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getOptionOverrides() {
+		return $this->mOptionOverrides;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAllowUsertalk() {
+		return $this->mAllowUsertalk;
+	}
+
+	/**
+	 * @param mixed $allowUsertalk
+	 */
+	public function setAllowUsertalk( $allowUsertalk ) {
+		$this->mAllowUsertalk = $allowUsertalk;
 	}
 
 	/**
@@ -1015,7 +1138,7 @@ class User {
 
 		$this->mId = 0;
 		$this->mName = $name;
-		$this->mRealName = '';
+		$this->mRealName =  '';
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
 		$this->mEmail = '';

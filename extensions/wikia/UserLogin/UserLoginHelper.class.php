@@ -271,7 +271,7 @@ class UserLoginHelper extends WikiaModel {
 		// Signup throttle check
 		$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
 		$emailSent = intval( $this->wg->Memc->get( $memKey ) );
-		if ( $user->isEmailConfirmationPending() && ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days" ) > 0 ) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
+		if ( $user->isEmailConfirmationPending() && ( strtotime( $user->getEmailTokenExpires() ) - strtotime( "+6 days" ) > 0 ) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'usersignup-error-throttled-email' )->escaped();
 			return $result;
@@ -304,12 +304,12 @@ class UserLoginHelper extends WikiaModel {
 		$userEmail = $user->getEmail();
 
 		$user->mId = 0;
-		$user->mEmail = $email;
+		$user->setEmail( $email );
 
 		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
-		$user->mEmail = $userEmail;
+		$user->setEmail( $userEmail );
 		$user->saveSettings();
 
 		return $result;
@@ -486,7 +486,7 @@ class UserLoginHelper extends WikiaModel {
 		$optionNewEmail = $user->getNewEmail();
 		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
-			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {
+			if ( strtotime( $user->getEmailTokenExpires() ) - strtotime( "+6 days 23 hours" ) > 0 ) {
 				$out->addWikiMsg( 'usersignup-error-throttled-email' );
 				return;
 			}
@@ -514,7 +514,7 @@ class UserLoginHelper extends WikiaModel {
 
 			if ( $user->isEmailConfirmationPending() || !empty( $optionNewEmail ) ) {
 				$out->addWikiMsg( 'usersignup-confirm-email-unconfirmed-emailnotauthenticated' );
-				if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 )
+				if ( strtotime( $user->getEmailTokenExpires() ) - strtotime( "+6 days 23 hours" ) > 0 )
 					return;
 			}
 

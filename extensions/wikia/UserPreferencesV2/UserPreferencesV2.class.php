@@ -396,8 +396,8 @@ class UserPreferencesV2 {
 		$userIdentityObject = new UserIdentityBox( $user );
 		$mastheadOptions = $userIdentityObject->getFullData();
 		$masthead = new Masthead( $user );
-		if ( !empty( $masthead->mUser->mOptionOverrides['avatar'] ) ) {
-			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
+		if ( !empty( $masthead->mUser->getOptionOverrides()['avatar'] ) ) {
+			$mastheadOptions['avatar'] = $masthead->mUser->getOptionOverrides()['avatar'];
 		}
 		$storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] = $mastheadOptions;
 

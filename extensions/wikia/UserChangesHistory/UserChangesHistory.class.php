@@ -143,12 +143,12 @@ class UserChangesHistory {
 			$params = array(
 				"user_id"          => $id,
 				"user_name"        => $wgUser->mName,
-				"user_real_name"   => $wgUser->mRealName,
-				"user_newpassword" => $wgUser->mNewpassword,
-				"user_email"       => $wgUser->mEmail,
+				"user_real_name"   => $wgUser->getRealName(),
+				"user_newpassword" => $wgUser->getNewpassword(),
+				"user_email"       => $wgUser->getEmail(),
 				"user_options"     => $user_options,
-				"user_touched"     => $wgUser->mTouched,
-				"user_token"       => $wgUser->mToken
+				"user_touched"     => $wgUser->getTouched(),
+				"user_token"       => $wgUser->getToken()
 			);
 
 			if ( !empty($wgEnableScribeReport) ) {

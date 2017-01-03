@@ -99,7 +99,7 @@ class UserProfilePageHooks {
 		$user->load();
 
 		// abort if user has been disabled
-		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->mRealName == CLOSED_ACCOUNT_FLAG ) {
+		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->getRealName() == CLOSED_ACCOUNT_FLAG ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
