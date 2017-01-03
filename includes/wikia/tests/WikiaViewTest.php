@@ -18,7 +18,6 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		return array(
 			array( 'Test', 'Foo', array(), 'html' ),
 			array( 'Test', 'Bar', array( 'foo1' => 1, 'foo2' => 2 ), 'json' ),
-			array( 'Test', 'Foo', array( 'bar' => 'zzz' ), 'raw' ),
 		);
 	}
 
@@ -92,7 +91,6 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$responseValueData = array( 1, 2, 3 );
 
 		return array(
-			array( WikiaResponse::FORMAT_RAW, $responseValueName, $responseValueData, '<pre>' . var_export( array( $responseValueName => $responseValueData ), true ) .'</pre>' ),
 			array( WikiaResponse::FORMAT_JSON, $responseValueName, $responseValueData, json_encode( array( $responseValueName => $responseValueData ) ) ),
 			array( WikiaResponse::FORMAT_HTML, $responseValueName, $responseValueData, implode( '-', $responseValueData ) ),
 		);
