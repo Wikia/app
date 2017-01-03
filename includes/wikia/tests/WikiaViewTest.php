@@ -81,7 +81,9 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 
 	public function testRenderingForUnknownFormat() {
 		$response = new WikiaResponse( 'unknownFormat' );
-		$expectedResult = json_encode(array ('exception' => array ('message' => 'Invalid Format, defaulting to JSON', 'code' => 501 )));
+		$response->setVal( 'secret', 'data' );
+		$this->object->setResponse( $response );
+		$expectedResult = json_encode(array ('exception' => array ('message' => 'Invalid Response Format', 'code' => 501 )));
 		$this->object->setResponse( $response );
 		$result = $this->object->render();
 		$this->assertEquals($result, $expectedResult);
