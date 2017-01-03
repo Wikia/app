@@ -372,7 +372,7 @@ class WikiaView {
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
 	protected function renderInvalid() {
-		WikiaLogger::instance()->debug( 'Invalid response type passed to WikiaView' );
+		WikiaLogger::instance()->warning( 'Invalid response type passed to WikiaView' );
 		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_ERROR ] ];
 
 		return json_encode( $output );
