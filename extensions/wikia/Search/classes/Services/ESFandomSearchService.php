@@ -16,6 +16,7 @@ class ESFandomSearchService extends AbstractSearchService {
 	const STORIES_VERTICAL_KEY = 'vertical';
 	const STORIES_IMAGE_URL_KEY = 'image';
 	const STORIES_URL_KEY = 'url';
+	const STORIES_COUNT_MAX = 6;
 
 	const MATCHES_ITEM_KEY = '_source';
 	const MATCHES_TITLE_KEY = 'title';
@@ -24,7 +25,6 @@ class ESFandomSearchService extends AbstractSearchService {
 	const MATCHES_IMAGE_URL_KEY = 'image_url';
 	const MATCHES_URL_KEY = 'url';
 
-	const MATCHES_COUNT = 6;
 
 	protected function getConsulUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
@@ -115,7 +115,7 @@ class ESFandomSearchService extends AbstractSearchService {
 					ESFandomSearchService::STORIES_URL_KEY =>
 						html_entity_decode( $source[ESFandomSearchService::MATCHES_URL_KEY] ),
 				];
-				if ( count( $results ) >= ESFandomSearchService::MATCHES_COUNT ) {
+				if ( count( $results ) >= ESFandomSearchService::STORIES_COUNT_MAX ) {
 					break;
 				}
 			}
