@@ -35,52 +35,13 @@ class UserProfilePageController extends WikiaController {
 
 	/**
 	 * @brief main entry point
-	 *
-	 * @requestParam User $user user object
-	 * @requestParam string $userPageBody original page body
-	 * @requestParam int $wikiId current wiki id
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * @var $user User
-		 */
-		$user = $this->getVal( 'user' );
-
-		$pageBody = $this->getVal( 'userPageBody' );
-
-		if ( $this->title instanceof Title ) {
-			$namespace = $this->title->getNamespace();
-			$isSubpage = $this->title->isSubpage();
-		} else {
-			$namespace = $this->wg->NamespaceNumber;
-			$isSubpage = false;
+		if ( !$this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->skipRendering();
 		}
 
-		$useOriginalBody = true;
-
-		if ( $user instanceof User ) {
-			$this->profilePage = new UserProfilePage( $user );
-			if ( $namespace == NS_USER && !$isSubpage ) {
-				// we'll implement interview section later
-				// $this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
-				$this->setVal( 'stuffSectionBody', $pageBody );
-				$useOriginalBody = false;
-			}
-
-			$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $this->wg->User->getId() ) ? true : false ) );
-		}
-
-		if ( $useOriginalBody ) {
-			$this->response->setBody( $pageBody );
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
-
-		wfProfileOut( __METHOD__ );
+		$this->overrideTemplate( 'WikiaMobileIndex' );
 	}
 
 	/**
