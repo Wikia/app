@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
-	'ext.wikia.adEngine.video.porvata'
+	'ext.wikia.adEngine.video.player.porvata'
 ], function (porvata) {
 	'use strict';
 

@@ -112,12 +112,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/playwire/playwirePlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/playwire/playwire.js',
 		'#group_adengine2_porvata_js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
+		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
@@ -309,7 +304,20 @@ $config['adengine2_porvata_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js'
+	],
+];
+
+$config['adengine2_video_ui_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js'
 	],
 ];
 
@@ -954,12 +962,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'#group_adengine2_porvata_js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
+		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',

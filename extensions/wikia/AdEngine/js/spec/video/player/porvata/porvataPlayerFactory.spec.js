@@ -1,4 +1,4 @@
-describe('ext.wikia.adEngine.video.porvata.porvataPlayerFactory', function () {
+describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', function () {
 	'use strict';
 
 	var mocks = {

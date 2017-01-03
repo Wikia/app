@@ -1,12 +1,12 @@
 /*global define, Promise*/
-define('ext.wikia.adEngine.video.player.playwire.playwire', [
+define('ext.wikia.adEngine.video.player.playwire', [
 	'ext.wikia.adEngine.video.player.playwire.playwirePlayerFactory',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.document',
 	'wikia.log'
 ], function (playerFactory, vastUrlBuilder, doc, log) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.player.playwire.playwire',
+	var logGroup = 'ext.wikia.adEngine.video.player.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
 
 	function getConfigUrl(publisherId, videoId) {
@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.playwire.playwire', [
 			script.src = playerUrl;
 
 			container.appendChild(script);
-			log(['inject', configUrl], 'debug', logGroup);
+			log(['inject', configUrl], log.levels.debug, logGroup);
 		});
 	}
 

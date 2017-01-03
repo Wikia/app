@@ -1,5 +1,5 @@
 /*global describe, expect, it, modules, spyOn*/
-describe('ext.wikia.adEngine.video.porvata.googleImaPlayerFactory', function () {
+describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', function () {
 	'use strict';
 
 	function noop() {

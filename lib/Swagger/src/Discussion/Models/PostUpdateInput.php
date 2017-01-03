@@ -65,7 +65,9 @@ class PostUpdateInput implements ArrayAccess
     protected static $swaggerTypes = array(
         'body' => 'string',
         'title' => 'string',
-        'open_graph' => '\Swagger\Client\Discussion\Models\OpenGraphInput'
+        'forum_id' => 'int',
+        'open_graph' => '\Swagger\Client\Discussion\Models\OpenGraph',
+        'content_images' => '\Swagger\Client\Discussion\Models\ContentImage[]'
     );
 
     public static function swaggerTypes()
@@ -80,7 +82,9 @@ class PostUpdateInput implements ArrayAccess
     protected static $attributeMap = array(
         'body' => 'body',
         'title' => 'title',
-        'open_graph' => 'openGraph'
+        'forum_id' => 'forumId',
+        'open_graph' => 'openGraph',
+        'content_images' => 'contentImages'
     );
 
     public static function attributeMap()
@@ -95,7 +99,9 @@ class PostUpdateInput implements ArrayAccess
     protected static $setters = array(
         'body' => 'setBody',
         'title' => 'setTitle',
-        'open_graph' => 'setOpenGraph'
+        'forum_id' => 'setForumId',
+        'open_graph' => 'setOpenGraph',
+        'content_images' => 'setContentImages'
     );
 
     public static function setters()
@@ -110,7 +116,9 @@ class PostUpdateInput implements ArrayAccess
     protected static $getters = array(
         'body' => 'getBody',
         'title' => 'getTitle',
-        'open_graph' => 'getOpenGraph'
+        'forum_id' => 'getForumId',
+        'open_graph' => 'getOpenGraph',
+        'content_images' => 'getContentImages'
     );
 
     public static function getters()
@@ -136,7 +144,9 @@ class PostUpdateInput implements ArrayAccess
     {
         $this->container['body'] = isset($data['body']) ? $data['body'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['forum_id'] = isset($data['forum_id']) ? $data['forum_id'] : null;
         $this->container['open_graph'] = isset($data['open_graph']) ? $data['open_graph'] : null;
+        $this->container['content_images'] = isset($data['content_images']) ? $data['content_images'] : null;
     }
 
     /**
@@ -150,12 +160,18 @@ class PostUpdateInput implements ArrayAccess
         if ($this->container['body'] === null) {
             $invalid_properties[] = "'body' can't be null";
         }
-        if (strlen($this->container['title']) > 512) {
+        if (!is_null($this->container['title']) && (strlen($this->container['title']) > 512)) {
             $invalid_properties[] = "invalid value for 'title', the character length must be smaller than or equal to 512.";
         }
-        if (strlen($this->container['title']) < 0) {
+
+        if (!is_null($this->container['title']) && (strlen($this->container['title']) < 0)) {
             $invalid_properties[] = "invalid value for 'title', the character length must be bigger than or equal to 0.";
         }
+
+        if (!is_null($this->container['forum_id']) && ($this->container['forum_id'] < 1.0)) {
+            $invalid_properties[] = "invalid value for 'forum_id', must be bigger than or equal to 1.0.";
+        }
+
         return $invalid_properties;
     }
 
@@ -174,6 +190,9 @@ class PostUpdateInput implements ArrayAccess
             return false;
         }
         if (strlen($this->container['title']) < 0) {
+            return false;
+        }
+        if ($this->container['forum_id'] < 1.0) {
             return false;
         }
         return true;
@@ -229,8 +248,33 @@ class PostUpdateInput implements ArrayAccess
     }
 
     /**
+     * Gets forum_id
+     * @return int
+     */
+    public function getForumId()
+    {
+        return $this->container['forum_id'];
+    }
+
+    /**
+     * Sets forum_id
+     * @param int $forum_id
+     * @return $this
+     */
+    public function setForumId($forum_id)
+    {
+
+        if ($forum_id < 1.0) {
+            throw new \InvalidArgumentException('invalid value for $forum_id when calling PostUpdateInput., must be bigger than or equal to 1.0.');
+        }
+        $this->container['forum_id'] = $forum_id;
+
+        return $this;
+    }
+
+    /**
      * Gets open_graph
-     * @return \Swagger\Client\Discussion\Models\OpenGraphInput
+     * @return \Swagger\Client\Discussion\Models\OpenGraph
      */
     public function getOpenGraph()
     {
@@ -239,12 +283,33 @@ class PostUpdateInput implements ArrayAccess
 
     /**
      * Sets open_graph
-     * @param \Swagger\Client\Discussion\Models\OpenGraphInput $open_graph
+     * @param \Swagger\Client\Discussion\Models\OpenGraph $open_graph
      * @return $this
      */
     public function setOpenGraph($open_graph)
     {
         $this->container['open_graph'] = $open_graph;
+
+        return $this;
+    }
+
+    /**
+     * Gets content_images
+     * @return \Swagger\Client\Discussion\Models\ContentImage[]
+     */
+    public function getContentImages()
+    {
+        return $this->container['content_images'];
+    }
+
+    /**
+     * Sets content_images
+     * @param \Swagger\Client\Discussion\Models\ContentImage[] $content_images
+     * @return $this
+     */
+    public function setContentImages($content_images)
+    {
+        $this->container['content_images'] = $content_images;
 
         return $this;
     }
@@ -306,3 +371,5 @@ class PostUpdateInput implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+
