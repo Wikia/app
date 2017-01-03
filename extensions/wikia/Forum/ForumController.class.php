@@ -310,7 +310,7 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumActivityModule() {
-		if ( !$this->request->isInternal()) {
+		if ( !$this->request->isInternal() ) {
 			throw new UnauthorizedException();
 		}
 
