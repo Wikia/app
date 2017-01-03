@@ -281,16 +281,6 @@ class WikiaView {
 		}
 	}
 
-	protected function renderRaw() {
-		wfProfileIn(__METHOD__);
-		if ($this->response->hasException()) {
-			wfProfileOut(__METHOD__);
-			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
-		}
-		wfProfileOut(__METHOD__);
-		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
-	}
-
 	protected function renderHtml() {
 		wfProfileIn(__METHOD__);
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
