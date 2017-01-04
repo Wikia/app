@@ -1219,14 +1219,15 @@ class WikiFactory {
 		// first - normalize URL
 		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
 		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
-		if ( preg_match( $regexp, $url, $groups ) === 0
-		     || preg_match( $wikiaDomainsRegexp, $groups[ 2 ] ) === 0 ) {
+		if ( preg_match( $regexp, $url, $groups ) === 0 ||
+		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0
+		) {
 			// on fail at least return original url
 			return $url;
 		}
-		$protocol = $groups [ 1 ];
-		$server = $groups[ 2 ];
-		$address = $groups[ 3 ];
+		$protocol = $groups [1];
+		$server = $groups[2];
+		$address = $groups[3];
 
 		if ( !empty( $address ) ) {
 			$address = '/' . $address;
@@ -1256,16 +1257,16 @@ class WikiFactory {
 		// put the address back into shape and return
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return $protocol . '://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return $protocol . '://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return $protocol . '://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return $protocol . '://' . static::getExternalHostName() . '.' . $server .
+				return 'http://' . static::getExternalHostName() . '.' . $server .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
 				return $protocol . '://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;

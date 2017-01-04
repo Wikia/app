@@ -6,7 +6,6 @@ class DesignSystemSharedLinks {
 	private static $instance;
 
 	private function __construct() {
-		$this->mapHrefsToLocalUrls();
 	}
 
 	public static function getInstance() {
@@ -16,28 +15,8 @@ class DesignSystemSharedLinks {
 		return static::$instance;
 	}
 
-	private static function mapHrefToLocalUrl($href) {
-		$href = WikiFactory::getLocalEnvURL($href);
-
-		// We need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
-		// we do not have ssl certificate for these subdomains
-		$regex = '/^https:\/\/(stable|preview|verify|sandbox-[a-z0-9]+)\.[^\/]+\.wikia\.com/';
-		if( preg_match( $regex, $href ) ) {
-			$href = preg_replace('/^https/', 'http', $href);
-		}
-
-		return $href;
-	}
-
-	private function mapHrefsToLocalUrls() {
-		$this->hrefs = array_map(function ($langHrefs) {
-			return array_map('self::mapHrefToLocalUrl', $langHrefs);
-		}, $this->hrefs);
-	}
-
 	public function setHrefs( $hrefs ) {
 		$this->hrefs = $hrefs;
-		$this->mapHrefsToLocalUrls();
 		return $this;
 	}
 
@@ -49,7 +28,10 @@ class DesignSystemSharedLinks {
 	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+		$href = WikiFactory::getLocalEnvURL( $href );
+
+		return $href;
 	}
 
 	/**

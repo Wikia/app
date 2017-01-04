@@ -239,7 +239,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'https://fallout.wikia.com/wiki/test',
-				'expected' => 'https://preview.fallout.wikia.com/wiki/test'
+				'expected' => 'http://preview.fallout.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
