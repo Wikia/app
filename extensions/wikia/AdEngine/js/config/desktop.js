@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
+	'ext.wikia.adEngine.provider.custom',
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.remnantGpt',
@@ -26,6 +27,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adDecoratorPageDimensions,
 
 	// AdProviders
+	adProviderCustom,
 	adProviderDirectGpt,
 	adProviderEvolve2,
 	adProviderRemnantGpt,
@@ -55,6 +57,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
 
+		providerList.push(adProviderCustom);
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
 			return [];
