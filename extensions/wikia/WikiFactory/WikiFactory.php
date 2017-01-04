@@ -1255,6 +1255,8 @@ class WikiFactory {
 		) ? $forcedEnv : $wgWikiaEnvironment;
 
 		// put the address back into shape and return
+		// we need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
+		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
 				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;

@@ -245,7 +245,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'https://muppet.wikia.com/wiki',
-				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
