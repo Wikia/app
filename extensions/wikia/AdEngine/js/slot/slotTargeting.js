@@ -47,7 +47,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 
 	function getWikiaSlotId(slotName, slotSource) {
 		var context = adContext.getContext(),
-
 			skin = valueOrX(skins, context.targeting.skin),
 			slot = valueOrX(wsiSlots, slotName),
 			pageType = valueOrX(pageTypes, context.targeting.pageType),

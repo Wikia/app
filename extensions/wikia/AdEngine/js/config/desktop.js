@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
+	'ext.wikia.adEngine.provider.diana',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
@@ -31,6 +32,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
+	adProviderDiana,
 	adProviderTaboola,
 	adProviderRevcontent
 ) {
@@ -58,6 +60,11 @@ define('ext.wikia.adEngine.config.desktop', [
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
 			return [];
+		}
+
+		// Diana
+		if (adProviderDiana && context.providers.diana && adProviderDiana.canHandleSlot(slotName)) {
+			return [adProviderDiana];
 		}
 
 		// Force provider

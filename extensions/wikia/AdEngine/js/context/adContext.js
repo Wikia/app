@@ -128,6 +128,9 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
+		//Diana integration
+		context.providers.diana = true;
+
 		// Evolve2 integration
 		if (context.providers.evolve2) {
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);

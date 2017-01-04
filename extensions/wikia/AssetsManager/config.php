@@ -79,6 +79,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/provider/diana.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
