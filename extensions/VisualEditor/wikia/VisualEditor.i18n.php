@@ -561,6 +561,7 @@ Füge hier den ersten Abschnitt deiner Seite ein. Du kannst hier auch dein Thema
 * Beschreibung der Protagonisten
 * Hintergrundinformationen
 Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösche ihn einfach. Du kannst den Text auch kopieren und erneut einfügen, wenn deine Seite mehr als einen Abschnitt haben soll.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Bild hinzufügen',
 ];
 
 $messages['diq'] = [
@@ -706,6 +707,7 @@ Escribe la primera sección de tu página aquí. Puedes usarla para describir de
 * Descripciones de personajes
 * Información de fondo
 Si piensas que tu página no necesita esta sección, simplemente bórrala. También puedes copiar y pegar este texto más abajo si quieres que tu página tenga más de una sección.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Añade una imagen',
 ];
 
 $messages['eu'] = [
@@ -915,6 +917,7 @@ Rédigez ici la première partie de la page. Utilisez-la pour fournir plus de d�
 * Description des personnages
 * Contexte
 Si vous pensez que cette section est inutile, vous pouvez la supprimer. Vous pouvez également copier-coller ce texte au-dessous pour ajouter d'autres sections à la page.",
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Ajouter une image',
 ];
 
 $messages['fy'] = [
@@ -1181,6 +1184,7 @@ Scrivi la prima sezione della tua pagina qui. Utilizzala per descrivere informaz
 * Descrizioni dei personaggi
 * Informazioni di background
 Se ritieni che la tua pagina non abbia bisogno di questa sezione, semplicemente rimuovila. Puoi anche copiare e incollare questo testo sotto se desideri che la tua pagina contenga più di una sezione.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => "Aggiungi un'immagine",
 ];
 
 $messages['ja'] = [
@@ -1276,6 +1280,7 @@ $messages['ja'] = [
 * キャラクターの紹介
 * 背景情報
 作成したいページに本セクションが不要な場合は削除してください。もしくは上記のテキストを「コピー＆貼り付け」することで、セクションを増やすことも可能です。',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '画像を追加する',
 ];
 
 $messages['ka'] = [
@@ -1762,6 +1767,7 @@ Write the first section of your page here. Use this to describe details about yo
 * Character descriptions
 * Background information
 If you think your page does not need this section, simply delete it. You may also copy and paste this text underneath if you want your page to have more than one section.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Add an image',
 ];
 
 $messages['nn'] = [
@@ -1904,6 +1910,7 @@ W tym miejscu napisz pierwszą sekcję strony. Wykorzystaj ją do opisania szcze
 * Opisy postaci
 * Informacje dodatkowe
 Jeśli uważasz, że twoja strona nie potrzebuje tej sekcji, po prostu ją usuń. Możesz też skopiować ją i wkleić poniżej, jeśli twoja strona ma mieć więcej niż jedną sekcję.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Dodaj obraz',
 ];
 
 $messages['ps'] = [
@@ -2035,6 +2042,7 @@ Alguns exemplos de coisas que você pode colocar aqui:
 * Descrições de personagens
 * Informações básicas
 Se você acha que sua página não precisa desta seção, simplesmente a exclua. Você também pode copiar e colar o texto abaixo, se você quiser que sua página tenha mais de uma seção.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Adicionar imagem',
 ];
 
 $messages['pt-br'] = [
@@ -2264,6 +2272,7 @@ $messages['ru'] = [
 *описание персонажей;
 *дополнительную информацию.
 Если вам не нужен этот раздел, то просто его удалите. Если вы хотите, чтобы на вашей странице было более одного раздела, скопируйте и вставьте этот текст ниже.',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Добавить изображение',
 ];
 
 $messages['sc'] = [
@@ -2754,6 +2763,7 @@ $messages['zh-hans'] = [
 * 人物描写
 * 背景信息
 如果你认为文章不需要这部分，你可以删除它。如果你希望添加更多的文章段落，你可以在下方通过复制和粘贴这部分章节继续添加内容。',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '添加图片',
 ];
 
 $messages['zh-hant'] = [
@@ -2850,6 +2860,7 @@ $messages['zh-hant'] = [
 * 人物描寫
 * 背景資訊
 如果你認為頁面不需要這一段落，你可以刪除它。如果你希望添加更多的段落，你可以在下方複製貼上這段文字再增加新的內容。',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '添加圖片',
 ];
 
 $messages['zh-hk'] = [
