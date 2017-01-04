@@ -3,6 +3,7 @@
 #CreatePageModalDialog {
 	section {
 		display: flex;
+		flex-direction: column;
 		padding: 0;
 
 		> div {
@@ -18,14 +19,15 @@
 
 	#CreatePageTitleProposals {
 		background-color: rgba($color-unified-module-background, .4);
-		display: none;
 
 		ul {
 			box-sizing: border-box;
 			padding: 0 12px;
 
 			li {
+				float: left;
 				padding: 5px 0;
+				width: 50%;
 			}
 		}
 	}
