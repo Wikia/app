@@ -223,7 +223,7 @@ var CreatePage = {
 						label: 'modal'
 					} );
 
-					redLinks = $( '#CreatePageTitleProposals a.new' );
+					redLinks = $( '#CreatePageTitleProposals .new' );
 
 					if ( redLinks.length ) {
 						CreatePage.track( {
