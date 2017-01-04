@@ -3,12 +3,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory';
 
-	function prepareVideoAdContainer(videoAdContainer, isAutoPlay) {
+	function prepareVideoAdContainer(videoAdContainer) {
 		videoAdContainer.style.position = 'relative';
-
-		if (!isAutoPlay) {
-			videoAdContainer.style.display = 'none';
-		}
+		videoAdContainer.style.display = 'none';
 		videoAdContainer.classList.add('video-player');
 
 		return videoAdContainer;
@@ -17,12 +14,13 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 	function create(params, ima) {
 		var width = params.width,
 			height = params.height,
-			isAutoPlay = params.autoPlay || false;
+			isAutoPlay = params.autoPlay || false,
+			videoAdContainer = params.container.querySelector('div');
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
 		return {
-			container: prepareVideoAdContainer(params.container.querySelector('div'), isAutoPlay),
+			container: prepareVideoAdContainer(videoAdContainer),
 			ima: ima,
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
@@ -43,6 +41,16 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 				if (newWidth !== undefined && newHeight !== undefined) {
 					width = newWidth;
 					height = newHeight;
+				}
+
+				if (isAutoPlay) {
+					this.addEventListener('start', function () {
+						videoAdContainer.style.display = 'block';
+					});
+
+					this.addEventListener('allAdsCompleted', function () {
+						videoAdContainer.style.display = 'none';
+					});
 				}
 
 				ima.playVideo(width, height);
