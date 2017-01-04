@@ -50,11 +50,11 @@
 	</form>
 </div>
 <? if ( !empty( $wantedPages ) ): ?>
-	<div id="CreatePageTitleProposals">
-		<div id="CreatePageTitleProposalsHeader">
+	<div class="create-page-dialog__proposals">
+		<div class="create-page-dialog__proposals-header">
 			<?= wfMessage( 'createpage-dialog-redlinks-list-header' )->text() ?>
 		</div>
-		<ul>
+		<ul class="create-page-dialog__proposals-list">
 			<? foreach ( $wantedPages as $page ): ?>
 				<li><a href="<?= $page['url']; ?>" class="new"><?= $page['title']; ?></a></li>
 			<? endforeach; ?>

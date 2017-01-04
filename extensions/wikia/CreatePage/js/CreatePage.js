@@ -223,7 +223,7 @@ var CreatePage = {
 						label: 'modal'
 					} );
 
-					redLinks = $( '#CreatePageTitleProposals .new' );
+					redLinks = createPageModal.$element.find( '.create-page-dialog__proposals .new' );
 
 					if ( redLinks.length ) {
 						CreatePage.track( {

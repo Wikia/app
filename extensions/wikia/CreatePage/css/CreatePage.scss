@@ -105,25 +105,28 @@
 
 #CreatePageModalDialog {
 	section {
-		display: flex;
-		flex-direction: column;
+		@include flexbox;
+		@include flex-direction(column);
 		padding: 0;
 
 		> div {
-			flex-grow: 1;
+			@include flex-grow(1);
 			padding: 20px;
 		}
 	}
 
-	#CreatePageTitleProposalsHeader {
-		font-weight: bold;
-		margin-bottom: 8px;
-	}
 
-	#CreatePageTitleProposals {
-		background-color: rgba($color-unified-module-background, .4);
+	.create-page-dialog {
+		&__proposals {
+			background-color: rgba($color-unified-module-background, .4);
+		}
 
-		ul {
+		&__proposals-header {
+			font-weight: bold;
+			margin-bottom: 8px;
+		}
+
+		&__proposals-list {
 			box-sizing: border-box;
 			padding: 0 12px;
 
