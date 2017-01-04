@@ -121,7 +121,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function testGetLocalEnvURLDataProvider() {
 		return [
 			[
-				'env' => WIKIA_ENV_PREV,
+				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com',
 				'expected' => 'http://preview.muppet.wikia.com'
