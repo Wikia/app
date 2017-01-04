@@ -1218,7 +1218,7 @@ class WikiFactory {
 
 		// first - normalize URL
 		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
-		$wikiaDomainsRegexp = '/wikia(-staging|-dev)?\.com$/';
+		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0
 		     || preg_match( $wikiaDomainsRegexp, $groups[ 2 ] ) === 0 ) {
 			// on fail at least return original url
