@@ -6,6 +6,7 @@ class DesignSystemSharedLinks {
 	private static $instance;
 
 	private function __construct() {
+		$this->mapHrefsToLocalUrls();
 	}
 
 	public static function getInstance() {
@@ -15,8 +16,19 @@ class DesignSystemSharedLinks {
 		return static::$instance;
 	}
 
+	private static function mapHrefToLocalUrl($href) {
+		return WikiFactory::getLocalEnvURL($href);
+	}
+
+	private function mapHrefsToLocalUrls() {
+		$this->hrefs = array_map(function ($langHrefs) {
+			return array_map('self::mapHrefToLocalUrl', $langHrefs);
+		}, $this->hrefs);
+	}
+
 	public function setHrefs( $hrefs ) {
 		$this->hrefs = $hrefs;
+		$this->mapHrefsToLocalUrls();
 		return $this;
 	}
 

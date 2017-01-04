@@ -1217,13 +1217,16 @@ class WikiFactory {
 		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
 
 		// first - normalize URL
-		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
-		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
+		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
+		$wikiaDomainsRegexp = '/wikia(-staging|-dev)?\.com$/';
+		if ( preg_match( $regexp, $url, $groups ) === 0
+		     || preg_match( $wikiaDomainsRegexp, $groups[ 2 ] ) === 0 ) {
 			// on fail at least return original url
 			return $url;
 		}
-		$server = $groups[ 1 ];
-		$address = $groups[ 2 ];
+		$protocol = $groups [ 1 ];
+		$server = $groups[ 2 ];
+		$address = $groups[ 3 ];
 
 		if ( !empty( $address ) ) {
 			$address = '/' . $address;
@@ -1253,18 +1256,19 @@ class WikiFactory {
 		// put the address back into shape and return
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return $protocol . '://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return $protocol . '://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return $protocol . '://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address );
+				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return $protocol . '://' . static::getExternalHostName() . '.' . $server .
+				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
+				return $protocol . '://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
