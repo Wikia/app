@@ -1269,7 +1269,8 @@ class WikiFactory {
 				return 'http://' . static::getExternalHostName() . '.' . $server .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return $protocol . '://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
+				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com'
+				       . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
