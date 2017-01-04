@@ -1225,7 +1225,7 @@ class WikiFactory {
 			// on fail at least return original url
 			return $url;
 		}
-		$protocol = $groups [1];
+		$protocol = $groups[1];
 		$server = $groups[2];
 		$address = $groups[3];
 
