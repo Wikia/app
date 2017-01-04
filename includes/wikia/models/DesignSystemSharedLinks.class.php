@@ -17,7 +17,16 @@ class DesignSystemSharedLinks {
 	}
 
 	private static function mapHrefToLocalUrl($href) {
-		return WikiFactory::getLocalEnvURL($href);
+		$href = WikiFactory::getLocalEnvURL($href);
+
+		// We need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
+		// we do not have ssl certificate for these subdomains
+		$regex = '/^https:\/\/(stable|preview|verify|sandbox-[a-z0-9]+)\.[^\/]+\.wikia\.com/';
+		if( preg_match( $regex, $href ) ) {
+			$href = preg_replace('/^https/', 'http', $href);
+		}
+
+		return $href;
 	}
 
 	private function mapHrefsToLocalUrls() {
