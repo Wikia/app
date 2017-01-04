@@ -53,8 +53,7 @@ class PasswordResetLinkController extends EmailController {
 	 * @template passwordResetLink
 	 */
 	public function body() {
-		$context = RequestContext::getMain();
-		$currentIp = $context->getRequest()->getIP();
+		$currentIp = $this->getContext()->getRequest()->getIP();
 		wfRunHooks( 'User::mailPasswordInternal', [
 			$this->currentUser,
 			$currentIp,
