@@ -26,8 +26,10 @@ define('ext.wikia.adEngine.provider.custom', [
 	function fillInSlot(slot) {
 		log(['fillInSlot', slot.name], 'debug', logGroup);
 
+		slotTweaker.removeDefaultHeight(slot.name);
+
 		var img = new Image();
-		img.src = 'https://placekitten.com/g/700/200';
+		img.src = 'https://placekitten.com/g/970/300';
 		slot.container.appendChild(img);
 
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
