@@ -283,9 +283,9 @@ class CheckUserHooks {
 		$updater->addExtensionUpdate( [ 'CheckUserHooks::checkUserCreateTables' ] );
 		if ( $updater->getDB()->getType() == 'mysql' ) {
 			$updater->addExtensionUpdate( [ 'addIndex', 'cu_changes',
-											'cuc_ip_hex_time', "$base/archives/patch-cu_changes_indexes.sql", true ] );
+				'cuc_ip_hex_time', "$base/archives/patch-cu_changes_indexes.sql", true ] );
 			$updater->addExtensionUpdate( [ 'addIndex', 'cu_changes',
-											'cuc_user_ip_time', "$base/archives/patch-cu_changes_indexes2.sql", true ] );
+				'cuc_user_ip_time', "$base/archives/patch-cu_changes_indexes2.sql", true ] );
 		}
 
 		return true;
