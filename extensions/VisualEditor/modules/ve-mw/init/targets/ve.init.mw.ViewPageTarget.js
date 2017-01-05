@@ -983,7 +983,7 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 };
 
 ve.init.mw.ViewPageTarget.prototype.isSummaryMissing = function ( saveOptions ) {
-	return  mw.user.options.get( 'forceeditsummary' ) &&
+	return mw.user.options.get( 'forceeditsummary' ) &&
 			saveOptions.summary === '' &&
 			!this.saveDialog.messages.missingsummary;
 };
