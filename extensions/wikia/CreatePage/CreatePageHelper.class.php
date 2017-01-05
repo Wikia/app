@@ -35,6 +35,7 @@ class CreatePageHelper {
 				$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
 
 				if ( $wantedPageTitle instanceof Title &&
+				     !$wantedPageTitle->isKnown() &&
 					(
 						empty( static::FORBIDDEN_CHARACTERS_REGEX ) ||
 						!preg_match( static::FORBIDDEN_CHARACTERS_REGEX, $wantedPageTitle->getText() )
