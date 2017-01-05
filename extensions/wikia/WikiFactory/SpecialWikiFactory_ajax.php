@@ -78,7 +78,7 @@ function axWFactoryTagCheck() {
 	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
-		return;
+		return '';
 	}
 
 	$tagName = $wgRequest->getVal( "tagName" );
@@ -518,8 +518,7 @@ function axWFactoryClearCache()
 function axWFactorySaveVariable() {
 	global $wgUser, $wgRequest;
 
-	$error     = 0;
-	$return    = "";
+	$error = 0;
 
 	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
 	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
@@ -527,8 +526,7 @@ function axWFactorySaveVariable() {
 	if ( ! $wgUser->isAllowed('wikifactory') ) {
 		$error++;
 		$return = Wikia::errormsg( "You are not allowed to change variable value" );
-	}
-	else {
+	} else {
 		$cv_id				= $wgRequest->getVal( 'varId' );
 		$city_id			= $wgRequest->getVal( 'cityid' );
 		$cv_name			= $wgRequest->getVal( 'varName' );
@@ -542,7 +540,7 @@ function axWFactorySaveVariable() {
 		#--- check if variable is valid
 		switch ( $cv_variable_type ) {
 			case "boolean":
-				if ((bool)$cv_value != $cv_value) {
+				if ( (bool)$cv_value != $cv_value ) {
 					$error++;
 					$return = Wikia::errormsg("Syntax error: value is not boolean. Variable not saved.");
 				}
@@ -570,16 +568,15 @@ function axWFactorySaveVariable() {
 				 * catch parse errors
 				 */
 				ob_start();
-				if( eval( $tEval ) === FALSE ) {
+				if ( eval( $tEval ) === FALSE ) {
 					$error++;
 					$return = Wikia::errormsg( "Syntax error, value is not valid PHP structure. Variable not saved." );
-				}
-				else {
+				} else {
 					$cv_value = $__var_value;
 					/**
 					 * now check if it's actually array when we want array)
 					 */
-					if( in_array( $cv_variable_type, array( "array", "struct", "hash" ) ) ) {
+					if( in_array( $cv_variable_type, [ "array", "struct", "hash" ] ) ) {
 						if( is_array( $cv_value ) ) {
 							$return = Wikia::successmsg( "Syntax OK (array), variable saved." );
 						}
@@ -592,27 +589,30 @@ function axWFactorySaveVariable() {
 						$return = Wikia::successmsg( "Parse OK, variable saved." );
 					}
 				}
-				ob_end_clean(); #--- puts parse error to /dev/null
+				#--- puts parse error to /dev/null
+				ob_end_clean();
 		}
 
-                if( empty( $error ) ) {
-                    $varInfo = WikiFactory::getVarById($cv_id, $city_id);
-                    if($varInfo->cv_is_unique) {
-                        $wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
-                        $count = count($wikis);
-                        if( (($count == 1) && ($wikis[0] != $city_id)) || ($count > 1) ) {
-                            $return = Wikia::errormsg( "Value of this variable need to be unique." );
-                            $error++;
-                        }
-                    }
+		if ( empty( $error ) ) {
+            $varInfo = WikiFactory::getVarById($cv_id, $city_id);
+            if ( $varInfo->cv_is_unique ) {
+                $wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
+                $count = count( $wikis );
+                if ( ( $count == 1 && $wikis[0] != $city_id ) || $count > 1 ) {
+                    $return = Wikia::errormsg( "Value of this variable needs to be unique." );
+                    $error++;
                 }
+            }
+        }
 
-		wfRunHooks('WikiFactoryVarSave::AfterErrorDetection',array($cv_id,$city_id,$cv_name,$cv_value,&$return,&$error));
-
+		wfRunHooks(
+			'WikiFactoryVarSave::AfterErrorDetection',
+			[ $cv_id, $city_id, $cv_name, $cv_value, &$return, &$error ]
+		);
 
 		# Save to DB, but only if no errors occurred
 		if ( empty( $error ) ) {
-			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value, $reason ) ) {
+			if ( ! WikiFactory::setVarById( $cv_id, $city_id, $cv_value, $reason ) ) {
 				$error++;
 				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
 			} else {
@@ -628,7 +628,7 @@ function axWFactorySaveVariable() {
 					// apply changes to all wikis with given tag
 					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
 					foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
-						if ( WikiFactory::setVarByID( $cv_id, $tagged_wiki_id, $cv_value, $reason ) ) {
+						if ( WikiFactory::setVarById( $cv_id, $tagged_wiki_id, $cv_value, $reason ) ) {
 							$tag_wiki_count++;
 						}
 					}
@@ -639,16 +639,24 @@ function axWFactorySaveVariable() {
 
 	}
 
-	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
+	$div_name = 'wf-variable-parse' . ( empty( $form_id ) ? '' : "-$form_id" );
+
+	if ( isset( $cv_value, $cv_variable_type ) ) {
+		$value = WikiFactory::parseValue( $cv_value, $cv_variable_type );
+		$value = htmlspecialchars( $value );
+	} else {
+		$value = '';
+	}
 
 	return json_encode(
-		array(
+		[
 			"div-body" => $return,
 			"is-error" => $error,
 			"tag-name" => $tag_name,
 			"tag-wikis" => $tag_wiki_count,
 			"div-name" => $div_name,
-		)
+			'variable-value' => $value,
+		]
 	);
 }
 

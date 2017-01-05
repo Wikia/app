@@ -129,7 +129,6 @@ var ajaxpath = wgServer + wgScript;
 $Factory.city_id = <?php echo $wiki->city_id ?>;
 $Factory.token = <?= Xml::encodeJsVar( F::app()->wg->User->getEditToken() ) ?>;
 
-
 $Factory.VariableCallback = {
     success: function( aData ) {
     	$("#" + aData["div-name"]).html(aData["div-body"]);
@@ -153,6 +152,7 @@ $Factory.VariableCallback = {
 $Factory.ReplaceCallback = {
     success: function( Data ) {
         $( "#" + Data["div-name"] ).html(Data["div-body"]);
+        $( "#variable-value" ).html("<pre>" + Data["variable-value"] + "</pre>");
 
         $Factory.Busy(0);
         // other conditions
@@ -437,8 +437,8 @@ $Factory.Variable.filter = function ( e ) {
             $Factory.Busy(0);
     	},
     	error: function( aData ) {
-    		 $Factory.Busy(0);
-             $("#wk-variable-select").attr("disabled", false);
+            $Factory.Busy(0);
+            $("#wk-variable-select").attr("disabled", false);
     	},
     	timeout: 50000
     });

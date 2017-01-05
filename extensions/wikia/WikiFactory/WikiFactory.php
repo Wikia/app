@@ -1214,57 +1214,63 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
-
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
 			// on fail at least return original url
 			return $url;
 		}
-		$server = $groups[ 1 ];
-		$address = $groups[ 2 ];
+		$server = $groups[1];
+		$path = $groups[2];
 
-		if ( !empty( $address ) ) {
-			$address = '/' . $address;
+		if ( !empty( $path ) ) {
+			$path = '/' . $path;
 		}
 
+		$localServer = self::getLocalEnvServer( $server, $forcedEnv );
+
+		return 'http://' . $localServer . $path;
+	}
+
+	static public function getLocalEnvServer( $server, $forcedEnv = null ) {
 		// strip env-specific pre- and suffixes for staging environment
 		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
 		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
 
 		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
-			$devbox = $groups[ 1 ];
+			$devBox = $groups[1];
 		} else {
-			$devbox = '';
+			$devBox = '';
 		}
 
-		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
+		$server = str_replace( '.' . $devBox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
-		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
-		// determine the environment we want to get url for
+		// PLATFORM-2400: make WF redirects work on staging
+		$server = str_replace( '.' . F::app()->wg->WikiaBaseDomain, '', $server );
+
+		// Determine the environment we want to get url for
 		$environment = (
 			$forcedEnv &&
 			$forcedEnv !== WIKIA_ENV_DEV &&
 			$forcedEnv !== WIKIA_ENV_SANDBOX
-		) ? $forcedEnv : $wgWikiaEnvironment;
+		) ? $forcedEnv : F::app()->wg->WikiaEnvironment;
 
-		// put the address back into shape and return
+		// put the path back into shape and return
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'preview.' . $server . static::WIKIA_TOP_DOMAIN;
 			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'verify.' . $server . static::WIKIA_TOP_DOMAIN;
 			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'stable.' . $server . static::WIKIA_TOP_DOMAIN;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address );
+				return $server . '.' . F::app()->wg->WikiaBaseDomain;
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
+				return $server . '.' . static::getExternalHostName() . '.wikia-dev.com';
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
@@ -3433,7 +3439,7 @@ class WikiFactory {
 	 *
 	 * @return string
 	 */
-	static private function parseValue( $value, $type ) {
+	static public function parseValue( $value, $type ) {
 		if ( $type == "string" || $type == "integer"  ) {
 			return $value;
 		}
