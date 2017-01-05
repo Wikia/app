@@ -3,6 +3,8 @@ $messages = [ ];
 
 $messages['en'] = [
 	'visualeditor-ca-classiceditor' => 'Classic editor',
+	'wikia-visualeditor-anon-warning' => 'You are not logged in. Some features will be unavailable to you while editing.',
+	'wikia-visualeditor-anon-log-in' => 'Log in',
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',
@@ -19,10 +21,14 @@ $messages['en'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Oops! That image is too big. $1MB is as much as we can take, captain!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Oops! We only support $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Error uploading file',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Search for something, or enter a URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Search for an image',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Search for a video, or enter an external URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Preview coming soon!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Please adhere to {{SITENAME}}'s image policy and Fandom's [http://www.wikia.com/Terms_of_Use terms of use] when embedding new videos and uploading new photos.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Read more',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'You need to be logged-in to upload a new image',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'You need to be logged-in to insert a new video',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Drop your file here',
 	'wikia-visualeditor-help-label' => 'Known issues',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
@@ -99,6 +105,8 @@ If you think your page does not need this section, simply delete it. You may als
 
 $messages['qqq'] = [
 	'visualeditor-ca-classiceditor' => 'Link text of the dedicated classic editor',
+	'wikia-visualeditor-anon-warning' => 'Informational message that user is editing as anon and some VE features might not be available',
+	'wikia-visualeditor-anon-log-in' => 'Log in link, opens log in modal',
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article.
 {{Identical|Media}}',
@@ -121,11 +129,15 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Error message for files that are too big for Add Media Tool upload. Value in megabytes.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Error message for wrong file type in Add Media Tool upload',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Message that is shown when an upload error occurs',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'The placeholder text that appears in the search field, indicating functionality',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'The placeholder text that appears in the image search field, indicating functionality',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'The placeholder text that appears in the video search field, indicating functionality',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Alert pop-up when user clicks on a video or image to preview.',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "The wiki's policies with regard to media",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'A link that will show the full media policy.
 {{Identical|Read more}}',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Information that user has to log in for image upload, displayed in add image modal',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Information that user has to log in for video adding, displayed in add video modal',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in button, opens a log in modal on click',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Callout that shows the droppable area for user drag and drop files',
 	'wikia-visualeditor-help-label' => 'Display text for the link to the user guide.
 {{Identical|Known issue}}',
@@ -219,7 +231,7 @@ $messages['ar'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'عفوًا! تلك الصورة كبيرة جدًا. $1 ميغا بايت هو الحد الأقصى للصور أيها المحرر!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'عفوًا! نحن ندعم $1 فقط',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'خطأ في رفع الملف',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'ابحث عن أي شيء، أو أدخل عنوان URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'ابحث عن أي شيء، أو أدخل عنوان URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'المعاينة قريبًا!',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'اقرأ المزيد',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'ألق ملفّك هنا',
@@ -290,7 +302,7 @@ $messages['br'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => "Ouzhpennañ skeudennoù nevez d'ar wikia-mañ",
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Enporzhiañ',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'fazi o kargañ ar restr',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Klask un dra bennak, pe ebarzhiñ un URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Klask un dra bennak, pe ebarzhiñ un URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => "Lenn muioc'h",
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Laoskit ho restr amañ',
 	'wikia-visualeditor-help-label' => 'Kudennoù anavezet',
@@ -327,7 +339,7 @@ $messages['ca'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ups! La imatge és massa gran. El màxim és $1MB!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ups! Només suportem $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Error en carregar el fitxer',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Cerca alguna cosa, o introdueix una URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Cerca alguna cosa, o introdueix una URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Vista prèvia aviat!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Si us plau, adheriu-vos a la política d'imatges de {{SITENAME}} i als [http://www.wikia.com/Terms_of_Use Termes d'ús] de Wikia quan afegeixis nous vídeos i fotos.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Llegir més',
@@ -409,7 +421,7 @@ $messages['cs'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ups! Tento obrázek je příliš velký. Maximální možná velikost je $1 MB.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ale ne! Podporujeme pouze $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Chyba při odesílání souboru',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Hledat nebo zadat URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Hledat nebo zadat URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Náhled již brzy!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Při nahrávní nových obrázků a vkládání videí se prosím řiďte pravidly na {{SITENAME}} a [http://www.wikia.com/Terms_of_Use podmínkami použití na Wikia.com].',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Číst více',
@@ -486,7 +498,7 @@ $messages['de'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Huch! Dieses Bild ist zu groß. Wir können höchstens $1 MB annehmen, Kapitän!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Huch! Wir unterstützen nur $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fehler beim Hochladen der Datei',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Suche nach etwas oder gib eine URL ein',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Suche nach einem Begriff oder gib eine URL ein',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Die Vorschau kommt bald!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Bitte beachte beim Einbinden neuer Videos und Hochladen neuer Fotos die Bilderrichtlinie von {{SITENAME}} und die [http://de.wikia.com/Nutzungsbedingungen] von Fandom.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Mehr lesen',
@@ -552,6 +564,8 @@ $messages['de'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Bild',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Video einfügen',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Suche nach etwas oder gib eine URL ein',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Bild hinzufügen',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Was weißt du bereits über {{PAGENAME}}? Hier kannst du dein Wissen mit anderen teilen.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} ist…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Beginne hier mit dem ersten Paragraphen deiner Seite. Darin kannst du den Lesern dein Thema vorstellen. Füge alle Eckdaten hinzu, die dir relevant erscheinen.
@@ -561,7 +575,6 @@ Füge hier den ersten Abschnitt deiner Seite ein. Du kannst hier auch dein Thema
 * Beschreibung der Protagonisten
 * Hintergrundinformationen
 Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösche ihn einfach. Du kannst den Text auch kopieren und erneut einfügen, wenn deine Seite mehr als einen Abschnitt haben soll.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Bild hinzufügen',
 ];
 
 $messages['diq'] = [
@@ -632,7 +645,7 @@ $messages['es'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '¡Uy! Esa imagen es demasiado grande. $1MB es lo máximo que podemos.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '¡Uy! Solo admitimos $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Error al subir el archivo',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Busca o escribe un URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Busca algo o introduce una dirección',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '¡Próximamente prevista!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Por favor respeta las políticas sobre imágenes de {{SITENAME}} y los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso] de Fandom cuando incorpores videos e imágenes nuevas.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Leer más',
@@ -698,6 +711,8 @@ $messages['es'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Imagen',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Insertar un video',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Busca o escribe un URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Añade una imagen',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => '¿Qué sabes sobre {{PAGENAME}}? Comienza a compartir tu conocimiento sobre este tema aquí.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} es un…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Comienza el primer párrafo de tu página aquí. Puedes usarlo para presentar tu tema a tus lectores. Añade cualquier información básica que consideres relevante.
@@ -707,7 +722,6 @@ Escribe la primera sección de tu página aquí. Puedes usarla para describir de
 * Descripciones de personajes
 * Información de fondo
 Si piensas que tu página no necesita esta sección, simplemente bórrala. También puedes copiar y pegar este texto más abajo si quieres que tu página tenga más de una sección.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Añade una imagen',
 ];
 
 $messages['eu'] = [
@@ -721,7 +735,7 @@ $messages['fa'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'عنوان',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'اجازه‌نامه',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'بارگذاری',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'جستجوی برای چیزی یا وارد کردن یک URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'جستجوی برای چیزی یا وارد کردن یک URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'بیشتر بخوانید',
 	'wikia-visualeditor-dialog-transclusion-title' => 'الگو',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'الگو',
@@ -791,7 +805,7 @@ $messages['fi'] = [
 	'wikia-visualeditor-media-photo-policy' => 'Noudatathan tämän wikian kuvakäytäntöjä lataessasi uusia kuvia',
 	'visualeditor-ca-classiceditor' => 'Perinteinen muokkain',
 	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Tällä mallineella ei ole kenttiä muokattavana. Voit muokata mallinetta sen omalla sivullaan.',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Etsi jotakin, tai syötä URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Etsi jotakin, tai syötä URL',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Muotoiluohje',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Lähdekoodimuokkain',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Lähdekoodimuokkain',
@@ -811,7 +825,7 @@ $messages['fo'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ups! Handa myndin er ov stór.  $1MB er alt ið vit kunnu klára!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ups! Vit stuðla bara $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Tað hendi ein feilur, meðan tú legði fílu út',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Leita eftir onkrum, ella set inn ein URL (internetadressu)',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Leita eftir onkrum, ella set inn ein URL (internetadressu)',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Forskoðan kemur skjótt!',
 	'wikia-visualeditor-help-label' => 'Kendir trupulleikar',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
@@ -842,7 +856,7 @@ $messages['fr'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Désolé, cette image est trop lourde. $1MB est le maximum supporté.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Désolé, nous ne supportons que les formats suivants : $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => "Erreur à l'importation du fichier",
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Saisissez un terme à rechercher ou une URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Saisissez un terme à rechercher ou une URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => "L'aperçu arrive bientôt !",
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Veuillez respecter les règles de {{SITENAME}} concernant les images ainsi que les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d'utilisation] de Fandom lorsque vous incluez de nouvelles vidéos et que vous importez de nouvelles images.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Lire plus',
@@ -908,6 +922,8 @@ $messages['fr'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Image',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Vidéo',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Insérer une vidéo',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Saisissez un terme à rechercher ou une URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Ajouter une image',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Que savez-vous de {{PAGENAME}} ? Partagez ici vos connaissances à ce sujet.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} est…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => "Le premier paragraphe de votre page commence ici. Vous pouvez vous en servir pour présenter le sujet aux lecteurs. Ajoutez-y les informations de base qui vous semblent pertinentes.
@@ -917,7 +933,6 @@ Rédigez ici la première partie de la page. Utilisez-la pour fournir plus de d�
 * Description des personnages
 * Contexte
 Si vous pensez que cette section est inutile, vous pouvez la supprimer. Vous pouvez également copier-coller ce texte au-dessous pour ajouter d'autres sections à la page.",
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Ajouter une image',
 ];
 
 $messages['fy'] = [
@@ -942,7 +957,7 @@ $messages['gl'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Vaites! Esa imaxe é grande de máis. $1MB é o máximo que podemos aceptar, capitán!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Vaites! Só admitimos $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Erro ao subir o ficheiro',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Busca algo ou escribe un enderezo URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Busca algo ou escribe un enderezo URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Axiña estará dispoñible a vista previa!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Respecte a política de imaxes de {{SITENAME}} e os [http://www.wikia.com/Terms_of_Use termos de uso] de Wikia ao incorporar novos vídeos e cargar novas fotos.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Ler máis',
@@ -1016,7 +1031,7 @@ $messages['he'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'אוי! נראה שהתמונה הזאת גדולה מדי. אנחנו יכולים לקבל רק $1 מ"ב!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'אוי! אנחנו תומכים רק ב־$1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'שגיאה בהעלאת קובץ',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'חשפו משהו או הזינו URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'חשפו משהו או הזינו URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'תצוגה מקדימה תגיע בקרוב!',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'מידע נוסף',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'ניתן לגרור את הקבצים שלך לכאן',
@@ -1071,7 +1086,7 @@ $messages['hu'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Hoppá! Ez a kép túl nagy méretű. A maximális fájlméret $1 MB.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Hoppá! Csak az $1 fájltípus támogatott.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Hiba történt a fájl feltöltése közben',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Keress rá valamire, vagy írj be egy webcímet',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Keress rá valamire, vagy írj be egy webcímet',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Az előnézet hamarosan elérhető lesz!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Kérünk, hogy tartsd be a(z) {{SITENAME}} képfeltöltésre vonatkozó szabályait és a Wikia [http://www.wikia.com/Terms_of_Use felhasználási feltételeit] új videók beágyazásakor és új képek feltöltésekor.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Tovább',
@@ -1135,7 +1150,7 @@ $messages['it'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => "Oops! Quell'immagine è troppo grande. $1MB è il massimo che possiamo supportare, signore!",
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Oops! Supportiamo solo $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Errore nel caricamento del file',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Cerca qualcosa o inserisci un URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Cerca qualcosa o inserisci un URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Anteprima presto disponibile!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Ti preghiamo di rispettare la politica sulle immagini di {{SITENAME}} e i [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo termini di utilizzo] di Fandom quando carichi nuovi video e foto.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Per saperne di più',
@@ -1175,6 +1190,8 @@ $messages['it'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Immagine',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Inserire un video',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Cerca qualcosa o inserisci un URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => "Aggiungi un'immagine",
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Cosa sai di {{PAGENAME}}? Inizia a condividere le tue conoscenze su questo argomento qui.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} è un…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Inizia il primo paragrafo della tua pagina qui. Puoi usarlo per presentare il tuo argomento ai lettori. Aggiungi i dati di base che ritieni pertinenti.
@@ -1184,7 +1201,6 @@ Scrivi la prima sezione della tua pagina qui. Utilizzala per descrivere informaz
 * Descrizioni dei personaggi
 * Informazioni di background
 Se ritieni che la tua pagina non abbia bisogno di questa sezione, semplicemente rimuovila. Puoi anche copiare e incollare questo testo sotto se desideri che la tua pagina contenga più di una sezione.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => "Aggiungi un'immagine",
 ];
 
 $messages['ja'] = [
@@ -1243,7 +1259,7 @@ $messages['ja'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'ウープス！この画像は大きすぎます。$1MB が我々が取得できるサイズです、キャプテン！',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'ウープス！ $1 のみサポートしています',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'ファイルをアップロード中にエラーが発生しました。',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '検索するか、URLを入力してください。',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => '検索するか、URLを入力してください。',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'プレビューはまもなく公開されます！',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '新たな動画の埋込みや画像アップロードを行う際は、{{SITENAME}}の画像ポリシーとFandomの [http://ja.wikia.com/利用規約 利用規約] を遵守してください。',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'もっと読む',
@@ -1271,6 +1287,8 @@ $messages['ja'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => '画像',
 	'wikia-visualeditor-dialog-video-insert-title' => '動画を挿入',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => '動画',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '検索するか、URLを入力してください。',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '画像を追加する',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => '{{PAGENAME}} についてご存じですか？トピックに関する知識をぜひこちらから共有してください。',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} とは…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'ここからページの1段落目を書き始めてください。読者へのトピック紹介文や関連する基本情報の追加等にご使用ください。
@@ -1280,7 +1298,6 @@ $messages['ja'] = [
 * キャラクターの紹介
 * 背景情報
 作成したいページに本セクションが不要な場合は削除してください。もしくは上記のテキストを「コピー＆貼り付け」することで、セクションを増やすことも可能です。',
-	'wikia-visualeditor-dialog-transclusion-add-image' => '画像を追加する',
 ];
 
 $messages['ka'] = [
@@ -1305,7 +1322,7 @@ $messages['km'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'អូ៎! រូប​នោះ​ធំ​ពេក​ហើយ។ $1MB គឺជា​ទំហំ​ដែល​យើង​អាច​ទទួល​យក​បាន។',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'អូ៎! យើង​ស្គាល់​តែ $1 ប៉ុណ្ណោះ',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'កំហុស​ផ្ទុក​ឡើង​ឯកសារ',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'ស្វែង​រក​អ្វី​មួយ ឬ​ក៏​បញ្ចូល URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'ស្វែង​រក​អ្វី​មួយ ឬ​ក៏​បញ្ចូល URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'ការ​មើល​ជាមុន នឹង​មក​ដល់​ឆាប់ៗ!',
 	'wikia-visualeditor-help-label' => 'បញ្ហា​ដែល​ស្គាល់',
 	'wikia-visualeditor-help-link' => 'ជំនួយ:VisualEditor',
@@ -1337,7 +1354,7 @@ $messages['ko'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '저작권',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => '취소',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => '이곳에 그림을 올려놓아 주세요',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '그림을 검색하시거나 URL을 입력해 주세요.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => '그림을 검색하시거나 URL을 입력해 주세요.',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '새 동영상이나 그림을 올리시기 전에 {{SITENAME}}의 그림 정책과 위키아의 [http://www.wikia.com/Terms_of_Use 이용약관]을 읽어 주세요.',
 	'wikia-visualeditor-help-link' => '도움말:시각 편집기',
 	'wikia-visualeditor-wikitext-warning' => "시각 편집기 베타 버전에서는 위키 문법을 사용하실 수 없습니다. 위키 문법을 사용하시려면 &#x2630; 메뉴의 '소스 편집기'를 이용해 주세요.",
@@ -1406,7 +1423,7 @@ $messages['lb'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lizenz',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Eroplueden',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Feeler beim Eropluede vum Fichier',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'No eppes sichen oder eng URL aginn',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'No eppes sichen oder eng URL aginn',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Méi liesen',
 	'wikia-visualeditor-help-label' => 'Bekannte Problemer',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
@@ -1473,7 +1490,7 @@ $messages['mk'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Нажалост, сликата е преголема. Можеме да примиме до $1 МБ, шефе!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Нажалост, поддржуваме само $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Грешка при подигањето на податотеката',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Пребарајте нешто или внесете URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Пребарајте нешто или внесете URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Прегледот ќе стаса наскоро!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Ве молиме да се придржувате кон правилникот на {{SITENAME}} за сликите и Викиините [http://www.wikia.com/Услови_за_Употреба услови за употреба] кога се вметнуваат нови видеа и подигаат нови слики.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Прочитајте повеќе',
@@ -1544,7 +1561,7 @@ $messages['ml'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'അയ്യോ! ആ ചിത്രം വളരെ വലുതാണ്. $1 എം.ബി. വലിപ്പമാണ് ഞങ്ങൾക്ക് സ്വീകരിക്കാനാവുന്നത് ചേട്ടാ!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'അയ്യോ! $1 മാത്രമേ ഞങ്ങൾ പിന്തുണയ്ക്കുന്നുള്ളു',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'പ്രമാണം അപ്‌ലോഡ് ചെയ്യുന്നതിനിടെ പിഴവുണ്ടായി',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'എന്തിനെങ്കിലും തിരയുക അല്ലെങ്കിൽ യു.ആർ.എൽ. നൽകുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'എന്തിനെങ്കിലും തിരയുക അല്ലെങ്കിൽ യു.ആർ.എൽ. നൽകുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'പ്രിവ്യൂ ഉടനെത്തും!',
 	'wikia-visualeditor-help-label' => 'അറിയാവുന്ന പ്രശ്നങ്ങൾ',
 ];
@@ -1582,7 +1599,7 @@ $messages['ms'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Oops! Imej tersebut terlalu besar.  $1MB adalah had muat naik, kapten!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Oops! Kami hanya menyokong $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Ralat memuat naik fail',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Cari sesuatu atau masukkan URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Cari sesuatu atau masukkan URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Tayangan akan datang!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Sila patuhi dasar imej {{SITENAME}} dan [http://www.wikia.com/Terms_of_Use syarat-syarat penggunaan] Wikia dalam meletakkan video baru dan memuat naik gambar baru.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Baca lagi',
@@ -1691,7 +1708,7 @@ $messages['nl'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Die afbeelding is te groot. $1 megabyte is de maximale grootte.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Alleen de volgende bestandstypen worden ondersteund: $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fout tijdens het uploaden van bestand',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Voorvertoning is binnenkort beschikbaar!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Gelieve je te houden aan het afbeeldingsbeleid van {{SITENAME}} en Wikia's [[w:c:nl.community:Gebruiksvoorwaarden|gebruiksvoorwaarden]] wanneer je nieuwe video's invoegt of nieuwe foto's uploadt.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Meer lezen',
@@ -1758,6 +1775,8 @@ $messages['nl'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Image',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Insert a video',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Add an image',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'What do you know about {{PAGENAME}}? Start sharing your knowledge about this topic here.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} is a…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Begin the first paragraph of your page here. You can use it to introduce your topic to readers. Add any basic data you find relevant.
@@ -1767,7 +1786,6 @@ Write the first section of your page here. Use this to describe details about yo
 * Character descriptions
 * Background information
 If you think your page does not need this section, simply delete it. You may also copy and paste this text underneath if you want your page to have more than one section.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Add an image',
 ];
 
 $messages['nn'] = [
@@ -1806,8 +1824,8 @@ $messages['pa'] = [
 	'wikia-visualeditor-dialog-transclusion-get-info' => '"$1" ਫਰਮੇ ਬਾਬਤ ਜਾਣਕਾਰੀ ਲਵੋ',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'ਝਾਤ ਨਵਿਆਉ',
 	'wikia-visualeditor-context-transclusion-description' => 'ਸੋਧੋ',
-	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'ਨਾਂ ਜਾਂ ਲੇਖ ਰਾਹੀਂ ਕਿਸੇ ਫਰਮੇ ਦੀ ਭਾਲ਼ ਕਰੋ',
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '{{FORMATNUM:$1}} {{PLURAL:$1|ਵਾਰ}} ਵਿਖਾਈ ਦਿੰਦਾ ਹੈ',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'ਨਾਂ ਜਾਂ ਲੇਖ ਰਾਹੀਂ ਕਿਸੇ ਫਰਮੇ ਦੀ ਭਾਲ਼ ਕਰੋ',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'ਇਹਨੂੰ ਸਭ ਤੋਂ ਪਹਿਲਾਂ ਵਰਤਣ ਵਾਲ਼ੇ ਬਣੋ',
 	'wikia-visualeditor-dialog-template-insert-title' => 'ਫਰਮਾ ਵਾੜੋ',
 	'wikia-visualeditor-dialog-preference-headline' => 'ਸਲਾਮ!',
@@ -1833,7 +1851,7 @@ $messages['pl'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ups! Ten obraz jest zbyt duży. $1MB - to maksymalny, dopuszczalny rozmiar pliku!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ups! Wspieramy jedynie $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Błąd podczas przesyłania pliku',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Szukaj lub wprowadź adres URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Szukaj lub wprowadź adres URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Podgląd dostępny wkrótce!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Proszę trzymać się zasad przesyłania obrazów {{SITENAME}} oraz [http://pl.wikia.com/Zasady_Użytkowania Zasad Użytkowania Fandomu] podczas dodawania nowych filmów i przesyłania nowych obrazów.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Czytaj więcej',
@@ -1900,6 +1918,8 @@ $messages['pl'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Obraz',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Film',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Wstaw film',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Szukaj lub wprowadź adres URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Dodaj obraz',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Co wiesz o {{PAGENAME}}? Zacznij dzielić się tutaj swoją wiedzą na ten temat.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} to…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'W tym miejscu rozpocznij pierwszy akapit swojej strony. Możesz go wykorzystać, aby przedstawić czytelnikom swój temat. Dodaj podstawowe informacje, które uważasz za odpowiednie.
@@ -1910,7 +1930,6 @@ W tym miejscu napisz pierwszą sekcję strony. Wykorzystaj ją do opisania szcze
 * Opisy postaci
 * Informacje dodatkowe
 Jeśli uważasz, że twoja strona nie potrzebuje tej sekcji, po prostu ją usuń. Możesz też skopiować ją i wkleić poniżej, jeśli twoja strona ma mieć więcej niż jedną sekcję.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Dodaj obraz',
 ];
 
 $messages['ps'] = [
@@ -1997,7 +2016,7 @@ $messages['pt'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Opa! Essa imagem é muito grande. $1MB é o que podemos levar, comandante!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Opa! Nós só usamos $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Erro ao carregar arquivo',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Procure por alguma coisas, ou digite um URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Procure por algo, ou digite a URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Pré-visualização em breve!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Por favor, respeite a política de imagem de {{SITENAME}} e os [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de Uso] do Fandom quando incluir vídeos novos ou fizer upload de novas fotos.',
 	'wikia-visualeditor-help-label' => 'Problemas conhecidos',
@@ -2032,6 +2051,8 @@ $messages['pt'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Imagem',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Vídeo',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Insira um vídeo',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Procure por alguma coisas, ou digite um URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Adicionar imagem',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'O que você sabe sobre {{PAGENAME}}? Comece a compartilhar seu conhecimento sobre este tópico aqui.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} é um(a)…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Comece o primeiro parágrafo da sua página aqui. Você pode usá-lo para apresentar o tema para os leitores. Adicione dados básicos que você achar relevante.
@@ -2042,7 +2063,6 @@ Alguns exemplos de coisas que você pode colocar aqui:
 * Descrições de personagens
 * Informações básicas
 Se você acha que sua página não precisa desta seção, simplesmente a exclua. Você também pode copiar e colar o texto abaixo, se você quiser que sua página tenha mais de uma seção.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Adicionar imagem',
 ];
 
 $messages['pt-br'] = [
@@ -2062,7 +2082,7 @@ $messages['pt-br'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Opa! Essa imagem é muito grande. $1MB é o que podemos levar, comandante!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Opa! Nós só usamos $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Erro ao carregar arquivo',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Procure por alguma coisas, ou digite um URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Procure por alguma coisas, ou digite um URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Pré-visualização em breve!',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Leia mais',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Arraste o seu arquivo aqui',
@@ -2117,7 +2137,7 @@ $messages['ro'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Elimină acest element',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Încarcă',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Eroare la încărcarea fișierului',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Căutați ceva sau introduceți o adresă URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Căutați ceva sau introduceți o adresă URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Previzualizare în curând!',
 	'wikia-visualeditor-help-label' => 'Probleme cunoscute',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Format',
@@ -2147,7 +2167,7 @@ $messages['roa-tara'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => "Pizze! St'immaggine jè troppe gruèsse. $1MB jè 'u massime ca putime tenè, 'u mestre!",
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Pizze! Nu supoortame sulamende $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => "Errore carecanne 'u file",
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => "Scacchie quaccheccose, o mitte 'na URL",
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => "Scacchie quaccheccose, o mitte 'na URL",
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Andeprime ste arrive!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Pe piacere vèje sus a le regole de le immaggine de {{SITENAME}} e le [http://www.wikia.com/Terms_of_Use termine de ause] de Uicchia quanne sckaffe video nuève e careche fote nuève.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Ligge de cchiù',
@@ -2197,7 +2217,7 @@ $messages['ru'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Это изображение слишком большое. Доступный максимум — $1 МБ.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Мы поддерживаем только $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Ошибка при загрузке файла',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Введите фразу для поиска или URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Поиск по вики; или введите URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Предварительный просмотр появится скоро.',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Пожалуйста, придерживайтесь правил загрузки изображений на {{SITENAME}} и соблюдайте [http://www.wikia.com/Terms_of_Use Условия использования] Фэндома при вставке новых видео и загрузке новых изображений.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Читать подробнее',
@@ -2263,6 +2283,8 @@ $messages['ru'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Изображение',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Видео',
 	'wikia-visualeditor-dialog-video-insert-title' => 'Добавить видео',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Введите фразу для поиска или URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => 'Добавить изображение',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Что вам известно о теме «{{PAGENAME}}»? Поделитесь своими знаниями здесь.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}} — это…',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Это первый абзац на вашей странице. Здесь вы можете рассказать читателям о вашей теме. Разместите базовую информацию, которая, на ваш взгляд, будет интересна другим участникам.
@@ -2272,7 +2294,6 @@ $messages['ru'] = [
 *описание персонажей;
 *дополнительную информацию.
 Если вам не нужен этот раздел, то просто его удалите. Если вы хотите, чтобы на вашей странице было более одного раздела, скопируйте и вставьте этот текст ниже.',
-	'wikia-visualeditor-dialog-transclusion-add-image' => 'Добавить изображение',
 ];
 
 $messages['sc'] = [
@@ -2323,7 +2344,7 @@ $messages['sv'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Hoppsan! Bilden är för stor. Bildens storlek får inte överstiga $1MB.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Hoppsan! Vi stöder bara $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fel uppstod när filen laddades upp',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Sök efter någonting eller ange en webbadress',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Sök efter någonting eller ange en webbadress',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Förhandsgranskning kommer snart!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Var god håll fast vid {{SITENAME}}s bildpolicy och Wikias [http://www.wikia.com/Terms_of_Use användarvillkor] när du bäddar in nya videoklipp och laddar upp nya foton.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Läs mer',
@@ -2407,7 +2428,7 @@ $messages['th'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'แย่แล้วล่ะ! ภาพมันมีขนาดใหญ่เกินไป $1MB เป็นขนาดมากที่ใหญ่สุดที่เราสามารถใช้,กัปตัน!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'แย่แล้วล่ะ! เรารองรับเฉพาะ $1 เท่านั้น',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'ค้นหาบางสิ่งบางอย่างหรือป้อน URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'ค้นหาบางสิ่งบางอย่างหรือป้อน URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'ตัวอย่างจะมาเร็ว ๆ นี้!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'กรุณาเป็นไปตาม นโยบายภาพ ของ{{SITENAME}}และ [http://www.wikia.com/Terms_of_Use terms of use] ของ วิเกีย เมื่อฝังวิดีโอใหม่และอัปโหลดรูปถ่ายใหม่',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'อ่านเพิ่มเติม',
@@ -2454,7 +2475,7 @@ $messages['uk'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Йой! Зображення надто велике. $1МБ - це стільки, скільки ми можемо прийняти!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Йой! Ми підтримуємо тільки $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Помилка завантаження файлу',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Введіть фразу для пошуку або URL-адресу',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Введіть фразу для пошуку або URL-адресу',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Попередній перегляд найближчим часом!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Будь ласка, дотримуйтеся політики зображень сайту {{SITENAME}} і Вікія [http://www.wikia.com/Terms_of_Use умови використання] при вбудуванні нового відео та завантаженні нових фотографій.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Читати далі',
@@ -2525,7 +2546,7 @@ $messages['vec'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Oops! Sta imaxene ła xe masa granda. $1MB xe pì de chel che se pol cargar!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Oops! Suportemo soło che $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => "Erore inte'l cargemento del file",
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Serca calcosa, o inserisi un URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Serca calcosa, o inserisi un URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => "Presto sarà disponibiłe anca l'anteprima!",
 	'wikia-visualeditor-help-label' => 'Problemi conosui',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
@@ -2574,7 +2595,7 @@ $messages['vi'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Rất tiếc! Hình ảnh này quá lớn. $1 MB là kích cỡ giới hạn mà chúng tôi có thể nhận!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Rất tiếc! Chúng tôi chỉ hỗ trợ $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Lỗi tải lên tệp',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Tìm kiếm điều gì đó, hoặc nhập URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'Tìm kiếm điều gì đó, hoặc nhập URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Xem trước sẽ được ra mắt sớm!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Xin vui lòng tuân theo quy định về hình ảnh của {{SITENAME}} và [http://congdong.wikia.com/wiki/Điều_khoản_sử_dụng điều khoản sử dụng] của Wikia khi nhúng đoạn phim và tải lên hình ảnh mới.',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Đọc nhiều hơn',
@@ -2648,7 +2669,7 @@ $messages['zh'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '添加媒体内容',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '预览功能即将发布！',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => '读更多',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '搜索或者输入链接',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => '搜索或者输入链接',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '很抱歉！我们只支持$1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '很抱歉！这个图片太大了。我们最多允许上传$1MB大小的图像。',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上传文件出现错误',
@@ -2687,7 +2708,7 @@ $messages['zh-hans'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '哎呀！此图像太大了。我们最多允许上传$1MB大小的图像。',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '哎呀！我们只支持$1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上载文件时出错',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '搜索东西，或者输入URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => '搜索东西，或者输入URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '预览即将推出 ！',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '在嵌入视频和上传新照片时请遵守{{SITENAME}}的图像方针和Fandom的[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 使用条款]。',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => '了解更多',
@@ -2753,6 +2774,8 @@ $messages['zh-hans'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => '图片',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => '视频',
 	'wikia-visualeditor-dialog-video-insert-title' => '插入视频',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '搜索东西，或者输入URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '添加图片',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => '你知道有关{{PAGENAME}}的信息吗？在这里分享关于这个话题的知识吧。',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}}是...',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => '你可以在这里撰写文章的第一部分，向读者介绍你的话题，或者添加任何你可以获取的相关数据。
@@ -2763,7 +2786,6 @@ $messages['zh-hans'] = [
 * 人物描写
 * 背景信息
 如果你认为文章不需要这部分，你可以删除它。如果你希望添加更多的文章段落，你可以在下方通过复制和粘贴这部分章节继续添加内容。',
-	'wikia-visualeditor-dialog-transclusion-add-image' => '添加图片',
 ];
 
 $messages['zh-hant'] = [
@@ -2783,7 +2805,7 @@ $messages['zh-hant'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '哎呀！圖片檔案太大，最大允許上傳 $1 MB 大小的圖片。',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '哎呀！我們僅支援 $1 格式',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上傳檔案時發生錯誤',
-	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '可搜尋任何東西或輸入 URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => '可搜尋任何東西或輸入 URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '即將推出預覽功能！',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '嵌入新的影片或上傳新的圖片時，請遵守{{SITENAME}}的圖片管理政策與Fandom的 [zh-tw.wikia.com/wiki/使用條款 使用條款]。',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => '閱讀更多',
@@ -2850,6 +2872,8 @@ $messages['zh-hant'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => '圖像',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => '視頻',
 	'wikia-visualeditor-dialog-video-insert-title' => '插入視頻',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '可搜尋任何東西或輸入 URL',
+	'wikia-visualeditor-dialog-transclusion-add-image' => '添加圖片',
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => '你知道有關{{PAGENAME}}的資訊嗎？在這裡分享關於這個主題的知識吧。',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => '{{PAGENAME}}是...',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => '你可以在這裡撰寫文章的第一段，向讀者介紹你的主題，或者增加任何相關的基本資料。
@@ -2860,7 +2884,6 @@ $messages['zh-hant'] = [
 * 人物描寫
 * 背景資訊
 如果你認為頁面不需要這一段落，你可以刪除它。如果你希望添加更多的段落，你可以在下方複製貼上這段文字再增加新的內容。',
-	'wikia-visualeditor-dialog-transclusion-add-image' => '添加圖片',
 ];
 
 $messages['zh-hk'] = [
