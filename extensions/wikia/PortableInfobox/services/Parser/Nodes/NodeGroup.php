@@ -93,8 +93,8 @@ class NodeGroup extends Node {
 	}
 
 	protected function getCollapse() {
-		$layout = $this->getXmlAttribute( $this->xmlNode, self::COLLAPSE_ATTR_NAME );
-		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupCollapses ) ) ? $layout : null;
+		$collapse = $this->getXmlAttribute( $this->xmlNode, self::COLLAPSE_ATTR_NAME );
+		return ( isset( $collapse ) && in_array( $collapse, $this->supportedGroupCollapses ) ) ? $collapse : null;
 	}
 
 	protected function getLayout() {

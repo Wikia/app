@@ -16,7 +16,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	 * @param array $params
 	 * @dataProvider testInfoboxParamsFailValidationDataProvider
 	 */
-	public function testInfoboxParamsFailValidation ( $params ) {
+	public function testInfoboxParamsFailValidation( $params ) {
 		$this->setExpectedException( $this->invalidParamsExpectionName );
 		$this->InfoboxParamsValidator->validateParams( $params );
 	}
@@ -25,7 +25,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	 * @param array $params
 	 * @dataProvider testInfoboxParamsPassValidationDataProvider
 	 */
-	public function testInfoboxParamsPassValidation ( $params ) {
+	public function testInfoboxParamsPassValidation( $params ) {
 		$this->assertEquals( true, $this->InfoboxParamsValidator->validateParams( $params ) );
 	}
 
@@ -49,7 +49,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	public function testInfoboxParamsPassValidationDataProvider() {
 		return [
 			[
-				'params' => [],
+				'params' => [ ],
 			],
 			[
 				'params' => [
@@ -63,6 +63,83 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 					'theme' => 'test',
 				]
 			]
+		];
+	}
+
+	/**
+	 * @param $color
+	 * @dataProvider testPassValidateColorValueDataProvider
+	 */
+	public function testPassValidateColorValue( $color ) {
+		$this->assertTrue( $this->InfoboxParamsValidator->validateColorValue( $color ) );
+	}
+
+	public function testPassValidateColorValueDataProvider() {
+		return [
+			[ 'color' => '#aaa' ],
+			[ 'color' => '#abc' ],
+			[ 'color' => '#a12' ],
+			[ 'color' => '#12f' ],
+			[ 'color' => '#fff' ],
+			[ 'color' => '#000' ],
+			[ 'color' => '#999' ],
+			[ 'color' => '#aaaaaa' ],
+			[ 'color' => '#abcabc' ],
+			[ 'color' => '#a12acd' ],
+			[ 'color' => '#12f126' ],
+			[ 'color' => '#adf129' ],
+			[ 'color' => '#125fff' ],
+			[ 'color' => '#ffffff' ],
+			[ 'color' => '#000000' ],
+			[ 'color' => '#999999' ],
+		];
+	}
+
+	/**
+	 * @param array $color
+	 * @dataProvider testFailValidateColorValueDataProvider
+	 */
+	public function testFailValidateColorValue( $color ) {
+		$this->assertFalse( $this->InfoboxParamsValidator->validateColorValue( $color ) );
+	}
+
+	public function testFailValidateColorValueDataProvider() {
+		return [
+			[ 'color' => '' ],
+			[ 'color' => 'aaa' ],
+			[ 'color' => 'abc' ],
+			[ 'color' => 'a12' ],
+			[ 'color' => '12f' ],
+			[ 'color' => 'fff' ],
+			[ 'color' => '000' ],
+			[ 'color' => '999' ],
+			[ 'color' => 'ggg' ],
+			[ 'color' => 'asd' ],
+			[ 'color' => '12g' ],
+			[ 'color' => '1k2' ],
+			[ 'color' => 'l34' ],
+			[ 'color' => 'aaaa' ],
+			[ 'color' => 'aaag' ],
+			[ 'color' => '#ggg' ],
+			[ 'color' => '#asd' ],
+			[ 'color' => '#12g' ],
+			[ 'color' => '#1k2' ],
+			[ 'color' => '#l34' ],
+			[ 'color' => '#aaaa' ],
+			[ 'color' => '#aaag' ],
+			[ 'color' => 'aaaaa' ],
+			[ 'color' => 'aaaaaa' ],
+			[ 'color' => 'abcabc' ],
+			[ 'color' => 'a12acd' ],
+			[ 'color' => '12f126' ],
+			[ 'color' => 'adf129' ],
+			[ 'color' => '125fff' ],
+			[ 'color' => 'ffffff' ],
+			[ 'color' => '000000' ],
+			[ 'color' => '999999' ],
+			[ 'color' => 'aaaaaaa' ],
+			[ 'color' => '#aaaaaaa' ],
+			[ 'color' => '#aaaaa' ],
 		];
 	}
 }

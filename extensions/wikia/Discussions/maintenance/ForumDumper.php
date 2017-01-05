@@ -190,6 +190,13 @@ class ForumDumper {
 	public function getTextAndTitle( $textId ) {
 		$rawText = $this->getRawText( $textId );
 
+		// There are some bogus characters in our data.  Strip them out
+		$rawText = filter_var(
+			$rawText,
+			FILTER_UNSAFE_RAW,
+			FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH
+		);
+
 		// The title is included within the text as an ac_metadata tag
 		$title = $this->getTitle( $rawText );
 

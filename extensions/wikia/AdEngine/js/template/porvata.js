@@ -1,22 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
-	'ext.wikia.adEngine.video.videoAdFactory'
-], function (videoAdFactory) {
+	'ext.wikia.adEngine.video.player.porvata'
+], function (porvata) {
 	'use strict';
-
-	function loadVideoAd(params) {
-		return videoAdFactory.create(
-			params.width,
-			params.height,
-			params.container,
-			{
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			},
-			params.vastUrl
-		);
-	}
 
 	/**
 	 * @param {object} params
@@ -29,18 +15,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
-		videoAdFactory.init()
-			.then(function () {
-				var video = loadVideoAd(params);
-
-				if (params.onReady) {
-					params.onReady(video);
-				}
-
-				if (params.autoPlay) {
-					video.play();
-				}
-			});
+		porvata.inject(params);
 	}
 
 	return {

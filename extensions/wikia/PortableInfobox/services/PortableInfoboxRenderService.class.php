@@ -1,44 +1,21 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
-	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
-	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
-	const MEDIA_CONTEXT_INFOBOX = 'infobox';
+	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
+	const EUROPA_THUMBNAIL_WIDTH = 300;
 
-	private static $templates = [
-		'wrapper' => 'PortableInfoboxWrapper.mustache',
-		'title' => 'PortableInfoboxItemTitle.mustache',
-		'header' => 'PortableInfoboxItemHeader.mustache',
-		'image' => 'PortableInfoboxItemImage.mustache',
-		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
-		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
-		'data' => 'PortableInfoboxItemData.mustache',
-		'group' => 'PortableInfoboxItemGroup.mustache',
-		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
-		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
-		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
-		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
-		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
-		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
-	];
-	private $templateEngine;
-	private $imagesWidth;
+	protected $templateEngine;
+	protected $imagesWidth = self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+	protected $inlineStyles;
+
+	private $helper;
 
 	function __construct() {
-		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( self::getTemplatesDir() );
-		$this->imagesWidth = PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
-	}
-
-	public static function getTemplatesDir() {
-		return dirname( __FILE__ ) . '/../templates';
-	}
-
-	public static function getTemplates() {
-		return self::$templates;
+		parent::__construct();
+		$this->templateEngine = new PortableInfoboxMustacheEngine();
 	}
 
 	/**
@@ -48,65 +25,79 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param $theme
 	 * @param $layout
+	 * @param $accentColor
+	 * @param $accentColorText
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
-		wfProfileIn( __METHOD__ );
+	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
+		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 
-		$helper = new PortableInfoboxRenderServiceHelper();
-		$infoboxHtmlContent = '';
-		$heroData = [ ];
+		// decide on image width, if europa go with bigger images! else default size
+		$this->imagesWidth = $this->isEuropaTheme() ? self::EUROPA_THUMBNAIL_WIDTH :
+			self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
-		// decide on image width
-		$this->imagesWidth = $helper->isMobile() ?
-			PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH :
-			// if europa go with bigger images! else default size
-			$helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
-				PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
-
-		foreach ( $infoboxdata as $item ) {
-			$data = $item[ 'data' ];
-			$type = $item[ 'type' ];
-
-			switch ( $type ) {
-				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data );
-					break;
-				case 'navigation':
-					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
-					break;
-				default:
-					if ( $helper->isMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
-						$heroData[ $type ] = $data;
-						continue;
-					}
-
-					if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
-						$infoboxHtmlContent .= $this->renderItem( $type, $data );
-					};
-			}
-		}
-
-		if ( !empty( $heroData ) ) {
-			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
-		}
+		$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
 
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper', [
 				'content' => $infoboxHtmlContent,
 				'theme' => $theme,
 				'layout' => $layout,
-				'isEuropaEnabled' => $helper->isEuropaTheme()
+				'isEuropaEnabled' => $this->isEuropaTheme()
 			] );
 		} else {
 			$output = '';
 		}
 
-		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
-
-		wfProfileOut( __METHOD__ );
-
 		return $output;
+	}
+
+	protected function getImageHelper() {
+		if ( !isset( $this->helper ) ) {
+			$this->helper = new PortableInfoboxImagesHelper();
+		}
+		return $this->helper;
+	}
+
+	/**
+	 * Produces HTML output for item type and data
+	 *
+	 * @param $type
+	 * @param array $data
+	 * @return string
+	 */
+	protected function render( $type, array $data ) {
+		return $this->templateEngine->render( $type, $data );
+	}
+
+	/**
+	 * renders part of infobox
+	 *
+	 * @param string $type
+	 * @param array $data
+	 *
+	 * @return string - HTML
+	 */
+	protected function renderItem( $type, array $data ) {
+		switch ( $type ) {
+			case 'group':
+				$result = $this->renderGroup( $data );
+				break;
+			case 'header':
+				$result = $this->renderHeader( $data );
+				break;
+			case 'image':
+				$result = $this->renderImage( $data );
+				break;
+			case 'title':
+				$result = $this->renderTitle( $data );
+				break;
+			default:
+				$result = $this->render( $type, $data );
+				break;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -116,133 +107,126 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData ) {
+	protected function renderGroup( $groupData ) {
 		$cssClasses = [ ];
-		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
-		$dataItems = $groupData[ 'value' ];
-		$layout = $groupData[ 'layout' ];
-		$collapse = $groupData[ 'collapse' ];
+		$dataItems = $groupData['value'];
+		$layout = $groupData['layout'];
+		$collapse = $groupData['collapse'];
 
 		if ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
-				$helper->createHorizontalGroupData( $dataItems )
+				$this->createHorizontalGroupData( $dataItems )
 			);
 		} else {
-			foreach ( $dataItems as $item ) {
-				$type = $item[ 'type' ];
-
-				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
-					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
-				}
-			}
+			$groupHTMLContent .= $this->renderChildren( $dataItems );
 		}
 
-		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[ 0 ][ 'type' ] === 'header' ) {
+		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[0]['type'] === 'header' ) {
 			$cssClasses[] = 'pi-collapse';
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
 
-		return $this->renderItem( 'group', [
+		return $this->render( 'group', [
 			'content' => $groupHTMLContent,
 			'cssClasses' => implode( ' ', $cssClasses )
 		] );
 	}
 
 	/**
-	 * renders infobox hero component
-	 *
-	 * @param array $data - infobox hero component data
-	 *
-	 * @return string
-	 */
-	private function renderInfoboxHero( $data ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
-
-		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
-		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
-			->isFirstInfoboxAlredyRendered();
-
-		if ( array_key_exists( 'image', $data ) ) {
-			$image = $data[ 'image' ][ 0 ];
-			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
-			$data[ 'image' ] = $image;
-
-			if ( !$helper->isMercury() ) {
-				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} elseif ( $firstInfoboxAlredyRendered ) {
-				return $this->renderItem( 'hero-mobile', $data );
-			}
-		} elseif ( !$helper->isMercury() || $firstInfoboxAlredyRendered ) {
-			return $this->renderItem( 'title', $data[ 'title' ] );
-		}
-
-		return '';
-	}
-
-	/**
-	 * renders part of infobox
 	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
-	 * @param string $type
-	 * @param array $data
-	 *
-	 * @return bool|string - HTML
+	 * @param $data
+	 * @return string
 	 */
-	private function renderItem( $type, array $data ) {
-		$helper = new PortableInfoboxRenderServiceHelper();
+	protected function renderImage( $data ) {
+		$helper = $this->getImageHelper();
+		$images = [ ];
 
-		if ( $type === 'image' ) {
-			$images = [ ];
+		for ( $i = 0; $i < count( $data ); $i++ ) {
+			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth );
 
-			for ( $i = 0; $i < count( $data ); $i++ ) {
-				$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-				$data[ $i ] = $helper->extendImageData( $data[ $i ], $this->imagesWidth );
-
-				if ( !!$data[ $i ] ) {
-					$images[] = $data[ $i ];
-				}
+			if ( !!$data[$i] ) {
+				$images[] = $data[$i];
 			}
+		}
 
-			if ( count( $images ) === 0 ) {
-				return false;
-			} else if ( count( $images ) === 1 ) {
-				$data = $images[ 0 ];
-				$templateName = $type;
-			} else {
-				// More than one image means image collection
-				if ( $helper->isMobile() && !$helper->isMercury() ) {
-					// Display only the first image on WikiaMobile
-					$data = $images[ 0 ];
-				} else {
-					$data = $helper->extendImageCollectionData( $images );
-				}
+		if ( count( $images ) === 0 ) {
+			return '';
+		}
 
-				$templateName = 'image-collection';
-			}
-
-			if ( $helper->isMobile() ) {
-				if ( !$helper->isMercury() ) {
-					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-wikiamobile';
-				} else {
-					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
-				}
-			}
+		if ( count( $images ) === 1 ) {
+			$data = $images[0];
+			$templateName = 'image';
 		} else {
-			$templateName = $type;
+			// More than one image means image collection
+			$data = $helper->extendImageCollectionData( $images );
+			$templateName = 'image-collection';
 		}
 
-		/**
-		 * Currently, based on business decision, sanitization happens ONLY on Mercury
-		 */
-		if ( $helper->isMobile() ) {
-			$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
+		return $this->render( $templateName, $data );
+	}
+
+	protected function renderTitle( $data ) {
+		$data['inlineStyles'] = $this->inlineStyles;
+
+		return $this->render( 'title', $data );
+	}
+
+	protected function renderHeader( $data ) {
+		$data['inlineStyles'] = $this->inlineStyles;
+
+		return $this->render( 'header', $data );
+	}
+
+	protected function renderChildren( $children ) {
+		$result = '';
+		foreach ( $children as $child ) {
+			$type = $child['type'];
+			if ( $this->templateEngine->isSupportedType( $type ) ) {
+				$result .= $this->renderItem( $type, $child['data'] );
+			}
 		}
 
-		return $this->templateEngine->clearData()
-			->setData( $data )
-			->render( self::getTemplates()[ $templateName ] );
+		return $result;
+	}
+
+	private function getInlineStyles( $accentColor, $accentColorText ) {
+		$backgroundColor = empty( $accentColor ) ? '' : "background-color:{$accentColor};";
+		$color = empty( $accentColorText ) ? '' : "color:{$accentColorText};";
+
+		return "{$backgroundColor}{$color}";
+	}
+
+	private function createHorizontalGroupData( $groupData ) {
+		$horizontalGroupData = [
+			'labels' => [ ],
+			'values' => [ ],
+			'renderLabels' => false
+		];
+
+		foreach ( $groupData as $item ) {
+			$data = $item['data'];
+
+			if ( $item['type'] === 'data' ) {
+				array_push( $horizontalGroupData['labels'], $data['label'] );
+				array_push( $horizontalGroupData['values'], $data['value'] );
+
+				if ( !empty( $data['label'] ) ) {
+					$horizontalGroupData['renderLabels'] = true;
+				}
+			} elseif ( $item['type'] === 'header' ) {
+				$horizontalGroupData['header'] = $data['value'];
+			}
+		}
+
+		return $horizontalGroupData;
+	}
+
+	private function isEuropaTheme() {
+		global $wgEnablePortableInfoboxEuropaTheme;
+
+		return !empty( $wgEnablePortableInfoboxEuropaTheme );
 	}
 }

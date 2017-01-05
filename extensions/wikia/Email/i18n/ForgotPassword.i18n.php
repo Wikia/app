@@ -9,9 +9,9 @@ $messages['en'] = [
 	'emailext-password-unrequested' => 'If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and log in to Fandom with your old password.',
 	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
 	'emailext-password-signature' => 'The Fandom Community Team',
-	'emailext-password-reset-link-intro' => 'Please click on the link below to reset your password',
-	'emailext-password-reset-link-summary' => 'It looks like you\'re having trouble logging in. Sorry about that! As much as we\'d like to just send you your password, for security reasons, we\'ll need you to reset your new password.',
-	'emailext-password-reset-link-link-caption' => 'Click here to reset your password.',
+	'emailext-password-reset-link-intro' => 'Please click the link below to set your new password:',
+	'emailext-password-reset-link-summary' => 'It looks like you\'re having trouble logging in. Sorry about that! As much as we\'d like to just send you your password, for security reasons, we\'ll need you to set a new password on Fandom.',
+	'emailext-password-reset-link-link-caption' => 'SET NEW PASSWORD',
 ];
 
 $messages['qqq'] = [

@@ -63,22 +63,22 @@ class ForumThreadHalResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
+        'id' => 'int',
         'site_id' => 'int',
+        'modification_date' => '\Swagger\Client\Discussion\Models\Instant',
         'is_viewable' => 'bool',
         'is_editable' => 'bool',
         'is_deleted' => 'bool',
         'is_held' => 'bool',
         'upvote_count' => 'int',
         'created_by' => '\Swagger\Client\Discussion\Models\UserInfo',
-        'modification_date' => '\Swagger\Client\Discussion\Models\Instant',
-        'post_count' => 'int',
-        'forum_id' => 'int',
         'first_post_id' => 'int',
         'last_post_id' => 'int',
         'requestor_id' => 'int',
         'trending_score' => 'double',
         'view_count' => 'int',
-        'id' => 'int',
+        'forum_id' => 'int',
+        'post_count' => 'int',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
         '_embedded' => '\Swagger\Client\Discussion\Models\HalForumThreadEmbedded[]'
@@ -94,22 +94,22 @@ class ForumThreadHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
+        'id' => 'id',
         'site_id' => 'siteId',
+        'modification_date' => 'modificationDate',
         'is_viewable' => 'isViewable',
         'is_editable' => 'isEditable',
         'is_deleted' => 'isDeleted',
         'is_held' => 'isHeld',
         'upvote_count' => 'upvoteCount',
         'created_by' => 'createdBy',
-        'modification_date' => 'modificationDate',
-        'post_count' => 'postCount',
-        'forum_id' => 'forumId',
         'first_post_id' => 'firstPostId',
         'last_post_id' => 'lastPostId',
         'requestor_id' => 'requestorId',
         'trending_score' => 'trendingScore',
         'view_count' => 'viewCount',
-        'id' => 'id',
+        'forum_id' => 'forumId',
+        'post_count' => 'postCount',
         '_links' => '_links',
         'requester_id' => 'requesterId',
         '_embedded' => '_embedded'
@@ -125,22 +125,22 @@ class ForumThreadHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
+        'id' => 'setId',
         'site_id' => 'setSiteId',
+        'modification_date' => 'setModificationDate',
         'is_viewable' => 'setIsViewable',
         'is_editable' => 'setIsEditable',
         'is_deleted' => 'setIsDeleted',
         'is_held' => 'setIsHeld',
         'upvote_count' => 'setUpvoteCount',
         'created_by' => 'setCreatedBy',
-        'modification_date' => 'setModificationDate',
-        'post_count' => 'setPostCount',
-        'forum_id' => 'setForumId',
         'first_post_id' => 'setFirstPostId',
         'last_post_id' => 'setLastPostId',
         'requestor_id' => 'setRequestorId',
         'trending_score' => 'setTrendingScore',
         'view_count' => 'setViewCount',
-        'id' => 'setId',
+        'forum_id' => 'setForumId',
+        'post_count' => 'setPostCount',
         '_links' => 'setLinks',
         'requester_id' => 'setRequesterId',
         '_embedded' => 'setEmbedded'
@@ -156,22 +156,22 @@ class ForumThreadHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
+        'id' => 'getId',
         'site_id' => 'getSiteId',
+        'modification_date' => 'getModificationDate',
         'is_viewable' => 'getIsViewable',
         'is_editable' => 'getIsEditable',
         'is_deleted' => 'getIsDeleted',
         'is_held' => 'getIsHeld',
         'upvote_count' => 'getUpvoteCount',
         'created_by' => 'getCreatedBy',
-        'modification_date' => 'getModificationDate',
-        'post_count' => 'getPostCount',
-        'forum_id' => 'getForumId',
         'first_post_id' => 'getFirstPostId',
         'last_post_id' => 'getLastPostId',
         'requestor_id' => 'getRequestorId',
         'trending_score' => 'getTrendingScore',
         'view_count' => 'getViewCount',
-        'id' => 'getId',
+        'forum_id' => 'getForumId',
+        'post_count' => 'getPostCount',
         '_links' => 'getLinks',
         'requester_id' => 'getRequesterId',
         '_embedded' => 'getEmbedded'
@@ -198,22 +198,22 @@ class ForumThreadHalResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
+        $this->container['modification_date'] = isset($data['modification_date']) ? $data['modification_date'] : null;
         $this->container['is_viewable'] = isset($data['is_viewable']) ? $data['is_viewable'] : false;
         $this->container['is_editable'] = isset($data['is_editable']) ? $data['is_editable'] : false;
         $this->container['is_deleted'] = isset($data['is_deleted']) ? $data['is_deleted'] : false;
         $this->container['is_held'] = isset($data['is_held']) ? $data['is_held'] : false;
         $this->container['upvote_count'] = isset($data['upvote_count']) ? $data['upvote_count'] : null;
         $this->container['created_by'] = isset($data['created_by']) ? $data['created_by'] : null;
-        $this->container['modification_date'] = isset($data['modification_date']) ? $data['modification_date'] : null;
-        $this->container['post_count'] = isset($data['post_count']) ? $data['post_count'] : null;
-        $this->container['forum_id'] = isset($data['forum_id']) ? $data['forum_id'] : null;
         $this->container['first_post_id'] = isset($data['first_post_id']) ? $data['first_post_id'] : null;
         $this->container['last_post_id'] = isset($data['last_post_id']) ? $data['last_post_id'] : null;
         $this->container['requestor_id'] = isset($data['requestor_id']) ? $data['requestor_id'] : null;
         $this->container['trending_score'] = isset($data['trending_score']) ? $data['trending_score'] : null;
         $this->container['view_count'] = isset($data['view_count']) ? $data['view_count'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['forum_id'] = isset($data['forum_id']) ? $data['forum_id'] : null;
+        $this->container['post_count'] = isset($data['post_count']) ? $data['post_count'] : null;
         $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
         $this->container['requester_id'] = isset($data['requester_id']) ? $data['requester_id'] : null;
         $this->container['_embedded'] = isset($data['_embedded']) ? $data['_embedded'] : null;
@@ -249,6 +249,27 @@ class ForumThreadHalResponse implements ArrayAccess
 
 
     /**
+     * Gets id
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
      * Gets site_id
      * @return int
      */
@@ -265,6 +286,27 @@ class ForumThreadHalResponse implements ArrayAccess
     public function setSiteId($site_id)
     {
         $this->container['site_id'] = $site_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets modification_date
+     * @return \Swagger\Client\Discussion\Models\Instant
+     */
+    public function getModificationDate()
+    {
+        return $this->container['modification_date'];
+    }
+
+    /**
+     * Sets modification_date
+     * @param \Swagger\Client\Discussion\Models\Instant $modification_date
+     * @return $this
+     */
+    public function setModificationDate($modification_date)
+    {
+        $this->container['modification_date'] = $modification_date;
 
         return $this;
     }
@@ -396,69 +438,6 @@ class ForumThreadHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets modification_date
-     * @return \Swagger\Client\Discussion\Models\Instant
-     */
-    public function getModificationDate()
-    {
-        return $this->container['modification_date'];
-    }
-
-    /**
-     * Sets modification_date
-     * @param \Swagger\Client\Discussion\Models\Instant $modification_date
-     * @return $this
-     */
-    public function setModificationDate($modification_date)
-    {
-        $this->container['modification_date'] = $modification_date;
-
-        return $this;
-    }
-
-    /**
-     * Gets post_count
-     * @return int
-     */
-    public function getPostCount()
-    {
-        return $this->container['post_count'];
-    }
-
-    /**
-     * Sets post_count
-     * @param int $post_count
-     * @return $this
-     */
-    public function setPostCount($post_count)
-    {
-        $this->container['post_count'] = $post_count;
-
-        return $this;
-    }
-
-    /**
-     * Gets forum_id
-     * @return int
-     */
-    public function getForumId()
-    {
-        return $this->container['forum_id'];
-    }
-
-    /**
-     * Sets forum_id
-     * @param int $forum_id
-     * @return $this
-     */
-    public function setForumId($forum_id)
-    {
-        $this->container['forum_id'] = $forum_id;
-
-        return $this;
-    }
-
-    /**
      * Gets first_post_id
      * @return int
      */
@@ -564,22 +543,43 @@ class ForumThreadHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets id
+     * Gets forum_id
      * @return int
      */
-    public function getId()
+    public function getForumId()
     {
-        return $this->container['id'];
+        return $this->container['forum_id'];
     }
 
     /**
-     * Sets id
-     * @param int $id
+     * Sets forum_id
+     * @param int $forum_id
      * @return $this
      */
-    public function setId($id)
+    public function setForumId($forum_id)
     {
-        $this->container['id'] = $id;
+        $this->container['forum_id'] = $forum_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets post_count
+     * @return int
+     */
+    public function getPostCount()
+    {
+        return $this->container['post_count'];
+    }
+
+    /**
+     * Sets post_count
+     * @param int $post_count
+     * @return $this
+     */
+    public function setPostCount($post_count)
+    {
+        $this->container['post_count'] = $post_count;
 
         return $this;
     }
@@ -704,3 +704,5 @@ class ForumThreadHalResponse implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+
