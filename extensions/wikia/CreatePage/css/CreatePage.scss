@@ -108,17 +108,16 @@
 		@include flexbox;
 		@include flex-direction(column);
 		padding: 0;
-
-		> div {
-			@include flex-grow(1);
-			padding: 20px;
-		}
 	}
-
 
 	.create-page-dialog {
 		&__proposals {
 			background-color: rgba($color-unified-module-background, .4);
+		}
+
+		&__form-container, &__proposals {
+			@include flex-grow(1);
+			padding: 20px;
 		}
 
 		&__proposals-header {

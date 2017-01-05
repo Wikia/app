@@ -1,4 +1,4 @@
-<div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" >
+<div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" class="create-page-dialog__form-container">
 	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog('page-create-title-modal'); return false;">
 		<div id="CreatePageContainer">
 			<div id="CreatePageDialogSub">
