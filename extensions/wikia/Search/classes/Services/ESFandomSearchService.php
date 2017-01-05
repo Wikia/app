@@ -42,7 +42,7 @@ class ESFandomSearchService extends AbstractSearchService {
 		$consulUrl = $this->getConsulUrl();
 
 		$response = \Http::post(
-			"http://$consulUrl/fandom",
+			"http://$consulUrl/fandom/search",
 			[
 				'noProxy' => true,
 				'postData' => "queryTerms=$query",
