@@ -118,7 +118,7 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * Use subpage as param and try to find wiki which match criteria
 	 *
-	 * @param mixed $subpage:
+	 * @param string $subpage:
 	 *
 	 * @return mixed: database row from city_list
 	 */

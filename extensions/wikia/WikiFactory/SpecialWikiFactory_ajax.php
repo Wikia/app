@@ -594,16 +594,16 @@ function axWFactorySaveVariable() {
 		}
 
 		if ( empty( $error ) ) {
-            $varInfo = WikiFactory::getVarById($cv_id, $city_id);
-            if ( $varInfo->cv_is_unique ) {
-                $wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
-                $count = count( $wikis );
-                if ( ( $count == 1 && $wikis[0] != $city_id ) || $count > 1 ) {
-                    $return = Wikia::errormsg( "Value of this variable needs to be unique." );
-                    $error++;
-                }
-            }
-        }
+			$varInfo = WikiFactory::getVarById($cv_id, $city_id);
+			if ( $varInfo->cv_is_unique ) {
+				$wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
+				$count = count( $wikis );
+				if ( ( $count == 1 && $wikis[0] != $city_id ) || $count > 1 ) {
+					$return = Wikia::errormsg( "Value of this variable needs to be unique." );
+					$error++;
+				}
+			}
+		}
 
 		wfRunHooks(
 			'WikiFactoryVarSave::AfterErrorDetection',
