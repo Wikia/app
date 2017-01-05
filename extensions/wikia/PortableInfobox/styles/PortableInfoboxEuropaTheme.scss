@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/gradient';
 
 $background-color-mix: 10%;
 $black: #000;
@@ -101,6 +102,10 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 			list-style-position: outside;
 			margin-left: $infobox-side-spacing;
 		}
+	}
+
+	.pi-data-collapse::before {
+		@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $background-color, 60%);
 	}
 
 	.pi-data,

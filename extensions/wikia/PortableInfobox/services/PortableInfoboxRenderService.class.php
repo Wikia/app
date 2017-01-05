@@ -1,7 +1,7 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
@@ -80,6 +80,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	protected function renderItem( $type, array $data ) {
 		switch ( $type ) {
+			case 'data':
+				$result = $this->renderData( $data );
+				break;
 			case 'group':
 				$result = $this->renderGroup( $data );
 				break;
@@ -98,6 +101,19 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $result;
+	}
+
+	protected function renderData( $nodeData ) {
+		if (
+			!empty( $nodeData['collapse'] ) &&
+			$nodeData['collapse'] === \Wikia\PortableInfobox\Parser\Nodes\NodeData::COLLAPSE_CLOSED_OPTION &&
+			// You can't predict image size before it's loaded, so don't collapse fields with images
+			!$this->getImageHelper()->doesHtmlContainImage( $nodeData['value'] )
+		) {
+			$nodeData['cssClasses'] = 'pi-data-collapse';
+		}
+
+		return $this->render( 'data', $nodeData );
 	}
 
 	/**

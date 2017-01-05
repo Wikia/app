@@ -168,25 +168,31 @@ class NodeDataTest extends WikiaBaseTest {
 
 	public function dataProvider() {
 		return [
-			[ '<data source="test"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '' ] ],
-			[ '<data source="test"><default>def</default></data>', [ ], [ 'value' => 'def', 'label' => '' ] ],
+			[ '<data source="test"></data>', [ 'test' => 'test' ], [ 'value' => 'test', 'label' => '', 'collapse' => null ] ],
+			[ '<data source="test"><default>def</default></data>', [ ], [ 'value' => 'def', 'label' => '', 'collapse' => null ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ ],
-			  [ 'value' => 'def', 'label' => 'l' ] ],
+			  [ 'value' => 'def', 'label' => 'l', 'collapse' => null ] ],
 			[ '<data source="test"><label source="l">jjj</label><default>def</default></data>', [ 'l' => 1 ],
-			  [ 'value' => 'def', 'label' => 'jjj' ] ],
+			  [ 'value' => 'def', 'label' => 'jjj', 'collapse' => null ] ],
 			[ '<data source="test"><label source="l" /><default>def</default></data>', [ 'l' => 1 ],
-			  [ 'value' => 'def', 'label' => '' ] ],
+			  [ 'value' => 'def', 'label' => '', 'collapse' => null ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ 'test' => 1 ],
-			  [ 'value' => 1, 'label' => 'l' ] ],
-			[ '<data></data>', [ ], [ 'label' => '', 'value' => null ] ],
+			  [ 'value' => 1, 'label' => 'l', 'collapse' => null ] ],
+			[ '<data></data>', [ ], [ 'label' => '', 'value' => null, 'collapse' => null ] ],
 			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ 'test' => 1 ],
-			  [ 'value' => '{{{test}}}%', 'label' => 'l' ] ],
+			  [ 'value' => '{{{test}}}%', 'label' => 'l', 'collapse' => null ] ],
 			[ '<data source="test"><label>l</label><format>{{{not_defined_var}}}%</format><default>def</default></data>', [ 'test' => 1 ],
-				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l' ] ],
+				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l', 'collapse' => null ] ],
 			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ ],
-				[ 'value' => 'def', 'label' => 'l' ] ],
+				[ 'value' => 'def', 'label' => 'l', 'collapse' => null ] ],
 			[ '<data source="test"><format>{{{test}}}%</format></data>', [ 'test' => 0 ],
-				[ 'value' => '{{{test}}}%', 'label' => '' ] ],
+				[ 'value' => '{{{test}}}%', 'label' => '', 'collapse' => null ] ],
+			[ '<data source="test" collapse="closed"></data>', [ 'test' => 'test' ],
+				[ 'value' => 'test', 'label' => '', 'collapse' => 'closed' ] ],
+			[ '<data source="test" collapse="wrong"></data>', [ 'test' => 'test' ],
+				[ 'value' => 'test', 'label' => '', 'collapse' => null ] ],
+			[ '<data source="test" collapse="open"></data>', [ 'test' => 'test' ],
+				[ 'value' => 'test', 'label' => '', 'collapse' => null ] ]
 		];
 	}
 
@@ -208,7 +214,7 @@ class NodeDataTest extends WikiaBaseTest {
 		return [
 			[ '<data source="test"></data>',
 				[ 'test' => 'test' ],
-				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ]
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '', 'collapse' => null ] ]
 			]
 		];
 	}

@@ -58,12 +58,17 @@
 		box-sizing: border-box;
 		overflow: hidden;
 		width: 100%;
+
+		// we need to have ".pi-data .pi-data-label" to override overflow property set by ".WikiaArticle h3" selector
+		// set overflow to visible to calculate scrollHeight correctly
+		.pi-data-label {
+			overflow: visible;
+		}
 	}
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
 		@include hyphens();
-		overflow: hidden;
 		word-wrap: break-word;
 	}
 

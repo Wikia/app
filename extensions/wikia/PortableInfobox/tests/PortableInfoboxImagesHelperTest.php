@@ -206,4 +206,62 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @param $html
+	 * @param $expected
+	 * @dataProvider doesHtmlContainImageDataProvider
+	 */
+	public function testDoesHtmlContainImage( $html, $expected ) {
+		$helper = new PortableInfoboxImagesHelper();
+		$this->assertEquals( $expected, $helper->doesHtmlContainImage( $html ) );
+	}
+
+	public function doesHtmlContainImageDataProvider() {
+		return [
+			[
+				'html' => 'text',
+				'expected' => false
+			],
+			[
+				'html' => 'text about img',
+				'expected' => false
+			],
+			[
+				'html' => '<imgined>imagined tag</imgined>',
+				'expected' => false
+			],
+			[
+				'html' => '<img src="test" />',
+				'expected' => true
+			],
+			[
+				'html' => 'text <img> and more text',
+				'expected' => true
+			],
+			[
+				'html' => 'picture this!',
+				'expected' => false
+			],
+			[
+				'html' => '<picture><source srcset="test"></picture>',
+				'expected' => true
+			],
+			[
+				'html' => 'text <picture></picture> text',
+				'expected' => true
+			],
+			[
+				'html' > 'are you svg expert?',
+				'expected' => false
+			],
+			[
+				'html' => '<svg><path d="1"></svg>',
+				'expected' => true
+			],
+			[
+				'html' => 'text <svg></svg> text',
+				'expected' => true
+			]
+		];
+	}
 }

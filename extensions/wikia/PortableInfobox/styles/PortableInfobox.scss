@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
@@ -101,6 +102,49 @@
 		thead,
 		tbody {
 			display: none;
+		}
+	}
+}
+
+// **********  Collapsible data  ********** //
+
+.pi-data {
+	position: relative;
+
+	&.pi-data-collapse {
+		position: relative;
+		max-height: $infobox-collapsible-data-max-height;
+
+		&::before {
+			@include linear-gradient(null, top, rgba(0, 0, 0, 0), 0%, $infobox-background, 60%);
+			content: '';
+			display: block;
+			height: $infobox-collapsible-data-chevron-size;
+			left: 0;
+			padding: 40px 0 0;
+			position: absolute;
+			text-align: center;
+			top: 136px;
+			width: 100%;
+			// TODO should this be a magic number or a variable?
+			z-index: 100;
+		}
+
+		.pi-expand-icon {
+			display: none;
+		}
+	}
+
+	&.pi-data-collapse-closed {
+		@include right-chevron($infobox-collapsible-data-chevron-size, 2px, 'down', $color-links);
+
+		&::after {
+			display: block;
+			margin-top: -($infobox-chevron-size / 2) + 2;
+			position: absolute;
+			right: calc(50% - #{$infobox-collapsible-data-chevron-size / 2});
+			top: 175px;
+			z-index: 100;
 		}
 	}
 }

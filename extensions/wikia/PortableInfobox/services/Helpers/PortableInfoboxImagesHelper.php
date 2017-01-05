@@ -103,4 +103,20 @@ class PortableInfoboxImagesHelper {
 
 		return [ 'height' => round( $height ), 'width' => round( $width ) ];
 	}
+
+	/**
+	 * @param string $html
+	 *
+	 * @return bool
+	 */
+	public function doesHtmlContainImage( $html ) {
+		$doc = new \DOMDocument();
+		$doc->loadHTML( $html );
+		$xpath = new \DOMXPath( $doc );
+
+		// We currently render only the <img> element, but let's make it more future-proof
+		$images = $xpath->query( '//img|//picture|//svg' );
+
+		return $images->length > 0;
+	}
 }

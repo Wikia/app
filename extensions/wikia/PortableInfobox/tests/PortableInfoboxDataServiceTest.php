@@ -53,8 +53,12 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			->save( $infoboxNode )
 			->getData();
 
-		$this->assertEquals( [ [ 'data' => [ [ 'type' => 'data', 'data' => [ 'label' => null, 'value' => 1 ] ] ],
-								 'sources' => [ 'test', 'test2' ] ] ], $result );
+		$this->assertEquals( [ [
+			'data' => [ [
+				'type' => 'data', 'data' => [ 'label' => null, 'value' => 1, 'collapse' => null ]
+			] ],
+			'sources' => [ 'test', 'test2' ]
+		] ], $result );
 	}
 
 	public function testTemplate() {
@@ -129,28 +133,28 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 
 	protected function getInfoboxData() {
 		return [ [ 'data' => [ [ "type" => "data",
-								 "data" => [
-									 "value" => "AAAA",
-									 "label" => "BBBB"
-								 ]
-							   ], [ "type" => "image",
-									"data" => [ [
-										"key" => "Test.jpg",
-										"alt" => null,
-										"caption" => null,
-									] ]
-							   ], [ "type" => "image",
-									"data" => [ [
-										"key" => "Test2.jpg",
-										"alt" => null,
-										"caption" => null
-									] ] ] ] ],
-				 [ 'data' => [ [ "type" => "image",
-								 "data" => [ [
-									 "key" => "Test2.jpg",
-									 "alt" => null,
-									 "caption" => null
-								 ] ] ] ] ] ];
+			"data" => [
+				"value" => "AAAA",
+				"label" => "BBBB"
+			]
+		], [ "type" => "image",
+			"data" => [ [
+				"key" => "Test.jpg",
+				"alt" => null,
+				"caption" => null,
+			] ]
+		], [ "type" => "image",
+			"data" => [ [
+				"key" => "Test2.jpg",
+				"alt" => null,
+				"caption" => null
+			] ] ] ] ],
+			[ 'data' => [ [ "type" => "image",
+				"data" => [ [
+					"key" => "Test2.jpg",
+					"alt" => null,
+					"caption" => null
+				] ] ] ] ] ];
 	}
 }
 
@@ -172,14 +176,12 @@ class PagePropsProxyDummy {
 	}
 
 	public function get( $id, $property ) {
-		$prop = $this->data[ $id . $property ];
-
-		return $prop !== null ? $prop : '';
+		return $this->data[$id . $property] ?? '';
 	}
 
 	public function set( $id, $data ) {
 		foreach ( $data as $property => $value ) {
-			$this->data[ $id . $property ] = $value;
+			$this->data[$id . $property] = $value;
 		}
 	}
 }
