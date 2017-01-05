@@ -63,6 +63,6 @@ class CreatePageHelper {
 	 * @return string['veaction'|'action']
 	 */
 	private static function getPreferredEditorQueryParamName() {
-		return EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
+		return EditorPreference::shouldShowVisualEditorLink( \RequestContext::getMain()->getSkin() ) ? 'veaction' : 'action';
 	}
 }
