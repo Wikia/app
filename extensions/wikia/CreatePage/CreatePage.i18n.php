@@ -1535,7 +1535,7 @@ Wybierz inną nazwę.',
 	'createpage-error-article-blocked' => 'Coś poszło nie tak. Pracujemy, żeby to naprawić. Spróbuj dodać nową stronę później. Jeśli problem będzie się powtarzał, skontaktuj się z administratorem.',
 	'tog-createpagedefaultblank' => 'Domyślnie twórz nowe strony puste',
 	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowego artykułu (niezalecane)',
-	'newpagelayout' => '[[Plik:Placeholder|right|300px]]
+	'newpagelayout' => '[[Plik:Wypełniacz|right|300px]]
 Tutaj napisz treść artykułu.',
 	'createpage-with-video' => '[[Plik:Placeholder|video|right|300px]] [[Plik:Placeholder|right|300px]]
 Tutaj umieść treść pierwszego paragrafu.
