@@ -19,6 +19,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home';
 
+		//DIANA
 		setStatus('HOME_TOP_LEADERBOARD', isHome);
 		setStatus('HOME_TOP_RIGHT_BOXAD', isHome);
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);

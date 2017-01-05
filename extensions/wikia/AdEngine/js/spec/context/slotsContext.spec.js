@@ -126,16 +126,14 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				HOME_TOP_LEADERBOARD: 3,
-				HOME_TOP_RIGHT_BOXAD: 4,
-				PREFOOTER_LEFT_BOXAD: 5,
-				PREFOOTER_MIDDLE_BOXAD: 6
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
 			TOP_RIGHT_BOXAD: 2,
-			PREFOOTER_LEFT_BOXAD: 5
+			PREFOOTER_LEFT_BOXAD: 3
 		});
 	});
 
@@ -145,17 +143,13 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				HOME_TOP_LEADERBOARD: 3,
-				HOME_TOP_RIGHT_BOXAD: 4,
-				PREFOOTER_LEFT_BOXAD: 5,
-				PREFOOTER_MIDDLE_BOXAD: 6
+				PREFOOTER_LEFT_BOXAD: 3,
+				PREFOOTER_MIDDLE_BOXAD: 4
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
-			HOME_TOP_LEADERBOARD: 3,
-			HOME_TOP_RIGHT_BOXAD: 4,
-			PREFOOTER_LEFT_BOXAD: 5,
-			PREFOOTER_MIDDLE_BOXAD: 6
+			PREFOOTER_LEFT_BOXAD: 3,
+			PREFOOTER_MIDDLE_BOXAD: 4
 		});
 	});
 });
