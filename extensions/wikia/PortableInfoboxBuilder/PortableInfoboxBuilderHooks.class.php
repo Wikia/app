@@ -65,7 +65,8 @@ class PortableInfoboxBuilderHooks {
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
 			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
-				\RequestContext::getMain()->getUser()->isAllowed( 'createpage' );
+				// use dummy title in template ns
+				Title::newFromText( 'ATemplate', NS_TEMPLATE )->userCan( 'createpage' );
 		}
 
 		return true;
