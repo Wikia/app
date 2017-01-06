@@ -510,9 +510,6 @@ function axWFactoryClearCache()
  *
  * ajax method, save variable from form
  *
- * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
- * @access public
- *
  * @return string encoded in JSON format
  */
 function axWFactorySaveVariable() {
@@ -563,6 +560,7 @@ function axWFactorySaveVariable() {
 				$return = Wikia::successmsg( "Parse OK, variable saved." );
 			break;
 			default:
+				$__var_value = null;
 				$tEval = "\$__var_value = $cv_value;";
 				/**
 				 * catch parse errors
@@ -594,7 +592,7 @@ function axWFactorySaveVariable() {
 		}
 
 		if ( empty( $error ) ) {
-			$varInfo = WikiFactory::getVarById($cv_id, $city_id);
+			$varInfo = WikiFactory::getVarById( $cv_id, $city_id );
 			if ( $varInfo->cv_is_unique ) {
 				$wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
 				$count = count( $wikis );
@@ -616,14 +614,6 @@ function axWFactorySaveVariable() {
 				$error++;
 				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
 			} else {
-				/* the one "set" that used this is now disabled, so disabling the call until needed again
-				$tied = WikiFactory::getTiedVariables( $cv_name );
-				if( $tied ) {
-					$return .= Wikia::successmsg(
-						" This variable is tied with others. Check: ". implode(", ", $tied )
-					);
-				}
-				*/
 				if ( !empty( $tag_name ) ) {
 					// apply changes to all wikis with given tag
 					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );

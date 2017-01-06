@@ -598,7 +598,7 @@ class WikiFactoryPage extends SpecialPage {
 	 *  $this->mMassTag
 	 *  $this->mMassTagWikis
 	 *
-	 * @note yes, i know this is HORRIBLY ineffecient, but I was going for RAD, not clean.
+	 * @note yes, i know this is HORRIBLY inefficient, but I was going for RAD, not clean.
 	 */
 	private function doMassTag() {
 		$this->mMassTagWikis = explode( "\n", $this->mMassTagWikis );
@@ -653,16 +653,15 @@ class WikiFactoryPage extends SpecialPage {
 	/**
 	 * doMultiRemoveTags
 	 *
+	 * Working data is stored in object prior to call
+	 *
+	 *   $this->mRemoveTag; has the tag to remove
+	 *   $this->mRemoveTags; has int array of wiki id to remove from
+	 *
 	 * @return string Text message (use Wikia::*box functions)
 	 */
 	private function doMultiRemoveTags( ) {
-
-		/* working data is stored in object prior to call
-			$this->mRemoveTag; has the tag to remove
-			$this->mRemoveTags; has int array of wiki id to remove from
-		*/
-
-		/* in theory, these should never trigger, but BSTS */
+		// in theory, these should never trigger, but BSTS
 		if ( empty( $this->mRemoveTag ) ) {
 			return Wikia::errorbox( "no tag to remove?" );
 		}
@@ -670,13 +669,13 @@ class WikiFactoryPage extends SpecialPage {
 			return Wikia::errorbox( "no items to remove?" );
 		}
 
-		/* turn the tag string into the tag id */
+		// turn the tag string into the tag id
 		$tagID = WikiFactoryTags::idFromName( $this->mRemoveTag );
 		if ( $tagID === false ) {
 			return Wikia::errorbox( "tag [{$this->mRemoveTag}] doesnt exist" );
 		}
 
-		/* to get list of all wikis with this tag, and later, use this to cache clear */
+		// to get list of all wikis with this tag, and later, use this to cache clear
 		$tagsQuery = new WikiFactoryTagsQuery( $this->mRemoveTag );
 
 		$fails = [];
@@ -688,13 +687,12 @@ class WikiFactoryPage extends SpecialPage {
 			}
 		}
 
-		/* force dump of the tag_map in memcache */
+		// force dump of the tag_map in memcache
 		$tagsQuery->clearCache();
 
-		/* since we /hopefully/ removed some tags from wikis,
-			force the search results for this pageload to be empty. */
+		// since we hopefully removed some tags from wikis, force the search results for this
+		// pageload to be empty.
 		$this->mTagWikiIds = [];
-		# print "(forcing mTagWikiIds to null at ".gmdate('r').")";
 
 		if ( empty( $fails ) ) {
 			return Wikia::successbox( "ok!" );
@@ -702,7 +700,6 @@ class WikiFactoryPage extends SpecialPage {
 			return Wikia::errorbox( "ok, but failed at " . count( $fails ) . " wikis" .
 									" (" . implode( ", ", $fails ) . ")" );
 		}
-
 	}
 
 	/**

@@ -1257,23 +1257,23 @@ class WikiFactory {
 		) ? $forcedEnv : F::app()->wg->WikiaEnvironment;
 
 		// put the path back into shape and return
-		switch ( $environment ) {
-			case WIKIA_ENV_PREVIEW:
-				return 'preview.' . $server . static::WIKIA_TOP_DOMAIN;
-			case WIKIA_ENV_VERIFY:
-				return 'verify.' . $server . static::WIKIA_TOP_DOMAIN;
-			case WIKIA_ENV_STABLE:
-				return 'stable.' . $server . static::WIKIA_TOP_DOMAIN;
-			case WIKIA_ENV_STAGING:
-			case WIKIA_ENV_PROD:
-				return $server . '.' . F::app()->wg->WikiaBaseDomain;
-			case WIKIA_ENV_SANDBOX:
-				return static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN;
-			case WIKIA_ENV_DEV:
-				return $server . '.' . static::getExternalHostName() . '.wikia-dev.com';
+		if ( $environment == WIKIA_ENV_PREVIEW ) {
+			$fullName = 'preview.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_VERIFY ) {
+			$fullName = 'verify.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_STABLE ) {
+			$fullName = 'stable.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_PROD || $environment == WIKIA_ENV_STAGING ) {
+			$fullName = $server . '.' . F::app()->wg->WikiaBaseDomain;
+		} elseif ( $environment == WIKIA_ENV_SANDBOX ) {
+			$fullName = static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN;
+		} elseif ( $environment == WIKIA_ENV_DEV) {
+			$fullName = $server . '.' . static::getExternalHostName() . '.wikia-dev.com';
+		} else {
+			throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
 		}
 
-		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
+		return $fullName;
 	}
 
 	/**
@@ -2221,39 +2221,6 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $loop;
 	}
-
-	/**
-	 * getTiedVariables
-	 *
-	 * return variables connected somehow to given variable. Used
-	 * for displaying hints after saving variable ("you should edit these
-	 * variables as well"), Ticket #3387. So far it uses hardcoded
-	 * values.
-	 *
-	 * @todo Move hardcoded values to MediaWiki message.
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access public
-	 * @static
-	 *
-	 * @param string	$cv_name	variable name
-	 *
-	 * @return array: names of tied variables or false if nothing matched
-	 */
-	static public function getTiedVariables( $cv_name ) {
-		$tied = [
-			#"wgExtraNamespacesLocal|wgContentNamespaces|wgNamespacesWithSubpagesLocal|wgNamespacesToBeSearchedDefault"
-		];
-		foreach ( $tied as $group ) {
-			$pattern = "/\b{$cv_name}\b/";
-			if ( preg_match( $pattern, $group ) ) {
-				return explode( "|", $group );
-			}
-		}
-
-		return false;
-	}
-
 
 	/**
 	 * log
