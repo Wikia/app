@@ -56,7 +56,6 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					}
 
 					item.meta = options.widget;
-					// item.sponsor = "Hulu";
 
 					item.index = index;
 					items.push(item);
