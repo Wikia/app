@@ -10,6 +10,11 @@
 				{{#meta}} data-meta="{{meta}}" {{/meta}}
 			>
 				<a href="{{url}}">
+				    {{#sponsor}}
+                    <div class="recirculation-sponsored-header">
+                        Sponsored
+                    </div>
+                    {{/sponsor}}
 					<div class="image image-thumbnail placeholder-thumbnail fluid small">
 						{{#thumbnail}}
 							<img src="{{thumbnail}}" alt="{{title}}" itemprop="thumbnail">
@@ -18,6 +23,11 @@
 					<div class="title" title="{{title}}">{{title}}</div>
 					<div class="metadata">{{author}} &middot; <time class="timeago" datetime="{{pub_date}}">{{pub_date}}</time></div>
 				</a>
+				{{#sponsor}}
+                <div class="recirculation-sponsored-footer">
+                    Sponsored by {{sponsor}}
+                </div>
+                {{/sponsor}}
 			</li>
 		{{/items}}
 	</ul>
