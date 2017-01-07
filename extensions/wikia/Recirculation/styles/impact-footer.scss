@@ -62,7 +62,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 
 	}
 
-	.title_pretext {
+	.title_pretext, .recirculation-sponsored-header {
 		display: none;
 	}
 
@@ -73,6 +73,10 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	.item:nth-of-type(1),
 	.item:nth-of-type(6) {
 		width: 49.5%;
+
+		.recirculation-sponsored-header {
+			display: block;
+		}
 
 		.recirc-footer-title-container {
 			background-color: $recirculation-impact-footer-color-feature-overlay;
