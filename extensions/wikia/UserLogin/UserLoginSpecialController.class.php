@@ -83,16 +83,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		// Redirect to standalone NewAuth page if extension enabled
 		if ( $this->app->wg->EnableNewAuthModal ) {
-			$isForgotPassword = $this->wg->request->getVal( 'type' ) == 'forgotPassword';
-			$redirectUrl = '/';
-
-			if ($isForgotPassword) {
-				$redirectUrl .= 'forgotpassword';
-			} else {
-				$redirectUrl .= 'signin';
-			}
-
-			$redirectUrl .= '?redirect=' . $this->userLoginHelper->getRedirectUrl();
+			$redirectUrl = $this->getAuthenticationResource()
+				. '?redirect=' . $this->userLoginHelper->getRedirectUrl();
 
 			if ( $contentLangCode !== 'en' ) {
 				$redirectUrl .= '&uselang=' . $contentLangCode;
@@ -105,6 +97,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
 			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
+	/**
+	 * @return {string}
+	 */
+	private function getAuthenticationResource() {
+		if ( $this->wg->request->getVal( 'type' ) == 'forgotPassword' ) {
+			return '/forgotpassword';
+		} else {
+			return '/signin';
 		}
 	}
 
