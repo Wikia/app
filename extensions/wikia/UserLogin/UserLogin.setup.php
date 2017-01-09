@@ -54,10 +54,6 @@ $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
 JSMessages::registerPackage( 'UserLogin', ['userlogin-login-*'] );
-JSMessages::registerPackage( 'EmailConfirmationBanner', [
-	'userlogin-email-confirmation-banner-success-message',
-	'userlogin-email-confirmation-banner-error'
-]);
 
 /**
  * Use ResourceLoader to load the JavaScript module
@@ -70,7 +66,6 @@ $wgResourceModules['ext.userLogin'] = [
 		'userlogin-error-wrongpasswordempty',
 	],
 ];
-
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';

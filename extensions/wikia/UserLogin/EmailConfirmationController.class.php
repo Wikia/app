@@ -8,7 +8,6 @@ class EmailConfirmationController extends WikiaController {
 	 */
 	public function postEmailConfirmation() {
 		$user = User::newFromConfirmationCode( $this->wg->request->getVal('token') );
-
 		if ( is_object( $user ) ) {
 			$user->confirmEmail();
 			$user->saveSettings();
@@ -17,5 +16,7 @@ class EmailConfirmationController extends WikiaController {
 		} else {
 			$this->response->setCode( 404 );
 		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }

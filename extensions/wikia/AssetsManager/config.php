@@ -3186,12 +3186,3 @@ $config[ 'rwe_page_header_js' ] = [
 		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
 	]
 ];
-
-$config[ 'email_confirmation_banner_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/EmailConfirmationBanner.js',
-	]
-];
-

@@ -8,10 +8,20 @@ class EmailConfirmationHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		Wikia::addAssetsToOutput( 'email_confirmation_banner_js' );
-		JSMessages::enqueuePackage('EmailConfirmationBanner', JSMessages::EXTERNAL);
+		$emailConfirmedParam = F::app()->wg->request->getVal( 'emailConfirmed' );
+
+		if ( $emailConfirmedParam == '1' ) {
+			BannerNotificationsController::addConfirmation(
+				wfMessage('userlogin-email-confirmation-banner-success-message')->text(),
+				BannerNotificationsController::CONFIRMATION_CONFIRM
+			);
+		} else if ( $emailConfirmedParam == '0' ) {
+			BannerNotificationsController::addConfirmation(
+				wfMessage('userlogin-email-confirmation-banner-error')->text(),
+				BannerNotificationsController::CONFIRMATION_ERROR
+			);
+		}
 
 		return true;
 	}
 }
-
