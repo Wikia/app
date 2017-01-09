@@ -107,46 +107,44 @@ class HealthController extends WikiaController {
 	}
 
 	/**
-	 * Execute checks for a single database server
+	 * Execute lag check on a given database
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
+	 * @param DatabaseMysqli $db connector to a tested database
 	 * @param int $index Server index to test
-	 * @return bool Is server healthy?
-	 * @throws MWException
+	 * @return bool Is lag below defined limit?
 	 */
-	private function testHost(LoadBalancer $loadBalancer, $index ) {
+	private function testHostLag(LoadBalancer $loadBalancer, DatabaseMysqli $db, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$master = $index == 0;
 
-
-		// connection check
-		try {
-			$db = wfGetDB( $index, array() );
-		} catch ( DBError $e ) {
-			$this->addError( "could not connect to server: " . $e->getMessage() );
-
-			return false;
-		}
-
-		// lag check
 		if ( !$master && isset( $serverInfo['max lag'] ) ) {
 			try {
 				$maxLag = $serverInfo['max lag'];
 				$lag = $db->getLag();
 				if ( $lag > $maxLag ) {
 					$this->addError( "lag (%d) is greater than configured \"max lag\" (%d)", $lag, $maxLag );
-					$db->close();
 
 					return false;
 				}
 			} catch ( DBError $e ) {
 				$this->addError( "could not fetch lag time" );
-				$db->close();
 
 				return false;
 			}
 		}
 
-		// read_only check on master
+		return true;
+	}
+
+	/**
+	 * Execute R/W check on a given database
+	 * @param DatabaseMysqli $db connector to a tested database
+	 * @param int $index Server index to test
+	 * @return bool Is R/W flag is set properly on a database?
+	 */
+	private function testHostRW(DatabaseMysqli $db, $index) {
+		$master = $index == 0;
+
 		try {
 			$res = $db->query( "SHOW VARIABLES LIKE 'read_only';" );
 			$row = $res->fetchRow();
@@ -161,6 +159,34 @@ class HealthController extends WikiaController {
 			$this->addError( "could not check read_only flag" );
 			$db->close();
 
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Execute checks for a single database server
+	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
+	 * @param int $index Server index to test
+	 * @return bool Is server healthy?
+	 * @throws MWException
+	 */
+	private function testHost(LoadBalancer $loadBalancer, $index ) {
+		// connection check
+		try {
+			$db = wfGetDB( $index, array() );
+		} catch ( DBError $e ) {
+			$this->addError( "could not connect to server: " . $e->getMessage() );
+
+			return false;
+		}
+
+		// lag check && read_only check on master
+		if ( !$this->testHostLag( $loadBalancer, $db, $index ) ||
+			 !$this->testHostRW( $db, $index )
+		) {
+			$db->close();
 			return false;
 		}
 
