@@ -74,7 +74,7 @@ class HealthController extends WikiaController {
 					$this->current = "{$clusterName}: {$serverName}: ";
 
 					$role = $i === 0 ? 'master' : 'slave';
-					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
+					$roles[$role][$serverName] = $this->testHost( $loadBalancer, $i );
 				}
 
 				if ( $serverCount == 1 ) {
@@ -108,20 +108,19 @@ class HealthController extends WikiaController {
 
 	/**
 	 * Execute checks for a single database server
-	 * @param string $databaseName Database name to use for connection
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
 	 * @param int $index Server index to test
 	 * @return bool Is server healthy?
 	 * @throws MWException
 	 */
-	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
+	private function testHost(LoadBalancer $loadBalancer, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$master = $index == 0;
 
 
 		// connection check
 		try {
-			$db = wfGetDB( $index, array(), $databaseName );
+			$db = wfGetDB( $index, array() );
 		} catch ( DBError $e ) {
 			$this->addError( "could not connect to server: " . $e->getMessage() );
 
