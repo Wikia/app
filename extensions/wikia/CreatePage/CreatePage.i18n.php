@@ -359,7 +359,7 @@ Bitte wähle einen anderen Namen.',
 	'createpage_cant_edit' => 'Konnte die Bearbeitung nicht durchführen',
 	'createpage-dialog-title' => 'Neue Seite hinzufügen',
 	'createpage-dialog-message2' => 'Gib hier den Titel deiner Seite ein:',
-	'createpage-dialog-message3' => 'Wir haben derzeit $1 Seiten über {{SITENAME}}. Wir müssen prüfen, ob der Name verfügbar ist.',
+	'createpage-dialog-message3' => 'Wir haben derzeit $1 {{PLURAL:$1|Seite|Seiten}} über {{SITENAME}}. Wir müssen prüfen, ob der Name verfügbar ist.',
 	'createpage-dialog-choose' => 'Wähle ein Seitenlayout aus:',
 	'createpage-dialog-format' => 'Vorformatiert',
 	'createpage-dialog-blank' => 'Leere Seite',
@@ -459,7 +459,7 @@ $messages['es'] = array(
 	'createpage_cant_edit' => 'No se pudo efectuar la edición',
 	'createpage-dialog-title' => 'Añade una página',
 	'createpage-dialog-message2' => 'Escribe aquí el título de la página:',
-	'createpage-dialog-message3' => 'Actualmente contamos con $1 páginas en {{SITENAME}}. Tenemos que comprobar si el nombre está disponible.',
+	'createpage-dialog-message3' => 'Actualmente contamos con $1 {{PLURAL:$1|página|páginas}} en {{SITENAME}}. Tenemos que comprobar si el nombre está disponible.',
 	'createpage-dialog-choose' => 'Elige un diseño de página:',
 	'createpage-dialog-format' => 'Diseño estándar',
 	'createpage-dialog-blank' => 'Página en blanco',
@@ -470,7 +470,7 @@ $messages['es'] = array(
 	'createpage-error-article-blocked' => 'Algo salió mal. Estamos trabajando en arreglarlo. Por favor trata de agregar tu página de nuevo más tarde. Si el problema continúa, ponte en contacto con tu administrador.',
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la creación de nuevas páginas',
 	'tog-createpagepopupdisabled' => 'Desactivar el proceso "Crear una nueva página" (no recomendado)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]] 
+	'newpagelayout' => '[[Archivo:Posicionador|right|300px]] 
 ¡Escribe tu artículo aquí!',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escribe aquí el primer párrafo de tu página.
@@ -614,7 +614,7 @@ $messages['fr'] = array(
 	'createpage_cant_edit' => "Impossible d'effectuer la modification",
 	'createpage-dialog-title' => 'Ajouter une page',
 	'createpage-dialog-message2' => 'Précisez ici le titre de votre page :',
-	'createpage-dialog-message3' => 'Il existe actuellement $1 pages sur {{SITENAME}}. Nous devons vérifier si ce nom est disponible.',
+	'createpage-dialog-message3' => 'Il existe actuellement $1 {{PLURAL:$1|page|pages}} sur {{SITENAME}}. Nous devons vérifier si ce nom est disponible.',
 	'createpage-dialog-choose' => 'Choisissez une mise en page :',
 	'createpage-dialog-format' => 'Mise en page standard',
 	'createpage-dialog-blank' => 'Page vierge',
@@ -625,7 +625,7 @@ $messages['fr'] = array(
 	'createpage-error-article-blocked' => 'Un problème est survenu, que nous essayons de résoudre. Veuillez ajouter une nouvelle page ultérieurement. Si le problème persiste, contactez votre administrateur.',
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
 	'tog-createpagepopupdisabled' => 'Désactiver le flux « Créer un nouvel article » (non recommandé)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]] 
+	'newpagelayout' => '[[Fichier:Espace_réservé|right|300px]] 
 Écrivez le texte de votre article ici !',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Écrivez le premier paragraphe de votre article ici.
@@ -914,7 +914,7 @@ Seleziona un nome diverso.',
 	'createpage_cant_edit' => 'Impossibile effettuare la modifica',
 	'createpage-dialog-title' => 'Aggiungi nuova pagina',
 	'createpage-dialog-message2' => 'Scrivi qui il titolo della pagina:',
-	'createpage-dialog-message3' => 'Al momento disponiamo di $1 pagine su {{SITENAME}}. Dobbiamo verificare se il nome sia disponibile.',
+	'createpage-dialog-message3' => 'Al momento disponiamo di $1 {{PLURAL:$1|pagina|pagine}} su {{SITENAME}}. Dobbiamo verificare se il nome sia disponibile.',
 	'createpage-dialog-choose' => 'Scegli una formattazione per la pagina:',
 	'createpage-dialog-format' => 'Formattazione standard',
 	'createpage-dialog-blank' => 'Pagina vuota',
@@ -925,7 +925,7 @@ Seleziona un nome diverso.',
 	'createpage-error-article-blocked' => "Qualcosa è andato storto. Stiamo lavorando alla risoluzione del problema. Provare ad aggiungere la nuova pagina più tardi. Se il problema persiste, contattare l'amministratore.",
 	'tog-createpagedefaultblank' => 'Utilizza una pagina vuota come default per la creazione di una nuova pagina',
 	'tog-createpagepopupdisabled' => 'Disabilita il processo guidato "Crea nuova pagina" (non raccomandato)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
+	'newpagelayout' => '[[File:Segnaposto|right|300px]]
 Aggiungi qui il contenuto della tua pagina!',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]]
 [[File:Placeholder|right|300px]]
@@ -958,7 +958,7 @@ $messages['ja'] = array(
 	'createpage_cant_edit' => '編集を実行できません',
 	'createpage-dialog-title' => '新規ページの作成',
 	'createpage-dialog-message2' => 'ページのタイトルを入力してください：',
-	'createpage-dialog-message3' => '現在、{{SITENAME}} には $1 のページが存在します。この名前が使用可能であるかどうか確認します。',
+	'createpage-dialog-message3' => '現在、$1{{PLURAL:$1|ページ|ページ}}が{{SITENAME}}には存在します。この名前が使用可能であるかどうか確認します。',
 	'createpage-dialog-choose' => 'ページのレイアウトを選択してください:',
 	'createpage-dialog-format' => '標準のレイアウト',
 	'createpage-dialog-blank' => '白紙のページ',
@@ -969,7 +969,7 @@ $messages['ja'] = array(
 	'createpage-error-article-blocked' => 'エラーが発生しました。現在、すみやかに解決できるよう作業しております。しばらくしてから再度、新規ページの追加をお試しください。問題が継続する場合は、アドミンにお問い合わせください。',
 	'tog-createpagedefaultblank' => '白紙ページを新規記事の作成にデフォルトで使用する',
 	'tog-createpagepopupdisabled' => '新規ページ作成支援の機能を無効にする（非推奨）',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
+	'newpagelayout' => '[[ファイル:プレースホルダ|right|300px]]
 ここに本文のテキストを書いてください。',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 ここに導入部分（第一段落）を書く。
@@ -1650,7 +1650,7 @@ Por favor, selecione um nome diferente.',
 	'createpage_cant_edit' => 'Não se pôde efetuar a edição',
 	'createpage-dialog-title' => 'Adicionar nova página',
 	'createpage-dialog-message2' => 'Escreva o título da página aqui:',
-	'createpage-dialog-message3' => 'Atualmente, temos $1 páginas na {{SITENAME}}. Precisamos verificar se o nome está disponível.',
+	'createpage-dialog-message3' => 'Atualmente, temos $1 {{PLURAL:$1|página|páginas}} na {{SITENAME}}. Precisamos verificar se o nome está disponível.',
 	'createpage-dialog-choose' => 'Escolha um layout para a página:',
 	'createpage-dialog-format' => 'Layout padrão',
 	'createpage-dialog-blank' => 'Página em branco',
@@ -1661,7 +1661,7 @@ Por favor, selecione um nome diferente.',
 	'createpage-error-article-blocked' => 'Algo deu errado. Estamos trabalhando para corrigir isso. Por favor, tente adicionar sua nova página mais tarde. Se o problema persistir, contate seu administrador.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
 	'tog-createpagepopupdisabled' => 'Desativar o processo "Criar novo artigo" (não recomendado)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]] Escreva o texto do seu artigo aqui!',
+	'newpagelayout' => '[[Ficheiro:Espaço reservado|right|300px]] Escreva o texto do seu artigo aqui!',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 
@@ -1758,7 +1758,7 @@ $messages['ru'] = array(
 	'createpage_cant_edit' => 'Не удалось выполнить правку',
 	'createpage-dialog-title' => 'Добавить новую страницу',
 	'createpage-dialog-message2' => 'Напишите название вашей страницы здесь:',
-	'createpage-dialog-message3' => 'В настоящее время на {{SITENAME}} есть $1 статей. Нам нужно проверить, доступно ли такое название страницы.',
+	'createpage-dialog-message3' => 'В настоящее время на {{SITENAME}} есть $1 {{PLURAL:$1|статья|статьи|статей}}. Нам нужно проверить, доступно ли такое название страницы.',
 	'createpage-dialog-choose' => 'Выберите макет страницы:',
 	'createpage-dialog-format' => 'Стандартный макет',
 	'createpage-dialog-blank' => 'Пустая страница',
@@ -1769,7 +1769,7 @@ $messages['ru'] = array(
 	'createpage-error-article-blocked' => 'Произошла ошибка. Мы работаем над её устранением. Пожалуйста, попробуйте добавить свою новую страницу позже. Если ошибка повторится, обратитесь к администратору.',
 	'tog-createpagedefaultblank' => 'Использовать пустую страницу по умолчанию при создании новой страницы',
 	'tog-createpagepopupdisabled' => 'Отключить всплывающее окно «Создать новую статью» (не рекомендуется)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
+	'newpagelayout' => '[[Файл:Заполнитель|right|300px]]
 Напишите текст вашей статьи здесь.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] 
 Напишите здесь первый параграф вашей статьи.
@@ -2165,13 +2165,13 @@ $messages['zh-hans'] = array(
 	'createpage_cant_edit' => '无法执行编辑',
 	'createpage-dialog-title' => '添加新页面',
 	'createpage-dialog-message2' => '在这里填写你的页面标题：',
-	'createpage-dialog-message3' => '我们目前在{{SITENAME}}上有$1个页面。我们需要检查一下此名称是否可用。',
+	'createpage-dialog-message3' => '我们目前在{{SITENAME}}上有$1个{{PLURAL:$1|页面|页面}}。我们需要检查一下此名称是否可用。',
 	'createpage-dialog-format' => '标准布局',
 	'createpage-dialog-blank' => '空白页面',
 	'createpage-error-empty-title' => '您的页面需要有一个标题。您之后可以点击“编辑”按钮下的“重命名”进行更改。',
 	'createpage-error-invalid-title' => '此标题无效。请不要使用这些字符: # < > [ ] | { }，并且不要在标题处使用“特殊："。',
 	'createpage-error-article-exists' => '关于<a href="$1">$2</a>的页面已经存在。请重新命名或者选择其他标题。',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
+	'newpagelayout' => '[[File:占位符|right|300px]]
 在这里创作你的文章内容！',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 在这里撰写第一段落。
