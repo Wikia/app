@@ -96,7 +96,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$result = $task->prepare();
 
 		//then
-		$taskContextData = $taskContext->getAllProperties();
+		$taskContextData = $taskContext->getLoggerContext();
 		foreach ($taskContextExpected as $key => $value) {
 			$this->assertEquals( $value, $taskContextData[ $key ] );
 		}
@@ -120,7 +120,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$result = $task->prepare();
 
 		//then
-		$taskContextData = $taskContext->getAllProperties();
+		$taskContextData = $taskContext->getLoggerContext();
 		$this->assertEquals( true, $result->isOk());
 		//We expect that the db name will have the original name + some suffix i.e. textWiki123
 		$this->assertNotEquals( $taskContextExpected[ 'dbName' ], $taskContextData[ 'dbName' ] );
@@ -144,7 +144,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$result = $task->prepare();
 
 		//then
-		$taskContextData = $taskContext->getAllProperties();
+		$taskContextData = $taskContext->getLoggerContext();
 		$this->assertEquals( true, $result->isOk());
 		//We expect that the db name will have the original name + some suffix i.e. textWiki123
 		$this->assertNotEquals( $taskContextExpected[ 'dbName' ], $taskContextData[ 'dbName' ] );
