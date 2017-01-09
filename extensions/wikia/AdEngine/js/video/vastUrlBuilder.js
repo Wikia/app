@@ -3,9 +3,10 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.location',
 	'wikia.log'
-], function (adContext, page, adUnitBuilder, loc, log) {
+], function (adContext, page, adUnitBuilder, slotTargeting, loc, log) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
@@ -16,8 +17,11 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
 	function getCustomParameters(slotParams) {
-		var customParameters = [],
-			params = page.getPageLevelParams();
+		var customParameters,
+			params = page.getPageLevelParams(),
+			wsi = slotTargeting.getWikiaSlotId(slotParams.pos, slotParams.src);
+
+		customParameters = ['wsi=' + wsi];
 
 		Object.keys(params).forEach(function (key) {
 			if (params[key]) {
