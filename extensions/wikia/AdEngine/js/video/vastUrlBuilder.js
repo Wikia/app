@@ -1,5 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.video.vastUrlBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.slotTargeting',
