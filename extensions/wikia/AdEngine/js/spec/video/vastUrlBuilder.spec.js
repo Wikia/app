@@ -2,45 +2,49 @@
 describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	'use strict';
 
-	function noop () {}
+	function noop() {
+	}
 
 	var mocks = {
-			adUnitBuilder: {
-				build: function() {
-					return 'my/ad/unit';
-				}
-			},
-			slotTargeting: {
-				getWikiaSlotId: function () {
-					return 'xxxx';
-				}
-			},
-			page: {
-				getPageLevelParams: function () {
-					return {
-						uno: 'foo',
-						due: 15,
-						tre: [ 'bar', 'zero' ],
-						quattro: null,
-						s0: 'life',
-						s1: '_project43',
-						s2: 'article'
-					};
-				}
-			},
-			loc: {
-				href: 'http://foo.url'
-			},
-			log: noop,
-			slotParams: {
-				src: 'src',
-				pos: 'SLOT_NAME'
+		adContext: {
+			addCallback: noop
+		},
+		adUnitBuilder: {
+			build: function () {
+				return 'my/ad/unit';
 			}
-
+		},
+		slotTargeting: {
+			getWikiaSlotId: function () {
+				return 'xxxx';
+			}
+		},
+		page: {
+			getPageLevelParams: function () {
+				return {
+					uno: 'foo',
+					due: 15,
+					tre: ['bar', 'zero'],
+					quattro: null,
+					s0: 'life',
+					s1: '_project43',
+					s2: 'article'
+				};
+			}
+		},
+		loc: {
+			href: 'http://foo.url'
+		},
+		log: noop,
+		slotParams: {
+			src: 'src',
+			pos: 'SLOT_NAME'
+		}
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
+			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,
