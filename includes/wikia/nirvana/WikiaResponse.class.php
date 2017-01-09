@@ -28,7 +28,7 @@ class WikiaResponse {
 	/**
 	 * Output formats
 	 */
-	const FORMAT_RAW = 'raw';
+	const FORMAT_RAW = 'raw';	// deprecated (PLATFORM-2770)
 	const FORMAT_HTML = 'html';
 	const FORMAT_JSON = 'json';
 	const FORMAT_JSONP = 'jsonp';
@@ -266,7 +266,7 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW || $value == self::FORMAT_JSONP ) {
+		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_JSONP ) {
 			$this->format = $value;
 		} else {
 			$this->format = self::FORMAT_INVALID;
