@@ -13,9 +13,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
 		enabledSlots = {
 			TOP_LEADERBOARD: true,
-			HOME_TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true,
-			HOME_TOP_RIGHT_BOXAD: true,
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_MIDDLE_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true,
