@@ -64,7 +64,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
 	it('Returns sizes that fit in screen width for TOP_LEADERBOARD (and variants) for smaller screens', function () {
@@ -76,7 +75,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
 	it('Returns only 728x90 for TOP_LEADERBOARD for very small screens', function () {
@@ -88,7 +86,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
 	it('Returns sizes unmodified for INVISIBLE_SKIN for screens >= 1240', function () {
