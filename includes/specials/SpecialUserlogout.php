@@ -73,10 +73,10 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 
 		// redirection
 
-		$headers = $this->getRequest()->getAllHeaders();
+		$referer = $this->getRequest()->getHeader('REFERER');
 		$redirectUrl = 'http://www.wikia.com/';
-		if ( isset( $headers['REFERER'] ) ) {
-			$parsedReferer = parse_url( $headers['REFERER'] );
+		if ( isset( $referer ) ) {
+			$parsedReferer = parse_url( $referer );
 			$redirectUrl = $this->getHostname( $parsedReferer );
 			if ( strpos( $parsedReferer['path'], '/d' ) === 0 ) {
 				$redirectUrl = $this->getHostname( $parsedReferer ) . '/d';
@@ -87,8 +87,6 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		$out->redirect( $redirectUrl );
 
 		return;
-
-
 	}
 
 	/**
