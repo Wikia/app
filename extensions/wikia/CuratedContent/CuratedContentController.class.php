@@ -288,7 +288,6 @@ class CuratedContentController extends WikiaController {
 		);
 		$this->response->setVal( 'wikisTotal', count( $wikisList ) );
 		$this->response->setVal( 'wikisWith', $this->sumUpStats( $stats ) );
-		$this->response->setVal( 'perWiki', $stats );
 	}
 
 	private function getCuratedContentStatsForWiki( $wikiID ) {
