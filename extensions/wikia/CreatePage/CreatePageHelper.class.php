@@ -64,7 +64,7 @@ class CreatePageHelper {
 	 */
 	private static function getPreferredEditorQueryParamName() {
 		if ( EditorPreference::isVisualEditorPrimary() &&
-		     EditorPreference::shouldShowVisualEditorLink( \RequestContext::getMain()->getSkin() ) ) {
+			EditorPreference::shouldShowVisualEditorLink( \RequestContext::getMain()->getSkin() ) ) {
 			return 'veaction';
 		} else {
 			return 'action';
