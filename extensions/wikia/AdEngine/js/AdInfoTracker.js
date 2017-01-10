@@ -48,6 +48,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			slotPrices = lookupServices.getSlotPrices(slot.name),
 			slotSize = JSON.parse(slotFirstChildData.gptCreativeSize);
 
+		console.log('****BOGNA slotPrices', slotPrices);
 		data = {
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.adEnginePvUID,

@@ -13,7 +13,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 			bestPrices[adapter.getName()] = undefined;
 		});
 
+		console.log('****BOGNA bestPrices', bestPrices);
+		console.log('****BOGNA slotBids', slotBids);
 		slotBids.forEach(function(bid) {
+			console.log('****BOGNA price', bid.bidderCode, bid.pbMg, bestPrices[bid.bidderCode]);
 			bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode], bid.pbMg) || 0;
 
 			if (typeof bestPrices[bid.bidderCode] !== 'undefined') {
