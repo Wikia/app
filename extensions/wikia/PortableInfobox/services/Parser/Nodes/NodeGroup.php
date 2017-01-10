@@ -107,6 +107,6 @@ class NodeGroup extends Node {
 	protected function getRowItems() {
 		$rowItems = $this->getXmlAttribute( $this->xmlNode, self::ROW_ITEMS_ATTR_NAME );
 
-		return ( isset( $rowItems ) && ctype_digit( $rowItems ) ) ? $rowItems : null;
+		return ( isset( $rowItems ) && ctype_digit( $rowItems ) ) ? intval( $rowItems ) : null;
 	}
 }

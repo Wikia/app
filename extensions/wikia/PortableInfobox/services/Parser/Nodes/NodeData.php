@@ -24,7 +24,7 @@ class NodeData extends Node {
 	protected function getSpan() {
 		$span = $this->getXmlAttribute( $this->xmlNode, self::SPAN_ATTR_NAME );
 
-		return ( isset( $span ) && ctype_digit( $span ) ) ? $span : self::SPAN_DEFAULT_VALUE;
+		return ( isset( $span ) && ctype_digit( $span ) ) ? intval( $span ) : self::SPAN_DEFAULT_VALUE;
 	}
 
 	protected function getLayout() {
