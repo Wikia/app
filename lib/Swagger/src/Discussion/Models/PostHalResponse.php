@@ -63,11 +63,11 @@ class PostHalResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'thread_id' => 'int',
+        'id' => 'int',
         'title' => 'string',
+        'thread_id' => 'int',
         'creator_id' => 'int',
         'creation_date' => '\Swagger\Client\Discussion\Models\Instant',
-        'id' => 'int',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
         '_embedded' => '\Swagger\Client\Discussion\Models\Embeddable[]'
@@ -83,11 +83,11 @@ class PostHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'thread_id' => 'threadId',
+        'id' => 'id',
         'title' => 'title',
+        'thread_id' => 'threadId',
         'creator_id' => 'creatorId',
         'creation_date' => 'creationDate',
-        'id' => 'id',
         '_links' => '_links',
         'requester_id' => 'requesterId',
         '_embedded' => '_embedded'
@@ -103,11 +103,11 @@ class PostHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'thread_id' => 'setThreadId',
+        'id' => 'setId',
         'title' => 'setTitle',
+        'thread_id' => 'setThreadId',
         'creator_id' => 'setCreatorId',
         'creation_date' => 'setCreationDate',
-        'id' => 'setId',
         '_links' => 'setLinks',
         'requester_id' => 'setRequesterId',
         '_embedded' => 'setEmbedded'
@@ -123,11 +123,11 @@ class PostHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'thread_id' => 'getThreadId',
+        'id' => 'getId',
         'title' => 'getTitle',
+        'thread_id' => 'getThreadId',
         'creator_id' => 'getCreatorId',
         'creation_date' => 'getCreationDate',
-        'id' => 'getId',
         '_links' => 'getLinks',
         'requester_id' => 'getRequesterId',
         '_embedded' => 'getEmbedded'
@@ -154,11 +154,11 @@ class PostHalResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['thread_id'] = isset($data['thread_id']) ? $data['thread_id'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['thread_id'] = isset($data['thread_id']) ? $data['thread_id'] : null;
         $this->container['creator_id'] = isset($data['creator_id']) ? $data['creator_id'] : null;
         $this->container['creation_date'] = isset($data['creation_date']) ? $data['creation_date'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
         $this->container['requester_id'] = isset($data['requester_id']) ? $data['requester_id'] : null;
         $this->container['_embedded'] = isset($data['_embedded']) ? $data['_embedded'] : null;
@@ -194,22 +194,22 @@ class PostHalResponse implements ArrayAccess
 
 
     /**
-     * Gets thread_id
+     * Gets id
      * @return int
      */
-    public function getThreadId()
+    public function getId()
     {
-        return $this->container['thread_id'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets thread_id
-     * @param int $thread_id
+     * Sets id
+     * @param int $id
      * @return $this
      */
-    public function setThreadId($thread_id)
+    public function setId($id)
     {
-        $this->container['thread_id'] = $thread_id;
+        $this->container['id'] = $id;
 
         return $this;
     }
@@ -231,6 +231,27 @@ class PostHalResponse implements ArrayAccess
     public function setTitle($title)
     {
         $this->container['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets thread_id
+     * @return int
+     */
+    public function getThreadId()
+    {
+        return $this->container['thread_id'];
+    }
+
+    /**
+     * Sets thread_id
+     * @param int $thread_id
+     * @return $this
+     */
+    public function setThreadId($thread_id)
+    {
+        $this->container['thread_id'] = $thread_id;
 
         return $this;
     }
@@ -273,27 +294,6 @@ class PostHalResponse implements ArrayAccess
     public function setCreationDate($creation_date)
     {
         $this->container['creation_date'] = $creation_date;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     * @param int $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
 
         return $this;
     }
@@ -418,3 +418,5 @@ class PostHalResponse implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

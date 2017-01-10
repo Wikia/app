@@ -19,8 +19,6 @@ class AdController extends WikiaController {
 			$leaderboardName = 'HUB_TOP_LEADERBOARD';
 		} elseif ( $this->wg->EnableWikiaHomePageExt ) {
 			$leaderboardName = 'CORP_TOP_LEADERBOARD';
-		} elseif ( WikiaPageType::isMainPage() ) {
-			$leaderboardName = 'HOME_TOP_LEADERBOARD';
 		} else {
 			$leaderboardName = 'TOP_LEADERBOARD';
 		}

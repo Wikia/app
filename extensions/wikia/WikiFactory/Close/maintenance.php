@@ -7,7 +7,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
+
+use Swagger\Client\Discussion\Api\SitesApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Swagger\ApiProvider;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
@@ -287,6 +292,8 @@ class CloseWikiMaintenance {
 
 			$this->log( "$dbname: completed" );
 
+			$this->removeDiscussions($cityid);
+
 			/**
 			 * just one?
 			 */
@@ -507,6 +514,29 @@ class CloseWikiMaintenance {
 	 */
 	private function log( $message ) {
 		Wikia::log( "CloseWiki", false, $message, true, true );
+	}
+
+	private function removeDiscussions( int $cityId ) {
+		try {
+			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+		}
+		catch ( \Swagger\Client\ApiException $e ) {
+			WikiaLogger::instance()
+				->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
+		}
+	}
+
+	/**
+	 * @return SitesApi
+	 */
+	private function getSitesApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		/** @var SitesApi $api */
+		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );
+
+		return $api;
 	}
 
 }
