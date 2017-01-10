@@ -19,12 +19,13 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
 		slotBids.forEach(function(bid) {
+			var priceFromBidder = parseFloat(bid.pbMg);
 
 			log(['getSlotBestPrices bidder', bid.bidderCode, slotName], 'debug', logGroup);
-			log(['getSlotBestPrices price', bid.pbMg, slotName], 'debug', logGroup);
+			log(['getSlotBestPrices price', priceFromBidder, slotName], 'debug', logGroup);
 			log(['getSlotBestPrices current price', bestPrices[bid.bidderCode], slotName], 'debug', logGroup);
 
-			bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode], parseFloat(bid.pbMg)) || 0;
+			bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode],priceFromBidder) || 0;
 
 			if (typeof bestPrices[bid.bidderCode] !== 'undefined') {
 				log(['getSlotBestPrices best price defined', (bestPrices[bid.bidderCode] / 100).toFixed(2).toString(), slotName], 'debug', logGroup);
