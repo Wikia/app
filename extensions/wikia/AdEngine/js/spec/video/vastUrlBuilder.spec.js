@@ -6,9 +6,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	}
 
 	var mocks = {
-		adContext: {
-			addCallback: noop
-		},
 		adUnitBuilder: {
 			build: function () {
 				return 'my/ad/unit';
@@ -44,7 +41,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
-			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,

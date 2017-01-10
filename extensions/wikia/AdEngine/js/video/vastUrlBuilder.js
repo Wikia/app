@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.vastUrlBuilder', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.location',
 	'wikia.log'
-], function (adContext, page, adUnitBuilder, slotTargeting, loc, log) {
+], function (page, adUnitBuilder, slotTargeting, loc, log) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
