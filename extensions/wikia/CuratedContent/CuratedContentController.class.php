@@ -270,16 +270,13 @@ class CuratedContentController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$wikiWithCC = WikiFactory::getListOfWikisWithVar(
-			self::CURATED_CONTENT_WG_VAR_ID_PROD,
-			"full",
-			"LIKE",
-			null,
-			"true"
+		$wikisList = WikiFactory::getListOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, 'array', '!=', [ ]
 		);
+
 		$stats = [];
 
-		foreach ( $wikiWithCC as $id => $data ) {
+		foreach ( $wikisList as $id => $data ) {
 			$stats[$data['u']] = $id;
 		}
 
@@ -289,7 +286,7 @@ class CuratedContentController extends WikiaController {
 			},
 			$stats
 		);
-		$this->response->setVal( 'wikisTotal', count( $stats ) );
+		$this->response->setVal( 'wikisTotal', count( $wikisList ) );
 		$this->response->setVal( 'wikisWith', $this->sumUpStats( $stats ) );
 		$this->response->setVal( 'perWiki', $stats );
 	}
