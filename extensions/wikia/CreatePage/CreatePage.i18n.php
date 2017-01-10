@@ -1524,7 +1524,7 @@ Wybierz inną nazwę.',
 	'createpage_cant_edit' => 'Nie można wykonać edycji',
 	'createpage-dialog-title' => 'Dodaj nową stronę',
 	'createpage-dialog-message2' => 'Tutaj wpisz tytuł strony:',
-	'createpage-dialog-message3' => 'Mamy obecnie $1 {{PLURAL:$1|stronę|strony|stron}} na {{SITENAME}}. Musimy sprawdzić czy nazwa jest dostępna.',
+	'createpage-dialog-message3' => 'Mamy obecnie $1 {{PLURAL:$1|stronę|strony|stron}} na {{GRAMMAR:locative|{{SITENAME}}}}. Musimy sprawdzić czy nazwa jest dostępna.',
 	'createpage-dialog-choose' => 'Wybierz układ strony:',
 	'createpage-dialog-format' => 'Standardowy układ',
 	'createpage-dialog-blank' => 'Pusta strona',
@@ -1548,7 +1548,7 @@ Tutaj napisz treść pierwszej sekcji strony.
 
 Tutaj napisz treść drugiej sekcji strony.',
 	'createpage-ve-body' => 'Artykuł <b>„$1”</b> jeszcze nie istnieje na tej wiki. Możesz pomóc, dodając kilka zdań.',
-	'createpage-button-proceed' => 'Następny',
+	'createpage-button-proceed' => 'Dalej',
 	'createpage-button-cancel' => 'Anuluj',
 	'createpage-dialog-redlinks-list-header' => 'Lub kliknij na jeden z tytułów poniżej i zacznij pisać!',
 );
