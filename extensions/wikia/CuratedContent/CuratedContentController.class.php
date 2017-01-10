@@ -266,6 +266,57 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
+	public function getCuratedContentStats() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$wikiWithCC = WikiFactory::getListOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD,
+			"full",
+			"LIKE",
+			null,
+			"true"
+		);
+		$stats = [];
+
+		foreach ( $wikiWithCC as $id => $data ) {
+			$stats[$data['u']] = $id;
+		}
+
+		$stats = array_map(
+			function ( $id ) {
+				return $this->getCuratedContentStatsForWiki( $id );
+			},
+			$stats
+		);
+		$this->response->setVal( 'total', $this->sumUpStats( $stats ) );
+		$this->response->setVal( 'perWiki', $stats );
+	}
+
+	private function getCuratedContentStatsForWiki( $wikiID ) {
+		$curatedContent = $this->getCuratedContentForWiki( $wikiID );
+
+		if ( is_array( $curatedContent ) ) {
+			return [
+				'categories' => count( $curatedContent['categories'] ),
+				'sections' => count( $curatedContent['sections'] ),
+				'featured' => count( $curatedContent['featured'] ),
+				'optional' => count( $curatedContent['optional'] )
+			];
+		}
+
+		return [ ];
+	}
+
+	private function sumUpStats( $stats ) {
+		return array_reduce( $stats, function ( $accu, $item ) {
+			foreach ( $item as $key => $value ) {
+				$accu[ $key ] += $value;
+			}
+			return $accu;
+		} );
+	}
+
 	public function setCuratedContentData() {
 		global $wgCityId, $wgUser, $wgRequest;
 
