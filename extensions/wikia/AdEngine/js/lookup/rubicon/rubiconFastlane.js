@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'use strict';
 
 	var bestPrices = {},
+		bestPricesPrivate = {},
 		config = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -176,19 +177,25 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 	function saveBestPrice(slotName, tiers) {
 		tiers.forEach(function (tier) {
-			bestPrices[slotName] = Math.max(rubiconTier.parsePrice(tier), bestPrices[slotName] || 0);
+			bestPrices[slotName] = Math.max(rubiconTier.parseOpenMarketPrice(tier), bestPrices[slotName] || 0);
+			bestPricesPrivate[slotName] = Math.max(rubiconTier.parsePrivatePrice(tier), bestPricesPrivate[slotName] || 0);
 		});
 	}
 
 	function getBestSlotPrice(slotName) {
-		var price;
+		var price, pricePrivate;
 
 		if (typeof bestPrices[slotName] !== 'undefined') {
 			price = (bestPrices[slotName] / 100).toFixed(2).toString();
 		}
 
+		if (typeof bestPricesPrivate[slotName] !== 'undefined') {
+			pricePrivate = (bestPricesPrivate[slotName] / 100).toFixed(2).toString();
+		}
+
 		return {
-			fastlane: price
+			fastlane: price,
+			fastlane_private: pricePrivate
 		};
 	}
 

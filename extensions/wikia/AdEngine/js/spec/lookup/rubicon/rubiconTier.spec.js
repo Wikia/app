@@ -68,7 +68,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconTier', function () {
 		});
 	});
 
-	it('Get price from ', function () {
+	it('Get open market price from ', function () {
 		var testCases = [
 			{
 				tier: '203_tier1600',
@@ -81,11 +81,48 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconTier', function () {
 			{
 				tier: '15_tier0015',
 				price: 15
+			},
+			{
+				tier: '15_tier0015NONE',
+				price: 15
+			},
+			{
+				tier: '15_tier0015deals',
+				price: 0
 			}
 		];
 
 		testCases.forEach(function (testCase) {
-			expect(rubiconTier.parsePrice(testCase.tier)).toEqual(testCase.price);
+			expect(rubiconTier.parseOpenMarketPrice(testCase.tier)).toEqual(testCase.price);
+		});
+	});
+
+	it('Get private price from ', function () {
+		var testCases = [
+			{
+				tier: '203_tier1600',
+				price: 0
+			},
+			{
+				tier: '15_tier0000',
+				price: 0
+			},
+			{
+				tier: '15_tier0015deals',
+				price: 15
+			},
+			{
+				tier: '15_tier0000deals',
+				price: 0
+			},
+			{
+				tier: '15_tier0015something',
+				price: 0
+			}
+		];
+
+		testCases.forEach(function (testCase) {
+			expect(rubiconTier.parsePrivatePrice(testCase.tier)).toEqual(testCase.price);
 		});
 	});
 });
