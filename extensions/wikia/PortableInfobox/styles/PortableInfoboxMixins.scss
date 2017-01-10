@@ -30,10 +30,11 @@
 
 	.pi-image {
 		text-align: center; // center smaller image inside infobox
+	}
 
-		img {
-			max-width: 100%;
-		}
+	.pi-image-thumbnail {
+		max-width: 100%;
+		height: auto;
 	}
 
 	.pi-caption {
