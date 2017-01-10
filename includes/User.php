@@ -72,7 +72,7 @@ class PasswordError extends MWException {
  * for rendering normal pages are set in the cookie to minimize use
  * of the database.
  */
-class User {
+class User implements JsonSerializable {
 
 	# WIKIA CHANGE BEGIN
 	# adamk@wikia-inc.com
@@ -4719,5 +4719,27 @@ class User {
 			return $dbName ?: $name;
 		}
 		return $name;
+	}
+
+	/**
+	 * Returns a simple representation of user object.
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		// Detailed logging for PLATFORM-2770.
+		WikiaLogger::instance()->debug(
+			'User::jsonSerialize was called',
+			[
+				'user_id' => $this->getId(),
+				'user_name' => $this->getName(),
+				'exception' => new Exception()
+			]
+		);
+
+		return [
+			'mId' => $this->mId,
+			'mName' => $this->mName,
+		];
 	}
 }
