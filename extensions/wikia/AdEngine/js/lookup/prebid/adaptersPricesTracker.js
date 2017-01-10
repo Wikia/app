@@ -21,6 +21,9 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		slotBids.forEach(function(bid) {
 			var priceFromBidder = parseFloat(bid.pbMg);
 
+			console.log('*****BOGNA pbMg', bid.pbMg);
+			console.log('*****BOGNA floated', parseFloat(bid.pbMg));
+
 			log(['getSlotBestPrices bidder', bid.bidderCode, slotName], 'debug', logGroup);
 			log(['getSlotBestPrices price', priceFromBidder, slotName], 'debug', logGroup);
 			log(['getSlotBestPrices current price', bestPrices[bid.bidderCode], slotName], 'debug', logGroup);
