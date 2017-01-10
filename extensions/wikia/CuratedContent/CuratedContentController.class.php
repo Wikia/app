@@ -289,7 +289,8 @@ class CuratedContentController extends WikiaController {
 			},
 			$stats
 		);
-		$this->response->setVal( 'total', $this->sumUpStats( $stats ) );
+		$this->response->setVal( 'wikisTotal', count( $stats ) );
+		$this->response->setVal( 'wikisWith', $this->sumUpStats( $stats ) );
 		$this->response->setVal( 'perWiki', $stats );
 	}
 
@@ -309,23 +310,24 @@ class CuratedContentController extends WikiaController {
 	}
 
 	private function sumUpStats( $stats ) {
-		return array_reduce( $stats, function ( $accu, $item ) {
-			$accu['wikis']++;
-
+		return array_reduce( $stats, function ( $wikisWith, $item ) {
 			if (
 				$item['categories'] === 0 &&
 				$item['sections'] === 0 &&
 				$item['featured'] === 0 &&
 				$item['optional'] === 0
 			) {
-				$accu['communityDataOnly']++;
+				$wikisWith['communityDataOnly']++;
 			}
 
 			foreach ( $item as $key => $value ) {
-				$accu[ $key ] += $value;
+				if ( $value > 0 ) {
+					$wikisWith[ $key ]++;
+				}
 			}
-			return $accu;
-		}, [ 'wikis' => 0, 'communityDataOnly' => 0 ] );
+
+			return $wikisWith;
+		}, [ 'communityDataOnly' => 0 ] );
 	}
 
 	public function setCuratedContentData() {
