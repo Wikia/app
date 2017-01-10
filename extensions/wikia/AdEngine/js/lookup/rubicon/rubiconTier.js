@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconTier', [
 ], function (math) {
 	'use strict';
 
-	var privateTierPostfix = 'deals',
+	var privateTierSuffix = 'deals',
 		cpmBuckets = [
 		{
 			maxValue: 4,
@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconTier', [
 	}
 
 	function parseOpenMarketPrice(tier) {
-		if (tier.indexOf(privateTierPostfix) === -1) {
+		if (tier.indexOf(privateTierSuffix) === -1) {
 			var matches = /^\d+_tier(\d+)/g.exec(tier);
 
 			if (matches && matches[1]) {
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconTier', [
 	}
 
 	function parsePrivatePrice(tier) {
-		var matches = new RegExp('^\\d+_tier(\\d+)' + privateTierPostfix,'g').exec(tier);
+		var matches = new RegExp('^\\d+_tier(\\d+)' + privateTierSuffix,'g').exec(tier);
 
 		if (matches && matches[1]) {
 			return parseInt(matches[1], 10);
