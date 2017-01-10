@@ -1,10 +1,9 @@
 /*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
-	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
-], function(imaSetup, browserDetect, doc, log) {
+], function(imaSetup, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
@@ -48,11 +47,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 			if (isAdsManagerLoaded) {
 				callback();
-			} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
+			} else {
 				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 				adsLoader.addEventListener('adsManagerLoaded', callback, false);
-			} else {
-				log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
 			}
 		}
 
