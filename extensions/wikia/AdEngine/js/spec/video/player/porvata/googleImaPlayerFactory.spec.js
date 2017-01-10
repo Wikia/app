@@ -6,20 +6,8 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 	}
 
 	var mocks = {
-		browserDetect: {
-			isMobile: noop
-		},
 		document: {
 			createElement: noop
-		},
-		window: {
-			google: {
-				ima: {
-					AdEvent: {
-						Type: {}
-					}
-				}
-			}
 		},
 		adsLoaderMock: {
 			addEventListener: noop,
@@ -42,10 +30,8 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](
 			mocks.imaSetup,
-			mocks.browserDetect,
 			mocks.document,
-			mocks.log,
-			mocks.window
+			mocks.log
 		);
 	}
 
