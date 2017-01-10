@@ -310,11 +310,22 @@ class CuratedContentController extends WikiaController {
 
 	private function sumUpStats( $stats ) {
 		return array_reduce( $stats, function ( $accu, $item ) {
+			$accu['wikis']++;
+
+			if (
+				$item['categories'] === 0 &&
+				$item['sections'] === 0 &&
+				$item['featured'] === 0 &&
+				$item['optional'] === 0
+			) {
+				$accu['communityDataOnly']++;
+			}
+
 			foreach ( $item as $key => $value ) {
 				$accu[ $key ] += $value;
 			}
 			return $accu;
-		} );
+		}, [ 'wikis' => 0, 'communityDataOnly' => 0 ] );
 	}
 
 	public function setCuratedContentData() {
