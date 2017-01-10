@@ -183,20 +183,20 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function getBestSlotPrice(slotName) {
-		var price, pricePrivate;
-
-		if (typeof bestPrices[slotName] !== 'undefined') {
-			price = (bestPrices[slotName] / 100).toFixed(2).toString();
-		}
-
-		if (typeof bestPricesPrivate[slotName] !== 'undefined') {
-			pricePrivate = (bestPricesPrivate[slotName] / 100).toFixed(2).toString();
-		}
-
 		return {
-			fastlane: price,
-			fastlane_private: pricePrivate
+			fastlane: getBestPriceString(bestPrices[slotName]),
+			fastlane_private: getBestPriceString(bestPricesPrivate[slotName])
 		};
+	}
+
+	function getBestPriceString(bestPriceForSlot) {
+		var price;
+
+		if (typeof bestPriceForSlot !== 'undefined') {
+			price = (bestPriceForSlot / 100).toFixed(2).toString();
+		}
+
+		return price;
 	}
 
 	function getSlotParams(slotName) {
