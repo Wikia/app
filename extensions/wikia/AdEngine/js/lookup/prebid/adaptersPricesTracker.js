@@ -1,8 +1,11 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.wrappers.prebid'
-], function (adaptersRegistry, prebid) {
+	'ext.wikia.adEngine.wrappers.prebid',
+	'wikia.log'
+], function (adaptersRegistry, prebid, log) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
 
 	function getSlotBestPrice(slotName) {
 		var prebidCmd = prebid.get(),
@@ -13,13 +16,18 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 			bestPrices[adapter.getName()] = undefined;
 		});
 
-		console.log('****BOGNA bestPrices', bestPrices);
-		console.log('****BOGNA slotBids', slotBids);
+		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
+
 		slotBids.forEach(function(bid) {
-			console.log('****BOGNA price', bid.bidderCode, bid.pbMg, bestPrices[bid.bidderCode]);
+
+			log(['getSlotBestPrices bidder', bid.bidderCode, slotName], 'debug', logGroup);
+			log(['getSlotBestPrices price', bid.pbMg, slotName], 'debug', logGroup);
+			log(['getSlotBestPrices current price', bestPrices[bid.bidderCode], slotName], 'debug', logGroup);
+
 			bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode], bid.pbMg) || 0;
 
 			if (typeof bestPrices[bid.bidderCode] !== 'undefined') {
+				log(['getSlotBestPrices best price defined', (bestPrices[bid.bidderCode] / 100).toFixed(2).toString(), slotName], 'debug', logGroup);
 				bestPrices[bid.bidderCode] = (bestPrices[bid.bidderCode] / 100).toFixed(2).toString();
 			}
 		});
