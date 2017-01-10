@@ -1,7 +1,7 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
@@ -113,8 +113,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		$dataItems = $groupData['value'];
 		$layout = $groupData['layout'];
 		$collapse = $groupData['collapse'];
+		$rowItems = $groupData['row-items'];
 
-		if ( $layout === 'horizontal' ) {
+		if ( $rowItems > 0 ) {
+			$cssClasses[] = 'pi-smart-group';
+			$items = $this->createSmartGroups( $dataItems, $rowItems );
+			$groupHTMLContent .= $this->renderChildren( $items );
+		} elseif ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
 				$this->createHorizontalGroupData( $dataItems )
@@ -228,5 +233,45 @@ class PortableInfoboxRenderService extends WikiaService {
 		global $wgEnablePortableInfoboxEuropaTheme;
 
 		return !empty( $wgEnablePortableInfoboxEuropaTheme );
+	}
+
+	private function createSmartGroups( $groupData, $rowCapacity ) {
+		$result = [ ];
+		$capacity = 0;
+		$smartGroup = [ ];
+
+		foreach ( $groupData as $item ) {
+			$data = $item['data'];
+
+			if ( $item['type'] === 'data' && ( !isset( $data['layout'] ) || $data['layout'] !== 'default' ) ) {
+
+				if ( $capacity + $data['span'] > $rowCapacity ) {
+					$result = array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
+					$capacity = 0;
+					$smartGroup = [ ];
+				}
+				$capacity += $data['span'];
+				$smartGroup[] = $item;
+			} else {
+				// smart wrapping works only for data tags
+				if ( !empty( $smartGroup ) ) {
+					$result = array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
+					$smartGroup = [ ];
+					$capacity = 0;
+				}
+				$result[] = $item;
+			}
+		}
+
+		return array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
+	}
+
+	private function calculateSmartWidths( $groupData, $capacity ) {
+		return array_map( function ( $item ) use ( $capacity ) {
+			$width = round( ( $item['data']['span'] / $capacity ) * 100 );
+			$item['data']['cssClasses'] = 'pi-smart-data';
+			$item['data']['inlineStyles'] = "width: {$width}%;";
+			return $item;
+		}, $groupData );
 	}
 }
