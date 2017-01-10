@@ -53,7 +53,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			->save( $infoboxNode )
 			->getData();
 
-		$this->assertEquals( [ [ 'data' => [ [ 'type' => 'data', 'data' => [ 'label' => null, 'value' => 1 ] ] ],
+		$this->assertEquals( [ [ 'data' => [ [ 'type' => 'data', 'data' => [ 'label' => null, 'value' => 1, 'layout' => null, 'span' => 1 ] ] ],
 								 'sources' => [ 'test', 'test2' ] ] ], $result );
 	}
 
