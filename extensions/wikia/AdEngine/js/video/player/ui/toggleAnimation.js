@@ -20,8 +20,8 @@ define('ext.wikia.adEngine.video.player.ui.toggleAnimation', [
 	}
 
 	function toggle(elementToShow, elementToHide) {
-		DOMElementTweaker.hide(elementToHide, true);
-		DOMElementTweaker.show(elementToShow, true);
+		DOMElementTweaker.hide(elementToHide);
+		DOMElementTweaker.show(elementToShow);
 	}
 
 	function clearHeight(element) {

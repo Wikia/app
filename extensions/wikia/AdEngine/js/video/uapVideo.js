@@ -14,8 +14,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
-	function getVideoHeight(slotWidth, params) {
-		return slotWidth / params.videoAspectRatio;
+	function getVideoHeight(slotWidth, aspectRatio) {
+		return slotWidth / aspectRatio;
 	}
 
 	function getSlotWidth(slot) {
@@ -73,11 +73,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 				video.addEventListener('wikiaAdStarted', function () {
 					var slotWidth = getSlotWidth(adSlot);
-					video.resize(slotWidth, getVideoHeight(slotWidth, params));
+					video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 				});
 				if (params.autoplay) {
 					var slotWidth = getSlotWidth(adSlot);
-					video.play(slotWidth, getVideoHeight(slotWidth, params));
+					video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 				}
 
 				return video;
@@ -93,7 +93,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
 		params.width = videoWidth;
-		params.height = getVideoHeight(videoWidth, params);
+		params.height = getVideoHeight(videoWidth, params.videoAspectRatio);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
@@ -112,12 +112,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
 				var slotWidth = getSlotWidth(slotContainer);
-				video.resize(slotWidth, getVideoHeight(slotWidth, params));
+				video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
 				var slotWidth = getSlotWidth(slotContainer);
-				video.play(slotWidth, getVideoHeight(slotWidth, params));
+				video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			});
 
 			return video;
