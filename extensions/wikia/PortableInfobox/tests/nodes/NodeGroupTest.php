@@ -29,6 +29,31 @@ class NodeGroupTest extends WikiaBaseTest {
 
 	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeGroup::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeGroup::getRenderData
+	 * @dataProvider groupNodeRowItemsTestProvider
+	 *
+	 * @param $markup
+	 * @param $expected
+	 */
+	public function testNodeGroupRowItems( $markup, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup );
+		$this->assertEquals( $expected, $node->getData()[ 'row-items' ] );
+		$this->assertEquals( $expected, $node->getRenderData()[ 'data' ][ 'row-items' ] );
+	}
+
+	public function groupNodeRowItemsTestProvider() {
+		return [
+			[ '<group></group>', null ],
+			[ '<group row-items="not a number"></group>', null ],
+			[ '<group row-items="5.5"></group>', null ],
+			[ '<group row-items="5"></group>', '5' ],
+			[ '<group row-items="50"></group>', '50' ],
+		];
+	}
+
+
+	/**
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeGroup::getData
 	 * @dataProvider groupNodeTestProvider
 	 *
 	 * @param $markup
@@ -56,7 +81,8 @@ class NodeGroupTest extends WikiaBaseTest {
 						  'source' => [ 'elem3' ] ]
 					],
 				'layout' => 'default',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
 			  ] ],
 			[ '<group layout="horizontal"><data source="elem1"><label>l1</label><default>def1</default></data><data source="elem2">
 				<label>l2</label><default>def2</default></data><data source="elem3"><label>l2</label></data></group>',
@@ -71,7 +97,8 @@ class NodeGroupTest extends WikiaBaseTest {
 						  'source' => [ 'elem3' ] ],
 					],
 				'layout' => 'horizontal',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
 			  ] ],
 			[ '<group  layout="loool"><data source="elem1"><label>l1</label><default>def1</default></data><data source="elem2">
 				<label>l2</label><default>def2</default></data><data source="elem3"><label>l2</label></data></group>',
@@ -86,7 +113,8 @@ class NodeGroupTest extends WikiaBaseTest {
 						  'source' => [ 'elem3' ] ],
 					],
 				'layout' => 'default',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
 			  ] ],
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
 			  [ '1' => 'one', '2' => 'two' ],
@@ -98,7 +126,8 @@ class NodeGroupTest extends WikiaBaseTest {
 					'source' => [ '2' ] ],
 			  ],
 				'layout' => 'default',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
 			  ] ],
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
 			  [ '1' => 'one' ],
@@ -110,7 +139,9 @@ class NodeGroupTest extends WikiaBaseTest {
 					'source' => [ '2' ] ]
 			  ],
 				'layout' => 'default',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
+
 			  ] ],
 			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>', [ ],
 			  [ 'value' => [
@@ -121,7 +152,8 @@ class NodeGroupTest extends WikiaBaseTest {
 					'source' => [ '2' ] ],
 			  ],
 				'layout' => 'default',
-				'collapse' => null
+				'collapse' => null,
+				'row-items' => null
 			  ] ]
 		];
 	}
