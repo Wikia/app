@@ -20,7 +20,7 @@
 			infoboxParamsRequest = this.fetchInfoboxParamsRequest( titles, specs, queue );
 
 		$.when( templateParamsRequest, infoboxParamsRequest )
-			.then( function( templateParamsResponse, infoboxParamsResponse ) {
+			.then( function ( templateParamsResponse, infoboxParamsResponse ) {
 				if ( templateParamsResponse[1] === 'success' ) {
 					this.templateParamsRequestDone( specs, templateParamsResponse[0] );
 				}
