@@ -264,15 +264,26 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
+		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
 	}
 
-	private function applyRowItemsStyles( $rowItems, $capacity ) {
-		return array_map( function ( $item ) use ( $capacity ) {
+	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow = false ) {
+		return array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
 			$width = round( ( $item['data']['span'] / $capacity ) * 100 );
-			$item['data']['cssClasses'] = 'pi-smart-data';
+			$cssClasses = [ 'pi-smart-data' ];
+			if ( $isLastRow ) {
+				$cssClasses[] = 'pi-smart-last-row';
+			}
+			if ( $index % 2 === 1 ) {
+				$cssClasses[] = 'pi-smart-even-in-row';
+			}
+			if ( $index === 0 ) {
+				$cssClasses[] = 'pi-smart-first-in-row';
+			}
+			$item['data']['cssClasses'] = implode( " ", $cssClasses );
 			$item['data']['inlineStyles'] = "width: {$width}%;";
+
 			return $item;
-		}, $rowItems );
+		}, $rowItems, array_keys( $rowItems ) );
 	}
 }

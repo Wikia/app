@@ -79,9 +79,23 @@
 }
 
 .pi-smart-data {
+	border-left-style: solid;
+	border-left-width: 1px;
 	display: block;
 	flex-direction: column;
 	text-align: center;
+
+	.pi-data-value {
+		padding: $infobox-item-margin $infobox-item-margin * 2 0;
+	}
+
+	&.pi-smart-last-row {
+		border-bottom: 0;
+	}
+
+	&.pi-smart-first-in-row {
+		border-left: 0;
+	}
 }
 
 // **********  Overwrite default infobox styles for STACKED layout type  ********** //

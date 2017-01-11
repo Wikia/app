@@ -827,11 +827,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -839,11 +839,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
 								  <div class="pi-data-value pi-font">test value 4</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-even-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
 								  <div class="pi-data-value pi-font">test value 5</div>
 								</div>
@@ -905,11 +905,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -917,7 +917,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
 								  <div class="pi-data-value pi-font">test value 4</div>
 								</div>
@@ -952,7 +952,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
@@ -996,11 +996,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 67%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 67%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -1044,11 +1044,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 67%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 67%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -1101,15 +1101,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
@@ -1189,11 +1189,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color	pi-smart-data pi-smart-first-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -1201,15 +1201,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
 								  <div class="pi-data-value pi-font">test value 4</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
 								  <div class="pi-data-value pi-font">test value 5</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 6</h3>
 								  <div class="pi-data-value pi-font">test value 6</div>
 								</div>
@@ -1289,11 +1289,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 33%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
@@ -1301,11 +1301,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
 								  <div class="pi-data-value pi-font">test value 4</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
 								  <div class="pi-data-value pi-font">test value 5</div>
 								</div>
@@ -1362,15 +1362,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color	pi-smart-data pi-smart-last-row pi-smart-even-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
@@ -1423,15 +1423,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
@@ -1490,16 +1490,16 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 							  <section class="pi-item pi-group pi-border-color pi-smart-group">
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-first-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 								  <div class="pi-data-value pi-font">test value 1</div>
 								</div>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-even-in-row" style="width: 50%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 								  <div class="pi-data-value pi-font">test value 2</div>
 								</div>
 								<h2 class="pi-item pi-item-spacing pi-title">title value</h2>
-								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data pi-smart-last-row pi-smart-first-in-row" style="width: 100%;">
 								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
 								  <div class="pi-data-value pi-font">test value 3</div>
 								</div>
