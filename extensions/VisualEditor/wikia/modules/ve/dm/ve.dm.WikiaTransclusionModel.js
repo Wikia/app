@@ -39,14 +39,14 @@
 	/**
 	 * @inheritdoc
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.fetchTemplateParamsRequest = function ( titles, specs, queue ) {
+	ve.dm.WikiaTransclusionModel.prototype.fetchTemplateParamsRequest = function ( titles ) {
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'templateparameters',
 			titles: titles.join( '|' )
 		} );
 	};
 
-	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
+	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles ) {
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'query',
 			prop: 'infobox',
