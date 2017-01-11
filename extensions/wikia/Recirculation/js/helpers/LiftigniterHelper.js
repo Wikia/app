@@ -34,7 +34,6 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 
 			// Callback renders and injects results into the placeholder.
 			w.$p('register', registerOptions);
-			w.$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author"]);
 
 			if (options.flush) {
 				w.$p('fetch');

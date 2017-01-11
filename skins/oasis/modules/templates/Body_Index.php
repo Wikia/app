@@ -101,7 +101,7 @@
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
-								'slotName' => 'TOP_RIGHT_BOXAD',
+								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}

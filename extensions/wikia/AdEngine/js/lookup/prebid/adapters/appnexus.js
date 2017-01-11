@@ -17,7 +17,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 					],
 					position: 'atf'
 				},
+				HOME_TOP_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					position: 'atf'
+				},
 				TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					],
+					position: 'atf'
+				},
+				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]

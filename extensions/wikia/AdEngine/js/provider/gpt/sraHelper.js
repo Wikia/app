@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 		flushed = false,
 		sraSlots = [
 			'CORP_TOP_LEADERBOARD',
+			'HOME_TOP_LEADERBOARD',
 			'HUB_TOP_LEADERBOARD',
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD'

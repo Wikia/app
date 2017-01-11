@@ -62,10 +62,6 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 
 	}
 
-	.title_pretext, .recirculation-sponsored-header {
-		display: none;
-	}
-
 	.item:nth-of-type(n+6) {
 		width: 32.5%;
 	}
@@ -74,45 +70,25 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	.item:nth-of-type(6) {
 		width: 49.5%;
 
-		.recirculation-sponsored-header {
-			display: block;
-		}
-
-		.recirc-footer-title-container {
+		h4 {
 			background-color: $recirculation-impact-footer-color-feature-overlay;
 			bottom: 0;
 			color: $color-white;
+			font-size: 24px;
 			left: 0;
+			line-height: 28px;
 			min-height: 70px;
-			padding: 15px;
+			padding: 10px;
 			position: absolute;
 			right: 0;
+		}
 
-			.title_pretext {
-				display: flex;
-				color: #CCC;
-				line-height: 14px;
-
-				.featured-fandom-subtitle {
-					flex-grow: 1;
-					font-size: 12px;
-					font-style: italic;
-				}
-
-				.recirculation-sponsored-footer {
-					opacity: 1.0;
-					flex-grow: 1;
-					text-align: right;
-					font-size: 10px;
-					padding: 0;
-				}
-			}
-
-			h4 {
-				padding-top: 5px;
-				font-size: 24px;
-				line-height: 28px;
-			}
+		h4::before {
+			content: attr(data-tag);
+			display: block;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 14px;
 		}
 
 		.thumbnail {

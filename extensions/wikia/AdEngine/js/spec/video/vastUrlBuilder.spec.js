@@ -13,11 +13,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 					return 'my/ad/unit';
 				}
 			},
-			slotTargeting: {
-				getWikiaSlotId: function () {
-					return 'xxxx';
-				}
-			},
 			page: {
 				getPageLevelParams: function () {
 					return {
@@ -47,7 +42,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
-			mocks.slotTargeting,
 			mocks.loc,
 			mocks.log
 		);
@@ -105,20 +99,20 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(/&correlator=\d+&/g);
 	});
 
-	it('Build VAST URL with page level params and wsi param', function () {
+	it('Build VAST URL with page level params', function () {
 		var vastUrl = getModule().build(1, {});
 
-		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
+		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
 	});
 
-	it('Build VAST URL with page level params, slot level params and wsi param', function () {
+	it('Build VAST URL with page level params and slot level params', function () {
 		var vastUrl = getModule().build(1, {
 			passback: 'playwire',
 			pos: 'TEST_SLOT',
 			src: 'remnant'
 		});
 
-		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
+		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
 	});
 
 	it('Build VAST URL with ad unit id', function () {

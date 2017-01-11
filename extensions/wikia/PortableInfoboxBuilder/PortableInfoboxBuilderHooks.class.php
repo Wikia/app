@@ -65,9 +65,7 @@ class PortableInfoboxBuilderHooks {
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
 			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
-				// user needs permissions to create template when using infobox builder, we check those on dummy template
-				Title::newFromText( 'PortableInfoboxBuilderHooks::onMakeGlobalVariablesScript:dummy.template', NS_TEMPLATE )
-					->userCan( 'createpage' );
+				\RequestContext::getMain()->getUser()->isAllowed( 'createpage' );
 		}
 
 		return true;

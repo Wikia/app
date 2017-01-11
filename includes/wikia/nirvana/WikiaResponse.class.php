@@ -266,14 +266,9 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		$value = strtolower( $value );
-		if ( in_array( $value, [ self::FORMAT_HTML, self::FORMAT_JSON, self::FORMAT_JSONP ] ) ) {
+		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_JSONP ) {
 			$this->format = $value;
 		} else {
-			\Wikia\Logger\WikiaLogger::instance()->warning( 'Invalid format passed to WikiaResponse', [
-				'format' => $value,
-				'exception' => new Exception()
-			] );
 			$this->format = self::FORMAT_INVALID;
 		}
 	}
@@ -453,15 +448,12 @@ class WikiaResponse {
 
 	public function sendHeaders() {
 		if ( !$this->hasContentType() ) {
-			if ( ( $this->getFormat() === WikiaResponse::FORMAT_JSON ) ) {
+			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
-			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_JSONP ) {
+			} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
 				$this->setContentType( 'text/javascript; charset=utf-8' );
-			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_HTML ) {
+			} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
 				$this->setContentType( 'text/html; charset=utf-8' );
-			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_INVALID ) {
-				$this->setContentType( 'application/json; charset=utf-8' );
-				$this->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			}
 		}
 

@@ -50,15 +50,21 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
+
+		expect(context.isApplicable('HOME_TOP_LEADERBOARD')).toBeFalsy();
+		expect(context.isApplicable('HOME_TOP_RIGHT_BOXAD')).toBeFalsy();
 		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeFalsy();
 	});
 
-	it('on home page mark article slots and one home specific slot as enabled', function () {
+	it('on home page mark article slots as disabled', function () {
 		mocks.context.pageType = 'home';
 		var context = getContext();
 
-		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
-		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
+		expect(context.isApplicable('TOP_LEADERBOARD')).toBeFalsy();
+		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeFalsy();
+
+		expect(context.isApplicable('HOME_TOP_LEADERBOARD')).toBeTruthy();
+		expect(context.isApplicable('HOME_TOP_RIGHT_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeTruthy();
 	});
 
@@ -120,14 +126,16 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4
+				HOME_TOP_LEADERBOARD: 3,
+				HOME_TOP_RIGHT_BOXAD: 4,
+				PREFOOTER_LEFT_BOXAD: 5,
+				PREFOOTER_MIDDLE_BOXAD: 6
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
 			TOP_RIGHT_BOXAD: 2,
-			PREFOOTER_LEFT_BOXAD: 3
+			PREFOOTER_LEFT_BOXAD: 5
 		});
 	});
 
@@ -137,15 +145,17 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4
+				HOME_TOP_LEADERBOARD: 3,
+				HOME_TOP_RIGHT_BOXAD: 4,
+				PREFOOTER_LEFT_BOXAD: 5,
+				PREFOOTER_MIDDLE_BOXAD: 6
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
-			TOP_LEADERBOARD: 1,
-			TOP_RIGHT_BOXAD: 2,
-			PREFOOTER_LEFT_BOXAD: 3,
-			PREFOOTER_MIDDLE_BOXAD: 4
+			HOME_TOP_LEADERBOARD: 3,
+			HOME_TOP_RIGHT_BOXAD: 4,
+			PREFOOTER_LEFT_BOXAD: 5,
+			PREFOOTER_MIDDLE_BOXAD: 6
 		});
 	});
 });

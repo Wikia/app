@@ -86,6 +86,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$this->object->setResponse( $response );
 		$result = $this->object->render();
 		$this->assertEquals($result, $expectedResult);
+		$this->assertEquals( 400, $response->getCode() );
 	}
 
 	public function testRenderingFormatsDataProvider() {

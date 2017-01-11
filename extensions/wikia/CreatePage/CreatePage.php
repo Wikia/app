@@ -235,7 +235,6 @@ function wfCreatePageAjaxGetDialog() {
 			'options' => $options,
 			'type' => $listtype,
 			'wantedPages' => CreatePageHelper::getMostWantedPages(),
-			'wikiTotalPages' => SiteStats::articles()
 		)
 	);
 

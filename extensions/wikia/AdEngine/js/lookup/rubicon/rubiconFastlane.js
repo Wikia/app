@@ -18,7 +18,15 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'}
 				},
+				HOME_TOP_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'top'}
+				},
 				TOP_RIGHT_BOXAD: {
+					sizes: [[300, 250], [300, 600], [300, 1050]],
+					targeting: {loc: 'top'}
+				},
+				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},

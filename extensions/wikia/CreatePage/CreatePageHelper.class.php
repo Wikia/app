@@ -35,7 +35,6 @@ class CreatePageHelper {
 				$wantedPageTitle = Title::newFromText( $row->title, $row->namespace );
 
 				if ( $wantedPageTitle instanceof Title &&
-				     !$wantedPageTitle->isKnown() &&
 					(
 						empty( static::FORBIDDEN_CHARACTERS_REGEX ) ||
 						!preg_match( static::FORBIDDEN_CHARACTERS_REGEX, $wantedPageTitle->getText() )
@@ -63,11 +62,6 @@ class CreatePageHelper {
 	 * @return string['veaction'|'action']
 	 */
 	private static function getPreferredEditorQueryParamName() {
-		if ( EditorPreference::isVisualEditorPrimary() &&
-			EditorPreference::shouldShowVisualEditorLink( \RequestContext::getMain()->getSkin() ) ) {
-			return 'veaction';
-		} else {
-			return 'action';
-		}
+		return EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ? 'veaction' : 'action';
 	}
 }
