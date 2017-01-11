@@ -263,7 +263,12 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
+		if ( !empty( $rowItems ) ) {
+			$result =
+				array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
+		}
+
+		return $result;
 	}
 
 	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow = false ) {
