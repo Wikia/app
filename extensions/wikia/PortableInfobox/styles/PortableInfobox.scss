@@ -98,14 +98,14 @@
 
 // **********  Collapsible groups  ********** //
 
-.pi-collapse .pi-header {
+.pi-collapse .pi-header:first-child {
 	@include collapsibleChevron;
 }
 
 .pi-collapse-closed {
 	border-bottom: none;
 
-	.pi-header::after {
+	.pi-header:first-child::after {
 		@include transform-rotate(135deg);
 		margin-top: -($infobox-chevron-size / 2);
 	}
