@@ -28,17 +28,11 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		volume.mute = function () {
 			volume.speaker.classList.add('mute');
 			video.setVolume(0);
-			if (videoAd) {
-				videoAd.muted = true;
-			}
 			log('mute', log.levels.info, logGroup);
 		};
 		volume.unmute = function () {
 			volume.speaker.classList.remove('mute');
 			video.setVolume(0.75);
-			if (videoAd) {
-				videoAd.muted = false;
-			}
 			log('unmute', log.levels.info, logGroup);
 		};
 
