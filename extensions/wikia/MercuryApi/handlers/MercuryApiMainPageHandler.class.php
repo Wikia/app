@@ -10,7 +10,7 @@ class MercuryApiMainPageHandler {
 		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
-		$communityData = self::getCommunityData();
+		$wikiDescription = self::getWikidescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
@@ -32,8 +32,8 @@ class MercuryApiMainPageHandler {
 			$mainPageData[ 'wikiaStats' ] = $wikiaStats;
 		}
 
-		if ( !empty( $communityData ) ) {
-			$mainPageData[ 'communityData' ] = $communityData;
+		if ( !empty( $wikiDescription ) ) {
+			$mainPageData[ 'wikiDescription' ] = $wikiDescription;
 		}
 
 		return $mainPageData;
@@ -138,16 +138,7 @@ class MercuryApiMainPageHandler {
 		];
 	}
 
-	private static function getCommunityData() {
-		$communityData = (new CommunityDataService( F::app()->wg->CityId ))->getCommunityData();
-
-		if ( !empty( $communityData[ 'image_id' ] ) ) {
-			$url = CuratedContentHelper::getImageUrl( $communityData[ 'image_id' ] );
-			$communityData[ 'image_url' ] = $url;
-		}
-
-		return $communityData;
-
-
+	private static function getWikidescription() {
+		return (new CommunityDataService( F::app()->wg->CityId ))->getCommunityDescription();
 	}
 }
