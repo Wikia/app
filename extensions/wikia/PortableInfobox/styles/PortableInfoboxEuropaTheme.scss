@@ -204,7 +204,7 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		border-left: 0;
 		text-align: left;
 
-		&.even-in-row {
+		&.pi-smart-even-in-row {
 			background-color: $horizontal-group-stripe-background;
 		}
 

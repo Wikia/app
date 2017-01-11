@@ -86,14 +86,14 @@
 	text-align: center;
 
 	.pi-data-value {
-		padding: 5px 10px 0;
+		padding: $infobox-item-margin $infobox-item-margin * 2 0;
 	}
 
-	&.last-row {
+	&.pi-smart-last-row {
 		border-bottom: 0;
 	}
 
-	&.first-in-row {
+	&.pi-smart-first-in-row {
 		border-left: 0;
 	}
 }
