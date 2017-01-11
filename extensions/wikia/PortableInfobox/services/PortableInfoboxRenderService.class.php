@@ -4,8 +4,8 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
-	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
-	const EUROPA_THUMBNAIL_WIDTH = 300;
+	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 350;
+	const EUROPA_THUMBNAIL_WIDTH = 310;
 
 	protected $templateEngine;
 	protected $imagesWidth = self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;

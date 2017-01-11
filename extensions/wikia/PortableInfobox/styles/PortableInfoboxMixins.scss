@@ -32,6 +32,11 @@
 		text-align: center; // center smaller image inside infobox
 	}
 
+	.pi-image-thumbnail {
+		max-width: 100%;
+		height: auto;
+	}
+
 	.pi-caption {
 		@include hyphens();
 		color: $color-alternate-text;
