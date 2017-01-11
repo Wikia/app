@@ -263,30 +263,26 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		if ( !empty( $rowItems ) ) {
-			$result =
-				array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
-		}
-
-		return $result;
+		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
 	}
 
 	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow = false ) {
-		$items = array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
+		return array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
 			$width = round( ( $item['data']['span'] / $capacity ) * 100 );
-			$item['data']['cssClasses'] = 'pi-smart-data';
+			$cssClasses = [ 'pi-smart-data' ];
 			if ( $isLastRow ) {
-				$item['data']['cssClasses'] .= ' pi-smart-last-row';
+				$cssClasses[] = 'pi-smart-last-row';
 			}
 			if ( $index % 2 === 1 ) {
-				$item['data']['cssClasses'] .= ' pi-smart-even-in-row';
+				$cssClasses[] = 'pi-smart-even-in-row';
 			}
+			if ( $index === 0 ) {
+				$cssClasses[] = 'pi-smart-first-in-row';
+			}
+			$item['data']['cssClasses'] = implode( " ", $cssClasses );
 			$item['data']['inlineStyles'] = "width: {$width}%;";
 
 			return $item;
 		}, $rowItems, array_keys( $rowItems ) );
-		$items[0]['data']['cssClasses'] .= ' pi-smart-first-in-row';
-
-		return $items;
 	}
 }
