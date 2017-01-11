@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
 		slotBids.forEach(function(bid) {
-			var priceFromBidder = parseFloat(bid.pbMg || 0),
+			var priceFromBidder = parseFloat(bid.pbAg || 0),
 				currentBestPrice = Math.max(bestPrices[bid.bidderCode], priceFromBidder) || 0;
 
 			bestPrices[bid.bidderCode] = (currentBestPrice).toFixed(2).toString();
