@@ -107,7 +107,7 @@ class PortableInfoboxHooks {
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			PortableInfoboxDataService::newFromTitle( $title )->purge();
+			PortableInfoboxDataService::newFromTitle( $title )->delete();
 		}
 
 		return true;
