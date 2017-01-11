@@ -113,7 +113,7 @@ class HealthController extends WikiaController {
 	 * @param int $index Server index to test
 	 * @return bool Is lag below defined limit?
 	 */
-	private function testHostLag(LoadBalancer $loadBalancer, DatabaseMysqli $db, $index ) {
+	private function testHostLag( LoadBalancer $loadBalancer, DatabaseMysqli $db, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$master = $index == 0;
 
@@ -142,7 +142,7 @@ class HealthController extends WikiaController {
 	 * @param int $index Server index to test
 	 * @return bool Is R/W flag is set properly on a database?
 	 */
-	private function testHostRW(DatabaseMysqli $db, $index) {
+	private function testHostRW( DatabaseMysqli $db, $index ) {
 		$master = $index == 0;
 
 		try {
@@ -172,7 +172,7 @@ class HealthController extends WikiaController {
 	 * @return bool Is server healthy?
 	 * @throws MWException
 	 */
-	private function testHost(LoadBalancer $loadBalancer, $index ) {
+	private function testHost( LoadBalancer $loadBalancer, $index ) {
 		// connection check
 		try {
 			$db = wfGetDB( $index, array() );
