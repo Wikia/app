@@ -257,7 +257,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromText( $data['name'] );
-		if ( $title && F::app()->checkSkin( 'wikiamobile' ) ) {
+		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
