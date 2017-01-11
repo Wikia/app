@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, beforeEach, spyOn*/
+/*global describe, it, expect, modules, beforeEach*/
 describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 	'use strict';
 

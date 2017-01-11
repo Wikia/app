@@ -11,7 +11,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		var isAdsManagerLoaded = false,
 			status = '',
 			videoMock = doc.createElement('video'),
-			adsManager;
+			adsManager,
+			videoAd = params.container.querySelector('video');
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings());
@@ -32,13 +33,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
-		function enableAutoplay() {
-			var videoAd = params.container.querySelector('video');
-
+		function setAutoplay(value) {
 			// videoAd DOM element is present on mobile only
 			if (videoAd) {
-				videoAd.autoplay = true;
-				videoAd.muted = true;
+				videoAd.autoplay = value;
+				videoAd.muted = value;
 			}
 		}
 
@@ -55,16 +54,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				log('Video play: started', log.levels.debug, logGroup);
 			}
 
-			if (params.autoplay) {
-				enableAutoplay();
-			}
-
 			if (isAdsManagerLoaded) {
 				callback();
 			} else {
 				// When adsManager is not loaded yet video can't start without click on mobile
 				// Muted auto play is workaround to run video on adsManagerLoaded event
-				enableAutoplay();
+				setAutoplay(true);
 				adsLoader.addEventListener('adsManagerLoaded', callback, false);
 				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 			}
@@ -106,6 +101,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
 		adsLoader.requestAds(imaSetup.createRequest(params));
+		if (params.autoplay) {
+			setAutoplay(true);
+		}
 
 		addEventListener('resume', setStatus('playing'));
 		addEventListener('start', setStatus('playing'));
@@ -118,7 +116,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
-			resize: resize
+			resize: resize,
+			setAutoplay: setAutoplay
 		};
 	}
 
