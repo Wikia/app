@@ -31,7 +31,8 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 				container: {
 					appendChild: function (element) {
 						mocks.video.volumeControl = element;
-					}
+					},
+					querySelector: noop
 				},
 				isMuted: function () {
 					return this.muted;
