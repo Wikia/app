@@ -62,7 +62,7 @@ class HealthController extends WikiaController {
 			$operational = false;
 			try {
 				$databaseName = $this->getClusterDatabase( $clusterName );
-				$loadBalancer = wfGetLB( $databaseName );
+				$loadBalancer = $this->getClusterLB( $clusterName, $databaseName );
 				$serverCount = $loadBalancer->getServerCount();
 
 				$roles = [
@@ -74,7 +74,7 @@ class HealthController extends WikiaController {
 					$this->current = "{$clusterName}: {$serverName}: ";
 
 					$role = $i === 0 ? 'master' : 'slave';
-					$roles[$role][$serverName] = $this->testHost( $loadBalancer, $i );
+					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
 				}
 
 				if ( $serverCount == 1 ) {
@@ -167,15 +167,16 @@ class HealthController extends WikiaController {
 
 	/**
 	 * Execute checks for a single database server
+	 * @param string $databaseName Database name to use for connection
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
 	 * @param int $index Server index to test
 	 * @return bool Is server healthy?
 	 * @throws MWException
 	 */
-	private function testHost( LoadBalancer $loadBalancer, $index ) {
+	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
 		// connection check
 		try {
-			$db = wfGetDB( $index, array() );
+			$db = $loadBalancer->getConnection( $index, array(), $databaseName );
 		} catch ( DBError $e ) {
 			$this->addError( "could not connect to server: " . $e->getMessage() );
 
@@ -228,11 +229,30 @@ class HealthController extends WikiaController {
 	private function getClusterDatabase( $cluster ) {
 		if ( preg_match( "/^c[0-9]\$/", $cluster ) ) {
 			return 'wikicities_' . $cluster;
+		} else if ( $cluster === "semanticdb" ) {
+			return "mysql";
 		}
+
 		$config = $this->wg->LBFactoryConf;
 		$database = array_search( $cluster, $config['sectionsByDB'] );
 
 		return $database;
+	}
+
+	/**
+	 * Get load balancer for a given cluster and database
+	 *
+	 * @param string $cluster Cluster name
+	 * @param string $databasName Database name
+	 * @return string Database name
+	 */
+	private function getClusterLB( $cluster, $databasName ) {
+		if ( $cluster === "semanticdb" ) {
+			$config = $this->wg->LBFactoryConf;
+			$databasName = array_search( $cluster, $config['sectionsByDB'] );
+		}
+
+		return wfGetLBFactory()->newMainLB($databasName);
 	}
 
 	/**
