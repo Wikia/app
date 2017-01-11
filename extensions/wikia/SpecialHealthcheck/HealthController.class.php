@@ -13,6 +13,7 @@ class HealthController extends WikiaController {
 	private $errors = [];
 	private $messages = [];
 	private $status = [];
+	private $servers = [];
 
 	/**
 	 * Get status of database clusters
@@ -44,6 +45,10 @@ class HealthController extends WikiaController {
 			$this->setVal( 'messages', $this->messages );
 		}
 
+		if ( $this->servers ) {
+			$this->setVal( 'servers', $this->servers );
+		}
+
 		$this->setVal( 'readWrite', [
 			'status' => !wfReadOnly(),
 			'reason' => wfReadOnlyReason(),
@@ -72,6 +77,7 @@ class HealthController extends WikiaController {
 				for ( $i = 0; $i < $serverCount; $i++ ) {
 					$serverName = $loadBalancer->getServerName( $i );
 					$this->current = "{$clusterName}: {$serverName}: ";
+					$this->servers[$clusterName][] = $serverName;
 
 					$role = $i === 0 ? 'master' : 'slave';
 					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
@@ -109,11 +115,11 @@ class HealthController extends WikiaController {
 	/**
 	 * Execute lag check on a given database
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
-	 * @param DatabaseMysqli $db connector to a tested database
+	 * @param DatabaseBase $db connector to a tested database
 	 * @param int $index Server index to test
 	 * @return bool Is lag below defined limit?
 	 */
-	private function testHostLag( LoadBalancer $loadBalancer, DatabaseMysqli $db, $index ) {
+	private function testHostLag( LoadBalancer $loadBalancer, DatabaseBase $db, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$master = $index == 0;
 
@@ -138,11 +144,11 @@ class HealthController extends WikiaController {
 
 	/**
 	 * Execute R/W check on a given database
-	 * @param DatabaseMysqli $db connector to a tested database
+	 * @param DatabaseBase $db connector to a tested database
 	 * @param int $index Server index to test
 	 * @return bool Is R/W flag is set properly on a database?
 	 */
-	private function testHostRW( DatabaseMysqli $db, $index ) {
+	private function testHostRW( DatabaseBase $db, $index ) {
 		$master = $index == 0;
 
 		try {
@@ -244,7 +250,7 @@ class HealthController extends WikiaController {
 	 *
 	 * @param string $cluster Cluster name
 	 * @param string $databasName Database name
-	 * @return string Database name
+	 * @return LoadBalancer
 	 */
 	private function getClusterLB( $cluster, $databasName ) {
 		if ( $cluster === "semanticdb" ) {
