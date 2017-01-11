@@ -110,25 +110,25 @@ class PortableInfoboxRenderService extends WikiaService {
 	protected function renderGroup( $groupData ) {
 		$cssClasses = [ ];
 		$groupHTMLContent = '';
-		$dataItems = $groupData['value'];
+		$children = $groupData['value'];
 		$layout = $groupData['layout'];
 		$collapse = $groupData['collapse'];
 		$rowItems = $groupData['row-items'];
 
 		if ( $rowItems > 0 ) {
 			$cssClasses[] = 'pi-smart-group';
-			$items = $this->createSmartGroups( $dataItems, $rowItems );
+			$items = $this->createSmartGroups( $children, $rowItems );
 			$groupHTMLContent .= $this->renderChildren( $items );
 		} elseif ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
-				$this->createHorizontalGroupData( $dataItems )
+				$this->createHorizontalGroupData( $children )
 			);
 		} else {
-			$groupHTMLContent .= $this->renderChildren( $dataItems );
+			$groupHTMLContent .= $this->renderChildren( $children );
 		}
 
-		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[0]['type'] === 'header' ) {
+		if ( $collapse !== null && count( $children ) > 0 && $children[0]['type'] === 'header' ) {
 			$cssClasses[] = 'pi-collapse';
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
@@ -237,41 +237,41 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	private function createSmartGroups( $groupData, $rowCapacity ) {
 		$result = [ ];
-		$capacity = 0;
-		$smartGroup = [ ];
+		$rowSpan = 0;
+		$rowItems = [ ];
 
 		foreach ( $groupData as $item ) {
 			$data = $item['data'];
 
 			if ( $item['type'] === 'data' && ( !isset( $data['layout'] ) || $data['layout'] !== 'default' ) ) {
 
-				if ( $capacity + $data['span'] > $rowCapacity ) {
-					$result = array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
-					$capacity = 0;
-					$smartGroup = [ ];
+				if ( $rowSpan + $data['span'] > $rowCapacity ) {
+					$result = array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
+					$rowSpan = 0;
+					$rowItems = [ ];
 				}
-				$capacity += $data['span'];
-				$smartGroup[] = $item;
+				$rowSpan += $data['span'];
+				$rowItems[] = $item;
 			} else {
 				// smart wrapping works only for data tags
-				if ( !empty( $smartGroup ) ) {
-					$result = array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
-					$smartGroup = [ ];
-					$capacity = 0;
+				if ( !empty( $rowItems ) ) {
+					$result = array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
+					$rowSpan = 0;
+					$rowItems = [ ];
 				}
 				$result[] = $item;
 			}
 		}
 
-		return array_merge( $result, $this->calculateSmartWidths( $smartGroup, $capacity ) );
+		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
 	}
 
-	private function calculateSmartWidths( $groupData, $capacity ) {
+	private function applyRowItemsStyles( $rowItems, $capacity ) {
 		return array_map( function ( $item ) use ( $capacity ) {
 			$width = round( ( $item['data']['span'] / $capacity ) * 100 );
 			$item['data']['cssClasses'] = 'pi-smart-data';
 			$item['data']['inlineStyles'] = "width: {$width}%;";
 			return $item;
-		}, $groupData );
+		}, $rowItems );
 	}
 }

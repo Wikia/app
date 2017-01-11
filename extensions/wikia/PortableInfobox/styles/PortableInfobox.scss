@@ -13,10 +13,6 @@
 	width: $infobox-width;
 }
 
-.pi-item {
-	width: 100%;
-}
-
 // **********  Overwrite styles from article  ********** //
 // (placing it within portable-infobox class makes it strong enough) //
 
@@ -76,6 +72,10 @@
 .pi-smart-group {
 	display: flex;
 	flex-wrap: wrap;
+
+	.pi-item {
+		width: 100%;
+	}
 }
 
 .pi-smart-data {
