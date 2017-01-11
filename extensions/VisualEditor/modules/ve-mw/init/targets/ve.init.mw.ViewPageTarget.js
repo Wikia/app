@@ -968,11 +968,7 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.captchaResponse = null;
 	}
 
-	if (
-		+mw.user.options.get( 'forceeditsummary' ) &&
-		saveOptions.summary === '' &&
-		!this.saveDialog.messages.missingsummary
-	) {
+	if ( this.shouldShowMissingSummaryMessage( saveOptions ) ) {
 		this.saveDialog.showMessage(
 			'missingsummary',
 			// Wrap manually since this core message already includes a bold "Warning:" label
@@ -984,6 +980,12 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.save( this.docToSave, saveOptions );
 		this.saveDeferred = saveDeferred;
 	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.shouldShowMissingSummaryMessage = function ( saveOptions ) {
+	return +mw.user.options.get( 'forceeditsummary' ) &&
+			saveOptions.summary === '' &&
+			!this.saveDialog.messages.missingsummary;
 };
 
 /**
