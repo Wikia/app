@@ -267,7 +267,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow ) {
-		$items = array_map( function ( $item ) use ( $capacity, $isLastRow ) {
+		$items = array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
 			$width = round( ( $item['data']['span'] / $capacity ) * 100 );
 			$item['data']['cssClasses'] = 'pi-smart-data';
 			if ( $isLastRow ) {
