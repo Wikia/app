@@ -41,6 +41,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 					width = newWidth;
 					height = newHeight;
 				}
+				if (!width || !height) {
+					width = params.container.offsetWidth;
+					height = params.container.offsetHeight;
+				}
 
 				ima.playVideo(width, height);
 			},

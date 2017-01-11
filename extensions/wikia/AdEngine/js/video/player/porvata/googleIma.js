@@ -21,13 +21,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 	function getPlayer(params) {
 		var adDisplayContainer = new win.google.ima.AdDisplayContainer(params.container),
-			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer),
-			videoAd = params.container.querySelector('video');
-
-		if (videoAd && params.autoplay) {
-			videoAd.autoplay = true;
-			videoAd.muted = true;
-		}
+			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
 
 		return imaPlayerFactory.create(adDisplayContainer, adsLoader, params);
 	}

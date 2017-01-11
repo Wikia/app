@@ -32,6 +32,16 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
+		function enableAutoplay() {
+			var videoAd = params.container.querySelector('video');
+
+			// videoAd DOM element is present on mobile only
+			if (videoAd) {
+				videoAd.autoplay = true;
+				videoAd.muted = true;
+			}
+		}
+
 		function playVideo(width, height) {
 			function callback() {
 				log('Video play: prepare player UI', log.levels.debug, logGroup);
@@ -45,11 +55,18 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				log('Video play: started', log.levels.debug, logGroup);
 			}
 
+			if (params.autoplay) {
+				enableAutoplay();
+			}
+
 			if (isAdsManagerLoaded) {
 				callback();
 			} else {
-				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
+				// When adsManager is not loaded yet video can't start without click on mobile
+				// Muted auto play is workaround to run video on adsManagerLoaded event
+				enableAutoplay();
 				adsLoader.addEventListener('adsManagerLoaded', callback, false);
+				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 			}
 		}
 
