@@ -204,7 +204,7 @@ class ForumDumper {
 		$parsedText = $this->getParsedText( $rawText );
 
 		// Get a plain text version as well
-		$plainText = strip_tags( $parsedText );
+		$plainText = trim( strip_tags( $parsedText ) );
 
 		// Truncate the strings if they are too big
 		if ( strlen($parsedText) > self::MAX_CONTENT_SIZE ) {
