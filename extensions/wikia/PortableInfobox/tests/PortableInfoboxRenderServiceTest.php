@@ -14,7 +14,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$extendImageData = isset( $input['extendImageData'] ) ? $input['extendImageData'] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' )
-			->setMethods( ['extendImageData' ] )
+			->setMethods( [ 'extendImageData' ] )
 			->getMock();
 		$mock->expects( $this->any() )
 			->method( 'extendImageData' )
@@ -403,6 +403,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'default',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -460,6 +461,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'default',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -511,6 +513,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -566,6 +569,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -631,6 +635,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -686,6 +691,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -736,6 +742,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -752,6 +759,749 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							</aside>',
 				'description' => 'Horizontal group data with empty label',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 4',
+										'value' => 'test value 4',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 5',
+										'value' => 'test value 5',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
+								  <div class="pi-data-value pi-font">test value 4</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
+								  <div class="pi-data-value pi-font">test value 5</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 5 elements with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 4',
+										'value' => 'test value 4',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
+								  <div class="pi-data-value pi-font">test value 4</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 4 elements with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of a single element with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 2,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 67%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 2 + 1 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 2,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 7
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 67%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 2 + 1 with row size 7',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 2,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 2,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 2,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 2 + 2 + 2 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => null,
+										'layout' => 'default'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 4',
+										'value' => 'test value 4',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 5',
+										'value' => 'test value 5',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 6',
+										'value' => 'test value 6',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
+								  <div class="pi-data-value pi-font">test value 4</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
+								  <div class="pi-data-value pi-font">test value 5</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 6</h3>
+								  <div class="pi-data-value pi-font">test value 6</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 1 + 1 + default + 1 + 1 + 1 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 4',
+										'value' => 'test value 4',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 5',
+										'value' => 'test value 5',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 6',
+										'value' => 'test value 6',
+										'span' => null,
+										'layout' => 'default'
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 33%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 4</h3>
+								  <div class="pi-data-value pi-font">test value 4</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 5</h3>
+								  <div class="pi-data-value pi-font">test value 5</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
+								  <h3 class="pi-data-label pi-secondary-font">Test 6</h3>
+								  <div class="pi-data-value pi-font">test value 6</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 1 + 1 + 1 + 1 + 1 + default with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 40,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 40 + 1 + 1 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 40,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 1 + 40 + 1 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 1',
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'title',
+									'data' => [
+										'value' => 'title value'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color pi-smart-group">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+								  <div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 50%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+								  <div class="pi-data-value pi-font">test value 2</div>
+								</div>
+								<h2 class="pi-item pi-item-spacing pi-title">title value</h2>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color pi-smart-data" style="width: 100%;">
+								  <h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+								  <div class="pi-data-value pi-font">test value 3</div>
+								</div>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 1 + 1 + title + 1 with row size 3',
 				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''

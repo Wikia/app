@@ -67,6 +67,23 @@
 	}
 }
 
+// **********  Special styles for SMART WRAP group (row-items attribute provided)  ********** //
+
+.pi-smart-group {
+	display: flex;
+	flex-wrap: wrap;
+
+	.pi-item {
+		width: 100%;
+	}
+}
+
+.pi-smart-data {
+	display: block;
+	flex-direction: column;
+	text-align: center;
+}
+
 // **********  Overwrite default infobox styles for STACKED layout type  ********** //
 
 .pi-layout-stacked {
