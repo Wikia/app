@@ -269,8 +269,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow = false ) {
 		return array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
-			// having a one number precision makes it much more accurate for uneven number of items
-			$width = round( ( $item['data']['span'] / $capacity ) * 100, 1 );
 			$cssClasses = [ 'pi-smart-data' ];
 			if ( $isLastRow ) {
 				$cssClasses[] = 'pi-smart-last-row';
@@ -282,7 +280,8 @@ class PortableInfoboxRenderService extends WikiaService {
 				$cssClasses[] = 'pi-smart-first-in-row';
 			}
 			$item['data']['cssClasses'] = implode( " ", $cssClasses );
-			$item['data']['inlineStyles'] = "width: {$width}%;";
+			$item['data']['inlineStyles'] =
+				"width: calc({$item['data']['span']} / $capacity * 100%);";
 
 			return $item;
 		}, $rowItems, array_keys( $rowItems ) );
