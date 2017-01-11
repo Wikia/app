@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer),
 			videoAd = params.container.querySelector('video');
 
-		if (videoAd && params.autoPlay) {
+		if (videoAd && params.autoplay) {
 			videoAd.autoplay = true;
 			videoAd.muted = true;
 		}

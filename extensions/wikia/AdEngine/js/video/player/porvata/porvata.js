@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					params.onReady(video);
 				}
 
-				if (params.autoPlay) {
+				if (params.autoplay) {
 					video.play();
 				}
 

@@ -22,16 +22,23 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	}
 
 	function add(video) {
-		var volume = createVolumeControl();
+		var volume = createVolumeControl(),
+			videoAd = video.container.querySelector('video');
 
 		volume.mute = function () {
 			volume.speaker.classList.add('mute');
 			video.setVolume(0);
+			if (videoAd) {
+				videoAd.muted = true;
+			}
 			log('mute', log.levels.info, logGroup);
 		};
 		volume.unmute = function () {
 			volume.speaker.classList.remove('mute');
 			video.setVolume(0.75);
+			if (videoAd) {
+				videoAd.muted = false;
+			}
 			log('unmute', log.levels.info, logGroup);
 		};
 
@@ -45,7 +52,11 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			volume.unmute();
+			if (videoAd && videoAd.muted) {
+				volume.mute();
+			} else {
+				volume.unmute();
+			}
 			volume.classList.remove('hidden');
 		});
 

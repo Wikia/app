@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 
 	function create(params, ima) {
 		var width = params.width,
-			height = params.height;
+			height = params.height,
+			videoAd = params.container.querySelector('video');
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
@@ -56,6 +57,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 				ima.getAdsManager().resume();
 			},
 			setVolume: function (volume) {
+				if (videoAd) {
+					videoAd.muted = volume === 0;
+				}
 				return ima.getAdsManager().setVolume(volume);
 			},
 			stop: function () {
