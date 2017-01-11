@@ -73,12 +73,15 @@ class NodeGroup extends Node {
 		return true;
 	}
 
-	public function getSource() {
-		return $this->getSourceForChildren();
+	public function getSources() {
+		return $this->getSourcesForChildren();
 	}
 
-	public function getSourceLabel() {
-		return $this->getSourceLabelForChildren();
+	public function getMetadata() {
+		return [
+			'type' => $this->getType(),
+			'metadata' => $this->getMetadataForChildren()
+		];
 	}
 
 	protected function showIncomplete() {

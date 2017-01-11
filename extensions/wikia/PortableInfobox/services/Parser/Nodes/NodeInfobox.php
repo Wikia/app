@@ -32,7 +32,7 @@ class NodeInfobox extends Node {
 		if ( !isset( $this->params ) ) {
 			$result = [ ];
 			foreach ( $this->xmlNode->attributes() as $k => $v ) {
-				$result[ $k ] = (string)$v;
+				$result[$k] = (string)$v;
 			}
 			$this->params = $result;
 		}
@@ -40,11 +40,11 @@ class NodeInfobox extends Node {
 		return $this->params;
 	}
 
-	public function getSource() {
-		return $this->getSourceForChildren();
+	public function getSources() {
+		return $this->getSourcesForChildren();
 	}
 
-	public function getSourceLabel() {
-		return $this->getSourceLabelForChildren();
+	public function getMetadata() {
+		return $this->getMetadataForChildren();
 	}
 }

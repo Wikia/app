@@ -403,7 +403,7 @@
 				action: action,
 				category: 'lightbox',
 				label: label || '',
-				trackingMethod: method || 'internal',
+				trackingMethod: method || 'both',
 				value: value || 0
 			}, data);
 		},

@@ -4,8 +4,8 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
-	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 270;
-	const EUROPA_THUMBNAIL_WIDTH = 300;
+	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 350;
+	const EUROPA_THUMBNAIL_WIDTH = 310;
 
 	protected $templateEngine;
 	protected $imagesWidth = self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
@@ -150,6 +150,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$images = [ ];
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
+			$data[$i]['context'] = null;
 			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth );
 
 			if ( !!$data[$i] ) {
