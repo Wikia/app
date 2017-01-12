@@ -18,22 +18,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		$infoboxHtmlContent = '';
-		$heroData = [ ];
+		$items = $this->splitOfHeroData( $infoboxdata, [ 'hero' => [ ], 'infobox' => [ ] ] );
 
-		foreach ( $infoboxdata as $item ) {
-			$data = $item['data'];
-			$type = $item['type'];
-
-			if ( $this->isValidHeroDataItem( $item, $heroData ) ) {
-				$heroData[$type] = $data;
-			} elseif ( $this->templateEngine->isSupportedType( $type ) ) {
-				$infoboxHtmlContent .= $this->renderItem( $type, $data );
-			}
-		}
-
-		if ( !empty( $heroData ) ) {
-			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+		if ( !empty( $items['hero'] ) ) {
+			$infoboxHtmlContent = $this->renderInfoboxHero( $items['hero'] ) . $this->renderChildren( $items['infobox'] );
+		} else {
+			$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
@@ -45,6 +35,28 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
 
 		return $output;
+	}
+
+	private function splitOfHeroData( $items, $result ) {
+		foreach ( $items as $item ) {
+			$data = $item['data'];
+			$type = $item['type'];
+
+			if ( $this->isValidHeroDataItem( $item, $result['hero'] ) ) {
+				$result['hero'][$type] = $data;
+			} elseif ( $type === 'group' ) {
+				// go deeper to find nested hero data items
+				$groupResult = $this->splitOfHeroData( $data['value'], [ 'hero' => $result['hero'], 'infobox' => [ ] ] );
+				// make sure other elements structure stays the same
+				$result['hero'] = $groupResult['hero'];
+				$item['data']['value'] = $groupResult['infobox'];
+				$result['infobox'][] = $item;
+			} else {
+				$result['infobox'][] = $item;
+			}
+		}
+
+		return $result;
 	}
 
 	protected function renderImage( $data ) {
