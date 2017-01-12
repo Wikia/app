@@ -71,31 +71,23 @@
 
 .pi-smart-group {
 	display: flex;
-	flex-wrap: wrap;
-
-	.pi-item {
-		width: 100%;
-	}
-}
-
-.pi-smart-data {
-	border-left-style: solid;
-	border-left-width: 1px;
-	display: block;
 	flex-direction: column;
 	text-align: center;
 
-	.pi-data-value {
-		padding: $infobox-item-margin $infobox-item-margin * 2 0;
+	.pi-smart-data-label,
+	.pi-smart-data-value {
+		box-sizing: border-box;
+		flex-basis: auto;
 	}
+}
 
-	&.pi-smart-last-row {
-		border-bottom: 0;
-	}
+.pi-smart-group-body {
+	display: flex;
+}
 
-	&.pi-smart-first-in-row {
-		border-left: 0;
-	}
+.pi-smart-group-head {
+	align-items: center;
+	display: flex;
 }
 
 // **********  Overwrite default infobox styles for STACKED layout type  ********** //
