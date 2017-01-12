@@ -28,6 +28,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return string
 	 */
 	private function normalizeHTML( $html ) {
+		if ( empty( $html ) ) {
+			return '';
+		}
+
 		$DOM = new DOMDocument( '1.0' );
 		$DOM->formatOutput = true;
 		$DOM->preserveWhiteSpace = false;
