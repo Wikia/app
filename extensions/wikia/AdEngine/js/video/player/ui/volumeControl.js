@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 
 	function add(video) {
 		var volume = createVolumeControl(),
-			videoAd = video.container.querySelector('video');
+			mobileVideoAd = video.container.querySelector('video');
 
 		volume.mute = function () {
 			volume.speaker.classList.add('mute');
@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			if (videoAd && videoAd.muted) {
+			if (mobileVideoAd && mobileVideoAd.muted) {
 				volume.mute();
 			} else {
 				volume.unmute();

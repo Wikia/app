@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			status = '',
 			videoMock = doc.createElement('video'),
 			adsManager,
-			videoAd = params.container.querySelector('video');
+			mobileVideoAd = params.container.querySelector('video');
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings());
@@ -34,10 +34,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		}
 
 		function setAutoPlay(value) {
-			// videoAd DOM element is present on mobile only
-			if (videoAd) {
-				videoAd.autoplay = value;
-				videoAd.muted = value;
+			// mobileVideoAd DOM element is present on mobile only
+			if (mobileVideoAd) {
+				mobileVideoAd.autoplay = value;
+				mobileVideoAd.muted = value;
 			}
 		}
 
