@@ -32,22 +32,14 @@ class PortableInfoboxHooks {
 	}
 
 	/**
-	 * Store information about raw content of all galleries in article to handle images in infoboxes
+	 * Store data of all galleries in article to handle images in infoboxes
 	 *
-	 * @param $name Parser tag name
-	 * @param $marker substitution marker
-	 * @param $content raw tag contents
-	 * @param $attributes
-	 * @param $parser
-	 * @param $frame
-	 *
+	 * @param $marker
+	 * @param WikiaPhotoGallery $gallery
 	 * @return bool
 	 */
-	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
-		if ( $name === self::PARSER_TAG_GALLERY ) {
-			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
-		}
-
+	public static function onAfterParserParseImageGallery( $marker, WikiaPhotoGallery $gallery ) {
+		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $gallery->getData() );
 		return true;
 	}
 
