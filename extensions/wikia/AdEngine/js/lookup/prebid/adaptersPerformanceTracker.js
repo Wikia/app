@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		if (bid.getStatusCode() === responseErrorCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
-		return [bid.getSize(), bid.pbMg, bucket].join(';');
+		return [bid.getSize(), bid.pbAg, bucket].join(';');
 	}
 
 

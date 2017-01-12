@@ -20,7 +20,7 @@
 			infoboxParamsRequest = this.fetchInfoboxParamsRequest( titles, specs, queue );
 
 		$.when( templateParamsRequest, infoboxParamsRequest )
-			.then( function( templateParamsResponse, infoboxParamsResponse ) {
+			.then( function ( templateParamsResponse, infoboxParamsResponse ) {
 				if ( templateParamsResponse[1] === 'success' ) {
 					this.templateParamsRequestDone( specs, templateParamsResponse[0] );
 				}
@@ -39,14 +39,14 @@
 	/**
 	 * @inheritdoc
 	 */
-	ve.dm.WikiaTransclusionModel.prototype.fetchTemplateParamsRequest = function ( titles, specs, queue ) {
+	ve.dm.WikiaTransclusionModel.prototype.fetchTemplateParamsRequest = function ( titles ) {
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'templateparameters',
 			titles: titles.join( '|' )
 		} );
 	};
 
-	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
+	ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles ) {
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'query',
 			prop: 'infobox',
