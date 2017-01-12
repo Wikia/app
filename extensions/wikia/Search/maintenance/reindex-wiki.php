@@ -12,8 +12,16 @@ include( "$IP/extensions/wikia/Search/WikiaSearch.setup.php" );
 $additionalNamespaces = [ NS_FILE ];
 
 $namespaces = array_merge( $wgContentNamespaces, $additionalNamespaces );
+
 if ( !empty( $wgExtraNamespaces ) ) {
 	$namespaces = array_merge( $namespaces, $wgExtraNamespaces );
+}
+
+foreach( Wikia\Search\Indexer::getExcludedNamespaces() as $excludedNamespace ) {
+	$excludedNamespaceIndex = array_search( $excludedNamespace, $namespaces );
+	if ( $excludedNamespaceIndex !== false ) {
+		unset( $namespaces[$excludedNamespaceIndex] );
+	}
 }
 
 $dbr = wfGetDB( DB_MASTER );

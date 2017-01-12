@@ -56,6 +56,34 @@ class Indexer {
 		'WikiViews'
 	];
 
+	const ARTICLECOMMENT_PREFIX = '@comment-'; // as defined in ArticleComments_setup.php
+
+	/**
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public static function canIndex( \Title $title ) {
+		# do not index article comments, but keep talk pages
+		# define( 'ARTICLECOMMENT_PREFIX', '@comment-' );
+		if ( $title->inNamespace( NS_TALK ) ) {
+			return strpos( $title->getText(), self::ARTICLECOMMENT_PREFIX ) === false;
+		}
+
+		return !in_array($title->getNamespace(), Indexer::getExcludedNamespaces());
+	}
+
+	/**
+	 * Get a list of article descendant namespaces which are not allowed to be indexed for searching:
+	 *
+	 * @return array
+	 */
+	public static function getExcludedNamespaces() {
+		return [
+			1201, // Message Wall
+			2001, // Forum
+		];
+	}
+
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 *
@@ -176,7 +204,8 @@ class Indexer {
 		try {
 			$dataSource = new WikiDataSource( $wid );
 			$dbHandler = $dataSource->getDB();
-			$rows = $dbHandler->query( "SELECT page_id FROM page" );
+			$rows = $dbHandler->query( 'SELECT page_id FROM page WHERE page_namespace NOT IN ('
+				.implode( ',', self::getExcludedNamespaces() ) . ')' );
 			while ( $page = $dbHandler->fetchObject( $rows ) ) {
 				$sp = new ScribeProducer( 'reindex', $page->page_id );
 				$sp->reindexPage();
