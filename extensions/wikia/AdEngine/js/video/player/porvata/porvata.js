@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 				video.addEventListener('allAdsCompleted', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
-					video.ima.setAutoplay(false);
+					video.ima.setAutoPlay(false);
 				});
 				video.addEventListener('start', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					params.onReady(video);
 				}
 
-				if (params.autoplay) {
+				if (params.autoPlay) {
 					video.play();
 				}
 
