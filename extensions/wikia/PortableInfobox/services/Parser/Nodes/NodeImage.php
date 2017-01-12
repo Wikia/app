@@ -84,8 +84,8 @@ class NodeImage extends Node {
 	private function getImagesData( $value ) {
 		$data = array();
 		$items = array_merge( $this->getGalleryItems( $value ), $this->getTabberItems( $value ) );
-		for( $i = 0; $i < count( $items ); $i++ ) {
-			$data[] = $this->getImageData( $items[$i]['title'], $items[$i]['label'], $items[$i]['label'] );
+		foreach( $items as $item ) {
+			$data[] = $this->getImageData( $item['title'], $item['label'], $item['label'] );
 		}
 		return $data;
 	}
@@ -103,8 +103,8 @@ class NodeImage extends Node {
 	private function getTabberItems( $value ) {
 		$tabberItems = array();
 		$tabberMarkers = self::getMarkers( $value, 'TABBER' );
-		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
-			$tabberHtml = $this->getExternalParser()->parseRecursive( $tabberMarkers[$i] );
+		foreach ( $tabberMarkers as $marker ) {
+			$tabberHtml = $this->getExternalParser()->parseRecursive( $marker );
 			$tabberItems = array_merge( $tabberItems, self::getTabberData( $tabberHtml ) );
 		}
 		return $tabberItems;
