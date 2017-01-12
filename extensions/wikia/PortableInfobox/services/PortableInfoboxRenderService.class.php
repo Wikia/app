@@ -92,9 +92,6 @@ class PortableInfoboxRenderService extends WikiaService {
 			case 'title':
 				$result = $this->renderTitle( $data );
 				break;
-			case 'smart-group':
-				$result = $this->renderSmartGroup( $data );
-				break;
 			default:
 				$result = $this->render( $type, $data );
 				break;
@@ -188,12 +185,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		return $this->render( 'header', $data );
 	}
 
-	protected function renderSmartGroup( $data ) {
-		return $this->render( 'smart-group', [
-			'content' => $this->renderChildren( $data['value'] )
-		] );
-	}
-
 	protected function renderChildren( $children ) {
 		$result = '';
 		foreach ( $children as $child ) {
@@ -254,7 +245,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( $item['type'] === 'data' && ( !isset( $data['layout'] ) || $data['layout'] !== 'default' ) ) {
 
-				if ( $rowSpan + $data['span'] > $rowCapacity ) {
+				if ( !empty( $rowItems ) && $rowSpan + $data['span'] > $rowCapacity ) {
 					$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
 					$rowSpan = 0;
 					$rowItems = [ ];
@@ -281,24 +272,22 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function createSmartGroupItem( $rowItems, $rowSpan ) {
 		return [
 			'type' => 'smart-group',
-			'data' => [ 'value' => $this->applyRowItemsStyles( $rowItems, $rowSpan ) ]
+			'data' => $this->createSmartGroupSections( $rowItems, $rowSpan )
 		];
 	}
 
-	private function applyRowItemsStyles( $rowItems, $capacity ) {
-		return array_map( function ( $item, $index ) use ( $capacity ) {
-			$cssClasses = [ 'pi-smart-data' ];
-			if ( $index % 2 === 1 ) {
-				$cssClasses[] = 'pi-smart-even-in-row';
-			}
-			if ( $index === 0 ) {
-				$cssClasses[] = 'pi-smart-first-in-row';
-			}
-			$item['data']['cssClasses'] = implode( " ", $cssClasses );
-			$item['data']['inlineStyles'] =
-				"width: calc({$item['data']['span']} / $capacity * 100%);";
+	private function createSmartGroupSections( $rowItems, $capacity ) {
+		return array_reduce( $rowItems, function ( $result, $item ) use ( $capacity ) {
+			$styles = "width: calc({$item['data']['span']} / $capacity * 100%);";
 
-			return $item;
-		}, $rowItems, array_keys( $rowItems ) );
+			$label = $item['data']['label'] ?? "";
+			if ( !empty( $label ) ) {
+				$result['renderLabels'] = true;
+			}
+			$result['labels'][] = [ 'value' => $label, 'inlineStyles' => $styles ];
+			$result['values'][] = [ 'value' => $item['data']['value'], 'inlineStyles' => $styles ];
+
+			return $result;
+		}, [ 'labels' => [ ], 'values' => [ ], 'renderLabels' => false ] );
 	}
 }
