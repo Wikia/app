@@ -2,6 +2,8 @@
 
 namespace Wikia\IndexingPipeline;
 
+use Wikia\Logger\WikiaLogger;
+
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
@@ -48,6 +50,11 @@ class PipelineEventProducer {
 	 * @param null $eventName
 	 */
 	private static function send( $eventName, $pageId, $revisionId ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'eventName' => $eventName,
+			'pageId' => (string) $pageId
+		] );
+
 		self::getPipeline()->publish(
 			implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
 			PipelineMessageBuilder::create()
@@ -68,6 +75,11 @@ class PipelineEventProducer {
 	 * @param string $ns
 	 */
 	private static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = PipelineRoutingBuilder::NS_CONTENT ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'action' => $action,
+			'pageId' => (string) $pageId
+		] );
+
 		self::getPipeline()->publish(
 			PipelineRoutingBuilder::create()
 				->addName( static::PRODUCER_NAME )
