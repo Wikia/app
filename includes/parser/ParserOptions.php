@@ -158,7 +158,7 @@ class ParserOptions {
 	 * @var User 
 	 * Stored user object
 	 */
-	var $mUser;
+	private $mUser;
 	
 	/**
 	 * Parsing the page for a "preview" operation?

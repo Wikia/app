@@ -8,6 +8,7 @@ use \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
+	const PARSER_TAG_VERSION = 2;
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'pi-theme-';
@@ -156,9 +157,23 @@ class PortableInfoboxParserTagController extends WikiaController {
 		// parser output stores this in page_props table, therefore we can reuse the data in data provider service
 		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
-			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
-			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sourcelabels' => $raw->getSourceLabel() ];
-			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
+			$infoboxes = json_decode(
+				$parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ),
+				true
+			);
+
+			// When you modify this structure, remember to bump the version
+			// Version is checked in PortableInfoboxDataService::load()
+			$infoboxes[] = [
+				'parser_tag_version' => self::PARSER_TAG_VERSION,
+				'data' => $raw->getRenderData(),
+				'metadata' => $raw->getMetadata()
+			];
+
+			$parserOutput->setProperty(
+				PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME,
+				json_encode( $infoboxes )
+			);
 		}
 	}
 
