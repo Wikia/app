@@ -1640,7 +1640,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</section>
 							  </section>
 							</aside>',
-				'description' => 'Flex wrapped group of 1 + 1 + title + 1 with row size 3',
+				'description' => 'Flex wrapped group of 1 (no label) + 1 (no label) + title + 1 (no label) + 1 with row size 3',
 				'mockParams' => [ ],
 				'accentColor' => '',
 				'accentColorText' => ''
