@@ -15,90 +15,6 @@ use Wikia\Search\Indexer;
  * @package Search
  */
 class Hooks {
-	/**
-	 * Stores backlinks for each target article, listing the backlink text, and which source articles link to them
-	 *
-	 * @var *
-	 */
-	protected static $outboundLinks = [];
-
-	/**
-	 * Encapsulates MediaWiki logic
-	 *
-	 * @var \Wikia\Search\MediaWikiService
-	 */
-	protected static $service;
-
-	/**
-	 * Sends delete request to article if it gets deleted
-	 *
-	 * @param \WikiPage $article
-	 * @param \User $user
-	 * @param integer $reason
-	 * @param integer $id
-	 *
-	 * @return true
-	 */
-	public static function onArticleDeleteComplete( &$article, \User &$user, $reason, $id ) {
-		if ( Indexer::canIndex($article->getTitle()) ) {
-			return ( new Indexer )->deleteArticle( $id );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Reindexes the page
-	 *
-	 * @param \WikiPage $article
-	 * @param \User $user
-	 * @param string $text
-	 * @param string $summary
-	 * @param bool $minoredit
-	 * @param bool $watchthis
-	 * @param string $sectionanchor
-	 * @param array $flags
-	 * @param \Revision $revision
-	 * @param int $status
-	 * @param int $baseRevId
-	 *
-	 * @return true
-	 */
-	public static function onArticleSaveComplete(
-		&$article,
-		&$user,
-		$text,
-		$summary,
-		$minoredit,
-		$watchthis,
-		$sectionanchor,
-		&$flags,
-		$revision,
-		&$status,
-		$baseRevId
-	) {
-		if ( Indexer::canIndex($article->getTitle()) ) {
-			return ( new Indexer )->reindexBatch( [ $article->getTitle()->getArticleID() ] );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Reindexes page on undelete
-	 *
-	 * @param \Title $title
-	 * @param int $create
-	 *
-	 * @return true
-	 */
-	public static function onArticleUndelete( $title, $create ) {
-		if ( Indexer::canIndex($title) ) {
-			return ( new Indexer )->reindexBatch( [ $title->getArticleID() ] );
-		}
-
-		return true;
-	}
 
 	/**
 	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
@@ -169,42 +85,6 @@ class Hooks {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Uses MediaWiki LinkEnd hook to store outbound links
-	 *
-	 * @param * $skin
-	 * @param \Title $target
-	 * @param array $options
-	 * @param * $text
-	 * @param array $attribs
-	 * @param * $ret
-	 *
-	 * @return boolean
-	 */
-	public static function onLinkEnd( $skin, \Title $target, array $options, &$text, array &$attribs, &$ret ) {
-		$service = self::$service ?: new MediaWikiService;
-		self::$service = $service;
-		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleID() );
-		if ( $targetId !== 0 ) {
-			$targetDocId = $service->getWikiId() . '_' . $targetId;
-			self::$outboundLinks[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Returns the current parse's outbound links and reinitializes the array.
-	 *
-	 * @return array
-	 */
-	public static function popLinks() {
-		$links = self::$outboundLinks;
-		self::$outboundLinks = [];
-
-		return $links;
 	}
 
 }
