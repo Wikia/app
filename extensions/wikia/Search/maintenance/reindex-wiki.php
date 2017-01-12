@@ -17,7 +17,7 @@ if ( !empty( $wgExtraNamespaces ) ) {
 	$namespaces = array_merge( $namespaces, $wgExtraNamespaces );
 }
 
-foreach( Wikia\Search\Indexer::$excludedNamespaces as $excludedNamespace ) {
+foreach( Wikia\Search\Indexer::getExcludedNamespaces() as $excludedNamespace ) {
 	$excludedNamespaceIndex = array_search( $excludedNamespace, $namespaces );
 	if ( $excludedNamespaceIndex !== false ) {
 		unset( $namespaces[$excludedNamespaceIndex] );
