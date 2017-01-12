@@ -70,6 +70,8 @@
 // **********  Special styles for SMART WRAP group (row-items attribute provided)  ********** //
 
 .pi-smart-group {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -78,6 +80,15 @@
 	.pi-smart-data-value {
 		box-sizing: border-box;
 		flex-basis: auto;
+		padding: $infobox-item-margin $infobox-item-margin * 2;
+	}
+
+	.pi-smart-data-label {
+		padding-bottom: 0;
+	}
+
+	&:last-child {
+		border-bottom: 0;
 	}
 }
 
@@ -88,6 +99,14 @@
 .pi-smart-group-head {
 	align-items: center;
 	display: flex;
+}
+
+.pi-smart-data-value, .pi-smart-data-label {
+	&:not(:first-child) {
+		border-color: $infobox-section-header-background;
+		border-left-style: solid;
+		border-left-width: 1px;
+	}
 }
 
 // **********  Overwrite default infobox styles for STACKED layout type  ********** //

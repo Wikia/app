@@ -200,20 +200,27 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		padding-top: $infobox-side-spacing;
 	}
 
-	.pi-smart-data {
-		border-left: 0;
+	.pi-smart-group {
+		border-bottom: 0;
 		text-align: left;
+	}
 
-		&.pi-smart-even-in-row {
+	.pi-smart-data-label,
+	.pi-smart-data-value {
+		border-left: 0;
+		box-sizing: border-box;
+		flex-basis: auto;
+
+		&:nth-child(even) {
 			background-color: $horizontal-group-stripe-background;
 		}
+	}
 
-		.pi-data-label {
-			padding: 0 0 $horizontal-group-label-spacing;
-		}
+	.pi-smart-data-label {
+		padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+	}
 
-		.pi-data-value {
-			padding: 0;
-		}
+	.pi-smart-data-value {
+		padding-top: 0;
 	}
 }
