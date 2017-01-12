@@ -1564,6 +1564,87 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'accentColor' => '',
 				'accentColorText' => ''
 			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => null,
+										'value' => 'test value 1',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => null,
+										'value' => 'test value 2',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'title',
+									'data' => [
+										'value' => 'title value'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => null,
+										'value' => 'test value 3',
+										'span' => 1,
+										'layout' => null
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 4',
+										'value' => 'test value 4',
+										'span' => 1,
+										'layout' => null
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+							'row-items' => 3
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+							  <section class="pi-item pi-group pi-border-color">
+								<section class="pi-item pi-smart-group pi-border-color">
+								  <section class="pi-smart-group-body pi-item-spacing">
+									<div class="pi-smart-data-value pi-data-value pi-font" style="width: calc(1 / 2 * 100%);">test value 1</div>
+									<div class="pi-smart-data-value pi-data-value pi-font" style="width: calc(1 / 2 * 100%);">test value 2</div>
+								  </section>
+								</section>
+								<h2 class="pi-item pi-item-spacing pi-title">title value</h2>
+								<section class="pi-item pi-smart-group pi-border-color">
+								  <section class="pi-smart-group-head pi-item-spacing">
+									<h3 class="pi-smart-data-label pi-data-label pi-secondary-font" style="width: calc(1 / 2 * 100%);"></h3>
+									<h3 class="pi-smart-data-label pi-data-label pi-secondary-font" style="width: calc(1 / 2 * 100%);">Test 4</h3>
+								  </section>
+								  <section class="pi-smart-group-body pi-item-spacing">
+									<div class="pi-smart-data-value pi-data-value pi-font" style="width: calc(1 / 2 * 100%);">test value 3</div>
+									<div class="pi-smart-data-value pi-data-value pi-font" style="width: calc(1 / 2 * 100%);">test value 4</div>
+								  </section>
+								</section>
+							  </section>
+							</aside>',
+				'description' => 'Flex wrapped group of 1 + 1 + title + 1 with row size 3',
+				'mockParams' => [ ],
+				'accentColor' => '',
+				'accentColorText' => ''
+			],
 		];
 	}
 }
