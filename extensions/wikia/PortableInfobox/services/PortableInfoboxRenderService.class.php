@@ -92,6 +92,9 @@ class PortableInfoboxRenderService extends WikiaService {
 			case 'title':
 				$result = $this->renderTitle( $data );
 				break;
+			case 'smart-group':
+				$result = $this->renderSmartGroup( $data );
+				break;
 			default:
 				$result = $this->render( $type, $data );
 				break;
@@ -116,7 +119,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		$rowItems = $groupData['row-items'];
 
 		if ( $rowItems > 0 ) {
-			$cssClasses[] = 'pi-smart-group';
 			$items = $this->createSmartGroups( $children, $rowItems );
 			$groupHTMLContent .= $this->renderChildren( $items );
 		} elseif ( $layout === 'horizontal' ) {
@@ -186,6 +188,12 @@ class PortableInfoboxRenderService extends WikiaService {
 		return $this->render( 'header', $data );
 	}
 
+	protected function renderSmartGroup( $data ) {
+		return $this->render( 'smart-group', [
+			'content' => $this->renderChildren( $data['value'] )
+		] );
+	}
+
 	protected function renderChildren( $children ) {
 		$result = '';
 		foreach ( $children as $child ) {
@@ -247,7 +255,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			if ( $item['type'] === 'data' && ( !isset( $data['layout'] ) || $data['layout'] !== 'default' ) ) {
 
 				if ( $rowSpan + $data['span'] > $rowCapacity ) {
-					$result = array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
+					$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
 					$rowSpan = 0;
 					$rowItems = [ ];
 				}
@@ -256,23 +264,30 @@ class PortableInfoboxRenderService extends WikiaService {
 			} else {
 				// smart wrapping works only for data tags
 				if ( !empty( $rowItems ) ) {
-					$result = array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan ) );
+					$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
 					$rowSpan = 0;
 					$rowItems = [ ];
 				}
 				$result[] = $item;
 			}
 		}
+		if ( !empty( $rowItems ) ) {
+			$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
+		}
 
-		return array_merge( $result, $this->applyRowItemsStyles( $rowItems, $rowSpan, true ) );
+		return $result;
 	}
 
-	private function applyRowItemsStyles( $rowItems, $capacity, $isLastRow = false ) {
-		return array_map( function ( $item, $index ) use ( $capacity, $isLastRow ) {
+	private function createSmartGroupItem( $rowItems, $rowSpan ) {
+		return [
+			'type' => 'smart-group',
+			'data' => [ 'value' => $this->applyRowItemsStyles( $rowItems, $rowSpan ) ]
+		];
+	}
+
+	private function applyRowItemsStyles( $rowItems, $capacity ) {
+		return array_map( function ( $item, $index ) use ( $capacity ) {
 			$cssClasses = [ 'pi-smart-data' ];
-			if ( $isLastRow ) {
-				$cssClasses[] = 'pi-smart-last-row';
-			}
 			if ( $index % 2 === 1 ) {
 				$cssClasses[] = 'pi-smart-even-in-row';
 			}

@@ -70,22 +70,23 @@
 // **********  Special styles for SMART WRAP group (row-items attribute provided)  ********** //
 
 .pi-smart-group {
-	display: flex;
-	flex-wrap: wrap;
-
-	.pi-item {
-		width: 100%;
-	}
+	display: table;
+	table-layout: fixed;
+	width: 100%;
 }
 
 .pi-smart-data {
 	border-left-style: solid;
 	border-left-width: 1px;
-	display: block;
-	flex-direction: column;
+	display: table-cell;
 	text-align: center;
 
+	.pi-data-label {
+		display: table-caption;
+	}
+
 	.pi-data-value {
+		display: table-cell;
 		padding: $infobox-item-margin $infobox-item-margin * 2 0;
 	}
 
