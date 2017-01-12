@@ -38,8 +38,10 @@ class PortableInfoboxHooks {
 	 * @param WikiaPhotoGallery $gallery
 	 * @return bool
 	 */
-	public static function onAfterParserParseImageGallery( $marker, WikiaPhotoGallery $gallery ) {
-		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $gallery->getData() );
+	public static function onAfterParserParseImageGallery( $marker, $gallery ) {
+		if ( $gallery instanceof WikiaPhotoGallery ) {
+			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery($marker, $gallery->getData());
+		}
 		return true;
 	}
 
