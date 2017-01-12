@@ -17,7 +17,7 @@ class EmailConfirmationHooks {
 			);
 		} else if ( $emailConfirmedParam == '0' ) {
 			BannerNotificationsController::addConfirmation(
-				wfMessage('userlogin-email-confirmation-banner-error')->text(),
+				wfMessage('userlogin-email-confirmation-banner-error')->parse(),
 				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 		}
