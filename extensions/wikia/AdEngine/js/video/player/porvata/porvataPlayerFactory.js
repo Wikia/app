@@ -16,7 +16,6 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function create(params, ima) {
 		var width = params.width,
 			height = params.height,
-			isAutoPlay = params.autoPlay || false,
 			videoAdContainer = params.container.querySelector('div');
 
 		log(['create porvata player'], log.levels.debug, logGroup);
@@ -43,16 +42,6 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				if (newWidth !== undefined && newHeight !== undefined) {
 					width = newWidth;
 					height = newHeight;
-				}
-
-				if (isAutoPlay) {
-					this.addEventListener('start', function () {
-						DOMElementTweaker.show(videoAdContainer);
-					});
-
-					this.addEventListener('allAdsCompleted', function () {
-						DOMElementTweaker.hide(videoAdContainer);
-					});
 				}
 
 				ima.playVideo(width, height);
