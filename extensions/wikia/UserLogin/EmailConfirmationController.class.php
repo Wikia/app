@@ -1,8 +1,6 @@
 <?php
 
 class EmailConfirmationController extends WikiaController {
-	const COOKIE_NAME = 'showEmailConfirmationBanner';
-
 	/**
 	 * Attempt to confirm the user's email address and show success or failure
 	 */
@@ -13,7 +11,9 @@ class EmailConfirmationController extends WikiaController {
 			$user->saveSettings();
 			wfRunHooks( 'ConfirmEmailComplete', array( &$user ) );
 			$this->response->setCode( 200 );
+			$this->response->setVal('username', $user->getName());
 		} else {
+			//User with such token not found
 			$this->response->setCode( 404 );
 		}
 
