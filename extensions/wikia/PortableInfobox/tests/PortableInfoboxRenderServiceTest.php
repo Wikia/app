@@ -1,9 +1,6 @@
 <?php
 
 class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
-	//todo: https://wikia-inc.atlassian.net/browse/DAT-3076
-	//todo: we are testing a lot of functionality and have issues with mocking
-	//todo: we should move all render service test to API tests
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
