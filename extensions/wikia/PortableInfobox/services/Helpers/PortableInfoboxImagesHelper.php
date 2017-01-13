@@ -10,10 +10,11 @@ class PortableInfoboxImagesHelper {
 	 * extends image data
 	 *
 	 * @param array $data image data
-	 * @param int $width preferred thumbnail width
+	 * @param int $thumbnailFileWidth preferred thumbnail file width
+	 * @param int $thumbnailImgTagWidth preferred thumbnail img tag width
 	 * @return array|bool false on failure
 	 */
-	public function extendImageData( $data, $width ) {
+	public function extendImageData( $data, $thumbnailFileWidth, $thumbnailImgTagWidth = null ) {
 		global $wgPortableInfoboxCustomImageWidth;
 
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
@@ -29,19 +30,28 @@ class PortableInfoboxImagesHelper {
 
 		// get dimensions
 		$originalWidth = $file->getWidth();
-		$dimensions = $this->getThumbnailSizes(
-			$width, self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $originalWidth, $file->getHeight() );
+		// we need to have different thumbnail file dimensions to support (not to have pixelated images) wider infoboxes than default width
+		$fileDimensions = $this->getThumbnailSizes( $thumbnailFileWidth, self::MAX_DESKTOP_THUMBNAIL_HEIGHT,
+			$originalWidth, $file->getHeight() );
+		$imgTagDimensions =
+			empty( $thumbnailImgTagWidth )
+				? $fileDimensions
+				: $this->getThumbnailSizes( $thumbnailImgTagWidth,
+				self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $originalWidth, $file->getHeight() );
+
 		// if custom and big enough, scale thumbnail size
-		$ratio = !empty( $wgPortableInfoboxCustomImageWidth ) && $originalWidth > $wgPortableInfoboxCustomImageWidth ?
-			$wgPortableInfoboxCustomImageWidth / $dimensions['width'] : 1;
+		$ratio =
+			!empty( $wgPortableInfoboxCustomImageWidth ) &&
+			$originalWidth > $wgPortableInfoboxCustomImageWidth
+				? $wgPortableInfoboxCustomImageWidth / $fileDimensions['width'] : 1;
 		// get thumbnail
 		$thumbnail = $file->transform( [
-			'width' => round( $dimensions['width'] * $ratio ),
-			'height' => round( $dimensions['height'] * $ratio )
+			'width' => round( $fileDimensions['width'] * $ratio ),
+			'height' => round( $fileDimensions['height'] * $ratio ),
 		] );
 		$thumbnail2x = $file->transform( [
-			'width' => round( $dimensions['width'] * $ratio * 2 ),
-			'height' => round( $dimensions['height'] * $ratio * 2 )
+			'width' => round( $fileDimensions['width'] * $ratio * 2 ),
+			'height' => round( $fileDimensions['height'] * $ratio * 2 ),
 		] );
 		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
@@ -52,8 +62,8 @@ class PortableInfoboxImagesHelper {
 
 		return array_merge( $data, [
 			'ref' => $ref,
-			'height' => $dimensions['height'],
-			'width' => $dimensions['width'],
+			'height' => $imgTagDimensions['height'],
+			'width' => $imgTagDimensions['width'],
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data['key'] ?? '' ),

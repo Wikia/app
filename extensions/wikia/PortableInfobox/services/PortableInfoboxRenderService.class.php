@@ -4,11 +4,16 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
+	// keep synced with scss variables ($infobox-width)
+	const DEFAULT_DESKTOP_INFOBOX_WIDTH = 270;
+	const DEFAULT_EUROPA_INFOBOX_WIDTH = 300;
+
 	const DEFAULT_DESKTOP_THUMBNAIL_WIDTH = 350;
 	const EUROPA_THUMBNAIL_WIDTH = 310;
 
 	protected $templateEngine;
 	protected $imagesWidth = self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+	protected $infoboxWidth = self::DEFAULT_DESKTOP_INFOBOX_WIDTH;
 	protected $inlineStyles;
 
 	private $helper;
@@ -33,8 +38,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		$this->inlineStyles = $this->getInlineStyles( $accentColor, $accentColorText );
 
 		// decide on image width, if europa go with bigger images! else default size
-		$this->imagesWidth = $this->isEuropaTheme() ? self::EUROPA_THUMBNAIL_WIDTH :
-			self::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
+		if($this->isEuropaTheme()) {
+			$this->imagesWidth = self::EUROPA_THUMBNAIL_WIDTH;
+			$this->infoboxWidth = self::DEFAULT_EUROPA_INFOBOX_WIDTH;
+		}
 
 		$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
 
@@ -153,7 +160,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $data as $dataItem ) {
 			$extendedItem = $dataItem;
 			$extendedItem['context'] = null;
-			$extendedItem = $helper->extendImageData( $extendedItem, $this->imagesWidth );
+			$extendedItem = $helper->extendImageData( $extendedItem, $this->imagesWidth, $this->infoboxWidth );
 
 			if ( !!$extendedItem ) {
 				$images[] = $extendedItem;
