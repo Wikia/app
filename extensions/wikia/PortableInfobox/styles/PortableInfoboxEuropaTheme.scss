@@ -187,8 +187,11 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		font-weight: inherit;
 	}
 
-	.pi-smart-data-label {
-		padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+	// need to have both (pi-data-label & pi-smart-data-label) classes in selector to override stacked layout padding (pi-layout-stacked)
+	.pi-data-label {
+		&.pi-smart-data-label {
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+		}
 	}
 
 	.pi-smart-data-value {
