@@ -120,6 +120,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
 		'//resources/wikia/modules/krux.js',
+		'//resources/wikia/modules/viewportObserver.js',
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -494,7 +495,6 @@ $config['oasis_nojquery_shared_js'] = [
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//resources/wikia/modules/viewportObserver.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
@@ -967,6 +967,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
+		'//resources/wikia/modules/viewportObserver.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 	],
 ];
