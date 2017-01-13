@@ -78,7 +78,7 @@ $messages['es'] = array(
 	'emailext-emailconfirmation-footer-list-1' => 'La habilidad de crear un perfil personalizado',
 	'emailext-emailconfirmation-footer-list-2' => 'Recibir alertas de las comunidades y discusiones',
 	'emailext-emailconfirmation-footer-list-3' => 'Añadir fotos y videos a tu comunidad',
-	'emailext-emailconfirmation-footer-list-4' => 'Convertite en miembro detu comunidad favorita',
+	'emailext-emailconfirmation-footer-list-4' => 'Convertite en miembro de tu comunidad favorita',
 );
 
 $messages['fr'] = array(
