@@ -24,6 +24,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	function loadPorvata(params, slotContainer, providerContainer) {
 		params.container = slotContainer;
+		params.container = params.videoElement || slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
@@ -33,8 +34,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					'progressBar',
 					'pauseOverlay',
 					'volumeControl',
-					'closeButton',
-					'toggleAnimation'
+					'closeButton'
+					// 'toggleAnimation' // TODO: replace it with different behavior
 				], {
 					image: providerContainer,
 					container: slotContainer,
@@ -87,7 +88,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
-			videoContainer = providerContainer.parentNode,
+			videoContainer = params.videoElement || providerContainer.parentNode,
 			videoWidth = getSlotWidth(videoContainer);
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
