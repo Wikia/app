@@ -87,8 +87,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
-			slotContainer = providerContainer.parentNode,
-			videoWidth = getSlotWidth(slotContainer);
+			videoContainer = providerContainer.parentNode,
+			videoWidth = getSlotWidth(videoContainer);
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
@@ -104,19 +104,19 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
 
 		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, slotContainer, providerContainer);
+			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, slotContainer, providerContainer);
+			loadedPlayer = loadPorvata(params, videoContainer, providerContainer);
 		}
 
 		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
-				var slotWidth = getSlotWidth(slotContainer);
+				var slotWidth = getSlotWidth(videoContainer);
 				video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(slotContainer);
+				var slotWidth = getSlotWidth(videoContainer);
 				video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			});
 
