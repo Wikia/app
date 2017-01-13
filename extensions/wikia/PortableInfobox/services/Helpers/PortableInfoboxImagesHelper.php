@@ -103,4 +103,18 @@ class PortableInfoboxImagesHelper {
 
 		return [ 'height' => round( $height ), 'width' => round( $width ) ];
 	}
+
+	/**
+	 * return real width of the image.
+	 * @param \Title $title
+	 * @return int number
+	 */
+	public function getFileWidth( $title ) {
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if ( $file ) {
+			return $file->getWidth();
+		}
+		return 0;
+	}
 }

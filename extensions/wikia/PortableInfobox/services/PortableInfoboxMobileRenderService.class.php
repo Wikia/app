@@ -161,7 +161,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		if ( $type === 'image' && !isset( $heroData['image'] ) && count( $item['data'] ) === 1 ) {
-			$imageWidth = $this->getFileWidth( $item['data'][0]['name'] );
+			$imageWidth = $this->getImageHelper()->getFileWidth( $item['data'][0]['name'] );
 
 			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
@@ -169,20 +169,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		return false;
-	}
-
-	/**
-	 * return real width of the image.
-	 * @param \Title $title
-	 * @return int number
-	 */
-	private function getFileWidth( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->getWidth();
-		}
-		return 0;
 	}
 
 	private function isMercury() {
