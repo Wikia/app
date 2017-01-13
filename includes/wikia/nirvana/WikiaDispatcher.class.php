@@ -10,6 +10,9 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+
+use Wikia\Logger\WikiaLogger;
+
 class WikiaDispatcher {
 
 	const DEFAULT_METHOD_NAME = 'index';
@@ -185,6 +188,21 @@ class WikiaDispatcher {
 					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
 				}
 
+				if ( !$request->isInternal() &&
+					$controller->allowsExternalRequests() &&
+					!in_array( $method, $controller->getAllowedExternalMethods() )
+				) {
+					// Log for now
+					WikiaLogger::instance()->debugSampled(
+						0.01,
+						'Non-whitelisted controller method called externally',
+						[
+							'controller' => $controllerClassName,
+							'method' => $method,
+						]
+					);
+				}
+
 				if ( !$request->isInternal() ) {
 					$this->testIfUserHasPermissionsOrThrow($app, $controller, $method);
 				}
@@ -260,7 +278,7 @@ class WikiaDispatcher {
 
 				$response->setException($e);
 
-				Wikia\Logger\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
 					[
 						'exception' => $e,
@@ -281,7 +299,7 @@ class WikiaDispatcher {
 
 		if ( $response->hasException() ) {
 			$exception = $response->getException();
-			\Wikia\Logger\WikiaLogger::instance()->error(
+			WikiaLogger::instance()->error(
 				sprintf( "%s - %s - %s - %s", __METHOD__, 'Exception', get_class( $exception ), $exception->getMessage() ),
 				[
 					'exception' => $exception

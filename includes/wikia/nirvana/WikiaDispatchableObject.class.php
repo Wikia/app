@@ -38,6 +38,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	protected $callNext = array();
 
+	protected $defaultAllowedExternalMethods = [
+		'index',
+	];
+
 	/**
 	 * Whether the class accepts external requests
 	 * @return boolean
@@ -219,6 +223,14 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			'status' => 'error',
 			'errormsg' => wfMessage( 'sessionfailure' )->escaped(),
 		] );
+	}
+
+	protected function allowedExternalMethods() {
+		return [];
+	}
+
+	final public function getAllowedExternalMethods() {
+		return array_merge( $this->defaultAllowedExternalMethods, $this->allowedExternalMethods() );
 	}
 
 	// Magic setting of template variables so we don't have to do $this->response->setVal
