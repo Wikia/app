@@ -2,6 +2,8 @@
 
 namespace Discussions;
 
+use DumpForumData;
+
 class ForumDumper {
 
 	const TABLE_PAGE = 'page';
@@ -75,16 +77,18 @@ class ForumDumper {
 	];
 
 	private $pages = [];
-	private $revisions = [];
-	private $votes = [];
 
 	private $dummyTitle;
 	private $parserOptions;
 
-	public function __construct() {
+	/** @var DumpForumData */
+	private $saver;
+
+	public function __construct(DumpForumData $saver) {
 		$this->dummyTitle = \Title::newFromText( "Dummy" );
 		$this->parserOptions = new \ParserOptions();
 		$this->parserOptions->setEditSection( false );
+		$this->saver = $saver;
 	}
 
 	private function getForumNamespaces() {
@@ -96,14 +100,6 @@ class ForumDumper {
 
 	public function addPage( $id, $data ) {
 		$this->pages[$id] = $data;
-	}
-
-	public function addRevision( $data ) {
-		$this->revisions[] = $data;
-	}
-
-	public function addVote( $data ) {
-		$this->votes[] = $data;
 	}
 
 	public function getPages() {
@@ -145,11 +141,7 @@ class ForumDumper {
 		return $this->pages;
 	}
 
-	public function getRevisions() {
-		if ( !empty( $this->revisions ) ) {
-			return $this->revisions;
-		}
-		
+	public function saveRevisions() {
 		$pageIds = array_keys( $this->getPages() );
 
 		$dbh = wfGetDB( DB_SLAVE );
@@ -164,8 +156,8 @@ class ForumDumper {
 
 				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
-				
-				$this->addRevision( [
+
+				$this->saver->dumpRevision( [
 					"revision_id" => $row->rev_id,
 					"page_id" => $row->rev_page,
 					"page_namespace" => $curPage['namespace'],
@@ -183,8 +175,6 @@ class ForumDumper {
 				    "content" => $parsedText
 				] );
 			} );
-
-		return $this->revisions;
 	}
 
 	public function getTextAndTitle( $textId ) {
@@ -262,28 +252,20 @@ class ForumDumper {
 		return self::CONTRIBUTOR_TYPE_USER;
 	}
 
-	public function getVotes() {
-		if ( !empty( $this->votes ) ) {
-			return $this->votes;
-		}
-
+	public function saveVotes() {
 		$pageIds = array_keys( $this->getPages() );
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::TABLE_VOTE )
 			->WHERE( 'article_id' )->IN( $pageIds )
 			->runLoop( $dbh, function ( &$pages, $row ) {
-
-				$this->addVote( [
+				$this->saver->dumpVote( [
 					"page_id" => $row->article_id,
 					"user_identifier" => $row->user_id,
 					"timestamp" => $row->time
 				] );
 			} );
-
-		return $this->votes;
 	}
 }
