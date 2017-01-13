@@ -31,13 +31,14 @@ class PortableInfoboxImagesHelper {
 		// get dimensions
 		$originalWidth = $file->getWidth();
 		// we need to have different thumbnail file dimensions to support (not to have pixelated images) wider infoboxes than default width
-		$imgTagDimensions = $fileDimensions = $this->getThumbnailSizes( $thumbnailFileWidth, self::MAX_DESKTOP_THUMBNAIL_HEIGHT,
+		$fileDimensions = $this->getThumbnailSizes( $thumbnailFileWidth, self::MAX_DESKTOP_THUMBNAIL_HEIGHT,
 			$originalWidth, $file->getHeight() );
-		if ( !empty( $thumbnailImgTagWidth ) ) {
-			$imgTagDimensions =
-				$this->getThumbnailSizes( $thumbnailImgTagWidth, self::MAX_DESKTOP_THUMBNAIL_HEIGHT,
-					$originalWidth, $file->getHeight() );
-		}
+		$imgTagDimensions =
+			empty( $thumbnailImgTagWidth )
+				? $fileDimensions
+				: $this->getThumbnailSizes( $thumbnailImgTagWidth,
+				self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $originalWidth, $file->getHeight() );
+
 		// if custom and big enough, scale thumbnail size
 		$ratio =
 			!empty( $wgPortableInfoboxCustomImageWidth ) &&
