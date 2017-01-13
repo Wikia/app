@@ -76,6 +76,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.src = src;
 
 			if (lookups) {
+				console.log('*****BOGNA', "extending slot targeting");
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 

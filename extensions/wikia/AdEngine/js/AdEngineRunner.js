@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
 		supportedModules = [amazonMatch, rubiconFastlane, spRecovery, prebid],
-		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
+		timeout = 0;
 
 	/**
 	 * Delay running AdEngine by module responses or by configured timeout

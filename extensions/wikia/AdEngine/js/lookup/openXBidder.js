@@ -58,6 +58,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		dfpParams[dfpKey] = price;
 		log(['getSlotParams', dfpKey, price], 'debug', logGroup);
 
+		console.log('****BOGNA', 'OX returning slot params', dfpParams);
 		return dfpParams;
 	}
 
@@ -85,6 +86,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				priceMap[shortSlotName] = prices[slotName];
 			}
 		}
+		console.log('****BOGNA', 'calculating prices for OX', prices);
 	}
 
 	function call(skin, onResponse) {
