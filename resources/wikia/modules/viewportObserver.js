@@ -8,7 +8,7 @@ define('wikia.viewportObserver', [
 	function addListener(element, callback) {
 		var listener = {element: element, callback: callback, inViewport: false};
 
-		window.addEventListener('scroll', function() {
+		win.addEventListener('scroll', function() {
 			updateInViewport(listener);
 		});
 
@@ -33,8 +33,8 @@ define('wikia.viewportObserver', [
 			elementHeight = element.offsetHeight,
 			topElement = getTopOffset(element),
 			bottomElement = topElement + elementHeight,
-			topViewport = window.scrollY + globalNavHeight,
-			bottomViewport = topViewport + Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			topViewport = win.scrollY + globalNavHeight,
+			bottomViewport = topViewport + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
 
 		return (topElement >= topViewport - elementHeight/2 && bottomElement <= bottomViewport + elementHeight/2);
 	}
