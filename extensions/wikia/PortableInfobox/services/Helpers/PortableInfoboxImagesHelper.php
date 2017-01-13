@@ -42,7 +42,7 @@ class PortableInfoboxImagesHelper {
 		$ratio =
 			!empty( $wgPortableInfoboxCustomImageWidth ) &&
 			$originalWidth > $wgPortableInfoboxCustomImageWidth
-				? $wgPortableInfoboxCustomImageWidth / $dimensions['width'] : 1;
+				? $wgPortableInfoboxCustomImageWidth / $fileDimensions['width'] : 1;
 		// get thumbnail
 		$thumbnail = $file->transform( [
 			'width' => round( $fileDimensions['width'] * $ratio ),
