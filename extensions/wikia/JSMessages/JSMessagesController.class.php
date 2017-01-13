@@ -31,4 +31,8 @@ class JSMessagesController extends WikiaController {
 			$this->response->setContentType('text/javascript; charset=utf-8');
 		}
 	}
+
+	protected function allowedExternalMethods() {
+		return [ 'getMessages' ];
+	}
 }

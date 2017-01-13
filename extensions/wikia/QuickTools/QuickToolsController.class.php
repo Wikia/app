@@ -120,6 +120,14 @@ class QuickToolsController extends WikiaController  {
 		return true;
 	}
 
+	protected function allowedExternalMethods() {
+		return [
+			'quickToolsModal',
+			'blockUser',
+			'revertAll',
+		];
+	}
+
 	/**
 	 * Checks if the request was valid
 	 *

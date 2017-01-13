@@ -137,10 +137,19 @@ class RailController extends WikiaController {
 
 		return $out;
 	}
+
 	private function modulesNotLazyCheck($moduleKey) {
 		return $moduleKey >= self::LAZY_LOADING_BEAKPOINT;
 	}
+
 	private function modulesLazyCheck($moduleKey) {
 		return $moduleKey < self::LAZY_LOADING_BEAKPOINT;
+	}
+
+	protected function allowedExternalMethods() {
+		return [
+			'executeLazy',
+			'executeLazyForAnons',
+		];
 	}
 }
