@@ -146,12 +146,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		$data = $this->filterImageData( $data );
 		$images = [ ];
 
-		foreach ( $data as &$dataItem ) {
-			$dataItem['context'] = null;
-			$dataItem = $helper->extendImageData( $dataItem, $this->imagesWidth );
+		foreach ( $data as $dataItem ) {
+			$extendedItem = $dataItem;
+			$extendedItem['context'] = null;
+			$extendedItem = $helper->extendImageData( $extendedItem, $this->imagesWidth );
 
-			if ( !!$dataItem ) {
-				$images[] = $dataItem;
+			if ( !!$extendedItem ) {
+				$images[] = $extendedItem;
 			}
 		}
 
@@ -169,20 +170,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $this->render( $templateName, $data );
-	}
-
-	protected function filterImageData( $data ) {
-		$dataWithCaption = array_filter($data, function( $item ) {
-			return !empty( $item['caption'] );
-		});
-
-		if ( !empty( $dataWithCaption ) ) {
-			return $dataWithCaption;
-		} elseif ( !empty( $data ) ) {
-			return [ $data[0] ];
-		}
-
-		return [];
 	}
 
 	protected function renderTitle( $data ) {
@@ -207,6 +194,20 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $result;
+	}
+
+	private function filterImageData( $data ) {
+		$dataWithCaption = array_filter($data, function( $item ) {
+			return !empty( $item['caption'] );
+		});
+
+		if ( !empty( $dataWithCaption ) ) {
+			return $dataWithCaption;
+		} elseif ( !empty( $data ) ) {
+			return [ $data[0] ];
+		}
+
+		return [];
 	}
 
 	private function getInlineStyles( $accentColor, $accentColorText ) {
