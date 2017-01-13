@@ -2,6 +2,7 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use HtmlHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
@@ -18,7 +19,7 @@ class NodeImage extends Node {
 	}
 
 	public static function getGalleryData( $marker ) {
-		$galleryData = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->getGallery( $marker );
+		$galleryData = PortableInfoboxDataBag::getInstance()->getGallery( $marker );
 		return array_map( function ( $image ) {
 			return [
 				'label' => $image[ 'caption' ],
