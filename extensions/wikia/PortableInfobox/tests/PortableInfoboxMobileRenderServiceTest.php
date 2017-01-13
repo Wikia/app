@@ -429,12 +429,14 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'ref' => 1,
-							'name' => 'test1',
-							'key' => 'test1',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'ref' => 1,
+								'name' => 'test1',
+								'key' => 'test1',
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -473,11 +475,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'url' => 'http://image.jpg',
-							'name' => 'test1',
-							'key' => 'test1',
-							'ref' => 44,
-							'isVideo' => false
+							[
+								'url' => 'http://image.jpg',
+								'name' => 'test1',
+								'key' => 'test1',
+								'ref' => 44,
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -512,12 +516,14 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'ref' => 1,
-							'name' => 'test1',
-							'key' => 'test1',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'ref' => 1,
+								'name' => 'test1',
+								'key' => 'test1',
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -565,11 +571,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'url' => 'http://image.jpg',
-							'name' => 'test1',
-							'key' => 'test1',
-							'ref' => 44,
-							'isVideo' => false
+							[
+								'url' => 'http://image.jpg',
+								'name' => 'test1',
+								'key' => 'test1',
+								'ref' => 44,
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -643,11 +651,13 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'image',
 									'data' => [
-										'url' => 'http://image.jpg',
-										'name' => 'test1',
-										'key' => 'test1',
-										'ref' => 44,
-										'isVideo' => false
+										[
+											'url' => 'http://image.jpg',
+											'name' => 'test1',
+											'key' => 'test1',
+											'ref' => 44,
+											'isVideo' => false
+										]
 									]
 								],
 								[
@@ -677,6 +687,21 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 										</a>
 									</figure>
 								</div>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
+									<h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+									<div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<section class="pi-item pi-group pi-border-color">
+									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+										<div class="pi-data-value pi-font">test value 2</div>
+									</div>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+										<div class="pi-data-value pi-font">test value 3</div>
+									</div>
+								</section>
 							</aside>',
 				'description' => 'Mercury: Infobox with valid hero data partially nested in group',
 				'mockParams' => [
@@ -686,6 +711,115 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'key' => 'test1',
 						'ref' => 44,
 						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'thumbnail.jpg',
+						'thumbnail2x' => 'thumbnail2x.jpg',
+						'isVideo' => false,
+						'media-type' => 'image',
+						'mercuryComponentAttrs' => json_encode( [
+							'itemContext' => 'portable-infobox',
+							'ref' => 44
+						] )
+					]
+				]
+			],
+			[
+				'input' => [
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'Test 1',
+							'value' => 'test value 1'
+						]
+					],
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test <img /><a href="example.com">Title</a>'
+						]
+					],
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'Test Header'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 2',
+										'value' => 'test value 2'
+									]
+								],
+								[
+									'type' => 'image',
+									'data' => [
+										[
+											'url' => 'http://image.jpg',
+											'name' => 'test1',
+											'key' => 'test1',
+											'ref' => 44,
+											'isVideo' => false
+										]
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'Test 3',
+										'value' => 'test value 3'
+									]
+								]
+							],
+							'layout' => null,
+							'collapse' => null,
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
+									<h3 class="pi-data-label pi-secondary-font">Test 1</h3>
+									<div class="pi-data-value pi-font">test value 1</div>
+								</div>
+								<section class="pi-item pi-group pi-border-color">
+									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
+										<div class="pi-data-value pi-font">test value 2</div>
+									</div>
+									<div class="pi-item pi-image">
+										<figure class="article-media-thumbnail" data-component="article-media-thumbnail" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
+											<a href="http://image.jpg">
+												<img class="article-media-placeholder"
+													src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E"
+													alt=""
+													 width="200"
+													 height="200"/>
+												<noscript>
+													<img src="http://image.jpg" alt="" width="200" height="200"/>
+												</noscript>
+											</a>
+										</figure>
+									</div>
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
+										<h3 class="pi-data-label pi-secondary-font">Test 3</h3>
+										<div class="pi-data-value pi-font">test value 3</div>
+									</div>
+								</section>
+							</aside>',
+				'description' => 'Mercury: Infobox with invalid hero data partially nested in group',
+				'mockParams' => [
+					'extendImageData' => [
+						'url' => 'http://image.jpg',
+						'name' => 'test1',
+						'key' => 'test1',
+						'ref' => 44,
+						'width' => '200',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
