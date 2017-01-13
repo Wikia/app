@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.template.bfab', [
 			}
 
 			if (uapVideo.isEnabled(params)) {
-				uapVideo.loadVideoAd(params, slot, slot.querySelector('div'));
+				uapVideo.loadVideoAd(params);
 			}
 		});
 

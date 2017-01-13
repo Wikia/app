@@ -1,10 +1,4 @@
 <?php
-/**
- * Class definition for \Wikia\Search\IndexService\WikiPromoData;
- *
- * @author relwell
- *
- */
 namespace Wikia\Search\IndexService;
 /**
  * Responsible for statistics for a given wiki
