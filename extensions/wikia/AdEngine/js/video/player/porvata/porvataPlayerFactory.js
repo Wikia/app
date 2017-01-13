@@ -1,11 +1,13 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.log'], function(log) {
+define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
+	'ext.wikia.adEngine.domElementTweaker', 'wikia.log'
+], function(DOMElementTweaker, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory';
 
 	function prepareVideoAdContainer(videoAdContainer) {
 		videoAdContainer.style.position = 'relative';
-		videoAdContainer.classList.add('hidden');
+		DOMElementTweaker.hide(videoAdContainer);
 		videoAdContainer.classList.add('video-player');
 
 		return videoAdContainer;
@@ -13,12 +15,13 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', ['wikia.l
 
 	function create(params, ima) {
 		var width = params.width,
-			height = params.height;
+			height = params.height,
+			videoAdContainer = params.container.querySelector('div');
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
 		return {
-			container: prepareVideoAdContainer(params.container.querySelector('div')),
+			container: prepareVideoAdContainer(videoAdContainer),
 			ima: ima,
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);

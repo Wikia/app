@@ -272,6 +272,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'default',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -321,6 +322,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
@@ -381,6 +383,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 							],
 							'layout' => 'horizontal',
 							'collapse' => null,
+							'row-items' => null
 						]
 					]
 				],
