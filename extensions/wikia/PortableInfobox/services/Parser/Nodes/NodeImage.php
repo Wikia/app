@@ -6,6 +6,9 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
+	const GALLERY = 'GALLERY';
+	const TABBER = 'TABBER';
+
 	const ALT_TAG_NAME = 'alt';
 	const CAPTION_TAG_NAME = 'caption';
 	const MEDIA_TYPE_VIDEO = 'VIDEO';
@@ -74,12 +77,7 @@ class NodeImage extends Node {
 	 * @return bool
 	 */
 	private function containsTabberOrGallery( $str ) {
-		// TODO: Consider more robust approach (UNIQ...QINU)
-		$strLower = strtolower( $str );
-		if ( strpos( $strLower, '-tabber-' ) !== false || strpos( $strLower, '-gallery-' ) !== false ) {
-			return true;
-		}
-		return false;
+		return !empty( array_merge( self::getMarkers( $str, self::TABBER ), self::getMarkers( $str, self::GALLERY ) ) );
 	}
 
 	private function getImagesData( $value ) {
@@ -93,7 +91,7 @@ class NodeImage extends Node {
 
 	private function getGalleryItems( $value ) {
 		$galleryItems = [];
-		$galleryMarkers = self::getMarkers( $value, 'GALLERY' );
+		$galleryMarkers = self::getMarkers( $value, self::GALLERY );
 		foreach ( $galleryMarkers as $marker ) {
 			$galleryItems = array_merge( $galleryItems, self::getGalleryData( $marker ) );
 
@@ -103,7 +101,7 @@ class NodeImage extends Node {
 
 	private function getTabberItems( $value ) {
 		$tabberItems = array();
-		$tabberMarkers = self::getMarkers( $value, 'TABBER' );
+		$tabberMarkers = self::getMarkers( $value, self::TABBER );
 		foreach ( $tabberMarkers as $marker ) {
 			$tabberHtml = $this->getExternalParser()->parseRecursive( $marker );
 			$tabberItems = array_merge( $tabberItems, self::getTabberData( $tabberHtml ) );
