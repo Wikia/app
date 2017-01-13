@@ -1,13 +1,14 @@
-/**
-
- */
-define('wikia.viewportObserver', ['wikia.window', 'wikia.onScroll'], function (win, onScroll) {
+/*global define*/
+define('wikia.viewportObserver', [
+	'wikia.document',
+	'wikia.window'
+], function (doc, win) {
 	'use strict';
 
 	function addListener(element, callback) {
 		var listener = {element: element, callback: callback, inViewport: false};
 
-		onScroll.bind(function() {
+		window.addEventListener('scroll', function() {
 			updateInViewport(listener);
 		});
 
@@ -31,8 +32,8 @@ define('wikia.viewportObserver', ['wikia.window', 'wikia.onScroll'], function (w
 		var elementHeight = element.offsetHeight,
 			topElement = getTopOffset(element),
 			bottomElement = topElement + elementHeight,
-			topViewport = window.scrollY,
-			bottomViewport = window.scrollY + Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			topViewport = win.scrollY,
+			bottomViewport = win.scrollY + Math.max(document.documentElement.clientHeight, win.innerHeight || 0);
 
 		return (topElement >= topViewport - elementHeight/2 && bottomElement <= bottomViewport + elementHeight/2);
 	}
@@ -52,5 +53,5 @@ define('wikia.viewportObserver', ['wikia.window', 'wikia.onScroll'], function (w
 	 */
 	return {
 		addListener: addListener
-	}
+	};
 });

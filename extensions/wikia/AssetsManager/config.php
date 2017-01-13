@@ -494,6 +494,7 @@ $config['oasis_nojquery_shared_js'] = [
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
+		'//resources/wikia/modules/viewportObserver.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',

@@ -2,12 +2,15 @@
 define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
-	'wikia.log'
-], function (porvataPlayerFactory, googleIma, log) {
+	'wikia.document',
+	'wikia.log',
+	'wikia.viewportObserver'
+], function (porvataPlayerFactory, googleIma, doc, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
 	function inject(params) {
+		var slot = doc.getElementById(params.slotName);
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
 
 		params.vastTargeting = params.vastTargeting || {
@@ -47,6 +50,16 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				if (params.onReady) {
 					params.onReady(video);
 				}
+
+				viewportObserver.addListener(slot, function (isVisible) {
+					if (video.ima.getAdsManager()) {
+						if (isVisible) {
+							video.resume();
+						} else {
+							video.pause();
+						}
+					}
+				});
 
 				if (params.autoPlay) {
 					video.play();

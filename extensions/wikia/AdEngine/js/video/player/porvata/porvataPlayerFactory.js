@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
-	'ext.wikia.adEngine.domElementTweaker', 'wikia.log'
+	'ext.wikia.adEngine.domElementTweaker',
+	'wikia.log',
 ], function(DOMElementTweaker, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory';
