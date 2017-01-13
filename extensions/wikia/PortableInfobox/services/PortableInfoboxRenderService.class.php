@@ -201,13 +201,15 @@ class PortableInfoboxRenderService extends WikiaService {
 			return !empty( $item['caption'] );
 		});
 
+		$result = [];
+
 		if ( !empty( $dataWithCaption ) ) {
-			return $dataWithCaption;
+			$result = $dataWithCaption;
 		} elseif ( !empty( $data ) ) {
-			return [ $data[0] ];
+			$result = [ $data[0] ];
 		}
 
-		return [];
+		return $result;
 	}
 
 	private function getInlineStyles( $accentColor, $accentColorText ) {
