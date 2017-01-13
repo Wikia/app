@@ -30,7 +30,7 @@
 
 			$collapsibleGroups.each( function( index, group ) {
 				var $group = $collapsibleGroups.eq(index),
-					$header = $group.find('.pi-header');
+					$header = $group.find('.pi-header:first');
 
 				$header.click( function() {
 					$group.toggleClass('pi-collapse-closed');
