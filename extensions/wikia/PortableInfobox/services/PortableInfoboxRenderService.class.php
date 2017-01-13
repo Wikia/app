@@ -1,7 +1,7 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine;
 
 class PortableInfoboxRenderService extends WikiaService {
 	// keep synced with scss variables ($infobox-width)
@@ -117,20 +117,24 @@ class PortableInfoboxRenderService extends WikiaService {
 	protected function renderGroup( $groupData ) {
 		$cssClasses = [ ];
 		$groupHTMLContent = '';
-		$dataItems = $groupData['value'];
+		$children = $groupData['value'];
 		$layout = $groupData['layout'];
 		$collapse = $groupData['collapse'];
+		$rowItems = $groupData['row-items'];
 
-		if ( $layout === 'horizontal' ) {
+		if ( $rowItems > 0 ) {
+			$items = $this->createSmartGroups( $children, $rowItems );
+			$groupHTMLContent .= $this->renderChildren( $items );
+		} elseif ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
-				$this->createHorizontalGroupData( $dataItems )
+				$this->createHorizontalGroupData( $children )
 			);
 		} else {
-			$groupHTMLContent .= $this->renderChildren( $dataItems );
+			$groupHTMLContent .= $this->renderChildren( $children );
 		}
 
-		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[0]['type'] === 'header' ) {
+		if ( $collapse !== null && count( $children ) > 0 && $children[0]['type'] === 'header' ) {
 			$cssClasses[] = 'pi-collapse';
 			$cssClasses[] = 'pi-collapse-' . $collapse;
 		}
@@ -236,5 +240,61 @@ class PortableInfoboxRenderService extends WikiaService {
 		global $wgEnablePortableInfoboxEuropaTheme;
 
 		return !empty( $wgEnablePortableInfoboxEuropaTheme );
+	}
+
+	private function createSmartGroups( $groupData, $rowCapacity ) {
+		$result = [ ];
+		$rowSpan = 0;
+		$rowItems = [ ];
+
+		foreach ( $groupData as $item ) {
+			$data = $item['data'];
+
+			if ( $item['type'] === 'data' && ( !isset( $data['layout'] ) || $data['layout'] !== 'default' ) ) {
+
+				if ( !empty( $rowItems ) && $rowSpan + $data['span'] > $rowCapacity ) {
+					$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
+					$rowSpan = 0;
+					$rowItems = [ ];
+				}
+				$rowSpan += $data['span'];
+				$rowItems[] = $item;
+			} else {
+				// smart wrapping works only for data tags
+				if ( !empty( $rowItems ) ) {
+					$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
+					$rowSpan = 0;
+					$rowItems = [ ];
+				}
+				$result[] = $item;
+			}
+		}
+		if ( !empty( $rowItems ) ) {
+			$result[] = $this->createSmartGroupItem( $rowItems, $rowSpan );
+		}
+
+		return $result;
+	}
+
+	private function createSmartGroupItem( $rowItems, $rowSpan ) {
+		return [
+			'type' => 'smart-group',
+			'data' => $this->createSmartGroupSections( $rowItems, $rowSpan )
+		];
+	}
+
+	private function createSmartGroupSections( $rowItems, $capacity ) {
+		return array_reduce( $rowItems, function ( $result, $item ) use ( $capacity ) {
+			$styles = "width: calc({$item['data']['span']} / $capacity * 100%);";
+
+			$label = $item['data']['label'] ?? "";
+			if ( !empty( $label ) ) {
+				$result['renderLabels'] = true;
+			}
+			$result['labels'][] = [ 'value' => $label, 'inlineStyles' => $styles ];
+			$result['values'][] = [ 'value' => $item['data']['value'], 'inlineStyles' => $styles ];
+
+			return $result;
+		}, [ 'labels' => [ ], 'values' => [ ], 'renderLabels' => false ] );
 	}
 }
