@@ -1,7 +1,6 @@
 <?php
 
 class PortableInfoboxHooks {
-	const PARSER_TAG_GALLERY = 'gallery';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		global $wgEnablePortableInfoboxEuropaTheme;
