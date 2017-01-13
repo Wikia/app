@@ -9,13 +9,17 @@ class EmailConfirmationController extends WikiaController {
 		$userFromToken = User::newFromConfirmationCode( $token );
 		$currentUserId = $this->wg->user->getId();
 
+		if (!$this->wg->request->wasPosted()) {
+			// Only POST to this resource is allowed
+			$this->response->setCode( 405 );
+		}
 		if ( is_null( $token ) ) {
 			// No token given: Bad Request
 			$this->response->setCode( 400 );
-		} else if ( !is_object( $userFromToken ) ) {
+		} elseif ( !is_object( $userFromToken ) ) {
 			// No user has such a token associated: Not Found
 			$this->response->setCode( 404 );
-		} else if ( $userFromToken->getId() != $currentUserId ) {
+		} elseif ( $userFromToken->getId() != $currentUserId ) {
 			// Not logged in as a user confirming their token: Unauthorized
 			$this->response->setCode( 401 );
 		} else {
@@ -35,6 +39,6 @@ class EmailConfirmationController extends WikiaController {
 	private function confirmEmail( User $user ) {
 		$user->confirmEmail();
 		$user->saveSettings();
-		wfRunHooks( 'ConfirmEmailComplete', array( &$user ) );
+		wfRunHooks( 'ConfirmEmailComplete', [&$user] );
 	}
 }
