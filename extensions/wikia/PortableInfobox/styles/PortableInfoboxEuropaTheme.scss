@@ -187,22 +187,12 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		font-weight: inherit;
 	}
 
-	.pi-tab-link {
-		border: 0;
-		font-size: $tab-font-size;
-		margin: 0;
+	.pi-smart-data-label {
+		padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
 	}
 
-	.pi-title {
-		font-size: $title-font-size;
-		font-weight: bold;
-		line-height: $title-line-height;
-		padding-top: $infobox-side-spacing;
-	}
-
-	.pi-smart-group {
-		border-bottom: 0;
-		text-align: left;
+	.pi-smart-data-value {
+		padding-top: 0;
 	}
 
 	.pi-smart-data-label,
@@ -216,11 +206,21 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		}
 	}
 
-	.pi-smart-data-label {
-		padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+	.pi-smart-group {
+		border-bottom: 0;
+		text-align: left;
 	}
 
-	.pi-smart-data-value {
-		padding-top: 0;
+	.pi-tab-link {
+		border: 0;
+		font-size: $tab-font-size;
+		margin: 0;
+	}
+
+	.pi-title {
+		font-size: $title-font-size;
+		font-weight: bold;
+		line-height: $title-line-height;
+		padding-top: $infobox-side-spacing;
 	}
 }
