@@ -77,7 +77,7 @@ class NodeImage extends Node {
 	 * @return bool
 	 */
 	private function containsTabberOrGallery( $str ) {
-		return !empty( array_merge( self::getMarkers( $str, self::TABBER ), self::getMarkers( $str, self::GALLERY ) ) );
+		return !empty( self::getMarkers( $str, self::TABBER ) ) || !empty( self::getMarkers( $str, self::GALLERY ) );
 	}
 
 	private function getImagesData( $value ) {
