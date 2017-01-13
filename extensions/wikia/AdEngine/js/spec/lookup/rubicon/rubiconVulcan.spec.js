@@ -70,7 +70,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				create: function () {
 					return '203_tier1600';
 				},
-				parsePrice: function () {
+				parseOpenMarketPrice: function () {
 					return 0;
 				}
 			},
