@@ -52,7 +52,6 @@ class Indexer {
 		'MediaData',
 		'Redirects',
 		'Wam',
-		'WikiPromoData',
 		'WikiViews'
 	];
 
