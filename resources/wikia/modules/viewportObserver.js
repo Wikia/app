@@ -5,24 +5,23 @@ define('wikia.viewportObserver', [
 ], function (doc, win) {
 	'use strict';
 
-	function addListener(element, callback) {
-		var listener = {element: element, callback: callback, inViewport: false};
+	// TODO extract to new object and reuse in AdEngine
+	function getTopOffset(element) {
+		var topPos = 0,
+			elementWindow = element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
 
-		win.addEventListener('scroll', function() {
-			updateInViewport(listener);
-		});
+		do {
+			topPos += element.offsetTop;
+			element = element.offsetParent;
+		} while (element !== null);
 
-		updateInViewport(listener);
-	}
-
-	function updateInViewport(listener) {
-		var newInViewport = isInViewport(listener.element);
-
-		if (newInViewport !== listener.inViewport) {
-			listener.callback(newInViewport);
-			listener.inViewport = newInViewport;
+		if (elementWindow.frameElement) {
+			topPos += getTopOffset(elementWindow.frameElement);
 		}
+
+		return topPos;
 	}
+
 	/**
 	 * Element is considered as in the viewport
 	 * when at least 50% of its height is in the viewport.
@@ -39,14 +38,24 @@ define('wikia.viewportObserver', [
 		return (topElement >= topViewport - elementHeight/2 && bottomElement <= bottomViewport + elementHeight/2);
 	}
 
-	function getTopOffset(el) {
-		var topPos = 0;
+	function updateInViewport(listener) {
+		var newInViewport = isInViewport(listener.element);
 
-		for (; el !== null; el = el.offsetParent) {
-			topPos += el.offsetTop;
+		if (newInViewport !== listener.inViewport) {
+			listener.callback(newInViewport);
+			listener.inViewport = newInViewport;
 		}
+	}
 
-		return topPos;
+	function addListener(element, callback) {
+		var listener = {element: element, callback: callback, inViewport: false};
+
+		// TODO throttle scroll
+		win.addEventListener('scroll', function() {
+			updateInViewport(listener);
+		});
+
+		updateInViewport(listener);
 	}
 
 	/**
