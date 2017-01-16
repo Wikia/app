@@ -62,6 +62,7 @@ define('wikia.viewportObserver', [
 	 * return API to add a new listener
 	 */
 	return {
-		addListener: addListener
+		addListener: addListener,
+		_isInViewport: isInViewport // exposed only for testing purpose
 	};
 });
