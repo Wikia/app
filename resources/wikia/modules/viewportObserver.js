@@ -57,6 +57,7 @@ define('wikia.viewportObserver', [
 	 */
 	return {
 		addListener: addListener,
-		removeListener: removeListener
-	};
+		removeListener: removeListener,
+		_isInViewport: isInViewport // exposed only for testing purpose
+};
 });
