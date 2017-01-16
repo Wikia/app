@@ -454,6 +454,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
+			this.cartModel.clearItems();
 			this.pages.setPage( this.getDefaultPage() );
 			// If the policy height (which has a max-height property set) is the same as the first child of the policy
 			// then there is no more of the policy to show and the read more link can be hidden.
@@ -500,45 +501,50 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 	return this.license.promise;
 };
 
+ve.ui.WikiaMediaInsertDialog.prototype.temporaryToPermanentCallback = function ( cartItem, name ) {
+	cartItem.temporaryFileName = null;
+	cartItem.url = null;
+	cartItem.title = name;
+};
+
 ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 	var cartItems = ve.copy( this.cartModel.getItems() ),
-		i, promises = [];
-
-	// TODO: consider encapsulating this so it doesn't get created on every function call
-	function temporaryToPermanentCallback( cartItem, name ) {
-		cartItem.temporaryFileName = null;
-		cartItem.url = null;
-		cartItem.title = name;
-	}
+		promises = [],
+		i;
 
 	for ( i = 0; i < cartItems.length; i++ ) {
 		if ( cartItems[i].isTemporary() ) {
 			promises.push(
 				this.convertTemporaryToPermanent( cartItems[i] ).done(
-					temporaryToPermanentCallback.bind( this, cartItems[i] )
+					this.temporaryToPermanentCallback.bind( this, cartItems[i] )
 				)
 			);
 		}
 	}
 
+	this.pushPending();
+
 	return new OO.ui.Process( function () {
 		$.when.apply( $, promises ).done( function () {
-			this.cartModel.items = cartItems;
+			this.cartModel.addItems( cartItems );
 
-			/**
-			 * goback action is used in InfoboxInsert flow
-			 * where we do not want images to be added to an article
-			 * we just want to have access to what images have been chosen
-			 */
 			if ( action === 'apply' ) {
-				this.insertPermanentMedia( ve.copy( cartItems ), this.fragment );
+				this.insertPermanentMedia( cartItems, this.fragment );
+				this.close( { action: action } );
+			} else if ( action === 'insertImageToPortableInfobox' ) {
+				/**
+				 * goback action is used in InfoboxInsert flow
+				 * where we do not want images to be added to an article
+				 * we just want to have access to what images have been chosen
+				 */
+				this.close( { action: action } );
+			} else {
+				this.close();
 			}
-
-			this.close( { action: action } );
+		}.bind( this ) ).always( function () {
+			this.popPending();
 		}.bind( this ) );
 	}, this );
-
-	// return ve.ui.WikiaMediaInsertDialog.super.prototype.getActionProcess.call( this, action );
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
