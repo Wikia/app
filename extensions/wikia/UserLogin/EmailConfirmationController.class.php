@@ -9,11 +9,10 @@ class EmailConfirmationController extends WikiaController {
 		$userFromToken = User::newFromConfirmationCode( $token );
 		$currentUserId = $this->wg->user->getId();
 
-		if (!$this->wg->request->wasPosted()) {
+		if ( !$this->wg->request->wasPosted() ) {
 			// Only POST to this resource is allowed
 			$this->response->setCode( 405 );
-		}
-		if ( is_null( $token ) ) {
+		} elseif ( is_null( $token ) ) {
 			// No token given: Bad Request
 			$this->response->setCode( 400 );
 		} elseif ( !is_object( $userFromToken ) ) {
@@ -39,6 +38,6 @@ class EmailConfirmationController extends WikiaController {
 	private function confirmEmail( User $user ) {
 		$user->confirmEmail();
 		$user->saveSettings();
-		wfRunHooks( 'ConfirmEmailComplete', [&$user] );
+		wfRunHooks( 'ConfirmEmailComplete', [ &$user ] );
 	}
 }
