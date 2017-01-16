@@ -6,10 +6,8 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	}
 
 	var mocks = {
-		adHelper: {
-			throttle: function (func) {
-				return func;
-			}
+		throttle: function (func) {
+			return func;
 		},
 		log: noop,
 		mercuryAdsModule: {
@@ -55,7 +53,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.scrollHandler'](
 			mocks.context,
-			mocks.adHelper,
+			mocks.throttle,
 			mocks.domCalculator,
 			mocks.log,
 			mocks.doc,

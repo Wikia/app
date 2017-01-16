@@ -1,12 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.scrollHandler', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adHelper',
-	'wikia.domCalculator',
+	'wikia.throttle',
+	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adHelper, dom, log, doc, win) {
+], function (adContext, throttle, dom, log, doc, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
 		isRefreshed = {},
@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 	}
 
 	function registerSlotEvents() {
-		win.addEventListener('scroll', adHelper.throttle(function () {
+		win.addEventListener('scroll', throttle(function () {
 			log('Scroll event listener has been added', 'debug', logGroup);
 			for (var slotName in config) {
 				if (config.hasOwnProperty(slotName)) {
