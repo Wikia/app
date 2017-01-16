@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.slot.scrollHandler', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.utils.domCalculator',
+	'wikia.domCalculator',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'

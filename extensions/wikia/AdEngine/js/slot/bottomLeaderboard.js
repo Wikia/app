@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.document',
+	'wikia.domCalculator',
 	'wikia.log',
-	'wikia.window',
-], function (adHelper, dom, doc, log, win) {
+	'wikia.window'
+], function (adHelper, doc, dom, log, win) {
 	'use strict';
 
 	var slotName = 'BOTTOM_LEADERBOARD',
