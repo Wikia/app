@@ -2,8 +2,9 @@
 define('wikia.viewportObserver', [
 	'wikia.document',
 	'wikia.domCalculator',
+	'wikia.throttle',
 	'wikia.window'
-], function (doc, dom, win) {
+], function (doc, dom, throttle, win) {
 	'use strict';
 
 	/**
@@ -31,15 +32,15 @@ define('wikia.viewportObserver', [
 		}
 	}
 
-	function addListener(element, callback) {
+	function addListener(element, callback, throttleThreshold) {
 		var listener = {
 				element: element,
 				callback: callback,
 				inViewport: false
 			},
-			updateCallback = function() {
+			updateCallback = throttle(function() {
 				updateInViewport(listener);
-			};
+			}, throttleThreshold);
 
 		win.addEventListener('scroll', updateCallback);
 		updateCallback();

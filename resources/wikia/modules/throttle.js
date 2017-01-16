@@ -1,6 +1,5 @@
 /*global define, clearTimeout, setTimeout*/
-// TODO Replace usages with wikia.throttle
-define('ext.wikia.adEngine.adHelper', function () {
+define('wikia.throttle', function () {
 	'use strict';
 
 	function throttle(fn, threshold, scope) {
@@ -27,7 +26,5 @@ define('ext.wikia.adEngine.adHelper', function () {
 		};
 	}
 
-	return {
-		throttle: throttle
-	};
+	return throttle;
 });
