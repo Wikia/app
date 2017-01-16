@@ -1,12 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.scrollHandler', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.throttle',
 	'ext.wikia.adEngine.utils.domCalculator',
-	'wikia.log',
 	'wikia.document',
+	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
-], function (adContext, throttle, dom, log, doc, win) {
+], function (adContext, doc, dom, log, throttle, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
 		isRefreshed = {},

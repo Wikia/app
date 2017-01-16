@@ -1,21 +1,21 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
-	'wikia.throttle',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (throttle,
-			 uapContext,
+], function (uapContext,
 			 btfBlocker,
 			 slotTweaker,
 			 uapVideo,
 			 doc,
 			 log,
+			 throttle,
 			 win,
 			 recoveryTweaker) {
 	'use strict';

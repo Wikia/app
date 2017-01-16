@@ -1,6 +1,5 @@
 /*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
-	'wikia.throttle',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.player.porvata',
@@ -8,8 +7,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
-], function (throttle, uapContext, adSlot, porvata, playwire, videoInterface, doc, log, win) {
+], function (uapContext, adSlot, porvata, playwire, videoInterface, doc, log, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';

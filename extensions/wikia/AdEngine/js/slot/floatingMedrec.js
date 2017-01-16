@@ -1,21 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.throttle',
-	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
-	throttle,
-	adLogicPageDimensions,
 	recoveryHelper,
 	slotFinder,
 	$,
 	log,
+	throttle,
 	win
 ) {
 	'use strict';

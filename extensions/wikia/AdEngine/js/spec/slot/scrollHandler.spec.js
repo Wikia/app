@@ -53,10 +53,10 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.scrollHandler'](
 			mocks.context,
-			mocks.throttle,
+			mocks.doc,
 			mocks.domCalculator,
 			mocks.log,
-			mocks.doc,
+			mocks.throttle,
 			mocks.win
 		);
 	}

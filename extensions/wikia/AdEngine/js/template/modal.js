@@ -1,14 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.template.modal', [
-	'wikia.throttle',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
+	'wikia.throttle',
 	'wikia.window'
-], function (throttle, adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
+], function (adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',

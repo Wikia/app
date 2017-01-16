@@ -2,12 +2,11 @@
 define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
-	'wikia.throttle',
 	'jquery',
 	'wikia.log',
-	'wikia.document',
+	'wikia.throttle',
 	'wikia.window'
-], function (adContext, math, throttle, $, log, doc, win) {
+], function (adContext, math, $, log, throttle, win) {
 	'use strict';
 
 	var $medrec = $('#TOP_RIGHT_BOXAD'),

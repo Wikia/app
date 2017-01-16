@@ -1,12 +1,12 @@
 /*jshint camelcase:false, maxdepth:4*/
 /*global define*/
 define('ext.wikia.adEngine.adLogicPageDimensions', [
-	'wikia.window',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
-	'ext.wikia.adEngine.slotTweaker',
-	'wikia.throttle'
-], function (win, doc, log, slotTweaker, throttle) {
+	'wikia.throttle',
+	'wikia.window'
+], function (slotTweaker, doc, log, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',

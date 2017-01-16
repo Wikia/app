@@ -84,13 +84,13 @@ describe('ext.wikia.adEngine.template.modal', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.template.modal'](
-			mocks.throttle,
 			mocks.adSlot,
 			mocks.adDetect,
 			mocks.modalHandlerFactory,
 			mocks.doc,
 			mocks.log,
 			mocks.iframeWriter,
+			mocks.throttle,
 			mocks.win
 		);
 	}
