@@ -53,7 +53,7 @@ describe('viewportObserver', function () {
 			},
 			domCalculatorMock: {
 				getTopOffset: function() {
-					return 1005; // px from the top
+					return 950; // px from the top
 				}
 			},
 			elementMock: {

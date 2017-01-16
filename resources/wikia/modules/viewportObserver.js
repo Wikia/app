@@ -17,8 +17,9 @@ define('wikia.viewportObserver', [
 			elementHeight = element.offsetHeight,
 			topElement = domCalculator.getTopOffset(element),
 			bottomElement = topElement + elementHeight,
-			topViewport = win.scrollY + globalNavHeight,
-			bottomViewport = topViewport + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
+			scrollPosition = win.scrollY,
+			topViewport = scrollPosition + globalNavHeight,
+			bottomViewport = scrollPosition + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
 
 		return (topElement >= topViewport - elementHeight/2 && bottomElement <= bottomViewport + elementHeight/2);
 	}
