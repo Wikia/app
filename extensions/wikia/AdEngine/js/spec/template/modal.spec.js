@@ -11,9 +11,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
 			showLightbox: noop
 		},
 		mocks = {
-			adHelper: {
-				throttle: noop
-			},
+			throttle: noop,
 			adDetect: {},
 			adSlot: {
 				create: function (slotName) {
@@ -86,7 +84,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.template.modal'](
-			mocks.adHelper,
+			mocks.throttle,
 			mocks.adSlot,
 			mocks.adDetect,
 			mocks.modalHandlerFactory,

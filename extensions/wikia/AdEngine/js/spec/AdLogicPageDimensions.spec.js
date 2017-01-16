@@ -6,10 +6,8 @@ describe('AdLogicPageDimensions', function () {
 
 	'use strict';
 
-	var adHelperMock = {
-		throttle: function (fn) {
-			return fn;
-		}
+	var throttleMock = function (fn) {
+		return fn;
 	};
 
 	function noop() {
@@ -39,7 +37,7 @@ describe('AdLogicPageDimensions', function () {
 				documentMock,
 				logMock,
 				slotTweakerMock,
-				adHelperMock
+				throttleMock
 			),
 			fillInSlotCalled = false,
 			fillInSlotMock = function () { fillInSlotCalled = true; };
@@ -195,7 +193,7 @@ describe('AdLogicPageDimensions', function () {
 				documentMock,
 				logMock,
 				slotTweakerMock,
-				adHelperMock
+				throttleMock
 			),
 			fillInSlotMock = function () { adLoadCounter += 1; };
 

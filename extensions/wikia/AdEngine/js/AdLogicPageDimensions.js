@@ -5,8 +5,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	'wikia.document',
 	'wikia.log',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.adHelper'
-], function (win, doc, log, slotTweaker, adHelper) {
+	'wikia.throttle'
+], function (win, doc, log, slotTweaker, throttle) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -193,8 +193,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	function init() {
 		log('init', 'debug', logGroup);
 		if (win.addEventListener) {
-			win.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
-			win.addEventListener('resize', adHelper.throttle(onResize, 100));
+			win.addEventListener('orientationchange', throttle(onResize, 100));
+			win.addEventListener('resize', throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);
 		}

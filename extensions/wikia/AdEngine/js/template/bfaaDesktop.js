@@ -1,6 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
-	'ext.wikia.adEngine.adHelper',
+	'wikia.throttle',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (adHelper,
+], function (throttle,
 			 uapContext,
 			 btfBlocker,
 			 slotTweaker,
@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log('desktopHandler::show', log.levels.info, logGroup);
 
 		updateNavBar(slotContainer.offsetHeight);
-		doc.addEventListener('scroll', adHelper.throttle(function () {
+		doc.addEventListener('scroll', throttle(function () {
 			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
