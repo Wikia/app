@@ -4,7 +4,7 @@ define('wikia.viewportObserver', [
 	'wikia.domCalculator',
 	'wikia.throttle',
 	'wikia.window'
-], function (doc, dom, throttle, win) {
+], function (doc, domCalculator, throttle, win) {
 	'use strict';
 
 	/**
@@ -15,7 +15,7 @@ define('wikia.viewportObserver', [
 	function isInViewport(element) {
 		var globalNavHeight = 55, // keep in sync with $wds-global-navigation-height
 			elementHeight = element.offsetHeight,
-			topElement = dom.getTopOffset(element),
+			topElement = domCalculator.getTopOffset(element),
 			bottomElement = topElement + elementHeight,
 			topViewport = win.scrollY + globalNavHeight,
 			bottomViewport = topViewport + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);

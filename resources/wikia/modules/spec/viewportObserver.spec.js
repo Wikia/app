@@ -13,10 +13,13 @@ describe('viewportObserver', function () {
 				scrollY: 0,
 				innerHeight: 1000
 			},
+			domCalculatorMock: {
+				getTopOffset: function() {
+					return 0; // px from the top
+				}
+			},
 			elementMock: {
-				offsetTop: 0, // px from the top
 				offsetHeight: 200, // element height
-				offsetParent: null,
 				ownerDocument: {
 					defaultView: {}
 				}
@@ -29,10 +32,13 @@ describe('viewportObserver', function () {
 				scrollY: 0,
 				innerHeight: 1000
 			},
+			domCalculatorMock: {
+				getTopOffset: function() {
+					return 0; // px from the top
+				}
+			},
 			elementMock: {
-				offsetTop: 0, // px from the top
 				offsetHeight: 100, // element height
-				offsetParent: null,
 				ownerDocument: {
 					defaultView: {}
 				}
@@ -45,10 +51,13 @@ describe('viewportObserver', function () {
 				scrollY: 0,
 				innerHeight: 1000
 			},
+			domCalculatorMock: {
+				getTopOffset: function() {
+					return 1005; // px from the top
+				}
+			},
 			elementMock: {
-				offsetTop: 1005, // px from the top (1000 - 55) = 1005 + 100 / 2
 				offsetHeight: 100, // element height
-				offsetParent: null,
 				ownerDocument: {
 					defaultView: {}
 				}
@@ -61,10 +70,13 @@ describe('viewportObserver', function () {
 				scrollY: 0,
 				innerHeight: 1000
 			},
+			domCalculatorMock: {
+				getTopOffset: function() {
+					return 1006; // px from the top
+				}
+			},
 			elementMock: {
-				offsetTop: 1006, // px from the top
 				offsetHeight: 100, // element height
-				offsetParent: null,
 				ownerDocument: {
 					defaultView: {}
 				}
@@ -77,10 +89,13 @@ describe('viewportObserver', function () {
 				scrollY: 100,
 				innerHeight: 1000
 			},
+			domCalculatorMock: {
+				getTopOffset: function() {
+					return 1106; // px from the top
+				}
+			},
 			elementMock: {
-				offsetTop: 1106, // px from the top
 				offsetHeight: 100, // element height
-				offsetParent: null,
 				ownerDocument: {
 					defaultView: {}
 				}
@@ -92,7 +107,7 @@ describe('viewportObserver', function () {
 
 	testCases.forEach(function (testCase) {
 			it('correctly states is element is in viewport: ' + testCase.desc, function() {
-			var viewportObserver = modules['wikia.viewportObserver'](docMock, testCase.windowMock);
+			var viewportObserver = modules['wikia.viewportObserver'](docMock, testCase.domCalculatorMock, null, testCase.windowMock);
 
 			expect(viewportObserver._isInViewport(testCase.elementMock)).toBe(testCase.expected);
 		})
