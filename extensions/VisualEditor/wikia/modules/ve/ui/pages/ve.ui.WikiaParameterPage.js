@@ -48,7 +48,7 @@
 			currentWindow.currentAction.getAction() === 'goback' &&
 			cartItems.length > 0
 		) {
-			return cartItems[0].data;
+			return cartItems[0].title;
 		}
 
 		return null;
@@ -84,7 +84,7 @@
 				var imageName;
 
 				if ( currentWindow instanceof ve.ui.WikiaMediaInsertDialog ) {
-					imageName = getImageName( currentWindow, currentWindow.cart.getItems() );
+					imageName = getImageName( currentWindow, currentWindow.cartModel.getItems() );
 
 					windowManager.closing.done( function () {
 						/**

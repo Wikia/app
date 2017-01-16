@@ -501,43 +501,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
-	if ( action === 'apply' ) {
-		return new OO.ui.Process( function () {
-			this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-			this.close( { action: action } );
-		}, this );
-	/**
-	 * goback action is used in InfoboxInsert flow
-	 * where we do not want images to be added to an article
-	 * we just want to have access to what images have been chosen
-	 */
-	} else if (action === 'goback') {
-		return new OO.ui.Process( function () {
-			this.close( { action: action } );
-		}, this );
-	}
-
-	return ve.ui.WikiaMediaInsertDialog.super.prototype.getActionProcess.call( this, action );
-};
-
-ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
-		.first( function () {
-			this.cartModel.clearItems();
-			this.queryInput.setValue( '' );
-			this.dropTarget.teardown();
-		}, this );
-};
-
-/**
- * @method
- * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
- * @param {ve.dm.SurfaceFragment} fragment
- */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragment ) {
-	var i, promises = [];
-
-	this.timings.insertStart = ve.now();
+	var cartItems = ve.copy( this.cartModel.getItems() ),
+		i, promises = [];
 
 	// TODO: consider encapsulating this so it doesn't get created on every function call
 	function temporaryToPermanentCallback( cartItem, name ) {
@@ -556,9 +521,33 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragm
 		}
 	}
 
-	$.when.apply( $, promises ).done( function () {
-		this.insertPermanentMedia( cartItems, fragment );
-	}.bind( this ) );
+	return new OO.ui.Process( function () {
+		$.when.apply( $, promises ).done( function () {
+			this.cartModel.items = cartItems;
+
+			/**
+			 * goback action is used in InfoboxInsert flow
+			 * where we do not want images to be added to an article
+			 * we just want to have access to what images have been chosen
+			 */
+			if ( action === 'apply' ) {
+				this.insertPermanentMedia( ve.copy( cartItems ), this.fragment );
+			}
+
+			this.close( { action: action } );
+		}.bind( this ) );
+	}, this );
+
+	// return ve.ui.WikiaMediaInsertDialog.super.prototype.getActionProcess.call( this, action );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			this.cartModel.clearItems();
+			this.queryInput.setValue( '' );
+			this.dropTarget.teardown();
+		}, this );
 };
 
 /**
