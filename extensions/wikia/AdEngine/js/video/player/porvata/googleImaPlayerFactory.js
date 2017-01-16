@@ -1,10 +1,9 @@
 /*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
-	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
-], function(imaSetup, browserDetect, doc, log) {
+], function(imaSetup, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
@@ -12,7 +11,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		var isAdsManagerLoaded = false,
 			status = '',
 			videoMock = doc.createElement('video'),
-			adsManager;
+			adsManager,
+			mobileVideoAd = params.container.querySelector('video');
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings());
@@ -33,6 +33,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
+		function setAutoPlay(value) {
+			// mobileVideoAd DOM element is present on mobile only
+			if (mobileVideoAd) {
+				mobileVideoAd.autoplay = value;
+				mobileVideoAd.muted = value;
+			}
+		}
+
 		function playVideo(width, height) {
 			function callback() {
 				log('Video play: prepare player UI', log.levels.debug, logGroup);
@@ -48,11 +56,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 			if (isAdsManagerLoaded) {
 				callback();
-			} else if (!browserDetect.isMobile()) { // ADEN-4275 quick fix
-				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
-				adsLoader.addEventListener('adsManagerLoaded', callback, false);
 			} else {
-				log(['Video play: trigger video play action is ignored'], log.levels.warning, logGroup);
+				// When adsManager is not loaded yet video can't start without click on mobile
+				// Muted auto play is workaround to run video on adsManagerLoaded event
+				setAutoPlay(true);
+				adsLoader.addEventListener('adsManagerLoaded', callback, false);
+				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 			}
 		}
 
@@ -92,6 +101,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
 		adsLoader.requestAds(imaSetup.createRequest(params));
+		if (params.autoPlay) {
+			setAutoPlay(true);
+		}
 
 		addEventListener('resume', setStatus('playing'));
 		addEventListener('start', setStatus('playing'));
@@ -104,7 +116,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
-			resize: resize
+			resize: resize,
+			setAutoPlay: setAutoPlay
 		};
 	}
 
