@@ -150,7 +150,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
 					]
 				],
-				'http://fallout.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki/test'
+				'http://fallout.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki/test'
 			],
 		];
 	}
