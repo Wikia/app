@@ -6,10 +6,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
+	'ext.wikia.adEngine.video.player.uiTemplate',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, doc, log, win) {
+], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -30,13 +31,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(params)
 			.then(function (video) {
-				videoInterface.setup(video, [
-					'progressBar',
-					'pauseOverlay',
-					'volumeControl',
-					'closeButton'
-					// 'toggleAnimation' // TODO: replace it with different behavior
-				], {
+				var uiElements = params.autoPlay ? UITemplate.autoPlay : UITemplate.default;
+				log(['VUAP UI elements', uiElements], log.levels.debug, logGroup);
+
+				videoInterface.setup(video, uiElements, {
 					image: providerContainer,
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
