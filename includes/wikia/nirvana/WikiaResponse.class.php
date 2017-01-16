@@ -469,6 +469,12 @@ class WikiaResponse {
 			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace']);
 		}
 
+		// Make sure we vary on Cookie by default (MAIN-9527)
+		$output = RequestContext::getMain()->getOutput();
+		if ( $output->getCacheVaryCookies() ) {
+			$this->sendHeader( $output->getVaryHeader(), true );
+		}
+
 		if ( !empty( $this->code ) ) {
 			$msg = '';
 
