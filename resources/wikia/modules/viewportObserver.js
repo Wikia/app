@@ -1,31 +1,13 @@
 /*global define*/
 define('wikia.viewportObserver', [
-	'wikia.document',
 	'wikia.domCalculator',
 	'wikia.throttle',
 	'wikia.window'
-], function (doc, domCalculator, throttle, win) {
+], function (domCalculator, throttle, win) {
 	'use strict';
 
-	/**
-	 * Element is considered as in the viewport
-	 * when at least 50% of its height is in the viewport.
-	 * We take into account global navigation height as it covers page elements so they're not visible.
-	 */
-	function isInViewport(element) {
-		var globalNavHeight = 55, // keep in sync with $wds-global-navigation-height
-			elementHeight = element.offsetHeight,
-			topElement = domCalculator.getTopOffset(element),
-			bottomElement = topElement + elementHeight,
-			scrollPosition = win.scrollY,
-			topViewport = scrollPosition + globalNavHeight,
-			bottomViewport = scrollPosition + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
-
-		return (topElement >= topViewport - elementHeight/2 && bottomElement <= bottomViewport + elementHeight/2);
-	}
-
 	function updateInViewport(listener) {
-		var newInViewport = isInViewport(listener.element);
+		var newInViewport = domCalculator.isInViewport(listener.element);
 
 		if (newInViewport !== listener.inViewport) {
 			listener.callback(newInViewport);
@@ -58,7 +40,6 @@ define('wikia.viewportObserver', [
 	 */
 	return {
 		addListener: addListener,
-		removeListener: removeListener,
-		_isInViewport: isInViewport // exposed only for testing purpose
-};
+		removeListener: removeListener
+	};
 });

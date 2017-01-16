@@ -1,6 +1,8 @@
 /*global define*/
 define('wikia.domCalculator', [
-], function () {
+	'wikia.document',
+	'wikia.window'
+], function (document, window) {
 	'use strict';
 
 	function getTopOffset(element) {
@@ -19,7 +21,26 @@ define('wikia.domCalculator', [
 		return topPos;
 	}
 
+	/**
+	 * Element is considered as in the viewport
+	 * when at least 50% of its height is in the viewport.
+	 * We take into account global navigation height as it covers page elements so they're not visible.
+	 */
+	function isInViewport(element) {
+		var globalNavHeight = 55, // keep in sync with $wds-global-navigation-height
+			elementHeight = element.offsetHeight,
+			topElement = getTopOffset(element),
+			bottomElement = topElement + elementHeight,
+			scrollPosition = window.scrollY,
+			topViewport = scrollPosition + globalNavHeight,
+			bottomViewport = scrollPosition + Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+		return topElement >= (topViewport - elementHeight/2) &&
+			bottomElement <= (bottomViewport + elementHeight/2);
+	}
+
 	return {
-		getTopOffset: getTopOffset
+		getTopOffset: getTopOffset,
+		isInViewport: isInViewport
 	};
 });
