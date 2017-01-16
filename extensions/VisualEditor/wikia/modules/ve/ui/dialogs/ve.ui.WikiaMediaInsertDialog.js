@@ -532,11 +532,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 				this.insertPermanentMedia( cartItems, this.fragment );
 				this.close( { action: action } );
 			} else if ( action === 'insertImageToPortableInfobox' ) {
-				/**
-				 * goback action is used in InfoboxInsert flow
-				 * where we do not want images to be added to an article
-				 * we just want to have access to what images have been chosen
-				 */
 				this.close( { action: action } );
 			} else {
 				this.close();
