@@ -77,7 +77,10 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 				}
 			},
 			rubiconTier: {
-				parsePrice: function () {
+				parseOpenMarketPrice: function () {
+					return 0;
+				},
+				parsePrivatePrice: function () {
 					return 0;
 				}
 			},

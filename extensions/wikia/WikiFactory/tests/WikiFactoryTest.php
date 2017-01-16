@@ -36,8 +36,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
 	}
 
-	public function testGetCurrentStagingHostDevbox()
-	{
+	public function testGetCurrentStagingHostDevbox() {
+		$this->mockGlobalVariable( 'wgDevDomain', 'mydevbox.wikia-dev.com' );
 		$this->assertEquals('muppet.mydevbox.wikia-dev.com',
 			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'dev-mydevbox'));
 	}
@@ -54,7 +54,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetCurrentStagingHostDataProvider
 	 */
-	public function testGetCurrentStagingHost($host, $dbName, $expHost) {
+	public function testGetCurrentStagingHost($host, $dbName, $devDomain, $expHost) {
 		$default = 'defaulthost';
 		$this->mockGlobalVariable('wgStagingList', ['preview',
 			'verify',
@@ -71,6 +71,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 			'sandbox-qa04',
 			'demo-sony',
 		] );
+		$this->mockGlobalVariable( 'wgDevDomain', $devDomain );
 
 		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
 	}
@@ -88,31 +89,37 @@ class WikiFactoryTest extends WikiaBaseTest {
 			[
 				'demo-sony-s1',
 				'muppet',
+				'',
 				'demo-sony.muppet.wikia.com'
 			],
 			[
 				'demo-sony-s2',
 				'muppet',
+				'',
 				'demo-sony.muppet.wikia.com'
 			],
 			[
 				'preview',
 				'muppet',
+				'',
 				'preview.muppet.wikia.com'
 			],
 			[
 				'verify',
 				'muppet',
-				'verify.muppet.wikia.com'
+				'',
+				'verify.muppet.wikia.com',
 			],
 			[
 				'dev-test',
 				'muppet',
-				'muppet.test.wikia-dev.com'
+				'test.wikia-dev.com',
+				'muppet.test.wikia-dev.com',
 			],
 			[
 				'sandbox-s3',
 				'muppet',
+				'',
 				'sandbox-s3.muppet.wikia.com'
 			]
 		];
@@ -142,7 +149,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki',
-				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_SANDBOX,
@@ -173,7 +180,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.com'
+				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.us'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
@@ -205,6 +212,60 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.wikia.com'
 			],
+			[
+				'env' => WIKIA_ENV_STABLE,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://stable.gta.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_STABLE,
+				'forcedEnv' => null,
+				'url' => 'http://stable.gta.wikia.com/wiki/test',
+				'expected' => 'http://stable.gta.wikia.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'https://www.wikia.com',
+				'expected' => 'https://www.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'https://www.wikia.com/wiki/test',
+				'expected' => 'https://www.wikia.com/wiki/test',
+			],
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
+				'url' => 'https://fallout.wikia.com/wiki/test',
+				'expected' => 'https://fallout.wikia-staging.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_PREVIEW,
+				'forcedEnv' => null,
+				'url' => 'https://fallout.wikia.com/wiki/test',
+				'expected' => 'http://preview.fallout.wikia.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
+				'url' => 'https://muppet.wikia.com/wiki',
+				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'http://google.com',
+				'expected' => 'http://google.com'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'https://mysecureddomain.com',
+				'expected' => 'https://mysecureddomain.com'
+			]
 		];
 	}
 

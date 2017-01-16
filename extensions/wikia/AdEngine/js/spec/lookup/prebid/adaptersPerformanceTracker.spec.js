@@ -92,7 +92,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctIndexExchangeBid: {
 				bidder: 'indexExchange',
-				pbMg: '1.00',
+				pbAg: '1.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -102,7 +102,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctAppNexusBid: {
 				bidder: 'appnexus',
-				pbMg: '0.00',
+				pbAg: '0.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -113,7 +113,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			completeAppNexusBid: {
 				bidder: 'appnexus',
 				complete: true,
-				pbMg: '5.00',
+				pbAg: '5.00',
 				getStatusCode: function () {
 					return 1;
 				},

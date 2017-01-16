@@ -355,7 +355,8 @@
 		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
 		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
 		['set', 'dimension25', String(window.wgNamespaceNumber)],               // Namespace Number
-		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)]          // SEO Testing bucket
+		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)],         // SEO Testing bucket
+		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')] // Special page canonical name (SUS-1465)
 	);
 
 	/*
@@ -516,6 +517,7 @@
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
+	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {

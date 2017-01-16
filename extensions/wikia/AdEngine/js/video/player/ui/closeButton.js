@@ -1,21 +1,26 @@
-/* global define */
-define('ext.wikia.adEngine.video.player.ui.closeButton', [], function () {
+/*global define*/
+define('ext.wikia.adEngine.video.player.ui.closeButton', [
+	'wikia.document',
+	'wikia.log'
+], function (doc, log) {
 	'use strict';
 
-	var className = 'close-ad';
+	var logGroup = 'ext.wikia.adEngine.video.player.ui.closeButton';
 
-	function create(ad) {
-		var element = document.createElement('div');
-		element.classList.add(className);
+	function add(video) {
+		var closeButton = doc.createElement('div');
+		closeButton.classList.add('close-ad');
 
-		element.addEventListener('click', function () {
-			ad.adsManager.stop();
+		closeButton.addEventListener('click', function (event) {
+			video.stop();
+			event.preventDefault();
+			log(['stop', log.levels.debug, logGroup]);
 		});
 
-		return element;
+		video.container.appendChild(closeButton);
 	}
 
 	return {
-		create: create
+		add: add
 	};
 });

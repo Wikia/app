@@ -31,11 +31,6 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->fileHash = md5( Http::get( self::URL, 'default', ['noProxy' => true] ) );
 		$this->reuploadedFileHash = md5( Http::get( self::REUPLOAD_URL, 'default', ['noProxy' => true] ) );
 
-		// use Swift domain
-		global $wgDevelEnvironmentName;
-		// Disabling forcing the image domain due to BAC-1136
-		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
-
 		// debug
 		global $wgLocalFileRepo;
 		echo "Files repository in use: '{$wgLocalFileRepo['backend']}'\n"; // local-backend / swift-backend

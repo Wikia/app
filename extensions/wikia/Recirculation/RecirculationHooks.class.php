@@ -46,10 +46,9 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgWikiaEnvironment, $wgNoExternals;
+		global $wgNoExternals;
 
-		// Only track on prod
-		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) ) {
+		if ( empty( $wgNoExternals ) ) {
 			$jsAssets[] = 'recirculation_liftigniter_tracker';
 		}
 

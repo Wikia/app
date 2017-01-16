@@ -41,15 +41,14 @@
 		word-wrap: break-word;
 	}
 
-	.pi-data:not(:last-of-type),
+	.pi-data,
 	.pi-group {
 		border-bottom-style: solid;
 		border-bottom-width: 1px;
 	}
 
-	.pi-data:last-of-type + .pi-group {
-		border-top-style: solid;
-		border-top-width: 1px;
+	.pi-group > .pi-item:last-child {
+		border-bottom: 0;
 	}
 
 	.pi-data {
