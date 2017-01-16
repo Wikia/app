@@ -89,8 +89,8 @@ $.widget( "ui.autocomplete", {
 					break;
 				case keyCode.ESCAPE:
 					if ( self.menu.element.is( ":visible" ) ) {
-						self.element.val(self.term);
-						self.close(event);
+						self.element.val( self.term );
+						self.close( event );
 					}
 					break;
 				default:
