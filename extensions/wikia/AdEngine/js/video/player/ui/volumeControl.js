@@ -22,7 +22,8 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	}
 
 	function add(video) {
-		var volume = createVolumeControl();
+		var volume = createVolumeControl(),
+			mobileVideoAd = video.container.querySelector('video');
 
 		volume.mute = function () {
 			volume.speaker.classList.add('mute');
@@ -45,7 +46,11 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			volume.unmute();
+			if (mobileVideoAd && mobileVideoAd.muted) {
+				volume.mute();
+			} else {
+				volume.unmute();
+			}
 			volume.classList.remove('hidden');
 		});
 

@@ -38,6 +38,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 				video.addEventListener('allAdsCompleted', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
+					video.ima.setAutoPlay(false);
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
 					}

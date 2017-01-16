@@ -29,19 +29,24 @@ class DumpForumData extends Maintenance {
 		}
 		$this->dumper = new Discussions\ForumDumper();
 
+		$this->setConnectinoEncoding();
 		$this->clearImportTables();
 		$this->dumpPages();
 		$this->dumpRevisions();
 		$this->dumpVotes();
 	}
 
-	public function clearImportTables() {
+	private function setConnectinoEncoding() {
+		fwrite( $this->fh, "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;" );
+	}
+
+	private function clearImportTables() {
 		fwrite( $this->fh, "DELETE FROM import_page;\n" );
 		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
 		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
 	}
 
-	public function dumpPages() {
+	private function dumpPages() {
 		$pages = $this->dumper->getPages();
 
 		foreach ( $pages as $id => $data ) {
@@ -55,7 +60,7 @@ class DumpForumData extends Maintenance {
 		}
 	}
 
-	public function dumpRevisions() {
+	private function dumpRevisions() {
 		$revisions = $this->dumper->getRevisions();
 
 		foreach ( $revisions as $data ) {
@@ -68,7 +73,7 @@ class DumpForumData extends Maintenance {
 		}
 	}
 
-	public function dumpVotes() {
+	private function dumpVotes() {
 		$votes = $this->dumper->getVotes();
 
 		foreach ( $votes as $data ) {

@@ -242,7 +242,7 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment;
+		global $IP, $wgWikiaEnvironment, $wgDevDomain;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
@@ -251,8 +251,8 @@ class AsyncTaskList {
 			$host = gethostname();
 			$executionMethod = 'http';
 
-			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
+				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
 				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {

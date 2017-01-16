@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
-	'wikia.log',
+	'wikia.log'
 ], function(DOMElementTweaker, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory';
@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function create(params, ima) {
 		var width = params.width,
 			height = params.height,
+			mobileVideoAd = params.container.querySelector('video'),
 			videoAdContainer = params.container.querySelector('div');
 
 		log(['create porvata player'], log.levels.debug, logGroup);
@@ -44,6 +45,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 					width = newWidth;
 					height = newHeight;
 				}
+				if (!width || !height) {
+					width = params.container.offsetWidth;
+					height = params.container.offsetHeight;
+				}
 
 				ima.playVideo(width, height);
 			},
@@ -60,6 +65,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				ima.getAdsManager().resume();
 			},
 			setVolume: function (volume) {
+				if (mobileVideoAd) {
+					mobileVideoAd.muted = volume === 0;
+				}
 				return ima.getAdsManager().setVolume(volume);
 			},
 			stop: function () {
