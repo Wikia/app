@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			price;
 
 		if (priceMap[slotName]) {
-			cpm = rubiconTier.parsePrice(priceMap[slotName]) / 100;
+			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
 			price = cpm.toFixed(2).toString();
 		}
 

@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_2': slotPrices.appnexus || '',
 			'bidder_3': slotPrices.fastlane || '',
 			'bidder_4': slotPrices.vulcan || '',
-			'bidder_5': '',
+			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': '',
 			'bidder_7': '',
 			'product_chosen': '',
