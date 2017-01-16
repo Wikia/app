@@ -19,7 +19,7 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
-	const RESET_URL = 'https://www.wikia.com/resetpassword';
+	const RESET_URL = 'https://www.wikia.com/reset-password';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
