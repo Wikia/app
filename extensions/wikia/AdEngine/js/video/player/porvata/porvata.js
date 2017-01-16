@@ -11,7 +11,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 	function inject(params) {
 		var autoPlayed = false,
-			shouldResume = false;
+			shouldResume = false,
+			viewportListener;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
 
@@ -38,7 +39,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 				video.addEventListener('allAdsCompleted', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
-					// TODO remove viewport listener
+					if (viewportListener) {
+						viewportObserver.removeListener(viewportListener);
+					}
 				});
 				video.addEventListener('start', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
@@ -55,7 +58,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					params.onReady(video);
 				}
 
-				viewportObserver.addListener(params.container, function (isVisible) {
+				viewportListener = viewportObserver.addListener(params.container, function (isVisible) {
 					if (isVisible && !autoPlayed && params.autoPlay) {
 						video.play();
 						autoPlayed = true;

@@ -48,20 +48,30 @@ define('wikia.viewportObserver', [
 	}
 
 	function addListener(element, callback) {
-		var listener = {element: element, callback: callback, inViewport: false};
+		var listener = {
+				element: element,
+				callback: callback,
+				inViewport: false
+			},
+			updateCallback = function() {
+				updateInViewport(listener);
+			};
 
-		// TODO throttle scroll
-		win.addEventListener('scroll', function() {
-			updateInViewport(listener);
-		});
+		win.addEventListener('scroll', updateCallback);
+		updateCallback();
 
-		updateInViewport(listener);
+		return updateCallback;
+	}
+
+	function removeListener(listener) {
+		win.removeEventListener('scroll', listener);
 	}
 
 	/**
-	 * return API to add a new listener
+	 * return API to add a new/remove listener
 	 */
 	return {
-		addListener: addListener
+		addListener: addListener,
+		removeListener: removeListener
 	};
 });
