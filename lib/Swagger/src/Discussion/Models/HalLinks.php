@@ -63,7 +63,6 @@ class HalLinks implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'curies' => '\Swagger\Client\Discussion\Models\HalCuries[]',
         '__links__' => 'string'
     );
 
@@ -77,7 +76,6 @@ class HalLinks implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'curies' => 'curies',
         '__links__' => '__links__'
     );
 
@@ -91,7 +89,6 @@ class HalLinks implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'curies' => 'setCuries',
         '__links__' => 'setLinks_'
     );
 
@@ -105,7 +102,6 @@ class HalLinks implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'curies' => 'getCuries',
         '__links__' => 'getLinks_'
     );
 
@@ -130,7 +126,6 @@ class HalLinks implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['curies'] = isset($data['curies']) ? $data['curies'] : null;
         $this->container['__links__'] = isset($data['__links__']) ? $data['__links__'] : null;
     }
 
@@ -162,27 +157,6 @@ class HalLinks implements ArrayAccess
         return true;
     }
 
-
-    /**
-     * Gets curies
-     * @return \Swagger\Client\Discussion\Models\HalCuries[]
-     */
-    public function getCuries()
-    {
-        return $this->container['curies'];
-    }
-
-    /**
-     * Sets curies
-     * @param \Swagger\Client\Discussion\Models\HalCuries[] $curies
-     * @return $this
-     */
-    public function setCuries($curies)
-    {
-        $this->container['curies'] = $curies;
-
-        return $this;
-    }
 
     /**
      * Gets __links__
@@ -262,3 +236,5 @@ class HalLinks implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

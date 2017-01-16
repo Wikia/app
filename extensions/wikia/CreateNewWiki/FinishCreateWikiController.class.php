@@ -71,8 +71,6 @@ class FinishCreateWikiController extends WikiaController {
 		$this->skipRendering();
 		$this->LoadState();
 
-		$mainPageTitleText = $wgSitename;
-
 		// SUS-563 debug
 		$mainPageMessageContent = wfMsgForContent( 'mainpage' );
 		$mediawikiMainPageArticleText = '';
@@ -109,7 +107,9 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText( $mainPageTitleText );
+			global $wgSitename;
+
+			$mainTitle = Title::newFromText( $wgSitename );
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID( $mainId );
 

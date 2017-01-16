@@ -12,8 +12,8 @@ class WikiaTracer {
 	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const SHIELDS_HEADER_NAME = 'X-SJC-shields-healthy';
-	const SHIELDS_HEADER_STATUS_HEALTHY = '1';
 	const SHIELDS_HEADER_STATUS_UNHEALTHY  = '0';
+	const SHIELDS_LOG_STATUS_UNHEALTHY  = 'unhealthy';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
 	const CLIENT_USER_ID = 'X-User-Id';
@@ -35,6 +35,7 @@ class WikiaTracer {
 
 	private $traceId;
 	private $sjcShieldsHealthStatus;
+	private $sjcShieldsHeaderValue;
 	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
@@ -113,7 +114,7 @@ class WikiaTracer {
 				'span_id' => $this->spanId,
 				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
-				'sjc_shields_unhealthy' => $this->sjcShieldsHealthStatus,
+				'sjc_shields_status' => $this->sjcShieldsHealthStatus,
 			] )
 		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
@@ -314,7 +315,7 @@ class WikiaTracer {
 			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId,
 			// pass the current span ID to the subrequest, it will be logged as parent_span_id there
 			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId,
-			self::SHIELDS_HEADER_NAME => $this->sjcShieldsHealthStatus,
+			self::SHIELDS_HEADER_NAME => $this->sjcShieldsHeaderValue,
 		] );
 	}
 
@@ -458,13 +459,15 @@ class WikiaTracer {
 	}
 
 	/**
-	 * Set the flag ONLY if backend is unhealthy (i.e. 0)
+	 * Set the flag ONLY if backend is unhealthy (header says "0")
 	 * If the backend is healthy, remove it from stack (set to null, trimmed later by removeNullEntries
 	 * @see removeNullEntries
 	 */
 	private function getSjcShieldsStatus() {
-		return $this->getTraceEntry( self::SHIELDS_HEADER_NAME ) === self::SHIELDS_HEADER_STATUS_UNHEALTHY
-			? 1
+		$this->sjcShieldsHeaderValue = $this->getTraceEntry( self::SHIELDS_HEADER_NAME );
+
+		return $this->sjcShieldsHeaderValue === self::SHIELDS_HEADER_STATUS_UNHEALTHY
+			? self::SHIELDS_LOG_STATUS_UNHEALTHY
 			: null;
 	}
 }

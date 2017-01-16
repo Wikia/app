@@ -310,6 +310,10 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumActivityModule() {
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$wallHistory = new WallHistory( $this->app->wg->CityId );
 		$out = $wallHistory->getLastPosts( NS_WIKIA_FORUM_BOARD );
 		$this->response->setVal( 'posts', $out );

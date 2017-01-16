@@ -11,6 +11,11 @@ require([
     });
 
     $(function () {
+        track({
+            action: tracker.ACTIONS.IMPRESSION,
+            label: 'alternative-suggestion-present'
+        });
+
         $('.noarticletext').on('click', '.alternative-suggestion', function(event) {
             track({
                 action: tracker.ACTIONS.CLICK,

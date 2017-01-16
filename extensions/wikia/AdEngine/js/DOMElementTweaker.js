@@ -16,6 +16,19 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		}
 	}
 
+	function show(element, useInline) {
+		if (element && useInline) {
+			element.style.display = 'block';
+		} else if (element) {
+			element.classList.remove(hiddenElementClass);
+		}
+	}
+
+	function addClass(element, cls) {
+		log(['addClass ' + cls, element], 8, logGroup);
+		element.classList.add(cls);
+	}
+
 	function removeClass(element, cls) {
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.classList.remove(cls);
@@ -62,10 +75,17 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		});
 	}
 
+	function forceRepaint(domElement) {
+		return domElement.offsetWidth;
+	}
+
 	return {
+		addClass: addClass,
+		forceRepaint: forceRepaint,
 		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
-		removeClass: removeClass
+		removeClass: removeClass,
+		show: show
 	};
 });

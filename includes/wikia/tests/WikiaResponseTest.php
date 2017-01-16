@@ -150,11 +150,11 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 
 	public function testViewDefaultRender() {
 		$this->object->setView( (new WikiaView) );
-		$this->object->setFormat( 'raw' );
+		$this->object->setFormat( 'json' );
 
 		$output = $this->object->getView()->render( $this->object );
 
-		$this->assertStringStartsWith( '<pre>', $output );
+		$this->assertStringStartsWith( '[]', $output );
 	}
 
 	/**

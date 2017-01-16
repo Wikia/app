@@ -19,7 +19,8 @@ class StaffWelcomePoster {
 		'zh-hant' => 56584     // Ffaarr
 	];
 
-	const MESSAGE_KEY = 'discussions-staff-welcome-post';
+	const TITLE_MESSAGE_KEY = 'discussions-staff-welcome-title';
+	const BODY_MESSAGE_KEY = 'discussions-staff-welcome-post';
 
 	const DEFAULT_LANG = 'en';
 
@@ -36,9 +37,10 @@ class StaffWelcomePoster {
 	public function postMessage( int $siteId, string $language ): bool {
 		$transformedLang = $this->getTransformedLang( $language );
 		$staffId = $this->getStaffFromLang( $transformedLang );
-		$message = $this->getMessage( $transformedLang );
+		$message = $this->getBodyMessage( $transformedLang );
+		$title = $this->getTitleMessage( $transformedLang );
 
-		$success = $this->threadCreator->create( $staffId, $siteId, $message );
+		$success = $this->threadCreator->create( $staffId, $siteId, $message, $title );
 
 		return $success;
 	}
@@ -47,8 +49,12 @@ class StaffWelcomePoster {
 		return self::LANG_TO_STAFF_MAP[$language] ?? self::LANG_TO_STAFF_MAP[self::DEFAULT_LANG];
 	}
 
-	private function getMessage( string $language ): string {
-		return wfMessage( self::MESSAGE_KEY )->inLanguage( $language )->plain();
+	private function getBodyMessage( string $language ): string {
+		return wfMessage( self::BODY_MESSAGE_KEY )->inLanguage( $language )->plain();
+	}
+
+	private function getTitleMessage( string $language ): string {
+		return wfMessage( self::TITLE_MESSAGE_KEY )->inLanguage( $language )->plain();
 	}
 
 	private function getTransformedLang(string $language ): string {

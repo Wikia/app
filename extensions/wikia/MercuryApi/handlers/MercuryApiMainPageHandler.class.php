@@ -10,6 +10,7 @@ class MercuryApiMainPageHandler {
 		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
+		$wikiDescription = self::getWikiDescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
@@ -29,6 +30,10 @@ class MercuryApiMainPageHandler {
 
 		if ( !empty( $wikiaStats ) ) {
 			$mainPageData[ 'wikiaStats' ] = $wikiaStats;
+		}
+
+		if ( !empty( $wikiDescription ) ) {
+			$mainPageData[ 'wikiDescription' ] = $wikiDescription;
 		}
 
 		return $mainPageData;
@@ -131,5 +136,14 @@ class MercuryApiMainPageHandler {
 			'title' => $title->getText(),
 			'revision' => []
 		];
+	}
+
+	/**
+	 * Fetches wiki description (aka "Promote your wiki" description)
+	 *
+	 * @return string
+	 */
+	private static function getWikiDescription() {
+		return (new CommunityDataService( F::app()->wg->CityId ))->getCommunityDescription();
 	}
 }

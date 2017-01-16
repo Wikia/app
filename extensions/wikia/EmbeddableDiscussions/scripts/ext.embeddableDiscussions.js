@@ -51,7 +51,7 @@ require([
 
 				modal.show();
 
-				$('.embeddable-discussions-sharemodal-cancel-button').on('click', function(event) {
+				$('.embeddable-discussions-sharemodal-cancel-button').on('click', function (event) {
 					modal.trigger('close', event);
 					event.preventDefault();
 				});
@@ -84,7 +84,7 @@ require([
 				content: content,
 				createdAt: $.timeago(date),
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
-				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
+				forumName: $.msg('embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
 				isDeleted: thread.isDeleted ? 'is-deleted' : '',
 				isReported: thread.isReported ? 'is-reported' : '',
@@ -124,29 +124,91 @@ require([
 				withCredentials: true
 			},
 		}).done(function (data) {
-			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
+			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl),
+				imagesDir = '/extensions/wikia/EmbeddableDiscussions/images/';
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
 				columnsDetailsClass: columnsDetailsClass,
 				replyText: $.msg('embeddable-discussions-reply'),
+				replyIconSrc: imagesDir + 'reply.svg',
+				replyTinyIconSrc: imagesDir + 'reply-tiny.svg',
 				shareText: $.msg('embeddable-discussions-share'),
+				shareIconSrc: imagesDir + 'share.svg',
 				showAll: $.msg('embeddable-discussions-show-all'),
 				upvoteText: $.msg('embeddable-discussions-upvote'),
+				upvoteIconSrc: imagesDir + 'upvote.svg',
+				upvoteTinyIconSrc: imagesDir + 'upvote-tiny.svg',
 				zeroText: $.msg('embeddable-discussions-zero'),
 				zeroTextDetail: $.msg('embeddable-discussions-zero-detail'),
 			}));
+
+			replaceSvgImages($elem);
+
 		}).fail(function () {
 			throbber.hide($elem);
 			$elem.html($.msg('embeddable-discussions-error-loading'));
 		});
 	}
 
+	/**
+	 * Replace img elements with svg element, it gives us possibility to set fill color of svg.
+	 * @param $elem
+	 */
+	function replaceSvgImages($elem) {
+		$elem.find('img.svg').each(function () {
+			var $img = $(this),
+				imgURL = $img.attr('src');
+
+			$.get(imgURL, replaceImgWithSvg.bind(null, $img), 'xml');
+
+		});
+	}
+
+	/**
+	 * Replace img element with svg element
+	 * @param $img - img element to be replaced
+	 * @param data - svg content
+	 */
+	function replaceImgWithSvg($img, data) {
+		// Get the SVG tag, ignore the rest
+		var $svg = $(data).find('svg'),
+			imgID = $img.attr('id'),
+			imgClass = $img.attr('class');
+
+		// Add replaced image's ID to the new SVG
+		if (typeof imgID !== 'undefined') {
+			$svg = $svg.attr('id', imgID);
+		}
+		// Add replaced image's classes to the new SVG
+		if (typeof imgClass !== 'undefined') {
+			$svg = $svg.attr('class', imgClass + ' replaced-svg');
+		}
+
+		removeInvalidXMLTags($svg);
+
+		$svg.attr('width', $img.attr('width'));
+		$svg.attr('height', $img.attr('height'));
+		$svg.attr('viewBox', '0 0 ' + $img.attr('width') + ' ' + $img.attr('height'));
+
+		// Replace image with new SVG
+		$img.replaceWith($svg);
+	}
+
+	/**
+	 * Removes any invalid XML tags as per http://validator.w3.org
+	 * @param $svg
+	 * @returns {*}
+	 */
+	function removeInvalidXMLTags($svg) {
+		$svg.removeAttr('xmlns:a');
+	}
+
 	function loadData() {
 		var $threads = $('.embeddable-discussions-threads');
 		throbber.show($threads);
 
-		$.each($threads, function() {
+		$.each($threads, function () {
 			performRequest($(this));
 		});
 	}
@@ -194,7 +256,7 @@ require([
 			label: 'embeddable-discussions-loaded',
 		});
 
-		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
+		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 				$svg = $($(event.currentTarget).children()[0]),
@@ -222,7 +284,7 @@ require([
 			event.preventDefault();
 		});
 
-		$('.embeddable-discussions-module').on('click', '.share', function(event) {
+		$('.embeddable-discussions-module').on('click', '.share', function (event) {
 			openModal(event.currentTarget.getAttribute('data-link'), event.currentTarget.getAttribute('data-title'));
 			event.preventDefault();
 		});

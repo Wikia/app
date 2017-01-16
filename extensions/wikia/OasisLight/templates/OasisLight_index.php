@@ -67,10 +67,11 @@
 		Wikia.queue.late.push(function () {
 			<? if ( $theme['backgroundImage'] ): ?>
 				$('body').css('background-image', 'url("' + encodeURI(
-						<?= json_encode( $theme['backgroundImage'] ) ?>
+						<?= json_encode( rawurldecode( $theme['backgroundImage'] ) ) ?>
 					) + '")');
 			<? endif; ?>
 			$.getScript(<?= json_encode( $am->getGroupCommonURL( 'oasislight_bottom_js' )[0] ); ?>);
+			$('body').append( <?= json_encode( $siteCssLink ); ?> );
 		});
 	</script>
 

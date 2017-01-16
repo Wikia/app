@@ -43,7 +43,6 @@ class Custom404PageHooks {
 		$wgOut = $article->getContext()->getOutput();
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Custom404Page/scripts/Custom404Page.tracking.js\"></script>" );
 		$wgOut->addWikiText( $text );
-		$wgOut->setStatusCode( 200 );
 		$wgOut->setRobotPolicy( 'noindex,follow' );
 
 		return false;

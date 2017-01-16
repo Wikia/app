@@ -163,7 +163,7 @@ class RenameUserHelper {
 
 		$blockFound = false;
 
-		foreach ( Phalanx::getAllTypeNames() as $blockType ) {
+		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
 			$res = $service->match( $blockType, $text );
 
 			if ( !empty( $res ) ) {

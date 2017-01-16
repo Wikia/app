@@ -19,12 +19,12 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home';
 
-		setStatus('HOME_TOP_LEADERBOARD', isHome);
-		setStatus('HOME_TOP_RIGHT_BOXAD', isHome);
 		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
 
-		setStatus('TOP_LEADERBOARD', !isHome);
-		setStatus('TOP_RIGHT_BOXAD', !isHome);
+		// those slots exists on all pages
+		setStatus('TOP_LEADERBOARD', true);
+		setStatus('TOP_RIGHT_BOXAD', true);
+
 		setStatus('LEFT_SKYSCRAPER_2', !isHome);
 		setStatus('LEFT_SKYSCRAPER_3', !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);

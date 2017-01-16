@@ -1,0 +1,139 @@
+#CreatePageDialogHeader {
+	margin-bottom: 20px;
+}
+
+#CreatePageDialogSub {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+#CreatePageDialogChoose {
+	font-weight: bold;
+	margin-bottom: 8px;
+	margin-top: 10px;
+}
+
+#CreatePageDialogChoices {
+	list-style-type: none;
+	margin: 0 0 8px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	.accent {
+		border-radius: 10px;
+	}
+
+	.long {
+		margin-bottom: 5px;
+		min-height: 87px;
+		text-align: left;
+		width: 100%;
+
+		div {
+			margin-left: 88px;
+			margin-top: 0;
+			padding: 12px 0 0;
+
+			span {
+				font-size: 14px;
+			}
+		}
+
+		img {
+			float: left;
+			margin-left: 6px;
+			margin-top: 10px;
+			width: 55px;
+		}
+
+		input {
+			border-top-width: 7px;
+			float: left;
+			margin-top: 32px;
+		}
+	}
+}
+
+#wpCreatePageDialogTitle {
+	box-sizing: border-box;
+	font-size: 14px;
+	margin-bottom: 12px;
+	max-width: 370px;
+	padding: 6px 10px;
+	width: 98%;
+}
+
+#CreatePageContainer {
+	.chooser {
+		float: left;
+		margin-bottom: 12px;
+		text-align: center;
+		width: 48%;
+	}
+
+	div img {
+		display: block;
+		margin: 8px auto 0;
+	}
+}
+
+
+.wikiaSkinMonaco {
+	#CreatePageDialogWrapper {
+		margin-top: -62px;
+	}
+}
+
+.chooser div {
+	padding: 1em;
+	width: 80%;
+}
+
+#CreatePageDialogButton {
+	clear: both;
+}
+
+#CreatePageDialogInputSub,
+#CreatePageDialogTitleErrorMsg {
+	margin-top: 8px;
+}
+
+.CreatePageError {
+	color: $color-error;
+	font-weight: bold;
+}
+
+#CreatePageModalDialog {
+	section {
+		@include flexbox;
+		@include flex-direction(column);
+		padding: 0;
+	}
+
+	.create-page-dialog {
+		&__proposals {
+			background-color: rgba($color-unified-module-background, .4);
+		}
+
+		&__form-container, &__proposals {
+			@include flex-grow(1);
+			padding: 20px;
+		}
+
+		&__proposals-header {
+			font-weight: bold;
+			margin-bottom: 8px;
+		}
+
+		&__proposals-list {
+			box-sizing: border-box;
+			padding: 0 12px;
+
+			li {
+				float: left;
+				padding: 5px 0;
+				width: 50%;
+			}
+		}
+	}
+}

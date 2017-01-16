@@ -215,54 +215,7 @@ class IndexServicesTest extends BaseTest
 				$service->execute()
 		);
 	}
-	
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.08742 ms
-	 * @covers Wikia\Search\IndexService\WikiPromoData::execute
-	 */
-	public function testWikiPromoData() {
-		$mwService = $this->service->setMethods( [ 'isOnDbCluster', 'getVisualizationInfoForWikiId', 'getWikiId' ] )->getMock();
-		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\WikiPromoData' )
-		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getService' ] )
-		                ->getMock();
-		
-		$desc = "This is my description";
-		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'promoted' => 1 ] ];
-		$service
-		    ->expects( $this->once() )
-		    ->method ( "getService" )
-		    ->will   ( $this->returnValue( $mwService ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'isOnDbCluster' )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getVisualizationInfoForWikiId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( $vizInfo ) )
-		;
-		$expected = [ 'wiki_description_txt' => $desc, 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'true' ];
-		$this->assertEquals(
-				$expected,
-				$service->execute()
-		);
-		$this->assertAttributeEquals(
-				$expected,
-				'result',
-				$service
-		);
-	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08654 ms

@@ -4,6 +4,7 @@ namespace Wikia\Service\Helios;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
+use \Wikia\Util\Assert;
 
 /**
  * @Injectable(lazy=true)
@@ -11,11 +12,17 @@ use Wikia\Service\Constants;
  *
  * This is a naive implementation.
  */
-class HeliosClientImpl implements HeliosClient
-{
-	const BASE_URI = "helios_base_uri";
-	const SCHWARTZ_TOKEN = "schwartz_token";
+class HeliosClientImpl implements HeliosClient {
+	const BASE_URI = 'helios_base_uri';
+	const SCHWARTZ_TOKEN = 'schwartz_token';
 	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
+	const USERNAME = 'username';
+	const PASSWORD = 'password'; //NOSONAR
+	const METHOD = 'method';
+	const HEADERS = 'headers';
+	const METHOD_POST = 'POST';
+	const METHOD_DELETE = 'DELETE';
+
 
 	// Timeout (in seconds) of the Helios HTTP requests.
 	const HELIOS_REQUEST_TIMEOUT_SEC = 2;
@@ -35,7 +42,9 @@ class HeliosClientImpl implements HeliosClient
 	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
 	 *   Wikia\Service\Helios\HeliosClientImpl::SCHWARTZ_TOKEN})
 	 * The constructor.
+	 *
 	 * @param string $baseUri
+	 * @param        $schwartzToken
 	 */
 	public function __construct( $baseUri, $schwartzToken ) {
 		$this->baseUri = $baseUri;
@@ -45,27 +54,32 @@ class HeliosClientImpl implements HeliosClient
 	/**
 	 * Returns the status of the last request.
 	 */
-	public function getStatus()
-	{
+	public function getStatus() {
 		return $this->status;
 	}
 
 	/**
 	 * The general method for handling the communication with the service.
+	 *
+	 * @param       $resourceName
+	 * @param array $getParams
+	 * @param array $postData
+	 * @param array $extraRequestOptions
+	 *
+	 * @return mixed|null
 	 */
-	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] )
-	{
+	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
-		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
+		Assert::true( \MWHttpRequest::canMakeRequests() );
 
 		// Request URI pre-processing.
-		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
+		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
 
 		// Appending the request remote IP for client to be able to
 		// identify the source of the remote request.
-		if ( isset( $extraRequestOptions['headers'] ) ) {
-			$headers = $extraRequestOptions['headers'];
-			unset( $extraRequestOptions['headers'] );
+		if ( isset( $extraRequestOptions[ self::HEADERS ] ) ) {
+			$headers = $extraRequestOptions[ self::HEADERS ];
+			unset( $extraRequestOptions[ self::HEADERS ] );
 		} else {
 			$headers = [];
 		}
@@ -78,14 +92,14 @@ class HeliosClientImpl implements HeliosClient
 
 		// Request options pre-processing.
 		$options = [
-			'method'          => 'GET',
+			self::METHOD      => 'GET',
 			'timeout'         => self::HELIOS_REQUEST_TIMEOUT_SEC,
-			'postData'        => $postData,
+			'postData'        => http_build_query( $postData ),
 			'noProxy'         => true,
 			'followRedirects' => false,
 			'returnInstance'  => true,
 			'internalRequest' => true,
-			'headers'         => $headers,
+			self::HEADERS     => $headers,
 		];
 
 		$options = array_merge( $options, $extraRequestOptions );
@@ -114,7 +128,7 @@ class HeliosClientImpl implements HeliosClient
 			// Request execution.
 			/** @var \MWHttpRequest $request */
 			$request = $wrapper->wrap( function () use ( $options, $uri ) {
-				return \Http::request( $options['method'], $uri, $options );
+				return \Http::request( $options[ self::METHOD ], $uri, $options );
 			} );
 
 			/*
@@ -163,57 +177,63 @@ class HeliosClientImpl implements HeliosClient
 	/**
 	 * A shortcut method for login requests.
 	 *
-	 * @throws ClientException
+	 * @param $username
+	 * @param $password
+	 *
+	 * @return array
 	 */
-	public function login( $username, $password )
-	{
+	public function login( $username, $password ) {
 		// Convert the array to URL-encoded query string, so the Content-Type
 		// for the POST request is application/x-www-form-urlencoded.
 		// It would be multipart/form-data which is not supported
 		// by the Helios service.
-		$postData = http_build_query([
-			'username'	=> $username,
-			'password'	=> $password
-		]);
+		$postData = [
+			self::USERNAME => $username,
+			self::PASSWORD => $password,
+		];
 
 		$response = $this->request(
 			'token',
 			[],
 			$postData,
-			[ 'method'	=> 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 
-		return [$this->status, $response];
+		return [ $this->status, $response ];
 	}
 
 	/**
 	 * A shortcut method to remove all tokens for user in helios
 	 *
 	 * @param $userId int for remove user tokens
+	 *
 	 * @internal param $username
 	 * @return null
 	 */
 	public function forceLogout( $userId ) {
 		return $this->request(
 			sprintf( 'users/%s/tokens', $userId ),
-			[ ],
-			[ ],
+			[],
+			[],
 			[
-				'method' => 'DELETE',
-				'headers' => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ]
+				self::METHOD  => self::METHOD_DELETE,
+				self::HEADERS => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ],
 			]
 		);
 	}
 
 	/**
 	 * A shortcut method for info requests
+	 *
+	 * @param $token
+	 *
+	 * @return mixed|null
 	 */
-	public function info( $token )
-	{
+	public function info( $token ) {
 		return $this->request(
 			'info',
 			[
-				'code' => $token,
+				'code'         => $token,
 				'noblockcheck' => 1,
 			]
 		);
@@ -222,19 +242,18 @@ class HeliosClientImpl implements HeliosClient
 	/**
 	 * A shortcut method for token invalidation requests.
 	 *
-	 * @param $token string - a token to be invalidated
+	 * @param $token  string - a token to be invalidated
 	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
 	 */
-	public function invalidateToken( $token, $userId )
-	{
+	public function invalidateToken( $token, $userId ) {
 		return $this->request(
-			sprintf('token/%s', $token),
+			sprintf( 'token/%s', $token ),
 			[],
 			[],
-			[ 'method' => 'DELETE',
-				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
+			[ self::METHOD  => self::METHOD_DELETE,
+			  self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
 		);
 	}
 
@@ -246,39 +265,80 @@ class HeliosClientImpl implements HeliosClient
 	 *
 	 * @return array - JSON string deserialized into an associative array
 	 */
-	public function generateToken( $userId )
-	{
+	public function generateToken( $userId ) {
 		return $this->request(
-			sprintf('users/%s/tokens', $userId),
+			sprintf( 'users/%s/tokens', $userId ),
 			[],
 			[],
-			[ 'method' => 'POST' ]
+			[ self::METHOD => self::METHOD_POST ]
 		);
 	}
 
 	/**
-	* A shortcut method for register requests.
-	*/
-	public function register( $username, $password, $email, $birthdate, $langCode )
-	{
-			// Convert the array to URL-encoded query string, so the Content-Type
-			// for the POST request is application/x-www-form-urlencoded.
-			// It would be multipart/form-data which is not supported
-			// by the Helios service.
-			$postData = http_build_query( [
-				'username'  => $username,
-				'password'  => $password,
-				'email'     => $email,
-				'birthdate' => $birthdate,
-				'langCode'  => $langCode,
-			] );
+	 * A shortcut method for register requests.
+	 *
+	 * @param $username
+	 * @param $password
+	 * @param $email
+	 * @param $birthdate
+	 * @param $langCode
+	 *
+	 * @return mixed|null
+	 */
+	public function register( $username, $password, $email, $birthdate, $langCode ) {
+		// Convert the array to URL-encoded query string, so the Content-Type
+		// for the POST request is application/x-www-form-urlencoded.
+		// It would be multipart/form-data which is not supported
+		// by the Helios service.
+		$postData = [
+			self::USERNAME => $username,
+			self::PASSWORD => $password,
+			'email'        => $email,
+			'birthdate'    => $birthdate,
+			'langCode'     => $langCode,
+		];
 
-			return $this->request(
-				'users',
-				[],
-				$postData,
-				[ 'method'	=> 'POST' ]
-			);
+		return $this->request(
+			'users',
+			[],
+			$postData,
+			[ self::METHOD => self::METHOD_POST ]
+		);
 	}
 
+	public function setPassword( $userId, $password ) {
+		$postData = [
+			self::PASSWORD => $password,
+		];
+
+		return $this->request(
+			sprintf( 'users/%s/password', $userId ),
+			[],
+			$postData,
+			[ self::METHOD => 'PUT', self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
+		);
+	}
+
+	public function validatePassword( $password, $name ) {
+		$postData = [
+			self::PASSWORD => $password,
+			self::USERNAME => $name,
+		];
+
+		return $this->request(
+			'password/validation',
+			[],
+			$postData,
+			[ self::METHOD => self::METHOD_POST ]
+		);
+	}
+
+	public function deletePassword( $userId ) {
+		return $this->request(
+			sprintf( 'users/%s/password', $userId ),
+			[],
+			[],
+			[ self::METHOD => self::METHOD_DELETE, self::HEADERS => [ Constants::HELIOS_AUTH_HEADER => $userId ] ]
+		);
+	}
 }

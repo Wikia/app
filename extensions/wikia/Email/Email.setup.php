@@ -36,6 +36,7 @@ $wgAutoloadClasses['Email\SocialLinksGenerator'] =  $dir . 'SocialLinksGenerator
 $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/ForgotPasswordController.class.php';
+$wgAutoloadClasses['Email\Controller\PasswordResetLinkController'] =  $dir . 'Controller/PasswordResetLinkController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageEditedOrCreatedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageProtectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
