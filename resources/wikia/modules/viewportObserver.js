@@ -1,26 +1,10 @@
 /*global define*/
 define('wikia.viewportObserver', [
 	'wikia.document',
+	'wikia.domCalculator',
 	'wikia.window'
-], function (doc, win) {
+], function (doc, dom, win) {
 	'use strict';
-
-	// TODO extract to new object and reuse in AdEngine
-	function getTopOffset(element) {
-		var topPos = 0,
-			elementWindow = element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
-
-		do {
-			topPos += element.offsetTop;
-			element = element.offsetParent;
-		} while (element !== null);
-
-		if (elementWindow.frameElement) {
-			topPos += getTopOffset(elementWindow.frameElement);
-		}
-
-		return topPos;
-	}
 
 	/**
 	 * Element is considered as in the viewport
@@ -30,7 +14,7 @@ define('wikia.viewportObserver', [
 	function isInViewport(element) {
 		var globalNavHeight = 55, // keep in sync with $wds-global-navigation-height
 			elementHeight = element.offsetHeight,
-			topElement = getTopOffset(element),
+			topElement = dom.getTopOffset(element),
 			bottomElement = topElement + elementHeight,
 			topViewport = win.scrollY + globalNavHeight,
 			bottomViewport = topViewport + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);

@@ -1,4 +1,5 @@
 /*global define*/
+// TODO replace with wikia.domCalculator
 define('ext.wikia.adEngine.utils.domCalculator', [
 ], function () {
 	'use strict';

@@ -2,10 +2,9 @@
 define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
-	'wikia.document',
 	'wikia.log',
 	'wikia.viewportObserver'
-], function (porvataPlayerFactory, googleIma, doc, log, viewportObserver) {
+], function (porvataPlayerFactory, googleIma, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 

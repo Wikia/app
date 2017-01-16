@@ -119,6 +119,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
+		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/viewportObserver.js',
 
@@ -966,6 +967,7 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//resources/wikia/modules/abTest.js',
+		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/viewportObserver.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
