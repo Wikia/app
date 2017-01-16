@@ -105,7 +105,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	private function getAuthenticationResource() {
 		if ( $this->wg->request->getVal( 'type' ) == 'forgotPassword' ) {
-			return '/forgotpassword';
+			return '/forgot-password';
 		} else {
 			return '/signin';
 		}
