@@ -33,6 +33,21 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 
+				function inViewportCallback(isVisible) {
+					// Play video automatically only for the first time
+					if (isVisible && !autoPlayed && params.autoPlay) {
+						video.play();
+						autoPlayed = true;
+					// Don't resume when video was paused manually
+					} else if (isVisible && shouldResume) {
+						video.resume();
+					// Pause video once it's out of viewport and set shouldResume to distinguish manual and auto pause
+					} else if (!isVisible && !video.isPaused()) {
+						video.pause();
+						shouldResume = true;
+					}
+				}
+
 				video.addEventListener('adCanPlay', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdStarted');
 				});
@@ -58,17 +73,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					params.onReady(video);
 				}
 
-				viewportListener = viewportObserver.addListener(params.container, function (isVisible) {
-					if (isVisible && !autoPlayed && params.autoPlay) {
-						video.play();
-						autoPlayed = true;
-					} else if (isVisible && shouldResume) {
-						video.resume();
-					} else if (!isVisible && !video.isPaused()) {
-						video.pause();
-						shouldResume = true;
-					}
-				});
+				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 
 				return video;
 			});

@@ -1,8 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.scrollHandler', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.document',
+	'wikia.domCalculator',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
