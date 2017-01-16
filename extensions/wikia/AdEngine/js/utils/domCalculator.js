@@ -1,5 +1,5 @@
 /*global define*/
-// TODO replace with wikia.domCalculator
+// TODO ADEN-4530 replace usages with wikia.domCalculator
 define('ext.wikia.adEngine.utils.domCalculator', [
 ], function () {
 	'use strict';

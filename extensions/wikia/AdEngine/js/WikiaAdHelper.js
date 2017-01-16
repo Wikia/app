@@ -1,5 +1,5 @@
 /*global define, clearTimeout, setTimeout*/
-// TODO Replace usages with wikia.throttle
+// TODO ADEN-4530 Replace usages with wikia.throttle
 define('ext.wikia.adEngine.adHelper', function () {
 	'use strict';
 
