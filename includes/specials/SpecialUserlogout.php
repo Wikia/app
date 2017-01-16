@@ -69,7 +69,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		// long running requests logging the user back in (@see PLATFORM-1028)
 		wfResetSessionID();
 
-		wfRunHooks( 'UserLogoutComplete', array( &$user, null, $oldName ) );
+		$injectedHTML = '';
+		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
 
 		// redirection
 
