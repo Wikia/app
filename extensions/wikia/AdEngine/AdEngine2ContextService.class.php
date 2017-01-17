@@ -66,6 +66,7 @@ class AdEngine2ContextService {
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
+					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
