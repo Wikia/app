@@ -198,7 +198,7 @@
 		 * @return array
 		 */
 		protected function merge( $articles, $images ) {
-			global $wgDevelEnvironment;
+			global $wgDevelEnvironment, $wgDevDomain;
 
 			wfProfileIn(__METHOD__);
 
@@ -213,7 +213,7 @@
 				if (!empty($images[$id])) {
 					$image = reset($images[$id]);
 					if (!empty($wgDevelEnvironment)) {
-						$image['url'] = str_replace('http://images.wladek.wikia-dev.com/', 'http://images.wikia.com/', $image['url']);
+						$image['url'] = str_replace( "http://images.{$wgDevDomain}/", 'http://images.wikia.com/', $image['url'] );
 					}
 
 					$entry['image_url'] = $image['url'];

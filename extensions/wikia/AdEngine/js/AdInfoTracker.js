@@ -13,9 +13,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
 		enabledSlots = {
 			TOP_LEADERBOARD: true,
-			HOME_TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true,
-			HOME_TOP_RIGHT_BOXAD: true,
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_MIDDLE_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true,
@@ -73,7 +71,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_2': slotPrices.appnexus || '',
 			'bidder_3': slotPrices.fastlane || '',
 			'bidder_4': slotPrices.vulcan || '',
-			'bidder_5': '',
+			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': '',
 			'bidder_7': '',
 			'product_chosen': '',

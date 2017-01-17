@@ -117,7 +117,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
 	if ( $overrideServer ) {
-		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
+		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.(pl|us|com)\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
@@ -183,7 +183,7 @@ function wfReplaceAssetServer( $url ) {
 		$serverNo++;
 
 		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
-	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches ) ) {
+	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.(pl|us|com)\/(.*))$/', $url, $matches ) ) {
 		$hash = sha1( $url );
 		$inthash = ord( $hash );
 

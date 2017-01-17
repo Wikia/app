@@ -88,7 +88,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			{
 				env: {
-					slotName: 'HOME_TOP_LEADERBOARD'
+					slotName: 'TOP_LEADERBOARD'
 				},
 				wsi: 'xlxx'
 			},

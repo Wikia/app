@@ -33,7 +33,9 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 	}
 
 	public function testLoadFromProps() {
-		$data = '[{"data": [], "sources": []}]';
+		$data = '[{"parser_tag_version": ' .
+			PortableInfoboxParserTagController::PARSER_TAG_VERSION .
+			', "data": [], "metadata": []}]';
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
 			->purge()
@@ -53,23 +55,72 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			->save( $infoboxNode )
 			->getData();
 
-		$this->assertEquals( [ [ 'data' => [ [ 'type' => 'data', 'data' => [ 'label' => null, 'value' => 1 ] ] ],
-								 'sources' => [ 'test', 'test2' ] ] ], $result );
+		$this->assertEquals(
+			[
+				[
+					'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+					'data' => [ [ 'type' => 'data', 'data' => [ 'label' => null, 'value' => 1, 'layout' => null, 'span' => 1 ] ] ],
+					'metadata' => [
+						[
+							'type' => 'data',
+							'sources' => [
+								'test' => [
+									'label' => '',
+									'primary' => true
+								],
+								'test2' => [
+									'label' => ''
+								]
+							]
+						]
+					]
+				]
+			],
+			$result
+		);
 	}
 
 	public function testTemplate() {
-		$data = [ [ 'data' => [ ], 'sources' => [ ] ] ];
+		$data = [
+			[
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+				'data' => [],
+				'metadata' => []
+			]
+		];
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1, NS_TEMPLATE ) )
 			->purge()
 			->setPagePropsProxy( new PagePropsProxyDummy( [ ] ) )
-			->setTemplatesHelper( new TemplateHelperDummy( $data ) )
+			->setParsingHelper( new ParsingHelperDummy( null, $data ) )
 			->getData();
 
 		$this->assertEquals( $data, $result );
 	}
 
+	public function testReparse() {
+		$oldData = '[{"parser_tag_version": 0, "data": [], "metadata": []}]';
+		$newData = [
+			[
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+				'data' => [],
+				'metadata' => []
+			]
+		];
+
+		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
+			// purge memc so we can rerun tests
+			->purge()
+			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => $oldData ] ) )
+			->setParsingHelper( new ParsingHelperDummy( $newData ) )
+			->getData();
+
+		$this->assertEquals( $newData, $result );
+	}
+
 	public function testDelete() {
-		$data = '[{"data": [], "sources": []}]';
+		$data = '[{"parser_tag_version": ' .
+			PortableInfoboxParserTagController::PARSER_TAG_VERSION .
+			', "data": [], "metadata": []}]';
 		$result = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
 			->purge()
@@ -81,7 +132,9 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 	}
 
 	public function testPurge() {
-		$data = '[{"data": [], "sources": []}]';
+		$data = '[{"parser_tag_version": ' .
+			PortableInfoboxParserTagController::PARSER_TAG_VERSION .
+			', "data": [], "metadata": []}]';
 		$service = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			// purge memc so we can rerun tests
 			->purge()
@@ -100,7 +153,9 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 	public function testImageListRemoveDuplicates() {
 		$images = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			->purge()
-			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxData() ) ] ) )
+			->setPagePropsProxy(
+				new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxPageProps() ) ] )
+			)
 			->getImages();
 
 		$this->assertEquals( count( $images ), 2 );
@@ -109,7 +164,9 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 	public function testImageListFetchImages() {
 		$images = PortableInfoboxDataService::newFromTitle( $this->prepareTitle( 1 ) )
 			->purge()
-			->setPagePropsProxy( new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxData() ) ] ) )
+			->setPagePropsProxy(
+				new PagePropsProxyDummy( [ '1infoboxes' => json_encode( $this->getInfoboxPageProps() ) ] )
+			)
 			->getImages();
 
 		$this->assertEquals( [ 'Test.jpg', 'Test2.jpg' ], $images );
@@ -127,41 +184,74 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 		$this->assertEquals( [ ], $result );
 	}
 
-	protected function getInfoboxData() {
-		return [ [ 'data' => [ [ "type" => "data",
-								 "data" => [
-									 "value" => "AAAA",
-									 "label" => "BBBB"
-								 ]
-							   ], [ "type" => "image",
-									"data" => [ [
-										"key" => "Test.jpg",
-										"alt" => null,
-										"caption" => null,
-									] ]
-							   ], [ "type" => "image",
-									"data" => [ [
-										"key" => "Test2.jpg",
-										"alt" => null,
-										"caption" => null
-									] ] ] ] ],
-				 [ 'data' => [ [ "type" => "image",
-								 "data" => [ [
-									 "key" => "Test2.jpg",
-									 "alt" => null,
-									 "caption" => null
-								 ] ] ] ] ] ];
+	protected function getInfoboxPageProps() {
+		return [
+			[
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+				'data' => [
+					[
+						'type' => 'data',
+						'data' => [
+							'value' => 'AAAA',
+							'label' => 'BBBB'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => [
+							[
+								'key' => 'Test.jpg',
+								'alt' => null,
+								'caption' => null,
+							]
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => [
+							[
+								'key' => 'Test2.jpg',
+								'alt' => null,
+								'caption' => null
+							]
+						]
+					]
+				],
+				'metadata' => []
+			],
+			[
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+				'data' => [
+					[
+						'type' => 'image',
+						'data' => [
+							[
+								'key' => 'Test2.jpg',
+								'alt' => null,
+								'caption' => null
+							]
+						]
+					]
+				],
+				'metadata' => []
+			]
+		];
 	}
 }
 
-class TemplateHelperDummy {
+class ParsingHelperDummy {
 
-	public function __construct( $hidden = false ) {
-		$this->hidden = $hidden;
+	public function __construct( $infoboxesData = null, $includeonlyInfoboxesData = null ) {
+		$this->infoboxesData = $infoboxesData;
+		$this->includeonlyInfoboxesData = $includeonlyInfoboxesData;
 	}
 
-	public function parseInfoboxes( $title ) {
-		return $this->hidden;
+	public function parseIncludeonlyInfoboxes( $title ) {
+		return $this->includeonlyInfoboxesData;
+	}
+
+	public function reparseArticle( $title ) {
+		return $this->infoboxesData;
 	}
 }
 
@@ -172,9 +262,7 @@ class PagePropsProxyDummy {
 	}
 
 	public function get( $id, $property ) {
-		$prop = $this->data[ $id . $property ];
-
-		return $prop !== null ? $prop : '';
+		return $this->data[ $id . $property ] ?? '';
 	}
 
 	public function set( $id, $data ) {

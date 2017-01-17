@@ -2,10 +2,45 @@
 
 namespace Wikia\IndexingPipeline;
 
+use Wikia\Logger\WikiaLogger;
+
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
 	protected static $pipe;
+
+	const ARTICLECOMMENT_PREFIX = '@comment-'; // as defined in ArticleComments_setup.php
+
+	/**
+	 * Check if a given title should be indexed in solr
+	 *
+	 * Do not index Wall messages, Forum posts and article comments (but keep the rest of NS_TALK articles)
+	 *
+	 * @see SUS-1446
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public static function canIndex( \Title $title ) {
+		// do not index article comments, but keep talk pages
+		if ( $title->inNamespace( NS_TALK ) ) {
+			return strpos( $title->getText(), self::ARTICLECOMMENT_PREFIX ) === false;
+		}
+
+		return !in_array( $title->getNamespace(), self::getExcludedNamespaces() );
+	}
+
+	/**
+	 * Get a list of article descendant namespaces which are not allowed to be indexed for searching:
+	 *
+	 * @see SUS-1446
+	 * @return array
+	 */
+	private static function getExcludedNamespaces() {
+		return [
+			1201, // Message Wall
+			2001, // Forum
+		];
+	}
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
@@ -14,7 +49,12 @@ class PipelineEventProducer {
 	 * @param null $revisionId
 	 * @param null $eventName
 	 */
-	public static function send( $eventName, $pageId, $revisionId ) {
+	private static function send( $eventName, $pageId, $revisionId ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'eventName' => $eventName,
+			'pageId' => (string) $pageId
+		] );
+
 		self::getPipeline()->publish(
 			implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
 			PipelineMessageBuilder::create()
@@ -34,7 +74,12 @@ class PipelineEventProducer {
 	 * @param $revisionId
 	 * @param string $ns
 	 */
-	public static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = PipelineRoutingBuilder::NS_CONTENT ) {
+	private static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = PipelineRoutingBuilder::NS_CONTENT ) {
+		WikiaLogger::instance()->info( __METHOD__, [
+			'action' => $action,
+			'pageId' => (string) $pageId
+		] );
+
 		self::getPipeline()->publish(
 			PipelineRoutingBuilder::create()
 				->addName( static::PRODUCER_NAME )
@@ -69,6 +114,10 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onNewRevisionFromEditComplete( $article, \Revision $rev, $baseID, \User $user ) {
+		if ( !self::canIndex( $article->getTitle() ) ) {
+			return true;
+		}
+
 		$action = $rev->getPrevious() === null ? PipelineRoutingBuilder::ACTION_CREATE
 			: PipelineRoutingBuilder::ACTION_UPDATE;
 		$pageId = $article->getId();
@@ -86,6 +135,10 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
+		if ( !self::canIndex( $oPage->getTitle() ) ) {
+			return true;
+		}
+
 		$revisionId = $oPage->getTitle()->getLatestRevID();
 
 		self::send( 'onArticleDeleteComplete', $pageId, $revisionId );
@@ -102,6 +155,10 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onArticleUndelete( \Title &$oTitle, $isNew = false ) {
+		if ( !self::canIndex( $oTitle ) ) {
+			return true;
+		}
+
 		$revisionId = $oTitle->getLatestRevID();
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $revisionId );
@@ -118,6 +175,10 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
+		if ( !self::canIndex( $oNewTitle ) ) {
+			return true;
+		}
+
 		$revisionId = $oNewTitle->getLatestRevID();
 
 		self::send( 'onTitleMoveComplete', $pageId, $revisionId );

@@ -242,6 +242,10 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 	this.$uploadWrapper.hide();
 };
 
+ve.ui.WikiaMediaQueryWidget.prototype.onLogInSuccess = function () {
+	this.upload.onLogInSuccess( true );
+};
+
 /**
  * Map API error message to human readable messages
  *

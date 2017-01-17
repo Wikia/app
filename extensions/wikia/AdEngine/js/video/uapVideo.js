@@ -2,87 +2,126 @@
 define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.video.uapVideoAnimation',
-	'ext.wikia.adEngine.video.videoAdFactory',
+	'ext.wikia.adEngine.slot.adSlot',
+	'ext.wikia.adEngine.video.player.porvata',
+	'ext.wikia.adEngine.video.player.playwire',
+	'ext.wikia.adEngine.video.player.ui.videoInterface',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adHelper, uapContext, uapVideoAnimation, videoAdFactory, log, win) {
+], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
-	function getVideoHeight(width, params) {
-		return width / params.videoAspectRatio;
+	function getVideoHeight(slotWidth, aspectRatio) {
+		return slotWidth / aspectRatio;
 	}
 
-	function defaultGetSlotWidth(slot) {
+	function getSlotWidth(slot) {
 		return slot.clientWidth;
 	}
 
-	function updateProgressBar(ima) {
-		var currentTime = ima.container.querySelector('.progress-bar > .current-time'),
-			remainingTime = ima.adsManager.getRemainingTime();
+	function loadPorvata(params, slotContainer, providerContainer) {
+		params.container = slotContainer;
 
-		if (remainingTime) {
-			currentTime.style.transitionDuration = remainingTime + 's';
-			currentTime.style.width = '100%';
-		} else {
-			currentTime.style.width = '0';
-		}
+		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
+
+		return porvata.inject(params)
+			.then(function (video) {
+				videoInterface.setup(video, [
+					'progressBar',
+					'pauseOverlay',
+					'volumeControl',
+					'closeButton',
+					'toggleAnimation'
+				], {
+					image: providerContainer,
+					container: slotContainer,
+					aspectRatio: params.aspectRatio,
+					videoAspectRatio: params.videoAspectRatio
+				});
+
+				video.addEventListener('allAdsCompleted', function () {
+					video.reload();
+				});
+
+				return video;
+			});
 	}
 
-	function addProgressListeners(video) {
-		video.addEventListener('start', updateProgressBar);
-		video.addEventListener('resume', updateProgressBar);
-		video.addEventListener('complete', updateProgressBar);
-		video.addEventListener('pause', function (ima) {
-			var progressBar = ima.container.querySelector('.progress-bar'),
-				currentTime = progressBar.querySelector('.current-time');
+	function loadPlaywire(params, adSlot, imageContainer) {
+		var container = doc.createElement('div');
 
-			currentTime.style.width = (currentTime.offsetWidth / progressBar.offsetWidth * 100) + '%';
-		});
-	}
+		container.classList.add('video-player', 'hidden');
+		adSlot.appendChild(container);
 
-	function loadVideoAd(params, adSlot, imageContainer, getSlotWidth) {
-		getSlotWidth = getSlotWidth || defaultGetSlotWidth;
+		params.container = container;
 
-		try {
-			var video = videoAdFactory.create(
-				getSlotWidth(adSlot),
-				getVideoHeight(getSlotWidth(adSlot), params),
-				adSlot,
-				{
-					src: params.src,
-					pos: params.slotName,
-					uap: uapContext.getUapId(),
-					passback: 'vuap'
+		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
+		return playwire.inject(params)
+			.then(function (video) {
+				videoInterface.setup(video, [
+					'closeButton',
+					'toggleAnimation'
+				], {
+					image: imageContainer,
+					container: adSlot,
+					aspectRatio: params.aspectRatio,
+					videoAspectRatio: params.videoAspectRatio
+				});
+
+				video.addEventListener('wikiaAdStarted', function () {
+					var slotWidth = getSlotWidth(adSlot);
+					video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+				});
+				if (params.autoPlay) {
+					var slotWidth = getSlotWidth(adSlot);
+					video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 				}
-			);
-			addProgressListeners(video);
 
+				return video;
+			});
+	}
+
+	function loadVideoAd(params) {
+		var loadedPlayer,
+			providerContainer = adSlot.getProviderContainer(params.slotName),
+			slotContainer = providerContainer.parentNode,
+			videoWidth = getSlotWidth(slotContainer);
+
+		log(['loadVideoAd params', params], log.levels.debug, logGroup);
+
+		params.width = videoWidth;
+		params.height = getVideoHeight(videoWidth, params.videoAspectRatio);
+		params.vastTargeting = {
+			src: params.src,
+			pos: params.slotName,
+			passback: 'vuap',
+			uap: uapContext.getUapId()
+		};
+
+		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
+
+		if (params.player === 'playwire') {
+			loadedPlayer = loadPlaywire(params, slotContainer, providerContainer);
+		} else {
+			loadedPlayer = loadPorvata(params, slotContainer, providerContainer);
+		}
+
+		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
-				var slotWidth = getSlotWidth(adSlot);
-				video.resize(slotWidth, getVideoHeight(slotWidth, params));
+				var slotWidth = getSlotWidth(slotContainer);
+				video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			}));
 
-			video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
-				uapVideoAnimation.showVideo(video, imageContainer, adSlot, params, getSlotWidth);
-			});
-
-			video.addEventListener(win.google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-				uapVideoAnimation.hideVideo(video, imageContainer, adSlot, params, getSlotWidth);
-				video.reload();
-			});
-
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(adSlot);
-				video.play(slotWidth, getVideoHeight(slotWidth, params));
+				var slotWidth = getSlotWidth(slotContainer);
+				video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			});
 
 			return video;
-		} catch (error) {
-			log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
-		}
+		});
 	}
 
 	function isEnabled(params) {
@@ -90,7 +129,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	return {
-		init: videoAdFactory.init,
 		isEnabled: isEnabled,
 		loadVideoAd: loadVideoAd
 	};
