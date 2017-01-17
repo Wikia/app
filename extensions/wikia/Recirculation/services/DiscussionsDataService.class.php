@@ -1,7 +1,6 @@
 <?php
 
 class DiscussionsDataService {
-	const DISCUSSIONS_API_BASE = 'https://services.wikia.com/discussion/';
 	const DISCUSSIONS_API_LIMIT = 5;
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
@@ -102,7 +101,8 @@ class DiscussionsDataService {
 
 		$params = array_merge( $defaultParams, $options );
 
-		return self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
+		return \F::app()->wg->DiscussionsApiUrl . '/' . $endpoint . '?' .
+		       http_build_query( $params );
 	}
 
 	private function buildPost( $rawPost, $index ) {

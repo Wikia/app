@@ -1,8 +1,6 @@
 <?php
 
 class DiscussionsThreadModel {
-	const DISCUSSIONS_API_BASE = 'https://services.wikia.com/discussion/';
-	const DISCUSSIONS_API_BASE_DEV = 'https://services.wikia-dev.com/discussion/';
 	const SORT_TRENDING = 'trending';
 	const SORT_LATEST = 'creation_date';
 	const SORT_TRENDING_LINK = 'trending';
@@ -22,11 +20,8 @@ class DiscussionsThreadModel {
 	}
 
 	private function getCategoryRequestUrl() {
-		global $wgDevelEnvironment;
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
-		}
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
+		global $wgDiscussionsApiUrl;
+		return "$wgDiscussionsApiUrl/forums?responseGroup=small&viewableOnly=true";
 	}
 
 	/**

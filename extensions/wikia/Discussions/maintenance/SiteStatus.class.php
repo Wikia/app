@@ -5,7 +5,6 @@ namespace Discussions;
 
 class SiteStatus {
 	const PROD_SERVICE_URL = 'https://serivces.wikia.com';
-	const DEV_SERVICE_URL = 'https://services.wikia-dev.com';
 
 	const TIME_OUT = 5;
 
@@ -359,13 +358,7 @@ class SiteStatus {
 	}
 
 	private function getDiscussionsUrl() {
-		if ( \F::app()->wg->WikiaEnvironment == WIKIA_ENV_DEV ) {
-			$baseUrl = self::DEV_SERVICE_URL;
-		} else {
-			$baseUrl = self::PROD_SERVICE_URL;
-		}
-
-		return $baseUrl . '/discussion/' . $this->siteId . '/threads';
+		return \F::app()->wg->DiscussionsApiUrl . '/' . $this->siteId . '/threads';
 	}
 
 	private function getVariableValue( $name ) {
