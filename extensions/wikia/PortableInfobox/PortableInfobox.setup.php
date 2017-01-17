@@ -74,7 +74,7 @@ $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQu
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
-$wgHooks[ 'AfterParserParseImageGallery' ][] = 'PortableInfoboxHooks::onAfterParserParseImageGallery';
+$wgHooks[ 'ParserTagHooksBeforeInvoke' ][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
 $wgHooks[ 'BeforePageDisplay' ][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';
