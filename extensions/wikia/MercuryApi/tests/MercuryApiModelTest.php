@@ -68,8 +68,15 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * @param $data
 	 */
 	public function testGetCuratedContentSections( $expected, $data ) {
-		$mercuryApi = new MercuryApi();
-		$this->assertEquals( $expected, $mercuryApi->getCuratedContentSections( $data ) );
+		$mock = $this->getMockBuilder( 'MercuryApi' )
+			->setMethods( [ 'getSectionContent' ] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getSectionContent' )
+			->will( $this->returnValue([]) );
+
+		$this->assertEquals( $expected, $mock->getCuratedContentSections( $data ) );
 	}
 
 	public function getCuratedContentSectionsDataProvider() {
@@ -85,12 +92,14 @@ class MercuryApiModelTest extends WikiaBaseTest {
 						'image_id' => 1024,
 						'image_url' => 'image_url_0',
 						'type' => 'section',
+						'items' => []
 					],
 					[
 						'title' => 'Another Curated Content Section',
 						'image_id' => 2048,
 						'image_url' => 'image_url_2',
 						'type' => 'section',
+						'items' => []
 					],
 				],
 				'$data' => [

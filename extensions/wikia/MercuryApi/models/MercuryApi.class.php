@@ -337,11 +337,15 @@ class MercuryApi {
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
-				$section[ 'items' ] = MercuryApiMainPageHandler::getCuratedContentData( $this, $section['title'] )['items'];
+				$section[ 'items' ] = $this->getSectionContent( $section[ 'title' ] );
 				$sections[] = $section;
 			}
 		}
 		return $sections;
+	}
+
+	protected function getSectionContent( $sectionTitle ) {
+		return MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle )['items'];
 	}
 
 	/**
