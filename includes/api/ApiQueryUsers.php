@@ -161,11 +161,13 @@ class ApiQueryUsers extends ApiQueryBase {
 
 				/* Wikia change begin - SUS-92 */
 				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
-					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] );
-					$isBlocked = $user->isBlocked( true, false, $isGlobalBlockCheck );
+					// SUS-1456: Only perform lookup for global blocks if user is allowed to view this info
+					$canViewGlobalBlocks = $this->getUser()->isAllowed( 'phalanx' );
+					$checkGlobalBlocks = $canViewGlobalBlocks && !isset( $this->prop['localblockinfo'] );
+					$isBlocked = $user->isBlocked( true /* use slave DB */, false /* don't log in phalanx */, $checkGlobalBlocks );
 					
-					if ($isBlocked) {
-						$blockInfo = $user->getBlock( true, false, $isGlobalBlockCheck );
+					if ( $isBlocked ) {
+						$blockInfo = $user->getBlock( true /* use slave DB */, false /* don't log in phalanx */, $checkGlobalBlocks );
 						$data[$name]['blockedby'] = $blockInfo->getByName();
 						$data[$name]['blockreason'] = $blockInfo->mReason;
 						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
