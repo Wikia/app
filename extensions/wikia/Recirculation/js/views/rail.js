@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.views.rail', [
 		var curated = new CuratedHelper();
 
 		return curated.injectContent(data)
-			.then(renderTemplate('rail.mustache'))
+			.then(renderTemplate('client/rail.mustache'))
 			.then(utils.waitForRail)
 			.then(function ($html) {
 				if (options.before) {
