@@ -74,7 +74,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 		$mock->expects( $this->any() )
 			->method( 'getSectionContent' )
-			->will( $this->returnValue([]) );
+			->will( $this->returnValue( [ ] ) );
 
 		$this->assertEquals( $expected, $mock->getCuratedContentSections( $data ) );
 	}
