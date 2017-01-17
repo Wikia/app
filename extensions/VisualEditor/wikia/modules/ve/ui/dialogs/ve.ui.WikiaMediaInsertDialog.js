@@ -526,7 +526,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 
 	return new OO.ui.Process( function () {
 		$.when.apply( $, promises ).done( function () {
-			// We need to update model to have permament images. 
+			// We need to update model to have permament images.
 			// We're using addItems as it replaces items in model when we operate on the same images
 			this.cartModel.addItems( cartItems );
 
