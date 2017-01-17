@@ -376,6 +376,26 @@ class MercuryApiController extends WikiaController {
 						}
 
 						break;
+					case NS_FILE:
+						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getFileContent( $title );
+
+						//if ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
+							if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
+								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+
+								// Remove namespace prefix from displayTitle, so it can be consistent with title
+								// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+								$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
+							} else {
+								// TODO
+								$data[ 'details' ] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							}
+//						} else {
+//							throw new NotFoundApiException( 'Category has no members' );
+//						}
+
+						break;
 					default:
 						if ( $title->isContentPage() ) {
 							if ( $title->isKnown() && $articleExists ) {
