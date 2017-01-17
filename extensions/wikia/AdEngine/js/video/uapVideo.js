@@ -20,12 +20,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	}
 
 	function getSlotWidth(slot) {
-		return slot.clientWidth;
+		return slot.clientWidth * 0.592;
 	}
 
 	function loadPorvata(params, slotContainer, providerContainer) {
 		params.container = slotContainer;
-		params.container = params.videoElement || slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
@@ -86,7 +85,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
-			videoContainer = params.videoElement || providerContainer.parentNode,
+			videoContainer = providerContainer.parentNode,
 			videoWidth = getSlotWidth(videoContainer);
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
@@ -116,7 +115,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 			params.videoTriggerElement.addEventListener('click', function () {
 				var slotWidth = getSlotWidth(videoContainer);
-				video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+				// video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+				video.play();
 			});
 
 			return video;
