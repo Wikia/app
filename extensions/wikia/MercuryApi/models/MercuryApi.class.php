@@ -337,6 +337,8 @@ class MercuryApi {
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
+				$section[ 'items' ] = MercuryApiMainPageHandler::getCuratedContentData( $this, $section['title'] )['items'];
+
 				$sections[] = $section;
 			}
 		}
