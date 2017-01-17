@@ -15,12 +15,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
-	function getVideoHeight(slotWidth, aspectRatio) {
-		return slotWidth / aspectRatio;
-	}
-
-	function getSlotWidth(slot) {
-		return slot.clientWidth * 0.592;
+	function getVideoSize(slot, params) {
+		var width = params.autoPlay ? slot.clientWidth * 0.592 : slot.clientWidth;
+		return {
+			width: width,
+			height: width / params.videoAspectRatio
+		};
 	}
 
 	function loadPorvata(params, slotContainer, providerContainer) {
@@ -70,12 +70,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 
 				video.addEventListener('wikiaAdStarted', function () {
-					var slotWidth = getSlotWidth(adSlot);
-					video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+					var size = getVideoSize(adSlot, params);
+					video.resize(size.width, size.height);
 				});
 				if (params.autoPlay) {
-					var slotWidth = getSlotWidth(adSlot);
-					video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+					var size = getVideoSize(adSlot, params);
+					video.play(size.width, size.height);
 				}
 
 				return video;
@@ -86,12 +86,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
 			videoContainer = providerContainer.parentNode,
-			videoWidth = getSlotWidth(videoContainer);
+			size;
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
-		params.width = videoWidth;
-		params.height = getVideoHeight(videoWidth, params.videoAspectRatio);
+		size = getVideoSize(videoContainer, params);
+		params.width = size.width;
+		params.height = size.height;
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
@@ -109,13 +110,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return loadedPlayer.then(function (video) {
 			win.addEventListener('resize', adHelper.throttle(function () {
-				var slotWidth = getSlotWidth(videoContainer);
-				video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
+				var size = getVideoSize(videoContainer, params);
+				video.resize(size.width, size.height);
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(videoContainer);
-				// video.play(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 				video.play();
 			});
 
