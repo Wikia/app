@@ -305,7 +305,7 @@ class MercuryApi {
 		$data = [ ];
 		$sections = $this->getCuratedContentSections( $rawData );
 		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
-		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
+		$featured = isset( $rawData[ 'featured' ] ) ? $this->getCuratedContentItems( $rawData[ 'featured' ] ) : [];
 
 		if ( !empty( $sections ) || !empty( $items ) ) {
 			$data[ 'items' ] = [ ];
@@ -338,7 +338,6 @@ class MercuryApi {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
 				$section[ 'items' ] = MercuryApiMainPageHandler::getCuratedContentData( $this, $section['title'] )['items'];
-
 				$sections[] = $section;
 			}
 		}
