@@ -536,9 +536,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 			} else {
 				this.close();
 			}
-		}.bind( this ) ).always( function () {
-			this.popPending();
-		}.bind( this ) );
+		}.bind( this ) ).always( this.popPending.bind( this ) );
 	}, this );
 };
 
