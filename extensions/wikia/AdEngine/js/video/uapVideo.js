@@ -16,7 +16,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
 	function getVideoSize(slot, params) {
-		var width = params.autoPlay ? slot.clientWidth * 0.592 : slot.clientWidth;
+		var width = slot.clientWidth,
+			slotHeight = width / params.aspectRatio;
+
+		if (params.autoPlay) {
+			width = params.videoAspectRatio * slotHeight;
+		}
+
 		return {
 			width: width,
 			height: width / params.videoAspectRatio
@@ -93,6 +99,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		size = getVideoSize(videoContainer, params);
 		params.width = size.width;
 		params.height = size.height;
+		params.videoSize = 100 / (size.width / size.height);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,

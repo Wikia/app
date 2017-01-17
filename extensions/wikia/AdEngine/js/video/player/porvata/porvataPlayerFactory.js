@@ -10,9 +10,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function prepareVideoAdContainer(videoAdContainer, params) {
 
 		if (params.autoPlay) {
-			videoAdContainer.style.width = '59.2%';
+			videoAdContainer.style.width = params.videoWidth + '%';
 			videoAdContainer.classList.add(autoPlayClassName);
 		} else {
+			videoAdContainer.style.position = 'relative';
 			DOMElementTweaker.hide(videoAdContainer);
 		}
 
