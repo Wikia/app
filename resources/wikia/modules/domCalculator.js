@@ -2,7 +2,7 @@
 define('wikia.domCalculator', [
 	'wikia.document',
 	'wikia.window'
-], function (document, window) {
+], function (doc, win) {
 	'use strict';
 
 	function getTopOffset(element) {
@@ -31,9 +31,9 @@ define('wikia.domCalculator', [
 			elementHeight = element.offsetHeight,
 			topElement = getTopOffset(element),
 			bottomElement = topElement + elementHeight,
-			scrollPosition = window.scrollY,
+			scrollPosition = win.scrollY,
 			topViewport = scrollPosition + globalNavHeight,
-			bottomViewport = scrollPosition + Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			bottomViewport = scrollPosition + Math.max(doc.documentElement.clientHeight, win.innerHeight || 0);
 
 		return topElement >= (topViewport - elementHeight/2) &&
 			bottomElement <= (bottomViewport + elementHeight/2);
