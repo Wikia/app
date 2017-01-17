@@ -107,7 +107,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => [ 'wgEnableWikiaHomePageExt' ],
 				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
 			],
 			[
 				'titleMockType' => 'article',
@@ -115,8 +114,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [ 'pageType' => 'corporate' ],
 				'expectedTargeting' => [
 					'newWikiCategories' => [ 'test' ],
-					'pageIsHub' => true,
-					'wikiIsCorporate' => true
+					'pageIsHub' => true
 				]
 			],
 			[
