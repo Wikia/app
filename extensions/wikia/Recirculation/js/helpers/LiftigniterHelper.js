@@ -34,7 +34,6 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 
 			// Callback renders and injects results into the placeholder.
 			w.$p('register', registerOptions);
-			w.$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author"]);
 
 			if (options.flush) {
 				w.$p('fetch');
@@ -47,11 +46,18 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			var items = [],
 				title = '';
 
+			if (options.title) {
+				title = options.title;
+			}
+
 			$.each(data.items, function (index, item) {
+                item.isWiki = false;
+
 				if (items.length < options.max && item.thumbnail) {
 					item.source = options.source;
 
 					if (item.source === 'wiki') {
+						item.isWiki = true;
 						item.thumbnail = thumbnailer
 							.getThumbURL(item.thumbnail, 'image', options.width, options.height);
 					}

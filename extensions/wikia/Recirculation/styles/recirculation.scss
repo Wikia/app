@@ -34,6 +34,16 @@
 		color: white;
 	}
 
+	.recirculation-wiki-header {
+		position: absolute;
+		background: #1a5eb8 url('/extensions/wikia/Recirculation/images/house-tiny.svg') no-repeat 10px 6px;
+		z-index: 1;
+		padding: 2px 12px 2px 26px;
+		font-size: 12px;
+		font-family: "Helvetica Neue", sans-serif;
+		color: white;
+	}
+
 	.recirculation-sponsored-footer {
 		opacity: 0.35;
 		font-size: 10px;

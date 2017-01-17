@@ -17,3 +17,4 @@ $p("init", "l9ehhrb6mtv75bp2", {
     }
 });
 $p("send", "pageview");
+$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author"]);
