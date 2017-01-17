@@ -153,17 +153,14 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	protected function renderImage( $data ) {
 		$helper = $this->getImageHelper();
-
-		$data = $this->filterImageData( $data );
 		$images = [ ];
 
-		foreach ( $data as $dataItem ) {
-			$extendedItem = $dataItem;
-			$extendedItem['context'] = null;
-			$extendedItem = $helper->extendImageData( $extendedItem, $this->imagesWidth, $this->infoboxWidth );
+		for ( $i = 0; $i < count( $data ); $i++ ) {
+			$data[$i]['context'] = null;
+			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth );
 
-			if ( !!$extendedItem ) {
-				$images[] = $extendedItem;
+			if ( !!$data[$i] ) {
+				$images[] = $data[$i];
 			}
 		}
 
@@ -202,22 +199,6 @@ class PortableInfoboxRenderService extends WikiaService {
 			if ( $this->templateEngine->isSupportedType( $type ) ) {
 				$result .= $this->renderItem( $type, $child['data'] );
 			}
-		}
-
-		return $result;
-	}
-
-	private function filterImageData( $data ) {
-		$dataWithCaption = array_filter($data, function( $item ) {
-			return !empty( $item['caption'] );
-		});
-
-		$result = [];
-
-		if ( !empty( $dataWithCaption ) ) {
-			$result = $dataWithCaption;
-		} elseif ( !empty( $data ) ) {
-			$result = [ $data[0] ];
 		}
 
 		return $result;

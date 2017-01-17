@@ -4177,7 +4177,7 @@ class Parser {
 				wfRunHooks( 'ParserTagHooksBeforeInvoke', [ $name, $marker, $content, $attributes, $this, $frame ] );
 
 				$output = call_user_func_array( $this->mTagHooks[$name],
-					array( $content, $attributes, $this, $frame, $marker ) );
+					array( $content, $attributes, $this, $frame ) );
 			} elseif ( isset( $this->mFunctionTagHooks[$name] ) ) {
 				list( $callback, $flags ) = $this->mFunctionTagHooks[$name];
 				if ( !is_callable( $callback ) ) {
@@ -5252,7 +5252,7 @@ class Parser {
 	 * @param array $params
 	 * @return string HTML
 	 */
-	function renderImageGallery( $text, $params, $marker ) {
+	function renderImageGallery( $text, $params ) {
 		$ig = new ImageGallery();
 
 		/* Wikia change begin - @author: Macbre */
@@ -5291,7 +5291,6 @@ class Parser {
 		/* Wikia change begin */
 		/* Allow extensions to use their own "parser" for <gallery> tag content */
 		if ( !wfRunHooks( 'BeforeParserrenderImageGallery', array( &$this, &$ig ) ) ) {
-			wfRunHooks( 'AfterParserParseImageGallery', [ $marker, $ig ] );
 			return $ig->toHTML();
 		}
 		/* Wikia change end */
