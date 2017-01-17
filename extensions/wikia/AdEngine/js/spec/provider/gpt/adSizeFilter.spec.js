@@ -62,7 +62,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[728, 90], [1030, 130], [970, 365], [980, 150]];
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
@@ -73,7 +72,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[728, 90], [970, 365]];
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
@@ -84,7 +82,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[728, 90]];
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-		expect(getModule().filter('CORP_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 		expect(getModule().filter('HUB_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
