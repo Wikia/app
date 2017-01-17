@@ -166,7 +166,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Floating medrec
 		context.opts.floatingMedrec = !!(
-			context.opts.showAds && context.opts.adsInContent && (isPageType('article') || isPageType('search'))
+			context.opts.showAds && context.opts.adsInContent &&
+			(isPageType('article') || isPageType('search')) && !context.targeting.wikiIsCorporate
 		);
 
 		// Override prefooters sizes
