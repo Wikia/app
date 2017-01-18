@@ -57,6 +57,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		expect(typeof createdPlayer.getRemainingTime).toBe('function');
 		expect(typeof createdPlayer.isMuted).toBe('function');
 		expect(typeof createdPlayer.isPaused).toBe('function');
+		expect(typeof createdPlayer.isPlaying).toBe('function');
 		expect(typeof createdPlayer.pause).toBe('function');
 		expect(typeof createdPlayer.play).toBe('function');
 		expect(typeof createdPlayer.reload).toBe('function');

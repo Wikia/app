@@ -1,6 +1,5 @@
 /*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.player.porvata',
@@ -9,6 +8,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
 ], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, win) {
 	'use strict';
