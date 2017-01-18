@@ -4,9 +4,11 @@
 		createCookie;
 
 	createCookie = function(cookieName) {
-		var cookieValue = cookieName + '=true;path=/;domain=';
-		if (window.location.host.indexOf('wikia-dev')) {
-			cookieValue += '.wikia-dev.com';
+		var cookieValue = cookieName + '=true;path=/;domain=',
+			hostName = window.location.host,
+			devDomainIndex = hostName.indexOf('wikia-dev');
+		if (devDomainIndex > -1) {
+			cookieValue += '.' + hostName.substr(devDomainIndex);
 		} else {
 			cookieValue += '.wikia.com';
 		}

@@ -28,7 +28,9 @@ class DesignSystemSharedLinks {
 	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+
+		return WikiFactory::getLocalEnvURL( $href );
 	}
 
 	/**
