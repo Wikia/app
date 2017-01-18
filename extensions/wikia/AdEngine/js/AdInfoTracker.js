@@ -106,10 +106,15 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function run() {
+		setAdEnginePvUID();
+		if (mercuryListener) {
+			mercuryListener.onEveryPageChange(function() {
+				win.adEnginePvUID = generateUUID();
+			});
+		}
+
 		if (isEnabled()) {
 			log('run', 'debug', logGroup);
-
-			setAdEnginePvUID();
 
 			win.addEventListener('adengine.slot.status', function (e) {
 				log(['adengine.slot.status', e], 'debug', logGroup);
@@ -118,11 +123,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 					logSlotInfo(data);
 				}
 			});
-			if (mercuryListener) {
-				mercuryListener.onEveryPageChange(function() {
-					win.adEnginePvUID = generateUUID();
-				});
-			}
 		}
 	}
 
