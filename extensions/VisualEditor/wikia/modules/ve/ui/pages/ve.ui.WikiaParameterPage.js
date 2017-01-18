@@ -45,10 +45,10 @@
 	function getImageName( currentWindow, cartItems ) {
 		if (
 			currentWindow.currentAction &&
-			currentWindow.currentAction.getAction() === 'goback' &&
+			currentWindow.currentAction.getAction() === 'insertImageToPortableInfobox' &&
 			cartItems.length > 0
 		) {
-			return cartItems[0].data;
+			return cartItems[0].title;
 		}
 
 		return null;
@@ -78,13 +78,13 @@
 
 		windowManager.closeWindow( windowName ).done( function () {
 			openDialog( 'wikiaMediaInsert' );
-			setDefaultMediaInsertDialogAction( 'goback' );
+			setDefaultMediaInsertDialogAction( 'insertImageToPortableInfobox' );
 
 			windowManager.once( 'closing', function ( currentWindow ) {
 				var imageName;
 
 				if ( currentWindow instanceof ve.ui.WikiaMediaInsertDialog ) {
-					imageName = getImageName( currentWindow, currentWindow.cart.getItems() );
+					imageName = getImageName( currentWindow, currentWindow.cartModel.getItems() );
 
 					windowManager.closing.done( function () {
 						/**

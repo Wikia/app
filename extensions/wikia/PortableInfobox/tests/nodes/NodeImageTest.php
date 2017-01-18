@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
-use Wikia\PortableInfobox\Parser\Nodes\NodeImage;
-
 class NodeImageTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
@@ -11,68 +8,16 @@ class NodeImageTest extends WikiaBaseTest {
 
 	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData
-	 * @dataProvider galleryDataProvider
-	 * @param $marker
-	 * @param $expected
 	 */
-	public function testGalleryData( $marker, $expected ) {
-		$this->assertEquals( $expected, NodeImage::getGalleryData( $marker ) );
-	}
-
-	public function galleryDataProvider() {
-		$markers = [
-			"'\"`UNIQabcd-gAlLeRy-1-QINU`\"'",
-			"'\"`UNIQabcd-gAlLeRy-2-QINU`\"'",
-			"'\"`UNIQabcd-gAlLeRy-3-QINU`\"'"
+	public function testGalleryData() {
+		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
+		$expected = [
+			[
+				'label' => '_caption_',
+				'title' => '_title_',
+			]
 		];
-		PortableInfoboxDataBag::getInstance()->setGallery( $markers[0],
-				['images' => [
-					[
-						'name' => 'image0_name.jpg',
-						'caption' => 'image0_caption'
-					],
-					[
-						'name' => 'image01_name.jpg',
-						'caption' => 'image01_caption'
-					],
-				]]);
-		PortableInfoboxDataBag::getInstance()->setGallery( $markers[1],
-				['images' => [
-					[
-						'name' => 'image1_name.jpg',
-						'caption' => 'image1_caption'
-					]
-				]]);
-		PortableInfoboxDataBag::getInstance()->setGallery( $markers[2], [ 'images' => [] ]);
-
-		return [
-			[
-				'marker' => $markers[0],
-				'expected' => [
-					[
-						'label' => 'image0_caption',
-						'title' => 'image0_name.jpg',
-					],
-					[
-						'label' => 'image01_caption',
-						'title' => 'image01_name.jpg',
-					],
-				]
-			],
-			[
-				'marker' => $markers[1],
-				'expected' => [
-					[
-						'label' => 'image1_caption',
-						'title' => 'image1_name.jpg',
-					]
-				]
-			],
-			[
-				'marker' => $markers[2],
-				'expected' => []
-			],
-		];
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData( $input ) );
 	}
 
 	/**
@@ -86,7 +31,7 @@ class NodeImageTest extends WikiaBaseTest {
 				'title' => '_data-image-key_',
 			]
 		];
-		$this->assertEquals( $expected, NodeImage::getTabberData( $input ) );
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData( $input ) );
 	}
 
 	/**
@@ -111,11 +56,6 @@ class NodeImageTest extends WikiaBaseTest {
 				'GALLERY',
 				"\x7f'\"`UNIQ123456789-tAbBeR-12345678-QINU`\"'\x7f<center>\x7f'\"`UNIQabcd-gAlLeRy-12345678-QINU`\"'\x7f</center>\x7f'\"`UNIQabcd-gAlLeRy-87654321-QINU`\"'\x7f",
 				[ "\x7f'\"`UNIQabcd-gAlLeRy-12345678-QINU`\"'\x7f", "\x7f'\"`UNIQabcd-gAlLeRy-87654321-QINU`\"'\x7f" ]
-			],
-			[
-				'GALLERY',
-				"\x7f'\"`UNIQ123456789-somethingelse-12345678-QINU`\"'\x7f",
-				[ ]
 			]
 		];
 	}
@@ -259,7 +199,7 @@ class NodeImageTest extends WikiaBaseTest {
 		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
 
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
-		$nodeImage = new NodeImage( $xmlObj, $params );
+		$nodeImage = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xmlObj, $params );
 
 		$this->assertEquals( $expected, $nodeImage->getData() );
 	}

@@ -88,8 +88,10 @@ $.widget( "ui.autocomplete", {
 					self.menu.select( event );
 					break;
 				case keyCode.ESCAPE:
-					self.element.val( self.term );
-					self.close( event );
+					if ( self.menu.element.is( ":visible" ) ) {
+						self.element.val( self.term );
+						self.close( event );
+					}
 					break;
 				default:
 					// keypress is triggered before the input value is changed

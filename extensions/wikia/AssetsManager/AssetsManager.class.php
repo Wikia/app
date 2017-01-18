@@ -270,7 +270,7 @@ class AssetsManager {
 			 * for urls in dev, where a url looks like:
 			 * http://i(1-9).nelson.wikia-dev.com/__am/sass/options/path/to/file.scss
 			 */
-			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
+			$regex = '/^(https?):\/\/(i[0-9]+\.[a-z0-9]+)\.wikia-dev.(pl|us|com)\/(.*)$/';
 		}
 
 		$urls = (array) $urls;
