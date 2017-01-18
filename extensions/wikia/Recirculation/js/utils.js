@@ -204,6 +204,6 @@ define('ext.wikia.recirculation.utils', [
 		waitForRail: waitForRail,
 		ditherResults: ditherResults,
 		sortThumbnails: sortThumbnails,
-        prepareFooter: prepareFooter
+		prepareFooter: prepareFooter
 	};
 });

@@ -10,13 +10,13 @@ define('ext.wikia.recirculation.views.footer', [
 
 		return utils.prepareFooter()
 			.then(function() {
-                return utils.renderTemplate('client/footer.mustache', data)
+				return utils.renderTemplate('client/footer.mustache', data)
 			})
-            .then(function($html) {
-                $('#recirculation-footer-container').html($html);
+			.then(function($html) {
+				$('#recirculation-footer-container').html($html);
 
-                return $html;
-		});
+				return $html;
+			});
 	}
 
 	function setupTracking(experimentName) {

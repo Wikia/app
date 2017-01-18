@@ -51,7 +51,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			}
 
 			$.each(data.items, function (index, item) {
-                item.isWiki = false;
+				item.isWiki = false;
 
 				if (items.length < options.max && item.thumbnail) {
 					item.source = options.source;

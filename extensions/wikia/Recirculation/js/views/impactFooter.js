@@ -38,14 +38,14 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 		return utils.prepareFooter()
 			.then(function() {
-                return utils.renderTemplate('client/impactFooter.mustache', renderData)
+				return utils.renderTemplate('client/impactFooter.mustache', renderData)
 			})
 			.then(function($html) {
-                $('#recirculation-impactFooter-container').html($html).find('.discussion-timestamp').timeago();
-                adjustFeatureItem($html);
-                renderDiscussionHeaderImage($html);
+				$('#recirculation-impactFooter-container').html($html).find('.discussion-timestamp').timeago();
+				adjustFeatureItem($html);
+				renderDiscussionHeaderImage($html);
 
-                return $html;
+				return $html;
 			});
 	}
 
