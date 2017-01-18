@@ -1,6 +1,5 @@
 /*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.player.porvata',
@@ -8,8 +7,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
-], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, doc, log, win) {
+], function (uapContext, adSlot, porvata, playwire, videoInterface, doc, log, throttle, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -110,7 +110,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		}
 
 		return loadedPlayer.then(function (video) {
-			win.addEventListener('resize', adHelper.throttle(function () {
+			win.addEventListener('resize', throttle(function () {
 				var slotWidth = getSlotWidth(slotContainer);
 				video.resize(slotWidth, getVideoHeight(slotWidth, params.videoAspectRatio));
 			}));
