@@ -297,14 +297,14 @@ class MercuryApi {
 	 * @param $rawData
 	 * @return array|null
 	 */
-	public function processCuratedContent( $rawData ) {
+	public function processCuratedContent( $rawData, $newFormat=false ) {
 		if ( empty( $rawData ) ) {
 			return null;
 		}
 
 		$data = [ ];
-		$sections = $this->getCuratedContentSections( $rawData );
-		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$sections = $this->getCuratedContentSections( $rawData, $newFormat );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ], $newFormat );
 		$featured = isset( $rawData[ 'featured' ] ) ? $this->getCuratedContentItems( $rawData[ 'featured' ] ) : [];
 
 		if ( !empty( $sections ) || !empty( $items ) ) {
@@ -332,8 +332,22 @@ class MercuryApi {
 	 * @param array $data
 	 * @return array
 	 */
-	public function getCuratedContentSections( Array $data ) {
+	public function getCuratedContentSections( Array $data , $newFormat=false) {
 		$sections = [ ];
+
+		if ( $newFormat && !empty( $data[ 'sections' ] )  ) {
+			foreach ( $data[ 'sections' ] as $dataItem ) {
+				$section = [];
+				$section[ 'label' ] = $dataItem['title'];
+				$section[ 'imageUrl' ] = $dataItem['image_url'];
+				$section[ 'type' ] = 'section';
+				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ] );
+
+				$sections[] = $section;
+			}
+			return $sections;
+		}
+
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
@@ -354,7 +368,7 @@ class MercuryApi {
 	 * @param $items
 	 * @return array
 	 */
-	public function getCuratedContentItems( $items ) {
+	public function getCuratedContentItems( $items, $newFormat=false ) {
 		$data = [ ];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {

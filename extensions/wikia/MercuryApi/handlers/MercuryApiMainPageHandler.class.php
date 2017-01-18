@@ -4,16 +4,20 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
-	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
+	public static function getMainPageData( MercuryApi $mercuryApiModel, $newFormat=false ) {
 		$mainPageData = [ ];
-		$curatedContent = self::getCuratedContentData( $mercuryApiModel );
+		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null, $newFormat );
 		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 		$wikiDescription = self::getWikiDescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
+			if ( $newFormat ) {
+				$mainPageData[ 'curatedContent' ] = $curatedContent;
+			} else {
+				$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
+			}
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
@@ -39,21 +43,21 @@ class MercuryApiMainPageHandler {
 		return $mainPageData;
 	}
 
-	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null ) {
+	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null, $newFormat=false ) {
 		$data = [ ];
 
 		try {
 			$data = WikiaDataAccess::cache(
 				self::curatedContentDataMemcKey( $section ),
 				WikiaResponse::CACHE_STANDARD,
-				function () use ( $mercuryApiModel, $section ) {
+				function () use ( $mercuryApiModel, $section, $newFormat ) {
 					$rawData = F::app()->sendRequest(
 						'CuratedContent',
 						'getList',
 						empty( $section ) ? [ ] : [ 'section' => $section ]
 					)->getData();
 
-					return $mercuryApiModel->processCuratedContent( $rawData );
+					return $mercuryApiModel->processCuratedContent( $rawData, $newFormat );
 				}
 			);
 		} catch ( NotFoundException $ex ) {
