@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
-], function (adHelper, uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, win) {
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
@@ -81,6 +81,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					var size = getVideoSize(adSlot, params);
 					video.resize(size.width, size.height);
 				});
+
 				if (params.autoPlay) {
 					var size = getVideoSize(adSlot, params);
 					video.play(size.width, size.height);
