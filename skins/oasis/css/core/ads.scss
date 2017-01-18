@@ -181,9 +181,6 @@ $uap-video-animation-duration: 0.4s;
 	position: relative;
 
 	&.autoplay {
-		height: 100%;
-		position: absolute;
-		width: 59.2%;
 		z-index: 1000;
 	}
 
