@@ -4,6 +4,7 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
+	// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
 	public static function getMainPageData( MercuryApi $mercuryApiModel, $newFormat=false ) {
 		$mainPageData = [ ];
 		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null, $newFormat );
@@ -16,6 +17,7 @@ class MercuryApiMainPageHandler {
 			if ( $newFormat ) {
 				$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
 			} else {
+				// TODO: remove this else block after release release of XW-2590 (XW-2625)
 				$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
 			}
 		}

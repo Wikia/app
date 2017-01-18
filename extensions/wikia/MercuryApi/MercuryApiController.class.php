@@ -347,7 +347,8 @@ class MercuryApiController extends WikiaController {
 			$data['ns'] = $title->getNamespace();
 
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-				// TODO: remove it
+
+				// TODO: remove this line after release release of XW-2590 (XW-2625)
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
 				$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true);
