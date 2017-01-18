@@ -109,13 +109,15 @@ class MercuryApiModelTest extends WikiaBaseTest {
 						'type' => 'section',
 						'items' => [],
 						'label' => 'Curated Content Section',
-						'imageUrl' => 'image_url_0'
+						'imageUrl' => 'image_url_0',
+						'imageCrop' => null,
 					],
 					[
 						'type' => 'section',
 						'items' => [],
 						'label' => 'Another Curated Content Section',
-						'imageUrl' => 'image_url_2'
+						'imageUrl' => 'image_url_2',
+						'imageCrop' => null
 					]
 				],
 				'$data' => [

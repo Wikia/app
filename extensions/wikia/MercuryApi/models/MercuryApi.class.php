@@ -342,6 +342,7 @@ class MercuryApi {
 				$section[ 'imageUrl' ] = $dataItem['image_url'];
 				$section[ 'type' ] = 'section';
 				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ], $newFormat );
+				$section['imageCrop'] = $dataItem['image_crop'];
 
 				$sections[] = $section;
 			}
@@ -398,6 +399,9 @@ class MercuryApi {
 			$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
 			$result[ 'imageUrl' ] = $item['image_url'];
 			$result[ 'type' ] = $item['type'];
+			if ( isset( $item['image_crop'] ) ) {
+				$result[ 'imageCrop' ] = $item['image_crop'];
+			}
 
 			if (!empty($item['article_id'])) {
 				$title = Title::newFromID($item['article_id']);
