@@ -9,6 +9,7 @@ class ForumDumper {
 	const TABLE_REVISION = 'revision';
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
+	const TABLE_PAGE_WIKIA_PROPS  = 'page_wikia_props';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -45,7 +46,8 @@ class ForumDumper {
 		"sticky_ind",
 		"first_revision_id",
 		"last_revision_id",
-		"comment_timestamp"
+		"comment_timestamp",
+		"display_order"
 	];
 
 	const COLUMNS_REVISION = [
@@ -100,10 +102,13 @@ class ForumDumper {
 
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
-			->SELECT_ALL()
+			->SELECT( "page.*, comments_index.*, IF(pp.props is NULL, page.page_id, REPLACE(REPLACE(REPLACE(pp.props, ';', ''), 'i', ''), ':', '')) as idx" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
+			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )->AS_( 'pp' )
+				->ON( 'page.page_id', 'pp.page_id' )->AND_( 'propname', WPP_WALL_ORDER_INDEX )
 			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
+			->ORDER_BY( 'idx' )->DESC()
 			->runLoop( $dbh, function ( &$pages, $row ) {
 				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
@@ -125,10 +130,10 @@ class ForumDumper {
 						"sticky_ind" => $row->sticky ?: 0,
 						"first_revision_id" => $row->first_rev_id,
 						"last_revision_id" => $row->last_rev_id,
-						"comment_timestamp" => $row->last_touched
+						"comment_timestamp" => $row->last_touched,
+						"display_order" => $row->idx
 					] );
 			} );
-
 		return $this->pages;
 	}
 
