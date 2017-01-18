@@ -62,7 +62,7 @@ class UserTest extends WikiaBaseTest {
 		$this->userPermissionsMock = $this->getMock( PermissionsService::class );
 
 		$this->heliosClientMock = $this->getMock( HeliosClient::class,
-			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken', 'setPassword', 'validatePassword', 'deletePassword' ] );
+			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken', 'setPassword', 'validatePassword', 'deletePassword', 'requestPasswordReset' ] );
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
