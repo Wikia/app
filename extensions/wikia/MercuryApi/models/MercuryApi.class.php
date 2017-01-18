@@ -341,7 +341,7 @@ class MercuryApi {
 				$section[ 'label' ] = $dataItem['title'];
 				$section[ 'imageUrl' ] = $dataItem['image_url'];
 				$section[ 'type' ] = 'section';
-				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ], true );
+				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ], $newFormat );
 
 				$sections[] = $section;
 			}
@@ -352,7 +352,7 @@ class MercuryApi {
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
-				$section[ 'items' ] = $this->getSectionContent( $section[ 'title' ], true );
+				$section[ 'items' ] = $this->getSectionContent( $section[ 'title' ], $newFormat );
 				$sections[] = $section;
 			}
 		}
