@@ -106,7 +106,7 @@ class RecirculationHooks {
 			$promoDetails = WikiaDataAccess::cache(
 					wfMemcKey("site-attribute-promoDetails"),
 					3600, // one hour cache
-					function() use ($outputPage) {
+					function() {
 						global $wgCityId;
 						return (new SiteAttributeService())->getAttribute($wgCityId, "promoDetails");
 					});
