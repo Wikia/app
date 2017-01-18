@@ -185,9 +185,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			->getMock();
 
 		if ( empty( $data ) ) {
-			$map = [ $data, null ];
+			$map = [ $data, false, null ];
 		} else {
-			$map = array_map( null, $data, $itemData );
+			$map = array_map( null, $data, [ false, false ], $itemData );
 		}
 
 		$mercuryApiMock->expects( $this->any() )
@@ -501,9 +501,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$mercuryApiMock->expects( $this->any() )
 			->method( 'getCuratedContentItems' )
 			->will( $this->returnValueMap( [
-				[ [ ], [ ] ],
-				[ $data['items'], $itemsData ],
-				[ $data['featured'], $featuredData ]
+				[ [ ], false, [ ] ],
+				[ $data['items'], false, $itemsData ],
+				[ $data['featured'], false, $featuredData ]
 			] ) );
 
 		$this->assertEquals( $expected, $mercuryApiMock->processCuratedContent( $data ) );
