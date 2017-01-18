@@ -281,7 +281,7 @@ class SiteStatus {
 			);
 
 		$this->debug("\tfound $date as most recent edit" );
-		$this->lastPageEdit = new \DateTime( $date, new \DateTimeZone( \DateTimeZone::UTC ) );
+		$this->lastPageEdit = new \DateTime( $date );
 	}
 
 	private function findExistingPosts() {
