@@ -157,7 +157,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		for ( $i = 0; $i < count( $data ); $i++ ) {
 			$data[$i]['context'] = null;
-			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth );
+			$data[$i] = $helper->extendImageData( $data[$i], $this->imagesWidth, $this->infoboxWidth );
 
 			if ( !!$data[$i] ) {
 				$images[] = $data[$i];
