@@ -10,10 +10,17 @@ define('ext.wikia.adEngine.video.player.ui.toggle', [
 	}
 
 	function hideVideo(video, params) {
-		toggle(params.image, video.container);
+		toggle(params.videoPlaceholderElement || params.image, video.container);
+	}
+
+	function showVideo(video, params) {
+		toggle(video.container, params.videoPlaceholderElement || params.image);
 	}
 
 	function add(video, params) {
+		video.addEventListener('wikiaAdStarted', function () {
+			showVideo(video, params);
+		});
 
 		video.addEventListener('wikiaAdCompleted', function () {
 			hideVideo(video, params);

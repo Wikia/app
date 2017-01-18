@@ -37,13 +37,15 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return porvata.inject(params)
 			.then(function (video) {
 				var uiElements = params.autoPlay ? UITemplate.autoPlay : UITemplate.default;
+
 				log(['VUAP UI elements', uiElements], log.levels.debug, logGroup);
 
 				videoInterface.setup(video, uiElements, {
 					image: providerContainer,
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio
+					videoAspectRatio: params.videoAspectRatio,
+					videoPlaceholderElement: params.videoPlaceholderElement
 				});
 
 				video.addEventListener('allAdsCompleted', function () {
@@ -54,7 +56,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadPlaywire(params, adSlot, imageContainer) {
+	function loadPlaywire(params, adSlot, providerContainer) {
 		var container = doc.createElement('div');
 
 		container.classList.add('video-player', 'hidden');
@@ -69,7 +71,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					'closeButton',
 					'toggleAnimation'
 				], {
-					image: imageContainer,
+					image: providerContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio
@@ -133,8 +135,14 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		});
 	}
 
+	/**
+	 * Check if all required params are present
+	 *
+	 * @param params
+	 * @returns bool
+	 */
 	function isEnabled(params) {
-		return params.videoTriggerElement && params.videoAspectRatio;
+		return !!params.videoAspectRatio;
 	}
 
 	return {
