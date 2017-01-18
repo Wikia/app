@@ -114,6 +114,19 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		};
 	}
 
+	function getSingleResponse(slotName) {
+		var bestResponse = {},
+			allSlots = win.rubiconVulcan.getAllSlots() || [];
+
+		allSlots.forEach(function (slot) {
+			if (slot.id === slotName) {
+				bestResponse = slot.getBestCpm();
+			}
+		});
+
+		return bestResponse;
+	}
+
 	function encodeParamsForTracking(params) {
 		if (!params[rubiconVideoTierKey]) {
 			return;
@@ -178,6 +191,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		calculatePrices: calculatePrices,
 		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
+		getSingleResponse: getSingleResponse,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
 		getSlotParams: getSlotParams
