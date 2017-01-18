@@ -101,11 +101,11 @@ class RecirculationHooks {
 	private static function addMainPageMetadata( OutputPage $outputPage ) {
 		if ( F::app()->wg->Title->isMainPage() ) {
 			$promoDetails = WikiaDataAccess::cache(
-					wfMemcKey( "site-attribute-promoDetails" ),
+					wfMemcKey( "site-attribute-liftigniterMetadata" ),
 					3600, // one hour cache
 					function() {
 						global $wgCityId;
-						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "promoDetails" );
+						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "liftigniterMetadata" );
 					} );
 
 			if ( $promoDetails !== null ) {
