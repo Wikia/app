@@ -13,6 +13,7 @@ $wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataServic
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
 $wgAutoloadClasses['CakeRelatedContentService'] =  __DIR__ . '/services/CakeRelatedContentService.php';
 $wgAutoloadClasses['CuratedContentService'] =  __DIR__ . '/services/CuratedContentService.class.php';
+$wgAutoloadClasses['WikiPromotionService'] =  __DIR__ . '/services/WikiPromotionService.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
 $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApiController.class.php';
