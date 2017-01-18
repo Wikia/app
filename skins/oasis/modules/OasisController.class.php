@@ -190,6 +190,11 @@ class OasisController extends WikiaController {
 			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
 		}
 
+		// this Inspectet script is loaded only on english Harry Potter Wiki (id=509)
+		if ( $this->app->wg->CityId === '509' && ( Wikia::isMainPage() || WikiaPageType::isArticlePage() ) ) {
+			$wgOut->addScript( ( new InspectletService( InspectletService::HARRY_POTTER_ARTICLES ) )->getInspectletCode() );
+		}
+
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
