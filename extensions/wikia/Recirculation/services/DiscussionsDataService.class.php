@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Service\Gateway\ConsulUrlProvider;
+
 class DiscussionsDataService {
 	const DISCUSSIONS_API_LIMIT = 5;
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
@@ -100,9 +102,14 @@ class DiscussionsDataService {
 		];
 
 		$params = array_merge( $defaultParams, $options );
+		return $this->getDiscussionsApiUrl() . '/' . $endpoint . '?' . http_build_query( $params );
+	}
 
-		return \F::app()->wg->DiscussionsApiUrl . '/' . $endpoint . '?' .
-		       http_build_query( $params );
+	private function getDiscussionsApiUrl() {
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		return ( new ConsulUrlProvider( $wgConsulUrl,
+			$wgConsulServiceTag ) )->getUrl( 'discussion' );
 	}
 
 	private function buildPost( $rawPost, $index ) {

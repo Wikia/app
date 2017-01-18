@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Service\Gateway\ConsulUrlProvider;
+
 class DiscussionsThreadModel {
 	const SORT_TRENDING = 'trending';
 	const SORT_LATEST = 'creation_date';
@@ -19,9 +21,16 @@ class DiscussionsThreadModel {
 		return json_decode( Http::get( $url ), true );
 	}
 
+	private function getDiscussionsApiUrl() {
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		return ( new ConsulUrlProvider( $wgConsulUrl,
+			$wgConsulServiceTag ) )->getUrl( 'discussion' );
+	}
+
 	private function getCategoryRequestUrl() {
-		global $wgDiscussionsApiUrl;
-		return "$wgDiscussionsApiUrl/forums?responseGroup=small&viewableOnly=true";
+		return $this->getDiscussionsApiUrl() .
+		       "/$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
 	/**

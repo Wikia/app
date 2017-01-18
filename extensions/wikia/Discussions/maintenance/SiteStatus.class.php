@@ -4,7 +4,6 @@ namespace Discussions;
 
 
 class SiteStatus {
-	const PROD_SERVICE_URL = 'https://serivces.wikia.com';
 
 	const TIME_OUT = 5;
 
