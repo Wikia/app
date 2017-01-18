@@ -348,10 +348,10 @@ class MercuryApiController extends WikiaController {
 
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				// TODO: remove it
-//				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
 				$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true);
-//ddd();
+
 				if ( $article instanceof Article ) {
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {

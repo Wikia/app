@@ -14,7 +14,7 @@ class MercuryApiMainPageHandler {
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
 			if ( $newFormat ) {
-				$mainPageData[ 'curatedContent' ] = $curatedContent;
+				$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
 			} else {
 				$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
 			}
@@ -45,10 +45,9 @@ class MercuryApiMainPageHandler {
 
 	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null, $newFormat=false ) {
 		$data = [ ];
-
 		try {
 			$data = WikiaDataAccess::cache(
-				self::curatedContentDataMemcKey( $section ),
+				self::curatedContentDataMemcKey( $section . $newFormat ),
 				WikiaResponse::CACHE_STANDARD,
 				function () use ( $mercuryApiModel, $section, $newFormat ) {
 					$rawData = F::app()->sendRequest(

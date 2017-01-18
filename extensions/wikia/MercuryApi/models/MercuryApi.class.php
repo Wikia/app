@@ -332,7 +332,7 @@ class MercuryApi {
 	 * @param array $data
 	 * @return array
 	 */
-	public function getCuratedContentSections( Array $data , $newFormat=false) {
+	public function getCuratedContentSections( Array $data, $newFormat=false) {
 		$sections = [ ];
 
 		if ( $newFormat && !empty( $data[ 'sections' ] )  ) {
@@ -341,7 +341,7 @@ class MercuryApi {
 				$section[ 'label' ] = $dataItem['title'];
 				$section[ 'imageUrl' ] = $dataItem['image_url'];
 				$section[ 'type' ] = 'section';
-				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ] );
+				$section[ 'items' ] = $this->getSectionContent( $dataItem[ 'title' ], true );
 
 				$sections[] = $section;
 			}
@@ -351,15 +351,15 @@ class MercuryApi {
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
-				$section[ 'items' ] = $this->getSectionContent( $section[ 'title' ] );
+				$section[ 'items' ] = $this->getSectionContent( $section[ 'title' ], true );
 				$sections[] = $section;
 			}
 		}
 		return $sections;
 	}
 
-	protected function getSectionContent( $sectionTitle ) {
-		return MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle )['items'];
+	protected function getSectionContent( $sectionTitle, $newFormat ) {
+		return MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat )['items'];
 	}
 
 	/**
@@ -372,7 +372,7 @@ class MercuryApi {
 		$data = [ ];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item );
+				$processedItem = $this->processCuratedContentItem( $item, $newFormat );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
@@ -391,7 +391,39 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	public function processCuratedContentItem( $item ) {
+	public function processCuratedContentItem( $item, $newFormat=false ) {
+		if ( $newFormat ) {
+			if (!empty($item['article_id'])) {
+				$title = Title::newFromID($item['article_id']);
+
+				if (!empty($title)) {
+					$result = [];
+					$result[ 'url' ] = $title->getLocalURL();
+					$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
+					$result[ 'imageUrl' ] = $item['image_url'];
+					$result[ 'type' ] = $item['type'];
+
+					return $result;
+				}
+			} else {
+				if ($item['article_id'] === 0) {
+					// Categories which don't have content have wgArticleID set to 0
+					// In order to generate link for them
+					// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
+					global $wgArticlePath;
+					$result = [];
+					$result[ 'url' ] = str_replace("$1", $item['title'], $wgArticlePath);
+					$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
+					$result[ 'imageUrl' ] = $item['image_url'];
+					$result[ 'type' ] = $item['type'];
+
+					return $result;
+				}
+			}
+			return null;
+		}
+
+		// TODO: to remove while cleanup
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
 
