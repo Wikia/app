@@ -41,8 +41,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					// Don't resume when video was paused manually
 					} else if (isVisible && autoPaused) {
 						video.resume();
-					// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-					} else if (!isVisible && !video.isPaused()) {
+						// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
+					} else if (!isVisible && video.isPlaying()) {
 						video.pause();
 						autoPaused = true;
 					}
