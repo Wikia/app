@@ -14,21 +14,21 @@ define('ext.wikia.recirculation.utils', [
 	};
 
 	function prepareFooter() {
-        var deferred = $.Deferred();
+		var deferred = $.Deferred();
 
 		if (!footerState.cleared) {
 			footerState.pending.push(deferred);
 
 			if (!footerState.loading) {
-                footerState.loading = true;
-                return renderTemplate('footer-index-container.mustache', {})
-                    .then(function($html) {
-                        $('#WikiaFooter').html($html);
-                        footerState.cleared = true;
-                        footerState.pending.forEach(function(d) {
-                            d.resolve();
-                        });
-                    });
+				footerState.loading = true;
+				return renderTemplate('footer-index-container.mustache', {})
+					.then(function($html) {
+						$('#WikiaFooter').html($html);
+						footerState.cleared = true;
+						footerState.pending.forEach(function(d) {
+							d.resolve();
+						});
+					});
 			} else {
 				return deferred.promise();
 			}
