@@ -132,22 +132,20 @@ class SiteStatus {
 		$this->numThreadedForumPosts = $row->tf_posts;
 		$this->numWikiForumPosts = $row->wf_posts;
 
-		$tz = new \DateTimeZone( \DateTimeZone::UTC );
-
 		if ( !empty( $row->discussion_found ) ) {
-			$this->discussionsFound = new \DateTime( $row->discussions_found, $tz );
+			$this->discussionsFound = new \DateTime( $row->discussions_found );
 		}
 		if ( !empty ( $row->first_post_found ) ) {
-			$this->firstPostFound = new \DateTime( $row->first_post_found, $tz );
+			$this->firstPostFound = new \DateTime( $row->first_post_found );
 		}
 		if ( !empty ( $row->last_migrated ) ) {
-			$this->lastMigrated = new \DateTime( $row->last_migrated, $tz );
+			$this->lastMigrated = new \DateTime( $row->last_migrated );
 		}
 		if ( !empty ( $row->last_updated ) ) {
-			$this->lastUpdated = new \DateTime( $row->last_updated, $tz );
+			$this->lastUpdated = new \DateTime( $row->last_updated );
 		}
 		if ( !empty ( $row->last_edit ) ) {
-			$this->lastPageEdit = new \DateTime( $row->last_edit, $tz );
+			$this->lastPageEdit = new \DateTime( $row->last_edit );
 		}
 	}
 
