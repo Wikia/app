@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
-
 /**
  * Class RecirculationHooks
  */
