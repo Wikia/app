@@ -16,11 +16,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
 
 	function getVideoSize(slot, params) {
-		var width = slot.clientWidth,
-			slotHeight = width / params.aspectRatio;
+		var width = slot.clientWidth;
 
 		if (params.autoPlay) {
-			width = params.videoAspectRatio * slotHeight;
+			width = params.videoPlaceholderElement.width;
 		}
 
 		return {
