@@ -63,7 +63,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
-		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -105,7 +104,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
@@ -119,7 +117,10 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
+		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
+		'//resources/wikia/modules/throttle.js',
+		'//resources/wikia/modules/viewportObserver.js',
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -848,8 +849,11 @@ $config['mobile_base_ads_js'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		// Modules
+		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
+		'//resources/wikia/modules/throttle.js',
+		'//resources/wikia/modules/viewportObserver.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
@@ -864,7 +868,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
@@ -959,7 +962,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
-		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',

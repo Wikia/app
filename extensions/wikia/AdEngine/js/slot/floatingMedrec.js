@@ -1,21 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
-	adHelper,
-	adLogicPageDimensions,
 	recoveryHelper,
 	slotFinder,
 	$,
 	log,
+	throttle,
 	win
 ) {
 	'use strict';
@@ -147,8 +145,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			win.addEventListener('scroll', adHelper.throttle(handleFloatingMedrec));
-			win.addEventListener('resize', adHelper.throttle(handleFloatingMedrec));
+			win.addEventListener('scroll', throttle(handleFloatingMedrec));
+			win.addEventListener('resize', throttle(handleFloatingMedrec));
 		}
 
 		start();
