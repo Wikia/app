@@ -38,7 +38,7 @@ class RecirculationHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
-		self::addMainPageData($out);
+		self::addMainPageMetadata($out);
 		return true;
 	}
 
@@ -73,9 +73,10 @@ class RecirculationHooks {
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
-		if ( self::isTitleInNamespaces($wg->Title, $showableNameSpaces)
-			&& $wg->request->getVal( 'action', 'view' ) === 'view'
-			&& $wg->request->getVal( 'diff' ) === null
+		if ( $wg->Title->exists()
+				&& in_array($wg->Title->getNamespace(), $showableNameSpaces)
+				&& $wg->request->getVal( 'action', 'view' ) === 'view'
+				&& $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
@@ -100,10 +101,10 @@ class RecirculationHooks {
 		}
 	}
 
-	private static function addMainPageData(OutputPage $outputPage) {
+	private static function addMainPageMetadata(OutputPage $outputPage) {
 		global $wgCityId;
 
-		if (self::isTitleInNamespaces(F::app()->wg->Title, [NS_MAIN])) {
+		if (F::app()->wg->Title->isMainPage()) {
 			/** @var ApiProvider $apiProvider */
 			$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 			$details = (new WikiPromotionService($apiProvider))->getWikiPromoDetails($wgCityId);
@@ -112,9 +113,5 @@ class RecirculationHooks {
 				$outputPage->addScript("<script id=\"liftigniter-metadata\" type=\"application/json\">${details}</script>");
 			}
 		}
-	}
-
-	private static function isTitleInNamespaces(Title $title, array $namespaces) {
-		return $title->exists() && in_array($title->getNamespace(), $namespaces);
 	}
 }
