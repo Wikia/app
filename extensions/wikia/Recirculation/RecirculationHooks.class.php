@@ -102,15 +102,20 @@ class RecirculationHooks {
 	}
 
 	private static function addMainPageMetadata(OutputPage $outputPage) {
-		global $wgCityId;
-
 		if (F::app()->wg->Title->isMainPage()) {
-			/** @var ApiProvider $apiProvider */
-			$apiProvider = Injector::getInjector()->get(ApiProvider::class);
-			$details = (new WikiPromotionService($apiProvider))->getWikiPromoDetails($wgCityId);
+			$promoDetails = WikiaDataAccess::cache(
+					wfMemcKey("mainpage-promoDetails"),
+					3600, // one hour cache
+					function() use ($outputPage) {
+						global $wgCityId;
 
-			if ($details !== null) {
-				$outputPage->addScript("<script id=\"liftigniter-metadata\" type=\"application/json\">${details}</script>");
+						/** @var ApiProvider $apiProvider */
+						$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+						return (new WikiPromotionService($apiProvider))->getWikiPromoDetails($wgCityId);
+					});
+
+			if ($promoDetails !== null) {
+				$outputPage->addScript("<script id=\"liftigniter-metadata\" type=\"application/json\">${promoDetails}</script>");
 			}
 		}
 	}
