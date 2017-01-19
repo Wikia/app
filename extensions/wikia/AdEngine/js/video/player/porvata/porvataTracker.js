@@ -48,6 +48,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {string} [params.trackingDisabled]
 	 */
 	function register(player, params) {
+		if (!playerTracker.isEnabled()) {
+			return;
+		}
+
 		playerTracker.track(params, playerName, 'ready');
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {

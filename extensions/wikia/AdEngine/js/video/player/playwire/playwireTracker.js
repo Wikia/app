@@ -46,6 +46,10 @@ define('ext.wikia.adEngine.video.player.playwire.playwireTracker', [
 	 * @param {string} [params.trackingDisabled]
 	 */
 	function register(player, params) {
+		if (!playerTracker.isEnabled()) {
+			return;
+		}
+
 		playerTracker.track(params, playerName, 'ready');
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {

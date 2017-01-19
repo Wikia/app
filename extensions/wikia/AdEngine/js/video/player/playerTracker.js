@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.video.player.playerTracker', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
@@ -7,9 +8,14 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
-], function (pageLevel, adTracker, slotTargeting, geo, log, win, vulcan) {
+], function (adContext, pageLevel, adTracker, slotTargeting, geo, log, win, vulcan) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.player.playerTracker';
+	var context = adContext.getContext(),
+		logGroup = 'ext.wikia.adEngine.video.player.playerTracker';
+
+	function isEnabled() {
+		return !!context.opts.playerTracking;
+	}
 
 	function prepareData(params, playerName, eventName, errorCode) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
@@ -60,7 +66,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	 */
 	function track(params, playerName, eventName, errorCode) {
 		// Possibility to turn off tracking from single creative/player instance
-		if (params.trackingDisabled) {
+		if (!isEnabled() || params.trackingDisabled) {
 			log(['track', 'Tracking disabled', params], log.levels.debug, logGroup);
 			return;
 		}
@@ -77,6 +83,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	}
 
 	return {
+		isEnabled: isEnabled,
 		track: track
 	};
 });

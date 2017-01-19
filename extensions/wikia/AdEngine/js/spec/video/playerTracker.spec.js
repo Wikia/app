@@ -6,6 +6,15 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	}
 
 	var mocks = {
+			adContext: {
+				getContext: function () {
+					return {
+						opts: {
+							playerTracking: true
+						}
+					};
+				}
+			},
 			adLogicPageParams: {
 				getPageLevelParams: function () {
 					return {
@@ -49,6 +58,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.playerTracker'](
+			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
