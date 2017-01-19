@@ -364,7 +364,8 @@ class MercuryApi {
 
 	protected function getSectionContent( $sectionTitle, $newFormat ) {
 		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
-		return MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat )['items'];
+		$content = MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat );
+		return isset( $content['items'] ) ? $content['items'] : [ ];
 	}
 
 	/**
