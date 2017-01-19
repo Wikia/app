@@ -184,6 +184,10 @@ $uap-video-animation-duration: 0.4s;
 		z-index: 1000;
 	}
 
+	&#{&}-right {
+		right: 0;
+	}
+
 	video {
 		left: 0;
 	}
