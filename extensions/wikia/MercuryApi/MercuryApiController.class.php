@@ -351,12 +351,7 @@ class MercuryApiController extends WikiaController {
 				// TODO: remove this line after release of XW-2590 (XW-2625)
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
-				// TODO: return whole $mainPageData after release of XW-2590 (XW-2625)
-				$mainPageData = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true);
-				$data[ 'curatedMainPageData' ] = [
-					'curatedContent' => $mainPageData['curatedContent'],
-					'featuredContent' => $mainPageData['featuredContent']
-				];
+				$data[ 'curatedMainPageData' ] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true);
 
 				if ( $article instanceof Article ) {
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
