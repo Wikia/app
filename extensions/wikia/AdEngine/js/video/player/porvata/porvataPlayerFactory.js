@@ -53,7 +53,6 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 					height = params.container.offsetHeight;
 				}
 
-				ima.getAdsManager().dispatchEvent('wikiaAdPlayTriggered');
 				ima.playVideo(width, height);
 			},
 			reload: function () {

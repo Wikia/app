@@ -1,4 +1,4 @@
-/*global define, Promise*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	'ext.wikia.adEngine.video.player.playerTracker'
 ], function (playerTracker) {
