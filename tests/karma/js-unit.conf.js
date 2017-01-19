@@ -49,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/browserDetect.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
+			'resources/wikia/modules/domCalculator.js',
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
@@ -62,8 +63,10 @@ module.exports = function (config) {
 			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
+			'resources/wikia/modules/throttle.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/modules/viewportObserver.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 

@@ -20,10 +20,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		},
 		wsiSlots = {
 			TOP_LEADERBOARD: 'l',
-			CORP_TOP_LEADERBOARD: 'l',
-			HUB_TOP_LEADERBOARD: 'l',
 			TOP_RIGHT_BOXAD: 'm',
-			CORP_TOP_RIGHT_BOXAD: 'm',
 			INCONTENT_PLAYER: 'i',
 			INCONTENT_LEADERBOARD: 'i',
 			INCONTENT_BOXAD_1: 'f',

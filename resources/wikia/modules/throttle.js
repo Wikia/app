@@ -1,5 +1,5 @@
 /*global define, clearTimeout, setTimeout*/
-define('ext.wikia.adEngine.adHelper', function () {
+define('wikia.throttle', function () {
 	'use strict';
 
 	function throttle(fn, threshold, scope) {
@@ -26,7 +26,5 @@ define('ext.wikia.adEngine.adHelper', function () {
 		};
 	}
 
-	return {
-		throttle: throttle
-	};
+	return throttle;
 });
