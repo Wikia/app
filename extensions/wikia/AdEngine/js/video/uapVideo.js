@@ -24,6 +24,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	function loadPorvata(params, slotContainer, providerContainer) {
 		params.container = slotContainer;
+		params.adProduct = 'vuap';
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
