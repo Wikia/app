@@ -450,6 +450,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'imageUrl' =>  'image_url_3',
 					'url' => '/wiki/Category:Category_name_0',
 					'type' => 'category',
+					'imageCrop' => null,
 				],
 				'$item' => [
 					'title' => 'Category:Category_name_0',
@@ -477,6 +478,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'imageUrl' =>  'image_url_4',
 					'url' => '/wiki/Category:Category_name_1',
 					'type' => 'category',
+					'imageCrop' => null
 				],
 				'$item' => [
 					'title' => 'Category:Category_name_1',
