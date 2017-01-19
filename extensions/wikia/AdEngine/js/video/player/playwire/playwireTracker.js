@@ -5,25 +5,17 @@ define('ext.wikia.adEngine.video.player.playwire.playwireTracker', [
 	'use strict';
 	var playerName = 'playwire',
 		trackingEventsMap = {
-			'adCanPlay': 'ad_can_play',
-			'impression': 'impression',
-			'pause': 'paused',
-			'resume': 'resumed',
-			'viewable_impression': 'viewable_impression',
-
-			'boltAdClicked': 'clicked',
 			'boltAdRequestStart': 'loaded',
 			'boltAdStarted': 'started',
 			'boltFirstQuartile': 'first_quartile',
 			'boltMidPoint': 'midpoint',
 			'boltThirdQuartile': 'third_quartile',
 			'boltAdComplete': 'completed',
+			'boltAdClicked': 'clicked',
 			'boltAdError': 'error',
 			'boltContentStarted': 'content_started',
 			'boltContentComplete': 'content_completed',
 			'boltContentError': 'content_error',
-
-
 			'wikiaAdPlayTriggered': 'play_triggered',
 			'wikiaAdStop': 'closed'
 		};
