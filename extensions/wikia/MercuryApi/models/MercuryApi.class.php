@@ -334,6 +334,7 @@ class MercuryApi {
 	 * @return array
 	 */
 	public function getCuratedContentSections( Array $data, $newFormat=false) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		$sections = [ ];
 
 		if ( $newFormat && !empty( $data[ 'sections' ] )  ) {
@@ -362,6 +363,7 @@ class MercuryApi {
 	}
 
 	protected function getSectionContent( $sectionTitle, $newFormat ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		return MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat )['items'];
 	}
 
@@ -372,6 +374,7 @@ class MercuryApi {
 	 * @return array
 	 */
 	public function getCuratedContentItems( $items, $newFormat=false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		$data = [ ];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
@@ -395,6 +398,7 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function processCuratedContentItem( $item, $newFormat=false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		if ( $newFormat ) {
 			$result = [];
 			$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
