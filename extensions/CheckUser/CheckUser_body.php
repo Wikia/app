@@ -246,7 +246,7 @@ class CheckUser extends SpecialPage {
 	 * @return Array: list of html-safe usernames
 	 */
 	public static function doMassUserBlockInternal( $users, $reason = '', $tag = '', $talkTag = '' ) {
-		global $wgUser;
+		global $wgUser, $wgEnableWallExt;
 		$counter = $blockSize = 0;
 		$safeUsers = array();
 		$log = new LogPage( 'block' );
@@ -265,7 +265,14 @@ class CheckUser extends SpecialPage {
 				continue;
 			}
 			$userTitle = $u->getUserPage();
-			$userTalkTitle = $u->getTalkPage();
+			/* Wikia change begin - VOLDEV-181 */
+			// If Message Walls are enabled, replace the text of their Message Wall Greeting
+			if( $wgEnableWallExt ) {
+				$userTalkTitle = Title::newFromText( $name, NS_USER_WALL_MESSAGE_GREETING );
+			} else {
+				$userTalkTitle = Title::newFromText( $name, NS_USER_TALK );
+			}
+			/* Wikia change end */
 			$userpage = new Article( $userTitle );
 			$usertalk = new Article( $userTalkTitle );
 			$safeUsers[] = '[[' . $userTitle->getPrefixedText() . '|' . $userTitle->getText() . ']]';
@@ -304,6 +311,22 @@ class CheckUser extends SpecialPage {
 			}
 			if ( strlen( $talkTag ) > 2 ) {
 				$usertalk->doEdit( $talkTag, $reason, EDIT_MINOR );
+				/* Wikia change begin - VOLDEV-181 */
+				if( $wgEnableWallExt ) {
+					// Remove all threads on their wall
+					$wall = Wall::newFromTitle( Title::newFromText( $name, NS_USER_WALL ) );
+					$wall->setMaxPerPage( $wall->getThreadCount() );
+					$threads = $wall->getThreads();
+					while( !empty( $threads ) ) {
+						foreach( $threads as $thread ) {
+							$wallMessage = $thread->getThreadMainMsg();
+							$wallMessage->remove( $wgUser, '' );
+						}
+						
+						$threads = $wall->getThreads();
+					}
+				}
+				/* Wikia change end */
 			}
 		}
 		return $safeUsers;
@@ -810,7 +833,7 @@ class CheckUser extends SpecialPage {
 	 * List unique IPs used for each user in time order, list corresponding user agent
 	 */
 	protected function doIPUsersRequest( $ip, $xfor = false, $reason = '', $period = 0, $tag = '', $talkTag = '' ) {
-		global $wgUser, $wgOut, $wgLang;
+		global $wgUser, $wgOut, $wgLang, $wgEnableWallExt;
 		$dbr = wfGetDB( DB_SLAVE );
 		# Invalid IPs are passed in as a blank string
 		$ip_conds = self::getIpConds( $dbr, $ip, $xfor );
@@ -1046,9 +1069,15 @@ class CheckUser extends SpecialPage {
 					'<td>' . Xml::label( wfMsgHtml( 'checkuser-blocktag' ), 'usetag' ) . '</td>' .
 					'<td>' . Xml::input( 'tag', 46, $tag, array( 'id' => 'blocktag' ) ) . '</td>' .
 					'</tr><tr>' .
-					'<td>' . Xml::check( 'usettag', false, array( 'id' => 'usettag' ) ) . '</td>' .
-					'<td>' . Xml::label( wfMsgHtml( 'checkuser-blocktag-talk' ), 'usettag' ) . '</td>' .
-					'<td>' . Xml::input( 'talktag', 46, $talkTag, array( 'id' => 'talktag' ) ) . '</td>' .
+					'<td>' . Xml::check( 'usettag', false, array( 'id' => 'usettag' ) ) . '</td>';
+				/* Wikia change begin - VOLDEV-181 */
+				if( $wgEnableWallExt ) {
+					$s .= '<td>' . Xml::label( wfMsgHtml( 'checkuser-blocktag-wall' ), 'usettag' ) . '</td>';
+				} else {
+					$s .= '<td>' . Xml::label( wfMsgHtml( 'checkuser-blocktag-talk' ), 'usettag' ) . '</td>';
+				}
+				/* Wikia change end */
+				$s .= '<td>' . Xml::input( 'talktag', 46, $talkTag, array( 'id' => 'talktag' ) ) . '</td>' .
 					'</tr></table>';
 				$s .= '<p>' . wfMsgHtml( 'checkuser-reason' ) . '&#160;';
 				$s .= Xml::input( 'blockreason', 46, '', array( 'maxlength' => '150', 'id' => 'blockreason' ) );
