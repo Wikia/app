@@ -7,16 +7,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'wikia.viewportObserver'
 ], function (poravataTracker, porvataPlayerFactory, googleIma, log, viewportObserver) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.player.porvata',
-		trackingParams;
-
+	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
+	
 	function inject(params) {
 		var autoPlayed = false,
 			autoPaused = false,
 			viewportListener;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
-		poravataTracker.track(trackingParams, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
 			src: params.src,
@@ -53,7 +51,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				video.addEventListener('adCanPlay', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdStarted');
-					poravataTracker.track(trackingParams, 'adRequest');
 				});
 				video.addEventListener('allAdsCompleted', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
@@ -62,17 +59,13 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
 					}
-
-					poravataTracker.track(trackingParams, 'adComplete');
 				});
 				video.addEventListener('start', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
-					poravataTracker.track(trackingParams, 'adStarted');
 				});
 				video.addEventListener('resume', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
 					autoPaused = false;
-					poravataTracker.track(trackingParams, 'adStarted');
 				});
 				video.addEventListener('pause', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
@@ -84,7 +77,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 
-				poravataTracker.track(trackingParams, 'ready');
 				return video;
 			});
 	}
