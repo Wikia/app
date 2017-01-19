@@ -5,16 +5,17 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'wikia.log',
 	'wikia.viewportObserver'
-], function (poravataTracker, porvataPlayerFactory, googleIma, log, viewportObserver) {
+], function (porvataTracker, porvataPlayerFactory, googleIma, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
-	
+
 	function inject(params) {
 		var autoPlayed = false,
 			autoPaused = false,
 			viewportListener;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
+		porvataTracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
 			src: params.src,
