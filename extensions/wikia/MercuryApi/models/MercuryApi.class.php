@@ -298,6 +298,7 @@ class MercuryApi {
 	 * @return array|null
 	 */
 	public function processCuratedContent( $rawData, $newFormat=false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		if ( empty( $rawData ) ) {
 			return null;
 		}
@@ -349,7 +350,7 @@ class MercuryApi {
 			return $sections;
 		}
 
-		// TODO: remove this block after release release of XW-2590 (XW-2625)
+		// TODO: remove this block after release of XW-2590 (XW-2625)
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
 				$section[ 'type' ] = 'section';
@@ -403,7 +404,7 @@ class MercuryApi {
 				$result[ 'imageCrop' ] = $item['image_crop'];
 			}
 
-			if (!empty($item['article_id'])) {
+			if ( !empty( $item['article_id'] ) ) {
 				$title = Title::newFromID($item['article_id']);
 
 				if (!empty($title)) {
