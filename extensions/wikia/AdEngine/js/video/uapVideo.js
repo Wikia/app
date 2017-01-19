@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio,
-					videoPlaceholderElement: params.videoPlaceholderElement
+					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
 
 				video.addEventListener('allAdsCompleted', function () {
