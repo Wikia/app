@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata', [
-	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
-	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
+	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
+	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver'
-], function (porvataTracker, porvataPlayerFactory, googleIma, log, viewportObserver) {
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
-		porvataTracker.track(params, 'init');
+		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
 			src: params.src,
@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				return porvataPlayerFactory.create(params, ima);
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
-				porvataTracker.register(video, params);
+				tracker.register(video, params);
 
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time

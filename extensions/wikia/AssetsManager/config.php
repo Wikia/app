@@ -301,12 +301,12 @@ $config['adengine2_porvata_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
+		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
-		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js'
 	],
 ];
