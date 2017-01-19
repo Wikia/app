@@ -512,14 +512,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'data', $data );
 	}
 
-	/**
-	 * @param null|String $section
-	 * @return array|Mixed|null
-	 */
-	public function getCuratedContentData( $section = null ) {
-		return MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
-	}
-
 	private function getOtherLanguages( Title $title ) {
 		global $wgEnableLillyExt;
 
