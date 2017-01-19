@@ -400,11 +400,12 @@ class MercuryApi {
 	public function processCuratedContentItem( $item, $newFormat=false ) {
 		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		if ( $newFormat ) {
-			$result = [];
-			$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
-			$result[ 'imageUrl' ] = $item['image_url'];
-			$result[ 'imageCrop' ] = isset( $item['image_crop'] ) ? $item['image_crop'] : null;
-			$result[ 'type' ] = $item['type'];
+			$result = [
+				'label' => empty($item['label']) ? $item['title'] : $item['label'],
+				'imageUrl' => $item['image_url'],
+				'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
+				'type' => $item['type'],
+			];
 
 			if ( !empty( $item['article_id'] ) ) {
 				$title = Title::newFromID($item['article_id']);
@@ -415,21 +416,11 @@ class MercuryApi {
 				}
 			} else {
 				if ($item['article_id'] === 0) {
-					// Categories which don't have content have wgArticleID set to 0
-					// In order to generate link for them
-					// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
-					global $wgArticlePath;
-					$result[ 'url' ] = str_replace("$1", $item['title'], $wgArticlePath);
-
+					$result[ 'url' ] = Title::newFromText($item['title'])->getLocalURL();
 					return $result;
 				}
 			}
-
-			return null;
-		}
-
-		// TODO: remove this block after release release of XW-2590 (XW-2625)
-		if ( !empty( $item[ 'article_id' ] ) ) {
+		} else if ( !empty( $item[ 'article_id' ] ) ) { // TODO: remove this block after release release of XW-2590 (XW-2625)
 			$title = Title::newFromID( $item[ 'article_id' ] );
 
 			if ( !empty( $title ) ) {
