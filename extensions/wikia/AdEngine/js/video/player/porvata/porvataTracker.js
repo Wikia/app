@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	}
 
 	/**
-	 * @param {object} player
+	 * @param {object} player created by porvataPlayerFactory
 	 * @param {object} params
 	 * @param {string} params.adProduct
 	 * @param {string} [params.creativeId]
@@ -31,7 +31,14 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {string} [params.trackingDisabled]
 	 */
 	function register(player, params) {
+		var originalPlay = player.play;
+
 		playerTracker.track(params, playerName, 'ready');
+
+		player.play = function() {
+			playerTracker.track(params, playerName, 'play_triggered');
+			originalPlay.apply(player, arguments);
+		};
 	}
 
 	return {
