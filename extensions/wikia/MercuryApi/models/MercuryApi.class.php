@@ -403,10 +403,8 @@ class MercuryApi {
 			$result = [];
 			$result[ 'label' ] = empty($item['label']) ? $item['title'] : $item['label'];
 			$result[ 'imageUrl' ] = $item['image_url'];
+			$result[ 'imageCrop' ] = isset( $item['image_crop'] ) ? $item['image_crop'] : null;
 			$result[ 'type' ] = $item['type'];
-			if ( isset( $item['image_crop'] ) ) {
-				$result[ 'imageCrop' ] = $item['image_crop'];
-			}
 
 			if ( !empty( $item['article_id'] ) ) {
 				$title = Title::newFromID($item['article_id']);
