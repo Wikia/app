@@ -15,6 +15,5 @@ class AdController extends WikiaController {
 	}
 
 	public function executeTop() {
-		$this->leaderboardName = 'TOP_LEADERBOARD';
 	}
 }
