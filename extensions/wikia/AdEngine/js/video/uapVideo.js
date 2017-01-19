@@ -94,10 +94,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function getPercentageVideoHeight(size) {
-		return 100 / (size.width / size.height);
-	}
-
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
@@ -109,7 +105,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		size = getVideoSize(videoContainer, params);
 		params.width = size.width;
 		params.height = size.height;
-		params.videoSize = getPercentageVideoHeight(size);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
