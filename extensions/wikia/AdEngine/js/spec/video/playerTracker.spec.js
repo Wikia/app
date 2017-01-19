@@ -161,7 +161,8 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 
 	it('Track data with vulcan data for vulcan ad product', function () {
 		tracker.track({
-			adProduct: 'vulcan'
+			adProduct: 'vulcan',
+			slotName: 'TOP_LEADERBOARD'
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vulcan_network')).toEqual(7872);
