@@ -21,8 +21,10 @@ function getLiftIgniterGlobalContext() {
         if (targeting.wikiCustomKeyValues) {
             targeting.wikiCustomKeyValues
                 .split(';')
-                .forEach(function(keyVal) {
-                    var parts = keyVal.split('=');
+                .map(function(keyVal) {
+                    return keyVal.split('=');
+                })
+                .forEach(function(parts) {
                     var key = '_'+parts[0];
                     if (!context[key]) {
                         context[key] = [parts[1]];
