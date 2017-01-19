@@ -348,7 +348,7 @@ class MercuryApiController extends WikiaController {
 
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 
-				// TODO: remove this line after release release of XW-2590 (XW-2625)
+				// TODO: remove this line after release of XW-2590 (XW-2625)
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
 				// TODO: return whole $mainPageData after release of XW-2590 (XW-2625)
@@ -479,6 +479,7 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
+	// TODO: remove this method after release of XW-2590 (XW-2625) as it is no longer used in mercury
 	public function getCuratedContentSection() {
 		$section = $this->getVal( 'section' );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
