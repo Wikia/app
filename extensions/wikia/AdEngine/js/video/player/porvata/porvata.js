@@ -34,6 +34,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				return porvataPlayerFactory.create(params, ima);
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
+				porvataTracker.register(video, params);
 
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time
