@@ -3,7 +3,22 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	'ext.wikia.adEngine.video.player.playerTracker'
 ], function (playerTracker) {
 	'use strict';
-	var playerName = 'porvata';
+	var playerName = 'porvata',
+		trackingEventsMap = {
+			'adCanPlay': 'ad_can_play',
+			'allAdsCompleted': 'completed',
+			'click': 'clicked',
+			'firstquartile': 'first_quartile',
+			'impression': 'impression',
+			'loaded': 'loaded',
+			'midpoint': 'midpoint',
+			'pause': 'paused',
+			'resume': 'resumed',
+			'start': 'started',
+			'thirdquartile': 'third_quartile',
+			'viewable_impression': 'viewable',
+			'adError': 'error'
+		};
 
 	/**
 	 * @param {object} params
@@ -39,6 +54,13 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			playerTracker.track(params, playerName, 'play_triggered');
 			originalPlay.apply(player, arguments);
 		};
+
+		Object.keys(trackingEventsMap).forEach(function (listener) {
+			player.addEventListener(listener, function(event) {
+				var errorCode = event.getError && event.getError().getErrorCode();
+				playerTracker.track(params, playerName, trackingEventsMap[listener], errorCode);
+			});
+		});
 	}
 
 	return {
