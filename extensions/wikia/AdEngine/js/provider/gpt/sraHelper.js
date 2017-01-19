@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.sraHelper',
 		flushed = false,
 		sraSlots = [
-			'HUB_TOP_LEADERBOARD',
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD'
 		];
