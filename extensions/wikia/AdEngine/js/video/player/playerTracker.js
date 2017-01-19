@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 		var data = prepareData(params, playerName, eventName, errorCode);
 
 		log(['track', data], log.levels.debug, logGroup);
-		adTracker.trackDW(data, 'player-info');
+		adTracker.trackDW(data, 'adengplayerinfo');
 	}
 
 	return {

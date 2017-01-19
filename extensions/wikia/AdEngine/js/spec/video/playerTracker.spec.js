@@ -109,7 +109,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'uap'
 		}, 'fooPlayer', 'barEvent');
 
-		expect(mocks.adTracker.trackDW.calls.mostRecent().args[1]).toEqual('player-info');
+		expect(mocks.adTracker.trackDW.calls.mostRecent().args[1]).toEqual('adengplayerinfo');
 	});
 
 	it('Track data with available data', function () {
