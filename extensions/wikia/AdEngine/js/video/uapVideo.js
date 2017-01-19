@@ -24,7 +24,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 	function loadPorvata(params, slotContainer, providerContainer) {
 		params.container = slotContainer;
-		params.adProduct = 'vuap';
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
@@ -93,6 +92,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
+		params.adProduct = 'vuap';
 		params.width = videoWidth;
 		params.height = getVideoHeight(videoWidth, params.videoAspectRatio);
 		params.vastTargeting = {
