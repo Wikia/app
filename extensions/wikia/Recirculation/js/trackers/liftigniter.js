@@ -38,7 +38,6 @@ function getLiftIgniterGlobalContext() {
     return context;
 }
 
-
 $p("init", "l9ehhrb6mtv75bp2", {
     config: {
         sdk: {
