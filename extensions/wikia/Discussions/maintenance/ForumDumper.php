@@ -100,16 +100,17 @@ class ForumDumper {
 			return $this->pages;
 		}
 
+		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
-			->SELECT( "page.*, comments_index.*, IF(pp.props is NULL, page.page_id, REPLACE(REPLACE(REPLACE(pp.props, ';', ''), 'i', ''), ':', '')) as idx" )
+			->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
 			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )->AS_( 'pp' )
 				->ON( 'page.page_id', 'pp.page_id' )->AND_( 'propname', WPP_WALL_ORDER_INDEX )
 			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
-			->ORDER_BY( 'idx' )->DESC()
-			->runLoop( $dbh, function ( &$pages, $row ) {
+			->ORDER_BY( 'idx' )
+			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
 				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
 						"namespace" => $row->page_namespace,
@@ -131,7 +132,7 @@ class ForumDumper {
 						"first_revision_id" => $row->first_rev_id,
 						"last_revision_id" => $row->last_rev_id,
 						"comment_timestamp" => $row->last_touched,
-						"display_order" => $row->idx
+						"display_order" => $display_order++
 					] );
 			} );
 		return $this->pages;
