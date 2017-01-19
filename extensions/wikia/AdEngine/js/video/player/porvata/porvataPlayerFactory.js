@@ -6,21 +6,21 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
+		videoPlayerClassName = 'video-player',
 		rightVideoPlayerClassName = 'video-player-right';
 
 	function prepareVideoAdContainer(videoAdContainer, params) {
+		DOMElementTweaker.hide(videoAdContainer);
+		videoAdContainer.classList.add(videoPlayerClassName);
+
 		if (params.autoPlay) {
-			videoAdContainer.style.width = params.videoWidth + '%';
 			videoAdContainer.classList.add(autoPlayClassName);
 			if (params.videoPosition === 'right') {
 				videoAdContainer.classList.add(rightVideoPlayerClassName);
 			}
 		} else {
 			videoAdContainer.style.position = 'relative';
-			DOMElementTweaker.hide(videoAdContainer);
 		}
-
-		videoAdContainer.classList.add('video-player');
 
 		return videoAdContainer;
 	}
