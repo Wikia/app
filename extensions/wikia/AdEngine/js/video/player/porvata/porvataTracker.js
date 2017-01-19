@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'resume': 'resumed',
 			'start': 'started',
 			'thirdquartile': 'third_quartile',
-			'viewable_impression': 'viewable',
+			'viewable_impression': 'viewable_impression',
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
 			'wikiaAdStop': 'closed'
@@ -50,10 +50,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	function register(player, params) {
 		playerTracker.track(params, playerName, 'ready');
 
-		Object.keys(trackingEventsMap).forEach(function (listener) {
-			player.addEventListener(listener, function(event) {
+		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
+			player.addEventListener(playerEvent, function(event) {
 				var errorCode = event.getError && event.getError().getErrorCode();
-				playerTracker.track(params, playerName, trackingEventsMap[listener], errorCode);
+				playerTracker.track(params, playerName, trackingEventsMap[playerEvent], errorCode);
 			});
 		});
 	}
