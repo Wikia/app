@@ -51,12 +51,17 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			}
 
 			$.each(data.items, function (index, item) {
-				item.isWiki = item.source === 'wiki';
+				item.isWiki = false;
 
 				if (items.length < options.max && item.thumbnail) {
 					item.source = options.source;
 					item.meta = options.widget;
 					item.index = index;
+
+                    if (item.source === 'wiki') {
+                        item.isWiki = true;
+                        item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
+                    }
 
 					items.push(item);
 				}
