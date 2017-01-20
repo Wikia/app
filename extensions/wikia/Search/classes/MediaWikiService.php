@@ -1202,6 +1202,9 @@ class MediaWikiService {
 
 		if ( !isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
+
+			\Wikia\Util\Assert::true( $page instanceof \Article, __METHOD__ . ' - Invalid article ID' ); // SUS-1403
+
 			static::$pageIdsToTitles[$pageId] = $page->getTitle();
 		}
 
