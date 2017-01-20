@@ -87,8 +87,6 @@
 	
 	var auctionRunning = false;
 	var bidRequestQueue = [];
-		debugger
-	
 	var eventValidators = {
 	  bidWon: checkDefinedPlacement
 	};
@@ -1065,7 +1063,6 @@
 	
 	exports.createInvisibleIframe = function _createInvisibleIframe() {
 	  var f = document.createElement('iframe');
-		debugger
 	  f.id = _getUniqueIdentifierStr();
 	  f.height = 0;
 	  f.width = 0;
@@ -4175,7 +4172,6 @@
 	
 	var AppNexusAdapter;
 
-		debugger
 	AppNexusAdapter = function AppNexusAdapter() {
 	  var baseAdapter = Adapter.createNew('appnexus');
 	  var usersync = false;
@@ -4311,8 +4307,6 @@
 	
 	  //expose the callback to the global object:
 	  pbjs.handleAnCB = function (jptResponseObj) {
-
-		  debugger
 	
 	    var bidCode;
 	
@@ -4334,8 +4328,6 @@
 	
 	      // @if NODE_ENV='debug'
 	      utils.logMessage('JSONP callback function called for ad ID: ' + id);
-			
-			debugger
 	
 	      // @endif
 	      var bid = [];
