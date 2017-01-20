@@ -348,45 +348,45 @@ class MercuryApiController extends WikiaController {
 			$data['isMainPage'] = $isMainPage;
 			$data['ns'] = $title->getNamespace();
 
-			$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
-			$data['categories'] = $articleData['categories'];
-			$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-			$data['articleType'] = WikiaPageType::getArticleType( $title );
-			$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
-			$otherLanguages = $this->getOtherLanguages( $title );
+			if ( $this->isSupportedByMercury( $title ) ) {
+				$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+				$data['categories'] = $articleData['categories'];
+				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+				$data['articleType'] = WikiaPageType::getArticleType( $title );
+				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+				$otherLanguages = $this->getOtherLanguages( $title );
 
-			if ( !empty( $otherLanguages ) ) {
-				$data['otherLanguages'] = $otherLanguages;
-			}
-
-			if ( !empty( $articleData['content'] ) ) {
-				$data['article'] = $articleData;
-
-				if ( !$title->isContentPage() ) {
-					// Remove namespace prefix from displayTitle, so it can be consistent with title
-					// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-					$data['article']['displayTitle'] = $title->getText();
+				if ( !empty( $otherLanguages ) ) {
+					$data['otherLanguages'] = $otherLanguages;
 				}
-			}
 
-			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
-			} else {
-				switch ( $data['ns'] ) {
-					// Handling namespaces other than content ones
-					case NS_CATEGORY:
-						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
-						break;
-					case NS_FILE:
-						$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
-						break;
-					default:
-						if ( $title->isContentPage() ) {
+				if ( !empty( $articleData['content'] ) ) {
+					$data['article'] = $articleData;
+
+					if ( !$title->isContentPage() ) {
+						// Remove namespace prefix from displayTitle, so it can be consistent with title
+						// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+						$data['article']['displayTitle'] = $title->getText();
+					}
+				}
+
+				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+					$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				} else {
+					switch ( $data['ns'] ) {
+						// Handling namespaces other than content ones
+						case NS_CATEGORY:
+							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+							break;
+						case NS_FILE:
+							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
+							break;
+						default:
 							$data = array_merge(
 								$data,
 								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 							);
-						}
+					}
 				}
 			}
 		} catch ( WikiaHttpException $exception ) {
@@ -529,5 +529,11 @@ class MercuryApiController extends WikiaController {
 		} );
 
 		return $langMap;
+	}
+
+	private function isSupportedByMercury( Title $title ) {
+		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
+			$title->isContentPage() ||
+			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY ]);
 	}
 }
