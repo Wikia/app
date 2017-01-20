@@ -7,8 +7,6 @@ namespace Wikia\Search\Test;
 use Wikia\Search\MediaWikiService;
 use \ReflectionProperty;
 use \ReflectionMethod;
-use Wikia\Search\Result\StaleResultException;
-
 /**
  * Tests the methods found in \Wikia\Search\MediaWikiService
  * @author relwell
@@ -1169,14 +1167,13 @@ class MediaWikiServiceTest extends BaseTest
 	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
-	public function testGetPageFromPageIdThrowsExceptionIfInvalid() {
+	public function testGetPageFromPageIdReturnsNullIfInvalid() {
 		$service = new MediaWikiService();
 
 		$method = new ReflectionMethod( MediaWikiService::class, 'getPageFromPageId' );
 		$method->setAccessible( true );
 
-		$this->setExpectedException( StaleResultException::class );
-		$method->invoke( $service, 0 );
+		$this->assertNull( $method->invoke( $service, 0 ), 'MediaWikiService::getPageFromPageId returns null for invalid id' );
 	}
 
 	/**
