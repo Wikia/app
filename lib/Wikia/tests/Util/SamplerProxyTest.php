@@ -160,7 +160,7 @@ class SamplerProxyTest extends \WikiaBaseTest {
 			$samplerProxy->expects( $this->exactly( $callCount ) )
 				->method( 'getRandomInt' )
 				->with( 0, 100 )
-				->willReturnCallback( [ $this, 'getRandomInt' ] );
+				->willReturnCallback( [ $this, 'getMockRandomInt' ] );
 		} else {
 			$samplerProxy->expects( $this->never() )
 				->method( 'getRandomInt' )
@@ -288,7 +288,17 @@ class SamplerProxyTest extends \WikiaBaseTest {
 		$this->assertEquals( $originalTestResult, $result );
 	}
 
-	function getRandomInt() {
+	/**
+	 * This method is used to mock rand() in sampling tests.
+	 * It creates a shuffled array of all ints between 1 and 100 and
+	 * simply iterates through the array to return "pseudo-random" ints.
+	 * As long as sampling tests that mock rand() use a loop count
+	 * that is a multiple of 100 they are guaranteed a uniform distribution
+	 * of "random" ints.
+	 *
+	 * @return int
+	 */
+	function getMockRandomInt() {
 		static $intArray;
 		static $index = 1;
 
