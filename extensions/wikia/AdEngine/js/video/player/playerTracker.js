@@ -40,9 +40,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
 			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vulcan_network'] = vulcanResponse.network;
-			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser;
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan;
+			trackingData['vulcan_network'] = vulcanResponse.network || '';
+			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || '';
+			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || '';
 		}
 
 		return trackingData;
