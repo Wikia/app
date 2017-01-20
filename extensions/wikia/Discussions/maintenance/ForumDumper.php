@@ -9,6 +9,7 @@ class ForumDumper {
 	const TABLE_REVISION = 'revision';
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
+	const TABLE_PAGE_WIKIA_PROPS  = 'page_wikia_props';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -19,8 +20,6 @@ class ForumDumper {
 	// subtracting 16 bytes from the max size since going right up to the limit still causes
 	// MySQL to fail the insert.
 	const MAX_CONTENT_SIZE = 65520;
-
-	const REGEXP_MATCH_TITLE = '/<ac_metadata.*title="([^"]*)".*>.*<\/ac_metadata>/';
 
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
@@ -47,7 +46,8 @@ class ForumDumper {
 		"sticky_ind",
 		"first_revision_id",
 		"last_revision_id",
-		"comment_timestamp"
+		"comment_timestamp",
+		"display_order"
 	];
 
 	const COLUMNS_REVISION = [
@@ -74,25 +74,14 @@ class ForumDumper {
 		"timestamp",
 	];
 
+	const FORUM_NAMEPSACES = [
+		NS_WIKIA_FORUM_BOARD,
+		NS_WIKIA_FORUM_BOARD_THREAD
+	];
+
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
-
-	private $dummyTitle;
-	private $parserOptions;
-
-	public function __construct() {
-		$this->dummyTitle = \Title::newFromText( "Dummy" );
-		$this->parserOptions = new \ParserOptions();
-		$this->parserOptions->setEditSection( false );
-	}
-
-	private function getForumNamespaces() {
-		return [
-			NS_WIKIA_FORUM_BOARD,
-			NS_WIKIA_FORUM_BOARD_THREAD
-		];
-	}
 
 	public function addPage( $id, $data ) {
 		$this->pages[$id] = $data;
@@ -111,13 +100,17 @@ class ForumDumper {
 			return $this->pages;
 		}
 
+		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
-			->SELECT_ALL()
+			->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
 			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
-			->WHERE( 'page_namespace' )->IN( $this->getForumNamespaces() )
-			->runLoop( $dbh, function ( &$pages, $row ) {
+			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )->AS_( 'pp' )
+				->ON( 'page.page_id', 'pp.page_id' )->AND_( 'propname', WPP_WALL_ORDER_INDEX )
+			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
+			->ORDER_BY( 'idx' )
+			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
 				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
 						"namespace" => $row->page_namespace,
@@ -138,10 +131,10 @@ class ForumDumper {
 						"sticky_ind" => $row->sticky ?: 0,
 						"first_revision_id" => $row->first_rev_id,
 						"last_revision_id" => $row->last_rev_id,
-						"comment_timestamp" => $row->last_touched
+						"comment_timestamp" => $row->last_touched,
+						"display_order" => $display_order++
 					] );
 			} );
-
 		return $this->pages;
 	}
 
@@ -159,12 +152,11 @@ class ForumDumper {
 			->JOIN( self::TABLE_TEXT )->ON( 'rev_text_id', 'old_id' )
 			->WHERE( 'rev_page' )->IN( $pageIds )
 			->runLoop( $dbh, function ( &$revisions, $row ) {
-				$textId = $row->old_text;
-				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $textId );
+				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
 				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
-				
+
 				$this->addRevision( [
 					"revision_id" => $row->rev_id,
 					"page_id" => $row->rev_page,
@@ -188,62 +180,42 @@ class ForumDumper {
 	}
 
 	public function getTextAndTitle( $textId ) {
-		$rawText = $this->getRawText( $textId );
+		$articleComment = \ArticleComment::newFromId( $textId );
+		$articleComment->load();
+
+		$rawText = $this->getRawText( $articleComment );
+		$title = $articleComment->getMetadata( 'title', '' );
+		$parsedText = $this->getParsedText( $rawText, $articleComment );
+
+		// Truncate the strings if they are too big
+		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
+			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
+		}
+		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
+			$rawText = substr( $rawText, 0, self::MAX_CONTENT_SIZE );
+		}
+
+		return [ $parsedText, $rawText, $title ];
+	}
+
+	private function getRawText( \ArticleComment $articleComment ) {
+		$rawText = strip_tags( $articleComment->getRawText() );
 
 		// There are some bogus characters in our data.  Strip them out
-		$rawText = filter_var(
+		return filter_var(
 			$rawText,
 			FILTER_UNSAFE_RAW,
 			FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH
 		);
-
-		// The title is included within the text as an ac_metadata tag
-		$title = $this->getTitle( $rawText );
-
-		// Parse the wiki text
-		$parsedText = $this->getParsedText( $rawText );
-
-		// Get a plain text version as well
-		$plainText = strip_tags( $parsedText );
-
-		// Truncate the strings if they are too big
-		if ( strlen($parsedText) > self::MAX_CONTENT_SIZE ) {
-			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
-		}
-		if ( strlen($plainText) > self::MAX_CONTENT_SIZE ) {
-			$plainText = substr( $plainText, 0, self::MAX_CONTENT_SIZE );
-		}
-
-		return [ $parsedText, $plainText, $title ];
 	}
 
-	private function getRawText( $textId ) {
-		$text = \ExternalStore::fetchFromURL( $textId );
-		return gzinflate( $text );
-	}
-
-	private function getParsedText( $wikiText ) {
+	private function getParsedText( $wikiText, \ArticleComment $articleComment ) {
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
 			return $wikiText;
 		}
 
-		$parserOut = \F::app()->wg->Parser->parse(
-			$wikiText,
-			$this->dummyTitle,
-			$this->parserOptions
-		);
-		return $parserOut->getText();
-	}
-
-	private function getTitle( $text ) {
-		$title = '';
-
-		if ( preg_match( self::REGEXP_MATCH_TITLE, $text, $matches ) ) {
-			$title = $matches[1];
-		}
-
-		return $title;
+		return $articleComment->getText();
 	}
 
 	public function getContributorType( $row ) {
@@ -269,7 +241,6 @@ class ForumDumper {
 
 		$pageIds = array_keys( $this->getPages() );
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
 		( new \WikiaSQL() )
 			->SELECT_ALL()

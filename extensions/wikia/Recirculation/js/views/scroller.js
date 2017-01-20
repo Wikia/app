@@ -17,7 +17,7 @@ define('ext.wikia.recirculation.views.scroller', [
 
 		data.title = data.title || $.msg('recirculation-incontent-title');
 
-		utils.renderTemplate('scroller.mustache', data).then(function ($html) {
+		utils.renderTemplate('client/scroller.mustache', data).then(function ($html) {
 			section.before($html);
 
 			var scroller = $html.find('.items-container').perfectScrollbar({

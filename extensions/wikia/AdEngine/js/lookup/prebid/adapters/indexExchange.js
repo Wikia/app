@@ -17,23 +17,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '1',
 					siteID: 183423
 				},
-				HOME_TOP_LEADERBOARD: {
-					sizes: [
-						[728, 90],
-						[970, 250]
-					],
-					id: '1',
-					siteID: 183423
-				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [
-						[300, 250],
-						[300, 600]
-					],
-					id: '2',
-					siteID: 183567
-				},
-				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]

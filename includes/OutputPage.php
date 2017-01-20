@@ -1768,7 +1768,8 @@ class OutputPage extends ContextSource {
 				array(
 					"{$wgCookiePrefix}Token",
 					"{$wgCookiePrefix}LoggedOut",
-					session_name()
+					session_name(),
+					'access_token',
 				),
 				$wgCacheVaryCookies
 			);

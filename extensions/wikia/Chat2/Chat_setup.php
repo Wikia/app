@@ -164,6 +164,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-message-was-too-long',
 		'chat-kick-cant-kick-moderator',
 		'chat-err-connected-from-another-browser',
+		'chat-err-communicating-with-mediawiki',
 		'chat-kick-you-need-permission',
 		'chat-inlinealert-a-made-b-chatmod',
 		// Chat ban modal

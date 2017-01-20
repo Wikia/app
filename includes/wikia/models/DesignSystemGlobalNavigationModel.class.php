@@ -235,7 +235,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$logOutLink = [
 			'type' => 'link-authentication',
-			'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ),
+			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'

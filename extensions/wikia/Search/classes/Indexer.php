@@ -52,7 +52,6 @@ class Indexer {
 		'MediaData',
 		'Redirects',
 		'Wam',
-		'WikiPromoData',
 		'WikiViews'
 	];
 
@@ -194,7 +193,7 @@ class Indexer {
 	 *
 	 * @param int $wid
 	 *
-	 * @return \Solarium_Result_Update|null|true
+	 * @return \Solarium_Result_Update|false
 	 */
 	public function deleteWikiDocs( $wid ) {
 		$updateHandler = $this->getClient()->createUpdate();
@@ -205,9 +204,14 @@ class Indexer {
 			return $this->getClient()->update( $updateHandler );
 		} catch ( \Exception $e ) {
 			$this->getLogger()->log( __METHOD__, 'Delete: ' . $query, $e );
-		}
 
-		return true;
+			\Wikia\Logger\WikiaLogger::instance()->critical( __METHOD__, [
+				'exception' => $e,
+				'query' => $query
+			] );
+
+			return false;
+		}
 	}
 
 	/**

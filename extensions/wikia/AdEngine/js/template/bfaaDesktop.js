@@ -1,33 +1,30 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (
-	adHelper,
-	uapContext,
-	btfBlocker,
-	slotTweaker,
-	uapVideo,
-	doc,
-	log,
-	win,
-	recoveryTweaker
-) {
+], function (uapContext,
+			 btfBlocker,
+			 slotTweaker,
+			 uapVideo,
+			 doc,
+			 log,
+			 throttle,
+			 win,
+			 recoveryTweaker) {
 	'use strict';
 
-	var adSlot,
-		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
-		imageContainer,
+		slotContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
@@ -55,9 +52,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
-		updateNavBar(adSlot.offsetHeight);
-		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(adSlot.offsetHeight);
+		updateNavBar(slotContainer.offsetHeight);
+		doc.addEventListener('scroll', throttle(function () {
+			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {
@@ -74,16 +71,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.init()
-				.then(function () {
-					uapVideo.loadVideoAd(params, adSlot, imageContainer);
-				});
+			uapVideo.loadVideoAd(params);
 		}
 	}
 
 	function show(params) {
-		adSlot = doc.getElementById(params.slotName);
-		imageContainer = adSlot.querySelector('div:last-of-type');
+		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
