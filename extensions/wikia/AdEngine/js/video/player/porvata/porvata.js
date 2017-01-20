@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata', [
-	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
+	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
+	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver'
-], function (porvataPlayerFactory, googleIma, log, viewportObserver) {
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
+		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
 			src: params.src,
@@ -32,6 +34,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				return porvataPlayerFactory.create(params, ima);
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
+				tracker.register(video, params);
 
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time
@@ -54,6 +57,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('allAdsCompleted', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
 					video.ima.setAutoPlay(false);
+
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
 					}

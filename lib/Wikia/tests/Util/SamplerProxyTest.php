@@ -96,6 +96,119 @@ class SamplerProxyTest extends \WikiaBaseTest {
 		$this->assertEquals( $testResult, $result );
 	}
 
+
+	function testSampling100Percent() {
+		$this->doSamplingTest( 100, false, 0.0 );
+	}
+
+	function testSampling75Percent() {
+		$this->doSamplingTest( 75, false, 0.1 );
+	}
+
+	function testSampling50Percent() {
+		$this->doSamplingTest( 50, false, 0.1 );
+	}
+
+	function testSampling25Percent() {
+		$this->doSamplingTest( 25, false, 0.1 );
+	}
+
+	function testSampling0Percent() {
+		$this->doSamplingTest( 0, false, 0 );
+	}
+
+	function testShadowing100Percent() {
+		$this->doSamplingTest( 100, true, 0.0 );
+	}
+
+	function testShadowing75Percent() {
+		$this->doSamplingTest( 75, true, 0.1 );
+	}
+
+	function testShadowing50Percent() {
+		$this->doSamplingTest( 50, true, 0.1 );
+	}
+
+	function testShadowing25Percent() {
+		$this->doSamplingTest( 25, true, 0.1 );
+	}
+
+	function testShadowing0Percent() {
+		$this->doSamplingTest( 0, true, 0 );
+	}
+
+	function doSamplingTest( $samplingRate, $enableShadowing, $deviation ) {
+
+		$testOriginalCallable = [ $this->originalMock, $this->originalMethodToSample ];
+		$testAlternateCallable = [ $this->alternateMock, $this->alternateMethod ];
+
+		$testArg1 = 1;
+		$testArg2 = 'two';
+		$testArg3 = array( 4, 5, 6 );
+		$originalTestResult = 'original';
+		$alternateTestResult = 'alternate';
+		$callCount = 200;
+
+		$samplerProxy =	$this->getMockBuilder( SamplerProxy::class )->setMethods(
+			[ 'getRandomInt' ] )->disableOriginalConstructor()->getMock();
+		$samplerProxy->setEnableShadowing( $enableShadowing );
+		$samplerProxy->setMethodSamplingRate( $samplingRate );
+		$samplerProxy->setOriginalCallable( $testOriginalCallable );
+		$samplerProxy->setAlternateCallable( $testAlternateCallable );
+
+		if ( $samplingRate > 0 ) {
+			$samplerProxy->expects( $this->exactly( $callCount ) )
+				->method( 'getRandomInt' )
+				->with( 0, 100 )
+				->willReturnCallback( [ $this, 'getMockRandomInt' ] );
+		} else {
+			$samplerProxy->expects( $this->never() )
+				->method( 'getRandomInt' )
+				->with( 0, 100 );
+		}
+
+		$originalCallableRecorder =
+			( $samplingRate < 100 || $enableShadowing ) ? $this->atLeastOnce() : $this->never();
+		$this->originalMock->expects( $originalCallableRecorder )
+			->method( $this->originalMethodToSample )
+			->with( $testArg1, $testArg2, $testArg3 )
+			->willReturn( $originalTestResult );
+
+		$alternateCallableRecorder = $samplingRate > 0 ? $this->atLeastOnce() : $this->never();
+		$this->alternateMock->expects( $alternateCallableRecorder )
+			->method( $this->alternateMethod )
+			->with( $testArg1, $testArg2, $testArg3 )
+			->willReturn( $alternateTestResult );
+
+		for ( $i = 0; $i < $callCount; $i ++ ) {
+			$samplerProxy->methodToSample( $testArg1, $testArg2, $testArg3 );
+		}
+
+		if ( $samplingRate == 100 ) {
+			// we should see $callCount calls to alternate
+			$this->assertEquals( $callCount, $alternateCallableRecorder->getInvocationCount() );
+			$this->assertEquals( $enableShadowing ? $callCount : 0,
+				$originalCallableRecorder->getInvocationCount() );
+		} elseif ( $samplingRate > 0 ) {
+			// we should see $samplingRate percent (+- $deviation) calls to alternate
+			$this->assertLessThanOrEqual( $callCount * $deviation,
+				abs( $callCount * $samplingRate / 100 - $alternateCallableRecorder->getInvocationCount() ) );
+			if ( $enableShadowing ) {
+				// when shadowing, we should see $callCount calls to original
+				$this->assertEquals( $callCount, $originalCallableRecorder->getInvocationCount() );
+			} else {
+				// when sampling without shadowing, original sees the calls that didn't go to
+				// alternate
+				$this->assertLessThanOrEqual( $callCount * $deviation,
+					abs( $callCount * ( 100 - $samplingRate ) / 100 -
+					     $originalCallableRecorder->getInvocationCount() ) );
+			}
+		} else {
+			$this->assertEquals( 0, $alternateCallableRecorder->getInvocationCount() );
+			$this->assertEquals( $callCount, $originalCallableRecorder->getInvocationCount() );
+		}
+	}
+
 	function testResultsCallable() {
 		$testShadowing = true;
 		$testMethodSamplingRate = 100;
@@ -175,6 +288,28 @@ class SamplerProxyTest extends \WikiaBaseTest {
 		$this->assertEquals( $originalTestResult, $result );
 	}
 
+	/**
+	 * This method is used to mock rand() in sampling tests.
+	 * It creates a shuffled array of all ints between 1 and 100 and
+	 * simply iterates through the array to return "pseudo-random" ints.
+	 * As long as sampling tests that mock rand() use a loop count
+	 * that is a multiple of 100 they are guaranteed a uniform distribution
+	 * of "random" ints.
+	 *
+	 * @return int
+	 */
+	function getMockRandomInt() {
+		static $intArray;
+		static $index = 1;
+
+		if ( !isset( $intArray ) ) {
+			$intArray = range( 1, 100 );
+			shuffle( $intArray );
+		}
+		$value = $intArray[$index];
+		$index = ++$index % 100;
+		return $value;
+	}
 }
 
 class OriginalPopo {

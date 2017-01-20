@@ -194,7 +194,7 @@ class ChatAjax {
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
 		if ( empty( $subjectUserName ) ) {
-			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text;
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text();
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;
