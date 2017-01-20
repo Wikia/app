@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 ], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
+		positionVideoPlayerClassName = 'video-player-';
 
 	function getVideoSize(slot, params) {
 		var width = slot.clientWidth;
@@ -50,6 +51,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					videoAspectRatio: params.videoAspectRatio,
 					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
+
+				if (params.splitLayoutVideoPosition) {
+					video.container.style.position = 'absolute';
+					video.container.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
+				}
 
 				video.addEventListener('allAdsCompleted', function () {
 					video.reload();
