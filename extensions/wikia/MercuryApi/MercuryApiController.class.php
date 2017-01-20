@@ -381,7 +381,6 @@ class MercuryApiController extends WikiaController {
 						$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 
 							// Remove namespace prefix from displayTitle, so it can be consistent with title
