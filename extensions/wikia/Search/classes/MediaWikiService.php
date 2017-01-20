@@ -561,10 +561,8 @@ class MediaWikiService {
 		$title = $searchEngine->getNearMatch( $term );
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if ( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			$page = $this->getPageFromPageId( $articleId );
-			if ( $page instanceof \Article ) {
-				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
-			}
+			$this->getPageFromPageId( $articleId );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 
 		return $articleMatch;
