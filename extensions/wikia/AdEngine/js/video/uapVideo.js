@@ -92,6 +92,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		log(['loadVideoAd params', params], log.levels.debug, logGroup);
 
+		params.adProduct = 'vuap';
 		params.width = videoWidth;
 		params.height = getVideoHeight(videoWidth, params.videoAspectRatio);
 		params.vastTargeting = {

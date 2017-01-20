@@ -74,6 +74,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				return ima.getAdsManager().setVolume(volume);
 			},
 			stop: function () {
+				ima.getAdsManager().dispatchEvent('wikiaAdStop');
 				ima.getAdsManager().stop();
 			}
 		};

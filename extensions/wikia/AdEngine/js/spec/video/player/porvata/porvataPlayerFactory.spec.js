@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 						classList: {
 							add: noop
 						}
-					}
+					};
 				}
 			}
 		},
@@ -30,7 +30,8 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 			pause: noop,
 			resume: noop,
 			setVolume: noop,
-			stop: noop
+			stop: noop,
+			dispatchEvent: noop
 		},
 		domElementTweaker: {
 			show: noop,
