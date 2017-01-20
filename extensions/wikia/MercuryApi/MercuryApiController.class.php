@@ -333,6 +333,10 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$data = [ ];
 
+			if ( !$title->isKnown() ) {
+				throw new NotFoundApiException( 'Page doesn\'t exist' );
+			}
+
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
 			$articleExists = $article instanceof Article;
@@ -345,12 +349,27 @@ class MercuryApiController extends WikiaController {
 			$data['isMainPage'] = $isMainPage;
 			$data['ns'] = $title->getNamespace();
 
+			$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+			$data['categories'] = $articleData['categories'];
+
+			if ($articleExists) {
+				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+			}
+
+			if ( !empty( $articleData['content'] ) ) {
+				$data['article'] = $articleData;
+
+				if ( !$title->isContentPage() ) {
+					// Remove namespace prefix from displayTitle, so it can be consistent with title
+					// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+					$data['article']['displayTitle'] = Title::newFromText( $data['article']['displayTitle'] )->getText();
+				}
+			}
+
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
-				if ( $article instanceof Article ) {
-					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-				} else {
+				if ( !$articleExists ) {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
 			} else {
@@ -359,42 +378,14 @@ class MercuryApiController extends WikiaController {
 					case NS_CATEGORY:
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-						if ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-							if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
-
-								// Remove namespace prefix from displayTitle, so it can be consistent with title
-								// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-								$data['article']['displayTitle'] = Title::newFromText( $data['article']['displayTitle'] )->getText();
-							} else {
-								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-							}
-						} else {
-							throw new NotFoundApiException( 'Category has no members' );
-						}
-
 						break;
 					case NS_FILE:
-						if ( !$title->isKnown() ) {
-							throw new NotFoundApiException( 'File not found' );
-						}
-
 						$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
-						$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-
-						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
-
-							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-							$data['article']['displayTitle'] = Title::newFromText( $data['article']['displayTitle'] )->getText();
-						}
 
 						break;
 					default:
 						if ( $title->isContentPage() ) {
-							if ( $title->isKnown() && $articleExists ) {
+							if ( $articleExists ) {
 								$data = array_merge(
 									$data,
 									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
