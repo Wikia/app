@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
 				'skin': pageLevelParams.skin,
-				'wsi': '',
+				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : '',
 				'player': playerName,
 				'ad_product': params.adProduct,
 				'position': params.slotName || '',
@@ -37,10 +37,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_price': ''
 			},
 			vulcanResponse;
-
-		if (params.src) {
-			trackingData.wsi = slotTargeting.getWikiaSlotId(params.slotName, params.src);
-		}
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
 			vulcanResponse = vulcan.getSingleResponse(params.slotName);
