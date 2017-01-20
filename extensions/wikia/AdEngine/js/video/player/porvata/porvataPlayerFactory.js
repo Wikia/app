@@ -37,6 +37,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			isPaused: function () {
 				return ima.getStatus() === 'paused';
 			},
+			isPlaying: function () {
+				return ima.getStatus() === 'playing';
+			},
 			pause: function () {
 				ima.getAdsManager().pause();
 			},

@@ -8,11 +8,15 @@ define('ext.wikia.recirculation.views.footer', [
 
 	function render(data) {
 
-		return utils.renderTemplate('footer.mustache', data).then(function($html) {
-			$('#WikiaArticle').append($html);
+		return utils.prepareFooter()
+			.then(function() {
+				return utils.renderTemplate('client/footer.mustache', data)
+			})
+			.then(function($html) {
+				$('#recirculation-footer-container').html($html);
 
-			return $html;
-		});
+				return $html;
+			});
 	}
 
 	function setupTracking(experimentName) {
