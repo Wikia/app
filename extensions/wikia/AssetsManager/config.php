@@ -112,7 +112,6 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
-		'//extensions/wikia/AdEngine/js/video/uiTemplate.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
@@ -320,7 +319,8 @@ $config['adengine2_video_ui_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js'
+		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
+		'//extensions/wikia/AdEngine/js/video/uiTemplate.js'
 	],
 ];
 
@@ -968,7 +968,6 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
-		'//extensions/wikia/AdEngine/js/video/uiTemplate.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
