@@ -147,14 +147,25 @@ class SamplerProxyTest extends \WikiaBaseTest {
 		$testArg3 = array( 4, 5, 6 );
 		$originalTestResult = 'original';
 		$alternateTestResult = 'alternate';
+		$callCount = 200;
 
-		$builder = SamplerProxy::createBuilder();
-		$samplerProxy =
-			$builder->setEnableShadowing( $enableShadowing )
-				->setMethodSamplingRate( $samplingRate )
-				->setOriginalCallable( $testOriginalCallable )
-				->setAlternateCallable( $testAlternateCallable )
-				->build();
+		$samplerProxy =	$this->getMockBuilder( SamplerProxy::class )->setMethods(
+			[ 'getRandomInt' ] )->disableOriginalConstructor()->getMock();
+		$samplerProxy->setEnableShadowing( $enableShadowing );
+		$samplerProxy->setMethodSamplingRate( $samplingRate );
+		$samplerProxy->setOriginalCallable( $testOriginalCallable );
+		$samplerProxy->setAlternateCallable( $testAlternateCallable );
+
+		if ( $samplingRate > 0 ) {
+			$samplerProxy->expects( $this->exactly( $callCount ) )
+				->method( 'getRandomInt' )
+				->with( 0, 100 )
+				->willReturnCallback( [ $this, 'getRandomInt' ] );
+		} else {
+			$samplerProxy->expects( $this->never() )
+				->method( 'getRandomInt' )
+				->with( 0, 100 );
+		}
 
 		$originalCallableRecorder =
 			( $samplingRate < 100 || $enableShadowing ) ? $this->atLeastOnce() : $this->never();
@@ -168,13 +179,6 @@ class SamplerProxyTest extends \WikiaBaseTest {
 			->method( $this->alternateMethod )
 			->with( $testArg1, $testArg2, $testArg3 )
 			->willReturn( $alternateTestResult );
-
-		// Seed the random generator so that we have a consistent dataset of psuedo-random
-		// numbers across the sample set.  We're trying to test the sampling code, not the
-		// random number generator, so this is reasonable and prevents intermittent test failures
-		// caused by a psuedo-random datasets with a highly skewed distribution.
-		srand(123456);
-		$callCount = 200;
 
 		for ( $i = 0; $i < $callCount; $i ++ ) {
 			$samplerProxy->methodToSample( $testArg1, $testArg2, $testArg3 );
@@ -284,6 +288,18 @@ class SamplerProxyTest extends \WikiaBaseTest {
 		$this->assertEquals( $originalTestResult, $result );
 	}
 
+	function getRandomInt() {
+		static $intArray;
+		static $index = 1;
+
+		if ( !isset( $intArray ) ) {
+			$intArray = range( 1, 100 );
+			shuffle( $intArray );
+		}
+		$value = $intArray[$index];
+		$index = ++$index % 100;
+		return $value;
+	}
 }
 
 class OriginalPopo {
