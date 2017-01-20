@@ -377,7 +377,7 @@ class MercuryApiController extends WikiaController {
 
 						break;
 					case NS_FILE:
-						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getFileContent( $title );
+						$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
 						$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
