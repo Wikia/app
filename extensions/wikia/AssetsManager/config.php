@@ -317,7 +317,7 @@ $config['adengine2_video_ui_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/toggle.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js'

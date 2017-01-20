@@ -1,5 +1,5 @@
 /*global define, setTimeout*/
-define('ext.wikia.adEngine.video.player.ui.toggle', [
+define('ext.wikia.adEngine.video.player.ui.toggleVideo', [
 	'ext.wikia.adEngine.domElementTweaker'
 ], function (DOMElementTweaker) {
 	'use strict';
