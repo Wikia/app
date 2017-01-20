@@ -18,8 +18,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 */
 	public function testGetSiteMessage( $expected, $isDisabled, $siteMessageMock, $wgSitenameMock ) {
 		$messageMock = $this->getMockBuilder( 'Message' )->disableOriginalConstructor()->setMethods(
-				[ 'inContentLanguage', 'isDisabled', 'text' ]
-			)->getMock();
+			[ 'inContentLanguage', 'isDisabled', 'text' ]
+		)->getMock();
 
 		$messageMock->expects( $this->once() )->method( 'isDisabled' )->willReturn( $isDisabled );
 
@@ -63,7 +63,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	public function testGetCuratedContentSections( $expected, $expectedNew, $data ) {
 		$mock = $this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'getSectionContent' ] )->getMock();
 
-		$mock->expects( $this->any() )->method( 'getSectionContent' )->will( $this->returnValue( [] ) );
+		$mock->expects( $this->any() )->method( 'getSectionContent' )->will(
+			$this->returnValue( $data['sectionsContent'] )
+		);
 
 		$this->assertEquals( $expected, $mock->getCuratedContentSections( $data ) );
 		$this->assertEquals( $expectedNew, $mock->getCuratedContentSections( $data, true ) );
@@ -74,7 +76,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			[
 				'$expected' => [],
 				'$expectedNew' => [],
-				'$data' => []
+				'$data' => [],
 			],
 			[
 				'$expected' => [
@@ -93,17 +95,87 @@ class MercuryApiModelTest extends WikiaBaseTest {
 						'items' => []
 					],
 				],
+				'$expectedNew' => [],
+				'$data' => [
+					'sections' => [
+						[
+							'title' => 'Curated Content Section',
+							'image_id' => 1024,
+							'image_url' => 'image_url_0',
+						],
+						[
+							'title' => 'Another Curated Content Section',
+							'image_id' => 2048,
+							'image_url' => 'image_url_2',
+						],
+					],
+					'sectionsContent' => [],
+					'items' => [
+						[
+							'title' => 'Category:Category_name_0',
+							'label' => 'Category Name Zero',
+							'image_id' => 4096,
+							'article_id' => 0,
+							'type' => 'category',
+							'image_url' => 'image_url_3',
+						],
+						[
+							'title' => 'Category:Category_name_1',
+							'label' => 'Category Name One',
+							'image_id' => 8192,
+							'article_id' => 512,
+							'type' => 'category',
+							'image_url' => 'image_url_4',
+						],
+					],
+					'featured' => [
+						[
+							'title' => 'Article_title',
+							'label' => 'Article label',
+							'image_id' => 256,
+							'article_id' => 128,
+							'type' => 'article',
+							'image_url' => 'image_url_5',
+						],
+						[
+							'title' => 'User_blog:Warkot/Such_Post',
+							'label' => 'Awesome blog post',
+							'image_id' => 64,
+							'article_id' => 32,
+							'type' => 'blog',
+							'image_url' => 'image_url_6',
+						],
+					]
+				]
+			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Curated Content Section',
+						'image_id' => 1024,
+						'image_url' => 'image_url_0',
+						'type' => 'section',
+						'items' => [ 'a', 'b' ]
+					],
+					[
+						'title' => 'Another Curated Content Section',
+						'image_id' => 2048,
+						'image_url' => 'image_url_2',
+						'type' => 'section',
+						'items' => [ 'a', 'b' ]
+					],
+				],
 				'$expectedNew' => [
 					[
 						'type' => 'section',
-						'items' => [],
+						'items' => [ 'a', 'b' ],
 						'label' => 'Curated Content Section',
 						'imageUrl' => 'image_url_0',
 						'imageCrop' => null,
 					],
 					[
 						'type' => 'section',
-						'items' => [],
+						'items' => [ 'a', 'b' ],
 						'label' => 'Another Curated Content Section',
 						'imageUrl' => 'image_url_2',
 						'imageCrop' => null
@@ -122,6 +194,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 							'image_url' => 'image_url_2',
 						],
 					],
+					'sectionsContent' => [ 'a', 'b' ],
 					'items' => [
 						[
 							'title' => 'Category:Category_name_0',
@@ -198,8 +271,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		}
 
 		$mercuryApiMock->expects( $this->any() )->method( 'processCuratedContentItem' )->will(
-				$this->returnValueMap( $map )
-			);
+			$this->returnValueMap( $map )
+		);
 
 		$this->assertEquals( $expected, $mercuryApiMock->getCuratedContentItems( $data ) );
 	}
@@ -388,13 +461,13 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$titleMock->expects( $this->any() )->method( 'getLocalURL' )->willReturn( $getLocalURL );
 
 		$this->getStaticMethodMock( 'Title', 'newFromID' )->expects( $this->any() )->method( 'newFromID' )->will(
-				$this->returnValueMap(
-					[
-						[ 0, null ],
-						[ $item['article_id'], $titleMock ]
-					]
-				)
-			);
+			$this->returnValueMap(
+				[
+					[ 0, null ],
+					[ $item['article_id'], $titleMock ]
+				]
+			)
+		);
 
 		$this->mockGlobalVariable( 'wgArticlePath', $wgArticlePath );
 
@@ -491,20 +564,20 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	public function testProcessCuratedContent( $expected, $data, $sectionsData, $itemsData, $featuredData ) {
 		/* @var MercuryApi|PHPUnit_Framework_MockObject_MockObject $mercuryApiMock */
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )->setMethods(
-				[ 'getCuratedContentSections', 'getCuratedContentItems' ]
-			)->getMock();
+			[ 'getCuratedContentSections', 'getCuratedContentItems' ]
+		)->getMock();
 
 		$mercuryApiMock->expects( $this->any() )->method( 'getCuratedContentSections' )->willReturn( $sectionsData );
 
 		$mercuryApiMock->expects( $this->any() )->method( 'getCuratedContentItems' )->will(
-				$this->returnValueMap(
-					[
-						[ [], false, [] ],
-						[ $data['items'], false, $itemsData ],
-						[ $data['featured'], false, $featuredData ]
-					]
-				)
-			);
+			$this->returnValueMap(
+				[
+					[ [], false, [] ],
+					[ $data['items'], false, $itemsData ],
+					[ $data['featured'], false, $featuredData ]
+				]
+			)
+		);
 
 		$this->assertEquals( $expected, $mercuryApiMock->processCuratedContent( $data ) );
 	}
@@ -709,12 +782,12 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			$this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'processTrendingArticlesItem' ] )->getMock();
 
 		$mercuryApiMock->expects( $this->any() )->method( 'processTrendingArticlesItem' )->will(
-				$this->returnCallback(
-					function ( $item ) {
-						return $item . ' processed';
-					}
-				)
-			);
+			$this->returnCallback(
+				function ( $item ) {
+					return $item . ' processed';
+				}
+			)
+		);
 
 		$this->assertEquals( $expected, $mercuryApiMock->processTrendingArticlesData( $data ) );
 	}
@@ -778,34 +851,34 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$mercuryApi = new MercuryApi();
 
 		$this->getStaticMethodMock( 'Title', 'newFromText' )->expects( $this->any() )->method( 'newFromText' )->will(
-				$this->returnArgument( 0 )
-			);
+			$this->returnArgument( 0 )
+		);
 
 		$this->getStaticMethodMock( 'WikiaFileHelper', 'getMediaDetail' )->expects( $this->any() )->method(
-				'getMediaDetail'
-			)->will(
-				$this->returnCallback(
-					function ( $title ) {
-						return [
-							'type' => 'video',
-							'title' => $title
-						];
-					}
-				)
-			);
+			'getMediaDetail'
+		)->will(
+			$this->returnCallback(
+				function ( $title ) {
+					return [
+						'type' => 'video',
+						'title' => $title
+					];
+				}
+			)
+		);
 
 		$this->getStaticMethodMock( 'ArticleAsJson', 'createMediaObject' )->expects( $this->any() )->method(
-				'createMediaObject'
-			)->will(
-				$this->returnCallback(
-					function ( $mediaDetail, $title ) {
-						return [
-							'type' => $mediaDetail['type'],
-							'title' => $title
-						];
-					}
-				)
-			);
+			'createMediaObject'
+		)->will(
+			$this->returnCallback(
+				function ( $mediaDetail, $title ) {
+					return [
+						'type' => $mediaDetail['type'],
+						'title' => $title
+					];
+				}
+			)
+		);
 
 		$this->assertEquals( $expected, $mercuryApi->processTrendingVideoData( $data ) );
 	}
