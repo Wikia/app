@@ -18,11 +18,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	function getVideoSize(slot, params) {
 		var width = slot.clientWidth;
 
-		// we don't want to have fullscreen (slot.clientWidth) video in case of splitted
+		// we don't want to have fullscreen (slot.clientWidth) video in case of split
 		// layout or on mercury.
-		// On mercury splittedLayoutVideoPosition and videoPlaceholderElement will be empty
+		// On mercury splitLayoutVideoPosition and videoPlaceholderElement will be empty
 		// because we always display video in the same way there.
-		if (params.splittedLayoutVideoPosition && params.videoPlaceholderElement) {
+		if (params.splitLayoutVideoPosition && params.videoPlaceholderElement) {
 			width = params.videoPlaceholderElement.width;
 		}
 

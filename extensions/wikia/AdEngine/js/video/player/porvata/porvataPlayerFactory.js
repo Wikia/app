@@ -17,9 +17,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			videoAdContainer.classList.add(autoPlayClassName);
 		}
 
-		if (params.splittedLayoutVideoPosition) {
+		if (params.splitLayoutVideoPosition) {
 			videoAdContainer.style.position = 'absolute';
-			videoAdContainer.classList.add(positionVideoPlayerClassName + params.splittedLayoutVideoPosition);
+			videoAdContainer.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
 		} else {
 			videoAdContainer.style.position = 'relative';
 		}
