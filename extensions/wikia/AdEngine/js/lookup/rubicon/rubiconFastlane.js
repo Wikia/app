@@ -31,14 +31,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
-				INCONTENT_BOXAD_1: {
-					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
-					targeting: {loc: 'hivi'}
-				},
-				INVISIBLE_HIGH_IMPACT_2: {
-					sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
-					targeting: {loc: 'hivi'}
-				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
@@ -85,8 +77,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			'336x280': 49,
 			'300x1050': 54,
 			'970x250': 57,
-			'320x480': 67,
-			'480x320': 101
+			'320x480': 67
 		},
 		slots;
 
