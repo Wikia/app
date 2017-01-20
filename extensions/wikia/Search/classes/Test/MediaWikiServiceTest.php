@@ -1181,6 +1181,20 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
+	 * @slowExecutionTime 0.14926 ms
+	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
+	 */
+	public function testPageIdExistsForNotExistingArticle() {
+		$this->mockClass( 'Article', null, 'newFromID' );
+
+		$this->assertFalse(
+			(new MediaWikiService)->pageIdExists(0),
+			'\Wikia\Search\MediaWikiService::pageIdExists should return false when provided a nonexistent page id'
+		);
+	}
+
+	/**
+	 * @group Slow
 	 * @slowExecutionTime 0.16001 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */

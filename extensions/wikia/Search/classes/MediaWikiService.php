@@ -379,7 +379,8 @@ class MediaWikiService {
 	public function pageIdExists( $pageId ) {
 		try {
 			return $this->getPageFromPageId( $pageId )->exists();
-		} catch ( \Exception $e ) {
+		} catch ( \Throwable $e ) {
+			# catch "Error: Call to a member function exists() on null"
 			return false;
 		}
 	}
