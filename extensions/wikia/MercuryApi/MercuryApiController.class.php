@@ -376,6 +376,10 @@ class MercuryApiController extends WikiaController {
 
 						break;
 					case NS_FILE:
+						if ( !$title->isKnown() ) {
+							throw new NotFoundApiException( 'File not found' );
+						}
+
 						$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
 						$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 
