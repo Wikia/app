@@ -115,14 +115,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return GlobalTitle::newFromText( $pageTitle, $namespace, $wikiId )->getFullURL( $query );
 	}
 
-	private function getLogoutUrl() {
-		$wikiId = $this->product === static::PRODUCT_WIKIS ?
-			$this->productInstanceId :
-			WikiFactory::COMMUNITY_CENTRAL;
-		$server = GlobalTitle::newFromText( null, NS_MAIN, $wikiId )->getServer();
-		return $server . '/logout';
-	}
-
 	private function getSearchData() {
 		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
 
@@ -243,7 +235,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$logOutLink = [
 			'type' => 'link-authentication',
-			'href' => $this->getLogoutUrl(),
+			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
