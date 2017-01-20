@@ -339,9 +339,8 @@ class MercuryApiController extends WikiaController {
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
-			$articleExists = $article instanceof Article;
 
-			if ( $articleExists && $title->isRedirect() ) {
+			if ( $title->isRedirect() ) {
 				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 			}
 
@@ -351,10 +350,7 @@ class MercuryApiController extends WikiaController {
 
 			$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 			$data['categories'] = $articleData['categories'];
-
-			if ($articleExists) {
-				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-			}
+			$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 
 			if ( !empty( $articleData['content'] ) ) {
 				$data['article'] = $articleData;
@@ -368,10 +364,6 @@ class MercuryApiController extends WikiaController {
 
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
-
-				if ( !$articleExists ) {
-					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
-				}
 			} else {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
@@ -385,19 +377,10 @@ class MercuryApiController extends WikiaController {
 						break;
 					default:
 						if ( $title->isContentPage() ) {
-							if ( $articleExists ) {
-								$data = array_merge(
-									$data,
-									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-								);
-							} else {
-								\Wikia\Logger\WikiaLogger::instance()->error(
-									'$article should be an instance of an Article',
-									[ 'article' => $article ]
-								);
-
-								throw new NotFoundApiException( 'Article is empty' );
-							}
+							$data = array_merge(
+								$data,
+								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+							);
 						}
 				}
 			}
