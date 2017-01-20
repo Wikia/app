@@ -351,6 +351,13 @@ class MercuryApiController extends WikiaController {
 			$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 			$data['categories'] = $articleData['categories'];
 			$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+			$data['articleType'] = WikiaPageType::getArticleType( $title );
+			$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+			$otherLanguages = $this->getOtherLanguages( $title );
+
+			if ( !empty( $otherLanguages ) ) {
+				$data['otherLanguages'] = $otherLanguages;
+			}
 
 			if ( !empty( $articleData['content'] ) ) {
 				$data['article'] = $articleData;
@@ -358,7 +365,7 @@ class MercuryApiController extends WikiaController {
 				if ( !$title->isContentPage() ) {
 					// Remove namespace prefix from displayTitle, so it can be consistent with title
 					// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-					$data['article']['displayTitle'] = Title::newFromText( $data['article']['displayTitle'] )->getText();
+					$data['article']['displayTitle'] = $title->getText();
 				}
 			}
 
@@ -395,20 +402,6 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
-
-			$title = $this->wg->Title;
-		}
-
-		// These operations slow the API response time by 50 times
-		// There is no need to perform them on the file pages as they're not supported by Mercury anyway
-		if ( $title->getNamespace() !== NS_FILE ) {
-			$data['articleType'] = WikiaPageType::getArticleType( $title );
-			$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
-			$otherLanguages = $this->getOtherLanguages( $title );
-
-			if ( !empty( $otherLanguages ) ) {
-				$data['otherLanguages'] = $otherLanguages;
-			}
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
