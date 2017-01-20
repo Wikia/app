@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'use strict';
 
 	var accountId = 7450,
+		bidder,
 		config = {
 			oasis: {
 				INCONTENT_LEADERBOARD: {
@@ -184,16 +185,19 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		return !!slots[slotName];
 	}
 
-	return factory.create({
+	bidder = factory.create({
 		logGroup: logGroup,
 		name: 'rubicon_vulcan',
 		call: call,
 		calculatePrices: calculatePrices,
 		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
-		getSingleResponse: getSingleResponse,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
 		getSlotParams: getSlotParams
 	});
+
+	bidder.getSingleResponse = getSingleResponse;
+
+	return bidder;
 });
