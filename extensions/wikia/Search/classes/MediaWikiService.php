@@ -1076,7 +1076,6 @@ class MediaWikiService {
 	 * @param int $pageId
 	 *
 	 * @return \Article
-	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 
