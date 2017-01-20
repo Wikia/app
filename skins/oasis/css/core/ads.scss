@@ -180,6 +180,14 @@ $uap-video-animation-duration: 0.4s;
 .video-player {
 	position: relative;
 
+	&#{&}-left, &#{&}-right {
+		z-index: $wikia-top-ads-index;
+	}
+
+	&#{&}-right {
+		right: 0;
+	}
+
 	video {
 		left: 0;
 	}
