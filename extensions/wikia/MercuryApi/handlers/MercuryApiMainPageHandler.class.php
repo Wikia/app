@@ -50,7 +50,7 @@ class MercuryApiMainPageHandler {
 		$data = [ ];
 		try {
 			$data = WikiaDataAccess::cache(
-				self::curatedContentDataMemcKey( $section . $newFormat ),
+				self::curatedContentDataMemcKey( $section . ( $newFormat ? '_new' : '' ) ),
 				WikiaResponse::CACHE_STANDARD,
 				function () use ( $mercuryApiModel, $section, $newFormat ) {
 					$rawData = F::app()->sendRequest(

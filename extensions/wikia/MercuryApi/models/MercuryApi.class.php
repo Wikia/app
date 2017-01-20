@@ -366,7 +366,7 @@ class MercuryApi {
 				$section['imageUrl'] = $dataItem['image_url'];
 				$section['type'] = 'section';
 				$section['items'] = $this->getSectionContent( $dataItem['title'], $newFormat );
-				$section['imageCrop'] = $dataItem['image_crop'];
+				$section['imageCrop'] = isset( $dataItem['image_crop'] ) ? $dataItem['image_crop'] : null;
 
 				if ( !empty( $section['items'] ) ) {
 					$sections[] = $section;
