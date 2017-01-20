@@ -46,6 +46,7 @@ class MercuryApiMainPageHandler {
 	}
 
 	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null, $newFormat=false ) {
+		// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
 		$data = [ ];
 		try {
 			$data = WikiaDataAccess::cache(

@@ -402,7 +402,7 @@ class MercuryApi {
 		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		if ( $newFormat ) {
 			$result = [
-				'label' => empty($item['label']) ? $item['title'] : $item['label'],
+				'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
 				'imageUrl' => $item['image_url'],
 				'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
 				'type' => $item['type'],
@@ -415,11 +415,9 @@ class MercuryApi {
 					$result[ 'url' ] = $title->getLocalURL();
 					return $result;
 				}
-			} else {
-				if ($item['article_id'] === 0) {
-					$result[ 'url' ] = Title::newFromText($item['title'])->getLocalURL();
-					return $result;
-				}
+			} elseif ($item['article_id'] === 0) {
+				$result[ 'url' ] = Title::newFromText($item['title'])->getLocalURL();
+				return $result;
 			}
 		} else if ( !empty( $item[ 'article_id' ] ) ) { // TODO: remove this block after release release of XW-2590 (XW-2625)
 			$title = Title::newFromID( $item[ 'article_id' ] );
