@@ -291,6 +291,38 @@ class HelperController extends \WikiaController {
 		$this->response->setData( [ 'blocked' => $user->isBlocked() ] );
 	}
 
+	public function logPiggybackAction() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( self::FIELD_SUCCESS, false );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$performerUserId = $this->request->getInt( 'user' );
+		$targetUserId = $this->request->getInt( 'target' );
+		$login = $this->request->getCheck( 'login' ) && !$this->request->getCheck( 'logout' );
+
+		if ( $performerUserId === 0 || $targetUserId === 0 ) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_INVALID_USER_ID );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$performer = \User::newFromId( $performerUserId );
+		$target = \User::newFromId( $targetUserId );
+
+		if ( $login ) {
+			\StaffLogger::eventlogPiggybackLogIn( $performer, $target );
+		} else {
+			\StaffLogger::eventlogPiggybackLogOut( $performer, $target );
+		}
+
+		$this->response->setVal( self::FIELD_SUCCESS, true );
+		$this->response->setCode( \WikiaResponse::RESPONSE_CODE_OK );
+	}
+
 	private function getFieldFromRequest( $field, $failureMessage ) {
 		$fieldValue = $this->getVal( $field, null );
 		if ( !isset( $fieldValue ) ) {
