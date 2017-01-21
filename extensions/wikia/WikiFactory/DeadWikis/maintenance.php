@@ -266,8 +266,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$classification = $oracle->check($wiki);
 			if ($classification) {
 				echo "Marking wiki \"{$wiki['dbname']}\" (#{$id}) as \"$classification\"\n";
-			}
-			if ($classification) {
 				$result[$classification][$id] = $wiki;
 			}
 		}
@@ -292,10 +290,17 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"l.city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\"",
 			"(v.city_flags IS NULL OR v.city_flags & " . WikisModel::FLAG_OFFICIAL . " = 0)",
 		);
-		if (!is_null($this->from))
-			$where[] = "l.city_id >= ".intval($this->from);
-		if (!is_null($this->to))
-			$where[] = "l.city_id <= ".intval($this->to);
+		if (!is_null($this->ids) && !empty($this->ids)) {
+			foreach ($this->ids as $id) {
+				$where[] = "l.city_id = ".intval($id);
+			}
+		} else {
+			if (!is_null($this->from))
+				$where[] = "l.city_id >= ".intval($this->from);
+			if (!is_null($this->to))
+				$where[] = "l.city_id <= ".intval($this->to);
+		}
+
 		$res = $db->select(
 			array(
 				'l' => 'city_list',
@@ -353,12 +358,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$notDeleted[$id] = $wiki;
 				continue;
 			}
-			if ($this->readOnly) {
-				echo "cancelled (read-only mode)\n";
-				$deleted[$id] = $wiki;
-				$this->deletedCount++;
-				continue;
-			}
 
 			$isActiveSite = true;
 
@@ -371,6 +370,13 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($isActiveSite) {
 				echo "cancelled (wiki has new discussions posts in the last 60 days)\n";
 				$notDeleted[$id] = $wiki;
+				continue;
+			}
+
+			if ($this->readOnly) {
+				echo "cancelled (read-only mode)\n";
+				$deleted[$id] = $wiki;
+				$this->deletedCount++;
 				continue;
 			}
 
@@ -493,7 +499,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 	protected function batchProcess( $wikis ) {
 		// evaluate wikis in groups of 100 wikis
+		$batchNum = 1;
 		while ($batch = array_splice($wikis,0,self::BATCH_SIZE)) {
+			echo "\n======== Processing batch ".$batchNum++." ========\n";
 			// fetch data from wikis
 			$ids = array();
 			$batchData = array();
@@ -504,6 +512,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$ids[$wiki['id']] = $wiki['id'];
 			}
 			$evaluated = array();
+			echo "Evaluating...\n";
 			for ( $pass = 0; $pass < 3 && count($ids) > 0; $pass++ ) {
 				$output = '';
 				$status = $this->runEvaluationScript($ids,$output);
@@ -515,24 +524,35 @@ class AutomatedDeadWikisDeletionMaintenance {
 					$evaluated = $evaluated + $evaluatedNow;
 				}
 			}
-
+			if ($this->debug)
+				print_r($evaluated);
 			// classify wikis
+			echo "Classifying...\n";
 			$classifications = $this->getOracleClassification($evaluated);
 			// save stats
+			echo "Saving statistics...\n";
 			foreach ($evaluated as $id => $wiki) {
 				$status = '';
-				if (isset($classifications[self::DELETE_NOW][$id])) $status = 'deleteNow';
-				if (isset($classifications[self::DELETE_SOON][$id])) $status = 'deleteSoon';
-				$this->updateWikiStats(array_merge($wiki,array(
-					'status' => $status,
-				)));
+				if (isset($classifications[self::DELETE_NOW][$id]))
+					$status = 'deleteNow';
+				if (isset($classifications[self::DELETE_SOON][$id]))
+					$status = 'deleteSoon';
+				if (!$this->readOnly) {
+					$this->updateWikiStats(array_merge($wiki, array(
+							'status' => $status,
+					)));
+				}
 			}
+			echo "Disabling wikis...\n";
+			if ($this->debug)
+				print_r($classifications);
 			if (isset($classifications[self::DELETE_NOW])) {
 				$this->disableWikis($classifications[self::DELETE_NOW],$this->deleted,$this->toBeDeleted);
 			}
 			if (isset($classifications[self::DELETE_SOON])) {
 				$this->toBeDeleted += $classifications[self::DELETE_SOON];
 			}
+			echo "Done!\n";
 		}
 	}
 
