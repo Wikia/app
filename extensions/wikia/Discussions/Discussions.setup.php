@@ -43,3 +43,22 @@ $wgGroupPermissions['user']['specialdiscussions'] = false;
 $wgGroupPermissions['vstf']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
+
+
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
+
+/**
+ * MW1.19 - ResourceLoaderStartUpModule class adds more variables
+ * @param array $vars JS variables to be added at the bottom of the page
+ * @param OutputPage $out
+ * @return bool return true - it's a hook
+ */
+function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
+	wfProfileIn(__METHOD__);
+	global $wgDiscussionsApiUrl;
+	$vars['wgDiscussionsApiUrl'] = $wgDiscussionsApiUrl;
+
+	wfProfileOut(__METHOD__);
+	return true;
+}
+
