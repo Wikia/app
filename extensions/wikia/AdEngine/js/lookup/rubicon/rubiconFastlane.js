@@ -65,7 +65,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		rubiconDomains = [
-			'//optimized-by.rubiconproject.com/',
 			'//fastlane.rubiconproject.com/',
 			'//fastlane-adv.rubiconproject.com/'
 		],
@@ -270,14 +269,18 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function prefetchDNS() {
+		var node = doc.getElementsByTagName('script')[0],
+			fragment = doc.createDocumentFragment();
+
 		rubiconDomains.forEach(function(domain) {
-			var linkToPrefetch = doc.createElement('link'),
-			node = doc.getElementsByTagName('script')[0];
+			var linkToPrefetch = doc.createElement('link');
+
 			linkToPrefetch.rel = 'dns-prefetch';
 			linkToPrefetch.href = domain;
 
-			node.parentNode.insertBefore(linkToPrefetch, node);
+			fragment.appendChild(linkToPrefetch);
 		});
+		node.parentNode.insertBefore(fragment, node);
 	}
 
 	function getPrices() {
