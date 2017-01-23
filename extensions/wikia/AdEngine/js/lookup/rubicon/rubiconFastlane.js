@@ -271,9 +271,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 	function prefetchDNS() {
 		rubiconDomains.forEach(function(domain) {
-			var linkToPrefetch = doc.createElement('link');
+			var linkToPrefetch = doc.createElement('link'),
+			node = doc.getElementsByTagName('script')[0];
 			linkToPrefetch.rel = 'dns-prefetch';
 			linkToPrefetch.href = domain;
+
+			node.parentNode.insertBefore(linkToPrefetch, node);
 		});
 	}
 
