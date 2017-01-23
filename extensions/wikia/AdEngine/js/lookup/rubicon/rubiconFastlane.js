@@ -64,6 +64,11 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
+		rubiconDomains = [
+			'//optimized-by.rubiconproject.com/',
+			'//fastlane.rubiconproject.com/',
+			'//fastlane-adv.rubiconproject.com/'
+		],
 		rubiconLoaded = false,
 		sizeMap = {
 			'468x60': 1,
@@ -251,6 +256,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			node.parentNode.insertBefore(rubicon, node);
 			context = adContext.getContext();
 			configureSlots(skin);
+			prefetchDNS();
 
 			rubiconLoaded = true;
 		}
@@ -260,6 +266,14 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			priceMap = {};
 			bestPrices = {};
 			onResponse();
+		});
+	}
+
+	function prefetchDNS() {
+		rubiconDomains.forEach(function(domain) {
+			var linkToPrefetch = doc.createElement('link');
+			linkToPrefetch.rel = 'dns-prefetch';
+			linkToPrefetch.href = domain;
 		});
 	}
 
