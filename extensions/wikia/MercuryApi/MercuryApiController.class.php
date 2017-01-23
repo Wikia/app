@@ -363,22 +363,22 @@ class MercuryApiController extends WikiaController {
 					$data['otherLanguages'] = $otherLanguages;
 				}
 
-				if ( !empty( $articleData['content'] ) ) {
-					$data['article'] = $articleData;
-
-					if ( !$title->isContentPage() ) {
-						// Remove namespace prefix from displayTitle, so it can be consistent with title
-						// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-						$data['article']['displayTitle'] = $title->getText();
-					}
-				}
-
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 					// TODO: remove this line after release of XW-2590 (XW-2625)
 					$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
 					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true );
 				} else {
+					if ( !empty( $articleData['content'] ) ) {
+						$data['article'] = $articleData;
+
+						if ( !$title->isContentPage() ) {
+							// Remove namespace prefix from displayTitle, so it can be consistent with title
+							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+							$data['article']['displayTitle'] = $title->getText();
+						}
+					}
+
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
