@@ -11,8 +11,6 @@ class MercuryApiArticleHandler {
 	 * @return array
 	 */
 	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
-		$data['details'] = self::getArticleDetails( $article );
-		$data['article'] = self::getArticleJson( $request, $article );
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
