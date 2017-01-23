@@ -201,7 +201,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 
 	function getSlotParams(slotName) {
 		var targeting,
-			parameters = {};
+			parameters = {},
+			respondedWithBid = 'no',
+			responseValue;
 
 		if (!win.rubicontag || typeof win.rubicontag.getSlot !== 'function' || !win.rubicontag.getSlot(slotName)) {
 			return {};
@@ -211,12 +213,20 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
 				parameters[params.key] = params.values;
+
+				if (respondedWithBid ===  'no') {
+					responseValue = JSON.stringify(params.values);
+					respondedWithBid = (responseValue && responseValue.indexOf('tier0000') === -1) ? 'yes': 'no';
+				}
 			}
 		});
+
 		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);
 		}
+
+		parameters['rubicon_bid'] = respondedWithBid;
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		return parameters;
