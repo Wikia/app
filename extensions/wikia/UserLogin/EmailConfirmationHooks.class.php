@@ -8,14 +8,14 @@ class EmailConfirmationHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		$emailConfirmedParam = $out->getRequest()->getInt( 'emailConfirmed' );
+		$emailConfirmedParam = $out->getRequest()->getVal( 'emailConfirmed' );
 
-		if ( $emailConfirmedParam === 1 ) {
+		if ( $emailConfirmedParam == '1' ) {
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'userlogin-email-confirmation-banner-success-message' )->escaped(),
 				BannerNotificationsController::CONFIRMATION_CONFIRM
 			);
-		} else if ( $emailConfirmedParam === 0 ) {
+		} else if ( $emailConfirmedParam == '0' ) {
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'userlogin-email-confirmation-banner-error' )->parse(),
 				BannerNotificationsController::CONFIRMATION_ERROR
