@@ -12,6 +12,7 @@ class FilePageController extends WikiaController {
 
 	CONST LIMIT_GLOBAL_USAGE = 50;
 	CONST LIMIT_LOCAL_USAGE = 100;
+	CONST LIMIT_DISPLAYED_USAGES = 3;
 
 	/**
 	 * Collects data about what articles the current file appears in, either
@@ -24,7 +25,6 @@ class FilePageController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$seeMoreLink = '';
-		$seeMoreText = '';
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 
 		$type = $this->getVal( 'type', 'local' );
@@ -42,7 +42,7 @@ class FilePageController extends WikiaController {
 			// Shorten the list to 3 articles.  We'll flesh out these three with full
 			// details to display now and flesh out the others dynamically from JS when
 			// the user pages forward
-			$shortenedSummary = array_slice( $summary, 0, 3 );
+			$shortenedSummary = array_slice( $summary, 0, self::LIMIT_DISPLAYED_USAGES );
 		} else {
 			$heading = wfMessage( 'video-page-file-list-header' )->plain();
 			$summary = $this->sendSelfRequest( 'getLocalUsage' )->getData()['summary'];
@@ -52,11 +52,9 @@ class FilePageController extends WikiaController {
 			// the global case
 			if ( $summary && count( $summary ) ) {
 				$dbName = $this->wg->DBname;
-				$shortenedSummary = array( $dbName => array_slice( $summary, 0, 3 ) );
+				$shortenedSummary = array( $dbName => array_slice( $summary, 0, self::LIMIT_DISPLAYED_USAGES ) );
 			}
 
-			$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl().'/'.$this->wg->Title->getPrefixedDBkey();
-			$seeMoreText = wfMessage( 'file-page-more-links' )->plain();
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
@@ -64,13 +62,18 @@ class FilePageController extends WikiaController {
 		$data = $this->sendSelfRequest( 'fileList', $params )->getData();
 		$fileList = empty( $data['fileList'] ) ? array() : $data['fileList'];
 
+		if ( $type === 'local' && count( $summary ) > self::LIMIT_DISPLAYED_USAGES ) {
+			$seeMoreLink = SpecialPage::getTitleFor( 'WhatLinksHere' )->escapeLocalUrl() .
+				'/' . $this->wg->Title->getPrefixedDBkey();
+		}
+
 		// Set template variables
 		$this->heading = $heading;
 		$this->fileList = $fileList;
 		$this->summary = $summary;
 		$this->type = $type;
 		$this->seeMoreLink = $seeMoreLink;
-		$this->seeMoreText = $seeMoreText;
+		$this->seeMoreText = wfMessage( 'file-page-more-links' )->plain();
 
 		wfProfileOut( __METHOD__ );
 	}
