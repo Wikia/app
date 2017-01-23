@@ -45,7 +45,7 @@ $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
 
-$wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'addDiscussionJsVariable';
 
 /**
  * MW1.19 - ResourceLoaderStartUpModule class adds more variables
@@ -53,7 +53,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
  * @param OutputPage $out
  * @return bool return true - it's a hook
  */
-function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
+function addDiscussionJsVariable(Array &$vars, &$scripts) {
 	wfProfileIn(__METHOD__);
 
 	$vars['wgDiscussionsApiUrl'] = F::app()->wg->DiscussionsApiUrl;
