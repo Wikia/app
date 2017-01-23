@@ -66,11 +66,8 @@ require([
 		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
-		
-		if (adInfoTracker && adInfoTracker.run) { //TODO: remove if check in 2017
-			adInfoTracker.run();
-		}
 
+		adInfoTracker.run();
 		slotTweaker.registerMessageListener();
 	});
 
