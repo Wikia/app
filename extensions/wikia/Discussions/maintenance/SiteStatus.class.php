@@ -357,13 +357,9 @@ class SiteStatus {
 	}
 
 	private function getDiscussionsUrl() {
-		if ( \F::app()->wg->WikiaEnvironment == WIKIA_ENV_DEV ) {
-			$baseUrl = self::DEV_SERVICE_URL;
-		} else {
-			$baseUrl = self::PROD_SERVICE_URL;
-		}
+		global $wgDiscussionsApiUrl;
 
-		return $baseUrl . '/discussion/' . $this->siteId . '/threads';
+		return "$wgDiscussionsApiUrl/$this->siteId/threads";
 	}
 
 	private function getVariableValue( $name ) {
