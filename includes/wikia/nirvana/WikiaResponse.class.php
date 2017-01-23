@@ -83,6 +83,8 @@ class WikiaResponse {
 	 */
 	protected $isCaching = false;
 
+	protected $varyOnCookie = true;
+
 	/**
 	 * constructor
 	 * @param string $format
@@ -353,6 +355,10 @@ class WikiaResponse {
 		return $this->isCaching;
 	}
 
+	public function setVaryOnCookie( $shouldVary = true ) {
+		$this->varyOnCookie = $shouldVary;
+	}
+
 	public function getHeader( $name ) {
 		$result = array();
 
@@ -471,7 +477,7 @@ class WikiaResponse {
 
 		// Make sure we vary on Cookie by default (MAIN-9527)
 		$output = RequestContext::getMain()->getOutput();
-		if ( $output->getCacheVaryCookies() ) {
+		if ( $output->getCacheVaryCookies() && $this->varyOnCookie ) {
 			$this->sendHeader( $output->getVaryHeader(), true );
 		}
 
