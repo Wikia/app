@@ -2304,4 +2304,21 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-260: Lock down Wall namespaces from page moves (both as source and destination)
+	 * @param bool $result Whether to allow page moves to or from this namespace
+	 * @param int $ns Namespace being checked
+	 * @return bool false to abort hook processing if this is Wall namespace, otherwise true to continue
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		// On wikis with Wall enabled, moving a page to the User talk namespace makes it into an archive
+		// This action is irreversible so User talk namespace is made immovable to avoid confusion
+		if ( in_array( $ns, [ NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_USER_TALK ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
+
 }
