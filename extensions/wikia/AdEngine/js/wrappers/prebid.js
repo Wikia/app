@@ -4,6 +4,11 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 ], function (win) {
 	'use strict';
 
+	/*
+	 * When updating prebid.js (https://github.com/prebid/Prebid.js/) to a new version
+	 * remember about the additional [320, 480] slot size, see:
+	 * https://github.com/Wikia/app/pull/12269/files#diff-5bbaaa809332f9adaddae42c8847ae5bR6015
+	 */
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
