@@ -7,7 +7,8 @@ $recirculation-horizontal-border-color: rgba($color-headline-border, .5);
 .recirculation-horizontal {
 	box-sizing: border-box;
 	clear: both;
-	margin: 30px auto;
+	margin: 30px auto -30px;
+	padding-bottom: 42px;
 	position: relative;
 
 	h3,
