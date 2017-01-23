@@ -73,14 +73,7 @@ $wgHooks['GetPreferences'][] = 'Wikia\Search\Hooks::onGetPreferences';
  */
 $wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAssetsPackages';
 
-global $wgExternalSharedDB;
-if ( empty( $wgExternalSharedDB ) ) {
-	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\Search\Hooks::onArticleDeleteComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'Wikia\Search\Hooks::onArticleSaveComplete';
-	$wgHooks['ArticleUndelete'][] = 'Wikia\Search\Hooks::onArticleUndelete';
-} else {
-	$wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
-}
+$wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
 
 $wgExtensionCredits['other'][] = [
 	'name' => 'Wikia Search',

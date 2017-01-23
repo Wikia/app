@@ -252,7 +252,6 @@ class MercuryApiController extends WikiaController {
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
 		$wikiCategoryNames = join( ',', $wikiCategoryNames );
 
-
 		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
 
 		$dimensions[1] = $wgDBname;
@@ -303,10 +302,14 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( $title ) {
-			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
-				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-				$articleAsJson = json_decode( ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText() );
-			} );
+			$wrapper->wrap(
+				function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+					// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+					$articleAsJson = json_decode(
+						ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText()
+					);
+				}
+			);
 		} else {
 			$this->response->setVal( 'data', [ 'content' => 'Invalid title' ] );
 			return;
@@ -331,7 +334,7 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$data = [ ];
+			$data = [];
 
 			if ( !$title->isKnown() ) {
 				throw new NotFoundApiException( 'Page doesn\'t exist' );
@@ -371,7 +374,10 @@ class MercuryApiController extends WikiaController {
 				}
 
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+					// TODO: remove this line after release of XW-2590 (XW-2625)
 					$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+
+					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true );
 				} else {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
@@ -392,7 +398,7 @@ class MercuryApiController extends WikiaController {
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
-			$data = [ ];
+			$data = [];
 
 			$this->response->setVal(
 				'exception',
@@ -451,6 +457,7 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
+	// TODO: remove this method after release of XW-2590 (XW-2625) as it is no longer used in mercury
 	public function getCuratedContentSection() {
 		$section = $this->getVal( 'section' );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -473,7 +480,7 @@ class MercuryApiController extends WikiaController {
 		$mainPageTitle = Title::newMainPage();
 		$mainPageArticleID = $mainPageTitle->getArticleID();
 		$article = Article::newFromID( $mainPageArticleID );
-		$data = [ ];
+		$data = [];
 
 		$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
@@ -481,14 +488,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'data', $data );
-	}
-
-	/**
-	 * @param null|String $section
-	 * @return array|Mixed|null
-	 */
-	public function getCuratedContentData( $section = null ) {
-		return MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
 	}
 
 	private function getOtherLanguages( Title $title ) {

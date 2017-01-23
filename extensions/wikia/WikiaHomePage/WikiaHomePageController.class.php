@@ -118,7 +118,7 @@ class WikiaHomePageController extends WikiaController {
 				$hubsV3List = $this->getHubsV3List( $langCode );
 
 				foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
-					if( !empty( $hubId ) ) {
+					if( !empty( $hubId ) && !empty( $hubsV3List[$hubId] ) ) {
 						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hubsV3List[$hubId], $slot );
 					}
 				}

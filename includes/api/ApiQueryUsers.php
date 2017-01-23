@@ -163,9 +163,17 @@ class ApiQueryUsers extends ApiQueryBase {
 				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
 					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] );
 					$isBlocked = $user->isBlocked( true, false, $isGlobalBlockCheck );
-					
-					if ($isBlocked) {
+
+					if ( $isBlocked ) {
 						$blockInfo = $user->getBlock( true, false, $isGlobalBlockCheck );
+
+						// SUS-1456: it is phalanx block - display in separate fields and only if request is authorized
+						if ( $user->isBlockedGlobally() && $this->canViewGlobalBlockInfo() ) {
+							$data[$name]['phalanxblockedby'] = $blockInfo->getByName();
+							$data[$name]['phalanxblockreason'] = $blockInfo->mReason;
+							$data[$name]['phalanxblockexpiry'] = $blockInfo->getExpiry();
+						}
+
 						$data[$name]['blockedby'] = $blockInfo->getByName();
 						$data[$name]['blockreason'] = $blockInfo->mReason;
 						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
@@ -246,6 +254,15 @@ class ApiQueryUsers extends ApiQueryBase {
 			$done[] = $u;
 		}
 		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+	}
+
+	/**
+	 * SUS-1472: Check if current request is authorized to view global block information
+	 * (it is internal request or request by staff/VSTF/helper user)
+	 * @return bool
+	 */
+	private function canViewGlobalBlockInfo() {
+		return $this->getRequest()->isWikiaInternalRequest() || $this->getUser()->isAllowed( 'phalanx' );
 	}
 
 	/**

@@ -15,7 +15,7 @@ class SpotlightsHooks {
 	{
 		global $wgEnableOpenXSPC, $wgEnableReviveSpotlights;
 
-		if ($wgEnableOpenXSPC) {
+		if ($wgEnableOpenXSPC && !SpotlightsHelper::isEnglishWiki()) {
 			$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
 			$vars['wgEnableReviveSpotlights'] = $wgEnableReviveSpotlights;
 		}
@@ -32,7 +32,9 @@ class SpotlightsHooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		$vars[] = 'wgReviveSpotlightsCountries';
+		if (!SpotlightsHelper::isEnglishWiki()) {
+			$vars[] = 'wgReviveSpotlightsCountries';
+		}
 
 		return true;
 	}
@@ -45,7 +47,9 @@ class SpotlightsHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		$jsAssets[] = self::ASSET_GROUP_SPOTLIGHTS;
+		if (!SpotlightsHelper::isEnglishWiki()) {
+			$jsAssets[] = self::ASSET_GROUP_SPOTLIGHTS;
+		}
 
 		return true;
 	}
