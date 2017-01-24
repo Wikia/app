@@ -32,9 +32,7 @@ class SpotlightsHooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		if (!SpotlightsHelper::isEnglishWiki()) {
-			$vars[] = 'wgReviveSpotlightsCountries';
-		}
+		$vars[] = 'wgReviveSpotlightsCountries';
 
 		return true;
 	}
