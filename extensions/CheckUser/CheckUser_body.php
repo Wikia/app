@@ -311,22 +311,6 @@ class CheckUser extends SpecialPage {
 			}
 			if ( strlen( $talkTag ) > 2 ) {
 				$usertalk->doEdit( $talkTag, $reason, EDIT_MINOR );
-				/* Wikia change begin - VOLDEV-181 */
-				if( $wgEnableWallExt ) {
-					// Remove all threads on their wall
-					$wall = Wall::newFromTitle( Title::newFromText( $name, NS_USER_WALL ) );
-					$wall->setMaxPerPage( $wall->getThreadCount() );
-					$threads = $wall->getThreads();
-					while( !empty( $threads ) ) {
-						foreach( $threads as $thread ) {
-							$wallMessage = $thread->getThreadMainMsg();
-							$wallMessage->remove( $wgUser, '' );
-						}
-						
-						$threads = $wall->getThreads();
-					}
-				}
-				/* Wikia change end */
 			}
 		}
 		return $safeUsers;
