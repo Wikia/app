@@ -2,6 +2,7 @@
 
 namespace Wikia\IndexingPipeline;
 
+use Title;
 use Wikia\Logger\WikiaLogger;
 
 class PipelineEventProducer {
@@ -52,7 +53,7 @@ class PipelineEventProducer {
 	private static function send( $eventName, $pageId, $revisionId ) {
 		WikiaLogger::instance()->info( __METHOD__, [
 			'eventName' => $eventName,
-			'pageId' => (string) $pageId
+			'pageId' => (string)$pageId
 		] );
 
 		self::getPipeline()->publish(
@@ -77,7 +78,7 @@ class PipelineEventProducer {
 	private static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = PipelineRoutingBuilder::NS_CONTENT ) {
 		WikiaLogger::instance()->info( __METHOD__, [
 			'action' => $action,
-			'pageId' => (string) $pageId
+			'pageId' => (string)$pageId
 		] );
 
 		self::getPipeline()->publish(
@@ -230,6 +231,25 @@ class PipelineEventProducer {
 		);
 
 		return true;
+	}
+
+	/**
+	 * @desc run on maintanence script - reindex wiki
+	 * @param Title $title
+	 * @return void
+	 */
+	public static function reindexPage( $title ) {
+		if ( !self::canIndex( $title ) ) {
+			return;
+		};
+
+		$action = PipelineRoutingBuilder::ACTION_UPDATE;
+		$pageId = $title->getArticleID();
+		$revId = $title->getLatestRevID();
+		$ns = $title->getNamespace();
+
+		self::send( 'onNewRevisionFromEditComplete', $pageId, $revId );
+		self::sendFlaggedSyntax( $action, $pageId, $revId, $ns );
 	}
 
 	/*

@@ -19,25 +19,22 @@ if ( !empty( $wgExtraNamespaces ) ) {
 $dbr = wfGetDB( DB_MASTER );
 $select = $dbr->select(
 	'page',
-	'page_id',
-	array( 'page_namespace' => array_unique( $namespaces ) )
+	[ 'page_id', 'page_namespace', 'page_latest', 'page_title' ],
+	[ 'page_namespace' => array_unique( $namespaces ) ]
 );
 
-$ids = [];
+$idCount = count( $select );
+$current = 0;
+
+
 foreach ( $select as $row ) {
-	if ( $row->page_id ) {
-		$ids[] = $row->page_id;
+	$current++;
+	$title = Title::newFromRow( $row );
+	Wikia\IndexingPipeline\PipelineEventProducer::reindexPage( $title );
+
+	if ( $current % 100 == 0 ) {
+		echo "Reindexed {$current}/{$idCount} docs\n";
 	}
 }
 
-$indexer = new Wikia\Search\Indexer();
-$idCount = count( $ids );
-$sliceCount = 0;
-$batchSize = 100;
-foreach ( array_chunk( $ids, $batchSize ) as $idSlice ) {
-	$sliceCount += $batchSize;
-	$indexer->reindexBatch( $idSlice );
-	echo "Reindexed {$sliceCount}/{$idCount} docs\n";
-}
-
-echo "Indexing process complete.\n";
+echo "Indexing process complete.\nReindexed {$idCount} docs.\n";
