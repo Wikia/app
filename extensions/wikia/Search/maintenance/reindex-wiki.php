@@ -23,7 +23,7 @@ $select = $dbr->select(
 	[ 'page_namespace' => array_unique( $namespaces ) ]
 );
 
-$idCount = count( $select );
+$idCount = $dbr->affectedRows();
 $current = 0;
 
 
@@ -37,4 +37,4 @@ foreach ( $select as $row ) {
 	}
 }
 
-echo "Indexing process complete.\nReindexed {$idCount} docs.\n";
+echo "Indexing process complete.\nReindexed {$current} docs.\n";
