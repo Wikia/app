@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		return adsRequest;
 	}
 
-	function getRenderingSettings() {
+	function getRenderingSettings(params) {
 		var adsRenderingSettings = new win.google.ima.AdsRenderingSettings(),
 			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
 
@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
 		}
 
+		adsRenderingSettings.loadVideoTimeout = params.loadVideoTimeout || 30000;
 		adsRenderingSettings.enablePreloading = true;
 		adsRenderingSettings.uiElements = [];
 
