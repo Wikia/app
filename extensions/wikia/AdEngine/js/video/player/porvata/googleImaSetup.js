@@ -35,6 +35,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		var adsRenderingSettings = new win.google.ima.AdsRenderingSettings(),
 			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
 
+		params = params || {};
+
 		if (!browserDetect.isMobile()) {
 			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
 		}
