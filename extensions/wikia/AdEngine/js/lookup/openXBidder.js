@@ -58,6 +58,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		dfpParams[dfpKey] = price;
 		log(['getSlotParams', dfpKey, price], 'debug', logGroup);
 
+		log(['getSlotParams', new Date(win.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
 		return dfpParams;
 	}
 
@@ -75,6 +76,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	}
 
 	function calculatePrices() {
+		log(['calculatePrices', new Date(win.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
 		var prices = win.OX.dfp_bidder.getPriceMap(),
 			slotName,
 			shortSlotName;
@@ -103,6 +105,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		openx.src = '//ox-d.wikia.servedbyopenx.com/w/1.0/jstag?nc=5441-Wikia';
 
 		node.parentNode.insertBefore(openx, node);
+		log(['call OpenX', new Date(win.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
 	}
 
 	function getPrices() {
