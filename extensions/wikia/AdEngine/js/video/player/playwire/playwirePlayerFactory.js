@@ -11,11 +11,13 @@ define('ext.wikia.adEngine.video.player.playwire.playwirePlayerFactory', [], fun
 				this.api.on(this.id, eventName, callback);
 			},
 			play: function (width, height) {
+				this.api.dispatchEvent(this.id, 'wikiaAdPlayTriggered');
 				this.resize(width, height);
 				this.api.playMedia(this.id);
 				this.api.dispatchEvent(this.id, 'wikiaAdStarted');
 			},
 			stop: function () {
+				this.api.dispatchEvent(this.id, 'wikiaAdStop');
 				this.api.stopMedia(this.id);
 				this.api.dispatchEvent(this.id, 'wikiaAdCompleted');
 			},

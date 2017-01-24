@@ -2,27 +2,19 @@
 
 namespace Email\Controller;
 
-class FacebookDisconnectController extends ForgotPasswordController {
+/**
+ * Class FacebookDisconnectController
+ *
+ * @requestParam int targetUserId : The user id to send the password reset link email to
+ * @requestParam string reset_token : The token by which a user will be identified
+ * @requestParam string return_url : The url user will be redirected to after setting a password
+ *
+ * @package      Email\Controller
+ */
+class FacebookDisconnectController extends PasswordResetLinkController {
+
 	public function getSubject() {
 		return $this->getMessage( 'emailext-fbdisconnect-subject' )->text();
-	}
-
-	/**
-	 * @template temporaryPassword
-	 */
-	public function body() {
-		$this->response->setData( [
-			'salutation' => $this->getSalutation(),
-			'summary' => $this->getSummary(),
-			'passwordIntro' => $this->getIntro(),
-			'username' => $this->getMessage( 'emailext-fbdisconnect-username',
-				$this->targetUser->getName() )->text(),
-			'tempPassword' => $this->getMessage( 'emailext-fbdisconnect-password',
-				$this->tempPass )->text(),
-			'instructions' => $this->getMessage( 'emailext-fbdisconnect-instructions' )->text(),
-			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
-			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
-		] );
 	}
 
 	protected function getSummary() {
@@ -31,6 +23,10 @@ class FacebookDisconnectController extends ForgotPasswordController {
 
 	protected function getIntro() {
 		return $this->getMessage( 'emailext-fbdisconnect-intro' )->text();
+	}
+
+	protected function getInstructions() {
+		return $this->getMessage( 'emailext-fbdisconnect-instructions' )->text();
 	}
 }
 

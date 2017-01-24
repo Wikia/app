@@ -109,6 +109,9 @@ class MercuryApiHooks {
 		$urls = [ ];
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
+		// TODO: remove this line after release of XW-2590 (XW-2625)
+		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( '_new' ) );
+
 		foreach ( $sections as $section ) {
 			$sectionLabel = $section['label'];
 
@@ -117,6 +120,9 @@ class MercuryApiHooks {
 			}
 
 			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionLabel ) );
+
+			// TODO: remove this line after release of XW-2590 (XW-2625)
+			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionLabel . '_new' ) );
 
 			// Request from browser to MediaWiki
 			$encodedTitle = self::encodeURIQueryParam( $sectionLabel );

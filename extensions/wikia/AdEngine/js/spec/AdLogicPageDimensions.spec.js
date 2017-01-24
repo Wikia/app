@@ -6,10 +6,8 @@ describe('AdLogicPageDimensions', function () {
 
 	'use strict';
 
-	var adHelperMock = {
-		throttle: function (fn) {
-			return fn;
-		}
+	var throttleMock = function (fn) {
+		return fn;
 	};
 
 	function noop() {
@@ -35,11 +33,11 @@ describe('AdLogicPageDimensions', function () {
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 			slotTweakerMock = {hide: noop, show: noop, hackChromeRefresh: noop},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
-				windowMock,
+				slotTweakerMock,
 				documentMock,
 				logMock,
-				slotTweakerMock,
-				adHelperMock
+				throttleMock,
+				windowMock
 			),
 			fillInSlotCalled = false,
 			fillInSlotMock = function () { fillInSlotCalled = true; };
@@ -191,11 +189,11 @@ describe('AdLogicPageDimensions', function () {
 				hackChromeRefresh: noop
 			},
 			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
-				windowMock,
+				slotTweakerMock,
 				documentMock,
 				logMock,
-				slotTweakerMock,
-				adHelperMock
+				throttleMock,
+				windowMock
 			),
 			fillInSlotMock = function () { adLoadCounter += 1; };
 
