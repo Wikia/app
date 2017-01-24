@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
 		}
 
-		adsRenderingSettings.loadVideoTimeout = params.loadVideoTimeout || 30000;
+		adsRenderingSettings.loadVideoTimeout = params.loadVideoTimeout || 15000;
 		adsRenderingSettings.enablePreloading = true;
 		adsRenderingSettings.uiElements = [];
 
