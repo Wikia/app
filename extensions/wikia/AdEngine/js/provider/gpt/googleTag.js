@@ -108,7 +108,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
-				log(['flush and refresh', new Date(win.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
+				log(['flush and refresh', new Date(window.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
 				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
 			}

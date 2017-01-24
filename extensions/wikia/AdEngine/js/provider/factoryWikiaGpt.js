@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.src = src;
 
 			if (lookups) {
-				log(['extendSlotTargeting', new Date(win.performance.now())], 'debug', 'ext.wikia.adEngine.timing');
+				log(['extendSlotTargeting', new Date(performance.now())], 'debug', 'ext.wikia.adEngine.timing');
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 
