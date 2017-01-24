@@ -238,7 +238,7 @@ class PipelineEventProducer {
 	 * @param Title $title
 	 * @return void
 	 */
-	public static function reindexPage( $title ) {
+	public static function reindexPage( Title $title ) {
 		if ( !self::canIndex( $title ) ) {
 			return;
 		};
