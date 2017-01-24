@@ -9,9 +9,13 @@ class MercuryApiFilePageHandler {
 			[ 'type' => 'local', 'format' => 'json' ]
 		)->getData();
 
+		$details = WikiaFileHelper::getMediaDetail( $title );
+		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
+
 		return [
 			'fileUsageList' => $fileUsageData['fileList'],
-			'fileUsageListSeeMoreUrl' => $fileUsageData['seeMoreLink']
+			'fileUsageListSeeMoreUrl' => $fileUsageData['seeMoreLink'],
+			'media' => $mediaObject
 		];
 	}
 }
