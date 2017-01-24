@@ -336,7 +336,8 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$data = [];
 
-			if ( !$title->isKnown() ) {
+			// Empty category pages are not known but contain article list
+			if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
 				throw new NotFoundApiException( 'Page doesn\'t exist' );
 			}
 
@@ -352,9 +353,14 @@ class MercuryApiController extends WikiaController {
 			$data['ns'] = $title->getNamespace();
 
 			if ( $this->isSupportedByMercury( $title ) ) {
-				$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
-				$data['categories'] = $articleData['categories'];
-				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+				if ( $article instanceof Article) {
+					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+					$data['categories'] = $articleData['categories'];
+					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+				} else {
+					$data['categories'] = [];
+					$data['details'] = new stdClass();
+				}
 				$data['articleType'] = WikiaPageType::getArticleType( $title );
 				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 				$otherLanguages = $this->getOtherLanguages( $title );
