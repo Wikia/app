@@ -82,6 +82,13 @@ class ApiMove extends ApiBase {
 			$this->dieUsageMsg( 'actionthrottledtext' );
 		}
 
+		// Wikia change - begin
+		// SUS-260: Provide meaningful error message if source or target NS is immobile
+		if ( !MWNamespace::isMovable( $fromTitle->getNamespace() ) || !MWNamespace::isMovable( $toTitle->getNamespace() ) ) {
+			$this->dieUsageMsg( 'immobile_namespace' );
+		}
+		// Wikia change - end
+
 		// Move the page
 		$retval = $fromTitle->moveTo( $toTitle, true, $params['reason'], !$params['noredirect'] );
 		if ( $retval !== true ) {
@@ -242,6 +249,7 @@ class ApiMove extends ApiBase {
 				array( 'notanarticle' ),
 				array( 'invalidtitle', 'to' ),
 				array( 'sharedfile-exists' ),
+				array( 'immobile_namespace' ) // Wikia change: SUS-260
 			)
 		);
 	}
