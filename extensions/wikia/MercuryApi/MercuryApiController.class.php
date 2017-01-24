@@ -359,7 +359,11 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
 					$data['categories'] = [];
-					$data['details'] = new stdClass();
+					/*
+					 * Categories with empty article doesn't allow us to get details.
+					 * In this case we return mocked data that allows mercury to operate correctly. HTML title etc.
+					 */
+					$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 				}
 				$data['articleType'] = WikiaPageType::getArticleType( $title );
 				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );

@@ -36,4 +36,13 @@ class MercuryApiCategoryHandler {
 
 		return $sanitizedAlphabeticalList;
 	}
+
+	public static function getCategoryMockedDetails( Title $title ) {
+		return [
+			'description' => '',
+			'id' => $title->getArticleID(),
+			'title'=> $title->getText(),
+			'url' => $title->getLocalURL()
+		];
+	}
 }
