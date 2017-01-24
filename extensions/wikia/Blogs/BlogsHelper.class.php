@@ -155,7 +155,7 @@ class BlogsHelper {
 	 * @return bool false to abort hook processing if it is Blogs namespace, otherwise true to resume
 	 */
 	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
-		if ( in_array( $ns, [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK ] ) ) {
+		if ( in_array( $ns, [ NS_BLOG_ARTICLE_TALK ] ) ) {
 			$result = false;
 			return false;
 		}
