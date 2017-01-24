@@ -5,8 +5,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 ], function (adaptersRegistry, prebid, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
-		validResponseStatusCode = 1;
+	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
 
 	function getSlotBestPrice(slotName) {
 		var prebidCmd = prebid.get(),
@@ -44,7 +43,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		return priceFromBidder !== '' &&
 			!isNaN(priceFromBidder) &&
 			typeof(priceFromBidder) !== 'boolean' &&
-			bid.getStatusCode() === validResponseStatusCode;
+			bid.getStatusCode() === prebid.validResponseStatusCode;
 	}
 
 	return {

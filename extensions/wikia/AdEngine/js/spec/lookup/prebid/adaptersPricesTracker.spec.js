@@ -35,10 +35,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				return {
 					getBidResponsesForAdUnitCode: mocks.getBidResponsesForAdUnitCode,
 				}
-			}
+			},
+			validResponseStatusCode: 1,
+			errorResponseStatusCode: 2
 		},
 		getBidResponsesForAdUnitCode: noop,
-		getStatusCode1: function() {
+		getStatusCodeValid: function() {
 			return 1;
 		},
 		log: noop
@@ -50,32 +52,32 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 		[
 			{
 				pbAg: 0,
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: true
 			},
 			{
 				pbAg: 0.00,
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: true
 			},
 			{
 				pbAg: 5,
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: true
 			},
 			{
 				pbAg: false,
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: false
 			},
 			{
 				pbAg: 'foo',
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: false
 			},
 			{
 				pbAg: '',
-				getStatusCode: mocks.getStatusCode1,
+				getStatusCode: mocks.getStatusCodeValid,
 				expected: false
 			},
 			{
@@ -101,12 +103,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 					{
 						bidderCode: 'appnexus',
 						pbAg: 0,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
 						pbAg: 0,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -122,12 +124,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 					{
 						bidderCode: 'appnexus',
 						pbAg: '0',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
 						pbAg: '1',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -143,12 +145,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 					{
 						bidderCode: 'appnexus',
 						pbAg: 0.50,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
 						pbAg: 0.01,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -164,12 +166,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 					{
 						bidderCode: 'appnexus',
 						pbAg: '',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
 						pbAg: 1,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -185,12 +187,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 					{
 						bidderCode: 'appnexus',
 						pbAg: 'something meaningless',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
 						pbAg: 100,
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -225,10 +227,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}, {
 						bidderCode: 'indexExchange',
-						getStatusCode: mocks.getStatusCode1
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
