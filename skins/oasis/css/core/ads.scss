@@ -177,6 +177,14 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
+.wikia-ad .replay-overlay {
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	top: 0;
+	z-index: 10;
+}
+
 .video-player {
 	position: relative;
 
