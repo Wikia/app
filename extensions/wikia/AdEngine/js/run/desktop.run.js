@@ -19,6 +19,7 @@ require([
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
@@ -40,6 +41,7 @@ require([
 	yavliTag,
 	win,
 	loader,
+	log,
 	gcs,
 	floatingRail
 ) {
