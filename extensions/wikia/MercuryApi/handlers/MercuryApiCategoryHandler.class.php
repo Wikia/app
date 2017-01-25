@@ -2,14 +2,15 @@
 
 class MercuryApiCategoryHandler {
 
-	public static function getCategoryContent( Title $title ) {
+	public static function getCategoryContent( Title $title, MercuryApi $mercuryApiModel ) {
 		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
 		return [
+			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData( $title ),
 			'members' => self::getMembers( $categoryPage )
 		];
 	}
 
-	public static function getMembers( $categoryPage, $batchSize = 25 ) {
+	private static function getMembers( $categoryPage, $batchSize = 25 ) {
 		$alphabeticalList =  F::app()->sendRequest(
 			'WikiaMobileCategoryService',
 			'alphabeticalList',

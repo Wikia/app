@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
@@ -412,6 +414,32 @@ class MercuryApi {
 					$data[] = $processedItem;
 				}
 			}
+		}
+
+		return $data;
+	}
+
+	public function getTrendingArticlesData( string $category = null ) {
+		global $wgContentNamespaces;
+
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => 10,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
+
+		if ( $category ) {
+			$params['category'] = $category;
+		}
+
+		$data = [ ];
+
+		try {
+			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = self::processTrendingArticlesData( $rawData );
+		} catch ( NotFoundException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;
