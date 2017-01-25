@@ -9,6 +9,22 @@ class EmailConfirmationHooks {
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
 		$emailConfirmedParam = $out->getRequest()->getVal( 'emailConfirmed' );
+		$sendEmailTo = $out->getRequest()->getVal( 'sendEmailTo' );
+
+		$result = null;
+
+		if ($sendEmailTo != null) {
+			$result = ( new UserLoginHelper )->sendConfirmationReminderEmail(User::newFromName($sendEmailTo));
+		}
+
+
+		if ($result != null && $result->isGood()) {
+			var_dump('All Good, email sent!');
+			exit();
+		}
+
+
+
 
 		if ( $emailConfirmedParam == '1' ) {
 			BannerNotificationsController::addConfirmation(
