@@ -35,6 +35,10 @@ function getLiftIgniterGlobalContext() {
         }
     }
 
+    if (localStorage.kxallsegs) {
+        context['_kruxTags'] = localStorage.kxallsegs.split(',');
+    }
+
     return context;
 }
 
