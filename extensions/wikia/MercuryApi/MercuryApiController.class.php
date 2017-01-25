@@ -351,7 +351,7 @@ class MercuryApiController extends WikiaController {
 			$data['ns'] = $title->getNamespace();
 
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-				$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true );
+				$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
 				if ( $article instanceof Article ) {
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
