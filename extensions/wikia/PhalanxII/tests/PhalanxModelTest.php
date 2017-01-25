@@ -233,11 +233,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 			->with( $this->equalTo( 'phalanxexempt' ) )
 			->willReturn( false );
 
-		if ( $isSelfCheck ) {
-			$userMock->expects( $this->once() )
+
+		$userMock->expects( $this->any() )
 				->method( 'getName' )
-				->willReturn( $this->app->wg->User->getName() );
-		}
+				->willReturn( $isSelfCheck ? $this->app->wg->User->getName() : 'TestDifferentUserName' );
 
 		$requestMock = $this->getMock( WebRequest::class, [ 'isWikiaInternalRequest', 'getIp' ] );
 		$requestMock->expects( $this->exactly( 3 ) )
