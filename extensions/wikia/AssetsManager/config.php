@@ -107,8 +107,8 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
-		'//extensions/wikia/AdEngine/js/video/player/playwire/playwirePlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/playwire/playwire.js',
+		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
+		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
@@ -301,11 +301,22 @@ $config['adengine2_porvata_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js'
+		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js'
+	],
+];
+
+$config['adengine2_playwire_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/video/player/playwire/playwire.js',
+		'//extensions/wikia/AdEngine/js/video/player/playwire/playwirePlayerFactory.js',
+		'//extensions/wikia/AdEngine/js/video/player/playwire/playwireTracker.js'
 	],
 ];
 
@@ -316,9 +327,11 @@ $config['adengine2_video_ui_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js'
+		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
+		'//extensions/wikia/AdEngine/js/video/uiTemplate.js'
 	],
 ];
 
@@ -902,8 +915,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
-		'//extensions/wikia/AdEngine/js/video/player/playwire/playwirePlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/playwire/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		// Recovery
@@ -963,6 +974,8 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
+		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
+		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
@@ -2930,24 +2943,6 @@ $config['special_community_page_scss'] = [
 	'assets' => [
 		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
-	],
-];
-
-$config['visual_editor_tour_experiment_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperiment.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentConfig.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInitArticleEntry.js',
-	],
-];
-
-$config['visual_editor_tour_experiment_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/VisualEditorTourExperiment/styles/VisualEditorTourExperimentInit.scss',
 	],
 ];
 

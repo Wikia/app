@@ -13,17 +13,19 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 			bestPrices = {};
 
 		adaptersRegistry.getAdapters().forEach(function(adapter) {
-			bestPrices[adapter.getName()] = 0;
+			bestPrices[adapter.getName()] = '';
 		});
 
 		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
 		slotBids.forEach(function(bid) {
-			var priceFromBidder = parseFloat(bid.pbAg || 0),
-				currentBestPrice = Math.max(bestPrices[bid.bidderCode], priceFromBidder) || 0;
+			var priceFromBidder = bid.pbAg;
 
-			bestPrices[bid.bidderCode] = (currentBestPrice).toFixed(2).toString();
-			log(['getSlotBestPrices best price for slot', slotName, bid.bidderCode, bestPrices[bid.bidderCode]], 'debug', logGroup);
+			if (priceFromBidder !== '' && !isNaN(priceFromBidder)) {
+				bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode] || 0, parseFloat(priceFromBidder)).toFixed(2).toString();
+				log(['getSlotBestPrices best price for slot', slotName, bid.bidderCode, bestPrices[bid.bidderCode]], 'debug', logGroup);
+			}
+
 		});
 
 		return bestPrices;

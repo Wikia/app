@@ -15,11 +15,5 @@ class AdController extends WikiaController {
 	}
 
 	public function executeTop() {
-		if ( WikiaPageType::isWikiaHub() ) {
-			$leaderboardName = 'HUB_TOP_LEADERBOARD';
-		} else {
-			$leaderboardName = 'TOP_LEADERBOARD';
-		}
-		$this->leaderboardName = $leaderboardName;
 	}
 }

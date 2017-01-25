@@ -1,10 +1,11 @@
 /*global define, Promise*/
 define('ext.wikia.adEngine.video.player.playwire', [
 	'ext.wikia.adEngine.video.player.playwire.playwirePlayerFactory',
+	'ext.wikia.adEngine.video.player.playwire.playwireTracker',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (playerFactory, vastUrlBuilder, doc, log) {
+], function (playerFactory, tracker, vastUrlBuilder, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
@@ -28,12 +29,16 @@ define('ext.wikia.adEngine.video.player.playwire', [
 			width = params.width,
 			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 
+		tracker.track(params, 'init');
+
 		return new Promise(function (resolve) {
 			configUrl = configUrl || getConfigUrl(params.publisherId, params.videoId);
 			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting);
 
 			win[playerId + '_ready'] = function () {
 				var video = playerFactory.create(win.Bolt, playerId, params);
+
+				tracker.register(video, params);
 
 				video.addEventListener('boltContentStarted', function () {
 					video.api.dispatchEvent(video.id, 'wikiaAdStarted');
