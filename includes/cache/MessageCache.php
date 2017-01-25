@@ -118,6 +118,9 @@ class MessageCache {
 			// Wikia change - begin - @author: TK-999
 			// Backporting upstream fix https://git.wikimedia.org/commit/mediawiki%2Fcore.git/ac97386173bde921e4c53c343bc7b40fcfb4d2b9
 			$this->mParserOptions->setEditSection( false );
+
+			// SUS-1527: Don't parse includable special pages in i18n messages
+			$this->mParserOptions->setAllowSpecialInclusion( false );
 			// Wikia change - end
 		}
 		return $this->mParserOptions;
