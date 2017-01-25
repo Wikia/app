@@ -19,6 +19,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	window.googletag = window.googletag || {};
 	window.googletag.cmd = window.googletag.cmd || [];
 
+	window.googletag.cmd.push(function() {
+		log(['First GoogeTag command', new Date(performance.now()), performance.now()], 'debug', 'ext.wikia.adEngine.timing');
+	});
+
 	function isSlotRegistered(slot, id) {
 		return registeredCallbacks[id] && slot && slot === googleSlots.getSlot(id);
 	}
