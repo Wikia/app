@@ -415,7 +415,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 
 		// extract post creation date from response
-		$mostRecentPostCreationDate = $response['_embedded']['doc:posts'][0]['creationDate']['epochSecond'];
+		$mostRecentPostCreationDate = $response['_embedded']->{'doc:posts'}[0]->{'creationDate'}->{'epochSecond'};
 
 		$sixtyDaysAgo = time() - 60*60*24*60;
 
@@ -642,6 +642,28 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 	}
 
+	protected function actionTestDiscussionsActivity() {
+		global $wgCityId;
+		$ids = $this->ids;
+		if ( empty($ids) ) {
+			$ids = array( $wgCityId );
+		}
+		echo "Checking discussions activity:\n";
+
+		foreach ($ids as $id) {
+			$isActiveSite = true;
+
+			try {
+				$isActiveSite = $this->isActiveSite((int)$id);
+			} catch ( \Swagger\Client\ApiException $e ) {
+				echo "{od} Failed to get most recent post from site: {$e->getMessage()}\n";
+			}
+
+			printf ("%d is %s\n", $id, $isActiveSite ? "active" : "inactive");
+		}
+
+	}
+
 	public function execute() {
 //		var_dump($this->options);
 		switch ($this->action) {
@@ -650,6 +672,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 				break;
 			case 'evaluate':
 				$this->actionEvaluate();
+				break;
+			case 'testDiscussionsActivity':
+				$this->actionTestDiscussionsActivity();
 				break;
 			default:
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);
