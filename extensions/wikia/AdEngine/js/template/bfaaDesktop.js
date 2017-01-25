@@ -48,7 +48,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
-		doc.body.classList.add('uap-skin');
+		if (!win.ads.runtime.disableCommunitySkinOverride) {
+			doc.body.classList.add('uap-skin');
+		}
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
