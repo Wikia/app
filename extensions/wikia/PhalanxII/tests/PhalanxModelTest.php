@@ -193,6 +193,71 @@ class PhalanxModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @param bool $isPhalanxExempt whether session user is exempt from Phalanx blocks
+	 * @dataProvider isOkForPhalanxExemptUserDataProvider
+	 */
+	public function testIsOkForPhalanxExemptUser( bool $isPhalanxExempt ) {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMock( User::class, [ 'isAllowed' ] );
+		$userMock->expects( $this->exactly( 3 ) )
+			->method( 'isAllowed' )
+			->with( $this->equalTo( 'phalanxexempt' ) )
+			->willReturn( $isPhalanxExempt );
+
+		$this->mockGlobalVariable( 'wgUser', $userMock );
+
+		$phalanxUserModel = new PhalanxUserModel( $userMock );
+		$res = $phalanxUserModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+
+		$phalanxContentModel = new PhalanxContentModel( new Title() );
+		$res = $phalanxContentModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+
+		$phalanxTextModel = new PhalanxTextModel( 'To jest test' );
+		$res = $phalanxTextModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+	}
+
+	/**
+	 * @param bool $isInternalRequest whether this is internal Wikia request
+	 * @param bool $isSelfCheck whether target user to look up is same as session user
+	 * @dataProvider isOkForInternalRequestDataProvider
+	 */
+	public function testIsOkForInternalRequest( bool $isInternalRequest, bool $isSelfCheck ) {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMock( User::class, [ 'isAllowed', 'getName' ] );
+		$userMock->expects( $this->any() )
+			->method( 'isAllowed' )
+			->with( $this->equalTo( 'phalanxexempt' ) )
+			->willReturn( false );
+
+		if ( $isSelfCheck ) {
+			$userMock->expects( $this->once() )
+				->method( 'getName' )
+				->willReturn( $this->app->wg->User->getName() );
+		}
+
+		$requestMock = $this->getMock( WebRequest::class, [ 'isWikiaInternalRequest', 'getIp' ] );
+		$requestMock->expects( $this->exactly( 3 ) )
+			->method( 'isWikiaInternalRequest' )
+			->willReturn( $isInternalRequest );
+		$this->mockGlobalVariable( 'wgRequest', $requestMock );
+
+		$phalanxUserModel = new PhalanxUserModel( $userMock );
+		$res = $phalanxUserModel->isOk();
+		$this->assertEquals( $isInternalRequest && $isSelfCheck, $res );
+
+		$phalanxContentModel = new PhalanxContentModel( new Title() );
+		$res = $phalanxContentModel->isOk();
+		$this->assertEquals( $isInternalRequest, $res );
+
+		$phalanxTextModel = new PhalanxTextModel( 'To jest test' );
+		$res = $phalanxTextModel->isOk();
+		$this->assertEquals( $isInternalRequest, $res );
+	}
+
 	public function phalanxNewFromTypeProvider() {
 		return array(
 			array(
@@ -400,5 +465,20 @@ class PhalanxModelTest extends WikiaBaseTest {
 		];
 
 		return [ $validTitle, $invalidTitle ];
+	}
+
+	public function isOkForPhalanxExemptUserDataProvider(): array {
+		return [
+			'Phalanx exempt user' => [ true ],
+			'Normal user' => [ false ]
+		];
+	}
+
+	public function isOkForInternalRequestDataProvider(): array {
+		return [
+			'Internal request' => [ true, true ],
+			'Internal request looking up different user' => [ true, false ],
+			'External request' => [ false, false ]
+		];
 	}
 }
