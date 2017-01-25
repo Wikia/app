@@ -112,7 +112,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			engineStarted = true;
 			log('Running AdEngine', 'info', logGroup);
 			adTracker.measureTime('adengine.init', queueName).track();
-			log(['Running AdEngine', new Date(performance.now()), performane.now()], 'debug', 'ext.wikia.adEngine.timing');
+			log(['Running AdEngine', new Date(performance.now()), performance.now()], 'debug', 'ext.wikia.adEngine.timing');
 			adEngine.run(config, slots, queueName);
 		}
 
