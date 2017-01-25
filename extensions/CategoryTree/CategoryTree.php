@@ -222,9 +222,13 @@ function efCategoryTree() {
  * @return bool
  */
 function efCategoryTreeSetHooks( $parser ) {
-	$parser->setHook( 'categorytree' , 'efCategoryTreeParserHook' );
+	$parser->setHook( 'categorytree' , 'efCategoryTreeRender' );
 	$parser->setFunctionHook( 'categorytree' , 'efCategoryTreeParserFunction' );
 	return true;
+}
+
+function efCategoryTreeRender( $cat, $argv, $parser = null ) {
+	return efCategoryTreeParserHook( $cat, $argv, $parser = null, false );
 }
 
 /**

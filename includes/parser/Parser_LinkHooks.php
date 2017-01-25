@@ -55,7 +55,6 @@ class Parser_LinkHooks extends Parser {
 
 		wfProfileIn( __METHOD__ );
 
-		$this->setHook( 'pre', array( $this, 'renderPreTag' ) );
 		CoreParserFunctions::register( $this );
 		CoreLinkFunctions::register( $this );
 		$this->initialiseVariables();
