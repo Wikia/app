@@ -11,17 +11,19 @@ class MercuryApi {
 	 *
 	 * @var array
 	 */
-	private $users = [ ];
+	private $users = [];
 
 	/**
 	 * @desc Fetch Article comments count
 	 *
 	 * @param Title $title - Article title
+	 *
 	 * @return integer
 	 */
 	public function articleCommentsCount( Title $title ) {
 		$articleCommentList = new ArticleCommentList();
 		$articleCommentList->setTitle( $title );
+
 		return $articleCommentList->getCountAll();
 	}
 
@@ -34,12 +36,15 @@ class MercuryApi {
 	 *
 	 * @param int $articleId - Article id
 	 * @param $limit - maximum number of contributors to fetch
+	 *
 	 * @return array
 	 */
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache(
+			$key,
+			self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function () use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -62,15 +67,17 @@ class MercuryApi {
 						'LIMIT' => $limit
 					]
 				);
-				$result = [ ];
+				$result = [];
 				while ( $row = $db->fetchObject( $res ) ) {
-					$result[ (int)$row->rev_user ] = (int)$row->cntr;
+					$result[(int) $row->rev_user] = (int) $row->cntr;
 				}
+
 				return $result;
 			}
 		);
 		// Cached results may contain more than the $limit results
 		$contributions = array_slice( $contributions, 0, $limit, true );
+
 		return array_keys( $contributions );
 	}
 
@@ -79,6 +86,7 @@ class MercuryApi {
 	 *
 	 * @param $articleId
 	 * @param $userId
+	 *
 	 * @return mixed
 	 */
 	public function getNumberOfUserContribForArticle( $articleId, $userId ) {
@@ -95,6 +103,7 @@ class MercuryApi {
 			],
 			__METHOD__
 		);
+
 		return $row->cntr;
 	}
 
@@ -105,12 +114,12 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
-			$wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-			$wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
-			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
-			'cacheBuster' => (int)$wgCacheBuster,
+			'cacheBuster' => (int) $wgCacheBuster,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
@@ -123,7 +132,7 @@ class MercuryApi {
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
-			'id' => (int)$wgCityId,
+			'id' => (int) $wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
 			'isDarkTheme' => SassUtil::isThemeDark(),
 			'language' => [
@@ -173,12 +182,13 @@ class MercuryApi {
 	 * Process comments and return two level comments
 	 *
 	 * @param array $commentsData
+	 *
 	 * @return array
 	 */
 	public function processArticleComments( Array $commentsData ) {
 		$this->clearUsers();
-		$comments = [ ];
-		foreach ( $commentsData[ 'commentListRaw' ] as $pageId => $commentData ) {
+		$comments = [];
+		foreach ( $commentsData['commentListRaw'] as $pageId => $commentData ) {
 			$item = null;
 			foreach ( $commentData as $level => $commentBody ) {
 				if ( $level === 'level1' ) {
@@ -188,17 +198,18 @@ class MercuryApi {
 					}
 				}
 				if ( $level === 'level2' && !empty( $item ) ) {
-					$item[ 'comments' ] = [ ];
+					$item['comments'] = [];
 					foreach ( array_keys( $commentBody ) as $articleId ) {
 						$comment = $this->getComment( $articleId );
 						if ( $comment ) {
-							$item[ 'comments' ][] = $comment;
+							$item['comments'][] = $comment;
 						}
 					}
 				}
 			}
 			$comments[] = $item;
 		}
+
 		return [
 			'comments' => $comments,
 			'users' => $this->getUsers(),
@@ -209,6 +220,7 @@ class MercuryApi {
 	 * Generate comment item object from comment article id
 	 *
 	 * @param integer $articleId
+	 *
 	 * @return null|mixed
 	 */
 	private function getComment( $articleId ) {
@@ -222,10 +234,11 @@ class MercuryApi {
 		if ( $commentData === false ) {
 			return null;
 		}
+
 		return [
-			'id' => $commentData[ 'id' ],
+			'id' => $commentData['id'],
 			'text' => $articleComment->getText(),
-			'created' => (int)wfTimestamp( TS_UNIX, $commentData[ 'rawmwtimestamp' ] ),
+			'created' => (int) wfTimestamp( TS_UNIX, $commentData['rawmwtimestamp'] ),
 			'userName' => $this->addUser( $commentData ),
 		];
 	}
@@ -234,19 +247,22 @@ class MercuryApi {
 	 * Add user to aggregated user array
 	 *
 	 * @param array $commentData - ArticleComment Data
+	 *
 	 * @return string userName
 	 */
 	private function addUser( Array $commentData ) {
-		$userName = trim( $commentData[ 'author' ]->mName );
-		if ( !isset( $this->users[ $userName ] ) ) {
-			$this->users[ $userName ] = [
-				'id' => (int)$commentData[ 'author' ]->mId,
+		$userName = trim( $commentData['author']->mName );
+		if ( !isset( $this->users[$userName] ) ) {
+			$this->users[$userName] = [
+				'id' => (int) $commentData['author']->mId,
 				'avatar' => AvatarService::getAvatarUrl(
-					$commentData[ 'author' ]->mName, AvatarService::AVATAR_SIZE_MEDIUM
+					$commentData['author']->mName,
+					AvatarService::AVATAR_SIZE_MEDIUM
 				),
-				'url' => $commentData[ 'userurl' ]
+				'url' => $commentData['userurl']
 			];
 		}
+
 		return $userName;
 	}
 
@@ -263,7 +279,7 @@ class MercuryApi {
 	 * Clear list of aggregated users
 	 */
 	private function clearUsers() {
-		$this->users = [ ];
+		$this->users = [];
 	}
 
 	/**
@@ -275,6 +291,7 @@ class MercuryApi {
 		if ( class_exists( 'WikiaLogoHelper' ) ) {
 			return ( new WikiaLogoHelper() )->getMainCorpPageURL();
 		}
+
 		return 'http://www.wikia.com'; // default homepage url
 	}
 
@@ -283,10 +300,12 @@ class MercuryApi {
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
 	 *
 	 * @param Title $title Title object
+	 *
 	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
 		$adContext = new AdEngine2ContextService();
+
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 
@@ -295,32 +314,35 @@ class MercuryApi {
 	 * Let's clean it up!
 	 *
 	 * @param $rawData
+	 *
 	 * @return array|null
 	 */
-	public function processCuratedContent( $rawData ) {
+	public function processCuratedContent( $rawData, $newFormat = false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
 		if ( empty( $rawData ) ) {
 			return null;
 		}
 
-		$data = [ ];
-		$sections = $this->getCuratedContentSections( $rawData );
-		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
-		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData, $newFormat );
+		$items = $this->getCuratedContentItems( $rawData['items'], $newFormat );
+		$featured =
+			isset( $rawData['featured'] ) ? $this->getCuratedContentItems( $rawData['featured'], $newFormat ) : [];
 
 		if ( !empty( $sections ) || !empty( $items ) ) {
-			$data[ 'items' ] = [ ];
+			$data['items'] = [];
 		}
 
 		if ( !empty( $sections ) ) {
-			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+			$data['items'] = array_merge( $data['items'], $sections );
 		}
 
 		if ( !empty( $items ) ) {
-			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+			$data['items'] = array_merge( $data['items'], $items );
 		}
 
 		if ( !empty( $featured ) ) {
-			$data[ 'featured' ] = $featured;
+			$data['featured'] = $featured;
 		}
 
 		return $data;
@@ -330,35 +352,68 @@ class MercuryApi {
 	 * Add `section` type to all sections from CuratedContent data
 	 *
 	 * @param array $data
+	 *
 	 * @return array
 	 */
-	public function getCuratedContentSections( Array $data ) {
-		$sections = [ ];
-		if ( !empty( $data[ 'sections' ] ) ) {
-			foreach ( $data[ 'sections' ] as $section ) {
-				$section[ 'type' ] = 'section';
+	public function getCuratedContentSections( Array $data, $newFormat = false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+		$sections = [];
+
+		if ( $newFormat && !empty( $data['sections'] ) ) {
+			foreach ( $data['sections'] as $dataItem ) {
+				$section = [];
+				$section['label'] = $dataItem['title'];
+				$section['imageUrl'] = $dataItem['image_url'];
+				$section['type'] = 'section';
+				$section['items'] = $this->getSectionContent( $dataItem['title'], $newFormat );
+				$section['imageCrop'] = isset( $dataItem['image_crop'] ) ? $dataItem['image_crop'] : null;
+
+				if ( !empty( $section['items'] ) ) {
+					$sections[] = $section;
+				}
+			}
+
+			return $sections;
+		}
+
+		// TODO: remove this block after release of XW-2590 (XW-2625)
+		if ( !empty( $data['sections'] ) ) {
+			foreach ( $data['sections'] as $section ) {
+				$section['type'] = 'section';
+				$section['items'] = $this->getSectionContent( $section['title'], $newFormat );
 				$sections[] = $section;
 			}
 		}
+
 		return $sections;
+	}
+
+	protected function getSectionContent( $sectionTitle, $newFormat ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+		$content = MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat );
+
+		return isset( $content['items'] ) ? $content['items'] : [];
 	}
 
 	/**
 	 * Process CuratedContent items and sanitize when the item is an article
 	 *
 	 * @param $items
+	 *
 	 * @return array
 	 */
-	public function getCuratedContentItems( $items ) {
-		$data = [ ];
+	public function getCuratedContentItems( $items, $newFormat = false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item );
+				$processedItem = $this->processCuratedContentItem( $item, $newFormat );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
 			}
 		}
+
 		return $data;
 	}
 
@@ -370,37 +425,63 @@ class MercuryApi {
 	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
 	 *
 	 * @param $item
+	 *
 	 * @return mixed
 	 */
-	public function processCuratedContentItem( $item ) {
-		if ( !empty( $item[ 'article_id' ] ) ) {
-			$title = Title::newFromID( $item[ 'article_id' ] );
+	public function processCuratedContentItem( $item, $newFormat = false ) {
+		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+		if ( $newFormat ) {
+			$result = [
+				'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
+				'imageUrl' => $item['image_url'],
+				'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
+				'type' => $item['type'],
+			];
+
+			if ( !empty( $item['article_id'] ) ) {
+				$title = Title::newFromID( $item['article_id'] );
+
+				if ( !empty( $title ) ) {
+					$result['url'] = $title->getLocalURL();
+
+					return $result;
+				}
+			} elseif ( $item['article_id'] === 0 ) {
+				$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
+
+				return $result;
+			}
+		} else if ( !empty( $item['article_id'] ) ) { // TODO: remove this block after release release of XW-2590 (XW-2625)
+			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$item[ 'article_local_url' ] = $title->getLocalURL();
+				$item['article_local_url'] = $title->getLocalURL();
+
 				return $item;
 			}
 		} else {
-			if ( $item[ 'article_id' ] === 0 ) {
+			if ( $item['article_id'] === 0 ) {
 				// Categories which don't have content have wgArticleID set to 0
 				// In order to generate link for them
 				// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
 				global $wgArticlePath;
-				$item[ 'article_local_url' ] = str_replace( "$1", $item[ 'title' ], $wgArticlePath );
+				$item['article_local_url'] = str_replace( "$1", $item['title'], $wgArticlePath );
+
 				return $item;
 			}
 		}
+
 		return null;
 	}
 
 	public function processTrendingArticlesData( $data ) {
-		$data = $data[ 'items' ];
+		$data = $data['items'];
 
 		if ( !isset( $data ) || !is_array( $data ) ) {
 			return null;
 		}
 
-		$items = [ ];
+		$items = [];
 
 		foreach ( $data as $item ) {
 			$processedItem = $this->processTrendingArticlesItem( $item );
@@ -417,17 +498,18 @@ class MercuryApi {
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
 	 * @param array $item
+	 *
 	 * @return array
 	 */
 	public function processTrendingArticlesItem( $item ) {
 		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
-		$processedItem = [ ];
+		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
 			foreach ( $paramsToInclude as $param ) {
-				if ( !empty( $item[ $param ] ) ) {
-					$processedItem[ $param ] = $item[ $param ];
+				if ( !empty( $item[$param] ) ) {
+					$processedItem[$param] = $item[$param];
 				}
 			}
 		}
@@ -436,23 +518,23 @@ class MercuryApi {
 	}
 
 	public function processTrendingVideoData( $data ) {
-		$videosData = $data[ 'videos' ];
+		$videosData = $data['videos'];
 
 		if ( !isset( $videosData ) || !is_array( $videosData ) ) {
 			return null;
 		}
 
-		$items = [ ];
+		$items = [];
 
 		foreach ( $videosData as $item ) {
 			$items[] = ArticleAsJson::createMediaObject(
 				WikiaFileHelper::getMediaDetail(
-					Title::newFromText( $item[ 'title' ], NS_FILE ),
+					Title::newFromText( $item['title'], NS_FILE ),
 					[
 						'imageMaxWidth' => false
 					]
 				),
-				$item[ 'title' ]
+				$item['title']
 			);
 		}
 
