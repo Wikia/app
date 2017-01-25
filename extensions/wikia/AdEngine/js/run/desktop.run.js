@@ -75,7 +75,7 @@ require([
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
-		log(['running adEngine', new Date(performance.now()), performance.now()], 'debug', 'ext.wikia.adEngine.timing');
+		log(['calling desktop run', new Date(performance.now()), performance.now()], 'debug', 'ext.wikia.adEngine.timing');
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
 		slotTweaker.registerMessageListener();
