@@ -38,6 +38,8 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 					return this.muted;
 				},
 				muted: false,
+				mute: noop,
+				unmute: noop,
 				setVolume: function (volume) {
 					this.muted = volume === 0;
 				},
@@ -60,13 +62,27 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 		volumeControl = getModule();
 	});
 
-	it('Click on volume control triggers video mute/unmute actions', function () {
+	it('Click on volume control triggers video mute action', function () {
+		mocks.video.muted = false;
 		volumeControl.add(mocks.video);
 
-		mocks.video.volumeControl.click();
-		expect(mocks.video.muted).toBeTruthy();
+		spyOn(mocks.video, 'mute');
+		spyOn(mocks.video, 'unmute');
 
 		mocks.video.volumeControl.click();
-		expect(mocks.video.muted).toBeFalsy();
+		expect(mocks.video.mute).toHaveBeenCalled();
+		expect(mocks.video.unmute).not.toHaveBeenCalled();
+	});
+
+	it('Click on volume control triggers video unmute action', function () {
+		volumeControl.add(mocks.video);
+		mocks.video.muted = true;
+
+		spyOn(mocks.video, 'mute');
+		spyOn(mocks.video, 'unmute');
+
+		mocks.video.volumeControl.click();
+		expect(mocks.video.unmute).toHaveBeenCalled();
+		expect(mocks.video.mute).not.toHaveBeenCalled();
 	});
 });
