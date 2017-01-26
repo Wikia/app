@@ -36,13 +36,17 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			wikiTag: $.msg('recirculation-impact-footer-wiki-tag')
 		};
 
-		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
-			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
-			adjustFeatureItem($html);
-			renderDiscussionHeaderImage($html);
+		return utils.prepareFooter()
+			.then(function() {
+				return utils.renderTemplate('client/impactFooter.mustache', renderData)
+			})
+			.then(function($html) {
+				$('#recirculation-impactFooter-container').html($html).find('.discussion-timestamp').timeago();
+				adjustFeatureItem($html);
+				renderDiscussionHeaderImage($html);
 
-			return $html;
-		});
+				return $html;
+			});
 	}
 
 	function adjustFeatureItem($html) {

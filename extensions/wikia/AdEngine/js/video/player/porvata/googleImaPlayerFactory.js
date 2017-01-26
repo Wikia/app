@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			mobileVideoAd = params.container.querySelector('video');
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
-			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings());
+			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
@@ -44,6 +44,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function playVideo(width, height) {
 			function callback() {
 				log('Video play: prepare player UI', log.levels.debug, logGroup);
+				adsManager.dispatchEvent('wikiaAdPlayTriggered');
 
 				// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 				adDisplayContainer.initialize();

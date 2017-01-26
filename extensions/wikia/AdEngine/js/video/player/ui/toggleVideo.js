@@ -1,5 +1,5 @@
 /*global define, setTimeout*/
-define('ext.wikia.adEngine.video.player.ui.toggle', [
+define('ext.wikia.adEngine.video.player.ui.toggleVideo', [
 	'ext.wikia.adEngine.domElementTweaker'
 ], function (DOMElementTweaker) {
 	'use strict';
@@ -10,11 +10,11 @@ define('ext.wikia.adEngine.video.player.ui.toggle', [
 	}
 
 	function hideVideo(video, params) {
-		toggle(params.videoPlaceholderElement || params.image, video.container);
+		toggle(params.hideWhenPlaying || params.image, video.container);
 	}
 
 	function showVideo(video, params) {
-		toggle(video.container, params.videoPlaceholderElement || params.image);
+		toggle(video.container, params.hideWhenPlaying || params.image);
 	}
 
 	function add(video, params) {

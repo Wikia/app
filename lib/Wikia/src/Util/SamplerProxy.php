@@ -70,6 +70,15 @@ class SamplerProxy {
 		$this->resultsCallable = $samplerProxyBuilder->getResultsCallable();
 	}
 
+	/**
+	 * Wrapper method for testability
+	 * @param $minValue
+	 * @param $maxValue
+	 */
+	public function getRandomInt( $minValue, $maxValue ) {
+		return rand( $minValue, $maxValue );
+	}
+
 	public function __call( $method, $args ) {
 
 		// Forward all methods but $originalMethod to $originalPopo
@@ -77,7 +86,8 @@ class SamplerProxy {
 			return call_user_func_array( [ $this->originalCallable[0], $method ], $args );
 		}
 
-		if ( !empty( $this->methodSamplingRate ) && rand( 0, 100 ) <= $this->methodSamplingRate ) {
+		if ( !empty( $this->methodSamplingRate ) &&
+		     $this->getRandomInt( 0, 100 ) <= $this->methodSamplingRate ) {
 
 			// We're going to route the request to the alternate instance.
 			// Now determine if we're going to shadow or redirect
@@ -132,20 +142,40 @@ class SamplerProxy {
 		return call_user_func_array( $this->originalCallable, $args );
 	}
 
+	public function setEnableShadowing( $isEnabled ) {
+		$this->enableShadowing = $isEnabled;
+	}
+
 	public function getEnableShadowing() {
 		return $this->enableShadowing;
+	}
+
+	public function setMethodSamplingRate( $rate ) {
+		$this->methodSamplingRate = $rate;
 	}
 
 	public function getMethodSamplingRate() {
 		return $this->methodSamplingRate;
 	}
 
+	public function setOriginalCallable( callable $callable ) {
+		$this->originalCallable = $callable;
+	}
+
 	public function getOriginalCallable() {
 		return $this->originalCallable;
 	}
 
+	public function setAlternateCallable( callable $callable ) {
+		$this->alternateCallable = $callable;
+	}
+
 	public function getAlternateCallable() {
 		return $this->alternateCallable;
+	}
+
+	public function setResultsCallable( callable $callable ) {
+		$this->resultsCallable = $callable;
 	}
 
 	public function getResultsCallable() {

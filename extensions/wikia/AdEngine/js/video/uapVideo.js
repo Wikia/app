@@ -13,12 +13,17 @@ define('ext.wikia.adEngine.video.uapVideo', [
 ], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
+		positionVideoPlayerClassName = 'video-player-';
 
 	function getVideoSize(slot, params) {
 		var width = slot.clientWidth;
 
-		if (params.autoPlay) {
+		// we don't want to have fullscreen (slot.clientWidth) video in case of split
+		// layout or on mercury.
+		// On mercury splitLayoutVideoPosition and videoPlaceholderElement will be empty
+		// because we always display video in the same way there.
+		if (params.splitLayoutVideoPosition && params.videoPlaceholderElement) {
 			width = params.videoPlaceholderElement.width;
 		}
 
@@ -44,8 +49,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio,
-					videoPlaceholderElement: params.videoPlaceholderElement
+					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
+
+				if (params.splitLayoutVideoPosition) {
+					video.container.style.position = 'absolute';
+					video.container.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
+				}
 
 				video.addEventListener('allAdsCompleted', function () {
 					video.reload();
@@ -90,10 +100,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function getPercentageVideoHeight(size) {
-		return 100 / (size.width / size.height);
-	}
-
 	function loadVideoAd(params) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
@@ -105,7 +111,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		size = getVideoSize(videoContainer, params);
 		params.width = size.width;
 		params.height = size.height;
-		params.videoSize = getPercentageVideoHeight(size);
+		params.adProduct = 'vuap';
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,

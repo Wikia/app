@@ -93,7 +93,7 @@ $uap-video-animation-duration: 0.4s;
 		width: 100%;
 	}
 
-	#TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+	#TOP_LEADERBOARD {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
 		max-width: none;
@@ -180,8 +180,8 @@ $uap-video-animation-duration: 0.4s;
 .video-player {
 	position: relative;
 
-	&.autoplay {
-		z-index: 1000;
+	&#{&}-left, &#{&}-right {
+		z-index: $wikia-top-ads-index;
 	}
 
 	&#{&}-right {
@@ -239,14 +239,14 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #TOP_LEADERBOARD {
 	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-#TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
@@ -384,13 +384,13 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+#TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
-}
 
-#CORP_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 #PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
