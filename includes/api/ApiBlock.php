@@ -82,7 +82,6 @@ class ApiBlock extends ApiBase {
 			),
 			'Expiry' => $params['expiry'] == 'never' ? 'infinite' : $params['expiry'],
 			'HardBlock' => !$params['anononly'],
-			'CreateAccount' => $params['nocreate'],
 			'AutoBlock' => $params['autoblock'],
 			'DisableEmail' => $params['noemail'],
 			'HideUser' => $params['hidename'],
@@ -157,7 +156,10 @@ class ApiBlock extends ApiBase {
 			'expiry' => 'never',
 			'reason' => null,
 			'anononly' => false,
-			'nocreate' => false,
+			// SUS-1528: Mark "nocreate" param as deprecated since "prevent account creation" flag is removed
+			'nocreate' => [
+				ApiBase::PARAM_DEPRECATED => true
+			],
 			'autoblock' => false,
 			'noemail' => false,
 			'hidename' => false,
