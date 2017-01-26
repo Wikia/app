@@ -37,9 +37,8 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 				isMuted: function () {
 					return this.muted;
 				},
+				volumeToggle: noop,
 				muted: false,
-				mute: noop,
-				unmute: noop,
 				setVolume: function (volume) {
 					this.muted = volume === 0;
 				},
@@ -62,27 +61,22 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 		volumeControl = getModule();
 	});
 
-	it('Click on volume control triggers video mute action', function () {
-		mocks.video.muted = false;
+	it('Click on volume control triggers video volume toggle action', function () {
 		volumeControl.add(mocks.video);
 
-		spyOn(mocks.video, 'mute');
-		spyOn(mocks.video, 'unmute');
+		spyOn(mocks.video, 'volumeToggle');
 
 		mocks.video.volumeControl.click();
-		expect(mocks.video.mute).toHaveBeenCalled();
-		expect(mocks.video.unmute).not.toHaveBeenCalled();
+		expect(mocks.video.volumeToggle).toHaveBeenCalled();
 	});
 
-	it('Click on volume control triggers video unmute action', function () {
-		volumeControl.add(mocks.video);
-		mocks.video.muted = true;
 
-		spyOn(mocks.video, 'mute');
-		spyOn(mocks.video, 'unmute');
+	it('Click on volume control triggers video volume toggle action', function () {
+		volumeControl.add(mocks.video);
+
+		spyOn(mocks.video, 'volumeToggle');
 
 		mocks.video.volumeControl.click();
-		expect(mocks.video.unmute).toHaveBeenCalled();
-		expect(mocks.video.mute).not.toHaveBeenCalled();
+		expect(mocks.video.volumeToggle).toHaveBeenCalled();
 	});
 });

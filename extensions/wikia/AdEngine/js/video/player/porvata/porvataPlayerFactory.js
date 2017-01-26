@@ -79,6 +79,13 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			unmute: function () {
 				return this.setVolume(0.75);
 			},
+			volumeToggle: function () {
+				if (this.isMuted()) {
+					this.unmute();
+				} else {
+					this.mute();
+				}
+			},
 			setVolume: function (volume) {
 				if (mobileVideoAd) {
 					mobileVideoAd.muted = volume === 0;
