@@ -178,11 +178,7 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .wikia-ad .replay-overlay {
-	background-color: rgba(0,0,0,0.5);
-	background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-icons-refresh.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 50% 85%;
+	background: rgba(0,0,0,0.7) url('/extensions/wikia/AdEngine/js/video/player/ui/images/replay.svg') center/8% no-repeat;
 	cursor: pointer;
 	position: absolute;
 	top: 0;

@@ -9,7 +9,6 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 
 	function add(video) {
 		var overlay = doc.createElement('div');
-
 		overlay.classList.add('replay-overlay');
 
 		overlay.addEventListener('click', function () {
