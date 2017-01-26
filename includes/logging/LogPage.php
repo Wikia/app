@@ -558,7 +558,11 @@ class LogPage {
 			}
 		}
 
-		return wfMessage( 'parentheses' )->inLanguage( $lang )->rawParams( $flags )->escaped();
+		if ( !empty( $flags ) ) {
+			return wfMessage( 'parentheses' )->inLanguage( $lang )->rawParams( $flags )->escaped();
+		} else {
+			return '';
+		}
 	}
 
 	/**
