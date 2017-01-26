@@ -115,9 +115,7 @@ class ApiBlock extends ApiBase {
 		if ( $params['anononly'] ) {
 			$res['anononly'] = '';
 		}
-		if ( $params['nocreate'] ) {
-			$res['nocreate'] = '';
-		}
+
 		if ( $params['autoblock'] ) {
 			$res['autoblock'] = '';
 		}
@@ -177,7 +175,7 @@ class ApiBlock extends ApiBase {
 			'expiry' => 'Relative expiry time, e.g. \'5 months\' or \'2 weeks\'. If set to \'infinite\', \'indefinite\' or \'never\', the block will never expire.',
 			'reason' => 'Reason for block (optional)',
 			'anononly' => 'Block anonymous users only (i.e. disable anonymous edits for this IP)',
-			'nocreate' => 'Prevent account creation',
+			'nocreate' => 'Prevent account creation (not functioning)',
 			'autoblock' => 'Automatically block the last used IP address, and any subsequent IP addresses they try to login from',
 			'noemail' => 'Prevent user from sending e-mail through the wiki. (Requires the "blockemail" right.)',
 			'hidename' => 'Hide the username from the block log. (Requires the "hideuser" right.)',
@@ -212,7 +210,7 @@ class ApiBlock extends ApiBase {
 	public function getExamples() {
 		return array(
 			'api.php?action=block&user=123.5.5.12&expiry=3%20days&reason=First%20strike',
-			'api.php?action=block&user=Vandal&expiry=never&reason=Vandalism&nocreate=&autoblock=&noemail='
+			'api.php?action=block&user=Vandal&expiry=never&reason=Vandalism&autoblock=&noemail='
 		);
 	}
 
