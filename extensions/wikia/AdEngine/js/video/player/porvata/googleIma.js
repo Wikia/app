@@ -23,7 +23,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 	function getPlayer(params) {
 		var adDisplayContainer = new win.google.ima.AdDisplayContainer(params.container),
-			adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
+			adsLoader,
+			iframe = params.container.querySelector('div > iframe');
+
+		// TODO: remove this hack
+		// it's reloading iframe in order to make IMA work when user is moving back to the page with player
+		iframe.contentWindow.location.href = iframe.src;
+
+		adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
 
 		return imaPlayerFactory.create(adDisplayContainer, adsLoader, params);
 	}
