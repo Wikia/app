@@ -190,12 +190,12 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 	// need to have both (pi-data-label & pi-smart-data-label) classes in selector to override stacked layout padding (pi-layout-stacked)
 	.pi-data-label {
 		&.pi-smart-data-label {
-			padding: $infobox-data-spacing $infobox-side-spacing 0;
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
 		}
 	}
 
 	.pi-smart-group-head + .pi-smart-group-body .pi-smart-data-value {
-		padding-top: $horizontal-group-label-spacing;
+		padding-top: 0;
 	}
 
 	.pi-smart-data-label,
