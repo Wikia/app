@@ -253,74 +253,28 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getCommunity() {
 		$data = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-header'
-				]
-			],
+			'header' => $this->getLineTextObject( 'global-footer-community-header' ),
 			'links' => [ ]
 		];
 
 		if ( $this->getHref( 'community-central' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-community-central'
-				],
-				'href' => $this->getHref( 'community-central' ),
-				'tracking_label' => 'community.community-central',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-community-link-community-central', 'community-central', 'community.community-central' );
 		}
 
 		if ( $this->getHref( 'support' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-support'
-				],
-				'href' => $this->getHref( 'support' ),
-				'tracking_label' => 'community.support',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-community-link-support', 'support', 'community.support' );
 		}
 
 		if ( $this->getHref( 'fan-contributor' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-fan-contributor-program'
-				],
-				'href' => $this->getHref( 'fan-contributor' ),
-				'tracking_label' => 'community.fan-contributor',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-community-link-fan-contributor-program', 'fan-contributor', 'community.fan-contributor' );
 		}
 
 		if ( $this->getHref( 'wam' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-wam-score'
-				],
-				'href' => $this->getHref( 'wam' ),
-				'tracking_label' => 'community.wam',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-community-link-wam-score', 'wam', 'community.wam' );
 		}
 
 		if ( $this->getHref( 'help' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-link-help'
-				],
-				'href' => $this->getHref( 'help' ),
-				'tracking_label' => 'community.help',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-community-link-help', 'help', 'community.help' );
 		}
 
 		return $data;
