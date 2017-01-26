@@ -30,173 +30,28 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-image',
 				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				],
+				'image-data' => $this->getWdsSvgObject( 'wds-company-logo-fandom-powered-by-wikia-two-lines' ),
 				'href' => $this->getHref( 'fandom-logo' ),
-				'title' => [
-					'type' => 'text',
-					'value' => 'Fandom powered by Wikia'
-				],
+				'title' => $this->getTextObject( 'Fandom powered by Wikia' ),
 				'tracking_label' => 'logo',
 			],
 			'company_overview' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-company-overview-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-about'
-						],
-						'href' => $this->getHref( 'about' ),
-						'tracking_label' => 'company-overview.about',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-careers'
-						],
-						'href' => $this->getHref( 'careers' ),
-						'tracking_label' => 'company-overview.careers',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-press'
-						],
-						'href' => $this->getHref( 'press' ),
-						'tracking_label' => 'company-overview.press',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-contact'
-						],
-						'href' => $this->getHref( 'contact' ),
-						'tracking_label' => 'company-overview.contact',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-org'
-						],
-						'href' => $this->getHref( 'wikia-org' ),
-						'tracking_label' => 'company-overview.wikia-org',
-					]
-				]
+				'header' => $this->getLineTextObject( 'global-footer-company-overview-header' ),
+				'links' => $this->getLinkTextObjectList( 'company-overview', [ 'about', 'careers', 'press', 'contact', 'wikia-org' ] ),
 			],
 			'site_overview' => [
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-terms-of-use'
-						],
-						'href' => $this->getHref( 'terms-of-use' ),
-						'tracking_label' => 'site-overview.terms-of-use',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-privacy-policy'
-						],
-						'href' => $this->getHref( 'privacy-policy' ),
-						'tracking_label' => 'site-overview.privacy-policy',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-global-sitemap'
-						],
-						'href' => $this->getHref( 'global-sitemap' ),
-						'tracking_label' => 'site-overview.global-sitemap',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-local-sitemap'
-						],
-						'href' => $this->getLocalSitemapUrl(),
-						'tracking_label' => 'site-overview.local-sitemap',
-					]
-				]
+				'links' => $this->getLinkTextObjectList( 'site-overview', [ 'terms-of-use', 'privacy-policy', 'global-sitemap', 'local-sitemap' ] )
 			],
 			'create_wiki' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-create-wiki-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' ),
-						'tracking_label' => 'start-a-wiki',
-					]
-				]
+				'description' => $this->getTranslatableTextObject( 'global-footer-create-wiki-description' ),
+				'links' => [ $this->getLinkTextObject( 'global-footer-create-wiki-link-start-wikia', 'create-new-wiki', 'start-a-wiki' ) ]
 			],
 			'community_apps' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-community-apps-header'
-					]
-				],
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-apps-description'
-				],
+				'header' => $this->getLineTextObject( 'global-footer-community-apps-header' ),
+				'description' => $this->getTranslatableTextObject( 'global-footer-community-apps-description' ),
 				'links' => [
-					[
-						'type' => 'link-image',
-						// 'image' is deprecated, use 'image-data' instead
-						'image' => 'wds-company-store-appstore',
-						'image-data' => [
-							'type' => 'wds-svg',
-							'name' => 'wds-company-store-appstore',
-						],
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-community-apps-link-app-store'
-						],
-						'href' => $this->getHref( 'app-store' ),
-						'tracking_label' => 'community-apps.app-store',
-					],
-					[
-						'type' => 'link-image',
-						// 'image' is deprecated, use 'image-data' instead
-						'image' => 'wds-company-store-googleplay',
-						'image-data' => [
-							'type' => 'wds-svg',
-							'name' => 'wds-company-store-googleplay',
-						],
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-community-apps-link-google-play'
-						],
-						'href' => $this->getHref( 'google-play' ),
-						'tracking_label' => 'community-apps.google-play',
-					]
+					$this->getLinkImageObject( 'wds-company-store-appstore', 'global-footer-community-apps-link-app-store', 'app-store', 'community-apps.app-store' ),
+					$this->getLinkImageObject( 'wds-company-store-googleplay', 'global-footer-community-apps-link-google-play', 'google-play', 'community-apps.google-play' ),
 				]
 			],
 			'licensing_and_vertical' => [
@@ -218,6 +73,65 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['advertise'] = $this->getAdvertise();
 
 		return $data;
+	}
+
+	private function getLinkTextObjectList( String $section, Array $linkKeys ) {
+		return array_map( function( $link ) use ( $section ) {
+			return $this->getLinkTextObject(
+				'global-footer-' . $section . '-link-' . $link,
+				$link,
+				$section . '.' . $link
+			);
+		}, $linkKeys );
+	}
+
+	private function getLinkTextObject( $titleKey, $hrefKey, $trackingLabel ) {
+		return [
+			'type' => 'link-text',
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $hrefKey == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $hrefKey ),
+			'tracking_label' => $trackingLabel,
+		];
+	}
+
+	private function getLineTextObject( $key ) {
+		return [
+			'type' => 'line-text',
+			'title' => $this->getTranslatableTextObject( $key )
+		];
+	}
+
+	private function getTranslatableTextObject( $key ) {
+		return [
+			'type' => 'translatable-text',
+			'key' =>  $key
+		];
+	}
+
+	private function getTextObject( $value ) {
+		return [
+			'type' => 'text',
+			'value' => $value
+		];
+	}
+
+	private function getWdsSvgObject( $key ) {
+		return [
+			'type' => 'wds-svg',
+			'name' => $key,
+		];
+	}
+
+	private function getLinkImageObject( $imageKey, $titleKey, $hrefKey, $trackingLabel ) {
+		return [
+			'type' => 'link-image',
+			// 'image' is deprecated, use 'image-data' instead
+			'image' => $imageKey,
+			'image-data' => $this->getWdsSvgObject( $imageKey ),
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $this->getHref( $hrefKey ),
+			'tracking_label' => $trackingLabel,
+		];
 	}
 
 	private function getSitenameData() {
@@ -276,21 +190,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
-		return [
-			'type' => 'translatable-text',
-			'key' => $verticalMessageKey
-		];
+		return $this->getTranslatableTextObject( $verticalMessageKey );
 	}
 
 	private function getLicenseData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-copyright-wikia',
-				],
-			];
+			return $this->getLineTextObject( 'global-footer-copyright-wikia' );
 		}
 
 		return [
