@@ -28,6 +28,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 		// TODO: remove this hack
 		// it's reloading iframe in order to make IMA work when user is moving back to the page with player
+		// https://groups.google.com/forum/#!topic/ima-sdk/Q6Y56CcXkpk
+		// https://github.com/googleads/videojs-ima/issues/110
 		iframe.contentWindow.location.href = iframe.src;
 
 		adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
