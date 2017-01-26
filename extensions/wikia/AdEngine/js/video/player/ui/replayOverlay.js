@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	'wikia.document',
-	'wikia.log'
-], function (doc, log) {
+	'wikia.log',
+	'wikia.window'
+], function (doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.replayOverlay',
@@ -14,7 +15,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 		overlay.classList.add(replayOverlayClass);
 		overlay.addEventListener('click', function () {
 			video.play();
-			log(['resume', log.levels.debug, logGroup]);
+			log(['replay', log.levels.debug, logGroup]);
 			// make overlay invisible
 			overlay.style.width = '';
 		});
@@ -36,7 +37,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	 * @return string in form '55%'
 	 */
 	function getOverlayWidth(video) {
-		var windowWidth = Math.max(doc.documentElement.clientWidth, window.innerWidth || 0),
+		var windowWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
 			videoContainerWidthString = video.container.style.width,
 			videoContainerWidth = parseInt(videoContainerWidthString.substr(0, videoContainerWidthString.length -2));
 

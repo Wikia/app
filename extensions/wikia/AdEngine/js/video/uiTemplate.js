@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 	'use strict';
 
-	var autoPlay = [
+	var splitLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
@@ -20,6 +20,6 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 
 	return {
 		default: defaultTemplate,
-		autoPlay: autoPlay
+		splitLayout: splitLayout
 	};
 });
