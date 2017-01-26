@@ -282,36 +282,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getAdvertise() {
 		$data = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-advertise-header'
-				]
-			],
-			'links' => [
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-advertise-link-media-kit'
-					],
-					'href' => $this->getHref( 'media-kit' ),
-					'tracking_label' => 'advertise.media-kit',
-				]
-			]
+			'header' => $this->getLineTextObject( 'global-footer-advertise-header' ),
+			'links' => [ $this->getLinkTextObject( 'global-footer-advertise-link-media-kit', 'media-kit', 'advertise.media-kit' ) ]
 		];
 
 		if ( $this->getHref( 'media-kit-contact' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-advertise-link-contact'
-				],
-				'href' => $this->getHref( 'media-kit-contact' ),
-				'tracking_label' => 'advertise.contact',
-			];
+			$data['links'][] = $this->getLinkTextObject( 'global-footer-advertise-link-contact', 'media-kit-contact', 'advertise.contact' );
 		}
 
 		return $data;
