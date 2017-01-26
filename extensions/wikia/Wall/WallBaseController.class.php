@@ -6,14 +6,14 @@
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
 
-class WallBaseController extends WikiaController {
+class WallBaseController extends WikiaService {
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 	const DEFAULT_MESSAGES_PER_PAGE = 10; // how many messages should appear per page if not specified otherwise
 	protected $helper;
 	// use for controlling if we are not adding the some css/js head two time
 	static $uniqueHead = [ ];
 	public function __construct() {
-		$this->app = F::App();
+		parent::__construct();
 		$this->helper = new WallHelper();
 	}
 

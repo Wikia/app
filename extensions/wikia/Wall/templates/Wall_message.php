@@ -110,7 +110,9 @@
 			<? if(!empty($replies)): ?>
 				<? $i =0;?>
 				<? if($showLoadMore): ?>
-					<?= $app->renderView( 'WallController', 'loadMore', [ 'repliesNumber' => $repliesNumber ] ); ?>
+					<li class="load-more">
+						<a href="#"><?= wfMessage( 'wall-message-loadmore' )->numParams( $repliesNumber )->parse(); ?></a>
+					</li>
 				<? endif; ?>
 				<? foreach( $replies as $key  => $val): ?>
 					<?php //TODO: move this logic to controler !!! ?>
