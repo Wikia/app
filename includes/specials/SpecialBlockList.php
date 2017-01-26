@@ -247,7 +247,6 @@ class BlockListPager extends TablePager {
 		if ( $msg === null ) {
 			$msg = array(
 				'anononlyblock',
-				'createaccountblock',
 				'noautoblockblock',
 				'emailblock',
 				'blocklist-nousertalk',
@@ -337,9 +336,7 @@ class BlockListPager extends TablePager {
 				if ( $row->ipb_anon_only ) {
 					$properties[] = $msg['anononlyblock'];
 				}
-				if ( $row->ipb_create_account ) {
-					$properties[] = $msg['createaccountblock'];
-				}
+
 				if ( $row->ipb_user && !$row->ipb_enable_autoblock ) {
 					$properties[] = $msg['noautoblockblock'];
 				}
@@ -376,7 +373,6 @@ class BlockListPager extends TablePager {
 				'ipb_timestamp',
 				'ipb_auto',
 				'ipb_anon_only',
-				'ipb_create_account',
 				'ipb_enable_autoblock',
 				'ipb_expiry',
 				'ipb_range_start',
