@@ -50,8 +50,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'header' => $this->getLineTextObject( 'global-footer-community-apps-header' ),
 				'description' => $this->getTranslatableTextObject( 'global-footer-community-apps-description' ),
 				'links' => [
-					$this->getLinkImageObject( 'wds-company-store-appstore', 'global-footer-community-apps-link-app-store', 'app-store', 'community-apps.app-store' ),
-					$this->getLinkImageObject( 'wds-company-store-googleplay', 'global-footer-community-apps-link-google-play', 'google-play', 'community-apps.google-play' ),
+					$this->getLinkImageObject( 'wds-company-store-appstore', 'global-footer-community-apps-link-app-store', $this->getHref( 'app-store' ), 'community-apps.app-store' ),
+					$this->getLinkImageObject( 'wds-company-store-googleplay', 'global-footer-community-apps-link-google-play', $this->getHref( 'google-play' ), 'community-apps.google-play' ),
 				]
 			],
 			'licensing_and_vertical' => [
@@ -122,14 +122,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
-	private function getLinkImageObject( $imageKey, $titleKey, $hrefKey, $trackingLabel ) {
+	private function getLinkImageObject( $imageKey, $titleKey, $href, $trackingLabel ) {
 		return [
 			'type' => 'link-image',
 			// 'image' is deprecated, use 'image-data' instead
 			'image' => $imageKey,
 			'image-data' => $this->getWdsSvgObject( $imageKey ),
 			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $this->getHref( $hrefKey ),
+			'href' => $href,
 			'tracking_label' => $trackingLabel,
 		];
 	}
@@ -239,34 +239,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getFollowUs() {
 		$data = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-header'
-				]
-			],
+			'header' => $this->getLineTextObject( 'global-footer-follow-us-header' ),
 			'links' => [ ]
 		];
 
 		$hrefs = $this->getSocialHrefs();
-
 		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-' . $hrefKey,
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-' . $hrefKey,
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-follow-us-link-' . $hrefKey
-				],
-				'href' => $hrefUrl,
-				'tracking_label' => 'follow-us.' . $hrefKey,
-			];
+			$data['links'][] = $this->getLinkImageObject( 'wds-icons-' . $hrefKey, 'global-footer-follow-us-link-' . $hrefKey, $hrefUrl, 'follow-us.' . $hrefKey );
 		}
 
 		return $data;
