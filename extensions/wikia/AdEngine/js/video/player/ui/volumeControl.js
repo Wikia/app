@@ -21,40 +21,44 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		return volume;
 	}
 
-	function add(video) {
-		var volume = createVolumeControl(),
-			mobileVideoAd = video.container.querySelector('video');
+	function isVideoMuted(video) {
+		var mobileVideoAd = video.container.querySelector('video');
+		return (mobileVideoAd && mobileVideoAd.muted) || video.isMuted();
+	}
 
-		volume.mute = function () {
-			volume.speaker.classList.add('mute');
+	function add(video) {
+		var volumeControl = createVolumeControl();
+
+		volumeControl.mute = function () {
+			volumeControl.speaker.classList.add('mute');
 			video.setVolume(0);
 			log('mute', log.levels.info, logGroup);
 		};
-		volume.unmute = function () {
-			volume.speaker.classList.remove('mute');
+		volumeControl.unmute = function () {
+			volumeControl.speaker.classList.remove('mute');
 			video.setVolume(0.75);
 			log('unmute', log.levels.info, logGroup);
 		};
 
-		volume.addEventListener('click', function(e) {
+		volumeControl.addEventListener('click', function(e) {
 			if (video.isMuted()) {
-				volume.unmute();
+				volumeControl.unmute();
 			} else {
-				volume.mute();
+				volumeControl.mute();
 			}
 			e.preventDefault();
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			if (mobileVideoAd && mobileVideoAd.muted) {
-				volume.mute();
+			if (isVideoMuted(video)) {
+				volumeControl.mute();
 			} else {
-				volume.unmute();
+				volumeControl.unmute();
 			}
-			volume.classList.remove('hidden');
+			volumeControl.classList.remove('hidden');
 		});
 
-		video.container.appendChild(volume);
+		video.container.appendChild(volumeControl);
 	}
 
 	return {

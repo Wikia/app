@@ -40,7 +40,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					// Play video automatically only for the first time
 					if (isVisible && !autoPlayed && params.autoPlay) {
 						video.play();
-						autoPlayed = true;
 					// Don't resume when video was paused manually
 					} else if (isVisible && autoPaused) {
 						video.resume();
@@ -54,7 +53,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('adCanPlay', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdStarted');
 				});
+
 				video.addEventListener('allAdsCompleted', function () {
+					autoPlayed = true;
 					video.ima.getAdsManager().dispatchEvent('wikiaAdCompleted');
 					video.ima.setAutoPlay(false);
 
@@ -72,6 +73,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('pause', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
 				});
+
+				if (params.autoPlay) {
+					video.addEventListener('wikiaAdStarted', function () {
+						if (!autoPlayed) {
+							video.mute();
+						}
+					});
+				}
 
 				if (params.onReady) {
 					params.onReady(video);
