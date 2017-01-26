@@ -20,7 +20,7 @@ class CoppaImageReviewHelper extends WikiaModel {
 
 		$where = [
 			'user_id' => $userId,
-			'state != ' . ImageReviewStatuses::STATE_DELETED . ' AND state != ' . ImageReviewStatuses::STATE_WIKI_DISABLED,
+			'state != ' . ImageStates::DELETED . ' AND state != ' . ImageStates::WIKI_DISABLED,
 		];
 
 		$from = wfTimestampOrNull( TS_DB, $from );
@@ -100,7 +100,7 @@ class CoppaImageReviewHelper extends WikiaModel {
 		$sqlWhere = [];
 
 		foreach ( $images as $image ) {
-			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
+			if ( $image['state'] == ImageStates::DELETED ) {
 				$deletionList[] = [ $image['wikiId'], $image['pageId'] ];
 				$sqlWhere[] = "( wiki_id = {$image['wikiId']} AND page_id = {$image['pageId']} )";
 			}
@@ -113,7 +113,7 @@ class CoppaImageReviewHelper extends WikiaModel {
 				'image_review',
 				[
 					'reviewer_id' => $userId,
-					'state' => ImageReviewStatuses::STATE_DELETED,
+					'state' => ImageStates::DELETED,
 					'review_end = now()',
 				],
 				[ implode( ' OR ', $sqlWhere ) ],
