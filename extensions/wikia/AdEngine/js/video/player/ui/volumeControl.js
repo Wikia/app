@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.volumeControl';
 
-	function createVolumeControl() {
+	function createVolumeControl(video) {
 		var volume = doc.createElement('div'),
 			speaker = doc.createElement('a');
 
@@ -18,6 +18,18 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		volume.speaker = speaker;
 		log('volume control is added', log.levels.info, logGroup);
 
+		volume.mute = function () {
+			volume.speaker.classList.add('mute');
+			video.mute();
+			log('mute', log.levels.info, logGroup);
+		};
+
+		volume.unmute = function () {
+			volume.speaker.classList.remove('mute');
+			video.unmute();
+			log('unmute', log.levels.info, logGroup);
+		};
+
 		return volume;
 	}
 
@@ -27,20 +39,9 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	}
 
 	function add(video) {
-		var volumeControl = createVolumeControl();
+		var volumeControl = createVolumeControl(video);
 
-		volumeControl.mute = function () {
-			volumeControl.speaker.classList.add('mute');
-			video.setVolume(0);
-			log('mute', log.levels.info, logGroup);
-		};
-		volumeControl.unmute = function () {
-			volumeControl.speaker.classList.remove('mute');
-			video.setVolume(0.75);
-			log('unmute', log.levels.info, logGroup);
-		};
-
-		volumeControl.addEventListener('click', function(e) {
+		volumeControl.addEventListener('click', function (e) {
 			if (video.isMuted()) {
 				volumeControl.unmute();
 			} else {
