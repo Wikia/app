@@ -75,75 +75,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getLinkTextObjectList( String $section, Array $linkKeys ) {
-		return array_map( function( $link ) use ( $section ) {
-			return $this->getLinkTextObject(
-				'global-footer-' . $section . '-link-' . $link,
-				$link,
-				$section . '.' . $link
-			);
-		}, $linkKeys );
-	}
-
-	private function getLinkTextObject( $titleKey, $hrefKey, $trackingLabel ) {
-		return [
-			'type' => 'link-text',
-			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $hrefKey == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $hrefKey ),
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
-	private function getLineTextObject( $key ) {
-		return [
-			'type' => 'line-text',
-			'title' => $this->getTranslatableTextObject( $key )
-		];
-	}
-
-	private function getTranslatableTextObject( $key ) {
-		return [
-			'type' => 'translatable-text',
-			'key' =>  $key
-		];
-	}
-
-	private function getTextObject( $value ) {
-		return [
-			'type' => 'text',
-			'value' => $value
-		];
-	}
-
-	private function getWdsSvgObject( $key ) {
-		return [
-			'type' => 'wds-svg',
-			'name' => $key,
-		];
-	}
-
-	private function getLinkImageObject( $imageKey, $titleKey, $href, $trackingLabel ) {
-		return [
-			'type' => 'link-image',
-			// 'image' is deprecated, use 'image-data' instead
-			'image' => $imageKey,
-			'image-data' => $this->getWdsSvgObject( $imageKey ),
-			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $href,
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
-	private function getLinkBrandedObject( $brand, $titleKey, $href, $trackingLabel) {
-		return [
-			'type' => 'link-branded',
-			'brand' => $brand,
-			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $href,
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
 	private function getSitenameData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
@@ -332,5 +263,74 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getSocialHrefs() {
 		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
+	}
+
+	private function getLinkTextObjectList( String $section, Array $linkKeys ) {
+		return array_map( function( $link ) use ( $section ) {
+			return $this->getLinkTextObject(
+				'global-footer-' . $section . '-link-' . $link,
+				$link,
+				$section . '.' . $link
+			);
+		}, $linkKeys );
+	}
+
+	private function getLinkTextObject( $titleKey, $hrefKey, $trackingLabel ) {
+		return [
+			'type' => 'link-text',
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $hrefKey == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $hrefKey ),
+			'tracking_label' => $trackingLabel,
+		];
+	}
+
+	private function getLineTextObject( $key ) {
+		return [
+			'type' => 'line-text',
+			'title' => $this->getTranslatableTextObject( $key )
+		];
+	}
+
+	private function getTranslatableTextObject( $key ) {
+		return [
+			'type' => 'translatable-text',
+			'key' =>  $key
+		];
+	}
+
+	private function getTextObject( $value ) {
+		return [
+			'type' => 'text',
+			'value' => $value
+		];
+	}
+
+	private function getWdsSvgObject( $key ) {
+		return [
+			'type' => 'wds-svg',
+			'name' => $key,
+		];
+	}
+
+	private function getLinkImageObject( $imageKey, $titleKey, $href, $trackingLabel ) {
+		return [
+			'type' => 'link-image',
+			// 'image' is deprecated, use 'image-data' instead
+			'image' => $imageKey,
+			'image-data' => $this->getWdsSvgObject( $imageKey ),
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
+		];
+	}
+
+	private function getLinkBrandedObject( $brand, $titleKey, $href, $trackingLabel) {
+		return [
+			'type' => 'link-branded',
+			'brand' => $brand,
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
+		];
 	}
 }
