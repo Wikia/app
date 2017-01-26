@@ -134,6 +134,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
+	private function getLinkBrandedObject( $brand, $titleKey, $href, $trackingLabel) {
+		return [
+			'type' => 'link-branded',
+			'brand' => $brand,
+			'title' => $this->getTranslatableTextObject( $titleKey ),
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
+		];
+	}
+
 	private function getSitenameData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
@@ -216,49 +226,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		if ( $this->lang === static::DEFAULT_LANG ) {
 			$out['links'] = [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-games'
-					],
-					'href' => 'http://fandom.wikia.com/games',
-					'tracking_label' => 'fandom-overview.games',
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-movies'
-					],
-					'href' => 'http://fandom.wikia.com/movies',
-					'tracking_label' => 'fandom-overview.movies',
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-overview-link-vertical-tv'
-					],
-					'href' => 'http://fandom.wikia.com/tv',
-					'tracking_label' => 'fandom-overview.tv',
-				],
+				$this->getLinkBrandedObject( 'games', 'global-footer-fandom-overview-link-vertical-games', 'http://fandom.wikia.com/games', 'fandom-overview.games'),
+				$this->getLinkBrandedObject( 'movies', 'global-footer-fandom-overview-link-vertical-movies', 'http://fandom.wikia.com/movies', 'fandom-overview.movies' ),
+				$this->getLinkBrandedObject( 'tv', 'global-footer-fandom-overview-link-vertical-tv', 'http://fandom.wikia.com/tv', 'fandom-overview.tv'),
 			];
 		}
 
-		$out['links'][] = [
-			'type' => 'link-branded',
-			'brand' => 'explore-wikis',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-overview-link-explore-wikis'
-			],
-			'href' => $this->getHref( 'explore-wikis' ),
-			'tracking_label' => 'fandom-overview.explore-wikis',
-		];
+		$out['links'][] = $this->getLinkBrandedObject( 'explore-wikis', 'global-footer-fandom-overview-link-explore-wikis', $this->getHref( 'explore-wikis' ), 'fandom-overview.explore-wikis' );
 
 		return $out;
 	}
