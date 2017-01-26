@@ -174,24 +174,18 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [ ]
 		];
 
-		if ( $this->getHref( 'community-central' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject( 'global-footer-community-link-community-central', 'community-central', 'community.community-central' );
-		}
+		$links = [
+			[ 'titleKey' => 'global-footer-community-link-community-central', 'hrefKey' => 'community-central', 'trackingLabel' => 'community.community-central'],
+			[ 'titleKey' => 'global-footer-community-link-support', 'hrefKey' => 'support', 'trackingLabel' => 'community.support'],
+			[ 'titleKey' => 'global-footer-community-link-fan-contributor-program', 'hrefKey' => 'fan-contributor', 'trackingLabel' => 'community.fan-contributor'],
+			[ 'titleKey' => 'global-footer-community-link-wam-score', 'hrefKey' => 'wam', 'trackingLabel' => 'community.wam'],
+			[ 'titleKey' => 'global-footer-community-link-help', 'hrefKey' => 'help', 'trackingLabel' => 'community.help'],
+		];
 
-		if ( $this->getHref( 'support' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject( 'global-footer-community-link-support', 'support', 'community.support' );
-		}
-
-		if ( $this->getHref( 'fan-contributor' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject( 'global-footer-community-link-fan-contributor-program', 'fan-contributor', 'community.fan-contributor' );
-		}
-
-		if ( $this->getHref( 'wam' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject( 'global-footer-community-link-wam-score', 'wam', 'community.wam' );
-		}
-
-		if ( $this->getHref( 'help' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject( 'global-footer-community-link-help', 'help', 'community.help' );
+		foreach ( $links as $link ) {
+			if ( $this->getHref( $link['hrefKey'] ) ) {
+				$data['links'][] = $this->getLinkTextTranslatableObject( $link['titleKey'], $link['hrefKey'], $link['trackingLabel'] );
+			}
 		}
 
 		return $data;
