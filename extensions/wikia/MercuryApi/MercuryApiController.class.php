@@ -334,25 +334,25 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$data = [];
-
-			// Empty category pages are not known but contain article list
-			if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
-				throw new NotFoundApiException( 'Page doesn\'t exist' );
-			}
-
-			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
-			$article = Article::newFromID( $title->getArticleId() );
-
-			if ( $title->isRedirect() ) {
-				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
-			}
-
 			$isMainPage = $title->isMainPage();
-			$data['isMainPage'] = $isMainPage;
-			$data['ns'] = $title->getNamespace();
+			$data = [
+				'ns' => $title->getNamespace(),
+				'isMainPage' => $isMainPage
+			];
 
 			if ( $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list
+				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
+					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
+
+				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
+				$article = Article::newFromID( $title->getArticleId() );
+
+				if ( $title->isRedirect() ) {
+					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
+				}
+
 				if ( $article instanceof Article) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 					$data['categories'] = $articleData['categories'];
