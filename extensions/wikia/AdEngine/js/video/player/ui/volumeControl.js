@@ -33,9 +33,13 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		return volume;
 	}
 
-	function isVideoMuted(video) {
+	function isMobilePlayerMuted(video) {
 		var mobileVideoAd = video.container.querySelector('video');
-		return (mobileVideoAd && mobileVideoAd.muted) || video.isMuted();
+		return mobileVideoAd && mobileVideoAd.muted;
+	}
+
+	function isVideoMuted(video) {
+		return isMobilePlayerMuted(video) || video.isMuted();
 	}
 
 	function add(video) {
