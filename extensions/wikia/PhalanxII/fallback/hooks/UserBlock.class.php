@@ -247,11 +247,6 @@ class UserBlock {
 		$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
 		$user->mBlock->mAddress = $blockData['text'];
 
-		// account creation check goes through the same hook...
-		if ( $isBlockIP ) {
-			$user->mBlock->setCreateAccount( 1 );
-		}
-
 		wfProfileOut( __METHOD__ );
 	}
 
