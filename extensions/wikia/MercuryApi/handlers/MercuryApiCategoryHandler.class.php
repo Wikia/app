@@ -1,11 +1,12 @@
 <?php
 
 class MercuryApiCategoryHandler {
+	const TRENDING_ARTICLES_COUNT = 6;
 
 	public static function getCategoryContent( Title $title, MercuryApi $mercuryApiModel ) {
 		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
 		return [
-			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData( $title ),
+			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData( self::TRENDING_ARTICLES_COUNT, $title ),
 			'members' => self::getMembers( $categoryPage )
 		];
 	}

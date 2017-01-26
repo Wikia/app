@@ -419,18 +419,18 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( string $category = null ) {
+	public function getTrendingArticlesData( $limit = 10, Title $category = null ) {
 		global $wgContentNamespaces;
 
 		$params = [
 			'abstract' => false,
 			'expand' => true,
-			'limit' => 10,
+			'limit' => $limit,
 			'namespaces' => implode( ',', $wgContentNamespaces )
 		];
 
-		if ( $category ) {
-			$params['category'] = $category;
+		if ( $category instanceof Title ) {
+			$params['category'] = $category->getText();
 		}
 
 		$data = [ ];
