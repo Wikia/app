@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
-		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		notRespondedMsg = 'NO_RESPONSE';
 
 	function setupPerformanceMap(skin) {
 		var biddersPerformanceMap = {},
@@ -80,7 +79,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
 
-		if (bid.getStatusCode() === responseErrorCode) {
+		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
 		return [bid.getSize(), bid.pbAg, bucket].join(';');
