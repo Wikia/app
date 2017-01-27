@@ -52,7 +52,7 @@ class WdsLinkImageTest extends WikiaBaseTest {
 
 
 	/**
-	 * @param $imageKey
+	 * @param $imageUrl
 	 * @param $title
 	 * @param $href
 	 * @param $label

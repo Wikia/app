@@ -4,24 +4,9 @@ class WdsLinkImage {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
 	use WdsTrackingLabelTrait;
+	use WdsImageTrait;
 
 	const TYPE = 'link-image';
-
-	private $image;
-	private $imageData;
-
-	public function setSvgImageData( $key ) {
-		$this->image = $key;
-		$this->imageData = ( new WdsSvg( $key ) )->get();
-
-		return $this;
-	}
-
-	public function setExternalImageData( $url ) {
-		$this->imageData = ( new WdsExternalImage( $url ) )->get();
-
-		return $this;
-	}
 
 	public function get() {
 		$result = [

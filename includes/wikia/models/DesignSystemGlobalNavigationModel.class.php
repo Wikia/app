@@ -142,24 +142,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private function getAnonUserData() {
 		return [
-			'header' => [
-				'type' => 'line-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-user',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-user',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
-				'subtitle' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
-				'tracking_label' => 'account',
-			],
+			'header' => (new WdsLineImage())->setSvgImageData( 'wds-icons-user' )
+				->setTranslatableTitle( 'global-navigation-anon-my-account' )
+				->setTranslatableSubtitle( 'global-navigation-anon-my-account' )
+				->setTrackingLabel( 'account' )
+				->get(),
 			'links' => [
 				[
 					'type' => 'link-authentication',
@@ -272,20 +259,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$userName = $user->getName();
 
 		return [
-			'header' => [
-				'type' => 'line-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-bell',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-bell',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-notifications-title'
-				],
-				'tracking_label' => 'notifications',
-			],
+			'header' => (new WdsLineImage())->setSvgImageData( 'wds-icons-bell' )
+				->setTranslatableTitle( 'global-navigation-notifications-title' )
+				->setTrackingLabel( 'notifications' )
+				->get(),
 			'module' => [
 				'type' => 'notifications',
 				'url' => $this->isMessageWallEnabled()
