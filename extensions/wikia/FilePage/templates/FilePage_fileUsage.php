@@ -4,7 +4,7 @@
 			<?= $heading ?>
 			<div class="page-list-pagination">
 				<img src="<?= wfBlankImgUrl() ?>" class="arrow left disabled">
-				<?= wfMessage('video-page-file-list-pagination', '<span class="page-list-current"></span>', '<span class="page-list-total"></span>')->text() ?>
+				<?= wfMessage( 'video-page-file-list-pagination' )->rawParams( '<span class="page-list-current"></span>', '<span class="page-list-total"></span>')->escaped(); ?>
 				<img src="<?= wfBlankImgUrl() ?>" class="arrow right">
 			</div>
 		</h2>
@@ -17,6 +17,6 @@
 	</section>
 	<script>
 		var FilePageSummary = FilePageSummary || {};
-		FilePageSummary[<?= json_encode($type) ?>] = <?= json_encode($summary) ?>;
+		FilePageSummary["<?= Xml::escapeJsString( $type ); ?>"] = <?= Xml::encodeJsVar( $summary ); ?>;
 	</script>
 <? endif; ?>
