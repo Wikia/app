@@ -40,6 +40,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			isMuted: function () {
 				return ima.getAdsManager().getVolume() === 0;
 			},
+			isMobilePlayerMuted: function () {
+				var mobileVideoAd = this.container.querySelector('video');
+				return mobileVideoAd && mobileVideoAd.autoplay && mobileVideoAd.muted;
+			},
 			isPaused: function () {
 				return ima.getStatus() === 'paused';
 			},

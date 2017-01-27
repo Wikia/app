@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	}
 
 	function updateCurrentState(video, volumeControl) {
-		if (video.isMuted()) {
+		if (video.isMuted() || video.isMobilePlayerMuted()) {
 			volumeControl.mute();
 		} else {
 			volumeControl.unmute();
