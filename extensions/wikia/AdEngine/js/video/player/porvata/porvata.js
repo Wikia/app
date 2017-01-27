@@ -9,6 +9,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
+	function muteFirstPlay(video, isFirstPlay) {
+		video.addEventListener('wikiaAdStarted', function () {
+			if (isFirstPlay) {
+				video.mute();
+			}
+		});
+	}
+
 	function inject(params) {
 		var isFirstPlay = true,
 			autoPlayed = false,
@@ -77,11 +85,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 
 				if (params.autoPlay) {
-					video.addEventListener('wikiaAdStarted', function () {
-						if (isFirstPlay) {
-							video.mute();
-						}
-					});
+					muteFirstPlay(video, isFirstPlay);
 				}
 
 				if (params.onReady) {
