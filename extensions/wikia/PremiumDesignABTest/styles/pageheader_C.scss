@@ -1,0 +1,145 @@
+#premium-design-ab-test-C-pageheader {
+	display: none;
+
+	.video {
+		width: 100%;
+		padding-top: 56%;
+		background-image: url("/extensions/wikia/PremiumDesignABTest/images/Video.png"); /* $wgCdnStylePath */
+		background-size: cover;
+		margin-bottom: 11px;
+	}
+
+	.WikiaPageHeader {
+		display: flex;
+		border-bottom: 2px solid #9a7b56;
+		margin-top: 15px;
+		padding-bottom: 0;
+
+		.header-container {
+			flex: 1;
+			border-bottom: 0;
+
+			.header-title h1 {
+				font-size: 48px;
+				font-weight: bold;
+				color: #000;
+			}
+		}
+
+		.header-tally {
+			display: none;
+		}
+
+		.wikia-menu-button {
+			background-color: #5f1023;
+			background-image: none;
+			border-radius: 0;
+			height: 33px;
+			border-top: 0;
+			border-bottom: 0;
+			margin-top: 9px;
+
+			.edit-pencil {
+				display: none;
+			}
+
+			> a {
+				padding: 5px 12px 6px;
+				border-color: rgba(255, 255, 255, 0.5);
+
+				&:hover {
+					background-image: none;
+					background-color: transparent;
+				}
+
+				&:before {
+					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */display: inline;
+					position: relative;
+					top: 4px;
+					margin-right: 2px;
+				}
+			}
+
+			.drop {
+				padding-left: 11px;
+
+				&:hover {
+					background-image: none;
+					background-color: transparent;
+				}
+
+				.chevron {
+					border-width: 5px;
+					margin: 0 11px 0 1px;
+				}
+			}
+
+			ul {
+				background-color: #fff;
+				top: 33px;
+				box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
+				border: 0;
+				font-size: 14px;
+				padding: 5px 0;
+
+				a {
+					padding: 0;
+
+					&:hover {
+						background-color: transparent;
+					}
+				}
+
+				li {
+					border-top: 0;
+					padding: 10px 18px;
+
+					&:hover {
+						background-color: #eee !important;
+					}
+				}
+			}
+
+
+		}
+
+		.wikia-button.talk, #ShareEntryPoint {
+			background-color: transparent;
+			background-image: none;
+			border: solid 1px #5f1023;
+			border-radius: 0;
+			color: #5f1023;
+			font-weight: bold;
+			padding: 3px 11px 9px;
+			text-transform: uppercase;
+			margin-top: 9px;
+
+			&:before {
+				display: inline;
+				position: relative;
+				top: 5px;
+				margin-right: 3px;
+			}
+		}
+
+		.wikia-button.talk {
+			margin-right: 10px;
+
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
+			}
+
+			.commentsbubble {
+				display: none;
+			}
+		}
+
+		#ShareEntryPoint {
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/share.svg"); /* $wgCdnStylePath */
+			}
+
+			>svg {display: none}
+		}
+	}
+}

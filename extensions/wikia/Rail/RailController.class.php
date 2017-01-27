@@ -9,6 +9,7 @@ class RailController extends WikiaController {
 	const FILTER_NON_LAZY_MODULES = false;
 
 	public function executeIndex($params) {
+		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
@@ -18,6 +19,13 @@ class RailController extends WikiaController {
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
+
+		$isPremiumDesignABTestEnabled = false;
+		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
+		if ( $wgCityId === '509' && $articleId === 3581 ) {
+			$isPremiumDesignABTestEnabled = true;
+		}
+		$this->setVal( 'isPremiumDesignABTestEnabled', $isPremiumDesignABTestEnabled );
 
 		wfProfileOut(__METHOD__);
 	}

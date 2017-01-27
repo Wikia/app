@@ -1,0 +1,47 @@
+#premium-design-ab-test-C-rightrail {
+	display: none;
+	overflow: auto;
+
+	.tally {
+		float: left;
+		
+		span {
+			display: block;
+			clear: left;
+			font-weight: bold;
+			margin-top: 1px;
+			letter-spacing: 0.2px;
+			
+			br {
+				display: none;
+			}
+		}
+
+		>em {
+			font-family: Arial;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+
+	.wikia-button.createpage {
+		float: right;
+		background-color: transparent;
+		background-image: none;
+		border: solid 1px #5f1023;
+		border-radius: 0;
+		color: #5f1023;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 2px 11px 9px;
+		text-transform: uppercase;
+
+		&:before {
+			content: url("/extensions/wikia/PremiumDesignABTest/images/add_new_page.svg"); /* $wgCdnStylePath */
+			display: inline;
+			position: relative;
+			top: 5px;
+			margin-right: 3px;
+		}
+	}
+}
