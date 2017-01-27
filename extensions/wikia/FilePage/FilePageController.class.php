@@ -173,7 +173,7 @@ SQL;
 	private function getLocalUsage( $fileTitle = null ): array {
 		wfProfileIn( __METHOD__ );
 
-		$target = !empty( $fileTitle ) ? $fileTitle : $this->getContext()->getTitle()->getDBkey();
+		$target = $fileTitle ?? $this->getContext()->getTitle()->getDBkey();
 
 		// Put an upper limit on how many of files to show
 		$limit = self::LIMIT_LOCAL_USAGE;
