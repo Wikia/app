@@ -9,19 +9,19 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
-	function muteFirstPlay(video, isFirstPlay) {
-		video.addEventListener('wikiaAdStarted', function () {
-			if (isFirstPlay) {
-				video.mute();
-			}
-		});
-	}
-
 	function inject(params) {
 		var isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
 			viewportListener;
+
+		function muteFirstPlay(video) {
+			video.addEventListener('wikiaAdStarted', function () {
+				if (isFirstPlay) {
+					video.mute();
+				}
+			});
+		}
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
 		tracker.track(params, 'init');
