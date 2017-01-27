@@ -26,15 +26,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
-			'header' => $this->getLinkImageObject(
-				'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				'Fandom powered by Wikia',
-				$this->getHref( 'fandom-logo' ),
-				'logo',
-				false
-			),
+			'header' => (new LinkImageObject())
+				->setImageData( 'wds-company-logo-fandom-powered-by-wikia-two-lines' )
+				->setTitle( 'Fandom powered by Wikia' )
+				->setHref( $this->getHref( 'fandom-logo' ) )
+				->setTrackingLabel( 'logo' )
+				->get(),
 			'company_overview' => [
-				'header' => $this->getLineTextTranslatableObject( 'global-footer-company-overview-header' ),
+				'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-company-overview-header' )->get(),
 				'links' => $this->getLinkTextObjectList(
 					'company-overview',
 					[ 'about', 'careers', 'press', 'contact', 'wikia-org' ]
@@ -47,42 +46,41 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				)
 			],
 			'create_wiki' => [
-				'description' => $this->getTranslatableTextObject( 'global-footer-create-wiki-description' ),
+				'description' => (new TranslatableTextObject( 'global-footer-create-wiki-description' ))->get(),
 				'links' => [
-					$this->getLinkTextTranslatableObject(
-						'global-footer-create-wiki-link-start-wikia',
-						'create-new-wiki',
-						'start-a-wiki'
-					)
+					(new LinkTextObject())
+						->setTranslatableTitle( 'global-footer-create-wiki-link-start-wikia' )
+						->setHref( $this->getHref( 'create-new-wiki' ) )
+						->setTrackingLabel( 'start-a-wiki' )
+						->get()
 				]
 			],
 			'community_apps' => [
-				'header' => $this->getLineTextTranslatableObject( 'global-footer-community-apps-header' ),
-				'description' => $this->getTranslatableTextObject( 'global-footer-community-apps-description' ),
+				'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-community-apps-header' )->get(),
+				'description' => (new TranslatableTextObject( 'global-footer-community-apps-description' ))->get(),
 				'links' => [
-					$this->getLinkImageObject(
-						'wds-company-store-appstore',
-						'global-footer-community-apps-link-app-store',
-						$this->getHref( 'app-store' ),
-						'community-apps.app-store'
-					),
-					$this->getLinkImageObject(
-						'wds-company-store-googleplay',
-						'global-footer-community-apps-link-google-play',
-						$this->getHref( 'google-play' ),
-						'community-apps.google-play'
-					),
+					(new LinkImageObject())
+						->setImageData( 'wds-company-store-appstore' )
+						->setTranslatableTitle( 'global-footer-community-apps-link-app-store' )
+						->setHref( $this->getHref( 'app-store' ) )
+						->setTrackingLabel( 'community-apps.app-store' )
+						->get(),
+					(new LinkImageObject())
+						->setImageData( 'wds-company-store-googleplay' )
+						->setTranslatableTitle( 'global-footer-community-apps-link-google-play' )
+						->setHref( $this->getHref( 'google-play' ) )
+						->setTrackingLabel( 'community-apps.google-play' )
+						->get(),
 				]
 			],
 			'licensing_and_vertical' => [
-				'description' => $this->getTranslatableTextObject(
+				'description' => (new TranslatableTextObject(
 					'global-footer-licensing-and-vertical-description',
 					[
 						'sitename' => $this->getSitenameData(),
 						'vertical' => $this->getVerticalData(),
 						'license' => $this->getLicenseData()
-					]
-				),
+					]))->get()
 			],
 		];
 
@@ -114,7 +112,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			}
 		}
 
-		return $this->getTextObject( $sitename );
+		return (new TextObject( $sitename ))->get();
 	}
 
 	private function getVerticalData() {
@@ -149,19 +147,19 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
-		return $this->getTranslatableTextObject( $verticalMessageKey );
+		return (new TranslatableTextObject( $verticalMessageKey ))->get();
 	}
 
 	private function getLicenseData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return $this->getLineTextTranslatableObject( 'global-footer-copyright-wikia' );
+			return (new LineTextObject())->setTranslatableTitle( 'global-footer-copyright-wikia' )->get();
 		}
 
-		return $this->getLinkTextObject(
-			WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
-			$this->getLicenseUrl(),
-			'license'
-		);
+		return (new LinkTextObject())
+			->setTitle( WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText )
+			->setHref( $this->getLicenseUrl() )
+			->setTrackingLabel( 'license' )
+			->get();
 	}
 
 	private function getFandomOverview() {
@@ -171,51 +169,51 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		if ( $this->lang === static::DEFAULT_LANG ) {
 			$out['links'] = [
-				$this->getLinkBrandedObject(
-					'games',
-					'global-footer-fandom-overview-link-vertical-games',
-					'http://fandom.wikia.com/games',
-					'fandom-overview.games'
-				),
-				$this->getLinkBrandedObject(
-					'movies',
-					'global-footer-fandom-overview-link-vertical-movies',
-					'http://fandom.wikia.com/movies',
-					'fandom-overview.movies'
-				),
-				$this->getLinkBrandedObject(
-					'tv',
-					'global-footer-fandom-overview-link-vertical-tv',
-					'http://fandom.wikia.com/tv',
-					'fandom-overview.tv'
-				),
+				(new LinkBrandedObject())
+					->setBrand( 'games' )
+					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-games' )
+					->setHref( 'http://fandom.wikia.com/games' )
+					->setTrackingLabel( 'fandom-overview.games' )
+					->get(),
+				(new LinkBrandedObject())
+					->setBrand( 'movies' )
+					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-movies' )
+					->setHref( 'http://fandom.wikia.com/movies' )
+					->setTrackingLabel( 'fandom-overview.movies' )
+					->get(),
+				(new LinkBrandedObject())
+					->setBrand( 'tv' )
+					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-tv' )
+					->setHref( 'http://fandom.wikia.com/tv' )
+					->setTrackingLabel( 'fandom-overview.tv' )
+					->get(),
 			];
 		}
 
-		$out['links'][] = $this->getLinkBrandedObject(
-			'explore-wikis',
-			'global-footer-fandom-overview-link-explore-wikis',
-			$this->getHref( 'explore-wikis' ),
-			'fandom-overview.explore-wikis'
-		);
+		$out['links'][] = (new LinkBrandedObject())
+			->setBrand( 'explore-wikis' )
+			->setTranslatableTitle( 'global-footer-fandom-overview-link-explore-wikis' )
+			->setHref( $this->getHref( 'explore-wikis' ) )
+			->setTrackingLabel( 'fandom-overview.explore-wikis' )
+			->get();
 
 		return $out;
 	}
 
 	private function getFollowUs() {
 		$data = [
-			'header' => $this->getLineTextTranslatableObject( 'global-footer-follow-us-header' ),
+			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-follow-us-header' )->get(),
 			'links' => []
 		];
 
 		$hrefs = $this->getSocialHrefs();
 		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
-			$data['links'][] = $this->getLinkImageObject(
-				'wds-icons-' . $hrefKey,
-				'global-footer-follow-us-link-' . $hrefKey,
-				$hrefUrl,
-				'follow-us.' . $hrefKey
-			);
+			$data['links'][] = (new LinkImageObject())
+				->setImageData( 'wds-icons-' . $hrefKey )
+				->setTranslatableTitle( 'global-footer-follow-us-link-' . $hrefKey )
+				->setHref( $hrefUrl )
+				->setTrackingLabel( 'follow-us.' . $hrefKey )
+				->get();
 		}
 
 		return $data;
@@ -223,7 +221,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getCommunity() {
 		$data = [
-			'header' => $this->getLineTextTranslatableObject( 'global-footer-community-header' ),
+			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-community-header' )->get(),
 			'links' => []
 		];
 
@@ -257,8 +255,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		foreach ( $links as $link ) {
 			if ( $this->getHref( $link['hrefKey'] ) ) {
-				$data['links'][] =
-					$this->getLinkTextTranslatableObject( $link['titleKey'], $link['hrefKey'], $link['trackingLabel'] );
+				$data['links'][] = (new LinkTextObject())
+					->setTranslatableTitle( $link['titleKey'] )
+					->setHref( $this->getHref( $link['hrefKey'] ) )
+					->setTrackingLabel( $link['trackingLabel'] )
+					->get();
 			}
 		}
 
@@ -267,22 +268,22 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getAdvertise() {
 		$data = [
-			'header' => $this->getLineTextTranslatableObject( 'global-footer-advertise-header' ),
+			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-advertise-header' )->get(),
 			'links' => [
-				$this->getLinkTextTranslatableObject(
-					'global-footer-advertise-link-media-kit',
-					'media-kit',
-					'advertise.media-kit'
-				)
+				(new LinkTextObject())
+					->setTranslatableTitle( 'global-footer-advertise-link-media-kit' )
+					->setHref( $this->getHref( 'media-kit' ) )
+					->setTrackingLabel( 'advertise.media-kit' )
+					->get()
 			]
 		];
 
 		if ( $this->getHref( 'media-kit-contact' ) ) {
-			$data['links'][] = $this->getLinkTextTranslatableObject(
-				'global-footer-advertise-link-contact',
-				'media-kit-contact',
-				'advertise.contact'
-			);
+			$data['links'][] = (new LinkTextObject())
+				->setTranslatableTitle( 'global-footer-advertise-link-contact' )
+				->setHref( $this->getHref( 'media-kit-contact' ) )
+				->setTrackingLabel( 'advertise.contact' )
+				->get();
 		}
 
 		return $data;
@@ -336,87 +337,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getLinkTextObjectList( String $section, Array $linkKeys ) {
 		return array_map(
 			function ( $link ) use ( $section ) {
-				return $this->getLinkTextTranslatableObject(
-					'global-footer-' . $section . '-link-' . $link,
-					$link,
-					$section . '.' . $link
-				);
+				return (new LinkTextObject())
+					->setTranslatableTitle( 'global-footer-' . $section . '-link-' . $link )
+					->setHref( $link == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $link ) )
+					->setTrackingLabel( $section . '.' . $link )
+					->get();
 			},
 			$linkKeys
 		);
-	}
-
-	private function getLinkTextTranslatableObject( $titleKey, $hrefKey, $trackingLabel ) {
-		return [
-			'type' => 'link-text',
-			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $hrefKey == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $hrefKey ),
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
-	private function getLinkTextObject( $titleValue, $href, $trackingLabel ) {
-		return [
-			'type' => 'link-text',
-			'title' => $this->getTextObject( $titleValue ),
-			'href' => $href,
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
-	private function getLineTextTranslatableObject( $key ) {
-		return [
-			'type' => 'line-text',
-			'title' => $this->getTranslatableTextObject( $key )
-		];
-	}
-
-	private function getTranslatableTextObject( $key, $params = null ) {
-		$result = [
-			'type' => 'translatable-text',
-			'key' => $key
-		];
-
-		if ( !empty( $params ) ) {
-			$result['params'] = $params;
-		}
-
-		return $result;
-	}
-
-	private function getTextObject( $value ) {
-		return [
-			'type' => 'text',
-			'value' => $value
-		];
-	}
-
-	private function getWdsSvgObject( $key ) {
-		return [
-			'type' => 'wds-svg',
-			'name' => $key,
-		];
-	}
-
-	private function getLinkImageObject( $imageKey, $title, $href, $trackingLabel, $translatable = true ) {
-		return [
-			'type' => 'link-image',
-			// 'image' is deprecated, use 'image-data' instead
-			'image' => $imageKey,
-			'image-data' => $this->getWdsSvgObject( $imageKey ),
-			'title' => $translatable ? $this->getTranslatableTextObject( $title ) : $this->getTextObject( $title ),
-			'href' => $href,
-			'tracking_label' => $trackingLabel,
-		];
-	}
-
-	private function getLinkBrandedObject( $brand, $titleKey, $href, $trackingLabel ) {
-		return [
-			'type' => 'link-branded',
-			'brand' => $brand,
-			'title' => $this->getTranslatableTextObject( $titleKey ),
-			'href' => $href,
-			'tracking_label' => $trackingLabel,
-		];
 	}
 }
