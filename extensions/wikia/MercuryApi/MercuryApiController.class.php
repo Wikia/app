@@ -383,9 +383,11 @@ class MercuryApiController extends WikiaController {
 						$data['article'] = $articleData;
 
 						if ( !$title->isContentPage() ) {
-							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-							$data['article']['displayTitle'] = $title->getText();
+							// This does two things:
+							// - gets displayTitle from parser function {{DISPLAYTITLE:displayTitle}}
+							// - removes the namespace prefix from it
+							$data['article']['displayTitle'] =
+								Title::newFromText( $data['article']['displayTitle'] )->getText();
 						}
 					}
 
