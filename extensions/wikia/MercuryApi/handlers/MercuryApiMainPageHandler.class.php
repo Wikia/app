@@ -4,22 +4,16 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
-	// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
-	public static function getMainPageData( MercuryApi $mercuryApiModel, $newFormat=false ) {
+	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
 		$mainPageData = [ ];
-		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null, $newFormat );
+		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null );
 		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 		$wikiDescription = self::getWikiDescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			if ( $newFormat ) {
-				$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
-			} else {
-				// TODO: remove this else block after release release of XW-2590 (XW-2625)
-				$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
-			}
+			$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
@@ -45,21 +39,20 @@ class MercuryApiMainPageHandler {
 		return $mainPageData;
 	}
 
-	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null, $newFormat=false ) {
-		// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
+	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null ) {
 		$data = [ ];
 		try {
 			$data = WikiaDataAccess::cache(
-				self::curatedContentDataMemcKey( $section . ( $newFormat ? '_new' : '' ) ),
+				self::curatedContentDataMemcKey( $section ),
 				WikiaResponse::CACHE_STANDARD,
-				function () use ( $mercuryApiModel, $section, $newFormat ) {
+				function () use ( $mercuryApiModel, $section ) {
 					$rawData = F::app()->sendRequest(
 						'CuratedContent',
 						'getList',
 						empty( $section ) ? [ ] : [ 'section' => $section ]
 					)->getData();
 
-					return $mercuryApiModel->processCuratedContent( $rawData, $newFormat );
+					return $mercuryApiModel->processCuratedContent( $rawData );
 				}
 			);
 		} catch ( NotFoundException $ex ) {
