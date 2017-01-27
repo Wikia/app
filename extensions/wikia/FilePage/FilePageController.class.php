@@ -14,6 +14,20 @@ class FilePageController extends WikiaController {
 	CONST LIMIT_LOCAL_USAGE = 100;
 
 	/**
+	 * SUS-1531: Restrict access to methods other than fileList (required by FilePageTabbed.js)
+	 * @throws ForbiddenException if a different method is requested externally
+	 */
+	public function init() {
+		if ( !$this->request->isInternal() && $this->request->getVal( 'method' ) !== 'fileList' ) {
+			throw new ForbiddenException();
+		}
+	}
+
+	protected function getSkipMethods() {
+		return [ 'fileUsage', 'relatedPages' ];
+	}
+
+	/**
 	 * Collects data about what articles the current file appears in, either
 	 * locally and globally.
 	 *
@@ -31,10 +45,10 @@ class FilePageController extends WikiaController {
 
 		// Based on $type get global or local data
 		if ( $type === 'global' ) {
-			$heading = wfMessage( 'video-page-global-file-list-header' )->plain();
+			$heading = wfMessage( 'video-page-global-file-list-header' )->escaped();
 
 			// Forward to the getGlobalUsage method
-			$summary = $this->sendSelfRequest( 'getGlobalUsage' )->getData()['summary'];
+			$summary = $this->getGlobalUsage();
 			if ( array_key_exists( $this->wg->DBname, $summary ) ) {
 				unset( $summary[$this->wg->DBname] );
 			}
@@ -44,8 +58,8 @@ class FilePageController extends WikiaController {
 			// the user pages forward
 			$shortenedSummary = array_slice( $summary, 0, 3 );
 		} else {
-			$heading = wfMessage( 'video-page-file-list-header' )->plain();
-			$summary = $this->sendSelfRequest( 'getLocalUsage' )->getData()['summary'];
+			$heading = wfMessage( 'video-page-file-list-header' )->escaped();
+			$summary = $this->getLocalUsage();
 
 			// Shorten the list down to three articles much like above in global, but
 			// here we also need to make the $shortentedSummary structure uniform to match
@@ -56,7 +70,7 @@ class FilePageController extends WikiaController {
 			}
 
 			$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl().'/'.$this->wg->Title->getPrefixedDBkey();
-			$seeMoreText = wfMessage( 'file-page-more-links' )->plain();
+			$seeMoreText = wfMessage( 'file-page-more-links' )->escaped();
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
@@ -77,17 +91,17 @@ class FilePageController extends WikiaController {
 
 	/**
 	 * Figure out what articles include this file from any wiki
+	 * @param string $fileTitle
+	 * @return array
 	 */
-	public function getGlobalUsage() {
+	private function getGlobalUsage( $fileTitle = null ): array {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
-			$this->summary = array();
 			wfProfileOut( __METHOD__ );
-			return;
+			return [];
 		}
 
-		$fileTitle = $this->getVal( 'fileTitle', '' );
 		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
 
 		$memcKey = $this->getMemcKeyGlobalUsage( $titleObj->getDBkey() );
@@ -144,20 +158,22 @@ SQL;
 			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60 );
 		}
 
-		$this->summary = $globalUsage;
-
 		wfProfileOut( __METHOD__ );
+		return $globalUsage;
 	}
 
 	/**
 	 * Figure out what articles on the local wiki are using this file.  A lot of this code is lifted from the
 	 * includes/ImagePage.php file.  The original code includes a lot of HTML building which means it wasn't
 	 * possible to reuse there.
+	 *
+	 * @param string $fileTitle
+	 * @return array
 	 */
-	public function getLocalUsage () {
+	private function getLocalUsage( $fileTitle = null ): array {
 		wfProfileIn( __METHOD__ );
 
-		$target = $this->getVal( 'fileTitle', $this->wg->Title->getDBkey() );
+		$target = !empty( $fileTitle ) ? $fileTitle : $this->getContext()->getTitle()->getDBkey();
 
 		// Put an upper limit on how many of files to show
 		$limit = self::LIMIT_LOCAL_USAGE;
@@ -190,7 +206,7 @@ SQL;
 
 		// We're showing redirects to this File, and sometimes the same File can have multiple
 		// redirects that point to it.  For example say we have File:A and it has File:B and File:C that
-		// redirect to it.  Additinally, page "D" includes links to File:B an File:C.  On the File:A file
+		// redirect to it.  Additionally, page "D" includes links to File:B an File:C.  On the File:A file
 		// page we'll see all the page links to File:B and to File:C.  Since page "D" links to both of those
 		// it will show up twice on the File:A file page.  We just want to show it once.
 		$seen = array();
@@ -229,9 +245,8 @@ SQL;
 			}
 		}
 
-		$this->summary = $summary;
-
 		wfProfileOut( __METHOD__ );
+		return $summary;
 	}
 
 	/**
@@ -317,7 +332,7 @@ SQL;
 	 * @param array $data
 	 * @return array
 	 */
-	public function addGlobalSummary( $data ) {
+	private function addGlobalSummary( array $data ): array {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
 			$ids = array();
 			$result = array();
@@ -362,7 +377,7 @@ SQL;
 	 * @param array $data
 	 * @return array
 	 */
-	public function addLocalSummary ( $data ) {
+	private function addLocalSummary( array $data ): array {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
 			$response = $this->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
 			return $response->getData();
@@ -529,7 +544,7 @@ SQL;
 		$expireDate = $this->getVal( 'expireDate', '' );
 		if ( !empty( $expireDate ) ) {
 			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = wfMessage( 'video-page-expires', $date )->text();
+			$expireDate = wfMessage( 'video-page-expires', $date )->escaped();
 		}
 
 		// Get restricted country list
@@ -539,10 +554,15 @@ SQL;
 			$regionalRestrictions = json_encode( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
 		}
 
-		$this->provider = ucwords( $provider );
-		$this->detailUrl = $this->getVal( 'detailUrl' );
-		$this->providerUrl = $this->getVal( 'providerUrl' );
-		$this->expireDate = $expireDate;
+		// Assemble provider link
+		$providerUrl = $this->getVal( 'providerUrl' );
+		$providerLink = Html::element( 'a', [ 'href' => $providerUrl, 'target' => '_blank' ], ucwords( $provider ) );
+		$providerPhrase = wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped();
+		if ( $expireDate ) {
+			$providerPhrase .= "<span class='expire-date'>$expireDate</span>";
+		}
+
+		$this->providerPhrase = $providerPhrase;
 		$this->regionalRestrictions = $regionalRestrictions;
 
 		wfProfileOut( __METHOD__ );
@@ -553,16 +573,8 @@ SQL;
 	 * @param string $title
 	 * @return string
 	 */
-	public function getMemcKeyGlobalUsage( $title ) {
+	private function getMemcKeyGlobalUsage( string $title ): string {
 		return wfSharedMemcKey( 'filepage', 'globalusage', md5( $title ) );
-	}
-
-	/**
-	 * Clear cache for global usage of the video
-	 * @param string $title
-	 */
-	public function invalidateCacheGlobalUsage( $title ) {
-		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $title ) );
 	}
 
 	/**
@@ -571,25 +583,7 @@ SQL;
 	 * @param integer $pageId
 	 * @return string
 	 */
-	public function getMemcKeyGlobalSummary( $dbName, $pageId ) {
+	private function getMemcKeyGlobalSummary( string $dbName, int $pageId ): string {
 		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
-	}
-
-	/**
-	 * Clear cache for summary of the global usage
-	 * @param string $dbName
-	 * @param integer $pageId
-	 */
-	public function invalidateCacheGlobalSummary( $dbName, $pageId ) {
-		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $dbName, $pageId ) );
-	}
-
-	private function nameToTitle ( $dbName ) {
-		$wikiData = WikiFactory::getWikiByDB( $dbName );
-		if ( empty( $wikiData ) ) {
-			return '';
-		} else {
-			return $wikiData->city_title;
-		}
 	}
 }
