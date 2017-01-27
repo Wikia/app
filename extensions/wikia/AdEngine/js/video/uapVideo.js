@@ -40,12 +40,12 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(params)
 			.then(function (video) {
-				var template = UITemplate.defaultTemplate;
+				var template = UITemplate.defaultLayout;
 
 				if (params.splitLayoutVideoPosition) {
 					template = UITemplate.splitLayout;
 				} else if (params.autoPlay) {
-					template = UITemplate.autoPlay;
+					template = UITemplate.autoPlayLayout;
 				}
 
 				log(['VUAP UI elements', template], log.levels.debug, logGroup);

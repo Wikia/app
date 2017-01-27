@@ -2,13 +2,13 @@
 define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 	'use strict';
 
-	var autoPlay = [
+	var autoPlayLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
 			'toggleAnimation'
 		],
-		defaultTemplate = [
+		defaultLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
@@ -23,8 +23,8 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 		];
 
 	return {
-		autoPlay: autoPlay,
-		defaultTemplate: defaultTemplate,
+		autoPlayLayout: autoPlayLayout,
+		defaultLayout: defaultLayout,
 		splitLayout: splitLayout
 	};
 });
