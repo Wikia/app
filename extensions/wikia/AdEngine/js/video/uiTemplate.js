@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'toggleVideo'
+			'toggleAnimation'
 		],
 		defaultTemplate = [
 			'progressBar',
@@ -14,10 +14,17 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'volumeControl',
 			'closeButton',
 			'toggleAnimation'
+		],
+		splitLayout = [
+			'progressBar',
+			'pauseOverlay',
+			'volumeControl',
+			'toggleVideo'
 		];
 
 	return {
-		default: defaultTemplate,
-		autoPlay: autoPlay
+		autoPlay: autoPlay,
+		defaultTemplate: defaultTemplate,
+		splitLayout: splitLayout
 	};
 });
