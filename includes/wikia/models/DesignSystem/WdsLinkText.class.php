@@ -3,6 +3,7 @@
 class WdsLinkText {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
+	use WdsTrackingLabelTrait;
 
 	const TYPE = 'link-text';
 

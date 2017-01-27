@@ -27,7 +27,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	public function getData() {
 		$data = [
 			'header' => (new WdsLinkImage())
-				->setImageData( 'wds-company-logo-fandom-powered-by-wikia-two-lines' )
+				->setSvgImageData( 'wds-company-logo-fandom-powered-by-wikia-two-lines' )
 				->setTitle( 'Fandom powered by Wikia' )
 				->setHref( $this->getHref( 'fandom-logo' ) )
 				->setTrackingLabel( 'logo' )
@@ -60,13 +60,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'description' => (new WdsTranslatableText( 'global-footer-community-apps-description' ))->get(),
 				'links' => [
 					(new WdsLinkImage())
-						->setImageData( 'wds-company-store-appstore' )
+						->setSvgImageData( 'wds-company-store-appstore' )
 						->setTranslatableTitle( 'global-footer-community-apps-link-app-store' )
 						->setHref( $this->getHref( 'app-store' ) )
 						->setTrackingLabel( 'community-apps.app-store' )
 						->get(),
 					(new WdsLinkImage())
-						->setImageData( 'wds-company-store-googleplay' )
+						->setSvgImageData( 'wds-company-store-googleplay' )
 						->setTranslatableTitle( 'global-footer-community-apps-link-google-play' )
 						->setHref( $this->getHref( 'google-play' ) )
 						->setTrackingLabel( 'community-apps.google-play' )
@@ -209,7 +209,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$hrefs = $this->getSocialHrefs();
 		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
 			$data['links'][] = (new WdsLinkImage())
-				->setImageData( 'wds-icons-' . $hrefKey )
+				->setSvgImageData( 'wds-icons-' . $hrefKey )
 				->setTranslatableTitle( 'global-footer-follow-us-link-' . $hrefKey )
 				->setHref( $hrefUrl )
 				->setTrackingLabel( 'follow-us.' . $hrefKey )

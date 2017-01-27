@@ -3,6 +3,7 @@
 class WdsLinkBranded {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
+	use WdsTrackingLabelTrait;
 
 	const TYPE = 'link-branded';
 

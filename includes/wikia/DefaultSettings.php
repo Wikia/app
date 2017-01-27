@@ -379,6 +379,7 @@ $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKey
 
 // Design System models classes
 $wgAutoloadClasses['WdsSvg'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSvg.class.php";
+$wgAutoloadClasses['WdsExternalImage'] = "{$IP}/includes/wikia/models/DesignSystem/WdsExternalImage.class.php";
 $wgAutoloadClasses['WdsText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsText.class.php";
 $wgAutoloadClasses['WdsTranslatableText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTranslatableText.class.php";
 $wgAutoloadClasses['WdsLinkBranded'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkBranded.class.php";
@@ -387,6 +388,7 @@ $wgAutoloadClasses['WdsLinkText'] = "{$IP}/includes/wikia/models/DesignSystem/Wd
 $wgAutoloadClasses['WdsLineText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineText.class.php";
 $wgAutoloadClasses['WdsTitleTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTitleTrait.php";
 $wgAutoloadClasses['WdsLinkTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkTrait.php";
+$wgAutoloadClasses['WdsTrackingLabelTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTrackingLabelTrait.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
