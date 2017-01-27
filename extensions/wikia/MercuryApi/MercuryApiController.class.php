@@ -396,7 +396,7 @@ class MercuryApiController extends WikiaController {
 						case NS_CATEGORY:
 							$categoryContent = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-							if ( empty( $categoryContent['members'] ) ) {
+							if ( empty( $categoryContent['members']['sections'] ) ) {
 								throw new NotFoundApiException( 'Category has no members' );
 							}
 
