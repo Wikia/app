@@ -12,6 +12,9 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../VideoHandlers.setup.php';
 		parent::setUp();
+
+		// SUS-1532: Disable GameStar API integration test until provider is sunset
+		$this->markTestSkipped( 'SUS-979 - GameStar provider sunset' );
 	}
 
 	protected function setUpMock( $cache_value = false ) {
