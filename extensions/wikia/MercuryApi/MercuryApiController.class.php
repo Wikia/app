@@ -334,10 +334,8 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$isMainPage = $title->isMainPage();
 			$data = [
-				'ns' => $title->getNamespace(),
-				'isMainPage' => $isMainPage
+				'ns' => $title->getNamespace()
 			];
 
 			if ( $this->isSupportedByMercury( $title ) ) {
@@ -352,6 +350,9 @@ class MercuryApiController extends WikiaController {
 				if ( $title->isRedirect() ) {
 					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 				}
+
+				$isMainPage = $title->isMainPage();
+				$data['isMainPage'] = $isMainPage;
 
 				if ( $article instanceof Article) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
