@@ -1,3 +1,152 @@
 #premium-design-ab-test-A-header {
-	display: none !important;
+	display: none;
+
+	.WikiaPageHeader {
+		.header-container {
+			border-bottom: 0;
+		}
+
+		.header-title h1 {
+			color: #000;
+			font-size: 48px;
+			font-weight: bold;
+		}
+
+		.header-tally {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.wikia-menu-button {
+			background-color: #5f1023;
+			background-image: none;
+			border-radius: 0;
+			height: 33px;
+			border-top: 0;
+			border-bottom: 0;
+
+			.edit-pencil {
+				display: none;
+			}
+
+			> a {
+				padding: 5px 10px 6px;
+				border-color: rgba(255, 255, 255, 0.5);
+
+				&:hover {
+					background-image: none;
+					background-color: transparent;
+				}
+
+				&:before {
+					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */
+					display: inline;
+					position: relative;
+					top: 2px;
+				}
+			}
+
+			.drop {
+				padding-left: 8px;
+
+				&:hover {
+					background-image: none;
+					background-color: transparent;
+				}
+
+				.chevron {
+					border-width: 5px;
+					margin: 0 11px 0 1px;
+				}
+			}
+
+			ul {
+				background-color: #fff;
+				top: 30px;
+				box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
+				border: 0;
+
+				li {
+					border-top: 0;
+
+					&:hover {
+						background-color: #fff !important;
+					}
+				}
+			}
+
+
+		}
+
+		.wikia-button.talk, .wikia-button.createpage, #ShareEntryPoint {
+			background-color: transparent;
+			background-image: none;
+			border: 0;
+			border-radius: 0;
+			color: #5f1023;
+			font-weight: bold;
+			padding: 7px 10px 7px;
+			text-transform: uppercase;
+
+			&:before {
+				display: inline;
+				position: relative;
+				top: 2px;
+			}
+		}
+
+		.wikia-button.talk {
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
+			}
+
+			.commentsbubble {
+				display: none;
+			}
+		}
+
+		.wikia-button.createpage {
+			font-size: 10px;
+			padding: 3px;
+			margin-top: 0;
+
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/add_new_page.svg"); /* $wgCdnStylePath */
+				vertical-align: middle;
+				top: 3px;
+				margin-right: 3px;
+			}
+		}
+
+		#ShareEntryPoint {
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/share.svg"); /* $wgCdnStylePath */
+			}
+
+			>svg {display: none}
+		}
+
+		.tally {
+			text-align: right;
+
+			>em {
+				font-family: Arial;
+				font-size: 30px;
+				font-weight: bold;
+			}
+
+			>span {
+				display: block;
+				font-weight: bold;
+				margin-top: 3px;
+
+				br {
+					display: none;
+				}
+			}
+		}
+
+
+	}
 }
