@@ -26,14 +26,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
-			'header' => (new LinkImageObject())
+			'header' => (new WdsLinkImage())
 				->setImageData( 'wds-company-logo-fandom-powered-by-wikia-two-lines' )
 				->setTitle( 'Fandom powered by Wikia' )
 				->setHref( $this->getHref( 'fandom-logo' ) )
 				->setTrackingLabel( 'logo' )
 				->get(),
 			'company_overview' => [
-				'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-company-overview-header' )->get(),
+				'header' => (new WdsLineText())->setTranslatableTitle( 'global-footer-company-overview-header' )->get(),
 				'links' => $this->getLinkTextObjectList(
 					'company-overview',
 					[ 'about', 'careers', 'press', 'contact', 'wikia-org' ]
@@ -46,9 +46,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				)
 			],
 			'create_wiki' => [
-				'description' => (new TranslatableTextObject( 'global-footer-create-wiki-description' ))->get(),
+				'description' => (new WdsTranslatableText( 'global-footer-create-wiki-description' ))->get(),
 				'links' => [
-					(new LinkTextObject())
+					(new WdsLinkText())
 						->setTranslatableTitle( 'global-footer-create-wiki-link-start-wikia' )
 						->setHref( $this->getHref( 'create-new-wiki' ) )
 						->setTrackingLabel( 'start-a-wiki' )
@@ -56,16 +56,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				]
 			],
 			'community_apps' => [
-				'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-community-apps-header' )->get(),
-				'description' => (new TranslatableTextObject( 'global-footer-community-apps-description' ))->get(),
+				'header' => (new WdsLineText())->setTranslatableTitle( 'global-footer-community-apps-header' )->get(),
+				'description' => (new WdsTranslatableText( 'global-footer-community-apps-description' ))->get(),
 				'links' => [
-					(new LinkImageObject())
+					(new WdsLinkImage())
 						->setImageData( 'wds-company-store-appstore' )
 						->setTranslatableTitle( 'global-footer-community-apps-link-app-store' )
 						->setHref( $this->getHref( 'app-store' ) )
 						->setTrackingLabel( 'community-apps.app-store' )
 						->get(),
-					(new LinkImageObject())
+					(new WdsLinkImage())
 						->setImageData( 'wds-company-store-googleplay' )
 						->setTranslatableTitle( 'global-footer-community-apps-link-google-play' )
 						->setHref( $this->getHref( 'google-play' ) )
@@ -74,7 +74,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				]
 			],
 			'licensing_and_vertical' => [
-				'description' => (new TranslatableTextObject(
+				'description' => (new WdsTranslatableText(
 					'global-footer-licensing-and-vertical-description',
 					[
 						'sitename' => $this->getSitenameData(),
@@ -112,7 +112,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			}
 		}
 
-		return (new TextObject( $sitename ))->get();
+		return (new WdsText( $sitename ))->get();
 	}
 
 	private function getVerticalData() {
@@ -147,15 +147,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
-		return (new TranslatableTextObject( $verticalMessageKey ))->get();
+		return (new WdsTranslatableText( $verticalMessageKey ))->get();
 	}
 
 	private function getLicenseData() {
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
-			return (new LineTextObject())->setTranslatableTitle( 'global-footer-copyright-wikia' )->get();
+			return (new WdsLineText())->setTranslatableTitle( 'global-footer-copyright-wikia' )->get();
 		}
 
-		return (new LinkTextObject())
+		return (new WdsLinkText())
 			->setTitle( WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText )
 			->setHref( $this->getLicenseUrl() )
 			->setTrackingLabel( 'license' )
@@ -169,19 +169,19 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		if ( $this->lang === static::DEFAULT_LANG ) {
 			$out['links'] = [
-				(new LinkBrandedObject())
+				(new WdsLinkBranded())
 					->setBrand( 'games' )
 					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-games' )
 					->setHref( 'http://fandom.wikia.com/games' )
 					->setTrackingLabel( 'fandom-overview.games' )
 					->get(),
-				(new LinkBrandedObject())
+				(new WdsLinkBranded())
 					->setBrand( 'movies' )
 					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-movies' )
 					->setHref( 'http://fandom.wikia.com/movies' )
 					->setTrackingLabel( 'fandom-overview.movies' )
 					->get(),
-				(new LinkBrandedObject())
+				(new WdsLinkBranded())
 					->setBrand( 'tv' )
 					->setTranslatableTitle( 'global-footer-fandom-overview-link-vertical-tv' )
 					->setHref( 'http://fandom.wikia.com/tv' )
@@ -190,7 +190,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			];
 		}
 
-		$out['links'][] = (new LinkBrandedObject())
+		$out['links'][] = (new WdsLinkBranded())
 			->setBrand( 'explore-wikis' )
 			->setTranslatableTitle( 'global-footer-fandom-overview-link-explore-wikis' )
 			->setHref( $this->getHref( 'explore-wikis' ) )
@@ -202,13 +202,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getFollowUs() {
 		$data = [
-			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-follow-us-header' )->get(),
+			'header' => (new WdsLineText())->setTranslatableTitle( 'global-footer-follow-us-header' )->get(),
 			'links' => []
 		];
 
 		$hrefs = $this->getSocialHrefs();
 		foreach ( $hrefs as $hrefKey => $hrefUrl ) {
-			$data['links'][] = (new LinkImageObject())
+			$data['links'][] = (new WdsLinkImage())
 				->setImageData( 'wds-icons-' . $hrefKey )
 				->setTranslatableTitle( 'global-footer-follow-us-link-' . $hrefKey )
 				->setHref( $hrefUrl )
@@ -221,7 +221,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getCommunity() {
 		$data = [
-			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-community-header' )->get(),
+			'header' => (new WdsLineText())->setTranslatableTitle( 'global-footer-community-header' )->get(),
 			'links' => []
 		];
 
@@ -255,7 +255,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		foreach ( $links as $link ) {
 			if ( $this->getHref( $link['hrefKey'] ) ) {
-				$data['links'][] = (new LinkTextObject())
+				$data['links'][] = (new WdsLinkText())
 					->setTranslatableTitle( $link['titleKey'] )
 					->setHref( $this->getHref( $link['hrefKey'] ) )
 					->setTrackingLabel( $link['trackingLabel'] )
@@ -268,9 +268,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getAdvertise() {
 		$data = [
-			'header' => (new LineTextObject())->setTranslatableTitle( 'global-footer-advertise-header' )->get(),
+			'header' => (new WdsLineText())->setTranslatableTitle( 'global-footer-advertise-header' )->get(),
 			'links' => [
-				(new LinkTextObject())
+				(new WdsLinkText())
 					->setTranslatableTitle( 'global-footer-advertise-link-media-kit' )
 					->setHref( $this->getHref( 'media-kit' ) )
 					->setTrackingLabel( 'advertise.media-kit' )
@@ -279,7 +279,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 
 		if ( $this->getHref( 'media-kit-contact' ) ) {
-			$data['links'][] = (new LinkTextObject())
+			$data['links'][] = (new WdsLinkText())
 				->setTranslatableTitle( 'global-footer-advertise-link-contact' )
 				->setHref( $this->getHref( 'media-kit-contact' ) )
 				->setTrackingLabel( 'advertise.contact' )
@@ -337,7 +337,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getLinkTextObjectList( String $section, Array $linkKeys ) {
 		return array_map(
 			function ( $link ) use ( $section ) {
-				return (new LinkTextObject())
+				return (new WdsLinkText())
 					->setTranslatableTitle( 'global-footer-' . $section . '-link-' . $link )
 					->setHref( $link == 'local-sitemap' ? $this->getLocalSitemapUrl() : $this->getHref( $link ) )
 					->setTrackingLabel( $section . '.' . $link )

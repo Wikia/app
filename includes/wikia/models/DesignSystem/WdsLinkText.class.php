@@ -1,6 +1,6 @@
 <?php
 
-class LinkTextObject {
+class WdsLinkText {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
 

@@ -6,7 +6,7 @@
  * Date: 27/01/2017
  * Time: 12:52
  */
-class LinkImageTest extends WikiaBaseTest {
+class WdsLinkImageTest extends WikiaBaseTest {
 	/**
 	 * @param $imageKey
 	 * @param $title
@@ -17,7 +17,7 @@ class LinkImageTest extends WikiaBaseTest {
 	 * @dataProvider getWithTextObjectDataProvider
 	 */
 	public function testGetWithTextObject( $imageKey, $title, $href, $label, $expected ) {
-		$linkImage = (new LinkImageObject())
+		$linkImage = (new WdsLinkImage())
 			->setImageData($imageKey)
 			->setTitle( $title )
 			->setHref( $href )
@@ -61,7 +61,7 @@ class LinkImageTest extends WikiaBaseTest {
 	 * @dataProvider getWithTranslatableTextObjectDataProvider
 	 */
 	public function testGetWithTranslatableTextObject( $imageKey, $title, $href, $label, $expected ) {
-		$linkImage = (new LinkImageObject())
+		$linkImage = (new WdsLinkImage())
 			->setImageData($imageKey)
 			->setTranslatableTitle( $title )
 			->setHref( $href )

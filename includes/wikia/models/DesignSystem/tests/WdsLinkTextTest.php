@@ -1,6 +1,6 @@
 <?php
 
-class LinkTextObjectTest extends WikiaBaseTest {
+class WdsLinkTextTest extends WikiaBaseTest {
 
 	/**
 	 * @param $title
@@ -11,7 +11,7 @@ class LinkTextObjectTest extends WikiaBaseTest {
 	 * @dataProvider getWithTextObjectDataProvider
 	 */
 	public function testGetWithTextObject( $title, $href, $label, $expected ) {
-		$linkText = (new LinkTextObject())
+		$linkText = (new WdsLinkText())
 			->setTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
@@ -46,7 +46,7 @@ class LinkTextObjectTest extends WikiaBaseTest {
 	 * @dataProvider getWithTranslatableTextObjectDataProvider
 	 */
 	public function testGetWithTranslatableTextObject( $title, $href, $label, $expected ) {
-		$linkText = (new LinkTextObject())
+		$linkText = (new WdsLinkText())
 			->setTranslatableTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );

@@ -1,8 +1,8 @@
 <?php
 
-class TextObjectTest extends WikiaBaseTest {
+class WdsTextTest extends WikiaBaseTest {
 	public function testGet() {
-		$text = new TextObject( 'some value' );
+		$text = new WdsText( 'some value' );
 		$expected = [
 			'type' => 'text',
 			'value' => 'some value'

@@ -1,6 +1,6 @@
 <?php
 
-class TranslatableTextObject {
+class WdsTranslatableText {
 	const TYPE = 'translatable-text';
 	private $key;
 	private $params;

@@ -4,13 +4,13 @@ trait WdsTitleTrait {
 	private $title;
 
 	public function setTitle( $value ) {
-		$this->title = ( new TextObject( $value ) )->get();
+		$this->title = ( new WdsText( $value ) )->get();
 
 		return $this;
 	}
 
 	public function setTranslatableTitle( $key ) {
-		$this->title = ( new TranslatableTextObject( $key ) )->get();
+		$this->title = ( new WdsTranslatableText( $key ) )->get();
 
 		return $this;
 	}

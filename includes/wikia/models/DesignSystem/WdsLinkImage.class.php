@@ -1,6 +1,6 @@
 <?php
 
-class LinkImageObject {
+class WdsLinkImage {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
 
@@ -11,7 +11,7 @@ class LinkImageObject {
 
 	public function setImageData( $key ) {
 		$this->image = $key;
-		$this->imageData = ( new WdsSvgObject( $key ) )->get();
+		$this->imageData = ( new WdsSvg( $key ) )->get();
 
 		return $this;
 	}

@@ -1,6 +1,6 @@
 <?php
 
-class LinkBrandedObject {
+class WdsLinkBranded {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
 

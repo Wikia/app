@@ -1,6 +1,6 @@
 <?php
 
-class LineTextObject {
+class WdsLineText {
 	use WdsTitleTrait;
 
 	const TYPE = 'line-text';

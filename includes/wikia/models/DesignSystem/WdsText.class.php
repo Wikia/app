@@ -1,6 +1,6 @@
 <?php
 
-class TextObject {
+class WdsText {
 	const TYPE = 'text';
 	private $value;
 

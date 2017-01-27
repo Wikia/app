@@ -1,7 +1,7 @@
 <?php
 
 
-class TranslatableTextObjectTest extends WikiaBaseTest {
+class WdsTranslatableTextTest extends WikiaBaseTest {
 
 	/**
 	 * @param $key
@@ -11,7 +11,7 @@ class TranslatableTextObjectTest extends WikiaBaseTest {
 	 * @dataProvider dataProvider
 	 */
 	public function testGet( $key, $params, $expected ) {
-		$this->assertEquals( $expected, ( new TranslatableTextObject( $key, $params ) )->get() );
+		$this->assertEquals( $expected, ( new WdsTranslatableText( $key, $params ) )->get() );
 	}
 
 	public function dataProvider() {

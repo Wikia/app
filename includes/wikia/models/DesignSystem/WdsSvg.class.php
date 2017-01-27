@@ -1,6 +1,6 @@
 <?php
 
-class WdsSvgObject {
+class WdsSvg {
 	const TYPE = 'wds-svg';
 	private $name;
 

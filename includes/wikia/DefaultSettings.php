@@ -378,13 +378,13 @@ $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCo
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 
 // Design System models classes
-$wgAutoloadClasses['WdsSvgObject'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSvgObject.class.php";
-$wgAutoloadClasses['TextObject'] = "{$IP}/includes/wikia/models/DesignSystem/TextObject.class.php";
-$wgAutoloadClasses['TranslatableTextObject'] = "{$IP}/includes/wikia/models/DesignSystem/TranslatableTextObject.class.php";
-$wgAutoloadClasses['LinkBrandedObject'] = "{$IP}/includes/wikia/models/DesignSystem/LinkBrandedObject.class.php";
-$wgAutoloadClasses['LinkImageObject'] = "{$IP}/includes/wikia/models/DesignSystem/LinkImageObject.class.php";
-$wgAutoloadClasses['LinkTextObject'] = "{$IP}/includes/wikia/models/DesignSystem/LinkTextObject.class.php";
-$wgAutoloadClasses['LineTextObject'] = "{$IP}/includes/wikia/models/DesignSystem/LineTextObject.class.php";
+$wgAutoloadClasses['WdsSvg'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSvg.class.php";
+$wgAutoloadClasses['WdsText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsText.class.php";
+$wgAutoloadClasses['WdsTranslatableText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTranslatableText.class.php";
+$wgAutoloadClasses['WdsLinkBranded'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkBranded.class.php";
+$wgAutoloadClasses['WdsLinkImage'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkImage.class.php";
+$wgAutoloadClasses['WdsLinkText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkText.class.php";
+$wgAutoloadClasses['WdsLineText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineText.class.php";
 $wgAutoloadClasses['WdsTitleTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTitleTrait.php";
 $wgAutoloadClasses['WdsLinkTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkTrait.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";

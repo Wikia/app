@@ -1,6 +1,6 @@
 <?php
 
-class LineTextObjectTest extends WikiaBaseTest {
+class WdsLineTextTest extends WikiaBaseTest {
 	/**
 	 * @param $title
 	 * @param $expected
@@ -8,7 +8,7 @@ class LineTextObjectTest extends WikiaBaseTest {
 	 * @dataProvider getWithTranslatableTextObjectDataProvider
 	 */
 	public function testGetWithTranslatableTextObject( $title, $expected ) {
-		$linkText = (new LineTextObject())
+		$linkText = (new WdsLineText())
 			->setTranslatableTitle( $title );
 		$this->assertEquals( $expected, $linkText->get() );
 	}

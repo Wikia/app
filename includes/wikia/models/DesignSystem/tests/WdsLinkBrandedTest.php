@@ -6,7 +6,7 @@
  * Date: 27/01/2017
  * Time: 12:33
  */
-class LinkBrandedTest extends WikiaBaseTest {
+class WdsLinkBrandedTest extends WikiaBaseTest {
 
 	/**
 	 * @param $brand
@@ -18,7 +18,7 @@ class LinkBrandedTest extends WikiaBaseTest {
 	 * @dataProvider getWithTranslatableTextObjectDataProvider
 	 */
 	public function testGetWithTranslatableTextObject( $brand, $title, $href, $label, $expected ) {
-		$linkText = (new LinkBrandedObject())
+		$linkText = (new WdsLinkBranded())
 			->setBrand( $brand )
 			->setTranslatableTitle( $title )
 			->setHref( $href )
