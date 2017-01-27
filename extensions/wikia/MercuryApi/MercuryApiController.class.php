@@ -394,7 +394,13 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
-							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+							$categoryContent = MercuryApiCategoryHandler::getCategoryContent( $title );
+
+							if ( empty( $categoryContent['members'] ) ) {
+								throw new NotFoundApiException( 'Category has no members' );
+							}
+
+							$data['nsSpecificContent'] = $categoryContent;
 							break;
 						case NS_FILE:
 							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
