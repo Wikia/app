@@ -2,8 +2,11 @@
 	display: none;
 
 	.WikiaPageHeader {
+		margin-top: 14px;
+
 		.header-container {
 			border-bottom: 0;
+			margin-bottom: 5px;
 		}
 
 		.header-title h1 {
@@ -15,7 +18,7 @@
 		.header-tally {
 			position: absolute;
 			right: 0;
-			top: 0;
+			top: 9px;
 		}
 
 		.wikia-menu-button {
@@ -31,7 +34,7 @@
 			}
 
 			> a {
-				padding: 5px 10px 6px;
+				padding: 5px 12px 6px;
 				border-color: rgba(255, 255, 255, 0.5);
 
 				&:hover {
@@ -40,15 +43,15 @@
 				}
 
 				&:before {
-					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */
-					display: inline;
+					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */display: inline;
 					position: relative;
-					top: 2px;
+					top: 4px;
+					margin-right: 2px;
 				}
 			}
 
 			.drop {
-				padding-left: 8px;
+				padding-left: 11px;
 
 				&:hover {
 					background-image: none;
@@ -63,15 +66,26 @@
 
 			ul {
 				background-color: #fff;
-				top: 30px;
+				top: 33px;
 				box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
 				border: 0;
+				font-size: 14px;
+				padding: 5px 0;
+
+				a {
+					padding: 0;
+
+					&:hover {
+						background-color: transparent;
+					}
+				}
 
 				li {
 					border-top: 0;
+					padding: 10px 18px;
 
 					&:hover {
-						background-color: #fff !important;
+						background-color: #eee !important;
 					}
 				}
 			}
@@ -86,17 +100,20 @@
 			border-radius: 0;
 			color: #5f1023;
 			font-weight: bold;
-			padding: 7px 10px 7px;
+			padding: 4px 11px 4px;
 			text-transform: uppercase;
 
 			&:before {
 				display: inline;
 				position: relative;
-				top: 2px;
+				top: 5px;
+				margin-right: 3px;
 			}
 		}
 
 		.wikia-button.talk {
+			margin-right: 0;
+
 			&:before {
 				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
 			}
@@ -108,14 +125,14 @@
 
 		.wikia-button.createpage {
 			font-size: 10px;
-			padding: 3px;
-			margin-top: 0;
+			padding: 0;
+			margin-top: 1px;
 
 			&:before {
 				content: url("/extensions/wikia/PremiumDesignABTest/images/add_new_page.svg"); /* $wgCdnStylePath */
 				vertical-align: middle;
-				top: 3px;
 				margin-right: 3px;
+				top: 5px;
 			}
 		}
 
@@ -139,7 +156,8 @@
 			>span {
 				display: block;
 				font-weight: bold;
-				margin-top: 3px;
+				margin-top: 4px;
+				letter-spacing: 0.2px;
 
 				br {
 					display: none;
