@@ -10,7 +10,8 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 		replayOverlayClass = 'replay-overlay';
 
 	function add(video) {
-		var overlay = doc.createElement('div');
+		var overlay = doc.createElement('div'),
+			overlayPercentWidth = 0;
 
 		overlay.classList.add(replayOverlayClass);
 		overlay.addEventListener('click', function () {
@@ -21,8 +22,12 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 		});
 
 		video.addEventListener('wikiaAdCompleted', function() {
+			if (!overlayPercentWidth) {
+				overlayPercentWidth = getOverlayWidth(video);
+			}
+
 			// make overlay visible after ad finishes
-			overlay.style.width = getOverlayWidth(video);
+			overlay.style.width = overlayPercentWidth;
 		});
 
 		video.container.parentElement.insertBefore(overlay, video.container);
