@@ -123,21 +123,6 @@ class MercuryApiMainPageHandler {
 	}
 
 	/**
-	 * @TODO XW-1174 - rethink this
-	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
-	 *
-	 * @param Title $title
-	 * @return array
-	 */
-	public static function getMainPageMockedDetails( Title $title ) {
-		return [
-			'ns' => 0,
-			'title' => $title->getText(),
-			'revision' => []
-		];
-	}
-
-	/**
 	 * Fetches wiki description (aka "Promote your wiki" description)
 	 *
 	 * @return string
