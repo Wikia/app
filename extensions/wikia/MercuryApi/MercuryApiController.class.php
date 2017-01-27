@@ -351,7 +351,8 @@ class MercuryApiController extends WikiaController {
 					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 				}
 
-				$data['isMainPage'] = $title->isMainPage();
+				$isMainPage = $title->isMainPage();
+				$data['isMainPage'] = $isMainPage;
 
 				if ( $article instanceof Article) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
