@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.replayOverlay',
 		replayOverlayClass = 'replay-overlay';
 
-	function add(video) {
+	function add(video, params) {
 		var overlay = doc.createElement('div'),
 			overlayPercentWidth = 0;
 
@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 
 		video.addEventListener('wikiaAdCompleted', function() {
 			if (!overlayPercentWidth) {
-				overlayPercentWidth = getOverlayWidth(video);
+				overlayPercentWidth = getOverlayWidth(params);
 			}
 
 			// make overlay visible after ad finishes
@@ -37,19 +37,18 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	}
 
 	/**
-	 * Basing on width set on video container and total ad width compute width (in %)
+	 * Basing on video width and total ad width compute width (in %)
 	 * of overlay to make it responsive.
 	 *
 	 * offsetWidth won't work in case video container is hidden.
-	 * @param video
+	 * @param params
 	 * @return string in form '55%'
 	 */
-	function getOverlayWidth(video) {
-		var adWidth = video.container.closest('.wikia-ad').offsetWidth,
-			videoContainerWidthString = video.container.style.width,
-			videoContainerWidth = parseInt(videoContainerWidthString.substr(0, videoContainerWidthString.length -2));
+	function getOverlayWidth(params) {
+		var adWidth = params.container.offsetWidth,
+			videoWidth = params.hideWhenPlaying.offsetWidth;
 
-		return 100 * videoContainerWidth / adWidth + '%';
+		return 100 * videoWidth / adWidth + '%';
 	}
 
 	return {
