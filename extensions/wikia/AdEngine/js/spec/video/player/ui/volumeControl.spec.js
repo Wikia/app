@@ -69,14 +69,4 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 		mocks.video.volumeControl.click();
 		expect(mocks.video.volumeToggle).toHaveBeenCalled();
 	});
-
-
-	it('Click on volume control triggers video volume toggle action', function () {
-		volumeControl.add(mocks.video);
-
-		spyOn(mocks.video, 'volumeToggle');
-
-		mocks.video.volumeControl.click();
-		expect(mocks.video.volumeToggle).toHaveBeenCalled();
-	});
 });
