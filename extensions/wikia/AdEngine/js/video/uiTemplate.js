@@ -6,7 +6,6 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'closeButton',
 			'toggleVideo'
 		],
 		defaultTemplate = [
