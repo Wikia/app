@@ -12,28 +12,14 @@ class MercuryApiArticleHandlerTest extends WikiaBaseTest {
 	 * @dataProvider getArticleDataProvider
 	 *
 	 * @param $expected
-	 * @param $articleDetailsMock
-	 * @param $articleJsonMock
 	 * @param $topContributorsJsonMock
 	 * @param $relatedPagesMock
 	 */
 	public function testGetArticleData(
 		$expected,
-		$articleDetailsMock,
-		$articleJsonMock,
 		$topContributorsJsonMock,
 		$relatedPagesMock
 	) {
-		$this->getStaticMethodMock( 'MercuryApiArticleHandler', 'getArticleDetails' )
-			->expects( $this->once() )
-			->method( 'getArticleDetails' )
-			->will( $this->returnValue( $articleDetailsMock ) );
-
-		$this->getStaticMethodMock( 'MercuryApiArticleHandler', 'getArticleJson' )
-			->expects( $this->once() )
-			->method( 'getArticleJson' )
-			->will( $this->returnValue( $articleJsonMock ) );
-
 		$this->getStaticMethodMock( 'MercuryApiArticleHandler', 'getTopContributorsDetails' )
 			->expects( $this->once() )
 			->method( 'getTopContributorsDetails' )
@@ -55,34 +41,13 @@ class MercuryApiArticleHandlerTest extends WikiaBaseTest {
 		return [
 			[
 				'$expected' => [
-					'details' => [ ],
-					'article' => [ ],
 					'topContributors' => [ ],
 				],
-				'$articleDetailsMock' => [ ],
-				'$articleJsonMock' => [ ],
 				'$topContributorsJsonMock' => [ ],
 				'$relatedPagesMock' => [ ]
 			],
 			[
 				'$expected' => [
-					'details' => [
-						'id' => 56921,
-						'title' => "Iron Dagger (Skyrim)",
-					],
-					'article' => [
-						'content' => 'The Iron Dagger is a one-handed weapon that appears in The Elder Scrolls V: Skyrim.',
-						'media' => [
-							[
-								'type' => "image",
-								'title' => "DamageIcon.png",
-							],
-							[
-								'type' => "image",
-								'title' => "IronDagger SK.png",
-							],
-						]
-					],
 					'topContributors' => [
 						[
 							'user_id' => 3186827,
@@ -102,23 +67,6 @@ class MercuryApiArticleHandlerTest extends WikiaBaseTest {
 							'url' => "/wiki/Orcish_Dagger",
 							'title' => "Orcish Dagger",
 						]
-					]
-				],
-				'$articleDetailsMock' => [
-					'id' => 56921,
-					'title' => "Iron Dagger (Skyrim)",
-				],
-				'$articleJsonMock' => [
-					'content' => 'The Iron Dagger is a one-handed weapon that appears in The Elder Scrolls V: Skyrim.',
-					'media' => [
-						[
-							'type' => "image",
-							'title' => "DamageIcon.png",
-						],
-						[
-							'type' => "image",
-							'title' => "IronDagger SK.png",
-						],
 					]
 				],
 				'$topContributorsJsonMock' => [

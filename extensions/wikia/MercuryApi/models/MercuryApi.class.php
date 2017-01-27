@@ -317,17 +317,16 @@ class MercuryApi {
 	 *
 	 * @return array|null
 	 */
-	public function processCuratedContent( $rawData, $newFormat = false ) {
-		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+	public function processCuratedContent( $rawData ) {
 		if ( empty( $rawData ) ) {
 			return null;
 		}
 
 		$data = [];
-		$sections = $this->getCuratedContentSections( $rawData, $newFormat );
-		$items = $this->getCuratedContentItems( $rawData['items'], $newFormat );
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData['items'] );
 		$featured =
-			isset( $rawData['featured'] ) ? $this->getCuratedContentItems( $rawData['featured'], $newFormat ) : [];
+			isset( $rawData['featured'] ) ? $this->getCuratedContentItems( $rawData['featured'] ) : [];
 
 		if ( !empty( $sections ) || !empty( $items ) ) {
 			$data['items'] = [];
@@ -355,42 +354,29 @@ class MercuryApi {
 	 *
 	 * @return array
 	 */
-	public function getCuratedContentSections( Array $data, $newFormat = false ) {
-		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+	public function getCuratedContentSections( Array $data ) {
 		$sections = [];
 
-		if ( $newFormat && !empty( $data['sections'] ) ) {
+		if ( !empty( $data['sections'] ) ) {
 			foreach ( $data['sections'] as $dataItem ) {
 				$section = [];
 				$section['label'] = $dataItem['title'];
 				$section['imageUrl'] = $dataItem['image_url'];
 				$section['type'] = 'section';
-				$section['items'] = $this->getSectionContent( $dataItem['title'], $newFormat );
+				$section['items'] = $this->getSectionContent( $dataItem['title'] );
 				$section['imageCrop'] = isset( $dataItem['image_crop'] ) ? $dataItem['image_crop'] : null;
 
 				if ( !empty( $section['items'] ) ) {
 					$sections[] = $section;
 				}
 			}
-
-			return $sections;
-		}
-
-		// TODO: remove this block after release of XW-2590 (XW-2625)
-		if ( !empty( $data['sections'] ) ) {
-			foreach ( $data['sections'] as $section ) {
-				$section['type'] = 'section';
-				$section['items'] = $this->getSectionContent( $section['title'], $newFormat );
-				$sections[] = $section;
-			}
 		}
 
 		return $sections;
 	}
 
-	protected function getSectionContent( $sectionTitle, $newFormat ) {
-		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
-		$content = MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle, $newFormat );
+	protected function getSectionContent( $sectionTitle ) {
+		$content = MercuryApiMainPageHandler::getCuratedContentData( $this, $sectionTitle );
 
 		return isset( $content['items'] ) ? $content['items'] : [];
 	}
@@ -402,12 +388,11 @@ class MercuryApi {
 	 *
 	 * @return array
 	 */
-	public function getCuratedContentItems( $items, $newFormat = false ) {
-		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
+	public function getCuratedContentItems( $items ) {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item, $newFormat );
+				$processedItem = $this->processCuratedContentItem( $item );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
@@ -420,7 +405,7 @@ class MercuryApi {
 	/**
 	 * @desc Mercury can't open article using ID - we need to create a local link.
 	 * If article doesn't exist (Title is null) return null.
-	 * In other case return item with updated article_local_url.
+	 * In other case return item with updated url.
 	 * TODO Implement cache for release version.
 	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
 	 *
@@ -428,47 +413,26 @@ class MercuryApi {
 	 *
 	 * @return mixed
 	 */
-	public function processCuratedContentItem( $item, $newFormat = false ) {
-		// TODO: remove $newFormat parameter ^ after release of XW-2590 (XW-2625)
-		if ( $newFormat ) {
-			$result = [
-				'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
-				'imageUrl' => $item['image_url'],
-				'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
-				'type' => $item['type'],
-			];
+	public function processCuratedContentItem( $item ) {
+		$result = [
+			'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
+			'imageUrl' => $item['image_url'],
+			'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
+			'type' => $item['type'],
+		];
 
-			if ( !empty( $item['article_id'] ) ) {
-				$title = Title::newFromID( $item['article_id'] );
-
-				if ( !empty( $title ) ) {
-					$result['url'] = $title->getLocalURL();
-
-					return $result;
-				}
-			} elseif ( $item['article_id'] === 0 ) {
-				$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
-
-				return $result;
-			}
-		} else if ( !empty( $item['article_id'] ) ) { // TODO: remove this block after release release of XW-2590 (XW-2625)
+		if ( !empty( $item['article_id'] ) ) {
 			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$item['article_local_url'] = $title->getLocalURL();
+				$result['url'] = $title->getLocalURL();
 
-				return $item;
+				return $result;
 			}
-		} else {
-			if ( $item['article_id'] === 0 ) {
-				// Categories which don't have content have wgArticleID set to 0
-				// In order to generate link for them
-				// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
-				global $wgArticlePath;
-				$item['article_local_url'] = str_replace( "$1", $item['title'], $wgArticlePath );
+		} elseif ( $item['article_id'] === 0 ) {
+			$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
 
-				return $item;
-			}
+			return $result;
 		}
 
 		return null;
