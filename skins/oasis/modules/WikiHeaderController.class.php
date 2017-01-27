@@ -8,6 +8,7 @@ class WikiHeaderController extends WikiaController {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
 	public function Index() {
+		global $wgCityId;
 		OasisController::addBodyClass( 'wikinav2' );
 
 		$themeSettings = new ThemeSettings();
@@ -50,6 +51,13 @@ class WikiHeaderController extends WikiaController {
 			'random' => SpecialPage::getTitleFor( 'Random' )->getLocalURL(),
 			'recentchanges' => SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL(),
 		];
+
+		$isPremiumDesignABTestEnabled = false;
+		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
+		if ( $wgCityId === '509' && $articleId === 3581 ) {
+			$isPremiumDesignABTestEnabled = true;
+		}
+		$this->setVal( 'isPremiumDesignABTestEnabled', $isPremiumDesignABTestEnabled );
 	}
 
 	public function Wordmark() {

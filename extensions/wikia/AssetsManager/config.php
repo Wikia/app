@@ -3190,3 +3190,14 @@ $config[ 'rwe_page_header_js' ] = [
 		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
 	]
 ];
+
+
+
+
+$config[ 'premium_design_ab_test_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumDesignABTest/styles/index.scss'
+	]
+];
