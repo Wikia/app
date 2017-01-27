@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 		// Reload iframe in order to make IMA work when user is moving back/forward to the page with player
 		// https://groups.google.com/forum/#!topic/ima-sdk/Q6Y56CcXkpk
 		// https://github.com/googleads/videojs-ima/issues/110
-		if (win.performance && win.performance.navigation.type === 2) {
+		if (win.performance && win.performance.navigation.type === win.performance.navigation.TYPE_BACK_FORWARD) {
 			iframe.contentWindow.location.href = iframe.src;
 		}
 
