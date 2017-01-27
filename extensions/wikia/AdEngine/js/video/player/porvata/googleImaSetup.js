@@ -31,14 +31,17 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		return adsRequest;
 	}
 
-	function getRenderingSettings() {
+	function getRenderingSettings(params) {
 		var adsRenderingSettings = new win.google.ima.AdsRenderingSettings(),
 			maximumRecommendedBitrate = 68000; // 2160p High Frame Rate
+
+		params = params || {};
 
 		if (!browserDetect.isMobile()) {
 			adsRenderingSettings.bitrate = maximumRecommendedBitrate;
 		}
 
+		adsRenderingSettings.loadVideoTimeout = params.loadVideoTimeout || 15000;
 		adsRenderingSettings.enablePreloading = true;
 		adsRenderingSettings.uiElements = [];
 

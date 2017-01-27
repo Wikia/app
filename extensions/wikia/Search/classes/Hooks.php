@@ -17,6 +17,20 @@ use Wikia\Search\Indexer;
 class Hooks {
 
 	/**
+	 * Stores backlinks for each target article, listing the backlink text, and which source articles link to them
+	 *
+	 * @var array
+	 */
+	protected static $outboundLinks = [];
+
+	/**
+	 * Encapsulates MediaWiki logic
+	 *
+	 * @var \Wikia\Search\MediaWikiService
+	 */
+	protected static $service;
+
+	/**
 	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
 	 *
 	 * @param  int $city_public
@@ -85,6 +99,44 @@ class Hooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Uses MediaWiki LinkEnd hook to store outbound links
+	 *
+	 * Bind via $service->registerHook( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' );
+	 *
+	 * @param * $skin
+	 * @param \Title $target
+	 * @param array $options
+	 * @param * $text
+	 * @param array $attribs
+	 * @param * $ret
+	 *
+	 * @return boolean
+	 */
+	public static function onLinkEnd( $skin, \Title $target, array $options, &$text, array &$attribs, &$ret ) {
+		$service = self::$service ?: new MediaWikiService;
+		self::$service = $service;
+		$targetId = $service->getCanonicalPageIdFromPageId( $target->getArticleID() );
+		if ( $targetId !== 0 ) {
+			$targetDocId = $service->getWikiId() . '_' . $targetId;
+			self::$outboundLinks[] = sprintf( "%s | %s", $targetDocId, strip_tags( $text ) );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns the current parse's outbound links and reinitializes the array.
+	 *
+	 * @return array
+	 */
+	public static function popLinks() {
+		$links = self::$outboundLinks;
+		self::$outboundLinks = [];
+
+		return $links;
 	}
 
 }

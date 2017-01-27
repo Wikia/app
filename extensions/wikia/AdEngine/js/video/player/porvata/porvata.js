@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	function inject(params) {
 		var autoPlayed = false,
 			autoPaused = false,
-			viewportListener;
+			viewportListener = null;
 
 		log(['injecting porvata player', params], log.levels.debug, logGroup);
 		tracker.track(params, 'init');
@@ -60,10 +60,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
+						viewportListener = null;
 					}
 				});
 				video.addEventListener('start', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
+					if (!viewportListener) {
+						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+					}
 				});
 				video.addEventListener('resume', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
