@@ -38,8 +38,8 @@ class WdsLinkAuthenticationTest extends WikiaBaseTest {
 						'key' => 'some-title'
 					],
 					'href' => 'some.href.com',
-					'param-name' => 'some-param',
 					'tracking_label' => 'label',
+					'param-name' => 'some-param',
 				]
 			]
 		];

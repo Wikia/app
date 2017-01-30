@@ -29,20 +29,20 @@ class WdsLineImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'line-image',
-					'image-data' => [
-						'type' => 'wds-svg',
-						'name' => 'some-image',
-					],
+					'image' => 'some-image',
 					'title' => [
 						'type' => 'text',
 						'value' => 'some title'
 					],
 					'tracking_label' => 'label',
-					'image' => 'some-image',
 					'subtitle' => [
 						'type' => 'text',
 						'value' => 'subtitle'
-					]
+					],
+					'image-data' => [
+						'type' => 'wds-svg',
+						'name' => 'some-image',
+					],
 				]
 			]
 		];
@@ -72,16 +72,17 @@ class WdsLineImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'line-image',
-					'image-data' => [
-						'type' => 'wds-svg',
-						'name' => 'some-image',
-					],
+					'image' => 'some-image',
 					'title' => [
 						'type' => 'text',
 						'value' => 'some title'
 					],
 					'tracking_label' => 'label',
-					'image' => 'some-image',
+					'subtitle' => null,
+					'image-data' => [
+						'type' => 'wds-svg',
+						'name' => 'some-image',
+					],
 				]
 			]
 		];

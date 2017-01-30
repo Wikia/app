@@ -41,12 +41,12 @@ class WdsLinkAuthenticationWithSubtitleTest extends WikiaBaseTest {
 						'key' => 'some-title'
 					],
 					'href' => 'some.href.com',
-					'param-name' => 'some-param',
 					'tracking_label' => 'label',
 					'subtitle' => [
 						'type' => 'translatable-text',
 						'key' => 'some-subtitle',
-					]
+					],
+					'param-name' => 'some-param',
 				]
 			]
 		];

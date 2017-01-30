@@ -34,10 +34,6 @@ class WdsLinkImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'link-image',
-					'image-data' => [
-						'type' => 'wds-svg',
-						'name' => 'some-image',
-					],
 					'title' => [
 						'type' => 'text',
 						'value' => 'some title'
@@ -45,6 +41,10 @@ class WdsLinkImageTest extends WikiaBaseTest {
 					'href' => 'some.href.com',
 					'tracking_label' => 'label',
 					'image' => 'some-image',
+					'image-data' => [
+						'type' => 'wds-svg',
+						'name' => 'some-image',
+					],
 				]
 			]
 		];
@@ -78,16 +78,17 @@ class WdsLinkImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'link-image',
-					'image-data' => [
-						'type' => 'image-external',
-						'url' => 'some.image.url',
-					],
 					'title' => [
 						'type' => 'text',
 						'value' => 'some title'
 					],
 					'href' => 'some.href.com',
-					'tracking_label' => 'label'
+					'tracking_label' => 'label',
+					'image' => null,
+					'image-data' => [
+						'type' => 'image-external',
+						'url' => 'some.image.url',
+					],
 				]
 			]
 		];
@@ -120,10 +121,6 @@ class WdsLinkImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'link-image',
-					'image-data' => [
-						'type' => 'wds-svg',
-						'name' => 'some-image',
-					],
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'some-title'
@@ -131,6 +128,10 @@ class WdsLinkImageTest extends WikiaBaseTest {
 					'href' => 'some.href.com',
 					'tracking_label' => 'label',
 					'image' => 'some-image',
+					'image-data' => [
+						'type' => 'wds-svg',
+						'name' => 'some-image',
+					],
 				]
 			]
 		];
