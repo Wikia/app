@@ -19,11 +19,11 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
 		slotBids.forEach(function(bid) {
-			var priceFromBidder = bid.pbAg;
+			if (isValidPrice(bid)) {
+				var bidderCode = bid.bidderCode;
 
-			if (priceFromBidder !== '' && !isNaN(priceFromBidder)) {
-				bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode] || 0, parseFloat(priceFromBidder)).toFixed(2).toString();
-				log(['getSlotBestPrices best price for slot', slotName, bid.bidderCode, bestPrices[bid.bidderCode]], 'debug', logGroup);
+				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(bid.pbAg)).toFixed(2).toString();
+				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 			}
 
 		});
@@ -31,7 +31,23 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 		return bestPrices;
 	}
 
+	/**
+	 * Checks if bidder has correct status code (is available) and the price is a number.
+	 * getStatusCode check is needed because even in case of error bid.pbAg value is 0.00
+	 * @param bid object
+	 * @returns {boolean}
+	 */
+	function isValidPrice(bid) {
+		var priceFromBidder = bid.pbAg;
+
+		return priceFromBidder !== '' &&
+			!isNaN(priceFromBidder) &&
+			typeof(priceFromBidder) !== 'boolean' &&
+			bid.getStatusCode() === prebid.validResponseStatusCode;
+	}
+
 	return {
-		getSlotBestPrice: getSlotBestPrice
+		getSlotBestPrice: getSlotBestPrice,
+		_isValidPrice: isValidPrice //for testing only
 	}
 });

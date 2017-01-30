@@ -326,6 +326,7 @@ $config['adengine2_video_ui_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
@@ -989,6 +990,13 @@ $config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
+$config['prebid_debug_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
 	]
 ];
 
@@ -2943,24 +2951,6 @@ $config['special_community_page_scss'] = [
 	'assets' => [
 		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
-	],
-];
-
-$config['visual_editor_tour_experiment_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperiment.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentConfig.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInitArticleEntry.js',
-	],
-];
-
-$config['visual_editor_tour_experiment_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/VisualEditorTourExperiment/styles/VisualEditorTourExperimentInit.scss',
 	],
 ];
 

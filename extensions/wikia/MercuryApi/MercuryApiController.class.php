@@ -334,10 +334,8 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$isMainPage = $title->isMainPage();
 			$data = [
-				'ns' => $title->getNamespace(),
-				'isMainPage' => $isMainPage
+				'ns' => $title->getNamespace()
 			];
 
 			if ( $this->isSupportedByMercury( $title ) ) {
@@ -352,6 +350,9 @@ class MercuryApiController extends WikiaController {
 				if ( $title->isRedirect() ) {
 					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 				}
+
+				$isMainPage = $title->isMainPage();
+				$data['isMainPage'] = $isMainPage;
 
 				if ( $article instanceof Article) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
@@ -374,10 +375,7 @@ class MercuryApiController extends WikiaController {
 				}
 
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-					// TODO: remove this line after release of XW-2590 (XW-2625)
-					$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
-
-					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true );
+					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 				} else {
 					if ( !empty( $articleData['content'] ) ) {
 						$data['article'] = $articleData;
@@ -477,39 +475,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setValues(
 			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
 		);
-	}
-
-	// TODO: remove this method after release of XW-2590 (XW-2625) as it is no longer used in mercury
-	public function getCuratedContentSection() {
-		$section = $this->getVal( 'section' );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
-		if ( empty( $section ) ) {
-			throw new NotFoundApiException( 'Section is not set' );
-		}
-
-		$data = MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
-
-		if ( empty( $data ) ) {
-			throw new NotFoundApiException( 'No members' );
-		}
-
-		$this->response->setVal( 'items', $data['items'] );
-	}
-
-	public function getMainPageDetailsAndAdsContext() {
-		$mainPageTitle = Title::newMainPage();
-		$mainPageArticleID = $mainPageTitle->getArticleID();
-		$article = Article::newFromID( $mainPageArticleID );
-		$data = [];
-
-		$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
-
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal( 'data', $data );
 	}
 
 	private function getOtherLanguages( Title $title ) {

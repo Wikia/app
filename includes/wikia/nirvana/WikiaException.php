@@ -53,26 +53,22 @@ abstract class WikiaBaseException extends MWException {
  * @link http://pl2.php.net/manual/en/class.exception.php
  */
 class WikiaException extends WikiaBaseException {
-	public function __construct( $message = '', $code = 0, Exception $previous = null, array $extraContext = [] ) {
+	public function __construct($message = '', $code = 0, Exception $previous = null) {
 		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
-		if ( !$wgRunningUnitTests ) {
-			$exceptionClass = get_class( $this );
+		if (!$wgRunningUnitTests) {
+			$exceptionClass = get_class($this);
 
 			// log on devboxes to /tmp/debug.log
-			wfDebug( $exceptionClass . ": {$message}\n" );
-			wfDebug( $this->getTraceAsString() );
+			wfDebug($exceptionClass . ": {$message}\n");
+			wfDebug($this->getTraceAsString());
 
-			WikiaLogger::instance()->error(
-				$exceptionClass,
-				[
-					'err' => $message,
-					'errno' => $code,
-					'exception' => $previous instanceof Exception ? $previous : $this,
-					'extra_context' => $extraContext
-				]
-			);
+			WikiaLogger::instance()->error($exceptionClass, [
+				'err' => $message,
+				'errno' => $code,
+				'exception' => $previous instanceof Exception ? $previous : $this,
+			]);
 		}
 	}
 }
