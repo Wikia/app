@@ -1,7 +1,7 @@
 <?php
 
 trait WdsLinkTrait {
-	private $href;
+	public $href;
 
 	public function setHref( $href ) {
 		$this->href = $href;

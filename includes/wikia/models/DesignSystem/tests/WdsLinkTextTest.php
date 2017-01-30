@@ -8,17 +8,17 @@ class WdsLinkTextTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTextObjectDataProvider
+	 * @dataProvider withTextObjectDataProvider
 	 */
-	public function testGetWithTextObject( $title, $href, $label, $expected ) {
+	public function testWithTextObject( $title, $href, $label, $expected ) {
 		$linkText = (new WdsLinkText())
 			->setTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkText->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkText ) );
 	}
 
-	public function getWithTextObjectDataProvider() {
+	public function withTextObjectDataProvider() {
 		return [
 			[
 				'title' => 'some title',
@@ -43,17 +43,17 @@ class WdsLinkTextTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTranslatableTextObjectDataProvider
+	 * @dataProvider withTranslatableTextObjectDataProvider
 	 */
-	public function testGetWithTranslatableTextObject( $title, $href, $label, $expected ) {
+	public function testWithTranslatableTextObject( $title, $href, $label, $expected ) {
 		$linkText = (new WdsLinkText())
 			->setTranslatableTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkText->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkText ) );
 	}
 
-	public function getWithTranslatableTextObjectDataProvider() {
+	public function withTranslatableTextObjectDataProvider() {
 		return [
 			[
 				'title' => 'some-title',

@@ -14,18 +14,18 @@ class WdsLinkImageTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTextObjectDataProvider
+	 * @dataProvider withTextObjectDataProvider
 	 */
-	public function testGetWithTextObject( $imageKey, $title, $href, $label, $expected ) {
+	public function testWithTextObject( $imageKey, $title, $href, $label, $expected ) {
 		$linkImage = (new WdsLinkImage())
 			->setSvgImageData($imageKey)
 			->setTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkImage->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkImage ) );
 	}
 
-	public function getWithTextObjectDataProvider() {
+	public function withTextObjectDataProvider() {
 		return [
 			[
 				'imageKey' => 'some-image',
@@ -34,7 +34,6 @@ class WdsLinkImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'link-image',
-					'image' => 'some-image',
 					'image-data' => [
 						'type' => 'wds-svg',
 						'name' => 'some-image',
@@ -44,7 +43,8 @@ class WdsLinkImageTest extends WikiaBaseTest {
 						'value' => 'some title'
 					],
 					'href' => 'some.href.com',
-					'tracking_label' => 'label'
+					'tracking_label' => 'label',
+					'image' => 'some-image',
 				]
 			]
 		];
@@ -58,18 +58,18 @@ class WdsLinkImageTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithExternalImageDataProvider()
+	 * @dataProvider withExternalImageDataProvider()
 	 */
-	public function testGetWithExternalImage( $imageUrl, $title, $href, $label, $expected ) {
+	public function testWithExternalImage( $imageUrl, $title, $href, $label, $expected ) {
 		$linkImage = (new WdsLinkImage())
 			->setExternalImageData( $imageUrl )
 			->setTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkImage->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkImage ) );
 	}
 
-	public function getWithExternalImageDataProvider() {
+	public function withExternalImageDataProvider() {
 		return [
 			[
 				'imageUrl' => 'some.image.url',
@@ -100,18 +100,18 @@ class WdsLinkImageTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTranslatableTextObjectDataProvider
+	 * @dataProvider withTranslatableTextObjectDataProvider
 	 */
-	public function testGetWithTranslatableTextObject( $imageKey, $title, $href, $label, $expected ) {
+	public function testWithTranslatableTextObject( $imageKey, $title, $href, $label, $expected ) {
 		$linkImage = (new WdsLinkImage())
 			->setSvgImageData($imageKey)
 			->setTranslatableTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkImage->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkImage ) );
 	}
 
-	public function getWithTranslatableTextObjectDataProvider() {
+	public function withTranslatableTextObjectDataProvider() {
 		return [
 			[
 				'imageKey' => 'some-image',
@@ -120,7 +120,6 @@ class WdsLinkImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'link-image',
-					'image' => 'some-image',
 					'image-data' => [
 						'type' => 'wds-svg',
 						'name' => 'some-image',
@@ -130,7 +129,8 @@ class WdsLinkImageTest extends WikiaBaseTest {
 						'key' => 'some-title'
 					],
 					'href' => 'some.href.com',
-					'tracking_label' => 'label'
+					'tracking_label' => 'label',
+					'image' => 'some-image',
 				]
 			]
 		];

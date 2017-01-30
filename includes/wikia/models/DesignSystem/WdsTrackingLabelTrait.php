@@ -1,10 +1,10 @@
 <?php
 
 trait WdsTrackingLabelTrait {
-	private $trackingLabel;
+	public $tracking_label;
 
 	public function setTrackingLabel( $label ) {
-		$this->trackingLabel = $label;
+		$this->tracking_label = $label;
 
 		return $this;
 	}

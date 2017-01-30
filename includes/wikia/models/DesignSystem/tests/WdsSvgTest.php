@@ -1,13 +1,13 @@
 <?php
 
 class WdsSvgTest extends WikiaBaseTest {
-	public function testGet() {
+	public function test() {
 		$wdsSvg = new WdsSvg( 'some-name' );
 		$expected = [
 			'type' => 'wds-svg',
 			'name' => 'some-name'
 		];
 
-		$this->assertEquals( $expected, $wdsSvg->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $wdsSvg ) );
 	}
 }

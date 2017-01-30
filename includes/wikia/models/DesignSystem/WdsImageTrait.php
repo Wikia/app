@@ -1,18 +1,18 @@
 <?php
 
 trait WdsImageTrait {
-	private $image;
-	private $imageData;
+	public $image;
+	public $imageData;
 
 	public function setSvgImageData( $key ) {
 		$this->image = $key;
-		$this->imageData = ( new WdsSvg( $key ) )->get();
+		$this->imageData = new WdsSvg( $key );
 
 		return $this;
 	}
 
 	public function setExternalImageData( $url ) {
-		$this->imageData = ( new WdsExternalImage( $url ) )->get();
+		$this->imageData = new WdsExternalImage( $url );
 
 		return $this;
 	}

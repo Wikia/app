@@ -15,18 +15,18 @@ class WdsLinkBrandedTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTranslatableTextObjectDataProvider
+	 * @dataProvider withTranslatableTextObjectDataProvider
 	 */
-	public function testGetWithTranslatableTextObject( $brand, $title, $href, $label, $expected ) {
+	public function testWithTranslatableTextObject( $brand, $title, $href, $label, $expected ) {
 		$linkText = (new WdsLinkBranded())
 			->setBrand( $brand )
 			->setTranslatableTitle( $title )
 			->setHref( $href )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkText->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkText ) );
 	}
 
-	public function getWithTranslatableTextObjectDataProvider() {
+	public function withTranslatableTextObjectDataProvider() {
 		return [
 			[
 				'brand' => 'brand',

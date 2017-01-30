@@ -1,6 +1,6 @@
 <?php
 
-class WdsLinkImage {
+class WdsLinkImage implements JsonSerializable {
 	use WdsTitleTrait;
 	use WdsLinkTrait;
 	use WdsTrackingLabelTrait;
@@ -8,13 +8,14 @@ class WdsLinkImage {
 
 	const TYPE = 'link-image';
 
-	public function get() {
+	// need to implement this method in order to return `image-data` as a key
+	function jsonSerialize() {
 		$result = [
 			'type' => self::TYPE,
 			'image-data' => $this->imageData,
 			'title' => $this->title,
 			'href' => $this->href,
-			'tracking_label' => $this->trackingLabel
+			'tracking_label' => $this->tracking_label
 		];
 
 		if ( isset( $this->image ) ) {

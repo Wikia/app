@@ -7,16 +7,16 @@
  * Time: 09:36
  */
 trait WdsSubtitleTrait {
-	private $subtitle;
+	public $subtitle;
 
 	public function setSubtitle( $value ) {
-		$this->subtitle = ( new WdsText( $value ) )->get();
+		$this->subtitle = new WdsText( $value );
 
 		return $this;
 	}
 
 	public function setTranslatableSubtitle( $key ) {
-		$this->subtitle = ( new WdsTranslatableText( $key ) )->get();
+		$this->subtitle = new WdsTranslatableText( $key );
 
 		return $this;
 	}

@@ -5,14 +5,14 @@ class WdsLineTextTest extends WikiaBaseTest {
 	 * @param $title
 	 * @param $expected
 	 *
-	 * @dataProvider getWithTranslatableTextObjectDataProvider
+	 * @dataProvider withTranslatableTextObjectDataProvider
 	 */
-	public function testGetWithTranslatableTextObject( $title, $expected ) {
+	public function testWithTranslatableTextObject( $title, $expected ) {
 		$linkText = ( new WdsLineText() )->setTranslatableTitle( $title );
-		$this->assertEquals( $expected, $linkText->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkText ) );
 	}
 
-	public function getWithTranslatableTextObjectDataProvider() {
+	public function withTranslatableTextObjectDataProvider() {
 		return [
 			[
 				'title' => 'some-title',
@@ -24,47 +24,6 @@ class WdsLineTextTest extends WikiaBaseTest {
 					]
 				]
 			]
-		];
-	}
-
-	/**
-	 * @param $title
-	 * @param $trackingLabel
-	 * @param $expected
-	 *
-	 * @dataProvider getWithTextObjectDataProvider
-	 */
-	public function testGetWithTrackingLabel( $title, $trackingLabel, $expected ) {
-		$linkText = ( new WdsLineText() )->setTitle( $title )->setTrackingLabel( $trackingLabel );
-		$this->assertEquals( $expected, $linkText->get() );
-	}
-
-	public function getWithTextObjectDataProvider() {
-		return [
-			[
-				'title' => 'some title',
-				'trackingLabel' => 'label',
-				'expected' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'some title'
-					],
-					'tracking_label' => 'label'
-				]
-			],
-			[
-				'title' => 'some title',
-				'trackingLabel' => null,
-				'expected' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'text',
-						'value' => 'some title'
-					]
-				]
-			]
-
 		];
 	}
 }

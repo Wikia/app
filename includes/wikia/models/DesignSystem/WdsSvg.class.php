@@ -1,17 +1,10 @@
 <?php
 
 class WdsSvg {
-	const TYPE = 'wds-svg';
-	private $name;
+	public $type = 'wds-svg';
+	public $name;
 
 	public function __construct( $name ) {
 		$this->name = $name;
-	}
-
-	public function get() {
-		return [
-			'type' => self::TYPE,
-			'name' => $this->name,
-		];
 	}
 }

@@ -1,16 +1,16 @@
 <?php
 
 trait WdsTitleTrait {
-	private $title;
+	public $title;
 
 	public function setTitle( $value ) {
-		$this->title = ( new WdsText( $value ) )->get();
+		$this->title = new WdsText( $value );
 
 		return $this;
 	}
 
 	public function setTranslatableTitle( $key ) {
-		$this->title = ( new WdsTranslatableText( $key ) )->get();
+		$this->title = new WdsTranslatableText( $key );
 
 		return $this;
 	}

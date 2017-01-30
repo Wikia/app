@@ -9,18 +9,18 @@ class WdsLineImageTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getDataProvider
+	 * @dataProvider dataProvider
 	 */
-	public function testGet( $imageKey, $title, $subtitle, $label, $expected ) {
-		$linkImage = (new WdsLineImage())
+	public function test( $imageKey, $title, $subtitle, $label, $expected ) {
+		$linkImage = (new WdsLineImage() )
 			->setSvgImageData($imageKey)
 			->setTitle( $title )
 			->setSubtitle( $subtitle )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkImage->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkImage ) );
 	}
 
-	public function getDataProvider() {
+	public function dataProvider() {
 		return [
 			[
 				'imageKey' => 'some-image',
@@ -29,7 +29,6 @@ class WdsLineImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'line-image',
-					'image' => 'some-image',
 					'image-data' => [
 						'type' => 'wds-svg',
 						'name' => 'some-image',
@@ -38,11 +37,12 @@ class WdsLineImageTest extends WikiaBaseTest {
 						'type' => 'text',
 						'value' => 'some title'
 					],
+					'tracking_label' => 'label',
+					'image' => 'some-image',
 					'subtitle' => [
 						'type' => 'text',
 						'value' => 'subtitle'
-					],
-					'tracking_label' => 'label'
+					]
 				]
 			]
 		];
@@ -54,17 +54,17 @@ class WdsLineImageTest extends WikiaBaseTest {
 	 * @param $label
 	 * @param $expected
 	 *
-	 * @dataProvider getWithoutSubtitleProvider
+	 * @dataProvider withoutSubtitleProvider
 	 */
-	public function testGetWithoutSubtitle( $imageKey, $title, $label, $expected ) {
-		$linkImage = (new WdsLineImage())
-			->setSvgImageData($imageKey)
+	public function testWithoutSubtitle( $imageKey, $title, $label, $expected ) {
+		$linkImage = (new WdsLineImage() )
+			->setSvgImageData( $imageKey )
 			->setTitle( $title )
 			->setTrackingLabel( $label );
-		$this->assertEquals( $expected, $linkImage->get() );
+		$this->assertEquals( json_encode( $expected ), json_encode( $linkImage ) );
 	}
 
-	public function getWithoutSubtitleProvider() {
+	public function withoutSubtitleProvider() {
 		return [
 			[
 				'imageKey' => 'some-image',
@@ -72,7 +72,6 @@ class WdsLineImageTest extends WikiaBaseTest {
 				'label' => 'label',
 				'expected' => [
 					'type' => 'line-image',
-					'image' => 'some-image',
 					'image-data' => [
 						'type' => 'wds-svg',
 						'name' => 'some-image',
@@ -81,7 +80,8 @@ class WdsLineImageTest extends WikiaBaseTest {
 						'type' => 'text',
 						'value' => 'some title'
 					],
-					'tracking_label' => 'label'
+					'tracking_label' => 'label',
+					'image' => 'some-image',
 				]
 			]
 		];

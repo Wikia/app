@@ -1,19 +1,20 @@
 <?php
 
-class WdsLineImage {
+class WdsLineImage implements JsonSerializable {
 	use WdsImageTrait;
 	use WdsTitleTrait;
 	use WdsTrackingLabelTrait;
 	use WdsSubtitleTrait;
 
-	const TYPE = 'line-image';
+	public $type = 'line-image';
 
-	public function get() {
+	// need to implement this method in order to return `image-data` as a key
+	function jsonSerialize() {
 		$result = [
-			'type' => self::TYPE,
+			'type' => $this->type,
 			'image-data' => $this->imageData,
 			'title' => $this->title,
-			'tracking_label' => $this->trackingLabel
+			'tracking_label' => $this->tracking_label
 		];
 
 		if ( isset( $this->image ) ) {
