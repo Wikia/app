@@ -119,7 +119,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'tracking_label' => 'search',
 			],
 			'placeholder-inactive' => new WdsTranslatableText( 'global-navigation-search-placeholder-inactive' ),
-			'placeholder-active' => new WdsTranslatableText( $searchPlaceholderKey )
+			'placeholder-active' => (array) new WdsTranslatableText( $searchPlaceholderKey )
 		];
 
 		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
