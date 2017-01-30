@@ -3,13 +3,12 @@ $bordo-hover: #8b1733;
 
 #premium-design-ab-test-B-header {
 	display: none;
-	margin-bottom: 12px;
 	margin-top: 20px;
 	position: relative;
 	text-align: center;
 
 	&:before {
-		border-top: 1   px solid #9a7b56;
+		border-top: 1px solid #9a7b56;
 		bottom: 15px;
 		content: "";
 		display: inline-block;
