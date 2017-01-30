@@ -14,8 +14,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'pauseOverlay',
 			'volumeControl',
 			'closeButton',
-			'toggleAnimation',
-			'replayOverlay'
+			'toggleAnimation'
 		],
 		splitLayout = [
 			'progressBar',
