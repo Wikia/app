@@ -25,6 +25,7 @@ $wgAutoloadClasses['MercuryApiHooks'] = $dir . 'MercuryApiHooks.class.php';
 
 // model classes
 $wgAutoloadClasses['MercuryApi'] = $dir . 'models/MercuryApi.class.php';
+$wgAutoloadClasses['MercuryApiCategoryModel'] = $dir . 'models/MercuryApiCategoryModel.class.php';
 $wgAutoloadClasses['MercuryApiArticleHandler'] = $dir . 'handlers/MercuryApiArticleHandler.class.php';
 $wgAutoloadClasses['MercuryApiCategoryHandler'] = $dir . 'handlers/MercuryApiCategoryHandler.class.php';
 $wgAutoloadClasses['MercuryApiFilePageHandler'] = $dir . 'handlers/MercuryApiFilePageHandler.class.php';
