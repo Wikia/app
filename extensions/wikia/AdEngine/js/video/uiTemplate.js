@@ -6,8 +6,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'toggleAnimation',
-			'replayOverlay'
+			'toggleAnimation'
 		],
 		defaultLayout = [
 			'progressBar',
