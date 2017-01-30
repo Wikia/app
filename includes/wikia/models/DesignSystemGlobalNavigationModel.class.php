@@ -144,30 +144,15 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				->setTranslatableSubtitle( 'global-navigation-anon-my-account' )
 				->setTrackingLabel( 'account' ),
 			'links' => [
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-sign-in',
-					],
-					'href' => $this->getHref( 'user-signin' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.sign-in',
-				],
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register',
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register-description',
-					],
-					'href' => $this->getHref( 'user-register' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.register',
-				],
+				( new WdsLinkAuthentication() )->setTranslatableTitle( 'global-navigation-anon-sign-in' )
+					->setHref( $this->getHref( 'user-signin' ) )
+					->setParamName( 'redirect' )
+					->setTrackingLabel( 'account.sign-in' ),
+				( new WdsLinkAuthenticationWithSubtitle() )->setTranslatableTitle( 'global-navigation-anon-register' )
+					->setTranslatableSubtitle( 'global-navigation-anon-register-description' )
+					->setHref( $this->getHref( 'user-register' ) )
+					->setParamName( 'redirect' )
+					->setTrackingLabel( 'account.register' ),
 			],
 		];
 	}
@@ -187,16 +172,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			->setHref( $this->getPageUrl( $userName, NS_USER ) )
 			->setTrackingLabel( 'account.profile' );
 
-		$logOutLink = [
-			'type' => 'link-authentication',
-			'href' => $this->getHref( 'user-logout' ),
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-user-sign-out'
-			],
-			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
-			'tracking_label' => 'account.sign-out',
-		];
+		$logOutLink = ( new WdsLinkAuthentication() )->setTranslatableTitle( 'global-navigation-user-sign-out' )
+			->setHref( $this->getHref( 'user-logout' ) )
+			->setParamName( $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto' )
+			->setTrackingLabel( 'account.sign-out' );
 
 		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
 			$viewProfileLinks[] = (new WdsLinkText())
