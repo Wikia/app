@@ -125,10 +125,27 @@ class MercuryApiCategoryModel {
 			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
 		);
 
-		return floor( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
+		return round( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
 	}
 
-	public static function getNextPage( int $page, int $pages ) {
+	public static function getPagination( Title $title, int $page ) {
+		$pages = self::getNumberOfPagesAvailable( $title->getDBkey() );
+
+		$nextPage = self::getNextPage( $page, $pages );
+		$nextPageUrl = $nextPage > 0 ? self::getPageUrl( $title, $nextPage ) : null;
+
+		$prevPage = self::getPrevPage( $page );
+		$prevPageUrl = $prevPage > 0 ? self::getPageUrl( $title, $prevPage ) : null;
+
+		return [
+			'nextPage' => $nextPage,
+			'nextPageUrl' => $nextPageUrl,
+			'prevPage' => $prevPage,
+			'prevPageUrl' => $prevPageUrl
+		];
+	}
+
+	private static function getNextPage( int $page, int $pages ) {
 		if ( $page >= $pages ) {
 			return null;
 		} else {
@@ -136,11 +153,28 @@ class MercuryApiCategoryModel {
 		}
 	}
 
-	public static function getPrevPage( int $page ) {
+	private static function getPrevPage( int $page ) {
 		if ( $page <= 1 ) {
 			return null;
 		} else {
 			return $page - 1;
 		}
+	}
+
+	/**
+	 * @param Title $title
+	 * @param int $page
+	 *
+	 * @return String
+	 */
+	private static function getPageUrl( Title $title, int $page ) {
+		$params = [];
+
+		// We don't want to have ?page=1, it's implicit
+		if ( $page > 1 ) {
+			$params['page'] = $page;
+		}
+
+		return $title->getLocalURL( $params );
 	}
 }

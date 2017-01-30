@@ -36,27 +36,18 @@ class MercuryApiCategoryHandler {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
-		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
-
-		$nextPage = $categoryModel::getNextPage( $page, $pages );
-		$nextPageUrl = $nextPage > 0 ? self::getPageUrl( $title, $nextPage ) : null;
-
-		$prevPage = $categoryModel::getPrevPage( $page );
-		$prevPageUrl = $prevPage > 0 ? self::getPageUrl( $title, $prevPage ) : null;
-
-		return [
-			// TODO Remove after XW-2583 is released
-			'members' => $categoryModel::getCategoryMembersLegacy( $title ),
-			'membersGrouped' => $membersGrouped,
-			'nextPage' => $nextPage,
-			'nextPageUrl' => $nextPageUrl,
-			'prevPage' => $prevPage,
-			'prevPageUrl' => $prevPageUrl,
-			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
-				self::TRENDING_ARTICLES_COUNT,
-				$title
-			),
-		];
+		return array_merge(
+			[
+				// TODO Remove after XW-2583 is released
+				'members' => $categoryModel::getCategoryMembersLegacy( $title ),
+				'membersGrouped' => $membersGrouped,
+				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
+					self::TRENDING_ARTICLES_COUNT,
+					$title
+				),
+			],
+			$categoryModel::getPagination( $title, $page )
+		);
 	}
 
 	/**
@@ -67,20 +58,17 @@ class MercuryApiCategoryHandler {
 	 * @throws NotFoundApiException
 	 */
 	public static function getCategoryMembers( Title $title, int $page ) {
-		$categoryDBKey = $title->getDBkey();
 		$categoryModel = self::getCategoryModel();
-		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
-		$members = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
+		$members = $categoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
 
 		if ( empty( $members ) ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
-		return [
-			'members' => $members,
-			'nextPage' => $categoryModel::getNextPage( $page, $pages ),
-			'prevPage' => $categoryModel::getPrevPage( $page ),
-		];
+		return array_merge(
+			[ 'members' => $members ],
+			$categoryModel::getPagination( $title, $page )
+		);
 	}
 
 	/**
@@ -98,23 +86,6 @@ class MercuryApiCategoryHandler {
 		}
 
 		return $page;
-	}
-
-	/**
-	 * @param Title $title
-	 * @param int $page
-	 *
-	 * @return String
-	 */
-	private static function getPageUrl( Title $title, int $page ) {
-		$params = [];
-
-		// We don't want to have ?page=1, it's implicit
-		if ( $page > 1 ) {
-			$params['page'] = $page;
-		}
-
-		return $title->getLocalURL( $params );
 	}
 
 	/**
