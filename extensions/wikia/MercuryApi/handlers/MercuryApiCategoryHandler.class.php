@@ -27,21 +27,24 @@ class MercuryApiCategoryHandler {
 	public static function getCategoryPageData( Title $title, int $page, MercuryApi $mercuryApiModel ) {
 		$categoryDBKey = $title->getDBkey();
 		$categoryModel = self::getCategoryModel();
-		$membersGrouped = $categoryModel->getMembersGroupedByFirstLetter( $categoryDBKey, $page );
+		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
+		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
 
 		if ( empty( $membersGrouped ) ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
 		return [
+			// TODO Remove after XW-2583 is released
+			'members' => self::getCategoryMembersLegacy( $title ),
+			'membersGrouped' => $membersGrouped,
+			'pages' => $pages,
+			'nextPage' => $categoryModel::getNextPage( $page, $pages ),
+			'prevPage' => $categoryModel::getPrevPage( $page ),
 			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
 				self::TRENDING_ARTICLES_COUNT,
 				$title
 			),
-			// TODO Remove after XW-2583 is released
-			'members' => self::getCategoryMembersLegacy( $title ),
-			'membersGrouped' => $membersGrouped,
-			'pages' => $categoryModel->getNumberOfPagesAvailable( $categoryDBKey )
 		];
 	}
 
@@ -89,14 +92,19 @@ class MercuryApiCategoryHandler {
 	 * @throws NotFoundApiException
 	 */
 	public static function getCategoryMembers( Title $title, int $page ) {
-		$members = self::getCategoryModel()->getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
+		$categoryDBKey = $title->getDBkey();
+		$categoryModel = self::getCategoryModel();
+		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
+		$members = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
 
 		if ( empty( $members ) ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
 		return [
-			'members' => $members
+			'members' => $members,
+			'nextPage' => $categoryModel::getNextPage( $page, $pages ),
+			'prevPage' => $categoryModel::getPrevPage( $page ),
 		];
 	}
 
@@ -107,8 +115,8 @@ class MercuryApiCategoryHandler {
 	 * @throws BadRequestApiException
 	 */
 	public static function getCategoryMembersPageFromRequest( WikiaRequest $request ) {
-		$intValidator = new WikiaValidatorInteger( [ 'min' => 0 ] );
-		$page = $request->getInt( self::PARAM_CATEGORY_MEMBERS_PAGE, 0 );
+		$intValidator = new WikiaValidatorInteger( [ 'min' => 1 ] );
+		$page = $request->getInt( self::PARAM_CATEGORY_MEMBERS_PAGE, 1 );
 
 		if ( !$intValidator->isValid( $page ) ) {
 			throw new BadRequestApiException( 'Category members page should be a positive intenger' );

@@ -2,7 +2,8 @@
 
 class MercuryApiCategoryModel {
 
-	const CATEGORY_MEMBERS_PER_PAGE = 10;
+	// TODO update to 200
+	const CATEGORY_MEMBERS_PER_PAGE = 30;
 
 	/**
 	 * @param string $categoryDBKey
@@ -11,7 +12,7 @@ class MercuryApiCategoryModel {
 	 * @return array
 	 */
 	public static function getMembersGroupedByFirstLetter( string $categoryDBKey, int $page ) {
-		$offset = $page * self::CATEGORY_MEMBERS_PER_PAGE;
+		$offset = ( $page - 1 ) * self::CATEGORY_MEMBERS_PER_PAGE;
 		$membersTitles = self::getAlphabeticalList(
 			$categoryDBKey,
 			self::CATEGORY_MEMBERS_PER_PAGE,
@@ -89,5 +90,21 @@ class MercuryApiCategoryModel {
 		);
 
 		return floor( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
+	}
+
+	public static function getNextPage( int $page, int $pages ) {
+		if ( $page >= $pages ) {
+			return null;
+		} else {
+			return $page + 1;
+		}
+	}
+
+	public static function getPrevPage( int $page ) {
+		if ( $page <= 1 ) {
+			return null;
+		} else {
+			return $page - 1;
+		}
 	}
 }
