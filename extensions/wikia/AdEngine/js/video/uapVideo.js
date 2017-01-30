@@ -40,7 +40,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(params)
 			.then(function (video) {
-				var template = UITemplate.defaultLayout;
+				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+					template = UITemplate.defaultLayout;
 
 				if (params.splitLayoutVideoPosition) {
 					template = UITemplate.splitLayout;
@@ -58,9 +59,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
 
-				if (params.splitLayoutVideoPosition) {
+				if (splitLayoutVideoPosition) {
 					video.container.style.position = 'absolute';
-					video.container.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
+					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 
 				video.addEventListener('allAdsCompleted', function () {

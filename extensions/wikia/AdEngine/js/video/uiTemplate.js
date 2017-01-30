@@ -6,20 +6,23 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'toggleAnimation'
+			'toggleAnimation',
+			'replayOverlay'
 		],
 		defaultLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
 			'closeButton',
-			'toggleAnimation'
+			'toggleAnimation',
+			'replayOverlay'
 		],
 		splitLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'toggleVideo'
+			'toggleVideo',
+			'replayOverlay'
 		];
 
 	return {
