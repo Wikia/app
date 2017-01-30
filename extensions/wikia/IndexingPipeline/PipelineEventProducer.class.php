@@ -242,14 +242,20 @@ class PipelineEventProducer {
 		if ( !self::canIndex( $title ) ) {
 			return;
 		};
-
-		$action = PipelineRoutingBuilder::ACTION_UPDATE;
 		$pageId = $title->getArticleID();
-		$revId = $title->getLatestRevID();
-		$ns = $title->getNamespace();
 
-		self::send( 'onNewRevisionFromEditComplete', $pageId, $revId );
-		self::sendFlaggedSyntax( $action, $pageId, $revId, $ns );
+		WikiaLogger::instance()->info( __METHOD__, [
+			'eventName' => "reindex",
+			'pageId' => (string)$pageId
+		] );
+
+		global $wgCityId;
+		self::getPipeline()->publish( 'reindex',
+			PipelineMessageBuilder::create()
+				->addParam("wiki_id", $wgCityId)
+				->addParam("article_id", $pageId)
+				->build()
+		);
 	}
 
 	/*
