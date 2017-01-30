@@ -22,6 +22,10 @@ class PremiumDesignABTestController extends WikiaController {
 
 	}
 
+	public function B_pageheader() {
+
+	}
+
 	public function C_pageheader() {
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 	}
