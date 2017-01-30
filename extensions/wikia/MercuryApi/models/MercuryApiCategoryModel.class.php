@@ -29,6 +29,7 @@ class MercuryApiCategoryModel {
 
 			array_push( $membersGrouped[$firstLetter], [
 				'title' => $titleText,
+				'url' => $memberTitle->getLocalURL(),
 				'isCategory' => $memberTitle->inNamespace( NS_CATEGORY )
 			] );
 		}
