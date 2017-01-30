@@ -48,6 +48,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
+		slotMapping = {
+			'INCONTENT_PLAYER': 'INCONTENT_LEADERBOARD'
+		},
 		slots = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
@@ -90,6 +93,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 	function getSlotParams(slotName) {
 		var parameters = {};
+
+		if (!slots[slotName] && slotMapping[slotName]) {
+			slotName = slotMapping[slotName];
+		}
 
 		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
 
@@ -182,7 +189,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		return !!slots[slotName] || slotMapping[slotName];
 	}
 
 	bidder = factory.create({
