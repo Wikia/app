@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: ryba
- * Date: 30/01/2017
- * Time: 09:36
- */
 trait WdsSubtitleTrait {
 	public $subtitle;
 
