@@ -147,4 +147,19 @@ class BlogsHelper {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	/**
+	 * SUS-260: Lock down blog namespaces from page moves (both as source and destination)
+	 * @param bool $result Whether to allow page moves to or from this namespace
+	 * @param int $ns Namespace being checked
+	 * @return bool false to abort hook processing if it is Blogs namespace, otherwise true to resume
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		if ( in_array( $ns, [ NS_BLOG_ARTICLE_TALK ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -154,6 +154,9 @@ $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGet
 // VOLDEV-66
 $wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 
+// SUS-260: lock down Wall namespaces from page moves
+$wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
+
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',

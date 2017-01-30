@@ -530,4 +530,18 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-260: Lock down Forum namespaces from page moves (both as source and destination)
+	 * @param bool $result Whether to allow page moves to or from this namespace
+	 * @param int $ns Namespace being checked
+	 * @return bool false to abort hook processing if this is Wall namespace, otherwise true to continue
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		if ( in_array( $ns, [ NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
 }
