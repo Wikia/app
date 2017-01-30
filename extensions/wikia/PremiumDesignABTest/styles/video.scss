@@ -1,0 +1,43 @@
+@mixin video {
+	cursor: pointer;
+	background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
+	background-size: cover;
+	padding-top: 56%;
+	position: relative;
+	margin-bottom: 11px;
+	width: 100%;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+	}
+
+	.video-title {
+		bottom: 63px;
+		color: #fff;
+		font-size: 24px;
+		left: 38px;
+		position: absolute;
+	}
+
+	.video-time {
+		bottom: 43px;
+		color: #656e78;
+		font-size: 18px;
+		left: 38px;
+		position: absolute;
+	}
+
+	.video-play-button {
+		bottom: 40px;
+		height: 80px;
+		position: absolute;
+		right: 40px;
+		width: 80px;
+	}
+}

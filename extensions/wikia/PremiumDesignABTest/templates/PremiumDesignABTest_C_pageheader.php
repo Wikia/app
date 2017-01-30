@@ -1,4 +1,4 @@
 <div id="premium-design-ab-test-C-pageheader">
-	<div class="video"></div>
+	<?= $app->renderView( 'PremiumDesignABTest', 'video') ?>
 	<?= $app->renderView( 'PageHeader', 'index', $headerModuleParams) ?>
 </div>

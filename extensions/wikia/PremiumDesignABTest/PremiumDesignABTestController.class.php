@@ -34,4 +34,9 @@ class PremiumDesignABTestController extends WikiaController {
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 	}
+
+	public function video() {
+		global $wgExtensionsPath;
+		$this->videoPlayButtonSrc = $wgExtensionsPath . '/wikia/PremiumDesignABTest/images/play-button.png';
+	}
 }

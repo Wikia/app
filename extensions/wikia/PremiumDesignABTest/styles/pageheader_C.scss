@@ -1,12 +1,10 @@
+@import "video";
+
 #premium-design-ab-test-C-pageheader {
 	display: none;
 
 	.video {
-		width: 100%;
-		padding-top: 56%;
-		background-image: url("/extensions/wikia/PremiumDesignABTest/images/Video.png"); /* $wgCdnStylePath */
-		background-size: cover;
-		margin-bottom: 11px;
+		@include video();
 	}
 
 	.WikiaPageHeader {
