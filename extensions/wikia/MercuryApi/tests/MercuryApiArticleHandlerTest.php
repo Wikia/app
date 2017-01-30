@@ -31,10 +31,9 @@ class MercuryApiArticleHandlerTest extends WikiaBaseTest {
 			->will( $this->returnValue( $relatedPagesMock ) );
 
 		$article = new Article( new Title() );
-		$request = new WikiaRequest( [ ] );
 		$mercuryApi = new MercuryApi();
 
-		$this->assertEquals( $expected, MercuryApiArticleHandler::getArticleData( $request, $mercuryApi, $article ) );
+		$this->assertEquals( $expected, MercuryApiArticleHandler::getArticleData( $mercuryApi, $article ) );
 	}
 
 	public function getArticleDataProvider() {
