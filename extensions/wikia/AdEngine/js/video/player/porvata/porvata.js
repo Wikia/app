@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		var isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
-			viewportListener;
+			viewportListener = null;
 
 		function muteFirstPlay(video) {
 			video.addEventListener('wikiaAdStarted', function () {
@@ -71,10 +71,14 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
+						viewportListener = null;
 					}
 				});
 				video.addEventListener('start', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
+					if (!viewportListener) {
+						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+					}
 				});
 				video.addEventListener('resume', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');

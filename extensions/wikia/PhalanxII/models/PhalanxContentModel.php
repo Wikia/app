@@ -18,11 +18,13 @@ class PhalanxContentModel extends PhalanxModel {
 	 *
 	 * @return bool
 	 */
-	public function isOk() {
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
 			!( $this->title instanceof Title ) ||
-			$this->isWikiaInternalRequest()
+			$this->isWikiaInternalRequest() ||
+			$wgUser->isAllowed( 'phalanxexempt' )
 		);
 	}
 
