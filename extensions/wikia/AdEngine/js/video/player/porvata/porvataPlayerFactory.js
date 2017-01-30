@@ -91,14 +91,20 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				}
 			},
 			setVolume: function (volume) {
-				if (mobileVideoAd) {
-					mobileVideoAd.muted = volume === 0;
-				}
-				return ima.getAdsManager().setVolume(volume);
+				this.updateVideoDOMElement(volume);
+				ima.getAdsManager().setVolume(volume);
+
+				// This is hack for Safari, because it can't dispatch original IMA event (volumeChange)
+				ima.getAdsManager().dispatchEvent('wikiaVolumeChange');
 			},
 			stop: function () {
 				ima.getAdsManager().dispatchEvent('wikiaAdStop');
 				ima.getAdsManager().stop();
+			},
+			updateVideoDOMElement: function (volume) {
+				if (mobileVideoAd) {
+					mobileVideoAd.muted = volume === 0;
+				}
 			}
 		};
 	}

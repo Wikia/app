@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 	function add(video) {
 		var volumeControl = createVolumeControl();
 
-		video.addEventListener('volumeChange', function () {
+		video.addEventListener('wikiaVolumeChange', function () {
 			updateCurrentState(video, volumeControl);
 		});
 
