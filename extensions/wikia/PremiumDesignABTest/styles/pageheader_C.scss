@@ -28,6 +28,10 @@
 			display: none;
 		}
 
+		.header-buttons {
+			display: flex;
+		}
+
 		.wikia-menu-button {
 			background-color: #5f1023;
 			background-image: none;
@@ -122,6 +126,7 @@
 
 		.wikia-button.talk {
 			margin-right: 10px;
+			margin-left: 10px;
 
 			&:before {
 				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
