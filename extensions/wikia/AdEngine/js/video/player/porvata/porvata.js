@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener = null;
 
 		function muteFirstPlay(video) {
-			video.addEventListener('wikiaAdStarted', function () {
+			video.addEventListener('loaded', function () {
 				if (isFirstPlay) {
 					video.mute();
 				}
