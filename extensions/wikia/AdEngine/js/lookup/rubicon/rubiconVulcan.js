@@ -94,10 +94,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
-		if (!slots[slotName] && slotMapping[slotName]) {
-			slotName = slotMapping[slotName];
-		}
-
+		slotName = slotMapping[slotName] || slotName;
 		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
@@ -112,9 +109,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var cpm,
 			price;
 
-		if (!slots[slotName] && slotMapping[slotName]) {
-			slotName = slotMapping[slotName];
-		}
+		slotName = slotMapping[slotName] || slotName;
 
 		if (priceMap[slotName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
@@ -130,9 +125,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var bestResponse = {},
 			allSlots = win.rubiconVulcan.getAllSlots() || [];
 
-		if (!slots[slotName] && slotMapping[slotName]) {
-			slotName = slotMapping[slotName];
-		}
+		slotName = slotMapping[slotName] || slotName;
 
 		allSlots.forEach(function (slot) {
 			if (slot.id === slotName) {
