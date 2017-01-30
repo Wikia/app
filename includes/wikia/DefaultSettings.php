@@ -391,6 +391,7 @@ $wgAutoloadClasses['WdsLinkAuthenticationWithSubtitle'] = "{$IP}/includes/wikia/
 $wgAutoloadClasses['WdsLineText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineText.class.php";
 $wgAutoloadClasses['WdsLineTextTrackable'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineTextTrackable.class.php";
 $wgAutoloadClasses['WdsLineImage'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineImage.class.php";
+$wgAutoloadClasses['WdsLineImageWithSubtitle'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLineImageWithSubtitle.class.php";
 $wgAutoloadClasses['WdsTitleTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTitleTrait.php";
 $wgAutoloadClasses['WdsLinkTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkTrait.php";
 $wgAutoloadClasses['WdsTrackingLabelTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTrackingLabelTrait.php";

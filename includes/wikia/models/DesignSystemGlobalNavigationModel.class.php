@@ -138,7 +138,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private function getAnonUserData() {
 		return [
-			'header' => (new WdsLineImage())
+			'header' => (new WdsLineImageWithSubtitle())
 				->setSvgImageData( 'wds-icons-user' )
 				->setTranslatableTitle( 'global-navigation-anon-my-account' )
 				->setTranslatableSubtitle( 'global-navigation-anon-my-account' )
