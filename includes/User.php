@@ -3880,6 +3880,12 @@ class User implements JsonSerializable {
 	 * @return String Formatted URL
 	 */
 	protected function getTokenUrl( $page, $token ) {
+		global $wgEnableNewAuthModal;
+
+		if ( $wgEnableNewAuthModal ) {
+			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+		}
+
 		// Hack to bypass localization of 'Special:'
 		$title = Title::makeTitle( NS_MAIN, "Special:$page/$token" );
 		return $title->getCanonicalURL();
