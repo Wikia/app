@@ -73,6 +73,42 @@ class MercuryApiCategoryModel {
 	}
 
 	/**
+	 * @TODO Remove after XW-2583 is released
+	 * @param $title
+	 * @param int $batchSize
+	 *
+	 * @return array
+	 */
+	public static function getCategoryMembersLegacy( $title, $batchSize = 25 ) {
+		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
+
+		$alphabeticalList = F::app()->sendRequest(
+			'WikiaMobileCategoryService',
+			'alphabeticalList',
+			[ 'categoryPage' => $categoryPage, 'format' => 'json' ]
+		)->getData();
+
+		$sanitizedAlphabeticalList = [ 'sections' => [] ];
+
+		foreach ( $alphabeticalList['collections'] as $index => $collection ) {
+			$batch = ( $index == $alphabeticalList['requestedIndex'] ) ? $alphabeticalList['requestedBatch'] : 1;
+			$itemsBatch = wfPaginateArray( $collection, $batchSize, $batch );
+			$currentBatch = $itemsBatch['currentBatch'];
+			$nextBatch = $currentBatch + 1;
+			$sanitizedAlphabeticalList['sections'][$index] = [
+				'items' => $itemsBatch['items'],
+				'nextBatch' => $nextBatch,
+				'currentBatch' => $currentBatch,
+				'total' => $itemsBatch['total'],
+				'hasNext' => $itemsBatch['next'] > 0,
+				'batchSize' => $batchSize
+			];
+		}
+
+		return $sanitizedAlphabeticalList;
+	}
+
+	/**
 	 * @param string $categoryDBKey
 	 *
 	 * @return int

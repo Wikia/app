@@ -8,6 +8,9 @@ class MercuryApiCategoryHandler {
 
 	private static $categoryModel;
 
+	/**
+	 * @return MercuryApiCategoryModel
+	 */
 	private static function getCategoryModel() {
 		if ( !self::$categoryModel instanceof MercuryApiCategoryModel ) {
 			self::$categoryModel = new MercuryApiCategoryModel();
@@ -28,60 +31,32 @@ class MercuryApiCategoryHandler {
 		$categoryDBKey = $title->getDBkey();
 		$categoryModel = self::getCategoryModel();
 		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
-		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
 
 		if ( empty( $membersGrouped ) ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
+		$pages = $categoryModel::getNumberOfPagesAvailable( $categoryDBKey );
+
+		$nextPage = $categoryModel::getNextPage( $page, $pages );
+		$nextPageUrl = $nextPage > 0 ? self::getPageUrl( $title, $nextPage ) : null;
+
+		$prevPage = $categoryModel::getPrevPage( $page );
+		$prevPageUrl = $prevPage > 0 ? self::getPageUrl( $title, $prevPage ) : null;
+
 		return [
 			// TODO Remove after XW-2583 is released
-			'members' => self::getCategoryMembersLegacy( $title ),
+			'members' => $categoryModel::getCategoryMembersLegacy( $title ),
 			'membersGrouped' => $membersGrouped,
-			'pages' => $pages,
-			'nextPage' => $categoryModel::getNextPage( $page, $pages ),
-			'prevPage' => $categoryModel::getPrevPage( $page ),
+			'nextPage' => $nextPage,
+			'nextPageUrl' => $nextPageUrl,
+			'prevPage' => $prevPage,
+			'prevPageUrl' => $prevPageUrl,
 			'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
 				self::TRENDING_ARTICLES_COUNT,
 				$title
 			),
 		];
-	}
-
-	/**
-	 * @TODO Remove after XW-2583 is released
-	 * @param $title
-	 * @param int $batchSize
-	 *
-	 * @return array
-	 */
-	public static function getCategoryMembersLegacy( $title, $batchSize = 25 ) {
-		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
-
-		$alphabeticalList = F::app()->sendRequest(
-			'WikiaMobileCategoryService',
-			'alphabeticalList',
-			[ 'categoryPage' => $categoryPage, 'format' => 'json' ]
-		)->getData();
-
-		$sanitizedAlphabeticalList = [ 'sections' => [] ];
-
-		foreach ( $alphabeticalList['collections'] as $index => $collection ) {
-			$batch = ( $index == $alphabeticalList['requestedIndex'] ) ? $alphabeticalList['requestedBatch'] : 1;
-			$itemsBatch = wfPaginateArray( $collection, $batchSize, $batch );
-			$currentBatch = $itemsBatch['currentBatch'];
-			$nextBatch = $currentBatch + 1;
-			$sanitizedAlphabeticalList['sections'][$index] = [
-				'items' => $itemsBatch['items'],
-				'nextBatch' => $nextBatch,
-				'currentBatch' => $currentBatch,
-				'total' => $itemsBatch['total'],
-				'hasNext' => $itemsBatch['next'] > 0,
-				'batchSize' => $batchSize
-			];
-		}
-
-		return $sanitizedAlphabeticalList;
 	}
 
 	/**
@@ -123,6 +98,23 @@ class MercuryApiCategoryHandler {
 		}
 
 		return $page;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param int $page
+	 *
+	 * @return String
+	 */
+	private static function getPageUrl( Title $title, int $page ) {
+		$params = [];
+
+		// We don't want to have ?page=1, it's implicit
+		if ( $page > 1 ) {
+			$params['page'] = $page;
+		}
+
+		return $title->getLocalURL( $params );
 	}
 
 	/**
