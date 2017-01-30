@@ -391,6 +391,7 @@ $wgAutoloadClasses['WdsTitleTrait'] = "{$IP}/includes/wikia/models/DesignSystem/
 $wgAutoloadClasses['WdsLinkTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLinkTrait.php";
 $wgAutoloadClasses['WdsTrackingLabelTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsTrackingLabelTrait.php";
 $wgAutoloadClasses['WdsImageTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsImageTrait.php";
+$wgAutoloadClasses['WdsSubtitleTrait'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSubtitleTrait.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";

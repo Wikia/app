@@ -4,22 +4,9 @@ class WdsLineImage {
 	use WdsImageTrait;
 	use WdsTitleTrait;
 	use WdsTrackingLabelTrait;
+	use WdsSubtitleTrait;
 
 	const TYPE = 'line-image';
-
-	private $subtitle;
-
-	public function setSubtitle( $value ) {
-		$this->subtitle = ( new WdsText( $value ) )->get();
-
-		return $this;
-	}
-
-	public function setTranslatableSubtitle( $key ) {
-		$this->subtitle = ( new WdsTranslatableText( $key ) )->get();
-
-		return $this;
-	}
 
 	public function get() {
 		$result = [
