@@ -25,7 +25,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-		$data = [
+		return [
 			'header' => (new WdsLinkImage())
 				->setSvgImageData( 'wds-company-logo-fandom-powered-by-wikia-two-lines' )
 				->setTitle( 'Fandom powered by Wikia' )
@@ -82,14 +82,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'license' => $this->getLicenseData()
 					]))->get()
 			],
+			'fandom_overview' => $this->getFandomOverview(),
+			'follow_us' => $this->getFollowUs(),
+			'community' => $this->getCommunity(),
+			'advertise' => $this->getAdvertise()
 		];
-
-		$data['fandom_overview'] = $this->getFandomOverview();
-		$data['follow_us'] = $this->getFollowUs();
-		$data['community'] = $this->getCommunity();
-		$data['advertise'] = $this->getAdvertise();
-
-		return $data;
 	}
 
 	private function getSitenameData() {
