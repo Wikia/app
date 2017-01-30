@@ -55,13 +55,18 @@ if ( $reindexMissing ) {
 	];
 	$notIndexedTitles = [];
 
+	$current = 0;
+	$current++;
 	/** @var Title $title */
 	foreach ( $titles as $title ) {
 		$client = new Solarium_Client( $solariumConfig );
 		$select = $client->createSelect();
 		$select->createFilterQuery( 'id' )->setQuery( 'id:' . sprintf( "%s_%s", $wgCityId, $title->getArticleID() ) );
-		$select->addField( 'id' );
+		$select->setFields( [ 'id' ] );
 		$result = $client->select( $select );
+		if ( $current % 100 == 0 ) {
+			echo "checking solr for missing docs {$current}/{$idCount} docs\n";
+		}
 		if ( $result->getNumFound() == 0 ) {
 			$notIndexedTitles[] = $title;
 		}
