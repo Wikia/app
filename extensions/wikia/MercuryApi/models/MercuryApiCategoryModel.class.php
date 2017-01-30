@@ -1,6 +1,7 @@
 <?php
 
 class MercuryApiCategoryModel {
+
 	const CATEGORY_MEMBERS_PER_PAGE = 10;
 
 	/**

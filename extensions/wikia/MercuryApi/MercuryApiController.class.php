@@ -392,17 +392,13 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
-							$categoryContent = MercuryApiCategoryHandler::getCategoryContent(
+							$categoryPageData = MercuryApiCategoryHandler::getCategoryPageData(
 								$title,
 								MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request ),
 								$this->mercuryApi
 							);
 
-							if ( empty( $categoryContent['members'] ) ) {
-								throw new NotFoundApiException( 'Category has no members' );
-							}
-
-							$data['nsSpecificContent'] = $categoryContent;
+							$data['nsSpecificContent'] = $categoryPageData;
 							break;
 						case NS_FILE:
 							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
@@ -410,7 +406,7 @@ class MercuryApiController extends WikiaController {
 						default:
 							$data = array_merge(
 								$data,
-								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+								MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article )
 							);
 					}
 				}
@@ -432,7 +428,6 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
 		$this->response->setVal( 'data', $data );
 	}
 
@@ -462,6 +457,31 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return [ $title, $article, $data ];
+	}
+
+	public function getCategoryMembers() {
+		try {
+			$title = $this->getTitleFromRequest();
+			$page = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request );
+			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $page );
+		} catch ( WikiaHttpException $exception ) {
+			$this->response->setCode( $exception->getCode() );
+
+			$data = [];
+
+			$this->response->setVal(
+				'exception',
+				[
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode(),
+					'details' => $exception->getDetails()
+				]
+			);
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'data', $data );
 	}
 
 	/**
