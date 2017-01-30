@@ -112,6 +112,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var cpm,
 			price;
 
+		if (!slots[slotName] && slotMapping[slotName]) {
+			slotName = slotMapping[slotName];
+		}
+
 		if (priceMap[slotName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
 			price = cpm.toFixed(2).toString();
@@ -125,6 +129,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
 			allSlots = win.rubiconVulcan.getAllSlots() || [];
+
+		if (!slots[slotName] && slotMapping[slotName]) {
+			slotName = slotMapping[slotName];
+		}
 
 		allSlots.forEach(function (slot) {
 			if (slot.id === slotName) {
