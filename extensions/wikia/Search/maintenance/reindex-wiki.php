@@ -26,7 +26,10 @@ if ( !empty( $wgExtraNamespaces ) ) {
 }
 
 $dbr = wfGetDB( DB_MASTER );
-$whereClause = [ 'page_namespace' => array_unique( $namespaces ) ];
+$whereClause = [
+	'page_namespace' => array_unique( $namespaces ),
+	'page_is_redirect' => 0
+];
 if ( !empty( $ids ) ) {
 	$whereClause[ 'page_id' ] = $ids;
 }
