@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_4': slotPrices.vulcan || '',
 			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': '',
-			'bidder_7': '',
+			'bidder_7': slotPrices.audienceNetwork || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''

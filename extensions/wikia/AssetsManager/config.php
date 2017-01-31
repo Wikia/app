@@ -291,6 +291,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
@@ -989,14 +990,17 @@ $config['mercury_ads_js'] = [
 $config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+		//'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+		//'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
+		'//extensions/wikia/AdEngine/resources/prebid/prebid_fan.js'
 	]
 ];
 
 $config['prebid_debug_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
+		//'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
+		'//extensions/wikia/AdEngine/resources/prebid/prebid_fan.js'
 	]
 ];
 

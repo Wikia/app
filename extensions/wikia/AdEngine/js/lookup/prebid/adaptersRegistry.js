@@ -1,12 +1,14 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
+	'ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'
-], function(appnexus, index) {
+], function(appnexus, audienceNetwork, index) {
 	'use strict';
 
 	var adapters = [
 		appnexus,
-		index
+		index,
+		audienceNetwork
 	];
 
 	function getAdapters() {
