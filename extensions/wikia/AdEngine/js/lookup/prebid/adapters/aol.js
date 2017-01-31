@@ -176,8 +176,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 		};
 
 	function isEnabled() {
-		return true;
-		// return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries);
 	}
 
 	function getSlots(skin) {
