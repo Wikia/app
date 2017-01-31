@@ -121,7 +121,8 @@ abstract class AbstractService {
 				continue;
 			}
 
-			if ( !$this->getService()->pageIdExists( $pageId ) ) {
+			// page was either delete or should not be indexed (SUS-1446)
+			if ( !$this->getService()->pageIdExists( $pageId ) || !$this->getService()->pageIdCanBeIndexed( $pageId ) ) {
 				$documents[] = [ "delete" => [ "id" => $currentId ] ];
 				continue;
 			}
