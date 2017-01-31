@@ -37,6 +37,7 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 				isMuted: function () {
 					return this.muted;
 				},
+				volumeToggle: noop,
 				muted: false,
 				setVolume: function (volume) {
 					this.muted = volume === 0;
@@ -60,13 +61,12 @@ describe('ext.wikia.adEngine.video.player.ui.volumeControl', function () {
 		volumeControl = getModule();
 	});
 
-	it('Click on volume control triggers video mute/unmute actions', function () {
+	it('Click on volume control triggers video volume toggle action', function () {
 		volumeControl.add(mocks.video);
 
-		mocks.video.volumeControl.click();
-		expect(mocks.video.muted).toBeTruthy();
+		spyOn(mocks.video, 'volumeToggle');
 
 		mocks.video.volumeControl.click();
-		expect(mocks.video.muted).toBeFalsy();
+		expect(mocks.video.volumeToggle).toHaveBeenCalled();
 	});
 });
