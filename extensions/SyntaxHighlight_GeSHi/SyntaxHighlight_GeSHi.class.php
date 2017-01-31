@@ -99,6 +99,10 @@ class SyntaxHighlight_GeSHi {
 			wfProfileOut( __METHOD__ );
 			return $error;
 		}
+
+		// SUS-1514: Log GeSHi parsing time
+		static::profileGeshiPerformance( $parser->getTitle(), $geshi );
+
 		// Armour for Parser::doBlockLevels()
 		if( $enclose === GESHI_HEADER_DIV ) {
 			$out = str_replace( "\n", '', $out );
@@ -247,6 +251,9 @@ class SyntaxHighlight_GeSHi {
 		if( $geshi instanceof GeSHi ) {
 			$out = $geshi->parse_code();
 			if( !$geshi->error() ) {
+				// SUS-1514: Log GeSHi parsing time
+				static::profileGeshiPerformance( $title, $geshi );
+
 				// Done
 				$output->addHeadItem( "source-$lang", self::buildHeadItem( $geshi ) );
 				$output->addHTML( "<div dir=\"ltr\">{$out}</div>" );
@@ -476,5 +483,20 @@ class SyntaxHighlight_GeSHi {
 			$out .= $chunk;
 		}
 		return $out;
+	}
+
+	/**
+	 * Wikia change
+	 * Log GeSHi syntax highlight parsing time with 10% sampling
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/SUS-1514
+	 * @param Title $title article title of JS page or page with a syntaxhighlight tag
+	 * @param GeSHi $geSHi
+	 */
+	private static function profileGeshiPerformance( Title $title, GeSHi $geSHi ) {
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.1, 'SUS-1514 - GeSHi syntax highlight performance', [
+			'titleText' => $title->getPrefixedText(),
+			'parsingTime' => $geSHi->get_time()
+		] );
 	}
 }
