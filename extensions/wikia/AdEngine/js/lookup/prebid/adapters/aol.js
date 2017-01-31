@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
+define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.geo',
 	'wikia.instantGlobals'
@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 						alias: '4431497',
 						sizeId: '225'
 					},
-					{
+					{//x
 						size: [970, 250],
 						placement: '4431493',
 						network: network,
@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 						alias: '4431473',
 						sizeId: '170'
 					},
-					{
+					{//x
 						size: [300, 600],
 						placement: '4431476',
 						network: network,
@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 					}
 				],
 				LEFT_SKYSCRAPER_2: [
-					{
+					{//ok
 						size: [160, 600],
 						placement: '4431477',
 						network: network,
@@ -107,7 +107,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 						alias: '4431496',
 						sizeId: '170'
 					},
-					{
+					{//ok
 						size: [300, 600],
 						placement: '4431475',
 						network: network,
@@ -123,7 +123,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 						alias: '4431492',
 						sizeId: '154'
 					},
-					{
+					{//ok
 						size: [300, 250],
 						placement: '4431494',
 						network: network,
@@ -140,9 +140,18 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 				]
 			},
 			mercury: {
-				MOBILE_IN_CONTENT: [
+				MOBILE_TOP_LEADERBOARD: [
 					{
-						size: [320, 250],
+						size: [320, 50],
+						placement: '4436772',
+						network: network,
+						alias: '4436772',
+						sizeId: '3055'
+					}
+				],
+				MOBILE_IN_CONTENT: [
+					{//ok
+						size: [300, 250],
 						placement: '4431565',
 						network: network,
 						alias: '4431565',
@@ -157,7 +166,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 					}
 				],
 				MOBILE_PREFOOTER: [
-					{
+					{//ok
 						size: [320, 50],
 						placement: '4431563',
 						network: network,
@@ -165,7 +174,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 						sizeId: '3055'
 					},
 					{
-						size: [320, 250],
+						size: [300, 250],
 						placement: '4431566',
 						network: network,
 						alias: '4431566',
@@ -184,23 +193,39 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol',[
 	}
 
 	function prepareAdUnit(slotName, config) {
-		var c = config[0];
-
-		return {
-			code: slotName,
-			sizes: [c.size],
-			bids: [
-				{
-					bidder: bidderName,
-					params: {
-						placement: c.placement,
-						network: c.network,
-						alias: c.alias,
-						sizeId: c.sizeId
+		return config.map(function (c) {
+			return {
+				code: slotName,
+				sizes: [c.size],
+				bids: [
+					{
+						bidder: bidderName,
+						params: {
+							placement: c.placement,
+							network: c.network,
+							alias: c.alias,
+							sizeId: c.sizeId
+						}
 					}
-				}
-			]
-		};
+				]
+			};
+		});
+
+		// return {
+		// 	code: slotName,
+		// 	sizes: [c.size],
+		// 	bids: [
+		// 		{
+		// 			bidder: bidderName,
+		// 			params: {
+		// 				placement: c.placement,
+		// 				network: c.network,
+		// 				alias: c.alias,
+		// 				sizeId: c.sizeId
+		// 			}
+		// 		}
+		// 	]
+		// };
 	}
 
 	function getName() {
