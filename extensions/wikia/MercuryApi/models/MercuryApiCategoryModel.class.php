@@ -11,7 +11,7 @@ class MercuryApiCategoryModel {
 	 *
 	 * @return array
 	 */
-	public static function getMembersGroupedByFirstLetter( string $categoryDBKey, int $page ) {
+	public static function getMembersGroupedByFirstLetter( string $categoryDBKey, int $page ): array {
 		$offset = ( $page - 1 ) * self::CATEGORY_MEMBERS_PER_PAGE;
 		$membersTitles = self::getAlphabeticalList(
 			$categoryDBKey,
@@ -45,7 +45,7 @@ class MercuryApiCategoryModel {
 	 *
 	 * @return Title[]
 	 */
-	private static function getAlphabeticalList( string $categoryDBKey, int $limit, int $offset ) {
+	private static function getAlphabeticalList( string $categoryDBKey, int $limit, int $offset ): array {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			[ 'page', 'categorylinks' ],
@@ -79,7 +79,7 @@ class MercuryApiCategoryModel {
 	 *
 	 * @return array
 	 */
-	public static function getCategoryMembersLegacy( $title, $batchSize = 25 ) {
+	public static function getCategoryMembersLegacy( $title, $batchSize = 25 ): array {
 		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
 
 		$alphabeticalList = F::app()->sendRequest(
@@ -113,7 +113,7 @@ class MercuryApiCategoryModel {
 	 *
 	 * @return int
 	 */
-	public static function getNumberOfPagesAvailable( string $categoryDBKey ) {
+	public static function getNumberOfPagesAvailable( string $categoryDBKey ): int {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$numberOfPages = $dbr->select(
@@ -128,7 +128,13 @@ class MercuryApiCategoryModel {
 		return round( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
 	}
 
-	public static function getPagination( Title $title, int $page ) {
+	/**
+	 * @param Title $title
+	 * @param int $page
+	 *
+	 * @return array
+	 */
+	public static function getPagination( Title $title, int $page ): array {
 		$pages = self::getNumberOfPagesAvailable( $title->getDBkey() );
 
 		$nextPage = self::getNextPage( $page, $pages );
@@ -167,7 +173,7 @@ class MercuryApiCategoryModel {
 	 *
 	 * @return String
 	 */
-	private static function getPageUrl( Title $title, int $page ) {
+	private static function getPageUrl( Title $title, int $page ): string {
 		$params = [];
 
 		// We don't want to have ?page=1, it's implicit

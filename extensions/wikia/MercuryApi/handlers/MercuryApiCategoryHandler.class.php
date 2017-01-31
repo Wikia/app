@@ -4,14 +4,14 @@ class MercuryApiCategoryHandler {
 
 	const PARAM_CATEGORY_MEMBERS_PAGE = 'categoryMembersPage';
 
-	const TRENDING_ARTICLES_COUNT = 6;
+	const TRENDING_ARTICLES_LIMIT = 6;
 
 	private static $categoryModel;
 
 	/**
 	 * @return MercuryApiCategoryModel
 	 */
-	private static function getCategoryModel() {
+	private static function getCategoryModel(): MercuryApiCategoryModel {
 		if ( !self::$categoryModel instanceof MercuryApiCategoryModel ) {
 			self::$categoryModel = new MercuryApiCategoryModel();
 		}
@@ -27,7 +27,7 @@ class MercuryApiCategoryHandler {
 	 * @return array
 	 * @throws NotFoundApiException
 	 */
-	public static function getCategoryPageData( Title $title, int $page, MercuryApi $mercuryApiModel ) {
+	public static function getCategoryPageData( Title $title, int $page, MercuryApi $mercuryApiModel ): array {
 		$categoryDBKey = $title->getDBkey();
 		$categoryModel = self::getCategoryModel();
 		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $categoryDBKey, $page );
@@ -42,7 +42,7 @@ class MercuryApiCategoryHandler {
 				'members' => $categoryModel::getCategoryMembersLegacy( $title ),
 				'membersGrouped' => $membersGrouped,
 				'trendingArticles' => $mercuryApiModel->getTrendingArticlesData(
-					self::TRENDING_ARTICLES_COUNT,
+					self::TRENDING_ARTICLES_LIMIT,
 					$title
 				),
 			],
@@ -57,16 +57,16 @@ class MercuryApiCategoryHandler {
 	 * @return array
 	 * @throws NotFoundApiException
 	 */
-	public static function getCategoryMembers( Title $title, int $page ) {
+	public static function getCategoryMembers( Title $title, int $page ): array {
 		$categoryModel = self::getCategoryModel();
-		$members = $categoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
+		$membersGrouped = $categoryModel::getMembersGroupedByFirstLetter( $title->getDBkey(), $page );
 
-		if ( empty( $members ) ) {
+		if ( empty( $membersGrouped ) ) {
 			throw new NotFoundApiException( 'Category has no members' );
 		}
 
 		return array_merge(
-			[ 'members' => $members ],
+			[ 'membersGrouped' => $membersGrouped ],
 			$categoryModel::getPagination( $title, $page )
 		);
 	}
@@ -77,7 +77,7 @@ class MercuryApiCategoryHandler {
 	 * @return int
 	 * @throws BadRequestApiException
 	 */
-	public static function getCategoryMembersPageFromRequest( WikiaRequest $request ) {
+	public static function getCategoryMembersPageFromRequest( WikiaRequest $request ): int {
 		$intValidator = new WikiaValidatorInteger( [ 'min' => 1 ] );
 		$page = $request->getInt( self::PARAM_CATEGORY_MEMBERS_PAGE, 1 );
 
@@ -93,7 +93,7 @@ class MercuryApiCategoryHandler {
 	 *
 	 * @return array
 	 */
-	public static function getCategoryMockedDetails( Title $title ) {
+	public static function getCategoryMockedDetails( Title $title ): array {
 		return [
 			'description' => '',
 			'id' => $title->getArticleID(),

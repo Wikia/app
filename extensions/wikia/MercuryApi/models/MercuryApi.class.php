@@ -404,7 +404,7 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function getTrendingArticlesData( $limit = 10, Title $category = null ) {
+	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -418,7 +418,7 @@ class MercuryApi {
 			$params['category'] = $category->getText();
 		}
 
-		$data = [ ];
+		$data = [];
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
