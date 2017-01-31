@@ -334,9 +334,7 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$data = [
-				'ns' => $title->getNamespace()
-			];
+			$data = [];
 
 			if ( $this->isSupportedByMercury( $title ) ) {
 				// Empty category pages are not known but contain article list
@@ -352,6 +350,7 @@ class MercuryApiController extends WikiaController {
 				}
 
 				$isMainPage = $title->isMainPage();
+				$data['ns'] = $title->getNamespace();
 				$data['isMainPage'] = $isMainPage;
 
 				if ( $article instanceof Article) {
