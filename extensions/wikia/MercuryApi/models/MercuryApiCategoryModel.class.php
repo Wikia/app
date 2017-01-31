@@ -2,8 +2,7 @@
 
 class MercuryApiCategoryModel {
 
-	// TODO update to 200
-	const CATEGORY_MEMBERS_PER_PAGE = 30;
+	const CATEGORY_MEMBERS_PER_PAGE = 200;
 
 	/**
 	 * @param string $categoryDBKey
