@@ -113,6 +113,9 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageS
 // Checking that user is permitted to delete blog articles
 $wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermissionErrors';
 
+// SUS-260: Prevent moving pages into or out of Forum namespaces
+$wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
+
 /**
  * load other parts
  */
