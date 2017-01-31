@@ -39,7 +39,10 @@ class SpecialGadgets extends SpecialPage {
 		global $wgOut, $wgUser, $wgLang, $wgContLang;
 
 		$this->setHeaders();
-		$wgOut->setPagetitle( wfMsg( "gadgets-title" ) );
+		// begin wikia change
+		// wfMsg cleanup
+		$wgOut->setPagetitle( wfMessage( 'gadgets-title' )->escaped() );
+		// end wikia change
 		$wgOut->addWikiMsg( 'gadgets-pagetext' );
 
 		$gadgets = Gadget::loadStructuredList();
@@ -52,7 +55,6 @@ class SpecialGadgets extends SpecialPage {
 
 		$listOpen = false;
 
-		$msgOpt = array( 'parseinline', 'parsemag' );
 		$editInterfaceAllowed = $wgUser->isAllowed( 'editinterface' );
 
 		foreach ( $gadgets as $section => $entries ) {
@@ -60,14 +62,20 @@ class SpecialGadgets extends SpecialPage {
 				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-section-$section$lang" );
 				if ( $editInterfaceAllowed ) {
 					$lnkTarget = $t
-						? Linker::link( $t, wfMsgHTML( 'edit' ), array(), array( 'action' => 'edit' ) )
+						// begin wikia change
+						// wfMsg cleanup
+						? Linker::link( $t, wfMessage( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) )
+						// end wikia change
 						: htmlspecialchars( $section );
 					$lnk =  "&#160; &#160; [$lnkTarget]";
 				} else {
 					$lnk = '';
 				}
 
-				$ttext = wfMsgExt( "gadget-section-$section", $msgOpt );
+				// begin wikia change
+				// wfMsg cleanup
+				$ttext = wfMessage( "gadget-section-$section" )->parse();
+				// end wikia change
 
 				if ( $listOpen ) {
 					$wgOut->addHTML( Xml::closeElement( 'ul' ) . "\n" );
@@ -89,23 +97,32 @@ class SpecialGadgets extends SpecialPage {
 
 				$links = array();
 				if ( $editInterfaceAllowed ) {
-					$links[] = Linker::link( $t, wfMsgHTML( 'edit' ), array(), array( 'action' => 'edit' ) );
+					// begin wikia change
+					// wfMsg cleanup
+					$links[] = Linker::link( $t, wfMessage( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) );
+					// end wikia change
 				}
 
-				$links[] = Linker::link( $this->getTitle( "export/{$gadget->getName()}" ), wfMsgHtml( 'gadgets-export' ) );
+				// begin wikia change
+				// wfMsg cleanup
+				$links[] = Linker::link( $this->getTitle( "export/{$gadget->getName()}" ), wfMessage( 'gadgets-export' )->escaped() );
 
-				$ttext = wfMsgExt( "gadget-{$gadget->getName()}", $msgOpt );
+				$ttext = wfMessage( "gadget-{$gadget->getName()}" )->parse();
+				// end wikia change
 
 				if ( !$listOpen ) {
 					$listOpen = true;
 					$wgOut->addHTML( Xml::openElement( 'ul' ) );
 				}
 
-				$lnk = '&#160;&#160;' . wfMsg( 'parentheses', $wgLang->pipeList( $links ) );
+				// begin wikia change
+				// wfMsg cleanup
+				$lnk = '&#160;&#160;' . wfMessage( 'parentheses', $wgLang->pipeList( $links ) )->plain();
 				$wgOut->addHTML( Xml::openElement( 'li' ) .
 						$ttext . $lnk . "<br />" .
-						wfMsgHTML( 'gadgets-uses' ) . wfMsg( 'colon-separator' )
+						wfMessage( 'gadgets-uses' )->escaped() . wfMessage( 'colon-separator' )->escaped()
 				);
+				// end wikia change
 
 				$lnk = array();
 				foreach ( $gadget->getScriptsAndStyles() as $codePage ) {
@@ -175,7 +192,10 @@ class SpecialGadgets extends SpecialPage {
 		 */
 		$g = $gadgets[$gadget];
 		$this->setHeaders();
-		$wgOut->setPagetitle( wfMsg( "gadgets-export-title" ) );
+		// begin wikia change
+		// wfMsg cleanup
+		$wgOut->setPagetitle( wfMessage( 'gadgets-export-title' )->escaped() );
+		// end wikia change
 		$wgOut->addWikiMsg( 'gadgets-export-text', $gadget, $g->getDefinition() );
 
 		$exportList = "MediaWiki:gadget-$gadget\n";
@@ -188,7 +208,10 @@ class SpecialGadgets extends SpecialPage {
 			. Html::hidden( 'pages', $exportList )
 			. Html::hidden( 'wpDownload', '1' )
 			. Html::hidden( 'templates', '1' )
-			. Xml::submitButton( wfMsg( 'gadgets-export-download' ) )
+			// begin wikia change
+			// wfMsg cleanup
+			. Xml::submitButton( wfMessage( 'gadgets-export-download' )->escaped() )
+			// end wikia change
 			. Html::closeElement( 'form' )
 		);
 	}

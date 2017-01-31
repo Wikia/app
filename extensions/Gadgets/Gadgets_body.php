@@ -87,7 +87,10 @@ class GadgetHooks {
 			}
 
 			if ( $section !== '' ) {
-				$section = wfMsgExt( "gadget-section-$section", 'parseinline' );
+				// begin wikia change
+				// wfMsg cleanup
+				$section = wfMessage( "gadget-section-$section" )->parse();
+				// end wikia change
 
 				if ( count ( $available ) ) {
 					$options[$section] = $available;
@@ -103,7 +106,10 @@ class GadgetHooks {
 				'label' => '&#160;',
 				'default' => Xml::tags( 'tr', array(),
 					Xml::tags( 'td', array( 'colspan' => 2 ),
-						wfMsgExt( 'gadgets-prefstext', 'parse' ) ) ),
+						// begin wikia change
+						// wfMsg cleanup
+						wfMessage( 'gadgets-prefstext' )->parse() ) ),
+						// end wikia change
 				'section' => 'gadgets',
 				'raw' => 1,
 				'rawrow' => 1,
