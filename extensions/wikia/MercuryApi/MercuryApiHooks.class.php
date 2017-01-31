@@ -59,6 +59,23 @@ class MercuryApiHooks {
 	}
 
 	/**
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @param Title $categoryTitle
+	 * @return bool
+	 */
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $categoryTitle ) {
+		$categories = $categoryInserts + $categoryDeletes;
+
+		foreach ( array_keys( $categories ) as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+			MercuryApiCategoryCacheHelper::setTouched( $categoryTitle->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
 	 * @desc Purge the contributors data to guarantee that it will be refreshed next time it is required
 	 *
 	 * @param WikiPage $wikiPage

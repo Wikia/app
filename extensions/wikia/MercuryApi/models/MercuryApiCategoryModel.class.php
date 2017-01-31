@@ -4,37 +4,40 @@ class MercuryApiCategoryModel {
 
 	const CATEGORY_MEMBERS_PER_PAGE = 200;
 
-	/**
-	 * @param string $categoryDBKey
-	 * @param int $page
-	 *
-	 * @return array
-	 */
 	public static function getMembersGroupedByFirstLetter( string $categoryDBKey, int $page ): array {
-		$offset = ( $page - 1 ) * self::CATEGORY_MEMBERS_PER_PAGE;
-		$membersTitles = self::getAlphabeticalList(
-			$categoryDBKey,
-			self::CATEGORY_MEMBERS_PER_PAGE,
-			$offset
-		);
-		$membersGrouped = [];
+		return WikiaDataAccess::cache(
+			MercuryApiCategoryCacheHelper::getCacheKeyForMethod(
+				$categoryDBKey,
+				__METHOD__ . '-' . $page
+			),
+			MercuryApiCategoryCacheHelper::CACHE_TTL,
+			function () use ( $categoryDBKey, $page ) {
+				$offset = ( $page - 1 ) * self::CATEGORY_MEMBERS_PER_PAGE;
+				$membersTitles = self::getAlphabeticalList(
+					$categoryDBKey,
+					self::CATEGORY_MEMBERS_PER_PAGE,
+					$offset
+				);
+				$membersGrouped = [];
 
-		foreach ( $membersTitles as $memberTitle ) {
-			$titleText = $memberTitle->getText();
-			$firstLetter = mb_substr( $titleText, 0, 1, 'utf-8' );
+				foreach ( $membersTitles as $memberTitle ) {
+					$titleText = $memberTitle->getText();
+					$firstLetter = mb_substr( $titleText, 0, 1, 'utf-8' );
 
-			if ( !isset( $membersGrouped[$firstLetter] ) ) {
-				$membersGrouped[$firstLetter] = [];
+					if ( !isset( $membersGrouped[$firstLetter] ) ) {
+						$membersGrouped[$firstLetter] = [];
+					}
+
+					array_push( $membersGrouped[$firstLetter], [
+						'title' => $titleText,
+						'url' => $memberTitle->getLocalURL(),
+						'isCategory' => $memberTitle->inNamespace( NS_CATEGORY )
+					] );
+				}
+
+				return $membersGrouped;
 			}
-
-			array_push( $membersGrouped[$firstLetter], [
-				'title' => $titleText,
-				'url' => $memberTitle->getLocalURL(),
-				'isCategory' => $memberTitle->inNamespace( NS_CATEGORY )
-			] );
-		}
-
-		return $membersGrouped;
+		);
 	}
 
 	/**
@@ -63,7 +66,7 @@ class MercuryApiCategoryModel {
 		while ( $row = $res->fetchObject() ) {
 			$title = Title::newFromID( $row->page_id );
 
-			if ( $title instanceof Title) {
+			if ( $title instanceof Title ) {
 				array_push( $pages, $title );
 			}
 		}
@@ -113,18 +116,27 @@ class MercuryApiCategoryModel {
 	 * @return int
 	 */
 	public static function getNumberOfPagesAvailable( string $categoryDBKey ): int {
-		$dbr = wfGetDB( DB_SLAVE );
+		return WikiaDataAccess::cache(
+			MercuryApiCategoryCacheHelper::getCacheKeyForMethod(
+				$categoryDBKey,
+				__METHOD__
+			),
+			MercuryApiCategoryCacheHelper::CACHE_TTL,
+			function () use ( $categoryDBKey ) {
+				$dbr = wfGetDB( DB_SLAVE );
 
-		$numberOfPages = $dbr->select(
-			[ 'page', 'categorylinks' ],
-			[ 'COUNT(page_id) as count' ],
-			[ 'cl_to' => $categoryDBKey ],
-			__METHOD__,
-			[],
-			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
+				$numberOfPages = $dbr->select(
+					[ 'page', 'categorylinks' ],
+					[ 'COUNT(page_id) as count' ],
+					[ 'cl_to' => $categoryDBKey ],
+					__METHOD__,
+					[],
+					[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
+				);
+
+				return round( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
+			}
 		);
-
-		return round( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
 	}
 
 	/**
