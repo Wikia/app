@@ -1,3 +1,47 @@
 #premium-design-ab-test-D-rightrail {
 	display: none;
+	overflow: auto;
+
+	.tally {
+		float: left;
+
+		span {
+			clear: left;
+			display: block;
+			font-weight: bold;
+			letter-spacing: .2px;
+			margin-top: 1px;
+
+			br {
+				display: none;
+			}
+		}
+
+		>em {
+			font-family: Arial;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+
+	.wikia-button.createpage {
+		background-color: transparent;
+		background-image: none;
+		border: solid 1px $bordo;
+		border-radius: 0;
+		color: $bordo;
+		float: right;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 2px 11px 9px;
+		text-transform: uppercase;
+
+		&:before {
+			content: url('/extensions/wikia/PremiumDesignABTest/images/add_new_page.svg'); /* $wgCdnStylePath */
+			display: inline;
+			margin-right: 3px;
+			position: relative;
+			top: 5px;
+		}
+	}
 }
