@@ -1350,8 +1350,8 @@ Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'userlogin-account-admin-error' => 'エラーが発生しました。申し訳ありませんが、[[特別:お問い合わせ|Wikiaにお問い合わせ]]ください。',
-	'userlogin-email-confirmation-banner-success-message' => 'あなたのメールアドレスは正常に登録されました。',
-	'userlogin-email-confirmation-banner-error' => 'このアカウント確認用のリンクの有効期限が切れたか、別のアカウントでFandomにログインしています。認証が必要なアカウントにログインするか[[特別:メールアドレスの確認|こちら]]から新しいリンクを発行してください。',
+	'userlogin-email-confirmation-banner-success-message' => 'ご利用のメールアドレスは正常に認証されました。',
+	'userlogin-email-confirmation-banner-error' => '認証用リンクの有効期限が切れたか、別のアカウントでFandomにログインしています。認証が必要なアカウントにログインするか[[特別:メールアドレスの確認|こちら]]から新しいリンクを発行してください。',
 );
 
 $messages['ka'] = array(
@@ -2350,7 +2350,7 @@ ___________________________________________
 </a>',
 	'userlogin-logged-in-message' => 'Вы вошли в систему. Зайдите на [[$1|домашнюю страницу]] за последними новостями или проверьте свой [[$2|профайл]].',
 	'userlogin-email-confirmation-banner-success-message' => 'Ваша электронная почта была подтверждена.',
-	'userlogin-email-confirmation-banner-error' => 'Либо ссылка для подтверждения аккаунта устарела, либо вы вошли не в тот аккаунт на Фэндоме. Пожалуйста, войдите в учётную запись, которую вы хотите подтвердить или [[Special:ConfirmEmail|нажмите сюда]], чтобы получить новую ссылку.',
+	'userlogin-email-confirmation-banner-error' => 'Либо ссылка для подтверждения аккаунта устарела, либо вы вошли не в тот аккаунт. Пожалуйста, войдите в учётную запись, которую вы хотите подтвердить, или [[Special:ConfirmEmail|нажмите сюда]], чтобы получить новую ссылку.',
 );
 
 $messages['sco'] = array(
