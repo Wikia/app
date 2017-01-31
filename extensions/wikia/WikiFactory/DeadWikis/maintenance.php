@@ -290,15 +290,13 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"l.city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\"",
 			"(v.city_flags IS NULL OR v.city_flags & " . WikisModel::FLAG_OFFICIAL . " = 0)",
 		);
-		if (!is_null($this->ids) && !empty($this->ids)) {
-			foreach ($this->ids as $id) {
-				$where[] = "l.city_id = ".intval($id);
-			}
-		} else {
+		if (empty($this->ids)) {
 			if (!is_null($this->from))
 				$where[] = "l.city_id >= ".intval($this->from);
 			if (!is_null($this->to))
 				$where[] = "l.city_id <= ".intval($this->to);
+		} else {
+			$where['l.city_id'] = $this->ids;
 		}
 
 		$res = $db->select(
@@ -456,8 +454,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 					$queryParams,
 					$httpBody,
 					$headerParams,
-					'object',
-					$resourcePathTemplate
+					'object'
 			);
 			$response = $apiClient->getSerializer()->deserialize($rawResponse, 'object', $httpHeader);
 		} catch (\Swagger\Client\ApiException $e) {
@@ -524,8 +521,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 					$evaluated = $evaluated + $evaluatedNow;
 				}
 			}
-			if ($this->debug)
+			if ($this->debug) {
 				print_r($evaluated);
+			}
 			// classify wikis
 			echo "Classifying...\n";
 			$classifications = $this->getOracleClassification($evaluated);
@@ -533,10 +531,12 @@ class AutomatedDeadWikisDeletionMaintenance {
 			echo "Saving statistics...\n";
 			foreach ($evaluated as $id => $wiki) {
 				$status = '';
-				if (isset($classifications[self::DELETE_NOW][$id]))
+				if (isset($classifications[self::DELETE_NOW][$id])) {
 					$status = 'deleteNow';
-				if (isset($classifications[self::DELETE_SOON][$id]))
+				}
+				if (isset($classifications[self::DELETE_SOON][$id])) {
 					$status = 'deleteSoon';
+				}
 				if (!$this->readOnly) {
 					$this->updateWikiStats(array_merge($wiki, array(
 							'status' => $status,
@@ -544,8 +544,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 				}
 			}
 			echo "Disabling wikis...\n";
-			if ($this->debug)
+			if ($this->debug) {
 				print_r($classifications);
+			}
 			if (isset($classifications[self::DELETE_NOW])) {
 				$this->disableWikis($classifications[self::DELETE_NOW],$this->deleted,$this->toBeDeleted);
 			}
@@ -654,9 +655,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$isActiveSite = true;
 
 			try {
-				$isActiveSite = $this->isActiveSite((int)$id);
+				$isActiveSite = $this->isActiveSite($id);
 			} catch ( \Swagger\Client\ApiException $e ) {
-				echo "{od} Failed to get most recent post from site: {$e->getMessage()}\n";
+				echo "{$id} Failed to get most recent post from site: {$e->getMessage()}\n";
 			}
 
 			printf ("%d is %s\n", $id, $isActiveSite ? "active" : "inactive");
