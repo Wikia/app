@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
 use Wikia\Util\GlobalStateWrapper;
 
 class MercuryApiController extends WikiaController {
@@ -58,7 +57,7 @@ class MercuryApiController extends WikiaController {
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
 		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [];
+			$localNavigation = [ ];
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
@@ -227,7 +226,7 @@ class MercuryApiController extends WikiaController {
 	public function getTrackingDimensions() {
 		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$dimensions = [];
+		$dimensions = [ ];
 
 		// Exception is thrown when empty title is send
 		// In that case we don't want to set dimensions which depend on title
@@ -238,7 +237,7 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $title->getArticleId() );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				$title = $this->handleRedirect( $title, $article, [] )[0];
+				$title = $this->handleRedirect( $title, $article, [ ] )[0];
 			}
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
@@ -313,7 +312,6 @@ class MercuryApiController extends WikiaController {
 			);
 		} else {
 			$this->response->setVal( 'data', [ 'content' => 'Invalid title' ] );
-
 			return;
 		}
 
@@ -338,73 +336,78 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$data = [];
 
-			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
-			$article = Article::newFromID( $title->getArticleId() );
-			$articleExists = $article instanceof Article;
+			if ( $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list
+				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
+					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
 
-			if ( $articleExists && $title->isRedirect() ) {
-				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
-			}
+				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
+				$article = Article::newFromID( $title->getArticleId() );
 
-			$isMainPage = $title->isMainPage();
-			$data['isMainPage'] = $isMainPage;
-			$data['ns'] = $title->getNamespace();
+				if ( $title->isRedirect() ) {
+					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
+				}
 
-			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+				$isMainPage = $title->isMainPage();
+				$data['ns'] = $title->getNamespace();
+				$data['isMainPage'] = $isMainPage;
 
-				// TODO: remove this line after release of XW-2590 (XW-2625)
-				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
-
-				$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi, true );
-
-				if ( $article instanceof Article ) {
+				if ( $article instanceof Article) {
+					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+					$data['categories'] = $articleData['categories'];
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
-					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
+					$data['categories'] = [];
+					/*
+					 * Categories with empty article doesn't allow us to get details.
+					 * In this case we return mocked data that allows mercury to operate correctly. HTML title etc.
+					 */
+					$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 				}
-			} else {
-				switch ( $data['ns'] ) {
-					// Handling namespaces other than content ones
-					case NS_CATEGORY:
-						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+				$data['articleType'] = WikiaPageType::getArticleType( $title );
+				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+				$otherLanguages = $this->getOtherLanguages( $title );
 
-						if ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-							if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+				if ( !empty( $otherLanguages ) ) {
+					$data['otherLanguages'] = $otherLanguages;
+				}
 
-								// Remove namespace prefix from displayTitle, so it can be consistent with title
-								// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-								$data['article']['displayTitle'] =
-									Title::newFromText( $data['article']['displayTitle'] )->getText();
-							} else {
-								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-							}
-						} else {
-							throw new NotFoundApiException( 'Category has no members' );
+				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				} else {
+					if ( !empty( $articleData['content'] ) ) {
+						$data['article'] = $articleData;
+
+						if ( !$title->isContentPage() ) {
+							// This does two things:
+							// - gets displayTitle from parser function {{DISPLAYTITLE:displayTitle}}
+							// - removes the namespace prefix from it
+							$data['article']['displayTitle'] =
+								Title::newFromText( $data['article']['displayTitle'] )->getText();
 						}
+					}
 
-						break;
-					default:
-						if ( $title->isContentPage() ) {
-							if ( $title->isKnown() && $articleExists ) {
-								$data = array_merge(
-									$data,
-									MercuryApiArticleHandler::getArticleData(
-										$this->request,
-										$this->mercuryApi,
-										$article
-									)
-								);
-							} else {
-								\Wikia\Logger\WikiaLogger::instance()->error(
-									'$article should be an instance of an Article',
-									[ 'article' => $article ]
-								);
+					switch ( $data['ns'] ) {
+						// Handling namespaces other than content ones
+						case NS_CATEGORY:
+							$categoryContent = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-								throw new NotFoundApiException( 'Article is empty' );
+							if ( empty( $categoryContent['members']['sections'] ) ) {
+								throw new NotFoundApiException( 'Category has no members' );
 							}
-						}
+
+							$data['nsSpecificContent'] = $categoryContent;
+							break;
+						case NS_FILE:
+							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
+							break;
+						default:
+							$data = array_merge(
+								$data,
+								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+							);
+					}
 				}
 			}
 		} catch ( WikiaHttpException $exception ) {
@@ -420,20 +423,6 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
-
-			$title = $this->wg->Title;
-		}
-
-		// These operations slow the API response time by 50 times
-		// There is no need to perform them on the file pages as they're not supported by Mercury anyway
-		if ( $title->getNamespace() !== NS_FILE ) {
-			$data['articleType'] = WikiaPageType::getArticleType( $title );
-			$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
-			$otherLanguages = $this->getOtherLanguages( $title );
-
-			if ( !empty( $otherLanguages ) ) {
-				$data['otherLanguages'] = $otherLanguages;
-			}
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -483,39 +472,6 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
-	// TODO: remove this method after release of XW-2590 (XW-2625) as it is no longer used in mercury
-	public function getCuratedContentSection() {
-		$section = $this->getVal( 'section' );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
-		if ( empty( $section ) ) {
-			throw new NotFoundApiException( 'Section is not set' );
-		}
-
-		$data = MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
-
-		if ( empty( $data ) ) {
-			throw new NotFoundApiException( 'No members' );
-		}
-
-		$this->response->setVal( 'items', $data['items'] );
-	}
-
-	public function getMainPageDetailsAndAdsContext() {
-		$mainPageTitle = Title::newMainPage();
-		$mainPageArticleID = $mainPageTitle->getArticleID();
-		$article = Article::newFromID( $mainPageArticleID );
-		$data = [];
-
-		$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
-
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal( 'data', $data );
-	}
-
 	private function getOtherLanguages( Title $title ) {
 		global $wgEnableLillyExt;
 
@@ -536,31 +492,29 @@ class MercuryApiController extends WikiaController {
 		unset( $links[$langCode] );
 
 		// Construct the structure for Mercury
-		$langMap = array_map(
-			function ( $langCode, $url ) {
-				$urlPath = parse_url( $url, PHP_URL_PATH );
-				$articleTitle = preg_replace( '|^/(wiki/)?|', '', rawurldecode( $urlPath ) );
-
-				return [
-					'languageCode' => $langCode,
-					'languageName' => Language::getLanguageName( $langCode ),
-					'articleTitle' => str_replace( '_', ' ', $articleTitle ),
-					'url' => $url,
-				];
-			},
-			array_keys( $links ),
-			array_values( $links )
-		);
+		$langMap = array_map( function ( $langCode, $url ) {
+			$urlPath = parse_url( $url, PHP_URL_PATH );
+			$articleTitle = preg_replace( '|^/(wiki/)?|', '', rawurldecode( $urlPath ) );
+			return [
+				'languageCode' => $langCode,
+				'languageName' => Language::getLanguageName( $langCode ),
+				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
+				'url' => $url,
+			];
+		}, array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
-		usort(
-			$langMap,
-			function ( $lang1, $lang2 ) use ( $c ) {
-				return $c->compare( $lang1['languageName'], $lang2['languageName'] );
-			}
-		);
+		usort( $langMap, function ( $lang1, $lang2 ) use ( $c ) {
+			return $c->compare( $lang1['languageName'], $lang2['languageName'] );
+		} );
 
 		return $langMap;
+	}
+
+	private function isSupportedByMercury( Title $title ) {
+		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
+			$title->isContentPage() ||
+			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY ]);
 	}
 }

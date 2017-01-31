@@ -326,6 +326,7 @@ $config['adengine2_video_ui_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
@@ -989,6 +990,13 @@ $config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
+$config['prebid_debug_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
 	]
 ];
 

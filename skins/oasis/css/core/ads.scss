@@ -177,6 +177,18 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
+.bfab-template {
+	position: relative;
+}
+
+.wikia-ad .replay-overlay {
+	background: rgba(0,0,0,0.7) url('/extensions/wikia/AdEngine/js/video/player/ui/images/replay.svg') center/8% no-repeat;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+
 .video-player {
 	position: relative;
 
