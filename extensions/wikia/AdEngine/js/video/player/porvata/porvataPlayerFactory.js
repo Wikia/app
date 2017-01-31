@@ -40,6 +40,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			isMuted: function () {
 				return ima.getAdsManager().getVolume() === 0;
 			},
+			isMobilePlayerMuted: function () {
+				var mobileVideoAd = this.container.querySelector('video');
+				return mobileVideoAd && mobileVideoAd.autoplay && mobileVideoAd.muted;
+			},
 			isPaused: function () {
 				return ima.getStatus() === 'paused';
 			},
@@ -73,15 +77,34 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resume: function () {
 				ima.getAdsManager().resume();
 			},
-			setVolume: function (volume) {
-				if (mobileVideoAd) {
-					mobileVideoAd.muted = volume === 0;
+			mute: function () {
+				return this.setVolume(0);
+			},
+			unmute: function () {
+				return this.setVolume(0.75);
+			},
+			volumeToggle: function () {
+				if (this.isMuted()) {
+					this.unmute();
+				} else {
+					this.mute();
 				}
-				return ima.getAdsManager().setVolume(volume);
+			},
+			setVolume: function (volume) {
+				this.updateVideoDOMElement(volume);
+				ima.getAdsManager().setVolume(volume);
+
+				// This is hack for Safari, because it can't dispatch original IMA event (volumeChange)
+				ima.getAdsManager().dispatchEvent('wikiaVolumeChange');
 			},
 			stop: function () {
 				ima.getAdsManager().dispatchEvent('wikiaAdStop');
 				ima.getAdsManager().stop();
+			},
+			updateVideoDOMElement: function (volume) {
+				if (mobileVideoAd) {
+					mobileVideoAd.muted = volume === 0;
+				}
 			}
 		};
 	}
