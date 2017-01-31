@@ -461,6 +461,16 @@ class MercuryApiController extends WikiaController {
 	public function getCategoryMembers() {
 		try {
 			$title = $this->getTitleFromRequest();
+
+			if ( $title->isRedirect() ) {
+				$article = new Article( $title );
+				$redirectTargetTitle = $article->getRedirectTarget();
+
+				if ( !is_null( $redirectTargetTitle ) && ( $redirectTargetTitle->getNamespace() === NS_CATEGORY ) ) {
+					$title = $redirectTargetTitle;
+				}
+			}
+
 			$page = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request );
 			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $page );
 		} catch ( WikiaHttpException $exception ) {
