@@ -30,11 +30,20 @@ class PremiumDesignABTestController extends WikiaController {
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 	}
 
+	public function D_pageheader() {
+		$this->headerModuleParams = [ 'showSearchBox' => false ];
+	}
+
 	public function rightrail() {
 
 	}
 
 	public function C_rightrail() {
+		// number of pages on this wiki
+		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
+	}
+
+	public function D_rightrail() {
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 	}
