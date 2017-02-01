@@ -188,7 +188,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 		slots = config[skin];
 		script.addEventListener('load', function () {
-			// TODO Remove win.rubiconVulcan reference
+			// TODO ADEN-4637 Remove win.rubiconVulcan reference
 			win.rubiconVulcan = win.rubicontag.video;
 			win.ads.rubiconVulcan = {
 				getSingleResponse: getSingleResponse,
