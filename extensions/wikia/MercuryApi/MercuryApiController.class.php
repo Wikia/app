@@ -332,6 +332,8 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
+		$cacheValidity = WikiaResponse::CACHE_STANDARD;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [];
@@ -391,13 +393,21 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
-							$categoryPageData = MercuryApiCategoryHandler::getCategoryPageData(
+							$categoryMembersPage = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest(
+								$this->request
+							);
+							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryPageData(
 								$title,
-								MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request ),
+								$categoryMembersPage,
 								$this->mercuryApi
 							);
 
-							$data['nsSpecificContent'] = $categoryPageData;
+							// We don't cache subsequent pages, because there is no good way to purge them
+							// TODO remove this when icache supports surrogate keys
+							if ( $categoryMembersPage > 1 ) {
+								$cacheValidity = WikiaResponse::CACHE_DISABLED;
+							}
+
 							break;
 						case NS_FILE:
 							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
@@ -426,7 +436,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setCacheValidity( $cacheValidity );
 		$this->response->setVal( 'data', $data );
 	}
 
@@ -489,7 +499,9 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		// We don't cache it, because there is no easy way to purge all pages
+		// TODO start caching when icache supports surrogate keys
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'data', $data );
 	}
 
