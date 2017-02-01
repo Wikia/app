@@ -215,45 +215,4 @@ class IndexServicesTest extends BaseTest
 				$service->execute()
 		);
 	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.08654 ms
-	 * @covers Wikia\Search\IndexService\WikiStats::execute
-	 */
-	public function testWikiStatsExecute() {
-		$mwService = $this->service->setMethods( [ 'isOnDbCluster', 'getApiStatsForWiki' ] )->getMock();
-		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\WikiStats' )
-		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getService' ] )
-		                ->getMock();
-		
-		$statsInfo = [ 'query' => [ 'statistics' => [ 'pages' => 123, 'articles' => 456, 'activeusers' => 234, 'images' => 567 ] ] ];
-		$service
-		    ->expects( $this->once() )
-		    ->method ( "getService" )
-		    ->will   ( $this->returnValue( $mwService ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'isOnDbCluster' )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getApiStatsForWiki' )
-		    ->will   ( $this->returnValue( $statsInfo ) )
-		;
-		$expected = [ 'wikipages' => 123, 'wikiarticles' => 456, 'activeusers' => 234, 'wiki_images' => 567 ];
-		$this->assertEquals(
-				$expected,
-				$service->execute()
-		);
-		$this->assertAttributeEquals(
-				$expected,
-				'result',
-				$service
-		);
-	}
-	
 }
