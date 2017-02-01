@@ -349,9 +349,6 @@ class MercuryApiController extends WikiaController {
 
 				if ( $title->isRedirect() ) {
 					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
-
-					// When title is a redirect we need to override namespace with it's target value
-					$data['ns'] = $title->getNamespace();
 				}
 
 				$isMainPage = $title->isMainPage();
@@ -456,6 +453,9 @@ class MercuryApiController extends WikiaController {
 		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
 			$article = Article::newFromID( $redirectTargetID );
+
+			// When title is a redirect we need to override namespace with it's target value
+			$data['ns'] = $title->getNamespace();
 		} else {
 			$data['redirectEmptyTarget'] = true;
 		}
