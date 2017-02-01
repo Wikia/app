@@ -406,42 +406,29 @@ class MercuryApi {
 	}
 
 	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
-		$cacheKey = wfMemcKey(
-			__CLASS__,
-			__METHOD__,
-			$category instanceof Title ? md5( $category->getDBkey() ) : null,
-			$limit
-		);
+		global $wgContentNamespaces;
 
-		return WikiaDataAccess::cache(
-			$cacheKey,
-			self::CACHE_TIME_TRENDING_ARTICLES,
-			function () use ( $limit, $category ) {
-				global $wgContentNamespaces;
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => $limit,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
 
-				$params = [
-					'abstract' => false,
-					'expand' => true,
-					'limit' => $limit,
-					'namespaces' => implode( ',', $wgContentNamespaces )
-				];
+		if ( $category instanceof Title ) {
+			$params['category'] = $category->getText();
+		}
 
-				if ( $category instanceof Title ) {
-					$params['category'] = $category->getText();
-				}
+		$data = [];
 
-				$data = [];
+		try {
+			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = self::processTrendingArticlesData( $rawData );
+		} catch ( NotFoundException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
+		}
 
-				try {
-					$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-					$data = self::processTrendingArticlesData( $rawData );
-				} catch ( NotFoundException $ex ) {
-					WikiaLogger::instance()->info( 'Trending articles data is empty' );
-				}
-
-				return $data;
-			}
-		);
+		return $data;
 	}
 
 	/**
