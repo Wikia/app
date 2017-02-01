@@ -137,8 +137,8 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('ad_error_code')).toBeFalsy();
 		expect(getTrackedValue('vulcan_network')).toBeFalsy();
 		expect(getTrackedValue('vulcan_advertiser')).toBeFalsy();
-		expect(getTrackedValue('vulcan_price')).toBeFalsy();
-		expect(getTrackedValue('wsi')).toBeFalsy();
+		expect(getTrackedValue('vulcan_price')).toEqual(-1);
+		expect(getTrackedValue('wsi')).toEqual('(none)');
 	});
 
 	it('Track data with slot name', function () {
