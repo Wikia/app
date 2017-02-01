@@ -884,7 +884,7 @@ class ArticleComment {
 
 		// SUS-1188
 		if ( !$status->isOK() ) {
-			WikiaLogger::instance()->error( __METHOD__ . ' - failed SUS-1188', [
+			WikiaLogger::instance()->error( __METHOD__ . ' - failed', [
 				'hook_error' => (string) $editPage->hookError,
 				'edit_status' => $status,
 				'edit_result' => (array) $result,
