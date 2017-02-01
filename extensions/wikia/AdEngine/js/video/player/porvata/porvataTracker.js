@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	var playerName = 'porvata',
 		trackingEventsMap = {
 			'adCanPlay': 'ad_can_play',
-			'allAdsCompleted': 'completed',
+			'completed': 'completed',
 			'click': 'clicked',
 			'firstquartile': 'first_quartile',
 			'impression': 'impression',
