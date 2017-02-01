@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="17px" viewBox="0 0 18 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Test-Concepts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Concept-2" transform="translate(-222.000000, -382.000000)" fill="#FFFFFF">
+            <g id="Video" transform="translate(68.000000, 276.000000)">
+                <g id="comment" transform="translate(154.000000, 106.000000)">
+                    <path d="M9,0 C4.03725003,0 0,3.33669422 0,7.43801654 C0,11.5393389 4.03725003,14.8760331 9,14.8760331 C9.7515,14.8760331 10.50825,14.7957025 11.25225,14.6372727 L15.47175,16.3108264 C15.56175,16.3465289 15.65625,16.3636364 15.75,16.3636364 C15.912,16.3636364 16.07175,16.312314 16.20375,16.2119009 C16.41375,16.0534711 16.524,15.7976033 16.4955,15.5380165 L16.10025,12.0094215 C17.328,10.7077686 18,9.0966942 18,7.43801654 C18,3.33669422 13.96275,0 9,0" id="Shape" transform="translate(9.000000, 8.181818) scale(-1, 1) translate(-9.000000, -8.181818) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

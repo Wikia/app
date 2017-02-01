@@ -21,12 +21,15 @@
 			position: absolute;
 			top: 50%;
 			transform: translate(-50%, -50%);
+			width: 100px;
+			height: 100px;
 		}
 
 		.video-time {
 			bottom: 15px;
 			color: #ffffff;
 			font-family: Arial;
+			font-size: 14px;
 			font-weight: bold;
 			left: 19px;
 			position: absolute;
@@ -43,21 +46,26 @@
 		.header-container {
 			border-bottom: 0;
 
-			.header-title h1 {
-				color: #ffffff;
-				display: block;
-				font-size: 40px;
-				font-weight: bold;
-				line-height: normal;
+			.header-title {
+				padding: 0;
 
-				&:before {
-					content: 'Article page';
+				h1 {
+					color: #ffffff;
 					display: block;
-					font-size: 10px;
-					font-weight: normal;
-					letter-spacing: .2px;
-					line-height: 18px;
-					text-transform: uppercase;
+					font-size: 40px;
+					font-weight: bold;
+					line-height: normal;
+					margin-bottom: 4px;
+
+					&:before {
+						content: 'Article page';
+						display: block;
+						font-size: 10px;
+						font-weight: normal;
+						letter-spacing: .2px;
+						line-height: 18px;
+						text-transform: uppercase;
+					}
 				}
 			}
 		}
@@ -95,9 +103,9 @@
 				}
 
 				&:before {
-					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */
+					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil-white.svg"); /* $wgCdnStylePath */
 					display: inline;
-					margin-right: 2px;
+					margin-right: 4px;
 					position: relative;
 					top: 4px;
 				}
@@ -162,7 +170,7 @@
 				display: inline;
 				position: relative;
 				top: 5px;
-				margin-right: 3px;
+				margin-right: 5px;
 			}
 		}
 
@@ -171,7 +179,7 @@
 			margin-left: 10px;
 
 			&:before {
-				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
+				content: url("/extensions/wikia/PremiumDesignABTest/images/comment-white.svg"); /* $wgCdnStylePath */
 			}
 
 			.commentsbubble {
@@ -181,7 +189,7 @@
 
 		#ShareEntryPoint {
 			&:before {
-				content: url("/extensions/wikia/PremiumDesignABTest/images/share.svg"); /* $wgCdnStylePath */
+				content: url("/extensions/wikia/PremiumDesignABTest/images/share-white.svg"); /* $wgCdnStylePath */
 			}
 
 			>svg {display: none}
