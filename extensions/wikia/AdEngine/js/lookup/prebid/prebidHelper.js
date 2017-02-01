@@ -12,11 +12,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 		Object.keys(slots).forEach(function(slotName) {
 			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin);
 			if (adUnit) {
-				if (adUnit instanceof Array) {
-					adapterAdUnits = adapterAdUnits.concat(adUnit);
-				} else {
-					adapterAdUnits.push(adUnit);
-				}
+				adapterAdUnits.push(adUnit);
 			}
 		});
 
