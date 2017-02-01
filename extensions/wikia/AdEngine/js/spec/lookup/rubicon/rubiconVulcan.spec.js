@@ -100,8 +100,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 							return [mocks.slot];
 						}
 					}
-
-				}
+				},
+				ads: {}
 			}
 		};
 

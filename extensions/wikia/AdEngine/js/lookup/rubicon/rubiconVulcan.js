@@ -136,6 +136,16 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		return bestResponse;
 	}
 
+	function deleteBid(slotName) {
+		var response;
+
+		slotName = slotMapping[slotName] || slotName;
+		response = getSingleResponse(slotName);
+		response.used = true;
+
+		delete priceMap[slotName];
+	}
+
 	function encodeParamsForTracking(params) {
 		if (!params[rubiconVideoTierKey]) {
 			return;
@@ -178,7 +188,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 		slots = config[skin];
 		script.addEventListener('load', function () {
+			// TODO ADEN-4637 Remove win.rubiconVulcan reference
 			win.rubiconVulcan = win.rubicontag.video;
+			win.ads.rubiconVulcan = {
+				getSingleResponse: getSingleResponse,
+				deleteBid: deleteBid
+			};
 			defineSlots(skin, onResponse);
 		});
 
