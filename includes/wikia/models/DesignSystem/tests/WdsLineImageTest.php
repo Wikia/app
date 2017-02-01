@@ -1,6 +1,5 @@
 <?php
 
-
 class WdsLineImageTest extends WikiaBaseTest {
 	/**
 	 * @param $imageKey

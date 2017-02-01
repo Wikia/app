@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: ryba
- * Date: 30/01/2017
- * Time: 12:13
- */
 class WdsLinkAuthenticationWithSubtitleTest extends WikiaBaseTest {
 	/**
 	 * @param $paramName
