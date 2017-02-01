@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 					sizes: ['300x250', '320x50']
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: ['300x250', '320x50']
+					sizes: ['320x50']
 				}
 			}
 		};
