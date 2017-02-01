@@ -85,7 +85,7 @@ class VideoHandlerHooks {
 	 * @return bool
 	 */
 	static public function initParserHook( &$parser ) {
-		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
+		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
 
