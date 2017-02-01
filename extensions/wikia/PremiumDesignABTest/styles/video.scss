@@ -1,6 +1,6 @@
 @mixin video {
 	cursor: pointer;
-	background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
+	background-image: $video-thumbnail-url; /* $wgCdnStylePath */
 	background-size: cover;
 	padding-top: 56%;
 	position: relative;

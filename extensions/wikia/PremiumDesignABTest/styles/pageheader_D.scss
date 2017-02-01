@@ -1,3 +1,190 @@
+@import "video";
+
 #premium-design-ab-test-D-pageheader {
 	display: none;
+
+	.video {
+		background-image: $video-thumbnail-url; /* $wgCdnStylePath */
+		background-size: cover;
+		cursor: pointer;
+		margin-bottom: 11px;
+		padding-top: 56%;
+		position: relative;
+		width: 100%;
+
+		.video-title {
+			display: none;
+		}
+
+		.video-play-button {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.video-time {
+			bottom: 15px;
+			color: #ffffff;
+			font-family: Arial;
+			font-weight: bold;
+			left: 19px;
+			position: absolute;
+		}
+	}
+
+	.WikiaPageHeader {
+		display: block;
+		left: 0;
+		padding: 24px 30px;
+		position: absolute;
+		top: 0;
+
+		.header-container {
+			border-bottom: 0;
+
+			.header-title h1 {
+				color: #ffffff;
+				display: block;
+				font-size: 40px;
+				font-weight: bold;
+				line-height: normal;
+
+				&:before {
+					content: 'Article page';
+					display: block;
+					font-size: 10px;
+					font-weight: normal;
+					letter-spacing: .2px;
+					line-height: 18px;
+					text-transform: uppercase;
+				}
+			}
+		}
+
+		.header-tally {
+			display: none;
+		}
+
+		.header-buttons {
+			display: flex;
+		}
+
+		.wikia-menu-button {
+			background-color: transparent;
+			background-image: none;
+			border: 1px solid #ffffff;
+			border-radius: 0;
+			color: #ffffff;
+			font-size: 10px;
+			height: 33px;
+			margin: 0;
+			text-transform: uppercase;
+
+			.edit-pencil {
+				display: none;
+			}
+
+			> a {
+				border-color: rgba(255, 255, 255, 0.5);
+				padding: 5px 12px 6px;
+
+				&:hover {
+					background-color: transparent;
+					background-image: none;
+				}
+
+				&:before {
+					content: url("/extensions/wikia/PremiumDesignABTest/images/pencil.svg"); /* $wgCdnStylePath */
+					display: inline;
+					margin-right: 2px;
+					position: relative;
+					top: 4px;
+				}
+			}
+
+			.drop {
+				padding-left: 11px;
+
+				&:hover {
+					background-image: none;
+					background-color: transparent;
+				}
+
+				.chevron {
+					border-width: 5px;
+					margin: 0 11px 0 1px;
+				}
+			}
+
+			ul {
+				background-color: #fff;
+				top: 33px;
+				box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
+				border: 0;
+				font-size: 14px;
+				padding: 5px 0;
+
+				a {
+					padding: 0;
+
+					&:hover {
+						background-color: transparent;
+					}
+				}
+
+				li {
+					border-top: 0;
+					padding: 10px 18px;
+
+					&:hover {
+						background-color: #eee !important;
+					}
+				}
+			}
+
+
+		}
+
+		.wikia-button.talk, #ShareEntryPoint {
+			background-color: transparent;
+			background-image: none;
+			border: 0;
+			border-radius: 0;
+			color: #ffffff;
+			font-size: 10px;
+			font-weight: bold;
+			padding: 3px 11px 9px;
+			text-transform: uppercase;
+			//margin-top: 9px;
+
+			&:before {
+				display: inline;
+				position: relative;
+				top: 5px;
+				margin-right: 3px;
+			}
+		}
+
+		.wikia-button.talk {
+			margin-right: 10px;
+			margin-left: 10px;
+
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/comment.svg"); /* $wgCdnStylePath */
+			}
+
+			.commentsbubble {
+				display: none;
+			}
+		}
+
+		#ShareEntryPoint {
+			&:before {
+				content: url("/extensions/wikia/PremiumDesignABTest/images/share.svg"); /* $wgCdnStylePath */
+			}
+
+			>svg {display: none}
+		}
+	}
 }
