@@ -48,6 +48,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
+		slotMapping = {
+			'INCONTENT_PLAYER': 'INCONTENT_LEADERBOARD'
+		},
 		slots = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
@@ -91,6 +94,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		slotName = slotMapping[slotName] || slotName;
 		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
@@ -105,6 +109,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var cpm,
 			price;
 
+		slotName = slotMapping[slotName] || slotName;
+
 		if (priceMap[slotName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
 			price = cpm.toFixed(2).toString();
@@ -118,6 +124,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
 			allSlots = win.rubiconVulcan.getAllSlots() || [];
+
+		slotName = slotMapping[slotName] || slotName;
 
 		allSlots.forEach(function (slot) {
 			if (slot.id === slotName) {
@@ -182,7 +190,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		return !!slots[slotName] || slotMapping[slotName];
 	}
 
 	bidder = factory.create({

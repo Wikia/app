@@ -220,4 +220,15 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 
 		expect(vulcan.getSlotParams('TOP_RIGHT_BOXAD')).toEqual({});
 	});
+
+	it('Returns INCONTENT_LEADERBOARD bid for INCONTENT_PLAYER', function () {
+		var vulcan = getVulcan();
+
+		vulcan.call();
+
+		expect(vulcan.hasResponse()).toBeTruthy();
+		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
+			'rpfl_video': '203_tier1600'
+		});
+	});
 });
