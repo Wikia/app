@@ -83,11 +83,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					sizeId: '170'
 				},
 				MOBILE_PREFOOTER: {
-					size: [320, 50],
-					placement: '4431563',
+					size: [300, 250],
+					placement: '4431566',
 					network: network,
-					alias: '4431563',
-					sizeId: '3055'
+					alias: '4431566',
+					sizeId: '170'
 				}
 			}
 		};
