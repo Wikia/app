@@ -95,6 +95,7 @@
 
 			> a {
 				border-color: rgba(255, 255, 255, 0.5);
+				letter-spacing: .2px;
 				padding: 5px 12px 6px;
 
 				&:hover {
@@ -121,7 +122,7 @@
 
 				.chevron {
 					border-width: 5px;
-					margin: 0 11px 0 1px;
+					margin: 3px 11px 0 1px;
 				}
 			}
 
@@ -144,6 +145,7 @@
 				li {
 					border-top: 0;
 					padding: 10px 18px;
+					text-transform: none;
 
 					&:hover {
 						background-color: #eee !important;
@@ -152,6 +154,11 @@
 			}
 
 
+			&.active {
+				.drop {
+					transform: rotate(180deg);
+				}
+			}
 		}
 
 		.wikia-button.talk, #ShareEntryPoint {
@@ -162,15 +169,16 @@
 			color: #ffffff;
 			font-size: 10px;
 			font-weight: bold;
+			letter-spacing: .2px;
 			padding: 3px 11px 9px;
 			text-transform: uppercase;
 			//margin-top: 9px;
 
 			&:before {
 				display: inline;
+				margin-right: 5px;
 				position: relative;
 				top: 5px;
-				margin-right: 5px;
 			}
 		}
 
