@@ -10,9 +10,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
 	function buildVastUrl(params) {
-		var vastUrl;
-
-		vastUrl = params.vastUrl || vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
+		var vastUrl = params.vastUrl ||
+			vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 
@@ -22,6 +21,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	function createRequest(params) {
 		var adsRequest = new win.google.ima.AdsRequest();
 
+		if (params.vastResponse) {
+			adsRequest.adsResponse = params.vastResponse;
+		}
 		adsRequest.adTagUrl = buildVastUrl(params);
 		adsRequest.linearAdSlotWidth = params.width;
 		adsRequest.linearAdSlotHeight = params.height;
