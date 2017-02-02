@@ -28,7 +28,8 @@ define('ext.wikia.recirculation.utils', [
 							.siblings()
 							.remove()
 							.end()
-							.after($html);
+							.end()
+							.append($html);
 						footerState.cleared = true;
 						footerState.pending.forEach(function(d) {
 							d.resolve();
