@@ -101,6 +101,7 @@ class PasswordResetLinkController extends EmailController {
 
 	private function getResetURL() {
 		global $wgDevelEnvironment;
+
 		if ( !empty( $wgDevelEnvironment ) && !empty( $this->returnUrl ) ) {
 			$parts = wfParseUrl( $this->returnUrl );
 			if ( !empty( $parts ) &&
