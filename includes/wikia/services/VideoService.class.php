@@ -56,7 +56,9 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = RepoGroup::singleton()->findFile( $videoTitle );
+
+				// SUS-1195: by-pass the RepoGroup process cache
+				$file = WikiaFileHelper::getFileFromTitle( $videoTitle, true /* by-pass the cache */ );
 			}
 
 			if ( !( $file instanceof File ) ) {

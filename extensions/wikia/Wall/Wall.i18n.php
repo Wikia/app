@@ -1,136 +1,112 @@
 <?php
-
-$messages = [ ];
+/** Internationalization file for /extensions/wikia/Wall/Wall extension. */
+$messages = [];
 
 $messages['en'] = [
 	'wall-no-title' => 'No title',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 reply|all $1 replies}}</span>',
 	'wall-message-wall' => 'Message Wall',
 	'wall-message-wall-shorten' => 'wall',
-
 	'wall-message-unfollow' => 'Unfollow',
-
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
-
 	'wall-message-update-topics-summary' => 'Topic changed',
 	'wall-message-update-highlight-summary' => 'Highlighted',
-	'wall-message-update-removed-highlight-summary'  => 'Highlight removed',
-
+	'wall-message-update-removed-highlight-summary' => 'Highlight removed',
 	'wall-message-mywall' => 'My wall',
 	'wall-toolbar-history' => 'History',
-
 	'wall-message-notify' => 'Notify admin',
-
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
 	'wall-message-fast-admin-delete-message' => 'VSTF delete',
 	'wall-message-quote-button' => 'Quote',
-
-	'wall-message-elseswall' => "$1's wall",
+	'wall-message-elseswall' => '$1\'s wall',
 	'wall-message-no-permission' => 'You don\'t have permissions to perform this action on the message',
-
 	'wall-thread-removed' => 'Removed',
 	'wall-thread-isnotifyeveryone' => 'Highlight',
 	'wall-thread-deleted' => 'Deleted',
 	'wall-thread-closed' => 'Closed',
-
 	'wall-default-title' => 'Message from $1',
 	'wall-no-title-warning' => '← You did not specify any title',
 	'wall-desc' => 'User talk page replacement',
 	'wall-disabled-desc' => 'Message Wall functionality for wikis without the Wall extension enabled',
 	'wall-placeholder-topic' => 'What\'s this about?',
-	'wall-placeholder-message' => "Post a new message to $1's wall",
-	'wall-placeholder-message-anon' => "Post a new message to this wall",
-	'wall-placeholder-reply' => "Post a reply",
-	'wall-button-to-preview-comment' => "Preview",
-	'wall-button-to-cancel-preview' => "Edit",
-	'wall-button-to-submit-comment' => "Post",
-	'wall-button-to-submit-reply' => "Reply",
-	'wall-button-to-submit-comment-no-topic' => "Post without a title",
+	'wall-placeholder-message' => 'Post a new message to $1\'s wall',
+	'wall-placeholder-message-anon' => 'Post a new message to this wall',
+	'wall-placeholder-reply' => 'Post a reply',
+	'wall-button-to-preview-comment' => 'Preview',
+	'wall-button-to-cancel-preview' => 'Edit',
+	'wall-button-to-submit-comment' => 'Post',
+	'wall-button-to-submit-reply' => 'Reply',
+	'wall-button-to-submit-comment-no-topic' => 'Post without a title',
 	'wall-button-save-changes' => 'Save changes',
 	'wall-button-cancel-changes' => 'Cancel',
 	'wall-button-done-source' => 'Done',
-	'wall-message-edit' => "Edit",
+	'wall-message-edit' => 'Edit',
 	'wall-message-more' => 'More',
-	'wall-message-delete' => "Delete",
-	'wall-message-close-thread' => "Close this thread",
-	'wall-message-reopen-thread' => "Reopen this thread",
-	'wall-message-removed-thread-because' => "$1 removed this thread because:",
-	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
-	'wall-message-restore-thread' => "Restore Thread",
+	'wall-message-delete' => 'Delete',
+	'wall-message-close-thread' => 'Close this thread',
+	'wall-message-reopen-thread' => 'Reopen this thread',
+	'wall-message-removed-thread-because' => '$1 removed this thread because:',
+	'wall-message-deleted-thread-because' => '$1 deleted this thread because:',
+	'wall-message-restore-thread' => 'Restore Thread',
 	'wall-message-move-thread' => 'Move this thread',
-	'wall-message-removed-reply-because' => "$1 removed this reply because:",
-	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
-	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
-	'wall-message-closed-by-because' => "$1 closed this thread because:",
-	'wall-message-restore-reply' => "Restore Reply",
-	'wall-message-limit-reached' => "There is a limit of $1 posts per thread.",
-	'wall-delete-reason' => "User/admin action",
+	'wall-message-removed-reply-because' => '$1 removed this reply because:',
+	'wall-message-deleted-reply-because' => '$1 deleted this reply because:',
+	'wall-message-closed-by' => '[[$2|$1]] closed this thread',
+	'wall-message-closed-by-because' => '$1 closed this thread because:',
+	'wall-message-restore-reply' => 'Restore Reply',
+	'wall-message-limit-reached' => 'There is a limit of $1 posts per thread.',
+	'wall-delete-reason' => 'User/admin action',
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
 	'wall-user-talk-archive-page-title' => 'User_talk_archive',
 	'wall-ipb-disableusertalk' => 'Prevent this user from posting on their own Message Wall while blocked',
-
 	'wall-action-all-confirm-cancel' => 'Cancel',
 	'wall-action-all-confirm-notify' => 'Notify an admin',
-
 	'wall-action-remove-reply-title' => 'Remove this reply',
 	'wall-action-remove-thread-title' => 'Remove this thread',
+	'wall-confirm-monobook-remove' => 'Please tell us why you would like to remove this.
 
-	'wall-confirm-monobook-remove' => "Please tell us why you would like to remove this.
+The original post and your summary will still appear in the wiki\'s history.',
+	'wall-confirm-monobook-admin' => 'Please tell us why you would like to delete this.
 
-The original post and your summary will still appear in the wiki's history.",
-	'wall-confirm-monobook-admin' => "Please tell us why you would like to delete this.
-
-The original post and your summary will still appear in the wiki's history.",
-	'wall-confirm-monobook-restore' => "Please tell us why you would like to restore this",
+The original post and your summary will still appear in the wiki\'s history.',
+	'wall-confirm-monobook-restore' => 'Please tell us why you would like to restore this',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
-
 	'wall-confirm-monobook-lack-of-reason' => 'Please provide a reason for removing this thread/reply.',
-
 	'wall-action-remove-confirm' => 'Please tell us why you would like to remove this:',
-	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
-	'wall-action-remove-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history.",
+	'wall-action-remove-thread-confirm-info' => 'This thread and your summary will still appear in the wiki\'s history.',
+	'wall-action-remove-reply-confirm-info' => 'This reply and your summary will still appear in the wiki\'s history.',
 	'wall-action-remove-confirm-ok' => 'Remove',
-
 	'wall-action-close-thread-title' => 'Close this thread',
 	'wall-action-close-confirm' => 'Please tell us why you would like to close this:',
-	'wall-action-close-thread-confirm-info' => "This thread will still be visible.",
+	'wall-action-close-thread-confirm-info' => 'This thread will still be visible.',
 	'wall-action-close-confirm-ok' => 'Close',
-
 	'wall-action-admin-thread-title' => 'Delete this thread',
 	'wall-action-admin-reply-title' => 'Delete this reply',
-
 	'wall-action-admin-confirm' => 'Please tell us why you would like to delete this:',
-	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history", // identical to 'wall-action-remove-thread above, why the duplicate?
-	'wall-action-admin-reply-confirm-info' => "This thread and your summary will still appear in the wiki's history. Only administrators will be able to view this thread.",
-
+	'wall-action-admin-thread-confirm-info' => 'This thread and your summary will still appear in the wiki\'s history',
+	'wall-action-admin-reply-confirm-info' => 'This thread and your summary will still appear in the wiki\'s history. Only administrators will be able to view this thread.',
 	'wall-action-admin-confirm-ok' => 'Delete',
-
 	'wall-action-restore-thread-title' => 'Restore this thread',
 	'wall-action-restore-reply-title' => 'Restore this reply',
-
 	'wall-action-restore-confirm' => 'Please tell us why you would like to restore this:',
 	'wall-action-restore-confirm-ok' => 'Restore',
-
 	'wall-action-rev-thread-title' => 'Revision delete this thread?',
 	'wall-action-rev-reply-title' => 'Revision delete this reply?',
-
 	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
 	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
 	'wall-action-rev-confirm-ok' => 'Yes, delete',
-
 	'wall-action-move-thread-heading' => 'Move this thread',
 	'wall-action-move-validation-select-wall' => 'Please select a board',
-	'wall-action-move-topics-summary' => 'Thread moved', // from $1
+	'wall-action-move-topics-summary' => 'Thread moved',
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
-
+	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
-
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
 	'wall-notifications-markasread' => 'Mark all as read',
@@ -140,7 +116,6 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-notifications-loading' => 'Loading notifications',
 	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
 	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this wiki. Unable to load notifications.',
-
 	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your wall',
 	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your wall',
 	'wn-user3-reply-you-your-wall' => '$1 and others replied to your message on your wall',
@@ -171,31 +146,24 @@ The original post and your summary will still appear in the wiki's history.",
 	'wn-newmsg-onmywall' => '$1 left a new message on your wall',
 	'wn-newmsg' => 'You left a new message on $1\'s wall',
 	'wn-newmsg-on-followed-wall' => '$1 left a new message on $2\'s wall',
-
 	'wn-admin-thread-deleted' => 'Thread removed from $1\'s wall',
 	'wn-admin-reply-deleted' => 'Reply removed from thread on $1\'s wall',
 	'wn-owner-thread-deleted' => 'Thread removed from your wall',
 	'wn-owner-reply-deleted' => 'Reply removed from thread on your wall',
-
 	'wall-sorting-newest-threads' => 'Newest threads',
 	'wall-sorting-oldest-threads' => 'Oldest threads',
 	'wall-sorting-newest-replies' => 'Newest replies',
 	'wall-sorting-most-active' => 'Most active',
 	'wall-sorting-archived' => 'Archived',
-
 	'tog-enotifwallthread' => '…someone replies to a Message Wall thread I follow',
 	'tog-enotifmywall' => '…someone posts a new message on my wall',
-
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to view has been deleted.',
 	'wall-deleted-msg-return-to' => 'Return to $1\'s wall.',
 	'wall-deleted-msg-view' => '(View/Restore)',
-
-
 	'wall-recentchanges-wall-thread' => 'Wall thread',
 	'wall-recentchanges-new-message' => 'on [[$1|$2\'s wall]]',
 	'wall-recentchanges-edit' => 'edited message',
-
 	'wall-recentchanges-removed-thread' => 'removed thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-removed-reply' => 'removed reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-restored-thread' => 'restored thread "[[$1|$2]]" to [[$3|$4\'s wall]]',
@@ -204,93 +172,64 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-recentchanges-deleted-reply' => 'deleted reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" on [[$3|$4\'s wall]]',
 	'wall-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" on [[$3|$4\'s wall]]',
-
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-wall-created-title' => 'Created a message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
 	'wall-recentchanges-thread-group' => '$1 on [[$2|$3\'s wall]]',
 	'wall-recentchanges-history-link' => 'wall history',
 	'wall-recentchanges-thread-history-link' => 'thread history',
-
 	'wall-contributions-line' => '[[$1|$2]] on [[$3|$4\'s wall]]',
-
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] on [[$3|$4\'s wall]]',
-
-	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact Wikia at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
-
-	'wall-message-staff-text' => 'This user is a member of Wikia staff',
-
-	'wall-ipballowusertalk' => "Allow this user to post on their own Message Wall while blocked",
-	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",
-
-	/* Wall WikiActivity */
+	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact Fandom at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
+	'wall-message-staff-text' => 'This user is a member of Fandom staff',
+	'wall-ipballowusertalk' => 'Allow this user to post on their own Message Wall while blocked',
+	'wall-ipbwatchuser' => 'Watch this user\'s profile and follow their Message Wall',
 	'wall-wiki-activity-on' => 'on [[$1|$2\'s wall]]',
-
-	/* Wall removed msg */
 	'wall-removed-thread-undo' => 'This thread has been removed. $1',
 	'wall-removed-reply-undo' => 'This reply has been removed. $1',
 	'wall-removed-reply' => 'This reply has been removed',
-
 	'wall-deleted-thread-undo' => 'This thread has been deleted. $1',
 	'wall-deleted-reply-undo' => 'This reply has been deleted. $1',
 	'wall-deleted-reply' => 'This reply has been deleted',
-
-	/* Wall Level History */
 	'wall-history' => 'History',
-
 	'wall-history-title' => 'wall history',
-	'wall-history-who-involved-wall-title' => "Who's involved?",
-	'wall-history-who-involved-thread-title' => "Who's involved in this thread?",
+	'wall-history-who-involved-wall-title' => 'Who\'s involved?',
+	'wall-history-who-involved-thread-title' => 'Who\'s involved in this thread?',
 	'wall-history-thread-created' => '$1 created by $2',
 	'wall-history-thread-removed' => '$1 removed by $2',
 	'wall-history-thread-restored' => '$1 restored by $2',
 	'wall-history-thread-admin-deleted' => '$1 deleted by $2',
 	'wall-history-sorting-newest-first' => 'Newest first',
 	'wall-history-sorting-oldest-first' => 'Oldest first',
-
 	'wall-history-summary-label' => 'Summary',
-
 	'wall-history-rail-wall' => 'wall',
 	'wall-history-rail-contribs' => 'contribs',
 	'wall-history-rail-block' => 'block',
-
 	'wall-history-action-view' => 'view',
 	'wall-history-action-restore' => 'restore',
 	'wall-history-action-thread-history' => 'thread history',
-
-	/* Thread Level History */
 	'wall-thread-history-title' => 'Thread history',
 	'wall-thread-history-thread-created' => '$1 $2 created this thread',
 	'wall-thread-history-reply-created' => '$1 $2 left a reply',
-
 	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
-	'wall-thread-history-reply-removed' => "$1 $2 removed $3's reply $5",
-	'wall-thread-history-reply-deleted' => "$1 $2 deleted $3's reply",
+	'wall-thread-history-reply-removed' => '$1 $2 removed $3\'s reply $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 deleted $3\'s reply',
 	'wall-thread-history-thread-restored' => '$1 $2 restored this thread',
-	'wall-thread-history-reply-restored' => "$1 $2 restored $3's reply $5",
+	'wall-thread-history-reply-restored' => '$1 $2 restored $3\'s reply $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 deleted this thread',
-
-	'wall-thread-history-thread-edited' => "$1 $2 edited $3's message $5",
-	'wall-thread-history-reply-edited' => "$1 $2 edited $3's message $5",
-
-	'wall-thread-history-thread-closed' => "$2 closed this thread",
-	'wall-thread-history-thread-reopened' => "$2 reopened this thread",
-
+	'wall-thread-history-thread-edited' => '$1 $2 edited $3\'s message $5',
+	'wall-thread-history-reply-edited' => '$1 $2 edited $3\'s message $5',
+	'wall-thread-history-thread-closed' => '$2 closed this thread',
+	'wall-thread-history-thread-reopened' => '$2 reopened this thread',
 	'wall-history-action-restore-reply' => 'restore reply',
 	'wall-history-action-restore-thread' => 'restore thread',
-
 	'wall-message-not-found-in-db' => 'We could not find this wall message in our database, sorry.',
-
-	/* Preferences */
 	'prefs-email-wall-v2' => 'Message Wall and Forum',
-
 	'tog-enotifwallthread-v2' => 'Email me…',
-
 	'tog-enotifmywall-every' => 'For every message & reply',
 	'tog-enotifmywall-sincevisited' => 'Once per thread since my last visit',
 	'tog-enotifmywall-reminder' => 'With a daily reminder email',
 	'tog-enotifmywall-noemail' => 'Never. Do not send me any Message Wall or Forum emails',
-
 	'wallshowsource-toggle-v2' => 'Enable {{int:user-action-menu-view-source}}  on threads',
 	'wallshowsource-toggle' => 'Enable {{int:user-action-menu-view-source}} on Message Wall posts',
 	'walldelete-toggle' => 'Enable Revision delete on threads',
@@ -305,10 +244,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
 	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
 	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
-
 	'wall-quote-author' => '$1 wrote:',
 	'wall-quote-reply-to' => 'reply to #$1',
-
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
@@ -317,28 +254,28 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
-
 	'group-threadmoderator' => 'Discussions Moderators',
 	'group-threadmoderator-member' => 'Discussions Moderator',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => '',
+	'right-walledit' => 'Can edit wall posts',
+	'right-wallarchive' => 'Can archive wall posts',
+	'right-wallremove' => 'Can remove wall threads',
+	'right-wallshowwikiaemblem' => 'Flags user as "Wikia Staff" on wall posts',
+	'right-wallfastadmindelete' => 'Can delete wall messages with one click',
+	'right-walladmindelete' => 'Can delete message wall messages',
+	'right-walldelete' => 'Can delete message wall messages',
+	'right-wallmessagemove' => 'Can move wall messages',
+	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
+	'right-editwallarchivedpages' => 'Can edit archived talk pages',
 ];
 
-/** Message documentation (Message documentation)
- * @author Liuxinyu970226
- * @author Metalhead64
- * @author PtM
- * @author SandroHc
- * @author Shirayuki
- * @author Siebrand
- * @author Wyz
- */
 $messages['qqq'] = [
 	'wall-no-title' => 'fallback wall message title for deleted message which are not accessible in archive',
 	'wall-message-loadmore' => 'See all the messages in the thread. Parameters:
 * $1 is the number of messages.',
 	'wall-message-wall' => 'Name of the feature',
-	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall
-{{Identical|Wall}}",
+	'wall-message-wall-shorten' => 'Name of the feature when it\'s used with a possessive, as in John\'s wall
+{{Identical|Wall}}',
 	'wall-message-unfollow' => 'stop subscribing to notifications for this thread
 {{Identical|Unfollow}}',
 	'wall-message-undoremove' => 'undo the action that you just took.
@@ -365,8 +302,8 @@ $messages['qqq'] = [
 	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages
 {{Identical|Quote}}',
-	'wall-message-elseswall' => "Link to a user's wall. Parameters:
-* $1 is the username (GENDER is supported)",
+	'wall-message-elseswall' => 'Link to a user\'s wall. Parameters:
+* $1 is the username (GENDER is supported)',
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
 {{Identical|Removed}}',
@@ -376,7 +313,7 @@ $messages['qqq'] = [
 {{Identical|Deleted}}',
 	'wall-thread-closed' => 'Label stating the thread is closed.
 {{Identical|Closed}}',
-	'wall-default-title' => "Default title if the user doesn't give a new thread a title",
+	'wall-default-title' => 'Default title if the user doesn\'t give a new thread a title',
 	'wall-no-title-warning' => 'Error message when a user tries to post a thread without a title',
 	'wall-desc' => 'Extension description which shows in special version',
 	'wall-disabled-desc' => 'Extension description which shows in special version (wall disabled)',
@@ -425,8 +362,8 @@ $messages['qqq'] = [
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
 	'wall-message-limit-reached' => 'Error message displayed instead of edit form when thread reaches the maximum number of replies',
 	'wall-delete-reason' => 'default user/admin action',
-	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
-	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
+	'wall-user-talk-page-archive-anchor' => 'Link on a Message Wall page to the user\'s old talk page archive',
+	'wall-user-talk-archive-page-title' => 'Title on a user\'s talk page archive',
 	'wall-ipb-disableusertalk' => '{{doc-singularthey}}
 Used as label for checkbox in [[Special:Block]].
 
@@ -442,8 +379,9 @@ See also:
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
-	'wall-confirm-monobook-remove' => "Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
-	'wall-confirm-monobook-admin' => "Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
+	'wall-action-monobook-login' => 'Error message shown to anon users on Monobook if they try to post a wall message',
+	'wall-confirm-monobook-remove' => 'Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don\'t see the complete modal box',
+	'wall-confirm-monobook-admin' => 'Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don\'t see the complete modal box',
 	'wall-confirm-monobook-restore' => 'Asks for a summary for restoring a message or reply for Monoboo users',
 	'wall-delete-error-title' => 'Title of error message for Monobook.
 {{Identical|Error}}',
@@ -492,17 +430,17 @@ See also:
 {{Identical|Mark all as read}}',
 	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read.
 {{Identical|All wikis}}',
-	'wall-notifications-markasread-this-wiki' => "Option to mark only this wiki's notifications as read",
+	'wall-notifications-markasread-this-wiki' => 'Option to mark only this wiki\'s notifications as read',
 	'wall-notifications-empty' => 'Message for empty notification dropdown',
 	'wall-notifications-loading' => 'Message in the notification dropdown while notifications are loading',
 	'wall-notifications-reminder' => 'Notification reminder that appears at the top right if user scrolls down without looking at notification dropdown, uses pluralization',
 	'wall-notifications-wall-disabled' => 'It shows when the wall is turned off during loading of notification',
 	'wn-user1-reply-you-your-wall' => 'Notification when someone replies on your wall. Parameters:
 * $1 is a username (GENDER is supported in this message).',
-	'wn-user2-reply-you-your-wall' => "Notification when 2 users reply on the logged in user's wall. Parameters:
-* $1 and $2 are names of users that replied (GENDER is supported in this message).",
-	'wn-user3-reply-you-your-wall' => "Notification when 3 or more users reply on the logged in user's wall. Parameters:
-* $1 is the first user who replied (GENDER is supported in this message).",
+	'wn-user2-reply-you-your-wall' => 'Notification when 2 users reply on the logged in user\'s wall. Parameters:
+* $1 and $2 are names of users that replied (GENDER is supported in this message).',
+	'wn-user3-reply-you-your-wall' => 'Notification when 3 or more users reply on the logged in user\'s wall. Parameters:
+* $1 is the first user who replied (GENDER is supported in this message).',
 	'wn-user1-reply-self-your-wall' => 'Notification when a user replies to a thread that user started. Parameters:
 * $1 is a username (GENDER is supported in this message).',
 	'wn-user2-reply-self-your-wall' => 'Notification when 2 users reply to a thread that one of them started. Parameters:
@@ -556,8 +494,8 @@ See also:
 	'wn-user2-reply-other-a-wall' => 'Notification when wall owner is one of the users involved, $1 and $2 are users who replied, $3 started the thread(you can use GENDER in this message)',
 	'wn-user3-reply-other-a-wall' => 'Notification when 3 or more users reply and wall owner is one of the users involved, $1 is first user who replied, $3 started the thread(you can use GENDER in this message)',
 	'wn-newmsg-onmywall' => 'Notification, $1 started a new thread on your wall',
-	'wn-newmsg' => "Notification when you follow a user's wall and start a new thread on that user's wall, $1 is wall owner",
-	'wn-newmsg-on-followed-wall' => "Notification when you follow a user's wall, $1 is user who started a new thread, $2 is wall owner",
+	'wn-newmsg' => 'Notification when you follow a user\'s wall and start a new thread on that user\'s wall, $1 is wall owner',
+	'wn-newmsg-on-followed-wall' => 'Notification when you follow a user\'s wall, $1 is user who started a new thread, $2 is wall owner',
 	'wn-admin-thread-deleted' => 'Admin notification of a removed thread, $1 is wall owner',
 	'wn-admin-reply-deleted' => 'Admin notification of a removed reply, $1 is wall owner',
 	'wn-owner-thread-deleted' => 'Notification for wall owner of removed thread',
@@ -568,13 +506,13 @@ See also:
 	'wall-sorting-most-active' => 'Sorting option, most active threads first (deprecated)',
 	'wall-sorting-archived' => 'Sorting option, show archived threads (not built yet).
 {{Identical|Archive}}',
-	'tog-enotifwallthread' => "Email preference option, checkbox to receive email when there's a reply to a followed thread
+	'tog-enotifwallthread' => 'Email preference option, checkbox to receive email when there\'s a reply to a followed thread
 
-This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email-me-v2/en , look there for your language version.",
-	'tog-enotifmywall' => "Email preference option, checkbox to receive email when there's a new thread on your wall",
+This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email-me-v2/en , look there for your language version.',
+	'tog-enotifmywall' => 'Email preference option, checkbox to receive email when there\'s a new thread on your wall',
 	'wall-deleted-msg-pagetitle' => 'Confirmation that a message has been deleted',
 	'wall-deleted-msg-text' => 'Error message when a user follows a link to a deleted thread',
-	'wall-deleted-msg-return-to' => "Link to return to user's wall when you try to follow a link to a deleted thread, $1 is wall owner",
+	'wall-deleted-msg-return-to' => 'Link to return to user\'s wall when you try to follow a link to a deleted thread, $1 is wall owner',
 	'wall-deleted-msg-view' => 'Option for admins and staff to view and restore a deleted thread',
 	'wall-recentchanges-wall-thread' => 'label for recent changes filter',
 	'wall-recentchanges-new-message' => 'Recent changes item, $2 is wall owner',
@@ -628,8 +566,8 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-whatlinkshere-wall-line' => 'What links here item. Parameters:
 * $2 is thread title
 * $4 is wall owner',
-	'wall-message-not-found' => "Error message if user tries to visit a thread that doesn't exist",
-	'wall-message-staff-text' => 'tooltip for Wikia staff signature',
+	'wall-message-not-found' => 'Missing documentation',
+	'wall-message-staff-text' => 'Missing documentation',
 	'wall-ipballowusertalk' => '{{doc-singularthey}}
 checkbox on Special:Block',
 	'wall-ipbwatchuser' => '{{doc-singularthey}}
@@ -650,8 +588,8 @@ checkbox on Special:Block',
 	'wall-history' => 'toolbar link to wall history.
 {{Identical|History}}',
 	'wall-history-title' => 'heading on wall history page',
-	'wall-history-who-involved-wall-title' => "heading on who's involved box on wall history page",
-	'wall-history-who-involved-thread-title' => "heading on who's involved box on thread history page",
+	'wall-history-who-involved-wall-title' => 'heading on who\'s involved box on wall history page',
+	'wall-history-who-involved-thread-title' => 'heading on who\'s involved box on thread history page',
 	'wall-history-thread-created' => 'wall history item. Parameters:
 * $1 is thread title
 * $2 is username',
@@ -668,12 +606,12 @@ checkbox on Special:Block',
 	'wall-history-sorting-oldest-first' => 'sorting option, view oldest changes first',
 	'wall-history-summary-label' => 'wall history page, heading for summary item.
 {{Identical|Summary}}',
-	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall
-{{Identical|Wall}}",
-	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list.
-{{Identical|Contribution}}",
-	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
-{{Identical|Block}}",
+	'wall-history-rail-wall' => 'wall history page, who\'s involved box - link to user\'s wall
+{{Identical|Wall}}',
+	'wall-history-rail-contribs' => 'wall history page, who\'s involved box - link to user\'s contributions list.
+{{Identical|Contribution}}',
+	'wall-history-rail-block' => 'wall history page, who\'s involved box - link for admins to block user.
+{{Identical|Block}}',
 	'wall-history-action-view' => 'wall history page, link to view removed thread.
 {{Identical|View}}',
 	'wall-history-action-restore' => 'wall history page, link to restore removed thread.
@@ -766,9 +704,6 @@ checkbox on Special:Block',
 	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
 ];
 
-/** Old English (Ænglisc)
- * @author Espreon
- */
 $messages['ang'] = [
 	'wall-toolbar-history' => 'Stǣr',
 	'wall-button-to-cancel-preview' => 'Adihtan',
@@ -779,13 +714,6 @@ $messages['ang'] = [
 	'wall-topic-edit-save' => 'Hordian',
 ];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Claw eg
- * @author Gagnabil
- * @author Sonic N800
- * @author زكريا
- */
 $messages['ar'] = [
 	'wall-no-title' => 'لا يوجد عنوان',
 	'wall-message-loadmore' => 'عرض <span class="count">{{PLURAL:$1|الرد|كل الردود ال$1}}</span>',
@@ -1036,10 +964,6 @@ $messages['ar'] = [
 	'wall-topic-edit-cancel' => 'إلغاء',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- * @author Erdemaslancan
- */
 $messages['az'] = [
 	'wall-message-remove' => 'Çıxar',
 	'wall-button-to-cancel-preview' => 'Redaktə',
@@ -1055,9 +979,6 @@ $messages['az'] = [
 	'wall-topic-edit-save' => 'Saxla',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'wall-message-undoremove' => 'Отмяна',
 	'wall-button-to-cancel-preview' => 'Редактиране',
@@ -1089,14 +1010,10 @@ $messages['bg'] = [
 	'wall-topic-edit-cancel' => 'Отказване',
 ];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Y-M D
- */
 $messages['br'] = [
 	'wall-no-title' => 'Titl ebet',
 	'wall-message-loadmore' => 'Gwelet <span class="count">{{PLURAL:$1|ur|ar/an $1}} respont</span>',
-	'wall-message-wall' => "Moger ar c'homzoù",
+	'wall-message-wall' => 'Moger ar c\'homzoù',
 	'wall-message-wall-shorten' => 'moger',
 	'wall-message-unfollow' => 'Chom hep heuliañ',
 	'wall-message-undoremove' => 'Dizober',
@@ -1113,28 +1030,28 @@ $messages['br'] = [
 	'wall-thread-deleted' => 'Dilamet',
 	'wall-thread-closed' => 'Serret',
 	'wall-default-title' => 'Kemennadenn a-berzh $1',
-	'wall-no-title-warning' => "← N'ho peus spisaet titl ebet",
-	'wall-placeholder-topic' => "Deus petra fell deoc'h komz ?",
+	'wall-no-title-warning' => '← N\'ho peus spisaet titl ebet',
+	'wall-placeholder-topic' => 'Deus petra fell deoc\'h komz ?',
 	'wall-placeholder-message' => 'Postañ ur gemennadenn nevez war moger $1',
-	'wall-placeholder-message-anon' => "Postañ ur gemennadenn nevez d'ar voger-mañ",
+	'wall-placeholder-message-anon' => 'Postañ ur gemennadenn nevez d\'ar voger-mañ',
 	'wall-placeholder-reply' => 'Kas ur respont',
 	'wall-button-to-preview-comment' => 'Rakwelet',
 	'wall-button-to-cancel-preview' => 'Aozañ',
 	'wall-button-to-submit-comment' => 'Kas',
 	'wall-button-to-submit-reply' => 'Respont',
 	'wall-button-to-submit-comment-no-topic' => 'Kas hep titl',
-	'wall-button-save-changes' => "Enrollañ ar c'hemmoù",
+	'wall-button-save-changes' => 'Enrollañ ar c\'hemmoù',
 	'wall-button-cancel-changes' => 'Nullañ',
 	'wall-button-done-source' => 'Graet',
 	'wall-message-edit' => 'Aozañ',
-	'wall-message-more' => "Muioc'h",
+	'wall-message-more' => 'Muioc\'h',
 	'wall-message-delete' => 'Dilemel',
 	'wall-message-close-thread' => 'Serriñ an neudennad-mañ',
 	'wall-message-reopen-thread' => 'Addigeriñ an neudennad-mañ',
 	'wall-message-removed-thread-because' => '$1 en deus tennet an neudennad evit an abeg-mañ :',
 	'wall-message-deleted-thread-because' => '$1 en deus diverket an neudennad evit an abeg-mañ :',
 	'wall-message-restore-thread' => 'Adsevel an neudennad',
-	'wall-message-move-thread' => "Dilec'hiañ an neudennad-mañ",
+	'wall-message-move-thread' => 'Dilec\'hiañ an neudennad-mañ',
 	'wall-message-removed-reply-because' => '$1 en deus tennet ar repsont evit an abeg-mañ :',
 	'wall-message-deleted-reply-because' => '$1 en deus diverket ar respont evit an abeg-mañ :',
 	'wall-message-closed-by' => '[[$2|$1]] en deus serret an neudennad-mañ',
@@ -1146,62 +1063,62 @@ $messages['br'] = [
 	'wall-action-all-confirm-notify' => 'Kemenn ur merour',
 	'wall-action-remove-reply-title' => 'Lemel ar respont-mañ',
 	'wall-action-remove-thread-title' => 'Lemel an neudennad-mañ',
-	'wall-confirm-monobook-restore' => "Lavarit dimp perak e fell deoc'h assevel an dra-mañ, mar plij",
+	'wall-confirm-monobook-restore' => 'Lavarit dimp perak e fell deoc\'h assevel an dra-mañ, mar plij',
 	'wall-delete-error-title' => 'Fazi',
-	'wall-delete-error-content' => "Dilamet e oa bet ar gemennadenn a-raok ha n'eus ket anezhi ken.",
-	'wall-action-remove-confirm' => "Mar plij, displegit dimp perak e fell deoc'h lemel an dra-mañ :",
+	'wall-delete-error-content' => 'Dilamet e oa bet ar gemennadenn a-raok ha n\'eus ket anezhi ken.',
+	'wall-action-remove-confirm' => 'Mar plij, displegit dimp perak e fell deoc\'h lemel an dra-mañ :',
 	'wall-action-remove-confirm-ok' => 'Dilemel',
 	'wall-action-close-thread-title' => 'Serriñ an neudennad-mañ',
-	'wall-action-close-confirm' => "Mar plij, displegit dimp perak e fell deoc'h serriñ an dra-mañ :",
-	'wall-action-close-thread-confirm-info' => "An neudennad-mañ a c'hallo c'hoazh bezañ gwelet.",
+	'wall-action-close-confirm' => 'Mar plij, displegit dimp perak e fell deoc\'h serriñ an dra-mañ :',
+	'wall-action-close-thread-confirm-info' => 'An neudennad-mañ a c\'hallo c\'hoazh bezañ gwelet.',
 	'wall-action-close-confirm-ok' => 'Serriñ',
 	'wall-action-admin-thread-title' => 'Diverkañ an neudennad-mañ',
 	'wall-action-admin-reply-title' => 'Dilemel ar respont-mañ',
-	'wall-action-admin-confirm' => "Mar plij, displegit dimp perak e fell deoc'h dilemel an dra-mañ :",
-	'wall-action-admin-thread-confirm-info' => "An neudennad-mañ hag ho tiverradur a c'hallo bezañ gwelet c'hoazh en istor ar wiki.",
+	'wall-action-admin-confirm' => 'Mar plij, displegit dimp perak e fell deoc\'h dilemel an dra-mañ :',
+	'wall-action-admin-thread-confirm-info' => 'An neudennad-mañ hag ho tiverradur a c\'hallo bezañ gwelet c\'hoazh en istor ar wiki.',
 	'wall-action-admin-confirm-ok' => 'Diverkañ',
 	'wall-action-restore-thread-title' => 'Adsevel an neudennad-mañ',
 	'wall-action-restore-reply-title' => 'Adsevel ar respont-mañ',
-	'wall-action-restore-confirm' => "Mar plij displegit perak e fell deoc'h ec'h adsevel :",
+	'wall-action-restore-confirm' => 'Mar plij displegit perak e fell deoc\'h ec\'h adsevel :',
 	'wall-action-restore-confirm-ok' => 'Assevel',
-	'wall-action-rev-reply-confirm' => "Ha sur oc'h e fell deoc'h dilemel ar gemennad-mañ ?",
+	'wall-action-rev-reply-confirm' => 'Ha sur oc\'h e fell deoc\'h dilemel ar gemennad-mañ ?',
 	'wall-action-rev-confirm-ok' => 'Ya, diverkañ',
-	'wall-action-move-thread-heading' => "Dilec'hiañ an neudennad-mañ",
+	'wall-action-move-thread-heading' => 'Dilec\'hiañ an neudennad-mañ',
 	'wall-action-move-validation-select-wall' => 'Diuzit ur rann, mar plij',
-	'wall-action-move-topics-summary' => "Neudennad dilec'hiet",
-	'wall-action-move-thread-ok' => "Dilec'hiañ an neudennad",
+	'wall-action-move-topics-summary' => 'Neudennad dilec\'hiet',
+	'wall-action-move-thread-ok' => 'Dilec\'hiañ an neudennad',
 	'wall-action-move-board-label' => 'Diuzañ un isforom da vont dezhañ',
 	'wall-notifications' => 'Kemennoù',
 	'wall-notifications-all' => 'An holl gemennoù',
 	'wall-notifications-markasread' => 'Merkañ an holl evel lennet',
 	'wall-notifications-markasread-all-wikis' => 'An holl wikioù',
 	'wall-notifications-markasread-this-wiki' => 'Ar wiki-mañ',
-	'wall-notifications-empty' => "N'eus kemenn ebet",
-	'wall-notifications-loading' => "O kargañ ar c'hemennoù",
-	'wall-notifications-reminder' => '<span>$1</span> kemenn nann-lennet ho peus', # Fuzzy
-	'wn-user1-reply-you-your-wall' => "$1 en deus respontet d'ho kemennadenn war ho moger",
-	'wn-user2-reply-you-your-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn war ho moger",
-	'wn-user3-reply-you-your-wall' => "$1 ha re all o deus respontet d'ho kemennadenn war ho moger",
-	'wn-user1-reply-self-your-wall' => "$1 en deus respontet d'ur gemennadenn war ho moger",
-	'wn-user2-reply-self-your-wall' => "$1 ha $2 o deus respontet d'ur gemennadenn war ho moger",
-	'wn-user3-reply-self-your-wall' => "$1 ha re all o deus respontet d'ur gemennadenn war ho moger",
+	'wall-notifications-empty' => 'N\'eus kemenn ebet',
+	'wall-notifications-loading' => 'O kargañ ar c\'hemennoù',
+	'wall-notifications-reminder' => '<span>$1</span> kemenn nann-lennet ho peus',
+	'wn-user1-reply-you-your-wall' => '$1 en deus respontet d\'ho kemennadenn war ho moger',
+	'wn-user2-reply-you-your-wall' => '$1 ha $2 o deus respontet d\'ho kemennadenn war ho moger',
+	'wn-user3-reply-you-your-wall' => '$1 ha re all o deus respontet d\'ho kemennadenn war ho moger',
+	'wn-user1-reply-self-your-wall' => '$1 en deus respontet d\'ur gemennadenn war ho moger',
+	'wn-user2-reply-self-your-wall' => '$1 ha $2 o deus respontet d\'ur gemennadenn war ho moger',
+	'wn-user3-reply-self-your-wall' => '$1 ha re all o deus respontet d\'ur gemennadenn war ho moger',
 	'wn-user1-reply-other-your-wall' => '$1 en deus respontet da gemennadenn $2 war ho moger',
 	'wn-user2-reply-other-your-wall' => '$1 ha $2 o deus respontet da gemennadenn $3 war ho moger',
 	'wn-user3-reply-other-your-wall' => '$1 ha re all o deus respontet da gemennadenn $2 war ho moger',
-	'wn-user1-reply-you-other-wall' => "$1 en deus respontet d'ho kemenandenn war moger $2",
-	'wn-user2-reply-you-other-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn war moger $3",
-	'wn-user3-reply-you-other-wall' => "$1 ha re all o deus respontet d'ho kemennadenn war moger $2",
-	'wn-user1-reply-self-other-wall' => "$1 en deus respontet d'ur gemennadenn war moger $2",
-	'wn-user2-reply-self-other-wall' => "$1 ha $2 o deus respontet d'ur gemennadenn war moger $3",
-	'wn-user3-reply-self-other-wall' => "$1 ha re all o deus respontet d'ur gemennadenn war moger $2",
-	'wn-user1-reply-other-other-wall' => '$1 en deus respontet da gemennadenn $2 war moger 3$', # Fuzzy
+	'wn-user1-reply-you-other-wall' => '$1 en deus respontet d\'ho kemenandenn war moger $2',
+	'wn-user2-reply-you-other-wall' => '$1 ha $2 o deus respontet d\'ho kemennadenn war moger $3',
+	'wn-user3-reply-you-other-wall' => '$1 ha re all o deus respontet d\'ho kemennadenn war moger $2',
+	'wn-user1-reply-self-other-wall' => '$1 en deus respontet d\'ur gemennadenn war moger $2',
+	'wn-user2-reply-self-other-wall' => '$1 ha $2 o deus respontet d\'ur gemennadenn war moger $3',
+	'wn-user3-reply-self-other-wall' => '$1 ha re all o deus respontet d\'ur gemennadenn war moger $2',
+	'wn-user1-reply-other-other-wall' => '$1 en deus respontet da gemennadenn $2 war moger 3$',
 	'wn-user2-reply-other-other-wall' => '$1 ha $2 o deus respontet da gemennadenn $3 war moger $4',
-	'wn-user1-reply-you-a-wall' => "$1 en deus respontet d'ho kemennadenn",
-	'wn-user2-reply-you-a-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn",
-	'wn-user3-reply-you-a-wall' => "$1 ha re all o deus respontet d'ho kemennadenn",
-	'wn-user1-reply-self-a-wall' => "$1 en deus respontet d'ur gemennadenn",
-	'wn-user2-reply-self-a-wall' => "$1 ha $2 o deus respontet d'ur gemennadenn",
-	'wn-user3-reply-self-a-wall' => "$1 ha re all o deus respontet d'ur gemennadenn",
+	'wn-user1-reply-you-a-wall' => '$1 en deus respontet d\'ho kemennadenn',
+	'wn-user2-reply-you-a-wall' => '$1 ha $2 o deus respontet d\'ho kemennadenn',
+	'wn-user3-reply-you-a-wall' => '$1 ha re all o deus respontet d\'ho kemennadenn',
+	'wn-user1-reply-self-a-wall' => '$1 en deus respontet d\'ur gemennadenn',
+	'wn-user2-reply-self-a-wall' => '$1 ha $2 o deus respontet d\'ur gemennadenn',
+	'wn-user3-reply-self-a-wall' => '$1 ha re all o deus respontet d\'ur gemennadenn',
 	'wn-user1-reply-other-a-wall' => '$1 en deus respontet da gemennadenn $2',
 	'wn-user2-reply-other-a-wall' => '$1 ha $2 o deus respontet da gemennadenn $3',
 	'wn-user3-reply-other-a-wall' => '$1 ha re all o deus respontet da gemennadenn $3',
@@ -1217,7 +1134,7 @@ $messages['br'] = [
 	'wall-sorting-most-active' => 'Oberiantañ',
 	'wall-sorting-archived' => 'Diellaouet',
 	'wall-deleted-msg-pagetitle' => 'Kemennadenn dilamet',
-	'wall-deleted-msg-text' => "Dilamet eo bet ar gemennadenn emaoc'h o klask gwelet.",
+	'wall-deleted-msg-text' => 'Dilamet eo bet ar gemennadenn emaoc\'h o klask gwelet.',
 	'wall-deleted-msg-return-to' => 'Distreiñ da voger $1.',
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
 	'wall-recentchanges-wall-thread' => 'Neudennad voger',
@@ -1228,9 +1145,9 @@ $messages['br'] = [
 	'wall-recentchanges-deleted-thread' => 'en deus diverket an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
 	'wall-recentchanges-deleted-reply' => 'en deus diverket ur respont da "[[$1|$2]]" eus [[$3|moger $4]]',
 	'wall-recentchanges-closed-thread' => 'en deus serret an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
-	'wall-recentchanges-reopened-thread' => 'en deus addigoret an neudennad "[[$1|$2]]" eus [[$3|moger $4]]', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'en deus addigoret an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Ur respont war ar voger',
-	'wall-recentchanges-namespace-selector-message-wall' => "Moger ar c'homzoù",
+	'wall-recentchanges-namespace-selector-message-wall' => 'Moger ar c\'homzoù',
 	'wall-recentchanges-thread-group' => '$1 war [[$2|moger $3]]',
 	'wall-recentchanges-history-link' => 'istor ar voger',
 	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
@@ -1286,9 +1203,6 @@ $messages['br'] = [
 	'wall-topic-edit-cancel' => 'Nullañ',
 ];
 
-/** Bosnian (bosanski)
- * @author CERminator
- */
 $messages['bs'] = [
 	'wall-message-closed-by-because' => '$1 je zatvorio ovaj niz zbog:',
 	'wall-action-close-thread-title' => 'Zatvorite ovaj niz',
@@ -1297,13 +1211,6 @@ $messages['bs'] = [
 	'wall-action-close-confirm-ok' => 'Zatvori',
 ];
 
-/** Catalan (català)
- * @author BroOk
- * @author Erdemaslancan
- * @author Macofe
- * @author Marcmpujol
- * @author Unapersona
- */
 $messages['ca'] = [
 	'wall-no-title' => 'Sense títol',
 	'wall-message-loadmore' => 'Veure <span class="count">{{PLURAL:$1|$1 resposta|$1 respostes}}</span>',
@@ -1331,8 +1238,8 @@ $messages['ca'] = [
 	'wall-thread-closed' => 'Tancat',
 	'wall-default-title' => 'Missatge de $1',
 	'wall-no-title-warning' => '← No has especificat cap títol',
-	'wall-desc' => "Substitució de la pàgina de discussió d'usuari",
-	'wall-disabled-desc' => "Funcionalitat del Mur de Missatges per a wikis sense l'extensió del Mur activada",
+	'wall-desc' => 'Substitució de la pàgina de discussió d\'usuari',
+	'wall-disabled-desc' => 'Funcionalitat del Mur de Missatges per a wikis sense l\'extensió del Mur activada',
 	'wall-placeholder-topic' => 'De què vols parlar?',
 	'wall-placeholder-message' => 'Publicar un missatge nou al mur de $1',
 	'wall-placeholder-message-anon' => 'Publica un missatge nou en aquest mur',
@@ -1359,7 +1266,7 @@ $messages['ca'] = [
 	'wall-message-closed-by' => '[[$2|$1]] ha tancat aquest tema',
 	'wall-message-closed-by-because' => '$1 ha tancat aquest tema per:',
 	'wall-message-restore-reply' => 'Restaurar resposta',
-	'wall-delete-reason' => "Acció d'usuari/admin",
+	'wall-delete-reason' => 'Acció d\'usuari/admin',
 	'wall-user-talk-page-archive-anchor' => 'Veure la pàgina de discussió arxivada',
 	'wall-user-talk-archive-page-title' => 'Arxiu_de_discussió',
 	'wall-ipb-disableusertalk' => 'Impedeix que aquest usuari pugui publicar en el seu Mur de Missatges mentre duri el bloqueig',
@@ -1367,19 +1274,19 @@ $messages['ca'] = [
 	'wall-action-all-confirm-notify' => 'Notificar a un admin',
 	'wall-action-remove-reply-title' => 'Retirar aquesta resposta',
 	'wall-action-remove-thread-title' => 'Retirar aquest tema',
-	'wall-confirm-monobook-remove' => "Si us plau, diga'ns per què vols retirar això.
+	'wall-confirm-monobook-remove' => 'Si us plau, diga\'ns per què vols retirar això.
 
-El missatge original i el teu resum apareixeran a l'historial del wiki.",
-	'wall-confirm-monobook-admin' => "Si us plau, diga'ns per què vols esborrar això.
+El missatge original i el teu resum apareixeran a l\'historial del wiki.',
+	'wall-confirm-monobook-admin' => 'Si us plau, diga\'ns per què vols esborrar això.
 
-El missatge original i el teu resum apareixeran a l'historial del wiki.",
-	'wall-confirm-monobook-restore' => "Si us plau, diga'ns per què vols restaurar això",
+El missatge original i el teu resum apareixeran a l\'historial del wiki.',
+	'wall-confirm-monobook-restore' => 'Si us plau, diga\'ns per què vols restaurar això',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'El missatge va ser esborrat prèviament i ja no existeix.',
 	'wall-confirm-monobook-lack-of-reason' => 'Si us plau, inclou un motiu per a retirar aquest tema o resposta.',
-	'wall-action-remove-confirm' => "Si us plau, diga'ns per què vols retirar això:",
-	'wall-action-remove-thread-confirm-info' => "El missatge original i el teu resum apareixeran a l'historial del wiki.",
-	'wall-action-remove-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
+	'wall-action-remove-confirm' => 'Si us plau, diga\'ns per què vols retirar això:',
+	'wall-action-remove-thread-confirm-info' => 'El missatge original i el teu resum apareixeran a l\'historial del wiki.',
+	'wall-action-remove-reply-confirm-info' => 'El missatge original i el teu resum continuaran apareixent a l\'historial del wiki.',
 	'wall-action-remove-confirm-ok' => 'Retirar',
 	'wall-action-close-thread-title' => 'Tancar aquest tema',
 	'wall-action-close-confirm' => 'Per què vols tancar el tema:',
@@ -1387,13 +1294,13 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-close-confirm-ok' => 'Tancar',
 	'wall-action-admin-thread-title' => 'Esborrar aquest tema',
 	'wall-action-admin-reply-title' => 'Esborrar aquesta resposta',
-	'wall-action-admin-confirm' => "Si us plau, diga'ns per què vols esborrar això:",
-	'wall-action-admin-thread-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
-	'wall-action-admin-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki. Només els administradors podran veure aquest tema.",
+	'wall-action-admin-confirm' => 'Si us plau, diga\'ns per què vols esborrar això:',
+	'wall-action-admin-thread-confirm-info' => 'El missatge original i el teu resum continuaran apareixent a l\'historial del wiki.',
+	'wall-action-admin-reply-confirm-info' => 'El missatge original i el teu resum continuaran apareixent a l\'historial del wiki. Només els administradors podran veure aquest tema.',
 	'wall-action-admin-confirm-ok' => 'Esborrar',
 	'wall-action-restore-thread-title' => 'Restaurar aquest tema',
 	'wall-action-restore-reply-title' => 'Restaurar aquesta resposta',
-	'wall-action-restore-confirm' => "Si us plau, diga'ns per què vols restaurar això:",
+	'wall-action-restore-confirm' => 'Si us plau, diga\'ns per què vols restaurar això:',
 	'wall-action-restore-confirm-ok' => 'Restaurar',
 	'wall-action-rev-thread-title' => 'Eliminar aquest tema?',
 	'wall-action-rev-reply-title' => 'Eliminar aquesta resposta?',
@@ -1407,7 +1314,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-move-board-label' => 'Selecciona un subfòrum per moure',
 	'wall-notifications' => 'Notificacions',
 	'wall-notifications-all' => 'Totes les notificacions',
-	'wall-notifications-markasread' => "Marca'ls tots com a llegits",
+	'wall-notifications-markasread' => 'Marca\'ls tots com a llegits',
 	'wall-notifications-markasread-all-wikis' => 'Tots els wikis',
 	'wall-notifications-markasread-this-wiki' => 'Aquest wiki',
 	'wall-notifications-empty' => 'No hi ha notificacions',
@@ -1456,7 +1363,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'tog-enotifwallthread' => '...algú respon a un tema que segueixo.',
 	'tog-enotifmywall' => '......algú deixa un missatge nou al meu mur.',
 	'wall-deleted-msg-pagetitle' => 'Missatge suprimit',
-	'wall-deleted-msg-text' => "S'ha suprimit el missatge que estant intentant veure.",
+	'wall-deleted-msg-text' => 'S\'ha suprimit el missatge que estant intentant veure.',
 	'wall-deleted-msg-return-to' => 'Tornar al Mur de $1.',
 	'wall-deleted-msg-view' => '(Veure/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Tema del mur',
@@ -1467,21 +1374,21 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-recentchanges-restored-thread' => 'restaurat el tema "[[$1|$2]]" en el mur de [[$3|$4]]',
 	'wall-recentchanges-restored-reply' => 'restaurada la resposta "[[$1|$2]]" en el mur de [[$3|$4]]',
 	'wall-recentchanges-deleted-thread' => 'eliminat el tema "[[$1|$2]]" del mur de [[$3|$4]]',
-	'wall-recentchanges-deleted-reply' => "ha eliminat en el [[$3|mur de $4]] un missatge del tema ''[[$1|$2]]''",
+	'wall-recentchanges-deleted-reply' => 'ha eliminat en el [[$3|mur de $4]] un missatge del tema \'\'[[$1|$2]]\'\'',
 	'wall-recentchanges-closed-thread' => 'ha tancat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
 	'wall-recentchanges-reopened-thread' => 'ha restaurat el tema "[[$1|$2]]" en el mur de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Una resposta en el mur de missatges',
-	'wall-recentchanges-wall-created-title' => "S'ha creat un mur de missatges",
+	'wall-recentchanges-wall-created-title' => 'S\'ha creat un mur de missatges',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de missatges',
 	'wall-recentchanges-thread-group' => '$1 en el [[$2|Mur de $3]]',
 	'wall-recentchanges-history-link' => 'Historial del mur',
 	'wall-recentchanges-thread-history-link' => 'Historial del tema',
 	'wall-contributions-line' => '[[$1|$2]] en el [[$3|Mur de $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] al [[$3|mur de $4]]',
-	'wall-message-not-found' => "Aquest missatge no s'ha trobat. Si veus aquest error, si us plau, contacta amb Wikia a través d' [[Special:Contact|Especial:Contactar]] i aporta tots els detalls que puguis sobre com pot reproduir-se aquest error. Gràcies!",
-	'wall-message-staff-text' => "Aquest usuari és un membre de l'Staff de Wikia",
+	'wall-message-not-found' => 'Aquest missatge no s\'ha trobat. Si veus aquest error, si us plau, contacta amb Wikia a través d\' [[Special:Contact|Especial:Contactar]] i aporta tots els detalls que puguis sobre com pot reproduir-se aquest error. Gràcies!',
+	'wall-message-staff-text' => 'Aquest usuari és un membre de l\'Staff de Wikia',
 	'wall-ipballowusertalk' => 'Permetre a aquest usuari deixar missatges al seu propi Mur de missatges mentre que està bloquejat',
-	'wall-ipbwatchuser' => "Seguir el perfil d'aquest usuari i el seu Mur de missatges",
+	'wall-ipbwatchuser' => 'Seguir el perfil d\'aquest usuari i el seu Mur de missatges',
 	'wall-wiki-activity-on' => 'a [[$1|mur de $2]]',
 	'wall-removed-thread-undo' => 'Aquest tema ha estat retirat. $1',
 	'wall-removed-reply-undo' => 'Aquesta resposta ha estat retirada. $1',
@@ -1523,14 +1430,14 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-history-action-restore-thread' => 'restaurar tema',
 	'wall-message-not-found-in-db' => 'No hem pogut trobar aquest missatge a la nostra base de dades, ho sentim.',
 	'prefs-email-wall-v2' => 'Mur de missatges i Fòrum',
-	'tog-enotifwallthread-v2' => "Envia'm un correu...",
+	'tog-enotifwallthread-v2' => 'Envia\'m un correu...',
 	'tog-enotifmywall-every' => 'Per a cada missatge i resposta',
 	'tog-enotifmywall-sincevisited' => 'Un cop per a cada tema des de la meva última visita',
 	'tog-enotifmywall-reminder' => 'Amb un recordatori diari',
-	'tog-enotifmywall-noemail' => "Mai. No m'envieu cap correu electrònic sobre el mur de missatge o el fòrum",
-	'wallshowsource-toggle-v2' => "Activar l'opció {{int:user-action-menu-view-source}} als temes",
+	'tog-enotifmywall-noemail' => 'Mai. No m\'envieu cap correu electrònic sobre el mur de missatge o el fòrum',
+	'wallshowsource-toggle-v2' => 'Activar l\'opció {{int:user-action-menu-view-source}} als temes',
 	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} a les publicacions en el Mur de Missatges',
-	'walldelete-toggle' => "Activar l'eliminació de revisions als temes",
+	'walldelete-toggle' => 'Activar l\'eliminació de revisions als temes',
 	'wall-notifications-notifyeveryone' => 'Destacat per $1',
 	'wall-message-notifyeveryone' => 'Destacar aquest tema',
 	'wall-message-unnotifyeveryone' => 'Deixar de destacar aquest tema',
@@ -1541,7 +1448,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-votes-number' => '$1 {{PLURAL:$1|a favor}}',
 	'wall-votes-number-tooltip' => 'Veure qui ha donat "a favor" a aquest missatge',
 	'wall-votes-vote-tooltip' => 'Donar "a favor" a aquest missatge',
-	'wall-votes-voted-tooltip' => "Estàs a favor d'aquest missatge!",
+	'wall-votes-voted-tooltip' => 'Estàs a favor d\'aquest missatge!',
 	'wall-quote-author' => '$1 va escriure:',
 	'wall-quote-reply-to' => 'respondre a #$1',
 	'wall-topic-input-heading' => 'Tema',
@@ -1556,9 +1463,6 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'group-threadmoderator-member' => 'Moderador',
 ];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
 $messages['ce'] = [
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
@@ -1574,11 +1478,6 @@ $messages['ce'] = [
 	'wall-votes-number' => '$1 {{PLURAL:$1|«суна хаза хетта»}}',
 ];
 
-/** Czech (čeština)
- * @author Chmee2
- * @author Darth Daron
- * @author Vks
- */
 $messages['cs'] = [
 	'wall-no-title' => 'Bez názvu',
 	'wall-message-loadmore' => 'Zobrazit <span class="count">{{PLURAL:$1|$1 odpověď|všechny $1 odpovědi}}</span>',
@@ -1742,7 +1641,7 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-recentchanges-deleted-thread' => 'smazal vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
 	'wall-recentchanges-deleted-reply' => 'smazal odpověď "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
 	'wall-recentchanges-closed-thread' => 'uzavřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
-	'wall-recentchanges-reopened-thread' => 'znovuotevřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'znovuotevřel vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Odpověď na zdi zpráv',
 	'wall-recentchanges-wall-created-title' => 'Vytvořil zeď zpráv',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Zeď zpráv',
@@ -1779,7 +1678,7 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-history-action-view' => 'prohlédnout',
 	'wall-history-action-restore' => 'obnovit',
 	'wall-history-action-thread-history' => 'historie vlákna',
-	'wall-thread-history-title' => 'historie vlákna', # Fuzzy
+	'wall-thread-history-title' => 'historie vlákna',
 	'wall-thread-history-thread-created' => '$1 $2 {{GENDER:$2|vytvořil|vytvořila}} toto vlákno',
 	'wall-thread-history-reply-created' => '$1 $2 {{GENDER:$2|zanechal|zanechala}} odpověď',
 	'wall-thread-history-thread-removed' => '$1 $2 {{GENDER:$2|odstranil|odstranila}} toto vlákno',
@@ -1827,10 +1726,6 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-topic-edit-cancel' => 'Zrušit',
 ];
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- * @author Thefartydoctor
- */
 $messages['cy'] = [
 	'wall-toolbar-history' => 'Hanes',
 	'wall-message-elseswall' => 'Wal $1',
@@ -1842,27 +1737,19 @@ $messages['cy'] = [
 	'wall-action-admin-confirm-ok' => 'Dileu',
 	'wall-recentchanges-new-message' => 'ar wal [[$1|$2]]',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Wal Neges',
-	'wall-recentchanges-history-link' => 'hanes wal|wal $2', # Fuzzy
+	'wall-recentchanges-history-link' => 'hanes wal|wal $2',
 	'wall-history-title' => 'hanes wal',
 	'wall-history-rail-wall' => 'wal',
 	'wall-topic-edit-cancel' => 'Diddymu',
+	'wall-sorting-newest-threads' => 'Edeifion y mwyaf newydd',
 ];
 
-/** German (Deutsch)
- * @author Arkondi
- * @author Dennis07
- * @author Geitost
- * @author Inkowik
- * @author Metalhead64
- * @author MtaÄ
- * @author PtM
- */
 $messages['de'] = [
-	'wall-no-title' => 'Kein Titel',
-	'wall-message-loadmore' => 'Zeige <span class="count">{{PLURAL:$1|eine Antwort|alle $1 Antworten}}</span>',
-	'wall-message-wall' => 'Nachrichtenseite',
+	'wall-no-title' => 'Kein Betreff',
+	'wall-message-loadmore' => 'Zeige alle $1 Antworten',
+	'wall-message-wall' => 'Nachrichten',
 	'wall-message-wall-shorten' => 'Nachrichten',
-	'wall-message-unfollow' => 'Nicht mehr folgen',
+	'wall-message-unfollow' => 'Verfolgung aufheben',
 	'wall-message-undoremove' => 'Rückgängig',
 	'wall-message-edited' => '<a href="$3" >Bearbeitet von</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4">$1 von</a> <a class="username" href="$2">$3</a>',
@@ -1870,252 +1757,246 @@ $messages['de'] = [
 	'wall-message-update-highlight-summary' => 'Hervorgehoben',
 	'wall-message-update-removed-highlight-summary' => 'Hervorhebung entfernt',
 	'wall-message-mywall' => 'Meine Nachrichten',
-	'wall-toolbar-history' => 'Verlauf',
+	'wall-toolbar-history' => 'Versionen',
 	'wall-message-notify' => 'Admin benachrichtigen',
 	'wall-message-remove' => 'Entfernen',
-	'wall-message-rev-delete' => 'Version löschen',
-	'wall-message-fast-admin-delete-message' => 'Ohne Bestätigung löschen',
+	'wall-message-rev-delete' => 'Versionslöschung',
+	'wall-message-fast-admin-delete-message' => '1-Klick-Löschung',
 	'wall-message-quote-button' => 'Zitieren',
-	'wall-message-elseswall' => '$1s Nachrichtenseite',
-	'wall-message-no-permission' => 'Du verfügst nicht über die ausreichenden Rechte, um diese Aktion auf die Nachricht ausführen zu können',
+	'wall-message-elseswall' => '$1s Nachrichten',
+	'wall-message-no-permission' => 'Du hast keine Rechte, diese Aktion auf dieser Nachricht durchzuführen.',
 	'wall-thread-removed' => 'Entfernt',
 	'wall-thread-isnotifyeveryone' => 'Hervorgehoben',
 	'wall-thread-deleted' => 'Gelöscht',
 	'wall-thread-closed' => 'Geschlossen',
 	'wall-default-title' => 'Nachricht von $1',
-	'wall-no-title-warning' => 'Du hast keinen Titel angegeben',
-	'wall-desc' => 'Benutzerdiskussionsseiten-Ersetzung',
-	'wall-disabled-desc' => 'Nachrichtenseiten-Funktionalität für Wikis ohne aktivierte Erweiterung',
-	'wall-placeholder-topic' => 'Worüber handelt dies?',
-	'wall-placeholder-message' => 'Schreibe $1 eine neue Nachricht',
-	'wall-placeholder-message-anon' => 'Schreibe eine neue Nachricht an diese Seite',
-	'wall-placeholder-reply' => 'Antworten',
+	'wall-no-title-warning' => '&larr; Du hast keinen Betreff angegeben',
+	'wall-desc' => 'Ersetzt Benutzerdiskussionsseiten',
+	'wall-disabled-desc' => 'Nachrichtenseiten-Funktionalität für Seiten ohne Nachrichten-Erweiterung',
+	'wall-placeholder-topic' => 'Betreff deiner Nachricht',
+	'wall-placeholder-message' => 'Schreibe eine neue Nachricht auf $1s Seite',
+	'wall-placeholder-message-anon' => 'Schreibe eine neue Nachricht auf diese Seite',
+	'wall-placeholder-reply' => 'Antwort senden',
 	'wall-button-to-preview-comment' => 'Vorschau',
 	'wall-button-to-cancel-preview' => 'Bearbeiten',
-	'wall-button-to-submit-comment' => 'Abschicken',
-	'wall-button-to-submit-reply' => 'Antwort',
-	'wall-button-to-submit-comment-no-topic' => 'Beitrag ohne Titel',
+	'wall-button-to-submit-comment' => 'Senden',
+	'wall-button-to-submit-reply' => 'Antworten',
+	'wall-button-to-submit-comment-no-topic' => 'Ohne Betreff senden',
 	'wall-button-save-changes' => 'Änderungen speichern',
 	'wall-button-cancel-changes' => 'Abbrechen',
-	'wall-button-done-source' => 'Fertig',
+	'wall-button-done-source' => 'Erledigt',
 	'wall-message-edit' => 'Bearbeiten',
 	'wall-message-more' => 'Mehr',
 	'wall-message-delete' => 'Löschen',
-	'wall-message-close-thread' => 'Diesen Thread schließen',
-	'wall-message-reopen-thread' => 'Thread wieder öffnen',
-	'wall-message-removed-thread-because' => '$1 entfernte diesen Thread, weil:',
-	'wall-message-deleted-thread-because' => '$1 löschte diesen Thread, weil:',
-	'wall-message-restore-thread' => 'Thread wiederherstellen',
-	'wall-message-move-thread' => 'Diesen Thread verschieben',
-	'wall-message-removed-reply-because' => '$1 entfernte diese Antwort, weil:',
-	'wall-message-deleted-reply-because' => '$1 löschte diese Antwort, weil:',
-	'wall-message-closed-by' => '[[$2|$1]] schloss den Thread',
+	'wall-message-close-thread' => 'Diesen Diskussionsfaden schließen',
+	'wall-message-reopen-thread' => 'Diskussionsfaden wieder öffnen',
+	'wall-message-removed-thread-because' => '$1 hat diese Diskussion entfernt. Grund:',
+	'wall-message-deleted-thread-because' => '$1 hat diese Diskussion gelöscht. Grund:',
+	'wall-message-restore-thread' => 'Diskussion wiederherstellen',
+	'wall-message-move-thread' => 'Verschieben',
+	'wall-message-removed-reply-because' => '$1 hat diese Antwort entfernt. Grund:',
+	'wall-message-deleted-reply-because' => '$1 hat diese Antwort gelöscht. Grund:',
+	'wall-message-closed-by' => '[[$2|$1]] schloss den Diskussionsfaden',
 	'wall-message-closed-by-because' => '$1 schloss diesen Thread, weil:',
 	'wall-message-restore-reply' => 'Antwort wiederherstellen',
-	'wall-delete-reason' => 'Benutzer/Admin-Aktion',
+	'wall-delete-reason' => 'Benutzer/Administrator-Aktion',
 	'wall-user-talk-page-archive-anchor' => 'Archivierte Diskussionsseite ansehen',
-	'wall-user-talk-archive-page-title' => 'Benutzer_Diskussionsarchiv',
+	'wall-user-talk-archive-page-title' => 'User_talk_archive',
 	'wall-ipb-disableusertalk' => 'Diesen Benutzer daran hindern, auf der eigenen Nachrichtenseite Nachrichten zu schreiben, während er gesperrt ist.',
 	'wall-action-all-confirm-cancel' => 'Abbrechen',
-	'wall-action-all-confirm-notify' => 'Einen Admin informieren',
-	'wall-action-remove-reply-title' => 'Diese Antwort entfernen',
-	'wall-action-remove-thread-title' => 'Diesen Thread entfernen',
-	'wall-confirm-monobook-remove' => 'Bitte teile uns mit, warum du dies entfernen möchtest.
+	'wall-action-all-confirm-notify' => 'Benachrichtige einen Admin',
+	'wall-action-remove-reply-title' => 'Entferne diese Antwort',
+	'wall-action-remove-thread-title' => 'Entferne diese Diskussion',
+	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
 
-Der Original-Post und deine Zusammenfassung bleiben weiterhin in der Wiki-Historie sichtbar.',
-	'wall-confirm-monobook-admin' => 'Bitte teile uns mit, warum du dies löschen willst.
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
 
-Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
-	'wall-confirm-monobook-restore' => 'Bitte teile uns mit, warum du dies wiederherstellen willst',
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-restore' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest.',
 	'wall-delete-error-title' => 'Fehler',
-	'wall-delete-error-content' => 'Diese Nachricht wurde zu einem früheren Zeitpunkt gelöscht und existiert nicht mehr.',
-	'wall-confirm-monobook-lack-of-reason' => 'Bitte einen Grund für das Löschen dieses Threads/Posts angeben.',
-	'wall-action-remove-confirm' => 'Bitte teile uns mit, warum du dies entfernen willst:',
-	'wall-action-remove-thread-confirm-info' => 'Dieser Thread und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
-	'wall-action-remove-reply-confirm-info' => 'Diese Antwort und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
+	'wall-delete-error-content' => 'Die Nachricht wurde bereits gelöscht und existiert nicht mehr.',
+	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
+	'wall-action-remove-confirm' => 'Bitte beschreibe kurz, warum du diesen Text entfernen möchtest:',
+	'wall-action-remove-thread-confirm-info' => 'Diese Diskussion und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-action-remove-reply-confirm-info' => 'Diese Anwort und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
 	'wall-action-remove-confirm-ok' => 'Entfernen',
 	'wall-action-close-thread-title' => 'Diesen Thread schließen',
 	'wall-action-close-confirm' => 'Bitte erzähle uns, warum du das hier schließen möchtest:',
 	'wall-action-close-thread-confirm-info' => 'Dieser Thread bleibt noch sichtbar.',
 	'wall-action-close-confirm-ok' => 'Schließen',
-	'wall-action-admin-thread-title' => 'Diesen Thread löschen',
-	'wall-action-admin-reply-title' => 'Diese Antwort löschen',
-	'wall-action-admin-confirm' => 'Bitte teile uns mit, warum du dies löschen möchtest:',
-	'wall-action-admin-thread-confirm-info' => 'Dieser Thread und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar.',
-	'wall-action-admin-reply-confirm-info' => 'Dieser Thread und deine Zusammenfassung bleiben in der Wiki-Historie sichtbar. Nur Administratoren werden den Thread einsehen können.',
+	'wall-action-admin-thread-title' => 'Lösche diese Diskussion',
+	'wall-action-admin-reply-title' => 'Lösche diese Antwort',
+	'wall-action-admin-confirm' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest:',
+	'wall-action-admin-thread-confirm-info' => 'Diese Diskussion und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-action-admin-reply-confirm-info' => 'Diese Diskussion und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt. Nur Administratoren können die Diskussion einsehen.',
 	'wall-action-admin-confirm-ok' => 'Löschen',
-	'wall-action-restore-thread-title' => 'Thread wiederherstellen',
+	'wall-action-restore-thread-title' => 'Diese Diskussion wiederherstellen',
 	'wall-action-restore-reply-title' => 'Diese Antwort wiederherstellen',
-	'wall-action-restore-confirm' => 'Bitte teile uns mit, warum du dies wiederherstellen willst:',
+	'wall-action-restore-confirm' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest:',
 	'wall-action-restore-confirm-ok' => 'Wiederherstellen',
-	'wall-action-rev-thread-title' => 'Diesen Thread versionslöschen?',
-	'wall-action-rev-reply-title' => 'Diese Antwort versionslöschen?',
-	'wall-action-rev-reply-confirm' => 'Soll diese Nachricht tatsächlich gelöscht werden?',
-	'wall-action-rev-thread-confirm' => 'Willst du wirklich den Thread und seinen gesamten Verlauf aus dem Wiki versionslöschen? Dies kann nicht rückgängig gemacht werden.',
+	'wall-action-rev-thread-title' => 'Versionslöschung dieser Diskussion?',
+	'wall-action-rev-reply-title' => 'Versionslöschung dieser Antwort?',
+	'wall-action-rev-reply-confirm' => 'Bist du sicher, dass du diese Nachricht löschen möchtest?',
+	'wall-action-rev-thread-confirm' => 'Bist du sicher, dass du eine Versionslöschung dieser Diskussion und ihrer Versionsgeschichte in diesem Wiki durchführen willst? Dies kann nicht rückgängig gemacht werden.',
 	'wall-action-rev-confirm-ok' => 'Ja, löschen',
-	'wall-action-move-thread-heading' => 'Diesen Thread verschieben',
-	'wall-action-move-validation-select-wall' => 'Bitte wähle ein Brett aus',
-	'wall-action-move-topics-summary' => 'Thread verschoben',
-	'wall-action-move-thread-ok' => 'Thread verschieben',
-	'wall-action-move-board-label' => 'Wähle ein Brett aus, um es zu verschieben',
-	'wall-notifications' => 'Benachrichtigungen',
-	'wall-notifications-all' => 'Alle Benachrichtigungen',
-	'wall-notifications-markasread' => 'Alle als gelesen markieren',
+	'wall-action-move-thread-heading' => 'Diesen Diskussionsfaden verschieben',
+	'wall-action-move-validation-select-wall' => 'Bitte wähle ein Forum',
+	'wall-action-move-topics-summary' => 'Diskussionsfaden verschoben',
+	'wall-action-move-thread-ok' => 'Verschieben',
+	'wall-action-move-board-label' => 'Wähle ein Forum aus, in das der Diskussionsfaden verschoben werden soll.',
+	'wall-notifications' => 'Neue Nachrichten',
+	'wall-notifications-all' => 'Alle Nachrichten',
+	'wall-notifications-markasread' => 'Als gelesen markieren',
 	'wall-notifications-markasread-all-wikis' => 'Alle Wikis',
 	'wall-notifications-markasread-this-wiki' => 'Dieses Wiki',
-	'wall-notifications-empty' => 'Es gibt keine Benachrichtigungen.',
-	'wall-notifications-loading' => 'Lade Benachrichtigungen',
-	'wall-notifications-reminder' => 'Du hast <span>$1</span> ungelesene {{PLURAL:$1|Benachrichtigung|Benachrichtigungen}}',
-	'wall-notifications-wall-disabled' => 'Nachrichtenseiten wurden in diesem Wiki deaktiviert. Benachrichtigung kann nicht geladen werden.',
-	'wn-user1-reply-you-your-wall' => '$1 hat dir auf deiner Nachrichtenseite geantwortet',
-	'wn-user2-reply-you-your-wall' => '$1 und $2 haben dir auf deiner Nachrichtenseite geantwortet',
-	'wn-user3-reply-you-your-wall' => '$1 und weitere haben dir auf deiner Nachrichtenseite geantwortet',
-	'wn-user1-reply-self-your-wall' => '$1 hat auf deiner Nachrichtenseite geantwortet',
-	'wn-user2-reply-self-your-wall' => '$1 und $2 haben auf deiner Nachrichtenseite geantwortet',
-	'wn-user3-reply-self-your-wall' => '$1 und weitere haben auf deiner Nachrichtenseite geantwortet',
-	'wn-user1-reply-other-your-wall' => '$1 hat bei dir auf $2s Nachricht geantwortet',
-	'wn-user2-reply-other-your-wall' => '$1 und $2 haben bei dir auf $3s Nachricht geantwortet',
-	'wn-user3-reply-other-your-wall' => '$1 und weitere haben bei dir auf $2s Nachricht geantwortet',
-	'wn-user1-reply-you-other-wall' => '$1 hat bei $2 auf deine Nachricht geantwortet',
-	'wn-user2-reply-you-other-wall' => '$1 und $2 haben bei $3 auf deine Nachricht geantwortet',
-	'wn-user3-reply-you-other-wall' => '$1 und weitere haben bei $2 auf deine Nachricht geantwortet',
-	'wn-user1-reply-self-other-wall' => '$1 hat auf $2s Nachrichtenseite geantwortet',
-	'wn-user2-reply-self-other-wall' => '$1 und $2 haben auf $3s Nachrichtenseite geantwortet',
-	'wn-user3-reply-self-other-wall' => '$1 und weitere haben auf $2s Nachrichtenseite geantwortet',
-	'wn-user1-reply-other-other-wall' => '$1 hat bei $3 auf $2s Nachricht geantwortet',
-	'wn-user2-reply-other-other-wall' => '$1 und $2 haben bei $4 auf $3s Nachricht geantwortet',
-	'wn-user3-reply-other-other-wall' => '$1 und weitere haben bei $3 auf $2s Nachricht geantwortet',
+	'wall-notifications-empty' => 'Es gibt keine ungelesenen Nachrichten',
+	'wall-notifications-loading' => 'Lade Nachrichten',
+	'wall-notifications-reminder' => 'Du hast <span>$1</span> ungelesene {{PLURAL:$1|Nachricht|Nachrichten}}',
+	'wall-notifications-wall-disabled' => 'Nachrichtenseiten wurden in diesem Wiki deaktiviert.',
+	'wn-user1-reply-you-your-wall' => '$1 hat auf deiner Seite auf deine Nachricht geantwortet',
+	'wn-user2-reply-you-your-wall' => '$1 und $2 haben auf deiner Seite auf deine Nachricht geantwortet',
+	'wn-user3-reply-you-your-wall' => '$1 und andere haben auf deiner Seite auf deine Nachricht geantwortet',
+	'wn-user1-reply-self-your-wall' => '$1 hat auf deiner Seite auf eine Nachricht geantwortet',
+	'wn-user2-reply-self-your-wall' => '$1 und $2 haben auf deiner Seite auf eine Nachricht geantwortet',
+	'wn-user3-reply-self-your-wall' => '$1 und andere haben auf deiner Seite auf eine Nachricht geantwortet',
+	'wn-user1-reply-other-your-wall' => '$1 hat auf deiner Seite auf $2s Nachricht geantwortet',
+	'wn-user2-reply-other-your-wall' => '$1 und $2 haben auf deiner Seite auf $3s Nachricht geantwortet',
+	'wn-user3-reply-other-your-wall' => '$1 und andere haben auf deiner Seite auf $2s Nachricht geantwortet',
+	'wn-user1-reply-you-other-wall' => '$1 hat auf $2s Seite auf deine Nachricht geantwortet',
+	'wn-user2-reply-you-other-wall' => '$1 und $2 haben auf $3s Seite auf deine Nachricht geantwortet',
+	'wn-user3-reply-you-other-wall' => '$1 und andere haben auf $3s Seite deine Nachricht geantwortet',
+	'wn-user1-reply-self-other-wall' => '$1 hat auf $2s Seite auf eine Nachricht geantwortet',
+	'wn-user2-reply-self-other-wall' => '$1 und $2 haben auf $3s Seite auf eine Nachricht geantwortet',
+	'wn-user3-reply-self-other-wall' => '$1 und andere haben auf $2s Seite auf eine Nachricht geantwortet',
+	'wn-user1-reply-other-other-wall' => '$1 hat auf $3s Seite auf $2s Nachricht geantwortet',
+	'wn-user2-reply-other-other-wall' => '$1 und $2 haben auf $4s Seite auf $3s Nachricht geantwortet',
+	'wn-user3-reply-other-other-wall' => '$1 und andere haben auf $3s Seite auf $2s Nachricht geantwortet',
 	'wn-user1-reply-you-a-wall' => '$1 hat auf deine Nachricht geantwortet',
-	'wn-user2-reply-you-a-wall' => '$1 und  $2 haben auf deine Nachricht geantwortet',
+	'wn-user2-reply-you-a-wall' => '$1 und $2 haben auf deine Nachricht geantwortet',
 	'wn-user3-reply-you-a-wall' => '$1 und andere haben auf deine Nachricht geantwortet',
 	'wn-user1-reply-self-a-wall' => '$1 hat auf eine Nachricht geantwortet',
-	'wn-user2-reply-self-a-wall' => '$1 und  $2 haben auf eine Nachricht geantwortet',
+	'wn-user2-reply-self-a-wall' => '$1 und $2 haben auf eine Nachricht geantwortet',
 	'wn-user3-reply-self-a-wall' => '$1 und andere haben auf eine Nachricht geantwortet',
-	'wn-user1-reply-other-a-wall' => '$1 hat auf $2s Nachricht geantwortet',
+	'wn-user1-reply-other-a-wall' => '$1 hat auf $2 Nachricht geantwortet',
 	'wn-user2-reply-other-a-wall' => '$1 und $2 haben auf $3s Nachricht geantwortet',
-	'wn-user3-reply-other-a-wall' => '$1 und weitere haben auf $3s Nachricht geantwortet',
-	'wn-newmsg-onmywall' => '$1 hat dir eine neue Nachricht hinterlassen',
-	'wn-newmsg' => 'Du hast $1 eine neue Nachricht hinterlassen',
-	'wn-newmsg-on-followed-wall' => '$1 hat $2 eine neue Nachricht hinterlassen',
-	'wn-admin-thread-deleted' => 'Thread von $1s Nachrichtenseite entfernt',
-	'wn-admin-reply-deleted' => 'Antwort aus Thread auf $1s Nachrichtenseite entfernt',
-	'wn-owner-thread-deleted' => 'Thread von deiner Nachrichtenseite entfernt',
-	'wn-owner-reply-deleted' => 'Antwort aus Thread auf deiner Nachrichtenseite entfernt',
-	'wall-sorting-newest-threads' => 'Neueste Threads',
-	'wall-sorting-oldest-threads' => 'Älteste Threads',
-	'wall-sorting-newest-replies' => 'Neueste Antworten',
+	'wn-user3-reply-other-a-wall' => '$1 und andere haben auf $3s Nachricht geantwortet',
+	'wn-newmsg-onmywall' => '$1 hat eine neue Nachricht auf deiner Seite hinterlassen',
+	'wn-newmsg' => 'Du hast eine neue Nachricht auf $1s Seite hinterlassen',
+	'wn-newmsg-on-followed-wall' => '$1 hat eine neue Nachricht auf $2s Seite hinterlassen.',
+	'wn-admin-thread-deleted' => 'Diskussion auf $1s Seite entfernt',
+	'wn-admin-reply-deleted' => 'Antwort in Diskussion auf $1s Seite entfernt',
+	'wn-owner-thread-deleted' => 'Diskussion auf deiner Seite entfernt',
+	'wn-owner-reply-deleted' => 'Antwort in Diskussion auf deiner Seite entfernt',
+	'wall-sorting-newest-threads' => 'Neuste Themen',
+	'wall-sorting-oldest-threads' => 'Älteste Themen',
+	'wall-sorting-newest-replies' => 'Neuste Antworten',
 	'wall-sorting-most-active' => 'Am aktivsten',
 	'wall-sorting-archived' => 'Archiviert',
-	'tog-enotifwallthread' => '…jemand auf einen von mir verfolgten Thread antwortet',
-	'tog-enotifmywall' => '…jemand mir eine neue Nachricht hinterlässt',
+	'tog-enotifwallthread' => '...jemand auf eine Diskussion antwortet, die ich verfolge.',
+	'tog-enotifmywall' => '...jemand eine neue Nachricht auf meiner Seite hinterlässt.',
 	'wall-deleted-msg-pagetitle' => 'Nachricht gelöscht',
-	'wall-deleted-msg-text' => 'Die Nachricht, die du einsehen möchtest, wurde gelöscht.',
-	'wall-deleted-msg-return-to' => 'Zurück zu  $1s Nachrichtenseite.',
-	'wall-deleted-msg-view' => '(Einsehen/Wiederherstellen)',
-	'wall-recentchanges-wall-thread' => 'Nachrichtenthread',
+	'wall-deleted-msg-text' => 'Die Nachricht, die du anzeigen wolltest wurde gelöscht.',
+	'wall-deleted-msg-return-to' => 'Kehre zu den Nachrichten von $1 zurück.',
+	'wall-deleted-msg-view' => '(Vorschau/Wiederherstellen)',
+	'wall-recentchanges-wall-thread' => 'Diskussionsfaden',
 	'wall-recentchanges-new-message' => 'auf [[$1|$2s Nachrichtenseite]]',
-	'wall-recentchanges-edit' => 'Nachricht bearbeitet',
+	'wall-recentchanges-edit' => 'Nachricht nachbearbeitet',
 	'wall-recentchanges-removed-thread' => 'hat die Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite entfernt.',
 	'wall-recentchanges-removed-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite entfernt',
-	'wall-recentchanges-restored-thread' => 'Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite wiederhergestellt',
-	'wall-recentchanges-restored-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite wiederhergestellt',
-	'wall-recentchanges-deleted-thread' => 'Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite gelöscht',
-	'wall-recentchanges-deleted-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite gelöscht',
-	'wall-recentchanges-closed-thread' => 'schloss den Thread „[[$1|$2]]“ auf der Nachrichtenseite von [[$3|$4]]',
+	'wall-recentchanges-restored-thread' => 'hat das Thema "[[$1|$2]]" auf [[$3|$4s Nachrichtenseite]] wiederhergestellt',
+	'wall-recentchanges-restored-reply' => 'hat die Antwort "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite wiederhergestellt',
+	'wall-recentchanges-deleted-thread' => 'hat den kompletten Diskussionfaden "[[$1|$2]]" von [[$3|$4s Nachrichtenseite]] gelöscht',
+	'wall-recentchanges-deleted-reply' => 'hat eine Antwort auf "[[$1|$2]]" von [[$3|$4s Nachrichtenseite]] gelöscht',
+	'wall-recentchanges-closed-thread' => 'hat den Diskussionsfaden "[[$1|$2]]" geschlossen',
 	'wall-recentchanges-reopened-thread' => 'hat den Thread „[[$1|$2]]“ auf der Nachrichtenseite von [[$3|$4]] wiedereröffnet',
-	'wall-recentchanges-deleted-reply-title' => 'Antwort auf Nachrichtenseite',
+	'wall-recentchanges-deleted-reply-title' => 'Eine Antwort auf der Nachrichtenseite',
 	'wall-recentchanges-wall-created-title' => 'Erstellte eine Nachrichtenwand',
-	'wall-recentchanges-namespace-selector-message-wall' => 'Nachrichtenseite',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Nachrichten',
 	'wall-recentchanges-thread-group' => '$1 auf [[$2|$3s Nachrichtenseite]]',
-	'wall-recentchanges-history-link' => 'Versionsgeschichte',
-	'wall-recentchanges-thread-history-link' => 'Diskussionsverlauf',
+	'wall-recentchanges-history-link' => 'Versionen',
+	'wall-recentchanges-thread-history-link' => 'Versionen (Diskussion)',
 	'wall-contributions-line' => '[[$1|$2]] auf [[$3|$4s Nachrichten]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] auf [[$3|$4s Nachrichtenseite]]',
-	'wall-message-not-found' => 'Diese Nachricht konnte nicht gefunden werden. Wenn dieser Fehler angezeigt wird, kontaktiere bitte Wikia per [[Special:Contact]], und gib so viele Details wie möglich darüber an, wie der Fehler reproduziert werden kann. Vielen Dank!',
-	'wall-message-staff-text' => 'Dieser Benutzer ist ein Wikia-Mitarbeiter',
-	'wall-ipballowusertalk' => 'Diesem Benutzer auch gesperrt das Schreiben auf seiner Nachrichtenseite gestatten',
-	'wall-ipbwatchuser' => 'Profil und Nachrichtenseite des Benutzers verfolgen',
-	'wall-wiki-activity-on' => 'auf [[$1|$2s Nachrichten]]',
-	'wall-removed-thread-undo' => 'Dieser Thread wurde entfernt. $1',
+	'wall-message-not-found' => 'Diese Nachricht konnte nicht gefunden werden. Wenn dieser Fehler angezeigt wird, kontaktiere bitte Fandom per [[Spezial:Kontakt]], und gib so viele Details wie möglich dazu an, wie der Fehler reproduziert werden kann. Vielen Dank!',
+	'wall-message-staff-text' => 'Dieser Benutzer ist ein Fandom-Mitarbeiter',
+	'wall-ipballowusertalk' => 'Benutzer darf während seiner Sperre seine eigene Nachrichtenseite benutzen.',
+	'wall-ipbwatchuser' => 'Verfolge das Profil und die Nachrichtenseite dieses Benutzers',
+	'wall-wiki-activity-on' => 'auf $1',
+	'wall-removed-thread-undo' => 'Diese Diskussion wurde entfernt. $1',
 	'wall-removed-reply-undo' => 'Diese Antwort wurde entfernt. $1',
 	'wall-removed-reply' => 'Diese Antwort wurde entfernt',
-	'wall-deleted-thread-undo' => 'Dieser Thread wurde gelöscht. $1',
+	'wall-deleted-thread-undo' => 'Diese Diskussion wurde gelöscht. $1',
 	'wall-deleted-reply-undo' => 'Diese Antwort wurde gelöscht. $1',
 	'wall-deleted-reply' => 'Diese Antwort wurde gelöscht',
-	'wall-history' => 'Verlauf',
-	'wall-history-title' => 'Diskussionsverlauf',
-	'wall-history-who-involved-wall-title' => 'Wer ist beteiligt?',
-	'wall-history-who-involved-thread-title' => 'Wer ist an dieser Diskussion beteiligt?',
-	'wall-history-thread-created' => '$1 gestartet von $2',
-	'wall-history-thread-removed' => '$1 entfernt von $2',
-	'wall-history-thread-restored' => '$1 wiederhergestellt von $2',
-	'wall-history-thread-admin-deleted' => '$1 gelöscht von $2',
+	'wall-history' => 'Versionen',
+	'wall-history-title' => 'Versionen (Nachrichtenseite)',
+	'wall-history-who-involved-wall-title' => 'Wer beteiligt sich an dieser Nachrichtenseite?',
+	'wall-history-who-involved-thread-title' => 'Wer beteiligt sich an dieser Diskussion?',
+	'wall-history-thread-created' => '$1 wurde von $2 erstellt',
+	'wall-history-thread-removed' => '$1 wurde von $2 entfernt',
+	'wall-history-thread-restored' => '$1 wurde von $2 wiederhergestellt',
+	'wall-history-thread-admin-deleted' => '$1 wurde von $2 gelöscht',
 	'wall-history-sorting-newest-first' => 'Neueste zuerst',
 	'wall-history-sorting-oldest-first' => 'Älteste zuerst',
 	'wall-history-summary-label' => 'Zusammenfassung',
 	'wall-history-rail-wall' => 'Nachrichten',
 	'wall-history-rail-contribs' => 'Beiträge',
 	'wall-history-rail-block' => 'sperren',
-	'wall-history-action-view' => 'ansehen',
+	'wall-history-action-view' => 'anzeigen',
 	'wall-history-action-restore' => 'wiederherstellen',
-	'wall-history-action-thread-history' => 'Diskussionsverlauf',
-	'wall-thread-history-title' => 'Diskussionsverlauf',
-	'wall-thread-history-thread-created' => '$1 $2 begann diese Diskussion',
-	'wall-thread-history-reply-created' => '$1 $2 antwortete',
-	'wall-thread-history-thread-removed' => '$1 $2 entfernte die Diskussion',
-	'wall-thread-history-reply-removed' => '$1 $2 entfernte $3s Antwort $5',
-	'wall-thread-history-reply-deleted' => '$1 $2 löschte die Antwort von $3',
-	'wall-thread-history-thread-restored' => '$1 $2 stellte die Diskussion wieder her',
+	'wall-history-action-thread-history' => 'Versionsgeschichte (Diskussion)',
+	'wall-thread-history-title' => 'Versionen (Diskussion)',
+	'wall-thread-history-thread-created' => '$1 $2 hat diese Diskussion gestartet',
+	'wall-thread-history-reply-created' => '$1 $2 hat eine Antwort verfasst',
+	'wall-thread-history-thread-removed' => '$1 $2 hat diese Diskussion entfernt',
+	'wall-thread-history-reply-removed' => '$1 $2 hat $3s Antwort entfernt $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 entfernte $3s Antwort $5',
+	'wall-thread-history-thread-restored' => '$1 $2 hat diese Diskussion wiederhergestellt',
 	'wall-thread-history-reply-restored' => '$1 $2 stellte $3s Antwort $5 wieder her',
-	'wall-thread-history-thread-deleted' => '$1 $2 löschte die Diskussion',
-	'wall-thread-history-thread-edited' => '$1 $2 bearbeitete $3s Beitrag $5',
-	'wall-thread-history-reply-edited' => '$1 $2 bearbeitete $3s Antwort $5',
-	'wall-thread-history-thread-closed' => '$2 schloss den Thread',
-	'wall-thread-history-thread-reopened' => '$2 öffnete den Thread neu',
+	'wall-thread-history-thread-deleted' => '$1 $2 hat diese Diskussion gelöscht',
+	'wall-thread-history-thread-edited' => '$1 $2 hat $3s Nachricht bearbeitet $5',
+	'wall-thread-history-reply-edited' => '$1 $2 hat $3s Nachricht bearbeitet $5',
+	'wall-thread-history-thread-closed' => '$2 schloss den Diskussionsfaden',
+	'wall-thread-history-thread-reopened' => '$2 wiedereröffnete den Diskussionsfaden',
 	'wall-history-action-restore-reply' => 'Antwort wiederherstellen',
-	'wall-history-action-restore-thread' => 'Thread wiederherstellen',
-	'wall-message-not-found-in-db' => 'Wir konnten diese Nachricht in unserer Datenbank nicht finden, Verzeihung.',
-	'prefs-email-wall-v2' => 'Nachrichtenseite und Forum',
-	'tog-enotifwallthread-v2' => 'Schicke mir eine E-Mail…',
-	'tog-enotifmywall-every' => 'Für jede Nachricht & Antwort',
-	'tog-enotifmywall-sincevisited' => 'Einmal pro Diskussion seit meinem letzten Besuch',
-	'tog-enotifmywall-reminder' => 'Mit einer täglichen E-Mail-Erinnerung',
-	'tog-enotifmywall-noemail' => 'niemals. Sende mir keine Nachrichtenseiten- oder Foren-Mails.',
-	'wallshowsource-toggle-v2' => 'Aktiviere „{{int:user-action-menu-view-source}}“ in Threads',
-	'wallshowsource-toggle' => 'Aktiviere {{int:user-action-menu-view-source}} für Nachrichtenseiten-Posts',
-	'walldelete-toggle' => 'Aktiviere Versionslöschung für Threads',
-	'wall-notifications-notifyeveryone' => 'Hervorgehoben von $1',
-	'wall-message-notifyeveryone' => 'Thread hervorheben',
-	'wall-message-unnotifyeveryone' => 'Hervorhebung aufheben',
-	'wall-message-notifyeveryone-tooltip' => 'Jeder angemeldete Benutzer im Wiki wird beim nächsten Besuch auf dieses Thema hingewiesen.',
-	'wall-votes-modal-showmore' => 'Andere zeigen, die Lob gaben',
-	'wall-votes-modal-title' => 'Lob',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eine Person|$1 Leute}} lobten diese Nachricht',
-	'wall-votes-number' => '{{PLURAL:$1|Ein Lob|$1 Lobe}}',
-	'wall-votes-number-tooltip' => 'Lobende für diesen Beitrag zeigen',
-	'wall-votes-vote-tooltip' => 'Diesen Beitrag loben',
-	'wall-votes-voted-tooltip' => 'Beitrag gelobt!',
-	'wall-quote-author' => '$1 schrieb:',
-	'wall-quote-reply-to' => 'auf Nr. $1 antworten',
+	'wall-history-action-restore-thread' => 'Diskussion wiederherstellen',
+	'wall-message-not-found-in-db' => 'Wir konnten diese Nachricht nicht in der Datenbank finden. Sorry.',
+	'prefs-email-wall-v2' => 'Nachrichtenseite',
+	'tog-enotifwallthread-v2' => 'Sende eine Mail...',
+	'tog-enotifmywall-every' => 'für jede Nachricht & Antwort',
+	'tog-enotifmywall-sincevisited' => 'einmal pro Thema nach dem letzten Besuch.',
+	'tog-enotifmywall-reminder' => 'zusammen mit der täglichen Erinnerungsmail.',
+	'tog-enotifmywall-noemail' => 'niemals. Sende mir keine Nachrichtenseiten-Mails.',
+	'wallshowsource-toggle-v2' => 'Quellcode bei Nachrichten anschalten',
+	'wallshowsource-toggle' => 'Quellcode bei Nachrichten anschalten',
+	'walldelete-toggle' => 'Ermögliche Versionslöschungen auf Nachrichtenseiten',
+	'wall-notifications-notifyeveryone' => 'Von $1 hervorgehoben',
+	'wall-message-notifyeveryone' => 'Diskussionsfaden hervorheben',
+	'wall-message-unnotifyeveryone' => 'Hervorhebung entfernen',
+	'wall-message-notifyeveryone-tooltip' => 'Jeder angemeldete Benutzer dieses Wikis erhält eine Benachrichtigung über diesen Diskussionsfaden beim nächsten Besuch des Wikis',
+	'wall-votes-modal-showmore' => 'Andere zeigen, zugestimmt haben',
+	'wall-votes-modal-title' => 'Zustimmung',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eine Person stimmte|$1 Leute stimmten}} dieser Nachricht zu',
+	'wall-votes-number' => '$1 Zustimmungen',
+	'wall-votes-number-tooltip' => 'Leute, die dieser Nachricht zustimmten anzeigen',
+	'wall-votes-vote-tooltip' => 'Diesem Beitrag zustimmen',
+	'wall-votes-voted-tooltip' => 'Beitrag zugestimmt!',
+	'wall-quote-author' => '$1 sagte:',
+	'wall-quote-reply-to' => 'Antwort zu #$1',
 	'wall-topic-input-heading' => 'Thema',
-	'wall-topic-input-placeholder' => 'Ein Thema hinzufügen (optional)',
-	'wall-topic-input-error' => 'Es gibt keinen Artikel namens „$1“. Bitte wähle einen vorhandenen Artikeltitel als Thema aus.',
-	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal {{PLURAL:$1|ein Thema|$1 Themen}} haben.',
-	'wall-topic-heading' => 'Themen für diesen Thread:',
+	'wall-topic-input-placeholder' => 'Thema hinzufügen (optional)',
+	'wall-topic-input-error' => 'Es existiert kein Artikel unter dem Namen "$1". Bitte gib einen existierenden Artikel als Thema an.',
+	'wall-topic-input-error-limit' => 'Ein Diskussionsfaden kann maximal $1 Themen haben.',
+	'wall-topic-heading' => 'Themen dieses Diskussionsfadens:',
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
 	'wall-topic-edit-cancel' => 'Abbrechen',
 	'group-threadmoderator' => 'Diskussions-Moderatoren',
 	'group-threadmoderator-member' => 'Diskussions-Moderator',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
+	'grouppage-threadmoderator' => 'w:c:de.community:Hilfe:Moderatoren',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Gorizon
- * @author Marmase
- * @author Mirzali
- */
 $messages['diq'] = [
 	'wall-no-title' => 'Sername çıno',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 Cewab|Cewabanê $1 }}</span> bıvinê',
@@ -2132,12 +2013,12 @@ $messages['diq'] = [
 	'wall-message-rev-delete' => 'Rewizyona besternayışi',
 	'wall-message-fast-admin-delete-message' => 'VSTF bestere',
 	'wall-message-quote-button' => 'Groteko',
-	'wall-message-elseswall' => "Dêsê $1'i",
+	'wall-message-elseswall' => 'Dêsê $1\'i',
 	'wall-thread-removed' => 'Hewadeya',
 	'wall-thread-isnotifyeveryone' => 'Xulasaye',
 	'wall-thread-deleted' => 'Esteriya',
 	'wall-thread-closed' => 'Racneya',
-	'wall-default-title' => "$1'i ra mesac",
+	'wall-default-title' => '$1\'i ra mesac',
 	'wall-button-to-preview-comment' => 'Verqayt',
 	'wall-button-to-cancel-preview' => 'Bıvurne',
 	'wall-button-to-submit-comment' => 'Bırışe',
@@ -2159,16 +2040,16 @@ $messages['diq'] = [
 	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
 	'wall-notifications-markasread-this-wiki' => 'E na wiki',
 	'wall-sorting-archived' => 'Arşivya',
-	'wall-recentchanges-new-message' => "[[$1|dêsê $2'i deyo]]",
+	'wall-recentchanges-new-message' => '[[$1|dêsê $2\'i deyo]]',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
-	'wall-recentchanges-thread-group' => "$1'i dês dê[[$2| ra kewt dês dê $3'i]]",
+	'wall-recentchanges-thread-group' => '$1\'i dês dê[[$2| ra kewt dês dê $3\'i]]',
 	'wall-recentchanges-history-link' => 'tarixê dêsi',
-	'wall-wiki-activity-on' => "[[$1|Dêsê $2'i]] ra",
+	'wall-wiki-activity-on' => '[[$1|Dêsê $2\'i]] ra',
 	'wall-history' => 'Tarix',
 	'wall-history-title' => 'tarixê dêsi',
-	'wall-history-thread-created' => "$2'i $1 vıraşt",
-	'wall-history-thread-removed' => "$2'i $1 wedarne",
-	'wall-history-thread-restored' => "$2'i $1 timar ke",
+	'wall-history-thread-created' => '$2\'i $1 vıraşt',
+	'wall-history-thread-removed' => '$2\'i $1 wedarne',
+	'wall-history-thread-restored' => '$2\'i $1 timar ke',
 	'wall-history-thread-admin-deleted' => '$1 terefê $2 ra esteriya',
 	'wall-history-summary-label' => 'Xulasa',
 	'wall-history-rail-wall' => 'dês',
@@ -2176,20 +2057,17 @@ $messages['diq'] = [
 	'wall-history-rail-block' => 'kılit ke',
 	'wall-history-action-view' => 'bıvin',
 	'wall-history-action-restore' => 'Timar bike',
-	'prefs-email-wall-v2' => 'Mesacê Dêsi', # Fuzzy
+	'prefs-email-wall-v2' => 'Mesacê Dêsi',
 	'tog-enotifwallthread-v2' => 'E-postay me...',
 	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
 	'wall-votes-modal-title' => 'Nam',
-	'wall-votes-number' => 'Namê $1', # Fuzzy
+	'wall-votes-number' => 'Namê $1',
 	'wall-quote-author' => 'Nusnayışê $1:',
 	'wall-quote-reply-to' => 'cewabê #$1',
 	'wall-topic-input-heading' => 'Topik:',
 	'wall-topic-edit' => 'Topiki bıvurne',
 ];
 
-/** Greek (Ελληνικά)
- * @author Glavkos
- */
 $messages['el'] = [
 	'wall-no-title' => 'Χωρίς τίτλο',
 	'wall-message-loadmore' => 'Προβολή <span class="count">{{PLURAL:$1|$1 απάντησης|όλων $1 των απαντήσεων}}</span>',
@@ -2247,35 +2125,22 @@ $messages['el'] = [
 	'wall-thread-history-thread-closed' => 'Ο $2 έκλεισε αυτό το νήμα',
 	'wall-thread-history-thread-reopened' => 'Ο $2 ξανάνοιξε αυτό το νήμα',
 	'wall-history-action-restore-reply' => 'επαναφορά απάντησης',
-	'prefs-email-wall-v2' => 'Τοίχος Μηνυμάτων', # Fuzzy
+	'prefs-email-wall-v2' => 'Τοίχος Μηνυμάτων',
 	'tog-enotifwallthread-v2' => 'Στείλτε μου email...',
 	'tog-enotifmywall-every' => 'Για κάθε μήνυμα & απάντηση',
 	'tog-enotifmywall-sincevisited' => 'Μία φορά ανά νήμα από την τελευταία μου επίσκεψη',
 	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
-	'wall-votes-number' => '$1 Kudos', # Fuzzy
+	'wall-votes-number' => '$1 Kudos',
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
 ];
 
-/** British English (British English)
- * @author Captaindogfish
- */
 $messages['en-gb'] = [
-	'wall-recentchanges-thread-group' => "$1 on [[$2|$3's wall]]",
+	'wall-recentchanges-thread-group' => '$1 on [[$2|$3\'s wall]]',
 ];
 
-/** Spanish (español)
- * @author AnakngAraw
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Bola
- * @author Macofe
- * @author Rubenwap
- * @author VegaDark
- * @author Vivaelcelta
- */
 $messages['es'] = [
 	'wall-no-title' => 'Sin título',
-	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|$1 respuesta|$1 respuestas}}</span>',
+	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|la única respuesta|las $1 respuestas}}</span>',
 	'wall-message-wall' => 'Muro de mensajes',
 	'wall-message-wall-shorten' => 'muro',
 	'wall-message-unfollow' => 'Dejar de seguir',
@@ -2283,57 +2148,57 @@ $messages['es'] = [
 	'wall-message-edited' => '<a href="$3" >Editado por</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 por </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Tema cambiado',
-	'wall-message-update-highlight-summary' => 'Destacado',
-	'wall-message-update-removed-highlight-summary' => 'Destacado borrado',
-	'wall-message-mywall' => 'Mi muro',
+	'wall-message-update-highlight-summary' => 'Tema destacado',
+	'wall-message-update-removed-highlight-summary' => 'Quitando etiqueta de destacado',
+	'wall-message-mywall' => 'Mi Muro',
 	'wall-toolbar-history' => 'Historial',
 	'wall-message-notify' => 'Notificar a un admin',
-	'wall-message-remove' => 'Quitar',
-	'wall-message-rev-delete' => 'Revisión borrada',
-	'wall-message-fast-admin-delete-message' => 'VSTF borrar',
-	'wall-message-quote-button' => 'Cita',
-	'wall-message-elseswall' => 'muro de $1',
-	'wall-message-no-permission' => 'No tienes permisos para realizar esta acción en el mensaje',
+	'wall-message-remove' => 'Retirar',
+	'wall-message-rev-delete' => 'Borrar revisión',
+	'wall-message-fast-admin-delete-message' => 'Borrado rápido',
+	'wall-message-quote-button' => 'Citar',
+	'wall-message-elseswall' => 'Muro de $1',
+	'wall-message-no-permission' => 'No tienes permisos para realizar esta acción en este mensaje',
 	'wall-thread-removed' => 'Retirado',
-	'wall-thread-isnotifyeveryone' => 'Resaltar',
+	'wall-thread-isnotifyeveryone' => 'Destacado',
 	'wall-thread-deleted' => 'Borrado',
 	'wall-thread-closed' => 'Cerrado',
 	'wall-default-title' => 'Mensaje de $1',
-	'wall-no-title-warning' => '← No has especificado ningún título',
-	'wall-desc' => 'Reemplazo de la discusión de usuario',
-	'wall-disabled-desc' => 'Funcionalidad del Muro de Mensajes para wikis sin la extensión del Muro activado',
-	'wall-placeholder-topic' => '¿Qué es esto?',
-	'wall-placeholder-message' => 'Publicar un mensaje nuevo en el muro de $1',
-	'wall-placeholder-message-anon' => 'Publica un mensaje nuevo en este muro',
+	'wall-no-title-warning' => '&larr; No especificaste ningún título',
+	'wall-desc' => 'Reemplazo de páginas de discusión',
+	'wall-disabled-desc' => 'Funcionalidad del Muro de mensajes para páginas sin la extensión del Muro',
+	'wall-placeholder-topic' => '¿De qué quieres hablar?',
+	'wall-placeholder-message' => 'Dejar un mensaje en el muro de $1',
+	'wall-placeholder-message-anon' => 'Dejar un nuevo mensaje en este muro',
 	'wall-placeholder-reply' => 'Dejar una respuesta',
 	'wall-button-to-preview-comment' => 'Previsualizar',
 	'wall-button-to-cancel-preview' => 'Editar',
 	'wall-button-to-submit-comment' => 'Publicar',
 	'wall-button-to-submit-reply' => 'Responder',
 	'wall-button-to-submit-comment-no-topic' => 'Publicar sin título',
-	'wall-button-save-changes' => 'Guardar cambios',
+	'wall-button-save-changes' => 'Publicar cambios',
 	'wall-button-cancel-changes' => 'Cancelar',
 	'wall-button-done-source' => 'Hecho',
 	'wall-message-edit' => 'Editar',
-	'wall-message-more' => 'Más',
-	'wall-message-delete' => 'Eliminar',
+	'wall-message-more' => 'Más acciones',
+	'wall-message-delete' => 'Borrar',
 	'wall-message-close-thread' => 'Cerrar este tema',
 	'wall-message-reopen-thread' => 'Reabrir este tema',
 	'wall-message-removed-thread-because' => '$1 retiró este tema porque:',
-	'wall-message-deleted-thread-because' => '$1 eliminó este tema porque:',
+	'wall-message-deleted-thread-because' => '$1 borró este tema porque:',
 	'wall-message-restore-thread' => 'Restaurar tema',
-	'wall-message-move-thread' => 'Renombrar este tema',
+	'wall-message-move-thread' => 'Mover este tema',
 	'wall-message-removed-reply-because' => '$1 retiró esta respuesta porque:',
-	'wall-message-deleted-reply-because' => '$1 eliminó esta respuesta porque:',
+	'wall-message-deleted-reply-because' => '$1 borró esta respuesta porque:',
 	'wall-message-closed-by' => '[[$2|$1]] cerró este tema',
 	'wall-message-closed-by-because' => '$1 cerró este hilo por:',
 	'wall-message-restore-reply' => 'Restaurar respuesta',
 	'wall-delete-reason' => 'Acción de usuario/administrador',
 	'wall-user-talk-page-archive-anchor' => 'Ver página de discusión archivada',
 	'wall-user-talk-archive-page-title' => 'Archivo_de_discusión',
-	'wall-ipb-disableusertalk' => 'Impedir que este usuario publique en su propio Muro de Mensajes mientras esté bloqueado',
+	'wall-ipb-disableusertalk' => 'Impedir a este usuario dejar mensajes en su propio Muro de Mensajes mientras está bloqueado',
 	'wall-action-all-confirm-cancel' => 'Cancelar',
-	'wall-action-all-confirm-notify' => 'Notificar a un admin',
+	'wall-action-all-confirm-notify' => 'Avisar a un administrador',
 	'wall-action-remove-reply-title' => 'Retirar esta respuesta',
 	'wall-action-remove-thread-title' => 'Retirar este tema',
 	'wall-confirm-monobook-remove' => 'Por favor, dinos por qué quieres retirar esto.
@@ -2345,10 +2210,10 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-confirm-monobook-restore' => 'Por favor, dinos por qué quieres restaurar esto',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'El mensaje fue borrado previamente y ya no existe.',
-	'wall-confirm-monobook-lack-of-reason' => 'Por favor incluye un motivo para retirar este tema o respuesta.',
+	'wall-confirm-monobook-lack-of-reason' => 'Por favor, añade un resumen para retirar este tema/mensaje.',
 	'wall-action-remove-confirm' => 'Por favor, dinos por qué quieres retirar esto:',
-	'wall-action-remove-thread-confirm-info' => 'El mensaje original y tu resumen aparecerán en el historial del wiki.',
-	'wall-action-remove-reply-confirm-info' => 'El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
+	'wall-action-remove-thread-confirm-info' => 'Este tema y tu resumen aparecerán en el historial del wiki.',
+	'wall-action-remove-reply-confirm-info' => 'Esta respuesta y tu resumen aparecerán en el historial del wiki.',
 	'wall-action-remove-confirm-ok' => 'Retirar',
 	'wall-action-close-thread-title' => 'Cerrar este hilo',
 	'wall-action-close-confirm' => 'Por favor dinos por qué quieres cerrar esto:',
@@ -2357,75 +2222,75 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-action-admin-thread-title' => 'Borrar este tema',
 	'wall-action-admin-reply-title' => 'Borrar esta respuesta',
 	'wall-action-admin-confirm' => 'Por favor, dinos por qué quieres borrar esto:',
-	'wall-action-admin-thread-confirm-info' => 'El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
-	'wall-action-admin-reply-confirm-info' => 'El mensaje original y tu resumen seguirán apareciendo en el historial del wiki. Solo los administradores podrán ver este tema.',
+	'wall-action-admin-thread-confirm-info' => 'Este tema y tu resumen aparecerán en el historial del wiki',
+	'wall-action-admin-reply-confirm-info' => 'Esta respuesta y tu resumen aparecerán en el historial del wiki. Solamente los administradores podrán ver este tema.',
 	'wall-action-admin-confirm-ok' => 'Borrar',
 	'wall-action-restore-thread-title' => 'Restaurar este tema',
 	'wall-action-restore-reply-title' => 'Restaurar esta respuesta',
 	'wall-action-restore-confirm' => 'Por favor, dinos por qué quieres restaurar esto:',
 	'wall-action-restore-confirm-ok' => 'Restaurar',
-	'wall-action-rev-thread-title' => '¿Eliminar este tema?',
-	'wall-action-rev-reply-title' => '¿Eliminar esta respuesta?',
-	'wall-action-rev-reply-confirm' => '¿Estás seguro que quieres borrar este mensaje?',
-	'wall-action-rev-thread-confirm' => '¿Estás seguro que quieres eliminar este tema y todo su historial en el wiki? Esto no puede revertirse.',
-	'wall-action-rev-confirm-ok' => 'Sí, bórralo',
+	'wall-action-rev-thread-title' => '¿Borrar esta revisión del tema?',
+	'wall-action-rev-reply-title' => '¿Borrar esta revisión de la respuesta?',
+	'wall-action-rev-reply-confirm' => '¿Estás seguro de que quieres borrar este mensaje?',
+	'wall-action-rev-thread-confirm' => '¿Estás seguro de que quieres borrar esta revisión del tema y todo su historial en el wiki? ¡Que esto no se puede deshacer!',
+	'wall-action-rev-confirm-ok' => 'Sí, ¡bórralo!',
 	'wall-action-move-thread-heading' => 'Trasladar este tema',
 	'wall-action-move-validation-select-wall' => 'Por favor selecciona un subforo',
 	'wall-action-move-topics-summary' => 'Tema trasladado',
 	'wall-action-move-thread-ok' => 'Trasladar tema',
 	'wall-action-move-board-label' => 'Selecciona un subforo a mover',
 	'wall-notifications' => 'Notificaciones',
-	'wall-notifications-all' => 'Todas las notificaciones',
-	'wall-notifications-markasread' => 'Marcar como leído',
+	'wall-notifications-all' => 'Notificaciones',
+	'wall-notifications-markasread' => 'Marcar como leídas',
 	'wall-notifications-markasread-all-wikis' => 'Todos los wikis',
 	'wall-notifications-markasread-this-wiki' => 'Este wiki',
 	'wall-notifications-empty' => 'No hay notificaciones',
 	'wall-notifications-loading' => 'Cargando notificaciones',
 	'wall-notifications-reminder' => 'Tienes <span>$1</span> {{PLURAL:$1|notificación|notificaciones}} sin leer',
-	'wall-notifications-wall-disabled' => 'El Muro de Mensajes ha sido desactivado en este wiki. No se pueden cargar las notificaciones.',
+	'wall-notifications-wall-disabled' => 'El Muro de mensajes ha sido desactivado en este wiki. No es posible cargar las notificaciones.',
 	'wn-user1-reply-you-your-wall' => '$1 respondió a tu mensaje en tu Muro',
 	'wn-user2-reply-you-your-wall' => '$1 y $2 respondieron a tu mensaje en tu Muro',
-	'wn-user3-reply-you-your-wall' => '$1 y otros respondieron a tu mensaje en tu Muro',
+	'wn-user3-reply-you-your-wall' => '$1 y otros usuarios respondieron a tu mensaje en tu Muro',
 	'wn-user1-reply-self-your-wall' => '$1 respondió a un mensaje en tu Muro',
 	'wn-user2-reply-self-your-wall' => '$1 y $2 respondieron a un mensaje en tu Muro',
-	'wn-user3-reply-self-your-wall' => '$1 y otros respondieron a un mensaje en tu Muro',
-	'wn-user1-reply-other-your-wall' => '$1 respondió al mensaje de $2 en tu Muro',
+	'wn-user3-reply-self-your-wall' => '$1 y otros usuarios respondieron a un mensaje en tu Muro',
+	'wn-user1-reply-other-your-wall' => '$1 contestó al mensaje de $2 en tu Muro',
 	'wn-user2-reply-other-your-wall' => '$1 y $2 respondieron al mensaje de $3 en tu Muro',
-	'wn-user3-reply-other-your-wall' => '$1 y otros respondieron al mensaje de $2 en tu Muro',
-	'wn-user1-reply-you-other-wall' => '$1 respondió a tu mensaje en el muro de $2',
-	'wn-user2-reply-you-other-wall' => '$1 y $2 respondieron a tu mensaje en el muro de $3',
-	'wn-user3-reply-you-other-wall' => '$1 y otros respondieron a tu mensaje en el muro de $2',
-	'wn-user1-reply-self-other-wall' => '$1 respondió a un mensaje en el muro de $2',
-	'wn-user2-reply-self-other-wall' => '$1 y $2 respondieron a un mensaje en el muro de $3',
-	'wn-user3-reply-self-other-wall' => '$1 y otros respondieron a un mensaje en el muro de $2',
-	'wn-user1-reply-other-other-wall' => '$1 respondió al mensaje de $2 en el muro de $3',
-	'wn-user2-reply-other-other-wall' => '$1 y $2 respondieron al mensaje de $3 en el muro de $4',
-	'wn-user3-reply-other-other-wall' => '$1 y otros respondieron al mensaje de $2 en el muro de $3',
+	'wn-user3-reply-other-your-wall' => '$1 y otros usuarios respondieron al mensaje de $2 en tu Muro',
+	'wn-user1-reply-you-other-wall' => '$1 respondió a tu mensaje en el Muro de $2',
+	'wn-user2-reply-you-other-wall' => '$1 y $2 respondieron a tu mensaje en el Muro de $3',
+	'wn-user3-reply-you-other-wall' => '$1 y otros usuarios respondieron a tu mensaje en el Muro de $3',
+	'wn-user1-reply-self-other-wall' => '$1 respondió a un mensaje en el Muro de $2',
+	'wn-user2-reply-self-other-wall' => '$1 y $2 respondieron a un mensaje en el Muro de $3',
+	'wn-user3-reply-self-other-wall' => '$1 y otros usuarios respondieron a tu mensaje en el Muro de $2',
+	'wn-user1-reply-other-other-wall' => '$1 contestó a un mensaje de $2 en el Muro de $3',
+	'wn-user2-reply-other-other-wall' => '$1 y $2 respondieron al mensaje de $3 en el Muro de $4',
+	'wn-user3-reply-other-other-wall' => '$1 y otros usuarios respondieron al mensaje de $2 en el Muro de $3',
 	'wn-user1-reply-you-a-wall' => '$1 respondió a tu mensaje',
 	'wn-user2-reply-you-a-wall' => '$1 y $2 respondieron a tu mensaje',
-	'wn-user3-reply-you-a-wall' => '$1 y otros respondieron a tu mensaje',
-	'wn-user1-reply-self-a-wall' => '$1 respondió a un mensaje',
-	'wn-user2-reply-self-a-wall' => '$1 y $2 respondieron a un mensaje',
-	'wn-user3-reply-self-a-wall' => '$1 y otros respondieron a un mensaje',
-	'wn-user1-reply-other-a-wall' => '$1 respondió al mensaje de $2',
+	'wn-user3-reply-you-a-wall' => '$1 y otros usuarios respondieron a tu mensaje',
+	'wn-user1-reply-self-a-wall' => '$1 contestó a un mensaje',
+	'wn-user2-reply-self-a-wall' => '$1 y $2 respondieron a tu mensaje',
+	'wn-user3-reply-self-a-wall' => '$1 y otros usuarios respondieron a tu mensaje',
+	'wn-user1-reply-other-a-wall' => '$1 contestó un mensaje de $2',
 	'wn-user2-reply-other-a-wall' => '$1 y $2 respondieron al mensaje de $3',
-	'wn-user3-reply-other-a-wall' => '$1 y otros respondieron al mensaje de $3',
-	'wn-newmsg-onmywall' => '$1 dejó un mensaje nuevo en tu muro',
-	'wn-newmsg' => 'Dejaste un mensaje nuevo en el muro de $1',
-	'wn-newmsg-on-followed-wall' => '$1 dejó un mensaje nuevo en el muro de $2',
-	'wn-admin-thread-deleted' => 'Tema retirado del muro de $1',
-	'wn-admin-reply-deleted' => 'Respuesta retirada del tema en el muro de $1',
+	'wn-user3-reply-other-a-wall' => '$1 y otros usuarios respondieron al mensaje de $3',
+	'wn-newmsg-onmywall' => '$1 dejó un nuevo mensaje en tu Muro',
+	'wn-newmsg' => 'Dejaste un nuevo mensaje en el Muro de $1',
+	'wn-newmsg-on-followed-wall' => '$1 dejó un nuevo mensaje en el Muro de $2',
+	'wn-admin-thread-deleted' => 'Tema retirado del Muro de $1',
+	'wn-admin-reply-deleted' => 'Respuesta retirada de un tema en el Muro de $1',
 	'wn-owner-thread-deleted' => 'Tema retirado de tu muro',
-	'wn-owner-reply-deleted' => 'Respuesta retirada del tema en tu muro',
-	'wall-sorting-newest-threads' => 'Nuevos temas',
+	'wn-owner-reply-deleted' => 'Respuesta retirada de un tema de tu Muro',
+	'wall-sorting-newest-threads' => 'Temas nuevos',
 	'wall-sorting-oldest-threads' => 'Temas antiguos',
 	'wall-sorting-newest-replies' => 'Nuevas respuestas',
 	'wall-sorting-most-active' => 'Temas más activos',
-	'wall-sorting-archived' => 'Archivado',
-	'tog-enotifwallthread' => '...alguien responde a un tema que sigo.',
-	'tog-enotifmywall' => '...alguien deja un nuevo mensaje en mi muro.',
+	'wall-sorting-archived' => 'Archivada',
+	'tog-enotifwallthread' => '...alguien conteste en un mensaje del Muro que yo esté siguiendo',
+	'tog-enotifmywall' => 'Enviarme un correo electrónico cuando alguien escriba un nuevo mensaje en mi Muro de mensajes.',
 	'wall-deleted-msg-pagetitle' => 'Mensaje borrado',
-	'wall-deleted-msg-text' => 'Se ha eliminado el mensaje que estás intentando ver.',
+	'wall-deleted-msg-text' => 'El mensaje que intentas leer ha sido borrado.',
 	'wall-deleted-msg-return-to' => 'Volver al Muro de $1.',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Tema del muro',
@@ -2433,10 +2298,10 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-edit' => 'mensaje editado',
 	'wall-recentchanges-removed-thread' => 'retirado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-removed-reply' => 'retirada la respuesta "[[$1|$2]]" del muro de [[$3|$4]]',
-	'wall-recentchanges-restored-thread' => 'restaurado el tema "[[$1|$2]]" en el muro de [[$3|$4]]',
-	'wall-recentchanges-restored-reply' => 'restaurada la respuesta "[[$1|$2]]" en el muro de [[$3|$4]]',
-	'wall-recentchanges-deleted-thread' => 'borrado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
-	'wall-recentchanges-deleted-reply' => "borró en el [[$3|muro de $4]] un mensaje del tema ''[[$1|$2]]''",
+	'wall-recentchanges-restored-thread' => 'restauró en el [[$3|muro de $4]] un mensaje al tema \'\'[[$1|$2]]\'\'',
+	'wall-recentchanges-restored-reply' => 'restauró en el [[$3|muro de $4]] un mensaje al tema \'\'[[$1|$2]]\'\'',
+	'wall-recentchanges-deleted-thread' => 'hilo completo borrado "[[$1|$2]]" desde el [[$3|muro de $4]]',
+	'wall-recentchanges-deleted-reply' => 'borró en el [[$3|muro de $4]] un mensaje del tema \'\'[[$1|$2]]\'\'',
 	'wall-recentchanges-closed-thread' => 'cerró el tema "[[$1|$2]] en el muro de [[$3|$4]]"',
 	'wall-recentchanges-reopened-thread' => 'restauró el tema "[[$1|$2]]" en el muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Una respuesta en el muro de mensajes',
@@ -2446,24 +2311,24 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-history-link' => 'Historial del muro',
 	'wall-recentchanges-thread-history-link' => 'Historial del tema',
 	'wall-contributions-line' => '[[$1|$2]] en el [[$3|Muro de $4]]',
-	'wall-whatlinkshere-wall-line' => '[[$1|$2]] en el [[$3|muro de $4]]',
-	'wall-message-not-found' => 'Este mensaje no pudo ser encontrado. Si ves este error, por favor, contacta con Wikia a través de [[Special:Contact|Especial:Contactar]] y aporta todos los detalles que puedas dar sobre cómo puede reproducirse este error. ¡Gracias!',
-	'wall-message-staff-text' => 'Este usuario es miembro del Staff de Wikia',
+	'wall-whatlinkshere-wall-line' => '[[$1|$2]] en el [[$3|Muro de $4]]',
+	'wall-message-not-found' => 'Este mensaje no pudo ser encontrado. Si ves este error, por favor, contacta con Fandom a través de [[Special:Contact|Especial:Contactar]] y aporta todos los detalles que puedas dar sobre cómo puede reproducirse este error. ¡Gracias!',
+	'wall-message-staff-text' => 'Este usuario es miembro del Staff de Fandom',
 	'wall-ipballowusertalk' => 'Permitir a este usuario dejar mensajes en su propio Muro de mensajes mientras está bloqueado',
 	'wall-ipbwatchuser' => 'Seguir el perfil de este usuario y seguir su Muro de mensajes',
-	'wall-wiki-activity-on' => 'en [[$1|muro de $2]]',
+	'wall-wiki-activity-on' => 'en el [[$1|muro de $2]]',
 	'wall-removed-thread-undo' => 'Este tema ha sido retirado. $1',
 	'wall-removed-reply-undo' => 'Esta respuesta ha sido retirada. $1',
 	'wall-removed-reply' => 'Esta respuesta ha sido retirada',
 	'wall-deleted-thread-undo' => 'Este tema ha sido borrado. $1',
 	'wall-deleted-reply-undo' => 'Esta respuesta ha sido borrada. $1',
-	'wall-deleted-reply' => 'Esta respuesta ha sido eliminada',
+	'wall-deleted-reply' => 'Esta respuesta ha sido borrada.',
 	'wall-history' => 'Historial',
-	'wall-history-title' => 'Historial del muro',
-	'wall-history-who-involved-wall-title' => '¿Quiénes participaron?',
-	'wall-history-who-involved-thread-title' => '¿Quiénes participaron de este tema?',
+	'wall-history-title' => 'Historial del Muro',
+	'wall-history-who-involved-wall-title' => '¿Quién participó en este Muro?',
+	'wall-history-who-involved-thread-title' => '¿Quién participó en este tema?',
 	'wall-history-thread-created' => '$1 creado por $2',
-	'wall-history-thread-removed' => '$1 quitado por $2',
+	'wall-history-thread-removed' => '$1 retirado por $2',
 	'wall-history-thread-restored' => '$1 restaurado por $2',
 	'wall-history-thread-admin-deleted' => '$1 borrado por $2',
 	'wall-history-sorting-newest-first' => 'Más nuevos primero',
@@ -2476,60 +2341,56 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-history-action-restore' => 'restaurar',
 	'wall-history-action-thread-history' => 'historial del tema',
 	'wall-thread-history-title' => 'Historial del tema',
-	'wall-thread-history-thread-created' => '$1 creado por $2',
+	'wall-thread-history-thread-created' => '$1 $2 creó este tema',
 	'wall-thread-history-reply-created' => '$1 $2 dejó una respuesta',
 	'wall-thread-history-thread-removed' => '$1 $2 retiró este tema',
-	'wall-thread-history-reply-removed' => '$1 $2 retiró la respuesta $5 de $3',
+	'wall-thread-history-reply-removed' => '$1 $2 retiró la respuesta de $3 $5',
 	'wall-thread-history-reply-deleted' => '$1 $2 borró la respuesta de $3',
 	'wall-thread-history-thread-restored' => '$1 $2 restauró este tema',
-	'wall-thread-history-reply-restored' => '$1 $2 restauró la respuesta $5 de $3',
+	'wall-thread-history-reply-restored' => '$1 $2 restauró la respuesta de $3 $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 borró este tema',
-	'wall-thread-history-thread-edited' => '$1 $2 editó el mensaje $5 de $3',
-	'wall-thread-history-reply-edited' => '$1 $2 editó el mensaje $5 de $3',
+	'wall-thread-history-thread-edited' => '$1 $2 editó el mensaje de $3 $5',
+	'wall-thread-history-reply-edited' => '$1 $2 editó el mensaje de $3 $5',
 	'wall-thread-history-thread-closed' => '$2 cerró este tema',
 	'wall-thread-history-thread-reopened' => '$2 reabrió este tema',
 	'wall-history-action-restore-reply' => 'restaurar respuesta',
 	'wall-history-action-restore-thread' => 'restaurar tema',
-	'wall-message-not-found-in-db' => 'No hemos podido encontrar este mensaje en nuestra base de datos, lo sentimos.',
-	'prefs-email-wall-v2' => 'Muro de mensajes y Foro',
-	'tog-enotifwallthread-v2' => 'Envíame un correo...',
-	'tog-enotifmywall-every' => 'Para cada mensaje y respuesta',
-	'tog-enotifmywall-sincevisited' => 'Una vez por cada tema desde mi última visita',
-	'tog-enotifmywall-reminder' => 'Con un recordatorio diario',
-	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún correo electrónico sobre el muro de mensajes o el foro',
-	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en los temas',
-	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} en las publicaciones en el Muro de Mensajes',
-	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en los temas',
-	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
-	'wall-message-notifyeveryone' => 'Resaltar este tema',
-	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
-	'wall-message-notifyeveryone-tooltip' => 'Todo usuario que ha iniciado sesión en el wiki será notificado sobre este hilo la próxima vez que visite el wiki.',
-	'wall-votes-modal-showmore' => 'Ver a otros que les gusta',
+	'wall-message-not-found-in-db' => 'Lo sentimos, no hemos podido encontrar este mensaje en nuestra base de datos.',
+	'prefs-email-wall-v2' => 'Muro de mensajes',
+	'tog-enotifwallthread-v2' => 'Cuando quiero recibir emails',
+	'tog-enotifmywall-every' => 'Para todos los mensajes y respuestas',
+	'tog-enotifmywall-sincevisited' => 'Un email por tema desde mi última visita',
+	'tog-enotifmywall-reminder' => 'Con un email recordatorio diario',
+	'tog-enotifmywall-noemail' => 'Nunca. No me enviéis ningún email sobre el Muro de mensajes',
+	'wallshowsource-toggle-v2' => 'Activar la opción para ver el Código fuente de los mensajes en los Muros de mensajes',
+	'wallshowsource-toggle' => 'Activar la vista del Código fuente de los mensajes en los Muros de mensajes',
+	'walldelete-toggle' => 'Activar el borrado de revisiones en los mensajes del Muro de mensajes',
+	'wall-notifications-notifyeveryone' => 'Destacado por $1',
+	'wall-message-notifyeveryone' => 'Destacar este tema',
+	'wall-message-unnotifyeveryone' => 'Dejar de destacar este tema',
+	'wall-message-notifyeveryone-tooltip' => 'Todo usuario identificado en el wiki será notificado sobre este tema la próxima vez que inicie sesión',
+	'wall-votes-modal-showmore' => 'Ver a otros que están a favor',
 	'wall-votes-modal-title' => 'Valoraciones',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona dio|$1 personas dieron}} me gusta a este mensaje',
-	'wall-votes-number' => '$1 {{PLURAL:$1|a favor}}',
-	'wall-votes-number-tooltip' => 'Ver quién dio me gusta a este mensaje',
-	'wall-votes-vote-tooltip' => 'Dar me gusta a este mensaje',
-	'wall-votes-voted-tooltip' => '¡Te gusta este mensaje!',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona está|$1 personas están}} de acuerdo con este mensaje',
+	'wall-votes-number' => '$1 a favor',
+	'wall-votes-number-tooltip' => 'Ver quién está de acuerdo con este mensaje',
+	'wall-votes-vote-tooltip' => 'Apoyar este mensaje',
+	'wall-votes-voted-tooltip' => '¡Estás de acuerdo con este mensaje!',
 	'wall-quote-author' => '$1 escribió:',
-	'wall-quote-reply-to' => 'responder a #$1',
-	'wall-topic-input-heading' => 'Tema',
+	'wall-quote-reply-to' => 'En respuesta a #$1',
+	'wall-topic-input-heading' => 'Reseñas',
 	'wall-topic-input-placeholder' => 'Añadir un Tema (opcional)',
 	'wall-topic-input-error' => 'No hay ningún artículo llamado "$1". Por favor usa un nombre de artículo existente como un Tema.',
 	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 {{PLURAL:$1|tema|temas}} como máximo.',
-	'wall-topic-heading' => 'Temas para este hilo:',
-	'wall-topic-edit' => 'Editar temas',
+	'wall-topic-heading' => 'Artículos reseñados:',
+	'wall-topic-edit' => 'Añadir o quitar artículos',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
 	'group-threadmoderator' => 'Moderadores de discusiones',
 	'group-threadmoderator-member' => 'Moderador de discusiones',
-	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Moderadores',
+	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Niveles_de_acceso_de_los_usuarios',
 ];
 
-/** Basque (euskara)
- * @author Subi
- * @author Xabier Armendaritz
- */
 $messages['eu'] = [
 	'wall-message-more' => 'Gehiago',
 	'wall-message-delete' => 'Ezabatu',
@@ -2547,12 +2408,6 @@ $messages['eu'] = [
 	'group-threadmoderator-member' => 'Moderatzailea',
 ];
 
-/** Persian (فارسی)
- * @author Alirezaaa
- * @author Ebraminio
- * @author Reza1615
- * @author ZxxZxxZ
- */
 $messages['fa'] = [
 	'wall-message-wall' => 'دیوار پیام',
 	'wall-message-unfollow' => 'دنبال نکردن',
@@ -2572,7 +2427,7 @@ $messages['fa'] = [
 	'wall-button-cancel-changes' => 'لغو',
 	'wall-button-done-source' => 'انجام شد',
 	'wall-message-edit' => 'ویرایش',
-	'wall-message-more' => 'بیشتر',
+	'wall-message-more' => 'مشاهدهٔ بیشتر',
 	'wall-message-delete' => 'حذف',
 	'wall-action-all-confirm-cancel' => 'لغو',
 	'wall-delete-error-title' => 'خطا',
@@ -2603,14 +2458,6 @@ $messages['fa'] = [
 	'group-threadmoderator-member' => 'مدیر',
 ];
 
-/** Finnish (suomi)
- * @author Elseweyr
- * @author Ilkea
- * @author Lukkipoika
- * @author Nike
- * @author Silvonen
- * @author Ville96
- */
 $messages['fi'] = [
 	'wall-no-title' => 'Ei otsikkoa',
 	'wall-message-loadmore' => 'Näytä <span class="count">{{PLURAL:$1|$1 vastaus|kaikki $1 vastausta}}</span>',
@@ -2776,7 +2623,7 @@ Tätä ei voi peruuttaa.',
 	'wall-recentchanges-deleted-thread' => 'poistettiin keskustelu  "[[$1|$2]]" [[$3|$4 seinältä]]',
 	'wall-recentchanges-deleted-reply' => 'poistettiin keskustelun "[[$1|$2]]" vastaus [[$3|$4 seinältä]]',
 	'wall-recentchanges-closed-thread' => 'sulki keskustelun "[[$1|$2]]" käyttäjän [[$3|$4 seinällä]]',
-	'wall-recentchanges-reopened-thread' => 'uudelleenavasi keskustelun "[[$1|$2]]" käyttäjän [[$3|$4 seinällä]]', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'uudelleenavasi keskustelun "[[$1|$2]]" käyttäjän [[$3|$4 seinällä]]',
 	'wall-recentchanges-deleted-reply-title' => 'Vastaus viestiseinällä',
 	'wall-recentchanges-wall-created-title' => 'Loi keskusteluseinän',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Viestiseinä',
@@ -2813,7 +2660,7 @@ Tätä ei voi peruuttaa.',
 	'wall-history-action-view' => 'katso',
 	'wall-history-action-restore' => 'palauta',
 	'wall-history-action-thread-history' => 'ketjun historia',
-	'wall-thread-history-title' => 'ketjun historia', # Fuzzy
+	'wall-thread-history-title' => 'ketjun historia',
 	'wall-thread-history-thread-created' => '$1 $2 loi tämän ketjun',
 	'wall-thread-history-reply-created' => '$1 $2 jätti vastauksen',
 	'wall-thread-history-thread-removed' => '$1 $2 poisti tämän ketjun',
@@ -2857,11 +2704,11 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit' => 'Muokkaa aiheita',
 	'wall-topic-edit-save' => 'Tallenna',
 	'wall-topic-edit-cancel' => 'Peruuta',
+	'group-threadmoderator-member' => 'Moderoija',
+	'group-threadmoderator' => 'Moderoijat',
+	'grouppage-threadmoderator' => 'w:c:yhteiso:Ohje:Moderoijat',
 ];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
 $messages['fo'] = [
 	'wall-no-title' => 'Onki heiti',
 	'wall-message-loadmore' => 'Vís <span class="count">{{PLURAL:$1|$1 svar|øll $1 svar}}</span>',
@@ -2893,12 +2740,6 @@ $messages['fo'] = [
 	'wall-delete-error-title' => 'Feilur',
 ];
 
-/** French (français)
- * @author Gomoko
- * @author Jgaignerot
- * @author McDutchie
- * @author Wyz
- */
 $messages['fr'] = [
 	'wall-no-title' => 'Sans titre',
 	'wall-message-loadmore' => 'Voir <span class="count">{{PLURAL:$1|une réponse|les $1 réponses}}</span>',
@@ -2930,7 +2771,7 @@ $messages['fr'] = [
 	'wall-disabled-desc' => 'Fonctionnalité Mur de discussion pour les wikis sans l’extension mur',
 	'wall-placeholder-topic' => 'De quoi souhaitez-vous discuter ?',
 	'wall-placeholder-message' => 'Envoyer un nouveau message sur le mur de $1',
-	'wall-placeholder-message-anon' => 'Envoyer un nouveau message sur ce mur',
+	'wall-placeholder-message-anon' => 'Poster un nouveau message sur ce mur',
 	'wall-placeholder-reply' => 'Envoyer une réponse',
 	'wall-button-to-preview-comment' => 'Aperçu',
 	'wall-button-to-cancel-preview' => 'Modifier',
@@ -2959,12 +2800,10 @@ $messages['fr'] = [
 	'wall-user-talk-archive-page-title' => 'archive_discussion_utilisateur',
 	'wall-ipb-disableusertalk' => 'Empêcher l’utilisateur de publier sur son mur de discussion pendant le blocage',
 	'wall-action-all-confirm-cancel' => 'Annuler',
-	'wall-action-all-confirm-notify' => 'Avertir un administrateur',
+	'wall-action-all-confirm-notify' => 'Notifier un administrateur',
 	'wall-action-remove-reply-title' => 'Retirer cette réponse',
 	'wall-action-remove-thread-title' => 'Retirer ce fil',
-	'wall-confirm-monobook-remove' => 'Veuillez indiquer pourquoi vous voulez son retrait.
-
-Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
+	'wall-confirm-monobook-remove' => 'Veuillez indiquer pourquoi vous souhaitez son retrait. Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-confirm-monobook-admin' => 'Veuillez indiquer pourquoi vous voulez sa suppression.
 
 Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
@@ -2972,7 +2811,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-delete-error-title' => 'Erreur',
 	'wall-delete-error-content' => 'Le message a été supprimé et n’existe plus.',
 	'wall-confirm-monobook-lack-of-reason' => 'Veuillez indiquer un résumé pour la suppression de ce fil/cette réponse.',
-	'wall-action-remove-confirm' => 'Veuillez indiquer pourquoi vous voulez son retrait :',
+	'wall-action-remove-confirm' => 'Veuillez indiquer pourquoi vous souhaitez son retrait :',
 	'wall-action-remove-thread-confirm-info' => 'Ce fil et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Cette réponse et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-remove-confirm-ok' => 'Retirer',
@@ -2982,13 +2821,13 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-action-close-confirm-ok' => 'Fermer',
 	'wall-action-admin-thread-title' => 'Supprimer ce fil',
 	'wall-action-admin-reply-title' => 'Supprimer cette réponse',
-	'wall-action-admin-confirm' => 'Veuillez indiquer pourquoi vous voulez sa suppression :',
+	'wall-action-admin-confirm' => 'Veuillez indiquer pourquoi vous souhaitez sa suppression :',
 	'wall-action-admin-thread-confirm-info' => 'Ce fil et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-admin-reply-confirm-info' => 'Ce fil et votre résumé seront toujours visibles dans l’historique du wiki. Seuls les administrateurs pourront voir ce fil.',
 	'wall-action-admin-confirm-ok' => 'Supprimer',
 	'wall-action-restore-thread-title' => 'Restaurer ce fil',
 	'wall-action-restore-reply-title' => 'Restaurer cette réponse',
-	'wall-action-restore-confirm' => 'Veuillez indiquer pourquoi vous voulez sa restauration :',
+	'wall-action-restore-confirm' => 'Veuillez indiquer pourquoi vous souhaitez sa restauration :',
 	'wall-action-restore-confirm-ok' => 'Restaurer',
 	'wall-action-rev-thread-title' => 'Supprimer les versions de ce fil ?',
 	'wall-action-rev-reply-title' => 'Supprimer les versions de cette réponse ?',
@@ -3045,10 +2884,10 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wn-owner-reply-deleted' => 'Réponse retirée du fil sur votre mur',
 	'wall-sorting-newest-threads' => 'Fils du plus récent au plus ancien',
 	'wall-sorting-oldest-threads' => 'Fils du plus ancien au plus récent',
-	'wall-sorting-newest-replies' => 'Réponses de la plus récente à la plus ancienne',
-	'wall-sorting-most-active' => 'Du plus actif au moins actif',
-	'wall-sorting-archived' => 'Archivées',
-	'tog-enotifwallthread' => '…quelqu’un répond à un fil de mur que je suis',
+	'wall-sorting-newest-replies' => 'Réponses les plus récentes',
+	'wall-sorting-most-active' => 'Les plus actifs',
+	'wall-sorting-archived' => 'Archivé',
+	'tog-enotifwallthread' => 'M’envoyer un e-mail  quand quelqu’un répond sur un fil de mur que je suis',
 	'tog-enotifmywall' => '…quelqu’un poste un nouveau message sur mon mur',
 	'wall-deleted-msg-pagetitle' => 'Message supprimé',
 	'wall-deleted-msg-text' => 'Le message que vous essayez de consulter a été effacé.',
@@ -3065,16 +2904,16 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-recentchanges-deleted-reply' => 'a supprimé une réponse à « [[$1|$2]] » du [[$3|mur de $4]]',
 	'wall-recentchanges-closed-thread' => 'a fermé le fil « [[$1|$2]] » sur le [[$3|mur de $4]]',
 	'wall-recentchanges-reopened-thread' => 'a rouvert le fil « [[$1|$2]] » sur le [[$3|mur de $4]]',
-	'wall-recentchanges-deleted-reply-title' => 'Une réponse sur le mur',
+	'wall-recentchanges-deleted-reply-title' => 'Une réponse sur le Mur de discussion',
 	'wall-recentchanges-wall-created-title' => 'Mur de messages créé',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de discussion',
-	'wall-recentchanges-thread-group' => '« $1 » sur le [[$2|mur de $3]]',
+	'wall-recentchanges-thread-group' => '$1 sur le [[$2|mur de $3]]',
 	'wall-recentchanges-history-link' => 'historique du mur',
 	'wall-recentchanges-thread-history-link' => 'historique du fil',
 	'wall-contributions-line' => '[[$1|$2]] sur le [[$3|mur de $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] sur le [[$3|mur de $4]]',
-	'wall-message-not-found' => 'Impossible de trouver ce message. Si vous voyez cette erreur, veuillez contacter Wikia via [[Special:Contact]] et donner autant de détails que possible sur comment reproduire ce bug. Merci !',
-	'wall-message-staff-text' => 'Cet utilisateur est membre du staff de Wikia',
+	'wall-message-not-found' => 'Impossible de trouver ce message. Si vous voyez cette erreur, veuillez contacter Fandom via [[Special:Contact]] et fournir autant de détails que possible sur la façon de reproduire ce bug. Merci !',
+	'wall-message-staff-text' => 'Cet utilisateur est membre du staff de Fandom',
 	'wall-ipballowusertalk' => 'Permettre à cet utilisateur de poster sur son Mur de discussion pendant le blocage',
 	'wall-ipbwatchuser' => 'Voir le profil de cet utilisateur et suivre son Mur de discussion',
 	'wall-wiki-activity-on' => 'sur [[$1|mur de $2]]',
@@ -3086,7 +2925,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-deleted-reply' => 'Cette réponse a été supprimée',
 	'wall-history' => 'Historique',
 	'wall-history-title' => 'historique du mur',
-	'wall-history-who-involved-wall-title' => 'Qui a participé?',
+	'wall-history-who-involved-wall-title' => 'Qui a participé ?',
 	'wall-history-who-involved-thread-title' => 'Qui a participé à ce fil ?',
 	'wall-history-thread-created' => '$1 créé par $2',
 	'wall-history-thread-removed' => '$1 retiré par $2',
@@ -3118,12 +2957,12 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-history-action-restore-thread' => 'restaurer le fil',
 	'wall-message-not-found-in-db' => 'Impossible de trouver ce message dans notre base de données, désolé.',
 	'prefs-email-wall-v2' => 'Mur de discussion et forum',
-	'tog-enotifwallthread-v2' => 'M’envoyer un courriel quand…',
+	'tog-enotifwallthread-v2' => 'M’envoyer un e-mail...',
 	'tog-enotifmywall-every' => 'Pour chaque message et réponse',
 	'tog-enotifmywall-sincevisited' => 'Un par fil depuis ma dernière visite',
-	'tog-enotifmywall-reminder' => 'Avec un courriel de rappel quotidien',
-	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de mur de discussion ou de forum.',
-	'wallshowsource-toggle-v2' => "Activer l'option {{int:user-action-menu-view-source}} sur les fils",
+	'tog-enotifmywall-reminder' => 'Avec un e-mail de rappel quotidien',
+	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun e-mail de mur de discussion ou de forum.',
+	'wallshowsource-toggle-v2' => 'Activer l\'option {{int:user-action-menu-view-source}} sur les fils',
 	'wallshowsource-toggle' => 'Activer «  {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion',
 	'walldelete-toggle' => 'Permettre la suppression des révisions sur les fils',
 	'wall-notifications-notifyeveryone' => 'Épinglé par $1',
@@ -3149,12 +2988,9 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-topic-edit-cancel' => 'Annuler',
 	'group-threadmoderator' => 'Modérateurs de discussions',
 	'group-threadmoderator-member' => 'Modérateur de discussions',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur#Modérateurs',
 ];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
 $messages['fy'] = [
 	'wall-toolbar-history' => 'Skiednis',
 	'wall-button-to-cancel-preview' => 'Bewurkje',
@@ -3172,10 +3008,6 @@ $messages['fy'] = [
 	'wall-topic-edit-cancel' => 'Annulearje',
 ];
 
-/** Galician (galego)
- * @author Toliño
- * @author Vivaelcelta
- */
 $messages['gl'] = [
 	'wall-no-title' => 'Sen título',
 	'wall-message-loadmore' => 'Ollar <span class="count">{{PLURAL:$1|$1 resposta|as $1 respostas}}</span>',
@@ -3341,7 +3173,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-recentchanges-deleted-thread' => 'borrou o fío "[[$1|$2]]" do [[$3|muro de $4]]',
 	'wall-recentchanges-deleted-reply' => 'borrou a resposta "[[$1|$2]]" do [[$3|muro de $4]]',
 	'wall-recentchanges-closed-thread' => 'pechou o fío "[[$1|$2]]" do [[$3|muro de $4]]',
-	'wall-recentchanges-reopened-thread' => 'reabriu o fío "[[$1|$2]]" no [[$3|muro de $4]]', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'reabriu o fío "[[$1|$2]]" no [[$3|muro de $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Unha resposta no muro de mensaxes',
 	'wall-recentchanges-wall-created-title' => 'Creouse unha mensaxe no muro',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensaxes',
@@ -3426,25 +3258,15 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-topic-edit-cancel' => 'Cancelar',
 ];
 
-/** Hebrew (עברית)
- * @author Guycn2
- */
 $messages['he'] = [
 	'wall-recentchanges-thread-group' => '$1 ב[[$2|קיר של $3]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] ב[[$3|קיר של $4]]',
 ];
 
-/** Hindi (हिन्दी)
- * @author Vivek Rai
- */
 $messages['hi'] = [
 	'wall-history-who-involved-wall-title' => 'कौन शामिल है?',
 ];
 
-/** Hungarian (magyar)
- * @author Csega
- * @author TK-999
- */
 $messages['hu'] = [
 	'wall-no-title' => 'Nincs cím',
 	'wall-message-loadmore' => 'Mind a(z) <span class="count">$1</span> válasz megtekintése',
@@ -3607,7 +3429,7 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-recentchanges-deleted-thread' => 'törölte a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfaláról]]',
 	'wall-recentchanges-deleted-reply' => 'törölt egy választ a(z) "[[$1|$2]]" beszélgetésfolyamból [[$3|$4 üzenőfalán]]',
 	'wall-recentchanges-closed-thread' => 'lezárta a(z) "[[$1|$2]] beszélgetésfolyamot [[$3|$4 üzenőfalán]]"',
-	'wall-recentchanges-reopened-thread' => 'újranyitotta a(z) "[[$1|$2]] beszélgetésfolyamot [[$3|$4 üzenőfalán]]"', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'újranyitotta a(z) "[[$1|$2]] beszélgetésfolyamot [[$3|$4 üzenőfalán]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Egy válasz az üzenőfalon',
 	'wall-recentchanges-wall-created-title' => 'Üzenőfal létrehozása',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Üzenőfal',
@@ -3644,7 +3466,7 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-history-action-view' => 'megjelenítés',
 	'wall-history-action-restore' => 'visszaállítás',
 	'wall-history-action-thread-history' => 'beszélgetésfolyam laptörténete',
-	'wall-thread-history-title' => 'beszélgetésfolyam laptörténete', # Fuzzy
+	'wall-thread-history-title' => 'beszélgetésfolyam laptörténete',
 	'wall-thread-history-thread-created' => '"$1" $2 hozta létre ezt a beszélgetésfolyamot',
 	'wall-thread-history-reply-created' => '$1 $2 válaszolt',
 	'wall-thread-history-thread-removed' => '$1 $2 eltávolította ezt a beszélgetésfolyamot',
@@ -3684,16 +3506,10 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-topic-edit-cancel' => 'Mégse',
 ];
 
-/** Armenian (Հայերեն)
- * @author Աշոտ1997
- */
 $messages['hy'] = [
 	'group-threadmoderator-member' => 'Մոդերատոր',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'wall-no-title' => 'Sin titulo',
 	'wall-message-loadmore' => 'Vider <span class="count">{{PLURAL:$1|un responsa|tote le $1 responsas}}</span>',
@@ -3860,7 +3676,7 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-deleted-reply' => 'Iste responsa ha essite delite.',
 	'wall-history' => 'Historia',
 	'wall-history-title' => 'historia del muro',
-	'wall-history-who-involved-wall-title' => 'Qui ha participate sur iste muro?', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'Qui ha participate sur iste muro?',
 	'wall-history-who-involved-thread-title' => 'Qui ha participate in iste discussion?',
 	'wall-history-thread-created' => '$1 create per $2',
 	'wall-history-thread-removed' => '$1 removite per $2',
@@ -3875,7 +3691,7 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-history-action-view' => 'vider',
 	'wall-history-action-restore' => 'restaurar',
 	'wall-history-action-thread-history' => 'historia del discussion',
-	'wall-thread-history-title' => 'historia del discussion', # Fuzzy
+	'wall-thread-history-title' => 'historia del discussion',
 	'wall-thread-history-thread-created' => '$1 $2 comenciava iste discussion',
 	'wall-thread-history-reply-created' => '$1 $2 lassava un responsa',
 	'wall-thread-history-thread-removed' => '$1 $2 removeva iste discussion',
@@ -3890,23 +3706,23 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-history-action-restore-reply' => 'restaurar responsa',
 	'wall-history-action-restore-thread' => 'restaurar discussion',
 	'wall-message-not-found-in-db' => 'Iste message de muro non esseva trovate in nostre base de datos.',
-	'prefs-email-wall-v2' => 'Muro de messages', # Fuzzy
+	'prefs-email-wall-v2' => 'Muro de messages',
 	'tog-enotifwallthread-v2' => 'Inviar me un e-mail…',
 	'tog-enotifmywall-every' => 'Pro cata message e responsa',
 	'tog-enotifmywall-sincevisited' => 'Un vice per discussion depost mi ultime visita',
 	'tog-enotifmywall-reminder' => 'Con un rememoration quotidian',
-	'tog-enotifmywall-noemail' => 'Nunquam. Non invia me alcun e-mail concernente le muro de discussion', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Activar le option "{{int:user-action-menu-view-source}}" pro le messages sur le muro', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Nunquam. Non invia me alcun e-mail concernente le muro de discussion',
+	'wallshowsource-toggle-v2' => 'Activar le option "{{int:user-action-menu-view-source}}" pro le messages sur le muro',
 	'wallshowsource-toggle' => 'Activar "{{int:user-action-menu-view-source}}" pro le messages sur le muro',
-	'walldelete-toggle' => 'Activar "Deler versiones" pro le messages sur le muro', # Fuzzy
+	'walldelete-toggle' => 'Activar "Deler versiones" pro le messages sur le muro',
 	'wall-notifications-notifyeveryone' => 'Mittite in evidentia per $1',
 	'wall-message-notifyeveryone' => 'Mitter iste discussion in evidentia',
 	'wall-message-unnotifyeveryone' => 'Non plus mitter iste discussion in evidentia',
-	'wall-message-notifyeveryone-tooltip' => 'Cata persona qui aperiva session in iste wiki essera notificate super iste discussion', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Cata persona qui aperiva session in iste wiki essera notificate super iste discussion',
 	'wall-votes-modal-showmore' => 'Vider alteres que dava complimentos',
 	'wall-votes-modal-title' => 'Complimentos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Un persona|$1 personas}} dava complimentos a iste message',
-	'wall-votes-number' => '$1 complimentos', # Fuzzy
+	'wall-votes-number' => '$1 complimentos',
 	'wall-votes-number-tooltip' => 'Vide qui ha date complimentos a iste message',
 	'wall-votes-vote-tooltip' => 'Dar complimentos a iste message',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
@@ -3914,42 +3730,262 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-quote-reply-to' => 'responsa a №$1',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Kenrick95
- */
 $messages['id'] = [
 	'wall-message-undoremove' => 'Balikkan',
 ];
 
-/** Italian (italiano)
- * @author Beta16
- * @author Minerva Titani
- * @author Sactage
- */
 $messages['it'] = [
 	'wall-thread-isnotifyeveryone' => 'Evidenziata',
-	'wall-recentchanges-new-message' => 'nella [[$1|bacheca di $2]]',
+	'wall-recentchanges-new-message' => 'nella [[$1|Bacheca di $2]]',
 	'wall-recentchanges-removed-thread' => 'ha rimosso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
 	'wall-recentchanges-removed-reply' => 'ha rimosso un messaggio da "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
 	'wall-recentchanges-closed-thread' => 'ha chiuso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
-	'wall-recentchanges-deleted-reply-title' => 'Un messaggio nella Bacheca',
+	'wall-recentchanges-deleted-reply-title' => 'Una risposta',
 	'wall-recentchanges-thread-group' => '$1 nella [[$2|Bacheca di $3]]',
-	'wall-recentchanges-history-link' => 'cronologia della Bacheca',
+	'wall-recentchanges-history-link' => 'cronologia della bacheca',
 	'wall-notifications-notifyeveryone' => 'Evidenziata da $1',
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
-	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
-	'group-threadmoderator' => 'Moderatori di discussioni',
-	'group-threadmoderator-member' => 'Moderatore di discussioni',
+	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione',
+	'group-threadmoderator' => 'Moderatori',
+	'group-threadmoderator-member' => 'Moderatore',
+	'wall-message-not-found' => 'Impossibile trovare questo messaggio. Se si visualizza questo errore, contattare Fandom a [[Special:Contact]] e fornire quanti più dettagli possibile su come è possibile riprodurre questo bug. Grazie!',
+	'wall-message-staff-text' => 'Questo utente è un membro dello staff di Fandom',
+	'grouppage-threadmoderator' => 'w:it:Aiuto:Moderatori',
+	'prefs-email-wall-v2' => 'Bacheca',
+	'tog-enotifmywall-every' => 'Per ogni messaggio & risposta',
+	'tog-enotifmywall-noemail' => 'Mai. Non inviatemi alcuna email riguardante la Bacheca',
+	'tog-enotifmywall-reminder' => 'Con un promemoria giornaliero',
+	'tog-enotifmywall-sincevisited' => 'Una volta per ogni discussione dalla mia ultima visita',
+	'tog-enotifmywall' => '...qualcuno scrive un nuovo messaggio nella mia Bacheca',
+	'tog-enotifwallthread-v2' => 'Inviatemi un\'email...',
+	'tog-enotifwallthread' => '...qualcuno risponde a una discussione di una Bacheca che sto seguendo',
+	'wall-action-admin-confirm-ok' => 'Cancella',
+	'wall-action-admin-confirm' => 'Per favore specifica il motivo della tua cancellazione:',
+	'wall-action-admin-reply-confirm-info' => 'Questa discussione e il motivo della tua cancellazione continueranno ad apparire nella cronologia della wiki. Solo gli amministratori potranno vedere questa discussione.',
+	'wall-action-admin-reply-title' => 'Cancella questa risposta',
+	'wall-action-admin-thread-confirm-info' => 'Questa discussione e il motivo della tua cancellazione continueranno ad apparire nella cronologia della wiki',
+	'wall-action-admin-thread-title' => 'Cancella questa discussione',
+	'wall-action-all-confirm-cancel' => 'Annulla',
+	'wall-action-all-confirm-notify' => 'Invia una notifica a un amministratore',
+	'wall-action-close-confirm-ok' => 'Chiudi',
+	'wall-action-close-confirm' => 'Per favore inserisci il motivo per cui vuoi chiudere questa discussione:',
+	'wall-action-close-thread-confirm-info' => 'Questa discussione sarà ancora visibile.',
+	'wall-action-close-thread-title' => 'Chiudi questa discussione',
+	'wall-action-move-board-label' => 'Seleziona un sottoforum in cui spostarle',
+	'wall-action-move-thread-heading' => 'Sposta questa discussione',
+	'wall-action-move-thread-ok' => 'Sposta discussione',
+	'wall-action-move-topics-summary' => 'Discussione spostata',
+	'wall-action-move-validation-select-wall' => 'Per favore scegli un sottoforum',
+	'wall-action-remove-confirm-ok' => 'Rimuovi',
+	'wall-action-remove-confirm' => 'Per favore specifica il motivo della tua rimozione:',
+	'wall-action-remove-reply-confirm-info' => 'Questa risposta e il motivo della tua rimozione continueranno ad apparire nella cronologia della wiki.',
+	'wall-action-remove-reply-title' => 'Rimuovi questa risposta',
+	'wall-action-remove-thread-confirm-info' => 'Questa discussione e il motivo della tua rimozione continueranno ad apparire nella cronologia della wiki.',
+	'wall-action-remove-thread-title' => 'Rimuovi questa discussione',
+	'wall-action-restore-confirm-ok' => 'Ripristina',
+	'wall-action-restore-confirm' => 'Per favore specifica il motivo del tuo ripristino:',
+	'wall-action-restore-reply-title' => 'Ripristina questa risposta',
+	'wall-action-restore-thread-title' => 'Ripristina questa discussione',
+	'wall-action-rev-confirm-ok' => 'Sì, cancella',
+	'wall-action-rev-reply-confirm' => 'Sei sicuro di voler cancellare questo messaggio?',
+	'wall-action-rev-reply-title' => 'Cancellare definitivamente questa risposta?',
+	'wall-action-rev-thread-confirm' => 'Sei sicuro di voler cancellare definitivamente questa discussione e tutta la sua cronologia dalla wiki? Quest\'azione non può essere annullata.',
+	'wall-action-rev-thread-title' => 'Cancellare definitivamente questa discussione?',
+	'wall-button-cancel-changes' => 'Annulla',
+	'wall-button-done-source' => 'Fatto',
+	'wall-button-save-changes' => 'Salva modifiche',
+	'wall-button-to-cancel-preview' => 'Modifica',
+	'wall-button-to-preview-comment' => 'Anteprima',
+	'wall-button-to-submit-comment-no-topic' => 'Invia senza titolo',
+	'wall-button-to-submit-comment' => 'Invia',
+	'wall-button-to-submit-reply' => 'Rispondi',
+	'wall-confirm-monobook-admin' => 'Per favore specifica il motivo della tua cancellazione.
+
+Il messaggio originale e il motivo della tua cancellazione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Per favore specifica il motivo della rimozione di questa discussione/risposta.',
+	'wall-confirm-monobook-remove' => 'Per favore specifica il motivo della tua rimozione.
+
+Il messaggio originale e il motivo della tua rimozione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-restore' => 'Per favore specifica il motivo del tuo ripristino',
+	'wall-default-title' => 'Messaggio di',
+	'wall-delete-error-content' => 'Il messaggio è stato precedentemente cancellato e non esiste più.',
+	'wall-delete-error-title' => 'Errore',
+	'wall-delete-reason' => 'Azione utente/amministratore',
+	'wall-deleted-msg-pagetitle' => 'Messaggio cancellato',
+	'wall-deleted-msg-return-to' => 'Ritorna alla Bacheca di $1.',
+	'wall-deleted-msg-text' => 'Il messaggio che stai cercando di visualizzare è stato cancellato.',
+	'wall-deleted-msg-view' => '(Vedi/Ripristina)',
+	'wall-deleted-reply-undo' => 'Questa risposta è stata cancellata. $1',
+	'wall-deleted-reply' => 'Questa risposta è stata cancellata',
+	'wall-deleted-thread-undo' => 'Questa discussione è stata cancellata. $1',
+	'wall-desc' => 'Sostituzione della pagina di discussione dell\'utente',
+	'wall-disabled-desc' => 'Funzione Bacheca per le pagine senza l\'estensione della Bacheca',
+	'wall-history-action-restore-reply' => 'ripristina risposta',
+	'wall-history-action-restore-thread' => 'ripristina discussione',
+	'wall-history-action-restore' => 'ripristina',
+	'wall-history-action-thread-history' => 'cronologia della discussione',
+	'wall-history-action-view' => 'vedi',
+	'wall-history-rail-block' => 'blocca',
+	'wall-history-rail-contribs' => 'contributi',
+	'wall-history-rail-wall' => 'bacheca',
+	'wall-history-sorting-newest-first' => 'Prima le più recenti',
+	'wall-history-sorting-oldest-first' => 'Prima le più vecchie',
+	'wall-history-summary-label' => 'Riassunto',
+	'wall-history-thread-admin-deleted' => '$1 cancellata da $2',
+	'wall-history-thread-created' => '$1 creata da $2',
+	'wall-history-thread-removed' => '$1 rimossa da $2',
+	'wall-history-thread-restored' => '$1 ripristinata da $2',
+	'wall-history-title' => 'Cronologia della Bacheca',
+	'wall-history-who-involved-thread-title' => 'Chi ha partecipato a questa discussione?',
+	'wall-history-who-involved-wall-title' => 'Chi ha partecipato?',
+	'wall-history' => 'Cronologia',
+	'wall-ipb-disableusertalk' => 'Impedisci a questo utente di scrivere nella sua Bacheca mentre è bloccato',
+	'wall-ipballowusertalk' => 'Consenti a questo utente di scrivere sulla sua Bacheca mentre è bloccato',
+	'wall-ipbwatchuser' => 'Aggiungi il profilo di questo utente agli osservati speciali e segui la sua Bacheca',
+	'wall-message-close-thread' => 'Chiudi questa discussione',
+	'wall-message-closed-by-because' => '$1 ha chiuso questa discussione perché:',
+	'wall-message-closed-by' => '[[$2|$1]] ha chiuso questa discussione',
+	'wall-message-delete' => 'Cancella',
+	'wall-message-deleted-reply-because' => '$1 ha cancellato questa risposta perché:',
+	'wall-message-deleted-thread-because' => '$1 ha cancellato questa discussione perché:',
+	'wall-message-edit' => 'Modifica',
+	'wall-message-edited-summary' => '<a href="$4" >$1 da </a><a class="username" href="$2">$3</a>',
+	'wall-message-edited' => '<a href="$3" >Modificato da</a> <a class="username" href="$1">$2</a>',
+	'wall-message-elseswall' => 'Bacheca di $1',
+	'wall-message-fast-admin-delete-message' => 'rimozione VSTF',
+	'wall-message-loadmore' => 'Vedi tutte le $1 risposte',
+	'wall-message-more' => 'Altro',
+	'wall-message-move-thread' => 'Sposta questa discussione',
+	'wall-message-mywall' => 'La mia Bacheca',
+	'wall-message-no-permission' => 'Non hai i permessi per effettuare quest\'azione sul messaggio',
+	'wall-message-not-found-in-db' => 'Ci dispiace, non siamo riusciti a trovare questo messaggio nel nostro database.',
+	'wall-message-notify' => 'Notifica un admin',
+	'wall-message-quote-button' => 'Cita',
+	'wall-message-remove' => 'Rimuovi',
+	'wall-message-removed-reply-because' => '$1 ha rimosso questa risposta perché:',
+	'wall-message-removed-thread-because' => '$1 ha rimosso questa discussione perché:',
+	'wall-message-reopen-thread' => 'Riapri questa discussione',
+	'wall-message-restore-reply' => 'Ripristina risposta',
+	'wall-message-restore-thread' => 'Ripristina discussione',
+	'wall-message-rev-delete' => 'Cancellazione definitiva',
+	'wall-message-undoremove' => 'Annulla',
+	'wall-message-unfollow' => 'Non seguire',
+	'wall-message-update-highlight-summary' => 'Evidenziata',
+	'wall-message-update-removed-highlight-summary' => 'Evidenziatura rimossa',
+	'wall-message-update-topics-summary' => 'Argomento cambiato',
+	'wall-message-wall-shorten' => 'bacheca',
+	'wall-message-wall' => 'Bacheca',
+	'wall-no-title-warning' => '&larr; Non hai specificato alcun titolo',
+	'wall-no-title' => 'Nessun titolo',
+	'wall-notifications-all' => 'Tutte le notifiche',
+	'wall-notifications-empty' => 'Non ci sono notifiche',
+	'wall-notifications-loading' => 'Notifiche in caricamento',
+	'wall-notifications-markasread-all-wikis' => 'Tutte le wiki',
+	'wall-notifications-markasread-this-wiki' => 'Questa wiki',
+	'wall-notifications-markasread' => 'Segna tutte come lette',
+	'wall-notifications-reminder' => 'Hai <span>$1</span> {{PLURAL:$1|notifica non letta|notifiche non lette}}',
+	'wall-notifications-wall-disabled' => 'La bacheca è stata disattivata in questa wiki. Attivala per caricare le notifiche.',
+	'wall-notifications' => 'Notifiche',
+	'wall-placeholder-message-anon' => 'Pubblica un nuovo messaggio su questa Bacheca',
+	'wall-placeholder-message' => 'Lascia un nuovo messaggio nella bacheca di $1',
+	'wall-placeholder-reply' => 'Invia una risposta',
+	'wall-placeholder-topic' => 'Qual è il titolo della discussione?',
+	'wall-quote-author' => '$1 ha scritto:',
+	'wall-quote-reply-to' => 'risposta a #$1',
+	'wall-recentchanges-deleted-reply' => 'ha cancellato la risposta di "<a href="$1" class="new">$2</a>" dalla Bacheca di <a href="$3">$4</a>',
+	'wall-recentchanges-deleted-thread' => 'ha cancellato l\'intera discussione "[[$1|$2]]" dalla [[$3|Bacheca di $4]]',
+	'wall-recentchanges-edit' => 'messaggio modificato',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Bacheca',
+	'wall-recentchanges-reopened-thread' => 'ha riaperto la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
+	'wall-recentchanges-restored-reply' => 'ha ripristinato la risposta di "[[$1|$2]]" dalla [[$3|Bacheca di $4]]',
+	'wall-recentchanges-restored-thread' => 'ha ripristinato l\'argomento "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
+	'wall-recentchanges-thread-history-link' => 'Cronologia della discussione',
+	'wall-recentchanges-wall-created-title' => 'Ha creato un messaggio nella Bacheca',
+	'wall-recentchanges-wall-thread' => 'Discussione della Bacheca',
+	'wall-removed-reply-undo' => 'Questa risposta è stata rimossa. $1',
+	'wall-removed-reply' => 'Questa risposta è stata rimossa',
+	'wall-removed-thread-undo' => 'Questa discussione è stata rimossa. $1',
+	'wall-sorting-archived' => 'Archiviati',
+	'wall-sorting-most-active' => 'Più attive',
+	'wall-sorting-newest-replies' => 'Risposte più recenti',
+	'wall-sorting-newest-threads' => 'Discussioni più recenti',
+	'wall-sorting-oldest-threads' => 'Discussioni più vecchie',
+	'wall-thread-closed' => 'Chiusa',
+	'wall-thread-deleted' => 'Cancellata',
+	'wall-thread-history-reply-created' => '$1 $2 ha scritto una risposta',
+	'wall-thread-history-reply-deleted' => '$1 $2 ha rimosso la risposta di $3',
+	'wall-thread-history-reply-edited' => '$1 $2 ha modificato il messaggio di $3 $5',
+	'wall-thread-history-reply-removed' => '$1 $2 ha rimosso la risposta di $3 $5',
+	'wall-thread-history-reply-restored' => '$1 $2 ha ripristinato la risposta di $3 $5',
+	'wall-thread-history-thread-closed' => '$2 ha chiuso questa discussione',
+	'wall-thread-history-thread-created' => '$1 $2 ha creato questa discussione',
+	'wall-thread-history-thread-deleted' => '$1 $2 ha cancellato questa discussione',
+	'wall-thread-history-thread-edited' => '$1 $2 ha modificato il messaggio di $3 $5',
+	'wall-thread-history-thread-removed' => '$1 $2 ha rimosso questa discussione',
+	'wall-thread-history-thread-reopened' => '$2 ha riaperto questa discussione',
+	'wall-thread-history-thread-restored' => '$1 $2 ha ripristinato questa discussione',
+	'wall-thread-history-title' => 'Cronologia della discussione',
+	'wall-thread-removed' => 'Rimossa',
+	'wall-toolbar-history' => 'Cronologia',
+	'wall-topic-edit-cancel' => 'Annulla',
+	'wall-topic-edit-save' => 'Salva',
+	'wall-topic-edit' => 'Modifica gli argomenti',
+	'wall-topic-heading' => 'Argomenti in questa discussione:',
+	'wall-topic-input-error-limit' => 'Una discussione può avere massimo $1 argomenti.',
+	'wall-topic-input-error' => 'Non esiste alcuna pagina chiamata "$1". Per favore usa un nome di pagina esistente come argomento.',
+	'wall-topic-input-heading' => 'Argomento',
+	'wall-topic-input-placeholder' => 'Aggiungi un argomento (opzionale)',
+	'wall-user-talk-archive-page-title' => 'Archivio_discussioni_utente',
+	'wall-user-talk-page-archive-anchor' => 'Vedi la pagina di discussione archiviata',
+	'wall-votes-modal-showmore' => 'Vedi gli altri che hanno dato Kudos',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona ha|$1 persone hanno}} dato Kudos a questo messaggio',
+	'wall-votes-modal-title' => 'Kudos',
+	'wall-votes-number-tooltip' => 'Vedi chi ha dato Kudos a questo messaggio',
+	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-vote-tooltip' => 'Dai un Kudos a questo messaggio',
+	'wall-votes-voted-tooltip' => 'Hai dato un Kudos a questo messaggio!',
+	'wall-whatlinkshere-wall-line' => '[[$1|$2]] nella Bacheca di [[$3|$4]]',
+	'wall-wiki-activity-on' => 'nella [[$1|Bacheca di $2]]',
+	'walldelete-toggle' => 'Attiva l\'opzione Cancellazione definitiva nei messaggi della Bacheca',
+	'wallshowsource-toggle-v2' => 'Attiva la visualizzazione in modalità codice sorgente dei messaggi della Bacheca',
+	'wallshowsource-toggle' => 'Attiva la visualizzazione in modalità codice sorgente dei messaggi della Bacheca',
+	'wn-admin-reply-deleted' => 'Risposta rimossa dalla discussione nella Bacheca di $1',
+	'wn-admin-thread-deleted' => 'Discussione rimossa dalla Bacheca di $1',
+	'wn-newmsg-on-followed-wall' => '$1 ha lasciato un nuovo messaggio nella Bacheca di $2',
+	'wn-newmsg-onmywall' => '$1 ha lasciato un nuovo messaggio nella tua Bacheca',
+	'wn-newmsg' => 'Hai lasciato un nuovo messaggio nella Bacheca di $1',
+	'wn-owner-reply-deleted' => 'Risposta rimossa dalla discussione nella tua Bacheca',
+	'wn-owner-thread-deleted' => 'Discussione rimossa dalla tua Bacheca',
+	'wn-user1-reply-other-a-wall' => '$1 ha risposto al messaggio di $2',
+	'wn-user1-reply-other-other-wall' => '$1 ha risposto al messaggio di $2 nella Bacheca di $3',
+	'wn-user1-reply-other-your-wall' => '$1 ha risposto al messaggio di $2 nella tua Bacheca',
+	'wn-user1-reply-self-a-wall' => '$1 ha risposto a un messaggio',
+	'wn-user1-reply-self-other-wall' => '$1 ha risposto a un messaggio nella Bacheca di $2',
+	'wn-user1-reply-self-your-wall' => '$1 ha risposto a un messaggio nella tua Bacheca',
+	'wn-user1-reply-you-a-wall' => '$1 ha risposto al tuo messaggio',
+	'wn-user1-reply-you-other-wall' => '$1 ha risposto al tuo messaggio nella Bacheca di $2',
+	'wn-user1-reply-you-your-wall' => '$1 ha risposto al tuo messaggio nella tua Bacheca',
+	'wn-user2-reply-other-a-wall' => '$1 e $2 hanno risposto al messaggio di $3',
+	'wn-user2-reply-other-other-wall' => '$1 e $2 hanno risposto al messaggio di $3 nella Bacheca di $4',
+	'wn-user2-reply-other-your-wall' => '$1 e $2 hanno risposto al messaggio di $3 nella tua Bacheca',
+	'wn-user2-reply-self-a-wall' => '$1 e $2 hanno risposto a un messaggio',
+	'wn-user2-reply-self-other-wall' => '$1 e $2 hanno risposto a un messaggio nella Bacheca di $3',
+	'wn-user2-reply-self-your-wall' => '$1 e $2 hanno risposto a un messaggio nella tua Bacheca',
+	'wn-user2-reply-you-a-wall' => '$1 e $2 hanno risposto al tuo messaggio',
+	'wn-user2-reply-you-other-wall' => '$1 e $2 hanno risposto al tuo messaggio nella Bacheca di $3',
+	'wn-user2-reply-you-your-wall' => '$1 e $2 hanno risposto al tuo messaggio nella tua Bacheca',
+	'wn-user3-reply-other-a-wall' => '$1 e altri hanno risposto al messaggio di $3',
+	'wn-user3-reply-other-other-wall' => '$1 e altri hanno risposto al messaggio di $2 nella Bacheca di $3',
+	'wn-user3-reply-other-your-wall' => '$1 e altri hanno risposto al messaggio di $2 nella tua Bacheca',
+	'wn-user3-reply-self-a-wall' => '$1 e altri hanno risposto a un messaggio',
+	'wn-user3-reply-self-other-wall' => '$1 e altri hanno risposto a un messaggio nella Bacheca di $2',
+	'wn-user3-reply-self-your-wall' => '$1 e altri hanno risposto a un messaggio nella tua Bacheca',
+	'wn-user3-reply-you-a-wall' => '$1 e altri hanno risposto al tuo messaggio',
+	'wn-user3-reply-you-other-wall' => '$1 e altri hanno risposto al tuo messaggio nella Bacheca di $3',
+	'wn-user3-reply-you-your-wall' => '$1 e altri hanno risposto al tuo messaggio nella tua Bacheca',
 ];
 
-/** Japanese (日本語)
- * @author BryghtShadow
- * @author Otokoume
- * @author Shirayuki
- * @author Tommy6
- * @author Whym
- */
 $messages['ja'] = [
 	'wall-no-title' => 'タイトルなし',
 	'wall-message-loadmore' => '<span class="count">$1件</span>の返信を全てを見る',
@@ -3965,7 +4001,7 @@ $messages['ja'] = [
 	'wall-toolbar-history' => '履歴',
 	'wall-message-notify' => '管理者に知らせる',
 	'wall-message-remove' => '除去',
-	'wall-message-rev-delete' => '版指定削除',
+	'wall-message-rev-delete' => 'リビジョン削除',
 	'wall-message-fast-admin-delete-message' => 'VSTFによる削除',
 	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1 のウォール',
@@ -3976,10 +4012,10 @@ $messages['ja'] = [
 	'wall-thread-closed' => '閉鎖',
 	'wall-default-title' => '$1 からのメッセージ',
 	'wall-no-title-warning' => '← タイトルが未入力です',
-	'wall-desc' => '利用者会話ページを置き換える',
+	'wall-desc' => 'ユーザー・トークページを置き換える',
 	'wall-disabled-desc' => 'ウォール拡張機能を有効にしていないウィキ向けのメッセージウォール関連機能',
 	'wall-placeholder-topic' => 'メッセージのタイトルを入力',
-	'wall-placeholder-message' => '$1 のウォールに新しいメッセージを投稿',
+	'wall-placeholder-message' => '$1 のボードに新しいメッセージを投稿',
 	'wall-placeholder-message-anon' => 'このウォールに新しいメッセージを投稿',
 	'wall-placeholder-reply' => '返信を投稿',
 	'wall-button-to-preview-comment' => 'プレビュー',
@@ -4005,8 +4041,8 @@ $messages['ja'] = [
 	'wall-message-closed-by-because' => 'このスレッドは $1 が以下の理由により閉鎖しました:',
 	'wall-message-restore-reply' => '返信を復帰',
 	'wall-delete-reason' => '利用者・管理者の操作',
-	'wall-user-talk-page-archive-anchor' => '会話ページのアーカイブを見る',
-	'wall-user-talk-archive-page-title' => '会話ページアーカイブ',
+	'wall-user-talk-page-archive-anchor' => 'トークページのアーカイブを見る',
+	'wall-user-talk-archive-page-title' => 'ユーザー・トークページのアーカイブ',
 	'wall-ipb-disableusertalk' => 'ブロック中のメッセージウォールへの投稿を禁止する',
 	'wall-action-all-confirm-cancel' => '中止',
 	'wall-action-all-confirm-notify' => '管理者に知らせる',
@@ -4018,7 +4054,7 @@ $messages['ja'] = [
 	'wall-confirm-monobook-admin' => '削除の理由を入力してください。
 
 削除されたデータや入力した理由はウィキの履歴に保存されます。',
-	'wall-confirm-monobook-restore' => '復帰の理由を入力してください',
+	'wall-confirm-monobook-restore' => '復帰の理由を入力してください。',
 	'wall-delete-error-title' => 'エラー',
 	'wall-delete-error-content' => 'メッセージは削除済みであり既に存在しません。',
 	'wall-confirm-monobook-lack-of-reason' => 'このスレッド・返信を削除する理由を入力してください。',
@@ -4032,7 +4068,7 @@ $messages['ja'] = [
 	'wall-action-close-confirm-ok' => '閉鎖',
 	'wall-action-admin-thread-title' => 'このスレッドを削除',
 	'wall-action-admin-reply-title' => 'この返信を削除',
-	'wall-action-admin-confirm' => '除去の理由を入力してください:',
+	'wall-action-admin-confirm' => '削除の理由を入力してください:',
 	'wall-action-admin-thread-confirm-info' => 'このスレッドや入力した理由はウィキの履歴に保存されます。',
 	'wall-action-admin-reply-confirm-info' => 'このスレッドや入力した理由はウィキの履歴に保存されます。管理者のみがこのスレッドを閲覧できるようになります。',
 	'wall-action-admin-confirm-ok' => '削除',
@@ -4041,9 +4077,9 @@ $messages['ja'] = [
 	'wall-action-restore-confirm' => '復帰の理由を入力してください:',
 	'wall-action-restore-confirm-ok' => '復帰',
 	'wall-action-rev-thread-title' => 'このスレッドを版指定削除しますか？',
-	'wall-action-rev-reply-title' => 'この返信を版指定削除しますか？',
-	'wall-action-rev-reply-confirm' => 'このメッセージを本当に削除しますか？',
-	'wall-action-rev-thread-confirm' => '本当にこのスレッドおよびその履歴を版指定削除しますか？この操作は取り消せません。',
+	'wall-action-rev-reply-title' => 'この返信をリビジョン削除しますか？',
+	'wall-action-rev-reply-confirm' => '本当にこのメッセージを削除しますか？',
+	'wall-action-rev-thread-confirm' => '本当にこのスレッドおよびその全履歴をウィキアコミュニティからリビジョン削除しますか？この操作は後で取り消すことはできません。',
 	'wall-action-rev-confirm-ok' => 'はい、削除します',
 	'wall-action-move-thread-heading' => 'このスレッドを移動',
 	'wall-action-move-validation-select-wall' => '板を選択してください',
@@ -4051,9 +4087,9 @@ $messages['ja'] = [
 	'wall-action-move-thread-ok' => '移動',
 	'wall-action-move-board-label' => '移動先の板を選択',
 	'wall-notifications' => '通知',
-	'wall-notifications-all' => 'すべての通知',
-	'wall-notifications-markasread' => 'すべての通知を確認済みにする',
-	'wall-notifications-markasread-all-wikis' => 'すべてのウィキ',
+	'wall-notifications-all' => '全ての通知',
+	'wall-notifications-markasread' => '全ての通知を確認済みにする',
+	'wall-notifications-markasread-all-wikis' => '全てのウィキ',
 	'wall-notifications-markasread-this-wiki' => 'このウィキ',
 	'wall-notifications-empty' => '通知はありません',
 	'wall-notifications-loading' => '通知を読み込んでいます',
@@ -4061,16 +4097,16 @@ $messages['ja'] = [
 	'wall-notifications-wall-disabled' => 'このウィキではメッセージウォールは無効になっています。通知を読み込めません。',
 	'wn-user1-reply-you-your-wall' => '$1 があなたのウォールのあなたのメッセージに返信しました',
 	'wn-user2-reply-you-your-wall' => '$1 と $2 があなたのウォールのあなたのメッセージに返信しました',
-	'wn-user3-reply-you-your-wall' => '$1 とその他複数があなたのウォールのあなたのメッセージに返信しました',
+	'wn-user3-reply-you-your-wall' => '$1 とその他複数があなたのウォールのあなたメッセージに返信しました',
 	'wn-user1-reply-self-your-wall' => '$1 があなたのウォールのメッセージに返信しました',
 	'wn-user2-reply-self-your-wall' => '$1 と $2 があなたのウォールのメッセージに返信しました',
 	'wn-user3-reply-self-your-wall' => '$1 とその他複数があなたのウォールのメッセージに返信しました',
 	'wn-user1-reply-other-your-wall' => '$1 があなたのウォールの $2 からのメッセージに返信しました',
-	'wn-user2-reply-other-your-wall' => '$1 と $2 があなたのウォールの $3 からのメッセージに返信しました',
+	'wn-user2-reply-other-your-wall' => '$1 と $2 があなたウォールの $3 からのメッセージに返信しました',
 	'wn-user3-reply-other-your-wall' => '$1 とその他複数があなたのウォールの $2 からのメッセージに返信しました',
 	'wn-user1-reply-you-other-wall' => '$1 が $2 のウォールのあなたのメッセージに返信しました',
 	'wn-user2-reply-you-other-wall' => '$1 と $2 が $3 のウォールのあなたのメッセージに返信しました',
-	'wn-user3-reply-you-other-wall' => '$1 とその他複数が $2 のウォールのあなたのメッセージに返信しました',
+	'wn-user3-reply-you-other-wall' => '$1 とその他複数が $3 のウォールのあなたのメッセージに返信しました',
 	'wn-user1-reply-self-other-wall' => '$1 が $2 のウォールのメッセージに返信しました',
 	'wn-user2-reply-self-other-wall' => '$1 と $2 が $3 のウォールのメッセージに返信しました',
 	'wn-user3-reply-self-other-wall' => '$1 とその他複数が $2 のウォールのメッセージに返信しました',
@@ -4098,8 +4134,8 @@ $messages['ja'] = [
 	'wall-sorting-newest-replies' => '新しい返信のついたスレッドから表示',
 	'wall-sorting-most-active' => '活発なスレッドから表示',
 	'wall-sorting-archived' => 'アーカイブ済み',
-	'tog-enotifwallthread' => 'フォローしているメッセージ ウォールに誰かが投稿したとき',
-	'tog-enotifmywall' => '自分のメッセージ ウォールに誰かが新しいメッセージを投稿したとき',
+	'tog-enotifwallthread' => 'フォローしているメッセージウォールに誰かが投稿した時',
+	'tog-enotifmywall' => '自分のメッセージウォールに誰かが新しいメッセージを投稿した時',
 	'wall-deleted-msg-pagetitle' => 'メッセージが削除されました',
 	'wall-deleted-msg-text' => '閲覧しようとしたメッセージは削除されています。',
 	'wall-deleted-msg-return-to' => '$1 のウォールに戻る',
@@ -4123,14 +4159,14 @@ $messages['ja'] = [
 	'wall-recentchanges-thread-history-link' => 'スレッドの履歴',
 	'wall-contributions-line' => '[[$1|$2]] -- [[$3|$4 のウォール]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] -- [[$3|$4 のウォール]]',
-	'wall-message-not-found' => 'このメッセージは見つかりませんでした。このエラーをご覧になりましたら、[[Special:Contact]]からウィキアに連絡し、このバグがどのような条件で発生するのかの情報をご提供ください。',
-	'wall-message-staff-text' => 'この利用者はウィキアのスタッフです',
+	'wall-message-not-found' => 'このメッセージは見つかりませんでした。お手数ですが、どのようにしてこのバグが発生したか、[[特別:お問い合わせ]]より詳細をご連絡いただきますようお願いします。',
+	'wall-message-staff-text' => 'このユーザーはFandomのスタッフです',
 	'wall-ipballowusertalk' => 'この利用者に対してブロック中の自身のメッセージウォールへの投稿を許可',
-	'wall-ipbwatchuser' => 'この利用者のプロフィールとメッセージ ウォールをフォロー',
-	'wall-wiki-activity-on' => '-- [[$1|$2 のウォール]]',
+	'wall-ipbwatchuser' => 'この利用者のプロフィールとメッセージウォールをフォローする',
+	'wall-wiki-activity-on' => '-- $1',
 	'wall-removed-thread-undo' => 'このスレッドは除去されました。 $1',
 	'wall-removed-reply-undo' => 'この返信は除去されました。 $1',
-	'wall-removed-reply' => 'この返信は除去されました。',
+	'wall-removed-reply' => 'この返信は除去されました',
 	'wall-deleted-thread-undo' => 'このスレッドは削除されました。 $1',
 	'wall-deleted-reply-undo' => 'この返信は削除されました。 $1',
 	'wall-deleted-reply' => 'この返信は削除されました',
@@ -4168,12 +4204,12 @@ $messages['ja'] = [
 	'wall-history-action-restore-thread' => 'スレッドを復帰',
 	'wall-message-not-found-in-db' => 'データベースからこのウォールメッセージを見つけられませんでした。',
 	'prefs-email-wall-v2' => 'メッセージウォールとフォーラム',
-	'tog-enotifwallthread-v2' => 'メール通知の設定',
-	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
+	'tog-enotifwallthread-v2' => 'メール通知の設定:',
+	'tog-enotifmywall-every' => '全てのメッセージおよび返信を通知する',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
 	'tog-enotifmywall-noemail' => 'メッセージウォールおよびフォーラムに関して通知を行わない',
 	'wallshowsource-toggle-v2' => 'スレッドで「{{int:user-action-menu-view-source}}」オプションを有効にする',
-	'wallshowsource-toggle' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
+	'wallshowsource-toggle' => 'スレッドで「{{int:user-action-menu-view-source}}」オプションを有効にする',
 	'walldelete-toggle' => 'スレッドに対する版指定削除を有効にする',
 	'wall-notifications-notifyeveryone' => '$1 がハイライトしました',
 	'wall-message-notifyeveryone' => 'このスレッドをハイライトする',
@@ -4185,7 +4221,7 @@ $messages['ja'] = [
 	'wall-votes-number' => '$1 いいね',
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
-	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
+	'wall-votes-voted-tooltip' => 'このメッセージに付けた「いいね」を取り消す',
 	'wall-quote-author' => '$1 曰く:',
 	'wall-quote-reply-to' => '#$1 への返信',
 	'wall-topic-input-heading' => 'タグ',
@@ -4196,14 +4232,12 @@ $messages['ja'] = [
 	'wall-topic-edit' => 'タグを編集',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '中止',
-	'group-threadmoderator' => 'トーク・モデレーター',
-	'group-threadmoderator-member' => 'トーク・モデレーター',
+	'group-threadmoderator' => 'モデレーター',
+	'group-threadmoderator-member' => 'モデレーター',
+	'grouppage-threadmoderator' => 'w:c:community:ヘルプ:モデレーター',
+	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
 ];
 
-/** Georgian (ქართული)
- * @author DevaMK
- * @author Otogi
- */
 $messages['ka'] = [
 	'wall-message-loadmore' => 'იხილე $1-ვე პასუხი',
 	'wall-message-unfollow' => 'კონტროლის გაუქმება',
@@ -4229,142 +4263,259 @@ $messages['ka'] = [
 	'wall-sorting-newest-replies' => 'უახლესი პასუხები',
 ];
 
-/** Kabardian (Адыгэбзэ)
- * @author Erdemaslancan
- */
 $messages['kbd'] = [
-
 ];
 
-/** Korean (한국어)
- * @author Cafeinlove
- * @author Miri-Nae
- * @author Priviet
- * @author 아라
- */
 $messages['ko'] = [
 	'wall-no-title' => '제목 없음',
-	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|덧글 $1개}}</span> 보기',
+	'wall-message-loadmore' => '$1개의 모든 답글 보기',
 	'wall-message-wall' => '메시지 담벼락',
 	'wall-message-wall-shorten' => '담벼락',
 	'wall-message-unfollow' => '주시 해제',
-	'wall-message-undoremove' => '되돌리기',
-	'wall-message-edited' => '<a class="username" href="$1">$2</a><a href="$3">에 의해 편집됨</a>',
+	'wall-message-undoremove' => '실행 취소',
+	'wall-message-edited' => '<a class="username" href="$1">$2</a>에 의해 <a href="$3">편집됨</a>',
 	'wall-message-mywall' => '내 담벼락',
 	'wall-toolbar-history' => '역사',
-	'wall-message-notify' => '관리자에게 알림',
-	'wall-message-remove' => '제거',
+	'wall-message-notify' => '관리자에게 알리기',
+	'wall-message-remove' => '숨기기',
 	'wall-message-rev-delete' => '판 삭제',
 	'wall-message-quote-button' => '인용',
 	'wall-message-elseswall' => '$1의 담벼락',
-	'wall-message-no-permission' => '메시지에 이 행동을 실행할 권한이 없습니다.',
-	'wall-thread-removed' => '제거됨',
-	'wall-thread-isnotifyeveryone' => '강조하기',
+	'wall-message-no-permission' => '이 글에 해당 작업을 수행할 권한이 없습니다.',
+	'wall-thread-removed' => '삭제됨',
+	'wall-thread-isnotifyeveryone' => '강조됨',
 	'wall-thread-deleted' => '삭제됨',
-	'wall-thread-closed' => '폐쇄됨',
+	'wall-thread-closed' => '닫힘',
 	'wall-button-to-preview-comment' => '미리 보기',
 	'wall-button-to-cancel-preview' => '편집',
 	'wall-button-cancel-changes' => '취소',
-	'wall-button-done-source' => '완료',
+	'wall-button-done-source' => '닫기',
 	'wall-message-edit' => '편집',
-	'wall-message-more' => '더 보기',
+	'wall-message-more' => '도구',
 	'wall-message-delete' => '삭제',
 	'wall-action-all-confirm-cancel' => '취소',
 	'wall-delete-error-title' => '오류',
-	'wall-action-remove-confirm-ok' => '제거',
+	'wall-action-remove-confirm-ok' => '숨기기',
 	'wall-action-admin-confirm-ok' => '삭제',
 	'wall-notifications-markasread-all-wikis' => '모든 위키',
-	'wall-notifications-loading' => '알림 로드 중',
-	'wn-user1-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
-	'wn-user3-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
-	'wn-user2-reply-self-your-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지 담벼락에 댓글을 남겼습니다',
-	'wn-user3-reply-self-your-wall' => '$1 사용자 및 그 외 사용자가 귀하의 메시지 담벼락에 댓글을 남겼습니다',
-	'wn-user1-reply-other-your-wall' => '$1 사용자가 귀하의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user2-reply-other-your-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지 담벼락에서 $3 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user3-reply-other-your-wall' => '$1 사용자와 및 그 외 사용자가 귀하의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user1-reply-you-other-wall' => '$2 사용자의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
-	'wn-user2-reply-you-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 귀하에게 댓글을 남겼습니다',
-	'wn-user3-reply-you-other-wall' => '$2 사용자의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
-	'wn-user1-reply-self-other-wall' => '$1 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
-	'wn-user2-reply-self-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
-	'wn-user3-reply-self-other-wall' => '$1 사용자 및 그 외 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
-	'wn-user1-reply-other-other-wall' => '$1 사용자가 $3 사용자의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user2-reply-other-other-wall' => '$1 사용자와 $2 사용자가 $4 사용자의 메시지 담벼락에서 $3 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user3-reply-other-other-wall' => '$1 사용자 및 그 외 사용자가 $3 사용자의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user1-reply-you-a-wall' => '$1 사용자가 귀하의 메시지에 댓글을 남겼습니다',
-	'wn-user2-reply-you-a-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지에 댓글을 남겼습니다',
-	'wn-user3-reply-you-a-wall' => '$1 사용자 및 그 외 사용자가 귀하의 메시지에 댓글을 남겼습니다',
-	'wn-user1-reply-self-a-wall' => '$1 사용자가 메시지에 댓글을 남겼습니다',
-	'wn-user2-reply-self-a-wall' => '$1 사용자와 $2 사용자가 메시지에 댓글을 남겼습니다',
-	'wn-user3-reply-self-a-wall' => '$1 사용자 및 그 외 사용자가 메시지에 댓글을 남겼습니다',
-	'wn-user1-reply-other-a-wall' => '$1 사용자가 $2 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user2-reply-other-a-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-user3-reply-other-a-wall' => '$1 사용자 및 그 외 사용자가 $3 사용자의 메시지에 댓글을 남겼습니다',
-	'wn-newmsg-onmywall' => '$1 사용자가 귀하의 메시지 담벼락에 새 메시지를 남겼습니다',
-	'wn-newmsg' => '귀하가 $1 사용자의 메시지 담벼락에 새 메시지를 남겼습니다',
-	'wn-newmsg-on-followed-wall' => '$1 사용자가 $2 사용자의 메시지 담벼락에 새 메시지를 남겼습니다',
-	'wn-admin-thread-deleted' => '$1 사용자의 메시지 담벼락에서 글이 삭제되었습니다',
-	'wn-admin-reply-deleted' => '$1 사용자의 메시지 담벼락에서 댓글이 삭제되었습니다',
-	'wn-owner-thread-deleted' => '귀하의 메시지 담벼락에서 글이 삭제되었습니다',
-	'wn-owner-reply-deleted' => '귀하의 메시지 담벼락에서 댓글이 삭제되었습니다',
-	'wall-sorting-archived' => '보존됨',
-	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
+	'wall-notifications-loading' => '알림 로드 중...',
+	'wn-user1-reply-you-your-wall' => '$1님께서 회원님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-you-your-wall' => '$1님과 다른 회원들이 회원님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-self-your-wall' => '$1님과 $2님께서 회원님의 담벼락에 있는 그들의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-self-your-wall' => '$1님과 다른 회원들이 회원님의 담벼락에 남긴 그들의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-other-your-wall' => '$1님께서 회원님의 담벼락에 있는 $2님의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-other-your-wall' => '$1님과 $2님께서 회원님의 담벼락에 있는 $3님의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-other-your-wall' => '$1님과 다른 회원들이 $2님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-you-other-wall' => '$1님께서 $2님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-you-other-wall' => '$1님과 $2님께서 $3님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-you-other-wall' => '$1님과 다른 회원들이 $3님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-self-other-wall' => '$1님께서 $2님의 담벼락에 남긴 자신의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-self-other-wall' => '$1님과 $2님께서 $3님의 담벼락에 있는 그들의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-self-other-wall' => '$1님과 다른 회원들이 $2님의 담벼락에 남긴 그들의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-other-other-wall' => '$1님께서 $3님의 담벼락에 있는 $2님의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-other-other-wall' => '$1님과 $2님께서 $4님의 담벼락에 있는 $3님의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-other-other-wall' => '$1님과 다른 회원들이 $3님의 담벼락에 남긴 $2님의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-you-a-wall' => '$1님께서 회원님이 남긴 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-you-a-wall' => '$1님과 $2님께서 회원님이 남긴 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-you-a-wall' => '$1님과 다른 회원들이 회원님이 남긴 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-self-a-wall' => '$1님께서 자신이 남긴 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-self-a-wall' => '$1님과 $2님께서 자신의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-self-a-wall' => '$1님과 다른 회원들이 그들의 메시지에 답글을 달았습니다.',
+	'wn-user1-reply-other-a-wall' => '$1님께서 $2님의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-other-a-wall' => '$1님과 $2님께서 $3님의 메시지에 답글을 달았습니다.',
+	'wn-user3-reply-other-a-wall' => '$1님과 다른 회원들이 $3님께서 남긴 메시지에 답글을 달았습니다.',
+	'wn-newmsg-onmywall' => '$1님께서 회원님의 담벼락에 새 메시지를 남겼습니다.',
+	'wn-newmsg' => '회원님께서 $1님의 담벼락에 새 메시지를 남겼습니다.',
+	'wn-newmsg-on-followed-wall' => '$1님께서 $2님의 담벼락에 새 메시지를 남겼습니다.',
+	'wn-admin-thread-deleted' => '$1님의 담벼락에 남긴 글이 삭제되었습니다.',
+	'wn-admin-reply-deleted' => '$1님의 담벼락에 게시된 글에 남긴 댓글이 삭제되었습니다.',
+	'wn-owner-thread-deleted' => '회원님의 담벼락에 게시된 글이 삭제되었습니다.',
+	'wn-owner-reply-deleted' => '회원님의 담벼락에 게시된 글에 남긴 답글이 삭제되었습니다.',
+	'wall-sorting-archived' => '보존된 메시지',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
 	'wall-recentchanges-history-link' => '담벼락 역사',
-	'wall-recentchanges-thread-history-link' => '토론 역사',
+	'wall-recentchanges-thread-history-link' => '글 역사',
 	'wall-history' => '역사',
 	'wall-history-title' => '담벼락 역사',
-	'wall-history-who-involved-wall-title' => '이 담벼락에 메시지를 남긴 사용자',
-	'wall-history-thread-created' => '$2에 의한 $1 게시글 생성',
-	'wall-history-thread-removed' => '$2에 의한 $1 게시글 삭제',
-	'wall-history-thread-restored' => '$2에 의한 $1 게시글 되살리기',
-	'wall-history-thread-admin-deleted' => '$2에 의한 $1 게시글 삭제',
-	'wall-history-sorting-newest-first' => '최근 항목순',
-	'wall-history-sorting-oldest-first' => '오래된 항목순',
-	'wall-history-summary-label' => '요약',
+	'wall-history-who-involved-wall-title' => '이 곳에서 대화한 사용자 목록',
+	'wall-history-thread-created' => '$1 글을 $2 사용자가 생성함',
+	'wall-history-thread-removed' => '$1 글을 $2 사용자가 숨김',
+	'wall-history-thread-restored' => '$1 글을 $2 사용자가 되살림',
+	'wall-history-thread-admin-deleted' => '$1 글을 $2 사용자가 삭제함',
+	'wall-history-sorting-newest-first' => '최근순',
+	'wall-history-sorting-oldest-first' => '오래된순',
+	'wall-history-summary-label' => '이유/편집 요약',
 	'wall-history-rail-wall' => '담벼락',
 	'wall-history-rail-contribs' => '기여',
 	'wall-history-rail-block' => '차단',
 	'wall-history-action-view' => '보기',
 	'wall-history-action-restore' => '되살리기',
-	'wall-history-action-thread-history' => '토론 역사',
-	'wall-thread-history-title' => '토론 역사',
-	'wall-thread-history-thread-created' => '$1 $2 사용자가 이 게시글을 생성함',
-	'wall-thread-history-reply-created' => '$1 $2 사용자가 댓글을 남김',
-	'wall-thread-history-thread-removed' => '$1 $2 사용자가 이 게시글을 삭제함',
-	'wall-thread-history-reply-removed' => '$1 $2 사용자가 $3 사용자의 댓글 $5번을 삭제함',
-	'wall-thread-history-reply-deleted' => '$1 $2 사용자가 $3 사용자의 댓글을 삭제함',
-	'wall-thread-history-thread-restored' => '$1 $2 사용자가 이 게시글을 되살림',
-	'wall-thread-history-reply-restored' => '$1 $2 사용자가 $3 사용자의 댓글 $5번을 되살림',
-	'wall-thread-history-thread-deleted' => '$1 $2 사용자가 이 게시글을 삭제함',
-	'wall-thread-history-thread-edited' => '$1 $2 사용자가 $3 사용자의 메시지 $5번을 편집함',
-	'wall-thread-history-reply-edited' => '$1 $2 사용자가 $3 사용자의 메시지를 편집함', # Fuzzy
-	'wall-thread-history-thread-closed' => '$2 사용자가 이 게시글을 닫음',
-	'wall-thread-history-thread-reopened' => '$2 사용자가 이 게시글을 다시 엶',
-	'wall-history-action-restore-reply' => '댓글 되살리기',
-	'wall-history-action-restore-thread' => '게시글 되살리기',
-	'prefs-email-wall-v2' => '메시지 담벼락과 포럼',
-	'wall-votes-modal-title' => '추천',
-	'wall-quote-author' => '$1의 말:',
-	'wall-quote-reply-to' => '#$1에 대한 덧글',
+	'wall-history-action-thread-history' => '글 역사',
+	'wall-thread-history-title' => '글 역사',
+	'wall-thread-history-thread-created' => '$1 $2 사용자가 이 글을 생성함',
+	'wall-thread-history-reply-created' => '$1 $2 사용자가 답글을 달음',
+	'wall-thread-history-thread-removed' => '$1 $2 사용자가 이 글을 숨김',
+	'wall-thread-history-reply-removed' => '$1 $2 사용자가 $3의 답글($5)을 숨김',
+	'wall-thread-history-reply-deleted' => '$1 $2 사용자가 $3의 답글을 삭제함',
+	'wall-thread-history-thread-restored' => '$1 $2 사용자가 이 글을 되살림',
+	'wall-thread-history-reply-restored' => '$1 $2 사용자가 $3의 답글($5)을 되살림',
+	'wall-thread-history-thread-deleted' => '$1 $2 사용자가 이 글을 삭제함',
+	'wall-thread-history-thread-edited' => '$1 $2 사용자가 $3의 글($5)을 편집함',
+	'wall-thread-history-reply-edited' => '$1 $2 사용자가 $3의 메시지($5)를 편집함',
+	'wall-thread-history-thread-closed' => '$2 사용자가 이 글을 닫음',
+	'wall-thread-history-thread-reopened' => '$2 사용자가 이 글을 염',
+	'wall-history-action-restore-reply' => '답글 되살리기',
+	'wall-history-action-restore-thread' => '글 되살리기',
+	'prefs-email-wall-v2' => '메시지 담벼락',
+	'wall-votes-modal-title' => '추천인 목록',
+	'wall-quote-author' => '$1의 원문:',
+	'wall-quote-reply-to' => '#$1에 답글',
 	'wall-topic-edit-save' => '저장',
 	'wall-topic-edit-cancel' => '취소',
+	'wall-message-not-found' => '요청한 메시지를 찾을 수 없습니다. 이 문제가 오류라고 생각하신다면 [[Special:Contact]]에서 이 문제에 관한 자세한 설명을 해주세요. 감사합니다!',
+	'wall-message-staff-text' => '이 사용자는 위키아의 스탭입니다.',
+	'group-threadmoderator-member' => '모더레이터',
+	'group-threadmoderator' => '모더레이터',
+	'grouppage-threadmoderator' => 'w:c:ko.community:도움말:모더레이터',
+	'tog-enotifmywall-every' => '담벼락의 모든 메시지와 답글',
+	'tog-enotifmywall-noemail' => '메시지 담벼락에 관한 메일 수신 안함',
+	'tog-enotifmywall-sincevisited' => '마지막 방문 이래로 담벼락에 올라오는 새 글',
+	'tog-enotifmywall' => '누군가 내 담벼락에 새 글을 남기면 이메일로 알림',
+	'tog-enotifwallthread-v2' => '다음에 대한 알림 받기:',
+	'tog-enotifwallthread' => '누군가 내가 주시하는 담벼락 글에 답글을 달았을 때 이메일로 알림',
+	'wall-action-admin-confirm' => '이 글을 삭제하는 이유:',
+	'wall-action-admin-reply-confirm-info' => '이 글과 편집 요약은 문서 역사에 그대로 남습니다. 관리자만 이 글을 열람할 수 있습니다.',
+	'wall-action-admin-reply-title' => '이 답글 삭제',
+	'wall-action-admin-thread-confirm-info' => '이 글과 편집 요약은 문서 역사에 그대로 남습니다.',
+	'wall-action-admin-thread-title' => '이 글 삭제',
+	'wall-action-all-confirm-notify' => '관리자에게 알림',
+	'wall-action-move-board-label' => '이 주제를 이동할 게시판을 선택하세요.',
+	'wall-action-move-thread-heading' => '이 주제 이동하기',
+	'wall-action-move-thread-ok' => '이동하기',
+	'wall-action-move-topics-summary' => '주제 이동됨',
+	'wall-action-move-validation-select-wall' => '이 주제를 이동할 게시판을 선택하세요.',
+	'wall-action-remove-confirm' => '이 글을 숨기는 이유:',
+	'wall-action-remove-reply-confirm-info' => '이 글과 편집 요약은 문서 역사에 그대로 남습니다.',
+	'wall-action-remove-reply-title' => '이 답글 숨기기',
+	'wall-action-remove-thread-confirm-info' => '이 글과 편집 요약은 문서 역사에 그대로 남습니다.',
+	'wall-action-remove-thread-title' => '이 글 숨기기',
+	'wall-action-restore-confirm-ok' => '되살리기',
+	'wall-action-restore-confirm' => '이 글을 되살리는 이유:',
+	'wall-action-restore-reply-title' => '이 답글 되살리기',
+	'wall-action-restore-thread-title' => '이 글 되살리기',
+	'wall-action-rev-confirm-ok' => '예, 삭제합니다',
+	'wall-action-rev-reply-confirm' => '정말로 이 메시지를 삭제하시겠습니까?',
+	'wall-action-rev-reply-title' => '이 답글의 판을 삭제하시겠습니까?',
+	'wall-action-rev-thread-confirm' => '정말로 이 글의 판과 그 역사를 모두 삭제하시겠습니까? 한 번 삭제하면 되돌릴 수 없습니다.',
+	'wall-action-rev-thread-title' => '이 글의 판을 삭제하시겠습니까?',
+	'wall-button-save-changes' => '변경사항 저장',
+	'wall-button-to-submit-comment-no-topic' => '제목없이 게시',
+	'wall-button-to-submit-comment' => '게시',
+	'wall-button-to-submit-reply' => '답글 작성',
+	'wall-confirm-monobook-admin' => '이 글을 삭제하는 이유를 자세히 밝혀주세요.
+
+이 글과 편집 요약은 삭제해도 문서 역사에 그대로 남습니다.',
+	'wall-confirm-monobook-lack-of-reason' => '이 글을 삭제하는 이유를 밝혀주셔야 삭제가 가능합니다.',
+	'wall-confirm-monobook-remove' => '이 글을 숨기는 이유를 자세히 밝혀주세요.
+
+이 글과 편집 요약은 삭제해도 문서 역사에 그대로 남습니다.',
+	'wall-confirm-monobook-restore' => '이 글을 되살리는 이유를 자세히 밝혀주세요.',
+	'wall-default-title' => '다음 사용자가 게시한 메시지:',
+	'wall-delete-error-content' => '이 메시지는 이미 삭제되었습니다.',
+	'wall-delete-reason' => '사용자/관리자가 삭제함',
+	'wall-deleted-msg-pagetitle' => '메시지 삭제됨',
+	'wall-deleted-msg-return-to' => '$1의 담벼락으로 돌아가기',
+	'wall-deleted-msg-text' => '보고자 하는 메시지가 이미 삭제되었습니다.',
+	'wall-deleted-msg-view' => '(보기/되살리기)',
+	'wall-deleted-reply-undo' => '삭제된 답글입니다. $1',
+	'wall-deleted-reply' => '삭제된 답글입니다.',
+	'wall-deleted-thread-undo' => '삭제된 글입니다. $1',
+	'wall-history-who-involved-thread-title' => '이 글에 관련된 사용자 목록',
+	'wall-ipb-disableusertalk' => '차단된 상태에서 자신의 메시지 담벼락에 글을 남길 수 없도록 함',
+	'wall-ipballowusertalk' => '차단된 중에도 자신의 메시지 담벼락을 사용할 수 있게 허용',
+	'wall-ipbwatchuser' => '이 사용자의 사용자 문서와 메시지 담벼락을 주시',
+	'wall-message-close-thread' => '이 글 닫기',
+	'wall-message-closed-by' => '[[$2|$1]] 사용자가 이 글을 닫음',
+	'wall-message-deleted-reply-because' => '$1 사용자가 이 답글을 삭제한 이유:',
+	'wall-message-deleted-thread-because' => '$1 사용자가 이 글을 삭제한 이유:',
+	'wall-message-fast-admin-delete-message' => '빠른 삭제',
+	'wall-message-move-thread' => '이 주제 이동하기',
+	'wall-message-not-found-in-db' => '찾으시는 메시지를 담벼락 DB에서 찾을 수 없습니다.',
+	'wall-message-notifyeveryone-tooltip' => '이 위키에 로그인한 모든 사용자에게 이 주제에 대한 알림을 보냅니다.',
+	'wall-message-notifyeveryone' => '이 주제 강조하기',
+	'wall-message-removed-reply-because' => '$1 사용자가 이 답글을 숨긴 이유:',
+	'wall-message-removed-thread-because' => '$1 사용자가 이 글을 숨긴 이유:',
+	'wall-message-reopen-thread' => '이 글 열기',
+	'wall-message-restore-reply' => '답글 되살리기',
+	'wall-message-restore-thread' => '글 되살리기',
+	'wall-message-unnotifyeveryone' => '이 주제 강조 해제하기',
+	'wall-message-update-highlight-summary' => '이 글을 강조함',
+	'wall-message-update-removed-highlight-summary' => '이 글의 강조를 해제함',
+	'wall-message-update-topics-summary' => '글 수정됨',
+	'wall-no-title-warning' => '&larr; 메시지 제목을 입력하세요',
+	'wall-notifications-all' => '모든 알림',
+	'wall-notifications-empty' => '읽지 않은 알림이 없습니다.',
+	'wall-notifications-markasread-this-wiki' => '이 위키',
+	'wall-notifications-markasread' => '모두 읽은 것으로 표시',
+	'wall-notifications-notifyeveryone' => '$1 사용자가 강조함',
+	'wall-notifications-reminder' => '<span>$1</span>개의 읽지 않은 알림이 있습니다.',
+	'wall-notifications-wall-disabled' => '이 위키에 메시지 담벼락이 비활성화되어 있으므로 알림을 확인할 수 없습니다.',
+	'wall-notifications' => '알림',
+	'wall-placeholder-message-anon' => '이 담벼락에 새 메시지 남기기',
+	'wall-placeholder-message' => '$1의 담벼락에 메시지 남기기',
+	'wall-placeholder-reply' => '답글 쓰기',
+	'wall-placeholder-topic' => '메시지 제목',
+	'wall-recentchanges-closed-thread' => '[[$3|$4의 담벼락]]에 게시된 "[[$1|$2]]" 주제를 염',
+	'wall-recentchanges-deleted-reply-title' => '메시지 담벼락에 게시된 답글',
+	'wall-recentchanges-deleted-reply' => '[[$3|$4의 담벼락]]에 게시된 "[[$1|$2]]" 주제에 대한 답글을 삭제함',
+	'wall-recentchanges-deleted-thread' => '[[$3|$4의 담벼락]]에 게시된 "[[$1|$2]]" 주제를 삭제함',
+	'wall-recentchanges-edit' => '메시지 수정됨',
+	'wall-recentchanges-new-message' => '([[$1|$2의 담벼락]]에 남긴 새 글)',
+	'wall-recentchanges-removed-reply' => '[[$3|$4의 담벼락]]에 있는 "[[$1|$2]]" 글의 답글을 숨김',
+	'wall-recentchanges-removed-thread' => '[[$3|$4의 담벼락]]에 있는 "[[$1|$2]]" 글을 숨김',
+	'wall-recentchanges-reopened-thread' => '[[$3|$4의 담벼락]]의 "[[$1|$2]]" 주제를 염',
+	'wall-recentchanges-restored-reply' => '<a href="$3">$4의 담벼락</a>의 "<a href="$1" class="new">$2</a>" 주제에 대한 답글이 복구됨',
+	'wall-recentchanges-restored-thread' => '<a href="$3">$4의 담벼락</a>에 게시되었던 "<a href="$1" class="new">$2</a>" 주제가 복구됨',
+	'wall-recentchanges-thread-group' => '[[$2|$3의 담벼락]]의 글 $1',
+	'wall-removed-reply-undo' => '숨겨진 답글입니다. $1',
+	'wall-removed-reply' => '숨겨진 답글입니다.',
+	'wall-removed-thread-undo' => '숨겨진 글입니다. $1',
+	'wall-sorting-most-active' => '인기순',
+	'wall-sorting-newest-replies' => '새 답글순',
+	'wall-sorting-newest-threads' => '새로운 메시지 순',
+	'wall-sorting-oldest-threads' => '오래된 메시지 순',
+	'wall-topic-edit' => '태그 편집하기',
+	'wall-topic-heading' => '이 주제에 대한 태그:',
+	'wall-topic-input-error-limit' => '한 주제에는 최대 문서 $1개까지 태그할 수 있습니다.',
+	'wall-topic-input-error' => '\'$1\' 문서는 아직 만들어지지 않았습니다. 존재하는 문서만 태그가 가능합니다.',
+	'wall-topic-input-heading' => '태그',
+	'wall-topic-input-placeholder' => '태그 달기 (선택)',
+	'wall-user-talk-archive-page-title' => '사용자_토론_보존문서',
+	'wall-user-talk-page-archive-anchor' => '보존된 토론 문서 보기',
+	'wall-votes-modal-showmore' => '추천한 사용자 더 보기',
+	'wall-votes-modal-title-desc' => '$1명이 이 주제를 추천합니다.',
+	'wall-votes-number-tooltip' => '이 주제를 추천하는 사용자 보기',
+	'wall-votes-number' => '$1명 추천',
+	'wall-votes-vote-tooltip' => '이 글을 추천하기',
+	'wall-votes-voted-tooltip' => '이 글을 추천하였습니다!',
+	'wall-whatlinkshere-wall-line' => '[[$3|$4의 담벼락]]의 글 [[$1|$2]]',
+	'wall-wiki-activity-on' => '$1에 남겨진 메시지',
+	'walldelete-toggle' => '메시지 담벼락에서 판 삭제를 활성화',
+	'wallshowsource-toggle-v2' => '메시지 담벼락에서 \'소스 보기\' 링크를 활성화',
+	'wallshowsource-toggle' => '메시지 담벼락에서 \'소스 보기\' 링크를 활성화',
+	'wn-user1-reply-self-your-wall' => '$1님께서 회원님의 담벼락에 남긴 자신의 메시지에 답글을 달았습니다.',
+	'wn-user2-reply-you-your-wall' => '$1님과 $2님께서 회원님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
 ];
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Iltever
- */
 $messages['krc'] = [
 	'wall-message-wall-shorten' => 'сюзюу',
 	'wall-toolbar-history' => 'Тарих',
 	'wall-thread-closed' => 'Джаб',
 ];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = [
 	'wall-no-title' => 'Keine Tittel',
-	'wall-message-loadmore' => 'Zeisch {{PLURAL:$1|ein Antwoot|$1 Antwoote|kei Antwoot}}', # Fuzzy
+	'wall-message-loadmore' => 'Zeisch {{PLURAL:$1|ein Antwoot|$1 Antwoote|kei Antwoot}}',
 	'wall-message-undoremove' => 'Zeröcknämme',
 	'wall-toolbar-history' => 'Versione',
 	'wall-message-remove' => 'Fottnämme',
@@ -4396,7 +4547,7 @@ $messages['ksh'] = [
 	'wall-sorting-most-active' => 'Aam aktiivste',
 	'wall-sorting-archived' => 'uss_em Aschiif',
 	'wall-recentchanges-thread-history-link' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
-	'wall-wiki-activity-on' => 'op [[$1]]', # Fuzzy
+	'wall-wiki-activity-on' => 'op [[$1]]',
 	'wall-removed-thread-undo' => 'Dä Jeschprääschßfäddem es fottjeschmeße. $1',
 	'wall-removed-reply-undo' => 'Di Antwoot es fottjeschmeße. $1',
 	'wall-removed-reply' => 'Di Antwoot es fottjeschmeße',
@@ -4411,12 +4562,9 @@ $messages['ksh'] = [
 	'wall-history-action-view' => 'aanloore',
 	'wall-history-action-restore' => 'wider zerök holle',
 	'wall-history-action-thread-history' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
-	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione', # Fuzzy
+	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
 ];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author Bikarhêner
- */
 $messages['ku-latn'] = [
 	'wall-toolbar-history' => 'Dîrok',
 	'wall-thread-deleted' => 'Hate jêbirin',
@@ -4439,9 +4587,6 @@ $messages['ku-latn'] = [
 	'group-threadmoderator-member' => 'Moderator',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = [
 	'wall-no-title' => 'Keen Titel',
 	'wall-message-undoremove' => 'Réckgängeg maachen',
@@ -4485,17 +4630,10 @@ $messages['lb'] = [
 	'group-threadmoderator-member' => 'Moderateur',
 ];
 
-/** Northern Luri (لوری مینجایی)
- * @author Mogoeilor
- */
 $messages['lrc'] = [
 	'wall-button-save-changes' => 'اماییه کردن آلشتیا',
 ];
 
-/** Latvian (latviešu)
- * @author Edgars2007
- * @author Sg ghost
- */
 $messages['lv'] = [
 	'wall-message-wall' => 'Lietotāja diskusija',
 	'wall-desc' => 'Lietotāja diskusija lapas nomaiņa',
@@ -4503,9 +4641,6 @@ $messages['lv'] = [
 	'prefs-email-wall-v2' => 'Lietotāja diskusija un Forums',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = [
 	'wall-no-title' => 'Без наслов',
 	'wall-message-loadmore' => 'Погл. <span class="count">{{PLURAL:$1|$1 одговор|сите $1 одговори}}</span>',
@@ -4759,9 +4894,6 @@ $messages['mk'] = [
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
 	'wall-no-title' => 'Tiada tajuk',
 	'wall-message-loadmore' => 'Lihat <span class="count">{{PLURAL:$1|$1 balasan|kesemua $1 balasan}}</span>',
@@ -5015,19 +5147,10 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 ];
 
-/** Neapolitan (Napulitano)
- * @author C.R.
- */
 $messages['nap'] = [
-	'wall-thread-history-title' => "Storico d' 'o filo",
+	'wall-thread-history-title' => 'Storico d\' \'o filo',
 ];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author Danmichaelo
- * @author EvenT
- * @author Wouterkoch
- */
 $messages['nb'] = [
 	'wall-no-title' => 'Ingen tittel',
 	'wall-message-loadmore' => 'Vis <span class="count">{{PLURAL:$1|$1 svar|alle $1 svar}}</span>',
@@ -5237,23 +5360,23 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-history-action-restore-reply' => 'gjenopprett svar',
 	'wall-history-action-restore-thread' => 'gjenopprett tråd',
 	'wall-message-not-found-in-db' => 'Vi kunne ikke finne denne tavlebeskjeden i databasen vår, beklager.',
-	'prefs-email-wall-v2' => 'Beskjedtavle', # Fuzzy
+	'prefs-email-wall-v2' => 'Beskjedtavle',
 	'tog-enotifwallthread-v2' => 'Send meg en e-post...',
 	'tog-enotifmywall-every' => 'For hver melding og hvert svar',
 	'tog-enotifmywall-sincevisited' => 'En gang per tråd siden mitt siste besøk',
 	'tog-enotifmywall-reminder' => 'Med en daglig e-post-påminnelse',
-	'tog-enotifmywall-noemail' => 'Aldri. Ikke send meg e-poster om beskjedtavla', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Aktiver {{int:user-action-menu-view-source}}-valget på tavlebeskjeder', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Aldri. Ikke send meg e-poster om beskjedtavla',
+	'wallshowsource-toggle-v2' => 'Aktiver {{int:user-action-menu-view-source}}-valget på tavlebeskjeder',
 	'wallshowsource-toggle' => 'Aktiver {{int:user-action-menu-view-source}} på tavlebeskjeder',
-	'walldelete-toggle' => 'Aktiver revisjonssletting av tavlebeskjeder', # Fuzzy
+	'walldelete-toggle' => 'Aktiver revisjonssletting av tavlebeskjeder',
 	'wall-notifications-notifyeveryone' => 'Fremhevet av $1',
 	'wall-message-notifyeveryone' => 'Fremhev denne tråden',
 	'wall-message-unnotifyeveryone' => 'Av-fremhev denne tråden',
-	'wall-message-notifyeveryone-tooltip' => 'Alle innloggede personer på denne wikien vil bli varslet om denne tråden', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Alle innloggede personer på denne wikien vil bli varslet om denne tråden',
 	'wall-votes-modal-showmore' => 'Se andre som har gitt ros',
 	'wall-votes-modal-title' => 'Ros',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Én person|$1 personer}} ga denne meldingen ros',
-	'wall-votes-number' => '$1 rosinger', # Fuzzy
+	'wall-votes-number' => '$1 rosinger',
 	'wall-votes-number-tooltip' => 'Se hvem som ga ros til denne meldingen',
 	'wall-votes-vote-tooltip' => 'Gi ros til denne meldingen',
 	'wall-votes-voted-tooltip' => 'Du har gitt denne meldingen ros!',
@@ -5262,23 +5385,13 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-topic-input-heading' => 'Emne',
 	'wall-topic-input-placeholder' => 'Legg til et emne (valgfritt)',
 	'wall-topic-input-error' => 'Det finnes ingen artikkel med navnet «$1». Vennligst bruk et eksisterende artikkelnavn som emne.',
-	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.', # Fuzzy
+	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.',
 	'wall-topic-heading' => 'Emner i denne tråden:',
 	'wall-topic-edit' => 'Rediger emner',
 	'wall-topic-edit-save' => 'Lagre',
 	'wall-topic-edit-cancel' => 'Avbryt',
 ];
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author Flightmare
- * @author Randykitty
- * @author Robin0van0der0vliet
- * @author SPQRobin
- * @author Saruman
- * @author Siebrand
- * @author Wiki13
- */
 $messages['nl'] = [
 	'wall-no-title' => 'Geen koptekst',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|Reactie|Alle $1 reacties}}</span> bekijken',
@@ -5306,8 +5419,8 @@ $messages['nl'] = [
 	'wall-thread-closed' => 'Gesloten',
 	'wall-default-title' => 'Bericht van $1',
 	'wall-no-title-warning' => '← U hebt geen koptekst opgegeven',
-	'wall-desc' => "Vervanging voor de overlegpagina's van gebruikers",
-	'wall-disabled-desc' => "Prikbordfunctie voor wiki's zonder de uitbreiding Wall",
+	'wall-desc' => 'Vervanging voor de overlegpagina\'s van gebruikers',
+	'wall-disabled-desc' => 'Prikbordfunctie voor wiki\'s zonder de uitbreiding Wall',
 	'wall-placeholder-topic' => 'Waar gaat dit over?',
 	'wall-placeholder-message' => 'Nieuw bericht plaatsen op het prikbord van $1',
 	'wall-placeholder-message-anon' => 'Nieuw bericht op dit prikbord plaatsen',
@@ -5383,7 +5496,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-notifications' => 'Meldingen',
 	'wall-notifications-all' => 'Alle meldingen',
 	'wall-notifications-markasread' => 'Alles als gelezen markeren',
-	'wall-notifications-markasread-all-wikis' => "Alle wiki's",
+	'wall-notifications-markasread-all-wikis' => 'Alle wiki\'s',
 	'wall-notifications-markasread-this-wiki' => 'Deze wiki',
 	'wall-notifications-empty' => 'Er zijn geen meldingen',
 	'wall-notifications-loading' => 'Bezig met het laden van meldingen',
@@ -5531,16 +5644,9 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'group-threadmoderator-member' => 'Discussiemoderator',
 ];
 
-/** Norwegian Nynorsk (norsk nynorsk)
- * @author Erdemaslancan
- */
 $messages['nn'] = [
-
 ];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = [
 	'wall-message-wall-shorten' => 'mur',
 	'wall-message-unfollow' => 'Seguir pas mai',
@@ -5593,23 +5699,17 @@ $messages['oc'] = [
 	'wall-topic-edit-cancel' => 'Anullar',
 ];
 
-/** Punjabi (ਪੰਜਾਬੀ)
- * @author Babanwalia
- */
 $messages['pa'] = [
 	'wall-recentchanges-thread-group' => '$1 on [[$2|$3 ਦੀ ਕੰਧ]]',
 	'wall-whatlinkshere-wall-line' => '[[$3|$4 ਦੀ ਕੰਧ]] ਉੱਤੇ [[$1|$2]]',
 ];
 
-/** Palatine German (Pälzisch)
- * @author Manuae
- */
 $messages['pfl'] = [
 	'wall-no-title' => 'Kän Tidl',
-	'wall-message-undoremove' => "Rigg'gängisch",
+	'wall-message-undoremove' => 'Rigg\'gängisch',
 	'wall-toolbar-history' => 'Gschischd',
 	'wall-message-remove' => 'Wegnemme',
-	'wall-thread-removed' => "Weg'gnumme",
+	'wall-thread-removed' => 'Weg\'gnumme',
 	'wall-thread-deleted' => 'Geleschd',
 	'wall-button-to-submit-reply' => 'Oandwoad',
 	'wall-button-cancel-changes' => 'Uffhere',
@@ -5625,24 +5725,15 @@ $messages['pfl'] = [
 	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
 ];
 
-/** Polish (polski)
- * @author Ankry
- * @author BeginaFelicysym
- * @author Chrumps
- * @author Debeet
- * @author Pio387
- * @author Rezonansowy
- * @author Sovq
- */
 $messages['pl'] = [
 	'wall-no-title' => 'Brak tytułu',
-	'wall-message-loadmore' => 'Zobacz <span class="count">({{PLURAL:$1|odpowiedź|wszystkie $1 odpowiedzi}})</span>',
+	'wall-message-loadmore' => 'Zobacz wszystkie odpowiedzi ({{PLURAL:$1|$1 odpowiedź|$1 odpowiedzi}})',
 	'wall-message-wall' => 'Tablica',
 	'wall-message-wall-shorten' => 'tablica',
 	'wall-message-unfollow' => 'Nie obserwuj',
 	'wall-message-undoremove' => 'Cofnij',
 	'wall-message-edited' => '<a href="$3" >Edytowane przez</a> <a class="username" href="$1">$2</a>',
-	'wall-message-edited-summary' => '<a href="$4" >$1</a> dokonana przez <a class="username" href="$2">$3</a>',
+	'wall-message-edited-summary' => 'Zmiana "<a href="$4" >$1</a>" dokonana przez <a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Zmieniono temat',
 	'wall-message-update-highlight-summary' => 'Wyróżniono',
 	'wall-message-update-removed-highlight-summary' => 'Usunięto wyróżnienie',
@@ -5656,7 +5747,7 @@ $messages['pl'] = [
 	'wall-message-elseswall' => 'Tablica $1',
 	'wall-message-no-permission' => 'Nie masz uprawnień do tej akcji',
 	'wall-thread-removed' => 'Usunięto',
-	'wall-thread-isnotifyeveryone' => 'Wyróżnij',
+	'wall-thread-isnotifyeveryone' => 'Wyróżniony',
 	'wall-thread-deleted' => 'Skasowano',
 	'wall-thread-closed' => 'Zamknięty',
 	'wall-default-title' => 'Wiadomość od $1',
@@ -5682,7 +5773,7 @@ $messages['pl'] = [
 	'wall-message-reopen-thread' => 'Reaktywuj ten wątek',
 	'wall-message-removed-thread-because' => '$1 usunął ten wątek ponieważ:',
 	'wall-message-deleted-thread-because' => '$1 skasował ten wątek ponieważ:',
-	'wall-message-restore-thread' => 'Przywróć Wątek',
+	'wall-message-restore-thread' => 'Przywróć wątek',
 	'wall-message-move-thread' => 'Przenieś wątek',
 	'wall-message-removed-reply-because' => '$1 usunął tę odpowiedź ponieważ:',
 	'wall-message-deleted-reply-because' => '$1 skasował tę odpowiedź ponieważ:',
@@ -5791,7 +5882,7 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-deleted-msg-text' => 'Wiadomość, którą próbujesz otworzyć została skasowana.',
 	'wall-deleted-msg-return-to' => 'Powrót do  tablicy użytkownika $1.',
 	'wall-deleted-msg-view' => '(pokaż/przywróć)',
-	'wall-recentchanges-wall-thread' => 'Wątek na tablicy',
+	'wall-recentchanges-wall-thread' => 'Wątek tablicy',
 	'wall-recentchanges-new-message' => 'na [[$1|tablicy użytkownika $2]]',
 	'wall-recentchanges-edit' => 'edytowano wiadomość',
 	'wall-recentchanges-removed-thread' => 'usunął/usunęła wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
@@ -5800,18 +5891,18 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-recentchanges-restored-reply' => 'przywrócił(a) odpowiedź w "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-thread' => 'skasował(a) wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-reply' => 'skasował(a) odpowiedź w "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
-	'wall-recentchanges-closed-thread' => 'zamknął/zamknęła wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
-	'wall-recentchanges-reopened-thread' => '{{GENDER:$5|reaktywował|reaktywowała}} wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]', # Fuzzy
+	'wall-recentchanges-closed-thread' => 'zamknięto wątek',
+	'wall-recentchanges-reopened-thread' => '{{GENDER:$5|reaktywował|reaktywowała}} wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Odpowiedź na tablicy wiadomości',
 	'wall-recentchanges-wall-created-title' => 'Utworzono tablicę',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Tablica Wiadomości',
-	'wall-recentchanges-thread-group' => '$1 na [[$2|tablicy $3]]',
+	'wall-recentchanges-thread-group' => '$1 na [[$2|tablicy użytkownika $3]]',
 	'wall-recentchanges-history-link' => 'historia tablicy',
 	'wall-recentchanges-thread-history-link' => 'historia wątku',
 	'wall-contributions-line' => '[[$1|$2]] na [[$3|tablicy $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] na [[$3|tablicy użytkownika $4]]',
-	'wall-message-not-found' => 'Nie odnaleziono wiadomości. Gdy zobaczysz ten błąd proszę powiadom nas przez [[Special:Contact]] podając możliwie dużo informacji na temat okoliczności, abyśmy  mogli odtworzyć błąd. Dziękujemy!',
-	'wall-message-staff-text' => 'Ten użytkownik jest pracownikiem Wikii',
+	'wall-message-not-found' => 'Nie odnaleziono wiadomości. Jeżeli widzisz ten błąd, powiadom nas przez [[Special:Contact]], podając dokładne informacje na temat okoliczności jego wystąpienia, abyśmy mogli spróbować go odtworzyć. Dziękujemy!',
+	'wall-message-staff-text' => 'Ten użytkownik jest pracownikiem Fandomu',
 	'wall-ipballowusertalk' => 'Pozwól temu użytkownikowi dodawać wiadomości na własnej tablicy, kiedy jest zablokowany',
 	'wall-ipbwatchuser' => 'Obserwuj profil tego użytkownika i jego tablicę',
 	'wall-wiki-activity-on' => 'na [[$1|tablicy użytkownika $2]]',
@@ -5886,11 +5977,13 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-topic-edit-cancel' => 'Anuluj',
 	'group-threadmoderator' => 'Moderatorzy dyskusji',
 	'group-threadmoderator-member' => 'Moderator dyskusji',
+	'grouppage-threadmoderator' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
+	'right-editwallarchivedpages' => 'Edycja zarchiwizowanych stron dyskusji',
+	'right-walladmindelete' => 'Kasowanie wątków na Tablicy Wiadomości',
+	'right-walldelete' => 'Trwałe usuwanie wątków na Tablicy Wiadomości',
+	'right-wallremove' => 'Usuwanie wątków z Tablicy Wiadomości',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = [
 	'wall-no-title' => 'بې سرليکه',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 ځواب|ټول $1 ځوابونه}}</span> کتل',
@@ -5951,16 +6044,6 @@ $messages['ps'] = [
 	'wall-topic-edit-cancel' => 'ناگارل',
 ];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Imperadeiro98
- * @author Josep Maria 15.
- * @author Luckas
- * @author Malafaya
- * @author SandroHc
- * @author Vitorvicentevalente
- * @author Waldir
- */
 $messages['pt'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
@@ -6129,8 +6212,8 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-recentchanges-thread-history-link' => 'histórico do tópico',
 	'wall-contributions-line' => '[[$1|$2]] no [[$3|mural de $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] no [[$3|mural de $4]]',
-	'wall-message-not-found' => 'Esta mensagem não foi encontrada. Se vir este erro, contacte a Wikia através de [[Special:Contact]] e forneça todos os pormenores sobre como reproduzir este erro. Obrigado!',
-	'wall-message-staff-text' => 'Este utilizador é um membro da Equipa da Wikia',
+	'wall-message-not-found' => 'Esta mensagem não pôde ser encontrada. Se você vir esse erro, por favor contate o Fandom em [[Especial:Contact]] e forneça o máximo de detalhes possíveis sobre como este bug pode ser reproduzido. Obrigado!',
+	'wall-message-staff-text' => 'Este usuário é um membro do staff do Fandom',
 	'wall-ipballowusertalk' => 'Permitir que este utilizador publique no seu próprio Mural de Mensagens',
 	'wall-ipbwatchuser' => 'Observar o perfil deste utilizador e seguir o seu Mural de Mensagens',
 	'wall-wiki-activity-on' => 'em [[$1|mural de $2]]',
@@ -6202,19 +6285,11 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Gravar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores de discussões',
-	'group-threadmoderator-member' => 'Moderador de discussões',
+	'group-threadmoderator' => 'Moderadores',
+	'group-threadmoderator-member' => 'Moderador',
+	'grouppage-threadmoderator' => 'w:c:comunidade:Ajuda:Moderadores',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Caio1478
- * @author Jefersonmoraes
- * @author Luckas
- * @author Luckas Blade
- * @author Macofe
- * @author TheGabrielZaum
- * @author Tooguether
- */
 $messages['pt-br'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
@@ -6412,18 +6487,15 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Salvar',
 	'wall-topic-edit-cancel' => 'Cancelar',
+	'group-threadmoderator-member' => 'Moderador',
+	'group-threadmoderator' => 'Moderadores',
+	'grouppage-threadmoderator' => 'w:c:comunidade:Ajuda:Moderadores',
 ];
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
 $messages['qu'] = [
 	'wall-notifications-markasread' => 'Tukuykunata ñawirisqa nispa unanchay',
 ];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = [
 	'wall-no-title' => 'Nisciune titole',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 resposte|tutte le $1 resposte}}</span>',
@@ -6436,7 +6508,7 @@ $messages['roa-tara'] = [
 	'wall-message-update-topics-summary' => 'Argomende cangiate',
 	'wall-message-update-highlight-summary' => 'Evidenziate',
 	'wall-message-update-removed-highlight-summary' => 'Evidenze luate',
-	'wall-message-mywall' => "'U mure mije",
+	'wall-message-mywall' => '\'U mure mije',
 	'wall-toolbar-history' => 'Cunde',
 	'wall-thread-removed' => 'Luate',
 	'wall-thread-isnotifyeveryone' => 'Evidenziate',
@@ -6453,8 +6525,8 @@ $messages['roa-tara'] = [
 	'wall-message-more' => 'De cchiù',
 	'wall-message-delete' => 'Scangille',
 	'wall-action-restore-confirm-ok' => 'Repristine',
-	'wall-action-rev-thread-title' => "'A revisione scangelle st'argomende?",
-	'wall-action-rev-reply-title' => "'A revisione scangelle sta resposte?",
+	'wall-action-rev-thread-title' => '\'A revisione scangelle st\'argomende?',
+	'wall-action-rev-reply-title' => '\'A revisione scangelle sta resposte?',
 	'wall-notifications-all' => 'Tutte le notifiche',
 	'wall-notifications-markasread' => 'Signe tutte cumme lette',
 	'wall-notifications-markasread-all-wikis' => 'Tutte le uicchi',
@@ -6465,23 +6537,15 @@ $messages['roa-tara'] = [
 	'wall-topic-edit-cancel' => 'Annulle',
 ];
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author Express2000
- * @author Ilnur efende
- * @author Kuzura
- * @author Okras
- */
 $messages['ru'] = [
-	'wall-no-title' => 'Без названия',
-	'wall-message-loadmore' => 'Просмотреть <span class="count">$1 {{PLURAL:$1|ответ|ответа|ответов}}</span>',
+	'wall-no-title' => 'Нет заголовка',
+	'wall-message-loadmore' => 'Посмотреть все $1 ответов',
 	'wall-message-wall' => 'Обсуждение участника',
 	'wall-message-wall-shorten' => 'обсуждение',
 	'wall-message-unfollow' => 'Не следить',
 	'wall-message-undoremove' => 'Восстановить',
 	'wall-message-edited' => '<a href="$3" >Отредактировал </a> <a class="username" href="$1">$2</a>',
-	'wall-message-edited-summary' => '<a href="$4" >$1 на </a><a class="username" href="$2">$3</a>',
+	'wall-message-edited-summary' => '<a href="$4" >$1 участником </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Тема изменена',
 	'wall-message-update-highlight-summary' => 'Сообщить всем',
 	'wall-message-update-removed-highlight-summary' => 'Оповещение удалено',
@@ -6494,12 +6558,12 @@ $messages['ru'] = [
 	'wall-message-quote-button' => 'Цитировать',
 	'wall-message-elseswall' => 'Стена $1',
 	'wall-message-no-permission' => 'У вас нет прав выполнять это действие над сообщением',
-	'wall-thread-removed' => 'Удалено',
-	'wall-thread-isnotifyeveryone' => 'Сообщить всем',
+	'wall-thread-removed' => 'Удалена',
+	'wall-thread-isnotifyeveryone' => 'Оповещение',
 	'wall-thread-deleted' => 'Удалить',
-	'wall-thread-closed' => 'Закрыть',
-	'wall-default-title' => 'Сообщение от $1',
-	'wall-no-title-warning' => '← Вы не указали название темы',
+	'wall-thread-closed' => 'Закрыта',
+	'wall-default-title' => 'Сообщение от',
+	'wall-no-title-warning' => '&larr; Вы не указали название темы',
 	'wall-desc' => 'Замена страницы обсуждения участника',
 	'wall-disabled-desc' => 'Стена обсуждения функциональна для страниц без подключения Стены',
 	'wall-placeholder-topic' => 'Тема сообщения',
@@ -6513,7 +6577,7 @@ $messages['ru'] = [
 	'wall-button-to-submit-comment-no-topic' => 'Оставить сообщение без заголовка',
 	'wall-button-save-changes' => 'Сохранить изменения',
 	'wall-button-cancel-changes' => 'Отмена',
-	'wall-button-done-source' => 'Сделано',
+	'wall-button-done-source' => 'Готово',
 	'wall-message-edit' => 'Править',
 	'wall-message-more' => 'Больше',
 	'wall-message-delete' => 'Удалить',
@@ -6526,43 +6590,43 @@ $messages['ru'] = [
 	'wall-message-removed-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-deleted-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-closed-by' => '[[$2|$1]] закрыл эту тему',
-	'wall-message-closed-by-because' => '$1 {{GENDER:$1|закрыл|закрыла}} эту тему по причине:',
+	'wall-message-closed-by-because' => '$1 закрыл эту тему. Причина:',
 	'wall-message-restore-reply' => 'Восстановить ответ',
 	'wall-delete-reason' => 'Действия участника/администратора',
 	'wall-user-talk-page-archive-anchor' => 'Просмотреть заархивированные страницы обсуждения',
 	'wall-user-talk-archive-page-title' => 'Архив_обсуждения_участника',
-	'wall-ipb-disableusertalk' => 'Препятствовать этому участнику оставлять сообщения на своей стене, когда он заблокирован',
+	'wall-ipb-disableusertalk' => 'Запретить этому участнику оставлять сообщения на своей стене, когда он заблокирован',
 	'wall-action-all-confirm-cancel' => 'Отмена',
 	'wall-action-all-confirm-notify' => 'Уведомить администратора',
 	'wall-action-remove-reply-title' => 'Удалить этот ответ',
 	'wall-action-remove-thread-title' => 'Удалить эту тему',
-	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите удалить это.
+	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите удалить это. 
 
 Оригинал сообщения и ваш комментарий останутся в истории вики.',
-	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите удалить это.
+	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите удалить это. 
 
 Оригинал сообщения и ваш комментарий останутся в истории вики.',
-	'wall-confirm-monobook-restore' => 'Пожалуйста, укажите, почему вы хотите восстановить это',
+	'wall-confirm-monobook-restore' => 'Пожалуйста, напишите, почему вы хотите восстановить это',
 	'wall-delete-error-title' => 'Ошибка',
 	'wall-delete-error-content' => 'Сообщение было удалено и больше не существует.',
-	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, оставьте комментарий к удалению этой темы/ответа.',
-	'wall-action-remove-confirm' => 'Пожалуйста, укажите, почему вы хотите удалить это:',
+	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, оставьте комментарий к удалению темы/ответа.',
+	'wall-action-remove-confirm' => 'Пожалуйста, напишите, почему вы хотите удалить это:',
 	'wall-action-remove-thread-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-confirm-ok' => 'Удалить',
 	'wall-action-close-thread-title' => 'Закрыть эту тему',
-	'wall-action-close-confirm' => 'Пожалуйста, укажите, почему вы хотите закрыть её:',
-	'wall-action-close-thread-confirm-info' => 'Эта тема будет всё ещё видимой.',
+	'wall-action-close-confirm' => 'Укажите, почему вы хотите закрыть эту тему:',
+	'wall-action-close-thread-confirm-info' => 'Эту тему можно будет просматривать.',
 	'wall-action-close-confirm-ok' => 'Закрыть',
 	'wall-action-admin-thread-title' => 'Удалить эту тему',
 	'wall-action-admin-reply-title' => 'Удалить этот ответ',
-	'wall-action-admin-confirm' => 'Пожалуйста, укажите, почему вы хотите удалить это:',
+	'wall-action-admin-confirm' => 'Пожалуйста, напишите, почему вы хотите удалить это:',
 	'wall-action-admin-thread-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики.',
-	'wall-action-admin-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики. Только администраторы смогут просматривать эту тему.',
+	'wall-action-admin-reply-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики. Только администраторы смогут просматривать удалённую тему.',
 	'wall-action-admin-confirm-ok' => 'Удалить',
 	'wall-action-restore-thread-title' => 'Восстановить эту тему',
 	'wall-action-restore-reply-title' => 'Восстановить этот ответ',
-	'wall-action-restore-confirm' => 'Пожалуйста, укажите, почему вы хотите восстановить это:',
+	'wall-action-restore-confirm' => 'Пожалуйста, напишите, почему вы хотите восстановить это:',
 	'wall-action-restore-confirm-ok' => 'Восстановить',
 	'wall-action-rev-thread-title' => 'Пересмотреть удаление этой темы?',
 	'wall-action-rev-reply-title' => 'Пересмотреть удаление этого ответа?',
@@ -6570,20 +6634,20 @@ $messages['ru'] = [
 	'wall-action-rev-thread-confirm' => 'Вы уверены, что хотите удалить эту тему и всю историю её изменений из вики? Это действие нельзя будет отменить.',
 	'wall-action-rev-confirm-ok' => 'Да, удалить',
 	'wall-action-move-thread-heading' => 'Переместить эту тему',
-	'wall-action-move-validation-select-wall' => 'Пожалуйста, выберите форум',
+	'wall-action-move-validation-select-wall' => 'Пожалуйста, выберите тему',
 	'wall-action-move-topics-summary' => 'Тема перемещена',
 	'wall-action-move-thread-ok' => 'Переместить тему',
-	'wall-action-move-board-label' => 'Выберите форум для перемещения',
+	'wall-action-move-board-label' => 'Выберите гл. тему для перемещения',
 	'wall-notifications' => 'Уведомления',
 	'wall-notifications-all' => 'Все уведомления',
 	'wall-notifications-markasread' => 'Отметить всё, как прочитанное',
-	'wall-notifications-markasread-all-wikis' => 'Все викии',
+	'wall-notifications-markasread-all-wikis' => 'Все вики',
 	'wall-notifications-markasread-this-wiki' => 'Эта вики',
 	'wall-notifications-empty' => 'Нет уведомлений',
 	'wall-notifications-loading' => 'Загрузка уведомлений',
 	'wall-notifications-reminder' => 'У вас <span>$1</span> {{PLURAL:$1|непрочитанное уведомление|непрочитанных уведомлений}}',
 	'wall-notifications-wall-disabled' => 'Стена обсуждения была отключена на этой вики. Уведомления загрузить невозможно.',
-	'wn-user1-reply-you-your-wall' => '$1ответил на ваше сообщение на вашей стене',
+	'wn-user1-reply-you-your-wall' => '$1 ответил на ваше сообщение на вашей стене',
 	'wn-user2-reply-you-your-wall' => '$1 и $2 ответили на ваше сообщение на вашей стене',
 	'wn-user3-reply-you-your-wall' => '$1 и другие ответили на ваше сообщение на вашей стене',
 	'wn-user1-reply-self-your-wall' => '$1 ответил на сообщение на вашей стене',
@@ -6594,7 +6658,7 @@ $messages['ru'] = [
 	'wn-user3-reply-other-your-wall' => '$1 и другие ответили на сообщение $2 на вашей стене',
 	'wn-user1-reply-you-other-wall' => '$1 ответил на ваше сообщение на стене $2',
 	'wn-user2-reply-you-other-wall' => '$1 и $2 ответили на ваше сообщение на стене $3',
-	'wn-user3-reply-you-other-wall' => '$1 и другие ответили на ваше сообщение на стене $2',
+	'wn-user3-reply-you-other-wall' => '$1 и другие ответили на ваше сообщение на стене $3',
 	'wn-user1-reply-self-other-wall' => '$1 ответил на сообщение на стене $2',
 	'wn-user2-reply-self-other-wall' => '$1 и $2 ответили на сообщение на стене $3',
 	'wn-user3-reply-self-other-wall' => '$1 и другие ответили на сообщение на стене $2',
@@ -6647,11 +6711,11 @@ $messages['ru'] = [
 	'wall-recentchanges-thread-history-link' => 'История темы',
 	'wall-contributions-line' => '[[$1|$2]] на [[$3|стене $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] на [[$3|стене $4]]',
-	'wall-message-not-found' => 'Сообщение не было найдено. Если вы считаете, что произошла ошибка, то свяжитесь с сотрудниками Викия через страницу [[Special:Contact]] и сообщите подробности, чтобы мы могли решить проблему. Спасибо!',
-	'wall-message-staff-text' => 'Этот участник является сотрудником Викия',
+	'wall-message-not-found' => 'Это сообщение не найдено. Если вы видите это сообщение об ошибке, свяжитесь с сотрудниками Фэндома через [[Служебная:Contact|форму обратной связи]] и сообщите подробности, чтобы мы могли решить проблему.',
+	'wall-message-staff-text' => 'Этот участник является сотрудником Фэндома',
 	'wall-ipballowusertalk' => 'Разрешить этому участнику оставлять сообщение на своей стене, когда он заблокирован',
 	'wall-ipbwatchuser' => 'Отслеживать страницу участника и его стену обсуждения',
-	'wall-wiki-activity-on' => 'на [[$1|Стена $2]]',
+	'wall-wiki-activity-on' => 'на $1',
 	'wall-removed-thread-undo' => 'Эта тема была удалена. $1',
 	'wall-removed-reply-undo' => 'Этот ответ был удалён. $1',
 	'wall-removed-reply' => 'Этот ответ был удалён',
@@ -6660,12 +6724,12 @@ $messages['ru'] = [
 	'wall-deleted-reply' => 'Этот ответ был удалён',
 	'wall-history' => 'История',
 	'wall-history-title' => 'История обсуждения',
-	'wall-history-who-involved-wall-title' => 'Участники этого обсуждения',
+	'wall-history-who-involved-wall-title' => 'Кто участвует в этом обсуждении?',
 	'wall-history-who-involved-thread-title' => 'Кто участвует в этой теме?',
-	'wall-history-thread-created' => '$1 создал $2',
-	'wall-history-thread-removed' => '$1 удалил $2',
-	'wall-history-thread-restored' => '$1 восстановил $2',
-	'wall-history-thread-admin-deleted' => '$1 удалил $2',
+	'wall-history-thread-created' => '$1 создана $2',
+	'wall-history-thread-removed' => '$1 удалена $2',
+	'wall-history-thread-restored' => '$1 восстановлена $2',
+	'wall-history-thread-admin-deleted' => '$1 была удалена $2',
 	'wall-history-sorting-newest-first' => 'Новые в начало',
 	'wall-history-sorting-oldest-first' => 'Старые в начало',
 	'wall-history-summary-label' => 'Комментарий',
@@ -6676,12 +6740,12 @@ $messages['ru'] = [
 	'wall-history-action-restore' => 'восстановить',
 	'wall-history-action-thread-history' => 'история темы',
 	'wall-thread-history-title' => 'История темы',
-	'wall-thread-history-thread-created' => '$2 создал тему $1',
+	'wall-thread-history-thread-created' => '$1 $2 создал эту тему',
 	'wall-thread-history-reply-created' => '$1 $2 оставил сообщение',
 	'wall-thread-history-thread-removed' => '$1 $2 удалил эту тему',
 	'wall-thread-history-reply-removed' => '$1 $2 удалил $3 сообщение $5',
 	'wall-thread-history-reply-deleted' => '$1 $2 удалил ответ $3',
-	'wall-thread-history-thread-restored' => '$1 $2 удалил эту тему',
+	'wall-thread-history-thread-restored' => '$1 $2 восстановил эту тему',
 	'wall-thread-history-reply-restored' => '$1 $2 восстановил $3 ответ $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 удалил эту тему',
 	'wall-thread-history-thread-edited' => '$1 $2 отредактировал $3 сообщение $5',
@@ -6692,42 +6756,40 @@ $messages['ru'] = [
 	'wall-history-action-restore-thread' => 'восстановить тему',
 	'wall-message-not-found-in-db' => 'Мы не смогли найти эту сообщение стены в нашей базе данных, извините.',
 	'prefs-email-wall-v2' => 'Стена обсуждения и форум',
-	'tog-enotifwallthread-v2' => 'Отправлять мне email...',
+	'tog-enotifwallthread-v2' => '...если кто-то ответил на тему на Стене обсуждения, за которой я слежу',
 	'tog-enotifmywall-every' => 'о каждом сообщении и ответе',
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
 	'tog-enotifmywall-reminder' => 'с ежедневным напоминанием',
 	'tog-enotifmywall-noemail' => 'Не отправлять мне эл. письма со Стены обсуждения или форума',
-	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} для тем',
-	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
-	'walldelete-toggle' => 'Включить просмотр постов, удалённых из тем',
+	'wallshowsource-toggle-v2' => 'Разрешить опции Исходного кода на Стене обсуждения',
+	'wallshowsource-toggle' => 'Разрешить режим Исходного кода на Стене обсуждения',
+	'walldelete-toggle' => 'Разрешить пересмотр удалённых сообщений на Стене обсуждения',
 	'wall-notifications-notifyeveryone' => '$1 сообщил об этом',
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
 	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил «Мне нравится»',
 	'wall-votes-modal-title' => 'Мне нравится',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили «Мне нравится» к этому сообщению',
-	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|$1 участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
+	'wall-votes-number' => '$1 {{PLURAL:$1|"Мне нравится"|"Мне нравится"}}',
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил «Мне нравится»',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
 	'wall-quote-author' => 'От $1:',
 	'wall-quote-reply-to' => 'ответ на #$1',
-	'wall-topic-input-heading' => 'Topic',
-	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
-	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
-	'wall-topic-input-error-limit' => 'В форуме может быть максимум $1 {{PLURAL:$1|тема|темы|тем}}.',
-	'wall-topic-heading' => 'Topics for this thread:',
-	'wall-topic-edit' => 'Edit Topics',
+	'wall-topic-input-heading' => 'Общая тема',
+	'wall-topic-input-placeholder' => 'Добавить общую тему (необязательно)',
+	'wall-topic-input-error' => 'Статьи с названием "$1" не существует. Используйте названия существующих статей для общих тем.',
+	'wall-topic-input-error-limit' => 'Обсуждение может содержать максимум $1 общих тем.',
+	'wall-topic-heading' => 'Общие темы для этого обсуждения:',
+	'wall-topic-edit' => 'Править',
 	'wall-topic-edit-save' => 'Сохранить',
-	'wall-topic-edit-cancel' => 'Отмена',
-	'group-threadmoderator' => 'Модераторы обсуждений',
-	'group-threadmoderator-member' => 'Модератор обсуждений',
+	'wall-topic-edit-cancel' => 'Отменить',
+	'group-threadmoderator' => 'Модераторы форума',
+	'group-threadmoderator-member' => 'модератор форума',
+	'grouppage-threadmoderator' => 'w:c:ru.community:Справка:Уровни доступа участников',
 ];
 
-/** Scots (Scots)
- * @author John Reid
- */
 $messages['sco'] = [
 	'wall-no-title' => 'Nae title',
 	'wall-message-loadmore' => 'See <span class="count">{{PLURAL:$1|$1 reply|aw $1 replies}}</span>',
@@ -6747,8 +6809,8 @@ $messages['sco'] = [
 	'wall-message-rev-delete' => 'Reveesion delyte',
 	'wall-message-fast-admin-delete-message' => 'VSTF delyte.',
 	'wall-message-quote-button' => 'Quote',
-	'wall-message-elseswall' => "$1's waw",
-	'wall-message-no-permission' => "Ye'r no alloued tae perform this action oan the message",
+	'wall-message-elseswall' => '$1\'s waw',
+	'wall-message-no-permission' => 'Ye\'r no alloued tae perform this action oan the message',
 	'wall-thread-removed' => 'Remuived',
 	'wall-thread-isnotifyeveryone' => 'Heilicht',
 	'wall-thread-deleted' => 'Delytit',
@@ -6757,8 +6819,8 @@ $messages['sco'] = [
 	'wall-no-title-warning' => '← Ye didna speecify onie title',
 	'wall-desc' => 'Uiser tauk page replacement',
 	'wall-disabled-desc' => 'Message Waw functionâlity fer wikis wioot the Waw extension enabled',
-	'wall-placeholder-topic' => "Whit's this in aid o?",
-	'wall-placeholder-message' => "Post ae new message tae $1's waw",
+	'wall-placeholder-topic' => 'Whit\'s this in aid o?',
+	'wall-placeholder-message' => 'Post ae new message tae $1\'s waw',
 	'wall-placeholder-message-anon' => 'Post ae new message til this waw',
 	'wall-placeholder-reply' => 'Post ae replie',
 	'wall-button-to-preview-comment' => 'Luikower',
@@ -6789,33 +6851,33 @@ $messages['sco'] = [
 	'wall-action-all-confirm-notify' => 'Notifie aen admeen',
 	'wall-action-remove-reply-title' => 'Remuiv this replie',
 	'wall-action-remove-thread-title' => 'Remuiv this threed',
-	'wall-confirm-monobook-remove' => "Please tell us why ye'd like tae remuiv this.
+	'wall-confirm-monobook-remove' => 'Please tell us why ye\'d like tae remuiv this.
 
-The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
-	'wall-confirm-monobook-admin' => "Please tell us why ye'd like tae delyte this.
+The oreeginal post n yer ootline will still kyth in the wiki\'s histerie.',
+	'wall-confirm-monobook-admin' => 'Please tell us why ye\'d like tae delyte this.
 
-The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
-	'wall-confirm-monobook-restore' => "Please tell us why ye'd like tae restore this",
+The oreeginal post n yer ootline will still kyth in the wiki\'s histerie.',
+	'wall-confirm-monobook-restore' => 'Please tell us why ye\'d like tae restore this',
 	'wall-delete-error-title' => 'Mistak',
 	'wall-delete-error-content' => 'Message wis delytit afore n it nae langer exeests.',
 	'wall-confirm-monobook-lack-of-reason' => 'Please provide ae raison fer remuiving this threed/reply.',
-	'wall-action-remove-confirm' => "Please tell us why ye'd like tae remuiv this:",
-	'wall-action-remove-thread-confirm-info' => "This threed n yer ootline will still kyth in the wiki's histerie.",
-	'wall-action-remove-reply-confirm-info' => "This replie n yer ootline will still kyth in the wiki's histerie.",
+	'wall-action-remove-confirm' => 'Please tell us why ye\'d like tae remuiv this:',
+	'wall-action-remove-thread-confirm-info' => 'This threed n yer ootline will still kyth in the wiki\'s histerie.',
+	'wall-action-remove-reply-confirm-info' => 'This replie n yer ootline will still kyth in the wiki\'s histerie.',
 	'wall-action-remove-confirm-ok' => 'Remuiv',
 	'wall-action-close-thread-title' => 'Clawse this threed',
-	'wall-action-close-confirm' => "Please tell us why ye'd like tae clawse this:",
+	'wall-action-close-confirm' => 'Please tell us why ye\'d like tae clawse this:',
 	'wall-action-close-thread-confirm-info' => 'This threed will still be veesible.',
 	'wall-action-close-confirm-ok' => 'Clawse',
 	'wall-action-admin-thread-title' => 'Delyte this threed',
 	'wall-action-admin-reply-title' => 'Delyte this replie',
-	'wall-action-admin-confirm' => "Please tell us why ye'd like tae delyte this:",
-	'wall-action-admin-thread-confirm-info' => "This threed n yer ootline will still kyth in the wiki's histerie",
-	'wall-action-admin-reply-confirm-info' => "This threed n yer ootline will still kyth in the wiki's histerie. Yinlie admeenistraters will be able tae see this threed.",
+	'wall-action-admin-confirm' => 'Please tell us why ye\'d like tae delyte this:',
+	'wall-action-admin-thread-confirm-info' => 'This threed n yer ootline will still kyth in the wiki\'s histerie',
+	'wall-action-admin-reply-confirm-info' => 'This threed n yer ootline will still kyth in the wiki\'s histerie. Yinlie admeenistraters will be able tae see this threed.',
 	'wall-action-admin-confirm-ok' => 'Delyte',
 	'wall-action-restore-thread-title' => 'Restore this threed',
 	'wall-action-restore-reply-title' => 'Restore this replie',
-	'wall-action-restore-confirm' => "Please tell us why ye'd like tae restore this:",
+	'wall-action-restore-confirm' => 'Please tell us why ye\'d like tae restore this:',
 	'wall-action-restore-confirm-ok' => 'Restore',
 	'wall-action-rev-thread-title' => 'Reveesion delyte this threed?',
 	'wall-action-rev-reply-title' => 'Reveesion delyte this replie?',
@@ -6842,32 +6904,32 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wn-user1-reply-self-your-wall' => '$1 replied tae ae message oan yer waw',
 	'wn-user2-reply-self-your-wall' => '$1 n $2 replied tae ae message oan yer waw',
 	'wn-user3-reply-self-your-wall' => '$1 n ithers replied tae ae message oan yer waw',
-	'wn-user1-reply-other-your-wall' => "$1 replied tae $2's message oan yer waw",
-	'wn-user2-reply-other-your-wall' => "$1 n $2 replied til $3's message oan yer waw",
-	'wn-user3-reply-other-your-wall' => "$1 n ithers replied tae $2's message oan yer waw",
-	'wn-user1-reply-you-other-wall' => "$1 replied tae yer message oan $2's waw",
-	'wn-user2-reply-you-other-wall' => "$1 n $2 replied tae yer message oan $3's waw",
-	'wn-user3-reply-you-other-wall' => "$1 n ithers replied tae yer message oan $2's waw",
-	'wn-user1-reply-self-other-wall' => "$1 replied tae ae message oan $2's waw",
-	'wn-user2-reply-self-other-wall' => "$1 n $2 replied tae ae message oan $3's waw",
-	'wn-user3-reply-self-other-wall' => "$1 n ithers replied til ae message oan $2's waw",
-	'wn-user1-reply-other-other-wall' => "$1 replied tae $2's message oan $3's waw",
-	'wn-user2-reply-other-other-wall' => "$1 n $2 replied tae $3's message oan $4's waw",
-	'wn-user3-reply-other-other-wall' => "$1 n ithers replied tae $2's message oan $3's waw",
+	'wn-user1-reply-other-your-wall' => '$1 replied tae $2\'s message oan yer waw',
+	'wn-user2-reply-other-your-wall' => '$1 n $2 replied til $3\'s message oan yer waw',
+	'wn-user3-reply-other-your-wall' => '$1 n ithers replied tae $2\'s message oan yer waw',
+	'wn-user1-reply-you-other-wall' => '$1 replied tae yer message oan $2\'s waw',
+	'wn-user2-reply-you-other-wall' => '$1 n $2 replied tae yer message oan $3\'s waw',
+	'wn-user3-reply-you-other-wall' => '$1 n ithers replied tae yer message oan $2\'s waw',
+	'wn-user1-reply-self-other-wall' => '$1 replied tae ae message oan $2\'s waw',
+	'wn-user2-reply-self-other-wall' => '$1 n $2 replied tae ae message oan $3\'s waw',
+	'wn-user3-reply-self-other-wall' => '$1 n ithers replied til ae message oan $2\'s waw',
+	'wn-user1-reply-other-other-wall' => '$1 replied tae $2\'s message oan $3\'s waw',
+	'wn-user2-reply-other-other-wall' => '$1 n $2 replied tae $3\'s message oan $4\'s waw',
+	'wn-user3-reply-other-other-wall' => '$1 n ithers replied tae $2\'s message oan $3\'s waw',
 	'wn-user1-reply-you-a-wall' => '$1 replied tae yer message',
 	'wn-user2-reply-you-a-wall' => '$1 n $2 replied tae yer message',
 	'wn-user3-reply-you-a-wall' => '$1 n ithers replied tae yer message',
 	'wn-user1-reply-self-a-wall' => '$1 replied tae ae message',
 	'wn-user2-reply-self-a-wall' => '$1 n $2 replied tae ae message',
 	'wn-user3-reply-self-a-wall' => '$1 n ithers replied tae ae message',
-	'wn-user1-reply-other-a-wall' => "$1 replied tae $2's message",
-	'wn-user2-reply-other-a-wall' => "$1 n $2 replied tae $3's message",
-	'wn-user3-reply-other-a-wall' => "$1 n ithers replied tae $3's message",
+	'wn-user1-reply-other-a-wall' => '$1 replied tae $2\'s message',
+	'wn-user2-reply-other-a-wall' => '$1 n $2 replied tae $3\'s message',
+	'wn-user3-reply-other-a-wall' => '$1 n ithers replied tae $3\'s message',
 	'wn-newmsg-onmywall' => '$1 left ae new message oan yer waw',
-	'wn-newmsg' => "Ye left ae new message oan $1's waw",
-	'wn-newmsg-on-followed-wall' => "$1 left ae new message oan $2's waw",
-	'wn-admin-thread-deleted' => "Threed remuived fae $1's waw",
-	'wn-admin-reply-deleted' => "Replie remuived fae threed oan $1's waw",
+	'wn-newmsg' => 'Ye left ae new message oan $1\'s waw',
+	'wn-newmsg-on-followed-wall' => '$1 left ae new message oan $2\'s waw',
+	'wn-admin-thread-deleted' => 'Threed remuived fae $1\'s waw',
+	'wn-admin-reply-deleted' => 'Replie remuived fae threed oan $1\'s waw',
 	'wn-owner-thread-deleted' => 'Threed remuived fae yer waw',
 	'wn-owner-reply-deleted' => 'Replie remuived fae threed oan yer waw',
 	'wall-sorting-newest-threads' => 'Newest threeds',
@@ -6878,11 +6940,11 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'tog-enotifwallthread' => '…somebodie replies tae ae Message Waw threed that Ah follae',
 	'tog-enotifmywall' => '…somebodie posts ae new message oan ma waw',
 	'wall-deleted-msg-pagetitle' => 'Message delytit',
-	'wall-deleted-msg-text' => "The message that ye'r ettlin tae see haes been delytit.",
-	'wall-deleted-msg-return-to' => "Return tae $1's wall.",
+	'wall-deleted-msg-text' => 'The message that ye\'r ettlin tae see haes been delytit.',
+	'wall-deleted-msg-return-to' => 'Return tae $1\'s wall.',
 	'wall-deleted-msg-view' => '(See/Restore)',
 	'wall-recentchanges-wall-thread' => 'Waw threed',
-	'wall-recentchanges-new-message' => "oan [[$1|$2's waw]]",
+	'wall-recentchanges-new-message' => 'oan [[$1|$2\'s waw]]',
 	'wall-recentchanges-edit' => 'eeditit message',
 	'wall-recentchanges-removed-thread' => 'remuived threed "[[$1|$2]]" fae [[$3|$4\'s waw]]',
 	'wall-recentchanges-removed-reply' => 'remuived replie fae "[[$1|$2]]" fae [[$3|$4\'s waw]]',
@@ -6891,20 +6953,20 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-recentchanges-deleted-thread' => 'delytit threed "[[$1|$2]]" fae [[$3|$4\'s waw]]',
 	'wall-recentchanges-deleted-reply' => 'delytit replie fae "[[$1|$2]]" fae [[$3|$4\'s waw]]',
 	'wall-recentchanges-closed-thread' => 'clawsed threed "[[$1|$2]] oan [[$3|$4\'s waw]]"',
-	'wall-recentchanges-reopened-thread' => 'reapened threed "[[$1|$2]] oan [[$3|$4\'s waw]]"', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'reapened threed "[[$1|$2]] oan [[$3|$4\'s waw]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Ae replie oan message waw',
 	'wall-recentchanges-wall-created-title' => 'makit ae message waw',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Waw',
-	'wall-recentchanges-thread-group' => "$1 oan [[$2|$3's waw]]",
+	'wall-recentchanges-thread-group' => '$1 oan [[$2|$3\'s waw]]',
 	'wall-recentchanges-history-link' => 'waw histerie',
 	'wall-recentchanges-thread-history-link' => 'threed histerie',
-	'wall-contributions-line' => "[[$1|$2]] oan [[$3|$4's waw]]",
-	'wall-whatlinkshere-wall-line' => "[[$1|$2]] oan [[$3|$4's waw]]",
-	'wall-message-not-found' => "This message coudna be foond. Gif ye'r seein this mistak, please contact Wikia at [[Special:Contact]] n provide aes muckle detail aes possible aneat hou this bug can be reproduced. Thank ye!",
+	'wall-contributions-line' => '[[$1|$2]] oan [[$3|$4\'s waw]]',
+	'wall-whatlinkshere-wall-line' => '[[$1|$2]] oan [[$3|$4\'s waw]]',
+	'wall-message-not-found' => 'This message coudna be foond. Gif ye\'r seein this mistak, please contact Wikia at [[Special:Contact]] n provide aes muckle detail aes possible aneat hou this bug can be reproduced. Thank ye!',
 	'wall-message-staff-text' => 'This uiser is ae member o Wikia staff',
 	'wall-ipballowusertalk' => 'Allou this uiser tae post oan thair ain Message Waw while blockit.',
-	'wall-ipbwatchuser' => "Watch this uiser's profile n follae thair Message Waw",
-	'wall-wiki-activity-on' => "oan [[$1|$2's waw]]",
+	'wall-ipbwatchuser' => 'Watch this uiser\'s profile n follae thair Message Waw',
+	'wall-wiki-activity-on' => 'oan [[$1|$2\'s waw]]',
 	'wall-removed-thread-undo' => 'This threed haes been remuived. $1',
 	'wall-removed-reply-undo' => 'This replie haes been remuived. $1',
 	'wall-removed-reply' => 'This replie haes been remuived',
@@ -6913,8 +6975,8 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-deleted-reply' => 'This replie haes been delytit',
 	'wall-history' => 'Histerie',
 	'wall-history-title' => 'waw histerie',
-	'wall-history-who-involved-wall-title' => "Wha's involved?",
-	'wall-history-who-involved-thread-title' => "Wha's involved in this threed?",
+	'wall-history-who-involved-wall-title' => 'Wha\'s involved?',
+	'wall-history-who-involved-thread-title' => 'Wha\'s involved in this threed?',
 	'wall-history-thread-created' => '$1 creautit bi $2',
 	'wall-history-thread-removed' => '$1 remuived bi $2',
 	'wall-history-thread-restored' => '$1 restored bi $2',
@@ -6932,13 +6994,13 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-thread-history-thread-created' => '$1 $2 makit this threed',
 	'wall-thread-history-reply-created' => '$1 $2 left ae replie',
 	'wall-thread-history-thread-removed' => '$1 $2 remuived this threed',
-	'wall-thread-history-reply-removed' => "$1 $2 remuived $3's replie $5",
-	'wall-thread-history-reply-deleted' => "$1 $2 delytit $3's replie",
+	'wall-thread-history-reply-removed' => '$1 $2 remuived $3\'s replie $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 delytit $3\'s replie',
 	'wall-thread-history-thread-restored' => '$1 $2 restored this threed',
-	'wall-thread-history-reply-restored' => "$1 $2 restored $3's replie $5",
+	'wall-thread-history-reply-restored' => '$1 $2 restored $3\'s replie $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 delytit this threed',
-	'wall-thread-history-thread-edited' => "$1 $2 eedited $3's message $5",
-	'wall-thread-history-reply-edited' => "$1 $2 eedited $3's message $5",
+	'wall-thread-history-thread-edited' => '$1 $2 eedited $3\'s message $5',
+	'wall-thread-history-reply-edited' => '$1 $2 eedited $3\'s message $5',
 	'wall-thread-history-thread-closed' => '$2 clawsed this threed',
 	'wall-thread-history-thread-reopened' => '$2 reapened this threed',
 	'wall-history-action-restore-reply' => 'restore replie',
@@ -6962,7 +7024,7 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos}}',
 	'wall-votes-number-tooltip' => 'See wha gave Kudos tae this message',
 	'wall-votes-vote-tooltip' => 'Gie Kudos tae this message',
-	'wall-votes-voted-tooltip' => "Ye'v gien this message Kudos!",
+	'wall-votes-voted-tooltip' => 'Ye\'v gien this message Kudos!',
 	'wall-quote-reply-to' => 'replie tae #$1',
 	'wall-topic-input-placeholder' => 'Eik ae Topic (aen optie)',
 	'wall-topic-input-error' => 'Thaur\'s nae airticle named "$1". Please uise aen exeestin airticle name aes ae Topeec.',
@@ -6972,10 +7034,6 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-topic-edit-save' => 'Hain',
 ];
 
-/** Swedish (svenska)
- * @author Cybjit
- * @author WikiPhoenix
- */
 $messages['sv'] = [
 	'wall-no-title' => 'Ingen titel',
 	'wall-message-loadmore' => 'Visa <span class="count">{{PLURAL:$1|$1 svar|alla $1 svar}}</span>',
@@ -7229,10 +7287,6 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 ];
 
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- * @author மதனாஹரன்
- */
 $messages['ta'] = [
 	'wall-no-title' => 'தலைப்பில்லை',
 	'wall-toolbar-history' => 'வரலாறு',
@@ -7254,16 +7308,10 @@ $messages['ta'] = [
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
 ];
 
-/** Telugu (తెలుగు)
- * @author Ravichandra
- */
 $messages['te'] = [
 	'wall-history-who-involved-wall-title' => 'ఎవరు పాల్గొంటున్నారు?',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'wall-no-title' => 'Walang pamagat',
 	'wall-message-loadmore' => 'Tingnan ang <span class="count">{{PLURAL:$1|$1 tugon|lahat ng $1 mga tugon}}</span>',
@@ -7417,7 +7465,7 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-recentchanges-thread-history-link' => 'kasaysayan ng sinulid',
 	'wall-contributions-line' => '[[$1|$2]] na nasa ibabaw ng [[$3|dingding ni $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] na nasa ibabaw ng [[$3|dingding ni $4]]',
-	'wall-message-not-found' => "Hindi matagpuan ang mensaheng ito. Kapag nakita mo ang kamaliang ito, paki makipag-ugnayan sa Wikia roon sa [[Special:Contact|Natatangi:Makipag-ugnayan]] at magbigay ng maraming mga detalye hangga't maaari patungkol sa kung paano naibubunga ang depektong ito. Salamat!",
+	'wall-message-not-found' => 'Hindi matagpuan ang mensaheng ito. Kapag nakita mo ang kamaliang ito, paki makipag-ugnayan sa Wikia roon sa [[Special:Contact|Natatangi:Makipag-ugnayan]] at magbigay ng maraming mga detalye hangga\'t maaari patungkol sa kung paano naibubunga ang depektong ito. Salamat!',
 	'wall-message-staff-text' => 'Ang tagagamit na ito ay isang kasapi sa tauhan ng Wikia',
 	'wall-ipballowusertalk' => 'Pahintulutan ang tagagamit na ito na magpaskil sa sarili nilang Dingding ng Mensahe habang hinaharangan',
 	'wall-ipbwatchuser' => 'Bantayan ang balangkas ng katangian ng tagagamit na ito at sundan ang kanilang Dingding ng Mensahe',
@@ -7430,7 +7478,7 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-deleted-reply' => 'Nabura na ang tugon na ito',
 	'wall-history' => 'Kasaysayan',
 	'wall-history-title' => 'kasaysayan ng dingding',
-	'wall-history-who-involved-wall-title' => 'Sino ba ang kasangkot sa dingding na ito?', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'Sino ba ang kasangkot sa dingding na ito?',
 	'wall-history-who-involved-thread-title' => 'Sino ba ang kasangkot sa sinulid na ito?',
 	'wall-history-thread-created' => 'Ang $1 ay nilikha ni $2',
 	'wall-history-thread-removed' => 'Ang $1 ay tinanggal ni $2',
@@ -7445,7 +7493,7 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-history-action-view' => 'tingnan',
 	'wall-history-action-restore' => 'papanumbalikin',
 	'wall-history-action-thread-history' => 'kasaysayan ng sinulid',
-	'wall-thread-history-title' => 'kasaysayan ng sinulid', # Fuzzy
+	'wall-thread-history-title' => 'kasaysayan ng sinulid',
 	'wall-thread-history-thread-created' => 'Nilikha ni $2 ang sinulid na ito $1',
 	'wall-thread-history-reply-created' => 'Nag-iwan si $1 $2 ng isang katugunan',
 	'wall-thread-history-thread-removed' => 'Tinanggal ni $1 $2 ang sinulid na ito',
@@ -7460,23 +7508,23 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-history-action-restore-reply' => 'papanumbalikin ang katugunan',
 	'wall-history-action-restore-thread' => 'papanumbalikin ang sinulid',
 	'wall-message-not-found-in-db' => 'Hindi namin matagpuan ang mensaheng pandingding na ito sa loob ng aming kalipunan ng dato, paumanhin.',
-	'prefs-email-wall-v2' => 'Dingding ng Mensahe', # Fuzzy
+	'prefs-email-wall-v2' => 'Dingding ng Mensahe',
 	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
 	'tog-enotifmywall-every' => 'Para sa bawat mensahe at sagot',
 	'tog-enotifmywall-sincevisited' => 'Isa bawat sinulid magmula noong huling pagdalaw ko',
 	'tog-enotifmywall-reminder' => 'Na mayroong isang pang-araw-araw na e-liham na paalala',
-	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe',
+	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
 	'wallshowsource-toggle' => 'Paganahin ang {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
-	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe', # Fuzzy
+	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
 	'wall-notifications-notifyeveryone' => 'Pinagliwanag ni $1',
 	'wall-message-notifyeveryone' => 'Pagliwanagin ang sinulid na ito',
 	'wall-message-unnotifyeveryone' => 'Huwag nang pagliwanagin ang sinulid na ito',
-	'wall-message-notifyeveryone-tooltip' => 'Bawat isang nakalagdang tao sa wiki ay pababatiran ng hinggil sa sinulid na ito', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Bawat isang nakalagdang tao sa wiki ay pababatiran ng hinggil sa sinulid na ito',
 	'wall-votes-modal-showmore' => 'Tingnan ang iba pa na nagbigay ng Kudos',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Isang tao|$1 mga tao}} ang nagbigay ng Kudos sa mensaheng ito',
-	'wall-votes-number' => '$1 Kudos', # Fuzzy
+	'wall-votes-number' => '$1 Kudos',
 	'wall-votes-number-tooltip' => 'Tingnan kung sino ang nagbigay ng Kudos sa mensaheng ito',
 	'wall-votes-vote-tooltip' => 'Magbigay ng Kudos sa mensaheng ito',
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
@@ -7484,10 +7532,6 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-quote-reply-to' => 'tumugon kay #$1',
 ];
 
-/** Talysh (толышә зывон)
- * @author Erdemaslancan
- * @author Гусейн
- */
 $messages['tly'] = [
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
@@ -7496,10 +7540,6 @@ $messages['tly'] = [
 	'wall-history-action-view' => 'тәмшо кардеј',
 ];
 
-/** Turkish (Türkçe)
- * @author Erdemaslancan
- * @author Incelemeelemani
- */
 $messages['tr'] = [
 	'wall-message-wall' => 'Mesaj Duvarı',
 	'wall-message-wall-shorten' => 'duvar',
@@ -7558,10 +7598,6 @@ $messages['tr'] = [
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
 ];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- * @author Ilnur efende
- */
 $messages['tt-cyrl'] = [
 	'wall-message-undoremove' => 'Кире кайтару',
 	'wall-toolbar-history' => 'Тарих',
@@ -7590,20 +7626,10 @@ $messages['tt-cyrl'] = [
 	'wn-newmsg' => 'Сез $1 диварында яңа хат калдырдыгыз',
 ];
 
-/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
- * @author Tifinaghes
- */
 $messages['tzm'] = [
 	'wall-no-title' => 'ⵡⴰⵔ ⴰⵣⵡⵉⵍ',
 ];
 
-/** Ukrainian (українська)
- * @author Andriykopanytsia
- * @author Base
- * @author Pig1995z
- * @author Wildream
- * @author Капитан Джон Шепард
- */
 $messages['uk'] = [
 	'wall-no-title' => 'Без назви',
 	'wall-message-loadmore' => 'Подивитись $1 {{PLURAL:$1|відповідь|відповідей|відповіді}}',
@@ -7614,8 +7640,8 @@ $messages['uk'] = [
 	'wall-message-edited' => '<a href="$3" >Відредагував</a> <a class="username" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 на </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Тема змінена',
-	'wall-message-update-highlight-summary' => 'Виділений',
-	'wall-message-update-removed-highlight-summary' => 'Виділення вилучено',
+	'wall-message-update-highlight-summary' => 'Повідомити всіх',
+	'wall-message-update-removed-highlight-summary' => 'Оповіщення видалене',
 	'wall-message-mywall' => 'Моя стіна',
 	'wall-toolbar-history' => 'Історія',
 	'wall-message-notify' => 'Повідомити адміністратора',
@@ -7656,8 +7682,8 @@ $messages['uk'] = [
 	'wall-message-move-thread' => 'Перемістити цю гілку',
 	'wall-message-removed-reply-because' => '$1 видалив це повідомлення, тому що:',
 	'wall-message-deleted-reply-because' => '$1 видалив це повідомлення, тому що:',
-	'wall-message-closed-by' => '[[$2| $1]] вилучив цю тему',
-	'wall-message-closed-by-because' => '$1 {{GENDER:$1|видалив|видалила}} це обговорення, тому що:',
+	'wall-message-closed-by' => '[[$2| $1]] закрив цю тему',
+	'wall-message-closed-by-because' => '$1 закрив цю тему, тому що:',
 	'wall-message-restore-reply' => 'Відновити повідомлення',
 	'wall-delete-reason' => 'Дія користувача/адміністратора',
 	'wall-user-talk-page-archive-anchor' => 'Переглянути заархівовані сторінки обговорення',
@@ -7679,9 +7705,9 @@ $messages['uk'] = [
 	'wall-action-remove-thread-confirm-info' => 'Це обговорення, і ваші комментарі залишуться в історії вікі',
 	'wall-action-remove-reply-confirm-info' => 'Ця відповідь, і ваші комментарі залишуться в історії вікі',
 	'wall-action-remove-confirm-ok' => 'Вилучити',
-	'wall-action-close-thread-title' => 'Закрити цю гілку',
-	'wall-action-close-confirm' => 'Будь ласка, повідомте нам, чому ви б хотіли видалити це:',
-	'wall-action-close-thread-confirm-info' => 'Цей потік все одно буде видно.',
+	'wall-action-close-thread-title' => 'Закрити цю тему',
+	'wall-action-close-confirm' => 'Будь ласка, повідомте нам, чому б ви хотіли закрити це:',
+	'wall-action-close-thread-confirm-info' => 'Цю дискусію все ще можуть бачити інші користувачі.',
 	'wall-action-close-confirm-ok' => 'Закрити',
 	'wall-action-admin-thread-title' => 'Видалити цю тему',
 	'wall-action-admin-reply-title' => 'Видалити цю відповідь',
@@ -7698,11 +7724,11 @@ $messages['uk'] = [
 	'wall-action-rev-reply-confirm' => 'Ви дійсно бажаєте видалити це повідомлення?',
 	'wall-action-rev-thread-confirm' => 'Ви справді бажаєте повністю видалити це обговорення зі всіею його історією? Це не можна буде скасувати',
 	'wall-action-rev-confirm-ok' => 'Так, видалити',
-	'wall-action-move-thread-heading' => 'Вилучити це обговорення',
-	'wall-action-move-validation-select-wall' => 'Будь ласка, виберіть форум.',
-	'wall-action-move-topics-summary' => 'Гілку переміщено',
-	'wall-action-move-thread-ok' => 'Перенести гілку',
-	'wall-action-move-board-label' => 'Виберіть форум, щоб перейти до нього',
+	'wall-action-move-thread-heading' => 'Перемістити цю тему',
+	'wall-action-move-validation-select-wall' => 'Будь ласка, оберіть головну тему',
+	'wall-action-move-topics-summary' => 'Тему переміщено',
+	'wall-action-move-thread-ok' => 'Перемістити тему',
+	'wall-action-move-board-label' => 'Оберіть головну тему для переміщення',
 	'wall-notifications' => 'Сповіщення',
 	'wall-notifications-all' => 'Усі сповіщення',
 	'wall-notifications-markasread' => 'Позначити всі, як прочитані',
@@ -7771,12 +7797,12 @@ $messages['uk'] = [
 	'wall-recentchanges-deleted-reply-title' => 'Відповідь на стіні обговорень',
 	'wall-recentchanges-wall-created-title' => 'Створена стіна повідомлень',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Стіна обговорень',
-	'wall-recentchanges-thread-group' => "Обговорення $1 на [[$2| стіні $3']]",
+	'wall-recentchanges-thread-group' => 'Обговорення $1 на [[$2| стіні $3\']]',
 	'wall-recentchanges-history-link' => 'Історія обговорення',
 	'wall-recentchanges-thread-history-link' => 'Історія теми',
 	'wall-contributions-line' => '[[$1|$2]] на [[$3|стіні $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] на [[$3|стіні $4]]',
-	'wall-message-not-found' => "Це повідомлення не було знайдено. Якщо ви вважаете, що це - помилка, зв'яжіться, будь ласка, зі співробітниками Вікія через [[Special:Contact]], і як можна більш детально опишіть проблему, щоб ми могли вирішити її. Дякуємо!",
+	'wall-message-not-found' => 'Це повідомлення не було знайдено. Якщо ви вважаете, що це - помилка, зв\'яжіться, будь ласка, зі співробітниками Вікія через [[Special:Contact]], і як можна більш детально опишіть проблему, щоб ми могли вирішити її. Дякуємо!',
 	'wall-message-staff-text' => 'Цей користувач - співробітник Вікія',
 	'wall-ipballowusertalk' => 'Дозволити користувачу розміщувати повідомлення на власній стіні, коли він заблокований',
 	'wall-ipbwatchuser' => 'Стежити за власною сторінкою користувача, і його стіною обговорення.',
@@ -7842,12 +7868,12 @@ $messages['uk'] = [
 	'wall-votes-voted-tooltip' => 'Вам сподобалось це повідомлення!',
 	'wall-quote-author' => '$1 написав:',
 	'wall-quote-reply-to' => 'Відповідь на #$1',
-	'wall-topic-input-heading' => 'Тема',
-	'wall-topic-input-placeholder' => 'Додати тему (за бажанням)',
-	'wall-topic-input-error' => 'Немає статті, названої "$1". Будь ласка, використовуйте назву існуючої статті як тему.',
-	'wall-topic-input-error-limit' => 'Гілка може мати щонайбільше $1 {{PLURAL:$1|тему|теми|тем}}.',
-	'wall-topic-heading' => 'Теми для цієї гілки:',
-	'wall-topic-edit' => 'Редагувати теми',
+	'wall-topic-input-heading' => 'Спільні теми',
+	'wall-topic-input-placeholder' => 'Додати Спільну тему (необов\'язково)',
+	'wall-topic-input-error' => 'Не існує сторінки з назвою "$1". Будь ласка, введіть назву існуючої сторінки.',
+	'wall-topic-input-error-limit' => 'Дискусія може вміщувати лише $1 {{PLURAL:$1|спільну тему|спілньі теми|спільних тем}}.',
+	'wall-topic-heading' => 'Спільні теми для цієї дискусії:',
+	'wall-topic-edit' => 'Редагувати спільні теми',
 	'wall-topic-edit-save' => 'Зберегти',
 	'wall-topic-edit-cancel' => 'Скасувати',
 	'group-threadmoderator' => 'Модератори',
@@ -7855,18 +7881,10 @@ $messages['uk'] = [
 	'grouppage-threadmoderator' => 'w:c:спільнота:допомога:Модератори',
 ];
 
-/** Uzbek (oʻzbekcha/ўзбекча)
- * @author Sociologist
- */
 $messages['uz'] = [
 	'wall-history-thread-removed' => '$1 $2 ni oʻchirdi',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- * @author Rémy Lee
- * @author Xiao Qiao
- */
 $messages['vi'] = [
 	'wall-no-title' => 'Không có tiêu đề',
 	'wall-message-loadmore' => 'Xem <span class="count">{{PLURAL:$1|$1 hồi âm|tất cả $1 hồi âm}}</span>',
@@ -8090,7 +8108,7 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'tog-enotifmywall-every' => 'Cho mỗi tin nhắn & hồi âm',
 	'tog-enotifmywall-sincevisited' => 'Mỗi lần một luồng kể từ lần cuối cùng tôi đăng nhập',
 	'tog-enotifmywall-reminder' => 'Với thư điện tử thông báo hằng ngày',
-	'tog-enotifmywall-noemail' => 'Không. Đừng gửi cho tôi bất kỳ email nào về Tường tin nhắn và Diễn đàn',
+	'tog-enotifmywall-noemail' => 'Không. Đừng gửi cho tôi bất kỳ thư nào về Tường tin nhắn và Diễn đàn',
 	'wallshowsource-toggle-v2' => 'Kích hoạt {{int:user-action-menu-view-source}} trên các luồng',
 	'wallshowsource-toggle' => 'Kích hoạt {{int:user-action-menu-view-source}} những tin gửi trên Tường tin nhắn',
 	'walldelete-toggle' => 'Kích hoạt Xem lại bản xóa những tin gửi trên các luồng',
@@ -8115,14 +8133,14 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit' => 'Sửa đổi chủ đề',
 	'wall-topic-edit-save' => 'Lưu',
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
+	'group-threadmoderator-member' => 'Điều phối viên',
+	'group-threadmoderator' => 'Điều phối viên',
+	'grouppage-threadmoderator' => 'w:c:community:vi:Help:Điều_phối_viên',
 ];
 
-/** Walloon (walon)
- * @author Srtxg
- */
 $messages['wa'] = [
-	'wall-no-title' => "Pont d' tite",
-	'wall-message-loadmore' => 'Vey {{PLURAL:$1|li response|totes les $1 responses}}', # Fuzzy
+	'wall-no-title' => 'Pont d\' tite',
+	'wall-message-loadmore' => 'Vey {{PLURAL:$1|li response|totes les $1 responses}}',
 	'wall-message-wall' => 'Meur di messaedjes',
 	'wall-message-wall-shorten' => 'meur',
 	'wall-message-unfollow' => 'Èn pus shuve',
@@ -8134,16 +8152,16 @@ $messages['wa'] = [
 	'wall-message-remove' => 'Rissaetchî',
 	'wall-message-rev-delete' => 'Disfacer les modêyes',
 	'wall-message-elseswall' => 'meur da $1',
-	'wall-message-no-permission' => "Vos n' avoz nén les permissions po fé ciste accion la sol messaedje",
+	'wall-message-no-permission' => 'Vos n\' avoz nén les permissions po fé ciste accion la sol messaedje',
 	'wall-thread-removed' => 'Rissaetchî',
 	'wall-thread-deleted' => 'Disfacé',
 	'wall-default-title' => 'Messaedje da $1',
-	'wall-no-title-warning' => "← Vos n' avoz nén dné on tite",
+	'wall-no-title-warning' => '← Vos n\' avoz nén dné on tite',
 	'wall-desc' => 'Replaeçmint pol pådje di copene des uzeus',
-	'wall-disabled-desc' => "Fonccionalité di meur di messaedjes po les wikis sins l' rawete «meur»",
-	'wall-placeholder-topic' => "Cwè çki c' est d' ça?",
+	'wall-disabled-desc' => 'Fonccionalité di meur di messaedjes po les wikis sins l\' rawete «meur»',
+	'wall-placeholder-topic' => 'Cwè çki c\' est d\' ça?',
 	'wall-placeholder-message' => 'Mete on novea messaedje sol meur da $1',
-	'wall-placeholder-message-anon' => "Mete on novea messaedje so ç' meur ci",
+	'wall-placeholder-message-anon' => 'Mete on novea messaedje so ç\' meur ci',
 	'wall-placeholder-reply' => 'Responde',
 	'wall-button-to-preview-comment' => 'Vey divant',
 	'wall-button-to-cancel-preview' => 'Candjî',
@@ -8156,34 +8174,34 @@ $messages['wa'] = [
 	'wall-message-edit' => 'Candjî',
 	'wall-message-more' => 'Di pus',
 	'wall-message-delete' => 'Disfacer',
-	'wall-message-removed-thread-because' => "$1 a rsaetchî ç' fyi ci paski:",
-	'wall-message-deleted-thread-because' => "$1 a disfacé ç' fyi ci paski:",
+	'wall-message-removed-thread-because' => '$1 a rsaetchî ç\' fyi ci paski:',
+	'wall-message-deleted-thread-because' => '$1 a disfacé ç\' fyi ci paski:',
 	'wall-message-restore-thread' => 'Rapexhî fyi',
 	'wall-message-removed-reply-because' => '$1 a rsaetchî cisse response ci paski:',
 	'wall-message-deleted-reply-because' => '$1 a disfacé cisse response ci paski:',
 	'wall-message-restore-reply' => 'Rapexhî response',
 	'wall-delete-reason' => 'Accion uzeu/manaedjeu',
-	'wall-user-talk-page-archive-anchor' => "Vey l' årtchive del pådje di copene",
+	'wall-user-talk-page-archive-anchor' => 'Vey l\' årtchive del pådje di copene',
 	'wall-user-talk-archive-page-title' => 'Årtchive del copene',
 	'wall-action-all-confirm-cancel' => 'Rinoncî',
 	'wall-action-all-confirm-notify' => 'Advierti les manaedjeus',
-	'wall-action-remove-reply-title' => "Rissaetchî l' response",
-	'wall-action-remove-thread-title' => "Rissaetchî l' fyi",
-	'wall-confirm-monobook-remove' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rsaetchî.
+	'wall-action-remove-reply-title' => 'Rissaetchî l\' response',
+	'wall-action-remove-thread-title' => 'Rissaetchî l\' fyi',
+	'wall-confirm-monobook-remove' => 'Dijhoz s\' i vs plait pocwè vos l\' vôrîz rsaetchî.
 
-Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istwere do wiki.",
-	'wall-confirm-monobook-admin' => "Dijhoz s' i vs plait pocwè vos l' vôrîz disfacer.
+Li messaedje d\' oridjinne eyet vosse rascourti seront todi veyåves dins l\' istwere do wiki.',
+	'wall-confirm-monobook-admin' => 'Dijhoz s\' i vs plait pocwè vos l\' vôrîz disfacer.
 
-Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istwere do wiki.",
-	'wall-confirm-monobook-restore' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rapexhî.",
+Li messaedje d\' oridjinne eyet vosse rascourti seront todi veyåves dins l\' istwere do wiki.',
+	'wall-confirm-monobook-restore' => 'Dijhoz s\' i vs plait pocwè vos l\' vôrîz rapexhî.',
 	'wall-delete-error-title' => 'Aroke',
-	'wall-delete-error-content' => "Li messaedje n' egzistêye nén la k' il a ddja stî disfacé.",
-	'wall-confirm-monobook-lack-of-reason' => "Dinez s' i vs plait l' råjhon pol rissaetchaedje do fyi/del response.",
+	'wall-delete-error-content' => 'Li messaedje n\' egzistêye nén la k\' il a ddja stî disfacé.',
+	'wall-confirm-monobook-lack-of-reason' => 'Dinez s\' i vs plait l\' råjhon pol rissaetchaedje do fyi/del response.',
 	'wall-action-remove-confirm-ok' => 'Rissaetchî',
 	'wall-action-admin-confirm-ok' => 'Disfacer',
-	'wall-action-restore-thread-title' => "Rapexhî l' fyi",
-	'wall-action-restore-reply-title' => "Rapexhî l' response",
-	'wall-action-restore-confirm' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rapexhî:",
+	'wall-action-restore-thread-title' => 'Rapexhî l\' fyi',
+	'wall-action-restore-reply-title' => 'Rapexhî l\' response',
+	'wall-action-restore-confirm' => 'Dijhoz s\' i vs plait pocwè vos l\' vôrîz rapexhî:',
 	'wall-action-restore-confirm-ok' => 'Rapexhî',
 	'wall-notifications-markasread' => 'Tot marker come léjhou',
 	'wall-notifications-markasread-all-wikis' => 'Tos les wikis',
@@ -8210,23 +8228,10 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-action-restore' => 'rapexhî',
 ];
 
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
 $messages['yi'] = [
 	'wall-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
 ];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Dimension
- * @author Ffaarr
- * @author Liuxinyu970226
- * @author Macofe
- * @author Sam Wang
- * @author Xiaomingyan
- * @author Yfdyh000
- * @author 乌拉跨氪
- */
 $messages['zh-hans'] = [
 	'wall-no-title' => '无标题',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1条回复|全部$1条回复}}</span>',
@@ -8256,7 +8261,7 @@ $messages['zh-hans'] = [
 	'wall-no-title-warning' => '← 您未指定任何标题',
 	'wall-desc' => '用户讨论页的替代品',
 	'wall-disabled-desc' => '对于没有启用Wall扩展的wiki的信息墙功能',
-	'wall-placeholder-topic' => '这是什么？',
+	'wall-placeholder-topic' => '主题是什么？',
 	'wall-placeholder-message' => '在$1的信息墙上发表新留言',
 	'wall-placeholder-message-anon' => '发布新留言',
 	'wall-placeholder-reply' => '发表回复',
@@ -8401,11 +8406,11 @@ $messages['zh-hans'] = [
 	'wall-recentchanges-thread-history-link' => '帖子历史',
 	'wall-contributions-line' => '[[$3|$4的墙]]上的[[$1|$2]]',
 	'wall-whatlinkshere-wall-line' => '[[$3|$4的墙]]上的[[$1|$2]]',
-	'wall-message-not-found' => '找不到此信息。如果您看到此错误，请在[[Special:Contact]]联系Wikia并尽可能提供如何重现此问题的信息。谢谢您！',
-	'wall-message-staff-text' => '该用户是Wikia的一名工作人员',
+	'wall-message-not-found' => '找不到此信息。如果您看到此错误，请在[[Special:Contact]]联系Fandom并尽可能提供如何重现此问题的信息。谢谢您！',
+	'wall-message-staff-text' => '该用户是Fandom的一名工作人员',
 	'wall-ipballowusertalk' => '允许此用户在被封禁期间在他的信息墙上发布信息',
 	'wall-ipbwatchuser' => '监视此用户的个人资料并关注它的信息墙',
-	'wall-wiki-activity-on' => '在[[$1|$2的信息墙上]]',
+	'wall-wiki-activity-on' => '在[[$1|$2的留言墙上]]',
 	'wall-removed-thread-undo' => '此话题已被移除。$1',
 	'wall-removed-reply-undo' => '此回复已被移除。$1',
 	'wall-removed-reply' => '此回复已被移除',
@@ -8461,7 +8466,7 @@ $messages['zh-hans'] = [
 	'wall-votes-modal-showmore' => '查看其他点赞的人',
 	'wall-votes-modal-title' => '赞',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|$1个人}}对此信息点赞',
-	'wall-votes-number' => '$1份{{PLURAL:$1|赞}}',
+	'wall-votes-number' => '$1个{{PLURAL:$1|赞}}',
 	'wall-votes-number-tooltip' => '查看谁对此消息点赞了',
 	'wall-votes-vote-tooltip' => '对此消息点赞',
 	'wall-votes-voted-tooltip' => '您已对此消息点赞！',
@@ -8477,16 +8482,9 @@ $messages['zh-hans'] = [
 	'wall-topic-edit-cancel' => '取消',
 	'group-threadmoderator' => '话题版主',
 	'group-threadmoderator-member' => '话题版主',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 ];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Ffaarr
- * @author LNDDYL
- * @author Liflon
- * @author Liuxinyu970226
- * @author Macofe
- */
 $messages['zh-hant'] = [
 	'wall-no-title' => '無標題',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1條回覆|全部$1條回覆}}</span>',
@@ -8516,7 +8514,7 @@ $messages['zh-hant'] = [
 	'wall-no-title-warning' => '← 您未指定任何標題',
 	'wall-desc' => '取代使用者對話頁',
 	'wall-disabled-desc' => '針對未啟用訊息牆的wiki的功能',
-	'wall-placeholder-topic' => '這是關於什麼？',
+	'wall-placeholder-topic' => '主題是什麼？',
 	'wall-placeholder-message' => '在$1的訊息牆上發表新留言',
 	'wall-placeholder-message-anon' => '發布新訊息至這個牆上',
 	'wall-placeholder-reply' => '發表回覆',
@@ -8651,16 +8649,16 @@ $messages['zh-hant'] = [
 	'wall-recentchanges-deleted-thread' => '從[[$3|$4的訊息牆]]刪除討論串 "[[$1|$2]]"',
 	'wall-recentchanges-deleted-reply' => '從[[$3|$4的訊息牆]]的"[[$1|$2]]"討論串刪除回覆',
 	'wall-recentchanges-closed-thread' => '從[[$3|$4的訊息牆]]關閉討論串 "[[$1|$2]]"',
-	'wall-recentchanges-reopened-thread' => '將討論串"[[$1|$2]]" 再度於[[$3|$4\'的訊息牆]]開啟', # Fuzzy
+	'wall-recentchanges-reopened-thread' => '將討論串"[[$1|$2]]" 再度於[[$3|$4\'的訊息牆]]開啟',
 	'wall-recentchanges-deleted-reply-title' => '訊息牆的一則回覆',
 	'wall-recentchanges-wall-created-title' => '建立訊息牆',
 	'wall-recentchanges-namespace-selector-message-wall' => '訊息牆',
 	'wall-recentchanges-thread-group' => '[[$2|$3的訊息牆]]上的討論 $1',
 	'wall-recentchanges-history-link' => '頁面歷史',
 	'wall-recentchanges-thread-history-link' => '討論串歷史',
-	'wall-contributions-line' => "[[$1|$2]] on [[$3|$4'的訊息牆]]",
-	'wall-message-not-found' => '找不到此消息。如果您看到此錯誤，請用[[special:Contact]] 聯繫 Wikia，並儘量提供關於這個問題發生的詳細訊息。謝謝！', # Fuzzy
-	'wall-message-staff-text' => '此使用者是 Wikia 職員',
+	'wall-contributions-line' => '[[$1|$2]] on [[$3|$4\'的訊息牆]]',
+	'wall-message-not-found' => '找不到此訊息。如果您看到此錯誤，請用[[special:Contact]]聯絡Fandom，並儘量提供關於這個問題發生的詳細訊息。謝謝！',
+	'wall-message-staff-text' => '此用戶是Fandom職員',
 	'wall-ipballowusertalk' => '允許此使用者在被封禁時在自己的訊息牆上發布訊息',
 	'wall-ipbwatchuser' => '觀看此使用者的使用者頁面，並關注其訊息牆',
 	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
@@ -8687,7 +8685,7 @@ $messages['zh-hant'] = [
 	'wall-history-action-view' => '檢視',
 	'wall-history-action-restore' => '恢復',
 	'wall-history-action-thread-history' => '討論串歷史',
-	'wall-thread-history-title' => '討論串歷史', # Fuzzy
+	'wall-thread-history-title' => '討論串歷史',
 	'wall-thread-history-thread-created' => '$1 $2 開始此討論串',
 	'wall-thread-history-reply-created' => '$1 $2 留下一個答覆',
 	'wall-thread-history-thread-removed' => '$1 $2 移除除此討論串',
@@ -8719,7 +8717,7 @@ $messages['zh-hant'] = [
 	'wall-votes-modal-showmore' => '看看其他給了讚的人。',
 	'wall-votes-modal-title' => '讚',
 	'wall-votes-modal-title-desc' => '有{{PLURAL:$1|One person|$1 個人}}幫這個訊息按讚',
-	'wall-votes-number' => '$1 個{{PLURAL:$1|榮譽}}',
+	'wall-votes-number' => '$1 個{{PLURAL:$1|讚}}',
 	'wall-votes-number-tooltip' => '看誰幫這個訊息按讚',
 	'wall-votes-vote-tooltip' => '幫這個訊息按讚',
 	'wall-votes-voted-tooltip' => '你已幫這個訊息按讚',
@@ -8735,4 +8733,34 @@ $messages['zh-hant'] = [
 	'wall-topic-edit-cancel' => '取消',
 	'group-threadmoderator' => '話題版主',
 	'group-threadmoderator-member' => '話題版主',
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 ];
+
+$messages['zh'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+	'wall-notifications-reminder' => '您有<span>$1</span>条未读消息',
+	'wall-placeholder-topic' => '主题是什么？',
+	'wall-topic-input-heading' => '话题',
+	'wall-topic-input-placeholder' => '添加话题（非必须的）',
+	'wall-votes-number' => '$1{{PLURAL:$1|Kudos|个赞}}',
+	'wall-wiki-activity-on' => '在[[$1|$2的留言墙上]]',
+];
+
+$messages['zh-hk'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+	'wall-placeholder-topic' => '主題是什麼？',
+	'wall-votes-number' => '$1 個{{PLURAL:$1|讚}}',
+	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
+];
+
+$messages['zh-tw'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+	'wall-placeholder-topic' => '主題是什麼？',
+	'wall-votes-number' => '$1 個{{PLURAL:$1|讚}}',
+	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
+];
+
+$messages['zh－tw'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+];
+

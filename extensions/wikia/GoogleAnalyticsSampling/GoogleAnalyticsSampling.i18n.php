@@ -1,11 +1,16 @@
 <?php
+/** Internationalization file for /extensions/wikia/GoogleAnalyticsSampling/GoogleAnalyticsSampling extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'google-analytics-sampling-desc' => 'Google Analytics Sampling',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'google-analytics-sampling-desc' => '{{desc}}',
-);
+];
+
+$messages['fr'] = [
+	'google-analytics-sampling-desc' => '&nbsp;',
+];
+

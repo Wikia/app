@@ -1,0 +1,15 @@
+.*
+*~
+*.kate-swp
+
+build/
+vendor/
+
+composer.lock
+composer.phar
+
+!.gitignore
+!.gitreview
+
+!.travis.yml
+!.scrutinizer.yml

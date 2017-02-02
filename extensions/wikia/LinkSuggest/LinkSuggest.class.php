@@ -329,7 +329,8 @@ class LinkSuggest {
 		global $wgLinkSuggestLimit;
 		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
 
-			if (strtolower($row->page_title) == $query) {
+			// SUS-846: Ensure we only have one exact match, to prevent overwriting it and losing the suggestion
+			if ( is_null( $exactMatchRow ) && strtolower( $row->page_title ) == $query ) {
 				$exactMatchRow = $row;
 				continue;
 			}

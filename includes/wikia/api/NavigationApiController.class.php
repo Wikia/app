@@ -1,11 +1,10 @@
 <?php
 
-	/**
-	 * Controller to get Wiki Navigation for a wiki
-	 *
-	 * @author Jakub "Student" Olek
-	 */
-
+/**
+ * Controller to get Wiki Navigation for a wiki
+ *
+ * @author Jakub "Student" Olek
+ */
 class NavigationApiController extends WikiaApiController {
 
 	/**
@@ -21,7 +20,7 @@ class NavigationApiController extends WikiaApiController {
 		$nav = $model->getWiki();
 
 		$ret = array();
-		foreach( $nav as $type => $list ){
+		foreach ( $nav as $type => $list ) {
 			$ret[$type] = $this->getChildren( $list );
 		}
 
@@ -32,30 +31,36 @@ class NavigationApiController extends WikiaApiController {
 		);
 	}
 
-	private function getChildren( $list, $i = 0 ){
-		$children = array();
-		$next = array();
+	private function getChildren( $list, $i = 0 ) {
+		$children = [ ];
+		$next = [ ];
 
-		$element = $list[$i];
+		if ( isset ($list[$i]) ) {
+			$element = $list[$i];
+		} else {
+			return [ ];
+		}
 
-		if ( isset( $element['children'] ) ) {
-			foreach( $element['children'] as $child ){
+		if ( isset($element['children']) ) {
+			foreach ( $element['children'] as $child ) {
 				$children[] = $this->getChildren( $list, $child );
 			}
 		}
 
-		if ( isset( $element['text'] ) ) {
+		if ( isset($element['text']) ) {
 			$next = array(
 				'text' => $element['text'],
 				'href' => $element['href']
 			);
 
-			if( !empty( $children ) ) {
+			if ( !empty($children) ) {
 				$next['children'] = $children;
 			}
 
-		} else if ( !empty( $children ) ) {
-			$next = $children;
+		} else {
+			if ( !empty($children) ) {
+				$next = $children;
+			}
 		}
 
 		return $next;

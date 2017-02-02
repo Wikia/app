@@ -6,12 +6,13 @@ var CreatePage = {
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
 	redlinkParam: '',
+	flowName: '',
 
 	canUseVisualEditor: function() {
 		return mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false;
 	},
 
-	checkTitle: function( title ) {
+	checkTitle: function( title, trackingCategory ) {
 		'use strict';
 		$.getJSON( CreatePage.context.wgScript, {
 			action: 'ajax',
@@ -20,18 +21,32 @@ var CreatePage = {
 		},
 		function( response ) {
 			var articlePath;
+			var flowParam = ( CreatePage.flowName === '' ) ? '' : '&flow=' + CreatePage.flowName;
+
 			if ( response.result === 'ok' ) {
+				CreatePage.track( {
+					category: trackingCategory,
+					action: Wikia.Tracker.ACTIONS.SUCCESS,
+					label: 'open-editor'
+				} );
+
 				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam + flowParam;
 				} else {
 					location.href = CreatePage.options[ CreatePage.canUseVisualEditor() ? 'blank' :
 						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
-						CreatePage.redlinkParam;
+						CreatePage.redlinkParam + flowParam;
 				}
+				CreatePage.flowName = '';
 			}
 			else {
-				CreatePage.displayError( response.msg );
+				CreatePage.track( {
+					category: trackingCategory,
+					action: Wikia.Tracker.ACTIONS.ERROR,
+					label: response.error
+				} );
+				CreatePage.displayError( response.msg, trackingCategory );
 			}
 		});
 	},
@@ -87,6 +102,7 @@ var CreatePage = {
 	},
 
 	openVEDialog: function( data ) {
+		var trackingCategory = 'redlink-page-create-title-modal';
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var createPageModalConfig = {
@@ -101,7 +117,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
@@ -126,15 +141,22 @@ var CreatePage = {
 					}
 				};
 				uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
-					CreatePage.track( { action: 'impression', label: 've-redlink-modal' } );
+					CreatePage.track( {
+						category: trackingCategory,
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
+						label: 'modal'
+					} );
 
-					createPageModal.bind( 'create', function( event ) {
-						CreatePage.track( { action: 'click', label: 've-redlink-create' } );
-						CreatePage.submitDialog( false );
+					createPageModal.bind( 'create', function() {
+						CreatePage.submitDialog( trackingCategory );
 					});
 					createPageModal.bind( 'cancel', function( event ) {
 						event.stopPropagation();
-						CreatePage.track( { action: 'click', label: 've-redlink-cancel' } );
+						CreatePage.track( {
+							category: trackingCategory,
+							action:  Wikia.Tracker.ACTIONS.CLICK,
+							label: 'cancel'
+						} );
 						createPageModal.trigger( 'close' );
 					});
 
@@ -143,7 +165,11 @@ var CreatePage = {
 							'click',
 							function( event ) {
 								if ( event.target === event.delegateTarget ) {
-									CreatePage.track( { action: 'click', label: 've-redlink-close' } );
+									CreatePage.track( {
+										category: trackingCategory,
+										action: Wikia.Tracker.ACTIONS.CLOSE,
+										label: 'close'
+									} );
 								}
 							}
 						);
@@ -156,6 +182,7 @@ var CreatePage = {
 	},
 
 	openDialog: function( data ) {
+		var trackingCategory = 'page-create-title-modal';
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var createPageModalConfig = {
@@ -170,7 +197,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
@@ -187,11 +213,48 @@ var CreatePage = {
 						elm,
 						onElementClick,
 						name,
-						titleText;
+						titleText,
+						inputChangeTracked = false,
+						redLinks;
+
+					CreatePage.track( {
+						category: trackingCategory,
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
+						label: 'modal'
+					} );
+
+					redLinks = createPageModal.$element.find( '.create-page-dialog__proposals .new' );
+
+					if ( redLinks.length ) {
+						CreatePage.track( {
+							category: 'page-create-title-modal',
+							action: Wikia.Tracker.ACTIONS.IMPRESSION,
+							label: 'redlinks'
+						} );
+
+						redLinks.on( 'click', function () {
+							CreatePage.track( {
+								category: 'page-create-title-modal',
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								label: 'redlink'
+							} );
+						} );
+					}
 
 					createPageModal.bind( 'create', function( event ) {
 						event.preventDefault();
-						CreatePage.submitDialog( false );
+						inputChangeTracked = false;
+						CreatePage.submitDialog( trackingCategory );
+					});
+
+					createPageModal.bind( 'cancel', function( event ) {
+						event.stopPropagation();
+						CreatePage.track( {
+							category: trackingCategory,
+							action:  Wikia.Tracker.ACTIONS.CLICK,
+							label: 'cancel'
+						} );
+						createPageModal.trigger( 'close' );
 					});
 
 					onElementClick = function() {
@@ -219,7 +282,19 @@ var CreatePage = {
 
 					CreatePage.setPageLayout( data.defaultOption );
 
-					$( '#wpCreatePageDialogTitle' ).focus();
+					$( '#wpCreatePageDialogTitle' )
+						.focus()
+						.on( 'change type keypress', function() {
+							if ( !inputChangeTracked ) {
+								inputChangeTracked = true;
+
+								CreatePage.track( {
+									category: trackingCategory,
+									action: Wikia.Tracker.ACTIONS.KEYPRESS,
+									label: 'title'
+								} );
+							}
+						} );
 
 					// Hide formats if ve is available
 					if ( CreatePage.canUseVisualEditor() ) {
@@ -232,15 +307,19 @@ var CreatePage = {
 		});
 	},
 
-	submitDialog: function( enterWasHit ) {
+	submitDialog: function(trackingCategory) {
 		'use strict';
-		CreatePage.checkTitle( $( '#wpCreatePageDialogTitle' ).val(), enterWasHit );
+		CreatePage.track( { category: trackingCategory, action: Wikia.Tracker.ACTIONS.SUBMIT, label: 'submit' } );
+		CreatePage.checkTitle( $( '#wpCreatePageDialogTitle' ).val(), trackingCategory );
 	},
 
-	displayError: function( errorMsg ) {
+	displayError: function( errorMsg, trackingCategory ) {
 		'use strict';
 		var box = $( '#CreatePageDialogTitleErrorMsg' );
 		box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
+		box.find( 'a' ).click( function() {
+			CreatePage.track( { category: trackingCategory, action: Wikia.Tracker.ACTIONS.CLICK, label: 'conflict-link' } );
+		} );
 		box.removeClass( 'hiddenStructure' );
 	},
 
@@ -265,12 +344,14 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
+			redLinkFlowName = CreatePage.getRedLinkFlowName();
 
 		CreatePage.redlinkParam = '&redlink=1';
+		CreatePage.flowName = redLinkFlowName;
 
 		if ( CreatePage.canUseVisualEditor() ) {
-			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
+			CreatePage.track( { category: 'article', action: Wikia.Tracker.ACTIONS.CLICK, label: 've-redlink-click' } );
 		}
 
 		if (
@@ -288,6 +369,12 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
+
+		$( '.createpage' ).click(function() {
+			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
+			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
+		});
+
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
@@ -331,7 +418,8 @@ var CreatePage = {
 					field = form.children( '.createboxInput' );
 					preloadField = form.children( 'input[name=\'preload\']' );
 
-					if ( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
+					if ( ( typeof preloadField.val() === 'undefined' ) || ( preloadField.val() === '' ) ) {
+						CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX;
 						CreatePage.requestDialog( e, prefix + field.val() );
 					}
 					else {
@@ -342,15 +430,28 @@ var CreatePage = {
 		}
 	},
 
+	getRedLinkFlowName: function () {
+		return mw.config.get('wgNamespaceNumber') === -1
+			? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
+			: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+	},
+
+	// create page flow tracking
+	trackCreatePageStart: function (flowName) {
+		require(['wikia.flowTracking'], function (flowTrack) {
+			flowTrack.beginFlow(flowName, {});
+		});
+	},
+
 	// Tracking for VE dialog only
 	track: function( data ) {
 		var defaultData;
 
-		if ( Wikia.Tracker ) {
+		// Don't track if category isn't provided. It's a flow that we didn't identify and can affect our numbers
+		if ( Wikia.Tracker && data.category ) {
 			defaultData = {
-				category: 'article',
-				trackingMethod: 'internal'
-			}
+				trackingMethod: 'analytics'
+			};
 
 			$.extend( defaultData, data );
 

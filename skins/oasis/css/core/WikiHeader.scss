@@ -37,6 +37,7 @@ $WikiNavWidth: $width-outside - 271px;
 	.hiddenLinks {
 		position: absolute;
 		top: -1000px;
+		visibility: hidden;
 	}
 
 	a:hover {

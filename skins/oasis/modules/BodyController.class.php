@@ -249,7 +249,8 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		if ( $isEditPage || WikiaPageType::isMainPage() ) {
+		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
+		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
@@ -285,6 +286,7 @@ class BodyController extends WikiaController {
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
+		$this->isEditPage = self::isEditPage();
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
@@ -345,7 +347,7 @@ class BodyController extends WikiaController {
 		}
 
 		// Display chromed header on Special:AdminDashboard
-		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) ) {
+		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
 			$this->headerModuleName = null;
 			$this->displayAdminDashboard = true;
 		} else {
@@ -419,20 +421,6 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
 			$this->wg->SuppressPageHeader = true;
-		}
-
-		// MonetizationModule Extension
-		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
-				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
-			} else {
-				$this->monetizationModules = [
-					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT     => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_IN_CONTENT' ] ),
-					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_CATEGORY' ] ),
-				];
-			}
-			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 
 		$namespace = $this->wg->Title->getNamespace();

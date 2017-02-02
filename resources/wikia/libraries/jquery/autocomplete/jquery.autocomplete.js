@@ -55,10 +55,15 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
+      fnContainerMarkup: function (mainContainerId, autocompleteElId, containerClass, width) {
+        return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
+      },
+      suggestionWrapperElement: 'div',
       queryParamName: 'query',
       fnPreprocessResults: null,
       skipBadQueries: false,
       positionRight: null,
+      setPosition: true,
       matchFromStart: true
     };
     if (options) {
@@ -103,7 +108,11 @@
 
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '"class="autocomplete-container" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
+      // Wikia change: make markup configurable
+      var containerMarkup = this.options.fnContainerMarkup(
+      	this.mainContainerId, autocompleteElId, 'autocomplete-container', this.options.width
+      );
+      $(containerMarkup).appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -129,12 +138,16 @@
     },
 
     fixPosition: function() {
-      var offset = this.el.offset();
-      var parentOffset = $(this.options.appendTo).offset();
-      var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
-      if ( this.options.positionRight !== null ) {
-        el.css({ right: this.options.positionRight });
+      // Wikia change start - setPosition option added
+      if (this.options.setPosition) {
+        var offset = this.el.offset();
+        var parentOffset = $(this.options.appendTo).offset();
+        var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+        if ( this.options.positionRight !== null ) {
+          el.css({ right: this.options.positionRight });
+        }
       }
+    // Wikia change end
     },
 
     enableKillerFn: function() {
@@ -293,19 +306,26 @@
         return;
       }
 
-      var me, len, div, f, suggestion;
+      var me, len, div, f, suggestion, v, suggestionWrapperElement;
       me = this;
       len = this.options.maxSuggestions && this.options.maxSuggestions < this.suggestions.length ? this.options.maxSuggestions : this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
+      // wikia change - start
+      suggestionWrapperElement = this.options.suggestionWrapperElement;
+      // wikia change - end
       this.container.hide().empty();
 
       for (var i = 0; i < len; i++) {
-          // wikia change - start
-          suggestion = this.suggestions[i];
-        div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-            + ' title="' + $.htmlentities(suggestion) + '">' + f($.htmlentities(suggestion), this.data[i], $.htmlentities(v))
-            + '</div>');
+        // wikia change - start
+        suggestion = this.suggestions[i];
+        div = $('<' + suggestionWrapperElement + '>')
+            .attr('title', $.htmlentities(suggestion))
+            .html(f($.htmlentities(suggestion), this.data[i], $.htmlentities(v)));
+
+        if (me.selectedIndex === i) {
+          div.addClass(this.options.selectedClass);
+        }
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
@@ -324,7 +344,8 @@
     processResponse: function(text) {
       var response;
       try {
-        response = eval('(' + text + ')');
+      	// Wikia change - use parseJSON instead of eval, backported from new version
+        response = (typeof text === 'string') ? $.parseJSON(text) : text;
       } catch (err) { return; }
 
       /* Wikia change - allow function to preprocess result data into a format this plugin understands*/

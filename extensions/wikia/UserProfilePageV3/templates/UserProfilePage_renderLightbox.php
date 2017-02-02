@@ -110,8 +110,8 @@
 					</a>
 					<ul class="favorite-wikis">
 						<? foreach ( $user['topWikis'] as $key => $wiki ): ?>
-							<li data-wiki-id="<?= $wiki['id']; ?>">
-								<span><?= $wiki['wikiName']; ?></span>
+							<li data-wiki-id="<?= Sanitizer::encodeAttribute( $wiki['id'] ); ?>">
+								<span><?= htmlspecialchars( $wiki['wikiName'] ); ?></span>
 								<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete">
 							</li>
 						<? endforeach; ?>

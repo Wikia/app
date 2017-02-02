@@ -108,14 +108,12 @@
 		 *
 		 * @param string event Name of event
 		 * @param object data Extra parameters to track
-		 * @param object successCallback callback function on success (optional)
-		 * @param object errorCallback callback function on failure (optional)
+		 * @param function onComplete callback function when tracking is completed (or fails)
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
-		function internalTrack( event, data, successCallback /* unused */, errorCallback /* unused */, timeout ) {
+		function internalTrack( event, data, onComplete, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
 					script = document.createElement( 'script' ),
-					callbackDelay = 200,
 					requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
 					requestParameters = [],
 					p,
@@ -176,11 +174,8 @@
 					// Dereference the script
 					script = undefined;
 
-					if ( !abort && typeof successCallback === 'function' ) {
-						setTimeout( successCallback, callbackDelay );
-
-					} else if ( abort && typeof errorCallback === 'function' ) {
-						setTimeout( errorCallback, callbackDelay );
+					if ( typeof(onComplete) === 'function' ) {
+						onComplete();
 					}
 				}
 			};
@@ -226,6 +221,10 @@
 		 *                (WARNING: that "analytics" includes "internal" but not "ad")
 		 *            value (optional for analytics tracking)
 		 *                The integer value for the event.
+		 *            callbacks (optional)
+		 *                object containing callback data, keys are:
+		 *                	timeout (int)
+		 *                	complete (function)
 		 *
 		 * @param {...Object} [optionsN]
 		 *        Any number of additional hashes that will be merged into the first.
@@ -252,6 +251,7 @@
 				l,
 				tracking = {},
 				trackingMethod = 'none',
+				callbacks = {},
 				value;
 
 			// Merge options
@@ -267,10 +267,13 @@
 				}
 			}
 
+			callbacks = data.callbacks || callbacks;
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
 			tracking[ trackingMethod ] = true;
+
+			delete data.callbacks;
 
 			if ( tracking.none || ( tracking.analytics &&
 				// Category and action are compulsory for analytics tracking
@@ -311,7 +314,7 @@
 				}
 
 				if ( tracking.analytics || tracking.internal ) {
-					internalTrack(eventName, data);
+					internalTrack(eventName, data, callbacks.complete, callbacks.timeout);
 				}
 			}
 

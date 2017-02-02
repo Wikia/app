@@ -35,7 +35,8 @@ define('wikia.preview', [
 		previewTypes, //List of available preview options
 		currentTypeName, //Currently used preview type
 		editPageOptions, //options passed from EditPageLayout
-		previewLoaded; //a flag indicating that preview has been loaded
+		previewLoaded, //a flag indicating that preview has been loaded
+		previousType; // the previous preview type loaded if any
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -140,7 +141,13 @@ define('wikia.preview', [
 
 				// fire event when new article comment is/will be added to DOM
 				mw.hook('wikipage.content').fire($article);
+			} else if (previousType === previewTypes.mobile.name) {
+				// always fire event when switching out of mobile preview
+				mw.hook('wikipage.content').fire($article);
 			}
+
+			previousType = type;
+
 			//If current view is different skin, pass it to getPreviewContent
 		}, previewTypes[currentTypeName].skin);
 	}

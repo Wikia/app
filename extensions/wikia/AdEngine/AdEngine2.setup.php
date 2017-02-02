@@ -49,25 +49,9 @@ $wgExtensionFunctions[] = function() {
 
 JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
 
-$wgExtensionFunctions[] = function() {
-	JSMessages::registerPackage( 'AdEngineRecoveryMessage', [
-		'adengine-recovery-message-*'
-	] );
-};
-
 AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
 AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
 AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');
-
-// Keep old resource links for cache
-// TODO: ADEN-3407
-$wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
-);
-
-$wgResourceModules['wikia.ext.adengine.yavli'] = array(
-	'class' => 'ResourceLoaderAdEngineYavliModule',
-);
 
 // Special page for importing ad test
 if ( !empty( $wgDevelEnvironment ) && $wgDBname === 'adtest' ) {

@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eitvys200",
+			"Hugo.arg",
+			"Aswanas",
+			"Zygimantus"
+		]
+	},
+	"maps-desc": "Suteikia galimybę atvaizduoti koordinačių duomenis žemėlapiuose ir geografinio kodavimo adresus ([http://mapping.referata.com/wiki/Maps_examples demo]).\nKatrografavimo paslaugos pasiekiamos: $1",
+	"action-geocode": " šioje wiki atlikite geokodavimą",
+	"maps_map": "Žemėlapis",
+	"maps-loading-map": "Kraunamas žemėlapis ...",
+	"maps-others": "kita",
+	"maps-abb-north": "Š",
+	"maps-abb-east": "R",
+	"maps-abb-south": "P",
+	"maps-abb-west": "V",
+	"maps-latitude": "Platuma:",
+	"maps-longitude": "Ilguma:",
+	"maps-invalid-coordinates": "Vertė $ 1 nepripažįstama kaip galiojanti koordinatė.",
+	"maps_coordinates_missing": "Nesudarytos koordinatės žemėlapiui.",
+	"maps_geocoding_failed": "{{PLURAL:$2|Šis adresas|Šie adresai}} negali būti kartografuoti: $1.",
+	"maps_unrecognized_coords": "{{PLURAL:$2|Ši koordinatė|Šios koordinatės}} nebuvo atpažintos: $1.",
+	"maps_map_cannot_be_displayed": "Žemėlapis negal būti parodytas.",
+	"maps_leaflet": "Lankstinukas",
+	"maps_click_to_activate": "Spustelėkite, norėdami įjungti žemėlapį",
+	"maps_centred_on": "Žemėlapis centruotas link $1, $2.",
+	"mapeditor": "Žemėlapio redaktorius",
+	"specialpages-group-maps": "Žemėlapiai",
+	"mapeditor-done-button": "Atlikta"
+}

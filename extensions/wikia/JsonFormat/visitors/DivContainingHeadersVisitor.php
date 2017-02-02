@@ -5,6 +5,12 @@
 
 
 class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
+
+	function __construct( IDOMNodeVisitor $childrenVisitor, JsonFormatBuilder $jsonFormatTraversingState )	{
+		parent::__construct( $childrenVisitor, $jsonFormatTraversingState );
+		DomHelper::cleanDescendantHeaderInternalCache();
+	}
+
 	/**
 	 * @param DOMNode $currentNode
 	 * @return bool

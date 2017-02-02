@@ -8,13 +8,13 @@
  */
 
 class WikiCreationBlock {
-	public static function isAllowedText($text, &$block) {
+	public static function isAllowedText( $text, &$block ) {
 		wfProfileIn( __METHOD__ );
 
-		$text = trim($text);
+		$text = trim( $text );
 		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_WIKI_CREATION );
 
-		if ( !empty($blocksData) && !empty($text) ) {
+		if ( !empty( $blocksData ) && !empty( $text ) ) {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 			if ( $result['blocked'] ) {

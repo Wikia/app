@@ -13,6 +13,7 @@ class HealthController extends WikiaController {
 	private $errors = [];
 	private $messages = [];
 	private $status = [];
+	private $servers = [];
 
 	/**
 	 * Get status of database clusters
@@ -24,6 +25,8 @@ class HealthController extends WikiaController {
 	 * - errors: list of errors
 	 */
 	public function databases() {
+		global $wgWikiaDatacenter;
+
 		$cluster = $this->getVal( 'cluster' );
 		$clusters = $this->getAllClusters();
 		if ( $cluster ) {
@@ -42,9 +45,14 @@ class HealthController extends WikiaController {
 			$this->setVal( 'messages', $this->messages );
 		}
 
+		if ( $this->servers ) {
+			$this->setVal( 'servers', $this->servers );
+		}
+
 		$this->setVal( 'readWrite', [
 			'status' => !wfReadOnly(),
 			'reason' => wfReadOnlyReason(),
+			'datacenter' => $wgWikiaDatacenter,
 		] );
 	}
 
@@ -59,7 +67,7 @@ class HealthController extends WikiaController {
 			$operational = false;
 			try {
 				$databaseName = $this->getClusterDatabase( $clusterName );
-				$loadBalancer = wfGetLB( $databaseName );
+				$loadBalancer = $this->getClusterLB( $clusterName, $databaseName );
 				$serverCount = $loadBalancer->getServerCount();
 
 				$roles = [
@@ -69,6 +77,7 @@ class HealthController extends WikiaController {
 				for ( $i = 0; $i < $serverCount; $i++ ) {
 					$serverName = $loadBalancer->getServerName( $i );
 					$this->current = "{$clusterName}: {$serverName}: ";
+					$this->servers[$clusterName][] = $serverName;
 
 					$role = $i === 0 ? 'master' : 'slave';
 					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
@@ -104,47 +113,44 @@ class HealthController extends WikiaController {
 	}
 
 	/**
-	 * Execute checks for a single database server
-	 * @param string $databaseName Database name to use for connection
+	 * Execute lag check on a given database
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
+	 * @param DatabaseBase $db connector to a tested database
 	 * @param int $index Server index to test
-	 * @return bool Is server healthy?
-	 * @throws MWException
+	 * @return bool Is lag below defined limit?
 	 */
-	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
+	private function testHostLag( LoadBalancer $loadBalancer, DatabaseBase $db, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$master = $index == 0;
 
-
-		// connection check
-		try {
-			$db = wfGetDB( $index, array(), $databaseName );
-		} catch ( DBError $e ) {
-			$this->addError( "could not connect to server: " . $e->getMessage() );
-
-			return false;
-		}
-
-		// lag check
 		if ( !$master && isset( $serverInfo['max lag'] ) ) {
 			try {
 				$maxLag = $serverInfo['max lag'];
 				$lag = $db->getLag();
 				if ( $lag > $maxLag ) {
 					$this->addError( "lag (%d) is greater than configured \"max lag\" (%d)", $lag, $maxLag );
-					$db->close();
 
 					return false;
 				}
 			} catch ( DBError $e ) {
 				$this->addError( "could not fetch lag time" );
-				$db->close();
 
 				return false;
 			}
 		}
 
-		// read_only check on master
+		return true;
+	}
+
+	/**
+	 * Execute R/W check on a given database
+	 * @param DatabaseBase $db connector to a tested database
+	 * @param int $index Server index to test
+	 * @return bool Is R/W flag is set properly on a database?
+	 */
+	private function testHostRW( DatabaseBase $db, $index ) {
+		$master = $index == 0;
+
 		try {
 			$res = $db->query( "SHOW VARIABLES LIKE 'read_only';" );
 			$row = $res->fetchRow();
@@ -159,6 +165,35 @@ class HealthController extends WikiaController {
 			$this->addError( "could not check read_only flag" );
 			$db->close();
 
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Execute checks for a single database server
+	 * @param string $databaseName Database name to use for connection
+	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
+	 * @param int $index Server index to test
+	 * @return bool Is server healthy?
+	 * @throws MWException
+	 */
+	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
+		// connection check
+		try {
+			$db = $loadBalancer->getConnection( $index, array(), $databaseName );
+		} catch ( DBError $e ) {
+			$this->addError( "could not connect to server: " . $e->getMessage() );
+
+			return false;
+		}
+
+		// lag check && read_only check on master
+		if ( !$this->testHostLag( $loadBalancer, $db, $index ) ||
+			 !$this->testHostRW( $db, $index )
+		) {
+			$db->close();
 			return false;
 		}
 
@@ -200,11 +235,30 @@ class HealthController extends WikiaController {
 	private function getClusterDatabase( $cluster ) {
 		if ( preg_match( "/^c[0-9]\$/", $cluster ) ) {
 			return 'wikicities_' . $cluster;
+		} else if ( $cluster === "semanticdb" ) {
+			return "mysql";
 		}
+
 		$config = $this->wg->LBFactoryConf;
 		$database = array_search( $cluster, $config['sectionsByDB'] );
 
 		return $database;
+	}
+
+	/**
+	 * Get load balancer for a given cluster and database
+	 *
+	 * @param string $cluster Cluster name
+	 * @param string $databasName Database name
+	 * @return LoadBalancer
+	 */
+	private function getClusterLB( $cluster, $databasName ) {
+		if ( $cluster === "semanticdb" ) {
+			$config = $this->wg->LBFactoryConf;
+			$databasName = array_search( $cluster, $config['sectionsByDB'] );
+		}
+
+		return wfGetLBFactory()->newMainLB($databasName);
 	}
 
 	/**

@@ -1,0 +1,75 @@
+{
+	"name": "param-processor/param-processor",
+	"type": "library",
+	"description": "Parameter processing library",
+	"keywords": [
+		"ParamProcessor",
+		"Validator",
+		"MediaWiki",
+		"SMW",
+		"Semantic MediaWiki"
+	],
+	"homepage": "https://github.com/JeroenDeDauw/ParamProcessor",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "http://jeroendedauw.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"irc": "irc://irc.freenode.net/mediawiki"
+	},
+	"require": {
+		"php": ">=5.5.0",
+		"data-values/data-values": "~1.0|~0.1.1",
+		"data-values/interfaces": "~0.2.0|~0.1.4",
+		"data-values/common": "~0.3.0|~0.2.2",
+		"data-values/validators": "~0.1.1"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~5.4",
+		"squizlabs/php_codesniffer": "~2.1",
+		"phpmd/phpmd": "~2.1",
+		"ockcyp/covers-validator": "~0.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"ParamProcessor\\": "src"
+		},
+		"classmap": [
+			"tests/phpunit/Definitions/ParamDefinitionTest.php",
+			"tests/phpunit/Definitions/NumericParamTest.php"
+		],
+		"files": [
+			"DefaultConfig.php"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.3.x-dev"
+		}
+	},
+	"scripts": {
+		"test": [
+			"@validate --no-interaction",
+			"vendor/bin/phpunit",
+			"vendor/bin/covers-validator"
+		],
+		"cs": [
+			"@phpcs",
+			"@phpmd"
+		],
+		"ci": [
+			"@test"
+		],
+		"phpcs": [
+			"vendor/bin/phpcs src/* tests/* --standard=phpcs.xml --extensions=php -sp"
+		],
+		"phpmd": [
+			"vendor/bin/phpmd src/,tests/ text phpmd.xml --exclude TopologicalSort"
+		]
+	}
+}

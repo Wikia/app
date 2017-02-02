@@ -1167,18 +1167,29 @@ class MediaWikiServiceTest extends BaseTest
 	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
-	public function testGetPageFromPageIdThrowsException() {
+	public function testGetPageFromPageIdRetunrsNull() {
 		$this->mockClass( 'Article', null, 'newFromID' );
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getPageFromPageId' );
 		$get->setAccessible( true );
-		try {
-			$get->invoke( (new MediaWikiService), $this->pageId );
-		} catch ( \Exception $e ) {}
 
-		$this->assertInstanceOf(
-				'\Exception',
-				$e,
-				'\Wikia\Search\MediaWikiService::getPageFromPageId should throw an exception when provided a nonexistent page id'
+		$this->assertEquals(
+			null,
+			$get->invoke( (new MediaWikiService), $this->pageId ),
+			'\Wikia\Search\MediaWikiService::getPageFromPageId should return null when provided a nonexistent page id'
+		);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14926 ms
+	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
+	 */
+	public function testPageIdExistsForNotExistingArticle() {
+		$this->mockClass( 'Article', null, 'newFromID' );
+
+		$this->assertFalse(
+			(new MediaWikiService)->pageIdExists(0),
+			'\Wikia\Search\MediaWikiService::pageIdExists should return false when provided a nonexistent page id'
 		);
 	}
 
@@ -3025,34 +3036,6 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.13433 ms
-	 * @covers Wikia\Search\MediaWikiService::shortNumForMsg
-	 * @dataProvider dataShortNumForMsg
-	 */
-	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->exactly( 1 ) )
-			->method( 'wfMessage' )
-			->with( $usedMessageId, $usedNumber, $number )
-			->will( $this->returnValue( 'mocked message' ) );
-
-		$service = (new MediaWikiService);
-		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
-
-	}
-
-	public function dataShortNumForMsg() {
-		return array(
-			array(1, 'message-id', 1, 'message-id'),
-			array(999, 'message-id', 999, 'message-id'),
-			array(1000, 'message-id', 1, 'message-id-k'),
-			array(999999, 'message-id', 999, 'message-id-k'),
-			array(1000000, 'message-id', 1, 'message-id-M'),
-			array(10000000000, 'message-id', 10000, 'message-id-M'),
-		);
-	}
 
 	/**
 	 * @group Slow

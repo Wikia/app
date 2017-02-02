@@ -38,6 +38,16 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			}
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
+
+			/**
+			 * As we're not using Wikia Upload we're need to send file to Scribe manually.
+			 * Hook from ScribeEventProducerController::onUploadComplete won't fire for this upload.
+			 */
+			$page = WikiPage::factory( $file->getTitle() );
+			$oScribeProducer = new ScribeEventProducer( 'create' );
+			if ( $oScribeProducer->buildEditPackage( $page, User::newFromId( $page->getUser() ), null, $file ) ) {
+				$oScribeProducer->sendLog();
+			}
 		}
 
 		return [

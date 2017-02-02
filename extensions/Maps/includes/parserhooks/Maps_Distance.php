@@ -6,22 +6,11 @@
  * 
  * @since 0.7
  * 
- * @file Maps_Distance.php
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsDistance extends ParserHook {
-	/**
-	 * No LSB in pre-5.3 PHP *sigh*.
-	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
-	 */	
-	public static function staticInit( Parser &$parser ) {
-		$instance = new self;
-		return $instance->init( $parser );
-	}	
-	
+
 	/**
 	 * Gets the name of the parser hook.
 	 * @see ParserHook::getName
@@ -46,29 +35,27 @@ class MapsDistance extends ParserHook {
 		global $egMapsDistanceUnit, $egMapsDistanceDecimals; 
 		
 		$params = array();
-		
-		$params['distance'] = new Parameter( 'distance' );
-		$params['distance']->addCriteria( new CriterionIsDistance() );
-		$params['distance']->setMessage( 'maps-distance-par-distance' );
-		
-		$params['unit'] = new Parameter(
-			'unit',
-			Parameter::TYPE_STRING,
-			$egMapsDistanceUnit,
-			array(),
-			array(
-				new CriterionInArray( MapsDistanceParser::getUnits() ),
-			)
-		);
-		$params['unit']->setMessage( 'maps-distance-par-unit' );
 
-		$params['decimals'] = new Parameter(
-			'decimals',
-			Parameter::TYPE_INTEGER,
-			$egMapsDistanceDecimals
+		$params['distance'] = array(
+			'type' => 'distance',
 		);
-		$params['decimals']->setMessage( 'maps-distance-par-decimals' );
-		
+
+		$params['unit'] = array(
+			'default' => $egMapsDistanceUnit,
+			'values' => MapsDistanceParser::getUnits(),
+		);
+
+		$params['decimals'] = array(
+			'type' => 'integer',
+			'default' => $egMapsDistanceDecimals,
+		);
+
+		// Give grep a chance to find the usages:
+		// maps-distance-par-distance, maps-distance-par-unit, maps-distance-par-decimals
+		foreach ( $params as $name => &$param ) {
+			$param['message'] = 'maps-distance-par-' . $name;
+		}
+
 		return $params;
 	}
 	
@@ -77,6 +64,8 @@ class MapsDistance extends ParserHook {
 	 * @see ParserHook::getDefaultParameters
 	 * 
 	 * @since 0.7
+	 *
+	 * @param $type
 	 * 
 	 * @return array
 	 */
@@ -95,8 +84,11 @@ class MapsDistance extends ParserHook {
 	 * @return string
 	 */
 	public function render( array $parameters ) {
-		$distanceInMeters = MapsDistanceParser::parseDistance( $parameters['distance'] );
-		return MapsDistanceParser::formatDistance( $distanceInMeters, $parameters['unit'], $parameters['decimals'] );
+		return MapsDistanceParser::formatDistance(
+			$parameters['distance'],
+			$parameters['unit'],
+			$parameters['decimals']
+		);
 	}
 
 	/**

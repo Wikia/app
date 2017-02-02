@@ -13,13 +13,6 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		] );
 	}
 
-	public function imageHeader() {
-		$this->response->setValues( [
-			'model' => $this->getVal( 'model' ),
-			'section' => $this->getVal( 'section' )
-		] );
-	}
-
 	public function linkBranded() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
@@ -38,7 +31,8 @@ class DesignSystemGlobalFooterService extends WikiaService {
 
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
-			'wikiId' => $this->wg->CityId,
+			'id' => $this->wg->CityId,
+			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
 	}

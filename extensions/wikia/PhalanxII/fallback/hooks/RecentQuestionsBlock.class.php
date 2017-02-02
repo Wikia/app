@@ -15,15 +15,15 @@ class RecentQuestionsBlock {
 	public static function filterWordsTest( $question ) {
 		wfProfileIn( __METHOD__ );
 
-		$text = preg_replace('/\pP+/', '', $question);
-		$text = preg_replace('/\s+/', ' ', $text);
+		$text = preg_replace( '/\pP+/', '', $question );
+		$text = preg_replace( '/\s+/', ' ', $text );
 
 		$blocksData = PhalanxFallback::getFromFilter( PhalanxFallback::TYPE_ANSWERS_RECENT_QUESTIONS );
-		if ( !empty($blocksData) && !empty($text) ) {
+		if ( !empty( $blocksData ) && !empty( $text ) ) {
 			$blockData = null;
 			$result = PhalanxFallback::findBlocked( $text, $blocksData, true, $blockData );
 			if ( $result['blocked'] ) {
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+				Wikia::log( __METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'." );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}

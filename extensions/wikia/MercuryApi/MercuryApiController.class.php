@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
 use Wikia\Util\GlobalStateWrapper;
 
 class MercuryApiController extends WikiaController {
@@ -28,24 +27,17 @@ class MercuryApiController extends WikiaController {
 		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) && !empty( $this->wg->WikiaMobileSmartBannerConfig ) ) {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
-			unset( $smartBannerConfig[ 'author' ] );
-
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) &&
-				 !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
-			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
-			}
-
-			$meta = $smartBannerConfig[ 'meta' ];
-			unset( $smartBannerConfig[ 'meta' ] );
-			$smartBannerConfig[ 'appId' ] = [
-				'ios' => str_replace( 'app-id=', '', $meta[ 'apple-itunes-app' ] ),
-				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
+			unset( $smartBannerConfig['author'] );
+			$meta = $smartBannerConfig['meta'];
+			unset( $smartBannerConfig['meta'] );
+			$smartBannerConfig['appId'] = [
+				'ios' => str_replace( 'app-id=', '', $meta['apple-itunes-app'] ),
+				'android' => str_replace( 'app-id=', '', $meta['google-play-app'] ),
 			];
 
-			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ] ?? null,
-				'android' => $meta[ 'android-scheme' ] ?? null,
+			$smartBannerConfig['appScheme'] = [
+				'ios' => $meta['ios-scheme'] ?? null,
+				'android' => $meta['android-scheme'] ?? null,
 			];
 
 			return $smartBannerConfig;
@@ -64,17 +56,17 @@ class MercuryApiController extends WikiaController {
 
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
-		if ( !isset( $navData[ 'navigation' ][ 'wiki' ] ) ) {
+		if ( !isset( $navData['navigation']['wiki'] ) ) {
 			$localNavigation = [ ];
 		} else {
-			$localNavigation = $navData[ 'navigation' ][ 'wiki' ];
+			$localNavigation = $navData['navigation']['wiki'];
 		}
 
 		$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes();
 
 		// Add link to explore wikia only for EN language
 		if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
-			$navigationNodes[ 'exploreDropdown' ][] = [
+			$navigationNodes['exploreDropdown'][] = [
 				'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
 				'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
 				'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
@@ -83,9 +75,9 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return [
-			'hubsLinks' => $navigationNodes[ 'hubs' ],
-			'exploreWikia' => $navigationNodes[ 'exploreWikia' ],
-			'exploreWikiaMenu' => $navigationNodes[ 'exploreDropdown' ],
+			'hubsLinks' => $navigationNodes['hubs'],
+			'exploreWikia' => $navigationNodes['exploreWikia'],
+			'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
 			'localNav' => $localNavigation,
 			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
 		];
@@ -153,7 +145,7 @@ class MercuryApiController extends WikiaController {
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
 		$this->response->setVal( 'payload', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
+		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
 		$this->response->setVal( 'basePath', $this->wg->Server );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -171,39 +163,42 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables[ 'navigation2016' ] = $navigation;
-		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
-		$wikiVariables[ 'basePath' ] = $this->wg->Server;
+		$wikiVariables['navigation2016'] = $navigation;
+		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
+		$wikiVariables['basePath'] = $this->wg->Server;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
-			$wikiVariables[ 'isGASpecialWiki' ] = true;
+			$wikiVariables['isGASpecialWiki'] = true;
 		}
 
 		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables[ 'articlePath' ] = str_replace( '$1', '', $this->wg->ArticlePath );
+			$wikiVariables['articlePath'] = str_replace( '$1', '', $this->wg->ArticlePath );
 		} else {
-			$wikiVariables[ 'articlePath' ] = '/wiki/';
+			$wikiVariables['articlePath'] = '/wiki/';
 		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
+			$wikiVariables['smartBanner'] = $smartBannerConfig;
 		}
 
-		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
-		if ( !empty( $wikiImages[ $this->wg->CityId ] ) ) {
-			$wikiVariables[ 'image' ] = $wikiImages[ $this->wg->CityId ];
+		// get wiki image from Curated Main Pages (SUS-474)
+		$communityData = ( new CommunityDataService( $this->wg->CityId ) )->getCommunityData();
+
+		if ( !empty( $communityData['image_id'] ) ) {
+			$url = CuratedContentHelper::getImageUrl( $communityData['image_id'], self::WIKI_IMAGE_SIZE );
+			$wikiVariables['image'] = $url;
 		}
 
-		$wikiVariables[ 'specialRobotPolicy' ] = null;
+		$wikiVariables['specialRobotPolicy'] = null;
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
 		if ( !empty( $robotPolicy ) ) {
-			$wikiVariables[ 'specialRobotPolicy' ] = $robotPolicy;
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
 		}
 
 		$htmlTitle = new WikiaHtmlTitle();
-		$wikiVariables[ 'htmlTitle' ] = [
+		$wikiVariables['htmlTitle'] = [
 			'separator' => $htmlTitle->getSeparator(),
 			'parts' => $htmlTitle->getAllParts(),
 		];
@@ -231,7 +226,7 @@ class MercuryApiController extends WikiaController {
 	public function getTrackingDimensions() {
 		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$dimensions = [];
+		$dimensions = [ ];
 
 		// Exception is thrown when empty title is send
 		// In that case we don't want to set dimensions which depend on title
@@ -242,12 +237,12 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $title->getArticleId() );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				$title = $this->handleRedirect( $title, $article, [] )[0];
+				$title = $this->handleRedirect( $title, $article, [ ] )[0];
 			}
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
@@ -256,7 +251,6 @@ class MercuryApiController extends WikiaController {
 
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
 		$wikiCategoryNames = join( ',', $wikiCategoryNames );
-
 
 		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
 
@@ -301,19 +295,23 @@ class MercuryApiController extends WikiaController {
 		$titleText = !empty( $this->getVal( 'title' ) ) ? $this->getVal( 'title' ) : '';
 		$title = Title::newFromText( $titleText );
 		$parserOptions = new ParserOptions( $wgUser );
-		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
+		$wrapper = new GlobalStateWrapper( [ 'wgArticleAsJson' => true ] );
 
 		if ( !empty( $this->getVal( 'CKmarkup' ) ) ) {
 			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		if ( $title ) {
-			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
-				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-				$articleAsJson = json_decode( ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText() );
-			} );
+			$wrapper->wrap(
+				function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+					// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+					$articleAsJson = json_decode(
+						ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText()
+					);
+				}
+			);
 		} else {
-			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
+			$this->response->setVal( 'data', [ 'content' => 'Invalid title' ] );
 			return;
 		}
 
@@ -336,70 +334,87 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$data = [ ];
+			$data = [
+				'ns' => $title->getNamespace()
+			];
 
-			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
-			$article = Article::newFromID( $title->getArticleId() );
-			$articleExists = $article instanceof Article;
+			if ( $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list
+				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
+					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
 
-			if ( $articleExists && $title->isRedirect() ) {
-				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
-			}
+				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
+				$article = Article::newFromID( $title->getArticleId() );
 
-			$isMainPage = $title->isMainPage();
-			$data['isMainPage'] = $isMainPage;
-			$data['ns'] = $title->getNamespace();
+				if ( $title->isRedirect() ) {
+					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
+				}
 
-			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				$isMainPage = $title->isMainPage();
+				$data['isMainPage'] = $isMainPage;
 
-				if ( $article instanceof Article ) {
+				if ( $article instanceof Article) {
+					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+					$data['categories'] = $articleData['categories'];
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
-					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
+					$data['categories'] = [];
+					/*
+					 * Categories with empty article doesn't allow us to get details.
+					 * In this case we return mocked data that allows mercury to operate correctly. HTML title etc.
+					 */
+					$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 				}
-			} else {
-				switch ( $data['ns'] ) {
-					// Handling namespaces other than content ones
-					case NS_CATEGORY:
-						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+				$data['articleType'] = WikiaPageType::getArticleType( $title );
+				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+				$otherLanguages = $this->getOtherLanguages( $title );
 
-						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+				if ( !empty( $otherLanguages ) ) {
+					$data['otherLanguages'] = $otherLanguages;
+				}
 
-							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
-							$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
-						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-						} else {
-							throw new NotFoundApiException( 'Article is empty and category has no members' );
+				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				} else {
+					if ( !empty( $articleData['content'] ) ) {
+						$data['article'] = $articleData;
+
+						if ( !$title->isContentPage() ) {
+							// This does two things:
+							// - gets displayTitle from parser function {{DISPLAYTITLE:displayTitle}}
+							// - removes the namespace prefix from it
+							$data['article']['displayTitle'] =
+								Title::newFromText( $data['article']['displayTitle'] )->getText();
 						}
+					}
 
-						break;
-					default:
-						if ( $title->isContentPage() ) {
-							if ( $title->isKnown() && $articleExists ) {
-								$data = array_merge(
-									$data,
-									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-								);
-							} else {
-								\Wikia\Logger\WikiaLogger::instance()->error(
-									'$article should be an instance of an Article',
-									['article' => $article]
-								);
+					switch ( $data['ns'] ) {
+						// Handling namespaces other than content ones
+						case NS_CATEGORY:
+							$categoryContent = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-								throw new NotFoundApiException( 'Article is empty' );
+							if ( empty( $categoryContent['members']['sections'] ) ) {
+								throw new NotFoundApiException( 'Category has no members' );
 							}
-						}
+
+							$data['nsSpecificContent'] = $categoryContent;
+							break;
+						case NS_FILE:
+							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
+							break;
+						default:
+							$data = array_merge(
+								$data,
+								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+							);
+					}
 				}
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
-			$data = [ ];
+			$data = [];
 
 			$this->response->setVal(
 				'exception',
@@ -409,16 +424,6 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
-
-			$title = $this->wg->Title;
-		}
-
-		$data['articleType'] = WikiaPageType::getArticleType( $title );
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
-		$otherLanguages = $this->getOtherLanguages( $title );
-
-		if ( !empty( $otherLanguages ) ) {
-			$data['otherLanguages'] = $otherLanguages;
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -448,6 +453,9 @@ class MercuryApiController extends WikiaController {
 		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
 			$article = Article::newFromID( $redirectTargetID );
+
+			// When title is a redirect we need to override namespace with it's target value
+			$data['ns'] = $title->getNamespace();
 		} else {
 			$data['redirectEmptyTarget'] = true;
 		}
@@ -468,46 +476,6 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
-	public function getCuratedContentSection() {
-		$section = $this->getVal( 'section' );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
-		if ( empty( $section ) ) {
-			throw new NotFoundApiException( 'Section is not set' );
-		}
-
-		$data = MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
-
-		if ( empty( $data ) ) {
-			throw new NotFoundApiException( 'No members' );
-		}
-
-		$this->response->setVal( 'items', $data[ 'items' ] );
-	}
-
-	public function getMainPageDetailsAndAdsContext() {
-		$mainPageTitle = Title::newMainPage();
-		$mainPageArticleID = $mainPageTitle->getArticleID();
-		$article = Article::newFromID( $mainPageArticleID );
-		$data = [ ];
-
-		$data[ 'details' ] = MercuryApiArticleHandler::getArticleDetails( $article );
-		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $mainPageTitle );
-
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal( 'data', $data );
-	}
-
-	/**
-	 * @param null|String $section
-	 * @return array|Mixed|null
-	 */
-	public function getCuratedContentData( $section = null ) {
-		return MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
-	}
-
 	private function getOtherLanguages( Title $title ) {
 		global $wgEnableLillyExt;
 
@@ -516,7 +484,6 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$url = $title->getFullURL();
-		// $url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
 
 		$lilly = new Lilly();
 		$links = $lilly->getCluster( $url );
@@ -526,7 +493,7 @@ class MercuryApiController extends WikiaController {
 
 		// Remove link to self
 		$langCode = $title->getPageLanguage()->getCode();
-		unset( $links[ $langCode ] );
+		unset( $links[$langCode] );
 
 		// Construct the structure for Mercury
 		$langMap = array_map( function ( $langCode, $url ) {
@@ -538,14 +505,20 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		} , array_keys( $links ), array_values( $links ) );
+		}, array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
 		usort( $langMap, function ( $lang1, $lang2 ) use ( $c ) {
-			return $c->compare( $lang1[ 'languageName' ], $lang2[ 'languageName' ] );
+			return $c->compare( $lang1['languageName'], $lang2['languageName'] );
 		} );
 
 		return $langMap;
+	}
+
+	private function isSupportedByMercury( Title $title ) {
+		return MercuryApiMainPageHandler::shouldGetMainPageData( $title->isMainPage() ) ||
+			$title->isContentPage() ||
+			in_array( $title->getNamespace(), [ NS_FILE, NS_CATEGORY ]);
 	}
 }

@@ -1,10 +1,11 @@
 <?php
 
 class PhalanxUserModel extends PhalanxModel {
-	const PHALANX_USER = 0;	
+	const PHALANX_USER = 0;
 
-	public function __construct( $user, $lang = '', $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'user' => $user, 'lang' => $lang, 'id' => $id ) );
+	public function __construct( User $user ) {
+		parent::__construct();
+		$this->user = $user;
 	}
 
 	/**
@@ -41,10 +42,10 @@ class PhalanxUserModel extends PhalanxModel {
 
 		return $ret;
 	}
-	
+
 	public function userBlock( $type = 'exact' ) {
 		wfProfileIn( __METHOD__ );
-	
+
 		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
 		$this->user->mBlockreason = UserBlock::getBlockReasonMessage( $this->block->reason, $type == 'exact', $type == 'ip' );
@@ -67,20 +68,20 @@ class PhalanxUserModel extends PhalanxModel {
 		wfProfileOut( __METHOD__ );
 		return $this;
 	}
-	
+
 	public function match_user() {
 		return $this->match( "user" );
 	}
-	
+
 	public function match_user_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		return UserBlock::blockCheck( $this->user, $this->block );
 	}
-	
+
 	public function match_email() {
 		return $this->setText( $this->user->getEmail() )->match( "email" );
 	}
-	
+
 	public function match_email_old() {
 		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
 		$abortError = '';

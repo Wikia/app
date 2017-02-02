@@ -25,7 +25,7 @@ $SpecialContactSecMap[] = array(
 $SpecialContactSecMap[] = [
 	'headerMsg' => 'editing',
 	'links' => [
-		'using-wikia',
+		'using-fandom',
 		[ 'link' => 'feedback', 'form' => true ],
 		[ 'link' => 'bug',      'form' => 'bug-report' ],
 		[ 'link' => 'security', 'form' => 'security' ],

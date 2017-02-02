@@ -58,11 +58,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'mwtiming.performance.user.saveComplete': function ( data ) {
-				if (mw.config.get('wgEnableVisualEditorTourExperiment')) {
-					require(['VisualEditorTourExperimentInit'], function (veTourInit) {
-						veTourInit.trackPublish();
-					});
-				}
 				return {
 					action: actions.SUCCESS,
 					label: 'publish',

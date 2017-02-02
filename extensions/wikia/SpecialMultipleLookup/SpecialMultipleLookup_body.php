@@ -23,19 +23,13 @@ class MultipleLookupPage extends SpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
 
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
-		if ( !$wgUser->isAllowed( 'multilookup' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->setHeaders();
+		// SUS-288: Check permissions before checking for block
+		$this->checkPermissions();
+		$this->checkReadOnly();
+		$this->checkIfUserIsBlocked();
 
 		/**
 		 * initial output

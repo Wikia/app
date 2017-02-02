@@ -12,6 +12,11 @@ class CategoryPaginationHooks {
 	public static function onArticleFromTitle( &$title, &$article ) {
 		$app = F::app();
 
+		// Only update the legacy category pages
+		if ( $app->wg->EnableCategoryExhibitionExt ) {
+			return true;
+		}
+
 		// Only do anything with category pages on Oasis
 		if ( !$app->checkSkin( 'oasis' ) || !$title || $title->getNamespace() != NS_CATEGORY ) {
 			return true;
@@ -26,17 +31,6 @@ class CategoryPaginationHooks {
 
 		$article = new CategoryPaginationPage( $title );
 
-		return true;
-	}
-
-	public static function onCategoryViewerGetSectionPagingLinks( $catViewer, $type, $position, &$r ) {
-		if ( !( $catViewer instanceof CategoryPaginationViewer ) ) {
-			return true;
-		}
-		$r = '';
-		if ( $position === 'bottom' ) {
-			$r = $catViewer->getPaginator( $type )->getBarHTML();
-		}
 		return true;
 	}
 }

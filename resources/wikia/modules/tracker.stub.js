@@ -51,6 +51,15 @@
 				// Generic error (generally AJAX)
 				ERROR: 'error',
 
+				// Flow start
+				FLOW_START: 'flow-start',
+
+				// Flow intermediary step
+				FLOW_MID_STEP: 'flow-mid-step',
+
+				// Flow end
+				FLOW_END: 'flow-end',
+
 				// Generic hover
 				HOVER: 'hover',
 

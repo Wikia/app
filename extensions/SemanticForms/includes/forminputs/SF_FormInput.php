@@ -116,6 +116,23 @@ abstract class SFFormInput {
 	}
 
 	/**
+	 * @param $key
+	 * @param $configVars
+	 * @param $functionData
+	 * @param $input_id
+	 * @return array
+	 */
+	private static function updateFormInputJsFunctionData( $key, &$configVars, $functionData, $input_id ) {
+		if ( array_key_exists( $key, $configVars ) ) {
+			$functionDataArray = $configVars[ $key ];
+		} else {
+			$functionDataArray = array();
+		}
+		$functionDataArray[ $input_id ] = $functionData;
+		return $functionDataArray;
+	}
+
+	/**
 	 * Return an array of the default parameters for this input where the
 	 * parameter name is the key while the parameter value is the value.
 	 *
@@ -203,7 +220,10 @@ abstract class SFFormInput {
 	 * @param String $name The name of the initialization function.
 	 * @param String $param The parameter passed to the initialization function.
 	 */
-	public function addJsInitFunctionData( $name, $param = 'null' ) {
+	public function addJsInitFunctionData( $name, $param = null ) {
+		if ( is_string( $param ) ) {
+			$param = json_decode( $param );
+		}
 		$this->mJsInitFunctionData[] = array( 'name' => $name, 'param' => $param );
 	}
 
@@ -337,31 +357,18 @@ abstract class SFFormInput {
 			$output->addModuleScripts( $modules );
 		}
 
-		// create calls to JS initialization and validation
-		// TODO: This data should be transferred as a JSON blob and then be evaluated from a dedicated JS file
 		if ( $input->getJsInitFunctionData() || $input->getJsValidationFunctionData() ) {
 
-			$jstext = '';
 			$input_id = $input_name == 'sf_free_text' ? 'sf_free_text' : "input_$sfgFieldNum";
+			$configVars = $output->getJsConfigVars();
 
-			foreach ( $input->getJsInitFunctionData() as $jsInitFunctionData ) {
-				$jstext .= "jQuery('#$input_id').SemanticForms_registerInputInit({$jsInitFunctionData['name']}, {$jsInitFunctionData['param']} );";
-			}
+			$initFunctionData = self::updateFormInputJsFunctionData( 'ext.sf.initFunctionData', $configVars, $input->getJsInitFunctionData(), $input_id );
+			$validationFunctionData = self::updateFormInputJsFunctionData( 'ext.sf.validationFunctionData', $configVars, $input->getJsValidationFunctionData(), $input_id );
 
-			foreach ( $input->getJsValidationFunctionData() as $jsValidationFunctionData ) {
-				$jstext .= "jQuery('#$input_id').SemanticForms_registerInputValidation( {$jsValidationFunctionData['name']}, {$jsValidationFunctionData['param']});";
-			}
-
-			if ( $modules !== null ) {
-				$jstext = 'mw.loader.using(' . json_encode( $modules )
-					. ',function(){' . $jstext
-					. '},function(e,module){alert(module+": "+e);});';
-			}
-
-			$jstext = 'jQuery(function(){' . $jstext . '});';
-
-			// write JS code directly to the page's code
-			$output->addHeadItem( Html::inlineScript( $jstext ) );
+			$output->addJsConfigVars( array(
+				'ext.sf.initFunctionData' => $initFunctionData,
+				'ext.sf.validationFunctionData' => $validationFunctionData
+			) );
 		}
 
 		return $input->getHtmlText();

@@ -6,6 +6,10 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 		returnObj = function () { return {};},
 		slotTweaker = {
 			onReady: noop
+		},
+		uapContext = {
+			shouldDispatchEvent: noop,
+			dispatchEvent: noop
 		};
 
 	function createSlot(slotName, success, collapse, hop) {
@@ -41,6 +45,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	function getModule(mocks) {
 		return modules['ext.wikia.adEngine.provider.gpt.adDetect'](
 			mocks.adContext,
+			uapContext,
 			mocks.messageListener,
 			slotTweaker,
 			mocks.log,

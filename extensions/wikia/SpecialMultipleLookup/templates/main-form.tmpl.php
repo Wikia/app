@@ -59,7 +59,9 @@ $(document).ready(function() {
 				"aTargets": [ 1 ],
 				"bSortable" : false
 			},
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, 'fnRender': function (oObj) {
+				return mw.html.escape(oObj.aData[2]);
+			} },
 			{ "fnRender": function ( oObj ) {
 				var row = '<a href="'+ mw.html.escape( oObj.aData[3] ) + '">' + mw.html.escape( oObj.aData[3] ) + '</a>';
 				return row;

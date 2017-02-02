@@ -152,6 +152,7 @@ return [
 		'dependencies' => [
 			'amd',
 			'wikia.cookies',
+			'wikia.querystring'
 		],
 	],
 	'wikia.tracker' => [
@@ -256,6 +257,10 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
 	],
 
+	'jquery.dataTables' => [
+		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [
@@ -291,6 +296,15 @@ return [
 		'scripts' => [
 			'resources/wikia/modules/importScript.js',
 			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/articleEditTracking.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
 		]
 	],
 ];

@@ -35,7 +35,6 @@ function wfOasisSetup() {
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
-	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
 	// notifications
 	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';

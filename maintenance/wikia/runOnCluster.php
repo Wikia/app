@@ -79,11 +79,16 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class RunOnCluster extends Maintenance {
 
+	const PARAM_SITE_ID = 'siteId';
+	const PARAM_DB_NAME = 'dbName';
+
 	protected $verbose = false;
 	protected $test    = false;
 	protected $cluster = '1';
 	protected $class;
 	protected $method;
+
+	/** @var DatabaseBase */
 	protected $db;
 	protected $master;
 
@@ -100,7 +105,7 @@ class RunOnCluster extends Maintenance {
 		$this->addOption( 'class', 'The class with code to run', false, true, 'l' );
 		$this->addOption( 'method', 'Which method to run', false, true, 'm' );
 		$this->addOption( 'file' , 'File containing code to run', false, true, 'f' );
-		$this->addOption( 'dbname' , 'A single dbname to run against', false, true, 'i' );
+		$this->addOption( 'db-name' , 'A single dbname to run against', false, true, 'i' );
 	}
 
 	/**
@@ -114,7 +119,7 @@ class RunOnCluster extends Maintenance {
 		$this->cluster = $this->getOption( 'cluster', '1' );
 		$this->class   = $this->getOption( 'class' );
 		$this->method  = $this->getOption( 'method', 'run' );
-		$singleDBname  = $this->getOption( 'dbname' );
+		$singleDBname  = $this->getOption( 'db-name' );
 		$file = $this->getOption( 'file' );
 
 		$startTime = time();
@@ -181,31 +186,36 @@ class RunOnCluster extends Maintenance {
 
 		echo "Running ".$this->class.'::'.$this->method.' on cluster '.$this->cluster."\n";
 
-		// Loop through each dbname and run our code
-		foreach ( $clusterWikis as $cityId => $dbname ) {
+		// Loop through each dbName and run our code
+		foreach ( $clusterWikis as $cityId => $dbName ) {
 			// Catch connection errors and log them
 			try {
-				$result = $this->db->selectDB( $dbname );
+				$result = $this->db->selectDB( $dbName );
 			} catch ( Exception $e ) {
 				fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
 			}
 			if ( empty( $result ) ) {
 				continue;
 			}
-			$this->debug( "Processing: $dbname\n" );
+			$this->debug( "Processing: $dbName\n" );
 
 			// Call our method passing the connected DB handle and test flag
 			$class = $this->class;
 			$method = $this->method;
-			$params = array(
-				'dbname' => $dbname,
-				'cityId' => $cityId,
-			);
+			$params = [
+				self::PARAM_DB_NAME => $dbName,
+				self::PARAM_SITE_ID => $cityId,
+			];
 
 			try {
 				$class::$method( $this->db, $this->test, $this->verbose, $params );
 			} catch ( Exception $e ) {
-				fwrite( STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n" );
+				fwrite(
+					STDERR,
+					"Could not run $class::$method for $dbName: " .
+					$e->getMessage() . "\n" .
+					$e->getTraceAsString() . "\n"
+				);
 			}
 		}
 
@@ -220,7 +230,7 @@ class RunOnCluster extends Maintenance {
 	 * @return array An array of database names
 	 */
 	private function getClusterWikis( $dbname = '' ) {
-		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+		$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
 		if ( empty( $dbname ) ) {
 			$sqlWhere = 'city_cluster = '.$db->addQuotes( 'c'.$this->cluster );
@@ -235,7 +245,7 @@ class RunOnCluster extends Maintenance {
 
 		$result = $db->query( $sql, __METHOD__ );
 
-		$wikis = array();
+		$wikis = [];
 		while ( $row = $db->fetchObject( $result ) ) {
 			$wikis[$row->city_id] = $row->city_dbname;
 		}
@@ -252,7 +262,7 @@ class RunOnCluster extends Maintenance {
 		$target = $this->master ? DB_MASTER : DB_SLAVE;
 
 		$name = 'wikicities_c'.$this->cluster;
-		$this->db = wfGetDB( $target, array(), $name );
+		$this->db = wfGetDB( $target, [], $name );
 
 		return $this->db ? true : false;
 	}
@@ -269,7 +279,7 @@ class RunOnCluster extends Maintenance {
 }
 
 class ClusterTestClass {
-	public static function run( $db, $verbose = false, $test = false, $params = array() ) {
+	public static function run( DatabaseBase $db, $test = false, $verbose = false, $params = [] ) {
 		echo "Default code : Running ".__METHOD__."\n";
 		$sql = 'SELECT database() as db';
 		$result = $db->query( $sql, __METHOD__ );

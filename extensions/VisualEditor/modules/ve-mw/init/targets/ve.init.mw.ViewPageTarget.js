@@ -253,6 +253,7 @@ ve.init.mw.ViewPageTarget.prototype.setupLocalNoticeMessages = function () {
  * @return {jQuery.Promise}
  */
 ve.init.mw.ViewPageTarget.prototype.activate = function () {
+	var extraModules = [ 'user' ];
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 		this.activatingDeferred = $.Deferred();
@@ -272,7 +273,12 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 
 		this.saveScrollPosition();
 
-		this.load( [ 'site', 'user' ] );
+		// Only ensure site JS is loaded if it is enabled (SEC-73)
+		if ( mw.config.get( 'wgUseSiteJs' ) ) {
+			extraModules[extraModules.length] = 'site';
+		}
+
+		this.load( extraModules );
 	}
 	return this.activatingDeferred.promise();
 };
@@ -315,7 +321,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( noDialog, trackMecha
  * @param {string} [trackMechanism] Abort mechanism; used for event tracking if present
  */
 ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
-	var abortType, promises = [];
+	var abortType;
 
 	// Event tracking
 	if ( trackMechanism ) {
@@ -335,6 +341,12 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
 			mechanism: trackMechanism
 		} );
 	}
+
+	this.updatePageOnCancel();
+};
+
+ve.init.mw.ViewPageTarget.prototype.updatePageOnCancel = function () {
+	var promises = [];
 
 	this.deactivating = true;
 	// User interface changes
@@ -553,10 +565,10 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 ) {
 	var newUrlParams, watchChecked;
 	this.saveDeferred.resolve();
-	if ( !this.pageExists || this.restoring ) {
+	if ( this.shouldReloadPageAfterSave() ) {
 		// This is a page creation or restoration, refresh the page
 		this.tearDownBeforeUnloadHandler();
-		newUrlParams = newid === undefined ? {} : { venotify: this.restoring ? 'restored' : 'created' };
+		newUrlParams = newid === undefined ? {} : { venotify: this.getVeNotifyAfterSave() };
 
 		if ( isRedirect ) {
 			newUrlParams.redirect = 'no';
@@ -608,6 +620,20 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 				message: ve.msg( 'postedit-confirmation-saved', mw.user )
 			} );
 		}
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
+	return Boolean( !this.pageExists || this.restoring );
+};
+
+ve.init.mw.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
+	if ( this.restoring ) {
+		return 'restored';
+	} else if ( this.pageExists ) {
+		return 'saved';
+	} else {
+		return 'created';
 	}
 };
 
@@ -942,11 +968,7 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.captchaResponse = null;
 	}
 
-	if (
-		+mw.user.options.get( 'forceeditsummary' ) &&
-		saveOptions.summary === '' &&
-		!this.saveDialog.messages.missingsummary
-	) {
+	if ( this.shouldShowMissingSummaryMessage( saveOptions ) ) {
 		this.saveDialog.showMessage(
 			'missingsummary',
 			// Wrap manually since this core message already includes a bold "Warning:" label
@@ -958,6 +980,12 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 		this.save( this.docToSave, saveOptions );
 		this.saveDeferred = saveDeferred;
 	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.shouldShowMissingSummaryMessage = function ( saveOptions ) {
+	return +mw.user.options.get( 'forceeditsummary' ) &&
+			saveOptions.summary === '' &&
+			!this.saveDialog.messages.missingsummary;
 };
 
 /**

@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"DCLXVI",
+			"Reedy",
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"validator-type-string": "текст",
+	"validator-type-float": "номер",
+	"validator-type-title": "заглавие",
+	"validator-describe-empty": "празно",
+	"validator-describe-header-type": "Тип",
+	"validator-describe-header-default": "По подразбиране",
+	"validator-describe-parameters": "Параметри",
+	"validator_error_empty_argument": "Параметърът $1 не може да има празна стойност."
+}

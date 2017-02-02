@@ -1,4 +1,3 @@
-/*global define*/
 define('ext.wikia.recirculation.views.incontent', [
 	'jquery',
 	'wikia.window',
@@ -6,6 +5,7 @@ define('ext.wikia.recirculation.views.incontent', [
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
 ], function ($, w, log, tracker, utils) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.recirculation.views.incontent',
 		$container = $('#mw-content-text'),
@@ -55,13 +55,13 @@ define('ext.wikia.recirculation.views.incontent', [
 	function render(data) {
 		var deferred = $.Deferred();
 
-		utils.renderTemplate('incontent.mustache', data)
+		utils.renderTemplate('client/incontent.mustache', data)
 			.then(waitForToc)
 			.then(function($html) {
 				var section = findSuitableSection();
 
 				if (!section) {
-					return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
+					return deferred.reject('Recirculation in-content widget not shown. Not enough sections in article');
 				}
 
 				section.before($html);
@@ -78,7 +78,7 @@ define('ext.wikia.recirculation.views.incontent', [
 			$html.on('mousedown', 'a', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'in-content'));
 			});
-		}
+		};
 	}
 
 	return function() {
@@ -87,6 +87,6 @@ define('ext.wikia.recirculation.views.incontent', [
 			render: render,
 			setupTracking: setupTracking,
 			findSuitableSection: findSuitableSection
-		}
-	}
+		};
+	};
 });

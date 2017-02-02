@@ -125,6 +125,9 @@ class ForumController extends WallBaseController {
 				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
 			}
 		}
+
+		// MAIN-7865: Don't render MiniEditor on Monobook
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExt && $this->app->checkSkin( 'oasis' ) );
 	}
 
 	public function boardThread() {
@@ -353,22 +356,4 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'messages', $messages );
 		}
 	}
-
-	public function messageTopic() {
-		// stub function
-	}
-
-	/**
-	 * render html for old forum info
-	 */
-
-	public function oldForumInfo() {
-		// TODO: include some css build some urls
-		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
-
-		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
-		$this->forumUrl = $forumTitle->getLocalUrl();
-		return true;
-	}
-
 }

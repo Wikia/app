@@ -109,7 +109,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				return;
 			}
 
-			if ( $user->checkPassword( $this->password ) ) {
+			if ( $user->checkPassword( $this->password )->success() ) {
 				$this->wg->User = $user;
 
 				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm

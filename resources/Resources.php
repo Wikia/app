@@ -578,7 +578,7 @@ return array(
 		'group' => 'mediawiki.action.history',
 	),
 	'mediawiki.action.history.diff' => array(
-		'styles' => 'resources/mediawiki.action/mediawiki.action.history.diff.css',
+		'styles' => 'resources/mediawiki.action/mediawiki.action.history.diff.scss',
 		'group' => 'mediawiki.action.history',
 	),
 	'mediawiki.action.view.dblClickEdit' => array(

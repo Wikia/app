@@ -13,6 +13,11 @@ $old-close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 		height: 90px;
 	}
 
+	.top-bar {
+		background: none;
+		z-index: 0;
+	}
+
 	.close {
 		bottom: 0;
 		padding: 37px 7px;

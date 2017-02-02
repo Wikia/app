@@ -25,7 +25,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
 		'Title' => [ 'newFromDBkey', 'newFromText', 'newFromURL', 'newFromID', 'newFromRow' ],
-		'User' => [ 'newFromName', 'newFromId', 'newFromSession', 'newFromRow' ],
+		'User' => [ 'newFromName', 'newFromId', 'newFromToken', 'newFromRow' ],
 	];
 
 
@@ -568,6 +568,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockDevEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->mockGlobalVariable( 'wgDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )
 			->method( 'getExternalHostName' )

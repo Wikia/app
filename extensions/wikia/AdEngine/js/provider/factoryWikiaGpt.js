@@ -1,12 +1,12 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adContext, adLogicPageParams, btfBlocker, gptHelper, log, lookups) {
+], function (adContext, btfBlocker, gptHelper, adUnitBuilder, log, lookups) {
 	'use strict';
 
 	function overrideSizes(slotMap) {
@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
 
-		if (!!slotMap.INCONTENT_LEADERBOARD && context.slots.incontentLeaderboardAsOutOfPage) {
+		if (!!slotMap.INCONTENT_LEADERBOARD && context.opts.incontentLeaderboardAsOutOfPage) {
 			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
 	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
 	 * @param {function} [extra.beforeHop]      - function to call before calling hop
+	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
@@ -63,15 +64,13 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot.name], 'debug', logGroup);
 
-			var pageParams = adLogicPageParams.getPageLevelParams(),
-				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])), // copy value
-				slotPath = [
-					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slot.name
-				].join('/');
+			var slotPath = adUnitBuilder.build(slot.name, src),
+				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
 
 			addHook(slot, 'success', extra.beforeSuccess);
 			addHook(slot, 'collapse', extra.beforeCollapse);
 			addHook(slot, 'hop', extra.beforeHop);
+			addHook(slot, 'renderEnded', extra.onSlotRendered);
 
 			slotTargeting.pos = slotTargeting.pos || slot.name;
 			slotTargeting.src = src;
@@ -90,7 +89,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: extra.atfSlots ? btfBlocker.decorate(extra.atfSlots, fillInSlot) : fillInSlot
+			fillInSlot: extra.atfSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
 		};
 	}
 

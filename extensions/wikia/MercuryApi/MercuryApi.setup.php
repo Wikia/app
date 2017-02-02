@@ -27,6 +27,7 @@ $wgAutoloadClasses['MercuryApiHooks'] = $dir . 'MercuryApiHooks.class.php';
 $wgAutoloadClasses['MercuryApi'] = $dir . 'models/MercuryApi.class.php';
 $wgAutoloadClasses['MercuryApiArticleHandler'] = $dir . 'handlers/MercuryApiArticleHandler.class.php';
 $wgAutoloadClasses['MercuryApiCategoryHandler'] = $dir . 'handlers/MercuryApiCategoryHandler.class.php';
+$wgAutoloadClasses['MercuryApiFilePageHandler'] = $dir . 'handlers/MercuryApiFilePageHandler.class.php';
 $wgAutoloadClasses['MercuryApiMainPageHandler'] = $dir . 'handlers/MercuryApiMainPageHandler.class.php';
 
 // Add new API controller to API controllers list

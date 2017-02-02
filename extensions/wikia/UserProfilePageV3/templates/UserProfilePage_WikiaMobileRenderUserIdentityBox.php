@@ -52,7 +52,7 @@
 							array_pop( $tokens );//drop all_the_rest from the tokens
 							$wikiURL = implode( '/', $tokens );//stick it back together
 						?>
-						<li class=mstLi><a href="<?= $wikiURL; ?>"><?= $wiki['wikiName']; ?></a></li>
+						<li class=mstLi><a href="<?= Sanitizer::encodeAttribute( $wikiURL ); ?>"><?= htmlspecialchars( $wiki['wikiName'] ); ?></a></li>
 						<? endforeach; ?>
 					</ul>
 				</li>

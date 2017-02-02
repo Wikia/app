@@ -88,7 +88,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 
 		$sUser = $this->mRequest->getText( 'user', '' );
 		if ( !empty( $sUser ) ) {
-			$this->aConds['slog_user_name'] = $sUser;
+			$userid = User::idFromName( $sUser );
+			$this->aConds['slog_user'] = $userid;
 		}
 	}
 
@@ -159,7 +160,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				}
 				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
-						$linker->userLink($result->slog_user, $result->slog_user_name),
+						$linker->userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
 						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
 						$siteurl,
 						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
@@ -168,7 +169,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
 				$out = wfMessage( $msg,
 					array($time,
-						$linker->userLink($result->slog_user, $result->slog_user_name),
+						$linker->userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
 						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
 				break;
 			case 'wikifactor':

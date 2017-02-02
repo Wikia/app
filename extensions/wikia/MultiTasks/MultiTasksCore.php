@@ -187,27 +187,16 @@ class MultiTask extends SpecialPage {
 	 *
 	 * @access public
 	 *
-	 * @return allow (or not) to show special page
+	 * @return bool allow (or not) to show special page
 	 */
 	protected function checkRestriction() {
-		global $wgUser, $wgOut;
+		$this->setHeaders();
+		// SUS-288: Check permissions before checking for block
+		$this->checkPermissions();
+		$this->checkReadOnly();
+		$this->checkIfUserIsBlocked();
 
-		$res = true;
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			$res = false;
-		}
-
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-
-		if ( !$wgUser->isAllowed( $this->mRights ) ) {
-			$this->displayRestrictionError();
-			$res = false;
-		}
-
-		return $res;
+		return true;
 	}
 
 	/**

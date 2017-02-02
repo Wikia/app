@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dbc334",
+			"Eleassar",
+			"Lesko987",
+			"Macofe"
+		]
+	},
+	"maps-desc": "Omogoča vključevanje dinamičnih zemljevidov na wikistrani, geokodiranje naslovov in druge geografske posege",
+	"right-geocode": "Geokodiranje",
+	"maps_map": "Zemljevid",
+	"maps-loading-map": "Nakladanje zemljevida...",
+	"maps-load-failed": "Zemljevid ni bilo mogoče naložiti.",
+	"maps-kml-parsing-failed": "Razčlenjevanje ene ali več datotek KML ni uspelo. Navadno je vzrok neuspešen priklic ali slabo oblikovan XML.",
+	"maps-fullscreen-button": "Vklopi celozaslonski prikaz",
+	"maps-fullscreen-button-tooltip": "Celozaslonski ali vključeni prikaz zemljevida.",
+	"maps-googlemaps3-par-enable-fullscreen": "Omogoči gumb za celozaslonski prikaz",
+	"maps-abb-north": "S",
+	"maps-abb-east": "V",
+	"maps-abb-south": "J",
+	"maps-abb-west": "Z",
+	"maps-latitude": "Zemljepisna širina:",
+	"maps-longitude": "Zemljepisna dolžina:",
+	"maps_googlemaps3": "Google Maps v3",
+	"maps_openlayers": "OpenLayers",
+	"maps_osm": "OpenStreetMap"
+}

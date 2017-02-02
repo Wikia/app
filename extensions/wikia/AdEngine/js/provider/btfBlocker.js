@@ -14,8 +14,13 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads = win.ads || {};
 	win.ads.runtime = win.ads.runtime || {};
 	win.ads.runtime.disableBtf = false;
+	win.ads.runtime.unblockHighlyViewableSlots = false;
 
-	function decorate(atfSlots, fillInSlot) {
+	function unblock(slotName) {
+		unblockedSlots.push(slotName);
+	}
+
+	function decorate(fillInSlot, config) {
 		var btfQueue = [],
 			btfQueueStarted = false,
 			pendingAtfSlots = []; // ATF slots pending for response
@@ -26,11 +31,16 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			btfQueueStarted = false;
 			pendingAtfSlots = [];
 			win.ads.runtime.disableBtf = false;
+			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
 		});
 
 		function processBtfSlot(slot) {
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
+
+			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+				config.highlyViewableSlots.map(unblock);
+			}
 
 			if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
 				fillInSlot(slot);
@@ -63,13 +73,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				pendingAtfSlots.splice(index, 1);
 
 				// If pendingAtfSlots is empty, start BTF slots
+				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
 					startBtfQueue();
 				}
-			}
-
-			if (recoveryHelper.isBlocking()) {
-				startBtfQueue();
 			}
 		}
 
@@ -77,7 +84,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
 			function fillInSlotOnResponse() {
-				onSlotResponse(slot.name, fillInSlot);
+				onSlotResponse(slot.name);
 			}
 
 			if (!adContext.getContext().opts.delayBtf) {
@@ -86,12 +93,13 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// For the above the fold slot:
-			if (atfSlots.indexOf(slot.name) > -1) {
+			if (config.atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
-				slot.pre('success', fillInSlotOnResponse);
+				slot.pre('renderEnded', fillInSlotOnResponse);
 				slot.pre('collapse', fillInSlotOnResponse);
 				slot.pre('hop', fillInSlotOnResponse);
+				slot.pre('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
@@ -102,10 +110,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		return fillInSlotWithDelay;
-	}
-
-	function unblock(slotName) {
-		unblockedSlots.push(slotName);
 	}
 
 	return {

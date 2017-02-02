@@ -195,17 +195,17 @@ class NewWikisPage extends AlphabeticPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
-		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
+		$name = Xml::element( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
 			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
-			$userLink = Xml::tags(
+			$userLink = Xml::element(
 				'a',
 				array( 'href' => $cuTitle->getFullURL( 'user=' . urlencode( $row->user_name ) ) ),
 				$row->user_name
 			);
 			$emailLink = $this->linker->link(
 				Title::newFromText( 'LookupUser', NS_SPECIAL ),
-				$row->user_email,
+				htmlspecialchars( $row->user_email ),
 				array(),
 				'target=' . urlencode( $row->user_email )
 			);
@@ -216,7 +216,7 @@ class NewWikisPage extends AlphabeticPager {
 			if( !empty( $row->city_founding_ip ) ) {
 				$ipMlLink = $this->linker->link(
 					Title::newFromText( 'MultiLookup', NS_SPECIAL ),
-					long2ip( $row->city_founding_ip ),
+					htmlspecialchars( long2ip( $row->city_founding_ip ) ),
 					array(),
 					'target=' . urlencode( long2ip( $row->city_founding_ip ) )
 				);

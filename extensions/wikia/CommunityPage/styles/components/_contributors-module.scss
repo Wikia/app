@@ -5,9 +5,13 @@
 
 // Styles for the contributors module in-page and modal version
 .contributors-module {
+	.badge-container {
+		@include avatar-badge($avatar-small-badge-top, $avatar-small-badge-left);
+	}
+
 	.avatar-container {
 		display: inline-block;
-		margin: $avatar-margin;
+		margin-right: $content-spacing-xxsmall;
 		vertical-align: middle;
 	}
 
@@ -25,9 +29,15 @@
 		&:first-of-type {
 			margin-top: 0;
 		}
+
+		.top-contributors {
+			margin-left: 0;
+		}
 	}
 
 	.community-page-contributor-details {
+		max-width: 148px;
+		overflow-wrap: break-word;
 		vertical-align: middle;
 	}
 
@@ -46,12 +56,12 @@
 		}
 
 		small {
-			font-size: 12px;
+			font-size: $wds-typescale-size-minus-2;
 		}
 
 		span {
 			display: block;
-			font-size: 16px;
+			font-size: $wds-typescale-size-base;
 			height: $module-default-line-height;
 			text-align: center;
 		}
@@ -62,8 +72,8 @@
 
 		.community-page-subtle {
 			color: $color-alternate-text;
-			font-size: 10px;
-			line-height: 12px;
+			font-size: $wds-typescale-size-minus-3;
+			line-height: $wds-line-height;
 			text-transform: uppercase;
 		}
 	}
@@ -83,11 +93,11 @@
 		}
 
 		.community-page-contributor-rank {
-			padding: 6px 6px 0 0;
+			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
 		}
 
 		.community-page-contributor-details {
-			padding-top: 6px;
+			padding-top: $content-spacing-xxsmall;
 		}
 
 		&.community-page-current-contributor {
@@ -131,10 +141,11 @@
 
 		.community-page-contributor-details {
 			@include flex(10 1 100%);
+			max-width: 100%;
 		}
 
 		.community-page-details {
-			padding-top: 6px;
+			padding-top: $content-spacing-xxsmall;
 		}
 
 		.user-details {

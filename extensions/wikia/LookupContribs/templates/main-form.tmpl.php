@@ -55,7 +55,9 @@ $(document).ready(function() {
 		"aoColumnDefs": [
 			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime", 'fnRender': function (oObj) {
+				return mw.html.escape(oObj.aData[2]);
+			} },
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + mw.html.escape(oObj.aData[3]) + '</a></span>';

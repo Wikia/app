@@ -242,7 +242,7 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment;
+		global $IP, $wgWikiaEnvironment, $wgDevDomain;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
@@ -251,8 +251,8 @@ class AsyncTaskList {
 			$host = gethostname();
 			$executionMethod = 'http';
 
-			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
+				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
 				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
@@ -279,16 +279,21 @@ class AsyncTaskList {
 	 * put this task list into the queue
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
+	 * @param string $priority which queue to add this task list to
 	 * @return string the task list's id
 	 * @throws AMQPExceptionInterface
 	 */
-	public function queue( AMQPChannel $channel = null ) {
+	public function queue( AMQPChannel $channel = null, $priority = null ) {
 		global $wgUser;
 
 		$this->initializeWorkId();
 
 		if ( $this->createdBy == null ) {
 			$this->createdBy( $wgUser );
+		}
+
+		if ( is_string( $priority ) ) {
+			$this->setPriority( $priority );
 		}
 
 		$id = $this->generateId();
@@ -397,19 +402,7 @@ class AsyncTaskList {
 	 * @return Queue queue this task list will go into
 	 */
 	protected function getQueue() {
-		if ( $this->queue == null ) {
-			global $wgEnableSemanticMediaWikiExt;
-
-			if ( $wgEnableSemanticMediaWikiExt ) {
-				$queue = new SMWQueue();
-			} else {
-				$queue = new Queue();
-			}
-		} else {
-			$queue = $this->queue;
-		}
-
-		return $queue;
+		return $this->queue == null ? new Queue() : $this->queue;
 	}
 
 	private function generateId() {
@@ -424,11 +417,12 @@ class AsyncTaskList {
 	 * send a group of AsyncTaskList objects to the broker
 	 *
 	 * @param array $taskLists AsyncTaskList objects to insert into the queue
+	 * @param string $priority which queue to add this task list to
 	 * @return array list of task ids
 	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
-	public static function batch( $taskLists ) {
+	public static function batch( $taskLists, $priority = null ) {
 		$logError = function( \Exception $e ) {
 			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
@@ -450,7 +444,7 @@ class AsyncTaskList {
 
 		foreach ( $taskLists as $task ) {
 			/** @var AsyncTaskList $task */
-			$ids [] = $task->queue( $channel );
+			$ids [] = $task->queue( $channel, $priority );
 		}
 
 		try {

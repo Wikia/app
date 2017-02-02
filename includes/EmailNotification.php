@@ -401,7 +401,6 @@ class EmailNotification {
 
 		// Now build message's subject and body
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
-		// EmailTemplatesHooksHelper -- updates subject if blogpost
 		// TopListHelper -- updates subject if title is toplist
 		wfRunHooks( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
 		$subject = strtr( $subject, $keys );
@@ -409,7 +408,6 @@ class EmailNotification {
 		$this->subject = strtr( $subject, $postTransformKeys );
 
 		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
-		// EmailTemplatesHooksHelper -- changes body to blog post. EmailTemplates only enabled on community and messaging so this tranforms
 		//     any watched page email coming from Community to a blog post (I think)
 		// TopListHelper -- updates body if title is toplist
 		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
@@ -441,6 +439,7 @@ class EmailNotification {
 				'summary' => $this->summary,
 				'action' => $this->action,
 				'subject' => $this->subject,
+				'exception' => new \Exception(),
 			];
 
 			if ( \F::app()->wg->DisableOldStyleEmail ) {

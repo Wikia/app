@@ -1134,6 +1134,12 @@ HTML;
 	public function isWikiaInternalRequest() {
 		return $this->getHeader( self::WIKIA_INTERNAL_REQUEST_HEADER ) !== false;
 	}
+
+	const MW_AUTH_OK_HEADER = 'X-MW-AUTH-OK';
+
+	public function isMwAuthOk() {
+		return $this->getHeader( self::MW_AUTH_OK_HEADER ) !== false;
+	}
 }
 
 /**

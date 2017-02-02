@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.template.playwire', [
-	'ext.wikia.adEngine.video.playwire',
+	'ext.wikia.adEngine.video.player.playwire',
 	'wikia.log'
 ], function (player, log) {
 	'use strict';
@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.template.playwire', [
 		params.configUrl = params.configUrl || player.getConfigUrl(params.publisherId, params.videoId);
 
 		if (params.container) {
-			player.inject(params.configUrl, params.container, params.vastUrl);
+			player.inject(params);
 			log(['show', params.configUrl], 'info', logGroup);
 		}
 	}

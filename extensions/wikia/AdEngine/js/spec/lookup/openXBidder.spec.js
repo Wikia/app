@@ -4,8 +4,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 	function noop() {
 	}
 
-	var slotParams = {},
-		mocks = {
+	var mocks = {
 			adContext: {
 				getContext: function () {
 					return {
@@ -47,7 +46,6 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			openXHelper: {
-				setSlots: function () {},
 				getSlots: function() {
 					return {
 						TOP_LEADERBOARD: {
@@ -88,6 +86,9 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addOnBlockingCallback: noop
+			},
 			tiers: [],
 			win: {
 				OX: {
@@ -112,6 +113,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -133,7 +135,6 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 			pageType: 'article'
 		};
 		mocks.targeting.skin = 'oasis';
-		slotParams = {};
 		openXBidder = getOpenXBidder();
 		openXBidder.call('oasis', function(){});
 		spyOn(mocks.adTracker, 'track');

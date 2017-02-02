@@ -1,18 +1,14 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.contentLinks', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
-	'wikia.nirvana',
-	'wikia.mustache',
-	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils'
-], function ($, w, abTest, nirvana, Mustache, tracker, utils) {
+	'wikia.nirvana'
+], function ($, w, abTest, nirvana) {
+	'use strict';
 
 	var placeholderImage = w.wgExtensionsPath + '/wikia/Recirculation/images/placeholder.png',
 		$container = $('#mw-content-text'),
-		minimumLinksNumber = 8,
-		minimumSectionsNumber = 3;
+		minimumLinksNumber = 8;
 
 	function formatData(data) {
 		var items = [];
@@ -27,7 +23,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		return {
 			title: $.msg('recirculation-incontent-title'),
 			items: items
-		}
+		};
 	}
 
 	function validLink(index, element) {
@@ -64,12 +60,16 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 			// If this page does not have enough links we don't want to show this widget
 			if ($links.length < minimumLinksNumber) {
-				return deferred.reject('Recirculation in-content widget not shown - Not enough links in article').promise();
+				return deferred
+					.reject('Recirculation in-content widget not shown - Not enough links in article')
+					.promise();
 			}
 
 			topTitles = findTopTitles($links);
 			if (topTitles.length < options.count) {
-				return deferred.reject('Recirculation in-content widget not shown - Not enough top links').promise();
+				return deferred
+					.reject('Recirculation in-content widget not shown - Not enough top links')
+					.promise();
 			}
 
 			nirvana.sendRequest({
@@ -86,9 +86,11 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 				callback: function(data) {
 					data = formatData(data);
 					if (data.items && data.items.length >= options.count ) {
-						deferred.resolve(data);
+						deferred
+							.resolve(data);
 					} else {
-						deferred.reject('Recirculation in-content widget not shown - Not enough items returned from API');
+						deferred
+							.reject('Recirculation in-content widget not shown - Not enough items returned from API');
 					}
 				}
 			});
@@ -106,7 +108,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 				links[element.title] ++;
 			});
 
-			titles = Object.keys(links),
+			titles = Object.keys(links);
 			sortedTitles = titles.sort(function(title1, title2){
 				return links[title2] - links[title1];
 			});
@@ -116,6 +118,6 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 		return {
 			loadData: loadData
-		}
-	}
+		};
+	};
 });

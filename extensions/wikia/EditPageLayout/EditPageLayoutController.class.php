@@ -126,7 +126,9 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
+			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
+			F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();

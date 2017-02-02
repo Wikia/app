@@ -24,6 +24,8 @@ ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
 
 	// Properties
 	this.toolbarSaveButtonEnableTracked = false;
+	this.userLoggedInDuringEdit = false;
+	this.$license = null;
 };
 
 /* Inheritance */
@@ -84,6 +86,50 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 		include: [ 'meta', 'categories', 'wikiaHelp', 'commandHelp', 'wikiaSourceMode' ]
 	}
 ];
+
+ve.init.wikia.ViewPageTarget.prototype.onSurfaceReady = function () {
+	// Parent method
+	ve.init.mw.ViewPageTarget.prototype.onSurfaceReady.call( this );
+
+	if ( !this.anonWarningWidget ) {
+		this.anonWarningWidget = new ve.ui.WikiaAnonWarningWidget();
+		this.anonWarningWidget.setupAnonWarning( this.getToolbar() );
+		this.anonWarningWidget.connect( this, {
+			logInSuccess: 'onLogInSuccess'
+		} );
+	}
+
+	if ( !this.licenseWidget ) {
+		this.licenseWidget = new ve.ui.WikiaLicenseWidget();
+		this.licenseWidget.setupLicense( '#WikiaArticle' );
+	}
+
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.wikia.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
+	this.tearDownLicense();
+	this.tearDownAnonWarning();
+
+	// Parent method
+	return ve.init.mw.ViewPageTarget.prototype.tearDownSurface.call( this, noAnimate );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.tearDownLicense = function () {
+	if ( this.licenseWidget ) {
+		this.licenseWidget.removeLicense();
+		this.licenseWidget = null;
+	}
+};
+
+ve.init.wikia.ViewPageTarget.prototype.tearDownAnonWarning = function () {
+	if ( this.anonWarningWidget ) {
+		this.anonWarningWidget.removeAnonWarning();
+		this.anonWarningWidget = null;
+	}
+};
 
 //ve.init.wikia.ViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
 
@@ -178,6 +224,10 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 		value: ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.shouldShowMissingSummaryMessage = function ( saveOptions ) {
+	return this.pageExists && ve.init.mw.ViewPageTarget.prototype.shouldShowMissingSummaryMessage.call( this, saveOptions );
 };
 
 ve.init.wikia.ViewPageTarget.prototype.setupSkinTabs = function () {
@@ -361,18 +411,6 @@ ve.init.wikia.ViewPageTarget.prototype.onSaveError = function ( doc, saveData, j
 /**
  * @inheritdoc
  */
-ve.init.wikia.ViewPageTarget.prototype.maybeShowDialogs = function () {
-	// Parent method
-	ve.init.wikia.ViewPageTarget.super.prototype.maybeShowDialogs.call( this );
-	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
-		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
-	}
-	//this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
-};
-
-/**
- * @inheritdoc
- */
 ve.init.wikia.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	var $captchaDiv = $( '<div>' ).addClass( 've-ui-mwSaveDialog-captcha' );
 
@@ -429,4 +467,47 @@ ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function ( $cont
 	).done( function ( getFancyCaptchaResolved ) {
 		$container.append( getFancyCaptchaResolved.form );
 	} );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
+	return this.userLoggedInDuringEdit ||
+		ve.init.wikia.ViewPageTarget.super.prototype.shouldReloadPageAfterSave.call( this );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.updatePageOnCancel = function () {
+	if ( this.userLoggedInDuringEdit === true ) {
+		this.deactivating = true;
+		this.tearDownBeforeUnloadHandler();
+		// Reload the page so we don't need to worry about the user's state
+		window.location = this.viewUri;
+	} else {
+		ve.init.wikia.ViewPageTarget.super.prototype.updatePageOnCancel.call( this );
+	}
+};
+
+ve.init.wikia.ViewPageTarget.prototype.onLogInSuccess = function () {
+	new mw.Api().get( {
+		action: 'query',
+		meta: 'userinfo',
+		prop: 'info',
+		// Try to send the normalised form so that it is less likely we get extra data like
+		// data.normalised back that we don't need.
+		titles: new mw.Title( this.pageName ).toText(),
+		indexpageids: '',
+		intoken: 'edit'
+	} ).done( function ( data ) {
+		var userInfo = data.query && data.query.userinfo,
+			pageInfo = data.query && data.query.pages && data.query.pageids &&
+				data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
+			editToken = pageInfo && pageInfo.edittoken;
+
+		if ( userInfo && editToken ) {
+			mw.user.tokens.set( 'editToken', editToken );
+			mw.config.set( { wgUserId: userInfo.id, wgUserName: userInfo.name } );
+			// This is used to reload the page after recently logged in user closes the editor
+			this.userLoggedInDuringEdit = true;
+		}
+	}.bind( this ) );
+
+	this.tearDownAnonWarning();
 };

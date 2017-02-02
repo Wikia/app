@@ -15,7 +15,7 @@ class UserLoginHelper extends WikiaModel {
 	const LIMIT_AVATARS = 4;
 	const LIMIT_WIKIS = 3;
 
-	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
+	const WIKIA_EMAIL_DOMAIN = "@fandom.com";
 
 	/**
 	 * Get random avatars from the current wiki
@@ -624,9 +624,12 @@ class UserLoginHelper extends WikiaModel {
 			$requestUrl = $this->app->wg->request->getRequestURL();
 		}
 
-		return $page . '?redirect='
+		parse_str( parse_url( $page, PHP_URL_QUERY ), $queryParams );
+
+		return wfAppendQuery( $page, 'redirect='
 			. urlencode ( wfExpandUrl ( $requestUrl ) )
-			. $this->getUselangParam();
+			. ( !isset( $queryParams['uselang'] ) ? $this->getUselangParam() : '' )
+		);
 	}
 
 	/**

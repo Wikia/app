@@ -3,11 +3,14 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adInfoTracker',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
+	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -16,15 +19,19 @@ require([
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
-	require.optional('ext.wikia.adEngine.recovery.gcs')
+	require.optional('ext.wikia.adEngine.recovery.gcs'),
+	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
 	adContext,
 	adEngineRunner,
+	adInfoTracker,
+	pageLevelParams,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
 	messageListener,
 	pageFair,
+	taboolaHelper,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -33,7 +40,8 @@ require([
 	yavliTag,
 	win,
 	loader,
-	gcs
+	gcs,
+	floatingRail
 ) {
 	'use strict';
 
@@ -56,18 +64,33 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
+		if (floatingRail) {
+			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
+		}
+
+		adInfoTracker.run();
+		
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		// Recovery
-		recoveryHelper.initEventQueue();
+		slotTweaker.registerMessageListener();
 
 		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {
 			pageFair.initDetection(context);
+		}
+
+		// Recovery
+		recoveryHelper.initEventQueues();
+
+		// Taboola
+		if (context.opts.loadTaboolaLibrary) {
+			recoveryHelper.addOnBlockingCallback(function() {
+				taboolaHelper.loadTaboola();
+			});
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
@@ -77,23 +100,13 @@ require([
 		if (context.opts.yavli) {
 			yavliTag.add();
 		}
-
-		if (context.opts.recoveredAdsMessage) {
-			loader({
-				type: loader.AM_GROUPS,
-				resources: ['adengine2_ads_recovery_message_js']
-			}).done(function () {
-				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.addRecoveryCallback();
-				});
-			});
-		}
 	});
 });
 
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
@@ -105,6 +118,7 @@ require([
 	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
 ], function (
 	adContext,
+	slotsContext,
 	bottomLeaderboard,
 	highImpact,
 	inContent,
@@ -120,7 +134,8 @@ require([
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		var incontentLeaderboard = 'INCONTENT_LEADERBOARD';
+		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
+			incontentPlayerSlotName = 'INCONTENT_PLAYER';
 
 		highImpact.init();
 		skyScraper3.init();
@@ -129,14 +144,14 @@ require([
 			revcontentSlots.init();
 		}
 
-		if (context.slots.incontentPlayer) {
-			inContent.init('INCONTENT_PLAYER');
+		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
+			inContent.init(incontentPlayerSlotName);
 		}
 
-		if (context.slots.incontentLeaderboard) {
-			inContent.init(incontentLeaderboard, function () {
-				if (context.slots.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
+			inContent.init(incontentLeaderboardSlotName, function () {
+				if (context.opts.incontentLeaderboardAsOutOfPage) {
+					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
 				}
 			});
 		}

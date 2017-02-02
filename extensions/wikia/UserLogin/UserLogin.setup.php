@@ -16,6 +16,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // classes
+$wgAutoloadClasses['EmailConfirmationController'] =  $dir . 'EmailConfirmationController.class.php';
+$wgAutoloadClasses['EmailConfirmationHooks'] =  $dir . 'EmailConfirmationHooks.class.php';
 $wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
 $wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
 $wgAutoloadClasses['UserLoginSpecialController'] =  $dir . 'UserLoginSpecialController.class.php';
@@ -26,6 +28,8 @@ $wgAutoloadClasses['UserLoginHelper'] =  $dir . 'UserLoginHelper.class.php';
 $wgAutoloadClasses['UserLoginForm'] =  $dir . 'UserLoginForm.class.php';
 $wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.class.php';
 $wgAutoloadClasses['UserLoginHooksHelper'] =  $dir . 'UserLoginHooksHelper.class.php';
+
+$wgWikiaApiControllers['EmailConfirmationController'] = $dir . 'EmailConfirmationController.class.php';
 
 // hooks
 $wgHooks['MakeGlobalVariablesScript'][] = 'UserLoginHooksHelper::onMakeGlobalVariablesScript';
@@ -40,6 +44,7 @@ $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComple
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
 // Add the JavaScript messages to the output
 $wgHooks['BeforePageDisplay'][] = "UserLoginHooksHelper::onBeforePageDisplay";
+$wgHooks['BeforePageDisplay'][] = "EmailConfirmationHooks::onBeforePageDisplay";
 
 
 // i18n mapping
@@ -62,7 +67,6 @@ $wgResourceModules['ext.userLogin'] = [
 	],
 ];
 
-
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';
 $wgSpecialPages['UserSignup'] = 'UserSignupSpecialController';
@@ -72,6 +76,6 @@ $wgSpecialPages['Signup'] = 'Signup';
 // redirects from Signup to UserLogin or UserSignup
 class Signup extends SpecialRedirectToSpecial {
 	function __construct() {
-		parent::__construct( 'Signup', 'UserLogin', false, array( 'returnto', 'type' ) );
+		parent::__construct( 'Signup', 'UserLogin', false, array( 'returnto', 'returntoquery', 'type' ) );
 	}
 }

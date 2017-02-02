@@ -193,6 +193,14 @@ class FSFile {
 		if ( $hash !== false ) {
 			$hash = wfBaseConvert( $hash, 16, 36, 31 );
 		}
+		else {
+			\Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - sha1_file failed',
+				[
+					'local_path' => $this->path,
+					'file_exists_bool' => file_exists( $this->path )
+				]
+			);
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $hash;

@@ -1,13 +1,12 @@
 <?php
-/**
- * Internationalisation file for extension WidgetFrameWork.
- *
- * @file
- * @ingroup Extensions
- */
+/** Internationalization file for /extensions/wikia/WidgetFramework/WidgetFramework extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'widgetframework-desc' => 'Wikia widget framework',
-);
+];
+
+$messages['fr'] = [
+	'widgetframework-desc' => 'Framework de widget de Wikia',
+];
+

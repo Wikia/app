@@ -7,6 +7,8 @@ class Masthead {
 	 */
 	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
 
+	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
+
 	/**
 	 * path to file, relative
 	 */
@@ -122,12 +124,12 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$this->mDefaultAvatars = array();
-		$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+		$images = getMessageForContentAsArray( 'blog-avatar-defaults' ) ?: [ static::DEFAULT_AVATAR_FILENAME ]; // PLATFORM-2393: add a default value
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = self::DEFAULT_PATH . $thumb . $hash . $image;
+				$this->mDefaultAvatars[] = static::DEFAULT_PATH . $thumb . $hash . $image;
 			}
 		}
 
@@ -215,7 +217,7 @@ class Masthead {
 		 * default avatar, path from messaging.wikia.com
 		 */
 		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
-		return self::DEFAULT_PATH . $hash . $avatar;
+		return static::DEFAULT_PATH . $hash . $avatar;
 	}
 
 	/**
@@ -252,7 +254,7 @@ class Masthead {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$url = self::getDefaultAvatarUrl( $url );
+				$url = static::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
@@ -514,10 +516,6 @@ class Masthead {
 			$wgLogTypes[] = AVATAR_LOG_NAME;
 		}
 		wfProfileOut( __METHOD__ );
-	}
-
-	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
 	}
 
 	/**

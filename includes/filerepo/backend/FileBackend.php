@@ -1136,13 +1136,16 @@ abstract class FileBackendStore extends FileBackend {
 		}
 		$latest = !empty( $params['latest'] );
 		if ( isset( $this->cache[$path]['stat'] ) ) {
+			$stat = $this->cache[$path]['stat'];
 			// If we want the latest data, check that this cached
 			// value was in fact fetched with the latest available data.
-			if ( !$latest || !empty( $this->cache[$path]['stat']['latest'] ) ) {
-				wfProfileOut( __METHOD__ );
-				return $this->cache[$path]['stat'];
-			} elseif ( in_array( $this->cache[$path]['stat'], array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
-				if ( !$latest || $this->cache[$path]['stat'] === 'NOT_EXIST_LATEST' ) {
+			if ( is_array( $stat ) ) {
+				if ( !$latest || $stat['latest'] ) {
+					wfProfileOut( __METHOD__ );
+					return $stat;
+				}
+			} elseif ( in_array( $stat, array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
+				if ( !$latest || $stat === 'NOT_EXIST_LATEST' ) {
 					wfProfileOut( __METHOD__ );
 					return false;
 				}

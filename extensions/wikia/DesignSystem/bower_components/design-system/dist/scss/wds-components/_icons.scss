@@ -1,0 +1,12 @@
+.wds-icon {
+	fill: currentColor;
+	@include square(24px);
+
+	&-small {
+		@include square(18px);
+	}
+
+	&-tiny {
+		@include square(12px);
+	}
+}

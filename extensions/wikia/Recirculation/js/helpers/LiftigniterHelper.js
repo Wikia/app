@@ -1,24 +1,25 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.liftigniter', [
 	'jquery',
 	'wikia.window',
 	'wikia.thumbnailer'
 ], function ($, w, thumbnailer) {
+	'use strict';
 
-	return function(config) {
+	var helper = function (config) {
 		var defaults = {
-				count: 5,
+				max: 5,
 				width: 320,
-				height: 180
+				height: 180,
+				flush: false
 			},
 			options = $.extend({}, defaults, config);
 
-		function loadData(waitToFetch) {
+		function loadData() {
 			var deferred = $.Deferred(),
 				registerOptions = {
-					max: options.count * 2,
+					max: options.max * 2, // We want to load twice as many because we filter based on thumbnails
 					widget: options.widget,
-					callback: function(response) {
+					callback: function (response) {
 						deferred.resolve(formatData(response));
 					}
 				};
@@ -27,15 +28,14 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				return deferred.reject('Liftigniter library not found').promise();
 			}
 
-			if (options.widget === 'fandom-rec') {
-				registerOptions.opts = {resultType: "fandom"}
+			if (options.opts) {
+				registerOptions.opts = options.opts;
 			}
 
 			// Callback renders and injects results into the placeholder.
 			w.$p('register', registerOptions);
 
-			// Executes the registered call.
-			if (!waitToFetch) {
+			if (options.flush) {
 				w.$p('fetch');
 			}
 
@@ -44,25 +44,25 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 
 		function formatData(data) {
 			var items = [],
-				title;
+				title = '';
 
-			if (options.widget === 'fandom-rec') {
-				title = $.msg('recirculation-fandom-title');
-			} else {
-				title = $.msg('recirculation-incontent-title');
+			if (options.title) {
+				title = options.title;
 			}
 
-			$.each(data.items, function(index, item) {
-				if (items.length < options.count && item.thumbnail) {
-					if (options.widget === 'fandom-rec') {
-						item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
-						item.source = 'fandom';
-					} else {
-						item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
-						item.source = 'wiki';
-					}
+			$.each(data.items, function (index, item) {
+				item.isWiki = false;
 
+				if (items.length < options.max && item.thumbnail) {
+					item.source = options.source;
+					item.meta = options.widget;
 					item.index = index;
+
+                    if (item.source === 'wiki') {
+                        item.isWiki = true;
+                        item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
+                    }
+
 					items.push(item);
 				}
 			});
@@ -73,15 +73,16 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			};
 		}
 
-		function setupTracking(elements) {
-			var trackOptions = {
-				elements: elements,
-				name: options.widget,
-				source: 'LI'
-			};
+		function setupTracking() {
+			var elements = $('.recirculation-unit .item[data-meta="' + options.widget + '"]').get(),
+				trackOptions = {
+					elements: elements,
+					name: options.widget,
+					source: 'LI'
+				};
 
-			if (options.widget === 'fandom-rec') {
-				trackOptions.opts = {resultType: "fandom"}
+			if (options.opts) {
+				trackOptions.opts = options.opts;
 			}
 			w.$p('track', trackOptions);
 		}
@@ -89,6 +90,8 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		return {
 			setupTracking: setupTracking,
 			loadData: loadData
-		}
-	}
+		};
+	};
+
+	return helper;
 });

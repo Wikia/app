@@ -144,7 +144,6 @@ class UserChangesHistory {
 				"user_id"          => $id,
 				"user_name"        => $wgUser->mName,
 				"user_real_name"   => $wgUser->mRealName,
-				"user_password"    => $wgUser->mPassword,
 				"user_newpassword" => $wgUser->mNewpassword,
 				"user_email"       => $wgUser->mEmail,
 				"user_options"     => $user_options,

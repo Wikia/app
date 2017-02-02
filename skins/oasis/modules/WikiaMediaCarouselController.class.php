@@ -1,5 +1,5 @@
 <?php
-class WikiaMediaCarouselController extends WikiaController {
+class WikiaMediaCarouselController extends WikiaService {
 	const DEFAULT_SCROLL_LIMIT = 3;
 
 	/**
@@ -23,7 +23,7 @@ class WikiaMediaCarouselController extends WikiaController {
 		$this->enableScroll = ($dataCount <= $this->scrollLimit) ? false : true;
 	}
 
-	public function setScrollLimit($scrollLimit) {
+	private function setScrollLimit( $scrollLimit ) {
 		$scrollLimit = intval($scrollLimit);
 		$this->scrollLimit = ($scrollLimit <= 0) ? 0 : $scrollLimit;
 	}

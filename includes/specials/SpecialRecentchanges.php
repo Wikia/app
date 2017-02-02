@@ -405,9 +405,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	/**
 	 * Process the query
 	 *
-	 * @param $conds Array
+	 * @param $conds array
 	 * @param $opts FormOptions
-	 * @return database result or false (for Recentchangeslinked only)
+	 * @return mixed database result or false (for Recentchangeslinked only)
 	 */
 	public function doMainQuery( $conds, $opts ) {
 		$tables = array( 'recentchanges' );

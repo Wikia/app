@@ -140,7 +140,7 @@ class SassUtil {
 		wfProfileIn(__METHOD__);
 		static $cb = null;
 
-		if (is_null($cb)) {
+		if (is_null($cb) && is_array($wgOasisThemeSettingsHistory)) {
 			$currentSettings = end($wgOasisThemeSettingsHistory);
 			if (!empty($currentSettings['revision'])) {
 				$cb = $currentSettings['revision'];

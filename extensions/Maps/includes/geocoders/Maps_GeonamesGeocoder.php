@@ -4,14 +4,11 @@
  * Class for geocoding requests with the GeoNames webservice.
  * 
  * @since 1.0
- * @file Maps_GeonamesGeocoder.php
- * @ingroup Maps
- * @ingroup Geocoders
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-final class MapsGeonamesGeocoder extends MapsGeocoder {
+final class MapsGeonamesGeocoder extends \Maps\Geocoder {
 	
 	/**
 	 * Registers the geocoder.
@@ -25,14 +22,14 @@ final class MapsGeonamesGeocoder extends MapsGeocoder {
 		global $egMapsGeoNamesUser;
 		
 		if ( $egMapsGeoNamesUser !== '' ) {
-			MapsGeocoders::registerGeocoder( 'geonames', __CLASS__ );
+			\Maps\Geocoders::registerGeocoder( 'geonames', __CLASS__ );
 		}
 		
 		return true;
 	}	
 	
 	/**
-	 * @see MapsGeocoder::getRequestUrl
+	 * @see \Maps\Geocoder::getRequestUrl
 	 * 
 	 * @since 1.0
 	 * 
@@ -46,7 +43,7 @@ final class MapsGeonamesGeocoder extends MapsGeocoder {
 	}
 	
 	/**
-	 * @see MapsGeocoder::parseResponse
+	 * @see \Maps\Geocoder::parseResponse
 	 * 
 	 * @since 1.0
 	 * 

@@ -49,7 +49,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	}
 
 	/**
-	 * Merges sripts into one
+	 * Merges scripts into one
 	 * @param array $scriptItems
 	 * @return bool|string
 	 */
@@ -61,7 +61,11 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 			$script = false;
 			if ( $scriptItem->getType() == ResourceLoaderScript::TYPE_REMOTE ) {
-				$script = $this->fetchRemoteScript( $scriptItem->getValue() );
+				try {
+					$script = $this->fetchRemoteScript( $scriptItem->getValue() );
+				} catch ( Exception $e ) {
+					return false;
+				} 
 			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_LOCAL ) {
 				$script = $this->fetchLocalScript( $scriptItem->getValue() );
 			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_INLINE ) {

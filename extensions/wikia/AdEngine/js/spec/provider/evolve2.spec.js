@@ -157,13 +157,6 @@ describe('Evolve2 Provider targeting', function () {
 		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
 
-	it('Should increment pos tageting value for the same size slots', function () {
-		evolve2.fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
-		evolve2.fillInSlot(createSlot('HOME_TOP_RIGHT_BOXAD'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');
-	});
-
 	it('Should start 160x600 with b pos and then increment', function () {
 		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');

@@ -13,6 +13,11 @@
 
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 
+use Swagger\Client\Discussion\Api\SitesApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Swagger\ApiProvider;
+
 $optionsWithArgs = array(
 	'action',
 	'ids',
@@ -356,6 +361,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
+				$this->disableDiscussion( $id );
 				$this->deleteWikiStats($id);
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
@@ -364,6 +370,29 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$notDeleted[$id] = $wiki;
 			}
 		}
+	}
+
+	private function disableDiscussion( $cityId ) {
+		try {
+			$this->getSitesApi()->softDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+		}
+		catch ( \Swagger\Client\ApiException $e ) {
+			WikiaLogger::instance()
+				->error( "{$cityId} Failed to soft delete Discussion site: {$e->getMessage()}\n" );
+		}
+	}
+
+	/**
+	 * @return SitesApi
+	 */
+	private function getSitesApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		/** @var SitesApi $api */
+		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );
+
+		return $api;
 	}
 
 	protected function batchProcess( $wikis ) {

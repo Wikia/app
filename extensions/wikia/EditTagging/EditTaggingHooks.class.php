@@ -114,7 +114,7 @@ class EditTaggingHooks {
 	 */
 	protected static function AddRevisionTag( $revisionId, $tag ) {
 		if ( !ChangeTags::addTags( $tag, null, $revisionId ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revisionId' => $revisionId, 'tag' => $tag ] );
+			\Wikia\Logger\WikiaLogger::instance()->info( 'EditTagging - No tag change', [ 'revisionId' => $revisionId, 'tag' => $tag ] );
 		}
 	}
 
@@ -211,11 +211,11 @@ class EditTaggingHooks {
 	 */
 	private static function getHandlers() {
 		$handlers = new ArrayObject();
-		$handlers->append( [ self, 'tagRevisionIfCategoryEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfGalleryEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfRTESourceEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfRTEWysiwygEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfSourceEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfCategoryEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfGalleryEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfRTESourceEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfRTEWysiwygEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfSourceEdit' ] );
 		return $handlers;
 	}
 }

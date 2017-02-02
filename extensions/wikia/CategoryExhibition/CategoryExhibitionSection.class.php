@@ -141,7 +141,7 @@ abstract class CategoryExhibitionSection {
 					$paginator = $this->getPaginatorForData( $serviceData, $itemsPerPage );
 					return [
 						'paginator' => $paginator,
-						'items' => $this->renderItems( $paginator->getCurrentPage( $serviceData ) ),
+						'items' => $this->renderItems( $paginator->getCurrentPageData( $serviceData ) ),
 					];
 				}
 			}

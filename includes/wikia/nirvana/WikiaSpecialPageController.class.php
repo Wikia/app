@@ -44,6 +44,7 @@
  * @method setHeaders()
  * @method bool setListed( $listed )
  * @method bool userCanExecute( User $user )
+ * @method void checkIfUserIsBlocked()
  */
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;

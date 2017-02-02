@@ -1,0 +1,9 @@
+{
+    "@metadata": {
+        "authors": [
+            "Base"
+        ]
+    },
+    "datavalues-desc": "Набір об'єктів для представлення різних типів значень",
+    "version-datavalues": "DataValues"
+}

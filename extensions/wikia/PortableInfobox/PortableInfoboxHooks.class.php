@@ -9,6 +9,7 @@ class PortableInfoboxHooks {
 		Wikia::addAssetsToOutput( 'portable_infobox_js' );
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
+			Wikia::addAssetsToOutput( 'portable_infobox_monobook_js' );
 		} else {
 			Wikia::addAssetsToOutput( 'portable_infobox_scss' );
 			if ( !empty( $wgEnablePortableInfoboxEuropaTheme ) ) {
@@ -106,7 +107,7 @@ class PortableInfoboxHooks {
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			PortableInfoboxDataService::newFromTitle( $title )->purge();
+			PortableInfoboxDataService::newFromTitle( $title )->delete();
 		}
 
 		return true;

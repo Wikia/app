@@ -121,5 +121,10 @@
 	"sf_category_desc": "Des isch d Kategorii $1.",
 	"sf_blank_namespace": "Hauptsyte",
 	"right-viewedittab": "D \"Bearbeite\"-Regischtercharte fir bearbeitbari Syte no Format aaluege",
-	"right-editrestrictedfields": "Yygschränkti Formatfälde bearbeite"
+	"right-editrestrictedfields": "Yygschränkti Formatfälde bearbeite",
+	"sf-datepicker-close": "Zuemache",
+	"sf-datepicker-prev": "Vorigi",
+	"sf-datepicker-next": "Negschti",
+	"sf-datepicker-today": "Hit",
+	"sf-regexp-wrongformat": "Falsch Format."
 }
