@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'1000x1000,1x1': 'a',
 			'160x600': 'b',
 
-			'320x50,320x100,300x250': 'a',
+			'320x50,320x100': 'a',
 			'300x250': 'a'
 		};
 	}
