@@ -121,7 +121,7 @@ class MercuryApiCategoryModel {
 					[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
 				);
 
-				return round( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
+				return ceil( $numberOfPages->fetchObject()->count / self::CATEGORY_MEMBERS_PER_PAGE );
 			}
 		);
 	}
