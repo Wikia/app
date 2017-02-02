@@ -64,10 +64,11 @@ class DumpForumPostContent extends Maintenance {
 			$articleComment = $this->getReplyComment( $commentIdx, $replies );
 		}
 
-		// $rawText = $articleComment->getRawText();
+		$rawText = $articleComment->getRawText();
 		$renderedText = $articleComment->getText();
 
-		echo "Rendered content:\n--- START ---\n$renderedText\n--- END ---\n";
+		echo "\n--- Raw content START ---\n$rawText\n--- END ---\n";
+		echo "\n--- Rendered content START ---\n$renderedText\n--- END ---\n";
 
 		$commentList = \ArticleCommentList::newFromTitle( $articleComment->getTitle() );
 		$commentPages = $commentList->getAllCommentPages();
