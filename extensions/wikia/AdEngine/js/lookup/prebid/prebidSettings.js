@@ -2,6 +2,12 @@
 define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [], function () {
 	'use strict';
 
+	/*
+	 * Documentation:
+	 * - http://prebid.org/dev-docs/publisher-api-reference.html#module_pbjs.setPriceGranularity
+	 * - http://prebid.org/dev-docs/publisher-api-reference.html#module_pbjs.bidderSettings
+	 * - http://prebid.org/dev-docs/examples/custom-price-bucket.html
+	 */
 	function transformPrice(bidResponse) {
 		var cpm = bidResponse.cpm,
 			result = '20.00';
