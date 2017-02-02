@@ -403,7 +403,7 @@ class MercuryApiController extends WikiaController {
 							);
 
 							// We don't cache subsequent pages, because there is no good way to purge them
-							// TODO remove this when icache supports surrogate keys
+							// TODO remove this when icache supports surrogate keys (OPS-10115)
 							if ( $categoryMembersPage > 1 ) {
 								$cacheValidity = WikiaResponse::CACHE_DISABLED;
 							}
@@ -500,7 +500,7 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// We don't cache it, because there is no easy way to purge all pages
-		// TODO start caching when icache supports surrogate keys
+		// TODO start caching when icache supports surrogate keys (OPS-10115)
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'data', $data );
 	}

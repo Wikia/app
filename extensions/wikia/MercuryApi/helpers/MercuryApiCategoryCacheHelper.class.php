@@ -7,10 +7,10 @@
  *
  * On modification call setTouched to cause the cache to be invalidated.
  *
- * FIXME this is complicated
+ * FIXME this is unnecessarily complicated
  * It would be better (simpler) to cache category data on Varnish and use surrogate keys to purge the responses.
  * We can't do this now, because Mercury uses icache to get the data from API.
- * Our icache doesn't support the surrogate keys at this point of time, see <!!!OPS ticket number!!!>
+ * Our icache doesn't support the surrogate keys at this point of time, see OPS-10115
  */
 class MercuryApiCategoryCacheHelper {
 
