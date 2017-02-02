@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
 			TOP_RIGHT_BOXAD:          {size: '300x250,300x600', wloc: 'top'},
 
-			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100,300x250', wsrc: 'mobile_evolve'},
+			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100', wsrc: 'mobile_evolve'},
 			MOBILE_IN_CONTENT:        {size: '300x250', wsrc: 'mobile_evolve'},
 			MOBILE_PREFOOTER:         {size: '300x250', wsrc: 'mobile_evolve'}
 		};
@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'1000x1000,1x1': 'a',
 			'160x600': 'b',
 
-			'320x50,320x100,300x250': 'a',
+			'320x50,320x100': 'a',
 			'300x250': 'a'
 		};
 	}
