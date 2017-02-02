@@ -209,7 +209,7 @@ class UserIdentityBox extends WikiaObject {
 		$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 
 		if ( empty( $memcData ) ) {
-			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis' ) as $key ) {
+			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis', 'bio' ) as $key ) {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference( $key );

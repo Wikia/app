@@ -189,6 +189,14 @@
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
 					<? endif; ?>
 				<? endif; ?>
+				<? if ( !empty( $user['bio'] ) ): ?>
+					<li id="discussion-bio"><?= wfMessage( 'user-identity-bio', $user['bio'] )->plain(); ?></li>
+					<div id="discussion-bio-toggle" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
+						<span>
+							[<?= wfMessage( 'user-identity-bio-show-more' )->escaped(); ?>]
+						</span>
+					</div>
+				<? endif; ?>
 			</ul>
 		</div>
 	</div>
