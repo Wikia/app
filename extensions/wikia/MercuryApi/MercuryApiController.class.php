@@ -242,7 +242,7 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
+			$dimensions[14] = ( $adContext['opts']['showAds'] ?? false ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
