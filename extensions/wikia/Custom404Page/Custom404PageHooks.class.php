@@ -21,7 +21,8 @@ class Custom404PageHooks {
 
 		$title = $article->getTitle();
 
-		if ( $article->getOldID() || !$title || !$title->isContentPage() ) {
+		// SUS-1275: handle NS_MAIN pages only, we do not want to query solr with all available namespaces
+		if ( $article->getOldID() || !$title || !$title->inNamespace( NS_MAIN ) ) {
 			// MW will treat those cases specially, don't try to direct users to other pages
 			return true;
 		}

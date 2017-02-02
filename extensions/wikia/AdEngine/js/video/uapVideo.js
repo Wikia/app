@@ -40,11 +40,18 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(params)
 			.then(function (video) {
-				var uiElements = params.autoPlay ? UITemplate.autoPlay : UITemplate.default;
+				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+					template = UITemplate.defaultLayout;
 
-				log(['VUAP UI elements', uiElements], log.levels.debug, logGroup);
+				if (params.splitLayoutVideoPosition) {
+					template = UITemplate.splitLayout;
+				} else if (params.autoPlay) {
+					template = UITemplate.autoPlayLayout;
+				}
 
-				videoInterface.setup(video, uiElements, {
+				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+
+				videoInterface.setup(video, template, {
 					image: providerContainer,
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
@@ -52,9 +59,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
 
-				if (params.splitLayoutVideoPosition) {
+				if (splitLayoutVideoPosition) {
 					video.container.style.position = 'absolute';
-					video.container.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
+					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 
 				video.addEventListener('allAdsCompleted', function () {

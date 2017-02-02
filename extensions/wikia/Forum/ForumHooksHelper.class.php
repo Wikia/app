@@ -530,4 +530,19 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-260: Prevent moving pages within, into, or out of Forum namespaces
+	 * @param bool $result whether to allow page moves
+	 * @param int $ns namespace number
+	 * @return bool false if this is Forum namespace to prevent page moves, true otherwise to resume hook processing
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		if ( in_array( $ns, [ NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
+
 }

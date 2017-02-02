@@ -12,7 +12,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			prebid: {
 				get: function () {
 					return mocks.pbjs;
-				}
+				},
+				validResponseStatusCode: 1,
+				errorResponseStatusCode: 2
 			},
 			timeBuckets: {
 				getTimeBucket: function () {

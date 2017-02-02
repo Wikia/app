@@ -2304,4 +2304,27 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-260: Prevent moving pages within, into, or out of Wall namespaces
+	 * @param bool $result whether to allow page moves
+	 * @param int $ns namespace number
+	 * @return bool false if this is a Wall namespace, otherwise true
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		// User Rename process needs to be able to move message walls
+		global $wgCommandLineMode;
+		if ( $wgCommandLineMode ) {
+			return true;
+		}
+
+		// If Message Wall is enabled, moving a page to User talk namespace makes it an archive
+		// This option is irreversible so it is prevented
+		if ( in_array( $ns, [ NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_USER_TALK ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
+
 }

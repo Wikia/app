@@ -386,6 +386,24 @@ class MediaWikiService {
 	}
 
 	/**
+	 * Determines whether given page can be indexed
+	 *
+	 * @param int $pageId
+	 *
+	 * @return boolean
+	 */
+	public function pageIdCanBeIndexed( $pageId ) {
+		try {
+			return \Wikia\IndexingPipeline\PipelineEventProducer::canIndex(
+				$this->getPageFromPageId( $pageId )->getTitle()
+			);
+		} catch ( \Throwable $e ) {
+			# catch "Error: Call to a member function exists() on null"
+			return false;
+		}
+	}
+
+	/**
 	 * Provides redirect title text for canonical pages
 	 *
 	 * @param int $pageId

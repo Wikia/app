@@ -37,7 +37,7 @@ class Field {
 	/**
 	 * Responsible for encapsulating MediaWiki logic.
 	 *
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 
