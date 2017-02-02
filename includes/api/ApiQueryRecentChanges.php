@@ -274,7 +274,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		/* Perform the actual query. */
 		$res = $this->select( __METHOD__ );
 
-		$titles = array();
+		$titles = [];
 
 		$result = $this->getResult();
 
