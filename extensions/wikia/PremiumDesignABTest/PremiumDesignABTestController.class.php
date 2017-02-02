@@ -19,7 +19,8 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function A_pageheader() {
-
+		global $wgExtensionsPath;
+		$this->videoPlayButtonSrc = $wgExtensionsPath . '/wikia/PremiumDesignABTest/images/play-button.png';
 	}
 
 	public function B_pageheader() {

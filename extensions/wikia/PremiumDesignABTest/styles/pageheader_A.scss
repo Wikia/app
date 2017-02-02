@@ -5,5 +5,218 @@
 
 	.video {
 		@include video();
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.yt-container {
+			background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
+			background-size: cover;
+			background-position: center center;
+			z-index: 1000;
+
+			&.ytcollapse-bottom-left {
+				bottom: 40px !important;
+				left: 20px !important;
+				width: 250px !important;
+				height: 140px !important;
+
+				&.animate {
+					transition: bottom 0.4s, left 0.4s, width 0.4s, height 0.4s;
+				}
+			}
+
+			&.ytcollapse-bottom-right {
+				bottom: 98px !important;
+				right: 20px !important;
+				width: 250px !important;
+				height: 140px !important;
+
+				&.animate {
+					transition: bottom 0.4s, right 0.4s, width 0.4s, height 0.4s;
+				}
+			}
+
+			&.ytcollapse-top-right {
+				top: 70px !important;
+				right: 20px !important;
+				width: 250px !important;
+				height: 140px !important;
+
+				&.animate {
+					transition: top 0.4s, right 0.4s, width 0.4s, height 0.4s;
+				}
+			}
+
+		}
 	}
+}
+
+.video-scroll {
+	display: none;
+	position: fixed;
+	z-index: 100;
+	cursor: pointer;
+
+	&.bottom-right {
+		bottom: 40px !important;
+		right: 20px !important;
+		width: 250px !important;
+		transition: bottom 0.4s, right 0.4s, width 0.4s;
+
+		.video-thumbnail {
+			height: 140px !important;
+			transition: height 0.4s;
+
+			.minimize, .scroll-to-top {
+				display: block;
+			}
+		}
+
+		.video-details {
+			opacity: 1;
+
+			.video-time {
+				display: block;
+			}
+		}
+	}
+
+	&.top-right {
+		top: 70px !important;
+		right: 20px !important;
+		width: 250px !important;
+		transition: top 0.4s, right 0.4s, width 0.4s;
+
+		.video-thumbnail {
+			height: 140px !important;
+			transition: height 0.4s;
+		}
+
+		.video-details {
+			opacity: 1;
+
+			.video-watch {
+				display: block;
+			}
+		}
+	}
+
+	&.bottom-left {
+		bottom: 40px !important;
+		left: 20px !important;
+		width: 250px !important;
+		transition: bottom 0.4s, left 0.4s, width 0.4s;
+
+		.video-thumbnail {
+			height: 140px !important;
+			transition: height 0.4s;
+
+			.close {
+				display: block;
+			}
+		}
+
+		.video-details {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			opacity: 1;
+			background: none;
+		}
+	}
+
+	.video-thumbnail {
+		background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
+		background-size: cover;
+		background-position: center center;
+		width: 100%;
+		height: 140px;
+		position: relative;
+		display: block;
+
+		.minimize {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/minimize.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			right: 0;
+			top: 0;
+			padding: 11px 6px 10px;
+		}
+
+		.scroll-to-top {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/scroll-to-top.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 7px;
+		}
+
+		.close {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/close.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 7px;
+		}
+
+		.video-play-button {
+			display: none;
+			height: 60px;
+			position: absolute;
+			left: 50%;
+			width: 60px;
+			top: 50%;
+			margin-top: -30px;
+			margin-left: -30px;
+		}
+	}
+
+	.video-details {
+		//display: none;
+		background: #000;
+		padding: 8px 10px 10px;
+		opacity: 0;
+		display: flex;
+		align-items: center;
+		transition: opacity 0.2s;
+		transition-delay: 0.5s;
+
+		.video-play-button {
+			width: 40px;
+		}
+
+		.video-watch {
+			font-size: 10px;
+			color: #00b7e0;
+		}
+
+		.video-title {
+			width: 180px;
+			float: left;
+			clear: left;
+			color: #fff;
+			font-size: 12px;
+		}
+
+		.video-watch {
+			display: none;
+		}
+
+		.video-time {
+			display: none;
+			color: #999999;
+			font-size: 10px;
+		}
+	}
+
+
 }
