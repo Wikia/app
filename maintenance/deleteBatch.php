@@ -41,7 +41,7 @@ class DeleteBatch extends Maintenance {
 			'If not given, stdin will be used.', false );
 
 		// Wikia change
-		$this->addOption( 'by-id', 'Provided list contains article IDs instead of titles', false, false /* $withArgs */ );
+		$this->addOption( 'by-id', 'Provided list contains article IDs instead of titles, separated by newlines', false, false /* $withArgs */ );
 	}
 
 	public function execute() {
