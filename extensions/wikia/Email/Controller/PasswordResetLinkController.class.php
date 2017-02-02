@@ -112,5 +112,4 @@ class PasswordResetLinkController extends EmailController {
 		}
 		return self::RESET_URL;
 	}
-
 }
