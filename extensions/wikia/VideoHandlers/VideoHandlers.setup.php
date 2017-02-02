@@ -175,8 +175,8 @@ $wgAutoloadClasses['YoutubeVideoHandler'] =  $dir . '/handlers/YoutubeVideoHandl
 $wgAutoloadClasses['YoutubeApiWrapper'] =  $dir . '/apiwrappers/YoutubeApiWrapper.class.php';
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
+// SUS-979 - GameStar video uploading is sunset, handler is preserved to allow existing videos to function
 $wgAutoloadClasses['GamestarVideoHandler'] =  $dir . '/handlers/GamestarVideoHandler.class.php';
-$wgAutoloadClasses['GamestarApiWrapper'] =  $dir . '/apiwrappers/GamestarApiWrapper.class.php';
 $wgMediaHandlers['video/gamestar'] = 'GamestarVideoHandler';
 
 $wgAutoloadClasses['AnyclipVideoHandler'] =  $dir . '/handlers/AnyclipVideoHandler.class.php';
