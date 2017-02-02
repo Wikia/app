@@ -1,17 +1,18 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, timeBuckets, prebid) {
+], function (adTracker, adaptersRegistry, timeBuckets, prebid) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
-		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		notRespondedMsg = 'NO_RESPONSE';
 
-	function setupPerformanceMap(skin, adapters) {
-		var biddersPerformanceMap = {};
+	function setupPerformanceMap(skin) {
+		var biddersPerformanceMap = {},
+			adapters = adaptersRegistry.getAdapters();
 
 		adapters.forEach(function (adapter) {
 			var slots = adapter.getSlots(skin),
@@ -78,10 +79,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
 
-		if (bid.getStatusCode() === responseErrorCode) {
+		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
-		return [bid.getSize(), bid.pbMg, bucket].join(';');
+		return [bid.getSize(), bid.pbAg, bucket].join(';');
 	}
 
 

@@ -1168,7 +1168,7 @@ class WikiFactory {
 	 * @return string changed host or $default
 	 */
 	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList;
+		global $wgStagingList, $wgDevDomain;
 
 		if ( $host === null ) {
 			$host = gethostname();
@@ -1182,8 +1182,8 @@ class WikiFactory {
 			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
 		}
 
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
-			return $dbName . '.' . $m[ 1 ] . '.wikia-dev.com';
+		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
+			return "{$dbName}.{$wgDevDomain}";
 		}
 
 		return $default;
@@ -1214,32 +1214,30 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
 
 		// first - normalize URL
-		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
-		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
+		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
+		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
+		if ( preg_match( $regexp, $url, $groups ) === 0 ||
+		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0
+		) {
 			// on fail at least return original url
 			return $url;
 		}
-		$server = $groups[ 1 ];
-		$address = $groups[ 2 ];
+		$protocol = $groups[1];
+		$server = $groups[2];
+		$address = $groups[3];
 
 		if ( !empty( $address ) ) {
 			$address = '/' . $address;
 		}
 
 		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/^(preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
-		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
-
-		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
-			$devbox = $groups[ 1 ];
-		} else {
-			$devbox = '';
+		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		if ( !empty( $wgDevDomain ) ) {
+			$server = str_replace( ".{$wgDevDomain}", '', $server );
 		}
-
-		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
 		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
@@ -1251,6 +1249,8 @@ class WikiFactory {
 		) ? $forcedEnv : $wgWikiaEnvironment;
 
 		// put the address back into shape and return
+		// we need to change 'https' to 'http' for stable/preview/verify/sandbox environments cause
+		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
 				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
@@ -1260,11 +1260,12 @@ class WikiFactory {
 				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address );
+				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return 'http://' . static::getExternalHostName() . '.' . $server .
+				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
+				return 'http://' . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );

@@ -55,7 +55,7 @@ define('ext.wikia.recirculation.views.incontent', [
 	function render(data) {
 		var deferred = $.Deferred();
 
-		utils.renderTemplate('incontent.mustache', data)
+		utils.renderTemplate('client/incontent.mustache', data)
 			.then(waitForToc)
 			.then(function($html) {
 				var section = findSuitableSection();

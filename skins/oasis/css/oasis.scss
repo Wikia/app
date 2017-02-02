@@ -2,9 +2,6 @@
 @import '/skins/common/shared.css';
 @import '/skins/wikia/shared.css';
 
-// CSS (needs leading slash and file extension)
-@import '/extensions/wikia/CreatePage/css/CreatePage.css';
-
 // Layout
 @import 'core/layout';
 @import 'wikiagrid';
@@ -76,6 +73,8 @@
 @import 'extensions/wikia/TOC/css/toc';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
+@import 'extensions/wikia/PageShare/styles/PageShare';
+@import 'extensions/wikia/CreatePage/css/CreatePage';
 
 //Site Optimizations
 @import 'extensions/wikia/Rail/styles/RailElement';

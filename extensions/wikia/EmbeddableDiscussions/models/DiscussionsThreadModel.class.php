@@ -1,8 +1,8 @@
 <?php
 
+use Wikia\Service\Gateway\ConsulUrlProvider;
+
 class DiscussionsThreadModel {
-	const DISCUSSIONS_API_BASE = 'https://services.wikia.com/discussion/';
-	const DISCUSSIONS_API_BASE_DEV = 'https://services.wikia-dev.com/discussion/';
 	const SORT_TRENDING = 'trending';
 	const SORT_LATEST = 'creation_date';
 	const SORT_TRENDING_LINK = 'trending';
@@ -21,12 +21,16 @@ class DiscussionsThreadModel {
 		return json_decode( Http::get( $url ), true );
 	}
 
+	private function getDiscussionsApiUrl() {
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		return ( new ConsulUrlProvider( $wgConsulUrl,
+			$wgConsulServiceTag ) )->getUrl( 'discussion' );
+	}
+
 	private function getCategoryRequestUrl() {
-		global $wgDevelEnvironment;
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
-		}
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
+		return $this->getDiscussionsApiUrl() .
+		       "/$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
 	/**

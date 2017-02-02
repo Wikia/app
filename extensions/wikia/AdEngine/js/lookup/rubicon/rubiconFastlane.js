@@ -4,27 +4,22 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTier',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, slotsContext, factory, rubiconTargeting, doc, log, win) {
+], function (adContext, slotsContext, factory, rubiconTargeting, rubiconTier, doc, log, win) {
 	'use strict';
 
-	var config = {
+	var bestPrices = {},
+		bestPricesPrivate = {},
+		config = {
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'}
 				},
-				HOME_TOP_LEADERBOARD: {
-					sizes: [[728, 90], [970, 250]],
-					targeting: {loc: 'top'}
-				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [[300, 250], [300, 600], [300, 1050]],
-					targeting: {loc: 'top'}
-				},
-				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},
@@ -35,14 +30,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				LEFT_SKYSCRAPER_3: {
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
-				},
-				INCONTENT_BOXAD_1: {
-					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
-					targeting: {loc: 'hivi'}
-				},
-				INVISIBLE_HIGH_IMPACT_2: {
-					sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
-					targeting: {loc: 'hivi'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
@@ -77,6 +64,11 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
+		rubiconDomains = [
+			'//fastlane.rubiconproject.com/',
+			'//fastlane-adv.rubiconproject.com/'
+		],
+		rubiconLoaded = false,
 		sizeMap = {
 			'468x60': 1,
 			'728x90': 2,
@@ -89,8 +81,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 			'336x280': 49,
 			'300x1050': 54,
 			'970x250': 57,
-			'320x480': 67,
-			'480x320': 101
+			'320x480': 67
 		},
 		slots;
 
@@ -109,6 +100,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
 				priceMap[slotName] = params.values.sort(compareTiers).join(',');
+				saveBestPrice(slotName, params.values);
 			}
 		});
 	}
@@ -149,6 +141,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function defineSlots(skin, onResponse) {
+		rubiconSlots = [];
 		Object.keys(slots).forEach(function (slotName) {
 			defineSingleSlot(slotName, slots[slotName], skin);
 		});
@@ -175,6 +168,30 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 				parameters[rubiconTierKey].push(tierSize + 'NONE');
 			}
 		});
+	}
+
+	function saveBestPrice(slotName, tiers) {
+		tiers.forEach(function (tier) {
+			bestPrices[slotName] = Math.max(rubiconTier.parseOpenMarketPrice(tier), bestPrices[slotName] || 0);
+			bestPricesPrivate[slotName] = Math.max(rubiconTier.parsePrivatePrice(tier), bestPricesPrivate[slotName] || 0);
+		});
+	}
+
+	function getBestSlotPrice(slotName) {
+		return {
+			fastlane: getBestPriceString(bestPrices[slotName]),
+			fastlane_private: getBestPriceString(bestPricesPrivate[slotName])
+		};
+	}
+
+	function getBestPriceString(bestPriceForSlot) {
+		var price;
+
+		if (typeof bestPriceForSlot !== 'undefined') {
+			price = (bestPriceForSlot / 100).toFixed(2).toString();
+		}
+
+		return price;
 	}
 
 	function getSlotParams(slotName) {
@@ -222,24 +239,48 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	}
 
 	function call(skin, onResponse) {
-		var rubicon = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
-
-		win.rubicontag = win.rubicontag || {};
-		win.rubicontag.cmd = win.rubicontag.cmd || [];
-
-		rubicon.async = true;
-		rubicon.type = 'text/javascript';
-		rubicon.src = rubiconLibraryUrl;
-
-		node.parentNode.insertBefore(rubicon, node);
-		context = adContext.getContext();
-		configureSlots(skin);
 		response = false;
+
+		if (!rubiconLoaded) {
+			var rubicon = doc.createElement('script'),
+				node = doc.getElementsByTagName('script')[0];
+
+			win.rubicontag = win.rubicontag || {};
+			win.rubicontag.cmd = win.rubicontag.cmd || [];
+
+			rubicon.async = true;
+			rubicon.type = 'text/javascript';
+			rubicon.src = rubiconLibraryUrl;
+
+			node.parentNode.insertBefore(rubicon, node);
+			context = adContext.getContext();
+			configureSlots(skin);
+			prefetchDNS();
+
+			rubiconLoaded = true;
+		}
+
 		defineSlots(skin, function () {
 			response = true;
+			priceMap = {};
+			bestPrices = {};
 			onResponse();
 		});
+	}
+
+	function prefetchDNS() {
+		var node = doc.getElementsByTagName('script')[0],
+			fragment = doc.createDocumentFragment();
+
+		rubiconDomains.forEach(function(domain) {
+			var linkToPrefetch = doc.createElement('link');
+
+			linkToPrefetch.rel = 'dns-prefetch';
+			linkToPrefetch.href = domain;
+
+			fragment.appendChild(linkToPrefetch);
+		});
+		node.parentNode.insertBefore(fragment, node);
 	}
 
 	function getPrices() {
@@ -255,6 +296,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		name: 'rubicon_fastlane',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,

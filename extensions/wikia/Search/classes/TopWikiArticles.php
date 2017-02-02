@@ -47,9 +47,11 @@ class TopWikiArticles {
 
 		try {
 			$app = \F::app();
-			$pageData = $app
-				->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'limit' => static::GET_NUMBER_OF_TOP_ARTICLES_FROM_DB ] )
-				->getData();
+			$pageData = $app->sendRequest(
+					'ArticlesApiController',
+					'getTop',
+					[ 'namespaces' => 0, 'limit' => static::GET_NUMBER_OF_TOP_ARTICLES_FROM_DB ]
+				)->getData();
 			$ids = [];
 
 			foreach ( $pageData['items'] as $item ) {

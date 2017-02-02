@@ -249,7 +249,8 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		if ( $isEditPage || WikiaPageType::isMainPage() ) {
+		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
+		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
@@ -285,6 +286,7 @@ class BodyController extends WikiaController {
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
+		$this->isEditPage = self::isEditPage();
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing

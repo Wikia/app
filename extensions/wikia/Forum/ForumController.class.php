@@ -356,8 +356,4 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'messages', $messages );
 		}
 	}
-
-	public function messageTopic() {
-		// stub function
-	}
 }

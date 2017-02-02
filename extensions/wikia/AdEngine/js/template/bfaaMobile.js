@@ -8,23 +8,19 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (
-	uapContext,
-	btfBlocker,
-	slotTweaker,
-	uapVideo,
-	doc,
-	log,
-	win,
-	mercuryListener
-) {
+], function (uapContext,
+			 btfBlocker,
+			 slotTweaker,
+			 uapVideo,
+			 doc,
+			 log,
+			 win,
+			 mercuryListener) {
 	'use strict';
 
-	var adSlot,
-		adsModule,
+	var adsModule,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
-		imageContainer,
 		unblockedSlots = [
 			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
@@ -60,14 +56,13 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.init()
-				.then(function () {
-					var video = uapVideo.loadVideoAd(params, adSlot, imageContainer);
-
-					video.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+			uapVideo.loadVideoAd(params)
+				.then(function (video) {
+					video.addEventListener('loaded', function () {
 						onResize(params.videoAspectRatio);
 					});
-					video.addEventListener(win.google.ima.AdEvent.Type.COMPLETE, function () {
+
+					video.addEventListener('allAdsCompleted', function () {
 						onResize(params.aspectRatio);
 					});
 				});
@@ -75,15 +70,14 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	}
 
 	function show(params) {
-		adSlot = doc.getElementById(params.slotName);
-		imageContainer = adSlot.querySelector('div:last-of-type');
-
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
+		uapContext.setUapId(params.uap);
+
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			runOnReady(iframe, params);
@@ -92,7 +86,6 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		log(['show', params.uap], log.levels.info, logGroup);
 
-		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
 	}
 

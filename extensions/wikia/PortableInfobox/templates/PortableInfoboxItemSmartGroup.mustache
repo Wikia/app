@@ -1,0 +1,14 @@
+<section class="pi-item pi-smart-group pi-border-color">
+    {{#renderLabels}}
+        <section class="pi-smart-group-head">
+            {{#labels}}
+                <h3 class="pi-smart-data-label pi-data-label pi-secondary-font pi-item-spacing"{{#inlineStyles}} style="{{{inlineStyles}}}"{{/inlineStyles}}>{{{value}}}</h3>
+            {{/labels}}
+        </section>
+    {{/renderLabels}}
+    <section class="pi-smart-group-body">
+        {{#values}}
+            <div class="pi-smart-data-value pi-data-value pi-font pi-item-spacing"{{#inlineStyles}} style="{{{inlineStyles}}}"{{/inlineStyles}}>{{{value}}}</div>
+        {{/values}}
+    </section>
+</section>

@@ -3,6 +3,7 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -23,6 +24,7 @@ require([
 ], function (
 	adContext,
 	adEngineRunner,
+	adInfoTracker,
 	pageLevelParams,
 	adConfigDesktop,
 	customAdsLoader,
@@ -66,10 +68,14 @@ require([
 			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
 		}
 
+		adInfoTracker.run();
+		
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
+
+		slotTweaker.registerMessageListener();
 
 		sourcePoint.initDetection();
 

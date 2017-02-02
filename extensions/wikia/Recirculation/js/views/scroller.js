@@ -15,7 +15,9 @@ define('ext.wikia.recirculation.views.scroller', [
 			return deferred.reject('Recirculation scroller widget not shown - Not enough sections in article');
 		}
 
-		utils.renderTemplate('scroller.mustache', data).then(function($html) {
+		data.title = data.title || $.msg('recirculation-incontent-title');
+
+		utils.renderTemplate('client/scroller.mustache', data).then(function ($html) {
 			section.before($html);
 
 			var scroller = $html.find('.items-container').perfectScrollbar({
@@ -23,7 +25,7 @@ define('ext.wikia.recirculation.views.scroller', [
 				}),
 				scrollAmount = $html.find('.item').outerWidth(true) * 3;
 
-			$html.find('.scroller-arrow').click(function() {
+			$html.find('.scroller-arrow').click(function () {
 				var direction = $(this).data('direction'),
 					currentScrollLeft = scroller.scrollLeft(),
 					scroll;
@@ -40,7 +42,6 @@ define('ext.wikia.recirculation.views.scroller', [
 				scroller.perfectScrollbar('update');
 			});
 
-
 			deferred.resolve($html);
 		});
 
@@ -48,16 +49,16 @@ define('ext.wikia.recirculation.views.scroller', [
 	}
 
 	function setupTracking(experimentName) {
-		return function($html) {
+		return function ($html) {
 			tracker.trackVerboseImpression(experimentName, 'scroller');
 
-			$html.on('mousedown', 'a', function() {
+			$html.on('mousedown', 'a', function () {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'scroller'));
 			});
 		};
 	}
 
-	return function() {
+	return function () {
 		return {
 			render: render,
 			setupTracking: setupTracking

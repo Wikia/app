@@ -117,7 +117,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
@@ -198,7 +197,6 @@ var CreatePage = {
 								vars: {
 									value: data.addPageLabel,
 									classes: [ 'normal', 'primary' ],
-									imageClass: 'new',
 									data: [
 										{
 											key: 'event',
@@ -216,13 +214,32 @@ var CreatePage = {
 						onElementClick,
 						name,
 						titleText,
-						inputChangeTracked = false;
+						inputChangeTracked = false,
+						redLinks;
 
 					CreatePage.track( {
 						category: trackingCategory,
 						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						label: 'modal'
 					} );
+
+					redLinks = createPageModal.$element.find( '.create-page-dialog__proposals .new' );
+
+					if ( redLinks.length ) {
+						CreatePage.track( {
+							category: 'page-create-title-modal',
+							action: Wikia.Tracker.ACTIONS.IMPRESSION,
+							label: 'redlinks'
+						} );
+
+						redLinks.on( 'click', function () {
+							CreatePage.track( {
+								category: 'page-create-title-modal',
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								label: 'redlink'
+							} );
+						} );
+					}
 
 					createPageModal.bind( 'create', function( event ) {
 						event.preventDefault();
@@ -401,7 +418,7 @@ var CreatePage = {
 					field = form.children( '.createboxInput' );
 					preloadField = form.children( 'input[name=\'preload\']' );
 
-					if ( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
+					if ( ( typeof preloadField.val() === 'undefined' ) || ( preloadField.val() === '' ) ) {
 						CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX;
 						CreatePage.requestDialog( e, prefix + field.val() );
 					}

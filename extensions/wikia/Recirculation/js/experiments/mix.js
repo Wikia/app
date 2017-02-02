@@ -4,6 +4,7 @@ require([
 	'wikia.log',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.discussions',
+	'ext.wikia.recirculation.helpers.liftigniter',
 	require.optional('videosmodule.controllers.rail')
 ], function (
 	$,
@@ -11,6 +12,7 @@ require([
 	log,
 	utils,
 	discussions,
+	liftigniter,
 	videosModule
 ) {
 	/**
@@ -22,7 +24,7 @@ require([
 	 *  var recircExperiment = [
 	 *  	{
 	 *  		id: 'unique identifier - only used if you want to use data across multiple views',
-	 *  		sorce: 'the id you want to use for data - only used if you want to use data across multiple views',
+	 *  		source: 'the id you want to use for data - only used if you want to use data across multiple views',
 	 *  		placement: 'name of the view',
 	 *  		helper: 'name of the helper',
 	 *  		options: {
@@ -37,8 +39,10 @@ require([
 	var recircExperiment = w.recircExperiment || false,
 		experimentName = 'RECIRCULATION_MIX',
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
-		views = {},
-		saved = {};
+		views = {}, // Each view holds an array of promises used to gather data for that view
+		saved = {}, // Saved data to be used across multiple views
+		completed = [], // An array of promises to keep track of which views have completed rendering
+		liftigniterHelpers = {};
 
 	if (!recircExperiment || w.wgContentLanguage !== 'en') {
 		if (videosModule) {
@@ -51,8 +55,6 @@ require([
 	recircExperiment.forEach(function (experiment) {
 		var deferred = $.Deferred();
 
-		views[experiment.placement] = views[experiment.placement] || [];
-
 		if (experiment.id) {
 			saved[experiment.id] = deferred;
 		}
@@ -61,22 +63,32 @@ require([
 			var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
 
 			require([helperString], function (helper) {
-				helper(experiment.options).loadData()
+				var configuredHelper = helper(experiment.options);
+				configuredHelper.loadData()
 					.done(function (data) {
 						deferred.resolve(data);
 					})
 					.fail(function (err) {
 						deferred.reject(err);
 					});
+
+				if (experiment.helper === 'liftigniter') {
+					// We need to keep track of the liftigniter helpers so we can setup tracking for them
+					liftigniterHelpers[experiment.id] = configuredHelper;
+				}
 			});
 		}
 
 		if (experiment.source && saved[experiment.source]) {
 			saved[experiment.source]
 				.done(function (data) {
+					var start = experiment.options.offset || 0,
+						end = experiment.options.limit || data.items.length,
+						items = data.items.slice(start).slice(0, end);
+
 					deferred.resolve({
 						title: data.title,
-						items: data.items.slice(experiment.options.offset)
+						items: items
 					});
 				})
 				.fail(function (err) {
@@ -84,15 +96,21 @@ require([
 				});
 		}
 
-		views[experiment.placement].push(deferred);
+		if (experiment.placement) {
+			views[experiment.placement] = views[experiment.placement] || [];
+			views[experiment.placement].push(deferred);
+		}
 	});
 
-	$.each(views, function (key, value) {
-		var viewString = 'ext.wikia.recirculation.views.' + key;
+	$.each(views, function (key, promises) {
+		var viewString = 'ext.wikia.recirculation.views.' + key,
+			deferred = $.Deferred();
+
+		completed.push(deferred);
 
 		log('Initializing View: ' + key, 'info', logGroup);
 		require([viewString], function (viewFactory) {
-			$.when.apply($, value)
+			$.when.apply($, promises)
 				.done(function () {
 					var view = viewFactory(),
 						args = Array.prototype.slice.call(arguments),
@@ -115,16 +133,29 @@ require([
 						data.items = data.items.concat(result.items);
 					});
 
-					data.items = utils.ditherResults(data.items, 4);
-
 					view.render(data)
-						.then(view.setupTracking(experimentName));
+						.then(view.setupTracking(experimentName))
+						.then(deferred.resolve);
 				})
-				.fail(handleError(key));
+				.fail(handleError(key), function () {
+					deferred.reject(key);
+				});
 		});
 	});
 
-	function handleError(placement) {
+	$.when.apply($, completed)
+		.done(function () {
+			log('Finished rendering recirculation', 'info', logGroup);
+
+			$.each(liftigniterHelpers, function (key, helper) {
+				helper.setupTracking();
+			});
+		})
+		.fail(function (placement) {
+			log('Error running recirc at: ' + placement, 'info', logGroup);
+		});
+
+	function handleError (placement) {
 		return function (errorMessage) {
 			log(errorMessage, 'info', logGroup);
 

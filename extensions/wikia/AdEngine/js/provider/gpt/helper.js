@@ -112,6 +112,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
 			element.updateDataParams(gptEvent);
 			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
+			slot.renderEnded(gptEvent);
 		}
 
 		if (!googleTag.isInitialized()) {

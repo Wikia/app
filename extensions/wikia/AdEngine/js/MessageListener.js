@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.messageListener', [
 			msgFrame;
 
 		if (match.dataKey) {
-			matching = matching && JSON.parse(msg.data).AdEngine.hasOwnProperty(match.dataKey);
+			matching = JSON.parse(msg.data).AdEngine.hasOwnProperty(match.dataKey);
 		}
 
 		if (match.source) {
@@ -42,27 +42,31 @@ define('ext.wikia.adEngine.messageListener', [
 		return matching;
 	}
 
-	function receiveMessage(msg) {
+	function processMessage(msg) {
 		var i, len, callback;
+		log(['Received message', msg.data], 'debug', logGroup);
 
-		if (isInterestingMessage(msg)) {
-			log(['Received message', msg.data], 'debug', logGroup);
+		for (i = 0, len = callbacks.length; i < len; i += 1) {
+			callback = callbacks[i];
 
-			for (i = 0, len = callbacks.length; i < len; i += 1) {
-				callback = callbacks[i];
+			if (eventMatch(callback.match, msg)) {
+				log(['Event matching', msg, callback], 'debug', logGroup);
 
-				if (eventMatch(callback.match, msg)) {
-					log(['Event matching', msg, callback], 'debug', logGroup);
-
-					callback.fn(JSON.parse(msg.data).AdEngine);
+				callback.fn(JSON.parse(msg.data).AdEngine);
+				if (!callback.match.infinite) {
 					callbacks.splice(i, 1);
-					return;
 				}
+				return;
 			}
+		}
 
-			log(['Event not matching (pushed to unhandled messages)', msg], 'debug', logGroup);
+		log(['Event not matching (pushed to unhandled messages)', msg], 'debug', logGroup);
+		unhandledMessages.push(msg);
+	}
 
-			unhandledMessages.push(msg);
+	function receiveMessage(msg) {
+		if (isInterestingMessage(msg)) {
+			processMessage(msg);
 		}
 	}
 
@@ -96,6 +100,7 @@ define('ext.wikia.adEngine.messageListener', [
 	}
 
 	adContext.addCallback(function () {
+		callbacks = [];
 		unhandledMessages = [];
 	});
 

@@ -40,7 +40,7 @@ class RecirculationApiController extends WikiaApiController {
 			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
 		}
 
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( [
 			'title' => $title,
 			'posts' => $posts,

@@ -35,6 +35,7 @@ class RecirculationHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
+		self::addMainPageMetadata( $out );
 		return true;
 	}
 
@@ -46,10 +47,9 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgWikiaEnvironment, $wgNoExternals;
+		global $wgNoExternals;
 
-		// Only track on prod
-		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) ) {
+		if ( empty( $wgNoExternals ) ) {
 			$jsAssets[] = 'recirculation_liftigniter_tracker';
 		}
 
@@ -71,9 +71,9 @@ class RecirculationHooks {
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
 		if ( $wg->Title->exists()
-			&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-			&& $wg->request->getVal( 'action', 'view' ) === 'view'
-			&& $wg->request->getVal( 'diff' ) === null
+				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
+				&& $wg->request->getVal( 'action', 'view' ) === 'view'
+				&& $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
@@ -95,6 +95,22 @@ class RecirculationHooks {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	private static function addMainPageMetadata( OutputPage $outputPage ) {
+		if ( F::app()->wg->Title->isMainPage() ) {
+			$promoDetails = WikiaDataAccess::cache(
+					wfMemcKey( "site-attribute-liftigniterMetadata" ),
+					3600, // one hour cache
+					function() {
+						global $wgCityId;
+						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "liftigniterMetadata" );
+					} );
+
+			if ( $promoDetails !== null ) {
+				$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${promoDetails}</script>" );
+			}
 		}
 	}
 }

@@ -38,6 +38,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function call() {
 			log('call', 'debug', module.logGroup);
 
+			response = false;
+
 			if (!Object.keys) {
 				log(['call', 'Module is not supported in IE8', module.name], 'debug', module.logGroup);
 				return;
@@ -91,6 +93,14 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
+		function getBestSlotPrice(slotName) {
+			if (module.getBestSlotPrice) {
+				return module.getBestSlotPrice(slotName);
+			}
+
+			return {};
+		}
+
 		function getName() {
 			return module.name;
 		}
@@ -108,6 +118,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		return {
 			addResponseListener: addResponseListener,
 			call: call,
+			getBestSlotPrice: getBestSlotPrice,
 			getName: getName,
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
