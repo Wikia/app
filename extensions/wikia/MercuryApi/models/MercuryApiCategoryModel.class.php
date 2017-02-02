@@ -48,10 +48,8 @@ class MercuryApiCategoryModel {
 	 * @return Title[]
 	 */
 	private static function getAlphabeticalList( string $categoryDBKey, int $limit, int $offset ): array {
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			[ 'page', 'categorylinks' ],
-			[ 'page_id', 'page_title' ],
+		return TitleBatch::newFromConds(
+			'categorylinks',
 			[ 'cl_to' => $categoryDBKey ],
 			__METHOD__,
 			[
@@ -60,18 +58,7 @@ class MercuryApiCategoryModel {
 				'OFFSET' => $offset
 			],
 			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
-		);
-
-		$pages = [];
-		while ( $row = $res->fetchObject() ) {
-			$title = Title::newFromID( $row->page_id );
-
-			if ( $title instanceof Title ) {
-				array_push( $pages, $title );
-			}
-		}
-
-		return $pages;
+		)->getAll();
 	}
 
 	/**
