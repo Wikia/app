@@ -378,6 +378,17 @@ $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCo
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 
 // Design System models classes
+$wgAutoloadClasses['WdsGlobalNavigation'] = "{$IP}/includes/wikia/models/DesignSystem/WdsGlobalNavigation.class.php";
+$wgAutoloadClasses['WdsLogo'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLogo.class.php";
+$wgAutoloadClasses['WdsCreateWiki'] = "{$IP}/includes/wikia/models/DesignSystem/WdsCreateWiki.class.php";
+$wgAutoloadClasses['WdsFandomOverview'] = "{$IP}/includes/wikia/models/DesignSystem/WdsFandomOverview.class.php";
+$wgAutoloadClasses['WdsWikis'] = "{$IP}/includes/wikia/models/DesignSystem/WdsWikis.class.php";
+$wgAutoloadClasses['WdsSearch'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSearch.class.php";
+$wgAutoloadClasses['WdsSearchModule'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSearchModule.class.php";
+$wgAutoloadClasses['WdsAnon'] = "{$IP}/includes/wikia/models/DesignSystem/WdsAnon.class.php";
+$wgAutoloadClasses['WdsNotifications'] = "{$IP}/includes/wikia/models/DesignSystem/WdsNotifications.class.php";
+$wgAutoloadClasses['WdsNotificationsModule'] = "{$IP}/includes/wikia/models/DesignSystem/WdsNotificationsModule.class.php";
+$wgAutoloadClasses['WdsLogoModule'] = "{$IP}/includes/wikia/models/DesignSystem/WdsLogoModule.class.php";
 $wgAutoloadClasses['WdsSvg'] = "{$IP}/includes/wikia/models/DesignSystem/WdsSvg.class.php";
 $wgAutoloadClasses['WdsExternalImage'] = "{$IP}/includes/wikia/models/DesignSystem/WdsExternalImage.class.php";
 $wgAutoloadClasses['WdsText'] = "{$IP}/includes/wikia/models/DesignSystem/WdsText.class.php";
