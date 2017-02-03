@@ -64,16 +64,16 @@ class WikiaRssHelper {
 		);
 
 		$status = null;
-		$rss = @fetch_rss($url, $status);
+		$rss = @fetch_rss( $url, $status );
 
 		$errorMessageKey = null;
 		$error = null;
 
-		if( !is_null($status) && $status !== 200 ) {
+		if ( !is_null( $status ) && $status !== 200 ) {
 			$errorMessageKey = 'wikia-rss-error-wrong-status-' . $status;
-		} else if( !is_object($rss) || !is_array($rss->items) ) {
+		} else if ( !is_object( $rss ) || !is_array($rss->items) ) {
 			$errorMessageKey = 'wikia-rss-empty';
-		} else if( $rss->ERROR ) {
+		} else if ( $rss->ERROR ) {
 			$errorMessageKey = 'wikia-rss-error';
 			$error = $rss->ERROR;
 		}

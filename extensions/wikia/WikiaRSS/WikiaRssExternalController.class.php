@@ -8,20 +8,20 @@ class WikiaRssExternalController extends WikiaController {
 	 * @desc Here we use 3rd-part extension magpierss which fetches rss feeds from given url
 	 */
 	public function getRssFeeds() {
-		$this->response->setVal('status', false);
-		$options = $this->request->getVal('options', false);
+		$this->response->setVal( 'status', false );
+		$options = $this->request->getVal( 'options', false );
 		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
 		//we need to restore then its default values
-		foreach(array('highlight', 'filter', 'filterout') as $option) {
-			if( !isset($options[$option]) ) {
+		foreach ( [ 'highlight', 'filter', 'filterout' ] as $option ) {
+			if ( !isset( $options[$option] ) ) {
 				$options[$option] = array();
 			}
 		}
 
-		if( !empty($options) && !empty($options['url']) ) {
-			$url = html_entity_decode($options['url']);
+		if ( !empty( $options ) && !empty( $options['url'] ) ) {
+			$url = html_entity_decode( $options['url'] );
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				__METHOD__,
@@ -31,7 +31,7 @@ class WikiaRssExternalController extends WikiaController {
 			$feedData = WikiaDataAccess::cacheWithLock(
 				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
 				self::CACHE_TIME,
-				function() use( $url ) {
+				function () use ( $url ) {
 					return WikiaRssHelper::getFeedData( $url );
 				}
 			);
@@ -41,37 +41,38 @@ class WikiaRssExternalController extends WikiaController {
 					'error',
 					wfMessage( $feedData['errorMessageKey'], $url, $feedData['error'] )->escaped()
 				);
+
 				return;
 			}
 
 			$rss = $feedData['rss'];
-			$short = ($options['short'] == 'true') ? true : false;
-			$reverse = ($options['reverse'] == 'true') ? true : false;
+			$short = ( $options['short'] == 'true' ) ? true : false;
+			$reverse = ( $options['reverse'] == 'true' ) ? true : false;
 
-			if( $reverse ) {
-				$rss->items = array_reverse($rss->items);
+			if ( $reverse ) {
+				$rss->items = array_reverse( $rss->items );
 			}
 
 			$description = false;
-			foreach( $rss->items as $item ) {
-				if( isset($item['description']) && $item['description'] ) {
+			foreach ( $rss->items as $item ) {
+				if ( isset( $item['description'] ) && $item['description'] ) {
 					$description = true;
 					break;
 				}
 			}
 
-			if( !$short && $description ) {
-				$items = $this->getFullItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'fullList', array('items' => $items));
+			if ( !$short && $description ) {
+				$items = $this->getFullItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'fullList', array( 'items' => $items ) );
 			} else {
-				$items = $this->getShortItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'shortList', array('items' => $items));
+				$items = $this->getShortItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'shortList', array( 'items' => $items ) );
 			}
 
-			$this->response->setVal('status', true);
-			$this->response->setVal('html', $html);
+			$this->response->setVal( 'status', true );
+			$this->response->setVal( 'html', $html );
 		} else {
-			$this->response->setVal('error', wfMsg('wikia-rss-error-invalid-options'));
+			$this->response->setVal( 'error', wfMsg( 'wikia-rss-error-invalid-options' ) );
 		}
 	}
 
