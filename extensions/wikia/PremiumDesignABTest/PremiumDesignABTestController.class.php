@@ -1,9 +1,31 @@
 <?php
 
 class PremiumDesignABTestController extends WikiaController {
+	private $variants = [
+		// List of Spells
+		3581 => [
+			'letter' => 'A',
+		],
+		// Hogwart Houses
+		967 => [
+			'letter' => 'C',
+		],
+		//Newton Scamander
+		2425 => [
+			'letter' => 'D',
+		]
+	];
+
+	private function setVariant() {
+		$articleId = $this->wg->Title->getArticleID();
+
+		if ( array_key_exists( $articleId, $this->variants ) ) {
+			$this->setVal( 'variant', $this->variants[$articleId] );
+		}
+	}
 
 	public function header() {
-
+		$this->setVariant();
 	}
 
 	public function A_header() {
@@ -15,7 +37,7 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function pageheader() {
-
+		$this->setVariant();
 	}
 
 	public function A_pageheader() {
@@ -36,7 +58,7 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function rightrail() {
-
+		$this->setVariant();
 	}
 
 	public function C_rightrail() {

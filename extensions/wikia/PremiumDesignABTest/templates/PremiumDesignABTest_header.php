@@ -1,2 +1,3 @@
-<?= $app->renderView( 'PremiumDesignABTest', 'A_header') ?>
-<?= $app->renderView( 'PremiumDesignABTest', 'B_header') ?>
+<? if ( in_array( $variant['letter'], [ 'A', 'B' ] ) ) : ?>
+	<?= $app->renderView( 'PremiumDesignABTest', $variant['letter'] . '_header') ?>
+<? endif;

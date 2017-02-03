@@ -8,7 +8,7 @@
   >
 		<div id="WikiaRail">
 
-			<?php if($isPremiumDesignABTestEnabled): ?>
+			<?php if($enablePremiumDesignABTest): ?>
 				<?= $app->renderView( 'PremiumDesignABTest', 'rightrail') ?>
 			<?php endif; ?>
 

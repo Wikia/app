@@ -1,2 +1,3 @@
-<?= $app->renderView( 'PremiumDesignABTest', 'C_rightrail') ?>
-<?= $app->renderView( 'PremiumDesignABTest', 'D_rightrail') ?>
+<? if ( in_array( $variant['letter'], [ 'C', 'D' ] ) ) : ?>
+	<?= $app->renderView( 'PremiumDesignABTest', $variant['letter'] . '_rightrail') ?>
+<? endif;

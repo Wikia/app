@@ -71,7 +71,7 @@
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
-				<?php if($isPremiumDesignABTestEnabled): ?>
+				<?php if($enablePremiumDesignABTest): ?>
 					<?= $app->renderView( 'PremiumDesignABTest', 'pageheader') ?>
 				<?php endif; ?>
 				<?php

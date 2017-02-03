@@ -26,6 +26,6 @@
 		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['recentchanges'] ); ?>" accesskey="r"><?= wfMessage( 'recentchanges' )->escaped(); ?></a>
 	</div>
 </header>
-<?php if($isPremiumDesignABTestEnabled): ?>
+<?php if($enablePremiumDesignABTest): ?>
 	<?= $app->renderView( 'PremiumDesignABTest', 'header') ?>
 <?php endif; ?>

@@ -1,5 +1,4 @@
 #premium-design-ab-test-B-header {
-	display: none;
 	margin-top: 20px;
 	position: relative;
 	text-align: center;
@@ -12,6 +11,10 @@
 		left: 0;
 		position: absolute;
 		right: 0;
+	}
+
+	.WikiaPageHeader {
+		display: block;
 	}
 
 	.wikia-menu-button,

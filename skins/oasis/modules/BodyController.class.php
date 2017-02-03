@@ -275,7 +275,8 @@ class BodyController extends WikiaController {
 
 
 	public function executeIndex() {
-		global $wgCityId;
+		global $wgCityId, $wgEnablePremiumDesignExperiment;
+
 		// set up global vars
 		if ( is_array( $this->wg->MaximizeArticleAreaArticleIds )
 			&& in_array( $this->wg->Title->getArticleID(), $this->wg->MaximizeArticleAreaArticleIds )
@@ -456,12 +457,6 @@ class BodyController extends WikiaController {
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 
-
-		$isPremiumDesignABTestEnabled = false;
-		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		if ( $wgCityId === '509' && $articleId === 3581 ) {
-			$isPremiumDesignABTestEnabled = true;
-		}
-		$this->setVal( 'isPremiumDesignABTestEnabled', $isPremiumDesignABTestEnabled );
+		$this->setVal( 'enablePremiumDesignABTest', $wgEnablePremiumDesignExperiment );
 	}
 }
