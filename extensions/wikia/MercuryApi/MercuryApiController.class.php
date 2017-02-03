@@ -357,6 +357,7 @@ class MercuryApiController extends WikiaController {
 
 				if ( $article instanceof Article) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+					$displayTitle = $articleData['displayTitle'];
 					$data['categories'] = $articleData['categories'];
 					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 				} else {
@@ -384,10 +385,8 @@ class MercuryApiController extends WikiaController {
 						$data['article'] = $articleData;
 
 						if ( !$title->isContentPage() ) {
-							// This does two things:
-							// - gets displayTitle from parser function {{DISPLAYTITLE:displayTitle}}
-							// - removes the namespace prefix from it
-							$displayTitle = Title::newFromText( $data['article']['displayTitle'] )->getText();
+							// Remove the namespace prefix from display title
+							$displayTitle = Title::newFromText( $displayTitle )->getText();
 							$data['article']['displayTitle'] = $displayTitle;
 						}
 					}
