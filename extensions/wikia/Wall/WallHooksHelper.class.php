@@ -681,18 +681,28 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @param Article $article
+	 * SUS-1521: Prevent user from deleting Message Wall page itself, and check permissions for deleting Wall content
+	 *
+	 * @param WikiPage $wikiPage
 	 * @param User $user
 	 * @param $reason
 	 * @param $error
 	 * @return bool
 	 */
-	static public function onArticleDelete( $article, &$user, &$reason, &$error ) {
-		$title = $article->getTitle();
-		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			return $wallMessage->canDelete( $user );
+	static public function onArticleDelete( WikiPage $wikiPage, User $user, string &$reason, &$error ) {
+		$title = $wikiPage->getTitle();
+
+		if ( $title instanceof Title ) {
+			switch ( $title->getNamespace() ) {
+				case NS_USER_WALL_MESSAGE:
+					$wallMessage = WallMessage::newFromTitle( $title );
+					return $wallMessage->canDelete( $user );
+					break;
+				case NS_USER_WALL:
+					return false;
+			}
 		}
+
 		return true;
 	}
 
