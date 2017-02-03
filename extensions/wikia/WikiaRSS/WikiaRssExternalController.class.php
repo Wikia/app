@@ -63,16 +63,16 @@ class WikiaRssExternalController extends WikiaController {
 
 			if ( !$short && $description ) {
 				$items = $this->getFullItemList( $rss->items, $options );
-				$html = $this->app->renderView( 'WikiaRssExternal', 'fullList', array( 'items' => $items ) );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'fullList', [ 'items' => $items ] );
 			} else {
 				$items = $this->getShortItemList( $rss->items, $options );
-				$html = $this->app->renderView( 'WikiaRssExternal', 'shortList', array( 'items' => $items ) );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'shortList', [ 'items' => $items ] );
 			}
 
 			$this->response->setVal( 'status', true );
 			$this->response->setVal( 'html', $html );
 		} else {
-			$this->response->setVal( 'error', wfMsg( 'wikia-rss-error-invalid-options' ) );
+			$this->response->setVal( 'error', wfMessage( 'wikia-rss-error-invalid-options' )->escaped() );
 		}
 	}
 
