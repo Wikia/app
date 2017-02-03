@@ -2,35 +2,7 @@
 describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 	'use strict';
 
-	var cpms = [
-			// test 0 -> 0.00
-			{actual: 0, expected: '0.00'},
-			// test <0.01, 0.05) -> increment 0.01
-			{actual: 0.01, expected: '0.01'},
-			{actual: 0.02, expected: '0.01'},
-			{actual: 0.03, expected: '0.01'},
-			{actual: 0.04, expected: '0.01'},
-			// test <0.05, 5.00) -> increment 0.05
-			{actual: 0.05, expected: '0.05'},
-			{actual: 0.06, expected: '0.05'},
-			{actual: 0.11, expected: '0.10'},
-			{actual: 4.99, expected: '4.95'},
-			// test <5.00, 10.00) -> increment 0.10
-			{actual: 5.00, expected: '5.00'},
-			{actual: 5.01, expected: '5.00'},
-			{actual: 5.11, expected: '5.10'},
-			{actual: 9.99, expected: '9.90'},
-			// test <10.00, 20.00) -> increment 0.5
-			{actual: 10.00, expected: '10.00'},
-			{actual: 10.01, expected: '10.00'},
-			{actual: 10.51, expected: '10.50'},
-			{actual: 11.21, expected: '11.00'},
-			{actual: 19.99, expected: '19.50'},
-			// test <20.00, infinity) -> return 20.00
-			{actual: 20.00, expected: '20.00'},
-			{actual: 100.00, expected: '20.00'}
-		],
-		mocks = {
+	var mocks = {
 			bidderResponse: {
 				bidderCode: 'wikia',
 				adId: '1209ab9b9660621',
@@ -103,17 +75,4 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 
 		expect(actual).toEqual(10);
 	});
-
-	// cpms.forEach(function (cpm) {
-	// 	it('settings hb_pb function should transform ' + cpm.actual + ' cpm from bidder response to ' + cpm.expected, function () {
-	// 		var settings = prebidSettings.create(),
-	// 			hb_pb = getFunction(settings, 'hb_pb'),
-	// 			actual;
-	//
-	// 		mocks.bidderResponse.cpm = cpm.actual;
-	// 		actual = hb_pb(mocks.bidderResponse);
-	//
-	// 		expect(actual).toEqual(cpm.expected);
-	// 	});
-	// });
 });
