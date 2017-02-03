@@ -1,0 +1,203 @@
+.video-collpased {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+
+	iframe {
+		width: 100%;
+		height: 480px;
+		position: absolute;
+		top: 0;
+	}
+
+	&.collapsed-ready {
+		display: block;
+	}
+
+	&.video-playing:not(.collapsed-ready) {
+		display: block;
+
+		.video-details {
+			display: none;
+		}
+	}
+
+	.video-thumbnail {
+		background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
+		background-size: cover;
+		background-position: center center;
+		width: 100%;
+		height: 480px;
+		position: relative;
+		display: block;
+
+		.minimize {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/minimize.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 1;
+			padding: 11px 6px 10px;
+		}
+
+		.scroll-to-top {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/scroll-to-top.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			padding: 7px;
+		}
+
+		.close {
+			display: none;
+			content: url("/extensions/wikia/PremiumDesignABTest/images/close.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			padding: 7px;
+		}
+	}
+
+	.video-details {
+		//display: none;
+		background: #000;
+		padding: 8px 10px 10px;
+		opacity: 1;
+		display: flex;
+		align-items: center;
+		transition: opacity 0.2s;
+		transition-delay: 0.5s;
+
+		.video-details-left {
+			flex: 1;
+		}
+
+		.video-scroll-play-button {
+			width: 40px;
+		}
+
+		.video-scroll-watch {
+			font-size: 10px;
+			color: #00b7e0;
+		}
+
+		.video-scroll-title {
+			width: 180px;
+			color: #fff;
+			font-size: 12px;
+		}
+
+		.video-scroll-watch {
+			display: none;
+		}
+
+		.video-scroll-time {
+			display: none;
+			color: #999999;
+			font-size: 10px;
+		}
+	}
+
+	&.bottom-right {
+		.video-scroll-time {
+			display: block;
+		}
+
+		&.collapsed {
+			position: fixed;
+			bottom: 40px !important;
+			right: 20px !important;
+			top: auto;
+			left: auto;
+			width: 250px !important;
+
+			transition: bottom 0.4s, right 0.4s, width 0.4s;
+
+			.video-thumbnail {
+				height: 140px !important;
+				transition: height 0.4s;
+				.minimize, .scroll-to-top {
+					display: block;
+				}
+			}
+
+			iframe {
+				width: 100%;
+				height: 140px;
+				transition: height 0.4s;
+			}
+		}
+	}
+
+	&.bottom-left {
+		.video-details {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			opacity: 1;
+			background: none;
+		}
+
+		&.collapsed {
+			position: fixed;
+			bottom: 40px !important;
+			left: 20px !important;
+			top: auto;
+			right: auto;
+			width: 250px !important;
+
+			transition: bottom 0.4s, left 0.4s, width 0.4s;
+
+			.video-thumbnail {
+				height: 140px !important;
+				transition: height 0.4s;
+
+				.close {
+					display: block;
+				}
+			}
+
+			iframe {
+				width: 100%;
+				height: 140px;
+				transition: height 0.4s;
+			}
+		}
+	}
+
+	&.top-right {
+		.video-scroll-watch {
+			display: block;
+		}
+
+		&.collapsed {
+			position: fixed;
+			top: 70px !important;
+			right: 20px !important;
+			bottom: auto !important;
+			left: auto !important;
+			width: 250px !important;
+
+			transition: top 0.4s, right 0.4s, width 0.4s;
+
+			.video-thumbnail {
+				height: 140px !important;
+				transition: height 0.4s;
+			}
+
+			iframe {
+				width: 100%;
+				height: 140px;
+				transition: height 0.4s;
+			}
+		}
+	}
+}

@@ -3201,3 +3201,35 @@ $config[ 'premium_design_ab_test_scss' ] = [
 		'//extensions/wikia/PremiumDesignABTest/styles/index.scss'
 	]
 ];
+
+$config[ 'premium_design_ab_test_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour.js',
+	]
+];
+
+$config[ 'premium_design_ab_test_js_A' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_A.js',
+	]
+];
+
+$config[ 'premium_design_ab_test_js_B' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_B.js',
+	]
+];
+
+$config[ 'premium_design_ab_test_js_C' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_C.js',
+	]
+];
