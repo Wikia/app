@@ -1,6 +1,8 @@
 <?php
 class WikiaRssExternalController extends WikiaController {
 
+	const CACHE_TIME = 3600;
+
 	/**
 	 * @brief Returns status flag and data in html tags
 	 * @desc Here we use 3rd-part extension magpierss which fetches rss feeds from given url
@@ -8,7 +10,7 @@ class WikiaRssExternalController extends WikiaController {
 	public function getRssFeeds() {
 		$this->response->setVal('status', false);
 		$options = $this->request->getVal('options', false);
-		$this->response->setCacheValidity(3600); //cache it on varnish for 1h
+		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
 		//we need to restore then its default values
@@ -22,7 +24,7 @@ class WikiaRssExternalController extends WikiaController {
 			$url = html_entity_decode($options['url']);
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
-				'WikiaRSS request to RSS provider',
+				'WikiaRSS::getRssFeeds',
 				[ 'providerUrl' => $url ]
 			);
 
@@ -32,24 +34,54 @@ class WikiaRssExternalController extends WikiaController {
 				return;
 			}
 
-			$status = null;
-			$rss = @fetch_rss($url, $status);
+			$feedData = WikiaDataAccess::cacheWithLock(
+				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
+				self::CACHE_TIME,
+				function() use( $url ) {
+					\Wikia\Logger\WikiaLogger::instance()->info(
+						'WikiaRSS calling RSS provider',
+						[ 'providerUrl' => $url ]
+					);
 
-			if( !is_null($status) && $status !== 200 ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
+					$status = null;
+					$rss = @fetch_rss($url, $status);
+
+					$errorMessageKey = null;
+					$error = null;
+
+					if( !is_null($status) && $status !== 200 ) {
+						$errorMessageKey = 'wikia-rss-error-wrong-status-' . $status;
+					} else if( !is_object($rss) || !is_array($rss->items) ) {
+						$errorMessageKey = 'wikia-rss-empty';
+					} else if( $rss->ERROR ) {
+						$errorMessageKey = 'wikia-rss-error';
+						$error = $rss->ERROR;
+					}
+
+					if ( !empty( $errorMessageKey ) ) {
+						\Wikia\Logger\WikiaLogger::instance()->error(
+							'Error: WikiaRSS calling RSS provider ',
+							[ 'providerUrl' => $url, 'error' => $errorMessageKey ]
+						);
+					}
+
+					return [
+						'errorMessageKey' => $errorMessageKey,
+						'error' => $error,
+						'rss' => $rss
+					];
+				}
+			);
+
+			if ( !empty( $feedData['errorMessageKey'] ) ) {
+				$this->response->setVal(
+					'error',
+					wfMessage( $feedData['errorMessageKey'], $url, $feedData['error'] )->escaped()
+				);
 				return;
 			}
 
-			if( !is_object($rss) || !is_array($rss->items) ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-empty', $url));
-				return;
-			}
-
-			if( $rss->ERROR ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error', $url, $rss->ERROR));
-				return;
-			}
-
+			$rss = $feedData['rss'];
 			$short = ($options['short'] == 'true') ? true : false;
 			$reverse = ($options['reverse'] == 'true') ? true : false;
 
