@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[300, 50], [300, 250], [320, 50]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
+					sizes: [[300, 50], [320, 50], [320, 480]]
 				}
 			}
 		},

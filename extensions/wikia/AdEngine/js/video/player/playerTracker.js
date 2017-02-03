@@ -11,7 +11,12 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 ], function (adContext, pageLevel, adTracker, slotTargeting, geo, log, win, vulcan) {
 	'use strict';
 	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.video.player.playerTracker';
+		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
+		emptyValue = {
+			int: 0,
+			string: '(none)',
+			price: -1
+		};
 
 	function isEnabled() {
 		return !!context.opts.playerTracking;
@@ -24,25 +29,25 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
 				'skin': pageLevelParams.skin,
-				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : '',
+				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': params.slotName || '',
+				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
-				'ad_error_code': errorCode || '',
-				'line_item_id': params.lineItemId || '',
-				'creative_id': params.creativeId || '',
-				'vulcan_network': '',
-				'vulcan_advertiser': '',
-				'vulcan_price': ''
+				'ad_error_code': errorCode || emptyValue.int,
+				'line_item_id': params.lineItemId || emptyValue.int,
+				'creative_id': params.creativeId || emptyValue.int,
+				'vulcan_network': emptyValue.int,
+				'vulcan_advertiser': emptyValue.int,
+				'vulcan_price': emptyValue.price
 			},
 			vulcanResponse;
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
 			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vulcan_network'] = vulcanResponse.network || '';
-			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || '';
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || '';
+			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
+			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
+			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
 		}
 
 		return trackingData;
