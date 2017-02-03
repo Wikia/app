@@ -406,6 +406,11 @@ the database
 $article: the article (object) being loaded from the database
 $content: the content (string) of the article
 
+'ArticleBeforeUndelete': before restoring deleted revisions of an article from the archive table
+$title: Title object of the article being restored
+$oldPageId: old int page_id of the article at the time of its deletion
+$newPageId: new int page_id of the article being restored
+
 'ArticleConfirmDelete': before writing the confirmation form for article
 	deletion
 $article: the article (object) being deleted

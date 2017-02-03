@@ -539,6 +539,8 @@ class PageArchive {
 		$revision = null;
 		$restored = 0;
 
+		Hooks::run( 'ArticleBeforeUndelete', [ $this->title, $row->ar_page_id, $pageId ] );
+
 		foreach ( $ret as $row ) {
 			// Check for key dupes due to shitty archive integrity.
 			if( $row->ar_rev_id ) {
