@@ -94,7 +94,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctIndexExchangeBid: {
 				bidder: 'indexExchange',
-				pbAg: '1.00',
+				cpm: '1.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -104,7 +104,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctAppNexusBid: {
 				bidder: 'appnexus',
-				pbAg: '0.00',
+				cpm: '0.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -115,7 +115,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			completeAppNexusBid: {
 				bidder: 'appnexus',
 				complete: true,
-				pbAg: '5.00',
+				cpm: '5.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -134,6 +134,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			adaptersRegistry: {
 				getAdapters: noop
+			},
+			priceGranularityHelper: {
+				transformPriceFromCpm: function(cpm) {
+					return cpm;
+				}
 			}
 		},
 		module,
@@ -144,6 +149,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
 			mocks.adaptersRegistry,
+			mocks.priceGranularityHelper,
 			mocks.timeBuckets,
 			mocks.prebid
 		);
