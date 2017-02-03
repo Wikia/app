@@ -24,7 +24,7 @@ class WikiaRssExternalController extends WikiaController {
 			$url = html_entity_decode($options['url']);
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
-				'WikiaRSS::getRssFeeds',
+				__METHOD__,
 				[ 'providerUrl' => $url ]
 			);
 
@@ -38,38 +38,7 @@ class WikiaRssExternalController extends WikiaController {
 				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
 				self::CACHE_TIME,
 				function() use( $url ) {
-					\Wikia\Logger\WikiaLogger::instance()->info(
-						'WikiaRSS calling RSS provider',
-						[ 'providerUrl' => $url ]
-					);
-
-					$status = null;
-					$rss = @fetch_rss($url, $status);
-
-					$errorMessageKey = null;
-					$error = null;
-
-					if( !is_null($status) && $status !== 200 ) {
-						$errorMessageKey = 'wikia-rss-error-wrong-status-' . $status;
-					} else if( !is_object($rss) || !is_array($rss->items) ) {
-						$errorMessageKey = 'wikia-rss-empty';
-					} else if( $rss->ERROR ) {
-						$errorMessageKey = 'wikia-rss-error';
-						$error = $rss->ERROR;
-					}
-
-					if ( !empty( $errorMessageKey ) ) {
-						\Wikia\Logger\WikiaLogger::instance()->error(
-							'Error: WikiaRSS calling RSS provider ',
-							[ 'providerUrl' => $url, 'error' => $errorMessageKey ]
-						);
-					}
-
-					return [
-						'errorMessageKey' => $errorMessageKey,
-						'error' => $error,
-						'rss' => $rss
-					];
+					return WikiaRssHelper::getFeedData( $url );
 				}
 			);
 
