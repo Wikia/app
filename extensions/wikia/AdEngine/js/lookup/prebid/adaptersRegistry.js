@@ -1,13 +1,21 @@
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
-	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'
-], function(appnexus, index) {
+	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
+	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
+	'wikia.window'
+], function(appnexus, index, wikia, veles, win) {
 	'use strict';
 
 	var adapters = [
-		appnexus,
-		index
-	];
+			appnexus,
+			index
+		],
+		customAdapters = [
+			wikia,
+			veles
+		];
 
 	function getAdapters() {
 		return adapters;
@@ -17,8 +25,20 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 		adapters.push(adapter);
 	}
 
+	function setupCustomAdapters() {
+		customAdapters.forEach(function (adapter) {
+			if (adapter && adapter.isEnabled()) {
+				push(adapter);
+				win.pbjs.que.push(function () {
+					win.pbjs.registerBidAdapter(adapter.create, adapter.getName());
+				});
+			}
+		});
+	}
+
 	return {
 		getAdapters: getAdapters,
-		push: push
-	}
+		push: push,
+		setupCustomAdapters: setupCustomAdapters
+	};
 });

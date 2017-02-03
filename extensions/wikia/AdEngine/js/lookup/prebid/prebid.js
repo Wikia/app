@@ -4,12 +4,20 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, performanceTracker, pricesTracker, adaptersRegistry, wikiaAdapter, helper, factory, doc, win) {
+], function (
+	adContext,
+	performanceTracker,
+	pricesTracker,
+	adaptersRegistry,
+	helper,
+	factory,
+	doc,
+	win
+) {
 	'use strict';
 
 	/*
@@ -30,12 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-			if (wikiaAdapter.isEnabled()) {
-				adaptersRegistry.push(wikiaAdapter);
-				win.pbjs.que.push(function () {
-					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-				});
-			}
+			adaptersRegistry.setupCustomAdapters();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
