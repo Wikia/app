@@ -28,12 +28,6 @@ class WikiaRssExternalController extends WikiaController {
 				[ 'providerUrl' => $url ]
 			);
 
-			// TODO XW-2693 temporary disable google rss
-			if ( stripos( $url, 'news.google.com') !== false ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-503', $url));
-				return;
-			}
-
 			$feedData = WikiaDataAccess::cacheWithLock(
 				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
 				self::CACHE_TIME,
