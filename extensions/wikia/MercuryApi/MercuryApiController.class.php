@@ -371,6 +371,8 @@ class MercuryApiController extends WikiaController {
 
 				$data['articleType'] = WikiaPageType::getArticleType( $title );
 				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+				// Set it before we remove the namespace from $displayTitle
+				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 
 				$otherLanguages = $this->getOtherLanguages( $title );
 
@@ -412,8 +414,6 @@ class MercuryApiController extends WikiaController {
 							);
 					}
 				}
-
-				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
