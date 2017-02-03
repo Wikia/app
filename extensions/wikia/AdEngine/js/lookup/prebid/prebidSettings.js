@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [], function () {
+define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper'
+], function (helper) {
 	'use strict';
 
 	/*
@@ -8,25 +10,6 @@ define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [], function () {
 	 * - http://prebid.org/dev-docs/publisher-api-reference.html#module_pbjs.bidderSettings
 	 * - http://prebid.org/dev-docs/examples/custom-price-bucket.html
 	 */
-	function transformPrice(bidResponse) {
-		var cpm = bidResponse.cpm,
-			result = '20.00';
-
-		if (cpm === 0) {
-			result = '0.00';
-		} else if (cpm < 0.05) {
-			result = '0.01';
-		} else if (cpm < 5.00) {
-			result = (Math.floor(cpm * 20) / 20).toFixed(2);
-		} else if (cpm < 10.00) {
-			result = (Math.floor(cpm * 10) / 10).toFixed(2);
-		} else if (cpm < 20.00) {
-			result = (Math.floor(cpm * 2) / 2).toFixed(2);
-		}
-
-		return result;
-	}
-
 	function create() {
 		return {
 			standard: {
@@ -43,7 +26,9 @@ define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [], function () {
 					}
 				}, {
 					key: "hb_pb",
-					val: transformPrice
+					val: function(bidResponse) {
+						return helper.transformPriceFromCpm(bidResponse.cpm);
+					}
 				}, {
 					key: 'hb_size',
 					val: function (bidResponse) {

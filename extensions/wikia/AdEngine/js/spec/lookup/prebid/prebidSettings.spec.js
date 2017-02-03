@@ -35,13 +35,20 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 				bidderCode: 'wikia',
 				adId: '1209ab9b9660621',
 				size: '728x90',
-				cpm: 0
+				cpm: 10
+			},
+			priceGranularityHelper: {
+				transformPriceFromCpm: function(cpm) {
+					return cpm;
+				}
 			}
 		},
 		prebidSettings;
 
 	function getPrebidSettings() {
-		return modules['ext.wikia.adEngine.lookup.prebid.prebidSettings']();
+		return modules['ext.wikia.adEngine.lookup.prebid.prebidSettings'](
+			mocks.priceGranularityHelper
+		);
 	}
 
 	beforeEach(function () {
@@ -87,16 +94,26 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 		expect(actual).toEqual('728x90');
 	});
 
-	cpms.forEach(function (cpm) {
-		it('settings hb_pb function should transform ' + cpm.actual + ' cpm from bidder response to ' + cpm.expected, function () {
-			var settings = prebidSettings.create(),
-				hb_pb = getFunction(settings, 'hb_pb'),
-				actual;
+	it('settings hb_pb function should retrive cpm fro bidder response', function () {
+		var settings = prebidSettings.create(),
+			hb_pb = getFunction(settings, 'hb_pb'),
+			actual;
 
-			mocks.bidderResponse.cpm = cpm.actual;
-			actual = hb_pb(mocks.bidderResponse);
+		actual = hb_pb(mocks.bidderResponse);
 
-			expect(actual).toEqual(cpm.expected);
-		});
+		expect(actual).toEqual(10);
 	});
+
+	// cpms.forEach(function (cpm) {
+	// 	it('settings hb_pb function should transform ' + cpm.actual + ' cpm from bidder response to ' + cpm.expected, function () {
+	// 		var settings = prebidSettings.create(),
+	// 			hb_pb = getFunction(settings, 'hb_pb'),
+	// 			actual;
+	//
+	// 		mocks.bidderResponse.cpm = cpm.actual;
+	// 		actual = hb_pb(mocks.bidderResponse);
+	//
+	// 		expect(actual).toEqual(cpm.expected);
+	// 	});
+	// });
 });
