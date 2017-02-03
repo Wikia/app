@@ -87,6 +87,9 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	// adding comment_index rows for articles
 	$wgHooks['ArticleDoEdit'][] = 'CommentsIndex::onArticleDoEdit';
 
+	// SUS-1521: Enforce DB integrity for comments_index upon MW deletion of Wall/Forum content
+	$wgHooks['ArticleBeforeUndelete'][] = 'CommentsIndex::onArticleBeforeUndelete';
+
 	// comments_index table
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
 

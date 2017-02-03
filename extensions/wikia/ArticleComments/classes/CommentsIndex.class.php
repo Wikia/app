@@ -590,4 +590,48 @@ class CommentsIndex extends WikiaModel {
 		return true;
 	}
 
+
+	/**
+	 * SUS-1521: On restoring a Wall/Forum thread or message deleted via API/QuickTools/Nuke, update comments_index to point to new article id
+	 *
+	 * @param Title $title
+	 * @param int $oldPageId
+	 * @param int $newPageId
+	 * @return bool true to continue hook processing
+	 */
+	public static function onArticleBeforeUndelete( Title $title, int $oldPageId, int $newPageId ): bool {
+		if ( WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$dbw = wfGetDB( DB_MASTER );
+			$ts = $dbw->timestamp();
+
+			$dbw->update(
+				'comments_index',
+				[
+					'comment_id' => $newPageId,
+					'deleted' => 0,
+					'last_touched' => $ts
+				],
+				[ 'comment_id' => $oldPageId ],
+				__METHOD__
+			);
+
+			$dbw->update(
+				'comments_index',
+				[
+					'parent_comment_id' => $newPageId,
+					'deleted' => 0,
+					'last_touched' => $ts
+				],
+				[ 'parent_comment_id' => $oldPageId ]
+			);
+
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1521 - comments_index update after MW undelete', [
+				'oldPageId' => $oldPageId,
+				'newPageId' => $newPageId,
+				'replyCount' => $dbw->affectedRows()
+			] );
+		}
+
+		return true;
+	}
 }

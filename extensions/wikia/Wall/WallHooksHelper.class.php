@@ -663,20 +663,46 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * clean history after delete
-	 * @param Article $self
-	 * @param $user
-	 * @param $reason
-	 * @param $id
-	 * @return bool
+	 * SUS-1521: On MediaWiki delete of Wall/Forum content, mark the changes in comments_index and wall_history
+	 * This also busts Forum Activity cache
+	 *
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param string $reason
+	 * @param int $pageId
+	 * @return bool true to continue hook processing
 	 */
-	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id ) {
-		$title = $self->getTitle();
-		$app = F::app();
-		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wh = new WallHistory( $app->wg->CityId );
-			$wh->remove( $id );
+	static public function onArticleDeleteComplete( WikiPage $wikiPage, User $user, string $reason, int $pageId ): bool {
+		$title = $wikiPage->getTitle();
+		if ( WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$wallMessage->adminDelete( $user, $reason );
 		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-1521: On MediaWiki restoration Wall/Forum content, make the necessary changes in wall_history
+	 * This also busts Forum Activity cache
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $reason
+	 * @return bool true to continue hook processing
+	 */
+	static public function onArticleUndelete( Title $title, User $user, string $reason ): bool {
+		if ( WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+
+			// Don't restore message fully if it's also removed - just undo the delete.
+			if ( $wallMessage->isRemove() ) {
+				$wallMessage->undoAdminDelete( $user );
+			} else {
+				$wallMessage->restore( $user, $reason );
+			}
+		}
+
 		return true;
 	}
 

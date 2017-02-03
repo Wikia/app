@@ -42,15 +42,6 @@ class WallHistory extends WikiaModel {
 		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
-	public function remove( $pageId ) {
-		$this->getDB( DB_MASTER )->delete(
-			'wall_history',
-			[
-				'parent_comment_id' => ( (int) $pageId )
-			]
-		);
-	}
-
 	public function moveThreads( $from, $to ) {
 		$this->getDB( DB_MASTER )->update(
 			'wall_history',

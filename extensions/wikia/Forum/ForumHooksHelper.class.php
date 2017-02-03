@@ -463,29 +463,6 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
-	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
-	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
-	 * comments_index row will fail.
-	 *
-	 * @param WikiPage $page WikiPage object
-	 * @param User $user User object [not used]
-	 * @param string $reason [not used]
-	 * @param int $id [not used]
-	 * @return bool true
-	 *
-	 */
-	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
-		$title = $page->getTitle();
-		if ( $title instanceof Title ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 );
-		}
-
-		return true;
-	}
-
-	/**
 	 * SEO-325 Allow robots to follow topic pages on selected communities
 	 *
 	 * Do that by setting $wgNamespaceRobotPolicies to [ [2002] => 'noindex,follow' ] in WikiFactory
@@ -508,23 +485,6 @@ class ForumHooksHelper {
 
 		if ( $title && $title->getNamespace() === $nsTopic && isset( $wgNamespaceRobotPolicies[$nsTopic] ) ) {
 			$specialPolicy = Article::formatRobotPolicy( $wgNamespaceRobotPolicies[$nsTopic] );
-		}
-
-		return true;
-	}
-
-	/**
-	 * SUS-1196: Invalidate "Forum Activity" rail module cache if thread is deleted via Nuke / Quick Tools
-	 * @param Article|WikiPage|Page $page
-	 * @param User $user
-	 * @param string $reason
-	 * @param int $id
-	 * @return bool always true to continue hook processing
-	 */
-	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
-		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallHistory = new WallHistory();
-			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
 		}
 
 		return true;

@@ -58,12 +58,6 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageU
 // notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 
-// make sure that when an article is deleted, if it has a comments_index,
-// that record is properly marked as deleted. this needs to happen within
-// the transaction in  WikiPage::doDeleteArticleReal which is why it's being hooked
-// here and not in ArticleDeleteComplete
-$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
-
 // forum discussion on article
 // It need to be first one !!!
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
@@ -84,9 +78,6 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 // Fix URLs of thread pages when purging them.
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
-
-// SUS-1196: Invalidate "Forum Activity" rail module when deleting a thread via Nuke / Quick Tools
-$wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
 
 // SUS-260: Prevent moving pages within, into or out of Forum namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
