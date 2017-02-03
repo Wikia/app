@@ -25,7 +25,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$footerModel = new DesignSystemGlobalFooterModel( $product, $productInstanceId );
 		$result = $footerModel->getData();
 
-		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
+		$this->assertEquals( json_encode( $expectedResult ), json_encode( $result['licensing_and_vertical'] ) );
 	}
 
 	public function getLicensingAndVerticalDataProvider() {
@@ -37,8 +37,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				'http://www.wikia.com/Licensing',
 				[
 					'description' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-and-vertical-description',
 						'params' => [
 							'sitename' => [
 								'type' => 'text',
@@ -58,6 +56,8 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 								'tracking_label' => 'license',
 							],
 						],
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description',
 					],
 				],
 			],
@@ -68,8 +68,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
 				[
 					'description' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-and-vertical-description',
 						'params' => [
 							'sitename' => [
 								'type' => 'text',
@@ -89,6 +87,8 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 								'tracking_label' => 'license',
 							],
 						],
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description',
 					],
 				],
 			],
@@ -99,8 +99,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				'',
 				'licensing_and_vertical' => [
 					'description' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-and-vertical-description',
 						'params' => [
 							'sitename' => [
 								'type' => 'text',
@@ -114,7 +112,9 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'key' => 'global-footer-copyright-wikia',
 								],
 							]
-						]
+						],
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description'
 					],
 				],
 

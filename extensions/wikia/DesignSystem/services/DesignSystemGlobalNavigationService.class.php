@@ -2,6 +2,7 @@
 
 class DesignSystemGlobalNavigationService extends WikiaService {
 	public function index() {
+		var_dump($this->getData());die;
 		$this->setVal( 'model', $this->getData() );
 	}
 

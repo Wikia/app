@@ -28,63 +28,41 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			'logo' => $this->getLogo(),
-			'search' => [
-				'module' => $this->getSearchData()
-			],
-			'create_wiki' => [
-				'header' => [
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-create-wiki-link-start-wikia'
-					],
-					'href' => $this->getHref( 'create-new-wiki' ),
-					'tracking_label' => 'start-a-wiki',
-				]
-			]
+			'logo' => $this->getLogo()
 		];
 
+		$search = new WdsSearch();
+		$search->setModule( $this->getSearchData() );
+		$data[ 'search' ] = $search;
+
+		$data[ 'create_wiki' ] = (new WdsCreateWiki())->setHeader( (new WdsLinkText())
+			->setTranslatableTitle( 'global-navigation-create-wiki-link-start-wikia' )
+			->setHref( $this->getHref( 'create-new-wiki' ) )
+			->setTrackingLabel( 'start-a-wiki' ) );
+
+
+		$wikis = new WdsWikis();
+
 		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
-			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
-			$data[ 'wikis' ] = [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-header',
-					],
-					'tracking_label' => 'link.wikis',
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-explore'
-						],
-						'href' => $this->getHref( 'explore-wikis' ),
-						'tracking_label' => 'link.explore',
-					],
-					$this->getCommunityCentralLink(),
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-fandom-university'
-						],
-						'href' => $this->getHref( 'fandom-university' ),
-						'tracking_label' => 'link.fandom-university',
-					]
-				]
-			];
+			$data[ 'fandom_overview' ] = $this->getFandomOverview();
+
+			$wikis->setHeader( (new WdsLineTextTrackable())
+				->setTranslatableTitle( 'global-navigation-wikis-header' )
+				->setTrackingLabel( 'link.wikis' ) );
+			$wikis->setLinks( [
+				(new WdsLinkText())->setTranslatableTitle( 'global-navigation-wikis-explore' )
+					->setHref( $this->getHref( 'explore-wikis' ) )
+					->setTrackingLabel( 'link.explore' ),
+				$this->getCommunityCentralLink(),
+				(new WdsLinkText())->setTranslatableTitle( 'global-navigation-wikis-fandom-university' )
+					->setHref( $this->getHref( 'fandom-university' ) )
+					->setTrackingLabel( 'link.fandom-university' )
+			] );
 		} else {
-			$data[ 'wikis' ] = [
-				'links' => [
-					$this->getCommunityCentralLink()
-				]
-			];
+			$wikis->setLinks( [ $this->getCommunityCentralLink() ] );
 		}
+
+		$data[ 'wikis' ] = $wikis;
 
 		if ( $wgUser->isLoggedIn() ) {
 			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
@@ -133,84 +111,55 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$searchParamName = 'query';
 		}
 
-		$search = [
-			'type' => 'search',
-			'results' => [
+		$searchModule = new WdsSearchModule();
+
+		$searchModule
+			// TODO
+			->setResults( [
 				'url' => $searchUrl,
 				'param-name' => $searchParamName,
 				'tracking_label' => 'search',
-			],
-			'placeholder-inactive' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-search-placeholder-inactive'
-			],
-			'placeholder-active' => [
-				'type' => 'translatable-text',
-				'key' => $searchPlaceholderKey
-			]
-		];
+			] )
+			->setActivePlaceholder( new WdsTranslatableText( $searchPlaceholderKey ) )
+			->setInactivePlaceholder( new WdsTranslatableText( 'global-navigation-search-placeholder-inactive' ) );
 
 		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
-			$search['suggestions'] = [
-				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
-				'param-name' => 'query',
-				'tracking_label' => 'search-suggestion',
-			];
+			// TODO
 			$search['placeholder-active']['params'] = [
 				'sitename' => $this->getSitenameData(),
 			];
+
+			// TODO
+			$searchModule->setSuggestions( [
+				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
+				'param-name' => 'query',
+				'tracking_label' => 'search-suggestion',
+			] );
 		}
 
-		return $search;
+		return $searchModule;
 	}
 
 	private function getAnonUserData() {
-		return [
-			'header' => [
-				'type' => 'line-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-user',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-user',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
-				'subtitle' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
-				'tracking_label' => 'account',
-			],
-			'links' => [
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-sign-in',
-					],
-					'href' => $this->getHref( 'user-signin' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.sign-in',
-				],
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register',
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register-description',
-					],
-					'href' => $this->getHref( 'user-register' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.register',
-				],
-			],
-		];
+		$anonUser = new WdsAnon();
+		$anonUser->setHeader( (new WdsLineImageWithSubtitle())
+			->setSvgImageData( 'wds-icons-user' )
+			->setTranslatableTitle( 'global-navigation-anon-my-account' )
+			->setTranslatableSubtitle( 'global-navigation-anon-my-account' )
+			->setTrackingLabel( 'account' ) );
+		$anonUser->setLinks( [
+			( new WdsLinkAuthentication() )->setTranslatableTitle( 'global-navigation-anon-sign-in' )
+				->setHref( $this->getHref( 'user-signin' ) )
+				->setParamName( 'redirect' )
+				->setTrackingLabel( 'account.sign-in' ),
+			( new WdsLinkAuthenticationWithSubtitle() )->setTranslatableTitle( 'global-navigation-anon-register' )
+				->setTranslatableSubtitle( 'global-navigation-anon-register-description' )
+				->setHref( $this->getHref( 'user-register' ) )
+				->setParamName( 'redirect' )
+				->setTrackingLabel( 'account.register' ),
+		] );
+
+		return $anonUser;
 	}
 
 	private function hasAuthorProfile( $user ) {
@@ -223,74 +172,39 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
 
-		$viewProfileLinks[] = [
-			'type' => 'link-text',
-			'href' => $this->getPageUrl( $userName, NS_USER ),
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-user-view-profile'
-			],
-			'tracking_label' => 'account.profile',
-		];
+		$viewProfileLinks[] = (new WdsLinkText())
+			->setTranslatableTitle( 'global-navigation-user-view-profile' )
+			->setHref( $this->getPageUrl( $userName, NS_USER ) )
+			->setTrackingLabel( 'account.profile' );
 
-		$logOutLink = [
-			'type' => 'link-authentication',
-			'href' => $this->getHref( 'user-logout' ),
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-user-sign-out'
-			],
-			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
-			'tracking_label' => 'account.sign-out',
-		];
+		$logOutLink = ( new WdsLinkAuthentication() )->setTranslatableTitle( 'global-navigation-user-sign-out' )
+			->setHref( $this->getHref( 'user-logout' ) )
+			->setParamName( $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto' )
+			->setTrackingLabel( 'account.sign-out' );
 
 		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
-			$viewProfileLinks[] = [
-				'type' => 'link-text',
-				'href' => $this->getHref( 'user-author-profile' ) . $userName,
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-user-view-author-profile'
-				],
-				'tracking_label' => 'account.profile-author',
-			];
+			$viewProfileLinks[] = (new WdsLinkText())
+				->setTranslatableTitle( 'global-navigation-user-view-author-profile' )
+				->setHref( $this->getHref( 'user-author-profile' ) . $userName )
+				->setTrackingLabel( 'account.profile-author' );
 		}
 
 		$links = [
 			static::PRODUCT_WIKIS => array_merge(
 				$viewProfileLinks,
 				[
-					[
-						'type' => 'link-text',
-						'href' => $isMessageWallEnabled
-							? $this->getPageUrl( $userName, NS_USER_WALL )
-							: $this->getPageUrl( $userName, NS_USER_TALK ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => $isMessageWallEnabled
-								? 'global-navigation-user-message-wall'
-								: 'global-navigation-user-my-talk'
-						],
-						'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-my-preferences'
-						],
-						'tracking_label' => 'account.preferences',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getHref( 'help' ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-help'
-						],
-						'tracking_label' => 'account.help',
-					],
+					(new WdsLinkText())
+						->setTranslatableTitle( $isMessageWallEnabled ? 'global-navigation-user-message-wall' : 'global-navigation-user-my-talk' )
+						->setHref( $isMessageWallEnabled ? $this->getPageUrl( $userName, NS_USER_WALL ) : $this->getPageUrl( $userName, NS_USER_TALK ) )
+						->setTrackingLabel( $isMessageWallEnabled ? 'account.message-wall' : 'account.talk' ),
+					(new WdsLinkText())
+						->setTranslatableTitle( 'global-navigation-user-my-preferences' )
+						->setHref( $this->getPageUrl( 'Preferences', NS_SPECIAL ) )
+						->setTrackingLabel( 'account.preferences' ),
+					(new WdsLinkText())
+						->setTranslatableTitle( 'global-navigation-user-help' )
+						->setHref( $this->getHref( 'help' ) )
+						->setTrackingLabel( 'account.help' ),
 					$logOutLink
 				]
 			),
@@ -319,65 +233,39 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getNotifications( $user ) {
 		$userName = $user->getName();
 
-		return [
-			'header' => [
-				'type' => 'line-image',
-				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-bell',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-bell',
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-notifications-title'
-				],
-				'tracking_label' => 'notifications',
-			],
-			'module' => [
-				'type' => 'notifications',
-				'url' => $this->isMessageWallEnabled()
-					? $this->getPageUrl( $userName, NS_USER_WALL )
-					: $this->getPageUrl( $userName, NS_USER_TALK )
-			]
-		];
+		$notificationsModule = new WdsNotificationsModule();
+		$notificationsModule->setUrl( $this->isMessageWallEnabled()
+			? $this->getPageUrl( $userName, NS_USER_WALL )
+			: $this->getPageUrl( $userName, NS_USER_TALK ) );
+
+
+		$notifications = new WdsNotifications();
+		$notifications->setHeader( (new WdsLineImage())
+			->setSvgImageData( 'wds-icons-bell' )
+			->setTranslatableTitle( 'global-navigation-notifications-title' )
+			->setTrackingLabel( 'notifications' ) );
+		$notifications->setModule( $notificationsModule );
+		return $notifications;
 	}
 
-	private function getVerticalsSection() {
-		return [
-			'links' => [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-games'
-					],
-					'href' => $this->getHref( 'games' ),
-					'tracking_label' => 'link.games'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
-					],
-					'href' => $this->getHref( 'movies' ),
-					'tracking_label' => 'link.movies'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
-					],
-					'href' => $this->getHref( 'tv' ),
-					'tracking_label' => 'link.tv'
-				]
-			]
-		];
+	private function getFandomOverview() {
+		$fandomOverview = new WdsFandomOverview();
+		$fandomOverview->setLinks( [
+			(new WdsLinkBranded())->setBrand( 'games' )
+				->setTranslatableTitle( 'global-navigation-fandom-overview-link-vertical-games' )
+				->setHref( $this->getHref( 'games' ) )
+				->setTrackingLabel( 'link.games' ),
+			(new WdsLinkBranded())->setBrand( 'movies' )
+				->setTranslatableTitle( 'global-navigation-fandom-overview-link-vertical-movies' )
+				->setHref( $this->getHref( 'movies' ) )
+				->setTrackingLabel( 'link.movies' ),
+			(new WdsLinkBranded())->setBrand( 'tv' )
+				->setTranslatableTitle( 'global-navigation-fandom-overview-link-vertical-tv' )
+				->setHref( $this->getHref( 'tv' ) )
+				->setTrackingLabel( 'link.tv' ),
+		] );
+
+		return $fandomOverview;
 	}
 
 	private function isMessageWallEnabled() {
@@ -397,127 +285,71 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getCommunityCentralLink() {
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-wikis-community-central'
-			],
-			'href' => $this->getHref( 'community-central' ),
-			'tracking_label' => 'link.community-central',
-		];
+		return (new WdsLinkText())->setTranslatableTitle( 'global-navigation-wikis-community-central' )
+			->setHref( $this->getHref( 'community-central' ) )
+			->setTrackingLabel( 'link.community-central' );
 	}
 
 	private function getSitenameData() {
-		return [
-			'type' => 'text',
-			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
-		];
+		return new WdsText( WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ) );
 	}
 
 	private function getPartnerSlot() {
 		if ( $this->lang === 'de' ) {
-			return [
-				'type' => 'link-image',
-				'href' => 'http://www.entertainweb.de/',
-				'image-data' => [
-					'type' => 'image-external',
-					'url' => 'https://services.wikia.com/static-assets/image/5588e692-fae8-4dc3-8db6-5f62e37fed47',
-				],
-				'title' => [
-					'type' => 'text',
-					'value' => 'entertainweb'
-				],
-				'tracking_label' => 'entertainweb',
-			];
+			return (new WdsLinkImage())->setExternalImageData( 'https://services.wikia.com/static-assets/image/5588e692-fae8-4dc3-8db6-5f62e37fed47' )
+				->setHref( 'http://www.entertainweb.de/' )
+				->setTitle( 'entertainweb' )
+				->setTrackingLabel( 'entertainweb' );
 		}
 		return null;
 	}
 
 	private function getLogo() {
-		$logo = [
-			// Deprecated
-			'header' => [
-				'type' => 'link-image',
-				'href' => $this->getHref( 'fandom-logo' ),
-				// 'image' is deprecated use 'image-data' instead
-				'image' => 'wds-company-logo-fandom-powered-by-wikia',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-fandom-powered-by-wikia',
-				],
-				'title' => [
-					'type' => 'text',
-					'value' => 'Fandom powered by Wikia'
-				],
-				'tracking_label' => 'logo',
-			],
-			'module' => [
-				'type' => 'logo',
-				'main' => $this->getLogoMain(),
-			]
-		];
-
+		$logoModule = (new WdsLogoModule())->setMain( $this->getLogoMain() );
 
 		$tagline = $this->getLogoTagline();
 		if ( !empty( $tagline ) ) {
-			$logo['module'][ 'tagline' ] = $tagline;
+			$logoModule->setTagLine( $tagline );
 		}
+
+		$logo = (new WdsLogo());
+		$logo->setHeader( (new WdsLinkImage())->setHref( $this->getHref( 'fandom-logo' ) )
+			->setSvgImageData( 'wds-company-logo-fandom-powered-by-wikia')
+			->setTitle( 'Fandom powered by Wikia' )
+			->setTrackingLabel( 'logo' ) );
+		$logo->setModule( $logoModule );
 
 		return $logo;
 	}
 
+	/**
+	 * @return WdsLinkImage
+	 */
 	private function getLogoMain() {
 		if ( $this->isWikiaOrgCommunity() === true ) {
-			return [
-				'type' => 'link-image',
-				'href' => $this->getHref( 'wikia-org-logo' ),
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-wikia-org',
-				],
-				'title' => [
-					'type' => 'text',
-					'value' => 'Wikia.org'
-				],
-				'tracking_label' => 'logo',
-			];
+			return (new WdsLinkImage())->setHref(  $this->getHref( 'wikia-org-logo' ) )
+				->setSvgImageData( 'wds-company-logo-wikia-org' )
+				->setTitle( 'Wikia.org' )
+				->setTrackingLabel( 'logo' );
 		}
 
-		return [
-			'type' => 'link-image',
-			'href' => $this->getHref( 'fandom-logo' ),
-			// 'image' is deprecated use 'image-data' instead
-			'image' => 'wds-company-logo-fandom',
-			'image-data' => [
-				'type' => 'wds-svg',
-				'name' => 'wds-company-logo-fandom',
-			],
-			'title' => [
-				'type' => 'text',
-				'value' => 'Fandom powered by Wikia'
-			],
-			'tracking_label' => 'logo',
-		];
+		return (new WdsLinkImage())->setHref( $this->getHref( 'fandom-logo' ) )
+			->setSvgImageData( 'wds-company-logo-fandom' )
+			->setTitle( 'Fandom powered by Wikia' )
+			->setTrackingLabel( 'logo' );
 	}
 
+	/**
+	 * @return WdsLinkImage|null
+	 */
 	private function getLogoTagline() {
 		if ( $this->isWikiaOrgCommunity() === true ) {
 			return null;
 		}
 
-		return [
-			'type' => 'link-image',
-			'href' => $this->getHref( 'fandom-logo' ),
-			'image-data' => [
-				'type' => 'wds-svg',
-				'name' => 'wds-company-logo-powered-by-wikia',
-			],
-			'title' => [
-				'type' => 'text',
-				'value' => 'Fandom powered by Wikia'
-			],
-			'tracking_label' => 'logo-tagline',
-		];
+		return (new WdsLinkImage())->setHref( $this->getHref( 'fandom-logo' ) )
+			->setSvgImageData( 'wds-company-logo-powered-by-wikia' )
+			->setTitle( 'Fandom powered by Wikia' )
+			->setTrackingLabel( 'logo-tagline' );
 	}
 }
