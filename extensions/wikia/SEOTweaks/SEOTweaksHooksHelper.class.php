@@ -36,29 +36,36 @@ class SEOTweaksHooksHelper {
 	 * @return bool
 	 */
 	static function onImagePageAfterImageLinks( $imgPage, $html ) {
-		$file = $imgPage->getDisplayedFile(); /* @var $file LocalRepo */
+		$file = $imgPage->getDisplayedFile(); /* @var $file WikiaLocalFile */
 		$title = $imgPage->getTitle();  /* @var $title Title */
-		$newTitle = '';
 
 		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin('monobook') ) {
-
-			if ( (new WikiaFileHelper)->isFileTypeVideo( $file ) ) {
-
-				$newTitle = wfMsg('seotweaks-video') . ' - ' . $title->getBaseText();
-			} else {
-
-				// It's not Video so lets check if it is Image
-				if ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
-
-					$newTitle = wfMsg('seotweaks-image') . ' - ' . $title->getBaseText();
-				}
-			}
+			$newTitle = self::getTitleForFilePage( $title, $file );
 
 			if ( !empty( $newTitle ) ) {
 				F::app()->wg->Out->setPageTitle( $newTitle );
 			}
 		}
+
 		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param File $file
+	 *
+	 * @return null|string
+	 */
+	public static function getTitleForFilePage( Title $title, File $file ) {
+		$newTitle = null;
+
+		if ( ( new WikiaFileHelper )->isFileTypeVideo( $file ) ) {
+			$newTitle = wfMsg( 'seotweaks-video' ) . ' - ' . $title->getBaseText();
+		} elseif ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
+			$newTitle = wfMsg( 'seotweaks-image' ) . ' - ' . $title->getBaseText();
+		}
+
+		return $newTitle;
 	}
 
 	/**

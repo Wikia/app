@@ -346,6 +346,7 @@ class MercuryApiController extends WikiaController {
 
 				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 				$article = Article::newFromID( $title->getArticleId() );
+				$displayTitle = null;
 
 				if ( $title->isRedirect() ) {
 					list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
@@ -366,8 +367,10 @@ class MercuryApiController extends WikiaController {
 					 */
 					$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 				}
+
 				$data['articleType'] = WikiaPageType::getArticleType( $title );
 				$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+
 				$otherLanguages = $this->getOtherLanguages( $title );
 
 				if ( !empty( $otherLanguages ) ) {
@@ -384,8 +387,8 @@ class MercuryApiController extends WikiaController {
 							// This does two things:
 							// - gets displayTitle from parser function {{DISPLAYTITLE:displayTitle}}
 							// - removes the namespace prefix from it
-							$data['article']['displayTitle'] =
-								Title::newFromText( $data['article']['displayTitle'] )->getText();
+							$displayTitle = Title::newFromText( $data['article']['displayTitle'] )->getText();
+							$data['article']['displayTitle'] = $displayTitle;
 						}
 					}
 
@@ -410,6 +413,8 @@ class MercuryApiController extends WikiaController {
 							);
 					}
 				}
+
+				$data['htmlTitle'] = $this->mercuryApi->getHtmlTitleForPage( $title, $displayTitle );
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );

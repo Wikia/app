@@ -310,6 +310,33 @@ class MercuryApi {
 	}
 
 	/**
+	 * @param Title $title
+	 * @param string|null $displayTitle
+	 *
+	 * @return string
+	 */
+	public function getHtmlTitleForPage( Title $title, $displayTitle ) {
+		global $wgContLang;
+
+		$namespaces = $wgContLang->getNamespaces();
+
+		if ( $title->inNamespace( NS_FILE ) ) {
+			$file = WikiaFileHelper::getFileFromTitle( $title );
+			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+		} else {
+			$htmlTitle = $displayTitle;
+		}
+
+		if ( empty( $htmlTitle ) ) {
+			$namespace = $namespaces[$title->getNamespace()];
+			$prefix = !empty( $namespace ) ? $namespace . ':' : '';
+			$htmlTitle = $prefix . $title->getText();
+		}
+
+		return $htmlTitle;
+	}
+
+	/**
 	 * CuratedContent API returns data in a different format than we need.
 	 * Let's clean it up!
 	 *
