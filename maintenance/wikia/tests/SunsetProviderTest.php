@@ -7,7 +7,7 @@ class SunsetProviderTest extends WikiaBaseTest {
 	public function setUp() {
 		global $wgUser;
 
-		$this->setupFile = __DIR__ . '/../SunsetProvider.php';
+		$this->setupFile = __DIR__ . '/../VideoHandlers/SunsetProvider.php';
 		parent::setUp();
 
 		// preserve original $wgUser (script overwrites it)
