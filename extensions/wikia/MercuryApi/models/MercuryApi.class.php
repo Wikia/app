@@ -318,6 +318,10 @@ class MercuryApi {
 	public function getHtmlTitleForPage( Title $title, $displayTitle ) {
 		global $wgContLang;
 
+		if ( $title->isMainPage() ) {
+			return '';
+		}
+
 		$namespaces = $wgContLang->getNamespaces();
 
 		if ( $title->inNamespace( NS_FILE ) ) {
