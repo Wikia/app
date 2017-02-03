@@ -8,6 +8,8 @@ class PremiumDesignABTestController extends WikiaController {
 
 		if ( array_key_exists( $articleId, $wgPremiumDesignABTestVariants ) ) {
 			$this->setVal( 'variant', $wgPremiumDesignABTestVariants[$articleId] );
+		} else {
+			$this->setVal( 'variant', null );
 		}
 	}
 
