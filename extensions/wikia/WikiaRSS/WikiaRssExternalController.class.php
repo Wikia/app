@@ -1,82 +1,78 @@
 <?php
 class WikiaRssExternalController extends WikiaController {
 
+	const CACHE_TIME = 3600;
+
 	/**
 	 * @brief Returns status flag and data in html tags
 	 * @desc Here we use 3rd-part extension magpierss which fetches rss feeds from given url
 	 */
 	public function getRssFeeds() {
-		$this->response->setVal('status', false);
-		$options = $this->request->getVal('options', false);
-		$this->response->setCacheValidity(3600); //cache it on varnish for 1h
+		$this->response->setVal( 'status', false );
+		$options = $this->request->getVal( 'options', false );
+		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
 		//we need to restore then its default values
-		foreach(array('highlight', 'filter', 'filterout') as $option) {
-			if( !isset($options[$option]) ) {
+		foreach ( [ 'highlight', 'filter', 'filterout' ] as $option ) {
+			if ( !isset( $options[$option] ) ) {
 				$options[$option] = array();
 			}
 		}
 
-		if( !empty($options) && !empty($options['url']) ) {
-			$url = html_entity_decode($options['url']);
+		if ( !empty( $options ) && !empty( $options['url'] ) ) {
+			$url = html_entity_decode( $options['url'] );
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
-				'WikiaRSS request to RSS provider',
+				__METHOD__,
 				[ 'providerUrl' => $url ]
 			);
 
-			// TODO XW-2693 temporary disable google rss
-			if ( stripos( $url, 'news.google.com') !== false ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-503', $url));
+			$feedData = WikiaDataAccess::cacheWithLock(
+				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
+				self::CACHE_TIME,
+				function () use ( $url ) {
+					return WikiaRssHelper::getFeedData( $url );
+				}
+			);
+
+			if ( !empty( $feedData['errorMessageKey'] ) ) {
+				$this->response->setVal(
+					'error',
+					wfMessage( $feedData['errorMessageKey'], $url, $feedData['error'] )->escaped()
+				);
+
 				return;
 			}
 
-			$status = null;
-			$rss = @fetch_rss($url, $status);
+			$rss = $feedData['rss'];
+			$short = ( $options['short'] == 'true' ) ? true : false;
+			$reverse = ( $options['reverse'] == 'true' ) ? true : false;
 
-			if( !is_null($status) && $status !== 200 ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
-				return;
-			}
-
-			if( !is_object($rss) || !is_array($rss->items) ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-empty', $url));
-				return;
-			}
-
-			if( $rss->ERROR ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error', $url, $rss->ERROR));
-				return;
-			}
-
-			$short = ($options['short'] == 'true') ? true : false;
-			$reverse = ($options['reverse'] == 'true') ? true : false;
-
-			if( $reverse ) {
-				$rss->items = array_reverse($rss->items);
+			if ( $reverse ) {
+				$rss->items = array_reverse( $rss->items );
 			}
 
 			$description = false;
-			foreach( $rss->items as $item ) {
-				if( isset($item['description']) && $item['description'] ) {
+			foreach ( $rss->items as $item ) {
+				if ( isset( $item['description'] ) && $item['description'] ) {
 					$description = true;
 					break;
 				}
 			}
 
-			if( !$short && $description ) {
-				$items = $this->getFullItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'fullList', array('items' => $items));
+			if ( !$short && $description ) {
+				$items = $this->getFullItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'fullList', [ 'items' => $items ] );
 			} else {
-				$items = $this->getShortItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'shortList', array('items' => $items));
+				$items = $this->getShortItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'shortList', [ 'items' => $items ] );
 			}
 
-			$this->response->setVal('status', true);
-			$this->response->setVal('html', $html);
+			$this->response->setVal( 'status', true );
+			$this->response->setVal( 'html', $html );
 		} else {
-			$this->response->setVal('error', wfMsg('wikia-rss-error-invalid-options'));
+			$this->response->setVal( 'error', wfMessage( 'wikia-rss-error-invalid-options' )->escaped() );
 		}
 	}
 
