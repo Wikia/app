@@ -21,6 +21,17 @@ class WikiaRssExternalController extends WikiaController {
 		if( !empty($options) && !empty($options['url']) ) {
 			$url = html_entity_decode($options['url']);
 
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'WikiaRSS request to RSS provider',
+				[ 'providerUrl' => $url ]
+			);
+
+			// TODO XW-2693 temporary disable google rss
+			if ( stripos( $url, 'news.google.com') !== false ) {
+				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-503', $url));
+				return;
+			}
+
 			$status = null;
 			$rss = @fetch_rss($url, $status);
 
