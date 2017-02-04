@@ -4,6 +4,8 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Fatal;
+use RequestContext;
+use WikiFactory;
 
 /**
  * Class PasswordResetLinkController
@@ -52,6 +54,14 @@ class PasswordResetLinkController extends EmailController {
 	 * @template passwordResetLink
 	 */
 	public function body() {
+		$currentIp = $this->getContext()->getRequest()->getIP();
+		wfRunHooks( 'User::mailPasswordInternal', [
+			$this->currentUser,
+			$currentIp,
+			$this->targetUser,
+			WikiFactory::IDtoDB( WikiFactory::COMMUNITY_CENTRAL ),
+		] );
+
 		$url = $this->getResetLink();
 
 		$this->response->setData( [
@@ -69,7 +79,7 @@ class PasswordResetLinkController extends EmailController {
 	protected function getResetLink() {
 		$query = [
 			'username' => $this->getTargetUserName(),
-			'token' => $this->token,
+			'token'    => $this->token,
 		];
 
 		if ( !empty( $this->returnUrl ) ) {
