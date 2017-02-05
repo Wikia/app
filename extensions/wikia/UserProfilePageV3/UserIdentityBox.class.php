@@ -585,7 +585,11 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		if ( $this->user->getGlobalPreference( 'hideEditsWikis' ) ) {
+			return [];
+		} else {
+			return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		}
 	}
 
 	/**
