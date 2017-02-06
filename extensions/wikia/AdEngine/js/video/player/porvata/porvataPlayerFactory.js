@@ -24,14 +24,14 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 		var width = params.width,
 			height = params.height,
 			mobileVideoAd = params.container.querySelector('video'),
-			videoAdContainer = params.container.querySelector('div');
+			videoAdContainer = params.container.querySelector('div'),
+			destroyCallbacks = [];
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
 		return {
 			container: prepareVideoAdContainer(videoAdContainer, params),
 			ima: ima,
-			destroyCallbacks: [],
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
 			},
@@ -108,14 +108,14 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				}
 			},
 			addOnDestroyCallback: function (callback) {
-				this.destroyCallbacks.push(callback);
+				destroyCallbacks.push(callback);
 			},
 			destroy: function () {
-				var callback = this.destroyCallbacks.pop();
+				var callback = destroyCallbacks.pop();
 
 				while (callback) {
 					callback(this);
-					callback = this.destroyCallbacks.pop();
+					callback = destroyCallbacks.pop();
 				}
 			}
 		};
