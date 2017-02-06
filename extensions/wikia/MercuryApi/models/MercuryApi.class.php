@@ -316,13 +316,9 @@ class MercuryApi {
 	 * @return string
 	 */
 	public function getHtmlTitleForPage( Title $title, $displayTitle ) {
-		global $wgContLang;
-
 		if ( $title->isMainPage() ) {
 			return '';
 		}
-
-		$namespaces = $wgContLang->getNamespaces();
 
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$file = WikiaFileHelper::getFileFromTitle( $title );
@@ -332,9 +328,7 @@ class MercuryApi {
 		}
 
 		if ( empty( $htmlTitle ) ) {
-			$namespace = $namespaces[$title->getNamespace()];
-			$prefix = !empty( $namespace ) ? $namespace . ':' : '';
-			$htmlTitle = $prefix . $title->getText();
+			$htmlTitle = $title->getPrefixedText();
 		}
 
 		return $htmlTitle;
