@@ -69,7 +69,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	function mockSuccessfulResponse() {
 		var adParameters = document.createElement('AdParameters'),
-			textNode = document.createTextNode('velesPrice=1554'),
+			textNode = document.createTextNode('veles=1554'),
 			vast = document.createElement('VAST');
 
 		adParameters.appendChild(textNode);
@@ -79,7 +79,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		mocks.win.XMLHttpRequest.prototype.send = function () {
 			this.readyState = 4;
 			this.status = 200;
-			this.response = '<VAST><AdParameters><![CDATA[velesPrice=1554]]></AdParameters></VAST>';
+			this.response = '<VAST><AdParameters><![CDATA[veles=1554]]></AdParameters></VAST>';
 			this.responseXML = {
 				documentElement: vast
 			};
@@ -177,7 +177,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		});
 
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
-		expect(bid.ad).toBe('<VAST><AdParameters><![CDATA[velesPrice=1554]]></AdParameters></VAST>');
+		expect(bid.ad).toBe('<VAST><AdParameters><![CDATA[veles=1554]]></AdParameters></VAST>');
 		expect(bid.code).toBe(1);
 		expect(bid.cpm).toBe(15.54);
 	});

@@ -61,8 +61,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		if (adParameters) {
 			parameters = parseParameters(adParameters);
 
-			if (parameters.velesPrice) {
-				return parseInt(parameters.velesPrice, 10) / 100;
+			if (parameters.veles) {
+				return parseInt(parameters.veles, 10) / 100;
 			}
 		}
 
