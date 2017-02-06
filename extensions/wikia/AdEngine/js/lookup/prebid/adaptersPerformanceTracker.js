@@ -1,9 +1,10 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
 	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, adaptersRegistry, timeBuckets, prebid) {
+], function (adTracker, adaptersRegistry, priceGranularityHelper, timeBuckets, prebid) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
@@ -82,7 +83,11 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
-		return [bid.getSize(), bid.pbAg, bucket].join(';');
+
+		return [
+			bid.getSize(),
+			priceGranularityHelper.transformPriceFromCpm(bid.cpm),
+			bucket].join(';');
 	}
 
 

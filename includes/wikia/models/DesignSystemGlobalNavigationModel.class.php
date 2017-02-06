@@ -214,7 +214,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function hasAuthorProfile( $user ) {
-		return sizeof( preg_grep( "/^fancontributor-/", $user->getGroups() ) ) > 0;
+		return intval( $user->getGlobalAttribute( 'wordpressId', 0 ), 10 ) > 0;
 	}
 
 	private function getLoggedInUserData( $user ) {

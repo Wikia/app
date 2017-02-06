@@ -185,7 +185,7 @@ class ForumDumper {
 
 		$rawText = $this->getRawText( $articleComment );
 		$title = $articleComment->getMetadata( 'title', '' );
-		$parsedText = $this->getParsedText( $rawText, $articleComment );
+		$parsedText = $this->getParsedText( $articleComment );
 
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
@@ -209,7 +209,9 @@ class ForumDumper {
 		);
 	}
 
-	private function getParsedText( $wikiText, \ArticleComment $articleComment ) {
+	private function getParsedText( \ArticleComment $articleComment ) {
+		$wikiText = $articleComment->getRawText();
+
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
 			return $wikiText;

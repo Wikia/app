@@ -167,7 +167,9 @@ $language_data = array (
 		array(
 			0 => '(function[\|\>]*)(\s)*([$a-zA-Z_][0-9a-zA-Z_$]*)+',
 			1 => '\\3',
-			3 => '\\1\\2'
+			2 => '',
+			3 => '\\1\\2',
+			4 => '',
 		)
     ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
