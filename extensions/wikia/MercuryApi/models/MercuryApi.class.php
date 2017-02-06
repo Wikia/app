@@ -146,6 +146,9 @@ class MercuryApi {
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'comscore' => [
+					'c7Value' => AnalyticsProviderComscore::getC7Value(),
+				],
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
 					'cmKey' => AnalyticsProviderIVW3::getCMKey()
