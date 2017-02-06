@@ -1,11 +1,12 @@
-/*global define, XMLHttpRequest*/
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.geo',
-	'wikia.instantGlobals'
-], function (adContext, prebid, vastUrlBuilder, geo, instantGlobals) {
+	'wikia.instantGlobals',
+	'wikia.window'
+], function (adContext, prebid, vastUrlBuilder, geo, instantGlobals, win) {
 	'use strict';
 
 	var bidderName = 'veles',
@@ -35,6 +36,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function parseParameters(adParameters) {
 		var pairs = [],
 			parameters = {};
+
 		if (adParameters.childNodes.length) {
 			pairs = adParameters.childNodes[0].nodeValue.split(',');
 		}
@@ -126,7 +128,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function requestVast(bidderRequest) {
-		var request = new XMLHttpRequest(),
+		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
 				pos: Object.keys(slots[skin]),
