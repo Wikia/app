@@ -1,0 +1,17 @@
+{
+  "name": "ad-engine",
+  "version": "1.0.0",
+  "description": "Resources for adengine extension",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd node_modules/prebid.js && npm install && gulp build --adapters list-of-adapters.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wikia/app/tree/dev/extensions/wikia/AdEngine"
+  },
+  "author": "dianafa",
+  "dependencies": {
+    "Prebid.js" : "https://github.com/Wikia/Prebid.js"
+  }
+}
