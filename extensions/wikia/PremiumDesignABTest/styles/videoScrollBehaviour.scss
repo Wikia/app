@@ -76,7 +76,6 @@
 	}
 
 	.video-details {
-		//display: none;
 		background: #000;
 		padding: 8px 10px 10px;
 		opacity: 1;
@@ -84,6 +83,7 @@
 		align-items: center;
 		transition: opacity 0.2s;
 		transition-delay: 0.5s;
+		min-height: 40px;
 
 		.video-details-left {
 			flex: 1;
