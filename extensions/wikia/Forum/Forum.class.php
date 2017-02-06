@@ -230,7 +230,7 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
-	 * @param ForumBoard $board
+	 * @param ForumBoard|null $board
 	 * @param $titletext
 	 * @param $body
 	 * @param bool $bot
@@ -238,10 +238,7 @@ class Forum extends Walls {
 	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		$id = null;
-		if ( !empty( $board ) ) {
-			$id = $board->getId();
-		}
+		$id = ( $board instanceof ForumBoard ) ? $board->getId() : null;
 
 		if (
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
@@ -280,7 +277,12 @@ class Forum extends Walls {
 		}
 
 		Forum::$allowToEditBoard = false;
-		$board->clearCacheBoardInfo();
+
+		// clear the cache only when we're editing an existing board
+		if ( $board instanceof ForumBoard ) {
+			$board->clearCacheBoardInfo();
+		}
+
 		return $retval;
 	}
 
