@@ -54,16 +54,11 @@ class WallThread {
 		$this->invalidateCache();
 	}
 
-
-	public function setReplies( $ids ) {
-		// set and cache replies of this thread
-		$this->initializeReplyData();
-
-		$this->data->threadReplyIds = $ids;
-
-		$this->saveToMemcache();
-	}
-
+	/**
+	 * Fetch data for replies on this thread from DB, then cache the result.
+	 * Result is cached indefinitely and is purged when thread is updated
+	 * @see WallThread::invalidateCache()
+	 */
 	private function loadReplyObjs() {
 		if ( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
@@ -83,6 +78,9 @@ class WallThread {
 				$this->data->threadReplyObjs[] = $reply;
 			}
 		}
+
+		// SUS-262: Save state to cache at this point, after objects have been initialized
+		$this->saveToMemcache();
 	}
 
 	/**
@@ -124,7 +122,7 @@ class WallThread {
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-		$this->setReplies( $this->getReplyIdsFromDB( $dbr ) );
+		$this->data->threadReplyIds = $this->getReplyIdsFromDB( $dbr );
 	}
 
 	public function invalidateCache() {
