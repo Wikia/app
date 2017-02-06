@@ -483,7 +483,8 @@ class ArticleComment {
 
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
-		$canDelete = !count( $title->getUserPermissionsErrors( 'delete', F::app()->wg->User, false, [] ) );
+		$canDelete = $title->userCan( 'delete', $wgUser, false );
+		$canEdit = $title->userCan( 'edit', $wgUser, false );
 
 		// vary cache on permission as well so it changes we can show it to a user
 		$articleDataKey = wfMemcKey(
@@ -523,7 +524,7 @@ class ArticleComment {
 		// we cannot check it using $title->getBaseText, as this returns main namespace title
 		// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 		$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-		$commentingAllowed = ArticleComment::userCanCommentOn( $articleTitle );
+		$commentingAllowed = ArticleComment::userCanCommentOn( $articleTitle, $wgUser );
 
 		if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 			$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
@@ -540,7 +541,7 @@ class ArticleComment {
 
 		// due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 		if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
-			$display = $this->canEdit() ? '' : ' style="display:none"';
+			$display = $canEdit ? '' : ' style="display:none"';
 			$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 			$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg( 'article-comments-edit' ) . '</a></span>';
 			$links['edit'] = '#comment' . $commentId;
@@ -690,29 +691,6 @@ class ArticleComment {
 		];
 
 		return $result;
-	}
-
-	/**
-	 * check if current user can edit comment
-	 * @deprecated use userCan directly on the comment's title object
-	 */
-	public function canEdit() {
-		global $wgUser;
-
-		$isAuthor = false;
-
-		if ( $this->mFirstRevision ) {
-			$isAuthor = $this->mFirstRevision->getUser( Revision::RAW ) == $wgUser->getId() && !$wgUser->isAnon();
-		}
-
-		// prevent infinite loop for blogs - userCan hooked up in BlogLockdown
-		$canEdit = self::isBlog( $this->mTitle ) || $this->mTitle->userCan( "edit" );
-
-		$isAllowed = $wgUser->isAllowed( 'commentedit' );
-
-		$res = $isAuthor || ( $isAllowed && $canEdit );
-
-		return $res;
 	}
 
 	/**
@@ -1627,95 +1605,89 @@ class ArticleComment {
 
 	/**
 	 * Manages permissions related to article and blog comments
-	 * Hook: userCan
+	 * Hook: getUserPermissionsErrors
 	 *
 	 * @param Title $title
 	 * @param User $user
 	 * @param string $action
-	 * @param bool $result Whether $user can perform $action on $title
+	 * @param array|null $result error array (message name and params) or null
 	 * @return bool Whether to continue checking hooks
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
-		$wg = F::app()->wg;
-		$commentsNS = $wg->ArticleCommentsNamespaces;
+	static public function getUserPermissionsErrors( Title $title, User $user, string $action, &$result ) {
+		global $wgArticleCommentsNamespaces;
 		$ns = $title->getNamespace();
 
 		// Only handle article and blog comments
-		if ( !in_array( MWNamespace::getSubject( $ns ), $commentsNS ) ||
+		if ( !in_array( MWNamespace::getSubject( $ns ), $wgArticleCommentsNamespaces ) ||
 			!ArticleComment::isTitleComment( $title ) ) {
 			return true;
 		}
 
-		wfProfileIn( __METHOD__ );
-
 		$comment = ArticleComment::newFromTitle( $title );
-		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+		$isBlog = ArticleComment::isBlog( $title );
+
+		$allow = true;
 
 		switch ( $action ) {
 			// Creating article comments requires 'commentcreate' permission
 			// For blogs, additionally check if the owner has enabled commenting+
 			case 'create':
 				// We have to check these permissions on the parent article
-				// due to the chicken-and-egg problem inherent in the design
-				$result = self::userCanCommentOn( $comment->getArticleTitle(), $user );
-				$return = false;
+				if ( !self::userCanCommentOn( $comment->getArticleTitle(), $user ) ) {
+					$result = [ 'titleprotected' ];
+					$allow = false;
+				}
+
 				break;
 			// Article and blog comments can only be edited by their author,
 			// or an user with 'commentedit' permission
 			case 'edit':
 				// Prepopulate the object with revision data
 				// required by ArticleComment::isAuthor
-				$result = ( $comment->isAuthor( $user ) || $user->isAllowed( 'commentedit' ) );
-				$return = false;
-				break;
+				if ( !$comment->isAuthor( $user ) && !$user->isAllowed( 'commentedit' ) ) {
+					$result = [ 'badaccess-group0' ];
+					$allow = false;
+				}
 
+				break;
 			case 'move':
 			case 'move-target':
-				$result = $user->isAllowed( 'commentmove' );
-				$return = false;
-				break;
+				if ( !$user->isAllowed( 'commentmove' ) ) {
+					$result = [ 'movenotallowed' ];
+					$allow = false;
+				}
 
+				break;
 			case 'delete':
 			case 'undelete':
-				$result = ( ArticleComment::isTitleComment( $title ) &&
-					( $user->isAllowed( 'commentdelete' ) || $isBlog && $user->isAllowed( 'blog-comments-delete' ) )
-				);
-				$return = false;
+				if ( !$user->isAllowed( 'commentdelete' ) || ( $isBlog && !$user->isAllowed( 'blog-comments-delete' ) ) ) {
+					$result = [ 'badaccess-group0' ];
+					$allow = false;
+				}
+
 				break;
-			default:
-				$result = $return = true;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $return;
+		return $allow;
 	}
 
 	/**
 	 * Check if user can add a comment to the current article
-	 * We must perform this check on the article
-	 * because of the chicken-and-egg problem inherent in the design
 	 *
 	 * @param Title $title Article title
-	 * @param User|null $user Current user
+	 * @param User $user Current user
 	 * @return bool Whether $user can add a comment to $title
 	 */
-	static public function userCanCommentOn( Title $title, User $user = null ) {
-		$wg = F::app()->wg;
-		if ( !( $user instanceof User ) ) {
-			$user = $wg->User;
-		}
+	static public function userCanCommentOn( Title $title, User $user ): bool {
+		$isBlog = ArticleComment::isBlog( $title );
+		$userHasPermissions = $user->isAllowedAll( 'commentcreate', 'edit' );
 
-		if ( wfReadOnly() ) {
-			return false;
-		}
-
-		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
 		if ( $isBlog ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && $commentingEnabled );
-		} else {
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
+			return ( $userHasPermissions && $commentingEnabled );
 		}
+
+		return ( $userHasPermissions && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
 	}
 }

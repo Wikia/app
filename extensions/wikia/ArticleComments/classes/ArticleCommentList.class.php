@@ -412,7 +412,7 @@ class ArticleCommentList {
 			'avatar' => AvatarService::renderAvatar( $wg->User->getName(), 50 ),
 			'userurl' => AvatarService::getUrl( $wg->User->getName() ),
 			'commentListRaw' => $comments,
-			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle ),
+			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle, $wg->User ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,

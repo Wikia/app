@@ -69,7 +69,7 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	// blogs
 	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
 	// prevent editing not own comments
-	$wgHooks['userCan'][] = 'ArticleComment::userCan';
+	$wgHooks['getUserPermissionsErrors'][] = 'ArticleComment::getUserPermissionsErrors';
 	// HAWelcome
 	$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
 

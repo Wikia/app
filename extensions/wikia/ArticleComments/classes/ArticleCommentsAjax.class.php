@@ -49,11 +49,6 @@ class ArticleCommentsAjax {
 			return $errorResult;
 		}
 
-		// Return with error if we can't comment on the current title (wgTitle)
-		if ( !ArticleComment::userCanCommentOn( $wgTitle ) ) {
-			return $errorResult;
-		}
-
 		// Return with error if we can't create a new article comment
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( empty( $comment ) ) {
@@ -62,11 +57,6 @@ class ArticleCommentsAjax {
 
 		// Return with error if we can't load the data for this comment
 		if ( !$comment->load( true ) ) {
-			return $errorResult;
-		}
-
-		// Return with error if we can't edit this comment
-		if ( !$comment->getTitle()->userCan( 'edit' ) ) {
 			return $errorResult;
 		}
 
@@ -155,17 +145,13 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$canComment = ArticleComment::userCanCommentOn( $title );
+		$vars = [
+			'commentId' => $commentId,
+			'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
+			'stylePath' => $wgStylePath
+		];
 
-		if ( $canComment == true ) {
-			$vars = [
-				'commentId' => $commentId,
-				'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
-				'stylePath' => $wgStylePath
-			];
-
-			$result['html'] = F::app()->getView( 'ArticleComments', 'Reply', $vars )->render();
-		}
+		$result['html'] = F::app()->getView( 'ArticleComments', 'Reply', $vars )->render();
 
 		return $result;
 	}
@@ -192,7 +178,7 @@ class ArticleCommentsAjax {
 
 		$title = Title::newFromID( $articleId );
 
-		if ( !$title || !ArticleComment::userCanCommentOn( $title, $wgUser ) ) {
+		if ( !$title ) {
 			return $result;
 		}
 
