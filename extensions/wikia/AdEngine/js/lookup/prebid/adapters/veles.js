@@ -34,17 +34,15 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function parseParameters(adParameters) {
-		var pairs = [],
-			parameters = {};
+		var parameters = {};
 
 		if (adParameters.childNodes.length) {
-			pairs = adParameters.childNodes[0].nodeValue.split(',');
-		}
-		pairs.forEach(function (pair) {
-			var data = pair.split('=');
+			adParameters.childNodes[0].nodeValue.split(',').forEach(function (pair) {
+				var data = pair.split('=');
 
-			parameters[data[0]] = data[1];
-		});
+				parameters[data[0]] = data[1];
+			});
+		}
 
 		return parameters;
 	}
