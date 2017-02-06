@@ -188,7 +188,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(6);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {
