@@ -65,7 +65,8 @@ class ArticleAsJson extends WikiaService {
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
 					'caption' => $media['caption'] ?? '',
-					'link' => $media['link'] ?? '',
+					'link' => $media['link'],
+					'isLinkedByUser' => $media['isLinkedByUser'],
 					/**
 					 * data-ref has to be set for now because it's read in
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
@@ -125,7 +126,7 @@ class ArticleAsJson extends WikiaService {
 				array_filter(
 					$media,
 					function ( $item ) {
-						return isset( $item['link'] );
+						return $item['isLinkedByUser'];
 					}
 				)
 			) ) {
@@ -152,8 +153,12 @@ class ArticleAsJson extends WikiaService {
 			'user' => $details['userName']
 		];
 
-		if ( is_string( $link ) && $link !== '' ) {
+		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
 			$media['link'] = $link;
+			$media['isLinkedByUser'] = true;
+		} else {
+			$media['link'] = $media['type'] === 'image' ? $media['url'] : $media['fileUrl'];
+			$media['isLinkedByUser'] = false;
 		}
 
 		if ( !empty( $details['width'] ) ) {
