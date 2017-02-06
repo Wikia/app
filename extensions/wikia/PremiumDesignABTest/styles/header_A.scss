@@ -1,7 +1,7 @@
 #premium-design-ab-test-A-header {
 	.WikiaPageHeader {
 		display: block;
-		margin-bottom: 0;
+		margin-bottom: 18px;
 		margin-top: 14px;
 		padding-bottom: 0;
 
@@ -30,14 +30,14 @@
 			border-top: 0;
 			border-bottom: 0;
 
-			.edit-pencil {
-				display: none;
-			}
-
 			> a {
 				border-color: rgba(255, 255, 255, 0.5);
 				padding: 5px 12px 6px;
 				text-transform: uppercase;
+
+				img {
+					display: none;
+				}
 
 				&:hover {
 					background-image: none;
@@ -107,6 +107,7 @@
 
 			&:before {
 				display: inline;
+				line-height: 1;
 				position: relative;
 				top: 5px;
 				margin-right: 3px;
