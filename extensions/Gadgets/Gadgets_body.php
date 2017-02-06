@@ -88,7 +88,7 @@ class GadgetHooks {
 
 			if ( $section !== '' ) {
 				// begin wikia change
-				// wfMsg cleanup
+				// VOLDEV-186: wfMsg cleanup
 				$section = wfMessage( "gadget-section-$section" )->parse();
 				// end wikia change
 
@@ -107,7 +107,7 @@ class GadgetHooks {
 				'default' => Xml::tags( 'tr', array(),
 					Xml::tags( 'td', array( 'colspan' => 2 ),
 						// begin wikia change
-						// wfMsg cleanup
+						// VOLDEV-186: wfMsg cleanup
 						wfMessage( 'gadgets-prefstext' )->parse() ) ),
 						// end wikia change
 				'section' => 'gadgets',

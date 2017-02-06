@@ -40,8 +40,8 @@ class SpecialGadgets extends SpecialPage {
 
 		$this->setHeaders();
 		// begin wikia change
-		// wfMsg cleanup
-		$wgOut->setPagetitle( wfMessage( 'gadgets-title' )->escaped() );
+		// VOLDEV-186: wfMsg cleanup
+		$wgOut->setPagetitle( $this->msg( 'gadgets-title' )->escaped() );
 		// end wikia change
 		$wgOut->addWikiMsg( 'gadgets-pagetext' );
 
@@ -63,8 +63,8 @@ class SpecialGadgets extends SpecialPage {
 				if ( $editInterfaceAllowed ) {
 					$lnkTarget = $t
 						// begin wikia change
-						// wfMsg cleanup
-						? Linker::link( $t, wfMessage( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) )
+						// VOLDEV-186: wfMsg cleanup
+						? Linker::link( $t, $this->msg( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) )
 						// end wikia change
 						: htmlspecialchars( $section );
 					$lnk =  "&#160; &#160; [$lnkTarget]";
@@ -73,8 +73,8 @@ class SpecialGadgets extends SpecialPage {
 				}
 
 				// begin wikia change
-				// wfMsg cleanup
-				$ttext = wfMessage( "gadget-section-$section" )->parse();
+				// VOLDEV-186: wfMsg cleanup
+				$ttext = $this->msg( "gadget-section-$section" )->parse();
 				// end wikia change
 
 				if ( $listOpen ) {
@@ -98,16 +98,16 @@ class SpecialGadgets extends SpecialPage {
 				$links = array();
 				if ( $editInterfaceAllowed ) {
 					// begin wikia change
-					// wfMsg cleanup
-					$links[] = Linker::link( $t, wfMessage( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) );
+					// VOLDEV-186: wfMsg cleanup
+					$links[] = Linker::link( $t, $this->msg( 'edit' )->escaped(), array(), array( 'action' => 'edit' ) );
 					// end wikia change
 				}
 
 				// begin wikia change
-				// wfMsg cleanup
-				$links[] = Linker::link( $this->getTitle( "export/{$gadget->getName()}" ), wfMessage( 'gadgets-export' )->escaped() );
+				// VOLDEV-186: wfMsg cleanup
+				$links[] = Linker::link( $this->getTitle( "export/{$gadget->getName()}" ), $this->msg( 'gadgets-export' )->escaped() );
 
-				$ttext = wfMessage( "gadget-{$gadget->getName()}" )->parse();
+				$ttext = $this->msg( "gadget-{$gadget->getName()}" )->parse();
 				// end wikia change
 
 				if ( !$listOpen ) {
@@ -116,11 +116,11 @@ class SpecialGadgets extends SpecialPage {
 				}
 
 				// begin wikia change
-				// wfMsg cleanup
-				$lnk = '&#160;&#160;' . wfMessage( 'parentheses', $wgLang->pipeList( $links ) )->plain();
+				// VOLDEV-186: wfMsg cleanup
+				$lnk = '&#160;&#160;' . $this->msg( 'parentheses', $wgLang->pipeList( $links ) )->plain();
 				$wgOut->addHTML( Xml::openElement( 'li' ) .
 						$ttext . $lnk . "<br />" .
-						wfMessage( 'gadgets-uses' )->escaped() . wfMessage( 'colon-separator' )->escaped()
+						$this->msg( 'gadgets-uses' )->escaped() . $this->msg( 'colon-separator' )->escaped()
 				);
 				// end wikia change
 
@@ -138,11 +138,17 @@ class SpecialGadgets extends SpecialPage {
 
 				$rights = array();
 				foreach ( $gadget->getRequiredRights() as $right ) {
-					$rights[] = '* ' . wfMessage( "right-$right" )->plain();
+					// wikia change
+					// VOLDEV 186: Convert wfMessage to $this->msg
+					$rights[] = '* ' . $this->msg( "right-$right" )->plain();
+					// end wikia change
 				}
 				if ( count( $rights ) ) {
 					$wgOut->addHTML( '<br />' .
-						wfMessage( 'gadgets-required-rights', implode( "\n", $rights ), count( $rights ) )->parse()
+						// wikia change
+						// VOLDEV 186: Convert wfMessage to $this->msg
+						$this->msg( 'gadgets-required-rights', implode( "\n", $rights ), count( $rights ) )->parse()
+						// end wikia change
 					);
 				}
 
@@ -150,19 +156,28 @@ class SpecialGadgets extends SpecialPage {
 				$validskins = Skin::getSkinNames();
 				foreach ( $gadget->getRequiredSkins() as $skinid ) {
 					if ( isset( $validskins[$skinid] ) ) {
-						$skins[] = wfMessage( "skinname-$skinid" )->plain();
+						// wikia change
+						// VOLDEV 186: Convert wfMessage to $this->msg
+						$skins[] = $this->msg( "skinname-$skinid" )->plain();
+						// end wikia change
 					} else {
 						$skins[] = $skinid;
 					}
 				}
 				if ( count( $skins ) ) {
 					$wgOut->addHTML( '<br />' .
-						wfMessage( 'gadgets-required-skins', $wgLang->commaList( $skins ), count( $skins ) )->parse()
+						// wikia change
+						// VOLDEV 186: Convert wfMessage to $this->msg
+						$this->msg( 'gadgets-required-skins', $wgLang->commaList( $skins ), count( $skins ) )->parse()
+						// end wikia change
 					);
 				}
 
 				if ( $gadget->isOnByDefault() ) {
-					$wgOut->addHTML( '<br />' . wfMessage( 'gadgets-default' )->parse() );
+					// wikia change
+					// VOLDEV 186: Convert wfMessage to $this->msg
+					$wgOut->addHTML( '<br />' . $this->msg( 'gadgets-default' )->parse() );
+					// end wikia change
 				}
 
 				$wgOut->addHTML( Xml::closeElement( 'li' ) . "\n" );
@@ -193,8 +208,8 @@ class SpecialGadgets extends SpecialPage {
 		$g = $gadgets[$gadget];
 		$this->setHeaders();
 		// begin wikia change
-		// wfMsg cleanup
-		$wgOut->setPagetitle( wfMessage( 'gadgets-export-title' )->escaped() );
+		// VOLDEV-186: wfMsg cleanup
+		$wgOut->setPagetitle( $this->msg( 'gadgets-export-title' )->escaped() );
 		// end wikia change
 		$wgOut->addWikiMsg( 'gadgets-export-text', $gadget, $g->getDefinition() );
 
@@ -209,8 +224,9 @@ class SpecialGadgets extends SpecialPage {
 			. Html::hidden( 'wpDownload', '1' )
 			. Html::hidden( 'templates', '1' )
 			// begin wikia change
-			// wfMsg cleanup
-			. Xml::submitButton( wfMessage( 'gadgets-export-download' )->escaped() )
+			// VOLDEV-186: wfMsg cleanup
+			// escaping handled by submitButton in this case
+			. Xml::submitButton( $this->msg( 'gadgets-export-download' )->plain() )
 			// end wikia change
 			. Html::closeElement( 'form' )
 		);
