@@ -80,7 +80,14 @@
 		}
 
 		.video-scroll-play-button {
-			width: 40px;
+			background-image: url("/extensions/wikia/PremiumDesignABTest/images/play-button-solid.svg"); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			background-size: contain;
+			height: 60px;
+			width: 60px;
+			position: absolute;
+			right: 0;
+			bottom: 0;
 		}
 
 		.video-scroll-watch {

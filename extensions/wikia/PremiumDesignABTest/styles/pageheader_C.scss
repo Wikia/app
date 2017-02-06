@@ -3,6 +3,12 @@
 #premium-design-ab-test-C-pageheader {
 	.video {
 		@include video();
+
+		.video-play-button {
+			background-image: url("/extensions/wikia/PremiumDesignABTest/images/play-button-gradient.svg"); /* $wgCdnStylePath */
+			bottom: 10px;
+			right: 10px;
+		}
 	}
 
 	.WikiaPageHeader {
@@ -38,6 +44,7 @@
 			border-top: 0;
 			border-bottom: 0;
 			margin-top: 9px;
+			text-transform: uppercase;
 
 			.edit-pencil {
 				display: none;

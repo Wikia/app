@@ -2,13 +2,7 @@
 
 #premium-design-ab-test-D-pageheader {
 	.video {
-		background-image: $video-thumbnail-url; /* $wgCdnStylePath */
-		background-size: cover;
-		cursor: pointer;
-		margin-bottom: 11px;
-		padding-top: 56%;
-		position: relative;
-		width: 100%;
+		@include video;
 
 		.video-title {
 			display: none;
@@ -16,11 +10,10 @@
 
 		.video-play-button {
 			left: 50%;
-			position: absolute;
 			top: 50%;
 			transform: translate(-50%, -50%);
-			width: 100px;
-			height: 100px;
+			width: 150px;
+			height: 150px;
 		}
 
 		.video-time {
@@ -28,9 +21,7 @@
 			color: #ffffff;
 			font-family: Arial;
 			font-size: 14px;
-			font-weight: bold;
 			left: 19px;
-			position: absolute;
 		}
 	}
 
