@@ -12,8 +12,11 @@ class ForumBoardInfo {
 	private $lastPost;
 
 	public function __construct( Array $array = [] ) {
-		$this->setLastPost( new ForumPostInfo( $array[ 'lastPost' ] ) );
-		unset( $array[ 'lastPost' ] );
+		if ( !empty( $array[ 'lastPost' ] ) ) {
+			$this->setLastPost( new ForumPostInfo( $array[ 'lastPost' ] ) );
+			unset( $array[ 'lastPost' ] );
+		}
+
 		foreach ( $array as $key => $val ) {
 			$this->$key = $val;
 		}
