@@ -60,6 +60,6 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function video() {
-
+		$this->setVariant();
 	}
 }
