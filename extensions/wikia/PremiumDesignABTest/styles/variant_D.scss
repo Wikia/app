@@ -9,4 +9,15 @@
 
 .video-collpased .video-thumbnail {
 	background-image: $newton-scamander-thumbnail; /* $wgCdnStylePath */
+
+	&:before {
+		content: '';
+		top: 0;
+		bottom: 50%;
+		left: 0;
+		right: 0;
+		background-image: linear-gradient(to top, rgba(0, 0, 0, 0), #000000);
+		position: absolute;
+		opacity: 0.5;
+	}
 }

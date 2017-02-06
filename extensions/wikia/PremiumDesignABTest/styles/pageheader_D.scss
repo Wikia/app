@@ -4,6 +4,17 @@
 	.video {
 		@include video($newton-scamander-thumbnail);
 
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 50%;
+			left: 0;
+			right: 0;
+			background-image: linear-gradient(to top,transparent,#000000);
+			opacity: 0.75;
+		}
+
 		.video-title {
 			display: none;
 		}
