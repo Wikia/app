@@ -1,7 +1,7 @@
 define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) {
 	'use strict';
 
-	function videoScrollBehaviour(containerId, scrollPosition) {
+	function videoScrollBehaviour(containerId, scrollPosition, youtubeID) {
 		var videoCollapsed = false;
 
 		var $videoCollapse = $(containerId + ' .video-collpased');
@@ -22,7 +22,7 @@ define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) 
 
 		$video.one('click', function () {
 			$videoCollapse.addClass('video-playing');
-			$videoCollapse.append('<iframe src="https://www.youtube.com/embed/xFulu1I3yEw?showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+			$videoCollapse.append('<iframe src="https://www.youtube.com/embed/' + youtubeID + '?showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		});
 
 		$(window).scroll(function () {

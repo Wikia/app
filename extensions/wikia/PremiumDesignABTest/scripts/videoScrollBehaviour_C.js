@@ -1,5 +1,5 @@
 require(['jquery', 'videoScrollBehaviour'], function ($, videoScrollBehaviour) {
 	$(function () {
-		videoScrollBehaviour('#premium-design-ab-test-C-pageheader', 'top-right');
+		videoScrollBehaviour('#premium-design-ab-test-C-pageheader', 'top-right', 'q5WXzqdE2V8');
 	});
 });
