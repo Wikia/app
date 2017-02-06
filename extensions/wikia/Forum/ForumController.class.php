@@ -128,6 +128,8 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'destinationBoards', $destinationBoards );
 		}
 
+		// MAIN-7865: Don't render MiniEditor on Monobook
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExt && $this->app->checkSkin( 'oasis' ) );
 	}
 
 	public function boardThread() {
