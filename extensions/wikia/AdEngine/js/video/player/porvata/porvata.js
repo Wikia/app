@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
-	'wikia.viewportObserver'
-], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver) {
+	'wikia.viewportObserver',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, mercuryListener) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -94,6 +95,15 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				if (params.onReady) {
 					params.onReady(video);
+				}
+
+				if (mercuryListener) {
+					mercuryListener.onPageChange(function () {
+						if (viewportListener) {
+							viewportObserver.removeListener(viewportListener);
+							viewportListener = null;
+						}
+					});
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
