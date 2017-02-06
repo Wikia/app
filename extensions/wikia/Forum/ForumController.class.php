@@ -258,14 +258,6 @@ class ForumController extends WallBaseController {
 		parent::messageButtons();
 	}
 
-	protected function addMiniEditorAssets() {
-		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
-			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
-			);
-		}
-	}
-
 	// get sorting options
 	protected function getSortingOptionsText() {
 		switch ( $this->sortingType ) {
@@ -374,6 +366,10 @@ class ForumController extends WallBaseController {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
 		}
 
-		$this->addMiniEditorAssets();
+		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
+			$this->sendRequest( 'MiniEditor', 'loadAssets',
+				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
+			);
+		}
 	}
 }
