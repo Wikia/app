@@ -1,3 +1,5 @@
+@import 'skins/oasis/css/core/breakpoints-variables';
+
 .video-collpased {
 	position: absolute;
 	top: 0;
@@ -9,9 +11,13 @@
 
 	iframe {
 		width: 100%;
-		height: 480px;
+		height: 394px;
 		position: absolute;
 		top: 0;
+
+		@media #{$breakpoint-large-up} {
+			height: 480px
+		}
 	}
 
 	&.collapsed-ready {
@@ -30,9 +36,13 @@
 		background-size: cover;
 		background-position: center center;
 		width: 100%;
-		height: 480px;
+		height: 394px;
 		position: relative;
 		display: block;
+
+		@media #{$breakpoint-large-up} {
+			height: 480px
+		}
 
 		.minimize {
 			display: none;
