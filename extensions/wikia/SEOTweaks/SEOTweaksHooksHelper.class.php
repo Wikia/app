@@ -60,9 +60,9 @@ class SEOTweaksHooksHelper {
 		$newTitle = null;
 
 		if ( ( new WikiaFileHelper )->isFileTypeVideo( $file ) ) {
-			$newTitle = wfMsg( 'seotweaks-video' ) . ' - ' . $title->getBaseText();
+			$newTitle = wfMessage( 'seotweaks-video' )->escaped() . ' - ' . $title->getBaseText();
 		} elseif ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
-			$newTitle = wfMsg( 'seotweaks-image' ) . ' - ' . $title->getBaseText();
+			$newTitle = wfMessage( 'seotweaks-image' )->escaped() . ' - ' . $title->getBaseText();
 		}
 
 		return $newTitle;
