@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function parseParameters(adParameters) {
 		var parameters = {};
 
-		if (adParameters.childNodes.length) {
+		if (adParameters.childNodes.length && adParameters.childNodes[0].nodeValue) {
 			adParameters.childNodes[0].nodeValue.split(',').forEach(function (pair) {
 				var data = pair.split('=');
 
