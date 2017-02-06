@@ -38,7 +38,7 @@ class ForumBoard extends Wall {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $relatedPageId ) ) {
-			$memKey = wfMemcKey( 'forum_board_active_threads', $this->getId() );
+			$memKey = self::getBoardActiveThreadsCacheKey( $this->getId() );
 
 			if ( $db == DB_SLAVE ) {
 				$activeThreads = $this->wg->Memc->get( $memKey );
@@ -111,10 +111,12 @@ class ForumBoard extends Wall {
 	 * clear cache for board info
 	 */
 	public function clearCacheBoardInfo() {
-		$this->getBoardInfoFromMaster();
-		$this->getTotalActiveThreads( DB_MASTER );
+		$boardId = $this->getId();
 
-		$title = Title::newFromID( $this->getId() );
+		$this->wg->memc->delete( self::getBoardInfoCacheKey( $boardId ) );
+		$this->wg->memc->delete( self::getBoardActiveThreadsCacheKey( $boardId ) );
+
+		$title = Title::newFromID( $boardId );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
 		}
@@ -145,5 +147,12 @@ class ForumBoard extends Wall {
 	 */
 	private static function getBoardInfoCacheKey( $forumBoardId ) {
 		return wfMemcKey( self::FORUM_BOARD_INFO, self::CACHE_VERSION, $forumBoardId );
+	}
+	/**
+	 * @param $forumBoardId integer
+	 * @return string cache key for getTotalActiveThreads()
+	 */
+	private static function getBoardActiveThreadsCacheKey( $forumBoardId ) {
+		return wfMemcKey( 'forum_board_active_threads', $forumBoardId );
 	}
 }
