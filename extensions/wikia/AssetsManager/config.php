@@ -996,13 +996,6 @@ $config['prebid_prod_js'] = [
 	]
 ];
 
-$config['prebid_debug_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
-	]
-];
-
 $config['interactivemaps_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'interactivemaps',
