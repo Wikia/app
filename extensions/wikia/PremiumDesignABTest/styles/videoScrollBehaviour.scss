@@ -5,6 +5,7 @@
 	right: 0;
 	bottom: 0;
 	display: none;
+	z-index: 10;
 
 	iframe {
 		width: 100%;
@@ -26,7 +27,6 @@
 	}
 
 	.video-thumbnail {
-		background-image: url("/extensions/wikia/PremiumDesignABTest/images/video.png"); /* $wgCdnStylePath */
 		background-size: cover;
 		background-position: center center;
 		width: 100%;

@@ -1,7 +1,8 @@
-@mixin video {
+@mixin video($video-thumbnail-url) {
 	cursor: pointer;
 	background-image: $video-thumbnail-url; /* $wgCdnStylePath */
 	background-size: cover;
+	background-position: center center;
 	padding-top: 56%;
 	position: relative;
 	margin-bottom: 11px;

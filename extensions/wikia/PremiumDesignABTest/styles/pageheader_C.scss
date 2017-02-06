@@ -2,7 +2,7 @@
 
 #premium-design-ab-test-C-pageheader {
 	.video {
-		@include video();
+		@include video($hogwart-houses-thumbnail);
 
 		.video-play-button {
 			background-image: url("/extensions/wikia/PremiumDesignABTest/images/play-button-gradient.svg"); /* $wgCdnStylePath */

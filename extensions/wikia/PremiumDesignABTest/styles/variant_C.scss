@@ -1,14 +1,12 @@
 @import "variables";
-@import "header_A";
-@import "pageheader_A";
-@import "header_B";
-@import "pageheader_B";
 @import "pageheader_C";
 @import "rightrail_C";
-@import "pageheader_D";
-@import "rightrail_D";
 @import "videoScrollBehaviour";
 
 .WikiaPageHeader {
 	display: none;
+}
+
+.video-collpased .video-thumbnail {
+	background-image: $hogwart-houses-thumbnail; /* $wgCdnStylePath */
 }

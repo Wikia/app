@@ -2,7 +2,7 @@
 
 #premium-design-ab-test-A-pageheader {
 	.video {
-		@include video();
+		@include video($grindelwald-thumbnail);
 		margin-top: 18px;
 		z-index: 100;
 	}

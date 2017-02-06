@@ -2,7 +2,7 @@
 
 #premium-design-ab-test-D-pageheader {
 	.video {
-		@include video;
+		@include video($newton-scamander-thumbnail);
 
 		.video-title {
 			display: none;
