@@ -360,10 +360,6 @@ class ForumController extends WallBaseController {
 		}
 	}
 
-	public function messageTopic() {
-		// stub function
-	}
-
 	private function addAssets() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
