@@ -621,18 +621,19 @@ class WallBaseController extends WikiaService {
 
 	}
 
-
-
+	/**
+	 * Renders Wall_message_error.php template
+	 */
 	public function message_error() {
 
 	}
 
 	/**
 	 * @param Title $title
-	 * @return mixed|string
+	 * @return string
 	 * @throws MWException
 	 */
-	private function getGreetingText( $title ) {
+	private function getGreetingText( Title $title ) {
 		$greeting = Title::newFromText( $title->getText(), NS_USER_WALL_MESSAGE_GREETING );
 		$greetingText = '';
 
@@ -644,8 +645,7 @@ class WallBaseController extends WikiaService {
 			$greetingText = $article->getParserOutput()->getText();
 		}
 
-		wfRunHooks( 'WallGreetingContent', [ &$greetingText ] );
-		return $greetingText; // used by SWM to add messages to Wall in monobook
+		return $greetingText;
 	}
 
 } // end class Wall
