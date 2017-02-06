@@ -96,7 +96,11 @@ class ForumBoard extends Wall {
 		if ( $row ) {
 			$forumBoardInfo->setPostCount( $row->posts );
 			$forumBoardInfo->setThreadCount( $row->threads );
-			$forumBoardInfo->setLastPost( $this->getLastPost( $row->rev_id ) );
+
+			$lastPost = $this->getLastPost( $row->rev_id );
+			if ( $lastPost instanceof ForumPostInfo ) {
+				$forumBoardInfo->setLastPost( $lastPost );
+			}
 		}
 		$forumBoardInfo->setId( $this->getTitle()->getArticleID() );
 		$forumBoardInfo->setName( $this->getTitle()->getText() );
