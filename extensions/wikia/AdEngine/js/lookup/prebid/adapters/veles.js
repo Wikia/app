@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	var bidderName = 'veles',
 		slots = {
+			// Order of slots is important - first slot name in group will be used to create ad unit
 			oasis: {
 				INCONTENT_PLAYER: {
 					sizes: [

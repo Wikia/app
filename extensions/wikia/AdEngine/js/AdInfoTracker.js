@@ -74,6 +74,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': '',
 			'bidder_7': '',
+			'bidder_8': slotPrices.veles || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''
