@@ -11,10 +11,6 @@ class ForumBoardInfo {
 	/** @var ForumPostInfo $lastPost */
 	private $lastPost;
 
-	/**
-	 * ForumBoardInfo constructor.
-	 * @param array $array ;
-	 */
 	public function __construct( Array $array = [] ) {
 		$this->setLastPost( new ForumPostInfo( $array[ 'lastPost' ] ) );
 		unset( $array[ 'lastPost' ] );
@@ -54,7 +50,7 @@ class ForumBoardInfo {
 	public function toArray() {
 		$ret = get_object_vars( $this );
 
-		if ( !empty( $this->lastPost ) ) {
+		if ( $this->lastPost instanceof ForumPostInfo ) {
 			$ret[ 'lastPost' ] = $this->lastPost->toArray();
 		}
 
