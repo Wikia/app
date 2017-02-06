@@ -7,7 +7,7 @@ define('wikia.domCalculator', [
 
 	function getTopOffset(element) {
 		var topPos = 0,
-			elementWindow = element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
+			elementWindow = element.ownerDocument.defaultView;
 
 		do {
 			topPos += element.offsetTop;
