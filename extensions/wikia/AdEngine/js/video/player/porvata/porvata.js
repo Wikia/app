@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
-	'wikia.viewportObserver',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, mercuryListener) {
+	'wikia.viewportObserver'
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -88,6 +87,12 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('pause', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
 				});
+				video.addOnDestroyCallback(function() {
+					if (viewportListener) {
+						viewportObserver.removeListener(viewportListener);
+						viewportListener = null;
+					}
+				});
 
 				if (params.autoPlay) {
 					muteFirstPlay(video, isFirstPlay);
@@ -95,15 +100,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				if (params.onReady) {
 					params.onReady(video);
-				}
-
-				if (mercuryListener) {
-					mercuryListener.onPageChange(function () {
-						if (viewportListener) {
-							viewportObserver.removeListener(viewportListener);
-							viewportListener = null;
-						}
-					});
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
