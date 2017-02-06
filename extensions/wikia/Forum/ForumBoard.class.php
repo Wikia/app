@@ -120,6 +120,10 @@ class ForumBoard extends Wall {
 		}
 	}
 
+	/**
+	 * @param int $rev_id
+	 * @return ForumPostInfo|null
+	 */
 	private function getLastPost( $rev_id ) {
 		$postInfo = null;
 		$revision = Revision::newFromId( $rev_id );

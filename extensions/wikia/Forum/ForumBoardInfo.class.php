@@ -31,7 +31,7 @@ class ForumBoardInfo {
 		$this->threadCount = $threadCount;
 	}
 
-	public function setLastPost( $lastPost ) {
+	public function setLastPost( ForumPostInfo $lastPost ) {
 		$this->lastPost = $lastPost;
 	}
 
