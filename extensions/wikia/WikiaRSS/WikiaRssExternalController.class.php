@@ -10,6 +10,7 @@ class WikiaRssExternalController extends WikiaController {
 	public function getRssFeeds() {
 		$this->response->setVal( 'status', false );
 		$options = $this->request->getVal( 'options', false );
+
 		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
@@ -111,6 +112,7 @@ class WikiaRssExternalController extends WikiaController {
 			$d_title = true;
 
 			$href = htmlspecialchars(trim(mb_convert_encoding($item['link'],$outputEncoding,$charset)));
+			$sanitizedHref = Sanitizer::validateAttributes(['href' => $href], ['href']);
 			$title = htmlspecialchars(trim(mb_convert_encoding($item['title'],$outputEncoding,$charset)));
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
@@ -140,7 +142,7 @@ class WikiaRssExternalController extends WikiaController {
 
 			if( $display ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 				);
 
@@ -184,6 +186,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars( trim( mb_convert_encoding( $item['link'], $outputEncoding, $charset ) ) );
+			$sanitizedHref = Sanitizer::validateAttributes(['href' => $href], ['href']);
 			$title = htmlspecialchars( trim( mb_convert_encoding( $item['title'], $outputEncoding, $charset ) ) );
 
 			$d_title = $this->doRssFilter($title, $rssFilter) && $this->doRssFilterOut($title, $rssFilterout);
@@ -205,7 +208,7 @@ class WikiaRssExternalController extends WikiaController {
 
 			if( $d_title && !in_array( $title, $displayed ) ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 					'attrTitle' => $attrTitle,
 				);
