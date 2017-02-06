@@ -14,7 +14,7 @@ define('wikia.domCalculator', [
 			element = element.offsetParent;
 		} while (element !== null);
 
-		if (elementWindow && elementWindow.frameElement) {
+		if (elementWindow.frameElement) {
 			topPos += getTopOffset(elementWindow.frameElement);
 		}
 
