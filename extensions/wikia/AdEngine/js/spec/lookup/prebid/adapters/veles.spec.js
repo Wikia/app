@@ -139,7 +139,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	});
 
 	it('Adds empty bids on failed response', function () {
-		var bidder = getVeles(),
+		var bid,
+			bidder = getVeles(),
 			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
 			velesAdapter = bidder.create();
 
@@ -154,11 +155,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			]
 		});
 
-		expect(mocks.prebidBid.addBidResponse).toHaveBeenCalledWith('foo123', { code: 2, bidderCode: 'bar' });
+		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
+		expect(bid.code).toBe(2);
 	});
 
-	it('Adds bids with proper prices on successful response', function () {
-		var bidder = getVeles(),
+	it('Adds bids with proper values on successful response', function () {
+		var bid,
+			bidder = getVeles(),
 			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
 			velesAdapter = bidder.create();
 
@@ -173,13 +176,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			]
 		});
 
-		expect(mocks.prebidBid.addBidResponse).toHaveBeenCalledWith('foo123', {
-			code: 1,
-			bidderCode: 'bar',
-			cpm: 15.54,
-			ad: '<VAST><AdParameters><![CDATA[velesPrice=1554]]></AdParameters></VAST>',
-			width: 640,
-			height: 480
-		});
+		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
+		expect(bid.ad).toBe('<VAST><AdParameters><![CDATA[velesPrice=1554]]></AdParameters></VAST>');
+		expect(bid.code).toBe(1);
+		expect(bid.cpm).toBe(15.54);
 	});
 });
