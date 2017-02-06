@@ -37,6 +37,10 @@
 
 				img {
 					display: none;
+
+					+ span {
+						display: none;
+					}
 				}
 
 				&:hover {
@@ -49,6 +53,10 @@
 					position: relative;
 					top: 4px;
 					margin-right: 2px;
+				}
+
+				&:after {
+					content: 'Edit';
 				}
 			}
 
@@ -104,6 +112,7 @@
 			font-weight: bold;
 			padding: 4px 11px 4px;
 			text-transform: uppercase;
+			vertical-align: middle;
 
 			&:before {
 				display: inline;
