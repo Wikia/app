@@ -8,6 +8,11 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 
 	function build(slotName, src) {
 		var params = page.getPageLevelParams();
+
+		if (slotName instanceof Array) {
+			slotName = slotName[0];
+		}
+
 		return [
 			'', dfpId, 'wka.' + params.s0, params.s1, '', params.s2, src, slotName
 		].join('/');
