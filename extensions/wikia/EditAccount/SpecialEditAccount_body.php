@@ -38,7 +38,9 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the page or null
+	 * @param String $par
+	 * @throws PermissionsError
+	 * @throws UserBlockedError
 	 */
 	public function execute( $par ) {
 
@@ -151,6 +153,11 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
+			case 'fan-contributor':
+				echo 'fan contributor';
+				$this->mStatus = $this->addFanContributor();
+				$template = 'displayuser';
+				break;
 			case 'logout':
 				$this->mStatus = $this->logOut();
 				$template = 'displayuser';
@@ -191,31 +198,32 @@ class EditAccount extends SpecialPage {
 		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$oTmpl->set_Vars( array(
-				'status'	=> $this->mStatus,
-				'statusMsg' => $this->mStatusMsg,
-				'statusMsg2' => $this->mStatusMsg2,
-				'user'	  => $userName,
-				'userEmail' => null,
-				'userRealName' => null,
-				'userEncoded' => urlencode( $userName ),
-				'user_hsc' => htmlspecialchars( $userName ),
-				'userId'  => null,
-				'userReg' => null,
-				'isUnsub' => null,
-				'isDisabled' => null,
-				'isAdopter' => null,
-				'returnURL' => $this->getTitle()->getFullURL(),
-				'logLink' => Linker::linkKnown(
-					SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
-					$this->msg( 'editaccount-log' )->escaped()
-				),
-				'userStatus' => null,
-				'emailStatus' => null,
-				'disabled' => null,
-				'changeEmailRequested' => null,
-				'editToken' => $user->getEditToken(),
-			) );
+		$oTmpl->set_Vars( [
+			'status'	=> $this->mStatus,
+			'statusMsg' => $this->mStatusMsg,
+			'statusMsg2' => $this->mStatusMsg2,
+			'user'	  => $userName,
+			'userEmail' => null,
+			'userRealName' => null,
+			'userEncoded' => urlencode( $userName ),
+			'user_hsc' => htmlspecialchars( $userName ),
+			'userId'  => null,
+			'userReg' => null,
+			'isUnsub' => null,
+			'isDisabled' => null,
+			'isAdopter' => null,
+			'fanContributorData' => $this->getFanContributorData(),
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'logLink' => Linker::linkKnown(
+				SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
+				$this->msg( 'editaccount-log' )->escaped()
+			),
+			'userStatus' => null,
+			'emailStatus' => null,
+			'disabled' => null,
+			'changeEmailRequested' => null,
+			'editToken' => $user->getEditToken(),
+		] );
 
 		if( is_object( $this->mUser ) ) {
 			$userStatus = wfMsg( 'editaccount-status-realuser' );
@@ -539,7 +547,7 @@ class EditAccount extends SpecialPage {
 		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
-		return (wfGenerateToken() . $REQUIRED_CHARS);
+		return ( wfGenerateToken() . $REQUIRED_CHARS );
 	}
 
 	public function displayLogData() {
@@ -550,7 +558,7 @@ class EditAccount extends SpecialPage {
 		$rows = [];
 
 		if ( $wgExternalSharedDB && $user_id ) {
-			$user_name = User::newFromID($user_id);
+			$user_name = User::newFromID( $user_id );
 
 			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
 			$res = $dbr->select (
@@ -561,7 +569,7 @@ class EditAccount extends SpecialPage {
 				["ORDER BY" => "changed_at DESC"]	// options
 				);
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				$row->changed_by_name = User::newFromId($row->changed_by_id);
+				$row->changed_by_name = User::newFromId( $row->changed_by_id );
 				$rows[] = $row;
 			}
 		}
@@ -572,10 +580,9 @@ class EditAccount extends SpecialPage {
 			'userName' => $user_name,
 			'returnURL' => $this->getTitle()->getFullURL(),
 			'rows' => $rows
-			]
-		);
+		] );
 
-		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
+		$wgOut->addHTML( $oTmpl->render( 'changelog' ) );
 	}
 
 	private function logOut() {
@@ -601,5 +608,19 @@ class EditAccount extends SpecialPage {
 		}
 
 		return $ok;
+	}
+
+	private function addFanContributor() {
+		$this->mStatusMsg = $this->msg( 'editaccount-success-fan-contributor', $this->mUser->getName() );
+		return true;
+	}
+
+	private function getFanContributorData() {
+		if ( false ) {
+			return [
+				'wordpressId' => 12345
+			];
+		}
+		return false;
 	}
 }
