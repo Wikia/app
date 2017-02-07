@@ -114,10 +114,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		});
 	}
 
+	function isValidResponse(status) {
+		return status !== 0 && status < 400;
+	}
+
 	function onVastResponse(vastRequest, bidderRequest) {
 		var price;
 
-		if (vastRequest.status < 400 && vastRequest.status !== 0) {
+		if (isValidResponse(vastRequest.status)) {
 			price = fetchPrice(vastRequest.responseXML);
 			addBids(bidderRequest, vastRequest.response, price);
 		} else {
