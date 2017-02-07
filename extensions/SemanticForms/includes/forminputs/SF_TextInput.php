@@ -60,6 +60,7 @@ class SFTextInput extends SFFormInput {
 			'Float' => array( 'field_type' => 'number' ),
 			'URL' => array( 'field_type' => 'URL' ),
 			'Email' => array( 'field_type' => 'email' ),
+			'File' => array( 'field_type' => 'string', 'uploadable' => true ),
 			'String' => array( 'field_type' => 'string' )
 		);
 	}
@@ -183,12 +184,6 @@ class SFTextInput extends SFFormInput {
 
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		global $sfgTabIndex, $sfgFieldNum;
-
-		// For backward compatibility with pre-SF-2.1 forms
-		if ( array_key_exists( 'autocomplete field type', $other_args ) &&
-			! array_key_exists( 'no autocomplete', $other_args ) ) {
-			return SFTextWithAutocompleteInput::getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args );
-		}
 
 		$className = 'createboxInput';
 		if ( $is_mandatory ) {

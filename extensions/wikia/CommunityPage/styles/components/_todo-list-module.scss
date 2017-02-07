@@ -1,9 +1,6 @@
 @import 'variables';
 @import 'skins/shared/color';
-@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $edit-icon-size: 16px;
 $module-header-line-height: 28px;
@@ -20,18 +17,18 @@ $module-header-line-height: 28px;
 
 	.community-page-todo-list-module-header {
 		display: inline-block;
-		font-size: $typescale-size-plus-2;
+		font-size: $wds-typescale-size-plus-2;
 		font-weight: bold;
 		padding-right: 32px;
 	}
 
 	.community-page-todo-list-module-edit {
 		display: inline-block;
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 	}
 
 	.community-page-todo-list-module-edit-icon {
-		fill: $color-light-gray;
+		fill: $wds-color-light-gray;
 		float: left;
 		height: $module-header-line-height;
 		margin-right: $content-spacing-xxsmall;

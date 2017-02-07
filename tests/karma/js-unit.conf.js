@@ -16,13 +16,15 @@ module.exports = function (config) {
 	config.set({
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
-			'resources/wikia/ui_components/**/node_modules/**/*.js'
+			'resources/wikia/ui_components/**/node_modules/**/*.js',
+			'extensions/wikia/ARecoveryEngine/js/SourcePoint/*_fallback.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/wikia/polyfills/promise.js',
 			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
@@ -47,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/browserDetect.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
+			'resources/wikia/modules/domCalculator.js',
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
@@ -60,8 +63,10 @@ module.exports = function (config) {
 			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
+			'resources/wikia/modules/throttle.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/modules/viewportObserver.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
@@ -95,7 +100,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
-			'extensions/wikia/AdEngine/js/video/*.js',
+			'extensions/wikia/AdEngine/js/video/**/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 

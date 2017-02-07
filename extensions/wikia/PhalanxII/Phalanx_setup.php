@@ -85,8 +85,6 @@ $phalanxhooks = array(
 		array(
 			'ContributionsToolLinks'          => 'loadLinks',
 			'SpamFilterCheck'                 => 'onSpamFilterCheck',
-			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
-			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
 			// temp logging for PLATFORM-317
 			'GetBlockedStatus'                => 'onGetBlockedStatus',
@@ -94,7 +92,6 @@ $phalanxhooks = array(
 		)
 );
 
-// don't bother initializing hooks if user is immune to Phalanx
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
 		$wgHooks[$name][] = $class . '::' . $method;
@@ -146,5 +143,3 @@ $wgLogActions['phalanx/delete']     	= 'phalanx-rule-log-delete';
 $wgLogActions['phalanxemail/add']   	= 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
-
-$wgPhalanxServiceUrl = "http://" . $wgConsulServiceTag . "." . $wgPhalanxBaseUrl; # PLATFORM-1744

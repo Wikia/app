@@ -21,17 +21,23 @@ class SFCreateForm extends SpecialPage {
 	}
 
 	function execute( $query ) {
-		global $wgRequest, $wgOut;
+		$out = $this->getOutput();
+		$req = $this->getRequest();
 
 		$this->setHeaders();
-		if ( $wgRequest->getCheck( 'showinputtypeoptions' ) ) {
-			$wgOut->disable();
+		if ( $req->getCheck( 'showinputtypeoptions' ) ) {
+			$out->disable();
 
 			// handle Ajax action
-			$inputType = $wgRequest->getVal( 'showinputtypeoptions' );
-			$fieldFormText = $wgRequest->getVal( 'formfield' );
+			$inputType = $req->getVal( 'showinputtypeoptions' );
+			$fieldFormText = $req->getVal( 'formfield' );
+
+			// @TODO - is any of this "params" stuff necesary?
+			// For now, it's removed - if the setting of params is
+			// going to be re-added, that has to be done in the JS.
+			/*
 			$paramValues = array();
-			foreach ( $wgRequest->getArray('params') as $key => $value ) {
+			foreach ( $req->getArray('params') as $key => $value ) {
 				if ( ( $pos = strpos( $key, '_' . $fieldFormText ) ) != false ) {
 					$paramName = substr( $key, 0, $pos );
 					// Spaces got replaced by underlines in
@@ -40,6 +46,7 @@ class SFCreateForm extends SpecialPage {
 					$paramValues[$paramName] = $value;
 				}
 			}
+			*/
 			echo self::showInputTypeOptions( $inputType, $fieldFormText, $paramValues );
 		} else {
 			$this->doSpecialCreateForm( $query );
@@ -47,54 +54,22 @@ class SFCreateForm extends SpecialPage {
 	}
 
 	function doSpecialCreateForm( $query ) {
-		global $wgOut, $wgRequest, $sfgScriptPath;
+		$out = $this->getOutput();
+		$req = $this->getRequest();
 		$db = wfGetDB( DB_SLAVE );
 
 		if ( !is_null( $query ) ) {
 			$presetFormName = str_replace( '_', ' ', $query );
-			$wgOut->setPageTitle( wfMessage( 'sf-createform-with-name', $presetFormName )->text() );
+			$out->setPageTitle( wfMessage( 'sf-createform-with-name', $presetFormName )->text() );
 			$form_name = $presetFormName;
 		} else {
 			$presetFormName = null;
-			$form_name = $wgRequest->getVal( 'form_name' );
+			$form_name = $req->getVal( 'form_name' );
 		}
 
-		// Create Javascript to populate fields to let the user input
-		// parameters for the field, based on the input type selected
-		// in the dropdown.
-		$url = Skin::makeSpecialUrl( 'CreateForm', "showinputtypeoptions=' + this.val() + '&formfield=' + this.attr('formfieldid') + '" );
-		foreach ( $wgRequest->getValues() as $param => $value ) {
-			$url .= '&params[' . Xml::escapeJsString( $param ) . ']=' . Xml::escapeJsString( $value );
-		}
+		$section_name_error_str = '<span class="error" id="section_error">' . wfMessage( 'sf_blank_error' )->escaped() . '</span>';
 
-		$wgOut->addModules( 'ext.semanticforms.collapsible' );
-		$section_name_error_str = '<font color="red" id="section_error">' . wfMessage( 'sf_blank_error' )->escaped() . '</font>';
-
-		$wgOut->addScript("<script>
-jQuery.fn.displayInputParams = function() {
-	inputParamsDiv = this.closest('.formField').find('.otherInputParams');
-	jQuery.ajax({
-		url: '$url',
-		context: document.body,
-		success: function(data){
-			inputParamsDiv.html(data);
-		}
-	});
-};
-jQuery(document).ready(function() {
-	jQuery('.inputTypeSelector').change( function() {
-		jQuery(this).displayInputParams();
-	});
-	jQuery('#addsection').click( function(event) {
-	if(jQuery('#sectionname').val() == '') {
-			event.preventDefault();
-			jQuery('#section_error').remove();
-			jQuery('<div/>').append('$section_name_error_str').appendTo('#sectionerror');
-	}
-    });
-});
-</script>");
-
+		$out->addModules( array( 'ext.semanticforms.collapsible', 'ext.semanticforms.SF_CreateForm' ) );
 
 		// Get the names of all templates on this site.
 		$all_templates = array();
@@ -119,7 +94,7 @@ jQuery(document).ready(function() {
 		$form_items = array();
 
 		// Handle inputs.
-		foreach ( $wgRequest->getValues() as $var => $val ) {
+		foreach ( $req->getValues() as $var => $val ) {
 			# ignore variables that are not of the right form
 			if ( strpos( $var, "_" ) != false ) {
 				# get the template declarations and work from there
@@ -128,18 +103,18 @@ jQuery(document).ready(function() {
 					// If the button was pressed to remove
 					// this template, just don't add it to
 					// the array.
-					if ( $wgRequest->getVal( "del_$id" ) != null ) {
+					if ( $req->getVal( "del_$id" ) != null ) {
 						$deleted_template_loc = $id;
 					} else {
 						$form_template = SFTemplateInForm::create( $val,
-							$wgRequest->getVal( "label_$id" ),
-							$wgRequest->getVal( "allow_multiple_$id" ) );
+							$req->getVal( "label_$id" ),
+							$req->getVal( "allow_multiple_$id" ) );
 						$form_items[] = array( 'type' => 'template',
 							'name' => $form_template->getTemplateName(),
 							'item' => $form_template );
 					}
 				} elseif ( $action == "section" ) {
-					if ( $wgRequest->getVal( "delsection_$id" ) != null ) {
+					if ( $req->getVal( "delsection_$id" ) != null ) {
 						$deleted_section_loc = $id;
 					} else {
 						$form_section = SFPageSection::create( $val );
@@ -150,9 +125,9 @@ jQuery(document).ready(function() {
 				}
 			}
 		}
-		if ( $wgRequest->getVal( 'add_field' ) != null ) {
-			$form_template = SFTemplateInForm::create( $wgRequest->getVal( 'new_template' ), "", false );
-			$template_loc = $wgRequest->getVal( 'before_template' );
+		if ( $req->getVal( 'add_field' ) != null ) {
+			$form_template = SFTemplateInForm::create( $req->getVal( 'new_template' ), "", false );
+			$template_loc = $req->getVal( 'before_template' );
 			$template_count = 0;
 			if ( $template_loc === null ) {
 				$new_template_loc = 0;
@@ -177,23 +152,23 @@ jQuery(document).ready(function() {
 			$new_template_loc = null;
 		}
 
-		if ( $wgRequest->getVal( 'add_section' ) != null ) {
-			$form_section = SFPageSection::create( $wgRequest->getVal( 'sectionname' ) );
-			$section_loc = $wgRequest->getVal( 'before_section' );
+		if ( $req->getVal( 'add_section' ) != null ) {
+			$form_section = SFPageSection::create( $req->getVal( 'sectionname' ) );
+			$section_loc = $req->getVal( 'before_section' );
 			$section_count = 0;
 			if ( $section_loc === null ) {
 				$new_section_loc = 0;
 				$section_loc = 0;
-				} else {
-					// Count the number of sections before the
-					// location of the section to be added
-					for ( $i = 0; $i < $section_loc; $i++ ) {
-						if ( $form_items[$i]['type'] == 'section' ) {
-							$section_count++;
-						}
+			} else {
+				// Count the number of sections before the
+				// location of the section to be added
+				for ( $i = 0; $i < $section_loc; $i++ ) {
+					if ( $form_items[$i]['type'] == 'section' ) {
+						$section_count++;
 					}
-					$new_section_loc = $section_count;
 				}
+				$new_section_loc = $section_count;
+			}
 			// The same used hack for templates
 			array_splice( $form_items, $section_loc, 0, "stub" );
 			$form_items[$section_loc] = array( 'type' => 'section', 'name' => $form_section->getSectionName(), 'item' => $form_section );
@@ -210,7 +185,7 @@ jQuery(document).ready(function() {
 				foreach ( $fi['item']->getFields() as $j => $field ) {
 
 					$old_i = SFFormUtils::getChangedIndex( $templates, $new_template_loc, $deleted_template_loc );
-					foreach ( $wgRequest->getValues() as $key => $value ) {
+					foreach ( $req->getValues() as $key => $value ) {
 						if ( ( $pos = strpos( $key, '_' . $old_i . '_' . $j ) ) != false ) {
 							$paramName = substr( $key, 0, $pos );
 							// Spaces got replaced by
@@ -223,15 +198,15 @@ jQuery(document).ready(function() {
 						if ( $paramName == 'label' ) {
 							$field->template_field->setLabel( $value );
 						} elseif ( $paramName == 'input type' ) {
-							$input_type = $wgRequest->getVal( "input_type_" . $old_i . "_" . $j );
+							$input_type = $req->getVal( "input_type_" . $old_i . "_" . $j );
 							if ( $input_type == 'hidden' ) {
-								$field->template_field->setInputType( $input_type );
+								$field->setInputType( $input_type );
 								$field->setIsHidden( true );
 							} elseif ( substr( $input_type, 0, 1 ) == '.' ) {
 								// It's the default input type -
 								// don't do anything.
 							} else {
-								$field->template_field->setInputType( $input_type );
+								$field->setInputType( $input_type );
 							}
 						} else {
 							if ( ! empty( $value ) ) {
@@ -248,7 +223,7 @@ jQuery(document).ready(function() {
 			} elseif ( $fi['type'] == 'section' ) {
 				$section = $fi['item'];
 				$old_i = SFFormUtils::getChangedIndex( $sections, $new_section_loc, $deleted_section_loc );
-				foreach ( $wgRequest->getValues() as $key => $value ) {
+				foreach ( $req->getValues() as $key => $value ) {
 					if ( ( $pos = strpos( $key, '_section_' . $old_i ) ) != false ) {
 						$paramName = substr( $key, 0, $pos );
 						$paramName = str_replace( '_', ' ', $paramName );
@@ -256,22 +231,22 @@ jQuery(document).ready(function() {
 						continue;
 					}
 
-						if ( !empty( $value ) ) {
-							if ( $value == 'on' ) {
-								$value = true;
-							}
-							if ( $paramName == 'level' ) {
-								$section->setSectionLevel( $value );
-							} elseif ( $paramName == 'hidden' ) {
-								$section->setIsHidden( $value );
-							} elseif ( $paramName == 'restricted' ) {
-								$section->setIsRestricted( $value );
-							} elseif ( $paramName == 'mandatory' ) {
-								$section->setIsMandatory( $value );
-							} else {
-								$section->setSectionArgs( $paramName, $value );
-							}
+					if ( !empty( $value ) ) {
+						if ( $value == 'on' ) {
+							$value = true;
 						}
+						if ( $paramName == 'level' ) {
+							$section->setSectionLevel( $value );
+						} elseif ( $paramName == 'hidden' ) {
+							$section->setIsHidden( $value );
+						} elseif ( $paramName == 'restricted' ) {
+							$section->setIsRestricted( $value );
+						} elseif ( $paramName == 'mandatory' ) {
+							$section->setIsMandatory( $value );
+						} else {
+							$section->setSectionArgs( $paramName, $value );
+						}
+					}
 				}
 				$sections++;
 			}
@@ -282,13 +257,13 @@ jQuery(document).ready(function() {
 
 		// If a submit button was pressed, create the form-definition
 		// file, then redirect.
-		$save_page = $wgRequest->getCheck( 'wpSave' );
-		$preview_page = $wgRequest->getCheck( 'wpPreview' );
+		$save_page = $req->getCheck( 'wpSave' );
+		$preview_page = $req->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
-			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateForm' );
+			$validToken = $this->getUser()->matchEditToken( $req->getVal( 'csrf' ), 'CreateForm' );
 			if ( !$validToken ) {
 				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
+				$out->addHTML( $text );
 				return;
 			}
 
@@ -297,11 +272,11 @@ jQuery(document).ready(function() {
 				$form_name_error_str = wfMessage( 'sf_blank_error' )->text();
 			} else {
 				// Redirect to wiki interface.
-				$wgOut->setArticleBodyOnly( true );
+				$out->setArticleBodyOnly( true );
 				$title = Title::makeTitleSafe( SF_NS_FORM, $form->getFormName() );
 				$full_text = $form->createMarkup();
 				$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
-				$wgOut->addHTML( $text );
+				$out->addHTML( $text );
 				return;
 			}
 		}
@@ -312,12 +287,12 @@ jQuery(document).ready(function() {
 			$text .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
 			$text .= "\n\t<p>" . wfMessage( 'sf_createform_nameinput' )->escaped() . ' ' . wfMessage( 'sf_createform_nameinputdesc' )->escaped() . Html::input( 'form_name', $form_name, 'text', array( 'size'=> 25 ) );
 			if ( ! empty( $form_name_error_str ) ) {
-				$text .= "\t" . Html::element( 'font', array( 'color' => 'red' ), $form_name_error_str );
+				$text .= "\t" . Html::element( 'span', array( 'class' => 'error' ), $form_name_error_str );
 			}
 			$text .= "</p>\n";
 		}
 
-		$text .= $form->creationHTML();
+		$text .= $this->formCreationHTML( $form );
 
 		$text .= "<h2> " . wfMessage( 'sf_createform_addelements' )->escaped() . " </h2>";
 		$text .= "\t<p>" . wfMessage( 'sf_createform_addtemplate' )->escaped() . "\n";
@@ -356,7 +331,7 @@ jQuery(document).ready(function() {
 		$text .= "\t" . Html::input( 'add_field', $add_button_text, 'submit' ) . "\n";
 
 		// The form HTML for page sections
-		$text .= "</br></br>" . Html::rawElement( 'span', null, wfMessage( 'sf_createform_addsection' )->text() . ":" ) . "\n";
+		$text .= "<br/></br/>" . Html::element( 'span', null, wfMessage( 'sf_createform_addsection' )->text() . ":" ) . "\n";
 		$text .= Html::input( 'sectionname', '', 'text', array( 'size' => '30', 'placeholder' => wfMessage( 'sf_createform_sectionname' )->text(), 'id' => 'sectionname' ) ) . "\n";
 
 		// Selection for before which item this section should be placed
@@ -398,13 +373,228 @@ END;
 
 END;
 
-		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
-		$wgOut->addHTML( $text );
+		$out->addHTML( $text );
+	}
 
-		//Don't submit the form if enter is pressed on a text input box or a select
-		$wgOut->addScript('<script>
-		jQuery("input,select").keypress(function(event) { return event.keyCode != 13; });
-		</script>');
+	function formCreationHTML( $form ) {
+		$text = "";
+		$template_count = 0;
+		$section_count = 0;
+		foreach ( $form->getItems() as $item ) {
+			if ( $item['type'] == 'template' ) {
+				$template = $item['item'];
+				$text .= $this->templateCreationHTML( $template, $template_count );
+				$template_count++;
+			} elseif ( $item['type'] == 'section' ) {
+				$section = $item['item'];
+				$text .= $this->sectionCreationHTML( $section, $section_count );
+				$section_count++;
+			}
+		}
+
+		return $text;
+	}
+
+	function sectionCreationHTML( $section, $section_count ) {
+		global $wgRequest;
+		$paramValues = array();
+		$section_name = $section->getSectionName();
+		$section_level = $section->getSectionLevel();
+
+		$section_str = wfMessage( 'sf_createform_pagesection' )->text() . " '" . $section_name . "'";
+		$text = Html::hidden( "section_$section_count", $section_name );
+		$text .= '<div class="sectionForm">';
+		$text .= Html::element( 'h2', array(), $section_str );
+
+		foreach ( $wgRequest->getValues() as $key => $value ) {
+			if ( ( $pos = strpos( $key, '_section_'.$section_count ) ) != false ) {
+				$paramName = substr( $key, 0, $pos );
+				$paramName = str_replace( '_', ' ', $paramName );
+				$paramValues[$paramName] = $value;
+			}
+		}
+
+		$header_options =  '';
+		$text .= Html::element( 'span', null, wfMessage( 'sf_createform_sectionlevel' )->text() ) . "\n";
+		for ( $i = 1; $i < 7; $i++ ) {
+			if ( $section_level == $i ) {
+				$header_options .= " " . Html::element( 'option', array( 'value' => $i, 'selected' ), $i ) . "\n";
+			} else {
+				$header_options .= " " . Html::element( 'option', array( 'value' => $i ), $i ) . "\n";
+			}
+		}
+		$text .= Html::rawElement( 'select', array( 'name' => "level_section_" . $section_count ), $header_options ) . "\n";
+		$other_param_text = wfMessage( 'sf_createform_otherparameters' )->escaped();
+		$text .= "<fieldset class=\"sfCollapsibleFieldset\"><legend>$other_param_text</legend>\n";
+		$text .= Html::rawElement( 'div', array(),
+		$this->showSectionParameters( $section_count, $paramValues ) ) . "\n";
+		$text .= "</fieldset>\n";
+		$removeSectionButton = Html::input( 'delsection_' . $section_count, wfMessage( 'sf_createform_removesection' )->text(), 'submit' ) . "\n";
+		$text .= "</br>" . Html::rawElement( 'p', null, $removeSectionButton ) . "\n";
+		$text .= "	</div>\n";
+
+		return $text;
+	}
+
+	function templateCreationHTML( $tif, $template_num ) {
+		$checked_attribs = ( $tif->allowsMultiple() ) ? array( 'checked' => 'checked' ) : array();
+		$template_str = wfMessage( 'sf_createform_template' )->escaped();
+		$template_label_input = wfMessage( 'sf_createform_templatelabelinput' )->escaped();
+		$allow_multiple_text = wfMessage( 'sf_createform_allowmultiple' )->escaped();
+
+		$text = Html::hidden( "template_$template_num", $tif->getTemplateName() );
+		$text .= '<div class="templateForm">';
+		$text .= Html::element( 'h2', array(), "$template_str '{$tif->getTemplateName()}'" );
+		$text .= Html::rawElement( 'p', array(),
+			$template_label_input . Html::input( "label_$template_num", $tif->getLabel(), 'text', array( 'size' => 25 ) )
+		);
+		$text .= Html::rawElement( 'p', array(),
+			Html::input( "allow_multiple_$template_num", '', 'checkbox', $checked_attribs ) . $allow_multiple_text
+		);
+		$text .= '<hr />';
+
+		foreach ( $tif->getFields() as $field_num => $field ) {
+			$text .= $this->fieldCreationHTML( $field, $field_num, $template_num );
+		}
+		$removeTemplateButton = Html::input(
+			'del_' . $template_num,
+			wfMessage( 'sf_createform_removetemplate' )->text(),
+			'submit'
+		);
+		$text .= "\t" . Html::rawElement( 'p', null, $removeTemplateButton ) . "\n";
+		$text .= "	</div>\n";
+		return $text;
+	}
+
+	function fieldCreationHTML( $field, $field_num, $template_num ) {
+		$field_form_text = $template_num . "_" . $field_num;
+		$template_field = $field->template_field;
+		$text = Html::element( 'h3', null, wfMessage( 'sf_createform_field' )->text() . " " . $template_field->getFieldName() ) . "\n";
+		// TODO - remove this probably-unnecessary check?
+		if ( !defined( 'SMW_VERSION' ) || $template_field->getSemanticProperty() == "" ) {
+			// Print nothing if there's no semantic property.
+		} elseif ( $template_field->getPropertyType() == "" ) {
+			$prop_link_text = SFUtils::linkText( SMW_NS_PROPERTY, $template_field->getSemanticProperty() );
+			$text .= wfMessage( 'sf_createform_fieldpropunknowntype', $prop_link_text )->parseAsBlock() . "\n";
+		} else {
+			if ( $template_field->isList() ) {
+				$propDisplayMsg = 'sf_createform_fieldproplist';
+			} else {
+				$propDisplayMsg = 'sf_createform_fieldprop';
+			}
+			$prop_link_text = SFUtils::linkText( SMW_NS_PROPERTY, $template_field->getSemanticProperty() );
+
+			// Get the display label for this property type.
+			global $smwgContLang;
+			$propertyTypeStr = '';
+			if ( $smwgContLang != null ) {
+				$datatypeLabels = $smwgContLang->getDatatypeLabels();
+				$datatypeLabels['enumeration'] = 'enumeration';
+
+				$propTypeID = $template_field->getPropertyType();
+
+				// Special handling for SMW 1.9
+				if ( $propTypeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+					$propTypeID = '_txt';
+				}
+				$propertyTypeStr = $datatypeLabels[$propTypeID];
+			}
+			$text .= Html::rawElement( 'p', null, wfMessage( $propDisplayMsg, $prop_link_text, $propertyTypeStr )->parse() ) . "\n";
+		}
+		// If it's not a semantic field - don't add any text.
+		$form_label_text = wfMessage( 'sf_createform_formlabel' )->escaped();
+		$form_label_input = Html::input(
+			'label_' . $field_form_text,
+			$template_field->getLabel(),
+			'text',
+			array( 'size' => 20 )
+		);
+		$input_type_text = wfMessage( 'sf_createform_inputtype' )->escaped();
+		$text .= <<<END
+	<div class="formField">
+	<p>$form_label_text $form_label_input
+	&#160; $input_type_text
+
+END;
+		global $sfgFormPrinter;
+		if ( !is_null( $template_field->getPropertyType() ) ) {
+			$default_input_type = $sfgFormPrinter->getDefaultInputTypeSMW( $template_field->isList(), $template_field->getPropertyType() );
+			$possible_input_types = $sfgFormPrinter->getPossibleInputTypesSMW( $template_field->isList(), $template_field->getPropertyType() );
+		} elseif ( !is_null( $template_field->getFieldType() ) ) {
+			$default_input_type = $sfgFormPrinter->getDefaultInputTypeCargo( $template_field->isList(), $template_field->getFieldType() );
+			$possible_input_types = $sfgFormPrinter->getPossibleInputTypesCargo( $template_field->isList(), $template_field->getFieldType() );
+		} else {
+			// Most likely, template uses neither SMW nor Cargo.
+			$default_input_type = null;
+			$possible_input_types = array();
+		}
+
+		if ( $default_input_type == null && count( $possible_input_types ) == 0 ) {
+			$default_input_type = null;
+			$possible_input_types = $sfgFormPrinter->getAllInputTypes();
+		}
+		$text .= $this->inputTypeDropdownHTML( $field_form_text, $default_input_type, $possible_input_types, $field->getInputType() );
+
+		if ( !is_null( $field->getInputType() ) ) {
+			$cur_input_type = $field->getInputType();
+		} elseif ( !is_null( $default_input_type ) ) {
+			$cur_input_type = $default_input_type;
+		} else {
+			$cur_input_type = $possible_input_types[0];
+		}
+
+		global $wgRequest;
+		$paramValues = array();
+		foreach ( $wgRequest->getValues() as $key => $value ) {
+			if ( ( $pos = strpos( $key, '_' . $field_form_text ) ) != false ) {
+				$paramName = substr( $key, 0, $pos );
+				// Spaces got replaced by underlines in the
+				// query.
+				$paramName = str_replace( '_', ' ', $paramName );
+				$paramValues[$paramName] = $value;
+			}
+		}
+
+		$other_param_text = wfMessage( 'sf_createform_otherparameters' )->escaped();
+		$text .= "<fieldset class=\"sfCollapsibleFieldset\"><legend>$other_param_text</legend>\n";
+		$text .= Html::rawElement( 'div', array( 'class' => 'otherInputParams' ),
+			self::showInputTypeOptions( $cur_input_type, $field_form_text, $paramValues ) ) . "\n";
+		$text .= "</fieldset>\n";
+		$text .= <<<END
+	</p>
+	</div>
+	<hr>
+
+END;
+		return $text;
+	}
+
+	function inputTypeDropdownHTML( $field_form_text, $default_input_type, $possible_input_types, $cur_input_type ) {
+		if ( !is_null( $default_input_type ) ) {
+			array_unshift( $possible_input_types, $default_input_type );
+		}
+		// create the dropdown HTML for a list of possible input types
+		$dropdownHTML = "";
+		foreach ( $possible_input_types as $i => $input_type ) {
+			if ( $i == 0 ) {
+				$dropdownHTML .= "	<option value=\".$input_type\">$input_type " .
+					wfMessage( 'sf_createform_inputtypedefault' )->escaped() . "</option>\n";
+			} else {
+				$selected_str = ( $cur_input_type == $input_type ) ? "selected" : "";
+				$dropdownHTML .= "	<option value=\"$input_type\" $selected_str>$input_type</option>\n";
+			}
+		}
+		$hidden_text = wfMessage( 'sf_createform_hidden' )->escaped();
+		$selected_str = ( $cur_input_type == 'hidden' ) ? "selected" : "";
+		// @todo FIXME: Contains hard coded parentheses.
+		$dropdownHTML .= "	<option value=\"hidden\" $selected_str>($hidden_text)</option>\n";
+		$text = "\t" . Html::rawElement( 'select',
+			array(
+				'class' => 'inputTypeSelector',
+				'name' => 'input_type_' . $field_form_text,
+				'formfieldid' => $field_form_text
+			), $dropdownHTML ) . "\n";
+		return $text;
 	}
 
 	/**
@@ -448,9 +638,9 @@ END;
 		} elseif ( $type == 'enum-list' ) {
 			$cur_values = explode( ',', $cur_value );
 			foreach ( $param['values'] as $val ) {
-				$text .= '<span style="white-space: nowrap; padding-right: 5px;"><input type="checkbox" name="p[' .
+				$text .= '<span style="white-space: nowrap; padding-right: 5px; font-family: monospace;"><input type="checkbox" name="p[' .
 					htmlspecialchars( $paramName ) . '][' . htmlspecialchars( $val ). ']" value="true"' .
-					( in_array( $val, $cur_values ) ? ' checked' : '' ) . '/> <tt>' . htmlspecialchars( $val ) . "</tt></span>\n";
+					( in_array( $val, $cur_values ) ? ' checked' : '' ) . '/> ' . htmlspecialchars( $val ) . "</span>\n";
 			}
 			return $text;
 		} elseif ( $type == 'boolean' ) {
@@ -523,7 +713,7 @@ END;
 	 *
 	 * @return string
 	 */
-	public static function showSectionParameters( $section_count, $paramValues ) {
+	function showSectionParameters( $section_count, $paramValues ) {
 		global $wgParser;
 
 		$text = '';
@@ -561,5 +751,5 @@ END;
 			++$i;
 		}
 		return $text;
-	 }
+	}
 }

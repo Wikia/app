@@ -1,11 +1,10 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
-@import 'skins/oasis/css/core/breakpoints-variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+@import 'variables';
 
 $hero-image-url: '/extensions/wikia/CommunityPage/images/fandom_heart.svg';
 $hero-image-height: 200px;
-$hero-image-background: $color-slate-gray;
+$hero-image-background: $wds-color-slate-gray;
 
 .community-page-header {
 	@include flexbox();
@@ -41,21 +40,21 @@ $hero-image-background: $color-slate-gray;
 	}
 
 	.community-page-header-welcome-message {
-		color: $color-white;
-		font-size: $typescale-size-plus-4;
+		color: $wds-color-white;
+		font-size: $wds-typescale-size-plus-4;
 		font-weight: bold;
 		line-height: 40px;
 		margin:	0;
 	}
 
 	.community-page-header-welcome-message:lang(ja) {
-		font-size: $typescale-size-plus-2;
+		font-size: $wds-typescale-size-plus-2;
 	}
 
 	.community-page-subheader-welcome-message {
-		color: $color-white;
-		font-size: $typescale-size-plus-2;
-		line-height: $line-height;
+		color: $wds-color-white;
+		font-size: $wds-typescale-size-plus-2;
+		line-height: $wds-line-height;
 		margin: 6px 0 0 0;
 	}
 }

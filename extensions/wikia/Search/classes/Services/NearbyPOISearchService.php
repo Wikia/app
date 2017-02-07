@@ -26,7 +26,7 @@ class NearbyPOISearchService extends EntitySearchService {
 
 	protected $wikiaId;
 
-	protected function getCore(){
+	protected function getCore() {
 		return self::ARTICLE_METADATA_CORE;
 	}
 
@@ -38,71 +38,81 @@ class NearbyPOISearchService extends EntitySearchService {
 		$this->region = null;
 		$this->latitude = 0;
 		$this->longitude = 0;
+
 		return $this;
 	}
 
 	public function latitude( $lat ) {
-		if( !empty( $lat ) ) {
+		if ( !empty( $lat ) ) {
 			$this->latitude = $lat;
 		}
+
 		return $this;
 	}
 
 	public function longitude( $long ) {
-		if( !empty( $long ) ) {
+		if ( !empty( $long ) ) {
 			$this->longitude = $long;
 		}
+
 		return $this;
 	}
 
-	public  function withWikiaId( $wikiaId ) {
+	public function withWikiaId( $wikiaId ) {
 		$this->wikiaId = $wikiaId;
+
 		return $this;
 	}
 
 	public function radius( $radius ) {
-		if( !empty( $radius ) ) {
+		if ( !empty( $radius ) ) {
 			$this->radius = $radius;
 		}
+
 		return $this;
 	}
 
 	public function region( $region ) {
-		if( !empty( $region ) ) {
+		if ( !empty( $region ) ) {
 			$this->region = $region;
 		}
+
 		return $this;
 	}
 
 	public function limit( $limit ) {
-		if( !empty( $limit ) ) {
+		if ( !empty( $limit ) ) {
 			$this->limit = $limit;
 		}
+
 		return $this;
 	}
 
 	public function setFields( $fields ) {
-		if( !empty( $fields ) ) {
+		if ( !empty( $fields ) ) {
 			$this->fields = $fields;
 			$this->fields = array_merge( $this->fields, [ 'score' ] );
 		}
+
 		return $this;
 	}
 
 	public function search() {
 		$query = $this->constructQuery();
+
 		return $this->query( $query );
 	}
 
 	protected function constructQuery() {
-		$conditions = [ ];
-		$conditions[ ] = $this->getGeoQuery();
+		$conditions = [];
+		$conditions[] = $this->getGeoQuery();
 		if ( !empty( $this->region ) ) {
-			$conditions[ ] = 'map_region_s:"' . $this->region . '"';
+			$conditions[] = 'map_region_s:"' . $this->region . '"';
 		}
-		if( !empty( $this->wikiaId ) ) {
-			$conditions[ ] = 'wid_i:"' . $this->wikiaId . '"';
+		if ( !empty( $this->wikiaId ) ) {
+			$conditions[] = 'wid_i:"' . $this->wikiaId . '"';
 		}
+
 		return join( ' AND ', $conditions );
 	}
 
@@ -112,10 +122,11 @@ class NearbyPOISearchService extends EntitySearchService {
 		$distance = $this->radius;
 		$sfield = self::LOCATION_FIELD_NAME;
 		$geoQuery = "({!geofilt score=distance sfield=${sfield} pt=${lat},${long} d=${distance}})";
+
 		return $geoQuery;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$select->setQuery( $query );
@@ -129,14 +140,15 @@ class NearbyPOISearchService extends EntitySearchService {
 	}
 
 	protected function consumeResponse( $solrResponse ) {
-		$cleanedResponse = [ ];
+		$cleanedResponse = [];
 		foreach ( $solrResponse as $item ) {
-			$cleanedItem = [ ];
+			$cleanedItem = [];
 			foreach ( $item as $fieldName => $field ) {
 				$cleanedItem[$fieldName] = $field;
 			}
 			$cleanedResponse [] = $cleanedItem;
 		}
+
 		return $cleanedResponse;
 	}
 }

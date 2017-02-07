@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ezagren"
+		]
+	},
+	"maps-abb-north": "U",
+	"maps-abb-east": "T",
+	"maps-abb-south": "S",
+	"maps-abb-west": "B"
+}

@@ -545,7 +545,6 @@ class RenameUserProcess {
 				return false;
 			}
 
-			$fakeUser->setPassword( null );
 			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
@@ -558,6 +557,14 @@ class RenameUserProcess {
 
 			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->setGlobalFlag( 'disabled', 1 );
+
+			try {
+				$fakeUser->setPassword( null );
+			} catch ( PasswordError $e ) {
+				// We don't really care if the password wasn't set at all for a fake user
+				// now that we go through Helios
+			}
+
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
 			$this->addLog( "Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getGlobalAttribute( 'renameData', '')}'" );

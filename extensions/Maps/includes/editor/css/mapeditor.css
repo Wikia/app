@@ -1,6 +1,22 @@
-#code-output, #code-input-container,#code-input {
-    height: 100%;
+#code-output-container, #code-input-container,#code-input {
+    height: 100% !important;
     width: 100%;
+}
+
+#code-output-container {
+    overflow: visible;
+}
+
+textarea#code-input, textarea#code-output {
+    resize: none;
+}
+
+#code-output {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: none;
+    padding: 10px;
 }
 
 #map-canvas {

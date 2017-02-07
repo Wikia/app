@@ -7,6 +7,42 @@ define('ext.wikia.recirculation.utils', [
 ], function ($, loader, cache, Mustache) {
 	'use strict';
 
+	var footerState = {
+		cleared: false,
+		loading: false,
+		pending: []
+	};
+
+	function prepareFooter() {
+		var deferred = $.Deferred();
+
+		if (!footerState.cleared) {
+			footerState.pending.push(deferred);
+
+			if (!footerState.loading) {
+				footerState.loading = true;
+				return renderTemplate('footer-index-container.mustache', {})
+					.then(function($html) {
+						$('#WikiaFooter')
+							.find('#BOTTOM_LEADERBOARD')
+							.siblings()
+							.remove()
+							.end()
+							.end()
+							.append($html);
+						footerState.cleared = true;
+						footerState.pending.forEach(function(d) {
+							d.resolve();
+						});
+					});
+			} else {
+				return deferred.promise();
+			}
+		} else {
+			return deferred.resolve();
+		}
+	}
+
 	// returns a gaussian random function with the given mean and stdev.
 	function gaussian(mean, stdev) {
 		var y2,
@@ -65,7 +101,7 @@ define('ext.wikia.recirculation.utils', [
 	 */
 	function loadTemplate(templateName) {
 		var dfd = new $.Deferred(),
-			templateLocation = 'extensions/wikia/Recirculation/templates/client/' + templateName,
+			templateLocation = 'extensions/wikia/Recirculation/templates/' + templateName,
 			cacheKey = 'RecirculationAssets_' + templateLocation,
 			template = cache.getVersioned(cacheKey);
 
@@ -173,6 +209,7 @@ define('ext.wikia.recirculation.utils', [
 		afterRailLoads: afterRailLoads,
 		waitForRail: waitForRail,
 		ditherResults: ditherResults,
-		sortThumbnails: sortThumbnails
+		sortThumbnails: sortThumbnails,
+		prepareFooter: prepareFooter
 	};
 });

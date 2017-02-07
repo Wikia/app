@@ -4,6 +4,7 @@
 /** @var $beforeWikiaPageHtml string */
 /** @var $headerModuleName string */
 /** @var $headerModuleAction string */
+/** @var $isEditPage bool */
 ?>
 
 <? if ( $displayHeader ): ?>
@@ -33,17 +34,16 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
-			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
-
-			if ( $runNjord ) {
-				echo $app->renderView( 'Njord', 'Index' );
-
-			}
-
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
+		<?php if ( !empty( $wg->EnablePageHeaderExperiment ) && empty( $wg->SuppressWikiHeader ) ): ?>
+			<div class="RWEPageHeader">
+				<?= $app->renderView( 'RWEPageHeader', 'index') ?>
+			</div>
+		<?php endif ?>
+
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
 				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
@@ -70,11 +70,6 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
-			<?php
-			if ( !empty( $wg->EnableMomModulesExt ) && WikiaPageType::isMainPage() ) {
-				echo $app->renderView( 'Njord', 'mom' );
-			}
-			?>
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
@@ -92,9 +87,7 @@
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
 						} else {
-							if ( !$runNjord ) {
-								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-							}
+							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 						}
 					}
 				?>
@@ -103,33 +96,17 @@
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
-				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
-					<div id="WikiaArticleMsg">
-						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
-						<br />
-						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
-							<br /><br />
-							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
-					</div>
-				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
-								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
+								'slotName' => 'TOP_RIGHT_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}
 					?>
 					</div>
-					<?php
-					if ( $runNjord ) {
-						echo $app->renderView( 'Njord', 'Summary' );
-						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-
-					}
-					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
@@ -139,7 +116,18 @@
 					<?= $bodytext ?>
 
 				</div>
-
+				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
+					<!--googleoff: all-->
+					<div id="WikiaArticleMsg">
+						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
+						<br />
+						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
+							<br /><br />
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?>
+						</h3>
+					</div>
+					<!--googleon: all-->
+				<?php } ?>
 				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
 					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
 						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
@@ -173,7 +161,7 @@
 		</article><!-- WikiaMainContent -->
 
 		<?php if( $railModulesExist ): ?>
-			<?= $app->renderView( 'Rail', 'Index', array( 'railModuleList' => $railModuleList ) ); ?>
+			<?= $app->renderView( 'Rail', 'Index', array( 'railModuleList' => $railModuleList, 'isEditPage' => $isEditPage ) ); ?>
 		<?php endif; ?>
 
 		<?php

@@ -22,12 +22,10 @@ class PhalanxAnswersBlock extends WikiaObject {
 	 *
 	 * @return Bool -- is word bad or not
 	 */
-	static public function badWordsTest( $title ) {
+	static public function badWordsTest( Title $title ): bool {
 		wfProfileIn( __METHOD__ );
 
-		$language = RequestContext::getMain()->getLanguage();
-
-		$phalanxModel = new PhalanxContentModel( $title, $language->getCode() );
+		$phalanxModel = new PhalanxContentModel( $title );
 		$ret = $phalanxModel->match_question_title();
 
 		wfProfileOut( __METHOD__ );

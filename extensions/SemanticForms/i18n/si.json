@@ -3,7 +3,8 @@
 		"authors": [
 			"Singhalawap",
 			"පසිඳු කාවින්ද",
-			"Susith Chandira Gts"
+			"Susith Chandira Gts",
+			"SusithCM"
 		]
 	},
 	"specialpages-group-sf_group": "අර්ථ විචාර ආකෘතිපත්‍ර",
@@ -37,7 +38,6 @@
 	"sf_forminputs_default": "මෙම ආදානය සඳහා සාමාන්‍ය අගය",
 	"sf_forminputs_rows": "මෙම ආදානය සඳහා පේළි ගණන",
 	"sf_forminputs_cols": "මෙම ආදානය සඳහා තීර ගණන",
-	"sf_forminputs_remoteautocompletion": "දුරස්ථ ස්වයංසම්පූර්ණවීම භාවිතා කරන්න",
 	"sf_forminputs_existingvaluesonly": "දැනටමත් ලයිස්තුවේ තිබෙන අගයන්වලට පමණක් ඉඩ දේ",
 	"sf_forminputs_hideroot": "මාපිය ප්‍රවර්ගය සඟවන්න",
 	"sf_forminputs_height": "මෙම ආදානයේ උස, පික්සල් වලින්",
@@ -120,5 +120,14 @@
 	"right-editrestrictedfields": "සීමිත ආකෘතිපත්‍ර ක්ෂේත්‍ර සංස්කරණය කරන්න",
 	"right-createclass": "නව අර්ථ විචාර සමූහ තනන්න",
 	"action-createclass": "නව අර්ථ විචාර සමූහ තනන්න",
-	"action-editrestrictedfields": "සීමිත ආකෘතිපත්‍ර ක්ෂේත්‍ර සංස්කරණය කරන්න"
+	"action-editrestrictedfields": "සීමිත ආකෘතිපත්‍ර ක්ෂේත්‍ර සංස්කරණය කරන්න",
+	"sf-datepicker-close": "වසන්න",
+	"sf-datepicker-prev": "පෙර",
+	"sf-datepicker-next": "මීළඟ",
+	"sf-datepicker-today": "අද",
+	"sf-datepicker-weekstart": "සතියේ පළමු දිනය (0 - ඉරිදා, 1 - සඳුදා, ...).",
+	"sf-datepicker-firstdate": "(in yyyy/mm/dd ආකෘතියෙන්) පළමු දිනය තෝරාගත හැකියි.",
+	"sf-datepicker-lastdate": "(yyyy/mm/dd ආකෘතියෙන්) අවසන් දිනය තෝරාගත හැකියි.",
+	"sf-regexp-wrongformat": "වැරදි ආකෘතිය.",
+	"sf-regexp-baseprefix": "පාදක වර්ගයේ පරාමිතීන් සඳහා උපසර්ගය."
 }

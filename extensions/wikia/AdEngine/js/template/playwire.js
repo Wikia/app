@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.template.playwire', [
-	'ext.wikia.adEngine.video.playwire',
+	'ext.wikia.adEngine.video.player.playwire',
 	'wikia.log'
 ], function (player, log) {
 	'use strict';

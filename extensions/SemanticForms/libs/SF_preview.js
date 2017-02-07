@@ -135,11 +135,17 @@
 			var pageName = mw.config.get( 'wgPageName' );
 			var parts = pageName.split( '/', 3 );
 
-			if ( parts.length > 1 ) { // found a formname
+			if ( mw.util.getParamValue( 'form' ) ) {
+				data.form = mw.util.getParamValue( 'form' );
+			}
+			else if ( parts.length > 1 ) { // found a formname
 				data.form = parts[1];
 			}
 
-			if ( parts.length > 2 ) { // found a pagename
+			if ( mw.util.getParamValue( 'target' ) ) {
+				data.target = mw.util.getParamValue( 'target' );
+			}
+			else if ( parts.length > 2 ) { // found a pagename
 				data.target = parts[2];
 			}
 		}

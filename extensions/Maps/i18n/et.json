@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avjoska",
+			"Hendrik",
+			"Pikne"
+		]
+	},
+	"maps_map": "Kaart",
+	"maps-loading-map": "Kaardi laadimine...",
+	"maps-others": "teised",
+	"maps-geocode-par-location": "Geokodeeritav aadress.",
+	"maps-displaymap-par-maxzoom": "Maksimaalne suumi tase",
+	"maps-displaymap-par-minzoom": "Minimaalne suumi tase",
+	"maps-abb-north": "N",
+	"maps-abb-east": "E",
+	"maps-abb-south": "S",
+	"maps-abb-west": "W",
+	"maps-latitude": "Laius:",
+	"maps-longitude": "Pikkus:",
+	"maps_map_cannot_be_displayed": "Kaarti ei saa kuvada.",
+	"maps-osm-par-thumbs": "Näita pisipilte",
+	"maps-osm-par-photos": "Näita fotosid",
+	"mapeditor": "Kaardi toimetaja",
+	"specialpages-group-maps": "Kaardid",
+	"mapeditor-none-text": "Puudub",
+	"mapeditor-done-button": "Valmis",
+	"mapeditor-remove-button": "Eemalda",
+	"mapeditor-import-button2": "Impordi",
+	"mapeditor-clear-button": "Tühjenda kaart",
+	"mapeditor-code-title": "Viki kood",
+	"mapeditor-form-title": "Muuda üksikasju",
+	"mapeditor-link-title-switcher-popup-text": "Hüpikaken tekstiga",
+	"mapeditor-form-field-title": "Pealkiri",
+	"mapeditor-form-field-text": "Tekst",
+	"mapeditor-form-field-link": "Link",
+	"mapeditor-form-field-icon": "Ikoon",
+	"mapeditor-form-field-group": "Rühm",
+	"mapeditor-form-field-image": "Pilt"
+}

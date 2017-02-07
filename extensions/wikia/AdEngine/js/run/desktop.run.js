@@ -3,12 +3,14 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
+	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -22,12 +24,14 @@ require([
 ], function (
 	adContext,
 	adEngineRunner,
+	adInfoTracker,
 	pageLevelParams,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
 	messageListener,
 	pageFair,
+	taboolaHelper,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -64,10 +68,14 @@ require([
 			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
 		}
 
+		adInfoTracker.run();
+		
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
+
+		slotTweaker.registerMessageListener();
 
 		sourcePoint.initDetection();
 
@@ -77,6 +85,13 @@ require([
 
 		// Recovery
 		recoveryHelper.initEventQueues();
+
+		// Taboola
+		if (context.opts.loadTaboolaLibrary) {
+			recoveryHelper.addOnBlockingCallback(function() {
+				taboolaHelper.loadTaboola();
+			});
+		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();

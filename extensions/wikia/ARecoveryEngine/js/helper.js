@@ -87,7 +87,11 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function getSafeUri(url) {
-		return win._sp_.getSafeUri(url);
+		if (isRecoveryEnabled() && isBlocking()) {
+			url = win._sp_.getSafeUri(url);
+		}
+
+		return url;
 	}
 
 	return {

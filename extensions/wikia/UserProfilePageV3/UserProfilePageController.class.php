@@ -35,52 +35,13 @@ class UserProfilePageController extends WikiaController {
 
 	/**
 	 * @brief main entry point
-	 *
-	 * @requestParam User $user user object
-	 * @requestParam string $userPageBody original page body
-	 * @requestParam int $wikiId current wiki id
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * @var $user User
-		 */
-		$user = $this->getVal( 'user' );
-
-		$pageBody = $this->getVal( 'userPageBody' );
-
-		if ( $this->title instanceof Title ) {
-			$namespace = $this->title->getNamespace();
-			$isSubpage = $this->title->isSubpage();
-		} else {
-			$namespace = $this->wg->NamespaceNumber;
-			$isSubpage = false;
+		if ( !$this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->skipRendering();
 		}
 
-		$useOriginalBody = true;
-
-		if ( $user instanceof User ) {
-			$this->profilePage = new UserProfilePage( $user );
-			if ( $namespace == NS_USER && !$isSubpage ) {
-				// we'll implement interview section later
-				// $this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
-				$this->setVal( 'stuffSectionBody', $pageBody );
-				$useOriginalBody = false;
-			}
-
-			$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $this->wg->User->getId() ) ? true : false ) );
-		}
-
-		if ( $useOriginalBody ) {
-			$this->response->setBody( $pageBody );
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
-
-		wfProfileOut( __METHOD__ );
+		$this->overrideTemplate( 'WikiaMobileIndex' );
 	}
 
 	/**
@@ -966,17 +927,21 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function fetchDiscussionPostsNumberFrom( $user ) {
+	public function fetchDiscussionPostsNumberFrom( $targetUser ) {
 		global $wgEnableDiscussions;
 
 		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussions );
-		if ( $wgEnableDiscussions ) {
-			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
+		if ( $wgEnableDiscussions && !$targetUser->isAnon() ) {
+			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $targetUser );
 
 			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
 			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
 			$this->setVal( 'discussionAllPostsByUserLink',
 				$discussionInfo->getDiscussionAllPostsByUserLink() );
+		} else {
+			$this->setVal( 'discussionActive', false );
+			$this->setVal( 'discussionPostsCount', 0 );
+			$this->setVal( 'discussionAllPostsByUserLink', '' );
 		}
 	}
 
@@ -1008,7 +973,7 @@ class UserProfilePageController extends WikiaController {
 			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
-					$this->clearAttributeCache( $avUser->getId() );
+					$this->clearCaches( $avUser );
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
@@ -1020,6 +985,33 @@ class UserProfilePageController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	private function clearCaches( User $user ) {
+		$this->clearAttributeCache( $user->getId() );
+		$this->bustETagsForUserPage( $user );
+		$this->bustETagsForAllPagesIfNecessary( $user );
+	}
+
+	/**
+	 *
+	 * @param User $user
+	 */
+	private function bustETagsForUserPage( User $user ) {
+		$user->getUserPage()->invalidateCache();
+	}
+
+	/**
+	 * Call invalidateCache for the current user if the user is removing their own avatar. This is necessary
+	 * because the global header (which contains the avatar) is cached along with the page, so any article page
+	 * the user has in browser cache will contain their stale avatar value. invalidateCache updates the
+	 * user's last_touched value which is used when validating ETags, effectively busting all pages the user
+	 * has in their browser cache.
+	 */
+	private function bustETagsForAllPagesIfNecessary( User $user ) {
+		if ( $this->wg->User->getId() == $user->getId() ) {
+			$user->invalidateCache();
+		}
 	}
 
 	/**
@@ -1051,6 +1043,7 @@ class UserProfilePageController extends WikiaController {
 		if ( $targetUser && $targetUser->getId() !== 0 ) {
 			$userIdentityBox = new UserIdentityBox( $targetUser );
 			$userIdentityBox->clearMastheadContents();
+			$this->clearCaches( $targetUser );
 
 			$this->response->setVal( 'success', wfMessage( 'user-identity-box-clear-success' )->escaped() );
 			BannerNotificationsController::addConfirmation( wfMessage( 'user-identity-box-clear-success' )->escaped() );

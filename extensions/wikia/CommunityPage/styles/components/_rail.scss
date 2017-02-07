@@ -1,12 +1,9 @@
 @import 'skins/shared/color';
-@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $community-page-rail-background-color: mix($color-page, #000, 96%);
 @if $is-dark-wiki {
-	$community-page-rail-background-color: mix($color-page, $color-white, 96%);
+	$community-page-rail-background-color: mix($color-page, $wds-color-white, 96%);
 }
 $community-page-rail-module-width: 210px;
 $community-page-rail-module-spacing: 35px;
@@ -24,7 +21,7 @@ $community-page-rail-spacing-xxlarge: 80px;
 
 	.community-page-module {
 		box-sizing: border-box;
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 		line-height: $module-default-line-height;
 		margin: 0 0 $community-page-rail-module-spacing $community-page-rail-module-spacing-left;
 		width: $community-page-rail-module-width;
@@ -33,7 +30,7 @@ $community-page-rail-spacing-xxlarge: 80px;
 	.community-page-module-section-title {
 		border-bottom: 1px $color-page-border solid;
 		color: $color-text;
-		font-size: $typescale-size-plus-1;
+		font-size: $wds-typescale-size-plus-1;
 		font-weight: bold;
 		line-height: $module-default-line-height;
 		margin-bottom: $community-page-rail-spacing-small;
@@ -43,7 +40,7 @@ $community-page-rail-spacing-xxlarge: 80px;
 	.community-page-subtle {
 		color: $color-alternate-text;
 		display: block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 	}
 
 	.community-page-module-box {

@@ -2,11 +2,12 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (googleSlots, recovery, doc, log, window) {
+], function (googleSlots, adSlot, recovery, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -147,7 +148,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
 		log(['onAdLoad', slotName], 'info', logGroup);
-		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
+		var iframe = adSlot.getIframe(slotName);
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}

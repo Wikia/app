@@ -21,7 +21,7 @@ class UserBlock {
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
-	public static function blockCheck(User $user, &$block) {
+	public static function blockCheck( User $user, &$block ) {
 		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -46,15 +46,15 @@ class UserBlock {
 			return $cachedState['return'];
 		}
 
-		if ( !empty($text) ) {
+		if ( !empty( $text ) ) {
 			if ( $user->isAnon() ) {
 				$ret =  self::blockCheckIP( $user, $text, $block, $isCurrentUser );
 			} else {
 				$blocksData = PhalanxFallback::getFromFilterShort( self::TYPE );
-				if ( !empty($blocksData) ) {
+				if ( !empty( $blocksData ) ) {
 					$ret = self::blockCheckInternal( $user, $blocksData, $text, $block, $isCurrentUser );
 				}
-				//do not check IP for current user when checking block status of different user
+				// do not check IP for current user when checking block status of different user
 				if ( $ret && $isCurrentUser ) {
 					// if the user name was not blocked, check for an IP block
 					$ret = self::blockCheckIP( $user, $wgRequest->getIP(), $block, $isCurrentUser );
@@ -84,10 +84,10 @@ class UserBlock {
 		$result = PhalanxFallback::findBlocked( $text, $blocksData, $writeStats, $blockData );
 
 		if ( $result['blocked'] ) {
-			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-			#self::setUserData( $user, $blockData, $text, false );
+			Wikia::log( __METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'." );
+			# self::setUserData( $user, $blockData, $text, false );
 
-			# set block 
+			# set block
 			$block = ( object ) $blockData;
 
 			$cachedState = array(
@@ -144,12 +144,12 @@ class UserBlock {
 				'reason' => $row->p_reason,
 				'lang' => $row->p_lang
 			);
-			Wikia::log(__METHOD__, __LINE__, "Block '{$blockData['text']}' blocked '$text'.");
+			Wikia::log( __METHOD__, __LINE__, "Block '{$blockData['text']}' blocked '$text'." );
 			if ( $writeStats ) {
-				PhalanxFallback::addStats($blockData['id'], $blockData['type']);
+				PhalanxFallback::addStats( $blockData['id'], $blockData['type'] );
 			}
 
-			#self::setUserData( $user, $blockData, $text, true );
+			# self::setUserData( $user, $blockData, $text, true );
 
 			# set block
 			$block = (object) $blockData;
@@ -225,14 +225,14 @@ class UserBlock {
 		return $result;
 	}
 
-	//moved from RegexBlockCore.php
-	private static function setUserData(User $user, $blockData, $address /* not used at all */, $isBlockIP = false) {
+	// moved from RegexBlockCore.php
+	private static function setUserData( User $user, $blockData, $address /* not used at all */, $isBlockIP = false ) {
 		wfProfileIn( __METHOD__ );
 		$user->mBlockedby = $blockData['author_id'];
 
-		//added to make User::isBlockedGlobally()
-		//work for this instance of User class
-		//-- Andrzej 'nAndy' Łukaszewski
+		// added to make User::isBlockedGlobally()
+		// work for this instance of User class
+		// -- Andrzej 'nAndy' Łukaszewski
 		$user->mBlockedGlobally = true;
 
 		$user->mBlockreason = self::getBlockReasonMessage( $blockData[ 'reason' ], $blockData[ 'exact' ], $isBlockIP );
@@ -243,12 +243,12 @@ class UserBlock {
 		$user->mBlock->setId( $blockData['id'] );
 		$user->mBlock->setBlockEmail( true );
 		// public
-		$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
+		$user->mBlock->mExpiry = is_null( $blockData['expire'] ) ? 'infinity' : $blockData['expire'];
 		$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
 		$user->mBlock->mAddress = $blockData['text'];
 
 		// account creation check goes through the same hook...
-		if ($isBlockIP) {
+		if ( $isBlockIP ) {
 			$user->mBlock->setCreateAccount( 1 );
 		}
 
@@ -259,7 +259,7 @@ class UserBlock {
 	 * Hook handler
 	 * @author Marooned
 	 */
-	public static function onUserCanSendEmail(&$user, &$canSend, &$block ) {
+	public static function onUserCanSendEmail( &$user, &$canSend, &$block ) {
 		$canSend = self::blockCheck( $user, $block );
 		return true;
 	}
@@ -305,9 +305,9 @@ class UserBlock {
 	 * @param $abortError string [OUTPUT]
 	 */
 	public static function onValidateUserName( $userName, &$abortError, &$block ) {
-		$user = User::newFromName($userName);
+		$user = User::newFromName( $userName );
 		$message = '';
-		if ( !$user || !self::onAbortNewAccount($user, $message, $block) ) {
+		if ( !$user || !self::onAbortNewAccount( $user, $message, $block ) ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
 		}

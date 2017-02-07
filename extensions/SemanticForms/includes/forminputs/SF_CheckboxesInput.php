@@ -52,7 +52,7 @@ class SFCheckboxesInput extends SFMultiEnumInput {
 		} else {
 			$delimiter = ',';
 		}
-		$cur_values = SFUtils::getValuesArray( $cur_value, $delimiter );
+		$cur_values = SFValuesUtils::getValuesArray( $cur_value, $delimiter );
 
 		if ( ( $possible_values = $other_args['possible_values'] ) == null ) {
 			$possible_values = array();

@@ -466,7 +466,6 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/extauth
 	'ExternalUser_Hardcoded' => 'includes/extauth/Hardcoded.php',
-	'ExternalUser_MediaWiki' => 'includes/extauth/MediaWiki.php',
 	'ExternalUser_vB' => 'includes/extauth/vB.php',
 
 	# includes/filerepo

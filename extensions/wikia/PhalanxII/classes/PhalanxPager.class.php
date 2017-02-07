@@ -127,7 +127,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		if ( ( $row->p_type & Phalanx::TYPE_EMAIL ) && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			return '';
 		}
-		
+
 		if ( isset( $row->p_author_id ) ) {
 			$author = User::newFromId( $row->p_author_id );
 			$authorName = $author->getName();
@@ -172,7 +172,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		if ( isset( $row->p_timestamp ) ) {
 			$html .= ' &bull; ';
 			$html .= $this->msg( 'phalanx-display-row-created' )
-					->params( $authorName, $this->getLanguage()->timeanddate( $row->p_timestamp ) )
+					->params( $authorName, $this->getLanguage()->timeanddate( $row->p_timestamp, true ) )
 					->parse();
 		}
 

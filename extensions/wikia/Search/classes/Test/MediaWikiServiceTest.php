@@ -1167,18 +1167,29 @@ class MediaWikiServiceTest extends BaseTest
 	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
-	public function testGetPageFromPageIdThrowsException() {
+	public function testGetPageFromPageIdRetunrsNull() {
 		$this->mockClass( 'Article', null, 'newFromID' );
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getPageFromPageId' );
 		$get->setAccessible( true );
-		try {
-			$get->invoke( (new MediaWikiService), $this->pageId );
-		} catch ( \Exception $e ) {}
 
-		$this->assertInstanceOf(
-				'\Exception',
-				$e,
-				'\Wikia\Search\MediaWikiService::getPageFromPageId should throw an exception when provided a nonexistent page id'
+		$this->assertEquals(
+			null,
+			$get->invoke( (new MediaWikiService), $this->pageId ),
+			'\Wikia\Search\MediaWikiService::getPageFromPageId should return null when provided a nonexistent page id'
+		);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14926 ms
+	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
+	 */
+	public function testPageIdExistsForNotExistingArticle() {
+		$this->mockClass( 'Article', null, 'newFromID' );
+
+		$this->assertFalse(
+			(new MediaWikiService)->pageIdExists(0),
+			'\Wikia\Search\MediaWikiService::pageIdExists should return false when provided a nonexistent page id'
 		);
 	}
 

@@ -2,38 +2,34 @@
 
 /**
  * @method PhalanxModel setBlock( $block )
- * @method getBlock
+ * @method object getBlock
  * @method PhalanxModel setText( string $text )
- * @method getText
- * @method getLang
- * @method PhalanxModel setShouldLogInStats
- * @method getShouldLogInStats
+ * @method string getText
+ * @method PhalanxModel setShouldLogInStats( bool $shouldLogInStats )
+ * @method bool getShouldLogInStats
+ * @method User getUser
+ * @method PhalanxModel setUser( User $user )
  */
 abstract class PhalanxModel extends WikiaObject {
-	public $model = null;
-	public $text = null;
+	/** @var string $text */
+	protected $text = null;
+
 	/** @var null|object $block Information about the current block that was triggered */
-	public $block = null;
-	public $lang = null;
+	protected $block = null;
+
 	/* @var User */
-	public $user = null;
+	protected $user = null;
+
 	/* @var PhalanxService */
 	private $service = null;
-	public $ip = null;
+	protected $ip = null;
 
 	protected $shouldLogInStats = true;
 
-	public function __construct( $model, $data = array() ) {
+	public function __construct() {
 		parent::__construct();
-		$this->model = $model;
 
 		$this->user = $this->wg->user;
-		if ( !empty( $data ) ) {
-			foreach ( $data as $key => $value ) {
-				$method = "set{$key}";
-				$this->$method( $value );
-			}
-		}
 		$this->service = new PhalanxService();
 		$this->ip = $this->wg->request->getIp();
 	}
@@ -45,7 +41,7 @@ abstract class PhalanxModel extends WikiaObject {
 	 * @param $content string|Title|User content to guess type for
 	 * @return int
 	 */
-	public static function determineTypeId($content) {
+	public static function determineTypeId( $content ) {
 		// Allow extensions to pass in unspecified content types to
 		// eliminate dependence on Phalanx from other extensions;
 		// Phalanx is not enabled on the internal wiki and causes
@@ -53,9 +49,9 @@ abstract class PhalanxModel extends WikiaObject {
 		// See CE-377
 		// default to TYPE_CONTENT
 		$typeId = Phalanx::TYPE_CONTENT;
-		if ($content instanceof Title) {
+		if ( $content instanceof Title ) {
 			$typeId = Phalanx::TYPE_TITLE;
-		} else if ($content instanceof User) {
+		} else if ( $content instanceof User ) {
 			$typeId = Phalanx::TYPE_USER;
 		}
 
@@ -69,13 +65,13 @@ abstract class PhalanxModel extends WikiaObject {
 	 * @param $content string|Title|User content to check (text, title, user name, ...)
 	 * @return PhalanxModel|null
 	 */
-	public static function newFromType($typeId, $content) {
+	public static function newFromType( $typeId, $content ) {
 		$instance = null;
 
-		switch($typeId) {
+		switch( $typeId ) {
 			case Phalanx:: TYPE_TITLE:
-				$title = ($content instanceof Title) ? $content : Title::newFromText($content);
-				$instance = new PhalanxContentModel($title);
+				$title = ( $content instanceof Title ) ? $content : Title::newFromText( $content );
+				$instance = new PhalanxContentModel( $title );
 				break;
 
 			case Phalanx:: TYPE_SUMMARY:
@@ -84,12 +80,12 @@ abstract class PhalanxModel extends WikiaObject {
 			case Phalanx:: TYPE_ANSWERS_RECENT_QUESTIONS:
 			case Phalanx:: TYPE_WIKI_CREATION:
 			case Phalanx:: TYPE_EMAIL:
-				$instance = new PhalanxTextModel($content);
+				$instance = new PhalanxTextModel( $content );
 				break;
 
 			case Phalanx:: TYPE_USER:
-				$user = ($content instanceof User) ? $content : User::newFromName($content);
-				$instance = new PhalanxUserModel($user);
+				$user = ( $content instanceof User ) ? $content : User::newFromName( $content );
+				$instance = new PhalanxUserModel( $user );
 				break;
 		}
 
@@ -98,23 +94,28 @@ abstract class PhalanxModel extends WikiaObject {
 
 	/**
 	 * Skip calls to Phalanx service if this method returns true
+	 * We must skip check if and only if:
+	 * - user has 'phalanxexempt' right (staff/VSTF/helper)
+	 * - this is an internal request (except if it's looking up different user, e.g. user-permissions service)
 	 *
-	 * @return bool
+	 * @return bool whether to skip call to Phalanx service
 	 */
-	public function isOk() {
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) ) ||
-			$this->isWikiaInternalRequest()
+			// SUS-1522: Permit user-permissions service to look up Phalanx blocks for different users
+			( $this->isWikiaInternalRequest() && $this->user->equals( $wgUser ) ) ||
+			$this->user->isAllowed( 'phalanxexempt' )
 		);
 	}
 
-	public function __call($name, $args) {
-		$method = substr($name, 0, 3);
+	public function __call( $name, $args ) {
+		$method = substr( $name, 0, 3 );
 		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
-		switch($method) {
+		switch( $method ) {
 			case 'get':
 				if ( isset( $this->$key ) ) {
 					$result = $this->$key;
@@ -144,7 +145,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function logBlock() {
 		$txt = $this->getText();
-		wfDebug( __METHOD__ . ":". __LINE__. ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode(",", $txt) : $txt ) . "}'.\n", true );
+		wfDebug( __METHOD__ . ":" . __LINE__ . ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode( ",", $txt ) : $txt ) . "}'.\n", true );
 	}
 
 	public function match( $type, $method = 'logBlock' ) {
@@ -155,9 +156,9 @@ abstract class PhalanxModel extends WikiaObject {
 
 			# send request to service
 			$result = $this->service
-				->setLimit(1)
+				->setLimit( 1 )
 				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
-				->match( $type, $content, $this->getLang() );
+				->match( $type, $content );
 
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
@@ -175,7 +176,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function check( $type ) {
 		# send request to service
-		$result = $this->service->check( $type, $this->getText(), $this->getLang() );
+		$result = $this->service->check( $type, $this->getText() );
 
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1

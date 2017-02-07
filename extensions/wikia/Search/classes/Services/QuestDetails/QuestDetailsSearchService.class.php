@@ -37,86 +37,96 @@ class QuestDetailsSearchService extends EntitySearchService {
 	 */
 	protected $solrHelper;
 
-	protected $conditions = [ ];
+	protected $conditions = [];
 
-	protected $requiredFields = [ ];
+	protected $requiredFields = [];
 
 	protected $limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
 
-	protected function getCore(){
+	protected function getCore() {
 		return self::ARTICLE_METADATA_CORE;
 	}
 
 	public function newQuery() {
-		$this->conditions = [ ];
+		$this->conditions = [];
 		$this->limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
 		$this->requiredFields = "*";
+
 		return $this;
 	}
 
 	public function withFingerprint( $fingerprint ) {
-		if( !empty( $fingerprint ) ) {
-			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_FINGERPRINT_FIELD, $fingerprint );
+		if ( !empty( $fingerprint ) ) {
+			$this->conditions[] = $this->queryExactMatch( self::SOLR_FINGERPRINT_FIELD, $fingerprint );
 		}
+
 		return $this;
 	}
 
 	public function withQuestId( $questId ) {
-		if( !empty( $questId ) ) {
-			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_QUEST_ID_FIELD, $questId );
+		if ( !empty( $questId ) ) {
+			$this->conditions[] = $this->queryExactMatch( self::SOLR_QUEST_ID_FIELD, $questId );
 		}
+
 		return $this;
 	}
 
 	public function withCategory( $category ) {
-		if( !empty( $category ) ) {
-			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_CATEGORY_FIELD, $category );
+		if ( !empty( $category ) ) {
+			$this->conditions[] = $this->queryExactMatch( self::SOLR_CATEGORY_FIELD, $category );
 		}
+
 		return $this;
 	}
 
 	public function withIds( $ids, $wikiId ) {
-		if( !empty( $ids ) ) {
+		if ( !empty( $ids ) ) {
 			$ids = $this->appendWikiIdToIds( $ids, $wikiId );
-			$this->conditions[ ] = self::SOLR_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
+			$this->conditions[] = self::SOLR_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
 			$this->limit( count( $ids ) );
 		}
+
 		return $this;
 	}
 
 	public function withWikiId( $wikiId ) {
-		if( !empty( $wikiId ) ) {
-			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_WIKI_ID, $wikiId );
+		if ( !empty( $wikiId ) ) {
+			$this->conditions[] = $this->queryExactMatch( self::SOLR_WIKI_ID, $wikiId );
 		}
+
 		return $this;
 	}
 
 	protected function appendWikiIdToIds( $ids, $wikiId ) {
-		$idsWithWikiId = [ ];
-		foreach( $ids as $id ) {
+		$idsWithWikiId = [];
+		foreach ( $ids as $id ) {
 			$idsWithWikiId[] = $wikiId . '_' . $id;
 		}
+
 		return $idsWithWikiId;
 	}
 
 	public function limit( $limit ) {
-		if( !empty( $limit ) ) {
+		if ( !empty( $limit ) ) {
 			$this->limit = $limit;
 		}
+
 		return $this;
 	}
 
 	public function search() {
 		$query = $this->makeQuery();
+
 		return $this->query( $query );
 	}
 
 	public function makeQuery() {
 		$query = join( self::SOLR_AND, $this->conditions );
+
 		return $query;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();
@@ -130,9 +140,9 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	public function consumeResponse( $response ) {
-		$data = [ ];
+		$data = [];
 		foreach ( $response as $item ) {
-			$data[ $item[ "id" ] ] = $item->getFields();
+			$data[$item["id"]] = $item->getFields();
 		}
 
 		return $data;
@@ -143,13 +153,14 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	public function getSolrHelper() {
-		if( empty( $this->solrHelper ) ) {
+		if ( empty( $this->solrHelper ) ) {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
+
 		return $this->solrHelper;
 	}
 
 	protected function queryExactMatch( $field, $value ) {
-		return $field.':"'.$value.'"';
+		return $field . ':"' . $value . '"';
 	}
 }

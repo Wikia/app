@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25"
+		]
+	},
+	"maps-abb-north": "شمال",
+	"maps-abb-east": "شرق",
+	"maps-abb-south": "جنوب",
+	"maps-abb-west": "غرب",
+	"maps-latitude": "دوائر العرض:",
+	"maps-longitude": "خطوط الطول:"
+}

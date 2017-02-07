@@ -535,8 +535,8 @@ function MarkerWithLabel(opt_options) {
   if (typeof opt_options.optimized === "undefined") {
     opt_options.optimized = false;
   }
-  opt_options.crossImage = opt_options.crossImage || "http://maps.gstatic.com/intl/en_us/mapfiles/drag_cross_67_16.png";
-  opt_options.handCursor = opt_options.handCursor || "http://maps.gstatic.com/intl/en_us/mapfiles/closedhand_8_8.cur";
+  opt_options.crossImage = opt_options.crossImage || "//maps.gstatic.com/intl/en_us/mapfiles/drag_cross_67_16.png";
+  opt_options.handCursor = opt_options.handCursor || "//maps.gstatic.com/intl/en_us/mapfiles/closedhand_8_8.cur";
   opt_options.optimized = false; // Optimized rendering is not supported
 
   this.label = new MarkerLabel_(this, opt_options.crossImage, opt_options.handCursor); // Bind the label to the marker

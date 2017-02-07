@@ -9,7 +9,6 @@
 			<th><?= wfMessage( 'phalanx-stats-table-exact' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-regex' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-case' )->escaped(); ?></th>
-			<th><?= wfMessage( 'phalanx-stats-table-language')->escaped(); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,6 +31,7 @@
 		</tr>
 	</tbody>
 </table>
+
 <a href="<?= Sanitizer::encodeAttribute( $editUrl ); ?>" class="modify"><?= wfMessage( 'phalanx-link-modify' )->escaped(); ?></a> &#183;
 <a href="#" class="unblock" data-id="<?= Sanitizer::encodeAttribute( $blockId ); ?>"><?= $wg->Lang->lcfirst( wfMessage( 'phalanx-link-unblock' )->escaped() ); ?></a>
 

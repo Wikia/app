@@ -63,22 +63,22 @@ class ForumHalResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'description' => 'string',
+        'name' => 'string',
+        'id' => 'int',
         'site_id' => 'int',
-        'creator_id' => 'int',
-        'creation_date' => '\Swagger\Client\Discussion\Models\Instant',
+        'modification_date' => '\Swagger\Client\Discussion\Models\Instant',
         'is_viewable' => 'bool',
         'is_editable' => 'bool',
         'is_deleted' => 'bool',
-        'modification_date' => '\Swagger\Client\Discussion\Models\Instant',
-        'post_count' => 'int',
-        'display_order' => 'int',
+        'description' => 'string',
+        'creator_id' => 'int',
         'thread_count' => 'int',
-        'parent_id' => 'int',
+        'post_count' => 'int',
+        'creation_date' => '\Swagger\Client\Discussion\Models\Instant',
         'image_url' => 'string',
+        'parent_id' => 'int',
+        'display_order' => 'int',
         'allows_threads' => 'bool',
-        'name' => 'string',
-        'id' => 'int',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
         '_embedded' => '\Swagger\Client\Discussion\Models\HalForumEmbedded[]'
@@ -94,22 +94,22 @@ class ForumHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'description' => 'description',
+        'name' => 'name',
+        'id' => 'id',
         'site_id' => 'siteId',
-        'creator_id' => 'creatorId',
-        'creation_date' => 'creationDate',
+        'modification_date' => 'modificationDate',
         'is_viewable' => 'isViewable',
         'is_editable' => 'isEditable',
         'is_deleted' => 'isDeleted',
-        'modification_date' => 'modificationDate',
-        'post_count' => 'postCount',
-        'display_order' => 'displayOrder',
+        'description' => 'description',
+        'creator_id' => 'creatorId',
         'thread_count' => 'threadCount',
-        'parent_id' => 'parentId',
+        'post_count' => 'postCount',
+        'creation_date' => 'creationDate',
         'image_url' => 'imageUrl',
+        'parent_id' => 'parentId',
+        'display_order' => 'displayOrder',
         'allows_threads' => 'allowsThreads',
-        'name' => 'name',
-        'id' => 'id',
         '_links' => '_links',
         'requester_id' => 'requesterId',
         '_embedded' => '_embedded'
@@ -125,22 +125,22 @@ class ForumHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'description' => 'setDescription',
+        'name' => 'setName',
+        'id' => 'setId',
         'site_id' => 'setSiteId',
-        'creator_id' => 'setCreatorId',
-        'creation_date' => 'setCreationDate',
+        'modification_date' => 'setModificationDate',
         'is_viewable' => 'setIsViewable',
         'is_editable' => 'setIsEditable',
         'is_deleted' => 'setIsDeleted',
-        'modification_date' => 'setModificationDate',
-        'post_count' => 'setPostCount',
-        'display_order' => 'setDisplayOrder',
+        'description' => 'setDescription',
+        'creator_id' => 'setCreatorId',
         'thread_count' => 'setThreadCount',
-        'parent_id' => 'setParentId',
+        'post_count' => 'setPostCount',
+        'creation_date' => 'setCreationDate',
         'image_url' => 'setImageUrl',
+        'parent_id' => 'setParentId',
+        'display_order' => 'setDisplayOrder',
         'allows_threads' => 'setAllowsThreads',
-        'name' => 'setName',
-        'id' => 'setId',
         '_links' => 'setLinks',
         'requester_id' => 'setRequesterId',
         '_embedded' => 'setEmbedded'
@@ -156,22 +156,22 @@ class ForumHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'description' => 'getDescription',
+        'name' => 'getName',
+        'id' => 'getId',
         'site_id' => 'getSiteId',
-        'creator_id' => 'getCreatorId',
-        'creation_date' => 'getCreationDate',
+        'modification_date' => 'getModificationDate',
         'is_viewable' => 'getIsViewable',
         'is_editable' => 'getIsEditable',
         'is_deleted' => 'getIsDeleted',
-        'modification_date' => 'getModificationDate',
-        'post_count' => 'getPostCount',
-        'display_order' => 'getDisplayOrder',
+        'description' => 'getDescription',
+        'creator_id' => 'getCreatorId',
         'thread_count' => 'getThreadCount',
-        'parent_id' => 'getParentId',
+        'post_count' => 'getPostCount',
+        'creation_date' => 'getCreationDate',
         'image_url' => 'getImageUrl',
+        'parent_id' => 'getParentId',
+        'display_order' => 'getDisplayOrder',
         'allows_threads' => 'getAllowsThreads',
-        'name' => 'getName',
-        'id' => 'getId',
         '_links' => 'getLinks',
         'requester_id' => 'getRequesterId',
         '_embedded' => 'getEmbedded'
@@ -198,22 +198,22 @@ class ForumHalResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
-        $this->container['creator_id'] = isset($data['creator_id']) ? $data['creator_id'] : null;
-        $this->container['creation_date'] = isset($data['creation_date']) ? $data['creation_date'] : null;
+        $this->container['modification_date'] = isset($data['modification_date']) ? $data['modification_date'] : null;
         $this->container['is_viewable'] = isset($data['is_viewable']) ? $data['is_viewable'] : false;
         $this->container['is_editable'] = isset($data['is_editable']) ? $data['is_editable'] : false;
         $this->container['is_deleted'] = isset($data['is_deleted']) ? $data['is_deleted'] : false;
-        $this->container['modification_date'] = isset($data['modification_date']) ? $data['modification_date'] : null;
-        $this->container['post_count'] = isset($data['post_count']) ? $data['post_count'] : null;
-        $this->container['display_order'] = isset($data['display_order']) ? $data['display_order'] : null;
+        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['creator_id'] = isset($data['creator_id']) ? $data['creator_id'] : null;
         $this->container['thread_count'] = isset($data['thread_count']) ? $data['thread_count'] : null;
-        $this->container['parent_id'] = isset($data['parent_id']) ? $data['parent_id'] : null;
+        $this->container['post_count'] = isset($data['post_count']) ? $data['post_count'] : null;
+        $this->container['creation_date'] = isset($data['creation_date']) ? $data['creation_date'] : null;
         $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
+        $this->container['parent_id'] = isset($data['parent_id']) ? $data['parent_id'] : null;
+        $this->container['display_order'] = isset($data['display_order']) ? $data['display_order'] : null;
         $this->container['allows_threads'] = isset($data['allows_threads']) ? $data['allows_threads'] : false;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
         $this->container['requester_id'] = isset($data['requester_id']) ? $data['requester_id'] : null;
         $this->container['_embedded'] = isset($data['_embedded']) ? $data['_embedded'] : null;
@@ -249,22 +249,43 @@ class ForumHalResponse implements ArrayAccess
 
 
     /**
-     * Gets description
+     * Gets name
      * @return string
      */
-    public function getDescription()
+    public function getName()
     {
-        return $this->container['description'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets description
-     * @param string $description
+     * Sets name
+     * @param string $name
      * @return $this
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->container['description'] = $description;
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets id
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
 
         return $this;
     }
@@ -291,43 +312,22 @@ class ForumHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets creator_id
-     * @return int
-     */
-    public function getCreatorId()
-    {
-        return $this->container['creator_id'];
-    }
-
-    /**
-     * Sets creator_id
-     * @param int $creator_id
-     * @return $this
-     */
-    public function setCreatorId($creator_id)
-    {
-        $this->container['creator_id'] = $creator_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets creation_date
+     * Gets modification_date
      * @return \Swagger\Client\Discussion\Models\Instant
      */
-    public function getCreationDate()
+    public function getModificationDate()
     {
-        return $this->container['creation_date'];
+        return $this->container['modification_date'];
     }
 
     /**
-     * Sets creation_date
-     * @param \Swagger\Client\Discussion\Models\Instant $creation_date
+     * Sets modification_date
+     * @param \Swagger\Client\Discussion\Models\Instant $modification_date
      * @return $this
      */
-    public function setCreationDate($creation_date)
+    public function setModificationDate($modification_date)
     {
-        $this->container['creation_date'] = $creation_date;
+        $this->container['modification_date'] = $modification_date;
 
         return $this;
     }
@@ -396,64 +396,43 @@ class ForumHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets modification_date
-     * @return \Swagger\Client\Discussion\Models\Instant
+     * Gets description
+     * @return string
      */
-    public function getModificationDate()
+    public function getDescription()
     {
-        return $this->container['modification_date'];
+        return $this->container['description'];
     }
 
     /**
-     * Sets modification_date
-     * @param \Swagger\Client\Discussion\Models\Instant $modification_date
+     * Sets description
+     * @param string $description
      * @return $this
      */
-    public function setModificationDate($modification_date)
+    public function setDescription($description)
     {
-        $this->container['modification_date'] = $modification_date;
+        $this->container['description'] = $description;
 
         return $this;
     }
 
     /**
-     * Gets post_count
+     * Gets creator_id
      * @return int
      */
-    public function getPostCount()
+    public function getCreatorId()
     {
-        return $this->container['post_count'];
+        return $this->container['creator_id'];
     }
 
     /**
-     * Sets post_count
-     * @param int $post_count
+     * Sets creator_id
+     * @param int $creator_id
      * @return $this
      */
-    public function setPostCount($post_count)
+    public function setCreatorId($creator_id)
     {
-        $this->container['post_count'] = $post_count;
-
-        return $this;
-    }
-
-    /**
-     * Gets display_order
-     * @return int
-     */
-    public function getDisplayOrder()
-    {
-        return $this->container['display_order'];
-    }
-
-    /**
-     * Sets display_order
-     * @param int $display_order
-     * @return $this
-     */
-    public function setDisplayOrder($display_order)
-    {
-        $this->container['display_order'] = $display_order;
+        $this->container['creator_id'] = $creator_id;
 
         return $this;
     }
@@ -480,22 +459,43 @@ class ForumHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets parent_id
+     * Gets post_count
      * @return int
      */
-    public function getParentId()
+    public function getPostCount()
     {
-        return $this->container['parent_id'];
+        return $this->container['post_count'];
     }
 
     /**
-     * Sets parent_id
-     * @param int $parent_id
+     * Sets post_count
+     * @param int $post_count
      * @return $this
      */
-    public function setParentId($parent_id)
+    public function setPostCount($post_count)
     {
-        $this->container['parent_id'] = $parent_id;
+        $this->container['post_count'] = $post_count;
+
+        return $this;
+    }
+
+    /**
+     * Gets creation_date
+     * @return \Swagger\Client\Discussion\Models\Instant
+     */
+    public function getCreationDate()
+    {
+        return $this->container['creation_date'];
+    }
+
+    /**
+     * Sets creation_date
+     * @param \Swagger\Client\Discussion\Models\Instant $creation_date
+     * @return $this
+     */
+    public function setCreationDate($creation_date)
+    {
+        $this->container['creation_date'] = $creation_date;
 
         return $this;
     }
@@ -522,6 +522,48 @@ class ForumHalResponse implements ArrayAccess
     }
 
     /**
+     * Gets parent_id
+     * @return int
+     */
+    public function getParentId()
+    {
+        return $this->container['parent_id'];
+    }
+
+    /**
+     * Sets parent_id
+     * @param int $parent_id
+     * @return $this
+     */
+    public function setParentId($parent_id)
+    {
+        $this->container['parent_id'] = $parent_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets display_order
+     * @return int
+     */
+    public function getDisplayOrder()
+    {
+        return $this->container['display_order'];
+    }
+
+    /**
+     * Sets display_order
+     * @param int $display_order
+     * @return $this
+     */
+    public function setDisplayOrder($display_order)
+    {
+        $this->container['display_order'] = $display_order;
+
+        return $this;
+    }
+
+    /**
      * Gets allows_threads
      * @return bool
      */
@@ -538,48 +580,6 @@ class ForumHalResponse implements ArrayAccess
     public function setAllowsThreads($allows_threads)
     {
         $this->container['allows_threads'] = $allows_threads;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     * @param int $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
 
         return $this;
     }

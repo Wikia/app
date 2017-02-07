@@ -366,7 +366,7 @@ Forum:Help_desk|User Support Forums',
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-	'masthead-anonymous-user' => 'A Wikia contributor',
+	'masthead-anonymous-user' => 'A Fandom user',
 	'mobile-show' => 'Show',
 	'mobile-hide' => 'Hide',
 ];
@@ -7375,7 +7375,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'most_emailed' => 'Am häufigsten verschickt',
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 	'manage_widgets' => 'Widgets verwalten',
-	'masthead-anonymous-user' => 'nicht-angemeldeter Benutzer',
+	'masthead-anonymous-user' => 'Ein Fandom-Nutzer',
 	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
 	'mobile-hide' => 'ausblenden',
 	'mobile-show' => 'anzeigen',
@@ -8752,7 +8752,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'manage_widgets' => 'Organizar widgets',
-	'masthead-anonymous-user' => 'Editor no registrado',
+	'masthead-anonymous-user' => 'Un editor de Fandom',
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
 	'mu_login' => 'Debes identificarte para subir archivos',
 	'multiplefileuploadsummary' => 'Resumen:',
@@ -10106,7 +10106,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'most_visited' => 'Pages les plus vues',
 	'most_emailed' => 'Les plus envoyés',
 	'manage_widgets' => 'Gérer les widgets',
-	'masthead-anonymous-user' => 'Contributeur Wikia',
+	'masthead-anonymous-user' => 'Un contributeur de Fandom',
 	'mobile-hide' => 'Masquer',
 	'mobile-show' => 'Afficher',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
@@ -15109,7 +15109,7 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => 'tutti',
-	'masthead-anonymous-user' => 'Collaboratore non registrato',
+	'masthead-anonymous-user' => 'Un collaboratore di Fandom',
 	'mobile-hide' => 'Nascondi',
 	'mobile-show' => 'Mostra',
 	'most_popular' => 'Più popolari',
@@ -15461,7 +15461,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_visited' => '最多アクセス',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
-	'masthead-anonymous-user' => '匿名ユーザー',
+	'masthead-anonymous-user' => 'Fandom投稿者',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *mainpage|コンテンツ
 **#popular#|お薦め記事
@@ -25847,7 +25847,7 @@ Pozostałe pola zostaną domyślnie ukryte.
 	'most_visited' => 'Najczęściej odwiedzane',
 	'most_emailed' => 'Najczęściej przesyłane',
 	'manage_widgets' => 'Zarządzaj widgetami',
-	'masthead-anonymous-user' => 'Niezarejestrowany użytkownik',
+	'masthead-anonymous-user' => 'Użytkownik Fandomu',
 	'mycontributions' => 'Moje edycje',
 ];
 
@@ -26748,6 +26748,7 @@ Caso o ficheiro tenha sido modificado a partir do seu estado original, alguns de
 	'most_popular' => 'os mais populares',
 	'most_visited' => 'Os mais visitados',
 	'most_emailed' => 'Os mais contatados por correio eletrônico',
+	'masthead-anonymous-user' => 'Um contribuidor do Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -28064,7 +28065,7 @@ $messages['ru'] = [
 	'most_visited' => 'Самые посещаемые',
 	'most_emailed' => 'Самые популярные по количеству электронных писем',
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
-	'masthead-anonymous-user' => 'Незарегистрированный вкладчик',
+	'masthead-anonymous-user' => 'Анонимный участник',
 	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
 	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
 	'mwlink_tip' => 'Внутренняя ссылка',
@@ -36984,6 +36985,7 @@ $messages['zh-hans'] = [
 	'mobile-hide' => '隐藏',
 	'mobile-show' => '显示',
 	'most_visited' => '最多人访问',
+	'masthead-anonymous-user' => 'Fandom贡献者',
 ];
 
 $messages['zh-hant'] = [
@@ -37168,6 +37170,7 @@ $messages['zh-hant'] = [
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
 	'most_visited' => '最多人訪問',
+	'masthead-anonymous-user' => 'Fandom貢獻者',
 ];
 
 $messages['zh-hk'] = [

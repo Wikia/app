@@ -10,19 +10,19 @@ class PhalanxBlockTestPager extends PhalanxPager {
 		$this->blockType = $blockType;
 	}
 
-	public function setRows(Array $rows) {
+	public function setRows( Array $rows ) {
 		$this->rows = $rows;
 	}
 
 	public function getHeader() {
-		return Html::element('h2', array(), sprintf('%s (%d)', $this->blockType, count($this->rows)));
+		return Html::element( 'h2', array(), sprintf( '%s (%d)', $this->blockType, count( $this->rows ) ) );
 	}
 
 	public function getBody() {
 		$ret = '<ul>';
 
-		foreach($this->rows as $row) {
-			$ret .= $this->formatRow($row);
+		foreach ( $this->rows as $row ) {
+			$ret .= $this->formatRow( $row );
 		}
 
 		$ret .= '</ul>';
@@ -36,7 +36,7 @@ class PhalanxBlockTestPager extends PhalanxPager {
 	 * @param stdClass $row Block data as returned by Phalanx service
 	 * @return string Formatted HTML output
 	 */
-	public function formatRow( $row ) {
+	public function formatRow( $row ): string {
 		$newRow = [
 			'p_regex' => $row->regex,
 			'p_expires' => $row->expires,
@@ -46,7 +46,6 @@ class PhalanxBlockTestPager extends PhalanxPager {
 			'p_exact' => $row->exact,
 			'p_case' => $row->caseSensitive,
 			'p_id' => $row->id,
-			'p_language' => $row->language,
 			'p_author_id' => $row->authorId,
 			'p_type' => $row->type
 		];

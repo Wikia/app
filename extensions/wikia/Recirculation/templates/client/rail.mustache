@@ -1,18 +1,34 @@
 <section class="recirculation-rail module recirculation-unit">
-	<h2>{{title}}</h2>
-	<ul class="thumbnails">
-		{{#items}}
-			<li class="rail-item {{classes}} item-{{source}}{{#isVideo}} is-video{{/isVideo}}" {{#id}} data-id="{{id}}" {{/id}} data-flag="{{flag}}" data-index="{{index}}" data-source="{{source}}">
-				<a href="{{url}}">
-					<div class="image image-thumbnail placeholder-thumbnail fluid small">
-						{{#thumbnail}}
-							<img src="{{thumbnail}}" alt="{{title}}" itemprop="thumbnail">
-						{{/thumbnail}}
-					</div>
-					<div class="title" title="{{title}}">{{title}}</div>
-					<div class="metadata">{{author}} &middot; <time class="timeago" datetime="{{pub_date}}">{{pub_date}}</time></div>
-				</a>
-			</li>
-		{{/items}}
-	</ul>
+  <h2>{{title}}</h2>
+  <ul class="thumbnails">
+    {{#items}}
+      <li class="item item-{{source}}{{#isVideo}} is-video{{/isVideo}}"
+          data-flag="{{flag}}"
+          data-index="{{index}}"
+          data-source="{{source}}"
+        {{#id}} data-id="{{id}}" {{/id}}
+        {{#meta}} data-meta="{{meta}}" {{/meta}}
+      >
+        <a href="{{url}}">
+          {{#presented_by}}
+            <div class="recirculation-sponsored-header">
+              Sponsored
+            </div>
+          {{/presented_by}}
+          <div class="image image-thumbnail placeholder-thumbnail fluid small">
+            {{#thumbnail}}
+              <img src="{{thumbnail}}" alt="{{title}}" itemprop="thumbnail">
+            {{/thumbnail}}
+          </div>
+          <div class="title" title="{{title}}">{{title}}</div>
+          <div class="metadata">{{author}} &middot; <time class="timeago" datetime="{{pub_date}}">{{pub_date}}</time></div>
+        </a>
+        {{#presented_by}}
+          <div class="recirculation-sponsored-footer">
+            Sponsored by {{presented_by}}
+          </div>
+        {{/presented_by}}
+      </li>
+    {{/items}}
+  </ul>
 </section>

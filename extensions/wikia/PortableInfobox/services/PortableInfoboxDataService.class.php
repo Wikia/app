@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\PortableInfobox\Helpers\PagePropsProxy;
-use Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper;
 use Wikia\PortableInfobox\Parser\Nodes\NodeInfobox;
 
 class PortableInfoboxDataService {
@@ -10,7 +10,7 @@ class PortableInfoboxDataService {
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	protected $title;
-	protected $templateHelper;
+	protected $parsingHelper;
 	protected $propsProxy;
 	protected $cache;
 	protected $cachekey;
@@ -22,9 +22,14 @@ class PortableInfoboxDataService {
 	 */
 	protected function __construct( $title ) {
 		$this->title = $title !== null ? $title : new Title();
-		$this->templateHelper = new PortableInfoboxTemplatesHelper();
+		$this->parsingHelper = new PortableInfoboxParsingHelper();
 		$this->propsProxy = new PagePropsProxy();
-		$this->cachekey = wfMemcKey( __CLASS__, $this->title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
+		$this->cachekey = wfMemcKey(
+			__CLASS__,
+			$this->title->getArticleID(),
+			self::INFOBOXES_PROPERTY_NAME,
+			PortableInfoboxParserTagController::PARSER_TAG_VERSION
+		);
 	}
 
 	public static function newFromTitle( $title ) {
@@ -36,8 +41,8 @@ class PortableInfoboxDataService {
 	}
 
 	// set internal helpers methods
-	public function setTemplatesHelper( $helper ) {
-		$this->templateHelper = $helper;
+	public function setParsingHelper( $helper ) {
+		$this->parsingHelper = $helper;
 
 		return $this;
 	}
@@ -51,11 +56,11 @@ class PortableInfoboxDataService {
 	/**
 	 * Returns infobox data, chain terminator method
 	 *
-	 * @return array in format [ [ 'data' => [], 'sources' => [] ] or [] will be returned
+	 * @return array in format [ [ 'data' => [], 'metadata' => [] ] or [] will be returned
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title );
+			$incOnlyTemplates = $this->parsingHelper->parseIncludeonlyInfoboxes( $this->title );
 			if ( $incOnlyTemplates ) {
 				$this->delete();
 				$this->set( $incOnlyTemplates );
@@ -67,11 +72,10 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	* @param $title
-	* @return array of strings (infobox markups)
-	*/
+	 * @return array of strings (infobox markups)
+	 */
 	public function getInfoboxes() {
-		return $this->templateHelper->getMarkup($this->title);
+		return $this->parsingHelper->getMarkup( $this->title );
 	}
 
 	/**
@@ -80,7 +84,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	public function getImages() {
-		$images = [];
+		$images = [ ];
 		foreach ( $this->getData() as $infobox ) {
 			if ( is_array( $infobox[ 'data' ] ) ) {
 				$images = array_merge( $images, $this->getImageFromOneInfoboxData( $infobox[ 'data' ] ) );
@@ -95,7 +99,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	private function getImageFromOneInfoboxData( $infoboxData ) {
-		$images = [];
+		$images = [ ];
 		foreach ( $infoboxData as $infoboxDataField ) {
 			if ( $infoboxDataField[ 'type' ] === self::IMAGE_FIELD_TYPE && isset( $infoboxDataField[ 'data' ] ) ) {
 				$images = array_merge( $images, $this->getImagesFromOneNodeImageData( $infoboxDataField[ 'data' ] ) );
@@ -110,7 +114,7 @@ class PortableInfoboxDataService {
 	 * @return array
 	 */
 	private function getImagesFromOneNodeImageData( $nodeImageData ) {
-		$images = [];
+		$images = [ ];
 		for ( $i = 0; $i < count( $nodeImageData ); $i++ ) {
 			if ( !empty( $nodeImageData[ $i ] [ 'key' ] ) ) {
 				$images[] = $nodeImageData[ $i ][ 'key' ];
@@ -121,6 +125,7 @@ class PortableInfoboxDataService {
 
 	/**
 	 * Save infobox data, permanently
+	 * NOTICE: This method isn't currently used anywhere
 	 *
 	 * @param NodeInfobox $raw infobox parser output
 	 *
@@ -129,7 +134,11 @@ class PortableInfoboxDataService {
 	public function save( NodeInfobox $raw ) {
 		if ( $raw ) {
 			$stored = $this->get();
-			$stored[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
+			$stored[] = [
+				'parser_tag_version' => PortableInfoboxParserTagController::PARSER_TAG_VERSION,
+				'data' => $raw->getRenderData(),
+				'metadata' => $raw->getMetadata()
+			];
 			$this->set( $stored );
 		}
 
@@ -175,11 +184,38 @@ class PortableInfoboxDataService {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
 			return WikiaDataAccess::cache( $this->cachekey, WikiaResponse::CACHE_STANDARD, function () use ( $id ) {
-				return json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
+				return $this->reparseArticleIfNeeded(
+					json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true )
+				);
 			} );
 		}
 
 		return [ ];
+	}
+
+	/**
+	 * If PageProps has an old version of infobox data/metadata then reparse the page and store fresh data
+	 * If it doesn't have infoboxes property, we treat it as a page without infoboxes - there might be false negatives
+	 *
+	 * @param $infoboxes
+	 *
+	 * @return array
+	 */
+	protected function reparseArticleIfNeeded( $infoboxes ) {
+		if ( is_array( $infoboxes ) ) {
+			foreach ( $infoboxes as $infobox ) {
+				if (
+					empty( $infobox ) ||
+					!isset( $infobox[ 'parser_tag_version' ] ) ||
+					$infobox[ 'parser_tag_version' ] !== PortableInfoboxParserTagController::PARSER_TAG_VERSION
+				) {
+					$infoboxes = $this->parsingHelper->reparseArticle( $this->title );
+					$this->set( $infoboxes );
+				}
+			}
+		}
+
+		return $infoboxes;
 	}
 
 	protected function store( $data ) {

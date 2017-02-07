@@ -6,13 +6,14 @@ class MercuryApiMainPageHandler {
 
 	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
 		$mainPageData = [ ];
-		$curatedContent = self::getCuratedContentData( $mercuryApiModel );
+		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null );
 		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
+		$wikiDescription = self::getWikiDescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
+			$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
@@ -31,12 +32,15 @@ class MercuryApiMainPageHandler {
 			$mainPageData[ 'wikiaStats' ] = $wikiaStats;
 		}
 
+		if ( !empty( $wikiDescription ) ) {
+			$mainPageData[ 'wikiDescription' ] = $wikiDescription;
+		}
+
 		return $mainPageData;
 	}
 
 	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null ) {
 		$data = [ ];
-
 		try {
 			$data = WikiaDataAccess::cache(
 				self::curatedContentDataMemcKey( $section ),
@@ -119,17 +123,11 @@ class MercuryApiMainPageHandler {
 	}
 
 	/**
-	 * @TODO XW-1174 - rethink this
-	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
+	 * Fetches wiki description (aka "Promote your wiki" description)
 	 *
-	 * @param Title $title
-	 * @return array
+	 * @return string
 	 */
-	public static function getMainPageMockedDetails( Title $title ) {
-		return [
-			'ns' => 0,
-			'title' => $title->getText(),
-			'revision' => []
-		];
+	private static function getWikiDescription() {
+		return (new CommunityDataService( F::app()->wg->CityId ))->getCommunityDescription();
 	}
 }

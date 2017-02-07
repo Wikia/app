@@ -15,7 +15,7 @@ class UserLoginHelper extends WikiaModel {
 	const LIMIT_AVATARS = 4;
 	const LIMIT_WIKIS = 3;
 
-	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
+	const WIKIA_EMAIL_DOMAIN = "@fandom.com";
 
 	/**
 	 * Get random avatars from the current wiki

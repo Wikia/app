@@ -82,20 +82,32 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$contentLangCode = $this->app->wg->ContLang->getCode();
 
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal( 'type' ) !== 'forgotPassword' ) {
-			$newLoginPageUrl = '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl();
+		if ( $this->app->wg->EnableNewAuthModal ) {
+			$redirectUrl = $this->getAuthenticationResource()
+				. '?redirect=' . $this->userLoginHelper->getRedirectUrl();
 
 			if ( $contentLangCode !== 'en' ) {
-				$newLoginPageUrl .= '&uselang=' . $contentLangCode;
+				$redirectUrl .= '&uselang=' . $contentLangCode;
 			}
 
-			$this->getOutput()->redirect( $newLoginPageUrl );
+			$this->getOutput()->redirect( $redirectUrl );
 		}
 
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
 			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
+	/**
+	 * @return {string}
+	 */
+	private function getAuthenticationResource() {
+		if ( $this->wg->request->getVal( 'type' ) == 'forgotPassword' ) {
+			return '/forgot-password';
+		} else {
+			return '/signin';
 		}
 	}
 
@@ -802,7 +814,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 
 				// from attemptReset() in SpecialResetpass
-				if ( !$user->checkTemporaryPassword( $password ) && !$user->checkPassword( $password ) ) {
+				if ( !$user->checkPassword( $password )->success() ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
 					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );

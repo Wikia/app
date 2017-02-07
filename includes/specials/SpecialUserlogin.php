@@ -92,21 +92,6 @@ class LoginForm extends SpecialPage {
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
-
-		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
-			// The line below duplicates what WebRequest::__construct() does. The reason for that
-			// is that raw and unprocessed data are required here for debugging purposes. This will
-			// provided the information whether the original user input is somehow malformed
-			// before it is passed to hashing methods.
-			$aData = $_POST + $_GET;
-			if ( isset( $aData['wpPassword'] ) ) {
-				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ . '-raw' );
-			}
-			unset( $aData );
-			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ . '-getText' );
-		}
-
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReason = $request->getText( 'wpReason' );
@@ -665,32 +650,6 @@ class LoginForm extends SpecialPage {
 			return self::SUCCESS;
 		}
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-
-		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
-			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
-		}
-
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType
-		&& is_object( $this->mExtUser )
-		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
-			# The external user and local user have the same name and
-			# password, so we assume they're the same.
-			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
-		}
-
-		// Wikia change - begin - author: @wladek
-		if ( $wgExternalAuthType
-			&& is_object( $this->mExtUser )
-			&& $this->mExtUser->getLastAuthenticationError() )
-		{
-			$this->mAbortLoginErrorMsg = $this->mExtUser->getLastAuthenticationError();
-			return self::ABORTED;
-		}
-		// Wikia change - end
-
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
 		$u = User::newFromName( $this->mUsername );
@@ -716,20 +675,17 @@ class LoginForm extends SpecialPage {
 
 		global $wgBlockDisablesLogin;
 		$abortedMessageKey = null;
-		if ( !$u->checkPassword( $this->mPassword, $abortedMessageKey ) ) {
+		$authResult = $u->checkPassword( $this->mPassword, $abortedMessageKey );
+		if ( !$authResult->success() ) {
 			if ( $abortedMessageKey ) {
 				$this->mAbortLoginErrorMsg = $abortedMessageKey;
 				return self::ABORTED;
 			}
-			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// At this point we just return an appropriate code/ indicating
-				// that the UI should show a password reset form; bot inter-
-				// faces etc will probably just fail cleanly here.
-				$retval = self::RESET_PASS;
-			} else {
-				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
-			}
-		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $u->getName(), $this->mPassword ) ) {
+			$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
+		} elseif ( $authResult->isResetPasswordAuth() ) {
+			// At this point we just return an appropriate code/ indicating
+			// that the UI should show a password reset form; bot inter-
+			// faces etc will probably just fail cleanly here.
 			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
@@ -739,7 +695,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		if ( !in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
-			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval ] );
+			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval, $authResult ] );
 		}
 
 		switch ($retval) {

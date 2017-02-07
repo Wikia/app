@@ -17,6 +17,8 @@ $wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderC
 $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
 $wgAutoloadClasses['AnalyticsProviderAmazonMatch'] = __DIR__ . '/AnalyticsProviderAmazonMatch.php';
 $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
+$wgAutoloadClasses['AnalyticsProviderGoogleFundingChoices'] = __DIR__ . '/AnalyticsProviderGoogleFundingChoices.php';
+$wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
 $wgAutoloadClasses['AnalyticsProviderIVW2'] = __DIR__ . '/AnalyticsProviderIVW2.php';
 $wgAutoloadClasses['AnalyticsProviderIVW3'] = __DIR__ . '/AnalyticsProviderIVW3.php';
 $wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
@@ -25,14 +27,15 @@ $wgAutoloadClasses['AnalyticsProviderOpenXBidder'] = __DIR__ . '/AnalyticsProvid
 $wgAutoloadClasses['AnalyticsProviderPrebid'] = __DIR__ . '/AnalyticsProviderPrebid.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconFastlane'] = __DIR__ . '/AnalyticsProviderRubiconFastlane.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconVulcan'] = __DIR__ . '/AnalyticsProviderRubiconVulcan.php';
-$wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
-$wgAutoloadClasses['AnalyticsProviderUbisoft'] = __DIR__ . '/AnalyticsProviderUbisoft.php';
+$wgAutoloadClasses['AnalyticsProviderNetzAthleten'] = __DIR__ . '/AnalyticsProviderNetzAthleten.php';
 
 //hooks
 //register hook to inject GA js library (MW 1.19)
+$wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleFundingChoices::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleUA::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderNielsen::onWikiaSkinTopScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
+$wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderGoogleFundingChoices::onInstantGlobalsGetVariables';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlobalsGetVariables';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW3::onInstantGlobalsGetVariables';
 

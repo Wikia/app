@@ -274,16 +274,27 @@ class UserStatsService extends WikiaModel {
 		}
 
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
-		$dbw->replace(
-			'wikia_user_properties',
-			[],
-			[
-				'wup_user' => $this->userId,
-				'wup_property' => $statName,
-				'wup_value' => $statVal
-			],
-			__METHOD__
-		);
+		try {
+			$dbw->replace(
+				'wikia_user_properties',
+				[],
+				[
+					'wup_user' => $this->userId,
+					'wup_property' => $statName,
+					'wup_value' => $statVal
+				],
+				__METHOD__
+			);
+		} catch ( DBQueryError $dbQueryError ) {
+			// SUS-1221: Some of these REPLACE queries are failing
+			// If this happens let's log exception details to try to identify root cause
+			Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - UserStatsService::setUserStat failed', [
+				'exception' => $dbQueryError,
+				'userId' => $this->userId,
+				'statName' => $statName,
+				'statValue' => $statVal
+			] );
+		}
 		return $dbw->affectedRows() === 1;
 	}
 

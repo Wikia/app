@@ -14,9 +14,9 @@ define('ext.wikia.recirculation.views.rail', [
 		var curated = new CuratedHelper();
 
 		return curated.injectContent(data)
-			.then(renderTemplate('rail.mustache'))
+			.then(renderTemplate('client/rail.mustache'))
 			.then(utils.waitForRail)
-			.then(function($html) {
+			.then(function ($html) {
 				if (options.before) {
 					$html = options.before($html);
 				}
@@ -29,17 +29,18 @@ define('ext.wikia.recirculation.views.rail', [
 	}
 
 	function renderTemplate(templateName) {
-		return function(data) {
+		return function (data) {
+			data.title = data.title || $.msg('recirculation-fandom-title');
 			data.items = data.items.slice(0, 5);
 			return utils.renderTemplate(templateName, data);
 		};
 	}
 
 	function setupTracking(experimentName) {
-		return function($html) {
+		return function ($html) {
 			tracker.trackVerboseImpression(experimentName, 'rail');
 
-			$html.on('mousedown', 'a', function() {
+			$html.on('mousedown', 'a', function () {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
 			});
 
@@ -47,7 +48,7 @@ define('ext.wikia.recirculation.views.rail', [
 		};
 	}
 
-	return function(config) {
+	return function (config) {
 		$.extend(options, config);
 
 		return {

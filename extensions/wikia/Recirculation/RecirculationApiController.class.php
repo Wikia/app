@@ -40,7 +40,7 @@ class RecirculationApiController extends WikiaApiController {
 			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
 		}
 
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( [
 			'title' => $title,
 			'posts' => $posts,
@@ -59,7 +59,7 @@ class RecirculationApiController extends WikiaApiController {
 		$ignore = trim( $this->request->getVal( 'ignore' ) );
 		$namespaceId = trim( $this->request->getVal( 'namespaceId' ) );
 
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 		$this->response->setData( [
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
 				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(

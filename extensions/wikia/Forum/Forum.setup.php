@@ -85,6 +85,12 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
+// SUS-1196: Invalidate "Forum Activity" rail module when deleting a thread via Nuke / Quick Tools
+$wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
+
+// SUS-260: Prevent moving pages within, into or out of Forum namespaces
+$wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
+
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces

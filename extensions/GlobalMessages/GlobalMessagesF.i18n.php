@@ -5465,8 +5465,8 @@ $messages['de'] = [
 	'file-too-large' => 'Die übertragene Datei ist zu groß',
 	'filename-tooshort' => 'Der Dateiname ist zu kurz',
 	'filetype-banned' => 'Diese Dateiendung ist gesperrt.',
-	'fileexists' => 'Eine Datei mit diesem Namen existiert bereits.
-Bitte prüfe {{#NewWindowLink:$1}} (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.',
+	'fileexists' => "Eine Datei mit diesem Namen existiert bereits.
+Bitte prüfe '''<tt>[[:$1]]</tt>''' (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.",
 	'filepageexists' => 'Eine Beschreibungsseite wurde bereits als \'\'\'<tt>[[:$1]]</tt>\'\'\' erstellt, es ist aber keine Datei mit diesem Namen vorhanden.
 Die eingegebene Beschreibung wird nicht auf die Beschreibungsseite übernommen.
 Die Beschreibungsseite musst du nach dem Hochladen der Datei noch manuell bearbeiten.
@@ -5490,7 +5490,7 @@ Wenn du diese Datei trotzdem hochladen möchtest, gehe bitte zurück und ändere
 	'filename-bad-prefix' => 'Der Dateiname beginnt mit \'\'\'„$1“\'\'\'. Dies ist im allgemeinen der von einer Digitalkamera vorgegebene Dateiname und daher nicht sehr aussagekräftig.
 Bitte gib der Datei einen Namen, der den Inhalt besser beschreibt.',
 	'filename-prefix-blacklist' => ' #<!-- Belasse diese Zeile genau so wie sie ist --> <pre>
-# Die Syntax lautet wie folgt: 
+# Die Syntax lautet wie folgt:
 #   * Alles vom "#"-Zeichen bis zum Ende der Zeile ist ein Kommentar
 #   * Jede nicht-leere Zeile ist ein Prefix für typische Dateinamen, die automatisch durch Digitalkameras vergeben werden
 CIMG # Casio
@@ -28400,7 +28400,7 @@ $messages['zh-hant'] = [
 	'filetype-bad-ie-mime' => '不可以上傳這個檔案，因為 Internet Explorer 會將它偵測為 "$1"，它是一種不容許以及有潛在危險性之檔案類型。',
 	'filetype-unwanted-type' => '\'\'\'".$1"\'\'\'是一種不需要的檔案類型。
 建議的{{PLURAL:$3|一種|多種}}檔案類型有$2。',
-	'filetype-banned-type' => '\'\'\'「.$1」\'\'\'{{PLURAL:$4|不是允許的檔案類型|是不允許的檔案類型}}。 
+	'filetype-banned-type' => '\'\'\'「.$1」\'\'\'{{PLURAL:$4|不是允許的檔案類型|是不允許的檔案類型}}。
 允許的{{PLURAL:$3|檔案類型|檔案類型}} $2。',
 	'filetype-missing' => '該檔案名稱並沒有副檔名 （像 ".jpg"）。',
 	'file-too-large' => '您所提交的檔案過大。',

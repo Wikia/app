@@ -1,4 +1,3 @@
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 @import 'variables';
 
 $admins-module-icon-size: 48px;
@@ -8,7 +7,7 @@ $admins-module-item-width: 80px;
 	text-align: center;
 
 	.community-page-admins-list {
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 
 		.community-page-admin-item {
 			display: inline-block;
@@ -22,17 +21,17 @@ $admins-module-item-width: 80px;
 	}
 
 	.community-page-admins-text {
-		font-size: $typescale-size-minus-1;
-		line-height: $line-height;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: $wds-line-height;
 		padding: $content-spacing-small-plus 0;
 	}
 
 	.community-page-admins-view-all {
 		color: $color-buttons;
 		display: inline-block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $line-height;
+		line-height: $wds-line-height;
 		margin: $content-spacing-xsmall 0 $content-spacing-xxsmall;
 		padding: $content-spacing-small $content-spacing-regular;
 		text-transform: uppercase;

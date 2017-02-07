@@ -17,7 +17,7 @@ $wgExtensionCredits['specialpage'][] = [
 	'descriptionmsg' => 'chat-desc',
 ];
 
-$dir = dirname( __FILE__ );
+$dir = __DIR__;
 
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
@@ -32,6 +32,7 @@ $wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
 $wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
+$wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
@@ -102,6 +103,44 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
 	],
 ];
 
+
+/**
+ * ResourceLoader module for Special:ChatBanList
+ */
+$wgResourceModules[ 'ext.Chat2.ChatBanList' ] = [
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2',
+	'messages' => [
+		'table_pager_limit',
+		'table_pager_empty',
+		'listusersrecordspager',
+		'search',
+		'livepreview-loading',
+		'table_pager_first',
+		'table_pager_prev',
+		'table_pager_next',
+		'table_pager_last',
+		'ipblocklist-submit',
+		'blocklist-timestamp',
+		'blocklist-target',
+		'blocklist-expiry',
+		'blocklist-by',
+		'blocklist-reason',
+	],
+	'styles' => [
+		'../Listusers/css/table.scss',
+	],
+	'scripts' => [
+		'js/ChatBanList.js',
+	],
+	'dependencies' => [
+		'jquery.dataTables',
+		'wikia.nirvana',
+	],
+
+];
+
+
 /**
  * ResourceLoader module
  */
@@ -125,6 +164,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-message-was-too-long',
 		'chat-kick-cant-kick-moderator',
 		'chat-err-connected-from-another-browser',
+		'chat-err-communicating-with-mediawiki',
 		'chat-kick-you-need-permission',
 		'chat-inlinealert-a-made-b-chatmod',
 		// Chat ban modal
@@ -156,7 +196,8 @@ $wgResourceModules['ext.Chat2'] = [
 
 
 define( 'CHAT_TAG', 'chat' );
-define( 'CUC_TYPE_CHAT', 128 );    // for CheckUser operation type
+// for CheckUser operation type
+define( 'CUC_TYPE_CHAT', 128 );
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
@@ -192,7 +233,8 @@ function ChatAjax() {
 		$json = json_encode( $data );
 	}
 	$response = new AjaxResponse( $json );
-	$response->setCacheDuration( 0 ); // don't cache any of these requests
+	// don't cache any of these requests
+	$response->setCacheDuration( 0 );
 	$response->setContentType( 'application/json; charset=utf-8' );
 
 	wfProfileOut( __METHOD__ );

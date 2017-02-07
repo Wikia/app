@@ -53,7 +53,7 @@
 			opts.formatInputTooShort = mw.msg( "sf-select2-input-too-short", opts.minimumInputLength );
 			opts.formatSelection = this.formatSelection;
 			opts.escapeMarkup = function (m) { return m; };
-		} else if ( input_tagname == "INPUT" ) {
+		} else if ( input_tagname === "INPUT" ) {
 			opts.data = this.getData( autocomplete_opts.autocompletesettings );
 		}
 		var sfgAutocompleteOnAllChars = mw.config.get( 'sfgAutocompleteOnAllChars' );
@@ -62,7 +62,7 @@
 				var no_diac_text = sf.select2.base.prototype.removeDiacritics( text );
 				var position = no_diac_text.toUpperCase().indexOf(term.toUpperCase());
 				var position_with_space = no_diac_text.toUpperCase().indexOf(" " + term.toUpperCase());
-				if ( (position != -1 && position === 0 ) ||  position_with_space != -1 ) {
+				if ( (position !== -1 && position === 0 ) || position_with_space !== -1 ) {
 					return true;
 				} else {
 					return false;
@@ -73,10 +73,10 @@
 		opts.formatSearching = mw.msg( "sf-select2-searching" );
 		opts.formatNoMatches = mw.msg( "sf-select2-no-matches" );
 		opts.placeholder = $(input_id).attr( "placeholder" );
-		if ( $(input_id).attr( "existingvaluesonly" ) !== "true" && input_tagname == "INPUT" ) {
+		if ( $(input_id).attr( "existingvaluesonly" ) !== "true" && input_tagname === "INPUT" ) {
 			opts.createSearchChoice = function( term, data ) { if ( $(data).filter(function() { return this.text.localeCompare( term )===0; }).length===0 ) {return { id:term, text:term };} };
 		}
-		if ( $(input_id).val() !== "" && input_tagname == "INPUT" ) {
+		if ( $(input_id).val() !== "" && input_tagname === "INPUT" ) {
 			opts.initSelection = function ( element, callback ) { var data = {id: element.val(), text: element.val()}; callback(data); };
 		}
 		opts.allowClear = true;
@@ -103,7 +103,7 @@
 		var dep_on = this.dependentOn();
 		var i, data;
 		if ( dep_on === null ) {
-			if ( autocompletesettings == 'external data' ) {
+			if ( autocompletesettings === 'external data' ) {
 				var name = $(input_id).attr(this.nameAttr($(input_id)));
 				var sfgEDSettings = mw.config.get( 'sfgEDSettings' );
 				var edgValues = mw.config.get( 'edgValues' );
@@ -114,9 +114,9 @@
 					if ( data.title !== undefined && data.title !== null ) {
 						data.title.forEach(function() {
 							values.push({
-							id: i + 1, text: data.title[i]
-						    });
-						    i++;
+								id: i + 1, text: data.title[i]
+							});
+							i++;
 						});
 					}
 					if ( sfgEDSettings[name].image !== undefined && sfgEDSettings[name].image !== "" ) {
@@ -161,7 +161,7 @@
 			my_server += "?action=sfautocomplete&format=json";
 			// URL depends on whether Cargo or Semantic MediaWiki
 			// is being used.
-			if ( dep_field_opts.prop.indexOf('|') == -1 ) {
+			if ( dep_field_opts.prop.indexOf('|') === -1 ) {
 				// SMW
 				my_server += "&property=" + dep_field_opts.prop + "&baseprop=" + dep_field_opts.base_prop + "&basevalue=" + dep_field_opts.base_value;
 			} else {
@@ -186,7 +186,7 @@
 					//Convert data into the format accepted by Select2
 					data.sfautocomplete.forEach( function(item) {
 						values.push({
-						 	id: id++, text: item.title
+							id: id++, text: item.title
 						});
 					});
 					return values;
@@ -208,7 +208,7 @@
 		var data_source = autocomplete_opts.autocompletesettings.split(',')[0];
 		var my_server = mw.util.wikiScript( 'api' );
 		var autocomplete_type = autocomplete_opts.autocompletedatatype;
-		if ( autocomplete_type == 'cargo field' ) {
+		if ( autocomplete_type === 'cargo field' ) {
 			var table_and_field = data_source.split('|');
 			my_server += "?action=sfautocomplete&format=json&cargo_table=" + table_and_field[0] + "&cargo_field=" + table_and_field[1];
 		} else {
@@ -247,8 +247,16 @@
 	combobox_proto.onChange = function() {
 		var self = this;
 		var data = $(this).select2( "data" );
+		var namespace = $(this).attr( "data-namespace" );
+
 		if (data !== null) {
-			$(this).val( data.text );
+ 			var val = data.text;
+ 			if ( namespace && data.id === data.text ) {
+ 				if ( val.indexOf( namespace + ':' ) !== 0 ) {
+ 					val = namespace + ':' + val;
+ 				}
+ 			}
+ 			$(this).val( val );
 		} else {
 			$(this).val( '' );
 		}
@@ -280,11 +288,11 @@
 		var cmbox = new sf.select2.combobox();
 		var tokens = new sf.select2.tokens();
 
-		if ( class_name.indexOf( 'sfComboBox' ) != -1 ) {
+		if ( class_name.indexOf( 'sfComboBox' ) !== -1 ) {
 			cmbox.refresh(dependent_field);
-		} else  if ( class_name.indexOf( 'sfTokens' ) != -1 ) {
+		} else if ( class_name.indexOf( 'sfTokens' ) !== -1 ) {
 			tokens.refresh(dependent_field);
-		} else if ( class_name.indexOf( 'createboxInput' ) != -1 ) {
+		} else if ( class_name.indexOf( 'createboxInput' ) !== -1 ) {
 			var name_attr = cmbox.nameAttr($(dependent_on));
 			var field_name = $(dependent_field).attr(name_attr),
 			base_field_name = $(dependent_on).attr(name_attr),
@@ -296,4 +304,4 @@
 
 	sf.select2.combobox.prototype = combobox_proto;
 
-} )( jQuery, mediaWiki, semanticforms );
+}( jQuery, mediaWiki, semanticforms ) );

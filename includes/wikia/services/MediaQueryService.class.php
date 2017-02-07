@@ -13,6 +13,11 @@ class MediaQueryService extends WikiaService {
 	const SORT_RECENT_FIRST   = 'recent';
 	const SORT_POPULAR_FIRST  = 'popular';
 	const SORT_TRENDING_FIRST = 'trend';
+	/**
+	 * @var string SORT_TRENDING_FIRST_LEGACY
+	 * Legacy sorting option used by requests from Game Guides apps
+	 */
+	const SORT_TRENDING_FIRST_LEGACY = 'trending';
 
 	const DB_RECENT_COLUMN    = 'added_at';
 	const DB_POPULAR_COLUMN   = 'views_total';
@@ -427,12 +432,13 @@ class MediaQueryService extends WikiaService {
 				break;
 
 			case self::SORT_TRENDING_FIRST:
+			case self::SORT_TRENDING_FIRST_LEGACY:
 				$query->ORDER_BY( self::DB_TRENDING_COLUMN )->DESC();
 				break;
 
 			default:
 				throw new InvalidArgumentException( "\$sort was none of '" . self::SORT_RECENT_FIRST . "', '"
-					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "'." );
+					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "', '" . self::SORT_TRENDING_FIRST_LEGACY . "'." );
 				break;
 		}
 

@@ -80,5 +80,15 @@
 	"sf-pageschemas-createtitle": "ფორმის სათაური ახალი გვერდებისათვის:",
 	"sf-pageschemas-edittitle": "ფორმის სათაური არსებული გვერდებისათვის:",
 	"sf_form_freetextlabel": "თავისუფალი ტექსტი",
-	"sf_blank_namespace": "მთავარი"
+	"sf_blank_namespace": "მთავარი",
+	"sf-datepicker-close": "დახურვა",
+	"sf-datepicker-prev": "წინა",
+	"sf-datepicker-next": "შემდეგი",
+	"sf-datepicker-today": "დღეს",
+	"sf-datepicker-weekstart": "კვირის პირველი დღე (0 - კვირა, 1 - ორშაბათი, ...).",
+	"sf-datepicker-firstdate": "პირველი თარიღი, რომელიც შეიძლება აირჩეს (წწწწ/თთ/დდ ფორმატით).",
+	"sf-datepicker-lastdate": "ბოლო თარიღი, რომელიც შეიძლება აირჩეს (წწწწ/თთ/დდ ფორმატით).",
+	"sf-datepicker-disabledaysofweek": "დღეების სია რომელთა არჩევა ვერ მოხერხდება (მაგ. დასვენების დღეები: 6, 0).",
+	"sf-datepicker-highlightdaysofweek": "დღეების სია რომლებიც უნდა ჩანდნენ (მაგ. დასვენების დღეები: 6, 0).",
+	"sf-regexp-wrongformat": "არასწორი ფორმატი."
 }

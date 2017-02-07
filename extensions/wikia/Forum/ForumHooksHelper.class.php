@@ -513,4 +513,36 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-1196: Invalidate "Forum Activity" rail module cache if thread is deleted via Nuke / Quick Tools
+	 * @param Article|WikiPage|Page $page
+	 * @param User $user
+	 * @param string $reason
+	 * @param int $id
+	 * @return bool always true to continue hook processing
+	 */
+	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
+		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$wallHistory = new WallHistory();
+			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-260: Prevent moving pages within, into, or out of Forum namespaces
+	 * @param bool $result whether to allow page moves
+	 * @param int $ns namespace number
+	 * @return bool false if this is Forum namespace to prevent page moves, true otherwise to resume hook processing
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		if ( in_array( $ns, [ NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ] ) ) {
+			$result = false;
+			return false;
+		}
+
+		return true;
+	}
+
 }

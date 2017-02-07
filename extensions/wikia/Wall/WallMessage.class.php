@@ -296,6 +296,14 @@ class WallMessage {
 		return $out;
 	}
 
+	/**
+	 * @param string $body
+	 * @param User $user
+	 * @param string $summary
+	 * @param bool $force
+	 * @param bool $preserveMetadata
+	 * @return string
+	 */
 	public function doSaveComment( $body, $user, $summary = '', $force = false, $preserveMetadata = false ) {
 		wfProfileIn( __METHOD__ );
 
@@ -306,18 +314,23 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
-		$out = $this->getArticleComment()->parseText( $body );
+
+		$articleComment = $this->getArticleComment();
+
+		// parse the new / updated message
+		$articleComment->setRawText( $body );
+		$out = $articleComment->getText();
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
-	public function doSaveMetadata( $user, $summary = '', $force = false ) {
+	protected function doSaveMetadata( $user, $summary = '', $force = false ) {
 		wfProfileIn( __METHOD__ );
-		// @todo: as getRawText overwrites the metadata, we have to make a copy of it
-		// this is done only to quickly fix case 102384, this whole thing should be refactored
-		$metadataCopy = $this->getArticleComment()->mMetadata;
-		$body = $this->getRawText( true );
-		$this->getArticleComment()->mMetadata = $metadataCopy;
+		$body = $this->getArticleComment()->getRawText();
+
+		wfDebug( __METHOD__ . json_encode( $this->getArticleComment()->getAllMetadata() ) . "\n" );
+
 		$out = $this->doSaveComment( $body, $user, $summary, $force, true );
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -542,6 +555,7 @@ class WallMessage {
 	public function setNotifyEveryone( $notifyEveryone ) {
 		if ( $this->isMain() ) {
 			if ( !$this->isAllowedNotifyEveryone() ) {
+				wfDebug( __METHOD__ . " - is not allowed to notify everyone\n" );
 				return false;
 			}
 			$app = F::App();
@@ -903,13 +917,7 @@ class WallMessage {
 	}
 
 	public function getHeadItems() {
-		$ac = $this->getArticleComment();
-
-		if ( !empty( $ac->mHeadItems ) ) {
-			return $ac->mHeadItems;
-		}
-
-		return [ ];
+		return $this->getArticleComment()->getHeadItems();
 	}
 
 	public function getCreateTime( $format = TS_ISO_8601 ) {
@@ -1524,7 +1532,6 @@ class WallMessage {
 	private function updateParentLastComment( $useMaster, CommentsIndex $commentsIndex ) {
 		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 	}
 
 	protected function markInProps( $prop ) {

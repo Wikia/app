@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jagwar"
+		]
+	},
+	"maps-layerdef-invalid-fatal": "Famaritana ny tsy azo ampiasaina mahajanona",
+	"maps-layerdef-wrong-namespace": "Azo ekena ao amin'ny eran'anarana \"$1\" ihany ny famaritan-tsosona",
+	"maps-layerdef-equal-layer-name": "Tsy maintsy tokana ao amin'ny pejy sosona ny anaran-tsosona. Efa ampiasaina anaty sosona hafa \"$1\"",
+	"maps-layerpage-usage": "Pejy misy sarintany mampiasa ny sosona \"$1\"",
+	"maps-layerpage-nousage": "Tsy misy pejy mampiasa ity sosona ity amin'izao fotoana izao.",
+	"validation-error-invalid-layer": "Tsy maintsy sosona azo ampiasaina ny parametatra \"$1\"",
+	"validation-error-invalid-layers": "Tsy maintsy parametatra azo ekena iray na mihoatra ny parametatra \"$1\".",
+	"validation-error-no-non-numerics": "Tsy maintsy tohin-dohavy iray na maro ny parametatra \"$1\".",
+	"maps-layer-of-type": "Karazan-tsosona \"$1\"",
+	"maps-layerdefinition-description": "Mamaritra sosona manokana izay mety aseho amin'ny alalan'ny lefan-tsaritany hafa.",
+	"validation-error-invalid-location": "Tsy maintsy toerana azo ekena ny parametatra \"$1\".",
+	"validation-error-invalid-width": "Tsy maintsy habe azo ekena ny parametatra \"$1\".",
+	"validation-error-invalid-height": "Tsy maintsy haavo azo ekena ny parametatra \"$1\".",
+	"validation-error-invalid-distances": "Tsy maintsy halavirana azo ekena ny parametatra \"$1\".",
+	"validation-error-invalid-image": "Tsy maintsy sary azo ekena ny parametatra \"$1\".",
+	"validation-error-invalid-goverlay": "Tsy maintsy azo ampiasaina ny mpanosona \"$1\".",
+	"validation-error-invalid-goverlays": "Tsy maintsy mpanosona azo ekena iray na mihoatra ny parametatra \"$1\"."
+}

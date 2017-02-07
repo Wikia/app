@@ -10,10 +10,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private $service;
 
 	public function __construct() {
-		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
-		$this->includable(false);
+		parent::__construct( 'Phalanx', 'phalanx' /* restrictions */ );
+		$this->includable( false );
 
-		$this->title = SpecialPage::getTitleFor('Phalanx');
+		$this->title = SpecialPage::getTitleFor( 'Phalanx' );
 		$this->service = new PhalanxService();
 	}
 
@@ -23,7 +23,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->wg->Out->setPageTitle( wfMsg('phalanx-title') );
+		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-title' ) );
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
@@ -31,7 +31,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		// select the current tab
-		switch($this->getPar()) {
+		switch( $this->getPar() ) {
 			case 'test':
 				$currentTab = 'test';
 				break;
@@ -41,10 +41,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		// load resource loader module
-		$this->wg->Out->addModules('ext.wikia.Phalanx');
-		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
+		$this->wg->Out->addModules( 'ext.wikia.Phalanx' );
+		$this->wg->Out->addJsConfigVars( 'wgPhalanxToken', $this->getToken() );
 
-		$this->forward('PhalanxSpecial', $currentTab);
+		$this->forward( 'PhalanxSpecial', $currentTab );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -58,7 +58,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
-			return;
+			return false;
 		}
 
 		// creating / editing a block
@@ -66,20 +66,20 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$res = $this->handleBlockPost();
 
 			// add a message that will be shown after the redirect
-			if ($res === self::RESULT_ERROR) {
+			if ( $res === self::RESULT_ERROR ) {
 				BannerNotificationsController::addConfirmation(
-					wfMsg('phalanx-block-failure'),
+					wfMsg( 'phalanx-block-failure' ),
 					BannerNotificationsController::CONFIRMATION_ERROR
 				);
 			}
 			else {
 				BannerNotificationsController::addConfirmation(
-					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success'),
+					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success' ),
 					BannerNotificationsController::CONFIRMATION_CONFIRM
 				);
 			}
 
-			$this->wg->Out->redirect($this->title->getFullURL());
+			$this->wg->Out->redirect( $this->title->getFullURL() );
 
 			wfProfileOut( __METHOD__ );
 
@@ -89,7 +89,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		/* set pager */
+		// set pager
 		$pager = new PhalanxPager();
 		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
@@ -97,16 +97,16 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$listing .= $pager->getNavigationBar();
 
 		$data = $this->blockDataForForm();
-		$editMode = !empty($data['id']);
+		$editMode = !empty( $data['id'] );
 
 		$expiries = Phalanx::getExpireValues();
-		if ($editMode) {
-			$expiries = array_merge(array('' => wfMsg('phalanx-expiries-select')), $expiries);
+		if ( $editMode ) {
+			$expiries = array_merge( array( '' => wfMsg( 'phalanx-expiries-select' ) ), $expiries );
 		}
 
 		// VSTF should not be allowed to block emails in Phalanx
-		$showEmailBlock = $this->wg->User->isAllowed('phalanxemailblock');
-		$blockTypes  = Phalanx::getAllTypeNames();
+		$showEmailBlock = $this->wg->User->isAllowed( 'phalanxemailblock' );
+		$blockTypes  = Phalanx::getSupportedTypeNames();
 
 		$typeSections = [
 			'page-edition' => [
@@ -127,20 +127,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			]
 		];
 
-		if (!$showEmailBlock) {
-			unset($typeSections['account-creation']);
+		if ( !$showEmailBlock ) {
+			unset( $typeSections['account-creation'] );
 		}
 
 		$this->setVal( 'expiries', $expiries );
-		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
-		$this->setVal( 'data',  $data);
-		$this->setVal( 'editMode',  $editMode);
+		$this->setVal( 'data',  $data );
+		$this->setVal( 'editMode',  $editMode );
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'typeFilter', $pager->getSearchFilter() );
 		$this->setVal( 'blockTypes', $blockTypes );
-		$this->setVal( 'type', $this->wg->Request->getInt('type') );
-		$this->setVal( 'typeSections', $typeSections);
+		$this->setVal( 'type', $this->wg->Request->getInt( 'type' ) );
+		$this->setVal( 'typeSections', $typeSections );
 
 		// SUS-270: preload username into filter search box
 		$this->setVal( 'checkBlocker', $data['checkBlocker'] !== '' ? $data['checkBlocker'] : $data['text'] );
@@ -157,15 +156,15 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$title = SpecialPage::getTitleFor('Phalanx', 'test');
+		$title = SpecialPage::getTitleFor( 'Phalanx', 'test' );
 		$this->setVal( 'action', $title->getLocalURL() );
 
-		$blockText = $this->wg->Request->getText('wpBlockText');
+		$blockText = $this->wg->Request->getText( 'wpBlockText' );
 		$this->setVal( 'blockText', $blockText );
 
 		// check the text against all blocks
-		if ($blockText !== '') {
-			$this->setVal( 'listing', $this->handleBlockTest($blockText) );
+		if ( $blockText !== '' ) {
+			$this->setVal( 'listing', $this->handleBlockTest( $blockText ) );
 		}
 	}
 
@@ -180,7 +179,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$id = $this->wg->Request->getInt( 'id' );
 		if ( $id > 0 ) {
 			// block edit
-			$data = Phalanx::newFromId($id);
+			$data = Phalanx::newFromId( $id );
 
 			if ( ( $data['type'] & Phalanx::TYPE_EMAIL ) && !$this->app->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 				// VSTF members should not be able to view email blocks
@@ -198,10 +197,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		// block creation
 		$pager = new PhalanxPager();
 
-		$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
+		$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '' );
 		$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
 		$data['type'] = $pager->getSearchFilter();
-		$data['text'] = $this->wg->Request->getText('target' , ''); // prefill the filter content using target URL parameter
+		$data['text'] = $this->wg->Request->getText( 'target' , '' ); // prefill the filter content using target URL parameter
 		$data['lang'] = '';
 		$data['expire'] = '';
 		$data['reason'] = '';
@@ -218,14 +217,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockPost() {
 		wfProfileIn( __METHOD__ );
 
-		$expire = $this->wg->Request->getText('wpPhalanxExpire');
-		if ($expire === 'custom') {
-			$expire = $this->wg->Request->getText('wpPhalanxExpireCustom');
+		$expire = $this->wg->Request->getText( 'wpPhalanxExpire' );
+		if ( $expire === 'custom' ) {
+			$expire = $this->wg->Request->getText( 'wpPhalanxExpireCustom' );
 		}
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
-		$isBlockUpdate = ($id !== 0);
-		$data = array(
+		$isBlockUpdate = ( $id !== 0 );
+		$data = [
 			'id'         => $id,
 			'text'       => $this->wg->Request->getText( 'wpPhalanxFilter' ),
 			'exact'      => $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
@@ -235,12 +234,13 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'author_id'  => $this->wg->User->getId(),
 			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
 			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
-			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
-		);
-		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
+		];
+
+		// SUS-1207: call handler directly, don't use hook dispatcher for single handler
+		if ( !PhalanxHooks::onEditPhalanxBlock( $data ) ) {
 			$ret = self::RESULT_ERROR;
 		} else {
 			$ret = $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
@@ -256,33 +256,33 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * @param $blockText string text to be test against all blocks
 	 * @return string HTML
 	 */
-	private function handleBlockTest($blockText) {
+	private function handleBlockTest( $blockText ) {
 		wfProfileIn( __METHOD__ );
 
 		$service = new PhalanxService();
-		$service->setLimit(20);
+		$service->setLimit( 20 );
 
 		$listing = '';
 		$noMatches = true;
 
-		foreach(Phalanx::getAllTypeNames() as $blockType) {
-			$res = $service->match($blockType, $blockText);
+		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
+			$res = $service->match( $blockType, $blockText );
 
-			if (empty($res)) {
+			if ( empty( $res ) ) {
 				continue;
 			}
 
 			$noMatches = false;
 
-			$pager = new PhalanxBlockTestPager($blockType);
+			$pager = new PhalanxBlockTestPager( $blockType );
 			$pager->setContext( $this->getContext() );
-			$pager->setRows($res);
+			$pager->setRows( $res );
 			$listing .= $pager->getHeader();
 			$listing .= $pager->getBody();
 		}
 
-		if ($noMatches) {
-			$pager = new PhalanxBlockTestPager(0);
+		if ( $noMatches ) {
+			$pager = new PhalanxBlockTestPager( 0 );
 			$listing .= $pager->getEmptyBody();
 		}
 
@@ -302,11 +302,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$this->response->setFormat('json');
-		$this->setVal('success', false);
+		$this->response->setFormat( 'json' );
+		$this->setVal( 'success', false );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->setVal('error', 'permission');
+			$this->setVal( 'error', 'permission' );
 
 			wfProfileOut( __METHOD__ );
 			return;
@@ -316,28 +316,29 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$token = $this->request->getVal( 'token' );
 
 		// validate input
-		if (!$id) {
-			$this->setVal('error', 'id');
+		if ( !$id ) {
+			$this->setVal( 'error', 'id' );
 
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if ($token != $this->getToken()) {
-			$this->setVal('error', 'token');
+		if ( $token != $this->getToken() ) {
+			$this->setVal( 'error', 'token' );
 
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		// delete a block
-		if ( !wfRunHooks( "DeletePhalanxBlock", array( $id ) ) ) {
+		// SUS-1207: call handler directly, don't use hook dispatcher for single handler
+		if ( !PhalanxHooks::onDeletePhalanxBlock( $id ) ) {
 			$result = false;
 		} else {
 			$result = true;
 		}
 
-		$this->setVal('success', $result !== false);
+		$this->setVal( 'success', $result !== false );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -353,14 +354,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$this->response->setFormat('json');
-		$this->setVal( 'valid', false);
+		$this->response->setFormat( 'json' );
+		$this->setVal( 'valid', false );
 
 		$regexp = $this->request->getVal( 'regexp' );
 		$token = $this->request->getVal( 'token' );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->setVal('error', 'permission');
+			$this->setVal( 'error', 'permission' );
 
 			wfProfileOut( __METHOD__ );
 			return;
@@ -384,14 +385,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$block = $this->request->getVal( 'block' );
 
 		if ( $token == $this->getToken() ) {
-			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
+			foreach ( Phalanx::getSupportedTypeNames() as $type => $typeName ) {
 				$blocks = $this->service->match( $type, $block );
 				if ( !empty( $blocks ) ) {
 					$result[$type] = $blocks;
 				}
 			}
 		}
-		$this->setVal('blocks', $result);
+		$this->setVal( 'blocks', $result );
 	}
 
 	private function getToken() {

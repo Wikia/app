@@ -290,15 +290,14 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 ** BertH
 * es
 ** Luchofigo85
-** Bola
+** Vpinas
 * fr
-** Wyz
 ** Hypsoline
 * it
 ** Leviathan_89
 ** Cresh.
 * ja
-** Charicocco
+** Kuro0222
 * ko
 ** Miri-Nae
 * nl
@@ -312,8 +311,6 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 * pt-br
 ** Macherie ana
 * ru
-** Kuzura
-** Wildream
 ** vlazovskiy
 * vi
 ** KhangND

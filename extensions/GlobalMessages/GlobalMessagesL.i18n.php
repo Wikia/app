@@ -369,6 +369,7 @@ See also [[MediaWiki:Lastmodifiedat/{{SUBPAGENAME}}]].',
 
 {{Identical|All}}',
 	'livepreview-loading' => '{{Identical|Loading}}',
+	'login-abort-service-unavailable' => 'Message shown to the user trying to log-in when we cannot contact authentication service.',
 ];
 
 $messages['ab'] = [
@@ -425,6 +426,7 @@ Intekening word verbied.',
 	'login-throttled' => 'U het al te veel kere met \'n ongeldige wagwoord probeer aanteken.
 Wag asseblief alvorens u weer probeer.',
 	'login-abort-generic' => 'U is nie aangemeld nie. Die prosedure is gestaak.',
+	'login-abort-service-unavailable' => 'Login is temporarily unavailable. Please try again later.',
 	'loginlanguagelabel' => 'Taal: $1',
 	'link_sample' => 'Skakelnaam',
 	'link_tip' => 'Interne skakel',
@@ -5929,6 +5931,7 @@ Ten en cuenta que las páginas que tengas abiertas en otras ventanas o pestañas
 	'login-userblocked' => 'Este usuario está bloqueado. Inicio de sesión no permitido.',
 	'login-throttled' => 'Has intentado demasiadas veces iniciar sesión. Por favor espera antes de intentarlo nuevamente.',
 	'login-abort-generic' => 'Tu inicio de sesión no se completó - Cancelado',
+	'login-abort-service-unavailable' => 'El inicio de sesión no está disponible temporalmente. Por favor, inténtalo de nuevo más tarde.',
 	'loginlanguagelabel' => 'Idioma: $1',
 	'link_sample' => 'Título del enlace',
 	'link_tip' => 'Enlace interno',
@@ -6984,6 +6987,7 @@ Notez que certaines pages peuvent être encore affichées comme si vous étiez t
 	'login-throttled' => 'Vous avez tenté un trop grand nombre de connexions dernièrement.
 Veuillez attendre avant d’essayer à nouveau.',
 	'login-abort-generic' => 'Votre tentative de connexion a échoué',
+	'login-abort-service-unavailable' => 'La connexion est temporairement indisponible. Veuillez réessayer plus tard.',
 	'loginlanguagelabel' => 'Langue : $1',
 	'link_sample' => 'Titre du lien',
 	'link_tip' => 'Lien interne',

@@ -247,7 +247,7 @@ The latest log entry is provided below for reference:',
 	'patrol-log-diff' => 'revision $1',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-help-blurmesg' => 'Blurry word',
-	'prefs-help-terms' => 'By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia, Inc\'s Terms of Use}}',
+	'prefs-help-terms' => 'By creating an account, you agree to the [[homepage:Terms of use|Wikia, Inc\'s Terms of Use]]',
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
 	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
@@ -8214,7 +8214,7 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'previousdiff' => '← Zum vorherigen Versionsunterschied',
 	'percent' => '$1%',
 	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
-	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den {{#NewWindowLink: homepage:de:Nutzungsbedingungen|Nutzungsbedingungen}} von Fandom zu',
+	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den [[homepage:de:Nutzungsbedingungen|Nutzungsbedingungen]] von Fandom zu',
 	'patrol-log-auto' => '(automatisch)',
 	'patrol-log-diff' => 'Version $1',
 	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
@@ -9649,7 +9649,7 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
 	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
-	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
+	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los [[w:c:es:Términos de uso|términos de uso de Fandom]]',
 	'popular-articles' => 'Artículos Populares',
 	'popular-wikis' => 'Wikis Populares',
 	'preferences_s' => 'Preferencias',
@@ -11223,7 +11223,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'previousdiff' => '← Modification précédente',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l\'intégrité du site tout en respectant les lois fédérales américaines.',
-	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation}}',
+	'prefs-help-terms' => 'En créant un compte, vous acceptez les [[homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation]]',
 	'pipe-separator' => '&#32;•&#32;',
 	'preferences_s' => 'Préférences',
 	'prefs-help-birthday' => 'Pourquoi dois-je fournir cette information?',
@@ -16829,7 +16829,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'patrol-log-header' => 'Di seguito sono elencate le verifiche delle modifiche.',
 	'previousdiff' => '← Differenza precedente',
 	'prefs-help-birthinfo' => 'Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l\'integrità del sito rispettando al contempo le disposizioni federali.',
-	'prefs-help-terms' => 'Con la creazione di un account, accetti i {{#NewWindowLink:w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom}}',
+	'prefs-help-terms' => 'Con la creazione di un account, accetti i [[w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom]]',
 	'preferences_s' => 'Preferenze',
 	'prefs-help-birthday' => 'Perché devo fornire questo dato?',
 	'prefs-help-birthmesg' => 'Perché è necessario indicare la mia data di nascita?',
@@ -17277,7 +17277,7 @@ file_uploadsの設定を確認してください。',
 	'parentheses' => '($1)',
 	'preferences_s' => 'オプション',
 	'prefs-help-birthinfo' => 'Fandomでは健全なサイト運営およびアメリカ合衆国の法規定に則るため、すべてのユーザーに対して生年月日の入力を必須としています。',
-	'prefs-help-terms' => 'アカウントを作成することで、{{#NewWindowLink: homepage:利用規約| Wikia株式会社の利用規約}}に同意したものと見なされます',
+	'prefs-help-terms' => 'アカウントを作成することで、[[homepage:利用規約|Wikia株式会社の利用規約]]に同意したものと見なされます',
 	'popular-articles' => '人気ページ',
 	'popular-wikis' => '人気のウィキ',
 	'prefs-help-birthday' => 'なぜこれが必要なのですか?',
@@ -20275,7 +20275,7 @@ $messages['kri'] = [
 	'portal-url' => 'Project:Mitin-ples fo yuza-dem',
 	'privacy' => 'Polisi fo Praivesi',
 	'privacypage' => 'Project:Polisi fo praivesi',
-	'pagetitle-view-mainpage' => ' 
+	'pagetitle-view-mainpage' => '
 {{SAITNEM}}',
 	'preview' => 'Privyu',
 	'permissionserrorstext-withaction' => 'Yu no get pamishon fo $2, bikoz {{PLURAL:$1|rizin|rizin-dem}}:',
@@ -21478,7 +21478,7 @@ $messages['lez'] = [
 	'page-rss-feed' => '"$1" РСС Xуьрек',
 	'page-atom-feed' => '"$1" Атом-зул',
 	'preview' => 'Сифтедин килигун',
-	'previewnote' => '\'\'\'Рикlел хуьх хьи, им анжах сифтедин килигун я.\'\'\'  
+	'previewnote' => '\'\'\'Рикlел хуьх хьи, им анжах сифтедин килигун я.\'\'\'
 Куь дегишунар гьеле хвенвач!',
 	'permissionserrorstext-withaction' => 'Квез и {{PLURAL:$1|себебдалди|себебралди}} $2 йиз ихтияр авайд туш:',
 	'post-expand-template-inclusion-warning' => '\'\'\'Дикъет:\'\'\' Кутазвай чешнейрин кьадар гзаф чIехи я.
@@ -25721,7 +25721,7 @@ $messages['mzn'] = [
 	'protectedpagetext' => 'این صفحه دچی‌ین وسّه زلفین بزه بیّه.',
 	'protectedinterface' => 'این صفحه ارائه‌دهندهٔ متنی واسط کارور این نرم‌افزار هسته و به منظور پیشگیری از خرابکاری زلفین بزه‌بیّه.',
 	'preview' => 'پیش نمایش',
-	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه. 
+	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه.
  شِمه دگاردسته‌ئون جانـَکِته که و‌نه، ونه اِسا ذخیره‌بیّـِن دوکمه ره بَزنین!',
 	'permissionserrorstext-withaction' => 'ته اجازهٔ $2 ره به {{PLURAL:$1|دلیل|دلایل}} رو به رو ندانی:',
 	'previousrevision' => '→ پیشی دگاردسته‌ئون',
@@ -28814,7 +28814,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
-	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz {{#NewWindowLink: homepage:Terms of use | Zasady Użytkowania}}',
+	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz [[homepage:Terms of use|Zasady Użytkowania]]',
 	'pipe-separator' => '&#32;•&#32;',
 	'prefs-help-birthday' => 'Dlaczego mam podać te informacje?',
 	'prefs-help-birthmesg' => 'Dlaczego mam wpisać swoją datę urodzenia?',
@@ -29906,7 +29906,7 @@ O último registo é apresentado abaixo para referência:',
 	'patrol-log-header' => 'Este é um registo de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
 	'prefs-help-birthinfo' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
-	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os {{#NewWindowLink: w: pt:Termos de Uso |Termos de Uso da Wikia}}',
+	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os [[w:pt:Termos de Uso|Termos de Uso da Wikia]]',
 ];
 
 $messages['pt-br'] = [
@@ -31411,7 +31411,7 @@ ___________________________________________________________
 	'previousdiff' => '← Предыдущая правка',
 	'parentheses' => '($1)',
 	'prefs-help-birthinfo' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Это мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
-	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования, установленными компанией Wikia, Inc.}}',
+	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с [[w:c:ru.community:Викия:Условия_использования|Условиями использования, установленными компанией Wikia, Inc.]]',
 	'popular-articles' => 'Популярные страницы',
 	'popular-wikis' => 'Популярные вики',
 	'prefs-help-birthday' => 'Почему я должен указывать это?',
@@ -32340,7 +32340,7 @@ yer auld password.',
 	'permissionserrors' => 'Richts Errors',
 	'permissionserrorstext' => 'Ye dinnae hae the richts tae dae that, acause o the followin {{PLURAL:$1|grund|grunds}}:',
 	'permissionserrorstext-withaction' => 'Ye dinna hae the richts tae $2, for the follaein {{PLURAL:$1|reason|reasons}}:',
-	'post-expand-template-inclusion-warning' => '\'\'\'Wairnin:\'\'\' Template include size is tae lairge. 
+	'post-expand-template-inclusion-warning' => '\'\'\'Wairnin:\'\'\' Template include size is tae lairge.
 Some templates wull nae be included.',
 	'post-expand-template-inclusion-category' => 'Pages whaur template include size is exceeded',
 	'post-expand-template-argument-warning' => 'Tak tent: This page hauds at least the ae template argument that haes an ower muckle expansion size.
@@ -32372,7 +32372,7 @@ Thae arguments hae been left oot.',
 	'prefs-memberingroups' => 'Member o {{PLURAL:$1|group|groups}}:',
 	'prefs-help-realname' => 'Rael name is optional an gin ye chuise tae provide it this will be uised tae gie ye attreibution for yer wark.',
 	'prefs-help-email' => 'E-mail is optional, bit is needed fur password resets, shuid ye forget yer password.',
-	'prefs-help-email-others' => 'Ye kin an choose tae let others contact ye by e-mail thro\' a link oan yer uiser or collogue  page. 
+	'prefs-help-email-others' => 'Ye kin an choose tae let others contact ye by e-mail thro\' a link oan yer uiser or collogue  page.
 Yer e-mail address insae revealed whin ither uisers contact ye.',
 	'prefs-help-email-required' => 'Yer e-mail address is needit.',
 	'prefs-diffs' => 'Diffs',
@@ -40453,7 +40453,7 @@ $messages['xmf'] = [
 	'protect_expiry_invalid' => 'ვადაშ გიშულაშ თარიღ რე ჩილათირ',
 	'protect_expiry_old' => 'ვადაშ გიშულაშ თარიღ რე ულირ ბორჯის',
 	'protect-text' => '\'\'\'$1\'\'\' ხასილაშო თხილუაშ დონეშ ძირაფა დო თირაფა შეგილებუნა თაქ.',
-	'protect-locked-access' => 'თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა. 
+	'protect-locked-access' => 'თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა.
 ათაქ რე \'\'\'$1\'\'\' ხასილაშ ასეიან გენწყილობეფ.',
 	'protect-cascadeon' => 'ათე ხასილა ასე თხილერ რე, თიშენ ნამდა თენა მიშულირ რე {{PLURAL:$1|ხასილაშა, ნამდგასით|ხასილეფშა, ნამდგეფსით}} ჩართულ აფუ კასკადურ თხილუა.
 თქვა შეგილეუნა დოთირუათ ათე ხასილაშ თხილუაშ დონე, მარა თეს გავლენა ვაღვენუ კასკადურ თხილუაშა.',
@@ -41161,15 +41161,15 @@ $messages['zh-hans'] = [
 
 用户"$2"的登入密码是"$3"。
 
-如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。 
+如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。
 
 谢谢！
 
-Fandom社区团队 
+Fandom社区团队
 
 www.wikia.com
 ___________________________________________________________
-* 若要更改您的个人设置或密码，请访问︰http://www.wikia.com/wiki/Special:参数设置。    
+* 若要更改您的个人设置或密码，请访问︰http://www.wikia.com/wiki/Special:参数设置。
 * 密码提醒来源于以下地址：$1。',
 	'passwordsent' => '用户"$1"的新密码已经寄往所登记的电子邮件地址。
 请在收到后再登录。',
@@ -41344,7 +41344,7 @@ ___________________________________________________________
 	'previousdiff' => '←上一编辑',
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
-	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用条款}}',
+	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此[[homepage:Terms of use|Wikia, Inc使用条款]]',
 	'profile' => '用户档案',
 ];
 
@@ -41570,7 +41570,7 @@ ___________________________________________________________
 	'previousdiff' => '←上一版本',
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Fandom要求所有用戶提供自己的真實出生日期。',
-	'prefs-help-terms' => '創建帳戶，即表示你同意此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用條款}}。',
+	'prefs-help-terms' => '創建帳戶，即表示你同意此[[homepage:Terms of use|Wikia, Inc使用條款]]。',
 	'profile' => '用戶檔案',
 ];
 
@@ -41627,10 +41627,10 @@ $messages['zh-tw'] = [
 	'passwordremindertitle' => 'Wikia密碼變更通知',
 	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
 
-Wikia社區團隊 
+Wikia社區團隊
 
-___________________________________________________________ 
-* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences 
+___________________________________________________________
+* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences
 * 這個密碼通知是由以下IP地址申請的：$1 。',
 	'passwordsent' => '使用者"$1"的新密碼已經寄往所登記的電子郵件地址。
 請在收到後再登入。',

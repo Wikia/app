@@ -1,12 +1,12 @@
-$list-item-padding: 11px 0;
-
 .wds-list {
+	$list-item-padding: 11px 0;
+
 	list-style-type: none;
 	margin: 0;
 	padding: 7px 18px;
 
 	> li {
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: 1em;
 		padding: $list-item-padding;
 	}
@@ -18,7 +18,7 @@ $list-item-padding: 11px 0;
 		};
 
 		> li {
-			font-size: $typescale-size-base;
+			font-size: $wds-typescale-size-base;
 			padding: {
 				bottom: 16px;
 				top: 16px;
@@ -27,7 +27,7 @@ $list-item-padding: 11px 0;
 	}
 
 	&.wds-has-lines-between > li {
-		border-bottom: solid 1px $color-light-c3;
+		border-bottom: solid 1px $wds-color-light-c3;
 
 		&:last-child {
 			border: 0;
