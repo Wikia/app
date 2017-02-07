@@ -194,7 +194,17 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
+	
+	.contributions-details {
+		a {
+			color: $color-text;
 
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+	
 	.links {
 		@include clearfix;
 		li {

@@ -57,23 +57,29 @@
 			<input type="hidden" id="user" value="<?= $user['id']; ?>"/>
 		<? endif; ?>
 		<div class="masthead-info-lower">
-			<div class="tally">
+			<div class="contributions-details tally">
 				<? if ( !empty( $user['registration'] ) ): ?>
 					<? if ( !empty( $user['edits'] ) || ( empty( $user['edits'] ) && !empty( $user['registration'] ) ) ): ?>
-						<em><?= $user['edits'] ?></em>
-						<span>
-							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
-						</span>
+						<a href="<?= $user['contributionsURL'] ?>">
+							<em><?= $user['edits'] ?></em>
+							<span>
+								<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
+							</span>
+						</a>
 					<? else: ?>
 						<?php if ( $user['edits'] >= 0 ): ?>
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+							<a href="<?= $user['contributionsURL'] ?>">
+								<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+							</a>
 						<?php else: ?>
 							<br/>
 						<?php endif; ?>
 					<?php endif; ?>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
-						<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+						<a href="<?= $user['contributionsURL'] ?>">
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+						</a>
 					<?php else: ?>
 						<br/>
 					<?php endif; ?>

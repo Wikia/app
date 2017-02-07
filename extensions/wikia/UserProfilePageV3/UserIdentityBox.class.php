@@ -103,6 +103,7 @@ class UserIdentityBox extends WikiaObject {
 			// data depends on which wiki it is displayed
 			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
+			$data['contributionsURL'] = SpecialPage::getTitleFor( 'Contributions', $userName )->getFullURL();
 
 			$data = call_user_func( array( $this, $dataType ), $data );
 
