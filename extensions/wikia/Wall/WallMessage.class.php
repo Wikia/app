@@ -13,6 +13,9 @@ class WallMessage {
 	protected $cityId = 0;
 	protected static $permissionsCache = [ ]; // permissions cache
 	protected static $wallURLCache = [ ];
+
+	protected static $wallMessageCache = [];
+
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
@@ -51,19 +54,29 @@ class WallMessage {
 			return null;
 		}
 
+		// use in-memory cache
+		if ( !empty( self::$wallMessageCache[$id] ) ) {
+			return self::$wallMessageCache[$id];
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
 		if ( $title instanceof Title && $title->exists() ) {
 			wfProfileOut( __METHOD__ );
-			return WallMessage::newFromTitle( $title );
+			return self::$wallMessageCache[$id] = WallMessage::newFromTitle( $title );
 		}
 
 		if ( $master == false ) {
+			// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
+			WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, trying master', [
+				'titleId' => $id
+			] );
+
 			wfProfileOut( __METHOD__ );
 			// if you fail from slave try again from master
-			return self::newFromId( $id, true );
+			return self::$wallMessageCache[$id] = self::newFromId( $id, true );
 		}
 
 		wfProfileOut( __METHOD__ );
