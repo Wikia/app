@@ -71,31 +71,44 @@ class WallMessage {
 		wfProfileIn( __METHOD__ );
 
 		$titles = Title::newFromIDs( $ids );
+
+		/* @var WallMessage[] $wallMessages */
 		$wallMessages = [ ];
 		$correctIds = [ ];
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
 			if ( $title->exists() ) {
-				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->getArticleID();
 			}
 		}
 
-		// TODO: call CommentsIndex::newFromId( $this->getId() ) in a single batch for all wall messages required
+		/**
+		 * Avoid a flood of database queries from CommentsIndex::selectRow
+		 * when WallMessages::getCommentsIndex is called
+		 *
+		 * @see SUS-262
+		 */
+		$commentsIndices = CommentsIndex::newFromIds( $correctIds );
+
+		foreach( $commentsIndices as $commentIndex ) {
+			$wallMessages[ $commentIndex->getCommentId() ]->commentsIndex = $commentIndex;
+		}
 
 		$retryIds = array_diff( $ids, $correctIds );
+
 		foreach ( $retryIds as $id ) {
 			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
-				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 			} else {
 				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $wallMessages;
+		return array_values( $wallMessages );
 	}
 
 	static public function addMessageWall( $userPageTitle ) {

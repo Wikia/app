@@ -81,6 +81,13 @@ class CommentsIndex extends WikiaModel {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getCommentId() {
+		return $this->commentId;
+	}
+
+	/**
 	 * update archived flag
 	 * @param integer $value
 	 */
@@ -360,6 +367,9 @@ class CommentsIndex extends WikiaModel {
 			if ( !empty( $parentPageId ) ) {
 				$comment->parentPageId = $parentPageId;
 			}
+
+			// avoid multiple queries for the same "main" entry when visiting Wall page
+			$comment->cache();
 		} else {
 			$comment = null;
 		}
@@ -367,6 +377,34 @@ class CommentsIndex extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $comment;
+	}
+
+
+	/**
+	 * get CommentsIndex objects for a set of ids in a single database query
+	 *
+	 * @see SUS-262
+	 *
+	 * @param int[] $commentId
+	 * @return CommentsIndex[]
+	 */
+	public static function newFromIds( Array $commentIds ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$res = $dbr->select(
+			'comments_index',
+			'*',
+			[ 'comment_id' => $commentIds ],
+			__METHOD__
+		);
+
+		$commments = [];
+
+		while ( $row = $res->fetchObject() ) {
+			$commments[] = CommentsIndex::newFromRow($row);
+		}
+
+		return $commments;
 	}
 
 	/**
