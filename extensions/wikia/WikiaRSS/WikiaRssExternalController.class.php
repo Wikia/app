@@ -131,6 +131,7 @@ class WikiaRssExternalController extends WikiaController {
 			if( $item['description'] ) {
 				$text = trim(mb_convert_encoding($item['description'],$outputEncoding,$charset));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
+				$text = Sanitizer::removeHTMLtags( $text, null, [], [ 'img' ] );
 
 				$d_text = $this->doRssFilter($text, $rssFilter );
 				$d_text = $this->doRssFilterOut($text, $rssFilterout);
