@@ -61,10 +61,9 @@ class MercuryApiHooks {
 	/**
 	 * @param $categoryInserts
 	 * @param $categoryDeletes
-	 * @param Title $categoryTitle
 	 * @return bool
 	 */
-	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes, $categoryTitle ) {
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes ) {
 		$categories = $categoryInserts + $categoryDeletes;
 
 		foreach ( array_keys( $categories ) as $categoryName ) {
