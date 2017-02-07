@@ -384,6 +384,9 @@ class ArticleComment {
 		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
 		$opts->setEditSection( false );
 
+		// SUS-1527: {{Special:RecentChanges}} in message on wall breaks page
+		$opts->setAllowSpecialInclusion( false );
+
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
 			WikiaResponse::CACHE_STANDARD,
