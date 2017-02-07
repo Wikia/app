@@ -320,7 +320,7 @@ class CommentsIndex extends WikiaModel {
 	 * get CommentsIndex object from id
 	 * @param integer $commentId
 	 * @param integer $parentPageId
-	 * @return object $comment
+	 * @return CommentsIndex $comment
 	 */
 	public static function newFromId( $commentId, $parentPageId = 0, $dbw = null ) {
 
@@ -387,7 +387,7 @@ class CommentsIndex extends WikiaModel {
 	/**
 	 * get CommentsIndex object from row
 	 * @param array row
-	 * @return array comment
+	 * @return CommentsIndex comment
 	 */
 	public static function newFromRow( $row, $dbw = null ) {
 		$data = [
@@ -407,9 +407,7 @@ class CommentsIndex extends WikiaModel {
 			'lastTouched' => $row->last_touched,
 		];
 
-		$comment = new CommentsIndex( $data, $dbw );
-
-		return $comment;
+		return new CommentsIndex( $data, $dbw );
 	}
 
 	/**

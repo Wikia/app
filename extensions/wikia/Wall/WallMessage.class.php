@@ -82,9 +82,11 @@ class WallMessage {
 			}
 		}
 
+		// TODO: call CommentsIndex::newFromId( $this->getId() ) in a single batch for all wall messages required
+
 		$retryIds = array_diff( $ids, $correctIds );
 		foreach ( $retryIds as $id ) {
-			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
+			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
 				$wallMessages[] = WallMessage::newFromTitle( $title );
 			} else {
@@ -235,6 +237,9 @@ class WallMessage {
 		return $val;
 	}
 
+	/**
+	 * @return CommentsIndex
+	 */
 	public function getCommentsIndex() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
 			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
@@ -652,6 +657,10 @@ class WallMessage {
 		return $this->getArticleTitle()->getFullUrl();
 	}
 
+	/**
+	 * @param bool $useMasterDB
+	 * @return Title
+	 */
 	public function getArticleTitle( $useMasterDB = false ) {
 		$commentsIndex = $this->getCommentsIndex();
 
