@@ -116,7 +116,7 @@ class WikiaRssExternalController extends WikiaController {
 			$d_title = true;
 
 			$href = htmlspecialchars(trim(mb_convert_encoding($item['link'],$outputEncoding,$charset)));
-			$sanitizedHref = Sanitizer::validateAttributes(['href' => $href], ['href']);
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars(trim(mb_convert_encoding($item['title'],$outputEncoding,$charset)));
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
@@ -197,7 +197,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars( trim( mb_convert_encoding( $item['link'], $outputEncoding, $charset ) ) );
-			$sanitizedHref = Sanitizer::validateAttributes(['href' => $href], ['href']);
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars( trim( mb_convert_encoding( $item['title'], $outputEncoding, $charset ) ) );
 
 			$d_title = $this->doRssFilter($title, $rssFilter) && $this->doRssFilterOut($title, $rssFilterout);
