@@ -135,8 +135,8 @@ class WikiaRssExternalController extends WikiaController {
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
 				$text = strip_tags( $text, '<img><a><br>' );
 
-				$globalStateWrppaer = new \Wikia\Util\GlobalStateWrapper( [ 'wgAllowImageTag' => true ] );
-				$text = $globalStateWrppaer->wrap( function () use ( $text ) {
+				$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgAllowImageTag' => true ] );
+				$text = $globalStateWrapper->wrap( function () use ( $text ) {
 					return Sanitizer::removeHTMLtags( $text, null, [], [ 'a' ] );
 				} );
 
