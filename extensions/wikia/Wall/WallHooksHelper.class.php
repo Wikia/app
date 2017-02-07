@@ -2330,7 +2330,7 @@ class WallHooksHelper {
 				// don't let user edit or delete Message Wall page
 				case 'delete':
 				case 'edit':
-					if ( $title->inNamespace( NS_USER_WALL ) ) {
+					if ( $ns === NS_USER_WALL ) {
 						$allow = false;
 						$result = [ 'badtitle' ];
 					}
