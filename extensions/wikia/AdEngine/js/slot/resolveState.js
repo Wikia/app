@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	}
 
 	function getQueryParam() {
-		return qs.getVal('resolvedState', null);
+		return qs.getVal('resolved_state', null);
 	}
 
 	function isForcedByURLParam() {
