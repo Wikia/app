@@ -23,6 +23,7 @@ $wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
 $wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 $wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
 $wgAutoloadClasses['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
+$wgAutoloadClasses['DiscussionsHelper'] =  $dir . 'DiscussionsHelper.class.php' ;
 $wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
 $wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
 $wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
@@ -35,6 +36,7 @@ $wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
 $wgSpecialPages['Forum'] =  'ForumSpecialController';
 
 // hooks
+$wgHooks['MediaWikiPerformAction'][] = 'ForumHooksHelper::discussionNavigationOverride';
 $wgHooks['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';
 $wgHooks['WallContributionsLine'][] = 'ForumHooksHelper::onWallContributionsLine';
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::getUserPermissionsErrors';

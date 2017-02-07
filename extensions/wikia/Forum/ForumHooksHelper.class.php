@@ -1,6 +1,20 @@
 <?php
 
 class ForumHooksHelper {
+
+	static public function discussionNavigationOverride(
+		OutputPage $output, Page $page, Title $title, $user, $request, $wiki
+	) {
+		$forumTitle = DiscussionsHelper::getTitle($title);
+
+		if ( $forumTitle != null ) {
+			$output->enableClientCache(true);
+			$output->redirect(DiscussionsHelper::getDiscussionsUrl($title));
+		}
+
+		return false;
+	}
+
 	/**
 	 * Render the alternative version of thread page
 	 * @param Title $title
