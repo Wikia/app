@@ -480,7 +480,7 @@ class CheckUser extends SpecialPage {
 				# If this IP is blocked, give a link to the block log
 				$s .= $this->getIPBlockInfo( $ip );
 				$s .= '<div style="margin-left:5%">';
-				$s .= '<small>' . wfMessage( 'checkuser-toollinks', urlencode( $ip ) )->escaped() . '</small>';
+				$s .= '<small>' . wfMessage( 'checkuser-toollinks', urlencode( $ip ) )->parse() . '</small>';
 				$s .= '</div>';
 				$s .= "</li>\n";
 			}
