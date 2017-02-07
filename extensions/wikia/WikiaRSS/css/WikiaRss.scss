@@ -1,0 +1,16 @@
+@import 'skins/shared/mixins/clearfix';
+
+.wikiaRss {
+	dd {
+		@include clearfix;
+	}
+
+	img {
+		float: left;
+		margin: 10px 10px 10px 0;
+
+		&:not([src]) {
+			display: none;
+		}
+	}
+}
