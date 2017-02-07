@@ -39,14 +39,21 @@ class WallMessage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	static public function newFromId( $id, $master = false ) {
+	/**
+	 * @param int $id
+	 * @param bool $master
+	 * @return null|WallMessage
+	 */
+	static public function newFromId( int $id, $master = false ) {
+
+		// WallMessage::getTopParentObj may call this method with $id set to zero
+		if ( $id === 0 ) {
+			return null;
+		}
+
 		wfProfileIn( __METHOD__ );
 
-		if ( $master == true ) {
-			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
-		} else {
-			$title = Title::newFromId( $id );
-		}
+		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
 		if ( $title instanceof Title && $title->exists() ) {
 			wfProfileOut( __METHOD__ );
