@@ -8,10 +8,6 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	var logGroup = 'ext.wikia.adEngine.slot.resolveState',
 		qs = new QueryString();
 
-	function replaceImage(params) {
-		params.backgroundImage.src = params.resolveState.imageSrc;
-	}
-
 	function getQueryParam() {
 		return qs.getVal('resolved_state', null);
 	}
@@ -32,15 +28,31 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		return isForcedByURLParam() || (paramsAreCorrect(params) && !isBlockedByURLParam());
 	}
 
-	function updateAd(params) {
+	function setResolveState(params) {
 		log('Resolve state is turned on', logGroup, log.levels.debug);
-		replaceImage(params);
+		params.backgroundImage.src = params.resolveState.imageSrc;
 		params.aspectRatio = params.resolveState.aspectRatio;
 		return params;
 	}
 
+	function templateSupportsResolveState(params) {
+		return params.backgroundImage;
+	}
+
+	function setDefaultState(params) {
+		params.backgroundImage.src = params.imageSrc;
+		return params;
+	}
+
+	function setImage(params) {
+		if (templateSupportsResolveState(params)) {
+			params = hasResolvedState(params) ? setResolveState(params) : setDefaultState(params);
+		}
+
+		return params;
+	}
+
 	return {
-		hasResolvedState: hasResolvedState,
-		updateAd: updateAd
+		setImage: setImage
 	};
 });

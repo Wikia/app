@@ -2,7 +2,10 @@
 describe('ext.wikia.adEngine.slot.resolveState', function () {
 	'use strict';
 
-	var mocks = {
+	var BIG_IMAGE = 'bigImage.png',
+		DEFAULT_IMAGE = 'oldImage.png',
+		RESOLVED_IMAGE = 'resolvedImage.png',
+		mocks = {
 			log: function () {},
 			qs: {
 				getVal: function () {
@@ -15,20 +18,25 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 		data = {
 			PARAMS: {
 				CORRECT: {
+					imageSrc: BIG_IMAGE,
 					aspectRatio: 1,
 					resolveState: {
 						aspectRatio: 2,
-						imageSrc: 'newImage.png'
+						imageSrc: RESOLVED_IMAGE
 					},
 					backgroundImage: {
-						src: 'oldImage.png'
+						src: DEFAULT_IMAGE
 					}
 				},
 				INCORRECT: {
 					aspectRatio: 1,
+					imageSrc: BIG_IMAGE,
 					resolveState: {
 						aspectRatio: 0,
-						image: ''
+						imageSrc: RESOLVED_IMAGE
+					},
+					backgroundImage: {
+						src: DEFAULT_IMAGE
 					}
 				},
 				EMPTY: {}
@@ -38,47 +46,47 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 			{
 				params: data.PARAMS.CORRECT,
 				queryParam: null,
-				expected: true
+				expected: RESOLVED_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: null,
-				expected: false
+				expected: BIG_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: 'true',
-				expected: true
+				expected: RESOLVED_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: true,
-				expected: true
+				expected: RESOLVED_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: 'blocked',
-				expected: false
+				expected: BIG_IMAGE
 			},
 			{
 				params: data.PARAMS.CORRECT,
 				queryParam: 'blocked',
-				expected: false
+				expected: BIG_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: 'a',
-				expected: false
+				expected: BIG_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '1',
-				expected: true
+				expected: RESOLVED_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '0',
-				expected: false
+				expected: BIG_IMAGE
 			}
 		];
 
@@ -96,21 +104,29 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 			spyOn(mocks.qs, 'getVal');
 			var rs = getModule();
 			mocks.qs.getVal.and.returnValue(testCase.queryParam);
-			expect(rs.hasResolvedState(testCase.params)).toEqual(testCase.expected);
+
+			expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
 		});
 	});
 
 	it('Should update params aspect ratio', function () {
 		var rs = getModule();
 
-		expect(rs.updateAd(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolveState.aspectRatio);
+		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolveState.aspectRatio);
 	});
 
 	it('Should update image src', function () {
 		var params = data.PARAMS.CORRECT,
 			rs = getModule();
 
-		expect(rs.updateAd(params).backgroundImage.src).toEqual(params.resolveState.imageSrc);
+		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolveState.imageSrc);
+	});
+
+	it('Should not update image if there is no background image (template without backgroundImage)', function () {
+		var params = {},
+			rs = getModule();
+
+		expect(rs.setImage(params)).toEqual(params);
 	});
 
 });

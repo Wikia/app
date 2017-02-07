@@ -87,9 +87,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
-		if (resolveState.hasResolvedState(params)) {
-			params = resolveState.updateAd(params);
-		}
+		params = resolveState.setImage(params);
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
