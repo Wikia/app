@@ -32,11 +32,13 @@ class CommentsIndexTest extends WikiaBaseTest {
 		$rowMock = $this->getFakeCommentsIndexRow(1);
 
 		$dbMock = $this->getMock('stdClass', [ 'selectRow' ] );
-		$dbMock->expects($this->exactly(2))
+		$dbMock->expects($this->exactly(1))
 			->method( 'selectRow' )
 			->will( $this->returnValue( $rowMock ) );
 
 		CommentsIndex::newFromId(1, 0, $dbMock);
+
+		# this call will be served from in-memory cache - hence "$this->exactly(1)" above
 		CommentsIndex::newFromId(1, 0, $dbMock);
 	}
 
