@@ -94,11 +94,13 @@ class WikiaRssExternalController extends WikiaController {
 	 * @return Array
 	 */
 	private function getFullItemList($items, $options) {
+		// TODO DRY see getShortItemList()
+
 		$app = F::app();
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		$date = $options['date'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -117,7 +119,7 @@ class WikiaRssExternalController extends WikiaController {
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
 				$pubdate = trim(mb_convert_encoding($item['dc']['date'],$outputEncoding,$charset));
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
@@ -174,7 +176,7 @@ class WikiaRssExternalController extends WikiaController {
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		$date = $options['date'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -201,7 +203,7 @@ class WikiaRssExternalController extends WikiaController {
 						trim( mb_convert_encoding( $item['dc']['date'], $outputEncoding, $charset ) ) : false;
 				}
 
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
