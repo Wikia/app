@@ -47,6 +47,7 @@ class WikiaRssExternalController extends WikiaController {
 			}
 
 			$rss = $feedData['rss'];
+
 			$short = ( $options['short'] == 'true' ) ? true : false;
 			$reverse = ( $options['reverse'] == 'true' ) ? true : false;
 
@@ -100,7 +101,8 @@ class WikiaRssExternalController extends WikiaController {
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['date'];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = $options['date'] || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -131,7 +133,12 @@ class WikiaRssExternalController extends WikiaController {
 			if( $item['description'] ) {
 				$text = trim(mb_convert_encoding($item['description'],$outputEncoding,$charset));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
-				$text = Sanitizer::removeHTMLtags( $text, null, [], [ 'img' ] );
+				$text = strip_tags( $text, '<img><a><br>' );
+
+				$globalStateWrppaer = new \Wikia\Util\GlobalStateWrapper( [ 'wgAllowImageTag' => true ] );
+				$text = $globalStateWrppaer->wrap( function () use ( $text ) {
+					return Sanitizer::removeHTMLtags( $text, null, [], [ 'a' ] );
+				} );
 
 				$d_text = $this->doRssFilter($text, $rssFilter );
 				$d_text = $this->doRssFilterOut($text, $rssFilterout);
@@ -177,7 +184,8 @@ class WikiaRssExternalController extends WikiaController {
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['date'];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = $options['date'] || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
