@@ -14,6 +14,6 @@
   },
   "author": "dianafa",
   "dependencies": {
-    "Prebid.js" : "Wikia/Prebid.js#master"
+    "prebid.js": "git+ssh://git@github.com/Wikia/Prebid.js.git"
   }
 }
