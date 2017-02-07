@@ -313,6 +313,31 @@ class MercuryApi {
 	}
 
 	/**
+	 * @param Title $title
+	 * @param string|null $displayTitle
+	 *
+	 * @return string
+	 */
+	public function getHtmlTitleForPage( Title $title, $displayTitle ) {
+		if ( $title->isMainPage() ) {
+			return '';
+		}
+
+		if ( $title->inNamespace( NS_FILE ) ) {
+			$file = WikiaFileHelper::getFileFromTitle( $title );
+			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+		} else {
+			$htmlTitle = $displayTitle;
+		}
+
+		if ( empty( $htmlTitle ) ) {
+			$htmlTitle = $title->getPrefixedText();
+		}
+
+		return $htmlTitle;
+	}
+
+	/**
 	 * CuratedContent API returns data in a different format than we need.
 	 * Let's clean it up!
 	 *
