@@ -153,13 +153,15 @@ class ArticleAsJson extends WikiaService {
 			'user' => $details['userName']
 		];
 
+		// Only images are allowed to be linked by user
 		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
 			// TODO remove after XW-2653 is released
 			$media['link'] = $link;
 			$media['href'] = $link;
 			$media['isLinkedByUser'] = true;
 		} else {
-			$media['href'] = $media['type'] === 'image' ? $media['url'] : $media['fileUrl'];
+			// There is no easy way to link directly to a video, so we link to its file page
+			$media['href'] = $media['type'] === 'video' ? $media['fileUrl'] : $media['url'];
 			$media['isLinkedByUser'] = false;
 		}
 
