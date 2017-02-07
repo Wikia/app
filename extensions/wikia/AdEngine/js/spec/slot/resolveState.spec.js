@@ -73,9 +73,13 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '1',
+				expected: true
+			},
+			{
+				params: data.PARAMS.INCORRECT,
+				queryParam: '0',
 				expected: false
 			}
-
 		];
 
 	mocks.log.levels = {debug: ''};

@@ -17,11 +17,11 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	}
 
 	function isForcedByURLParam() {
-		return [true, 'true'].indexOf(getQueryParam()) > -1;
+		return [true, 'true', '1'].indexOf(getQueryParam()) > -1;
 	}
 
 	function isBlockedByURLParam() {
-		return [false, 'blocked', 'false'].indexOf(getQueryParam()) > -1;
+		return [false, 'blocked', 'false', '0'].indexOf(getQueryParam()) > -1;
 	}
 
 	function paramsAreCorrect (params) {
