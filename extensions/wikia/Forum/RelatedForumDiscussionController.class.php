@@ -13,7 +13,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 	public function index() {
 
-		$this->messages = $this->getVal( 'messages' );
+		$this->response->setVal('messages', $this->getVal( 'messages' ));
 
 		// loading assets in Monobook that would normally load in oasis
 		if ( $this->app->checkSkin( 'monobook' ) ) {
@@ -25,14 +25,14 @@ class RelatedForumDiscussionController extends WikiaController {
 		$topicTitle = Title::newFromText( $title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 
 		// common data
-		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped();
-		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$this->newPostUrl = $topicTitle->getFullUrl( 'openEditor=1' );
-		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped();
-		$this->blankImgUrl = wfBlankImgUrl();
+		$this->response->setVal('sectionHeading', wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped());
+		$this->response->setVal('newPostButton', wfMessage( 'forum-related-discussion-new-post-button' )->escaped());
+		$this->response->setVal('newPostUrl', $topicTitle->getFullUrl( 'openEditor=1' ));
+		$this->response->setVal('newPostTooltip', wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped());
+		$this->response->setVal('blankImgUrl', wfBlankImgUrl());
 
-		$this->seeMoreUrl = $topicTitle->getFullUrl();
-		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
+		$this->response->setVal('seeMoreUrl', $topicTitle->getFullUrl());
+		$this->response->setVal('seeMoreText', wfMessage( 'forum-related-discussion-see-more' )->escaped());
 	}
 
 	/**
@@ -42,8 +42,8 @@ class RelatedForumDiscussionController extends WikiaController {
 		$articleId = $this->getVal( 'articleId' );
 		$title = Title::newFromId( $articleId );
 		if ( empty( $articleId ) || empty( $title ) ) {
-			$this->replace = false;
-			$this->articleId = $articleId;
+			$this->response->setVal('replace', false);
+			$this->response->setVal('articleId', $articleId);
 			return;
 		}
 
@@ -51,19 +51,19 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$timediff = time() - $messages['lastupdate'];
 
-		$this->lastupdate = $messages['lastupdate'];
-		$this->timediff = $timediff;
+		$this->response->setVal('lastupdate', $messages['lastupdate']);
+		$this->response->setVal('timediff', $timediff);
 
 		unset( $messages['lastupdate'] );
 
-		if ( $timediff < 24 * 60 * 60 ) {
-			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", [ 'messages' => $messages ] );
-		} else {
-			$this->replace = false;
-			$this->html = '';
+		$html = '';
+		$replace = ( $timediff < 24 * 60 * 60 );
+		if ( $replace ) {
+			$html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", [ 'messages' => $messages ] );
 		}
 
+		$this->response->setVal( 'replace', $replace );
+		$this->response->setVal( 'html', $html );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( 6 * 60 * 60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
