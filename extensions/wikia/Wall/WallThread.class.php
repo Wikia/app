@@ -53,16 +53,11 @@ class WallThread {
 		$this->invalidateCache();
 	}
 
-
-	public function setReplies( $ids ) {
-		// set and cache replies of this thread
-		$this->initializeReplyData();
-
-		$this->data->threadReplyIds = $ids;
-
-		$this->saveToMemcache();
-	}
-
+	/**
+	 * Fetch data for replies on this thread from DB, then cache the result.
+	 * Result is cached indefinitely and is purged when thread is updated
+	 * @see WallThread::invalidateCache()
+	 */
 	private function loadReplyObjs() {
 		if ( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
@@ -81,6 +76,9 @@ class WallThread {
 				$this->data->threadReplyObjs[] = $reply;
 			}
 		}
+
+		// SUS-262: Save state to cache at this point, after objects have been initialized (using WallMessage::newFromIds)
+		$this->saveToMemcache();
 	}
 
 	/**
@@ -93,7 +91,6 @@ class WallThread {
 	private function getReplyIdsFromDB( $dbr, $afterId = 0 ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
-		// (fetch for many threads at once, set with ->setReplies)
 
 		$query = ( new WikiaSQL() )
 			->SELECT( 'distinct comment_id' )
@@ -115,14 +112,13 @@ class WallThread {
 			: array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
 	}
 
-	private function loadReplyIdsFromDB( $master = false ) {
+	private function loadReplyIdsFromDB() {
 		if ( empty( Title::newFromID( $this->mThreadId ) ) ) {
 			return;
 		}
 
-		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$this->setReplies( $this->getReplyIdsFromDB( $dbr ) );
+		$dbr = wfGetDB( DB_SLAVE );
+		$this->data->threadReplyIds = $this->getReplyIdsFromDB( $dbr );
 	}
 
 	public function invalidateCache() {
