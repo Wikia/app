@@ -47,8 +47,6 @@ class WallRelatedPages extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_MASTER );
 
-		$this->createTable();
-
 		$db->begin();
 		$db->delete( 'wall_related_pages', [
 			'comment_id' => $messageId
@@ -121,15 +119,6 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$db = wfGetDB( $dbType );
-
-		if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( $dbType );
-		}
 
 		$result = $db->select(
 			[ 'wall_related_pages' ],
@@ -262,15 +251,6 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$db = wfGetDB( DB_SLAVE );
-
-	    if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( DB_MASTER );
-		}
 
 		// Loading from cache
 		$result = $db->select(
