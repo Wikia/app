@@ -1,4 +1,4 @@
-define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) {
+define('videoScrollBehaviour', ['wikia.window', 'wikia.loader', 'jquery', 'ooyalaVideo'], function (window, loader, $, OoyalaVideo) {
 	'use strict';
 
 	function videoScrollBehaviour(containerId, scrollPosition, youtubeID) {
@@ -8,7 +8,7 @@ define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) 
 		$videoCollapse.addClass(scrollPosition);
 
 
-		var $video = $(containerId + ' .video');
+		var $video = $(containerId + ' .videoo');
 		var videoWidth = $video.outerWidth();
 		var videoHeight = $video.outerHeight();
 		var videoOffset = $video.offset();
@@ -19,16 +19,53 @@ define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) 
 		var scrollOffset = 100;
 		var collapseOffset = videoOffset.top + videoHeight - scrollOffset;
 
+		var ooyalaVideo;
+
 
 		$video.one('click', function () {
 			$videoCollapse.addClass('video-playing');
-			$videoCollapse.append('<iframe src="https://www.youtube.com/embed/' + youtubeID + '?showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+			// $videoCollapse.append('<iframe src="https://www.youtube.com/embed/' + youtubeID + '?showinfo=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+			//
+			var ooyalaJsFile = window.wgArticleVideoData.jsParams.jsFile[0];
+			var ooyalaVideoId = window.wgArticleVideoData.jsParams.videoId;
+			//
+			// loadJs(ooyalaJsFile).done(function () {
+			// 	window.OO.ready(function () {
+			// 		window.OO.Player.create('ooyala-article-video', ooyalaVideoId, {
+			// 			autoplay: true,
+			// 			width: '100%',
+			// 			height: '100%'
+			// 		});
+			// 	});
+			// });
+			ooyalaVideo = new OoyalaVideo('ooyala-article-video', ooyalaJsFile, ooyalaVideoId);
 		});
+
+		function loadJs(resource) {
+			return loader({
+				type: loader.JS,
+				resources: resource
+			}).fail(loadFail);
+		}
+
+		// log any errors from failed script loading (VID-976)
+		function loadFail(data) {
+			var message = data.error + ':';
+
+			$.each(data.resources, function () {
+				message += ' ' + this;
+			});
+
+			log(message, log.levels.error, 'asd');
+		}
 
 		$(window).scroll(function () {
 			if ($(window).scrollTop() > collapseOffset && !videoCollapsed) {
 				videoCollapsed = true;
 				$videoCollapse.addClass('collapsed-ready');
+				if(ooyalaVideo) {
+					ooyalaVideo.miniControls();
+				}
 				$videoCollapse.css(getVideoCollpasedReadyStyles());
 				setTimeout(function () {
 					$videoCollapse.addClass('collapsed');
@@ -44,6 +81,9 @@ define('videoScrollBehaviour', ['wikia.window', 'jquery'], function (window, $) 
 					'width': videoWidth
 				});
 				$videoCollapse.removeClass('collapsed collapsed-ready');
+				if(ooyalaVideo) {
+					ooyalaVideo.fullControls();
+				}
 			}
 		});
 

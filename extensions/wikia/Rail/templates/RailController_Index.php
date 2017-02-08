@@ -8,10 +8,6 @@
   >
 		<div id="WikiaRail">
 
-			<?php if($enablePremiumDesignABTest): ?>
-				<?= $app->renderView( 'PremiumDesignABTest', 'rightrail') ?>
-			<?php endif; ?>
-
 			<?php
 			// sort in reverse order (highest priority displays first)
 			krsort($railModuleList);

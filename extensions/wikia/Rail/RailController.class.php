@@ -9,7 +9,6 @@ class RailController extends WikiaController {
 	const FILTER_NON_LAZY_MODULES = false;
 
 	public function executeIndex($params) {
-		global $wgCityId, $wgEnablePremiumDesignExperiment;
 		wfProfileIn(__METHOD__);
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
@@ -19,8 +18,6 @@ class RailController extends WikiaController {
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
-
-		$this->setVal( 'enablePremiumDesignABTest', $wgEnablePremiumDesignExperiment );
 
 		wfProfileOut(__METHOD__);
 	}

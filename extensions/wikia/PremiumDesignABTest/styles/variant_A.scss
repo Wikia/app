@@ -10,3 +10,24 @@
 .video-collpased .video-thumbnail {
 	background-image: $grindelwald-thumbnail; /* $wgCdnStylePath */
 }
+
+#ooyala-article-video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.collapsed-ready {
+	#ooyala-article-video {
+		//.oo_currentTime, .oo_duration {
+		//	display: none;
+		//}
+		//
+		//.oo_scrubber_track {
+		//	left: 0 !important;
+		//	right: 0 !important;
+		//}
+	}
+}

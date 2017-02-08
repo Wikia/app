@@ -52,7 +52,7 @@ class WikiHeaderController extends WikiaController {
 			'recentchanges' => SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL(),
 		];
 
-		$this->setVal( 'enablePremiumDesignABTest', $wgEnablePremiumDesignExperiment );
+		$this->setVal( 'enablePremiumMVP', $wgEnablePremiumDesignExperiment );
 	}
 
 	public function Wordmark() {

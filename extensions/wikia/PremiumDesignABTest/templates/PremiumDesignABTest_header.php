@@ -1,3 +1,3 @@
-<? if ( in_array( $variant['letter'], [ 'A', 'B' ] ) ) : ?>
-	<?= $app->renderView( 'PremiumDesignABTest', $variant['letter'] . '_header') ?>
-<? endif;
+<div id="premium-mvp-article-header">
+	<?= $app->renderView( 'PageHeader', 'index', $headerModuleParams) ?>
+</div>

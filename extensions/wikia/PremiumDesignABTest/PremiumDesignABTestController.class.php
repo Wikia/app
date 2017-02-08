@@ -13,9 +13,9 @@ class PremiumDesignABTestController extends WikiaController {
 		}
 	}
 
-	public function header() {
-		$this->setVariant();
-	}
+//	public function header() {
+//		$this->setVariant();
+//	}
 
 	public function A_header() {
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
@@ -30,7 +30,15 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function A_pageheader() {
-
+//		$ooyalaHandler = new OoyalaVideoHandler();
+//		$ooyalaHandler->setVideoId('hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O');
+//		$videoData = $ooyalaHandler->getEmbed(600, [
+//			'autoplay' => true,
+//		    'isAjax' => true
+//		]);
+//		$this->wg->Out->addJsConfigVars([
+//			'wgArticleVideoData' => $videoData
+//		]);
 	}
 
 	public function B_pageheader() {
@@ -60,6 +68,10 @@ class PremiumDesignABTestController extends WikiaController {
 	}
 
 	public function video() {
-		$this->setVariant();
+
+	}
+
+	public function header() {
+		$this->headerModuleParams = [ 'showSearchBox' => false ];
 	}
 }

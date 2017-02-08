@@ -3194,58 +3194,18 @@ $config[ 'rwe_page_header_js' ] = [
 
 
 
-$config[ 'premium_design_ab_test_scss_A' ] = [
+$config[ 'premium_mvp_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/styles/variant_A.scss'
+		'//extensions/wikia/PremiumDesignABTest/styles/premium-mvp.scss'
 	]
 ];
 
-$config[ 'premium_design_ab_test_scss_C' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/styles/variant_C.scss'
-	]
-];
-
-$config[ 'premium_design_ab_test_scss_D' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/styles/variant_D.scss'
-	]
-];
-
-$config[ 'premium_design_ab_test_js' ] = [
+$config[ 'premium_mvp_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour.js',
-	]
-];
-
-$config[ 'premium_design_ab_test_js_A' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_A.js',
-	]
-];
-
-$config[ 'premium_design_ab_test_js_D' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_D.js',
-	]
-];
-
-$config[ 'premium_design_ab_test_js_C' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/scripts/videoScrollBehaviour_C.js',
+		'//extensions/wikia/PremiumDesignABTest/scripts/premium-mvp.js'
 	]
 ];

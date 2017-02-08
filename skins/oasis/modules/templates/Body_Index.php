@@ -71,8 +71,8 @@
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
-				<?php if($enablePremiumDesignABTest): ?>
-					<?= $app->renderView( 'PremiumDesignABTest', 'pageheader') ?>
+				<?php if ( $enablePremiumMVP ): ?>
+					<?= $app->renderView( 'PremiumDesignABTest', 'video' ) ?>
 				<?php endif; ?>
 				<?php
 					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
