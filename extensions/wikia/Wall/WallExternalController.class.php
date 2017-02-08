@@ -391,12 +391,16 @@ class WallExternalController extends WikiaController {
 			case 'close':
 				if ( $mw->canArchive( $this->wg->User ) ) {
 					$result = $mw->archive( $this->wg->User, $reason );
+					$mw->getWall()->getTitle()->invalidateCache();
+					wfWaitForSlaves();
 					$mw->purgeSquid();
 				}
 				break;
 			case 'open':
 				if ( $mw->canReopen( $this->wg->User ) ) {
 					$result = $mw->reopen( $this->wg->User );
+					$mw->getWall()->getTitle()->invalidateCache();
+					wfWaitForSlaves();
 					$mw->purgeSquid();
 				}
 				break;

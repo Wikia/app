@@ -1679,7 +1679,7 @@ class WallMessage {
 	}
 
 	/**
-	 * @desc Creates wall message title (a board, a thread, a message) instance and calls purgeSquid() on it
+	 * @desc calls purgeSquid() on $title instance
 	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
 	 */
 	public function purgeSquid() {
