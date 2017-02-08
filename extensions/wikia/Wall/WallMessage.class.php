@@ -85,7 +85,7 @@ class WallMessage {
 
 	/**
 	 * @param array $ids
-	 * @return array
+	 * @return WallMessage[]
 	 */
 	static public function newFromIds( $ids ) {
 		wfProfileIn( __METHOD__ );

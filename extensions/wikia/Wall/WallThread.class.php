@@ -17,14 +17,13 @@ class WallThread {
 	}
 
 	protected function initializeReplyData() {
-		$this->data = new StdClass();
+		$this->data = new stdClass();
 		$this->data->threadReplyIds = false;
 		$this->data->threadReplyObjs = false;
 	}
 
 	/**
-	 * @static
-	 * @param $id
+	 * @param int $id
 	 * @return WallThread
 	 */
 	static public function newFromId( $id ) {
@@ -77,7 +76,6 @@ class WallThread {
 
 		$replyMessages = WallMessage::newFromIds( $this->data->threadReplyIds );
 
-		/** @var WallMessage $reply */
 		foreach ( $replyMessages as $reply ) {
 			if ( !$reply->isAdminDelete() ) {
 				$this->data->threadReplyObjs[] = $reply;
@@ -118,7 +116,7 @@ class WallThread {
 	}
 
 	private function loadReplyIdsFromDB( $master = false ) {
-		if ( empty( Title::newFromId( $this->mThreadId ) ) ) {
+		if ( empty( Title::newFromID( $this->mThreadId ) ) ) {
 			return;
 		}
 
@@ -139,7 +137,7 @@ class WallThread {
 	}
 
 	private function getCache() {
-		return F::App()->wg->Memc;
+		return F::app()->wg->Memc;
 	}
 
 	private function loadFromMemcache() {
@@ -199,14 +197,14 @@ class WallThread {
 
 	public function getLastMessage() {
 		$key = wfMemcKey( __CLASS__, '-thread-lastreply-key', $this->mThreadId );
-		$threadId = $this->mThreadId;
-		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $threadId ) {
+
+		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() {
 			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
 				[ 'comments_index' ],
 				[ 'max(first_rev_id) rev_id' ],
 				[
-						'parent_comment_id' => $threadId,
+						'parent_comment_id' => $this->mThreadId,
 						'archived' => 0,
 						'deleted' => 0,
 						'removed' => 0
@@ -220,7 +218,7 @@ class WallThread {
 		$revision = Revision::newFromId( $data->rev_id );
 		if ( $revision instanceof Revision ) {
 			$title = $revision->getTitle();
-			$wallMessage = WallMessage::newFromId( $title->getArticleId() );
+			$wallMessage = WallMessage::newFromId( $title->getArticleID() );
 			if ( !empty( $wallMessage ) ) {
 				$wallMessage->load();
 				return $wallMessage;
