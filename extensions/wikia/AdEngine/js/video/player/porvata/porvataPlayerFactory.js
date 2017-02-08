@@ -24,7 +24,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 		var width = params.width,
 			height = params.height,
 			mobileVideoAd = params.container.querySelector('video'),
-			videoAdContainer = params.container.querySelector('div');
+			videoAdContainer = params.container.querySelector('div'),
+			destroyCallbacks = [];
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
@@ -104,6 +105,17 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			updateVideoDOMElement: function (volume) {
 				if (mobileVideoAd) {
 					mobileVideoAd.muted = volume === 0;
+				}
+			},
+			addOnDestroyCallback: function (callback) {
+				destroyCallbacks.push(callback);
+			},
+			destroy: function () {
+				var callback = destroyCallbacks.pop();
+
+				while (callback) {
+					callback(this);
+					callback = destroyCallbacks.pop();
 				}
 			}
 		};

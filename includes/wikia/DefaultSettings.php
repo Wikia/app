@@ -1328,6 +1328,13 @@ $wgAdDriverRubiconVulcanCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAolBidderCountries
+ * List of countries where aol bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAolBidderCountries = null;
+
+/**
  * @name $wgAdDriverAppNexusBidderCountries
  * List of countries where appnexus bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

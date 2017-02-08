@@ -1,8 +1,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.log'
-], function (adaptersRegistry, prebid, log) {
+], function (adaptersRegistry, priceGranularityHelper, prebid, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
@@ -20,9 +21,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 
 		slotBids.forEach(function(bid) {
 			if (isValidPrice(bid)) {
-				var bidderCode = bid.bidderCode;
+				var bidderCode = bid.bidderCode,
+					cpmPrice = priceGranularityHelper.transformPriceFromCpm(bid.cpm);
 
-				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(bid.pbAg)).toFixed(2).toString();
+				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
 				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 			}
 
@@ -32,18 +34,12 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	}
 
 	/**
-	 * Checks if bidder has correct status code (is available) and the price is a number.
-	 * getStatusCode check is needed because even in case of error bid.pbAg value is 0.00
+	 * Checks if bidder has correct status code (is available).
 	 * @param bid object
 	 * @returns {boolean}
 	 */
 	function isValidPrice(bid) {
-		var priceFromBidder = bid.pbAg;
-
-		return priceFromBidder !== '' &&
-			!isNaN(priceFromBidder) &&
-			typeof(priceFromBidder) !== 'boolean' &&
-			bid.getStatusCode() === prebid.validResponseStatusCode;
+		return bid.getStatusCode && bid.getStatusCode() === prebid.validResponseStatusCode;
 	}
 
 	return {

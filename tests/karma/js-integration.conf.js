@@ -74,11 +74,6 @@ module.exports = function (config) {
 			// loading specs for core modules
 			'resources/wikia/modules/spec/integration/*.spec.js',
 
-			// SpecialPromote
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
-			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
-
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',
 			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
