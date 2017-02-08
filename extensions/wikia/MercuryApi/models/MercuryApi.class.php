@@ -1,9 +1,12 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
+	const CACHE_TIME_TRENDING_ARTICLES = 60 * 60 * 24;
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -425,6 +428,32 @@ class MercuryApi {
 					$data[] = $processedItem;
 				}
 			}
+		}
+
+		return $data;
+	}
+
+	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+		global $wgContentNamespaces;
+
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => $limit,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
+
+		if ( $category instanceof Title ) {
+			$params['category'] = $category->getText();
+		}
+
+		$data = [];
+
+		try {
+			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = self::processTrendingArticlesData( $rawData );
+		} catch ( NotFoundException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;

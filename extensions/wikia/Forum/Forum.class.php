@@ -31,6 +31,7 @@ class Forum extends Walls {
 			[ 'page.page_namespace' => NS_WIKIA_FORUM_BOARD ],
 			__METHOD__,
 			[ 'ORDER BY' => 'page_title' ],
+			[],
 			$db
 		);
 
