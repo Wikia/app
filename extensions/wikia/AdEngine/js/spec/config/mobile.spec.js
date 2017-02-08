@@ -82,20 +82,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([]);
 	});
 
-	it('getProviderList returns DirectGPT, RemnantGPT for high impact slot', function () {
-		context.slots.invisibleHighImpact = true;
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT'))
-			.toEqual([adProviderDirectMock, adProviderRemnantMock]);
-	});
-
-	it('getProviderLists returns [] for high impact slot when high impact slot is turned off', function () {
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
-	});
-
 	it('getProviderLists returns Evolve2, RemnantGPT when evolve is enabled', function () {
 		context.providers.evolve2 = true;
 		var adConfigMobile = getConfig();

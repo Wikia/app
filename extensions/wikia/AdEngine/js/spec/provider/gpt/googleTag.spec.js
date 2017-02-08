@@ -78,10 +78,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					getTargeting: function () {
 						return ['TOP_RIGHT_BOXAD']
 					}
-				}, {
-					getTargeting: function () {
-						return ['INVISIBLE_HIGH_IMPACT']
-					}
 				}
 			],
 			googleSlots: {

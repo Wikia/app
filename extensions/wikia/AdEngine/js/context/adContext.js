@@ -142,12 +142,6 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
-		// INVISIBLE_HIGH_IMPACT slot
-		context.slots.invisibleHighImpact = (
-				context.slots.invisibleHighImpact &&
-				geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
-			) || isUrlParamSet('highimpactslot');
-
 		context.opts.incontentLeaderboardAsOutOfPage =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
 

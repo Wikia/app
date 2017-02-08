@@ -46,10 +46,6 @@ define('ext.wikia.adEngine.config.mobile', [
 				return [rubiconFastlane];
 		}
 
-		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
-			return [];
-		}
-
 		if (paidAssetDrop.canHandleSlot(slotName)) {
 			return [paidAssetDrop];
 		}
