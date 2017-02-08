@@ -1683,9 +1683,8 @@ class WallMessage {
 	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
 	 */
 	public function purgeSquid() {
-		$title = Title::newFromID( $this->getId() );
-		if ( $title instanceof Title ) {
-			$title->purgeSquid();
+		if ( $this->title instanceof Title ) {
+			$this->title->purgeSquid();
 		}
 	}
 
