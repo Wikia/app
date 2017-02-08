@@ -442,8 +442,9 @@ class ArticleComment {
 
 		$parser = ParserPool::get();
 		$parserOptions = $this->getParserOptions();
+		$user = $parserOptions->getUser();
 
-		$this->mRawtext = $parser->preSaveTransform( $this->mRawtext, $this->mTitle, $parserOptions->getUser(), $parserOptions );
+		$this->mRawtext = $parser->preSaveTransform( $this->mRawtext, $this->mTitle, $user, $parserOptions );
 
 		ParserPool::release( $parser );
 	}
