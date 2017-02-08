@@ -8,7 +8,7 @@ class RelatedForumDiscussionController extends WikiaService {
 	const CACHE_EXPIRY = 86400; // 24*60*60
 
 	public function index() {
-		$this->messages = $this->getVal( 'messages' );
+		$this->response->setVal('messages', $this->getVal( 'messages' ));
 
 		// loading assets in Monobook that would normally load in oasis
 		if ( $this->app->checkSkin( 'monobook' ) ) {
@@ -20,14 +20,14 @@ class RelatedForumDiscussionController extends WikiaService {
 		$topicTitle = Title::newFromText( $title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 
 		// common data
-		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped();
-		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$this->newPostUrl = $topicTitle->getFullUrl( 'openEditor=1' );
-		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped();
-		$this->blankImgUrl = wfBlankImgUrl();
+		$this->response->setVal('sectionHeading', wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped());
+		$this->response->setVal('newPostButton', wfMessage( 'forum-related-discussion-new-post-button' )->escaped());
+		$this->response->setVal('newPostUrl', $topicTitle->getFullUrl( 'openEditor=1' ));
+		$this->response->setVal('newPostTooltip', wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped());
+		$this->response->setVal('blankImgUrl', wfBlankImgUrl());
 
-		$this->seeMoreUrl = $topicTitle->getFullUrl();
-		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
+		$this->response->setVal('seeMoreUrl', $topicTitle->getFullUrl());
+		$this->response->setVal('seeMoreText', wfMessage( 'forum-related-discussion-see-more' )->escaped());
 	}
 
 	/**
