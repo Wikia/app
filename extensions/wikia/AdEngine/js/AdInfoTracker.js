@@ -20,6 +20,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			LEFT_SKYSCRAPER_2: true,
 			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
+			INCONTENT_LEADERBOARD: true,
+			INCONTENT_PLAYER: true,
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
 			MOBILE_BOTTOM_LEADERBOARD: true,
@@ -74,6 +76,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': slotPrices.aol || '',
 			'bidder_7': '',
+			'bidder_8': slotPrices.veles || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''
