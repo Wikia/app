@@ -4,11 +4,12 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
-], function (adContext, pageLevel, adTracker, slotTargeting, geo, log, win, vulcan) {
+], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -39,7 +40,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'creative_id': params.creativeId || emptyValue.int,
 				'vulcan_network': emptyValue.int,
 				'vulcan_advertiser': emptyValue.int,
-				'vulcan_price': emptyValue.price
+				'vulcan_price': emptyValue.price,
+				'browser': [browserDetect.getOS(), browserDetect.getBrowser()].join(' ')
 			},
 			vulcanResponse;
 
