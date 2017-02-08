@@ -319,7 +319,7 @@ class WallMessage {
 
 		// parse the new / updated message
 		$articleComment->setRawText( $body );
-		$out = $articleComment->getText();
+		$out = $articleComment->getTransformedParsedText();
 
 		wfProfileOut( __METHOD__ );
 		return $out;
