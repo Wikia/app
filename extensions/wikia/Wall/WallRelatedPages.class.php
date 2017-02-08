@@ -3,26 +3,6 @@
 class WallRelatedPages extends WikiaModel {
 
 	/**
-	 * Create table if it dosen't exists
-	 */
-	function createTable() {
-		wfProfileIn( __METHOD__ );
-		$dir = dirname( __FILE__ );
-
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return false;
-	}
-
-	/**
 	 * set last update use for ordering on aritcle page
 	 *
 	 */
