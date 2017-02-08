@@ -18,9 +18,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		},
 		{
 			atfSlots: [
-				'MOBILE_TOP_LEADERBOARD',
-				'INVISIBLE_HIGH_IMPACT',
-				'INVISIBLE_HIGH_IMPACT_2'
+				'MOBILE_TOP_LEADERBOARD'
 			]
 		}
 	);
