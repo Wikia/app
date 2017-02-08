@@ -9,8 +9,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
-	'wikia.window'
-], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
@@ -39,6 +40,15 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
 		return porvata.inject(params)
+			.then(function (video) {
+				if (mercuryListener) {
+					mercuryListener.onPageChange(function () {
+						video.destroy();
+					});
+				}
+
+				return video;
+			})
 			.then(function (video) {
 				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
 					template = UITemplate.defaultLayout;
