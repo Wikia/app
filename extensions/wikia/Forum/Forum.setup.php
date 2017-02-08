@@ -49,7 +49,6 @@ $wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
 $wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
 $wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
-$wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
 $wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
 $wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
 $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
