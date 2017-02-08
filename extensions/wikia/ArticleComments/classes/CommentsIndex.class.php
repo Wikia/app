@@ -389,6 +389,12 @@ class CommentsIndex extends WikiaModel {
 	 * @return CommentsIndex[]
 	 */
 	public static function newFromIds( Array $commentIds ) {
+
+		// a shortcut that prevents "DatabaseBase::makeList: empty input" exception
+		if ( count( $commentIds ) == 0 ) {
+			return [];
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select(

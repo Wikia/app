@@ -84,10 +84,10 @@ class WallMessage {
 	}
 
 	/**
-	 * @param array $ids
+	 * @param int[] $ids
 	 * @return WallMessage[]
 	 */
-	static public function newFromIds( $ids ) {
+	static public function newFromIds( Array $ids ) {
 		wfProfileIn( __METHOD__ );
 
 		$titles = Title::newFromIDs( $ids );
