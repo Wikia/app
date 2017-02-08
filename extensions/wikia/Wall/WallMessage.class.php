@@ -1679,11 +1679,13 @@ class WallMessage {
 	}
 
 	/**
-	 * @desc calls purgeSquid() on $title instance
+	 * @desc calls purgeSquid() on $title instance and invalidateCache() on Wall's title instance
 	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
 	 */
-	public function purgeSquid() {
+	public function invalidateCache() {
 		if ( $this->title instanceof Title ) {
+			$this->getWall()->getTitle()->invalidateCache();
+			wfWaitForSlaves();
 			$this->title->purgeSquid();
 		}
 	}
