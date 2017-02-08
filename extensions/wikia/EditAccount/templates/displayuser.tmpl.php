@@ -1,6 +1,5 @@
 <?php
 /**
- * @var array|bool $fanContributorData
  * @var $status
  * @var $statusMsg
  * @var $statusMsg2
@@ -14,7 +13,7 @@
  * @var $isUnsub
  * @var $isDisabled
  * @var $isAdopter
- * @var $fanContributorData
+ * @var $isFanContributor
  * @var $returnURL
  * @var $logLink
  * @var $userStatus
@@ -94,8 +93,8 @@
 
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-fan-contributor', $user )-> escaped(); ?></legend>
-	<?php if ( $fanContributorData ) : ?>
-		<p>Display user data here.</p>
+	<?php if ( $isFanContributor ) : ?>
+		<p><?= wfMessage( 'editaccount-fan-contributor-exists' )->escaped(); ?></p>
 	<?php else: ?>
 		<p><?= wfMessage( 'editaccount-usage-fan-contributor' )-> escaped(); ?></p>
 		<form method="post" action="">

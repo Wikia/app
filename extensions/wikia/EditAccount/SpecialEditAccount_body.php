@@ -20,6 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Attributes\UserAttributes;
 
 class EditAccount extends SpecialPage {
 	/** @var User */
@@ -212,7 +213,7 @@ class EditAccount extends SpecialPage {
 			'isUnsub' => null,
 			'isDisabled' => null,
 			'isAdopter' => null,
-			'fanContributorData' => $this->getFanContributorData(),
+			'isFanContributor' => null,
 			'returnURL' => $this->getTitle()->getFullURL(),
 			'logLink' => Linker::linkKnown(
 				SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
@@ -235,24 +236,25 @@ class EditAccount extends SpecialPage {
 
 			// emailStatus is the status of the email in the "Set new email address" field
 			$emailStatus = ( $this->mUser->isEmailConfirmed() ) ? wfMsg('editaccount-status-confirmed') : wfMsg('editaccount-status-unconfirmed') ;
-			$oTmpl->set_Vars( array(
-					'userEmail' => $this->mUser->getEmail(),
-					'userRealName' => $this->mUser->getRealName(),
-					'userId'  => $this->mUser->getID(),
-					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
-					'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
-					'isClosureRequested' => $this->isClosureRequested(),
-					'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
-					'userStatus' => $userStatus,
-					'emailStatus' => $emailStatus,
-					'changeEmailRequested' => $changeEmailRequested,
-					'mailLogLink' => Linker::linkKnown(
-						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
-						"Mail change log",	// TODO: i18n this
-						array(),			// attribs
-						array('user_id' => $this->mUser->getID())),
-				) );
+			$oTmpl->set_Vars( [
+				'userEmail' => $this->mUser->getEmail(),
+				'userRealName' => $this->mUser->getRealName(),
+				'userId'  => $this->mUser->getID(),
+				'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
+				'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
+				'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
+				'isClosureRequested' => $this->isClosureRequested(),
+				'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
+				'isFanContributor' => $this->isFanContributor(),
+				'userStatus' => $userStatus,
+				'emailStatus' => $emailStatus,
+				'changeEmailRequested' => $changeEmailRequested,
+				'mailLogLink' => Linker::linkKnown(
+					SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+					"Mail change log",	// TODO: i18n this
+					array(),			// attribs
+					array('user_id' => $this->mUser->getID())),
+			] );
 		}
 
 		// HTML output
@@ -615,12 +617,10 @@ class EditAccount extends SpecialPage {
 		return true;
 	}
 
-	private function getFanContributorData() {
-		if ( false ) {
-			return [
-				'wordpressId' => 12345
-			];
-		}
-		return false;
+	private function isFanContributor() {
+		/** @var UserAttributes $attributeService */
+		$attributeService = Injector::getInjector()->get( UserAttributes::class );
+		$wordpressId = $attributeService->getAttribute( $this->mUser->getId(), 'wordpressId', 0 );
+		return $wordpressId > 0;
 	}
 }
