@@ -566,7 +566,7 @@ function axWFactorySaveVariable() {
 				 * catch parse errors
 				 */
 				ob_start();
-				if ( eval( $tEval ) === FALSE ) {
+				if ( eval( $tEval ) === FALSE ) { //NOSONAR
 					$error++;
 					$return = Wikia::errormsg( "Syntax error, value is not valid PHP structure. Variable not saved." );
 				} else {
