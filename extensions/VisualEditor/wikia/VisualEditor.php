@@ -193,6 +193,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice',
 			'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice',
 			'wikia-visualeditor-dialog-wikiamediainsert-log-in-button',
+			'wikia-visualeditor-dialog-wikiamediainsert-register-button',
 			'wikia-visualeditor-dialog-drop-target-callout',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',

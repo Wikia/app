@@ -20,6 +20,7 @@ ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 				.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) )
 				.on( 'click', function () {
 					window.wikiaAuthModal.load( {
+						url: '/signin',
 						onAuthSuccess: function () {
 							this.emit( 'logInSuccess' );
 						}.bind( this )

@@ -83,7 +83,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 			upload: 'onUploadSuccess'
 		},
 		logInEvents = {
-			logInClick: 'onLogInClick'
+			logInClick: 'onLogInClick',
+			registerClick: 'onRegisterClick'
 		};
 
 	// Parent method
@@ -771,6 +772,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.onDocumentKeyDown = function ( e ) {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onLogInClick = function () {
+	window.wikiaAuthModal.load( {
+		url: '/signin',
+		onAuthSuccess: this.onLogInSuccess.bind( this )
+	} );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onRegisterClick = function () {
 	window.wikiaAuthModal.load( {
 		onAuthSuccess: this.onLogInSuccess.bind( this )
 	} );
