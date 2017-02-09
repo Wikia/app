@@ -56,6 +56,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-loading',
 			'wikia-visualeditor-anon-warning',
 			'wikia-visualeditor-anon-log-in',
+			'wikia-visualeditor-anon-register',
 			'accesskey-ca-editsource',
 			'accesskey-ca-ve-edit',
 			'accesskey-save',

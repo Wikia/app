@@ -11,22 +11,38 @@ ve.ui.WikiaAnonWarningWidget.prototype.setupAnonWarning = function (predecessor 
 };
 
 ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
+	var loginLink = this.$( '<a>' )
+		.addClass('ve-ui-wikia-anon-warning__login-link')
+		.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) );
+	var registerLink = this.$( '<a>' )
+		.addClass('ve-ui-wikia-anon-warning__register-link')
+		.text( ve.msg( 'wikia-visualeditor-anon-register' ) );
+
 	this.$anonWarning = this.$( '<div>' )
 		.addClass( 've-ui-wikia-anon-warning' )
-		.text( ve.msg( 'wikia-visualeditor-anon-warning' ) )
-		.append(
-			this.$( '<a>' )
-				.addClass('ve-ui-wikia-anon-warning__login-link')
-				.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) )
-				.on( 'click', function () {
-					window.wikiaAuthModal.load( {
-						url: '/signin',
-						onAuthSuccess: function () {
-							this.emit( 'logInSuccess' );
-						}.bind( this )
-					} );
-				}.bind( this ) )
-		);
+		.html( ve.msg(
+			'wikia-visualeditor-anon-warning',
+			loginLink.get(0).outerHTML,
+			registerLink.get(0).outerHTML
+		) );
+
+	this.$anonWarning.find('.ve-ui-wikia-anon-warning__login-link')
+		.on( 'click', function () {
+			window.wikiaAuthModal.load( {
+				url: '/signin',
+				onAuthSuccess: function () {
+					this.emit( 'logInSuccess' );
+				}.bind( this )
+			} );
+		}.bind( this ) );
+	this.$anonWarning.find('.ve-ui-wikia-anon-warning__register-link')
+		.on( 'click', function () {
+			window.wikiaAuthModal.load( {
+				onAuthSuccess: function () {
+					this.emit( 'logInSuccess' );
+				}.bind( this )
+			} );
+		}.bind( this ) );
 
 	return this.$anonWarning;
 };
