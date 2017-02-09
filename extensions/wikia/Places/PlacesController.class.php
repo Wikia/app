@@ -146,6 +146,17 @@ class PlacesController extends WikiaController {
 	 * Create a new place based on geo data provided and store it in the database
 	 */
 	public function saveNewPlaceToArticle(){
+		// SUS-1638: verify edit token
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $badRequestException ) {
+			$this->response->setValues( [
+				'success' => false,
+				'error' => wfMessage( 'sessionfailure' )->escaped()
+			] );
+			return;
+		}
+
 		$oPlaceModel = new PlaceModel();
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
 
