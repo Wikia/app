@@ -3,9 +3,6 @@
 abstract class WallNotificationControllerBase extends WikiaService {
 	const NOTIFICATION_TITLE_LIMIT = 48;
 
-	/** @var WallHelper $wallHelper */
-	protected $wallHelper;
-
 	public function Index() {
 		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
 		$loggedIn = $wgUser->isLoggedIn();
@@ -251,21 +248,7 @@ abstract class WallNotificationControllerBase extends WikiaService {
 	 * @return string
 	 */
 	protected function shortenTitle( string $title ): string {
-		return $this->getWallHelper()->shortenText( $title, static::NOTIFICATION_TITLE_LIMIT );
-	}
-
-	/**
-	 * Lazy-initialize and cache an instance of WallHelper which will be used to truncate title of notifications
-	 *
-	 * @see WallNotificationControllerBase::shortenTitle()
-	 * @return WallHelper
-	 */
-	protected function getWallHelper(): WallHelper {
-		if ( empty( $this->wallHelper ) ) {
-			$this->wallHelper = new WallHelper();
-		}
-
-		return $this->wallHelper;
+		return WallHelper::shortenText( $this->getContext()->getLanguage(), $title, static::NOTIFICATION_TITLE_LIMIT );
 	}
 
 	/**
