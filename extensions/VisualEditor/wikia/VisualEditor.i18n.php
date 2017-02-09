@@ -141,7 +141,7 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Information that user has to log in for image upload, displayed in add image modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Information that user has to log in for video adding, displayed in add video modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in button, opens a log in modal on click',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Register button, opens a register modal on click',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Register button, opens a register modal on click',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Callout that shows the droppable area for user drag and drop files',
 	'wikia-visualeditor-help-label' => 'Display text for the link to the user guide.
 {{Identical|Known issue}}',
