@@ -54,8 +54,6 @@ class CommentsIndexTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.01076 ms
 	 * The purpose of CommentsIndex cache is avoid database queries for CommentsIndex instances that were created
 	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
 	 * make sure it's not fetched from the database
