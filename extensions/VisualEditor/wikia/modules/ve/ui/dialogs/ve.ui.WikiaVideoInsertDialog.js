@@ -72,7 +72,7 @@ ve.ui.WikiaVideoInsertDialog.prototype.addVideoMainPage = function () {
 		logInButton.on( 'click', function () {
 			this.onLogInClick();
 		}.bind( this ) );
-		
+
 		registerButton.on( 'click', function () {
 			this.onRegisterClick();
 		}.bind( this ) );

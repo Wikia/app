@@ -12,11 +12,11 @@ ve.ui.WikiaAnonWarningWidget.prototype.setupAnonWarning = function (predecessor 
 
 ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 	var loginLink = this.$( '<a>' )
-		.addClass('ve-ui-wikia-anon-warning__login-link')
-		.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) );
-	var registerLink = this.$( '<a>' )
-		.addClass('ve-ui-wikia-anon-warning__register-link')
-		.text( ve.msg( 'wikia-visualeditor-anon-register' ) );
+			.addClass('ve-ui-wikia-anon-warning__login-link')
+			.text( ve.msg( 'wikia-visualeditor-anon-log-in' ) ),
+		registerLink = this.$( '<a>' )
+			.addClass('ve-ui-wikia-anon-warning__register-link')
+			.text( ve.msg( 'wikia-visualeditor-anon-register' ) );
 
 	this.$anonWarning = this.$( '<div>' )
 		.addClass( 've-ui-wikia-anon-warning' )

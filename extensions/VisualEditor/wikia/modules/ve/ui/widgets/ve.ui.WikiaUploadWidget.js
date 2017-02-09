@@ -249,7 +249,7 @@ ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
 	this.logInButton.on( 'click', function () {
 		this.emit( 'logInClick' );
 	}.bind( this ) );
-	
+
 	this.registerButton.on( 'click', function () {
 		this.emit( 'registerClick' );
 	}.bind( this ) );
