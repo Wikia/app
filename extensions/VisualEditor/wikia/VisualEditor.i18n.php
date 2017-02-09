@@ -107,8 +107,9 @@ If you think your page does not need this section, simply delete it. You may als
 
 $messages['qqq'] = [
 	'visualeditor-ca-classiceditor' => 'Link text of the dedicated classic editor',
-	'wikia-visualeditor-anon-warning' => 'Informational message that user is editing as anon and some VE features might not be available',
+	'wikia-visualeditor-anon-warning' => 'Informational message that user is editing as anon and some VE features might not be available. Parameters: $1 is login link, $2 is register link',
 	'wikia-visualeditor-anon-log-in' => 'Log in link, opens log in modal',
+	'wikia-visualeditor-anon-register' => 'Register link, opens register modal',
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article.
 {{Identical|Media}}',
@@ -140,6 +141,7 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Information that user has to log in for image upload, displayed in add image modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Information that user has to log in for video adding, displayed in add video modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in button, opens a log in modal on click',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Register button, opens a register modal on click',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Callout that shows the droppable area for user drag and drop files',
 	'wikia-visualeditor-help-label' => 'Display text for the link to the user guide.
 {{Identical|Known issue}}',
