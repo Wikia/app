@@ -200,6 +200,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
+			INVISIBLE_HIGH_IMPACT: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480',
 			MOBILE_BOTTOM_LEADERBOARD: '300x50,320x50,320x100,320x480',
@@ -212,6 +213,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('remnantGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
+			INVISIBLE_HIGH_IMPACT: null,
 			INVISIBLE_HIGH_IMPACT_2: null,
 			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480',
 			MOBILE_BOTTOM_LEADERBOARD: '300x50,320x50,320x100,320x480',

@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		'DirectGptMobile',
 		'mobile',
 		{
+			INVISIBLE_HIGH_IMPACT:      {size: '1x1'},
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480', loc: 'top'},
 			MOBILE_BOTTOM_LEADERBOARD:  {size: '300x50,320x50,320x100,320x480', loc: 'footer'},

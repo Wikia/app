@@ -336,6 +336,27 @@ describe('AdContext', function () {
 		expect(mocks.callback).toHaveBeenCalled();
 	});
 
+	it('enables high impact slot when country in instantGlobals.wgAdDriverHighImpactSlotCountries', function () {
+		var adContext;
+
+		mocks.win = {ads: {context: {slots: {invisibleHighImpact: true}}}};
+		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
+	});
+
+	it('enables high impact slot when url param highimpactslot is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'highimpactslot' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
+	});
+
 	it('enables scroll handler when country in instantGlobals.wgAdDriverScrollHandlerCountries', function () {
 		var adContext;
 
