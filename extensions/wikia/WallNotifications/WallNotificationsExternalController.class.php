@@ -21,6 +21,7 @@ class WallNotificationsExternalController extends WikiaController {
 	public function getUpdateCounts() {
 		global $wgUser;
 
+		// check notifications for messages marked with "notify everyone"
 		$wne = new WallNotificationsEveryone();
 		$wne->processQueue( $wgUser->getId() );
 

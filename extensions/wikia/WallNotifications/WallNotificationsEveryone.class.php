@@ -19,10 +19,11 @@
  * ## DB schema
  *
  *  - wall_notification_queue table stores the date of the last edit (event_date column) of Message Walls (page_id + entity_key columns) across all wikis
- *  - wall_notification_queue_processed stores per-user notifications
+ *  - wall_notification_queue_processed stores per-user notifications that were added to wall_notifications
  *
  * When WallNotificationsExternalController::getUpdateCounts is handled processQueue() method moves entries from wall_notification_queue to wall_notification_queue_processed table (using processEntities method).
- * All entity_key values for a given wiki (taken from wall_notification_queue) are insrted into wall_notification_queue_processed table (with a specific user_id set). wall_notification entry is created as well.
+ * All entity_key values for a given wiki (taken from wall_notification_queue) are insrted into wall_notification_queue_processed table (with a specific user_id set) and wall_notification entry is created.
+ * Hence wall_notification_queue_processed table is used to mark entities which user was already notified about.
  *
   */
 class WallNotificationsEveryone extends WallNotifications {
@@ -128,7 +129,8 @@ class WallNotificationsEveryone extends WallNotifications {
 				$wn->addNotificationLinks( [ $userId ], $notification );
 			}
 
-			$this->addProcessedEntity( $userId, $entityKey );
+			// mark given entity as processed for a given user
+			$this->markEntityAsProcessed( $userId, $entityKey );
 		}
 	}
 
@@ -163,7 +165,7 @@ class WallNotificationsEveryone extends WallNotifications {
 	 * @param int $userId
 	 * @param string $entityKey in a form of "<revision ID>_<wiki ID>"
 	 */
-	private function addProcessedEntity($userId, $entityKey ) {
+	private function markEntityAsProcessed($userId, $entityKey ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -171,14 +173,28 @@ class WallNotificationsEveryone extends WallNotifications {
 		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
 		$wgMemc->set( $cacheKey, true );
 
-		$this->getDB( true )->insert( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE, [
-			'user_id' => $userId,
-			'entity_key' => $entityKey
-		], __METHOD__ );
+		// avoid duplicated entries for the same entity
+		//we use count(*) to check if there are entries in this table and that there's no need to push a row to wall_notifications
+		$this->getDB( true )->replace( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE, '',
+			[
+				'user_id' => $userId,
+				'entity_key' => $entityKey
+			],
+			__METHOD__
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Does given user has an entry in notifications queue for a given entity (i.e. wall message)?
+	 *
+	 * Per-user and per-wiki memcache flag is used to rate-limit DB checks
+	 *
+	 * @param int $userId
+	 * @param string $entityKey
+	 * @return bool
+	 */
 	private function hasEntryInProcessedQueue($userId, $entityKey ) {
 		global $wgMemc;
 
@@ -200,14 +216,8 @@ class WallNotificationsEveryone extends WallNotifications {
 			__METHOD__
 		);
 
-		if ( $row->cnt == 0 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$this->addProcessedEntity( $userId, $entityKey );
 		wfProfileOut( __METHOD__ );
-		return true;
+		return ( $row->cnt == 0 ) ? false : true;
 	}
 
 	private function setQueueProcessed( $userId ) {
@@ -216,7 +226,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
-		$wgMemc->set( $cacheKey, true );
+		$wgMemc->set( $cacheKey, true ); // TODO: cache for infite time?
 
 		wfProfileOut( __METHOD__ );
 	}
