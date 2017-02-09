@@ -612,9 +612,13 @@ class EditAccount extends SpecialPage {
 	}
 
 	private function addFanContributor() {
-		global $wgWordpressAPIUser, $wgWordpressAPIPassword;
+		global $wgWordpressAPIUser, $wgWordpressAPIPassword, $wgDevelEnvironment;
 
-		$url = 'http://sandbox2.fandom.wikia.com/ajax/create_user/';
+		$baseUrl = !empty( $wgDevelEnvironment ) ?
+			'http://sandbox2.fandom.wikia.com' :
+			'http://fandom.wikia.com';
+		$url = $baseUrl . '/ajax/create_user/';
+
 		$fields = [
 			'wp_login' => $this->mUser->getName(),
 			'wp_email' => $this->mUser->getEmail(),
