@@ -29,7 +29,7 @@ ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 	this.$anonWarning.find('.ve-ui-wikia-anon-warning__login-link')
 		.on( 'click', function () {
 			window.wikiaAuthModal.load( {
-				url: '/signin',
+				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 				onAuthSuccess: this.emit.bind(this, 'logInSuccess')
 			} );
 		}.bind( this ) );

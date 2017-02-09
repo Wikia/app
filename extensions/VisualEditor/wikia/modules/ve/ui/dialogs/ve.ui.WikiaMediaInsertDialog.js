@@ -773,7 +773,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onDocumentKeyDown = function ( e ) {
 
 ve.ui.WikiaMediaInsertDialog.prototype.onLogInButtonClicked = function () {
 	window.wikiaAuthModal.load( {
-		url: '/signin',
+		url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 		onAuthSuccess: this.onLogInSuccess.bind( this )
 	} );
 };
