@@ -1284,7 +1284,7 @@ class WikiFactory {
 		} elseif ( $environment == WIKIA_ENV_SANDBOX ) {
 			$fullName = static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN;
 		} elseif ( $environment == WIKIA_ENV_DEV) {
-			$fullName = $server . '.' . static::getExternalHostName() . '.wikia-dev.com';
+			$fullName = $server . '.' . F::app()->wg->DevDomain;
 		} else {
 			throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
 		}
