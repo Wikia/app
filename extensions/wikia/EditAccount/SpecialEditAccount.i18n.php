@@ -80,7 +80,7 @@ $messages['en'] = [
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by [[Help:Closing an account|user choice]], or by Fandom.</div>',
 	'right-editaccount' => 'Edit other users\' information',
 	'action-editaccount' => 'edit other users\' information',
-	'editaccount-fan-contributor-exists' => 'User is already in the fan contributor program.',
+	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
 ];
 
 $messages['qqq'] = [

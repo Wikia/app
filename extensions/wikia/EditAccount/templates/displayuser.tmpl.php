@@ -100,7 +100,7 @@
 		<form method="post" action="">
 			<input type="submit" value="<?= wfMessage( 'editaccount-submit-fan-contributor' )->escaped(); ?>" <?= $disabled; ?> />
 			<input type="hidden" name="wpAction" value="fan-contributor" />
-			<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 			<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 		</form>
 	<?php endif; ?>

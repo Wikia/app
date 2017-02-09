@@ -624,7 +624,7 @@ class EditAccount extends SpecialPage {
 		$ch = curl_init();
 
 		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_USERPWD, $wgWordpressAPIUser . ":" . $wgWordpressAPIPassword );
+		curl_setopt( $ch, CURLOPT_USERPWD, $wgWordpressAPIUser . ':' . $wgWordpressAPIPassword );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 
@@ -637,11 +637,10 @@ class EditAccount extends SpecialPage {
 			empty( $result['data']['wp_user_id'] )
 		) {
 			if ( !empty( $result['data'][0]['message'] ) ) {
-				echo "status message is " . $result['data'][0]['message'];
-				$this->mStatus = $result['data'][0]['message'];
+				$this->mStatusMsg = $result['data'][0]['message'];
 				return false;
 			}
-			$this->mStatus = $this->msg( 'unknown-error' )->escaped();
+			$this->mStatusMsg = $this->msg( 'unknown-error' )->escaped();
 			return false;
 		}
 
