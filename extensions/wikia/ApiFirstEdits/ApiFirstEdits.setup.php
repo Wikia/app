@@ -14,4 +14,6 @@ $wgAutoloadClasses['ApiQueryFirstEdits'] = __DIR__ . '/api/ApiQueryFirstEdits.ph
 
 $wgAPIListModules['firstedits'] = 'ApiQueryFirstEdits';
 
+$wgHooks['RevisionInsertComplete'][] = 'ApiFirstEditsHooks::onRevisionInsertComplete';
+
 return true; // ...to the single purpose of the moment.

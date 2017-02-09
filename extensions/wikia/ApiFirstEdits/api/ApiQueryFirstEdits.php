@@ -60,9 +60,12 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 
 		$result->setIndexedTagName_internal( [ 'query', $this->getModuleName() ], 'firstedits' );
 
-		// TODO: Investigate how to invalidate cache of MW API on demand (as with Nirvana)
-		//$this->getMain()->setCacheMode( 'public' );
-		//$this->getMain()->setCacheMaxAge( WikiaResponse::CACHE_STANDARD );
+		// cache for 1 day
+		$this->getMain()->setCacheMode( 'public' );
+		$this->getMain()->setCacheMaxAge( WikiaResponse::CACHE_STANDARD );
+
+		// use surrogate key for easy cache invalidation
+		$this->getOutput()->tagWithSurrogateKeys( static::getSurrogateKey() );
 	}
 
 	/**
@@ -116,5 +119,13 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 			'api.php?action=query&list=firstedits',
 			'api.php?action=query&list=firstedits&fedir=newer'
 		];
+	}
+
+	/**
+	 * Returns surrogate key used to tag all responses of this module so that they can be easily invalidated
+	 * @return string
+	 */
+	public static function getSurrogateKey() {
+		return Wikia::surrogateKey( __CLASS__ );
 	}
 }
