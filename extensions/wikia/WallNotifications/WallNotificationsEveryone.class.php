@@ -1,21 +1,46 @@
 <?php
 
-// TODO: Comments!
+/**
+ * Class WallNotificationsEveryone that implements wall notifications queue.
+ * It's called by WallMessage::setNotifyEveryone method - triggered by notifyEveryoneSave AJAX request.
+ *
+ * ## How to call it
+ *
+ * $notif = WallNotificationEntity::createFromRev( $rev );
+ * $wne = new WallNotificationsEveryone();
+ * $wne->addNotificationToQueue( $notif );
+ *
+ * ## Database queries
+ *
+ * This class uses wall_notification_queue and wall_notification_queue_processed tables on dataware database.
+ *
+ * entity_id column is composed of "<revision ID>_<wiki ID>"
+ *
+ * ## DB schema
+ *
+ *  - wall_notification_queue table stores the date of the last edit (event_date column) of Message Walls (page_id + entity_key columns) across all wikis
+ *  - wall_notification_queue_processed stores per-user notifications
+ *
+ * When WallNotificationsExternalController::getUpdateCounts is handled processQueue() method moves entries from wall_notification_queue to wall_notification_queue_processed table (using processEntities method).
+ * All entity_key values for a given wiki (taken from wall_notification_queue) are insrted into wall_notification_queue_processed table (with a specific user_id set). wall_notification entry is created as well.
+ *
+  */
 class WallNotificationsEveryone extends WallNotifications {
 
 	const DELETE_IDS_BATCH_SIZE = 100;
 
+	const WALL_NOTIFICATIONS_QUEUE_TABLE = 'wall_notification_queue';
+	const WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE = 'wall_notification_queue_processed';
+
 	public function __construct() {
 		parent::__construct();
 
-		global $wgCityId, $wgWikiaEnvironment;
-
-		$this->app = F::app();
+		global $wgCityId;
 		$this->cityId = $wgCityId;
 	}
 
 	/**
-	 * Adds notification to the notification queue
+	 * Adds notification to the notification queue. Called by WallMessage::setNotifyEveryone
 	 *
 	 * @param WallNotificationEntity $entity
 	 */
@@ -23,9 +48,9 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn( __METHOD__ );
 
 		$key = $entity->id;
-		$pageId = $entity->data->title_id;
+		$pageId = $entity->data->title_id; // ID of MessageWall title, each Wall has a unique entry in this table
 
-		$this->getDB( true )->replace( 'wall_notification_queue', '',
+		$this->getDB( true )->replace( self::WALL_NOTIFICATIONS_QUEUE_TABLE, '',
 			[
 				'wiki_id' => $this->cityId,
 				'entity_key' => $key,
@@ -42,7 +67,7 @@ class WallNotificationsEveryone extends WallNotifications {
 
 	/**
 	 * Removes notifications for page from the notification queue and notifications list for all users and updates the
-	 * notifications cache
+	 * notifications cache. Called by WallMessage::setNotifyEveryone
 	 *
 	 * @param integer $pageId Page id
 	 */
@@ -53,7 +78,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$this->remNotificationsForUniqueID( false, $this->cityId, $pageId );
 
 		// remove notification from notification queue
-		$this->getDB( true )->delete( 'wall_notification_queue',
+		$this->getDB( true )->delete( self::WALL_NOTIFICATIONS_QUEUE_TABLE,
 			[
 				'wiki_id' => $this->cityId,
 				'page_id' => $pageId
@@ -68,6 +93,8 @@ class WallNotificationsEveryone extends WallNotifications {
 	/**
 	 * Processes the notification queue for user
 	 *
+	 * Called by WallNotificationsExternalController::getUpdateCounts for handling AJAX requests
+	 *
 	 * @param int $userId
 	 */
 	public function processQueue( $userId ) {
@@ -76,7 +103,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		}
 
 		$preparedDbExpireTime = $this->getDbExpireDate();
-		$res = $this->getDB( false )->select( 'wall_notification_queue',
+		$res = $this->getDB( false )->select( self::WALL_NOTIFICATIONS_QUEUE_TABLE,
 			[ 'entity_key' ],
 			[
 				'wiki_id = ' . $this->cityId,
@@ -93,19 +120,19 @@ class WallNotificationsEveryone extends WallNotifications {
 		}
 	}
 
-	public function processEntities( $userId, $entityKey ) {
-		if ( !$this->getEntityProcessed( $userId, $entityKey ) ) {
+	private function processEntities( $userId, $entityKey ) {
+		if ( !$this->hasEntryInProcessedQueue( $userId, $entityKey ) ) {
 			$notification = WallNotificationEntity::createFromId( $entityKey );
 			if ( !empty( $notification ) ) {
 				$wn = new WallNotifications();
 				$wn->addNotificationLinks( [ $userId ], $notification );
 			}
 
-			$this->setEntityProcessed( $userId, $entityKey );
+			$this->addProcessedEntity( $userId, $entityKey );
 		}
 	}
 
-	public function setGlobalCacheBuster() {
+	private function setGlobalCacheBuster() {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -116,7 +143,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		return $val;
 	}
 
-	public function getGlobalCacheBuster() {
+	private function getGlobalCacheBuster() {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -130,7 +157,13 @@ class WallNotificationsEveryone extends WallNotifications {
 		return $val;
 	}
 
-	public function setEntityProcessed( $userId, $entityKey ) {
+	/**
+	 * Inserts a row to wall_notification_queue_processed table
+	 *
+	 * @param int $userId
+	 * @param string $entityKey in a form of "<revision ID>_<wiki ID>"
+	 */
+	private function addProcessedEntity($userId, $entityKey ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -138,7 +171,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
 		$wgMemc->set( $cacheKey, true );
 
-		$this->getDB( true )->insert( 'wall_notification_queue_processed', [
+		$this->getDB( true )->insert( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE, [
 			'user_id' => $userId,
 			'entity_key' => $entityKey
 		], __METHOD__ );
@@ -146,7 +179,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function getEntityProcessed( $userId, $entityKey ) {
+	private function hasEntryInProcessedQueue($userId, $entityKey ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -158,7 +191,7 @@ class WallNotificationsEveryone extends WallNotifications {
 			return true;
 		}
 
-		$row = $this->getDB( false )->selectRow( 'wall_notification_queue_processed',
+		$row = $this->getDB( false )->selectRow( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE,
 			[ 'count(*) as cnt' ],
 			[
 				'user_id' => $userId,
@@ -172,12 +205,12 @@ class WallNotificationsEveryone extends WallNotifications {
 			return false;
 		}
 
-		$this->setEntityProcessed( $userId, $entityKey );
+		$this->addProcessedEntity( $userId, $entityKey );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	public function setQueueProcessed( $userId ) {
+	private function setQueueProcessed( $userId ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -188,7 +221,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function getQueueProcessed( $userId ) {
+	private function getQueueProcessed( $userId ) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
@@ -205,15 +238,15 @@ class WallNotificationsEveryone extends WallNotifications {
 		return false;
 	}
 
-	public function getEntityProcessedCacheKey( $userId, $entityKey ) {
+	private function getEntityProcessedCacheKey( $userId, $entityKey ) {
 		return wfMemcKey( __CLASS__, 'EntityProcessed', $userId, $entityKey, $this->getGlobalCacheBuster() );
 	}
 
-	public function getQueueProcessedCacheKey( $userId ) {
+	private function getQueueProcessedCacheKey( $userId ) {
 		return wfMemcKey( __CLASS__, 'QueueProcessed', $userId, $this->getGlobalCacheBuster() );
 	}
 
-	public function getGlobalCacheBusterKey() {
+	private function getGlobalCacheBusterKey() {
 		return wfMemcKey( __CLASS__, 'GlobalCacheKey' );
 	}
 
@@ -236,7 +269,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$res = $db->select(
 			[
 				'wn' => 'wall_notification',
-				'wnq' => 'wall_notification_queue'
+				'wnq' => self::WALL_NOTIFICATIONS_QUEUE_TABLE
 			],
 			[
 				'wn.id',
@@ -359,8 +392,8 @@ class WallNotificationsEveryone extends WallNotifications {
 		// TODO: performance of this queries
 		if ( !$onlyCache ) {
 			$db = $this->getDB( true );
-			$db->query( 'DELETE FROM wall_notification_queue WHERE event_date < ' . $preparedDbExpireTime );
-			$db->query( 'DELETE FROM wall_notification_queue_processed WHERE event_date < ' . $preparedDbExpireTime );
+			$db->query( 'DELETE FROM ' . self::WALL_NOTIFICATIONS_QUEUE_TABLE . ' WHERE event_date < ' . $preparedDbExpireTime );
+			$db->query( 'DELETE FROM ' . self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE . ' WHERE event_date < ' . $preparedDbExpireTime );
 			$db->commit();
 		}
 		wfProfileOut( __METHOD__ );
