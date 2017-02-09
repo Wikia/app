@@ -10,7 +10,7 @@ $wgExtensionCredits['api'][] = [
 
 $wgExtensionMessagesFiles['ApiFirstEdits'] = __DIR__ . '/ApiFirstEdits.i18n.php';
 
-$wgAutoloadClasses['ApiQueryFirstEdits'] = __DIR__ . '/ApiQueryFirstEdits.php';
+$wgAutoloadClasses['ApiQueryFirstEdits'] = __DIR__ . '/api/ApiQueryFirstEdits.php';
 
 $wgAPIListModules['firstedits'] = 'ApiQueryFirstEdits';
 

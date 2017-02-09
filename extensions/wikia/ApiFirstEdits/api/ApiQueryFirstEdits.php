@@ -6,6 +6,13 @@
  */
 class ApiQueryFirstEdits extends ApiQueryBase {
 
+	/**
+	 * @var int MAX_INTERVAL_SINCE_LAST_EDIT
+	 * Maximum time that can elapse since an user's last edit.
+	 * If an user edits after not editing for at least this long, they'll be considered a new user.
+	 */
+	const MAX_INTERVAL_SINCE_LAST_EDIT = 31536000;
+
 	public function __construct( ApiBase $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'fe' );
 	}
@@ -13,16 +20,18 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 
-		$this->addTables( 'recentchanges' );
+		$this->addTables( 'revision' );
 
-		$this->addFields( 'MIN(rc_this_oldid) as diff_id' );
-		$this->addFields( 'MIN(rc_timestamp) as diff_timestamp' );
-		$this->addFields( 'rc_user_text' );
+		$this->addFields( 'MIN(rev_id) as diff_id' );
+		$this->addFields( 'MIN(rev_timestamp) as diff_timestamp' );
+		$this->addFields( 'rev_user_text' );
 
-		$this->addWhere( 'rc_type < ' . RC_MOVE );
-		$this->addTimestampWhereRange( 'rc_timestamp', $params['dir'], $params['start'], $params['end'] );
+		$this->addWhere( 'rev_deleted = 0' );
 
-		$this->addOption( 'GROUP BY', 'rc_user' );
+		$from = $this->getFromTimestamp( $params['before'] );
+		$this->addTimestampWhereRange( 'rev_timestamp', null, $from, $params['before'] );
+
+		$this->addOption( 'GROUP BY', 'rev_user' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
 		$res = $this->select( __METHOD__ );
@@ -32,14 +41,19 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 		foreach ( $res as $row ) {
 			$count++;
 			if ( $count >= $params['limit'] ) {
-				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->diff_timestamp ) );
+				$this->setContinueEnumParameter( 'before', wfTimestamp( TS_ISO_8601, $row->diff_timestamp ) );
 				break;
 			}
 
-			$editInfo = $this->parseEditInfo( $row );
+			$editInfo = [
+				'id' => $row->diff_id,
+				'date' => wfTimestamp( TS_ISO_8601, $row->diff_timestamp ),
+				'username' => $row->rev_user_text
+			];
+
 			$fit = $result->addValue( [ 'query', $this->getModuleName() ], null, $editInfo );
 			if ( !$fit ) {
-				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->diff_timestamp ) );
+				$this->setContinueEnumParameter( 'before', wfTimestamp( TS_ISO_8601, $row->diff_timestamp ) );
 				break;
 			}
 		}
@@ -52,17 +66,19 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	}
 
 	/**
-	 * Process a result row and convert it into a format suitable for output
+	 * Return earliest date from which to enumerate first edits
 	 *
-	 * @param stdClass $row DB result row
-	 * @return array
+	 * @param string|null $end only enumerate users who joined before this date, or null to use present date
+	 * @return int Unix timestamp
 	 */
-	private function parseEditInfo( $row ) {
-		return [
-			'id' => $row->diff_id,
-			'date' => wfTimestamp( TS_ISO_8601, $row->diff_timestamp ),
-			'username' => $row->rc_user_text
-		];
+	private function getFromTimestamp( $end ) {
+		if ( is_null( $end ) ) {
+			$end = time();
+		} else {
+			$end = wfTimestamp( TS_UNIX, $end );
+		}
+
+		return $end - static::MAX_INTERVAL_SINCE_LAST_EDIT;
 	}
 
 	public function getVersion() {
@@ -71,14 +87,8 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 
 	public function getAllowedParams() {
 		return [
-			'start' => [
+			'before' => [
 				ApiBase::PARAM_TYPE => 'timestamp'
-			],
-			'end' => [
-				ApiBase::PARAM_TYPE => 'timestamp'
-			],
-			'dir' => [
-				ApiBase::PARAM_TYPE => [ 'newer', 'older' ]
 			],
 			'limit' => [
 				ApiBase::PARAM_DFLT => 10,
@@ -91,12 +101,8 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	}
 
 	public function getParamDescription() {
-		$p = $this->getModulePrefix();
-
 		return [
-			'start' => 'The timestamp to start enumerating from',
-			'end' => 'The timestamp to stop enumerating at',
-			'dir' => $this->getDirectionDescription( $p ),
+			'before' => 'Only enumerate users who joined before this date',
 			'limit' => 'The maximum amount of entries to list',
 		];
 	}
