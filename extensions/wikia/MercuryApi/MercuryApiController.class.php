@@ -242,7 +242,7 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
+			$dimensions[14] = !empty( $adContext['opts']['showAds'] ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
@@ -332,6 +332,8 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
+		$cacheValidity = WikiaResponse::CACHE_STANDARD;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [
@@ -396,13 +398,21 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						// Handling namespaces other than content ones
 						case NS_CATEGORY:
-							$categoryContent = MercuryApiCategoryHandler::getCategoryContent( $title );
+							$categoryMembersPage = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest(
+								$this->request
+							);
+							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryPageData(
+								$title,
+								$categoryMembersPage,
+								$this->mercuryApi
+							);
 
-							if ( empty( $categoryContent['members']['sections'] ) ) {
-								throw new NotFoundApiException( 'Category has no members' );
+							// We don't cache subsequent pages, because there is no good way to purge them
+							// TODO remove this when icache supports surrogate keys (OPS-10115)
+							if ( $categoryMembersPage > 1 ) {
+								$cacheValidity = WikiaResponse::CACHE_DISABLED;
 							}
 
-							$data['nsSpecificContent'] = $categoryContent;
 							break;
 						case NS_FILE:
 							$data['nsSpecificContent'] = MercuryApiFilePageHandler::getFileContent( $title );
@@ -410,7 +420,7 @@ class MercuryApiController extends WikiaController {
 						default:
 							$data = array_merge(
 								$data,
-								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+								MercuryApiArticleHandler::getArticleData( $this->mercuryApi, $article )
 							);
 					}
 				}
@@ -431,8 +441,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
+		$this->response->setCacheValidity( $cacheValidity );
 		$this->response->setVal( 'data', $data );
 	}
 
@@ -465,6 +474,43 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return [ $title, $article, $data ];
+	}
+
+	public function getCategoryMembers() {
+		try {
+			$title = $this->getTitleFromRequest();
+
+			if ( $title->isRedirect() ) {
+				$article = new Article( $title );
+				$redirectTargetTitle = $article->getRedirectTarget();
+
+				if ( !is_null( $redirectTargetTitle ) && ( $redirectTargetTitle->getNamespace() === NS_CATEGORY ) ) {
+					$title = $redirectTargetTitle;
+				}
+			}
+
+			$page = MercuryApiCategoryHandler::getCategoryMembersPageFromRequest( $this->request );
+			$data = MercuryApiCategoryHandler::getCategoryMembers( $title, $page );
+		} catch ( WikiaHttpException $exception ) {
+			$this->response->setCode( $exception->getCode() );
+
+			$data = [];
+
+			$this->response->setVal(
+				'exception',
+				[
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode(),
+					'details' => $exception->getDetails()
+				]
+			);
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		// We don't cache it, because there is no easy way to purge all pages
+		// TODO start caching when icache supports surrogate keys (OPS-10115)
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'data', $data );
 	}
 
 	/**
