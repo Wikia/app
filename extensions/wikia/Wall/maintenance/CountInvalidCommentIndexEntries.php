@@ -10,11 +10,21 @@ class CountInvalidCommentIndexEntries extends Maintenance {
 		$count = $this->getInvalidEntriesCount();
 
 		if ($count > 0) {
-			$this->output("Wiki: " . $wgCityId . " count: " . $count);
+			$entry = '{"wiki": ' . $wgCityId . ', commentsIndexCount:' . $this->getCommentsIndexCount() . ', "invalidCount": ' . $count . ', "dbname": ' . $wgDBname . '}';
+			$this->output($entry . "\n");
+
 			$file = fopen($wgCityId . ".txt", "w");
-			fwrite($file, '{"wiki": ' . $wgCityId . ', "count": ' . $count . ', "dbname": ' . $wgDBname . '}');
+			fwrite($file, $entry);
 			fclose($file);
 		}
+	}
+
+	public function  getCommentsIndexCount() {
+		$db = wfGetDB( DB_SLAVE );
+		$query = "select count(*) as cnt from comments_index";
+
+		$row = $db->query($query)->fetchRow();
+		return $row['cnt'];
 	}
 
 	public function getInvalidEntriesCount() {
