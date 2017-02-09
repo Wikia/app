@@ -46,7 +46,7 @@
 
 		.minimize {
 			display: none;
-			content: url("/extensions/wikia/PremiumDesignABTest/images/minimize.svg"); /* $wgCdnStylePath */
+			content: url("/extensions/wikia/ArticleVideoMVP/images/minimize.svg"); /* $wgCdnStylePath */
 			position: absolute;
 			right: 0;
 			top: 0;
@@ -56,7 +56,7 @@
 
 		.scroll-to-top {
 			display: none;
-			content: url("/extensions/wikia/PremiumDesignABTest/images/scroll-to-top.svg"); /* $wgCdnStylePath */
+			content: url("/extensions/wikia/ArticleVideoMVP/images/scroll-to-top.svg"); /* $wgCdnStylePath */
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -66,7 +66,7 @@
 
 		.close {
 			display: none;
-			content: url("/extensions/wikia/PremiumDesignABTest/images/close.svg"); /* $wgCdnStylePath */
+			content: url("/extensions/wikia/ArticleVideoMVP/images/close.svg"); /* $wgCdnStylePath */
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -90,7 +90,7 @@
 		}
 
 		.video-scroll-play-button {
-			background-image: url("/extensions/wikia/PremiumDesignABTest/images/play-button-solid.svg"); /* $wgCdnStylePath */
+			background-image: url("/extensions/wikia/ArticleVideoMVP/images/play-button-solid.svg"); /* $wgCdnStylePath */
 			background-repeat: no-repeat;
 			background-size: contain;
 			height: 60px;

@@ -1,5 +1,5 @@
 <?php
-class PremiumDesignABTestHooks {
+class ArticleVideoMVPHooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'premium_mvp_scss' );
 		\Wikia::addAssetsToOutput( 'premium_mvp_js' );

@@ -1,9 +1,9 @@
 <?php
-$wgAutoloadClasses['PremiumDesignABTestHooks'] =  __DIR__ . '/PremiumDesignABTest.hooks.php';
-$wgAutoloadClasses[ 'PremiumDesignABTestController' ] = __DIR__ . '/PremiumDesignABTestController.class.php';
+$wgAutoloadClasses['ArticleVideoMVPHooks'] =  __DIR__ . '/ArticleVideoMVP.hooks.php';
+$wgAutoloadClasses[ 'ArticleVideoMVPController' ] = __DIR__ . '/ArticleVideoMVPController.class.php';
 
-$wgHooks['BeforePageDisplay'][] = 'PremiumDesignABTestHooks::onBeforePageDisplay';
-$wgHooks['MakeGlobalVariablesScript'][] = 'PremiumDesignABTestHooks::onMakeGlobalVariablesScript';
+$wgHooks['BeforePageDisplay'][] = 'ArticleVideoMVPHooks::onBeforePageDisplay';
+$wgHooks['MakeGlobalVariablesScript'][] = 'ArticleVideoMVPHooks::onMakeGlobalVariablesScript';
 
 //$wgPremiumDesignABTestVariants = [
 //	// List of Spells

@@ -1,11 +1,11 @@
-define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader', 'wikia.log'], function ($, window, loader, log) {
+define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, window, loader) {
 
 	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, ooyalaPlayerOptions) {
-		var _this = this;
+		var self = this;
 
 		this.$playerElement = $('#' + elementId);
 
-		if(typeof ooyalaPlayerOptions === 'undefined') {
+		if (typeof ooyalaPlayerOptions === 'undefined') {
 			ooyalaPlayerOptions = {
 				autoplay: true,
 				width: '100%',
@@ -13,9 +13,12 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader', 'wikia.log'], f
 			};
 		}
 
-		loadJs(ooyalaJsFile).done(function () {
+		loader({
+			type: loader.JS,
+			resources: ooyalaJsFile
+		}).done(function () {
 			window.OO.ready(function () {
-				_this.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
+				self.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
 			});
 		});
 	}
@@ -34,24 +37,6 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader', 'wikia.log'], f
 		}
 		return this.$controlsElement;
 	};
-
-
-	function loadJs(resource) {
-		return loader({
-			type: loader.JS,
-			resources: resource
-		}).fail(loadFail);
-	}
-
-	function loadFail(data) {
-		var message = data.error + ':';
-
-		$.each(data.resources, function () {
-			message += ' ' + this;
-		});
-
-		log(message, log.levels.error, 'asd');
-	}
 
 	return OoyalaVideo;
 

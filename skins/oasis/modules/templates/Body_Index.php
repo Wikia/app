@@ -71,9 +71,6 @@
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
-				<?php if ( $enablePremiumMVP ): ?>
-					<?= $app->renderView( 'PremiumDesignABTest', 'video' ) ?>
-				<?php endif; ?>
 				<?php
 					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
 						echo $app->renderView( 'ForumController', 'header' );
@@ -95,6 +92,9 @@
 					}
 				?>
 
+				<?php if ( $enablePremiumMVP ): ?>
+					<?= $app->renderView( 'ArticleVideoMVP', 'index' ) ?>
+				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>

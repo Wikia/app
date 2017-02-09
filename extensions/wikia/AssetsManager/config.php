@@ -3198,7 +3198,7 @@ $config[ 'premium_mvp_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/styles/premium-mvp.scss'
+		'//extensions/wikia/ArticleVideoMVP/styles/premium-mvp.scss'
 	]
 ];
 
@@ -3206,6 +3206,7 @@ $config[ 'premium_mvp_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PremiumDesignABTest/scripts/premium-mvp.js'
+		'//extensions/wikia/ArticleVideoMVP/scripts/premium-mvp.js',
+		'//extensions/wikia/ArticleVideoMVP/scripts/ooyalaVideo.js'
 	]
 ];

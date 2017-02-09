@@ -1,0 +1,137 @@
+#premium-mvp-article-header {
+	display: block;
+}
+
+#premium-mvp-video {
+	cursor: pointer;
+	background-image: url("/extensions/wikia/ArticleVideoMVP/images/video.png"); /* $wgCdnStylePath */
+	background-size: cover;
+	background-position: center center;
+	padding-top: 56%;
+	position: relative;
+	margin-bottom: 11px;
+	width: 100%;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+	}
+
+	.video-title {
+		bottom: 41px;
+		color: #fff;
+		font-size: 24px;
+		left: 38px;
+		position: absolute;
+	}
+
+	.video-time {
+		bottom: 73px;
+		color: #656e78;
+		font-size: 14px;
+		font-weight: bold;
+		left: 38px;
+		position: absolute;
+		text-transform: uppercase;
+	}
+
+	.video-play-button {
+		background-image: url("/extensions/wikia/ArticleVideoMVP/images/play-button-solid.svg"); /* $wgCdnStylePath */
+		background-repeat: no-repeat;
+		background-size: contain;
+		bottom: 15px;
+		height: 120px;
+		position: absolute;
+		right: 15px;
+		width: 120px;
+	}
+
+	.video-thumbnail {
+		.close {
+			display: none;
+			content: url("/extensions/wikia/ArticleVideoMVP/images/close.svg"); /* $wgCdnStylePath */
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			padding: 7px;
+		}
+	}
+
+	&.collapsed {
+		.video-container {
+			position: fixed;
+			right: 20px !important;
+			bottom: 40px !important;
+			width: 225px !important;
+			transition: right 0.4s, bottom 0.4s, width 0.4s;
+		}
+
+		.video-thumbnail {
+			background-image: url("/extensions/wikia/ArticleVideoMVP/images/video.png"); /* $wgCdnStylePath */
+			background-size: cover;
+			background-position: center center;
+			height: 140px;
+			display: block;
+
+			.close {
+				display: block;
+				z-index: 10001;
+			}
+		}
+
+		.video-details {
+			background: #000;
+			display: flex;
+			align-items: center;
+
+			.video-details-left {
+				flex: 1;
+				margin-left: 10px;
+			}
+
+			.video-time {
+				position: static;
+				font-size: 10px;
+			}
+
+			.video-title {
+				position: static;
+				font-size: 12px;
+			}
+
+			.video-play-button {
+				position: static;
+				height: 60px;
+				margin: 0;
+				width: 60px;
+			}
+		}
+
+		#ooyala-article-video {
+			bottom: auto;
+			height: 140px;
+		}
+
+	}
+
+}
+
+#ooyala-article-video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	>div {
+		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
+		// and it doesn't remove this style when user leaves this mode
+		z-index: 10000 !important;
+	}
+}
