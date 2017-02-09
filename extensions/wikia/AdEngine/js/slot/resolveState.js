@@ -1,16 +1,14 @@
 /* global define */
 define('ext.wikia.adEngine.slot.resolveState', [
-	'wikia.log',
-	'wikia.querystring',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'ext.wikia.adEngine.context.uapContext',
 	'wikia.cache',
-	'ext.wikia.adEngine.context.uapContext'
-], function (log, QueryString, pvCounter, cache, uapContext) {
+	'wikia.log',
+	'wikia.querystring'
+], function (uapContext, cache, log, QueryString) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.resolveState',
 		qs = new QueryString(),
-		wasAlreadyPlayedOnce = false,
 		cacheKey = 'adEngine_resolveStateCounter',
 		cacheTtl = 24 * 3600 * 1000, // 1 day to clear the page view counter
 		now = window.wgNow || new Date();
@@ -44,8 +42,6 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		log('Resolved state is turned on', log.levels.debug, logGroup);
 		params.backgroundImage.src = params.resolveState.imageSrc;
 		params.aspectRatio = params.resolveState.aspectRatio;
-
-		wasAlreadyPlayedOnce = true;
 
 		return params;
 	}
@@ -92,6 +88,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 
 		if (wasRecentlySeen(records, params.uap)) {
 			log('Full version of uap was seen in last 24h. adId: ' + params.uap, log.levels.debug, logGroup);
+
 			return false;
 		} else {
 			log('Full version of uap was not seen in last 24h. adId: ' + params.uap, log.levels.debug, logGroup);
@@ -100,12 +97,11 @@ define('ext.wikia.adEngine.slot.resolveState', [
 				adId: uapContext.getUapId() || params.uap,
 				lastSeenDate: now.getTime()
 			};
-			records.push(val);
-
-			log('Setting new value in localStorage for adId: ' + params.uap, log.levels.debug, logGroup);
 
 			age = now.getTime() - val.lastSeenDate;
+			records.push(val);
 			cache.set(cacheKey, records, cacheTtl - age, now);
+
 
 			return true;
 		}
