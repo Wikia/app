@@ -70,7 +70,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				create: function () {
 					return '203_tier1600';
 				},
-				parsePrice: function () {
+				parseOpenMarketPrice: function () {
 					return 0;
 				}
 			},
@@ -100,8 +100,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 							return [mocks.slot];
 						}
 					}
-
-				}
+				},
+				ads: {}
 			}
 		};
 
@@ -219,5 +219,16 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		vulcan.call();
 
 		expect(vulcan.getSlotParams('TOP_RIGHT_BOXAD')).toEqual({});
+	});
+
+	it('Returns INCONTENT_LEADERBOARD bid for INCONTENT_PLAYER', function () {
+		var vulcan = getVulcan();
+
+		vulcan.call();
+
+		expect(vulcan.hasResponse()).toBeTruthy();
+		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
+			'rpfl_video': '203_tier1600'
+		});
 	});
 });

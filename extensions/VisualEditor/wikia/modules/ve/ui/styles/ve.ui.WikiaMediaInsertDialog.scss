@@ -354,6 +354,7 @@ $width-cart: 120px;
 	> span {
 		display: block;
 		font-size: 1.7em;
+		line-height: 1.25em;
 		margin-bottom: 20px;
 	}
 
@@ -368,4 +369,8 @@ $width-cart: 120px;
 		opacity: .7;
 		width: 32px;
 	}
+}
+
+.ve-ui-wikiaRegisterButton {
+	margin-left: 20px;
 }

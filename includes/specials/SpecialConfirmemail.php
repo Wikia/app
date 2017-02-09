@@ -173,7 +173,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			$this->getOutput()->addWikiMsg( 'confirmemail_invalid' );
 		}
 	}
-	
+
 }
 
 /**

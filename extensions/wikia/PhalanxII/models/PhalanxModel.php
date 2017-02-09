@@ -12,15 +12,17 @@
  */
 abstract class PhalanxModel extends WikiaObject {
 	/** @var string $text */
-	public $text = null;
+	protected $text = null;
+
 	/** @var null|object $block Information about the current block that was triggered */
-	public $block = null;
+	protected $block = null;
 
 	/* @var User */
-	public $user = null;
+	protected $user = null;
+
 	/* @var PhalanxService */
 	private $service = null;
-	public $ip = null;
+	protected $ip = null;
 
 	protected $shouldLogInStats = true;
 
@@ -92,14 +94,19 @@ abstract class PhalanxModel extends WikiaObject {
 
 	/**
 	 * Skip calls to Phalanx service if this method returns true
+	 * We must skip check if and only if:
+	 * - user has 'phalanxexempt' right (staff/VSTF/helper)
+	 * - this is an internal request (except if it's looking up different user, e.g. user-permissions service)
 	 *
-	 * @return bool
+	 * @return bool whether to skip call to Phalanx service
 	 */
-	public function isOk() {
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) ) ||
-			$this->isWikiaInternalRequest()
+			// SUS-1522: Permit user-permissions service to look up Phalanx blocks for different users
+			( $this->isWikiaInternalRequest() && $this->user->equals( $wgUser ) ) ||
+			$this->user->isAllowed( 'phalanxexempt' )
 		);
 	}
 

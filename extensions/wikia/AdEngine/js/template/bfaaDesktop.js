@@ -1,31 +1,32 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.slot.resolveState',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
+	'wikia.throttle',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (adHelper,
-			 uapContext,
+], function (uapContext,
 			 btfBlocker,
 			 slotTweaker,
+			 resolveState,
 			 uapVideo,
 			 doc,
 			 log,
+			 throttle,
 			 win,
 			 recoveryTweaker) {
 	'use strict';
 
-	var adSlot,
-		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
-		imageContainer,
+		slotContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
@@ -49,13 +50,15 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
-		doc.body.classList.add('uap-skin');
+		if (!win.ads.runtime.disableCommunitySkinOverride) {
+			doc.body.classList.add('uap-skin');
+		}
 
 		log('desktopHandler::show', log.levels.info, logGroup);
 
-		updateNavBar(adSlot.offsetHeight);
-		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(adSlot.offsetHeight);
+		updateNavBar(slotContainer.offsetHeight);
+		doc.addEventListener('scroll', throttle(function () {
+			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {
@@ -72,18 +75,19 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params, adSlot, imageContainer);
+			uapVideo.loadVideoAd(params);
 		}
 	}
 
 	function show(params) {
-		adSlot = doc.getElementById(params.slotName);
-		imageContainer = adSlot.querySelector('div:last-of-type');
+		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
 
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
+
+		params = resolveState.setImage(params);
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);

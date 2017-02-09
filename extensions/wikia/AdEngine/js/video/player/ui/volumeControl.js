@@ -18,38 +18,45 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		volume.speaker = speaker;
 		log('volume control is added', log.levels.info, logGroup);
 
-		return volume;
-	}
-
-	function add(video) {
-		var volume = createVolumeControl();
-
 		volume.mute = function () {
 			volume.speaker.classList.add('mute');
-			video.setVolume(0);
 			log('mute', log.levels.info, logGroup);
 		};
+
 		volume.unmute = function () {
 			volume.speaker.classList.remove('mute');
-			video.setVolume(0.75);
 			log('unmute', log.levels.info, logGroup);
 		};
 
-		volume.addEventListener('click', function(e) {
-			if (video.isMuted()) {
-				volume.unmute();
-			} else {
-				volume.mute();
-			}
-			e.preventDefault();
+		return volume;
+	}
+
+	function updateCurrentState(video, volumeControl) {
+		if (video.isMuted() || video.isMobilePlayerMuted()) {
+			volumeControl.mute();
+		} else {
+			volumeControl.unmute();
+		}
+	}
+
+	function add(video) {
+		var volumeControl = createVolumeControl();
+
+		video.addEventListener('wikiaVolumeChange', function () {
+			updateCurrentState(video, volumeControl);
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			volume.unmute();
-			volume.classList.remove('hidden');
+			updateCurrentState(video, volumeControl);
+			volumeControl.classList.remove('hidden');
 		});
 
-		video.container.appendChild(volume);
+		volumeControl.addEventListener('click', function (e) {
+			video.volumeToggle();
+			e.preventDefault();
+		});
+
+		video.container.appendChild(volumeControl);
 	}
 
 	return {

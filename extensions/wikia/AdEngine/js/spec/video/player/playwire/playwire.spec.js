@@ -28,6 +28,10 @@ describe('ext.wikia.adEngine.video.player.playwire', function () {
 			},
 			playerFactory: {
 				create: noop
+			},
+			tracker: {
+				register: noop,
+				track: noop
 			}
 		};
 
@@ -36,6 +40,7 @@ describe('ext.wikia.adEngine.video.player.playwire', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.playwire'](
 			mocks.playerFactory,
+			mocks.tracker,
 			mocks.dfpVastUrl,
 			mocks.doc,
 			mocks.log

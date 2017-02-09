@@ -18,22 +18,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout, $accentColor, $accentColorText ) {
-		$infoboxHtmlContent = '';
-		$heroData = [ ];
+		$items = $this->splitOfHeroData( $infoboxdata, [ 'hero' => [ ], 'infobox' => [ ] ] );
 
-		foreach ( $infoboxdata as $item ) {
-			$data = $item['data'];
-			$type = $item['type'];
-
-			if ( $this->isValidHeroDataItem( $item, $heroData ) ) {
-				$heroData[$type] = $data;
-			} elseif ( $this->templateEngine->isSupportedType( $type ) ) {
-				$infoboxHtmlContent .= $this->renderItem( $type, $data );
-			}
-		}
-
-		if ( !empty( $heroData ) ) {
-			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+		if ( !empty( $items['hero'] ) ) {
+			$infoboxHtmlContent = $this->renderInfoboxHero( $items['hero'] ) . $this->renderChildren( $items['infobox'] );
+		} else {
+			$infoboxHtmlContent = $this->renderChildren( $infoboxdata );
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
@@ -45,6 +35,28 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
 
 		return $output;
+	}
+
+	private function splitOfHeroData( $items, $result ) {
+		foreach ( $items as $item ) {
+			$data = $item['data'];
+			$type = $item['type'];
+
+			if ( $this->isValidHeroDataItem( $item, $result['hero'] ) ) {
+				$result['hero'][$type] = $data;
+			} elseif ( $type === 'group' ) {
+				// go deeper to find nested hero data items
+				$groupResult = $this->splitOfHeroData( $data['value'], [ 'hero' => $result['hero'], 'infobox' => [ ] ] );
+				// make sure other elements structure stays the same
+				$result['hero'] = $groupResult['hero'];
+				$item['data']['value'] = $groupResult['infobox'];
+				$result['infobox'][] = $item;
+			} else {
+				$result['infobox'][] = $item;
+			}
+		}
+
+		return $result;
 	}
 
 	protected function renderImage( $data ) {
@@ -149,7 +161,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		if ( $type === 'image' && !isset( $heroData['image'] ) && count( $item['data'] ) === 1 ) {
-			$imageWidth = $this->getFileWidth( $item['data'][0]['name'] );
+			$imageWidth = $this->getImageHelper()->getFileWidth( $item['data'][0]['name'] );
 
 			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
@@ -157,20 +169,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		return false;
-	}
-
-	/**
-	 * return real width of the image.
-	 * @param \Title $title
-	 * @return int number
-	 */
-	private function getFileWidth( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->getWidth();
-		}
-		return 0;
 	}
 
 	private function isMercury() {

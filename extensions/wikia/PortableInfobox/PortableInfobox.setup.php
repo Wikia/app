@@ -48,7 +48,7 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboxParamsValidator' ] = $
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxMustacheEngine' ] = $dir . 'services/Helpers/PortableInfoboxMustacheEngine.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxImagesHelper' ] = $dir . 'services/Helpers/PortableInfoboxImagesHelper.php';
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper' ] = $dir . 'services/Helpers/PortableInfoboxTemplatesHelper.php';
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxParsingHelper' ] = $dir . 'services/Helpers/PortableInfoboxParsingHelper.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PagePropsProxy' ] = $dir . 'services/Helpers/PagePropsProxy.php';
 
 //sanitizers
@@ -69,13 +69,12 @@ $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPo
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 $wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
 
-
 // query pages
 $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQueryPage.php';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
-$wgHooks[ 'ParserTagHooksBeforeInvoke' ][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
+$wgHooks[ 'AfterParserParseImageGallery' ][] = 'PortableInfoboxHooks::onAfterParserParseImageGallery';
 $wgHooks[ 'BeforePageDisplay' ][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';

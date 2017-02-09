@@ -2075,7 +2075,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 * Purge wiki navigation cache when disabling/enabling Forum and Wall
 	 *
 	 * @param String $name
 	 * @param String $val
@@ -2085,15 +2085,6 @@ class WallHooksHelper {
 	public static function onAfterToggleFeature( $name, $val ) {
 		global $IP;
 		if ( $name == 'wgEnableWallExt' || $name == 'wgEnableForumExt' ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_history' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_history_local.sql" );
-			}
-
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_related_pages.sql" );
-			}
-
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
@@ -2299,6 +2290,29 @@ class WallHooksHelper {
 			&& $title->getNamespace() == NS_USER
 		) {
 			$talkPageTitle = Title::makeTitle( NS_USER_WALL, $title->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-260: Prevent moving pages within, into, or out of Wall namespaces
+	 * @param bool $result whether to allow page moves
+	 * @param int $ns namespace number
+	 * @return bool false if this is a Wall namespace, otherwise true
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		// User Rename process needs to be able to move message walls
+		global $wgCommandLineMode;
+		if ( $wgCommandLineMode ) {
+			return true;
+		}
+
+		// If Message Wall is enabled, moving a page to User talk namespace makes it an archive
+		// This option is irreversible so it is prevented
+		if ( in_array( $ns, [ NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_USER_TALK ] ) ) {
+			$result = false;
+			return false;
 		}
 
 		return true;

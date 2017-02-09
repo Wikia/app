@@ -1168,7 +1168,7 @@ class WikiFactory {
 	 * @return string changed host or $default
 	 */
 	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList;
+		global $wgStagingList, $wgDevDomain;
 
 		if ( $host === null ) {
 			$host = gethostname();
@@ -1182,8 +1182,8 @@ class WikiFactory {
 			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
 		}
 
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
-			return $dbName . '.' . $m[ 1 ] . '.wikia-dev.com';
+		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
+			return "{$dbName}.{$wgDevDomain}";
 		}
 
 		return $default;
@@ -1213,15 +1213,20 @@ class WikiFactory {
 	 * @return string url pointing to local env
 	 * @throws \Exception
 	 */
-	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
+	public static function getLocalEnvURL( $url, $forcedEnv = null ) {
 		// first - normalize URL
-		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
-		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
+		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
+		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
+		if ( preg_match( $regexp, $url, $groups ) === 0 ||
+		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0
+		) {
 			// on fail at least return original url
 			return $url;
 		}
-		$server = $groups[1];
-		$path = $groups[2];
+
+		$protocol = $groups[1];
+		$server = $groups[2];
+		$path = $groups[3];
 
 		if ( !empty( $path ) ) {
 			$path = '/' . $path;
@@ -1229,14 +1234,29 @@ class WikiFactory {
 
 		$localServer = self::getLocalEnvServer( $server, $forcedEnv );
 
-		return 'http://' . $localServer . $path;
+		if ( self::getCurrentEnvironment( $forcedEnv ) != WIKIA_ENV_PROD ) {
+			// Force HTTP in non-production environments
+			$protocol = 'http';
+		}
+
+		return $protocol . '://' . $localServer . $path;
 	}
 
-	static public function getLocalEnvServer( $server, $forcedEnv = null ) {
+	public static function getCurrentEnvironment( $forcedEnv = false ) {
+		if ( $forcedEnv &&
+		     $forcedEnv !== WIKIA_ENV_DEV &&
+		     $forcedEnv !== WIKIA_ENV_SANDBOX ) {
+			return $forcedEnv;
+		} else {
+			return F::app()->wg->WikiaEnvironment;
+		}
+	}
+
+	public static function getLocalEnvServer( $server, $forcedEnv = null ) {
 		// strip env-specific pre- and suffixes for staging environment
 		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
-		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
 
+		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.(us|pl|com)$/';
 		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
 			$devBox = $groups[1];
 		} else {
@@ -1250,11 +1270,7 @@ class WikiFactory {
 		$server = str_replace( '.' . F::app()->wg->WikiaBaseDomain, '', $server );
 
 		// Determine the environment we want to get url for
-		$environment = (
-			$forcedEnv &&
-			$forcedEnv !== WIKIA_ENV_DEV &&
-			$forcedEnv !== WIKIA_ENV_SANDBOX
-		) ? $forcedEnv : F::app()->wg->WikiaEnvironment;
+		$environment = self::getCurrentEnvironment( $forcedEnv );
 
 		// put the path back into shape and return
 		if ( $environment == WIKIA_ENV_PREVIEW ) {

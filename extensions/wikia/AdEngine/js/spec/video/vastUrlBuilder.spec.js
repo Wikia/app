@@ -2,46 +2,48 @@
 describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	'use strict';
 
-	function noop () {}
+	function noop() {
+	}
 
 	var mocks = {
-			adContext: {
-				addCallback: noop
-			},
-			adUnitBuilder: {
-				build: function() {
-					return 'my/ad/unit';
-				}
-			},
-			page: {
-				getPageLevelParams: function () {
-					return {
-						uno: 'foo',
-						due: 15,
-						tre: [ 'bar', 'zero' ],
-						quattro: null,
-						s0: 'life',
-						s1: '_project43',
-						s2: 'article'
-					};
-				}
-			},
-			loc: {
-				href: 'http://foo.url'
-			},
-			log: noop,
-			slotParams: {
-				src: 'src',
-				pos: 'SLOT_NAME'
+		adUnitBuilder: {
+			build: function () {
+				return 'my/ad/unit';
 			}
-
+		},
+		slotTargeting: {
+			getWikiaSlotId: function () {
+				return 'xxxx';
+			}
+		},
+		page: {
+			getPageLevelParams: function () {
+				return {
+					uno: 'foo',
+					due: 15,
+					tre: ['bar', 'zero'],
+					quattro: null,
+					s0: 'life',
+					s1: '_project43',
+					s2: 'article'
+				};
+			}
+		},
+		loc: {
+			href: 'http://foo.url'
+		},
+		log: noop,
+		slotParams: {
+			src: 'src',
+			pos: 'SLOT_NAME'
+		}
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
-			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
+			mocks.slotTargeting,
 			mocks.loc,
 			mocks.log
 		);
@@ -99,20 +101,20 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(/&correlator=\d+&/g);
 	});
 
-	it('Build VAST URL with page level params', function () {
+	it('Build VAST URL with page level params and wsi param', function () {
 		var vastUrl = getModule().build(1, {});
 
-		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
+		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
 	});
 
-	it('Build VAST URL with page level params and slot level params', function () {
+	it('Build VAST URL with page level params, slot level params and wsi param', function () {
 		var vastUrl = getModule().build(1, {
 			passback: 'playwire',
 			pos: 'TEST_SLOT',
 			src: 'remnant'
 		});
 
-		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
+		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
 	});
 
 	it('Build VAST URL with ad unit id', function () {

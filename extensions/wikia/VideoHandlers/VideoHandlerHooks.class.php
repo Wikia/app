@@ -3,10 +3,6 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function WikiaVideo_isMovable( $result, $index ) {
-		return true;
-	}
-
 	static public function WikiaVideoParserBeforeStrip( $parser, &$text, $strip_state ) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
@@ -85,7 +81,7 @@ class VideoHandlerHooks {
 	 * @return bool
 	 */
 	static public function initParserHook( &$parser ) {
-		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
+		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
 

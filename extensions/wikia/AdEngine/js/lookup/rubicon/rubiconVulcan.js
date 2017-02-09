@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'use strict';
 
 	var accountId = 7450,
+		bidder,
 		config = {
 			oasis: {
 				INCONTENT_LEADERBOARD: {
@@ -47,6 +48,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
+		slotMapping = {
+			'INCONTENT_PLAYER': 'INCONTENT_LEADERBOARD'
+		},
 		slots = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
@@ -90,6 +94,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		slotName = slotMapping[slotName] || slotName;
 		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
@@ -104,14 +109,41 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var cpm,
 			price;
 
+		slotName = slotMapping[slotName] || slotName;
+
 		if (priceMap[slotName]) {
-			cpm = rubiconTier.parsePrice(priceMap[slotName]) / 100;
+			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
 			price = cpm.toFixed(2).toString();
 		}
 
 		return {
 			vulcan: price
 		};
+	}
+
+	function getSingleResponse(slotName) {
+		var bestResponse = {},
+			allSlots = win.rubiconVulcan.getAllSlots() || [];
+
+		slotName = slotMapping[slotName] || slotName;
+
+		allSlots.forEach(function (slot) {
+			if (slot.id === slotName) {
+				bestResponse = slot.getBestCpm();
+			}
+		});
+
+		return bestResponse;
+	}
+
+	function deleteBid(slotName) {
+		var response;
+
+		slotName = slotMapping[slotName] || slotName;
+		response = getSingleResponse(slotName);
+		response.used = true;
+
+		delete priceMap[slotName];
 	}
 
 	function encodeParamsForTracking(params) {
@@ -156,7 +188,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 		slots = config[skin];
 		script.addEventListener('load', function () {
+			// TODO ADEN-4637 Remove win.rubiconVulcan reference
 			win.rubiconVulcan = win.rubicontag.video;
+			win.ads.rubiconVulcan = {
+				getSingleResponse: getSingleResponse,
+				deleteBid: deleteBid
+			};
 			defineSlots(skin, onResponse);
 		});
 
@@ -168,10 +205,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		return !!slots[slotName] || slotMapping[slotName];
 	}
 
-	return factory.create({
+	bidder = factory.create({
 		logGroup: logGroup,
 		name: 'rubicon_vulcan',
 		call: call,
@@ -182,4 +219,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		encodeParamsForTracking: encodeParamsForTracking,
 		getSlotParams: getSlotParams
 	});
+
+	bidder.getSingleResponse = getSingleResponse;
+
+	return bidder;
 });

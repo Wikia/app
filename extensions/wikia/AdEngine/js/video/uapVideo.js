@@ -1,45 +1,78 @@
 /*global define*/
 define('ext.wikia.adEngine.video.uapVideo', [
-	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
+	'ext.wikia.adEngine.video.player.uiTemplate',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (adHelper, uapContext, porvata, playwire, videoInterface, doc, log, win) {
+	'wikia.throttle',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.video.uapVideo';
+	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
+		positionVideoPlayerClassName = 'video-player-';
 
-	function getVideoHeight(width, params) {
-		return width / params.videoAspectRatio;
+	function getVideoSize(slot, params) {
+		var width = slot.clientWidth;
+
+		// we don't want to have fullscreen (slot.clientWidth) video in case of split
+		// layout or on mercury.
+		// On mercury splitLayoutVideoPosition and videoPlaceholderElement will be empty
+		// because we always display video in the same way there.
+		if (params.splitLayoutVideoPosition && params.videoPlaceholderElement) {
+			width = params.videoPlaceholderElement.width;
+		}
+
+		return {
+			width: width,
+			height: width / params.videoAspectRatio
+		};
 	}
 
-	function getSlotWidth(slot) {
-		return slot.clientWidth;
-	}
-
-	function loadPorvata(params, adSlot, imageContainer) {
-		params.container = adSlot;
+	function loadPorvata(params, slotContainer, providerContainer) {
+		params.container = slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
 		return porvata.inject(params)
 			.then(function (video) {
-				videoInterface.setup(video, [
-					'progressBar',
-					'pauseOverlay',
-					'volumeControl',
-					'closeButton',
-					'toggleAnimation'
-				], {
-					image: imageContainer,
-					container: adSlot,
+				if (mercuryListener) {
+					mercuryListener.onPageChange(function () {
+						video.destroy();
+					});
+				}
+
+				return video;
+			})
+			.then(function (video) {
+				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+					template = UITemplate.defaultLayout;
+
+				if (params.splitLayoutVideoPosition) {
+					template = UITemplate.splitLayout;
+				} else if (params.autoPlay) {
+					template = UITemplate.autoPlayLayout;
+				}
+
+				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+
+				videoInterface.setup(video, template, {
+					image: providerContainer,
+					container: slotContainer,
 					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio
+					videoAspectRatio: params.videoAspectRatio,
+					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
+
+				if (splitLayoutVideoPosition) {
+					video.container.style.position = 'absolute';
+					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
+				}
 
 				video.addEventListener('allAdsCompleted', function () {
 					video.reload();
@@ -49,7 +82,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadPlaywire(params, adSlot, imageContainer) {
+	function loadPlaywire(params, adSlot, providerContainer) {
 		var container = doc.createElement('div');
 
 		container.classList.add('video-player', 'hidden');
@@ -64,31 +97,38 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					'closeButton',
 					'toggleAnimation'
 				], {
-					image: imageContainer,
+					image: providerContainer,
 					container: adSlot,
 					aspectRatio: params.aspectRatio,
 					videoAspectRatio: params.videoAspectRatio
 				});
 
 				video.addEventListener('wikiaAdStarted', function () {
-					var slotWidth = getSlotWidth(adSlot);
-					video.resize(slotWidth, getVideoHeight(slotWidth, params));
+					var size = getVideoSize(adSlot, params);
+					video.resize(size.width, size.height);
 				});
-				if (params.autoplay) {
-					var slotWidth = getSlotWidth(adSlot);
-					video.play(slotWidth, getVideoHeight(slotWidth, params));
+
+				if (params.autoPlay) {
+					var size = getVideoSize(adSlot, params);
+					video.play(size.width, size.height);
 				}
 
 				return video;
 			});
 	}
 
-	function loadVideoAd(params, adSlot, imageContainer) {
+	function loadVideoAd(params) {
 		var loadedPlayer,
-			videoWidth = getSlotWidth(adSlot);
+			providerContainer = adSlot.getProviderContainer(params.slotName),
+			videoContainer = providerContainer.parentNode,
+			size;
 
-		params.width = videoWidth;
-		params.height = getVideoHeight(videoWidth, params);
+		log(['loadVideoAd params', params], log.levels.debug, logGroup);
+
+		size = getVideoSize(videoContainer, params);
+		params.width = size.width;
+		params.height = size.height;
+		params.adProduct = 'vuap';
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
@@ -96,29 +136,37 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			uap: uapContext.getUapId()
 		};
 
+		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
+
 		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, adSlot, imageContainer);
+			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, adSlot, imageContainer);
+			loadedPlayer = loadPorvata(params, videoContainer, providerContainer);
 		}
 
 		return loadedPlayer.then(function (video) {
-			win.addEventListener('resize', adHelper.throttle(function () {
-				var slotWidth = getSlotWidth(adSlot);
-				video.resize(slotWidth, getVideoHeight(slotWidth, params));
+			win.addEventListener('resize', throttle(function () {
+				var size = getVideoSize(videoContainer, params);
+				video.resize(size.width, size.height);
 			}));
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				var slotWidth = getSlotWidth(adSlot);
-				video.play(slotWidth, getVideoHeight(slotWidth, params));
+				var size = getVideoSize(videoContainer, params);
+				video.play(size.width, size.height);
 			});
 
 			return video;
 		});
 	}
 
+	/**
+	 * Check if all required params are present
+	 *
+	 * @param params
+	 * @returns bool
+	 */
 	function isEnabled(params) {
-		return params.videoTriggerElement && params.videoAspectRatio;
+		return !!params.videoAspectRatio;
 	}
 
 	return {

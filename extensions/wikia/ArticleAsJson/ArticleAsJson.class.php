@@ -45,7 +45,7 @@ class ArticleAsJson extends WikiaService {
 					'height' => $scaledSize['height'],
 					'width' => $scaledSize['width'],
 					'title' => $media['title'],
-					'link' => $media['link'] ?? '',
+					'href' => $media['href'],
 					'caption' => $media['caption'] ?? ''
 				]
 			)
@@ -65,7 +65,8 @@ class ArticleAsJson extends WikiaService {
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
 					'caption' => $media['caption'] ?? '',
-					'link' => $media['link'] ?? '',
+					'href' => $media['href'],
+					'isLinkedByUser' => $media['isLinkedByUser'],
 					/**
 					 * data-ref has to be set for now because it's read in
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
@@ -125,7 +126,7 @@ class ArticleAsJson extends WikiaService {
 				array_filter(
 					$media,
 					function ( $item ) {
-						return isset( $item['link'] );
+						return $item['isLinkedByUser'];
 					}
 				)
 			) ) {
@@ -152,8 +153,16 @@ class ArticleAsJson extends WikiaService {
 			'user' => $details['userName']
 		];
 
-		if ( is_string( $link ) && $link !== '' ) {
+		// Only images are allowed to be linked by user
+		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
+			// TODO remove after XW-2653 is released
 			$media['link'] = $link;
+			$media['href'] = $link;
+			$media['isLinkedByUser'] = true;
+		} else {
+			// There is no easy way to link directly to a video, so we link to its file page
+			$media['href'] = $media['type'] === 'video' ? $media['fileUrl'] : $media['url'];
+			$media['isLinkedByUser'] = false;
 		}
 
 		if ( !empty( $details['width'] ) ) {
@@ -257,7 +266,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromText( $data['name'] );
-		if ( $title && F::app()->checkSkin( 'wikiamobile' ) ) {
+		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );

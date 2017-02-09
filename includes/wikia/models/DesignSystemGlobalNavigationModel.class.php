@@ -214,7 +214,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function hasAuthorProfile( $user ) {
-		return sizeof( preg_grep( "/^fancontributor-/", $user->getGroups() ) ) > 0;
+		return intval( $user->getGlobalAttribute( 'wordpressId', 0 ), 10 ) > 0;
 	}
 
 	private function getLoggedInUserData( $user ) {
@@ -235,7 +235,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$logOutLink = [
 			'type' => 'link-authentication',
-			'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ),
+			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'

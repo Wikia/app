@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 						classList: {
 							add: noop
 						}
-					}
+					};
 				}
 			}
 		},
@@ -30,7 +30,12 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 			pause: noop,
 			resume: noop,
 			setVolume: noop,
-			stop: noop
+			stop: noop,
+			dispatchEvent: noop
+		},
+		domElementTweaker: {
+			show: noop,
+			hide: noop
 		}
 	};
 
@@ -40,7 +45,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 	logMock.levels = {};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory'](logMock)
+		return modules['ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory'](mocks.domElementTweaker, logMock);
 	}
 
 	it('player created with all properties', function () {
@@ -53,6 +58,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		expect(typeof createdPlayer.getRemainingTime).toBe('function');
 		expect(typeof createdPlayer.isMuted).toBe('function');
 		expect(typeof createdPlayer.isPaused).toBe('function');
+		expect(typeof createdPlayer.isPlaying).toBe('function');
 		expect(typeof createdPlayer.pause).toBe('function');
 		expect(typeof createdPlayer.play).toBe('function');
 		expect(typeof createdPlayer.reload).toBe('function');

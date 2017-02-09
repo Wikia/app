@@ -28,7 +28,9 @@ class DesignSystemSharedLinks {
 	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+
+		return WikiFactory::getLocalEnvURL( $href );
 	}
 
 	/**
@@ -87,6 +89,7 @@ class DesignSystemSharedLinks {
 			'tv' => 'http://fandom.wikia.com/tv',
 			'fandom-university' => 'http://community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
+			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
 			'user-author-profile' => 'http://fandom.wikia.com/u/',
 			'wikia-org-logo' => 'https://www.wikia.org',

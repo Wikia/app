@@ -4,8 +4,6 @@ namespace Discussions;
 
 
 class SiteStatus {
-	const PROD_SERVICE_URL = 'https://serivces.wikia.com';
-	const DEV_SERVICE_URL = 'https://services.wikia-dev.com';
 
 	const TIME_OUT = 5;
 
@@ -48,6 +46,8 @@ class SiteStatus {
 	private $numThreadedForumPosts;
 	private $numWikiForumPosts;
 
+	/** @var \DateTime */
+	private $lastPageEdit;
 	/** @var \DateTime */
 	private $discussionsFound;
 	/** @var \DateTime */
@@ -142,12 +142,16 @@ class SiteStatus {
 		if ( !empty ( $row->last_updated ) ) {
 			$this->lastUpdated = new \DateTime( $row->last_updated );
 		}
+		if ( !empty ( $row->last_edit ) ) {
+			$this->lastPageEdit = new \DateTime( $row->last_edit );
+		}
 	}
 
 	public function update() {
 		$this->probeSiteAvailable();
 		$this->updateWikiVariables();
 		$this->findExistingPosts();
+		$this->findLastEdit();
 		$this->probeDiscussions();
 	}
 
@@ -174,6 +178,10 @@ class SiteStatus {
 			$statement->SET( 'first_post_found', $this->firstPostFoundString() );
 		}
 
+		if ( !empty( $this->lastPageEdit ) ) {
+			$statement->SET( 'last_edit', $this->lastPageEditString() );
+		}
+
 		$now = (new \DateTime())->format('Y-m-d H:i:s');
 		$statement->SET( 'site_available', $this->siteAvailable )
 			->SET( 'discussions_enabled', $this->discussionsEnabled )
@@ -198,6 +206,13 @@ class SiteStatus {
 			return '';
 		}
 		return $this->firstPostFound->format('Y-m-d H:i:s');
+	}
+
+	public function lastPageEditString() {
+		if ( empty( $this->lastPageEdit ) ) {
+			return '';
+		}
+		return $this->lastPageEdit->format('Y-m-d H:i:s');
 	}
 
 	private function probeSiteAvailable() {
@@ -244,6 +259,29 @@ class SiteStatus {
 		$this->navigationEnabled = $this->getVariableValue( 'wgEnableDiscussionsNavigation' );
 	}
 
+	private function findLastEdit() {
+		$date = ( new \WikiaSQL() )
+			->SELECT( "MAX(page_touched)" )->AS_( "last_edit_date" )
+			->FROM( self::TABLE_PAGE )
+			->run(
+				$this->localDbh,
+				function ( $result ) {
+					/** @var \ResultWrapper|bool $result */
+					if ( !is_object( $result ) ) {
+						return 0;
+					}
+
+					$row = $result->fetchObject();
+
+					return $row ? $row->last_edit_date : '';
+				},
+				''
+			);
+
+		$this->debug("\tfound $date as most recent edit" );
+		$this->lastPageEdit = new \DateTime( $date );
+	}
+
 	private function findExistingPosts() {
 		$this->debug( "Finding existing posts" );
 
@@ -253,7 +291,7 @@ class SiteStatus {
 
 	private function findExistingThreadedForumPosts() {
 		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*) " )->AS_( "num_posts" )
+			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_COMMENTS )
 				->LEFT_JOIN( self::TABLE_PAGE )
 				->ON( 'page_id', 'comment_id' )
@@ -282,7 +320,7 @@ class SiteStatus {
 
 	private function findExistingWikiForumPosts() {
 		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*) " )->AS_( "num_posts" )
+			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_PAGE )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_FORUM )
 			->run(
@@ -359,13 +397,9 @@ class SiteStatus {
 	}
 
 	private function getDiscussionsUrl() {
-		if ( \F::app()->wg->WikiaEnvironment == WIKIA_ENV_DEV ) {
-			$baseUrl = self::DEV_SERVICE_URL;
-		} else {
-			$baseUrl = self::PROD_SERVICE_URL;
-		}
+		global $wgDiscussionsApiUrl;
 
-		return $baseUrl . '/discussion/' . $this->siteId . '/threads';
+		return "$wgDiscussionsApiUrl/$this->siteId/threads";
 	}
 
 	private function getVariableValue( $name ) {
