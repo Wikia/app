@@ -1234,7 +1234,7 @@ class WikiFactory {
 
 		$localServer = self::getLocalEnvServer( $server, $forcedEnv );
 
-		if ( self::getCurrentEnvironment( $forcedEnv ) != WIKIA_ENV_PROD ) {
+		if ( !self::environmentSupportsHttps( $forcedEnv ) ) {
 			// Force HTTP in non-production environments
 			$protocol = 'http';
 		}
@@ -1250,6 +1250,11 @@ class WikiFactory {
 		} else {
 			return F::app()->wg->WikiaEnvironment;
 		}
+	}
+
+	public static function environmentSupportsHttps( $forcedEnv ) {
+		$currentEnv = self::getCurrentEnvironment( $forcedEnv );
+		return $currentEnv == WIKIA_ENV_PROD || $currentEnv == WIKIA_ENV_STAGING;
 	}
 
 	public static function getLocalEnvServer( $server, $forcedEnv = null ) {
