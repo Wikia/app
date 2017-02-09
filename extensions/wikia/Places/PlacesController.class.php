@@ -6,6 +6,20 @@ class PlacesController extends WikiaController {
 	private static $mapId = 1;
 
 	/**
+	 * @throws UnauthorizedException
+	 */
+	public function init() {
+		$method = $this->request->getVal( 'method' );
+		if ( !$this->request->isInternal() && !in_array( $method, $this->allowedExternalMethods() ) ) {
+			throw new UnauthorizedException();
+		}
+	}
+
+	protected function allowedExternalMethods() {
+		return [ 'getMarkersRelatedToCurrentTitle', 'saveNewPlaceToArticle' ];
+	}
+
+	/**
 	 * Render static map from given set of attributes
 	 *
 	 * Used to render <place> parser hook
