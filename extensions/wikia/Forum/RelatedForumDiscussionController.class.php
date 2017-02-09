@@ -2,17 +2,12 @@
 
 use Wikia\Logger\WikiaLogger;
 
-class RelatedForumDiscussionController extends WikiaController {
+class RelatedForumDiscussionController extends WikiaService {
 
 	/** Expiry time to use in cache requests */
 	const CACHE_EXPIRY = 86400; // 24*60*60
 
-	public function init() {
-
-	}
-
 	public function index() {
-
 		$this->response->setVal('messages', $this->getVal( 'messages' ));
 
 		// loading assets in Monobook that would normally load in oasis
@@ -33,39 +28,6 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->response->setVal('seeMoreUrl', $topicTitle->getFullUrl());
 		$this->response->setVal('seeMoreText', wfMessage( 'forum-related-discussion-see-more' )->escaped());
-	}
-
-	/**
-	 * @deprecated legacy entry point for cached JS requests
-	 */
-	public function checkData() {
-		$articleId = $this->getVal( 'articleId' );
-		$title = Title::newFromId( $articleId );
-		if ( empty( $articleId ) || empty( $title ) ) {
-			$this->response->setVal('replace', false);
-			$this->response->setVal('articleId', $articleId);
-			return;
-		}
-
-		$messages = RelatedForumDiscussionController::getData( $articleId );
-
-		$timediff = time() - $messages['lastupdate'];
-
-		$this->response->setVal('lastupdate', $messages['lastupdate']);
-		$this->response->setVal('timediff', $timediff);
-
-		unset( $messages['lastupdate'] );
-
-		$html = '';
-		$replace = ( $timediff < 24 * 60 * 60 );
-		if ( $replace ) {
-			$html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", [ 'messages' => $messages ] );
-		}
-
-		$this->response->setVal( 'replace', $replace );
-		$this->response->setVal( 'html', $html );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( 6 * 60 * 60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
 
 	/**
