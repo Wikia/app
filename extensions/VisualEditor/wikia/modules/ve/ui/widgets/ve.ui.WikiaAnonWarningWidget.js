@@ -30,17 +30,13 @@ ve.ui.WikiaAnonWarningWidget.prototype.getAnonWarning = function () {
 		.on( 'click', function () {
 			window.wikiaAuthModal.load( {
 				url: '/signin',
-				onAuthSuccess: function () {
-					this.emit( 'logInSuccess' );
-				}.bind( this )
+				onAuthSuccess: this.emit.bind(this, 'logInSuccess')
 			} );
 		}.bind( this ) );
 	this.$anonWarning.find('.ve-ui-wikia-anon-warning__register-link')
 		.on( 'click', function () {
 			window.wikiaAuthModal.load( {
-				onAuthSuccess: function () {
-					this.emit( 'logInSuccess' );
-				}.bind( this )
+				onAuthSuccess: this.emit.bind(this, 'logInSuccess')
 			} );
 		}.bind( this ) );
 

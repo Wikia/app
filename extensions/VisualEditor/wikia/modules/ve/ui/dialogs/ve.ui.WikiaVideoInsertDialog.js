@@ -70,11 +70,11 @@ ve.ui.WikiaVideoInsertDialog.prototype.addVideoMainPage = function () {
 			.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' ) );
 
 		logInButton.on( 'click', function () {
-			this.onLogInClick();
+			this.onLogInButtonClicked();
 		}.bind( this ) );
 
 		registerButton.on( 'click', function () {
-			this.onRegisterClick();
+			this.onRegisterButtonClicked();
 		}.bind( this ) );
 
 		this.$videoIcon = this.$( '<span>' )
