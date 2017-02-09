@@ -3,8 +3,10 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
 	var BIG_IMAGE = 'bigImage.png',
+		BIG_IMAGE_2 = 'bigImage2.png',
 		DEFAULT_IMAGE = 'oldImage.png',
 		RESOLVED_IMAGE = 'resolvedImage.png',
+		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
 		mocks = {
 			log: function () {},
 			qs: {
@@ -25,6 +27,22 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 						imageSrc: RESOLVED_IMAGE
 					},
 					backgroundImage: {
+						src: DEFAULT_IMAGE
+					}
+				},
+				CORRECT_WITH_TWO_ASSETS: {
+					leftImageSrc: BIG_IMAGE,
+					rightImageSrc: BIG_IMAGE_2,
+					aspectRatio: 1,
+					resolvedState: {
+						aspectRatio: 2,
+						leftImageSrc: RESOLVED_IMAGE,
+						rightImageSrc: RESOLVED_IMAGE_2
+					},
+					backgroundLeftImage: {
+						src: DEFAULT_IMAGE
+					},
+					backgroundRightImage: {
 						src: DEFAULT_IMAGE
 					}
 				},
@@ -87,6 +105,20 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 				params: data.PARAMS.INCORRECT,
 				queryParam: '0',
 				expected: BIG_IMAGE
+			},
+			{
+				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				queryParam: '0',
+				expectedLeftImage: BIG_IMAGE,
+				expectedRightImage: BIG_IMAGE_2,
+				twoAssets: true
+			},
+			{
+				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				queryParam: null,
+				expectedLeftImage: RESOLVED_IMAGE,
+				expectedRightImage: RESOLVED_IMAGE_2,
+				twoAssets: true
 			}
 		];
 
@@ -105,7 +137,12 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			var rs = getModule();
 			mocks.qs.getVal.and.returnValue(testCase.queryParam);
 
-			expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
+			if (testCase.twoAssets) {
+				expect(testCase.expectedLeftImage).toEqual(rs.setImage(testCase.params).backgroundLeftImage.src);
+				expect(testCase.expectedRightImage).toEqual(rs.setImage(testCase.params).backgroundRightImage.src);
+			} else {
+				expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
+			}
 		});
 	});
 

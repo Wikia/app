@@ -32,8 +32,14 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 
 	function setResolvedState(params) {
 		log('Resolved state is turned on', logGroup, log.levels.debug);
-		params.backgroundImage.src = params.resolvedState.imageSrc;
 		params.aspectRatio = params.resolvedState.aspectRatio;
+		if (params.backgroundImage) {
+			params.backgroundImage.src = params.resolvedState.imageSrc;
+		} else {
+			params.backgroundLeftImage.src = params.resolvedState.leftImageSrc;
+			params.backgroundRightImage.src = params.resolvedState.rightImageSrc;
+		}
+
 		return params;
 	}
 
@@ -42,7 +48,13 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function setDefaultState(params) {
-		params.backgroundImage.src = params.imageSrc;
+		if (params.backgroundImage) {
+			params.backgroundImage.src = params.imageSrc;
+		} else {
+			params.backgroundLeftImage.src = params.leftImageSrc;
+			params.backgroundRightImage.src = params.rightImageSrc;
+		}
+
 		return params;
 	}
 
