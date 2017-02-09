@@ -20,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Helios\HeliosClient;
-use Wikia\Service\User\Attributes\UserAttributes;
+
 
 class EditAccount extends SpecialPage {
 	/** @var User */
@@ -155,7 +155,6 @@ class EditAccount extends SpecialPage {
 				$template = 'displayuser';
 				break;
 			case 'fan-contributor':
-				echo 'fan contributor';
 				$this->mStatus = $this->addFanContributor();
 				$template = 'displayuser';
 				break;
@@ -613,14 +612,49 @@ class EditAccount extends SpecialPage {
 	}
 
 	private function addFanContributor() {
+		global $wgWordpressAPIUser, $wgWordpressAPIPassword;
+
+		$url = 'http://sandbox2.fandom.wikia.com/ajax/create_user/';
+		$fields = [
+			'wp_login' => $this->mUser->getName(),
+			'wp_email' => $this->mUser->getEmail(),
+			'fandom_id' => $this->mUser->getId(),
+		];
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_USERPWD, $wgWordpressAPIUser . ":" . $wgWordpressAPIPassword );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+		$result = json_decode( curl_exec( $ch ), true );
+		curl_close( $ch );
+
+		if (
+			$result === false ||
+			empty( $result['success'] ) ||
+			empty( $result['data']['wp_user_id'] )
+		) {
+			if ( !empty( $result['data'][0]['message'] ) ) {
+				echo "status message is " . $result['data'][0]['message'];
+				$this->mStatus = $result['data'][0]['message'];
+				return false;
+			}
+			$this->mStatus = $this->msg( 'unknown-error' )->escaped();
+			return false;
+		}
+
+		$wordpressId = $result['data']['wp_user_id'];
+		$this->mUser->setGlobalAttribute( 'wordpressId', $wordpressId );
 		$this->mStatusMsg = $this->msg( 'editaccount-success-fan-contributor', $this->mUser->getName() );
+
 		return true;
 	}
 
 	private function isFanContributor() {
-		/** @var UserAttributes $attributeService */
-		$attributeService = Injector::getInjector()->get( UserAttributes::class );
-		$wordpressId = $attributeService->getAttribute( $this->mUser->getId(), 'wordpressId', 0 );
+		$wordpressId = $this->mUser->getGlobalAttribute( 'wordpressId', 0 );
+
 		return $wordpressId > 0;
 	}
 }
