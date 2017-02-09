@@ -220,8 +220,6 @@ class CommentsIndex extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		if ( !wfReadOnly() && !empty( $this->commentId ) ) {
-			$this->createTableCommentsIndex();
-
 			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 
 			$updateValue['last_touched'] = $db->timestamp();
@@ -254,8 +252,6 @@ class CommentsIndex extends WikiaModel {
 
 		wfProfileIn( __METHOD__ );
 
-
-		$this->createTableCommentsIndex();
 		$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 		$timestamp = $db->timestamp();
 		if ( empty( $this->createdAt ) ) {
@@ -300,24 +296,6 @@ class CommentsIndex extends WikiaModel {
 		// if $dbw was passed, this is a part of some outside transaction, so we don't commit anything yet
 		if ( is_null( $this->dbw ) ) {
 			$db->commit();
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * create comments_index table if not exists
-	 */
-	public function createTableCommentsIndex() {
-		wfProfileIn( __METHOD__ );
-
-		if ( !wfReadOnly() ) {
-			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
-
-			if ( !$db->tableExists( 'comments_index' ) ) {
-				$source = dirname( __FILE__ ) . "/../patch-create-comments_index.sql";
-				$db->sourceFile( $source );
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

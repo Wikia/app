@@ -222,29 +222,6 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * Hook: add comments_index table when adding board
-	 * @param Article $article
-	 * @param $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @return bool
-	 */
-	static public function onArticleInsertComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision ) {
-		$title = $article->getTitle();
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
-			$commentsIndex = ( new CommentsIndex );
-			$commentsIndex->createTableCommentsIndex();
-		}
-
-		return true;
-	}
-
-	/**
 	 * clear the caches
 	 * @param WallMessage $mw
 	 * @return bool

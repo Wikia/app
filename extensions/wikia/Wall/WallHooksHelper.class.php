@@ -2075,7 +2075,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 * Purge wiki navigation cache when disabling/enabling Forum and Wall
 	 *
 	 * @param String $name
 	 * @param String $val
@@ -2085,15 +2085,6 @@ class WallHooksHelper {
 	public static function onAfterToggleFeature( $name, $val ) {
 		global $IP;
 		if ( $name == 'wgEnableWallExt' || $name == 'wgEnableForumExt' ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_history' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_history_local.sql" );
-			}
-
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_related_pages.sql" );
-			}
-
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
