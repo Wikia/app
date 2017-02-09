@@ -81,6 +81,13 @@ class CommentsIndex extends WikiaModel {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getCommentId() {
+		return $this->commentId;
+	}
+
+	/**
 	 * update archived flag
 	 * @param integer $value
 	 */
@@ -320,7 +327,7 @@ class CommentsIndex extends WikiaModel {
 	 * get CommentsIndex object from id
 	 * @param integer $commentId
 	 * @param integer $parentPageId
-	 * @return object $comment
+	 * @return CommentsIndex $comment
 	 */
 	public static function newFromId( $commentId, $parentPageId = 0, $dbw = null ) {
 
@@ -360,6 +367,9 @@ class CommentsIndex extends WikiaModel {
 			if ( !empty( $parentPageId ) ) {
 				$comment->parentPageId = $parentPageId;
 			}
+
+			// avoid multiple queries for the same "main" entry when visiting Wall page
+			$comment->cache();
 		} else {
 			$comment = null;
 		}
@@ -367,6 +377,40 @@ class CommentsIndex extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $comment;
+	}
+
+
+	/**
+	 * get CommentsIndex objects for a set of ids in a single database query
+	 *
+	 * @see SUS-262
+	 *
+	 * @param int[] $commentId
+	 * @return CommentsIndex[]
+	 */
+	public static function newFromIds( Array $commentIds ) {
+
+		// a shortcut that prevents "DatabaseBase::makeList: empty input" exception
+		if ( count( $commentIds ) == 0 ) {
+			return [];
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$res = $dbr->select(
+			'comments_index',
+			'*',
+			[ 'comment_id' => $commentIds ],
+			__METHOD__
+		);
+
+		$commments = [];
+
+		while ( $row = $res->fetchObject() ) {
+			$commments[] = CommentsIndex::newFromRow($row);
+		}
+
+		return $commments;
 	}
 
 	/**
@@ -387,7 +431,7 @@ class CommentsIndex extends WikiaModel {
 	/**
 	 * get CommentsIndex object from row
 	 * @param array row
-	 * @return array comment
+	 * @return CommentsIndex comment
 	 */
 	public static function newFromRow( $row, $dbw = null ) {
 		$data = [
@@ -407,9 +451,7 @@ class CommentsIndex extends WikiaModel {
 			'lastTouched' => $row->last_touched,
 		];
 
-		$comment = new CommentsIndex( $data, $dbw );
-
-		return $comment;
+		return new CommentsIndex( $data, $dbw );
 	}
 
 	/**

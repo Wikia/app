@@ -13,6 +13,9 @@ class WallMessage {
 	protected $cityId = 0;
 	protected static $permissionsCache = [ ]; // permissions cache
 	protected static $wallURLCache = [ ];
+
+	protected static $wallMessageCache = [];
+
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
@@ -39,24 +42,41 @@ class WallMessage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	static public function newFromId( $id, $master = false ) {
+	/**
+	 * @param int $id
+	 * @param bool $master
+	 * @return null|WallMessage
+	 */
+	static public function newFromId( int $id, $master = false ) {
+
+		// WallMessage::getTopParentObj may call this method with $id set to zero
+		if ( $id === 0 ) {
+			return null;
+		}
+
+		// use in-memory cache
+		if ( !empty( self::$wallMessageCache[$id] ) ) {
+			return self::$wallMessageCache[$id];
+		}
+
 		wfProfileIn( __METHOD__ );
 
-		if ( $master == true ) {
-			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
-		} else {
-			$title = Title::newFromId( $id );
-		}
+		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
 		if ( $title instanceof Title && $title->exists() ) {
 			wfProfileOut( __METHOD__ );
-			return WallMessage::newFromTitle( $title );
+			return self::$wallMessageCache[$id] = WallMessage::newFromTitle( $title );
 		}
 
 		if ( $master == false ) {
+			// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
+			WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, trying master', [
+				'titleId' => $id
+			] );
+
 			wfProfileOut( __METHOD__ );
 			// if you fail from slave try again from master
-			return self::newFromId( $id, true );
+			return self::$wallMessageCache[$id] = self::newFromId( $id, true );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -64,36 +84,51 @@ class WallMessage {
 	}
 
 	/**
-	 * @param array $ids
-	 * @return array
+	 * @param int[] $ids
+	 * @return WallMessage[]
 	 */
-	static public function newFromIds( $ids ) {
+	static public function newFromIds( Array $ids ) {
 		wfProfileIn( __METHOD__ );
 
 		$titles = Title::newFromIDs( $ids );
+
+		/* @var WallMessage[] $wallMessages */
 		$wallMessages = [ ];
 		$correctIds = [ ];
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
 			if ( $title->exists() ) {
-				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->getArticleID();
 			}
 		}
 
+		/**
+		 * Avoid a flood of database queries from CommentsIndex::selectRow
+		 * when WallMessages::getCommentsIndex is called
+		 *
+		 * @see SUS-262
+		 */
+		$commentsIndices = CommentsIndex::newFromIds( $correctIds );
+
+		foreach( $commentsIndices as $commentIndex ) {
+			$wallMessages[ $commentIndex->getCommentId() ]->commentsIndex = $commentIndex;
+		}
+
 		$retryIds = array_diff( $ids, $correctIds );
+
 		foreach ( $retryIds as $id ) {
-			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
+			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
-				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 			} else {
 				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $wallMessages;
+		return array_values( $wallMessages );
 	}
 
 	static public function addMessageWall( $userPageTitle ) {
@@ -235,6 +270,9 @@ class WallMessage {
 		return $val;
 	}
 
+	/**
+	 * @return CommentsIndex
+	 */
 	public function getCommentsIndex() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
 			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
@@ -652,6 +690,10 @@ class WallMessage {
 		return $this->getArticleTitle()->getFullUrl();
 	}
 
+	/**
+	 * @param bool $useMasterDB
+	 * @return Title
+	 */
 	public function getArticleTitle( $useMasterDB = false ) {
 		$commentsIndex = $this->getCommentsIndex();
 
