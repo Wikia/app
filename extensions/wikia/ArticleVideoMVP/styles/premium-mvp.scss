@@ -4,7 +4,6 @@
 
 #premium-mvp-video {
 	cursor: pointer;
-	background-image: url("/extensions/wikia/ArticleVideoMVP/images/video.png"); /* $wgCdnStylePath */
 	background-size: cover;
 	background-position: center center;
 	padding-top: 56%;
@@ -73,7 +72,6 @@
 		}
 
 		.video-thumbnail {
-			background-image: url("/extensions/wikia/ArticleVideoMVP/images/video.png"); /* $wgCdnStylePath */
 			background-size: cover;
 			background-position: center center;
 			height: 140px;
