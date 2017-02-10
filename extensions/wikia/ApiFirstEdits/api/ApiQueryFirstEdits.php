@@ -62,6 +62,11 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 		$this->getOutput()->tagWithSurrogateKeys( static::getSurrogateKey() );
 	}
 
+	private function getMaximumDays() {
+		global $wgRCMaxAge;
+		return $wgRCMaxAge / 86400;
+	}
+
 	public function getVersion() {
 		return __CLASS__. 'v1';
 	}
@@ -93,23 +98,25 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 
 	public function getParamDescription() {
 		$prefix = $this->getModulePrefix();
+		$days = $this->getMaximumDays();
 
 		return [
 			'after' => 'Only get users who joined after this date.',
-			'before' => 'Only get users who joined before this date. Can\'t be more than 91 days before the present date.',
+			'before' => "Only get users who joined before this date. Can't be more than $days days before the present date.",
 			'dir' => $this->getDirectionDescription( $prefix ),
 			'limit' => 'The maximum amount of entries to list',
 		];
 	}
 
 	public function getDescription() {
-		return 'Returns the first edit of users on this wiki, including user name, diff id and timestamp';
+		$days = $this->getMaximumDays();
+		return "Returns the first edit of users on this wiki made in the last $days days, including user name, diff id and timestamp";
 	}
 
 	public function getExamples() {
 		return [
 			'api.php?action=query&list=firstedits',
-			'api.php?action=query&list=firstedits&feaft'
+			'api.php?action=query&list=firstedits&fedir=newer'
 		];
 	}
 
