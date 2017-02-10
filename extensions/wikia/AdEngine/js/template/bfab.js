@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.template.bfab', [
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.log',
 	'wikia.document',
+	require.optional('ext.wikia.adEngine.slot.resolvedState'),
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (slotTweaker, uapVideo, log, doc, recoveryTweaker) {
+], function (slotTweaker, uapVideo, log, doc, resolvedState, recoveryTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfab',
@@ -21,6 +22,9 @@ define('ext.wikia.adEngine.template.bfab', [
 	 */
 	function show(params) {
 		slot.classList.add('bfab-template');
+		if (resolvedState) {
+			params = resolvedState.setImage(params);
+		}
 		slotTweaker.makeResponsive(slot.id, params.aspectRatio);
 
 		slotTweaker.onReady(slot.id, function (iframe) {

@@ -1,10 +1,12 @@
 /*global describe, it, expect, modules*/
-describe('ext.wikia.adEngine.slot.resolveState', function () {
+describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
 	var BIG_IMAGE = 'bigImage.png',
+		BIG_IMAGE_2 = 'bigImage2.png',
 		DEFAULT_IMAGE = 'oldImage.png',
 		RESOLVED_IMAGE = 'resolvedImage.png',
+		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
 		mocks = {
 			log: function () {},
 			qs: {
@@ -20,7 +22,7 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 				CORRECT: {
 					imageSrc: BIG_IMAGE,
 					aspectRatio: 1,
-					resolveState: {
+					resolvedState: {
 						aspectRatio: 2,
 						imageSrc: RESOLVED_IMAGE
 					},
@@ -28,12 +30,30 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 						src: DEFAULT_IMAGE
 					}
 				},
+				CORRECT_WITH_TWO_ASSETS: {
+					aspectRatio: 1,
+					resolvedStateAspectRatio: 2,
+					image1: {
+						element: {
+							src: DEFAULT_IMAGE
+						},
+						defaultStateSrc: BIG_IMAGE,
+						resolvedStateSrc: RESOLVED_IMAGE
+					},
+					image2: {
+						element: {
+							src: DEFAULT_IMAGE
+						},
+						defaultStateSrc: BIG_IMAGE_2,
+						resolvedStateSrc: RESOLVED_IMAGE_2
+					}
+				},
 				INCORRECT: {
 					aspectRatio: 1,
 					imageSrc: BIG_IMAGE,
-					resolveState: {
+					resolvedState: {
 						aspectRatio: 0,
-						imageSrc: RESOLVED_IMAGE
+						imageSrc: ''
 					},
 					backgroundImage: {
 						src: DEFAULT_IMAGE
@@ -56,12 +76,12 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: 'true',
-				expected: RESOLVED_IMAGE
+				expected: ''
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: true,
-				expected: RESOLVED_IMAGE
+				expected: ''
 			},
 			{
 				params: data.PARAMS.INCORRECT,
@@ -81,19 +101,33 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '1',
-				expected: RESOLVED_IMAGE
+				expected: ''
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '0',
 				expected: BIG_IMAGE
 			}
+		],
+		testCasesWithTwoAssets = [
+			{
+				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				queryParam: '0',
+				expectedImage1: BIG_IMAGE,
+				expectedImage2: BIG_IMAGE_2
+			},
+			{
+				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				queryParam: null,
+				expectedImage1: RESOLVED_IMAGE,
+				expectedImage2: RESOLVED_IMAGE_2
+			}
 		];
 
 	mocks.log.levels = {debug: ''};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.resolveState'](mocks.log, mocks.QueryString);
+		return modules['ext.wikia.adEngine.slot.resolvedState'](mocks.log, mocks.QueryString);
 	}
 
 	testCases.forEach(function (testCase) {
@@ -109,17 +143,32 @@ describe('ext.wikia.adEngine.slot.resolveState', function () {
 		});
 	});
 
+	testCasesWithTwoAssets.forEach(function (testCase) {
+		var testName = 'Should return ' + testCase.expectedImage1 + ' and ' + testCase.expectedImage2 +
+			' when params: ' + JSON.stringify(testCase.params) + ' and resolvedState query param equals: ' +
+			testCase.queryParam;
+
+		it(testName, function () {
+			spyOn(mocks.qs, 'getVal');
+			var rs = getModule();
+			mocks.qs.getVal.and.returnValue(testCase.queryParam);
+
+			expect(testCase.expectedImage1).toEqual(rs.setImage(testCase.params).image1.element.src);
+			expect(testCase.expectedImage2).toEqual(rs.setImage(testCase.params).image2.element.src);
+		});
+	});
+
 	it('Should update params aspect ratio', function () {
 		var rs = getModule();
 
-		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolveState.aspectRatio);
+		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolvedState.aspectRatio);
 	});
 
 	it('Should update image src', function () {
 		var params = data.PARAMS.CORRECT,
 			rs = getModule();
 
-		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolveState.imageSrc);
+		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolvedState.imageSrc);
 	});
 
 	it('Should not update image if there is no background image (template without backgroundImage)', function () {
