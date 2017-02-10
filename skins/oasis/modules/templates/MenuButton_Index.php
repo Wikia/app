@@ -21,7 +21,7 @@
 			if (isset($action['href'])) {
 ?>
 	<a <?= !empty($actionAccessKey) ? 'accesskey="' . Sanitizer::encodeAttribute( $actionAccessKey ) . '"' : '' ?> <?= !empty($data['action']['tabindex']) ? 'tabindex="' . Sanitizer::encodeAttribute( $data['action']['tabindex'] ) . '"' : '' ?> href="<?= empty($action['href']) ? '' : Sanitizer::encodeAttribute( $action['href'] ) ?>" data-id="<?= Sanitizer::encodeAttribute( $actionName ) ?>" <?= empty($action['id']) ? '' : 'id="'. Sanitizer::encodeAttribute( $action['id'] ) .'"'?>>
-		<?= $icon ?> <span><?= htmlspecialchars($action['text']) ?></span>
+		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
 	</a>
 <?php
 			}
