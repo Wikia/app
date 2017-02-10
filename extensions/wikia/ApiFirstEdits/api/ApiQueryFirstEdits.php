@@ -20,18 +20,20 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 
-		$this->addTables( 'revision' );
+		$this->addTables( [ 'recentchanges', 'revision' ] );
 
-		$this->addFields( 'MIN(rev_id) as diff_id' );
-		$this->addFields( 'MIN(rev_timestamp) as diff_timestamp' );
-		$this->addFields( 'rev_user_text' );
+		$this->addFields( 'MIN(rc_this_oldid) as diff_id' );
+		$this->addFields( 'MIN(rc_timestamp) as diff_timestamp' );
+		$this->addFields( 'rc_user_text' );
 
-		$this->addWhere( 'rev_deleted = 0' );
+		$this->addWhere( 'rc_type < ' . RC_MOVE );
 
-		$from = $this->getFromTimestamp( $params['before'] );
-		$this->addTimestampWhereRange( 'rev_timestamp', null, $from, $params['before'] );
+		//$from = $this->getFromTimestamp( $params['before'] );
+		//$this->addTimestampWhereRange( 'rc_timestamp', null, $from, $params['before'] );
 
-		$this->addOption( 'GROUP BY', 'rev_user' );
+		$this->addJoinConds( [ 'revision' => [ 'INNER JOIN', 'rc_this_oldid = rev_id' ] ] );
+		$this->addOption( 'GROUP BY', 'rc_user' );
+		$this->addOption( 'HAVING', 'diff_timestamp = MIN(rev_timestamp)' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
 		$res = $this->select( __METHOD__ );
