@@ -4,7 +4,7 @@
  * API module which returns list of users' first edits, including revision id, date and user name
  * @ingroup API
  */
-class ApiQueryFirstEdits extends ApiQueryBase {
+class ApiQueryNewEditors extends ApiQueryBase {
 
 	public function __construct( ApiBase $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'fe' );
@@ -62,7 +62,7 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 		$this->getOutput()->tagWithSurrogateKeys( static::getSurrogateKey() );
 	}
 
-	private function getMaximumDays() {
+	private function getMaximumRange() {
 		global $wgRCMaxAge;
 		return $wgRCMaxAge / 86400;
 	}
@@ -98,7 +98,7 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 
 	public function getParamDescription() {
 		$prefix = $this->getModulePrefix();
-		$days = $this->getMaximumDays();
+		$days = $this->getMaximumRange();
 
 		return [
 			'after' => 'Only get users who joined after this date.',
@@ -109,14 +109,14 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	}
 
 	public function getDescription() {
-		$days = $this->getMaximumDays();
-		return "Returns the first edit of users on this wiki made in the last $days days, including user name, diff id and timestamp";
+		$days = $this->getMaximumRange();
+		return "Returns user name and first edit rev id and timestamp for new editors who first edited in the last $days days";
 	}
 
 	public function getExamples() {
 		return [
-			'api.php?action=query&list=firstedits',
-			'api.php?action=query&list=firstedits&fedir=newer'
+			'api.php?action=query&list=neweditors',
+			'api.php?action=query&list=neweditors&fedir=newer'
 		];
 	}
 
