@@ -6,13 +6,6 @@
  */
 class ApiQueryFirstEdits extends ApiQueryBase {
 
-	/**
-	 * @var int MAX_INTERVAL_SINCE_LAST_EDIT
-	 * Maximum time that can elapse since an user's last edit.
-	 * If an user edits after not editing for at least this long, they'll be considered a new user.
-	 */
-	const MAX_INTERVAL_SINCE_LAST_EDIT = 31536000;
-
 	public function __construct( ApiBase $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'fe' );
 	}
@@ -20,20 +13,19 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 
-		$this->addTables( [ 'recentchanges', 'revision' ] );
+		$this->addTables( 'recentchanges' );
 
 		$this->addFields( 'MIN(rc_this_oldid) as diff_id' );
 		$this->addFields( 'MIN(rc_timestamp) as diff_timestamp' );
-		$this->addFields( 'rc_user_text' );
+		$this->addFields( 'rc_user_text as diff_author' );
 
 		$this->addWhere( 'rc_type < ' . RC_MOVE );
+		$this->addWhere( [ 'rc_bot' => 0 ] );
 
-		//$from = $this->getFromTimestamp( $params['before'] );
-		//$this->addTimestampWhereRange( 'rc_timestamp', null, $from, $params['before'] );
+		$this->addTimestampWhereRange( 'rc_timestamp', $params['dir'], $params['after'], $params['before'] );
 
-		$this->addJoinConds( [ 'revision' => [ 'INNER JOIN', 'rc_this_oldid = rev_id' ] ] );
 		$this->addOption( 'GROUP BY', 'rc_user' );
-		$this->addOption( 'HAVING', 'diff_timestamp = MIN(rev_timestamp)' );
+		$this->addOption( 'HAVING', 'diff_id = (SELECT min(rev_id) from revision where rev_user = rc_user)' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
 		$res = $this->select( __METHOD__ );
@@ -50,7 +42,7 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 			$editInfo = [
 				'id' => $row->diff_id,
 				'date' => wfTimestamp( TS_ISO_8601, $row->diff_timestamp ),
-				'username' => $row->rev_user_text
+				'username' => $row->diff_author
 			];
 
 			$fit = $result->addValue( [ 'query', $this->getModuleName() ], null, $editInfo );
@@ -70,30 +62,24 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 		$this->getOutput()->tagWithSurrogateKeys( static::getSurrogateKey() );
 	}
 
-	/**
-	 * Return earliest date from which to enumerate first edits
-	 *
-	 * @param string|null $end only enumerate users who joined before this date, or null to use present date
-	 * @return int Unix timestamp
-	 */
-	private function getFromTimestamp( $end ) {
-		if ( is_null( $end ) ) {
-			$end = time();
-		} else {
-			$end = wfTimestamp( TS_UNIX, $end );
-		}
-
-		return $end - static::MAX_INTERVAL_SINCE_LAST_EDIT;
-	}
-
 	public function getVersion() {
 		return __CLASS__. 'v1';
 	}
 
 	public function getAllowedParams() {
 		return [
+			'after' => [
+				ApiBase::PARAM_TYPE => 'timestamp',
+			],
 			'before' => [
 				ApiBase::PARAM_TYPE => 'timestamp'
+			],
+			'dir' => [
+				ApiBase::PARAM_TYPE => [
+					'newer',
+					'older'
+				],
+				ApiBase::PARAM_DFLT => 'older'
 			],
 			'limit' => [
 				ApiBase::PARAM_DFLT => 10,
@@ -106,8 +92,12 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	}
 
 	public function getParamDescription() {
+		$prefix = $this->getModulePrefix();
+
 		return [
-			'before' => 'Only enumerate users who joined before this date',
+			'after' => 'Only get users who joined after this date.',
+			'before' => 'Only get users who joined before this date. Can\'t be more than 91 days before the present date.',
+			'dir' => $this->getDirectionDescription( $prefix ),
 			'limit' => 'The maximum amount of entries to list',
 		];
 	}
@@ -119,7 +109,7 @@ class ApiQueryFirstEdits extends ApiQueryBase {
 	public function getExamples() {
 		return [
 			'api.php?action=query&list=firstedits',
-			'api.php?action=query&list=firstedits&fedir=newer'
+			'api.php?action=query&list=firstedits&feaft'
 		];
 	}
 
