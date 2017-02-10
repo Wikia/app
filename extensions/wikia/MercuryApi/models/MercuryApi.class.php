@@ -1,9 +1,12 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
+	const CACHE_TIME_TRENDING_ARTICLES = 60 * 60 * 24;
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -323,7 +326,11 @@ class MercuryApi {
 			return '';
 		}
 
-		if ( $title->inNamespace( NS_FILE ) ) {
+		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
+			/*
+			 * Only run this code if SEOTweaks extension is enabled.
+			 * We don't use $wg variable because there are multiple switches enabling this extension
+			 */
 			$file = WikiaFileHelper::getFileFromTitle( $title );
 			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
 		} else {
@@ -425,6 +432,32 @@ class MercuryApi {
 					$data[] = $processedItem;
 				}
 			}
+		}
+
+		return $data;
+	}
+
+	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+		global $wgContentNamespaces;
+
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => $limit,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
+
+		if ( $category instanceof Title ) {
+			$params['category'] = $category->getText();
+		}
+
+		$data = [];
+
+		try {
+			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = self::processTrendingArticlesData( $rawData );
+		} catch ( NotFoundException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;

@@ -49,7 +49,6 @@ $wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
 $wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
 $wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
-$wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
 $wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
 $wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
 $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
@@ -75,7 +74,6 @@ $wgHooks['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreR
 $wgHooks['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
 
 $wgHooks['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
-$wgHooks['ArticleRobotPolicy'][] = 'ForumHooksHelper::onArticleRobotPolicy';
 
 // For activity module tag
 $wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
