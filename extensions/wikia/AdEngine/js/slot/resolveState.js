@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	function hasResolvedState(params) {
 		return paramsAreCorrect(params) && !isBlockedByURLParam() &&
 			(
-				checkAndUpdateStorage(params) ||
+				checkAndUpdateStorage() ||
 				isForcedByURLParam()
 			);
 	}
