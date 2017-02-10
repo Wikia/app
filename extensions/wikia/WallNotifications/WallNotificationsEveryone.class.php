@@ -2,7 +2,7 @@
 
 /**
  * Class WallNotificationsEveryone that implements wall notifications queue.
- * It's called by WallMessage::setNotifyEveryone method - triggered by notifyEveryoneSave AJAX request.
+ * It's called by WallMessage::setNotifyEveryone method - triggered by notifyEveryoneSave AJAX request (used by Forum only).
  *
  * ## How to call it
  *
