@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	var logGroup = 'ext.wikia.adEngine.slot.resolveState',
 		qs = new QueryString(),
 		cacheKey = 'adEngine_resolvedStateCounter',
-		cacheTtl = 24 * 3600 * 1000, // 24h
+		cacheTtl = cache.CACHE_STANDARD, // 24h
 		now = window.wgNow || new Date();
 
 	function getQueryParam() {
@@ -69,8 +69,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	}
 
 	function checkAndUpdateStorage() {
-		var age, val,
-			adId = uapContext.getUapId(),
+		var adId = uapContext.getUapId(),
 			adCacheKey = cacheKey + '_' + adId,
 			record = cache.get(adCacheKey, now);
 
@@ -81,14 +80,10 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		} else {
 			log('Full version of uap was not seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
-			val = {
+			cache.set(adCacheKey, {
 				adId: adId,
 				lastSeenDate: now.getTime()
-			};
-
-			age = now.getTime() - val.lastSeenDate;
-			cache.set(adCacheKey, val, cacheTtl - age, now);
-
+			}, cacheTtl);
 
 			return true;
 		}
