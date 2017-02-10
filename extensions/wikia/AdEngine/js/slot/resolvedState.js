@@ -34,10 +34,11 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 
 	function setResolvedState(params) {
 		log('Resolved state is turned on', logGroup, log.levels.debug);
-		params.aspectRatio = params.resolvedStateAspectRatio || params.resolvedState.aspectRatio;
 		if (params.backgroundImage) {
+			params.aspectRatio = params.resolvedState.aspectRatio;
 			params.backgroundImage.src = params.resolvedState.imageSrc;
 		} else {
+			params.aspectRatio = params.resolvedStateAspectRatio;
 			params.image1.element.src = params.image1.resolvedStateSrc;
 			params.image2.element.src = params.image2.resolvedStateSrc;
 		}
