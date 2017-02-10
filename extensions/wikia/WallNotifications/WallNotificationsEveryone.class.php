@@ -96,6 +96,9 @@ class WallNotificationsEveryone extends WallNotifications {
 	 *
 	 * Called by WallNotificationsExternalController::getUpdateCounts for handling AJAX requests
 	 *
+	 * Checks wall_notification_queue for all Wall message marked as "notify everyone" that has not yet been added
+	 * to wall_notification table for a given user.
+	 *
 	 * @param int $userId
 	 */
 	public function processQueue( $userId ) {
@@ -207,8 +210,8 @@ class WallNotificationsEveryone extends WallNotifications {
 			return true;
 		}
 
-		$row = $this->getDB( false )->selectRow( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE,
-			[ 'count(*) as cnt' ],
+		$cnt = $this->getDB( false )->selectField( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE,
+			'count(*)',
 			[
 				'user_id' => $userId,
 				'entity_key' => $entityKey
@@ -217,7 +220,10 @@ class WallNotificationsEveryone extends WallNotifications {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return ( $row->cnt == 0 ) ? false : true;
+
+		// there's at least a single matching row - entity has already been proccessed
+		// .e. there's an entry in wall_notification table
+		return ( $cnt > 0 );
 	}
 
 	private function setQueueProcessed( $userId ) {
@@ -226,7 +232,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
-		$wgMemc->set( $cacheKey, true ); // TODO: cache for infite time?
+		$wgMemc->set( $cacheKey, true ); // cache for infite time - memcache key contains a cache buster value
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -378,6 +384,8 @@ class WallNotificationsEveryone extends WallNotifications {
 
 	/**
 	 * Clears notification queues and expired notifications
+	 *
+	 * Called by the maintenance.php script
 	 *
 	 * @param bool $onlyCache - clears only users' cache
 	 */
