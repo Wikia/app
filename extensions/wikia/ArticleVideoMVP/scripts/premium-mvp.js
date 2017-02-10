@@ -15,8 +15,8 @@ require(['wikia.window', 'ooyalaVideo'], function (window, OoyalaVideo) {
 			collapseOffset = videoOffset.top + videoHeight - scrollOffset;
 
 		function initVideo() {
-			var ooyalaJsFile = window.wgArticleVideoData.jsParams.jsFile[0];
-			var ooyalaVideoId = window.wgArticleVideoData.jsParams.videoId;
+			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
+			var ooyalaVideoId = window.wgArticleVideoData.videoId;
 
 			ooyalaVideo = new OoyalaVideo('ooyala-article-video', ooyalaJsFile, ooyalaVideoId);
 		}
@@ -71,7 +71,7 @@ require(['wikia.window', 'ooyalaVideo'], function (window, OoyalaVideo) {
 			}
 		}
 
-		$video.click(initVideo);
+		$video.one('click', initVideo);
 
 		$closeBtn.click(closeButtonClicked);
 

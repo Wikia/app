@@ -1,15 +1,13 @@
-<div id="premium-mvp-video" class="">
+<div id="premium-mvp-video">
 	<div class="video-container">
 		<div class="video-placeholder">
 			<div class="video-thumbnail">
-				<div class="scroll-to-top"></div>
-				<div class="minimize"></div>
 				<div class="close"></div>
 			</div>
 			<div class="video-details">
 				<div class="video-details-left">
-					<div class="video-time">watch • 2:36</div>
-					<div class="video-title">Top 5 Best Spells in the Wizarding World</div>
+					<div class="video-time">watch • <?= $videoDetails['time']; ?></div>
+					<div class="video-title"><?= $videoDetails['title']; ?></div>
 				</div>
 				<div class="video-play-button"></div>
 			</div>

@@ -92,7 +92,7 @@
 					}
 				?>
 
-				<?php if ( $enablePremiumMVP ): ?>
+				<?php if ( $enableArticleVideoMVP ): ?>
 					<?= $app->renderView( 'ArticleVideoMVP', 'index' ) ?>
 				<?php endif; ?>
 

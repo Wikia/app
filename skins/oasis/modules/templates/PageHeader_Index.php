@@ -20,8 +20,10 @@
 			</div>
 		</div>
 		<?php
-
-		echo Html::openElement( 'div', [ 'class' => 'header-buttons' ] );
+		// Temp for CommunityPageExperiment
+		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
+			echo Html::openElement( 'div', [ 'class' => 'header-buttons' ] );
+		}
 
 		// edit button with actions dropdown
 		if ( !empty( $action ) ) {
@@ -30,7 +32,7 @@
 				'Index',
 				[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
 			);
-		} 
+		}
 
 		echo $curatedContentToolButton;
 
@@ -70,5 +72,10 @@
 			</a>
 		<? } ?>
 
-		<? echo Html::closeElement( 'div' ); ?>
+		<?
+		// Temp for CommunityPageExperiment
+		if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
+			echo Html::closeElement( 'div' );
+		}
+		?>
 	</header>
