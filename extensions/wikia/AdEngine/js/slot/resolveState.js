@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.resolveState',
 		qs = new QueryString(),
-		cacheKey = 'adEngine_resolveStateCounter',
+		cacheKey = 'adEngine_resolvedStateCounter',
 		cacheTtl = 24 * 3600 * 1000, // 24h
 		now = window.wgNow || new Date();
 
@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	}
 
 	function paramsAreCorrect (params) {
-		return params.resolveState.aspectRatio > 0 && params.resolveState.imageSrc !== '';
+		return params.resolvedState.aspectRatio > 0 && params.resolvedState.imageSrc !== '';
 	}
 
 	function hasResolvedState(params) {
@@ -39,8 +39,8 @@ define('ext.wikia.adEngine.slot.resolveState', [
 
 	function setResolveState(params) {
 		log('Resolved state is turned on', log.levels.debug, logGroup);
-		params.backgroundImage.src = params.resolveState.imageSrc;
-		params.aspectRatio = params.resolveState.aspectRatio;
+		params.backgroundImage.src = params.resolvedState.imageSrc;
+		params.aspectRatio = params.resolvedState.aspectRatio;
 
 		return params;
 	}
@@ -63,10 +63,10 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	 * @returns {boolean}
 	 */
 	function wasRecentlySeen(records, adId) {
-		var recentlySeenObj = null;
+		var recentlySeenObj;
 
 		records.forEach(function(value) {
-			if (value.adId === adId) {
+			if (adId && value.adId === adId) {
 				recentlySeenObj = value;
 			}
 		});
@@ -82,18 +82,20 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		return false;
 	}
 
-	function checkAndUpdateStorage(params) {
-		var age, val, records = cache.get(cacheKey, now) || [];
+	function checkAndUpdateStorage() {
+		var age, val,
+			records = cache.get(cacheKey, now) || [],
+			adId = uapContext.getUapId();
 
-		if (wasRecentlySeen(records, params.uap)) {
-			log('Full version of uap was seen in last 24h. adId: ' + params.uap, log.levels.debug, logGroup);
+		if (wasRecentlySeen(records, adId)) {
+			log('Full version of uap was seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
 			return false;
 		} else {
-			log('Full version of uap was not seen in last 24h. adId: ' + params.uap, log.levels.debug, logGroup);
+			log('Full version of uap was not seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
 			val = {
-				adId: uapContext.getUapId() || params.uap,
+				adId: adId,
 				lastSeenDate: now.getTime()
 			};
 
