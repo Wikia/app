@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 	var logGroup = 'ext.wikia.adEngine.slot.resolveState',
 		qs = new QueryString(),
 		cacheKey = 'adEngine_resolveStateCounter',
-		cacheTtl = 24 * 3600 * 1000, // 1 day to clear the page view counter
+		cacheTtl = 24 * 3600 * 1000, // 24h
 		now = window.wgNow || new Date();
 
 	function getQueryParam() {
@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		var recentlySeenObj = null;
 
 		records.forEach(function(value) {
-			if (value.adId == adId) {
+			if (value.adId === adId) {
 				recentlySeenObj = value;
 			}
 		});
