@@ -993,7 +993,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
-		'//extensions/wikia/AdEngine/js/slot/resolveState.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfaaMobile.js',
