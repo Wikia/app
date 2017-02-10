@@ -54,25 +54,11 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		return params;
 	}
 
-	/**
-	 * Check if ad with given adId has been seen in full state
-	 * during last cacheTtl period of time.
-	 *
-	 * @param records array of records in localStorage
-	 * @param adId
-	 * @returns {boolean}
-	 */
-	function wasRecentlySeen(records, adId) {
-		var recentlySeenObj;
+	function wasRecentlySeen(record) {
+		var age;
 
-		records.forEach(function(value) {
-			if (adId && value.adId === adId) {
-				recentlySeenObj = value;
-			}
-		});
-
-		if (recentlySeenObj) {
-			var age = now.getTime() - recentlySeenObj.lastSeenDate;
+		if (record) {
+			age = now.getTime() - record.lastSeenDate;
 
 			if (age > 0 || age < cacheTtl) {
 				return true;
@@ -84,10 +70,11 @@ define('ext.wikia.adEngine.slot.resolveState', [
 
 	function checkAndUpdateStorage() {
 		var age, val,
-			records = cache.get(cacheKey, now) || [],
-			adId = uapContext.getUapId();
+			adId = uapContext.getUapId(),
+			adCacheKey = cacheKey + '_' + adId,
+			record = cache.get(adCacheKey, now);
 
-		if (wasRecentlySeen(records, adId)) {
+		if (wasRecentlySeen(record)) {
 			log('Full version of uap was seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
 			return false;
@@ -100,8 +87,7 @@ define('ext.wikia.adEngine.slot.resolveState', [
 			};
 
 			age = now.getTime() - val.lastSeenDate;
-			records.push(val);
-			cache.set(cacheKey, records, cacheTtl - age, now);
+			cache.set(adCacheKey, val, cacheTtl - age, now);
 
 
 			return true;
