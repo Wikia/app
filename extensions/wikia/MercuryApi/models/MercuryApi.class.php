@@ -323,7 +323,11 @@ class MercuryApi {
 			return '';
 		}
 
-		if ( $title->inNamespace( NS_FILE ) ) {
+		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
+			/*
+			 * Only run this code if SEOTweaks extension is enabled.
+			 * We don't use $wg variable because there are multiple switches enabling this extension
+			 */
 			$file = WikiaFileHelper::getFileFromTitle( $title );
 			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
 		} else {
