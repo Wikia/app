@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker'](
 			mocks.adaptersRegistry,
+			mocks.priceGranularityHelper,
 			mocks.prebid,
 			mocks.log
 		);
@@ -30,18 +31,49 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				]
 			}
 		},
+		priceGranularityHelper: {
+			transformPriceFromCpm: function(cpm) {
+				return cpm;
+			}
+		},
 		prebid: {
 			get: function () {
 				return {
-					getBidResponsesForAdUnitCode: mocks.getBidResponsesForAdUnitCode
+					getBidResponsesForAdUnitCode: mocks.getBidResponsesForAdUnitCode,
 				}
-			}
+			},
+			validResponseStatusCode: 1,
+			errorResponseStatusCode: 2
 		},
 		getBidResponsesForAdUnitCode: noop,
+		getStatusCodeValid: function() {
+			return 1;
+		},
+		getStatusCodeInvalid: function() {
+			return 2;
+		},
 		log: noop
 	};
 
 	mocks.log.levels = {};
+
+	it('isValidPrice is calculated correctly', function () {
+		[
+			{
+				getStatusCode: mocks.getStatusCodeValid,
+				expected: true
+			},
+			{
+				getStatusCode: mocks.getStatusCodeInvalid,
+				expected: false
+			}
+		].forEach(function (testCase) {
+			var module = getModule(),
+				result = module._isValidPrice(testCase);
+
+			expect(result).toEqual(testCase.expected, testCase.message);
+		});
+	});
 
 	it('getSlotBestPrice is calculated correctly', function () {
 		[{
@@ -50,11 +82,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: 0
+						cpm: 0,
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: 0
+						cpm: 0,
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -69,30 +103,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: '0'
+						cpm: 0.50,
+						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: '1'
-					}
-				]
-			},
-			expected: {
-				appnexus: '0.00',
-				indexExchange: '1.00'
-			},
-			message: 'when adapter returns numeric value as string - correct value is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus',
-						pbAg: 0.50
-					},
-					{
-						bidderCode: 'indexExchange',
-						pbAg: 0.01
+						cpm: 0.01,
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -100,18 +117,20 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				appnexus: '0.50',
 				indexExchange: '0.01'
 			},
-			message: 'w hen adapter returns fractional value - correct value is tracked'
+			message: 'when adapter returns fractional value - correct value is tracked'
 		}, {
 			slotName: 'TOP_LEADERBOARD',
 			prebidBids: {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: ''
+						cpm: 0,
+						getStatusCode: mocks.getStatusCodeInvalid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: 1
+						cpm: 1,
+						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
 			},
@@ -120,25 +139,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				indexExchange: '1.00'
 			},
 			message: 'when one of adapters doesn\'t offer - nothing is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus',
-						pbAg: 'something meaningless'
-					},
-					{
-						bidderCode: 'indexExchange',
-						pbAg: 100
-					}
-				]
-			},
-			expected: {
-				appnexus: '',
-				indexExchange: '100.00'
-			},
-			message: 'when incorrect pbAg is set - nothing is tracked'
 		}, {
 			slotName: 'TOP_LEADERBOARD',
 			prebidBids: {},
@@ -159,22 +159,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				indexExchange: ''
 			},
 			message: 'when bids are empty - nothing is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus'
-					}, {
-						bidderCode: 'indexExchange'
-					}
-				]
-			},
-			expected: {
-				appnexus: '',
-				indexExchange: ''
-			},
-			message: 'when bids are set but pbAg is empty - nothing is tracked'
 		}].forEach(function (testCase) {
 			spyOn(mocks, 'getBidResponsesForAdUnitCode').and.returnValue(testCase.prebidBids);
 

@@ -26,6 +26,14 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adTracker: {
 				trackDW: noop
 			},
+			browserDetect: {
+				getOS: function () {
+					return 'Fake';
+				},
+				getBrowser: function () {
+					return 'Foo 9';
+				}
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'XY';
@@ -62,6 +70,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adLogicPageParams,
 			mocks.adTracker,
 			mocks.slotTargeting,
+			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
 			mocks.window,
@@ -137,8 +146,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('ad_error_code')).toBeFalsy();
 		expect(getTrackedValue('vulcan_network')).toBeFalsy();
 		expect(getTrackedValue('vulcan_advertiser')).toBeFalsy();
-		expect(getTrackedValue('vulcan_price')).toBeFalsy();
-		expect(getTrackedValue('wsi')).toBeFalsy();
+		expect(getTrackedValue('vulcan_price')).toEqual(-1);
+		expect(getTrackedValue('wsi')).toEqual('(none)');
+		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
 	});
 
 	it('Track data with slot name', function () {

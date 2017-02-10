@@ -194,7 +194,7 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		}
 	}
 
-	.pi-smart-data-value {
+	.pi-smart-group-head + .pi-smart-group-body .pi-smart-data-value {
 		padding-top: 0;
 	}
 

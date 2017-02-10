@@ -357,21 +357,21 @@ class WallHelper {
 	 *
 	 * @desc Text is truncated to given limit (by default limit is equal to WA_WALL_COMMENTS_MAX_LEN constant) then it truncates it to last spacebar and adds ellipses.
 	 *
+	 * @param Language $language Language object to be used in formatting string
 	 * @param string $text text which needs to be shorter
 	 * @param integer $limit limit of characters
 	 *
 	 * @return string
 	 */
-	public function shortenText( $text, $limit = self::WA_WALL_COMMENTS_MAX_LEN ) {
-		$app = F::app();
+	public static function shortenText( Language $language, string $text, int $limit = self::WA_WALL_COMMENTS_MAX_LEN ): string {
 		wfProfileIn( __METHOD__ );
 
 		if ( mb_strlen( $text ) > $limit ) {
-			$text = $app->wg->Lang->truncate( $text, $limit );
+			$text = $language->truncate( $text, $limit );
 			$lastSpacePos = strrpos( $text, ' ' );
 
 			if ( $lastSpacePos !== false ) {
-				$text = $app->wg->Lang->truncate( $text, $lastSpacePos );
+				$text = $language->truncate( $text, $lastSpacePos );
 			}
 		}
 
@@ -409,7 +409,7 @@ class WallHelper {
 	public function getMessageSnippet( WallMessage $wallMessage ) {
 		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
 
-		return $this->shortenText( $formatted );
+		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
 
 	/**

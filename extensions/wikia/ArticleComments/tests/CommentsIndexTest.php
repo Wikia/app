@@ -32,11 +32,13 @@ class CommentsIndexTest extends WikiaBaseTest {
 		$rowMock = $this->getFakeCommentsIndexRow(1);
 
 		$dbMock = $this->getMock('stdClass', [ 'selectRow' ] );
-		$dbMock->expects($this->exactly(2))
+		$dbMock->expects($this->exactly(1))
 			->method( 'selectRow' )
 			->will( $this->returnValue( $rowMock ) );
 
 		CommentsIndex::newFromId(1, 0, $dbMock);
+
+		# this call will be served from in-memory cache - hence "$this->exactly(1)" above
 		CommentsIndex::newFromId(1, 0, $dbMock);
 	}
 
@@ -52,8 +54,6 @@ class CommentsIndexTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.01076 ms
 	 * The purpose of CommentsIndex cache is avoid database queries for CommentsIndex instances that were created
 	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
 	 * make sure it's not fetched from the database

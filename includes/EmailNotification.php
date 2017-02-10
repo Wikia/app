@@ -408,7 +408,6 @@ class EmailNotification {
 		$this->subject = strtr( $subject, $postTransformKeys );
 
 		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
-		// EmailTemplatesHooksHelper -- changes body to blog post. EmailTemplates only enabled on community and messaging so this tranforms
 		//     any watched page email coming from Community to a blog post (I think)
 		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
 		$body = strtr( $body, $keys );
@@ -585,30 +584,28 @@ class EmailNotification {
 		// its not a blog.
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() != NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isBlogComment() {
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() == NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace(  NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isUserBlogPost() {
-		$ns = $this->title->getNamespace();
 		return (
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
-			( $ns == NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isListBlogPost() {
-		$ns = $this->title->getNamespace();
 		return (
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
-			( $ns == NS_BLOG_LISTING )
+			( defined( 'NS_BLOG_LISTING' ) && $this->title->inNamespace( NS_BLOG_LISTING ) )
 		);
 	}
 

@@ -209,7 +209,7 @@ $language_data = array (
         //note: & is needed for &gt; (i.e. > )
         2 => '(?<!\\\\):(?!\d)[a-zA-Z0-9\-]+\b(?:\s*(?=[\{\.#a-zA-Z,:+*&](.|\n)|<\|))',
         //Measurements
-        3 => '(em|ex|pt|px|cm|in|%)',
+        3 => '(em|ex|pt|px|cm|in|%)'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

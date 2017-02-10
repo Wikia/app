@@ -48,6 +48,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
+		slotMapping = {
+			'INCONTENT_PLAYER': 'INCONTENT_LEADERBOARD'
+		},
 		slots = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
@@ -91,6 +94,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		slotName = slotMapping[slotName] || slotName;
 		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
@@ -104,6 +108,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getBestSlotPrice(slotName) {
 		var cpm,
 			price;
+
+		slotName = slotMapping[slotName] || slotName;
 
 		if (priceMap[slotName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
@@ -119,6 +125,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		var bestResponse = {},
 			allSlots = win.rubiconVulcan.getAllSlots() || [];
 
+		slotName = slotMapping[slotName] || slotName;
+
 		allSlots.forEach(function (slot) {
 			if (slot.id === slotName) {
 				bestResponse = slot.getBestCpm();
@@ -126,6 +134,16 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		});
 
 		return bestResponse;
+	}
+
+	function deleteBid(slotName) {
+		var response;
+
+		slotName = slotMapping[slotName] || slotName;
+		response = getSingleResponse(slotName);
+		response.used = true;
+
+		delete priceMap[slotName];
 	}
 
 	function encodeParamsForTracking(params) {
@@ -170,7 +188,12 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 		slots = config[skin];
 		script.addEventListener('load', function () {
+			// TODO ADEN-4637 Remove win.rubiconVulcan reference
 			win.rubiconVulcan = win.rubicontag.video;
+			win.ads.rubiconVulcan = {
+				getSingleResponse: getSingleResponse,
+				deleteBid: deleteBid
+			};
 			defineSlots(skin, onResponse);
 		});
 
@@ -182,7 +205,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		return !!slots[slotName] || slotMapping[slotName];
 	}
 
 	bidder = factory.create({
