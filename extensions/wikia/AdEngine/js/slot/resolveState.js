@@ -68,12 +68,18 @@ define('ext.wikia.adEngine.slot.resolveState', [
 		return false;
 	}
 
+	/**
+	 * Check if in storage is already record with present UapId and it's not a record just
+	 * saved on current page - previously for bfaa and now for bfab.
+	 *
+	 * @returns {boolean} true if full state wasn't seen in last 24h or was seen at current page
+	 */
 	function checkAndUpdateStorage() {
 		var adId = uapContext.getUapId(),
 			adCacheKey = cacheKey + '_' + adId,
 			record = cache.get(adCacheKey, now);
 
-		if (wasRecentlySeen(record)) {
+		if (wasRecentlySeen(record) && record.lastSeenDate !== now.getTime()) {
 			log('Full version of uap was seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
 			return false;
