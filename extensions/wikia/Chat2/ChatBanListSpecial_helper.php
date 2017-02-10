@@ -203,6 +203,7 @@ class ChatBanData extends WikiaModel
 			1 => Linker::link(
 				Title::newFromText( 'Contributions', NS_SPECIAL ),
 				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) ),
+				[],
 				[ 'target' => $oEncUserName]
 			),
 		];
