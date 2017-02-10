@@ -21,9 +21,11 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function paramsAreCorrect (params) {
-		var correctSplitImages = params.resolvedState.leftImageSrc && params.resolvedState.rightImageSrc;
+		var correctSingleImage = params.resolvedState && params.resolvedState.imageSrc,
+			correctMultipleImages = params.image1 && params.image2 &&
+				params.image1.resolvedStateSrc !== '' && params.image2.resolvedStateSrc !== '';
 
-		return params.resolvedState.imageSrc !== '' || correctSplitImages;
+		return correctSingleImage !== '' || correctMultipleImages;
 	}
 
 	function hasResolvedState(params) {
@@ -32,27 +34,29 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 
 	function setResolvedState(params) {
 		log('Resolved state is turned on', logGroup, log.levels.debug);
-		params.aspectRatio = params.resolvedState.aspectRatio;
+		params.aspectRatio = params.resolvedStateAspectRatio || params.resolvedState.aspectRatio;
 		if (params.backgroundImage) {
 			params.backgroundImage.src = params.resolvedState.imageSrc;
 		} else {
-			params.backgroundLeftImage.src = params.resolvedState.leftImageSrc;
-			params.backgroundRightImage.src = params.resolvedState.rightImageSrc;
+			params.image1.element.src = params.image1.resolvedStateSrc;
+			params.image2.element.src = params.image2.resolvedStateSrc;
 		}
 
 		return params;
 	}
 
 	function templateSupportsResolvedState(params) {
-		return params.backgroundImage || (params.backgroundLeftImage && params.backgroundRightImage);
+		var correctMultipleImages = params.image1 && params.image2;
+
+		return params.backgroundImage || correctMultipleImages;
 	}
 
 	function setDefaultState(params) {
 		if (params.backgroundImage) {
 			params.backgroundImage.src = params.imageSrc;
 		} else {
-			params.backgroundLeftImage.src = params.leftImageSrc;
-			params.backgroundRightImage.src = params.rightImageSrc;
+			params.image1.element.src = params.image1.defaultStateSrc;
+			params.image2.element.src = params.image2.defaultStateSrc;
 		}
 
 		return params;

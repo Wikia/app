@@ -31,19 +31,21 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 					}
 				},
 				CORRECT_WITH_TWO_ASSETS: {
-					leftImageSrc: BIG_IMAGE,
-					rightImageSrc: BIG_IMAGE_2,
 					aspectRatio: 1,
-					resolvedState: {
-						aspectRatio: 2,
-						leftImageSrc: RESOLVED_IMAGE,
-						rightImageSrc: RESOLVED_IMAGE_2
+					resolvedStateAspectRatio: 2,
+					image1: {
+						element: {
+							src: DEFAULT_IMAGE
+						},
+						defaultStateSrc: BIG_IMAGE,
+						resolvedStateSrc: RESOLVED_IMAGE
 					},
-					backgroundLeftImage: {
-						src: DEFAULT_IMAGE
-					},
-					backgroundRightImage: {
-						src: DEFAULT_IMAGE
+					image2: {
+						element: {
+							src: DEFAULT_IMAGE
+						},
+						defaultStateSrc: BIG_IMAGE_2,
+						resolvedStateSrc: RESOLVED_IMAGE_2
 					}
 				},
 				INCORRECT: {
@@ -105,20 +107,20 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 				params: data.PARAMS.INCORRECT,
 				queryParam: '0',
 				expected: BIG_IMAGE
-			},
+			}
+		],
+		testCasesWithTwoAssets = [
 			{
 				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
 				queryParam: '0',
-				expectedLeftImage: BIG_IMAGE,
-				expectedRightImage: BIG_IMAGE_2,
-				twoAssets: true
+				expectedImage1: BIG_IMAGE,
+				expectedImage2: BIG_IMAGE_2
 			},
 			{
 				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
 				queryParam: null,
-				expectedLeftImage: RESOLVED_IMAGE,
-				expectedRightImage: RESOLVED_IMAGE_2,
-				twoAssets: true
+				expectedImage1: RESOLVED_IMAGE,
+				expectedImage2: RESOLVED_IMAGE_2
 			}
 		];
 
@@ -137,12 +139,22 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			var rs = getModule();
 			mocks.qs.getVal.and.returnValue(testCase.queryParam);
 
-			if (testCase.twoAssets) {
-				expect(testCase.expectedLeftImage).toEqual(rs.setImage(testCase.params).backgroundLeftImage.src);
-				expect(testCase.expectedRightImage).toEqual(rs.setImage(testCase.params).backgroundRightImage.src);
-			} else {
-				expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
-			}
+			expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
+		});
+	});
+
+	testCasesWithTwoAssets.forEach(function (testCase) {
+		var testName = 'Should return ' + testCase.expectedImage1 + ' and ' + testCase.expectedImage2 +
+			' when params: ' + JSON.stringify(testCase.params) + ' and resolvedState query param equals: ' +
+			testCase.queryParam;
+
+		it(testName, function () {
+			spyOn(mocks.qs, 'getVal');
+			var rs = getModule();
+			mocks.qs.getVal.and.returnValue(testCase.queryParam);
+
+			expect(testCase.expectedImage1).toEqual(rs.setImage(testCase.params).image1.element.src);
+			expect(testCase.expectedImage2).toEqual(rs.setImage(testCase.params).image2.element.src);
 		});
 	});
 
