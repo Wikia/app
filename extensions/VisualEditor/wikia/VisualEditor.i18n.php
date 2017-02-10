@@ -579,7 +579,7 @@ Füge hier den ersten Abschnitt deiner Seite ein. Du kannst hier auch dein Thema
 * Beschreibung der Protagonisten
 * Hintergrundinformationen
 Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösche ihn einfach. Du kannst den Text auch kopieren und erneut einfügen, wenn deine Seite mehr als einen Abschnitt haben soll.',
-	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeitung nicht verfügbar.',
+	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeitung nicht verfügbar. $1 oder $2.',
 	'wikia-visualeditor-anon-log-in' => 'Anmelden',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Du musst angemeldet sein, um ein neues Bild hochzuladen.',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Du musst angemeldet sein, um ein neues Video einzufügen.',
@@ -1332,11 +1332,11 @@ $messages['ja'] = array(
 * 背景情報
 作成したいページに本セクションが不要な場合は削除してください。もしくは上記のテキストを「コピー＆貼り付け」することで、セクションを増やすことも可能です。',
 	'wikia-visualeditor-anon-warning' => 'ログインされていないため、いくつかの編集機能が無効になっています。$1・$2',
-	'wikia-visualeditor-anon-log-in' => 'ログインする',
+	'wikia-visualeditor-anon-log-in' => 'ログイン',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '画像をアップロードするにはログインしてください',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '画像をアップロードするにはログインしてください',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'ログイン',
-	'wikia-visualeditor-anon-register' => '新規登録する',
+	'wikia-visualeditor-anon-register' => '新規登録',
 	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '新規登録',
 );
 
@@ -2854,7 +2854,7 @@ $messages['zh-hans'] = array(
 * 人物描写
 * 背景信息
 如果你认为文章不需要这部分，你可以删除它。如果你希望添加更多的文章段落，你可以在下方通过复制和粘贴这部分章节继续添加内容。',
-	'wikia-visualeditor-anon-warning' => '您还没有登录。这将导致您在编辑的时候某些功能无能正常使用。$1 or $2',
+	'wikia-visualeditor-anon-warning' => '您还没有登录。这将导致您在编辑的时候某些功能无能正常使用。$1或$2',
 	'wikia-visualeditor-anon-log-in' => '登录',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '您需要登录后才能上传图片。',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '您需要登录后才能插入新的视频。',
