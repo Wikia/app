@@ -165,6 +165,9 @@ class WallNotificationsEveryone extends WallNotifications {
 	/**
 	 * Inserts a row to wall_notification_queue_processed table
 	 *
+	 * We then use count(*) to check if there are entries in this table (hasEntryInProcessedQueue method)
+	 * and that there's no need to push a row to wall_notifications.
+	 *
 	 * @param int $userId
 	 * @param string $entityKey in a form of "<revision ID>_<wiki ID>"
 	 */
@@ -176,9 +179,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
 		$wgMemc->set( $cacheKey, true );
 
-		// avoid duplicated entries for the same entity
-		//we use count(*) to check if there are entries in this table and that there's no need to push a row to wall_notifications
-		$this->getDB( true )->replace( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE, '',
+		$this->getDB( true )->insert( self::WALL_NOTIFICATIONS_QUEUE_PROCESSED_TABLE,
 			[
 				'user_id' => $userId,
 				'entity_key' => $entityKey
@@ -186,6 +187,7 @@ class WallNotificationsEveryone extends WallNotifications {
 			__METHOD__
 		);
 
+		$this->getDB( true )->commit();
 		wfProfileOut( __METHOD__ );
 	}
 
