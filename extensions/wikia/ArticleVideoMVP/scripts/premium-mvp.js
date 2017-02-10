@@ -32,26 +32,26 @@ require(['wikia.window', 'ooyalaVideo'], function (window, OoyalaVideo) {
 				'width': 'auto'
 			});
 			$video.removeClass('collapsed');
-			if(ooyalaVideo) {
+			if (ooyalaVideo) {
 				ooyalaVideo.fullControls();
 			}
 
 		}
 
-		function closeButtonClicked () {
-			if(ooyalaVideo && ooyalaVideo.player) {
+		function closeButtonClicked() {
+			if (ooyalaVideo && ooyalaVideo.player) {
 				ooyalaVideo.player.pause();
 			}
 			uncollapseVideo();
 			collapsingDisabled = true;
 		}
 
-		function toggleCollpase () {
-			if(!collapsingDisabled || ooyalaVideo.player.getState() === OO.STATE.PLAYING || videoCollapsed) {
+		function toggleCollpase() {
+			if (!collapsingDisabled || ooyalaVideo.player.getState() === OO.STATE.PLAYING || videoCollapsed) {
 				if ($(window).scrollTop() > collapseOffset && !videoCollapsed) {
 					collapsingDisabled = false;
 					videoCollapsed = true;
-					if(ooyalaVideo) {
+					if (ooyalaVideo) {
 						ooyalaVideo.miniControls();
 					}
 					$videoContainer.css({

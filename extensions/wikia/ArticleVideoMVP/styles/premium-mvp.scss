@@ -3,22 +3,22 @@
 }
 
 #premium-mvp-video {
-	cursor: pointer;
-	background-size: cover;
 	background-position: center center;
+	background-size: cover;
+	cursor: pointer;
+	margin-bottom: 11px;
 	padding-top: 56%;
 	position: relative;
-	margin-bottom: 11px;
 	width: 100%;
 
 	&:before {
-		content: '';
-		position: absolute;
-		top: 50%;
-		bottom: 0;
-		left: 0;
-		right: 0;
 		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 50%;
 	}
 
 	.video-title {
@@ -52,30 +52,30 @@
 
 	.video-thumbnail {
 		.close {
-			display: none;
 			content: url("/extensions/wikia/ArticleVideoMVP/images/close.svg"); /* $wgCdnStylePath */
+			display: none;
+			padding: 7px;
 			position: absolute;
 			top: 0;
 			left: 0;
 			z-index: 1;
-			padding: 7px;
 		}
 	}
 
 	&.collapsed {
 		.video-container {
+			bottom: 40px !important;
 			position: fixed;
 			right: 20px !important;
-			bottom: 40px !important;
-			width: 225px !important;
 			transition: right 0.4s, bottom 0.4s, width 0.4s;
+			width: 225px !important;
 		}
 
 		.video-thumbnail {
-			background-size: cover;
 			background-position: center center;
-			height: 140px;
+			background-size: cover;
 			display: block;
+			height: 140px;
 
 			.close {
 				display: block;
@@ -84,9 +84,9 @@
 		}
 
 		.video-details {
+			align-items: center;
 			background: #000;
 			display: flex;
-			align-items: center;
 
 			.video-details-left {
 				flex: 1;
@@ -94,19 +94,19 @@
 			}
 
 			.video-time {
-				position: static;
 				font-size: 10px;
+				position: static;
 			}
 
 			.video-title {
-				position: static;
 				font-size: 12px;
+				position: static;
 			}
 
 			.video-play-button {
-				position: static;
 				height: 60px;
 				margin: 0;
+				position: static;
 				width: 60px;
 			}
 		}
@@ -121,11 +121,11 @@
 }
 
 #ooyala-article-video {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
 	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 
 	>div {
 		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
