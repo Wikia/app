@@ -85,6 +85,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		} else {
 			$this->addFields(array('city_id', 'city_url', 'city_lang'));
 			$this->addOption( "ORDER BY ", "city_id" );
+			$this->addOption( 'LIMIT', $this->defLimit );
 
 			#--- result builder
 			$data = array();
@@ -114,7 +115,10 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	}
 
 	public function getDescription() {
-		return "Get domains handled by Wikia";
+		return [
+			'Get domains handled by Fandom',
+			"This API returns a maximum of {$this->defLimit} results"
+		];
 	}
 
 	public function getAllowedParams() {
