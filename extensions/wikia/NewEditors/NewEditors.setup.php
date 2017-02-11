@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['api'][] = [
 	'name' => 'New Editors',
-	'description' => 'Implements API to list information about new editors who have edited the wiki recently',
+	'description' => 'Implements API module and special page to list first edits of new editors on a wiki',
 	'descriptionmsg' => 'neweditors-desc',
 	'version' => 1,
 	'author' => 'TK-999',
@@ -11,9 +11,10 @@ $wgExtensionCredits['api'][] = [
 $wgExtensionMessagesFiles['NewEditors'] = __DIR__ . '/NewEditors.i18n.php';
 
 $wgAutoloadClasses['ApiQueryNewEditors'] = __DIR__ . '/api/ApiQueryNewEditors.php';
+$wgAutoloadClasses['SpecialNewEditors'] = __DIR__ . '/SpecialNewEditors.php';
 
 $wgAPIListModules['neweditors'] = 'ApiQueryNewEditors';
 
-$wgHooks['RevisionInsertComplete'][] = 'NewEditorsHooks::onRevisionInsertComplete';
+$wgSpecialPages['NewEditors'] = 'SpecialNewEditors';
 
 return true; // ...to the single purpose of the moment.

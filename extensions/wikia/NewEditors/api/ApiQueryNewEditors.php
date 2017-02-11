@@ -15,8 +15,8 @@ class ApiQueryNewEditors extends ApiQueryBase {
 
 		$this->addTables( 'recentchanges' );
 
-		$this->addFields( 'MIN(rc_this_oldid) as diff_id' );
-		$this->addFields( 'MIN(rc_timestamp) as diff_timestamp' );
+		$this->addFields( 'rc_this_oldid as diff_id' );
+		$this->addFields( 'rc_timestamp as diff_timestamp' );
 		$this->addFields( 'rc_user_text as diff_author' );
 
 		$this->addWhere( 'rc_type < ' . RC_MOVE );
@@ -54,12 +54,8 @@ class ApiQueryNewEditors extends ApiQueryBase {
 
 		$result->setIndexedTagName_internal( [ 'query', $this->getModuleName() ], 'firstedits' );
 
-		// cache for 1 day
 		$this->getMain()->setCacheMode( 'public' );
-		$this->getMain()->setCacheMaxAge( WikiaResponse::CACHE_STANDARD );
-
-		// use surrogate key for easy cache invalidation
-		$this->getOutput()->tagWithSurrogateKeys( static::getSurrogateKey() );
+		$this->getMain()->setCacheMaxAge( WikiaResponse::CACHE_SHORT );
 	}
 
 	private function getMaximumRange() {
@@ -118,13 +114,5 @@ class ApiQueryNewEditors extends ApiQueryBase {
 			'api.php?action=query&list=neweditors',
 			'api.php?action=query&list=neweditors&fedir=newer'
 		];
-	}
-
-	/**
-	 * Returns surrogate key used to tag all responses of this module so that they can be easily invalidated
-	 * @return string
-	 */
-	public static function getSurrogateKey() {
-		return Wikia::surrogateKey( __CLASS__ );
 	}
 }
