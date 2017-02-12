@@ -16,7 +16,12 @@ class WallExternalController extends WikiaController {
 	protected $helper;
 
 	public function init() {
+		global $wgIsValidWallTransaction;
+
 		$this->helper = new WallHelper();
+
+		// SUS-1554: Mark this transaction as a valid one for editing or creating Wall/Forum content
+		$wgIsValidWallTransaction = true;
 	}
 	/*
 	 *
