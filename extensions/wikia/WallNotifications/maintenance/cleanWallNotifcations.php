@@ -29,11 +29,15 @@ class CleanupWallNotifications extends Maintenance {
 		$res = $this->getDatawareDB()->query(
 			sprintf( 'SELECT user_id, count(*) AS cnt FROM wall_notification GROUP BY user_id HAVING cnt > %d', self::NOTIFICATIONS_PER_USER_THRESHOLD )
 		);
+		$count = $res->numRows();
 
-		$this->output( sprintf( "Got list of %d users to perform cleanup for\n", $res->numRows() ) );
+		$this->output( sprintf( "Got list of %d users to perform cleanup for\n", $count ) );
 
+		$i = 0;
 		while ( $row = $res->fetchObject() ) {
-			$this->output( sprintf( "\nRunning cleanup for user #%d (%d notifications)...\n", $row->user_id, $row->cnt ) );
+			$i++;
+
+			$this->output( sprintf( "\n(%d/%d) Running cleanup for user #%d (%d notifications)...\n", $i, $count, $row->user_id, $row->cnt ) );
 			$rowsCounter += $this->doCleanupForUser( $row->user_id );
 		}
 
