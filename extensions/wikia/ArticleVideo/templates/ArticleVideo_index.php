@@ -1,4 +1,4 @@
-<div id="premium-mvp-video" class="premium-mvp-video">
+<div id="article-video" class="article-video">
 	<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
@@ -8,7 +8,7 @@
 			</div>
 			<div class="video-details">
 				<div class="video-details-left">
-					<div class="video-time"><?= wfMessage( 'articlevideomvp-watch',
+					<div class="video-time"><?= wfMessage( 'articlevideo-watch',
 							$videoDetails['time'] ); ?></div>
 					<div class="video-title"><?= $videoDetails['title']; ?></div>
 				</div>

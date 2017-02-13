@@ -92,8 +92,8 @@
 					}
 				?>
 
-				<?php if ( $enableArticleVideoMVP ): ?>
-					<?= $app->renderView( 'ArticleVideoMVP', 'index' ) ?>
+				<?php if ( $enableArticleVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
 				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>

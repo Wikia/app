@@ -3194,19 +3194,19 @@ $config[ 'rwe_page_header_js' ] = [
 
 
 
-$config[ 'premium_mvp_scss' ] = [
+$config[ 'article_video_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideoMVP/styles/premium-mvp.scss'
+		'//extensions/wikia/ArticleVideo/styles/article-video.scss'
 	]
 ];
 
-$config[ 'premium_mvp_js' ] = [
+$config[ 'article_video_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideoMVP/scripts/premium-mvp.js',
-		'//extensions/wikia/ArticleVideoMVP/scripts/ooyalaVideo.js'
+		'//extensions/wikia/ArticleVideo/scripts/article-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyalaVideo.js'
 	]
 ];

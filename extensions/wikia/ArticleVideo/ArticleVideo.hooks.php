@@ -1,14 +1,14 @@
 <?php
 
-class ArticleVideoMVPHooks {
+class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
 		) {
-			\Wikia::addAssetsToOutput( 'premium_mvp_scss' );
-			\Wikia::addAssetsToOutput( 'premium_mvp_js' );
+			\Wikia::addAssetsToOutput( 'article_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_video_js' );
 		}
 
 		return true;
