@@ -216,7 +216,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			] ),
 
 			array_merge( $defaultParameters, [
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'hasPoratableInfobox' => true ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'hasPortableInfobox' => true ],
 			] ),
 		];
 	}
@@ -267,7 +267,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expectedTargeting['pageIsArticle'] = true;
 		}
 
-		if ( isset( $expectedTargeting['hasPoratableInfobox'] ) && $expectedTargeting['hasPoratableInfobox'] === true ) {
+		if ( isset( $expectedTargeting['hasPortableInfobox'] ) && $expectedTargeting['hasPortableInfobox'] === true ) {
 			$wikiaMock = $this->getMockBuilder( 'Wikia' )
 				->disableOriginalConstructor()
 				->setMethods( [ 'getProps' ] )
