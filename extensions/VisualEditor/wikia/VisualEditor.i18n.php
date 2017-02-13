@@ -1,10 +1,11 @@
 <?php
-$messages = [ ];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'visualeditor-ca-classiceditor' => 'Classic editor',
-	'wikia-visualeditor-anon-warning' => 'You are not logged in. Some features will be unavailable to you while editing.',
-	'wikia-visualeditor-anon-log-in' => 'Log in',
+	'wikia-visualeditor-anon-warning' => 'You are not signed in. Some features will not be available to you. $1 or $2.',
+	'wikia-visualeditor-anon-log-in' => 'Sign in',
+	'wikia-visualeditor-anon-register' => 'Register',
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',
@@ -26,9 +27,10 @@ $messages['en'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Preview coming soon!',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Please adhere to {{SITENAME}}'s image policy and Fandom's [http://www.wikia.com/Terms_of_Use terms of use] when embedding new videos and uploading new photos.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Read more',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'You need to be logged-in to upload a new image',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'You need to be logged-in to insert a new video',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'You need to be signed in to upload a new image.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'You need to be signed in to insert a new video.',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Sign in',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Register',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Drop your file here',
 	'wikia-visualeditor-help-label' => 'Known issues',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
@@ -101,12 +103,13 @@ Write the first section of your page here. Use this to describe details about yo
 * Character descriptions
 * Background information
 If you think your page does not need this section, simply delete it. You may also copy and paste this text underneath if you want your page to have more than one section.',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'visualeditor-ca-classiceditor' => 'Link text of the dedicated classic editor',
-	'wikia-visualeditor-anon-warning' => 'Informational message that user is editing as anon and some VE features might not be available',
+	'wikia-visualeditor-anon-warning' => 'Informational message that user is editing as anon and some VE features might not be available. Parameters: $1 is login link, $2 is register link',
 	'wikia-visualeditor-anon-log-in' => 'Log in link, opens log in modal',
+	'wikia-visualeditor-anon-register' => 'Register link, opens register modal',
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article.
 {{Identical|Media}}',
@@ -138,6 +141,7 @@ $messages['qqq'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Information that user has to log in for image upload, displayed in add image modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Information that user has to log in for video adding, displayed in add video modal',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in button, opens a log in modal on click',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Register button, opens a register modal on click',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Callout that shows the droppable area for user drag and drop files',
 	'wikia-visualeditor-help-label' => 'Display text for the link to the user guide.
 {{Identical|Known issue}}',
@@ -213,13 +217,13 @@ $messages['qqq'] = [
 	'wikia-visualeditor-zero-state-call-to-action-variant-a' => 'Placeholder text put into the editable area of the Visual Editor for a newly created page.',
 	'wikia-visualeditor-zero-state-call-to-action-variant-b' => 'Simple template put into the editable area of the Visual Editor for a newly created page',
 	'wikia-visualeditor-zero-state-call-to-action-variant-c' => 'Advanced template put into the editable area of the Visual Editor for a newly created page.',
-];
+);
 
-$messages['aeb'] = [
+$messages['aeb'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'wikia-visualeditor-preference-enable' => 'تفعيل المحرر المرئي التجريبي',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'وسائط',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'إضافة وسائط',
@@ -265,33 +269,33 @@ $messages['ar'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'ابحث عن صور',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'عرض',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'شاهد',
-];
+);
 
-$messages['av'] = [
+$messages['av'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Карта гьабизе',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'wikia-visualeditor-dialog-transclusion-title' => 'Şablon',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
-];
+);
 
-$messages['azb'] = [
+$messages['azb'] = array(
 	'wikia-visualeditor-dialog-transclusion-title' => 'دَییشدیر',
-];
+);
 
-$messages['bm'] = [
+$messages['bm'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Bisimila',
-];
+);
 
-$messages['bn'] = [
+$messages['bn'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'মিডিয়া',
 	'wikia-visualeditor-dialog-orientation-headline' => 'স্বাগতম',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'নজর রাখুন',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ouzhpennañ ur media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kartenn',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Krouiñ ur gartenn',
@@ -320,9 +324,9 @@ $messages['br'] = [
 	'wikia-visualeditor-dialog-done-button' => 'Graet',
 	'wikia-visualeditor-context-transclusion-description' => 'Kemmañ',
 	'wikia-visualeditor-dialog-template-insert-title' => "Ensoc'hañ ar patrom",
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'wikia-visualeditor-preference-enable' => 'Activa Editor Visual beta',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Multimèdia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -389,9 +393,9 @@ $messages['ca'] = [
 	'wikia-visualeditor-dialog-preference-link-preferences' => "Gestionar les vostres preferències de l'editor",
 	'wikia-visualeditor-dialog-preference-start-button' => 'Molt bé!',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Cerca fitxers',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Мультимедиа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Чуяккха',
@@ -402,9 +406,9 @@ $messages['ce'] = [
 	'wikia-visualeditor-dialog-cancel-button' => 'Цаоьшу',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Галерей',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Хьалха хьажар',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'wikia-visualeditor-preference-enable' => 'Povolit beta verzi VisualEditoru',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Média',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -478,9 +482,9 @@ $messages['cs'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Shlédnout',
 	'wikia-visualeditor-media-photo-policy' => 'Dodržujte prosím podmínky pro obrázky při nahrávání nových fotografií.',
 	'wikia-visualeditor-media-video-policy' => 'Dodržujte prosím podmínky pro videa při nahrávání nových videí.',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'visualeditor-ca-classiceditor' => 'Klassischer Editor',
 	'wikia-visualeditor-preference-enable' => 'Den VisualEditor aktivieren',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medien',
@@ -575,14 +579,16 @@ Füge hier den ersten Abschnitt deiner Seite ein. Du kannst hier auch dein Thema
 * Beschreibung der Protagonisten
 * Hintergrundinformationen
 Wenn du der Meinung bist, dass deine Seite diesen Abschnitt nicht braucht, lösche ihn einfach. Du kannst den Text auch kopieren und erneut einfügen, wenn deine Seite mehr als einen Abschnitt haben soll.',
-	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeitung nicht verfügbar.',
+	'wikia-visualeditor-anon-warning' => 'Du bist nicht angemeldet. Manche Funktionen sind daher beim Bearbeitung nicht verfügbar. $1 oder $2.',
 	'wikia-visualeditor-anon-log-in' => 'Anmelden',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Du musst angemeldet sein, um ein neues Bild hochzuladen',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Du musst angemeldet sein, um ein neues Video einzufügen',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Du musst angemeldet sein, um ein neues Bild hochzuladen.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Du musst angemeldet sein, um ein neues Video einzufügen.',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Anmelden',
-];
+	'wikia-visualeditor-anon-register' => 'registrieren',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registrieren',
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medya',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Medya cı ke',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Sername',
@@ -600,9 +606,9 @@ $messages['diq'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Vıraştoğê Çımey',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Format kerdış desteg',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ενεργοποίηση beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Πολυμέσα',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Χάρτης',
@@ -616,9 +622,9 @@ $messages['el'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ωχ! Αυτή η εικόνα είναι πολύ μεγάλη. $1MB είναι το μεγαλύτερο που μπορούμε, αρχηγέ!',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Πρότυπο',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Βοήθεια μορφοποίησης',
-];
+);
 
-$messages['en-gb'] = [
+$messages['en-gb'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licence',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Edit',
 	'wikia-visualeditor-dialog-transclusion-zerostate' => 'This template does not have fields to edit. Make changes to the template on its page.',
@@ -630,9 +636,9 @@ $messages['en-gb'] = [
 	'wikia-visualeditor-dialog-preference-text' => 'Our editor just got upgraded, offering enhanced tools to help you create richer articles.',
 	'wikia-visualeditor-dialog-preference-link-help' => 'Read about new features',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Got it!',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'visualeditor-ca-classiceditor' => 'Editor clásico',
 	'wikia-visualeditor-preference-enable' => 'Activar el Editor Visual',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Archivos multimedia',
@@ -727,19 +733,21 @@ Escribe la primera sección de tu página aquí. Puedes usarla para describir de
 * Descripciones de personajes
 * Información de fondo
 Si piensas que tu página no necesita esta sección, simplemente bórrala. También puedes copiar y pegar este texto más abajo si quieres que tu página tenga más de una sección.',
-	'wikia-visualeditor-anon-warning' => 'No has iniciado sesión. Algunas funcionalidades no estarán disponibles mientras editas.',
+	'wikia-visualeditor-anon-warning' => 'No has iniciado sesión. Algunas funcionalidades no estarán disponibles para ti. $1 o $2.',
 	'wikia-visualeditor-anon-log-in' => 'Iniciar sesión',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Necesitas haber iniciado sesión para subir una nueva imagen',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Necesitas haber iniciado sesión para colocar un nuevo video',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Necesitas haber iniciado sesión para subir una nueva imagen.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Necesitas haber iniciado sesión para colocar un nuevo video.',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Iniciar sesión',
-];
+	'wikia-visualeditor-anon-register' => 'Registrarse',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registrarse',
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Irakurri gehiago',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galeria',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'رسانه',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'نقشه',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'عنوان',
@@ -766,9 +774,9 @@ $messages['fa'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'جستجوی تصویر',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'نمایش',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'پی‌گیری',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ota käyttöön Visuaalinen muokkain',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Lisää media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kartta',
@@ -821,9 +829,9 @@ $messages['fi'] = [
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Lähdekoodimuokkain',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Lähdekoodi',
 	'wikia-visualeditor-loading' => 'Visuaalista muokkainta ladataan...',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ger VisualEditor virknan í beta',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg afturat miðil',
@@ -846,9 +854,9 @@ $messages['fo'] = [
 	'wikia-visualeditor-toolbar-savedialog' => 'Útgev',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Goym broytingar',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'visualeditor-ca-classiceditor' => 'Éditeur classique',
 	'wikia-visualeditor-preference-enable' => 'Activer ÉditeurVisuel (bêta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Médias',
@@ -943,19 +951,21 @@ Rédigez ici la première partie de la page. Utilisez-la pour fournir plus de d�
 * Description des personnages
 * Contexte
 Si vous pensez que cette section est inutile, vous pouvez la supprimer. Vous pouvez également copier-coller ce texte au-dessous pour ajouter d'autres sections à la page.",
-	'wikia-visualeditor-anon-warning' => 'Vous n’êtes pas connecté. Certaines fonctionnalités ne seront pas disponibles lors de l’édition.',
+	'wikia-visualeditor-anon-warning' => 'Vous n’êtes pas connecté. Certaines fonctionnalités ne seront pas disponibles. $1 ou $2.',
 	'wikia-visualeditor-anon-log-in' => 'Se connecter',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Vous devez être connecté pour importer une nouvelle image',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Vous devez être connecté pour ajouter une nouvelle vidéo',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Vous devez être connecté pour importer une nouvelle image.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Vous devez être connecté pour ajouter une nouvelle vidéo.',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Se connecter',
-];
+	'wikia-visualeditor-anon-register' => "S'inscrire",
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => "S'inscrire",
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'wikia-visualeditor-dialog-cancel-button' => 'Annulearje',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galery',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Activar o editor visual en fase beta',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ficheiros multimedia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -1021,17 +1031,17 @@ $messages['gl'] = [
 	'wikia-visualeditor-dialog-preference-link-help' => 'Lea acerca das novas funcións',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Xestione as preferenzas do seu editor',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Xa entendín!',
-];
+);
 
-$messages['gu'] = [
+$messages['gu'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'નકશો',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'વધુ વાંચો',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'માફ કરજો, આ વિડિઓ પૂર્વદર્શન માટે પ્રાપ્ત નથી.',
 	'wikia-visualeditor-loading' => 'વિઝ્યુલએડિટર લાવે છે...',
 	'wikia-visualeditor-dialog-map-insert-title' => 'નકશો ઉમેરો',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'wikia-visualeditor-preference-enable' => 'הפעלת עורך חזותי (בטא)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'מדיה',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'יצירת מפה',
@@ -1087,9 +1097,9 @@ $messages['he'] = [
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'ניהול ההעדפות שלך עבור העורך',
 	'wikia-visualeditor-dialog-preference-start-button' => 'הבנתי!',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'גלריה',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'wikia-visualeditor-preference-enable' => 'A béta állapotú VisualEditor bekapcsolása',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Média hozzáadása',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Média hozzáadása',
@@ -1110,18 +1120,18 @@ $messages['hu'] = [
 	'wikia-visualeditor-help-link' => 'Segítség:VisualEditor',
 	'wikia-visualeditor-beta-warning' => 'Ez a Wikia béta állapotú VisualEditor-integrációja. Vannak még hibái, de reméljük, tetszik!',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Képek keresése',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Վերբեռնել',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Կաղապար',
 	'wikia-visualeditor-toolbar-savedialog' => 'Հրապարակել',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Ելատեքստի խմբագրիչ',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Ելատեքստի խմբագրիչ',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Կիրառել փոփոխությունները',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'visualeditor-ca-classiceditor' => 'Editor classico',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mappa',
@@ -1216,14 +1226,16 @@ Scrivi la prima sezione della tua pagina qui. Utilizzala per descrivere informaz
 * Descrizioni dei personaggi
 * Informazioni di background
 Se ritieni che la tua pagina non abbia bisogno di questa sezione, semplicemente rimuovila. Puoi anche copiare e incollare questo testo sotto se desideri che la tua pagina contenga più di una sezione.',
-	'wikia-visualeditor-anon-warning' => "Non hai effettuato l'accesso. Alcune funzioni non saranno disponibili per te durante la modifica.",
+	'wikia-visualeditor-anon-warning' => "Non hai effettuato l'accesso. Alcune funzioni non saranno disponibili. $1 o $2.",
 	'wikia-visualeditor-anon-log-in' => 'Accedi',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Devi accedere per poter caricare una nuova immagine',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Devi accedere per poter inserire un nuovo video',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => "Devi aver effettuato l'accesso per caricare una nuova immagine.",
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => "Devi aver effettuato l'accesso per inserire un nuovo video.",
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Accedi',
-];
+	'wikia-visualeditor-anon-register' => 'Iscriviti',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Iscriviti',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'wikia-visualeditor-preference-enable' => 'ビジュアルエディター（ベータ版機能）を有効にする',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'メディア',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'マップ',
@@ -1319,14 +1331,16 @@ $messages['ja'] = [
 * キャラクターの紹介
 * 背景情報
 作成したいページに本セクションが不要な場合は削除してください。もしくは上記のテキストを「コピー＆貼り付け」することで、セクションを増やすことも可能です。',
-	'wikia-visualeditor-anon-warning' => 'ログインされていないため、いくつかの編集機能が無効になっています。',
-	'wikia-visualeditor-anon-log-in' => 'ログインする',
+	'wikia-visualeditor-anon-warning' => 'ログインされていないため、いくつかの編集機能が無効になっています。$1・$2',
+	'wikia-visualeditor-anon-log-in' => 'ログイン',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '画像をアップロードするにはログインしてください',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '動画を追加するにはログインしてください',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '画像をアップロードするにはログインしてください',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'ログイン',
-];
+	'wikia-visualeditor-anon-register' => '新規登録',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '新規登録',
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'visualeditor-ca-classiceditor' => 'კლასიკური რედაქტორი',
 	'wikia-visualeditor-dialog-cancel-button' => 'გაუქმება',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'გალერეა',
@@ -1334,9 +1348,9 @@ $messages['ka'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'სურათების ძიება',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'ნახვა',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'კონტროლი',
-];
+);
 
-$messages['km'] = [
+$messages['km'] = array(
 	'wikia-visualeditor-preference-enable' => 'បើក VisualEditor បេតា',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'បន្ថែម​មេឌា',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'បន្ថែម​មេឌា',
@@ -1367,9 +1381,9 @@ $messages['km'] = [
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'អ្នក​ត្រូវ​តែ​កត់​ឈ្មោះ​ចូល ដើម្បី​បន្ថែម​រូប​ភាព និង​វីដេអូ។',
 	'wikia-visualeditor-notification-media-query-failed' => 'សូម​ទោស, យើង​រក​មិន​ឃើញ​ប្រភេទ​រូបភាព ឬ វីដេអូ​ដែល​ស្គាល់​ពី URL នោះ​ទេ។',
 	'wikia-visualeditor-notification-media-permission-denied' => 'ពុំ​មាន​សិទ្ធិ​ឡើយ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'wikia-visualeditor-preference-enable' => '비쥬얼 에디터 베타 사용',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '미디어',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '지도',
@@ -1423,9 +1437,9 @@ $messages['ko'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => '올리기',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => '소스 편집기',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => '정보상자',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lîsans',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Zêdetir bixwîne',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Biguherîne',
@@ -1437,9 +1451,9 @@ $messages['ku-latn'] = [
 	'wikia-visualeditor-dialog-cancel-button' => 'Betal bike',
 	'wikia-visualeditor-context-transclusion-description' => 'Biguherîne',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Bibîne',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'visualeditor-ca-classiceditor' => 'Klasseschen Editeur',
 	'wikia-visualeditor-preference-enable' => 'De Beta-VisualEditor aktivéieren',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kaart',
@@ -1477,17 +1491,17 @@ $messages['lb'] = [
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galerie',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'No Biller sichen',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Kucken',
-];
+);
 
-$messages['li'] = [
+$messages['li'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Wilkóm',
-];
+);
 
-$messages['lrc'] = [
+$messages['lrc'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'د کار ونن آلشتیا',
-];
+);
 
-$messages['lv'] = [
+$messages['lv'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Nosaukums',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licence',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Augšupielādēt',
@@ -1497,9 +1511,9 @@ $messages['lv'] = [
 	'wikia-visualeditor-savedialog-label-restore' => 'Atjaunot lapu',
 	'wikia-visualeditor-toolbar-savedialog' => 'Publicēt',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Lietot izmaiņas',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'wikia-visualeditor-preference-enable' => 'Вклучи ја бета-верзијата на ВизуеленУредник',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Додај слики/снимки',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
@@ -1573,9 +1587,9 @@ $messages['mk'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Набљудувај',
 	'wikia-visualeditor-media-photo-policy' => 'Би ве замолиле да се придржувате до правилата за слики кога подигате нови.',
 	'wikia-visualeditor-media-video-policy' => 'Би ве замолиле да се придржувате до правилата за видеа кога подигате нови.',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'wikia-visualeditor-preference-enable' => 'പരീക്ഷണാടിസ്ഥാനത്തിലുള്ള കണ്ടുതിരുത്തൽ സൗകര്യം സജ്ജമാക്കുക',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'മീഡിയ ചേർക്കുക',
@@ -1590,9 +1604,9 @@ $messages['ml'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-video-search-input-placeholder' => 'എന്തിനെങ്കിലും തിരയുക അല്ലെങ്കിൽ യു.ആർ.എൽ. നൽകുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'പ്രിവ്യൂ ഉടനെത്തും!',
 	'wikia-visualeditor-help-label' => 'അറിയാവുന്ന പ്രശ്നങ്ങൾ',
-];
+);
 
-$messages['mn'] = [
+$messages['mn'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Жижиг зургуудыг оруулах',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Дэлгэрэнгүйг унших',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Энд файлаа хийнэ үү',
@@ -1600,14 +1614,14 @@ $messages['mn'] = [
 	'wikia-visualeditor-loading' => 'VisualEditor-ыг ачааллаж байна',
 	'wikia-visualeditor-dialog-map-insert-title' => 'map оруулах',
 	'wikia-visualeditor-save-error-generic' => 'Мэдээллийг серверт хадгалахад алдаа6',
-];
+);
 
-$messages['mr'] = [
+$messages['mr'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'परवाना',
 	'wikia-visualeditor-dialog-preference-start-button' => 'समजले!',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'visualeditor-ca-classiceditor' => 'Editor klasik',
 	'wikia-visualeditor-preference-enable' => 'Membolehkan beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
@@ -1682,23 +1696,23 @@ $messages['ms'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Tonton',
 	'wikia-visualeditor-media-photo-policy' => 'Sila patuhi polisi imej wikia ini ketika memuat naik foto baru.',
 	'wikia-visualeditor-media-video-policy' => 'Sila patuhi polisi video wikia ini ketika memuat naik video baru.',
-];
+);
 
-$messages['mt'] = [
+$messages['mt'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Tal-midja',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Immodifika',
-];
+);
 
-$messages['nap'] = [
+$messages['nap'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => "Miette immaggene pe' lle caricà",
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Pe' piacere auniteve â puliteca d'immaggene 'e {{SITENAME}} ed 'e [http://www.wikia.com/Terms_of_Use Cundizzione d'uso] 'e Wikia quanno azzeccate video e immaggene nnove.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => "Liegge 'e cchiù",
 	'wikia-visualeditor-dialog-drop-target-callout' => "Jetta 'o file ccà",
 	'wikia-visualeditor-notification-video-preview-not-available' => "Scusate, stu video nun è pronto p' 'a previsualizzazziona.",
 	'wikia-visualeditor-loading' => "Carecanno 'o VisualEditor",
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'wikia-visualeditor-preference-enable' => 'Skru på VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg til media',
@@ -1710,14 +1724,14 @@ $messages['nb'] = [
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Heisann! Dette bildet er for stort. $1 MB er grensen for bilder!',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Heisann! Vi støtter bare $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Feil ved opplasting av filen',
-];
+);
 
-$messages['ne'] = [
+$messages['ne'] = array(
 	'visualeditor-ca-classiceditor' => 'पूराना सम्पादक',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'सामग्री',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Beta van visuele tekstverwerker inschakelen',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kaart',
@@ -1812,22 +1826,24 @@ Write the first section of your page here. Use this to describe details about yo
 * Character descriptions
 * Background information
 If you think your page does not need this section, simply delete it. You may also copy and paste this text underneath if you want your page to have more than one section.',
-	'wikia-visualeditor-anon-warning' => 'You are not logged in. Some features will be unavailable to you while editing.',
-	'wikia-visualeditor-anon-log-in' => 'Log in',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'You need to be logged-in to upload a new image',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'You need to be logged-in to insert a new video',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Log in',
-];
+	'wikia-visualeditor-anon-warning' => 'You are not signed in. Some features will not be available to you. $1 or $2.',
+	'wikia-visualeditor-anon-log-in' => 'Sign in',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'You need to be signed in to upload a new image.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'You need to be signed in to insert a new video.',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Sign in',
+	'wikia-visualeditor-anon-register' => 'Register',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Register',
+);
 
-$messages['nn'] = [
+$messages['nn'] = array(
 	'wikia-visualeditor-dialog-cancel-button' => 'Bryt av',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galleri',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Søk etter bilder',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Vis',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Overvak',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'wikia-visualeditor-preference-enable' => "Activar l'Editor Visual beta",
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Mèdia',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Aprondre un mèdi',
@@ -1846,9 +1862,9 @@ $messages['oc'] = [
 	'wikia-visualeditor-savedialog-label-save' => 'Publicar',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restablir la pagina',
 	'wikia-visualeditor-toolbar-savedialog' => 'Publicar',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'wikia-visualeditor-dialog-transclusion-title' => 'ਸੋਧੋ',
 	'wikia-visualeditor-dialog-transclusion-filter' => 'ਕਿਸੇ ਖ਼ਾਸ ਖੇਤਰ ਜਾਂ ਮੁੱਲ ਦੀ ਭਾਲ਼ ਕਰੋ',
 	'wikia-visualeditor-dialog-done-button' => 'ਹੋ ਗਿਆ',
@@ -1863,9 +1879,9 @@ $messages['pa'] = [
 	'wikia-visualeditor-dialog-preference-link-help' => 'ਨਵੇਂ ਗੁਣਾਂ ਬਾਬਤ ਪੜ੍ਹੋ',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'ਆਪਣੀਆਂ ਸੰਪਾਦਕੀ ਤਰਜੀਹਾਂ ਸਾਂਭੋ',
 	'wikia-visualeditor-dialog-preference-start-button' => 'ਸਮਝ ਆ ਗਿਆ!',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Włącz VisualEditor w wersji beta',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Multimedia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -1961,14 +1977,16 @@ W tym miejscu napisz pierwszą sekcję strony. Wykorzystaj ją do opisania szcze
 * Opisy postaci
 * Informacje dodatkowe
 Jeśli uważasz, że twoja strona nie potrzebuje tej sekcji, po prostu ją usuń. Możesz też skopiować ją i wkleić poniżej, jeśli twoja strona ma mieć więcej niż jedną sekcję.',
-	'wikia-visualeditor-anon-warning' => 'Niektóre opcje edytora są niedostępne dla niezalogowanego użytkownika.',
+	'wikia-visualeditor-anon-warning' => 'Nie jesteś zalogowany. Niektóre funkcje nie będą dla Ciebie dostępne. $1 lub $2.',
 	'wikia-visualeditor-anon-log-in' => 'Zaloguj się',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Musisz się zalogować, by móc dodawać nowe obrazy',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Musisz się zalogować, by móc dodawać nowe filmy',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Musisz się zalogować, aby przesłać nowy obraz.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Musisz się zalogować, aby wstawić nowy film.',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Zaloguj się',
-];
+	'wikia-visualeditor-anon-register' => 'zarejestruj',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Zarejestruj się',
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'رسنۍ',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'کښېده',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'يوه کښېده جوړول',
@@ -2001,9 +2019,9 @@ $messages['ps'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'د دوتنو پلټنه',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'کتل',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'کتل',
-];
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ativar Editor Visual (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Arquivos',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -2099,14 +2117,16 @@ Alguns exemplos de coisas que você pode colocar aqui:
 * Descrições de personagens
 * Informações básicas
 Se você acha que sua página não precisa desta seção, simplesmente a exclua. Você também pode copiar e colar o texto abaixo, se você quiser que sua página tenha mais de uma seção.',
-	'wikia-visualeditor-anon-warning' => 'Você não está autenticado. Alguns recursos não estarão disponíveis durante a edição.',
-	'wikia-visualeditor-anon-log-in' => 'Autenticar-se',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Você precisa se autenticar antes de carregar uma nova imagem',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Você precisa se autenticar antes de inserir um novo vídeo',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Autenticar-se',
-];
+	'wikia-visualeditor-anon-warning' => 'Você não está autenticado. Alguns recursos não estarão disponíveis para você. $1 ou $2.',
+	'wikia-visualeditor-anon-log-in' => 'Iniciar sessão',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Você precisa se autenticar antes de enviar uma nova imagem.',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Você precisa se autenticar antes de inserir um novo vídeo.',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Iniciar sessão',
+	'wikia-visualeditor-anon-register' => 'Registre-se',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Registre-se',
+);
 
-$messages['pt-br'] = [
+$messages['pt-br'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ativar Editor Visual (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Adicionar mídia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -2170,9 +2190,9 @@ $messages['pt-br'] = [
 	'wikia-visualeditor-dialog-preference-text' => 'O nosso editor acaba de ser atualizado,oferecendo ferramentas melhoradas para ajudá-lo na criação de artigos.',
 	'wikia-visualeditor-dialog-preference-link-help' => 'leia sobre as novas funções',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Controle as preferências do seu editor',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Titlu',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licență',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Elimină acest element',
@@ -2192,9 +2212,9 @@ $messages['ro'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Ajutor pentru formatare',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Trebuie să fiți autentificat pentru a adăuga imagini şi clipuri video.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permisiune refuzată',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'wikia-visualeditor-preference-enable' => "Abbilite 'a bete de VisualEditor",
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mappe',
@@ -2238,9 +2258,9 @@ $messages['roa-tara'] = [
 	'wikia-visualeditor-dialog-done-button' => 'Fatte',
 	'wikia-visualeditor-dialog-cancel-button' => 'Annulle',
 	'wikia-visualeditor-context-transclusion-description' => 'Cange',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'visualeditor-ca-classiceditor' => 'Классический редактор',
 	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Медиа',
@@ -2335,44 +2355,46 @@ $messages['ru'] = [
 *описание персонажей;
 *дополнительную информацию.
 Если вам не нужен этот раздел, то просто его удалите. Если вы хотите, чтобы на вашей странице было более одного раздела, скопируйте и вставьте этот текст ниже.',
-	'wikia-visualeditor-anon-warning' => 'Вы не вошли в систему, и поэтому вам не будут доступны все инструменты для редактирования.',
+	'wikia-visualeditor-anon-warning' => 'Вы не вошли в систему, и поэтому вам не будут доступны все инструменты для редактирования. $1 или $2.',
 	'wikia-visualeditor-anon-log-in' => 'Войти',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => 'Чтобы добавить изображение, вам нужно войти в учётную запись.',
 	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => 'Чтобы добавить видео, вам нужно войти в учётную запись.',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => 'Войти',
-];
+	'wikia-visualeditor-anon-register' => 'Зарегистрироваться',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => 'Зарегистрироваться',
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Mitza',
-];
+);
 
-$messages['sco'] = [
+$messages['sco'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Drap the eemages tae uplaid',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Please stick wi {{SITENAME}}'s eemage policie n Wikia's [http://www.wikia.com/Terms_of_Use terms o uiss] whan embeddin new videos n uplaidin new photæs.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Read mair',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Drap yer file here',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Sairrie, this video isna available fer luikower.',
 	'wikia-visualeditor-loading' => 'Laidin the VeesualEediter...',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'මාධ්‍යය',
 	'wikia-visualeditor-context-transclusion-description' => 'සංස්කරණය',
-];
+);
 
-$messages['sr'] = [
+$messages['sr'] = array(
 	'wikia-visualeditor-dialog-cancel-button' => 'Откажи',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Пошаљи',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Примени измене',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'visualeditor-ca-classiceditor' => 'Klassisk redigerare',
 	'wikia-visualeditor-preference-enable' => 'Aktivera VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
@@ -2447,18 +2469,18 @@ $messages['sv'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Titta',
 	'wikia-visualeditor-media-photo-policy' => 'Var god samtyck till denna wikis bildpolicy när du laddar upp nya foton.',
 	'wikia-visualeditor-media-video-policy' => 'Var god samtyck till denna wikis videopolicy när du laddar upp nya videoklipp.',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'வரைபடம்',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'பதிவேற்ற படங்களை போடவும்',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'மேலும் படிக்க',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'தங்கள் கோப்பை இங்கு இடவும்',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'மன்னிக்கவும், இந்த நிகழ்படத்தின் முன்னோட்டத்தினை காட்ட இயலாது.',
 	'wikia-visualeditor-context-transclusion-description' => 'தொகு',
-];
+);
 
-$messages['th'] = [
+$messages['th'] = array(
 	'wikia-visualeditor-preference-enable' => 'เปิดใช้งาน VisualEditor รุ่นทดลอง',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'มีเดีย',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'แผนที่',
@@ -2492,9 +2514,9 @@ $messages['th'] = [
 	'wikia-visualeditor-context-transclusion-description' => 'แก้ไข',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'มุมมอง',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'ดู',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'visualeditor-ca-classiceditor' => 'Klasik editör',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Harita',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Harita oluştur',
@@ -2502,9 +2524,9 @@ $messages['tr'] = [
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Bunu kullanan ilk kişi olun',
 	'wikia-visualeditor-dialog-preference-link-help' => 'Yeni özellikler hakkında bilgi edinin',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Anladım!',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'wikia-visualeditor-preference-enable' => 'Увімкнути бета-версію Візуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Медіа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Мапа',
@@ -2578,9 +2600,9 @@ $messages['uk'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Дивитися',
 	'wikia-visualeditor-media-photo-policy' => 'Будь ласка, дотримуйтесь політики вікі при завантаженні нових зображень.',
 	'wikia-visualeditor-media-video-policy' => 'Будь ласка, дотримуйтеся вікі політики при додаванні нового відео.',
-];
+);
 
-$messages['vec'] = [
+$messages['vec'] = array(
 	'wikia-visualeditor-preference-enable' => 'Abiłita VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Xonta Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Xonta Media',
@@ -2613,18 +2635,18 @@ $messages['vec'] = [
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Sta wiki ła permete soło che contegùi licensia da <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a>. Par piasere va so <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> par sercar video.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Scuxa, no riusimo catar na imaxine o un video suportai a chel URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permeso negà',
-];
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'wikia-visualeditor-preference-enable' => 'Kävutada VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ližata medijad',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Ližata Maedijad',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Pälkirjutez',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licenzii',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Čuta poiš nece kalu',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'wikia-visualeditor-preference-enable' => 'Bật giao diện beta',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Phương tiện',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Bản đồ',
@@ -2692,17 +2714,17 @@ $messages['vi'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Tìm kiếm hình ảnh',
 	'wikia-visualeditor-media-video-policy' => 'Hãy tuân thủ chính sách Video của wiki này khi thêm video mới.',
 	'visualeditor-ca-classiceditor' => 'Sửa đổi mã nguồn',
-];
+);
 
-$messages['vo'] = [
+$messages['vo'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Reidön pluikosi',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'מעדיע',
-];
+);
 
-$messages['zh'] = [
+$messages['zh'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '这个维基只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>中的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
 	'visualeditor-ca-classiceditor' => '传统编辑模式',
 	'wikia-visualeditor-aliennode-tooltip' => '很抱歉，这个条目只能在经典编辑模式下进行编辑。',
@@ -2734,9 +2756,9 @@ $messages['zh'] = [
 	'wikia-visualeditor-preference-enable' => '开启"视效编辑"测试功能',
 	'wikia-visualeditor-wikitext-warning' => '
 您正在使用"视效编辑"测试版本，wikitext不适用于此处。请点击"更多"，选择"源文件编辑模式"使用wikitext。',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'visualeditor-ca-classiceditor' => '传统编辑器',
 	'wikia-visualeditor-preference-enable' => '启用测试版视效编辑器',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒体',
@@ -2832,14 +2854,16 @@ $messages['zh-hans'] = [
 * 人物描写
 * 背景信息
 如果你认为文章不需要这部分，你可以删除它。如果你希望添加更多的文章段落，你可以在下方通过复制和粘贴这部分章节继续添加内容。',
-	'wikia-visualeditor-anon-warning' => '您还没有登入。这将导致您在编辑的时候某些功能无能正常使用。',
-	'wikia-visualeditor-anon-log-in' => '登入',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '您需要登入后再上传图片。',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '您需要登入后插入新的视频。',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => '登入',
-];
+	'wikia-visualeditor-anon-warning' => '您还没有登录。这将导致您在编辑的时候某些功能无能正常使用。$1或$2',
+	'wikia-visualeditor-anon-log-in' => '登录',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '您需要登录后才能上传图片。',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '您需要登录后才能插入新的视频。',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => '登录',
+	'wikia-visualeditor-anon-register' => '注册',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '注册',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'wikia-visualeditor-preference-enable' => '啟用測試板視效編輯器',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒體',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地圖',
@@ -2935,14 +2959,16 @@ $messages['zh-hant'] = [
 * 人物描寫
 * 背景資訊
 如果你認為頁面不需要這一段落，你可以刪除它。如果你希望添加更多的段落，你可以在下方複製貼上這段文字再增加新的內容。',
-	'wikia-visualeditor-anon-warning' => '您尚未登入。這會造成您在編輯時不能使用某些功能。',
+	'wikia-visualeditor-anon-warning' => '你尚未登入，部分的功能會無法使用。 $1 或 $2',
 	'wikia-visualeditor-anon-log-in' => '登入',
-	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '您需要登入才能上傳圖片',
-	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '你需要登入才能插入新的影片',
+	'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' => '你需要登入才能上傳新的圖片。',
+	'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' => '你需要登入才能插入新的影片。',
 	'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' => '登入',
-];
+	'wikia-visualeditor-anon-register' => '註冊',
+	'wikia-visualeditor-dialog-wikiamediainsert-register-button' => '註冊',
+);
 
-$messages['zh-hk'] = [
+$messages['zh-hk'] = array(
 	'visualeditor-ca-classiceditor' => '傳統編輯模式',
 	'wikia-visualeditor-context-transclusion-description' => '編輯',
 	'wikia-visualeditor-dialog-map-insert-title' => '插入地圖',
@@ -2960,9 +2986,9 @@ $messages['zh-hk'] = [
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地圖',
 	'wikia-visualeditor-loading' => '視效編輯器讀取中...',
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '顯示$1{{PLURAL:$1|次|次}}',
-];
+);
 
-$messages['zh-tw'] = [
+$messages['zh-tw'] = array(
 	'visualeditor-ca-classiceditor' => '傳統編輯模式',
 	'wikia-visualeditor-context-transclusion-description' => '編輯',
 	'wikia-visualeditor-dialog-map-insert-title' => '插入地圖',
@@ -2980,5 +3006,5 @@ $messages['zh-tw'] = [
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地圖',
 	'wikia-visualeditor-loading' => '視效編輯器讀取中...',
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '顯示$1{{PLURAL:$1|次|次}}',
-];
+);
 

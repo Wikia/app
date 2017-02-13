@@ -226,10 +226,6 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
 
-ve.init.wikia.ViewPageTarget.prototype.shouldShowMissingSummaryMessage = function ( saveOptions ) {
-	return this.pageExists && ve.init.mw.ViewPageTarget.prototype.shouldShowMissingSummaryMessage.call( this, saveOptions );
-};
-
 ve.init.wikia.ViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
 };

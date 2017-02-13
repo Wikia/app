@@ -1426,38 +1426,6 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param $action
-	 * @param $result
-	 * @return bool
-	 *
-	 * @author Tomek Odrobny
-	 *
-	 * @access public
-	 */
-	static public function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
-
-		if ( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
-			$result = [ ];
-
-			$wm = new WallMessage( $title );
-
-			if ( $user->isAllowed( 'walledit' ) || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
-				$result = null;
-				return true;
-			} else {
-				$result = [ 'badaccess-group0' ];
-				return false;
-			}
-		}
-		$result = null;
-		return true;
-	}
-
-	/**
 	 * @param Article $article
 	 * @param User $user
 	 * @param $text
@@ -2075,7 +2043,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 * Purge wiki navigation cache when disabling/enabling Forum and Wall
 	 *
 	 * @param String $name
 	 * @param String $val
@@ -2085,15 +2053,6 @@ class WallHooksHelper {
 	public static function onAfterToggleFeature( $name, $val ) {
 		global $IP;
 		if ( $name == 'wgEnableWallExt' || $name == 'wgEnableForumExt' ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_history' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_history_local.sql" );
-			}
-
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_related_pages.sql" );
-			}
-
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
@@ -2325,6 +2284,83 @@ class WallHooksHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * SUS-1554: Prevent invalid content manipulation in Wall Namespaces
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $action
+	 * @param array|null $result error message array (message name and optional params) or null
+	 * @return bool true if action is not handled or allowed, false if action should be prevented
+	 */
+	public static function onGetUserPermissionsErrors( Title $title, User $user, string $action, &$result ): bool {
+		$ns = $title->getNamespace();
+		if ( $ns === NS_USER_WALL_MESSAGE_GREETING ) {
+			return static::checkWallGreeting( $title, $user, $action, $result );
+		}
+
+		if ( !WallHelper::isWallNamespace( $ns ) ) {
+			return true;
+		}
+
+		global $wgIsValidWallTransaction, $wgCommandLineMode;
+		$isValidContext = $wgIsValidWallTransaction || $wgCommandLineMode;
+		$allow = true;
+
+		if ( !$isValidContext ) {
+			switch ( $action ) {
+				// don't let user create Message Wall page, or bogus Thread
+				case 'create':
+					$allow = false;
+					$result = [ 'badtitle' ];
+
+					break;
+
+				// don't let user edit or delete Message Wall page
+				case 'delete':
+				case 'edit':
+					if ( $ns === NS_USER_WALL ) {
+						$allow = false;
+						$result = [ 'badtitle' ];
+					}
+
+					break;
+			}
+		}
+
+		return $allow;
+	}
+
+
+	/**
+	 * control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 *
+	 * @author Tomek Odrobny
+	 */
+	static private function checkWallGreeting( Title $title, User $user, string $action, &$result ) {
+		$allow = true;
+
+		switch ( $action ) {
+			case 'create':
+			case 'edit':
+			case 'move':
+				$wm = new WallMessage( $title );
+
+				if ( !$user->isAllowed( 'walledit' ) && !$wm->isWallOwner( $user ) ) {
+					$allow = false;
+					$result = [ 'badaccess-group0' ];
+				}
+		}
+
+		return $allow;
 	}
 
 }

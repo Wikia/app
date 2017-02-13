@@ -6,6 +6,20 @@ class PlacesController extends WikiaController {
 	private static $mapId = 1;
 
 	/**
+	 * @throws UnauthorizedException
+	 */
+	public function init() {
+		$method = $this->request->getVal( 'method' );
+		if ( !$this->request->isInternal() && !in_array( $method, $this->allowedExternalMethods() ) ) {
+			throw new UnauthorizedException();
+		}
+	}
+
+	protected function allowedExternalMethods() {
+		return [ 'getMarkersRelatedToCurrentTitle', 'saveNewPlaceToArticle' ];
+	}
+
+	/**
 	 * Render static map from given set of attributes
 	 *
 	 * Used to render <place> parser hook
@@ -132,6 +146,17 @@ class PlacesController extends WikiaController {
 	 * Create a new place based on geo data provided and store it in the database
 	 */
 	public function saveNewPlaceToArticle(){
+		// SUS-1638: verify edit token
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $badRequestException ) {
+			$this->response->setValues( [
+				'success' => false,
+				'error' => wfMessage( 'sessionfailure' )->escaped()
+			] );
+			return;
+		}
+
 		$oPlaceModel = new PlaceModel();
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
 
