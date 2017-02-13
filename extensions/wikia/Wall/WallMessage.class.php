@@ -211,41 +211,41 @@ class WallMessage {
 		}
 		// after successful posting invalidate Wall cache
 		/**
-		 * @var $class WallMessage
+		 * @var $message WallMessage
 		 */
-		$class = new WallMessage( $ac->getTitle(), $ac );
+		$message = new WallMessage( $ac->getTitle(), $ac );
 
 		if ( $parent === false ) {// $db = DB_SLAVE
-			$class->storeRelatedTopicsInDB( $relatedTopics );
-			$class->setOrderId( 1 );
-			$class->getWall()->invalidateCache();
+			$message->storeRelatedTopicsInDB( $relatedTopics );
+			$message->setOrderId( 1 );
+			$message->getWall()->invalidateCache();
 		} else {
 			$count = $parent->getOrderId( $userMaster = true );
 			if ( is_numeric( $count ) ) {
 				$count++;
 				$parent->setOrderId( $count );
-				$class->setOrderId( $count );
+				$message->setOrderId( $count );
 			}
 			// after successful posting invalidate Thread cache
-			$class->getThread()->invalidateCache();
+			$message->getThread()->invalidateCache();
 			$rp = new WallRelatedPages();
 			$rp->setLastUpdate( $parent->getId() );
 		}
 		// Build data for sweet url ? id#number_of_comment
 		// notify
 		if ( $notify ) {
-			$class->sendNotificationAboutLastRev( $useMasterDB );
+			$message->sendNotificationAboutLastRev( $useMasterDB );
 		}
 
 		if ( $parent === false && $notifyEveryone ) {
-			$class->notifyEveryone();
+			$message->notifyEveryone();
 		}
 
-		$class->addWatch( $user );
+		$message->addWatch( $user );
 
-		wfRunHooks( 'AfterBuildNewMessageAndPost', [ &$class ] );
+		wfRunHooks( 'AfterBuildNewMessageAndPost', [ &$message ] );
 		wfProfileOut( __METHOD__ );
-		return $class;
+		return $message;
 	}
 
 	static public function newFromTitle( Title $title ) {
