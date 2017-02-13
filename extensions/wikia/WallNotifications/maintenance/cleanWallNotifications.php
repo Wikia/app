@@ -87,7 +87,10 @@ class CleanupWallNotifications extends Maintenance {
 	 */
 	private function doCleanupForUserAndWiki(int $user_id, int $wiki_id ) : int {
 		// first, let's get the revision ID that is old enough that we can remove all notifications prior to it
-		$revision_id =  $this->getWikiDB( $wiki_id )->selectField(
+		$wiki_db = $this->getWikiDB( $wiki_id );
+		$wiki_db->ping(); // this script runs for a while, make sure the connection to DB is still up, reconnect when needed
+
+		$revision_id =  $wiki_db->selectField(
 			'revision',
 			'MAX(rev_id)',
 			[
