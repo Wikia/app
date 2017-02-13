@@ -16,9 +16,8 @@ class ArticleVideoHooks {
 
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$wg = F::app()->wg;
-		$ooyalaPlayerId = $wg->OoyalaApiConfig['playerId'];
 		$articleId = $wg->Title->getArticleID();
-		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId . '?platform=html5-priority';
+		$jsFile = OoyalaVideoHandler::getOoyalaScriptUrl();
 
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
 		) {
