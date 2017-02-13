@@ -63,7 +63,10 @@ class CleanupWallNotifications extends Maintenance {
 			[
 				'user_id' => $user_id
 			],
-			__METHOD__
+			__METHOD__,
+			[
+				'GROUP BY' => 'wiki_id'
+			]
 		);
 
 		while ( $row = $res->fetchObject() ) {
