@@ -265,6 +265,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[28] = !empty($adContext['targeting']['hasPortableInfobox']) ? 'yes' : 'no';
 
 		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
