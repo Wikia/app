@@ -10,12 +10,23 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		mocks = {
 			log: function () {},
 			qs: {
-				getVal: function () {
-				}
+				getVal: function () {}
 			},
 			QueryString: function () {
 				return mocks.qs;
-			}
+			},
+			uapContext: {
+				getUapId: function () {
+					return 12345;
+				}
+			},
+			cache: {
+				get: function() {
+					return [];
+				},
+				set: function () {}
+			},
+			win: {}
 		},
 		data = {
 			PARAMS: {
@@ -69,43 +80,38 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: null,
-				expected: BIG_IMAGE
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: 'true',
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: true,
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: 'blocked',
-				expected: BIG_IMAGE
-			},
-			{
 				params: data.PARAMS.CORRECT,
 				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: data.PARAMS.CORRECT,
+				queryParam: 'true',
+				expected: RESOLVED_IMAGE
+			},
+			{
+				params: data.PARAMS.CORRECT,
 				queryParam: 'a',
+				expected: RESOLVED_IMAGE
+			},
+			{
+				params: data.PARAMS.CORRECT,
+				queryParam: '0',
+				expected: BIG_IMAGE
+			},
+			{
+				params: data.PARAMS.INCORRECT,
+				queryParam: 'true',
+				expected: BIG_IMAGE
+			},
+			{
+				params: data.PARAMS.INCORRECT,
+				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
 				params: data.PARAMS.INCORRECT,
 				queryParam: '1',
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: '0',
 				expected: BIG_IMAGE
 			}
 		],
@@ -127,7 +133,13 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	mocks.log.levels = {debug: ''};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.resolvedState'](mocks.log, mocks.QueryString);
+		return modules['ext.wikia.adEngine.slot.resolvedState'](
+			mocks.uapContext,
+			mocks.cache,
+			mocks.log,
+			mocks.QueryString,
+			mocks.win
+		);
 	}
 
 	testCases.forEach(function (testCase) {

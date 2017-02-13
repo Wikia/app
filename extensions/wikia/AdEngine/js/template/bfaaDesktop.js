@@ -87,10 +87,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
-		params = resolvedState.setImage(params);
-
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
+		params = resolvedState.setImage(params);
 
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
