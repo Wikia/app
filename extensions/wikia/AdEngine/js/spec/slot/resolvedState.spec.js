@@ -25,7 +25,8 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 					return [];
 				},
 				set: function () {}
-			}
+			},
+			win: {}
 		},
 		data = {
 			PARAMS: {
@@ -136,7 +137,8 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			mocks.uapContext,
 			mocks.cache,
 			mocks.log,
-			mocks.QueryString
+			mocks.QueryString,
+			mocks.win
 		);
 	}
 
