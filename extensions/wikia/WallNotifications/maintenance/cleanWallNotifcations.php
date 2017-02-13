@@ -10,7 +10,7 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
  */
 class CleanupWallNotifications extends Maintenance {
 
-	const NOTIFICATIONS_PER_USER_THRESHOLD = 10000; // process users with more than X notifications site-wide
+	const NOTIFICATIONS_PER_USER_THRESHOLD = 1000; // process users with more than X notifications site-wide
 	const NOTIFICATIONS_DAYS_THRESHOLD = 90; // delete notifications for messages older than X days
 
 	/**
