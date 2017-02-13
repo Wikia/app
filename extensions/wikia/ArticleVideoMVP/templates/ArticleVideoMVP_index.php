@@ -1,7 +1,9 @@
-<div id="premium-mvp-video" style="background-image: url(<?= $thumbnailUrl; ?>);">
+<div id="premium-mvp-video">
+	<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
-			<div class="video-thumbnail" style="background-image: url(<?= $thumbnailUrl; ?>);">
+			<div class="video-thumbnail">
+				<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
 				<div class="close"></div>
 			</div>
 			<div class="video-details">

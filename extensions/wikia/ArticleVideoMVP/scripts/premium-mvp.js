@@ -5,6 +5,8 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
 			ooyalaVideo,
+			ooyalaVideoElementId = 'ooyala-article-video',
+			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false;
 
@@ -12,7 +14,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
 			var ooyalaVideoId = window.wgArticleVideoData.videoId;
 
-			ooyalaVideo = new OoyalaVideo('ooyala-article-video', ooyalaJsFile, ooyalaVideoId);
+			ooyalaVideo = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId);
 		}
 
 		function uncollapseVideo() {
@@ -26,6 +28,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 				'width': ''
 			});
 			$videoThumbnail.css('height', '');
+			$ooyalaVideo.css('height', '');
 			$video.removeClass('collapsed');
 			if (ooyalaVideo) {
 				updatePlayerControls(false);
@@ -75,11 +78,12 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 						'position': 'fixed',
 						'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
 						'right': viewportWidth - videoOffset.left - videoWidth,
-						'top': '',
-						'left': '',
+						'top': 'auto',
+						'left': 'auto',
 						'width': videoWidth
 					});
 					$videoThumbnail.css('height', videoHeight);
+					$ooyalaVideo.css('height', videoHeight);
 					setTimeout(function () {
 						$video.addClass('collapsed');
 					}, 0);
