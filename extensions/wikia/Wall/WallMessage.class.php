@@ -231,17 +231,22 @@ class WallMessage {
 			$rp = new WallRelatedPages();
 			$rp->setLastUpdate( $parent->getId() );
 		}
-		// Build data for sweet url ? id#number_of_comment
-		// notify
-		if ( $notify ) {
-			$message->sendNotificationAboutLastRev( $useMasterDB );
-		}
-
-		if ( $parent === false && $notifyEveryone ) {
-			$message->notifyEveryone();
-		}
 
 		$message->addWatch( $user );
+
+		// let's prevent slave lag from messing with an offline task we're about to schedule
+		wfWaitForSlaves();
+
+		/**
+		 * Add notifications asynchronously
+		 *
+		 * @see SUS-1644
+		 */
+		global $wgCityId;
+		$task = new WallAddNotificationsTask();
+		$task->call( 'notify', $message->getId(), $notify, $notifyEveryone, $parent instanceof WallMessage );
+		$task->wikiId( $wgCityId );
+		$task->queue();
 
 		wfRunHooks( 'AfterBuildNewMessageAndPost', [ &$message ] );
 		wfProfileOut( __METHOD__ );
