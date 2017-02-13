@@ -401,7 +401,7 @@ class EmailNotification {
 
 		// Now build message's subject and body
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
-		// TopListHelper -- updates subject if title is toplist
+		// EmailTemplatesHooksHelper -- updates subject if blogpost
 		wfRunHooks( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
@@ -409,7 +409,6 @@ class EmailNotification {
 
 		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
 		//     any watched page email coming from Community to a blog post (I think)
-		// TopListHelper -- updates body if title is toplist
 		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
