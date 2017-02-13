@@ -4,7 +4,7 @@
 		<div class="video-placeholder">
 			<div class="video-thumbnail">
 				<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
-				<div class="close"></div>
+				<img src="<?= $closeIconUrl; ?>" class="close">
 			</div>
 			<div class="video-details">
 				<div class="video-details-left">
@@ -12,7 +12,7 @@
 							$videoDetails['time'] ); ?></div>
 					<div class="video-title"><?= $videoDetails['title']; ?></div>
 				</div>
-				<div class="video-play-button"></div>
+				<img src="<?= $videoPlayButtonUrl; ?>" class="video-play-button">
 			</div>
 		</div>
 		<div id="ooyala-article-video"></div>

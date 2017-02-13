@@ -54,9 +54,6 @@ $video-collapse-animation-speed: 0.4s;
 	}
 
 	.video-play-button {
-		background-image: url("/extensions/wikia/ArticleVideoMVP/images/play-button-solid.svg"); /* $wgCdnStylePath */
-		background-repeat: no-repeat;
-		background-size: contain;
 		bottom: 15px;
 		height: 120px;
 		position: absolute;
@@ -66,7 +63,6 @@ $video-collapse-animation-speed: 0.4s;
 
 	.video-thumbnail {
 		.close {
-			content: url("/extensions/wikia/ArticleVideoMVP/images/close.svg"); /* $wgCdnStylePath */
 			display: none;
 			left: 0;
 			padding: 7px;
