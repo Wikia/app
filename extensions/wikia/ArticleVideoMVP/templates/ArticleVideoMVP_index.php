@@ -6,7 +6,8 @@
 			</div>
 			<div class="video-details">
 				<div class="video-details-left">
-					<div class="video-time">watch • <?= $videoDetails['time']; ?></div>
+					<div class="video-time"><?= wfMessage( 'articlevideomvp-watch',
+							$videoDetails['time'] ); ?></div>
 					<div class="video-title"><?= $videoDetails['title']; ?></div>
 				</div>
 				<div class="video-play-button"></div>

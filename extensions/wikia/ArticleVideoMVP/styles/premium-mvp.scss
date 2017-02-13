@@ -1,18 +1,20 @@
+$video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+
 #premium-mvp-article-header {
 	display: block;
 }
 
 #premium-mvp-video {
-	background-position: center center;
+	background-position: center;
 	background-size: cover;
 	cursor: pointer;
 	margin-bottom: 11px;
-	padding-top: 56%;
+	padding-top: 56.25%;
 	position: relative;
 	width: 100%;
 
 	&:before {
-		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+		background-image: $video-overlay-gradient;
 		bottom: 0;
 		content: '';
 		left: 0;
@@ -54,12 +56,16 @@
 		.close {
 			content: url("/extensions/wikia/ArticleVideoMVP/images/close.svg"); /* $wgCdnStylePath */
 			display: none;
+			left: 0;
 			padding: 7px;
 			position: absolute;
 			top: 0;
-			left: 0;
 			z-index: 1;
 		}
+	}
+
+	.video-container {
+		z-index: 2;
 	}
 
 	&.collapsed {
@@ -75,7 +81,8 @@
 			background-position: center center;
 			background-size: cover;
 			display: block;
-			height: 140px;
+			height: 140px !important;
+			transition: height 0.4s;
 
 			.close {
 				display: block;
@@ -116,6 +123,12 @@
 			height: 140px;
 		}
 
+	}
+
+	&.animating {
+		.oo_controls {
+			display: none;
+		}
 	}
 
 }

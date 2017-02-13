@@ -2,13 +2,10 @@
 
 class ArticleVideoMVPHooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		global $wgVideoMVPArticles, $wgCityId;
-
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
-		if ( isset( $wgVideoMVPArticles[$wgCityId] ) &&
-		     isset( $wgVideoMVPArticles[$wgCityId][$articleId] )
+		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
 		) {
 			\Wikia::addAssetsToOutput( 'premium_mvp_scss' );
 			\Wikia::addAssetsToOutput( 'premium_mvp_js' );
@@ -18,18 +15,15 @@ class ArticleVideoMVPHooks {
 	}
 
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgVideoMVPArticles, $wgCityId;
-
 		$wg = F::app()->wg;
 		$ooyalaPlayerId = $wg->OoyalaApiConfig['playerId'];
-		$articleId = $vars['wgArticleId'];
+		$articleId = $wg->Title->getArticleID();
 		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId . '?platform=html5-priority';
 
-		if ( isset( $wgVideoMVPArticles[$wgCityId] ) &&
-		     isset( $wgVideoMVPArticles[$wgCityId][$articleId] )
+		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
 		) {
 			$vars['wgArticleVideoData'] = [
-				'videoId' => $wgVideoMVPArticles[$wgCityId][$articleId]['videoId'],
+				'videoId' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoId'],
 				'jsUrl' => $jsFile,
 			];
 		}

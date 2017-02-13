@@ -2,11 +2,12 @@
 
 class ArticleVideoMVPController extends WikiaController {
 	public function index() {
-		global $wgVideoMVPArticles, $wgCityId, $wgExtensionsPath;
-		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		$thumbnailPath = $wgVideoMVPArticles[$wgCityId][$articleId]['thumbnailPath'];
+		$wg = F::app()->wg;
 
-		$this->setVal( 'thumbnailUrl', $wgExtensionsPath . $thumbnailPath );
-		$this->setVal( 'videoDetails', $wgVideoMVPArticles[$wgCityId][$articleId] );
+		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
+		$thumbnailPath = $wg->videoMVPArticles[$wg->cityId][$articleId]['thumbnailPath'];
+
+		$this->setVal( 'thumbnailUrl', $wg->extensionsPath . $thumbnailPath );
+		$this->setVal( 'videoDetails', $wg->videoMVPArticles[$wg->cityId][$articleId] );
 	}
 }

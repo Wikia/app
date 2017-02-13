@@ -1,4 +1,5 @@
 <?php
+$wgExtensionMessagesFiles['ArticleVideoMVP'] = __DIR__ . '/ArticleVideoMVP.i18n.php';
 $wgAutoloadClasses['ArticleVideoMVPHooks'] = __DIR__ . '/ArticleVideoMVP.hooks.php';
 $wgAutoloadClasses['ArticleVideoMVPController'] = __DIR__ . '/ArticleVideoMVPController.class.php';
 
