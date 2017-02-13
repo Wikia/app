@@ -517,6 +517,7 @@
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
 	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
+	window.ga('ads.set', 'dimension28', String(window.ads.context.targeting.hasPortableInfobox || 'No')); // ADEN-4708
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {
