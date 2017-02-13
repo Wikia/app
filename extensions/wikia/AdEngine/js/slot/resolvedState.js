@@ -34,29 +34,48 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		return correctSingleImage !== '' || correctMultipleImages;
 	}
 
-	function checkAndUpdateStorage() {
+	function createCacheKey() {
+		return cacheKey + '_' + uapContext.getUapId();
+	}
+
+	function findRecordInCache() {
+		return cache.get(createCacheKey(), now)
+	}
+
+	function wasDefaultStateSeen() {
 		var adId = uapContext.getUapId(),
-			adCacheKey = cacheKey + '_' + adId,
-			record = cache.get(adCacheKey, now),
+			record = findRecordInCache(),
 			seen = !!record && record.lastSeenDate !== now.getTime();
 
 		if (seen) {
 			log('Full version of uap was seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 		} else {
 			log('Full version of uap was not seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
-
-			cache.set(adCacheKey, {
-				adId: adId,
-				lastSeenDate: now.getTime()
-			}, cacheTtl, now);
 		}
 
 		return seen;
 	}
 
+	function updateInformationAboutSeenDefaultStateAd() {
+		cache.set(createCacheKey(), {
+			adId: uapContext.getUapId(),
+			lastSeenDate: now.getTime()
+		}, cacheTtl, now);
+	}
+
 	function hasResolvedState(params) {
-		return paramsAreCorrect(params) && !isBlockedByURLParam() &&
-			(checkAndUpdateStorage() || isForcedByURLParam());
+		var showResolvedState = paramsAreCorrect(params) && !isBlockedByURLParam(),
+			defaultStateSeen = true;
+
+		if (showResolvedState) {
+			defaultStateSeen = wasDefaultStateSeen() || isForcedByURLParam();
+
+			if (!defaultStateSeen) {
+				updateInformationAboutSeenDefaultStateAd();
+			}
+		}
+
+		return showResolvedState && defaultStateSeen;
 	}
 
 	function setResolvedState(params) {
