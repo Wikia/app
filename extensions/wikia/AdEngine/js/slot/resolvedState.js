@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		return [false, 'blocked', 'false', '0'].indexOf(getQueryParam()) > -1;
 	}
 
-	function paramsAreCorrect (params) {
+	function paramsAreCorrect(params) {
 		var correctSingleImage = params.resolvedState && params.resolvedState.imageSrc,
 			correctMultipleImages = params.image1 && params.image2 &&
 				params.image1.resolvedStateSrc !== '' && params.image2.resolvedStateSrc !== '';
@@ -34,47 +34,29 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		return correctSingleImage !== '' || correctMultipleImages;
 	}
 
-	function wasRecentlySeen(record) {
-		var age;
-
-		if (record) {
-			age = now.getTime() - record.lastSeenDate;
-
-			if (age > 0 || age < cacheTtl) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	function checkAndUpdateStorage() {
 		var adId = uapContext.getUapId(),
 			adCacheKey = cacheKey + '_' + adId,
-			record = cache.get(adCacheKey, now);
+			record = cache.get(adCacheKey, now),
+			seen = !!record && record.lastSeenDate !== now.getTime();
 
-		if (wasRecentlySeen(record) && record.lastSeenDate !== now.getTime()) {
+		if (seen) {
 			log('Full version of uap was seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
-
-			return false;
 		} else {
 			log('Full version of uap was not seen in last 24h. adId: ' + adId, log.levels.debug, logGroup);
 
 			cache.set(adCacheKey, {
 				adId: adId,
 				lastSeenDate: now.getTime()
-			}, cacheTtl);
-
-			return true;
+			}, cacheTtl, now);
 		}
+
+		return seen;
 	}
 
 	function hasResolvedState(params) {
 		return paramsAreCorrect(params) && !isBlockedByURLParam() &&
-			(
-				checkAndUpdateStorage() ||
-				isForcedByURLParam()
-			);
+			(checkAndUpdateStorage() || isForcedByURLParam());
 	}
 
 	function setResolvedState(params) {
