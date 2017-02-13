@@ -2,11 +2,7 @@ $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
 
-#premium-mvp-article-header {
-	display: block;
-}
-
-#premium-mvp-video {
+.premium-mvp-video {
 	background-position: center;
 	background-size: cover;
 	cursor: pointer;

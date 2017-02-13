@@ -1,4 +1,4 @@
-<div id="premium-mvp-video">
+<div id="premium-mvp-video" class="premium-mvp-video">
 	<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
