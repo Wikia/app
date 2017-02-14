@@ -5,10 +5,24 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	function createCorrectParams() {
 		return {
 			imageSrc: BIG_IMAGE,
-				aspectRatio: 1,
-				resolvedState: {
-				aspectRatio: 2,
-					imageSrc: RESOLVED_IMAGE
+			aspectRatio: ASPECT_RATIO,
+			resolvedState: {
+				aspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+				imageSrc: RESOLVED_IMAGE
+			},
+			backgroundImage: {
+				src: DEFAULT_IMAGE
+			}
+		}
+	}
+
+	function createIncorrectParams() {
+		return {
+			aspectRatio: 1,
+			imageSrc: BIG_IMAGE,
+			resolvedState: {
+				aspectRatio: 0,
+				imageSrc: ''
 			},
 			backgroundImage: {
 				src: DEFAULT_IMAGE
@@ -71,102 +85,57 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			},
 			win: {}
 		},
-		data = {
-			PARAMS: {
-				CORRECT: {
-					imageSrc: BIG_IMAGE,
-					aspectRatio: 1,
-					resolvedState: {
-						aspectRatio: 2,
-						imageSrc: RESOLVED_IMAGE
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				CORRECT_WITH_TWO_ASSETS: {
-					aspectRatio: 1,
-					resolvedStateAspectRatio: 2,
-					image1: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE,
-						resolvedStateSrc: RESOLVED_IMAGE
-					},
-					image2: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE_2,
-						resolvedStateSrc: RESOLVED_IMAGE_2
-					}
-				},
-				INCORRECT: {
-					aspectRatio: 1,
-					imageSrc: BIG_IMAGE,
-					resolvedState: {
-						aspectRatio: 0,
-						imageSrc: ''
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				EMPTY: {}
-			}
-		},
 		testCases = [
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: null,
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'true',
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'a',
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: '0',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: 'true',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: '1',
 				expected: BIG_IMAGE
 			}
 		],
 		testCasesWithTwoAssets = [
 			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				params: createCorrectParamsWithTwoAssets(),
 				queryParam: '0',
 				expectedImage1: BIG_IMAGE,
 				expectedImage2: BIG_IMAGE_2
 			},
 			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				params: createCorrectParamsWithTwoAssets(),
 				queryParam: null,
 				expectedImage1: RESOLVED_IMAGE,
 				expectedImage2: RESOLVED_IMAGE_2
@@ -216,11 +185,11 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	it('Should update params aspect ratio', function () {
 		var rs = getModule();
 
-		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolvedState.aspectRatio);
+		expect(rs.setImage(createCorrectParams()).aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
 	});
 
 	it('Should update image src', function () {
-		var params = data.PARAMS.CORRECT,
+		var params = createCorrectParams(),
 			rs = getModule();
 
 		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolvedState.imageSrc);
@@ -233,17 +202,6 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(rs.setImage(params)).toEqual(params);
 	});
 
-	function expectCacheSetMethodWasCalled() {
-		expect(mocks.cache.set).toHaveBeenCalledWith(
-			'adEngine_resolvedStateCounter_12345',
-			{
-				adId: AD_ID,
-				lastSeenDate: jasmine.any(Number)
-			},
-			CACHE_STANDARD_TIME,
-			jasmine.any(Date));
-	}
-
 	it('should use default state resources when no information about seen ad was stored using single image configuration', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
@@ -254,7 +212,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 		var actual = rs.setImage(createCorrectParams());
 
-		expectCacheSetMethodWasCalled();
+		expect(mocks.cache.set).toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
 		expect(actual.backgroundImage.src).toEqual(BIG_IMAGE);
 	});
@@ -286,7 +244,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 		var actual = rs.setImage(createCorrectParamsWithTwoAssets());
 
-		expectCacheSetMethodWasCalled();
+		expect(mocks.cache.set).toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
 		expect(actual.image1.element.src).toEqual(BIG_IMAGE);
 		expect(actual.image2.element.src).toEqual(BIG_IMAGE_2);
