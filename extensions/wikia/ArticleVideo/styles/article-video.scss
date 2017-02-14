@@ -63,6 +63,7 @@ $video-collapse-animation-speed: 0.4s;
 		position: absolute;
 		right: 0;
 		top: 0;
+		transform: translate3d(0, 0, 0); // hack for iOS for changing position to fixed while scrolling
 		z-index: 2;
 
 		.video-thumbnail {
