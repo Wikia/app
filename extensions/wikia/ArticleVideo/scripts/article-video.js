@@ -10,11 +10,11 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			videoCollapsed = false,
 			collapsingDisabled = false;
 
-		function initVideo() {
+		function initVideo(onCreate) {
 			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
 			var ooyalaVideoId = window.wgArticleVideoData.videoId;
 
-			ooyalaVideo = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId);
+			ooyalaVideo = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId, onCreate);
 		}
 
 		function uncollapseVideo() {
@@ -36,7 +36,8 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		}
 
-		function closeButtonClicked() {
+		function closeButtonClicked(event) {
+			event.stopPropagation();
 			if (ooyalaVideo && ooyalaVideo.player) {
 				ooyalaVideo.player.pause();
 			}
@@ -46,7 +47,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideo.hideControls();
-			if(waitForTransition) {
+			if (waitForTransition) {
 				$videoContainer.on('transitionend', function () {
 					ooyalaVideo.sizeChanged();
 					ooyalaVideo.showControls();
@@ -83,7 +84,9 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 					$videoThumbnail.css('height', videoHeight);
 					$ooyalaVideo.css('height', videoHeight);
 					setTimeout(function () {
-						$video.addClass('collapsed');
+						if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
+							$video.addClass('collapsed');
+						}
 					}, 0);
 				} else if (scrollTop <= collapseOffset && videoCollapsed) {
 					uncollapseVideo();
@@ -91,11 +94,18 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			}
 		}
 
-		$video.one('click', initVideo);
+		function showAndPlayVideo() {
+			$ooyalaVideo.show();
+			ooyalaVideo.player.play();
+		}
+
+		initVideo(function () {
+			$video.addClass('ready-to-play');
+			$video.one('click', showAndPlayVideo);
+		});
 
 		$closeBtn.click(closeButtonClicked);
 
 		onScroll.bind(toggleCollpase);
-
 	});
 });

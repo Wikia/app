@@ -5,8 +5,7 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
-		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
-		) {
+		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
 			\Wikia::addAssetsToOutput( 'article_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_video_js' );
 		}
@@ -19,8 +18,7 @@ class ArticleVideoHooks {
 		$articleId = $wg->Title->getArticleID();
 		$jsFile = OoyalaVideoHandler::getOoyalaScriptUrl();
 
-		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] )
-		) {
+		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
 			$vars['wgArticleVideoData'] = [
 				'videoId' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoId'],
 				'jsUrl' => $jsFile,

@@ -1,15 +1,13 @@
 define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, window, loader) {
 
-	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, ooyalaPlayerOptions) {
-		var self = this;
-
-		if (typeof ooyalaPlayerOptions === 'undefined') {
+	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, onCreate) {
+		var self = this,
 			ooyalaPlayerOptions = {
-				autoplay: true,
+				autoplay: false,
 				width: '100%',
-				height: '100%'
+				height: '100%',
+				onCreate: onCreate
 			};
-		}
 
 		loader({
 			type: loader.JS,
@@ -23,15 +21,21 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, w
 	}
 
 	OoyalaVideo.prototype.sizeChanged = function () {
-		this.player.mb.publish(OO.EVENTS.SIZE_CHANGED);
+		if (this.player) {
+			this.player.mb.publish(OO.EVENTS.SIZE_CHANGED);
+		}
 	};
 
 	OoyalaVideo.prototype.hideControls = function () {
-		this.$controls.hide();
+		if (this.$controls) {
+			this.$controls.hide();
+		}
 	};
 
 	OoyalaVideo.prototype.showControls = function () {
-		this.$controls.show();
+		if (this.$controls) {
+			this.$controls.show();
+		}
 	};
 
 	return OoyalaVideo;

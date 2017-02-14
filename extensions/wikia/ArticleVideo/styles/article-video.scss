@@ -5,11 +5,14 @@ $video-collapse-animation-speed: 0.4s;
 .article-video {
 	background-position: center;
 	background-size: cover;
-	cursor: pointer;
 	margin-bottom: 11px;
 	padding-top: 56.25%;
 	position: relative;
 	width: 100%;
+
+	.video-details {
+		display: none;
+	}
 
 	.video-thumbnail {
 		bottom: 0;
@@ -81,6 +84,14 @@ $video-collapse-animation-speed: 0.4s;
 		}
 	}
 
+	&.ready-to-play {
+		cursor: pointer;
+
+		.video-details {
+			display: block;
+		}
+	}
+
 	&.collapsed-ready {
 		.video-container {
 			left: auto;
@@ -104,6 +115,7 @@ $video-collapse-animation-speed: 0.4s;
 			width: 225px !important;
 
 			.close {
+				cursor: pointer;
 				display: block;
 				z-index: 10001;
 			}
@@ -165,6 +177,7 @@ $video-collapse-animation-speed: 0.4s;
 	position: absolute;
 	right: 0;
 	top: 0;
+	display: none;
 
 	>div {
 		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
