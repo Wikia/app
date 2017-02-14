@@ -4,7 +4,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
-			ooyalaVideo,
+			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
@@ -14,7 +14,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
 			var ooyalaVideoId = window.wgArticleVideoData.videoId;
 
-			ooyalaVideo = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId, onCreate);
+			ooyalaVideoController = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId, onCreate);
 		}
 
 		function uncollapseVideo() {
@@ -30,7 +30,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			$videoThumbnail.css('height', '');
 			$ooyalaVideo.css('height', '');
 			$video.removeClass('collapsed collapsed-ready');
-			if (ooyalaVideo) {
+			if (ooyalaVideoController) {
 				updatePlayerControls(false);
 			}
 
@@ -38,28 +38,28 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		function closeButtonClicked(event) {
 			event.stopPropagation();
-			if (ooyalaVideo && ooyalaVideo.player) {
-				ooyalaVideo.player.pause();
+			if (ooyalaVideoController && ooyalaVideoController.player) {
+				ooyalaVideoController.player.pause();
 			}
 			uncollapseVideo();
 			collapsingDisabled = true;
 		}
 
 		function updatePlayerControls(waitForTransition) {
-			ooyalaVideo.hideControls();
+			ooyalaVideoController.hideControls();
 			if (waitForTransition) {
 				$videoContainer.on('transitionend', function () {
-					ooyalaVideo.sizeChanged();
-					ooyalaVideo.showControls();
+					ooyalaVideoController.sizeChanged();
+					ooyalaVideoController.showControls();
 				});
 			} else {
-				ooyalaVideo.sizeChanged();
-				ooyalaVideo.showControls();
+				ooyalaVideoController.sizeChanged();
+				ooyalaVideoController.showControls();
 			}
 		}
 
 		function toggleCollpase() {
-			if (!collapsingDisabled || ooyalaVideo.player.getState() === OO.STATE.PLAYING || videoCollapsed) {
+			if (!collapsingDisabled || ooyalaVideoController.player.getState() === OO.STATE.PLAYING || videoCollapsed) {
 				var scrollTop = $(window).scrollTop(),
 					videoHeight = $video.outerHeight(),
 					videoWidth = $video.outerWidth(),
@@ -73,7 +73,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 					collapsingDisabled = false;
 					videoCollapsed = true;
 					$video.addClass('collapsed-ready');
-					if (ooyalaVideo) {
+					if (ooyalaVideoController) {
 						updatePlayerControls(true);
 					}
 					$videoContainer.css({
@@ -96,7 +96,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		function showAndPlayVideo() {
 			$ooyalaVideo.show();
-			ooyalaVideo.player.play();
+			ooyalaVideoController.player.play();
 		}
 
 		initVideo(function () {
