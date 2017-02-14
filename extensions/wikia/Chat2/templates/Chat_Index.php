@@ -104,7 +104,7 @@
 					groups.indexOf('threadmoderator') !== -1
 				) { %>
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-discussion-moderator'); ?>
-				<% else if (groups.indexOf('helper') !== -1) { %>
+				<% } else if (groups.indexOf('helper') !== -1) { %>
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-helper', 'wds-icon wds-icon-small'); ?>
 				<% } else if (groups.indexOf('vstf') !== -1) { %>
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-vstf', 'wds-icon wds-icon-small'); ?>
