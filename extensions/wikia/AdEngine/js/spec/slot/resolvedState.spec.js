@@ -202,7 +202,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(rs.setImage(params)).toEqual(params);
 	});
 
-	it('should use default state resources when no information about seen ad was stored using single image configuration', function () {
+	it('should use default state resources when no information about seen ad was stored for add with one image', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
@@ -217,7 +217,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(actual.backgroundImage.src).toEqual(BIG_IMAGE);
 	});
 
-	it('should use resolved state resources when information about seen ad was stored using single image configuration', function () {
+	it('should use resolved state resources when information about seen ad was stored for add with one image', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
@@ -234,7 +234,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(actual.backgroundImage.src).toEqual(RESOLVED_IMAGE);
 	});
 
-	it('should use default state resources when no information about seen ad was stored using split image configuration', function () {
+	it('should use default state resources when no information about seen ad was stored using split template', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
@@ -250,7 +250,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(actual.image2.element.src).toEqual(BIG_IMAGE_2);
 	});
 
-	it('should use resolved state resources when information about seen ad was stored using split image configuration', function () {
+	it('should use resolved state resources when information about seen ad was stored using split template', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
