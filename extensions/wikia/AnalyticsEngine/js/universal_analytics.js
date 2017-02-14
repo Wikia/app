@@ -341,22 +341,23 @@
 
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
-		['set', 'dimension8', window.wikiaPageType],                            // PageType
-		['set', 'dimension9', window.wgCityId],                                 // CityId
-		['set', 'dimension13', getEsrbRating()],                                // ESRB rating
-		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
-		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
-		['set', 'dimension16', getKruxSegment()],                               // Krux Segment
-		['set', 'dimension17', window.wgWikiVertical],                          // Vertical
-		['set', 'dimension18', window.wgWikiCategories.join(',')],              // Categories
-		['set', 'dimension19', window.wgArticleType],                           // ArticleType
-		['set', 'dimension20', 'not set'],        								// Performance A/B testing (Not used any more)
-		['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
-		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
-		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
-		['set', 'dimension25', String(window.wgNamespaceNumber)],               // Namespace Number
-		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)],         // SEO Testing bucket
-		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')] // Special page canonical name (SUS-1465)
+		['set', 'dimension8', window.wikiaPageType],                                // PageType
+		['set', 'dimension9', window.wgCityId],                                     // CityId
+		['set', 'dimension13', getEsrbRating()],                                    // ESRB rating
+		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],                   // HasAds
+		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],         // IsCorporatePage
+		['set', 'dimension16', getKruxSegment()],                                   // Krux Segment
+		['set', 'dimension17', window.wgWikiVertical],                              // Vertical
+		['set', 'dimension18', window.wgWikiCategories.join(',')],                  // Categories
+		['set', 'dimension19', window.wgArticleType],                               // ArticleType
+		['set', 'dimension20', 'not set'],                                          // Performance A/B testing (Not used any more)
+		['set', 'dimension21', String(window.wgArticleId)],                         // ArticleId
+		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'],     // IsPowerUser: Frequent
+		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
+		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
+		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)],             // SEO Testing bucket
+		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
+		['set', 'dimension28', String(window.ads.context.targeting.hasPortableInfobox || 'No')] // ADEN-4708
 	);
 
 	/*
