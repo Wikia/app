@@ -11,7 +11,7 @@ $video-collapse-animation-speed: 0.4s;
 	position: relative;
 	width: 100%;
 
-	.thumbnail {
+	.video-thumbnail {
 		bottom: 0;
 		left: 0;
 		position: absolute;
@@ -57,7 +57,19 @@ $video-collapse-animation-speed: 0.4s;
 		width: 120px;
 	}
 
-	.video-thumbnail {
+	.video-container {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 2;
+
+		.video-thumbnail {
+			display: none;
+			position: static;
+		}
+
 		.close {
 			display: none;
 			left: 0;
@@ -68,13 +80,16 @@ $video-collapse-animation-speed: 0.4s;
 		}
 	}
 
-	.video-container {
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
-		z-index: 2;
+	&.collapsed-ready {
+		.video-container {
+			left: auto;
+			position: fixed;
+			top: auto;
+
+			.video-thumbnail {
+				display: block;
+			}
+		}
 	}
 
 	&.collapsed {
@@ -86,18 +101,16 @@ $video-collapse-animation-speed: 0.4s;
 			top: auto;
 			transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
 			width: 225px !important;
-		}
-
-		.video-thumbnail {
-			background-position: center center;
-			background-size: cover;
-			display: block;
-			height: $video-collapsed-height !important;
-			transition: height $video-collapse-animation-speed;
 
 			.close {
 				display: block;
 				z-index: 10001;
+			}
+
+			.video-thumbnail {
+				display: block;
+				height: $video-collapsed-height !important;
+				transition: height $video-collapse-animation-speed;
 			}
 		}
 

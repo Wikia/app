@@ -1,11 +1,9 @@
 <div id="article-video" class="article-video">
-	<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
+	<img class="video-thumbnail" src="<?= $thumbnailUrl; ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
-			<div class="video-thumbnail">
-				<img class="thumbnail" src="<?= $thumbnailUrl; ?>">
-				<img src="<?= $closeIconUrl; ?>" class="close">
-			</div>
+			<img class="video-thumbnail" src="<?= $thumbnailUrl; ?>">
+			<img src="<?= $closeIconUrl; ?>" class="close">
 			<div class="video-details">
 				<div class="video-details-left">
 					<div class="video-time"><?= wfMessage( 'articlevideo-watch',

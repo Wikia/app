@@ -29,7 +29,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			});
 			$videoThumbnail.css('height', '');
 			$ooyalaVideo.css('height', '');
-			$video.removeClass('collapsed');
+			$video.removeClass('collapsed collapsed-ready');
 			if (ooyalaVideo) {
 				updatePlayerControls(false);
 			}
@@ -71,15 +71,13 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 				if (scrollTop > collapseOffset && !videoCollapsed) {
 					collapsingDisabled = false;
 					videoCollapsed = true;
+					$video.addClass('collapsed-ready');
 					if (ooyalaVideo) {
 						updatePlayerControls(true);
 					}
 					$videoContainer.css({
-						'position': 'fixed',
 						'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
 						'right': viewportWidth - videoOffset.left - videoWidth,
-						'top': 'auto',
-						'left': 'auto',
 						'width': videoWidth
 					});
 					$videoThumbnail.css('height', videoHeight);
@@ -87,7 +85,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 					setTimeout(function () {
 						$video.addClass('collapsed');
 					}, 0);
-				} else if ($(window).scrollTop() <= collapseOffset && videoCollapsed) {
+				} else if (scrollTop <= collapseOffset && videoCollapsed) {
 					uncollapseVideo();
 				}
 			}
