@@ -2,128 +2,141 @@
 describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
-	var BIG_IMAGE = 'bigImage.png',
+	var AD_ID = 12345,
+		ASPECT_RATIO = 1,
+		BIG_IMAGE = 'bigImage.png',
 		BIG_IMAGE_2 = 'bigImage2.png',
+		CACHE_STANDARD_TIME = 24,
 		DEFAULT_IMAGE = 'oldImage.png',
+		RESOLVED_STATE_ASPECT_RATIO = 2,
 		RESOLVED_IMAGE = 'resolvedImage.png',
-		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
-		mocks = {
-			log: function () {},
+		RESOLVED_IMAGE_2 = 'resolvedImage2.png';
+
+	function createCorrectParams() {
+		return {
+			imageSrc: BIG_IMAGE,
+			aspectRatio: ASPECT_RATIO,
+			resolvedState: {
+				aspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+				imageSrc: RESOLVED_IMAGE
+			},
+			backgroundImage: {
+				src: DEFAULT_IMAGE
+			}
+		}
+	}
+
+	function createIncorrectParams() {
+		return {
+			aspectRatio: 1,
+			imageSrc: BIG_IMAGE,
+			resolvedState: {
+				aspectRatio: 0,
+				imageSrc: ''
+			},
+			backgroundImage: {
+				src: DEFAULT_IMAGE
+			}
+		}
+	}
+
+	function createCorrectParamsWithTwoAssets() {
+		return {
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: RESOLVED_IMAGE
+			},
+			image2: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE_2,
+				resolvedStateSrc: RESOLVED_IMAGE_2
+			}
+		};
+	}
+
+	var mocks = {
+			log: function () {
+			},
 			qs: {
-				getVal: function () {}
+				getVal: function () {
+				}
 			},
 			QueryString: function () {
 				return mocks.qs;
 			},
 			uapContext: {
 				getUapId: function () {
-					return 12345;
+					return AD_ID;
 				}
 			},
 			cache: {
-				get: function() {
+				CACHE_STANDARD: CACHE_STANDARD_TIME,
+				get: function () {
 					return [];
 				},
-				set: function () {}
+				set: function () {
+				}
 			},
 			win: {}
 		},
-		data = {
-			PARAMS: {
-				CORRECT: {
-					imageSrc: BIG_IMAGE,
-					aspectRatio: 1,
-					resolvedState: {
-						aspectRatio: 2,
-						imageSrc: RESOLVED_IMAGE
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				CORRECT_WITH_TWO_ASSETS: {
-					aspectRatio: 1,
-					resolvedStateAspectRatio: 2,
-					image1: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE,
-						resolvedStateSrc: RESOLVED_IMAGE
-					},
-					image2: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE_2,
-						resolvedStateSrc: RESOLVED_IMAGE_2
-					}
-				},
-				INCORRECT: {
-					aspectRatio: 1,
-					imageSrc: BIG_IMAGE,
-					resolvedState: {
-						aspectRatio: 0,
-						imageSrc: ''
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				EMPTY: {}
-			}
-		},
 		testCases = [
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: null,
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'true',
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: 'a',
 				expected: RESOLVED_IMAGE
 			},
 			{
-				params: data.PARAMS.CORRECT,
+				params: createCorrectParams(),
 				queryParam: '0',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: 'true',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: 'blocked',
 				expected: BIG_IMAGE
 			},
 			{
-				params: data.PARAMS.INCORRECT,
+				params: createIncorrectParams(),
 				queryParam: '1',
 				expected: BIG_IMAGE
 			}
 		],
 		testCasesWithTwoAssets = [
 			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				params: createCorrectParamsWithTwoAssets(),
 				queryParam: '0',
 				expectedImage1: BIG_IMAGE,
 				expectedImage2: BIG_IMAGE_2
 			},
 			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
+				params: createCorrectParamsWithTwoAssets(),
 				queryParam: null,
 				expectedImage1: RESOLVED_IMAGE,
 				expectedImage2: RESOLVED_IMAGE_2
@@ -173,11 +186,11 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	it('Should update params aspect ratio', function () {
 		var rs = getModule();
 
-		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolvedState.aspectRatio);
+		expect(rs.setImage(createCorrectParams()).aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
 	});
 
 	it('Should update image src', function () {
-		var params = data.PARAMS.CORRECT,
+		var params = createCorrectParams(),
 			rs = getModule();
 
 		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolvedState.imageSrc);
@@ -190,4 +203,65 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(rs.setImage(params)).toEqual(params);
 	});
 
+	it('should use default state resources when no information about seen ad was stored for add with one image', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue(null);
+
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParams());
+
+		expect(mocks.cache.set).toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(actual.backgroundImage.src).toEqual(BIG_IMAGE);
+	});
+
+	it('should use resolved state resources when information about seen ad was stored for add with one image', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue({
+			lastSeenDate: new Date()
+		});
+
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParams());
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(actual.backgroundImage.src).toEqual(RESOLVED_IMAGE);
+	});
+
+	it('should use default state resources when no information about seen ad was stored using split template', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue(null);
+
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParamsWithTwoAssets());
+
+		expect(mocks.cache.set).toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(actual.image1.element.src).toEqual(BIG_IMAGE);
+		expect(actual.image2.element.src).toEqual(BIG_IMAGE_2);
+	});
+
+	it('should use resolved state resources when information about seen ad was stored using split template', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue({
+			lastSeenDate: new Date()
+		});
+
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParamsWithTwoAssets());
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(actual.image1.element.src).toEqual(RESOLVED_IMAGE);
+		expect(actual.image2.element.src).toEqual(RESOLVED_IMAGE_2);
+	});
 });
