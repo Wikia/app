@@ -512,7 +512,7 @@ class UserIdentityBox extends WikiaObject {
 
 		$result = true;
 
-		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis' ];
+		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis', 'bio' ];
 
 		foreach ( $data as $property => $value ) {
 			if ( in_array( $property, $fieldsToCheck ) && !empty( $value ) ) {
