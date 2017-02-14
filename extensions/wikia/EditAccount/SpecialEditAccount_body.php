@@ -615,7 +615,7 @@ class EditAccount extends SpecialPage {
 		global $wgWordpressAPIUser, $wgWordpressAPIPassword, $wgDevelEnvironment;
 
 		$baseUrl = !empty( $wgDevelEnvironment ) ?
-			'http://sandbox2.fandom.wikia.com' :
+			'http://preview.fandom.wikia.com' :
 			'http://fandom.wikia.com';
 		$url = $baseUrl . '/ajax/create_user/';
 
@@ -650,6 +650,7 @@ class EditAccount extends SpecialPage {
 
 		$wordpressId = $result['data']['wp_user_id'];
 		$this->mUser->setGlobalAttribute( 'wordpressId', $wordpressId );
+		$this->mUser->saveSettings();
 		$this->mStatusMsg = $this->msg( 'editaccount-success-fan-contributor', $this->mUser->getName() );
 
 		return true;
