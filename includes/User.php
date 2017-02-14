@@ -2611,7 +2611,7 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set a global user attribute.
+	 * Set a global user attribute. You also have to call `saveSettings` for the value to be saved in the DB.
 	 *
 	 * @param string $attribute
 	 * @param string $value
