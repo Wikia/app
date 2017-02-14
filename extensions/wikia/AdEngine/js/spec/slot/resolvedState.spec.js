@@ -2,29 +2,72 @@
 describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
-	var BIG_IMAGE = 'bigImage.png',
+	function createCorrectParams() {
+		return {
+			imageSrc: BIG_IMAGE,
+				aspectRatio: 1,
+				resolvedState: {
+				aspectRatio: 2,
+					imageSrc: RESOLVED_IMAGE
+			},
+			backgroundImage: {
+				src: DEFAULT_IMAGE
+			}
+		}
+	}
+
+	function createCorrectParamsWithTwoAssets() {
+		return {
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: RESOLVED_IMAGE
+			},
+			image2: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE_2,
+				resolvedStateSrc: RESOLVED_IMAGE_2
+			}
+		};
+	}
+
+	var AD_ID = 12345,
+		ASPECT_RATIO = 1,
+		BIG_IMAGE = 'bigImage.png',
 		BIG_IMAGE_2 = 'bigImage2.png',
+		CACHE_STANDARD_TIME = 24,
 		DEFAULT_IMAGE = 'oldImage.png',
+		RESOLVED_STATE_ASPECT_RATIO = 2,
 		RESOLVED_IMAGE = 'resolvedImage.png',
 		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
 		mocks = {
-			log: function () {},
+			log: function () {
+			},
 			qs: {
-				getVal: function () {}
+				getVal: function () {
+				}
 			},
 			QueryString: function () {
 				return mocks.qs;
 			},
 			uapContext: {
 				getUapId: function () {
-					return 12345;
+					return AD_ID;
 				}
 			},
 			cache: {
-				get: function() {
+				CACHE_STANDARD: CACHE_STANDARD_TIME,
+				get: function () {
 					return [];
 				},
-				set: function () {}
+				set: function () {
+				}
 			},
 			win: {}
 		},
@@ -190,4 +233,79 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		expect(rs.setImage(params)).toEqual(params);
 	});
 
+	function expectCacheSetMethodWasCalled() {
+		expect(mocks.cache.set).toHaveBeenCalledWith(
+			'adEngine_resolvedStateCounter_12345',
+			{
+				adId: AD_ID,
+				lastSeenDate: jasmine.any(Number)
+			},
+			CACHE_STANDARD_TIME,
+			jasmine.any(Date));
+	}
+
+	it('should use default state resources when no information about seen ad was stored using single image configuration', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		var rs = getModule();
+
+		mocks.cache.get.and.returnValue(null);
+
+		var actual = rs.setImage(createCorrectParams());
+
+		expectCacheSetMethodWasCalled();
+		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(actual.backgroundImage.src).toEqual(BIG_IMAGE);
+	});
+
+	it('should use resolved state resources when information about seen ad was stored using single image configuration', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		var rs = getModule();
+
+		mocks.cache.get.and.returnValue({
+			lastSeenDate: new Date()
+		});
+
+		var actual = rs.setImage(createCorrectParams());
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(actual.backgroundImage.src).toEqual(RESOLVED_IMAGE);
+	});
+
+	it('should use default state resources when no information about seen ad was stored using split image configuration', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		var rs = getModule();
+
+		mocks.cache.get.and.returnValue(null);
+
+		var actual = rs.setImage(createCorrectParamsWithTwoAssets());
+
+		expectCacheSetMethodWasCalled();
+		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(actual.image1.element.src).toEqual(BIG_IMAGE);
+		expect(actual.image2.element.src).toEqual(BIG_IMAGE_2);
+	});
+
+	it('should use resolved state resources when information about seen ad was stored using split image configuration', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue({
+			lastSeenDate: new Date()
+		});
+
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParamsWithTwoAssets());
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(actual.image1.element.src).toEqual(RESOLVED_IMAGE);
+		expect(actual.image2.element.src).toEqual(RESOLVED_IMAGE_2);
+	});
 });
