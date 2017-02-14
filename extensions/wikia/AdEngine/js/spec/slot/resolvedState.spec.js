@@ -206,11 +206,10 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
-		var rs = getModule();
-
 		mocks.cache.get.and.returnValue(null);
 
-		var actual = rs.setImage(createCorrectParams());
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParams());
 
 		expect(mocks.cache.set).toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
@@ -221,13 +220,12 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
-		var rs = getModule();
-
 		mocks.cache.get.and.returnValue({
 			lastSeenDate: new Date()
 		});
 
-		var actual = rs.setImage(createCorrectParams());
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParams());
 
 		expect(mocks.cache.set).not.toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
@@ -238,11 +236,10 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		spyOn(mocks.cache, 'get');
 		spyOn(mocks.cache, 'set');
 
-		var rs = getModule();
-
 		mocks.cache.get.and.returnValue(null);
 
-		var actual = rs.setImage(createCorrectParamsWithTwoAssets());
+		var rs = getModule(),
+			actual = rs.setImage(createCorrectParamsWithTwoAssets());
 
 		expect(mocks.cache.set).toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
