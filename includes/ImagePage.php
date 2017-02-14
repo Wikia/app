@@ -370,7 +370,7 @@ class ImagePage extends Article {
 			$height_orig = $this->displayImg->getHeight( $page );
 			$height = $height_orig;
 
-			$longDesc = wfMsg( 'parentheses', $this->displayImg->getLongDesc() );
+			$longDesc = wfMessage( 'parentheses', $this->displayImg->getLongDesc() )->escaped();
 
 			wfRunHooks( 'ImageOpenShowImageInlineBefore', array( &$this, &$wgOut ) );
 
@@ -515,22 +515,31 @@ class ImagePage extends Article {
 			}
 
 			if ( $showLink ) {
-				$filename = wfEscapeWikiText( $this->displayImg->getName() );
-				$linktext = $filename;
+				$linktext = htmlspecialchars( $this->displayImg->getName(), ENT_QUOTES );
 				if ( isset( $msgbig ) ) {
-					$linktext = wfEscapeWikiText( $msgbig );
+					$linktext = htmlspecialchars( $msgbig, ENT_QUOTES );
 				}
-				$medialink = "[[Media:$filename|$linktext]]";
+				$medialink = Linker::makeMediaLinkFile( $this->displayImg->getTitle(), $this->displayImg, $linktext );
 
 				if ( !$this->displayImg->isSafeFile() ) {
-					$warning = wfMsgNoTrans( 'mediawarning' );
-					$wgOut->addWikiText( <<<EOT
+					$warning = wfMessage( 'mediawarning' )->parse();
+					$wgOut->addHTML( <<<EOT
 <div class="fullMedia"><span class="dangerousLink">{$medialink}</span>$dirmark <span class="fileInfo">$longDesc</span></div>
 <div class="mediaWarning">$warning</div>
 EOT
 						);
 				} else {
-					$wgOut->addWikiText( <<<EOT
+					if ( in_array( $this->displayImg->getMimeType(), [ 'image/jpeg', 'image/png' ] ) ) {
+						$medialink .= ' ' . wfMessage( 'parentheses' )->rawParams( Html::element(
+							'a',
+							[
+								'href' => $this->displayImg->getUrlGenerator()->forceOriginal()->url(),
+								'class' => 'internal',
+							],
+							wfMessage( 'download' )->plain()
+						) )->escaped();
+					}
+					$wgOut->addHTML( <<<EOT
 <div class="fullMedia">{$medialink}{$dirmark} <span class="fileInfo">$longDesc</span>
 </div>
 EOT
