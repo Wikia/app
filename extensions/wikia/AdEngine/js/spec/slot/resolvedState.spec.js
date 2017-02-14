@@ -2,6 +2,16 @@
 describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
+	var AD_ID = 12345,
+		ASPECT_RATIO = 1,
+		BIG_IMAGE = 'bigImage.png',
+		BIG_IMAGE_2 = 'bigImage2.png',
+		CACHE_STANDARD_TIME = 24,
+		DEFAULT_IMAGE = 'oldImage.png',
+		RESOLVED_STATE_ASPECT_RATIO = 2,
+		RESOLVED_IMAGE = 'resolvedImage.png',
+		RESOLVED_IMAGE_2 = 'resolvedImage2.png';
+
 	function createCorrectParams() {
 		return {
 			imageSrc: BIG_IMAGE,
@@ -51,16 +61,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		};
 	}
 
-	var AD_ID = 12345,
-		ASPECT_RATIO = 1,
-		BIG_IMAGE = 'bigImage.png',
-		BIG_IMAGE_2 = 'bigImage2.png',
-		CACHE_STANDARD_TIME = 24,
-		DEFAULT_IMAGE = 'oldImage.png',
-		RESOLVED_STATE_ASPECT_RATIO = 2,
-		RESOLVED_IMAGE = 'resolvedImage.png',
-		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
-		mocks = {
+	var mocks = {
 			log: function () {
 			},
 			qs: {
