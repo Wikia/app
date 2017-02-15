@@ -17,7 +17,7 @@ class WallMessage {
 	protected static $wallMessageCache = [];
 
 	/**
-	 * @var $commentsIndex CommentsIndex
+	 * @var $commentsIndex CommentsIndexEntry
 	 */
 	public $commentsIndex = false;
 	/**
@@ -110,7 +110,7 @@ class WallMessage {
 		 *
 		 * @see SUS-262
 		 */
-		$commentsIndices = CommentsIndex::newFromIds( $correctIds );
+		$commentsIndices = CommentsIndex::singleton()->entriesFromIds( $correctIds );
 
 		foreach( $commentsIndices as $commentIndex ) {
 			$wallMessages[ $commentIndex->getCommentId() ]->commentsIndex = $commentIndex;
@@ -129,123 +129,6 @@ class WallMessage {
 
 		wfProfileOut( __METHOD__ );
 		return array_values( $wallMessages );
-	}
-
-	static public function addMessageWall( $userPageTitle ) {
-		wfProfileIn( __METHOD__ );
-		$botUser = User::newFromName( 'WikiaBot' );
-		/** @var Article $article */
-		$article = new Article( $userPageTitle );
-		$status = $article->getPage()
-			->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
-		$title = ( $status->isOK() ) ? $article->getTitle() : false;
-		wfProfileOut( __METHOD__ );
-		return $title;
-	}
-
-	/**
-	 * @static
-	 * @param $body
-	 * @param $page
-	 * @param $user
-	 * @param string $metaTitle
-	 * @param bool|WallMessage $parent
-	 * @param array $relatedTopics
-	 * @param bool $notify
-	 * @param bool $notifyEveryone
-	 * @return WallMessage|Bool
-	 */
-	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = [ ], $notify = true, $notifyEveryone = false ) {
-		wfProfileIn( __METHOD__ );
-		if ( $page instanceof Title ) {
-			$userPageTitle = $page;
-		} else {
-			$userPageTitle = Title::newFromText( $page, NS_USER_WALL );
-		}
-
-		// if message wall was just created, we should later use MASTER db when creating title object
-		$useMasterDB = false;
-		// create wall page by bot if not exist
-		if ( $userPageTitle instanceof Title && !$userPageTitle->exists() ) {
-			$userPageTitle = self::addMessageWall( $userPageTitle );
-			$useMasterDB = true;
-		}
-
-		if ( empty( $userPageTitle ) ) {
-			Wikia::log( __METHOD__, '', '$userPageTitle not an instance of Title' );
-			Wikia::logBacktrace( __METHOD__ );
-
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		if ( $parent === false ) {
-			$metaData = [ 'title' => $metaTitle ];
-			if ( $notifyEveryone ) {
-				$metaData[ 'notify_everyone' ] = time();
-			}
-
-			if ( !empty( $relatedTopics ) ) {
-				$metaData[ 'related_topics' ] = implode( '|', $relatedTopics );
-			}
-
-			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, false, $metaData );
-		} else {
-			if ( !$parent->canReply() ) {
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-
-			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, $parent->getId(), null );
-		}
-
-		if ( $acStatus === false ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$ac = ArticleComment::newFromId( $acStatus[ 1 ]->getId() );
-		if ( empty( $ac ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-		// after successful posting invalidate Wall cache
-		/**
-		 * @var $class WallMessage
-		 */
-		$class = new WallMessage( $ac->getTitle(), $ac );
-
-		if ( $parent === false ) {// $db = DB_SLAVE
-			$class->storeRelatedTopicsInDB( $relatedTopics );
-			$class->setOrderId( 1 );
-			$class->getWall()->invalidateCache();
-		} else {
-			$count = $parent->getOrderId( $userMaster = true );
-			if ( is_numeric( $count ) ) {
-				$count++;
-				$parent->setOrderId( $count );
-				$class->setOrderId( $count );
-			}
-			// after successful posting invalidate Thread cache
-			$class->getThread()->invalidateCache();
-			$rp = new WallRelatedPages();
-			$rp->setLastUpdate( $parent->getId() );
-		}
-		// Build data for sweet url ? id#number_of_comment
-		// notify
-		if ( $notify ) {
-			$class->sendNotificationAboutLastRev( $useMasterDB );
-		}
-
-		if ( $parent === false && $notifyEveryone ) {
-			$class->notifyEveryone();
-		}
-
-		$class->addWatch( $user );
-
-		wfRunHooks( 'AfterBuildNewMessageAndPost', [ &$class ] );
-		wfProfileOut( __METHOD__ );
-		return $class;
 	}
 
 	static public function newFromTitle( Title $title ) {
@@ -271,11 +154,11 @@ class WallMessage {
 	}
 
 	/**
-	 * @return CommentsIndex
+	 * @return CommentsIndexEntry
 	 */
-	public function getCommentsIndex() {
+		public function getCommentsIndexEntry() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
+			$this->commentsIndex = CommentsIndex::singleton()->entryFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -294,13 +177,6 @@ class WallMessage {
 		}
 
 		$out = $this->getPropVal( WPP_WALL_COUNT );
-		wfProfileOut( __METHOD__ );
-		return $out;
-	}
-
-	public function addNewReply( $body, $user ) {
-		wfProfileIn( __METHOD__ );
-		$out = self::buildNewMessageAndPost( $body, $this->getArticleTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -691,41 +567,10 @@ class WallMessage {
 	}
 
 	/**
-	 * @param bool $useMasterDB
 	 * @return Title
 	 */
-	public function getArticleTitle( $useMasterDB = false ) {
-		$commentsIndex = $this->getCommentsIndex();
-
-		if ( empty( $commentsIndex ) ) {
-			return Title::newFromText( 'empty' );
-		}
-
-		$pageId = $commentsIndex->getParentPageId();
-
-		static $cache = [ ];
-		if ( empty( $cache[ $pageId ] ) ) {
-			if ( !$useMasterDB ) {
-				$cache[ $pageId ] = Title::newFromId( $pageId );
-				// make sure this did not happen due to master-slave delay
-				// if so, this is a bug in the code, as $master flag should be set to true
-				// we want to log this and fix it
-				if ( empty( $cache[ $pageId ] ) ) {
-					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-					if ( !empty( $cache[ $pageId ] ) ) {
-						Wikia::log( __METHOD__, false, "WALL_BUG - title does not exist in slave db yet - fix it!", true );
-					}
-				}
-			} else {
-				$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-			}
-		}
-
-		if ( empty( $cache[ $pageId ] ) ) {
-			return Title::newFromText( 'empty' );
-		}
-
-		return $cache[ $pageId ];
+	public function getArticleTitle() {
+		return $this->getArticleComment()->getArticleTitle();
 	}
 
 	/**
@@ -831,27 +676,9 @@ class WallMessage {
 	 * @return null|WallMessage
 	 */
 	public function getTopParentObj() {
-		wfProfileIn( __METHOD__ );
+		$parentComment = $this->getArticleComment()->getTopParentObj();
 
-		static $topObjectCache = [ ];
-
-		// TODO: some cache or pre setting of parentPageId during list fetching
-
-		$index = $this->getCommentsIndex();
-		if ( empty( $index ) ) {
-			wfProfileOut( __METHOD__ );
-			return null;
-		}
-
-		$id = $index->getParentCommentId();
-		if ( !empty( $topObjectCache[ $id ] ) ) {
-			wfProfileOut( __METHOD__ );
-			return $topObjectCache[ $id ];
-		}
-
-		wfProfileOut( __METHOD__ );
-		$topObjectCache[ $id ] = WallMessage::newFromId( $id );
-		return $topObjectCache[ $id ];
+		return $parentComment ? WallMessage::newFromArticleComment( $parentComment ) : null;
 	}
 
 	public function getTopParentId() {
@@ -859,7 +686,7 @@ class WallMessage {
 		if ( empty( $top ) ) {
 			return null;
 		}
-		return $this->getId();
+		return $top->getId();
 	}
 
 	public function isMain() {
@@ -1548,32 +1375,23 @@ class WallMessage {
 	public function setInCommentsIndex( $prop, $value, $useMaster = false ) {
 		$commentId = $this->getId();
 		if ( !empty( $commentId ) ) {
-			$commentsIndex = $this->getCommentsIndex();
-			if ( $commentsIndex instanceof CommentsIndex ) {
+			$commentsIndexEntry = $this->getCommentsIndexEntry();
+			if ( $commentsIndexEntry instanceof CommentsIndexEntry ) {
 				switch ( $prop ) {
 					case WPP_WALL_ARCHIVE:
-						$commentsIndex->updateArchived( $value );
+						$commentsIndexEntry->setArchived( $value );
 						break;
 					case WPP_WALL_ADMINDELETE:
-						$commentsIndex->updateDeleted( $value );
-						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						$commentsIndexEntry->setDeleted( $value );
 						break;
 					case WPP_WALL_REMOVE:
-						$commentsIndex->updateRemoved( $value );
-						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						$commentsIndexEntry->setRemoved( $value );
 						break;
 				}
+
+				CommentsIndex::singleton()->updateEntry( $commentsIndexEntry );
 			}
 		}
-	}
-
-	/**
-	 * @param boolean $useMaster
-	 * @param CommentsIndex $commentsIndex
-	 */
-	private function updateParentLastComment( $useMaster, CommentsIndex $commentsIndex ) {
-		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
-		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 	}
 
 	protected function markInProps( $prop ) {
@@ -1670,7 +1488,7 @@ class WallMessage {
 	/**
 	 * @return null|ArticleComment
 	 */
-	protected function getArticleComment() {
+	public function getArticleComment() {
 		if ( empty( $this->articleComment ) ) {
 			$this->articleComment = ArticleComment::newFromTitle( $this->title );
 		}

@@ -23,7 +23,8 @@ include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
-$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
@@ -42,14 +43,12 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
+$wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/builders/WallBuilderException.class.php';
+$wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
+$wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
+
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
-
-// Comments Index hooks
-
-// adding comment_index rows for articles
-$wgHooks['ArticleDoEdit'][] = 'CommentsIndex::onArticleDoEdit';
-// comments_index table
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
 
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';

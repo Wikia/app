@@ -36,10 +36,10 @@ class CommentsIndexTest extends WikiaBaseTest {
 			->method( 'selectRow' )
 			->will( $this->returnValue( $rowMock ) );
 
-		CommentsIndex::newFromId(1, 0, $dbMock);
+		CommentsIndex::entryFromId(1, 0, $dbMock);
 
 		# this call will be served from in-memory cache - hence "$this->exactly(1)" above
-		CommentsIndex::newFromId(1, 0, $dbMock);
+		CommentsIndex::entryFromId(1, 0, $dbMock);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class CommentsIndexTest extends WikiaBaseTest {
 		$dbMock->expects( $this->exactly( 0 ) )
 			->method( 'selectRow' );
 
-		CommentsIndex::newFromId(0, 0, $dbMock);
+		CommentsIndex::entryFromId(0, 0, $dbMock);
 	}
 
 	/**
@@ -81,16 +81,16 @@ class CommentsIndexTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 
 		$ci = new CommentsIndex( [ 'commentId' => 2, 'parentPageId' => 3, 'parentCommentId' => 4 ], $dbMock );
-		$ci->addToDatabase();
+		$ci->insertEntry();
 
 		//we pass the same $db connection so it's easier to compare objects
-		$ci2 = CommentsIndex::newFromId(2, 0, $dbMock);
+		$ci2 = CommentsIndex::entryFromId(2, 0, $dbMock);
 
 		// make sure the cached object has the same properties
 		$this->assertEquals($ci, $ci2);
 
 		//make sure we don't inherit the database connection form the original object
-		$ci2 = CommentsIndex::newFromId(3);
+		$ci2 = CommentsIndex::entryFromId(3);
 		$this->assertNotEquals($ci, $ci2);
 	}
 

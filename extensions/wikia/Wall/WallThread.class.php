@@ -41,7 +41,7 @@ class WallThread {
 	}
 
 	public function move( Wall $dest, $user ) {
-		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId );
+		CommentsIndex::singleton()->moveThread( $this->mThreadId, $dest->getId() );
 
 		$wallHistory = new WallHistory( $this->mCityId );
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );

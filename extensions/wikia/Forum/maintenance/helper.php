@@ -92,7 +92,7 @@ function insertIntoCommentsIndex( $parentPageId, $articleComment, $parentComment
 	$commentsIndex = new CommentsIndex( $data );
 
 	if ( !$isDryrun ) {
-		$commentsIndex->addToDatabase();
+		$commentsIndex->insertEntry();
 	}
 
 	return true;

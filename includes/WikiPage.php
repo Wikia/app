@@ -1458,7 +1458,7 @@ class WikiPage extends Page implements IDBAccessObject {
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
 
 				// wikia changes begin
-				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+				Hooks::run( 'ArticleDoEdit', [ $dbw, $this->mTitle, $revision ] );
 				// wikia changes end
 
 				if ( !$ok ) {
