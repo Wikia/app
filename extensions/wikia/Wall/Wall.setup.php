@@ -23,6 +23,8 @@ include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/CommentsIndex.class.php';
+
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
@@ -41,6 +43,13 @@ $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
+
+// Comments Index hooks
+
+// adding comment_index rows for articles
+$wgHooks['ArticleDoEdit'][] = 'CommentsIndex::onArticleDoEdit';
+// comments_index table
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
 
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
