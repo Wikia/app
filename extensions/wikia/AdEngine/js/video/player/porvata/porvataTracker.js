@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker'
-], function (playerTracker) {
+	'ext.wikia.adEngine.video.player.playerTracker',
+	'ext.wikia.adEngine.video.player.porvata.vastLogger'
+], function (playerTracker, logger) {
 	'use strict';
 	var playerName = 'porvata',
 		trackingEventsMap = {
 			'adCanPlay': 'ad_can_play',
-			'allAdsCompleted': 'completed',
+			'complete': 'completed',
 			'click': 'clicked',
 			'firstquartile': 'first_quartile',
 			'impression': 'impression',
@@ -32,9 +33,14 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {string} [params.trackingDisabled]
 	 * @param {string} eventName
 	 * @param {int} [errorCode]
+	 * @param {object} [player]
 	 */
-	function track(params, eventName, errorCode) {
-		playerTracker.track(params, playerName, eventName, errorCode);
+	function track(params, eventName, errorCode, player) {
+		var data = playerTracker.track(params, playerName, eventName, errorCode);
+
+		if (params.adProduct === 'vulcan') {
+			logger.logVast(player, params, data);
+		}
 	}
 
 	/**
@@ -52,12 +58,12 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			return;
 		}
 
-		playerTracker.track(params, playerName, 'ready');
+		track(params, 'ready');
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.addEventListener(playerEvent, function(event) {
 				var errorCode = event.getError && event.getError().getErrorCode();
-				playerTracker.track(params, playerName, trackingEventsMap[playerEvent], errorCode);
+				track(params, trackingEventsMap[playerEvent], errorCode, player);
 			});
 		});
 	}

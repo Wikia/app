@@ -6,7 +6,6 @@
 
 
 class GlobalNavigationWallNotificationsController extends WallNotificationControllerBase {
-
 	const NOTIFICATION_TITLE_LIMIT = 48;
 
 	private $wallHelper;
@@ -24,20 +23,12 @@ class GlobalNavigationWallNotificationsController extends WallNotificationContro
 
 	protected function addAssets() {}
 
-	public function updateExt( $notificationCounts ) {
+	protected function updateExt( $notificationCounts ) {
 		$this->response->setVal( 'wikiCount', count( $notificationCounts ) );
 	}
 
-	public function getTitle( $title ) {
-		return $this->getWallHelper()->shortenText( $title, self::NOTIFICATION_TITLE_LIMIT );
-
-	}
-
 	protected function areNotificationsSuppressedByExtensions() {
-		global $wgUser;
-
-		$suppressed = !$wgUser->isAllowed( 'read' );
-		return !empty( $suppressed );
+		return !$this->getContext()->getUser()->isAllowed( 'read' );
 	}
 
 	protected function setUnread( $unread ) {
@@ -47,13 +38,4 @@ class GlobalNavigationWallNotificationsController extends WallNotificationContro
 	protected function setTemplate() {
 		$this->response->getView()->setTemplate( 'GlobalNavigationWallNotificationsController', 'NotifyEveryone' );
 	}
-
-	private function getWallHelper() {
-		if ( empty( $this->wallHelper ) ) {
-			$this->wallHelper = new WallHelper();
-		}
-
-		return $this->wallHelper;
-	}
-
 }

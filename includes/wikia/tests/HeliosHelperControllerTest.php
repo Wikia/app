@@ -16,10 +16,8 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 	const METHOD_SEND_PWD_RESET_LINK_EMAIL = 'sendPasswordResetLinkEmail';
 
 	public function test_shouldFailWithInvalidSecret() {
+		$this->setExpectedException( '\ForbiddenException' );
 		$response = $this->app->sendRequest( self::WIKIA_HELIOS_HELPER_CONTROLLER, self::METHOD_SEND_PWD_RESET_LINK_EMAIL, [] );
-		$this->assertEquals( \WikiaResponse::RESPONSE_CODE_FORBIDDEN, $response->getCode() );
-		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
-		$this->assertEquals( 'invalid secret', $response->getData()[ self::MESSAGE ] );
 	}
 
 	public function test_shouldFailInvalidToken() {
@@ -66,6 +64,7 @@ class HeliosHelperControllerTest extends WikiaBaseTest {
 		$this->assertFalse( $response->getData()[ self::SUCCESS ] );
 		$this->assertEquals( HelperController::ERR_INVALID_EMAIL, $response->getData()[ self::MESSAGE ] );
 	}
+
 	public function test_shouldFakeSendEmail() {
 		global $wgTheSchwartzSecretToken;
 		$appResponse = new WikiaResponse( 'json' );

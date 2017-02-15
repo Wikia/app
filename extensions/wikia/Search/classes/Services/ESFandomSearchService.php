@@ -30,7 +30,7 @@ class ESFandomSearchService extends AbstractSearchService {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
 		return ( new ConsulUrlProvider( $wgConsulUrl,
-			$wgConsulServiceTag ) )->getUrl( 'fandom-search' );
+			$wgConsulServiceTag ) )->getUrl( 'fandom-search-service' );
 	}
 
 	protected function prepareQuery( string $query ) {

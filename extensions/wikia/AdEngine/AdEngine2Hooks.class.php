@@ -38,6 +38,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverDelayCountries';
@@ -71,9 +72,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverVelesBidderCountries';
 		$vars[] = 'wgAdDriverYavliCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
+		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
 		 * Disaster Recovery

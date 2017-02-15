@@ -229,18 +229,29 @@ ve.ui.WikiaUploadWidget.prototype.getUploadButton = function () {
 
 ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
 	var loginButtonConfig = {
-		$: this.$,
-		label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
-		flags: ['primary']
-	};
+			$: this.$,
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
+			flags: ['primary']
+		},
+		registerButtonConfig = {
+			$: this.$,
+			classes: [ 've-ui-wikiaRegisterButton' ],
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-register-button' ),
+			flags: ['primary']
+		};
 
 	this.logInButton = new OO.ui.ButtonWidget( loginButtonConfig );
+	this.registerButton = new OO.ui.ButtonWidget( registerButtonConfig );
 
 	this.$logInLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' ) );
 
 	this.logInButton.on( 'click', function () {
-		this.emit( 'logInClick' );
+		this.emit( 'logInButtonClicked' );
+	}.bind( this ) );
+
+	this.registerButton.on( 'click', function () {
+		this.emit( 'registerButtonClicked' );
 	}.bind( this ) );
 
 	this.$uploadLabel.hide();
@@ -248,8 +259,7 @@ ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
 
 	this.$element
 		.addClass( 've-ui-wikiaUploadButtonWidgetLogIn' )
-		.append( this.$logInLabel )
-		.append( this.logInButton.$element );
+		.append( this.$logInLabel, this.logInButton.$element, this.registerButton.$element );
 };
 
 ve.ui.WikiaUploadWidget.prototype.onLogInSuccess = function ( keepUploadLabelHidden ) {
@@ -258,6 +268,7 @@ ve.ui.WikiaUploadWidget.prototype.onLogInSuccess = function ( keepUploadLabelHid
 
 	this.$logInLabel.remove();
 	this.logInButton.$element.remove();
+	this.registerButton.$element.remove();
 
 	// There is a CSS rule that hides the label when this widget is used in the WikiaMediaQueryWidget
 	// We don't want to show it in this case

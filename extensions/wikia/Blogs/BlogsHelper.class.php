@@ -147,4 +147,28 @@ class BlogsHelper {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	/**
+	 * SUS-260: Prevent moving pages into User blog comment namespace, or moving comments out of this namespace
+	 * @param Title $sourceTitle
+	 * @param Title $targetTitle
+	 * @param User $user
+	 * @param null|array $err
+	 * @param string $reason
+	 * @return bool false if we're trying to move out of or into blog comment namespace, true otherwise
+	 */
+	public static function onAbortMove( Title $sourceTitle, Title $targetTitle, User $user, &$err, string $reason ): bool {
+		$blogsNS = [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ];
+		if ( $sourceTitle->inNamespaces( $blogsNS ) && !$targetTitle->inNamespace( $sourceTitle->getNamespace() ) ) {
+			$err = wfMessage( 'immobile-source-namespace', $sourceTitle->getNsText() )->escaped();
+			return false;
+		}
+
+		if ( $targetTitle->inNamespace( NS_BLOG_ARTICLE_TALK ) && !$sourceTitle->inNamespace( $targetTitle->getNamespace() ) ) {
+			$err = wfMessage( 'immobile-target-namespace', $targetTitle->getNsText() )->escaped();
+			return false;
+		}
+
+		return true;
+	}
 }
