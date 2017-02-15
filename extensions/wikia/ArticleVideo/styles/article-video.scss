@@ -2,6 +2,24 @@ $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
 
+$spinner-color: #ccc;
+$spinnerSize: 48;
+
+@keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		stroke-dashoffset: (0.66 * $spinnerSize);
+	}
+	50% {
+		-webkit-transform: rotate(720deg);
+		stroke-dashoffset: (3.14 * $spinnerSize);
+	}
+	100% {
+		-webkit-transform: rotate(1080deg);
+		stroke-dashoffset: (0.66 * $spinnerSize);
+	}
+}
+
 .article-video {
 	background-position: center;
 	background-size: cover;
@@ -11,7 +29,9 @@ $video-collapse-animation-speed: 0.4s;
 	width: 100%;
 
 	.video-details {
-		display: none;
+		* {
+			opacity: 0.6;
+		}
 	}
 
 	.video-thumbnail {
@@ -87,8 +107,16 @@ $video-collapse-animation-speed: 0.4s;
 	&.ready-to-play {
 		cursor: pointer;
 
-		.video-details {
-			display: block;
+		.video-container {
+			.video-details {
+				* {
+					opacity: 1;
+				}
+			}
+		}
+
+		.spinner {
+			display: none;
 		}
 	}
 
@@ -132,6 +160,10 @@ $video-collapse-animation-speed: 0.4s;
 			background: #000;
 			display: flex;
 
+			* {
+				opacity: 0.7;
+			}
+
 			.video-details-left {
 				flex: 1;
 				margin-left: 10px;
@@ -161,6 +193,9 @@ $video-collapse-animation-speed: 0.4s;
 			transition: height $video-collapse-animation-speed;
 		}
 
+		.spinner {
+			top: $video-collapsed-height / 2;
+		}
 	}
 
 	&.animating {
@@ -169,6 +204,24 @@ $video-collapse-animation-speed: 0.4s;
 		}
 	}
 
+	.spinner {
+		width: $spinnerSize + px;
+		height: $spinnerSize + px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: (-$spinnerSize/2 + px) 0 0 (-$spinnerSize/2 + px);
+
+		circle {
+			animation: spinner 2s linear infinite;
+			fill: transparent;
+			stroke: $spinner-color;
+			stroke-width: 4;
+			stroke-linecap: round;
+			stroke-dasharray: (3.14 * $spinnerSize);
+			transform-origin: (0.5px * $spinnerSize) (0.5px * $spinnerSize) 0;
+		}
+	}
 }
 
 .ooyala-article-video {
@@ -185,3 +238,5 @@ $video-collapse-animation-speed: 0.4s;
 		z-index: 10000 !important;
 	}
 }
+
+
