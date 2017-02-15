@@ -120,6 +120,10 @@ $spinnerSize: 48;
 		}
 	}
 
+	&.playing.ready-to-play {
+		cursor: default;
+	}
+
 	&.collapsed-ready {
 		.video-container {
 			left: auto;
@@ -134,7 +138,7 @@ $spinnerSize: 48;
 
 	&.collapsed {
 		.video-container {
-			bottom: 40px !important;
+			bottom: 45px !important;
 			left: auto;
 			position: fixed;
 			right: 20px !important;
@@ -236,6 +240,10 @@ $spinnerSize: 48;
 		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
 		// and it doesn't remove this style when user leaves this mode
 		z-index: 10000 !important;
+	}
+
+	.oo_button, .oo_playhead, .oo_replay {
+		cursor: pointer;
 	}
 }
 

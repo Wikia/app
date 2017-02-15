@@ -77,8 +77,25 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			}
 		}
 
+		function isVideoPlaying() {
+			if(ooyalaVideoController && ooyalaVideoController.player) {
+				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
+			}
+		}
+
+		function isVideoInFullScreenMode() {
+			if(ooyalaVideoController && ooyalaVideoController.player) {
+				return ooyalaVideoController.player.getFullscreen();
+			}
+		}
+
 		function toggleCollapse() {
-			if (!collapsingDisabled || ooyalaVideoController.player.getState() === OO.STATE.PLAYING || videoCollapsed) {
+			// That's for Safari because it triggers scroll event (it scrolls to the top)
+			// when video is switched to full screen mode.
+			if (isVideoInFullScreenMode()) {
+				return;
+			}
+			if (!collapsingDisabled || isVideoPlaying() || videoCollapsed) {
 				var scrollTop = $(window).scrollTop(),
 					videoHeight = $video.outerHeight(),
 					videoOffset = $video.offset(),
@@ -116,6 +133,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		function showAndPlayVideo() {
 			$ooyalaVideo.show();
+			$video.addClass('playing');
 			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
 			ooyalaVideoController.player.play();
 		}
