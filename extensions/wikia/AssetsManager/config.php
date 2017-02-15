@@ -337,7 +337,8 @@ $config['adengine2_porvata_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js'
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/vastLogger.js'
 	],
 ];
 

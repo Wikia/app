@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_network': emptyValue.int,
 				'vulcan_advertiser': emptyValue.int,
 				'vulcan_price': emptyValue.price,
-				'browser': [browserDetect.getOS(), browserDetect.getBrowser()].join(' ')
+				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' ')
 			},
 			vulcanResponse;
 
@@ -83,6 +83,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 		log(['track', data], log.levels.debug, logGroup);
 		adTracker.trackDW(data, 'adengplayerinfo');
+
+		return data;
 	}
 
 	return {
