@@ -368,7 +368,6 @@ class UserIdentityBox extends WikiaObject {
 			$this->user->setGlobalFlag( self::USER_EVER_EDITED_MASTHEAD, true );
 
 			$this->user->saveSettings();
-			$this->saveMemcUserIdentityData( $data );
 
 			wfProfileOut( __METHOD__ );
 			return true;
