@@ -45,7 +45,7 @@ define('wikia.onScroll', ['jquery', 'wikia.window'], function ($, window) {
 	function init() {
 		window.addEventListener(
 			'scroll',
-			$.debounce(debounceRate, true, trigger)
+			$.throttle(debounceRate, trigger)
 		);
 	}
 

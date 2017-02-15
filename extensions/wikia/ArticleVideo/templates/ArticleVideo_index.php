@@ -3,16 +3,18 @@
 	<div class="video-container">
 		<div class="video-placeholder">
 			<img class="video-thumbnail" src="<?= $thumbnailUrl; ?>">
+			<!-- TODO: replace with DS tiny icon -->
 			<img src="<?= $closeIconUrl; ?>" class="close">
 			<div class="video-details">
 				<div class="video-details-left">
-					<div class="video-time"><?= wfMessage( 'articlevideo-watch',
-							$videoDetails['time'] ); ?></div>
-					<div class="video-title"><?= $videoDetails['title']; ?></div>
+					<div class="video-time"><?= htmlspecialchars( wfMessage( 'articlevideo-watch',
+							$videoDetails['time'] ) ); ?></div>
+					<div
+						class="video-title"><?= htmlspecialchars( $videoDetails['title'] ); ?></div>
 				</div>
 				<img src="<?= $videoPlayButtonUrl; ?>" class="video-play-button">
 			</div>
 		</div>
-		<div id="ooyala-article-video"></div>
+		<div id="ooyala-article-video" class="ooyala-article-video"></div>
 	</div>
 </div>

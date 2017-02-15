@@ -3191,9 +3191,6 @@ $config[ 'rwe_page_header_js' ] = [
 	]
 ];
 
-
-
-
 $config[ 'article_video_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

@@ -1,3 +1,7 @@
+/*
+ * If we want to continue using ooyala player for "premium videos"
+ * we should merge this with ooyala handler (Ooyala.js from VideoHandlers dir)
+ */
 define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, window, loader) {
 
 	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, onCreate) {

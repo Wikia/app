@@ -275,8 +275,6 @@ class BodyController extends WikiaController {
 
 
 	public function executeIndex() {
-		global $wgCityId, $wgVideoMVPArticles, $wgEnableArticleVideo;
-
 		// set up global vars
 		if ( is_array( $this->wg->MaximizeArticleAreaArticleIds )
 			&& in_array( $this->wg->Title->getArticleID(), $this->wg->MaximizeArticleAreaArticleIds )
@@ -459,7 +457,7 @@ class BodyController extends WikiaController {
 
 		$articleId = $this->wg->Title->getArticleID();
 		$enableArticleVideo =
-			$wgEnableArticleVideo && isset( $wgVideoMVPArticles[$wgCityId][$articleId] );
+			$this->wg->enableArticleVideo && isset( $this->wg->videoMVPArticles[$this->wg->cityId][$articleId] );
 		$this->setVal( 'enableArticleVideo', $enableArticleVideo );
 	}
 }

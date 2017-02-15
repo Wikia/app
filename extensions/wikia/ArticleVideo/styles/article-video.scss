@@ -155,7 +155,7 @@ $video-collapse-animation-speed: 0.4s;
 			}
 		}
 
-		#ooyala-article-video {
+		.ooyala-article-video {
 			bottom: auto;
 			height: $video-collapsed-height !important;
 			transition: height $video-collapse-animation-speed;
@@ -171,7 +171,7 @@ $video-collapse-animation-speed: 0.4s;
 
 }
 
-#ooyala-article-video {
+.ooyala-article-video {
 	bottom: 0;
 	left: 0;
 	position: absolute;
