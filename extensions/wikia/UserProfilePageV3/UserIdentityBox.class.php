@@ -366,8 +366,8 @@ class UserIdentityBox extends WikiaObject {
 
 		if ( true === $changed ) {
 			$this->user->setGlobalFlag( self::USER_EVER_EDITED_MASTHEAD, true );
-
 			$this->user->saveSettings();
+			$this->clearMemcUserIdentityData();
 
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -420,7 +420,7 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData( $data ) {
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis' ) as $property ) {
+		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis', 'bio' ) as $property ) {
 			if ( is_object( $data ) && isset( $data->$property ) ) {
 				$memcData[$property] = $data->$property;
 			}
@@ -464,6 +464,10 @@ class UserIdentityBox extends WikiaObject {
 		$this->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
 
 		return $memcData;
+	}
+
+	private function clearMemcUserIdentityData() {
+		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 
 	/**
