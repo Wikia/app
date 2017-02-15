@@ -516,10 +516,11 @@ class ImagePage extends Article {
 
 			if ( $showLink ) {
 				$linktext = htmlspecialchars( $this->displayImg->getName(), ENT_QUOTES );
+				$imgTitle = $this->displayImg->getTitle();
 				if ( isset( $msgbig ) ) {
 					$linktext = htmlspecialchars( $msgbig, ENT_QUOTES );
 				}
-				$medialink = Linker::makeMediaLinkFile( $this->displayImg->getTitle(), $this->displayImg, $linktext );
+				$medialink = Linker::makeMediaLinkFile( $imgTitle, $this->displayImg, $linktext );
 
 				if ( !$this->displayImg->isSafeFile() ) {
 					$warning = wfMessage( 'mediawarning' )->parse();
@@ -535,6 +536,7 @@ EOT
 							[
 								'href' => $this->displayImg->getUrlGenerator()->forceOriginal()->url(),
 								'class' => 'internal',
+								'download' => $imgTitle->getDBkey(),
 							],
 							wfMessage( 'download' )->plain()
 						) )->escaped();
