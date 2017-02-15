@@ -7,15 +7,15 @@ $spinnerSize: 48;
 
 @keyframes spinner {
 	0% {
-		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
 		stroke-dashoffset: (0.66 * $spinnerSize);
 	}
 	50% {
-		-webkit-transform: rotate(720deg);
+		transform: rotate(720deg);
 		stroke-dashoffset: (3.14 * $spinnerSize);
 	}
 	100% {
-		-webkit-transform: rotate(1080deg);
+		transform: rotate(1080deg);
 		stroke-dashoffset: (0.66 * $spinnerSize);
 	}
 }
@@ -24,7 +24,7 @@ $spinnerSize: 48;
 	background-position: center;
 	background-size: cover;
 	margin-bottom: 11px;
-	padding-top: 56.25%;
+	padding-top: 56.25%; // we want to have 16:9 ratio div size
 	position: relative;
 	width: 100%;
 

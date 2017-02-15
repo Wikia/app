@@ -8,7 +8,26 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
-			collapsingDisabled = false;
+			collapsingDisabled = false,
+			transitionEndEventName = getTransitionEndEventName();
+
+		function getTransitionEndEventName() {
+			var el = document.createElement('div'),
+				transitions = {
+					'transition': 'transitionend',
+					'OTransition': 'oTransitionEnd',
+					'MozTransition': 'transitionend',
+					'WebkitTransition': 'webkitTransitionEnd'
+				};
+
+			for (var t in transitions) {
+				if (el.style[t] !== undefined) {
+					return transitions[t];
+				}
+			}
+
+			return null;
+		}
 
 		function initVideo(onCreate) {
 			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
@@ -48,7 +67,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
 			if (waitForTransition) {
-				$videoContainer.on('transitionend', function () {
+				$videoContainer.on(transitionEndEventName, function () {
 					ooyalaVideoController.sizeChanged();
 					ooyalaVideoController.showControls();
 				});
@@ -97,6 +116,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 
 		function showAndPlayVideo() {
 			$ooyalaVideo.show();
+			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
 			ooyalaVideoController.player.play();
 		}
 
