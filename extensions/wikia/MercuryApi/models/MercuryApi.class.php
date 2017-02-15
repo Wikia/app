@@ -119,7 +119,6 @@ class MercuryApi {
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
-			'enableGlobalNav2016' => true,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),

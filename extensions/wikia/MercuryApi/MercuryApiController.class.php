@@ -61,10 +61,7 @@ class MercuryApiController extends WikiaController {
 			$localNavigation = $navData[ 'navigation' ][ 'wiki' ];
 		}
 
-		return [
-			'localNav' => $localNavigation,
-			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
-		];
+		return  $localNavigation;
 	}
 
 	/**
@@ -147,7 +144,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables[ 'navigation2016' ] = $navigation;
+		$wikiVariables[ 'localNav' ] = $navigation;
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 

@@ -3012,8 +3012,7 @@ $config['design_system_user_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss'
+		'//resources/wikia/libraries/headroom/headroom.scss'
 	],
 ];
 
