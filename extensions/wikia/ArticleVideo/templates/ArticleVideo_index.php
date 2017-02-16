@@ -12,8 +12,7 @@
 				<div class="video-details-left">
 					<div class="video-time"><?= htmlspecialchars( wfMessage( 'articlevideo-watch',
 							$videoDetails['time'] ) ); ?></div>
-					<div
-						class="video-title"><?= htmlspecialchars( $videoDetails['title'] ); ?></div>
+					<div class="video-title"><?= htmlspecialchars( $videoDetails['title'] ); ?></div>
 				</div>
 				<img src="<?= $videoPlayButtonUrl; ?>" class="video-play-button">
 			</div>
