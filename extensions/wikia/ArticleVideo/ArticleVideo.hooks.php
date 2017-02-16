@@ -31,7 +31,8 @@ class ArticleVideoHooks {
 		$articleId = $wg->Title->getArticleID();
 
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
+			$text .= '<script>define.amd.jQuery = false;</script>' .
+			         Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
 		}
 
 		return true;
