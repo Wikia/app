@@ -2,10 +2,9 @@
  * If we want to continue using ooyala player for "premium videos"
  * we should merge this with ooyala handler (Ooyala.js from VideoHandlers dir)
  */
-define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, window, loader) {
+define('ooyalaVideo', ['jquery', 'wikia.window'], function ($, window) {
 
-	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, onCreate) {
-		console.log('ooyala constructor');
+	function OoyalaVideo(elementId, ooyalaVideoId, onCreate) {
 		var self = this,
 			ooyalaPlayerOptions = {
 				autoplay: false,
@@ -14,19 +13,11 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, w
 				onCreate: onCreate
 			};
 
-		console.log('ooyala js loaded');
 		window.OO.ready(function () {
-			console.log('ooyala ready');
 			self.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
 			self.$controls = $('#' + elementId + ' .oo_controls');
 		});
 
-		// loader({
-		// 	type: loader.JS,
-		// 	resources: ooyalaJsFile
-		// }).done(function () {
-		//
-		// });
 	}
 
 	OoyalaVideo.prototype.sizeChanged = function () {

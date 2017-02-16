@@ -16,13 +16,22 @@ class ArticleVideoHooks {
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
-		$jsFile = OoyalaVideoHandler::getOoyalaScriptUrl();
 
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
 			$vars['wgArticleVideoData'] = [
 				'videoId' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoId'],
-				'jsUrl' => $jsFile,
 			];
+		}
+
+		return true;
+	}
+
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		$wg = F::app()->wg;
+		$articleId = $wg->Title->getArticleID();
+
+		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
+			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
 		}
 
 		return true;

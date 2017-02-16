@@ -30,10 +30,9 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 		}
 
 		function initVideo(onCreate) {
-			var ooyalaJsFile = window.wgArticleVideoData.jsUrl;
 			var ooyalaVideoId = window.wgArticleVideoData.videoId;
 
-			ooyalaVideoController = new OoyalaVideo(ooyalaVideoElementId, ooyalaJsFile, ooyalaVideoId, onCreate);
+			ooyalaVideoController = new OoyalaVideo(ooyalaVideoElementId, ooyalaVideoId, onCreate);
 		}
 
 		function uncollapseVideo() {
@@ -78,13 +77,13 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 		}
 
 		function isVideoPlaying() {
-			if(ooyalaVideoController && ooyalaVideoController.player) {
+			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
 			}
 		}
 
 		function isVideoInFullScreenMode() {
-			if(ooyalaVideoController && ooyalaVideoController.player) {
+			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.getFullscreen();
 			}
 		}
@@ -139,7 +138,6 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 		}
 
 		initVideo(function () {
-			console.log('ooyala created');
 			$video.addClass('ready-to-play');
 			$video.one('click', showAndPlayVideo);
 		});

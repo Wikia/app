@@ -22,4 +22,3 @@
 	</div>
 </div>
 
-<script src="<?= $ooyalaJs; ?>"></script>
