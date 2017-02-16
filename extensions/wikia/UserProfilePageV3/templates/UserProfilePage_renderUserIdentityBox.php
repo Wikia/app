@@ -60,7 +60,7 @@
 			<div class="contributions-details tally">
 				<? if ( !empty( $user['registration'] ) ): ?>
 					<? if ( !empty( $user['edits'] ) || ( empty( $user['edits'] ) && !empty( $user['registration'] ) ) ): ?>
-						<a href="<?= $user['contributionsURL'] ?>">
+						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
 							<em><?= $user['edits'] ?></em>
 							<span>
 								<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
@@ -68,7 +68,7 @@
 						</a>
 					<? else: ?>
 						<?php if ( $user['edits'] >= 0 ): ?>
-							<a href="<?= $user['contributionsURL'] ?>">
+							<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
 								<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
 							</a>
 						<?php else: ?>
@@ -77,7 +77,7 @@
 					<?php endif; ?>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
-						<a href="<?= $user['contributionsURL'] ?>">
+						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
 							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
 						</a>
 					<?php else: ?>
