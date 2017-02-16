@@ -63,7 +63,7 @@ class WallMessage {
 
 		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
-		if ( $title instanceof Title && $title->exists() ) {
+		if ( $title instanceof Title && $title->exists() && self::isWallMessage( $title ) ) {
 			wfProfileOut( __METHOD__ );
 			return self::$wallMessageCache[$id] = WallMessage::newFromTitle( $title );
 		}
@@ -98,7 +98,7 @@ class WallMessage {
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
-			if ( $title->exists() ) {
+			if ( $title->exists() && self::isWallMessage( $title ) ) {
 				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->getArticleID();
 			}
@@ -129,6 +129,10 @@ class WallMessage {
 
 		wfProfileOut( __METHOD__ );
 		return array_values( $wallMessages );
+	}
+
+	static private function isWallMessage( $title ) {
+		return in_array( $title->getNamespace(), [ NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ] );
 	}
 
 	static public function addMessageWall( $userPageTitle ) {
