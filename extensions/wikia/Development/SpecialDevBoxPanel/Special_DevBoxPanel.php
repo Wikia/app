@@ -239,9 +239,10 @@ function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
 }
 
 function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
-	global $wgDevelEnvironment;
+	global $wgDevelEnvironment, $wgWikiaDatacenter;
 
 	$vars['wgDevelEnvironment'] = $wgDevelEnvironment;
+	$vars['wgWikiaDatacenter'] = $wgWikiaDatacenter;
 
 	return true;
 }
