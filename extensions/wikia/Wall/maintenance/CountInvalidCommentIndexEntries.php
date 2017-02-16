@@ -33,7 +33,7 @@ class CountInvalidCommentIndexEntries extends Maintenance {
 		$namespaces = array_unique(array_merge([1,500,501,1200,1201,2000,2001], $wgArticleCommentsNamespaces));
 
 		$db = wfGetDB( DB_SLAVE );
-		$query = "select count(*) as cnt from page, comments_index where  page_id=comment_id and  page_namespace not in (" . implode(',', $namespaces) . ") and created_at > '2016-12-06'";
+		$query = "select count(*) as cnt from page, comments_index where  page_id=comment_id and  page_namespace not in (" . implode(',', $namespaces) . ") and created_at > '2017-02-08'";
 
 		$row = $db->query($query)->fetchRow();
 		return $row['cnt'];
