@@ -631,6 +631,9 @@ class WallExternalController extends WikiaController {
 			$text = $builder->build();
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
+			$this->response->setVal( 'status', false );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
 		}
 
 		$this->response->setVal( 'isotime', wfTimestamp( TS_ISO_8601 ) );
@@ -700,6 +703,7 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		}
 

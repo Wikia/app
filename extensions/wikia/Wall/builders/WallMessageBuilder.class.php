@@ -167,7 +167,7 @@ class WallMessageBuilder extends WallBuilder {
 	 * @param DatabaseBase $dbw DB connection used by MediaWiki to create article comment
 	 * @param Title $title title of newly posted article comment
 	 * @param Revision $rev newly inserted revision
-	 * @return bool true
+	 * @return bool true if comments index was successfully updated, else false to force MW to rollback the transaction
 	 */
 	public function insertNewCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
 		$parentPageId = $this->parentPageTitle->getArticleID();

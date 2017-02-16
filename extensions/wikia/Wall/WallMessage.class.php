@@ -574,7 +574,7 @@ class WallMessage {
 	public function getArticleTitle( $useMasterDB = false ) {
 		$commentsIndex = $this->getCommentsIndexEntry();
 		if ( empty( $commentsIndex ) ) {
-			$this->error( 'SUS-1680 - No comments_index entry for message', [
+			$this->error( __METHOD__ . ' - SUS-1680 - No comments_index entry for message', [
 				'messageTitle' => $this->getTitle()->getPrefixedText(),
 				'messageId' => $this->getTitle()->getArticleID()
 			] );
@@ -591,7 +591,7 @@ class WallMessage {
 				if ( empty( $cache[ $pageId ] ) ) {
 					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
 					if ( !empty( $cache[ $pageId ] ) ) {
-						$this->error( 'SUS-1680 - message article title does not exist in slave', [
+						$this->error( __METHOD__ . ' - SUS-1680 - message article title does not exist in slave', [
 							'messageTitle' => $this->getTitle()->getPrefixedText(),
 							'messageId' => $this->getTitle()->getArticleID(),
 							'parentPageTitle' => $cache[$pageId]->getPrefixedText(),
@@ -604,7 +604,7 @@ class WallMessage {
 			}
 		}
 		if ( empty( $cache[ $pageId ] ) ) {
-			$this->error( 'SUS-1680 - No title for message parent', [
+			$this->error( __METHOD__ . ' - SUS-1680 - No title for message parent', [
 				'messageTitle' => $this->getTitle()->getPrefixedText(),
 				'messageId' => $this->getTitle()->getArticleID()
 			] );
