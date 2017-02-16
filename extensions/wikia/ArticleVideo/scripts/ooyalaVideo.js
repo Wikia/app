@@ -14,17 +14,19 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, w
 				onCreate: onCreate
 			};
 
-		loader({
-			type: loader.JS,
-			resources: ooyalaJsFile
-		}).done(function () {
-			console.log('ooyala js loaded');
-			window.OO.ready(function () {
-				console.log('ooyala ready');
-				self.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
-				self.$controls = $('#' + elementId + ' .oo_controls');
-			});
+		console.log('ooyala js loaded');
+		window.OO.ready(function () {
+			console.log('ooyala ready');
+			self.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
+			self.$controls = $('#' + elementId + ' .oo_controls');
 		});
+
+		// loader({
+		// 	type: loader.JS,
+		// 	resources: ooyalaJsFile
+		// }).done(function () {
+		//
+		// });
 	}
 
 	OoyalaVideo.prototype.sizeChanged = function () {

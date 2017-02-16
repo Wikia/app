@@ -11,5 +11,7 @@ class ArticleVideoController extends WikiaController {
 		$this->setVal( 'closeIconUrl', $wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 		$this->setVal( 'videoPlayButtonUrl', $wg->extensionsPath . '/wikia/ArticleVideo/images/play-button-solid.svg' );
 		$this->setVal( 'videoDetails', $wg->videoMVPArticles[$wg->cityId][$articleId] );
+		$this->setVal( 'ooyalaJs', OoyalaVideoHandler::getOoyalaScriptUrl() );
+
 	}
 }

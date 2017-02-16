@@ -21,3 +21,5 @@
 		<div id="ooyala-article-video" class="ooyala-article-video"></div>
 	</div>
 </div>
+
+<script src="<?= $ooyalaJs; ?>"></script>
