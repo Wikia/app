@@ -5,6 +5,7 @@
 define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, window, loader) {
 
 	function OoyalaVideo(elementId, ooyalaJsFile, ooyalaVideoId, onCreate) {
+		console.log('ooyala constructor');
 		var self = this,
 			ooyalaPlayerOptions = {
 				autoplay: false,
@@ -17,7 +18,9 @@ define('ooyalaVideo', ['jquery', 'wikia.window', 'wikia.loader'], function ($, w
 			type: loader.JS,
 			resources: ooyalaJsFile
 		}).done(function () {
+			console.log('ooyala js loaded');
 			window.OO.ready(function () {
+				console.log('ooyala ready');
 				self.player = window.OO.Player.create(elementId, ooyalaVideoId, ooyalaPlayerOptions);
 				self.$controls = $('#' + elementId + ' .oo_controls');
 			});

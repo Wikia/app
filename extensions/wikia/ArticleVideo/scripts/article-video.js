@@ -139,6 +139,7 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 		}
 
 		initVideo(function () {
+			console.log('ooyala created');
 			$video.addClass('ready-to-play');
 			$video.one('click', showAndPlayVideo);
 		});
