@@ -66,6 +66,7 @@ class ChatAjax {
 			'avatarSrc' => AvatarService::getAvatarUrl( $user->getName(), self::CHAT_AVATAR_DIMENSION ),
 			'editCount' => "",
 			'since' => '',
+			'groups' => $user->getGroups(),
 
 			// Extra wg variables that we need.
 			'wgCityId' => $wgCityId,
