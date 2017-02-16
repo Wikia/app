@@ -1,97 +1,110 @@
 <?php
 
 class CommentsIndexTest extends WikiaBaseTest {
+	/** @var int $parentId */
+	private $parentId;
+	/** @var int $commentId */
+	private $commentId;
+	/** @var CommentsIndexEntry $parentEntry */
+	private $parentEntry;
+	/** @var CommentsIndexEntry $entry */
+	private $entry;
 
-	/**
-	 * Create a fake object emulating the comments_index row fetched from db
-	 */
-	private function getFakeCommentsIndexRow( $v ) {
-		$rowMock = new stdClass();
-		$rowMock->parent_page_id = $v;
-		$rowMock->comment_id = $v;
-		$rowMock->parent_comment_id = $v;
-		$rowMock->last_child_comment_id = $v;
-		$rowMock->archived = $v;
-		$rowMock->deleted = $v;
-		$rowMock->removed = $v;
-		$rowMock->locked = $v;
-		$rowMock->protected = $v;
-		$rowMock->sticky = $v;
-		$rowMock->first_rev_id = $v;
-		$rowMock->created_at = $v;
-		$rowMock->last_rev_id = $v;
-		$rowMock->last_touched = $v;
-		return $rowMock;
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../Wall.setup.php';
+		parent::setUp();
+
+		$this->parentId = 1526;
+		$this->commentId = 1686;
+		$this->parentEntry = new CommentsIndexEntry();
+		$this->parentEntry->setCommentId( $this->parentId );
+		$this->entry = new CommentsIndexEntry();
+		$this->entry
+			->setCommentId( $this->commentId )
+			->setParentCommentId( $this->parentId );
 	}
 
 	/**
-	 * Make sure the cache is not used when the CommentsIndex objects are just fetched from the database.
+	 * Verify that CommentsIndex populates its in memory cache with queried entry instances
 	 */
-	public function testCommentsIndexCacheNotUsedForDB() {
-
-		$rowMock = $this->getFakeCommentsIndexRow(1);
-
-		$dbMock = $this->getMock('stdClass', [ 'selectRow' ] );
-		$dbMock->expects($this->exactly(1))
+	public function testCommentsIndexUsesInObjectCacheForEntries() {
+		$dbMock = $this->getDatabaseMock( [ 'selectRow' ] );
+		$dbMock->expects( $this->once() )
 			->method( 'selectRow' )
-			->will( $this->returnValue( $rowMock ) );
+			->willReturn( (object)( $this->entry->getDatabaseRepresentation() ) );
 
-		CommentsIndex::entryFromId(1, 0, $dbMock);
+		$this->mockGlobalFunction( 'wfGetDB', $dbMock );
 
-		# this call will be served from in-memory cache - hence "$this->exactly(1)" above
-		CommentsIndex::entryFromId(1, 0, $dbMock);
+		$firstCall = CommentsIndex::singleton()->entryFromId( $this->commentId );
+		$secondCall = CommentsIndex::singleton()->entryFromId( $this->commentId );
+
+		$this->assertEquals( $firstCall->getCommentId(), $secondCall->getCommentId() );
 	}
 
 	/**
-	 * Make sure we don't query the db for non-existingarticles
+	 * Verify CommentsIndex updates its cached entry instances when an entry is updated
 	 */
-	public function testCommentsIndexSkipDBWhenNoArticle() {
-		$dbMock = $this->getMock( 'stdClass', [ 'selectRow' ] );
-		$dbMock->expects( $this->exactly( 0 ) )
-			->method( 'selectRow' );
-
-		CommentsIndex::entryFromId(0, 0, $dbMock);
-	}
-
-	/**
-	 * The purpose of CommentsIndex cache is avoid database queries for CommentsIndex instances that were created
-	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
-	 * make sure it's not fetched from the database
-	 */
-	public function testCommentsIndexCacheIsUsedForNewObjects() {
-
-		$rowMock = $this->getFakeCommentsIndexRow(2);
-
-		$dbMock = $this->getMock('stdClass', [ 'selectRow', 'replace', 'tableExists', 'timestamp' ] );
-
-		$dbMock->expects($this->exactly(0))
-			->method( 'selectRow' )
-			->will( $this->returnValue( $rowMock ) );
-
-		$dbMock->expects($this->any())
-			->method( 'replace' )
-			->will( $this->returnValue( true ) );
-
-		$dbMock->expects($this->any())
+	public function testInObjectCacheIsUpdatedOnUpdate() {
+		$dbMock = $this->getDatabaseMock( [ 'timestamp', 'update', 'selectField', 'selectRow' ] );
+		$dbMock->expects( $this->exactly( 2 ) )
 			->method( 'timestamp' )
-			->will( $this->returnValue( '20130102030405' ) );
+			->willReturn( 'foo' );
 
-		$dbMock->expects($this->any())
-			->method( 'tableExists' )
-			->will( $this->returnValue( true ) );
+		$dbMock->expects( $this->exactly( 2 ) )
+			->method( 'update' );
 
-		$ci = new CommentsIndex( [ 'commentId' => 2, 'parentPageId' => 3, 'parentCommentId' => 4 ], $dbMock );
-		$ci->insertEntry();
+		$dbMock->expects( $this->once() )
+			->method( 'selectField' )
+			->willReturn( 1456 );
 
-		//we pass the same $db connection so it's easier to compare objects
-		$ci2 = CommentsIndex::entryFromId(2, 0, $dbMock);
+		$dbMock->expects( $this->once() )
+			->method( 'selectRow' )
+			->willReturn( (object)$this->parentEntry->getDatabaseRepresentation() );
 
-		// make sure the cached object has the same properties
-		$this->assertEquals($ci, $ci2);
+		$this->mockGlobalFunction( 'wfGetDB', $dbMock );
 
-		//make sure we don't inherit the database connection form the original object
-		$ci2 = CommentsIndex::entryFromId(3);
-		$this->assertNotEquals($ci, $ci2);
+		// update and save entry
+		$this->entry->setDeleted( true );
+		CommentsIndex::singleton()->updateEntry( $this->entry );
+
+		$updatedEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->commentId );
+		$updatedParentFromCache = CommentsIndex::singleton()->entryFromId( $this->parentId );
+
+		$this->assertTrue( $updatedEntryFromCache->isDeleted() );
+		$this->assertEquals( 1456, $updatedParentFromCache->getLastChildCommentId() );
 	}
 
+	/**
+	 * Verify CommentsIndex updates its cached entry instances when a new entry is inserted
+	 */
+	public function testInObjectCacheIsUpdatedOnInsert() {
+		/** @var PHPUnit_Framework_MockObject_MockObject|DatabaseBase $dbMock */
+		$dbMock = $this->getDatabaseMock( [ 'timestamp', 'replace', 'update' ] );
+		$dbMock->expects( $this->exactly( 2 ) )
+			->method( 'timestamp' )
+			->willReturn( 'foo' );
+
+		$dbMock->expects( $this->once() )
+			->method( 'replace' )
+			->willReturn( true );
+
+		$dbMock->expects( $this->once() )
+			->method( 'update' );
+
+		$this->mockGlobalFunction( 'wfGetDB', $dbMock );
+
+		CommentsIndex::singleton()->insertEntry( $this->entry, $dbMock );
+
+		$commentEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->commentId );
+		$parentEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->parentId );
+
+		$this->assertEquals( $this->commentId, $commentEntryFromCache->getCommentId() );
+		$this->assertEquals( $this->commentId, $parentEntryFromCache->getLastChildCommentId() );
+	}
+
+	public function testEntriesFromIdsCanProcessEmptyInput() {
+		$result = CommentsIndex::singleton()->entriesFromIds( [] );
+
+		$this->assertEmpty( $result );
+	}
 }

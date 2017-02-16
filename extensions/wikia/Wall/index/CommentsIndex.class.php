@@ -64,6 +64,9 @@ class CommentsIndex {
 			$parentEntry->setLastChildCommentId( $lastCommentId );
 			$this->updateEntry( $parentEntry );
 		}
+
+		// store new entry in object cache
+		$this->objectCache[$entry->getCommentId()] = $entry;
 	}
 
 	/**
@@ -156,7 +159,7 @@ class CommentsIndex {
 
 		// TODO: Monitor if this actually gets executed and remove if not
 		if ( !$row ) {
-			$this->error( 'No match for comment id in slave comments_index - retry from master', [
+			$this->error( 'SUS-1680 - No match for comment id in slave comments_index - retry from master', [
 				'commentId' => $commentId
 			] );
 
@@ -164,7 +167,7 @@ class CommentsIndex {
 			$row = $dbw->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
 
 			if ( !$row ) {
-				$this->error( 'No match for comment id in master comments_index', [
+				$this->error( 'SUS-1680 - No match for comment id in master comments_index', [
 					'commentId' => $commentId
 				] );
 				return null;
