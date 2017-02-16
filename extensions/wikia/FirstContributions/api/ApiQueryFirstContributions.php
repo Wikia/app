@@ -19,6 +19,7 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 		$this->addFields( 'rc_timestamp as timestamp' );
 		$this->addFields( 'rc_user_text as author' );
 
+		// only list edit or new article creation
 		$this->addWhere( 'rc_type < ' . RC_MOVE );
 		$this->addWhere( [ 'rc_bot' => 0 ] );
 
@@ -28,6 +29,22 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 		$this->addOption( 'HAVING', 'id = (SELECT min(rev_id) from revision where rev_user = rc_user)' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
+		/*
+		 SELECT rc_this_oldid as id, rc_timestamp as timestamp, rc_user_text as author
+		 FROM recentchanges
+		 WHERE rc_type < 2 AND rc_bot = 0
+		 GROUP BY rc_user
+		 HAVING id = (SELECT min(rev_id) from revision where rev_user = rc_user)
+		 ORDER BY rc_timestamp DESC
+		 LIMIT 10;
+
+		+----+--------------------+---------------+------------+------+----------------+----------------+---------+------+-------+----------+----------------------------------------------+
+		| id | select_type        | table         | partitions | type | possible_keys  | key            | key_len | ref  | rows  | filtered | Extra                                        |
+		+----+--------------------+---------------+------------+------+----------------+----------------+---------+------+-------+----------+----------------------------------------------+
+		|  1 | PRIMARY            | recentchanges | NULL       | ALL  | NULL           | NULL           | NULL    | NULL | 14638 |     3.33 | Using where; Using temporary; Using filesort |
+		|  2 | DEPENDENT SUBQUERY | revision      | NULL       | ref  | user_timestamp | user_timestamp | 4       | func |   130 |   100.00 | Using index                                  |
+		+----+--------------------+---------------+------------+------+----------------+----------------+---------+------+-------+----------+----------------------------------------------+
+		 */
 		$res = $this->select( __METHOD__ );
 		$result = $this->getResult();
 		$count = 0;

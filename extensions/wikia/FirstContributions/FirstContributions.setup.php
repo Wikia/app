@@ -13,5 +13,3 @@ $wgExtensionMessagesFiles['FirstContributions'] = __DIR__ . '/FirstContributions
 $wgAutoloadClasses['ApiQueryFirstContributions'] = __DIR__ . '/api/ApiQueryFirstContributions.php';
 
 $wgAPIListModules['firstcontributions'] = 'ApiQueryFirstContributions';
-
-return true; // ...to the single purpose of the moment.
