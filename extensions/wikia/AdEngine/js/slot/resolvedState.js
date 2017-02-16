@@ -27,11 +27,11 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function paramsAreCorrect(params) {
-		var correctSingleImage = params.resolvedState && params.resolvedState.imageSrc,
+		var correctSingleImage = params.resolvedState && params.resolvedState.imageSrc !== '',
 			correctMultipleImages = params.image1 && params.image2 &&
 				params.image1.resolvedStateSrc !== '' && params.image2.resolvedStateSrc !== '';
 
-		return correctSingleImage !== '' || correctMultipleImages;
+		return correctSingleImage || correctMultipleImages;
 	}
 
 	function createCacheKey() {
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function findRecordInCache() {
-		return cache.get(createCacheKey(), now)
+		return cache.get(createCacheKey(), now);
 	}
 
 	function wasDefaultStateSeen() {
