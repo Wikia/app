@@ -22,13 +22,14 @@ class UrlGenerator {
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
 
-	const IMAGE_TYPE_AVATAR = "avatars";
-	const IMAGE_TYPE_IMAGES = "images";
+	const IMAGE_TYPE_AVATAR = 'avatars';
+	const IMAGE_TYPE_IMAGES = 'images';
 
-	const FORMAT_WEBP = "webp";
-	const FORMAT_JPG = "jpg";
+	const FORMAT_WEBP = 'webp';
+	const FORMAT_JPG = 'jpg';
+	const FORMAT_ORIGINAL = 'original';
 
-	const ZONE_TEMP = "temp";
+	const ZONE_TEMP = 'temp';
 
 	const REVISION_LATEST = 'latest';
 
@@ -248,7 +249,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function replaceThumbnail() {
-		$this->query['replace'] = "true";
+		$this->query['replace'] = 'true';
 		return $this;
 	}
 
@@ -262,6 +263,10 @@ class UrlGenerator {
 
 	public function jpg() {
 		return $this->format(self::FORMAT_JPG);
+	}
+
+	public function forceOriginal() {
+		return $this->format( self::FORMAT_ORIGINAL );
 	}
 
 	public function fromStash() {
