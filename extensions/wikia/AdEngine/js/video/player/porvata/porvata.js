@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
-	function inject(params) {
+	function inject(params, videoSettings) {
 		var isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
@@ -94,7 +94,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					}
 				});
 
-				if (params.autoPlay) {
+				if (videoSettings.isAutoPlay()) {
 					muteFirstPlay(video, isFirstPlay);
 				}
 

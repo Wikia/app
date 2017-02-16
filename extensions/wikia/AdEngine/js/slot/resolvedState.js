@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function findRecordInCache() {
-		return cache.get(createCacheKey(), now)
+		return cache.get(createCacheKey(), now);
 	}
 
 	function wasDefaultStateSeen() {
@@ -117,7 +117,19 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		return params;
 	}
 
+	function isResolvedState(params) {
+		var showResolvedState = paramsAreCorrect(params) && !isBlockedByURLParam(),
+			defaultStateSeen = true;
+
+		if (showResolvedState) {
+			defaultStateSeen = wasDefaultStateSeen() || isForcedByURLParam();
+		}
+
+		return showResolvedState && defaultStateSeen;
+	}
+
 	return {
+		isResolvedState: isResolvedState,
 		setImage: setImage
 	};
 });

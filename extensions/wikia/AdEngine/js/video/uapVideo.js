@@ -6,12 +6,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.player.uiTemplate',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win, mercuryListener) {
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, VideoSettings, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
@@ -34,12 +35,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
-	function loadPorvata(params, slotContainer, providerContainer) {
+	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
+		videoSettings = videoSettings || VideoSettings.create(params);
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		return porvata.inject(params)
+		return porvata.inject(params, videoSettings)
 			.then(function (video) {
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
@@ -55,7 +57,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 				if (params.splitLayoutVideoPosition) {
 					template = UITemplate.splitLayout;
-				} else if (params.autoPlay) {
+				} else if (videoSettings.isAutoPlay()) {
 					template = UITemplate.autoPlayLayout;
 				}
 
@@ -117,7 +119,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params) {
+	function loadVideoAd(params, videoSettings) {
 		var loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
 			videoContainer = providerContainer.parentNode,
@@ -141,7 +143,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		if (params.player === 'playwire') {
 			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, videoContainer, providerContainer);
+			loadedPlayer = loadPorvata(params, videoContainer, providerContainer, videoSettings);
 		}
 
 		return loadedPlayer.then(function (video) {
