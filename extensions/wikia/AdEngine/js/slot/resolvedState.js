@@ -26,14 +26,6 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		return [false, 'blocked', 'false', '0'].indexOf(getQueryParam()) > -1;
 	}
 
-	function paramsAreCorrect(params) {
-		var correctSingleImage = params.resolvedState && params.resolvedState.imageSrc !== '',
-			correctMultipleImages = params.image1 && params.image2 &&
-				params.image1.resolvedStateSrc !== '' && params.image2.resolvedStateSrc !== '';
-
-		return correctSingleImage || correctMultipleImages;
-	}
-
 	function createCacheKey() {
 		return cacheKey + '_' + uapContext.getUapId();
 	}
@@ -63,8 +55,8 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		}, cacheTtl, now);
 	}
 
-	function hasResolvedState(params) {
-		var showResolvedState = paramsAreCorrect(params) && !isBlockedByURLParam(),
+	function shouldSetResolvedState() {
+		var showResolvedState = !isBlockedByURLParam(),
 			defaultStateSeen = true;
 
 		if (showResolvedState) {
@@ -80,12 +72,10 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 
 	function setResolvedState(params) {
 		log('Resolved state is turned on', logGroup, log.levels.debug);
-		if (params.backgroundImage) {
-			params.aspectRatio = params.resolvedState.aspectRatio;
-			params.backgroundImage.src = params.resolvedState.imageSrc;
-		} else {
-			params.aspectRatio = params.resolvedStateAspectRatio;
-			params.image1.element.src = params.image1.resolvedStateSrc;
+		params.aspectRatio = params.resolvedStateAspectRatio;
+		params.image1.element.src = params.image1.resolvedStateSrc;
+
+		if (params.image2 && params.image2.resolvedStateSrc) {
 			params.image2.element.src = params.image2.resolvedStateSrc;
 		}
 
@@ -93,16 +83,13 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 	}
 
 	function templateSupportsResolvedState(params) {
-		var correctMultipleImages = params.image1 && params.image2;
-
-		return params.backgroundImage || correctMultipleImages;
+		return !!(params.image1 && params.image1.resolvedStateSrc);
 	}
 
 	function setDefaultState(params) {
-		if (params.backgroundImage) {
-			params.backgroundImage.src = params.imageSrc;
-		} else {
-			params.image1.element.src = params.image1.defaultStateSrc;
+		params.image1.element.src = params.image1.defaultStateSrc;
+
+		if (params.image2 && params.image2.defaultStateSrc) {
 			params.image2.element.src = params.image2.defaultStateSrc;
 		}
 
@@ -111,7 +98,7 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 
 	function setImage(params) {
 		if (templateSupportsResolvedState(params)) {
-			params = hasResolvedState(params) ? setResolvedState(params) : setDefaultState(params);
+			params = shouldSetResolvedState() ? setResolvedState(params) : setDefaultState(params);
 		}
 
 		return params;
