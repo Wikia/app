@@ -6,21 +6,6 @@
 
 
 class GlobalNavigationWallNotificationsController extends WallNotificationControllerBase {
-	const NOTIFICATION_TITLE_LIMIT = 48;
-
-	private $wallHelper;
-
-	public function __construct() {
-		parent::__construct();
-		$this->app = F::App();
-	}
-
-	public function Index() {
-		wfProfileIn( __METHOD__ );
-		parent::Index();
-		wfProfileOut( __METHOD__ );
-	}
-
 	protected function addAssets() {}
 
 	protected function updateExt( $notificationCounts ) {

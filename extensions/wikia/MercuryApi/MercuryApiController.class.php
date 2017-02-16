@@ -55,12 +55,12 @@ class MercuryApiController extends WikiaController {
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
 		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [ ];
+			$localNavigation = [];
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
     
-		return  $localNavigation;
+		return $localNavigation;
 	}
 
 	/**
