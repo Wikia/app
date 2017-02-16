@@ -70,7 +70,7 @@ class SiteStatus {
 
 		// Don't do anything if this has been recently updated by this script
 		if ( $status->skipCataloging() ) {
-			echo( "== Cateloged recently.  Skipping ..." );
+			echo( "== Cataloged recently.  Skipping ..." );
 			return;
 		}
 
@@ -167,7 +167,10 @@ class SiteStatus {
 			$statement
 				->UPDATE( self::TABLE_STATUS )
 				->WHERE( 'site_id' )->EQUAL_TO( $this->siteId );
-		} else {
+		} else if ( $this->siteAvailable ) {
+			// Only INSERT if the site is available.  We don't do this check with UPDATE
+			// so that if a site is ingested and then gets closed, we can update existing
+			// records to reflect the new status (rather than have it look like it was skipped)
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
