@@ -15,7 +15,10 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
  */
 class CleanUpWallNotifications extends Maintenance {
 
-	const DAYS_DEFAULT = 90; // remove notifications older than X days
+	const WALL_NOTIFICATION_TABLE = 'wall_notification';
+	const DELETE_BATCH = 200000; // takes 1-2 seconds
+
+	const DAYS_DEFAULT = 90; // remove notifications older than X days, can be customized via --days option
 
 	/**
 	 * Set script options
@@ -73,7 +76,7 @@ class CleanUpWallNotifications extends Maintenance {
 	 */
 	private function getNotificationsIdsRange() : array {
 		$row = $this->getDatawareDB()->selectRow(
-			'wall_notification',
+			self::WALL_NOTIFICATION_TABLE,
 			[
 				'MIN(id) AS min',
 				'MAX(id) AS max',
@@ -95,20 +98,49 @@ class CleanUpWallNotifications extends Maintenance {
 	 * @return int number of rows affected
 	 */
 	private function deleteNotificationsOlderThan( int $notification_id ) : int {
-		$where = [ sprintf( 'id < %d', $notification_id ) ];
-
 		if ( $this->hasOption( 'really-delete' ) ) {
-			// TODO: implement
 			$this->output( sprintf( "Deleting notifications with id < %d ... ", $notification_id ) );
-			$this->output( "done\n" );
 
 			$affected_rows = 0;
+			$dbw = $this->getDatawareDB( DB_MASTER );
+
+			// perform deletes in batches
+			do {
+				$dbw->query(
+					sprintf(
+						'DELETE FROM %s WHERE id < %d LIMIT %d',
+						self::WALL_NOTIFICATION_TABLE,
+						$notification_id,
+						self::DELETE_BATCH
+					),
+					__METHOD__
+				);
+
+				$deleted = $dbw->affectedRows();
+				$affected_rows += $deleted;
+
+				$this->output( '.' );
+
+				wfWaitForSlaves( $dbw->getDBname() );
+
+			} while( $deleted > 0 );
+
+			$this->output( "done\n" );
+
+			// optimize the table - takes ~30-40 seconds
+			$this->output( "Optimizing the table ... " );
+
+			$dbw->query( 'OPTIMIZE TABLE ' . self::WALL_NOTIFICATION_TABLE, __METHOD__ );
+
+			$this->output( "done\n" );
 		}
 		else {
 			$affected_rows = $this->getDatawareDB()->selectField(
-				'wall_notification',
+				self::WALL_NOTIFICATION_TABLE,
 				'count(*)',
-				$where,
+				[
+					sprintf( 'id < %d', $notification_id )
+				],
 				__METHOD__
 			);
 
@@ -127,7 +159,7 @@ class CleanUpWallNotifications extends Maintenance {
 	 */
 	private function getNotificationTimestamp( int $notification_id ) : string {
 		$row = $this->getDatawareDB()->selectRow(
-			'wall_notification',
+			self::WALL_NOTIFICATION_TABLE,
 			'entity_key', // e.g. 1401655_7976 (rev_id, wiki_id)
 			[
 				sprintf( 'id < %d', $notification_id ) // get notification that is the nearest one
