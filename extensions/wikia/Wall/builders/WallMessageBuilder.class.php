@@ -73,6 +73,7 @@ class WallMessageBuilder extends WallBuilder {
 	public function postNewMessage(): WallMessageBuilder {
 		/**
 		 * Hook into MW transaction to ensure data integrity is maintained in comments_index table
+		 * If handler cannot create comments_index entry, transaction will be aborted and comment will not be posted!
 		 * @see WallMessageBuilder::insertNewCommentsIndexEntry()
 		 */
 		Hooks::register( 'ArticleDoEdit', [ $this, 'insertNewCommentsIndexEntry' ] );
@@ -182,9 +183,7 @@ class WallMessageBuilder extends WallBuilder {
 				->setFirstRevId( $revId )
 				->setLastRevId( $revId );
 
-		CommentsIndex::singleton()->insertEntry( $entry, $dbw );
-
-		return true;
+		return CommentsIndex::singleton()->insertEntry( $entry, $dbw );
 	}
 
 	/**

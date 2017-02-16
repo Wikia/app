@@ -93,11 +93,14 @@ class CommentsIndex {
 	 * This has to be performed within the same transaction used by MediaWiki to save corresponding article comment to database,
 	 * to ensure data integrity.
 	 *
+	 * If this fails, transaction has to be rollbacked to prevent invalid data from being posted!
+	 *
 	 * @see https://wikia-inc.atlassian.net/browse/ZZZ-3225
 	 * @param CommentsIndexEntry $commentsIndexEntry
 	 * @param DatabaseBase $db
+	 * @return bool whether transaction succeeded
 	 */
-	public function insertEntry( CommentsIndexEntry $commentsIndexEntry, DatabaseBase $db ) {
+	public function insertEntry( CommentsIndexEntry $commentsIndexEntry, DatabaseBase $db ): bool {
 		$timestamp = $db->timestamp();
 
 		if ( empty( $commentsIndexEntry->getCreatedAt() ) ) {
@@ -124,7 +127,7 @@ class CommentsIndex {
 
 		if ( !$status ) {
 			$this->error( 'Failed to insert comments index entry', $commentsIndexEntry->getDatabaseRepresentation() );
-			return;
+			return false;
 		}
 
 		// update last_child_comment_id for parent thread
@@ -133,6 +136,8 @@ class CommentsIndex {
 			$parentEntry->setLastChildCommentId( $commentsIndexEntry->getCommentId() );
 			$this->updateEntry( $parentEntry );
 		}
+
+		return true;
 	}
 
 	/**
@@ -141,7 +146,7 @@ class CommentsIndex {
 	 * @param int $commentId
 	 * @return CommentsIndexEntry|null
 	 */
-	public function entryFromId( $commentId ) {
+	public function entryFromId( int $commentId ) {
 		if ( isset( $this->objectCache[$commentId] ) ) {
 			return $this->objectCache[$commentId];
 		}
