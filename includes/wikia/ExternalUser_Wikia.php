@@ -210,35 +210,16 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
-		// Log to check whether this is used anymore (it shouldn't be), so we can clean
-		// this up.
-		// @todo remove after the new password hashing is implemented (PLATFORM-2526)
-		Wikia\Logger\WikiaLogger::instance()->debug(
-			'NEW_HASHING ExternalUser authenticate called',
+		// All authentication should now go through Helios
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'Unsupported ExternalUser_Wikia::authenticate called',
 			[
 				'user_id' => $this->getId(),
 				'caller' => wfGetCaller(),
 				'exception' => new Exception()
 			]
 		);
-
-		$this->lastAuthenticationError = null;
-
-		$result = false;
-		$errorMessageKey = null;
-
-		try {
-			$authResult = $this->authenticationService()->authenticate( $this->getName(), $password );
-			$result = $authResult->success();
-		} catch ( ClientException $e ) {
-			$errorMessageKey = 'login-abort-service-unavailable';
-		}
-
-		if ( $errorMessageKey ) {
-			$this->lastAuthenticationError = $errorMessageKey;
-		}
-
-		return $result;
+		return false;
 	}
 
 	public function getPref( $pref ) {

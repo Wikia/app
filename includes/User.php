@@ -4076,24 +4076,18 @@ class User implements JsonSerializable {
 	 *
 	 * @param $password String Plain-text password
 	 * @param bool|string $salt Optional salt, may be random or the user ID.
-
 	 *                     If unspecified or false, will generate one automatically
 	 * @return String Password hash
 	 * @deprecated use HeliosClient
 	 */
 	public static function crypt( $password, $salt = false ) {
-		global $wgPasswordSalt;
+		global $wgPasswordSalt, $wgDevelEnvironment;
 		// Wikia change - begin
-		// @see PLATFORM-2502 comparing new passwords in PHP code.
-		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
-		WikiaLogger::instance()->debug(
-			'NEW_HASHING crypt called in PHP',
-			[
-				'wgPasswordSalt' => $wgPasswordSalt,
-				'caller' => wfGetCaller(),
-				'exception' => new Exception()
-			]
-		);
+		// Only allow on devboxes for now
+		// @todo Remove once old login code is removed (PLATFORM-2891)
+		if ( empty( $wgDevelEnvironment ) ) {
+			throw new MWException( 'Unsupported User::crypt method requested' );
+		}
 		// Wikia change - end
 		$hash = '';
 		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
