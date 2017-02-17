@@ -26,4 +26,36 @@ $wgVideoMVPArticles = [
 			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
 		],
 	],
+	'1265146' => [
+		298 => [
+			'time' => '2:39',
+			'title' => 'Top 5 Best Spells in the Wizarding World',
+			'videoId' => 'hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O',
+			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
+		],
+	],
+	'1265146' => [
+		288 => [
+			'time' => '2:39',
+			'title' => 'Top 5 Best Spells in the Wizarding World',
+			'videoId' => 'hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O',
+			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
+		],
+	],
+	'1265146' => [
+		292 => [
+			'time' => '2:39',
+			'title' => 'Top 5 Best Spells in the Wizarding World',
+			'videoId' => 'hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O',
+			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
+		],
+	],
+	'1046' => [
+		2618 => [
+			'time' => '2:39',
+			'title' => 'Top 5 Best Spells in the Wizarding World',
+			'videoId' => 'hwM2FkOTE6R_fZR9uu5jvOy9FHm3NS1O',
+			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
+		],
+	],
 ];
