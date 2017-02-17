@@ -1,6 +1,7 @@
 <?php
 
 class WallNotificationEntityTest extends WikiaBaseTest {
+	const A_FANDOM_USER = 'A Fandom user';
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../WallNotifications.setup.php';
@@ -43,10 +44,16 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			->method( 'set' )
 			->with( WallNotificationEntity::getMemcKey( $params['id'] ), $params['data'] );
 
+		$messageMock = $this->getMock( Message::class, [ 'escaped' ] );
+		$messageMock->expects( $this->any() )
+			->method( 'escaped' )
+			->willReturn( static::A_FANDOM_USER );
+
 		$this->mockClass( User::class, $userMock, 'newFromID' );
 		$this->mockGlobalVariable( 'wgMemc', $cacheMock );
 		$this->mockGlobalVariable( 'wgCityId', $params['wgCityId'] );
 		$this->mockGlobalVariable( 'wgSitename', $params['wgSitename'] );
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
 	}
 
 	private function setupWallMessageMocks( array $params ) {
@@ -337,7 +344,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'parent_page_id' => '2147',
 				'msg_author_id' => 0,
 				'msg_author_username' => '65.19.148.1',
-				'msg_author_displayname' => wfMessage( 'oasis-anon-user' )->escaped(),
+				'msg_author_displayname' => static::A_FANDOM_USER,
 				'wall_username' => 'Garthwebb',
 				'wall_userid' => '2035791',
 				'wall_displayname' => 'Garthwebb',
@@ -413,7 +420,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'parent_page_id' => '2147',
 				'msg_author_id' => '0',
 				'msg_author_username' => '65.19.148.1',
-				'msg_author_displayname' => wfMessage( 'oasis-anon-user' )->escaped(),
+				'msg_author_displayname' => static::A_FANDOM_USER,
 				'wall_username' => 'Garthwebb',
 				'wall_userid' => '2035791',
 				'wall_displayname' => 'Garthwebb',
@@ -573,7 +580,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'thread_title' => "Hey hey I'm anon",
 				'notifyeveryone' => '',
 				'reason' => '',
-				'parent_displayname' => wfMessage( 'oasis-anon-user' )->escaped(),
+				'parent_displayname' => static::A_FANDOM_USER,
 				'parent_user_id' => '0',
 				'url' => 'http://garth.garth.wikia-dev.com/wiki/Thread:2726#2',
 			],
