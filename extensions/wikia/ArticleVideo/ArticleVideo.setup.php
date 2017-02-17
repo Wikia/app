@@ -56,7 +56,7 @@ $wgVideoMVPArticles = [
 			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
 		],
 	],
-	'1046' => [
+	'10467' => [
 		2618 => [
 			'time' => '2:39',
 			'title' => 'Top 5 Best Spells in the Wizarding World',
