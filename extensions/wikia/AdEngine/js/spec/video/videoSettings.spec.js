@@ -40,8 +40,9 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 
 		var videoSettings = getSettings({
 			autoPlay: false,
-			resolvedAutoPlay: true
+			resolvedStateAutoPlay: true
 		});
+
 		expect(true).toMatch(videoSettings.isAutoPlay());
 	});
 

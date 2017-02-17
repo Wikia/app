@@ -1,21 +1,9 @@
 describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', function () {
 	'use strict';
 
-	var mocks = {
-		params: {
-			width: 100,
-			height: 100,
-			container: {
-				querySelector: function() {
-					return {
-						style: {},
-						classList: {
-							add: noop
-						}
-					};
-				}
-			}
-		},
+	var WIDTH = 100,
+		HEIGHT = 100,
+		mocks = {
 		ima: {
 			addEventListener: noop,
 			getAdsManager: noop,
@@ -36,11 +24,35 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		domElementTweaker: {
 			show: noop,
 			hide: noop
+		},
+		videoSettings: {
+			getParams: function () {
+				return {
+					width: WIDTH,
+					height: HEIGHT,
+					container: {
+						querySelector: function () {
+							return {
+								style: {},
+								classList: {
+									add: noop
+								}
+							};
+						}
+					}
+				};
+			},
+			isAutoPlay: function () {
+				return false;
+			}
 		}
 	};
 
-	function logMock() {}
-	function noop() {}
+	function logMock() {
+	}
+
+	function noop() {
+	}
 
 	logMock.levels = {};
 
@@ -50,7 +62,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 
 	it('player created with all properties', function () {
 		var module = getModule(),
-			createdPlayer = module.create(mocks.params, mocks.ima);
+			createdPlayer = module.create(mocks.videoSettings, mocks.ima);
 
 		expect(createdPlayer.container).toBeDefined();
 		expect(createdPlayer.ima).toEqual(mocks.ima);
@@ -81,7 +93,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 			setVolumeSpy = spyOn(mocks.adsManager, 'setVolume'),
 			stopSpy = spyOn(mocks.adsManager, 'stop'),
 			module = getModule(),
-			createdPlayer = module.create(mocks.params, mocks.ima);
+			createdPlayer = module.create(mocks.videoSettings, mocks.ima);
 
 		spyOn(mocks.ima, 'getAdsManager').and.returnValue(mocks.adsManager);
 
@@ -104,9 +116,9 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		expect(playSpy).toHaveBeenCalledWith(300, 500);
 		playSpy.calls.reset();
 
-		createdPlayer = module.create(mocks.params, mocks.ima);
+		createdPlayer = module.create(mocks.videoSettings, mocks.ima);
 		createdPlayer.play(undefined, 500);
-		expect(playSpy).toHaveBeenCalledWith(mocks.params.width, mocks.params.height);
+		expect(playSpy).toHaveBeenCalledWith(WIDTH, HEIGHT);
 
 		createdPlayer.reload();
 		expect(reloadSpy).toHaveBeenCalled();
