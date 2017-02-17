@@ -3,8 +3,15 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class CleanupCommentsIndex extends Maintenance {
 
+	public function __construct() {
+		parent::__construct();
+
+		$this->addOption( 'dry-run', 'only checks how many rows is affected' );
+	}
 
 	public function execute() {
+		global $wgDBname;
+
 		$db = wfGetDB( DB_MASTER );
 
 		$ids = $db->selectFieldValues(
@@ -20,11 +27,13 @@ class CleanupCommentsIndex extends Maintenance {
 			}, $ids);
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
-				"CleanupCommentsIndex: " . count( $ids ) . " rows affected",
+				"{$wgDBname}: " . count( $ids ) . " rows affected",
 				[ "rows_count" => count( $ids ) ]
 			);
 
-			$db->delete( 'comments_index',  "comment_id in (" . implode( ',', $ids ) . ")");
+			if ( !$this->hasOption('dry-run') ) {
+				$db->delete( 'comments_index', "comment_id in (" . implode( ',', $ids ) . ")" );
+			}
 		}
 	}
 }
