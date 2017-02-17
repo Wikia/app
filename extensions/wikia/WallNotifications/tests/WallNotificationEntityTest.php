@@ -12,6 +12,8 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 	 * Given a revision, verify that wall notification data is properly populated
 	 *
 	 * @see WallNotificationEntity::createFromRev()
+	 * @group Slow
+	 * @slowExecutionTime 0.01071 ms
 	 * @dataProvider loadDataFromRevDataProvider
 	 * @param array $params
 	 */
