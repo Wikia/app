@@ -39,10 +39,10 @@ class DiscussionsThreadModel {
 	 * @return array with name and id pairs for all valid requested categories
 	 */
 	public function getCategoryNames( $categoryIds ) {
-		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
+		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER, $categoryIds );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
-			WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_VERY_SHORT,
 			function() {
 				return $this->apiRequest( $this->getCategoryRequestUrl() );
 			}
