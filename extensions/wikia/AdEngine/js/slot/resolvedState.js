@@ -85,7 +85,7 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 				setResolvedState(params);
 			} else {
 				setDefaultState(params);
-				updateInformationAboutSeenDefaultStateAd(params);
+				updateInformationAboutSeenDefaultStateAd();
 			}
 		}
 	}

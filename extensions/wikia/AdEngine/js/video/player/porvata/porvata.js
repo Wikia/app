@@ -96,7 +96,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				});
 
 				if (videoSettings.isAutoPlay()) {
-					muteFirstPlay(video, isFirstPlay);
+					muteFirstPlay(video);
 				}
 
 				if (params.onReady) {

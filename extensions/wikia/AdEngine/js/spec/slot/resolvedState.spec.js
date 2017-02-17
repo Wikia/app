@@ -174,6 +174,8 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 		mocks.videoSettings.getParams.and.returnValue(params);
 
+		rs.setImage(mocks.videoSettings);
+
 		expect(params.aspectRatio).toEqual(ASPECT_RATIO);
 		expect(params.image1.element.src).toEqual(DEFAULT_IMAGE);
 	});
