@@ -1179,24 +1179,6 @@ $wgPhalanxServiceOptions = [
 ];
 
 /**
- * @name $wgWikiaHubsFileRepoDBName
- * DB name of wiki that contains images for WikiaHubs
- */
-$wgWikiaHubsFileRepoDBName = 'corp';
-
-/**
- * @name $wgWikiaHubsFileRepoPath
- * URL prefix for the wiki with hubs images
- */
-$wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
-
-/**
- * @name $wgWikiaHubsFileRepoDirectory
- * filesystem path for hubs' images
- */
-$wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
-
-/**
  * @name $wgEnableGoogleFundingChoices
  * Enables Google Funding Choices
  */
