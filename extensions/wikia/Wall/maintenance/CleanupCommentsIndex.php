@@ -5,8 +5,6 @@ class CleanupCommentsIndex extends Maintenance {
 
 
 	public function execute() {
-		global $wgDBName;
-
 		$db = wfGetDB( DB_MASTER );
 
 		$ids = $db->selectFieldValues(
@@ -22,8 +20,8 @@ class CleanupCommentsIndex extends Maintenance {
 			}, $ids);
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
-				$wgDBName . ":" . count( $ids ) . "rows affected",
-				[ "rows_count" => count( $ids ),  "dbname" => $wgDBName ]
+				"CleanupCommentsIndex: " . count( $ids ) . " rows affected",
+				[ "rows_count" => count( $ids ) ]
 			);
 
 			$db->delete( 'comments_index',  "comment_id in (" . implode( ',', $ids ) . ")");
