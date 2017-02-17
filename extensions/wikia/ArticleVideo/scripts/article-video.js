@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onScroll, OoyalaVideo) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], function (window, onScroll, tracker, OoyalaVideo) {
 	$(function () {
 		var $video = $('#article-video'),
 			$videoContainer = $video.find('.video-container'),
@@ -9,7 +9,11 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
-			transitionEndEventName = getTransitionEndEventName();
+			transitionEndEventName = getTransitionEndEventName(),
+			track = tracker.buildTrackingFunction({
+				category: 'article-video',
+				trackingMethod: 'analytics'
+			});
 
 		function getTransitionEndEventName() {
 			var el = document.createElement('div'),
@@ -86,6 +90,10 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			}
 			uncollapseVideo();
 			collapsingDisabled = true;
+			track({
+				action: tracker.ACTIONS.CLOSE,
+				label: 'featured-video-collapsed',
+			});
 		}
 
 		function updatePlayerControls(waitForTransition) {
@@ -141,6 +149,10 @@ require(['wikia.window', 'wikia.onScroll', 'ooyalaVideo'], function (window, onS
 			$video.addClass('playing');
 			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
 			ooyalaVideoController.player.play();
+			track({
+				action: tracker.ACTIONS.PLAY_VIDEO,
+				label: 'featured-video',
+			});
 		}
 
 		initVideo(function () {
