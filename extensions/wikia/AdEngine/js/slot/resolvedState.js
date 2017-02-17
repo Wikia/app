@@ -55,21 +55,6 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		}, cacheTtl, now);
 	}
 
-	function shouldSetResolvedState() {
-		var showResolvedState = !isBlockedByURLParam(),
-			defaultStateSeen = true;
-
-		if (showResolvedState) {
-			defaultStateSeen = wasDefaultStateSeen() || isForcedByURLParam();
-
-			if (!defaultStateSeen) {
-				updateInformationAboutSeenDefaultStateAd();
-			}
-		}
-
-		return showResolvedState && defaultStateSeen;
-	}
-
 	function setResolvedState(params) {
 		log('Resolved state is turned on', logGroup, log.levels.debug);
 		params.aspectRatio = params.resolvedStateAspectRatio;
@@ -78,8 +63,6 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		if (params.image2 && params.image2.resolvedStateSrc) {
 			params.image2.element.src = params.image2.resolvedStateSrc;
 		}
-
-		return params;
 	}
 
 	function templateSupportsResolvedState(params) {
@@ -92,20 +75,23 @@ define('ext.wikia.adEngine.slot.resolvedState', [
 		if (params.image2 && params.image2.defaultStateSrc) {
 			params.image2.element.src = params.image2.defaultStateSrc;
 		}
-
-		return params;
 	}
 
-	function setImage(params) {
+	function setImage(videoSettings) {
+		var params = videoSettings.getParams();
+
 		if (templateSupportsResolvedState(params)) {
-			params = shouldSetResolvedState() ? setResolvedState(params) : setDefaultState(params);
+			if (videoSettings.isResolvedState()) {
+				setResolvedState(params);
+			} else {
+				setDefaultState(params);
+				updateInformationAboutSeenDefaultStateAd(params);
+			}
 		}
-
-		return params;
 	}
 
-	function isResolvedState(params) {
-		var showResolvedState = paramsAreCorrect(params) && !isBlockedByURLParam(),
+	function isResolvedState() {
+		var showResolvedState = !isBlockedByURLParam(),
 			defaultStateSeen = true;
 
 		if (showResolvedState) {

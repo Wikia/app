@@ -13,17 +13,20 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		init();
 
 		function init() {
-			state.resolvedState = resolvedState.isResolvedState(params);
+			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = isAutoPlay(params);
 		}
 
 		function isAutoPlay(params) {
 			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
 				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
-			return defaultStateAutoPlay || resolvedStateAutoPlay;
+			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
 		}
 
 		return {
+			getParams: function() {
+				return params;
+			},
 			isAutoPlay: function () {
 				return state.autoPlay;
 			},
