@@ -120,8 +120,12 @@ $spinnerSize: 48;
 		}
 	}
 
-	&.playing.ready-to-play {
+	&.played.ready-to-play {
 		cursor: default;
+
+		.video-play-button {
+			cursor: pointer;
+		}
 	}
 
 	&.collapsed-ready {

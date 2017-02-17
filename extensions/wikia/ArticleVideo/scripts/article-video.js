@@ -4,6 +4,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
+			$videoPlayBtn = $videoContainer.find('.video-play-button'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
@@ -92,7 +93,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			collapsingDisabled = true;
 			track({
 				action: tracker.ACTIONS.CLOSE,
-				label: 'featured-video-collapsed',
+				label: 'featured-video-collapsed'
 			});
 		}
 
@@ -112,6 +113,13 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		function isVideoPlaying() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
+			}
+			return false;
+		}
+
+		function isVideoPausedOrReady() {
+			if (ooyalaVideoController && ooyalaVideoController.player) {
+				return ooyalaVideoController.player.getState() === OO.STATE.PAUSED || ooyalaVideoController.player.getState() === OO.STATE.READY;
 			}
 			return false;
 		}
@@ -146,21 +154,63 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 
 		function showAndPlayVideo() {
 			$ooyalaVideo.show();
-			$video.addClass('playing');
+			$video.addClass('played');
 			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
 			ooyalaVideoController.player.play();
 			track({
 				action: tracker.ACTIONS.PLAY_VIDEO,
-				label: 'featured-video',
+				label: 'featured-video'
 			});
 		}
 
-		initVideo(function () {
+		function playPauseVideo() {
+			if (!$video.hasClass('played')) {
+				return;
+			}
+			if (isVideoPausedOrReady()) {
+				ooyalaVideoController.player.play();
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-collapsed-play'
+				});
+			} else if (isVideoPlaying()) {
+				ooyalaVideoController.player.pause();
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-collapsed-pause'
+				});
+			}
+		}
+
+		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 			$video.one('click', showAndPlayVideo);
+
+			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-play'
+				});
+			});
+
+			player.mb.subscribe(OO.EVENTS.PLAYED, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-played'
+				});
+			});
+
+			player.mb.subscribe(OO.EVENTS.PAUSED, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-paused'
+				});
+			});
 		});
 
 		$closeBtn.click(closeButtonClicked);
+
+		$videoPlayBtn.click(playPauseVideo);
 
 		onScroll.bind(toggleCollapse);
 	});
