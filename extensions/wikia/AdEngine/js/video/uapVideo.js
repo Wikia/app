@@ -9,8 +9,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
-	'wikia.window'
-], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
@@ -40,11 +41,27 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(params)
 			.then(function (video) {
-				var uiElements = params.autoPlay ? UITemplate.autoPlay : UITemplate.default;
+				if (mercuryListener) {
+					mercuryListener.onPageChange(function () {
+						video.destroy();
+					});
+				}
 
-				log(['VUAP UI elements', uiElements], log.levels.debug, logGroup);
+				return video;
+			})
+			.then(function (video) {
+				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+					template = UITemplate.defaultLayout;
 
-				videoInterface.setup(video, uiElements, {
+				if (params.splitLayoutVideoPosition) {
+					template = UITemplate.splitLayout;
+				} else if (params.autoPlay) {
+					template = UITemplate.autoPlayLayout;
+				}
+
+				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+
+				videoInterface.setup(video, template, {
 					image: providerContainer,
 					container: slotContainer,
 					aspectRatio: params.aspectRatio,
@@ -52,9 +69,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					hideWhenPlaying: params.videoPlaceholderElement || params.image
 				});
 
-				if (params.splitLayoutVideoPosition) {
+				if (splitLayoutVideoPosition) {
 					video.container.style.position = 'absolute';
-					video.container.classList.add(positionVideoPlayerClassName + params.splitLayoutVideoPosition);
+					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 
 				video.addEventListener('allAdsCompleted', function () {

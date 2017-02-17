@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
@@ -12,6 +13,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 ], function (uapContext,
 			 btfBlocker,
 			 slotTweaker,
+			 resolvedState,
 			 uapVideo,
 			 doc,
 			 log,
@@ -87,6 +89,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
+		params = resolvedState.setImage(params);
 
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {

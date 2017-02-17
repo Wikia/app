@@ -2611,13 +2611,13 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set a global user attribute.
+	 * Set a global user attribute. You also have to call `saveSettings` for the value to be saved in the DB.
 	 *
 	 * @param string $attribute
 	 * @param string $value
 	 * @see getGlobalAttribute for more documentation about attributes
 	 */
-	public function setGlobalAttribute($attribute, $value) {
+	public function setGlobalAttribute( $attribute, $value ) {
 		if ( $this->isPublicAttribute( $attribute ) ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
@@ -3880,6 +3880,12 @@ class User implements JsonSerializable {
 	 * @return String Formatted URL
 	 */
 	protected function getTokenUrl( $page, $token ) {
+		global $wgEnableNewAuthModal;
+
+		if ( $wgEnableNewAuthModal ) {
+			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+		}
+
 		// Hack to bypass localization of 'Special:'
 		$title = Title::makeTitle( NS_MAIN, "Special:$page/$token" );
 		return $title->getCanonicalURL();

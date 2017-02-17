@@ -59,6 +59,22 @@ class MercuryApiHooks {
 	}
 
 	/**
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @return bool
+	 */
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes ) {
+		$categories = $categoryInserts + $categoryDeletes;
+
+		foreach ( array_keys( $categories ) as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+			MercuryApiCategoryCacheHelper::setTouched( $categoryTitle->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
 	 * @desc Purge the contributors data to guarantee that it will be refreshed next time it is required
 	 *
 	 * @param WikiPage $wikiPage
@@ -109,9 +125,6 @@ class MercuryApiHooks {
 		$urls = [ ];
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
-		// TODO: remove this line after release of XW-2590 (XW-2625)
-		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( '_new' ) );
-
 		foreach ( $sections as $section ) {
 			$sectionLabel = $section['label'];
 
@@ -120,9 +133,6 @@ class MercuryApiHooks {
 			}
 
 			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionLabel ) );
-
-			// TODO: remove this line after release of XW-2590 (XW-2625)
-			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionLabel . '_new' ) );
 
 			// Request from browser to MediaWiki
 			$encodedTitle = self::encodeURIQueryParam( $sectionLabel );

@@ -31,6 +31,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
+				INCONTENT_BOXAD_1: {
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+					targeting: {loc: 'hivi'}
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
@@ -52,7 +56,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[300, 50], [300, 250], [320, 50]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
+					sizes: [[300, 50], [320, 50], [320, 480]]
 				}
 			}
 		},

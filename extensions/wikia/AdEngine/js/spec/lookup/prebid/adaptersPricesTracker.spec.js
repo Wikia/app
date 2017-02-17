@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker'](
 			mocks.adaptersRegistry,
+			mocks.priceGranularityHelper,
 			mocks.prebid,
 			mocks.log
 		);
@@ -30,6 +31,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				]
 			}
 		},
+		priceGranularityHelper: {
+			transformPriceFromCpm: function(cpm) {
+				return cpm;
+			}
+		},
 		prebid: {
 			get: function () {
 				return {
@@ -43,6 +49,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 		getStatusCodeValid: function() {
 			return 1;
 		},
+		getStatusCodeInvalid: function() {
+			return 2;
+		},
 		log: noop
 	};
 
@@ -51,40 +60,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 	it('isValidPrice is calculated correctly', function () {
 		[
 			{
-				pbAg: 0,
 				getStatusCode: mocks.getStatusCodeValid,
 				expected: true
 			},
 			{
-				pbAg: 0.00,
-				getStatusCode: mocks.getStatusCodeValid,
-				expected: true
-			},
-			{
-				pbAg: 5,
-				getStatusCode: mocks.getStatusCodeValid,
-				expected: true
-			},
-			{
-				pbAg: false,
-				getStatusCode: mocks.getStatusCodeValid,
-				expected: false
-			},
-			{
-				pbAg: 'foo',
-				getStatusCode: mocks.getStatusCodeValid,
-				expected: false
-			},
-			{
-				pbAg: '',
-				getStatusCode: mocks.getStatusCodeValid,
-				expected: false
-			},
-			{
-				pbAg: 5,
-				getStatusCode: function() {
-					return 2;
-				},
+				getStatusCode: mocks.getStatusCodeInvalid,
 				expected: false
 			}
 		].forEach(function (testCase) {
@@ -102,12 +82,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: 0,
+						cpm: 0,
 						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: 0,
+						cpm: 0,
 						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
@@ -123,33 +103,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: '0',
+						cpm: 0.50,
 						getStatusCode: mocks.getStatusCodeValid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: '1',
-						getStatusCode: mocks.getStatusCodeValid
-					}
-				]
-			},
-			expected: {
-				appnexus: '0.00',
-				indexExchange: '1.00'
-			},
-			message: 'when adapter returns numeric value as string - correct value is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus',
-						pbAg: 0.50,
-						getStatusCode: mocks.getStatusCodeValid
-					},
-					{
-						bidderCode: 'indexExchange',
-						pbAg: 0.01,
+						cpm: 0.01,
 						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
@@ -158,19 +117,19 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				appnexus: '0.50',
 				indexExchange: '0.01'
 			},
-			message: 'w hen adapter returns fractional value - correct value is tracked'
+			message: 'when adapter returns fractional value - correct value is tracked'
 		}, {
 			slotName: 'TOP_LEADERBOARD',
 			prebidBids: {
 				bids: [
 					{
 						bidderCode: 'appnexus',
-						pbAg: '',
-						getStatusCode: mocks.getStatusCodeValid
+						cpm: 0,
+						getStatusCode: mocks.getStatusCodeInvalid
 					},
 					{
 						bidderCode: 'indexExchange',
-						pbAg: 1,
+						cpm: 1,
 						getStatusCode: mocks.getStatusCodeValid
 					}
 				]
@@ -180,27 +139,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				indexExchange: '1.00'
 			},
 			message: 'when one of adapters doesn\'t offer - nothing is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus',
-						pbAg: 'something meaningless',
-						getStatusCode: mocks.getStatusCodeValid
-					},
-					{
-						bidderCode: 'indexExchange',
-						pbAg: 100,
-						getStatusCode: mocks.getStatusCodeValid
-					}
-				]
-			},
-			expected: {
-				appnexus: '',
-				indexExchange: '100.00'
-			},
-			message: 'when incorrect pbAg is set - nothing is tracked'
 		}, {
 			slotName: 'TOP_LEADERBOARD',
 			prebidBids: {},
@@ -221,24 +159,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', function () {
 				indexExchange: ''
 			},
 			message: 'when bids are empty - nothing is tracked'
-		}, {
-			slotName: 'TOP_LEADERBOARD',
-			prebidBids: {
-				bids: [
-					{
-						bidderCode: 'appnexus',
-						getStatusCode: mocks.getStatusCodeValid
-					}, {
-						bidderCode: 'indexExchange',
-						getStatusCode: mocks.getStatusCodeValid
-					}
-				]
-			},
-			expected: {
-				appnexus: '',
-				indexExchange: ''
-			},
-			message: 'when bids are set but pbAg is empty - nothing is tracked'
 		}].forEach(function (testCase) {
 			spyOn(mocks, 'getBidResponsesForAdUnitCode').and.returnValue(testCase.prebidBids);
 

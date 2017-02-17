@@ -83,7 +83,7 @@ class DiscussionsDataService {
 		$endpoint = $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = Http::get( $url );
+		$data = Http::get( $url, 'default', [ 'noProxy' => true ] );
 
 		return json_decode( $data, true );
 	}
@@ -108,7 +108,7 @@ class DiscussionsDataService {
 	private function getDiscussionsApiUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new ConsulUrlProvider( $wgConsulUrl,
+		return "http://" . ( new ConsulUrlProvider( $wgConsulUrl,
 			$wgConsulServiceTag ) )->getUrl( 'discussion' );
 	}
 

@@ -1,20 +1,12 @@
-<?
-	$providerLink = '<a href="' . $providerUrl . '" target="_blank">' . $provider . '</a>';
-	$providerPhrase = wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped();
-	if ( $expireDate ) {
-		$providerPhrase .= "<span class='expire-date'>$expireDate</span>";
-	}
-?>
-
 <div class="video-page-caption">
 	<div class="inner">
 		<p class="video-provider"><?= $providerPhrase ?></p>
 		<? if ( $regionalRestrictions ) : ?>
-			<p class="regional-restriction hidden" id="restricted-content-viewable" data-regional-restrictions="<?= htmlspecialchars( strtolower( $regionalRestrictions ) ) ?>">
-				<?= wfMessage('video-page-regional-restrictions-viewable')->plain() ?>
+			<p class="regional-restriction hidden" id="restricted-content-viewable" data-regional-restrictions="<?= Sanitizer::encodeAttribute( strtolower( $regionalRestrictions ) ); ?>">
+				<?= wfMessage( 'video-page-regional-restrictions-viewable' )->escaped(); ?>
 			</p>
 			<p class="regional-restriction hidden" id="restricted-content-unviewable">
-				<?=  wfMessage('video-page-regional-restrictions-unviewable')->plain() ?>
+				<?=  wfMessage( 'video-page-regional-restrictions-unviewable' )->escaped(); ?>
 			</p>
 		<? endif; ?>
 	</div>

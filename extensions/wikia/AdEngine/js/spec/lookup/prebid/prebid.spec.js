@@ -77,22 +77,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					}
 				}
 			},
-			adapters: {
-				appnexus: {
-					isEnabled: function () {
-						return true;
-					}
-				},
-				indexExchange: {
-					isEnabled: function () {
-						return true;
-					}
-				},
-				wikia: {
-					isEnabled: function () {
-						return false;
-					}
-				}
+			adaptersPricesTracker: {},
+			adaptersRegistry: {
+				setupCustomAdapters: noop
 			},
 			prebidHelper: {
 				setupAdUnits: function () {
@@ -117,6 +104,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 						}
 					];
 				}
+			},
+			prebidSettings: {
+				create: noop
 			},
 			adaptersPerformanceTracker: {
 				setupPerformanceMap: noop
@@ -149,10 +139,10 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
 			mocks.adContext,
 			mocks.adaptersPerformanceTracker,
-			mocks.adapters.appnexus,
-			mocks.adapters.indexExchange,
-			mocks.adapters.wikia,
+			mocks.adaptersPricesTracker,
+			mocks.adaptersRegistry,
 			mocks.prebidHelper,
+			mocks.prebidSettings,
 			getFactory(),
 			mocks.doc,
 			mocks.win

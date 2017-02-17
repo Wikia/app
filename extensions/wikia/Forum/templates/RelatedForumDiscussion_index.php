@@ -7,10 +7,10 @@
 		<ul class="forum-discussions">
 			<? foreach ( $messages as $message ): ?>
 				<li class="forum-thread">
-					<img class="sprite talk-two" src="<?= $wg->BlankImgUrl ?>">
+					<img class="sprite talk-two" src="<?= $blankImgUrl ?>">
 					<h4>
-						<a href="<?= $message['threadUrl'] ?>" class="forum-thread-title">
-							<?= $message['metaTitle'] ?>
+						<a href="<?= Sanitizer::encodeAttribute( $message['threadUrl'] ); ?>" class="forum-thread-title">
+							<?= htmlspecialchars( $message['metaTitle'] ); ?>
 						</a>
 					</h4>
 					<? if ( $message['totalReplies'] > 0 ): ?>
