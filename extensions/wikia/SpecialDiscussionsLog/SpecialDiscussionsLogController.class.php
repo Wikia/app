@@ -191,8 +191,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							'userUrl' => $this->getTitle()->getLocalURL(
 									[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 							),
-							'site' => $userLogRecord->site->title,
-							'siteUrl' => $userLogRecord->site->domain . '/d/u/' .
+							'site' => $userLogRecord->site['title'],
+							'siteUrl' => 'http://'.$userLogRecord->site['domain'] . '/d/u/' .
 							             $userLogRecord->user->getId(),
 							'ip' => $userLogRecord->ip,
 							'ipUrl' => $this->getTitle()->getLocalURL(
