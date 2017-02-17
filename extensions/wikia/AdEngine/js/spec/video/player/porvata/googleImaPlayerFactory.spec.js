@@ -23,9 +23,16 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 			}
 		},
 		log: noop,
-		params: {
-			container: {
-				querySelector: noop
+		videoSettings: {
+			getParams: function() {
+				return {
+					container: {
+						querySelector: noop
+					}
+				};
+			},
+			isAutoPlay: function() {
+				return false;
 			}
 		}
 	};
@@ -44,7 +51,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 		var addEventListenerSpy = spyOn(mocks.adsLoaderMock, 'addEventListener'),
 			requestAdsSpy = spyOn(mocks.adsLoaderMock, 'requestAds'),
 			module = getModule(),
-			createdPlayer = module.create(mocks.adDisplayContainer, mocks.adsLoaderMock, mocks.params);
+			createdPlayer = module.create(mocks.adDisplayContainer, mocks.adsLoaderMock, mocks.videoSettings);
 
 		expect(typeof createdPlayer.addEventListener).toBe('function');
 		expect(typeof createdPlayer.dispatchEvent).toBe('function');
