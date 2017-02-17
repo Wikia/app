@@ -17,7 +17,9 @@
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			legacyThumbnailerPath = '/images/thumb/',
-			thumbnailerBaseURLRegex = /(.*\/revision\/\w+).*/;
+			// [0-9a-f-]{36} is to match UUIDs like in
+			// https://vignette.wikia.nocookie.net/ff8b7617-46fa-4efb-ac2f-ff98edf04bcf
+			thumbnailerBaseURLRegex = new RegExp('(.*/revision/\\w+|.*/[0-9a-f-]{36}).*');
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
