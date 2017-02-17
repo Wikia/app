@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		// On mercury splitLayoutVideoPosition and videoPlaceholderElement will be empty
 		// because we always display video in the same way there.
 		if (params.splitLayoutVideoPosition && params.videoPlaceholderElement) {
-			width = params.videoPlaceholderElement.width;
+			width = params.videoPlaceholderElement.offsetWidth;
 		}
 
 		return {
@@ -147,15 +147,23 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		}
 
 		return loadedPlayer.then(function (video) {
+			function playVideo() {
+				var videoSize = getVideoSize(videoContainer, params);
+				video.play(videoSize.width, videoSize.height);
+			}
+
 			win.addEventListener('resize', throttle(function () {
-				var size = getVideoSize(videoContainer, params);
-				video.resize(size.width, size.height);
+				var videoSize = getVideoSize(videoContainer, params);
+				video.resize(videoSize.width, videoSize.height);
 			}));
 
-			params.videoTriggerElement.addEventListener('click', function () {
-				var size = getVideoSize(videoContainer, params);
-				video.play(size.width, size.height);
-			});
+			if (params.videoTriggerElement) {
+				params.videoTriggerElement.addEventListener('click', playVideo);
+			} else if (params.videoTriggers) {
+				params.videoTriggers.forEach(function (trigger) {
+					trigger.addEventListener('click', playVideo);
+				});
+			}
 
 			return video;
 		});
@@ -168,7 +176,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	 * @returns bool
 	 */
 	function isEnabled(params) {
-		return !!params.videoAspectRatio;
+		return !!params.videoAspectRatio && (params.videoTriggerElement || params.videoTriggers);
 	}
 
 	return {

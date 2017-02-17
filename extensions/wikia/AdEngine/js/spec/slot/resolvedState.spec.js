@@ -14,30 +14,30 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 	function createCorrectParams() {
 		return {
-			imageSrc: BIG_IMAGE,
 			aspectRatio: ASPECT_RATIO,
-			resolvedState: {
-				aspectRatio: RESOLVED_STATE_ASPECT_RATIO,
-				imageSrc: RESOLVED_IMAGE
-			},
-			backgroundImage: {
-				src: DEFAULT_IMAGE
+			resolvedStateAspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: RESOLVED_IMAGE
 			}
-		}
+		};
 	}
 
 	function createIncorrectParams() {
 		return {
-			aspectRatio: 1,
-			imageSrc: BIG_IMAGE,
-			resolvedState: {
-				aspectRatio: 0,
-				imageSrc: ''
-			},
-			backgroundImage: {
-				src: DEFAULT_IMAGE
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: 0,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: ''
 			}
-		}
+		};
 	}
 
 	function createCorrectParamsWithTwoAssets() {
@@ -115,17 +115,17 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			{
 				params: createIncorrectParams(),
 				queryParam: 'true',
-				expected: BIG_IMAGE
+				expected: DEFAULT_IMAGE
 			},
 			{
 				params: createIncorrectParams(),
 				queryParam: 'blocked',
-				expected: BIG_IMAGE
+				expected: DEFAULT_IMAGE
 			},
 			{
 				params: createIncorrectParams(),
 				queryParam: '1',
-				expected: BIG_IMAGE
+				expected: DEFAULT_IMAGE
 			}
 		],
 		testCasesWithTwoAssets = [
@@ -164,7 +164,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 			var rs = getModule();
 			mocks.qs.getVal.and.returnValue(testCase.queryParam);
 
-			expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
+			expect(testCase.expected).toEqual(rs.setImage(testCase.params).image1.element.src);
 		});
 	});
 
@@ -193,7 +193,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 		var params = createCorrectParams(),
 			rs = getModule();
 
-		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolvedState.imageSrc);
+		expect(rs.setImage(params).image1.element.src).toEqual(params.image1.resolvedStateSrc);
 	});
 
 	it('Should not update image if there is no background image (template without backgroundImage)', function () {
@@ -214,7 +214,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 		expect(mocks.cache.set).toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(ASPECT_RATIO);
-		expect(actual.backgroundImage.src).toEqual(BIG_IMAGE);
+		expect(actual.image1.element.src).toEqual(BIG_IMAGE);
 	});
 
 	it('should use resolved state resources when information about seen ad was stored for add with one image', function () {
@@ -230,7 +230,7 @@ describe('ext.wikia.adEngine.slot.resolvedState', function () {
 
 		expect(mocks.cache.set).not.toHaveBeenCalled();
 		expect(actual.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
-		expect(actual.backgroundImage.src).toEqual(RESOLVED_IMAGE);
+		expect(actual.image1.element.src).toEqual(RESOLVED_IMAGE);
 	});
 
 	it('should use default state resources when no information about seen ad was stored using split template', function () {

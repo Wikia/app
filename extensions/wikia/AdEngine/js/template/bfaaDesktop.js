@@ -2,8 +2,8 @@
 define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
-	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.slot.resolvedState',
+	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
 	'wikia.log',
@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
 ], function (uapContext,
 			 btfBlocker,
-			 slotTweaker,
 			 resolvedState,
+			 slotTweaker,
 			 uapVideo,
 			 doc,
 			 log,
