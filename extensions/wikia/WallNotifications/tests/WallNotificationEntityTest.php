@@ -46,7 +46,10 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			->method( 'set' )
 			->with( WallNotificationEntity::getMemcKey( $params['id'] ), $params['data'] );
 
-		$messageMock = $this->getMock( Message::class, [ 'escaped' ] );
+		$messageMock = $this->getMockBuilder( Message::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'escaped' ] )
+			->getMock();
 		$messageMock->expects( $this->any() )
 			->method( 'escaped' )
 			->willReturn( static::A_FANDOM_USER );
@@ -149,6 +152,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'getId',
 				'getUser',
 				'getTimestamp',
+				'getTitle'
 			] )
 			->disableOriginalConstructor()
 			->getMock();
@@ -162,6 +166,9 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		$rev->expects( $this->once() )
 			->method( 'getTimestamp' )
 			->willReturn( $params['revision']['timestamp'] );
+		$rev->expects( $this->once() )
+			->method( 'getTitle' )
+			->willReturn( new Title() );
 
 		return $rev;
 	}
