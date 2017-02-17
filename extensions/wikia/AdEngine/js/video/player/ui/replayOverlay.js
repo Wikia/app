@@ -26,13 +26,13 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 
 		if (!params.autoPlay) {
 			overlayPercentWidth = computeOverlayWidth(params, overlayPercentWidth);
-			showOverlayAndComputeWidth(overlay, overlayPercentWidth);
+			showOverlay(overlay, overlayPercentWidth);
 		}
 
 		video.addEventListener('wikiaAdCompleted', function () {
 			overlayPercentWidth = computeOverlayWidth(params, overlayPercentWidth);
 			// make overlay visible after ad finishes
-			showOverlayAndComputeWidth(overlay, overlayPercentWidth);
+			showOverlay(overlay, overlayPercentWidth);
 		});
 
 		video.container.parentElement.insertBefore(overlay, video.container);
@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	 * @param overlayPercentWidth
 	 * @returns void
 	 */
-	function showOverlayAndComputeWidth(overlay, overlayPercentWidth) {
+	function showOverlay(overlay, overlayPercentWidth) {
 		overlay.style.width = overlayPercentWidth;
 	}
 
