@@ -35,13 +35,27 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
+	function selectTemplate(videoSettings) {
+		var params = videoSettings.getParams(),
+			template = UITemplate.defaultLayout;
+
+		if (params.splitLayoutVideoPosition) {
+			template = UITemplate.splitLayout;
+		} else if (videoSettings.isAutoPlay()) {
+			template = UITemplate.autoPlayLayout;
+		}
+
+		log(['VUAP UI elements', template], log.levels.debug, logGroup);
+
+		return template;
+	}
+
 	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
-		videoSettings = videoSettings || VideoSettings.create(params);
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		return porvata.inject(params, videoSettings)
+		return porvata.inject(videoSettings)
 			.then(function (video) {
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
@@ -53,22 +67,15 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			})
 			.then(function (video) {
 				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
-					template = UITemplate.defaultLayout;
-
-				if (params.splitLayoutVideoPosition) {
-					template = UITemplate.splitLayout;
-				} else if (videoSettings.isAutoPlay()) {
-					template = UITemplate.autoPlayLayout;
-				}
-
-				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+					template = selectTemplate(videoSettings)
 
 				videoInterface.setup(video, template, {
-					image: providerContainer,
-					container: slotContainer,
 					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio,
-					hideWhenPlaying: params.videoPlaceholderElement || params.image
+					autoPlay: videoSettings.isAutoPlay(),
+					container: slotContainer,
+					hideWhenPlaying: params.videoPlaceholderElement || params.image,
+					image: providerContainer,
+					videoAspectRatio: params.videoAspectRatio
 				});
 
 				if (splitLayoutVideoPosition) {
@@ -119,8 +126,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params, videoSettings) {
-		var loadedPlayer,
+	function loadVideoAd(videoSettings) {
+		var params = videoSettings.getParams(),
+			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
 			videoContainer = providerContainer.parentNode,
 			size;
