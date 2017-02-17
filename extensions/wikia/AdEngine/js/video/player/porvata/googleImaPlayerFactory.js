@@ -7,8 +7,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
-	function create(adDisplayContainer, adsLoader, params) {
-		var isAdsManagerLoaded = false,
+	function create(adDisplayContainer, adsLoader, videoSettings) {
+		var params = videoSettings.getParams(),
+			isAdsManagerLoaded = false,
 			status = '',
 			videoMock = doc.createElement('video'),
 			adsManager,
@@ -102,7 +103,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
 		adsLoader.requestAds(imaSetup.createRequest(params));
-		if (params.autoPlay) {
+		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);
 		}
 
