@@ -233,8 +233,9 @@ class MercuryApiController extends WikiaController {
 		// Title parameter is empty for URLs like /main/edit, /d etc. (all pages outside /wiki/ space)
 		try {
 			$title = $this->getTitleFromRequest();
+			$articleId = $title->getArticleId();
 
-			$article = Article::newFromID( $title->getArticleId() );
+			$article = Article::newFromID( $articleId );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
 				$title = $this->handleRedirect( $title, $article, [ ] )[0];
@@ -244,6 +245,7 @@ class MercuryApiController extends WikiaController {
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
 			$dimensions[14] = !empty( $adContext['opts']['showAds'] ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
+			$dimensions[21] = (string)$articleId;
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
 			// In case of exception - don't set the dimensions
@@ -258,6 +260,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[2] = $wgLanguageCode;
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+		$dimensions[8] = WikiaPageType::getPageType();
 		$dimensions[9] = $wgCityId;
 		$dimensions[13] = AdTargeting::getEsrbRating();
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
