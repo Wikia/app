@@ -206,6 +206,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 					label: 'featured-video-paused'
 				});
 			});
+
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'featured-video'
+			});
 		});
 
 		$closeBtn.click(closeButtonClicked);
