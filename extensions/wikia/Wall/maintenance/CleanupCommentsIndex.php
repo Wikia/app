@@ -31,6 +31,8 @@ class CleanupCommentsIndex extends Maintenance {
 				[ "rows_count" => count( $ids ) ]
 			);
 
+			$this->output( "{$wgDBname}: " . count( $ids ) . " rows affected\n" );
+
 			if ( !$this->hasOption('dry-run') ) {
 				$db->delete( 'comments_index', "comment_id in (" . implode( ',', $ids ) . ")" );
 			}
