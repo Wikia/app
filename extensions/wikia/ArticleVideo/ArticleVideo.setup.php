@@ -10,7 +10,7 @@ $wgHooks['SkinAfterBottomScripts'][] = 'ArticleVideoHooks::onSkinAfterBottomScri
 
 // cityId => articleId => videoDetails
 $wgVideoMVPArticles = [
-	'509' => [
+/*	'509' => [
 		3581 => [
 			'time' => '2:39',
 			'title' => 'Top 5 Best Spells in the Wizarding World',
@@ -26,6 +26,8 @@ $wgVideoMVPArticles = [
 			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
 		],
 	],
+
+*/
 	'1265146' => [
 		298 => [
 			'time' => '2:39',
@@ -34,7 +36,7 @@ $wgVideoMVPArticles = [
 			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
 		],
 	],
-	'1265146' => [
+/*	'1265146' => [
 		288 => [
 			'time' => '2:39',
 			'title' => 'Top 5 Best Spells in the Wizarding World',
@@ -58,4 +60,5 @@ $wgVideoMVPArticles = [
 			'thumbnailPath' => '/wikia/ArticleVideo/images/list-of-spells-thumb.jpg',
 		],
 	],
+*/
 ];
