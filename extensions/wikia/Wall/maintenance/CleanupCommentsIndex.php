@@ -1,24 +1,33 @@
 <?php
-require_once( getenv( 'MW_INSTALL_PATH' ) !== false ? getenv( 'MW_INSTALL_PATH' ) . '/maintenance/Maintenance.php' : dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class CleanupCommentsIndex extends Maintenance {
 
 
 	public function execute() {
-		$getIdsQuery = "select page_id from page, comments_index where page_id=comment_id and page_namespace not in (1,500,501,1200,1201,2000,2001)";
+		global $wgDBName;
 
 		$db = wfGetDB( DB_MASTER );
 
-		$ids = [];
+		$ids = $db->selectFieldValues(
+			[ 'page', 'comments_index' ],
+			'comment_id',
+			[ 'page_id=comment_id', 'page_namespace not in (1,500,501,1200,1201,2000,2001)' ],
+			__METHOD__
+		);
 
-		$result = $db->query( $getIdsQuery );
-		while ( $row = $db->fetchRow( $result ) ) {
-			$ids[] = intval( $row['page_id'] );
-		};
+		if ( is_array( $ids ) ) {
+			$ids = array_map( function( $item ) {
+				return intval( $item );
+			}, $ids);
 
-		$deleteQuery = "DELETE FROM comments_index WHERE comment_id in (" . implode( ',', $ids ) . ")";
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				$wgDBName . ":" . count( $ids ) . "rows affected",
+				[ "rows_count" => count( $ids ),  "dbname" => $wgDBName ]
+			);
 
-		$db->query( $deleteQuery );
+			$db->delete( 'comments_index',  "comment_id in (" . implode( ',', $ids ) . ")");
+		}
 	}
 }
 
