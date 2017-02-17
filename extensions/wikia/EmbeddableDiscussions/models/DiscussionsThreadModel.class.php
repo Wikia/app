@@ -18,13 +18,13 @@ class DiscussionsThreadModel {
 
 	// TODO: Consider changing this request to use Swagger when unblocked. See JPN-631
 	private function apiRequest( $url ) {
-		return json_decode( Http::get( $url ), true );
+		return json_decode( Http::get( $url, 'default', [ 'noProxy' => true ] ), true );
 	}
 
 	private function getDiscussionsApiUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new ConsulUrlProvider( $wgConsulUrl,
+		return 'http://'.( new ConsulUrlProvider( $wgConsulUrl,
 			$wgConsulServiceTag ) )->getUrl( 'discussion' );
 	}
 
