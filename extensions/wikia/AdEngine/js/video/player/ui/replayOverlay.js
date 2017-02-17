@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.video.player.ui.replayOverlay', [
 	}
 
 	/**
-	 * Computes overaly percent width if value have been not computed yet
+	 * Computes overlay percent width if value have been not computed yet
 	 * @param params
 	 * @param overlayPercentWidth - previously computed percent width
 	 * @return string in form '55%'
