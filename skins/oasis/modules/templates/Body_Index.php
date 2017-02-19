@@ -92,6 +92,9 @@
 					}
 				?>
 
+				<?php if ( $enableArticleVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
+				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
