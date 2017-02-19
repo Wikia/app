@@ -11,6 +11,7 @@ class WallBuilderException extends Exception {
 	 */
 	public function __construct( $message = "", array $context = [] ) {
 		parent::__construct( $message );
+		$this->context = $context;
 
 		// return self for traceback
 		$this->context['exception'] = $this;

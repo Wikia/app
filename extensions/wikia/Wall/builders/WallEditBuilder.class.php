@@ -58,10 +58,10 @@ class WallEditBuilder extends WallBuilder {
 	 * @return bool true
 	 */
 	public function updateCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
-		$entry = CommentsIndex::singleton()->entryFromId( $title->getArticleID() );
+		$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
 		$entry->setLastRevId( $rev->getId() );
 
-		CommentsIndex::singleton()->updateEntry( $entry, $dbw );
+		CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
 
 		return true;
 	}

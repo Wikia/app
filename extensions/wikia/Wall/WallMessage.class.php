@@ -112,7 +112,7 @@ class WallMessage {
 		 *
 		 * @see SUS-262
 		 */
-		$commentsIndices = CommentsIndex::singleton()->entriesFromIds( $correctIds );
+		$commentsIndices = CommentsIndex::getInstance()->entriesFromIds( $correctIds );
 
 		foreach( $commentsIndices as $commentIndex ) {
 			$wallMessages[ $commentIndex->getCommentId() ]->commentsIndex = $commentIndex;
@@ -160,7 +160,7 @@ class WallMessage {
 	 */
 		public function getCommentsIndexEntry() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
-			$this->commentsIndex = CommentsIndex::singleton()->entryFromId( $this->getId() ); // note: can return null
+			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -572,15 +572,15 @@ class WallMessage {
 	 * @return Title
 	 */
 	public function getArticleTitle( $useMasterDB = false ) {
-		$commentsIndex = $this->getCommentsIndexEntry();
-		if ( empty( $commentsIndex ) ) {
+		$entry = $this->getCommentsIndexEntry();
+		if ( empty( $entry ) ) {
 			$this->error( __METHOD__ . ' - SUS-1680 - No comments_index entry for message', [
 				'messageTitle' => $this->getTitle()->getPrefixedText(),
 				'messageId' => $this->getTitle()->getArticleID()
 			] );
 			return Title::newFromText( 'empty' );
 		}
-		$pageId = $commentsIndex->getParentPageId();
+		$pageId = $entry->getParentPageId();
 		static $cache = [ ];
 		if ( empty( $cache[ $pageId ] ) ) {
 			if ( !$useMasterDB ) {
@@ -1412,24 +1412,25 @@ class WallMessage {
 		return false;
 	}
 
-	public function setInCommentsIndex( $prop, $value, $useMaster = false ) {
+	public function setInCommentsIndex( $prop, $value ) {
 		$commentId = $this->getId();
 		if ( !empty( $commentId ) ) {
-			$commentsIndexEntry = $this->getCommentsIndexEntry();
-			if ( $commentsIndexEntry instanceof CommentsIndexEntry ) {
+			$entry = $this->getCommentsIndexEntry();
+
+			if ( $entry instanceof CommentsIndexEntry ) {
 				switch ( $prop ) {
 					case WPP_WALL_ARCHIVE:
-						$commentsIndexEntry->setArchived( $value );
+						$entry->setArchived( $value );
 						break;
 					case WPP_WALL_ADMINDELETE:
-						$commentsIndexEntry->setDeleted( $value );
+						$entry->setDeleted( $value );
 						break;
 					case WPP_WALL_REMOVE:
-						$commentsIndexEntry->setRemoved( $value );
+						$entry->setRemoved( $value );
 						break;
 				}
 
-				CommentsIndex::singleton()->updateEntry( $commentsIndexEntry );
+				CommentsIndex::getInstance()->updateEntry( $entry );
 			}
 		}
 	}
@@ -1462,7 +1463,7 @@ class WallMessage {
 
 		wfDeleteWikiaPageProp( $prop, $this->getId() );
 
-		$this->setInCommentsIndex( $prop, 0, true );
+		$this->setInCommentsIndex( $prop, 0 );
 	}
 
 	protected function getPropVal( $prop ) {

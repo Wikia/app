@@ -266,16 +266,15 @@ class WallExternalController extends WikiaController {
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
 
 		try {
-			$builder =
+			$wallMessage =
 				( new WallMessageBuilder() )
 					->setMessageTitle( $titleMeta )
 					->setMessageText( $body )
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setRelatedTopics( $relatedTopics )
 					->setNotifyEveryone( $notifyEveryone )
-					->setParentPageTitle( $title );
-
-			$wallMessage = $builder->build();
+					->setParentPageTitle( $title )
+					->build();
 		} catch ( WallBuilderException $builderException ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
@@ -622,13 +621,12 @@ class WallExternalController extends WikiaController {
 		$wallMessage->setMetaTitle( $newtitle );
 
 		try {
-			$builder =
+			$text =
 				( new WallEditBuilder() )
 					->setMessage( $wallMessage )
 					->setMessageText( $newbody )
-					->setEditor( $this->getContext()->getUser() );
-
-			$text = $builder->build();
+					->setEditor( $this->getContext()->getUser() )
+					->build();
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
@@ -692,14 +690,13 @@ class WallExternalController extends WikiaController {
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
 		try {
-			$builder =
+			$reply =
 				( new WallMessageBuilder() )
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setMessageText( $body )
 					->setParentMessage( $wallMessage )
-					->setParentPageTitle( $wallMessage->getArticleTitle() );
-
-			$reply = $builder->build();
+					->setParentPageTitle( $wallMessage->getArticleTitle() )
+					->build();
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );

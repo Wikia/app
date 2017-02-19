@@ -68,6 +68,7 @@ class WallMessageBuilder extends WallBuilder {
 
 	/**
 	 * Call ArticleComments and actually save the new message.
+	 * All permissions checks (Phalanx spam filter and user blocks, local blocks, AbuseFilter...) are performed at this step.
 	 * @return WallMessageBuilder
 	 */
 	public function postNewMessage(): WallMessageBuilder {
@@ -81,12 +82,18 @@ class WallMessageBuilder extends WallBuilder {
 		if ( !$this->parentMessage ) {
 			$result = ArticleComment::doPost( $this->messageText, $this->messageAuthor, $this->parentPageTitle, false, $this->metaData );
 		} elseif ( !$this->parentMessage->canReply() ) {
+			// This can happen in two cases
+			// 1) thread was removed or deleted but the user has not refreshed the page and attempted to post a reply
+			// 2) direct nirvana invocation of WallExternalController::replyToMessage ("hack")
 			$this->throwException( 'Attempted to post reply on deleted or removed thread' );
 		} else {
 			$result = ArticleComment::doPost( $this->messageText, $this->messageAuthor, $this->parentMessage->getTitle(), $this->parentMessage->getId() );
 		}
 
 		if ( !$result || !$result[0]->isOK() ) {
+			// Permissions check are performed on article comment level by EditPage class of Mediawiki
+			// Text is matched there against Phalanx filters and all user blocks (global and local) are also checked
+			// This can cause edit to fail
 			$this->throwException( 'Failed to create article comment' );
 		}
 
@@ -183,7 +190,7 @@ class WallMessageBuilder extends WallBuilder {
 				->setFirstRevId( $revId )
 				->setLastRevId( $revId );
 
-		return CommentsIndex::singleton()->insertEntry( $entry, $dbw );
+		return CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
 	}
 
 	/**

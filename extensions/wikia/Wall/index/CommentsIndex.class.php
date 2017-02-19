@@ -17,7 +17,7 @@ class CommentsIndex {
 	private function __construct() {
 	}
 
-	public static function singleton(): CommentsIndex {
+	public static function getInstance(): CommentsIndex {
 		if ( !( static::$instance instanceof CommentsIndex ) ) {
 			static::$instance = new CommentsIndex();
 		}
@@ -99,44 +99,44 @@ class CommentsIndex {
 	 * If this fails, transaction has to be rollbacked to prevent invalid data from being posted!
 	 *
 	 * @see https://wikia-inc.atlassian.net/browse/ZZZ-3225
-	 * @param CommentsIndexEntry $commentsIndexEntry
+	 * @param CommentsIndexEntry $entry
 	 * @param DatabaseBase $db
 	 * @return bool whether transaction succeeded
 	 */
-	public function insertEntry( CommentsIndexEntry $commentsIndexEntry, DatabaseBase $db ): bool {
+	public function insertEntry( CommentsIndexEntry $entry, DatabaseBase $db ): bool {
 		$timestamp = $db->timestamp();
 
-		if ( empty( $commentsIndexEntry->getCreatedAt() ) ) {
-			$commentsIndexEntry->setCreatedAt( $timestamp );
+		if ( empty( $entry->getCreatedAt() ) ) {
+			$entry->setCreatedAt( $timestamp );
 		}
 
-		if ( empty( $commentsIndexEntry->getLastTouched() ) ) {
-			$commentsIndexEntry->setLastTouched( $timestamp );
+		if ( empty( $entry->getLastTouched() ) ) {
+			$entry->setLastTouched( $timestamp );
 		}
 
-		if ( empty( $commentsIndexEntry->getLastChildCommentId() ) ) {
-			$commentsIndexEntry->setLastChildCommentId( $commentsIndexEntry->getCommentId() );
+		if ( empty( $entry->getLastChildCommentId() ) ) {
+			$entry->setLastChildCommentId( $entry->getCommentId() );
 		}
 
 		// cache the new instance so we won't have to query the db when we need it again during this request
-		$this->objectCache[$commentsIndexEntry->getCommentId()] = $commentsIndexEntry;
+		$this->objectCache[$entry->getCommentId()] = $entry;
 
 		$status = $db->replace(
 			'comments_index',
 			null,
-			$commentsIndexEntry->getDatabaseRepresentation(),
+			$entry->getDatabaseRepresentation(),
 			__METHOD__
 		);
 
 		if ( !$status ) {
-			$this->error( 'Failed to insert comments index entry', $commentsIndexEntry->getDatabaseRepresentation() );
+			$this->error( 'Failed to insert comments index entry', $entry->getDatabaseRepresentation() );
 			return false;
 		}
 
 		// update last_child_comment_id for parent thread
-		if ( !empty( $commentsIndexEntry->getParentCommentId() ) ) {
-			$parentEntry = static::entryFromId( $commentsIndexEntry->getParentCommentId() );
-			$parentEntry->setLastChildCommentId( $commentsIndexEntry->getCommentId() );
+		if ( !empty( $entry->getParentCommentId() ) ) {
+			$parentEntry = static::entryFromId( $entry->getParentCommentId() );
+			$parentEntry->setLastChildCommentId( $entry->getCommentId() );
 			$this->updateEntry( $parentEntry );
 		}
 

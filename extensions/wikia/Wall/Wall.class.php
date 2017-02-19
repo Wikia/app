@@ -357,7 +357,7 @@ class Wall extends WikiaModel {
 	}
 
 	public function moveAllThread( Wall $dest ) {
-		CommentsIndex::singleton()->moveAllThreads( $this->getId(), $dest->getId() );
+		CommentsIndex::getInstance()->moveAllThreads( $this->getId(), $dest->getId() );
 
 		$wallHistory = new WallHistory( $this->mCityId );
 		$wallHistory->moveThreads( $this->getId(), $dest->getId() );

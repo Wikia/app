@@ -35,8 +35,8 @@ class CommentsIndexTest extends WikiaBaseTest {
 
 		$this->mockGlobalFunction( 'wfGetDB', $dbMock );
 
-		$firstCall = CommentsIndex::singleton()->entryFromId( $this->commentId );
-		$secondCall = CommentsIndex::singleton()->entryFromId( $this->commentId );
+		$firstCall = CommentsIndex::getInstance()->entryFromId( $this->commentId );
+		$secondCall = CommentsIndex::getInstance()->entryFromId( $this->commentId );
 
 		$this->assertEquals( $firstCall->getCommentId(), $secondCall->getCommentId() );
 	}
@@ -65,10 +65,10 @@ class CommentsIndexTest extends WikiaBaseTest {
 
 		// update and save entry
 		$this->entry->setDeleted( true );
-		CommentsIndex::singleton()->updateEntry( $this->entry );
+		CommentsIndex::getInstance()->updateEntry( $this->entry );
 
-		$updatedEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->commentId );
-		$updatedParentFromCache = CommentsIndex::singleton()->entryFromId( $this->parentId );
+		$updatedEntryFromCache = CommentsIndex::getInstance()->entryFromId( $this->commentId );
+		$updatedParentFromCache = CommentsIndex::getInstance()->entryFromId( $this->parentId );
 
 		$this->assertTrue( $updatedEntryFromCache->isDeleted() );
 		$this->assertEquals( 1456, $updatedParentFromCache->getLastChildCommentId() );
@@ -93,17 +93,17 @@ class CommentsIndexTest extends WikiaBaseTest {
 
 		$this->mockGlobalFunction( 'wfGetDB', $dbMock );
 
-		CommentsIndex::singleton()->insertEntry( $this->entry, $dbMock );
+		CommentsIndex::getInstance()->insertEntry( $this->entry, $dbMock );
 
-		$commentEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->commentId );
-		$parentEntryFromCache = CommentsIndex::singleton()->entryFromId( $this->parentId );
+		$commentEntryFromCache = CommentsIndex::getInstance()->entryFromId( $this->commentId );
+		$parentEntryFromCache = CommentsIndex::getInstance()->entryFromId( $this->parentId );
 
 		$this->assertEquals( $this->commentId, $commentEntryFromCache->getCommentId() );
 		$this->assertEquals( $this->commentId, $parentEntryFromCache->getLastChildCommentId() );
 	}
 
 	public function testEntriesFromIdsCanProcessEmptyInput() {
-		$result = CommentsIndex::singleton()->entriesFromIds( [] );
+		$result = CommentsIndex::getInstance()->entriesFromIds( [] );
 
 		$this->assertEmpty( $result );
 	}
