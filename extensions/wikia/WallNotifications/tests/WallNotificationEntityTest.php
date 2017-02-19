@@ -125,7 +125,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		if ( !empty( $params['parentWallMessage']['id'] ) ) {
 			$parentWallMessageMock = $this->getParentWallMessageMock( $params );
 
-			$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 				->method( 'getTopParentObj' )
 				->willReturn( $parentWallMessageMock );
 		} else {
@@ -133,7 +133,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				->method( 'getTopParentObj' )
 				->willReturn( null );
 
-			$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 				->method( 'getMetaTitle' )
 				->willReturn( $params['wallMessage']['metaTitle'] );
 		}
@@ -265,7 +265,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			->method( 'getUser' )
 			->willReturn( $parentUserMock );
 
-		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter++ ) )
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getId' )
 			->willReturn( $params['parentWallMessage']['id'] );
 
