@@ -1,4 +1,5 @@
 require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], function (window, onScroll, tracker, OoyalaVideo) {
+
 	$(function () {
 		var $video = $('#article-video'),
 			$videoContainer = $video.find('.video-container'),
@@ -219,4 +220,5 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 
 		onScroll.bind(toggleCollapse);
 	});
+	
 });
