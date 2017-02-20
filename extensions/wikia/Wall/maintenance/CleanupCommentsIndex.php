@@ -33,8 +33,11 @@ class CleanupCommentsIndex extends Maintenance {
 
 			$this->output( "{$wgDBname}: " . count( $ids ) . " rows affected\n" );
 
-			if ( !$this->hasOption('dry-run') ) {
-				$db->delete( 'comments_index', "comment_id in (" . implode( ',', $ids ) . ")" );
+			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
+				$db->delete(
+					'comments_index',
+					[ "comment_id" => $ids ]
+				);
 			}
 		}
 	}
