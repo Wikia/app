@@ -2,13 +2,12 @@
 @import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/box-shadow';
-@import 'GlobalNavigationColors';
 @import 'GlobalNavigationMixins';
-@import 'GlobalNavigationVariables';
 
 $black-half-transparent: rgba(0, 0, 0, .6);
 $black-transparent: rgba(0, 0, 0, 0);
 $border-color: #c7d1d8;
+$global-navigation-height: 46px;
 $header-bg-color: #092140;
 $markasread-bg-color: rgb(9, 35, 68);
 $markasread-color: #fff;
@@ -20,14 +19,12 @@ $time-color: rgba($notifications-header-color, .5);
 $notification-bubble-color: rgb(101, 110, 120);
 $white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
-$wiki-header-bg-color: rgba(113, 133, 148, .2);
-$wiki-header-color: #2b54b5;
 
 .notifications-container {
 	position: relative;
 
 	.notifications-entry-point {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon.svg'); /** inline */
+		background-image: url('/extensions/wikia/DesignSystem/images/notifications_icon.svg'); /** inline */
 		background-position: center;
 		background-size: 19px;
 		background-repeat: no-repeat;
@@ -83,7 +80,7 @@ $wiki-header-color: #2b54b5;
 	}
 
 	&.active {
-		background-color: $global-navigation-background-color;
+		background-color: rgb(230, 235, 242);;
 
 		.notifications-container {
 			display: block;
