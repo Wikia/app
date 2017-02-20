@@ -2,180 +2,255 @@
 describe('ext.wikia.adEngine.slot.resolvedState', function () {
 	'use strict';
 
-	var BIG_IMAGE = 'bigImage.png',
+	var AD_ID = 12345,
+		ASPECT_RATIO = 1,
+		BIG_IMAGE = 'bigImage.png',
 		BIG_IMAGE_2 = 'bigImage2.png',
+		CACHE_STANDARD_TIME = 24,
 		DEFAULT_IMAGE = 'oldImage.png',
+		RESOLVED_STATE_ASPECT_RATIO = 2,
 		RESOLVED_IMAGE = 'resolvedImage.png',
-		RESOLVED_IMAGE_2 = 'resolvedImage2.png',
-		mocks = {
-			log: function () {},
+		RESOLVED_IMAGE_2 = 'resolvedImage2.png';
+
+	function createCorrectParams() {
+		return {
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: RESOLVED_IMAGE
+			}
+		};
+	}
+
+	function createIncorrectParams() {
+		return {
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: 0,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: ''
+			}
+		};
+	}
+
+	function createCorrectParamsWithTwoAssets() {
+		return {
+			aspectRatio: ASPECT_RATIO,
+			resolvedStateAspectRatio: RESOLVED_STATE_ASPECT_RATIO,
+			image1: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE,
+				resolvedStateSrc: RESOLVED_IMAGE
+			},
+			image2: {
+				element: {
+					src: DEFAULT_IMAGE
+				},
+				defaultStateSrc: BIG_IMAGE_2,
+				resolvedStateSrc: RESOLVED_IMAGE_2
+			}
+		};
+	}
+
+	var mocks = {
+			log: function () {
+			},
 			qs: {
 				getVal: function () {
 				}
 			},
 			QueryString: function () {
 				return mocks.qs;
-			}
+			},
+			uapContext: {
+				getUapId: function () {
+					return AD_ID;
+				}
+			},
+			cache: {
+				CACHE_STANDARD: CACHE_STANDARD_TIME,
+				get: function () {
+					return [];
+				},
+				set: function () {
+				}
+			},
+			videoSettings: {
+				getParams: function () {
+					return {};
+				},
+				isResolvedState: function () {
+					return false;
+				}
+			},
+			win: {}
 		},
-		data = {
-			PARAMS: {
-				CORRECT: {
-					imageSrc: BIG_IMAGE,
-					aspectRatio: 1,
-					resolvedState: {
-						aspectRatio: 2,
-						imageSrc: RESOLVED_IMAGE
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				CORRECT_WITH_TWO_ASSETS: {
-					aspectRatio: 1,
-					resolvedStateAspectRatio: 2,
-					image1: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE,
-						resolvedStateSrc: RESOLVED_IMAGE
-					},
-					image2: {
-						element: {
-							src: DEFAULT_IMAGE
-						},
-						defaultStateSrc: BIG_IMAGE_2,
-						resolvedStateSrc: RESOLVED_IMAGE_2
-					}
-				},
-				INCORRECT: {
-					aspectRatio: 1,
-					imageSrc: BIG_IMAGE,
-					resolvedState: {
-						aspectRatio: 0,
-						imageSrc: ''
-					},
-					backgroundImage: {
-						src: DEFAULT_IMAGE
-					}
-				},
-				EMPTY: {}
-			}
-		},
-		testCases = [
-			{
-				params: data.PARAMS.CORRECT,
-				queryParam: null,
-				expected: RESOLVED_IMAGE
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: null,
-				expected: BIG_IMAGE
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: 'true',
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: true,
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: 'blocked',
-				expected: BIG_IMAGE
-			},
-			{
-				params: data.PARAMS.CORRECT,
-				queryParam: 'blocked',
-				expected: BIG_IMAGE
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: 'a',
-				expected: BIG_IMAGE
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: '1',
-				expected: ''
-			},
-			{
-				params: data.PARAMS.INCORRECT,
-				queryParam: '0',
-				expected: BIG_IMAGE
-			}
-		],
-		testCasesWithTwoAssets = [
-			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
-				queryParam: '0',
-				expectedImage1: BIG_IMAGE,
-				expectedImage2: BIG_IMAGE_2
-			},
-			{
-				params: data.PARAMS.CORRECT_WITH_TWO_ASSETS,
-				queryParam: null,
-				expectedImage1: RESOLVED_IMAGE,
-				expectedImage2: RESOLVED_IMAGE_2
-			}
+		blockingUrlParams = [
+			false,
+			'blocked',
+			'false',
+			'0'
+		], forcingUrlParams = [
+			true,
+			'true',
+			'1'
 		];
 
 	mocks.log.levels = {debug: ''};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.resolvedState'](mocks.log, mocks.QueryString);
+		return modules['ext.wikia.adEngine.slot.resolvedState'](
+			mocks.uapContext,
+			mocks.cache,
+			mocks.log,
+			mocks.QueryString,
+			mocks.win
+		);
 	}
 
-	testCases.forEach(function (testCase) {
-		var testName = 'Should return ' + testCase.expected + ' when params: ' + JSON.stringify(testCase.params) +
-			' and resolvedState query param equals: ' + testCase.queryParam;
-
-		it(testName, function () {
+	blockingUrlParams.forEach(function (params) {
+		it('should not be in resolved state when is not blocked by query param ' + params, function () {
 			spyOn(mocks.qs, 'getVal');
-			var rs = getModule();
-			mocks.qs.getVal.and.returnValue(testCase.queryParam);
 
-			expect(testCase.expected).toEqual(rs.setImage(testCase.params).backgroundImage.src);
+			mocks.qs.getVal.and.returnValue(params);
+
+			var rs = getModule();
+
+			expect(rs.isResolvedState()).toEqual(false);
 		});
 	});
 
-	testCasesWithTwoAssets.forEach(function (testCase) {
-		var testName = 'Should return ' + testCase.expectedImage1 + ' and ' + testCase.expectedImage2 +
-			' when params: ' + JSON.stringify(testCase.params) + ' and resolvedState query param equals: ' +
-			testCase.queryParam;
-
-		it(testName, function () {
+	forcingUrlParams.forEach(function (params) {
+		it('should be in resolved state when is forced by query param ' + params, function () {
 			spyOn(mocks.qs, 'getVal');
-			var rs = getModule();
-			mocks.qs.getVal.and.returnValue(testCase.queryParam);
 
-			expect(testCase.expectedImage1).toEqual(rs.setImage(testCase.params).image1.element.src);
-			expect(testCase.expectedImage2).toEqual(rs.setImage(testCase.params).image2.element.src);
+			mocks.qs.getVal.and.returnValue(params);
+
+			var rs = getModule();
+
+			expect(rs.isResolvedState()).toEqual(true);
 		});
 	});
 
-	it('Should update params aspect ratio', function () {
+	it('should not be in resolved state when no information about seen ad was stored', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue(null);
+
 		var rs = getModule();
 
-		expect(rs.setImage(data.PARAMS.CORRECT).aspectRatio).toEqual(data.PARAMS.CORRECT.resolvedState.aspectRatio);
+		expect(rs.isResolvedState()).toEqual(false);
 	});
 
-	it('Should update image src', function () {
-		var params = data.PARAMS.CORRECT,
+	it('should be in resolved state when information about seen ad was stored', function () {
+		spyOn(mocks.cache, 'get');
+		spyOn(mocks.cache, 'set');
+
+		mocks.cache.get.and.returnValue({
+			lastSeenDate: new Date()
+		});
+
+
+		var rs = getModule();
+
+		expect(rs.isResolvedState()).toEqual(true);
+	});
+
+	it('should not modify params if template does not support resolved state', function() {
+		spyOn(mocks.videoSettings, 'getParams');
+
+		var params = createIncorrectParams(),
 			rs = getModule();
 
-		expect(rs.setImage(params).backgroundImage.src).toEqual(params.resolvedState.imageSrc);
+		mocks.videoSettings.getParams.and.returnValue(params);
+
+		rs.setImage(mocks.videoSettings);
+
+		expect(params.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(params.image1.element.src).toEqual(DEFAULT_IMAGE);
 	});
 
-	it('Should not update image if there is no background image (template without backgroundImage)', function () {
-		var params = {},
+	it('should use default state resources when no information about seen ad was stored for add with one image', function () {
+		spyOn(mocks.videoSettings, 'isResolvedState');
+		spyOn(mocks.videoSettings, 'getParams');
+		spyOn(mocks.cache, 'set');
+
+		var params = createCorrectParams(),
 			rs = getModule();
 
-		expect(rs.setImage(params)).toEqual(params);
+		mocks.videoSettings.getParams.and.returnValue(params);
+		mocks.videoSettings.isResolvedState.and.returnValue(false);
+
+		rs.setImage(mocks.videoSettings);
+
+		expect(mocks.cache.set).toHaveBeenCalled();
+		expect(params.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(params.image1.element.src).toEqual(BIG_IMAGE);
 	});
 
+	it('should use resolved state resources when information about seen ad was stored for add with one image', function () {
+		spyOn(mocks.videoSettings, 'isResolvedState');
+		spyOn(mocks.videoSettings, 'getParams');
+		spyOn(mocks.cache, 'set');
+
+		var params = createCorrectParams(),
+			rs = getModule();
+
+		mocks.videoSettings.getParams.and.returnValue(params);
+		mocks.videoSettings.isResolvedState.and.returnValue(true);
+
+		rs.setImage(mocks.videoSettings);
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(params.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(params.image1.element.src).toEqual(RESOLVED_IMAGE);
+	});
+
+	it('should use default state resources when no information about seen ad was stored using split template', function () {
+		spyOn(mocks.videoSettings, 'isResolvedState');
+		spyOn(mocks.videoSettings, 'getParams');
+		spyOn(mocks.cache, 'set');
+
+		var rs = getModule(),
+			params = createCorrectParamsWithTwoAssets();
+
+		mocks.videoSettings.getParams.and.returnValue(params);
+		mocks.videoSettings.isResolvedState.and.returnValue(false);
+
+		rs.setImage(mocks.videoSettings);
+
+		expect(mocks.cache.set).toHaveBeenCalled();
+		expect(params.aspectRatio).toEqual(ASPECT_RATIO);
+		expect(params.image1.element.src).toEqual(BIG_IMAGE);
+		expect(params.image2.element.src).toEqual(BIG_IMAGE_2);
+	});
+
+	it('should use resolved state resources when information about seen ad was stored using split template', function () {
+		spyOn(mocks.videoSettings, 'isResolvedState');
+		spyOn(mocks.videoSettings, 'getParams');
+		spyOn(mocks.cache, 'set');
+
+		var rs = getModule(),
+			params = createCorrectParamsWithTwoAssets();
+
+		mocks.videoSettings.getParams.and.returnValue(params);
+		mocks.videoSettings.isResolvedState.and.returnValue(true);
+
+		rs.setImage(mocks.videoSettings);
+
+		expect(mocks.cache.set).not.toHaveBeenCalled();
+		expect(params.aspectRatio).toEqual(RESOLVED_STATE_ASPECT_RATIO);
+		expect(params.image1.element.src).toEqual(RESOLVED_IMAGE);
+		expect(params.image2.element.src).toEqual(RESOLVED_IMAGE_2);
+	});
 });

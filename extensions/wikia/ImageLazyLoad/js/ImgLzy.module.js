@@ -6,9 +6,7 @@
 define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnailer'], function ($, log, w, thumbnailer) {
 	'use strict';
 
-	var ImgLzy,
-		// allow WebP thumbnails for JPG and PNG files only
-		thumbExtCheckRegExp = /\.(jpg|jpeg|jpe|png)(\/)/i;
+	var ImgLzy;
 
 	function logger(msg) {
 		log(msg, log.levels.info, 'ImgLzy');
@@ -17,7 +15,6 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 	ImgLzy = {
 		cache: [],
 		timestats: 0,
-		browserSupportsWebP: false,
 
 		init: function () {
 			var proxy = $.proxy(this.checkAndLoad, this),
@@ -41,45 +38,6 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 
 		absTop: function ($el) {
 			return $el.offset().top;
-		},
-
-		checkWebPSupport: function () {
-			logger('checking WebP support...');
-
-			// @see http://stackoverflow.com/a/5573422
-			var webP = new Image();
-			webP.src = 'data:image/webp;' +
-				'base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
-			webP.onload = webP.onerror = $.proxy(function () {
-				this.browserSupportsWebP = webP.height === 2;
-
-				logger('has support for WebP: ' + (this.browserSupportsWebP ? 'yes' : 'no'));
-
-				// report WebP support stats to Kibana
-				if (w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function') {
-					syslogReport(log.levels.info, 'webp', {
-						'webp-support': this.browserSupportsWebP ? 'yes' : 'no'
-					});
-				}
-			}, this);
-		},
-
-		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
-		rewriteURLForWebP: function (src) {
-			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbExtCheckRegExp.test(src) && thumbnailer.isThumbUrl(src)) {
-				if (thumbnailer.isLegacyThumbnailerUrl(src)) {
-					src = src.replace(/\.[^\./]+$/, '.webp');
-				}
-				else {
-					// remove the existing format parameter
-					src = src.replace(/[\?&]format=\w+/, '');
-
-					// add "format=webp" to Vignette URL
-					src += src.indexOf('?') ? '&' : '?';
-					src += 'format=webp';
-				}
-			}
-			return src;
 		},
 
 		createCache: function () {
@@ -148,7 +106,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 				dataSrc = $img.data('src');
 			image.onload = '';
 			if (dataSrc) {
-				image.src = this.rewriteURLForWebP(dataSrc);
+				image.src = dataSrc;
 			}
 			$img.removeClass('lzy').removeClass('lzyPlcHld');
 		},
@@ -191,7 +149,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 				if (inViewport && this.parentVisible(cacheItem)) {
 					cacheItem.$el.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					imgSrc = this.rewriteURLForWebP(cacheItem.$el.data('src'));
+					imgSrc = cacheItem.$el.data('src');
 					if (imgSrc) {
 						cacheItem.el.src = imgSrc;
 					}

@@ -99,12 +99,11 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				this.forceReconnect();
 				break;
 			case 'initial':
-				this.firstConnected = true; //we are 100% sure about conenction
-			default:
-				if (this.firstConnected) {
-					this.fire(message.event, message);
-				}
+				this.firstConnected = true;	//we are 100% sure about conenction
 				break;
+		}
+		if (this.firstConnected) {
+			this.fire(message.event, message);
 		}
 	}
 });

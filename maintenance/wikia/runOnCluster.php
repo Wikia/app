@@ -75,18 +75,35 @@ ini_set( 'error_reporting', E_NOTICE );
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 /**
+ * Class Filters
+ *
+ * An enum for the filter parameter to RunOnCluster
+ */
+abstract class Filters {
+	const Public = 0;
+	const Private = 1;
+	const All = 2;
+}
+
+/**
  * Class RunOnCluster
  */
 class RunOnCluster extends Maintenance {
 
 	const PARAM_SITE_ID = 'siteId';
 	const PARAM_DB_NAME = 'dbName';
+	const PARAM_DB_MISSING = 'dbMissing';
 
 	protected $verbose = false;
 	protected $test    = false;
 	protected $cluster = '1';
 	protected $class;
 	protected $method;
+	protected $filter;
+	protected $file;
+	protected $singleDBname;
+	protected $dbCheck = true;
+	protected $dbMissing = false;
 
 	/** @var DatabaseBase */
 	protected $db;
@@ -105,6 +122,10 @@ class RunOnCluster extends Maintenance {
 		$this->addOption( 'class', 'The class with code to run', false, true, 'l' );
 		$this->addOption( 'method', 'Which method to run', false, true, 'm' );
 		$this->addOption( 'file' , 'File containing code to run', false, true, 'f' );
+		$this->addOption( 'filter' , 'Filter wikis from the input; public, private or all', false,
+			true );
+		$this->addOption( 'no-db-check', "Don't verify the DB connection (useful if just using wikicities tables)",
+			false, false );
 		$this->addOption( 'db-name' , 'A single dbname to run against', false, true, 'i' );
 	}
 
@@ -113,14 +134,7 @@ class RunOnCluster extends Maintenance {
 	 */
 	public function execute() {
 		// Collect options
-		$this->test    = $this->hasOption( 'test' ) ? true : false;
-		$this->verbose = $this->hasOption( 'verbose' ) ? true : false;
-		$this->master  = $this->hasOption( 'master' ) ? true : false;
-		$this->cluster = $this->getOption( 'cluster', '1' );
-		$this->class   = $this->getOption( 'class' );
-		$this->method  = $this->getOption( 'method', 'run' );
-		$singleDBname  = $this->getOption( 'db-name' );
-		$file = $this->getOption( 'file' );
+		$this->readOptions();
 
 		$startTime = time();
 
@@ -134,11 +148,11 @@ class RunOnCluster extends Maintenance {
 		}
 
 		// If there's an include file, make sure it exists
-		if ( $file ) {
-			if ( !file_exists( $file ) ) {
-				die("File '$file' does not exist\n");
+		if ( $this->file ) {
+			if ( !file_exists( $this->file ) ) {
+				die( "File '" . $this->file . "' does not exist\n" );
 			}
-			require_once($file);
+			require_once( $this->file );
 		} else {
 			if ( $this->class ) {
 				echo "Warning: Argument --class given without --file; this is probably not correct\n";
@@ -154,7 +168,7 @@ class RunOnCluster extends Maintenance {
 			foreach ( get_declared_classes() as $class ) {
 				// Figure out where that class was defined
 				$reflector = new ReflectionClass( $class );
-				if ( realpath($file) == $reflector->getFileName() ) {
+				if ( realpath( $this->file ) == $reflector->getFileName() ) {
 					// Bingo, this is the class to use
 					$this->class = $class;
 					break;
@@ -164,20 +178,19 @@ class RunOnCluster extends Maintenance {
 
 		// Make sure the class and method we're using exist
 		if ( !class_exists( $this->class ) ) {
-			die( "Class '".$this->class."' does not exist\n" );
+			die( "Class '" . $this->class . "' does not exist\n" );
 		}
 		if ( !method_exists( $this->class, $this->method ) ) {
-			die( "Method '".$this->method."' does not exist in class '".$this->class."'\n" );
+			die( "Method '" . $this->method . "' does not exist in class '" . $this->class . "'\n" );
 		}
 
 		// Basic cluster sanity check
 		if ( !preg_match( '/^[0-9]+$/', $this->cluster ) ) {
-			die("Argument to --cluster must be an integer\n");
+			die( "Argument to --cluster must be an integer\n" );
 		}
 
 		// Get all the wiki's on the current cluster
-		$singleDBname = empty( $singleDBname ) ? '' : $singleDBname;
-		$clusterWikis = $this->getClusterWikis( $singleDBname );
+		$clusterWikis = $this->getClusterWikis();
 
 		// Connect to the cluster we will operate on and set $this->db
 		if ( !$this->initDBHandle() ) {
@@ -195,7 +208,12 @@ class RunOnCluster extends Maintenance {
 				fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
 			}
 			if ( empty( $result ) ) {
-				continue;
+				$this->dbMissing = true;
+
+				if ( $this->dbCheck ) {
+					$this->debug( "Could not find DB to use\n" );
+					continue;
+				}
 			}
 			$this->debug( "Processing: $dbName\n" );
 
@@ -205,6 +223,7 @@ class RunOnCluster extends Maintenance {
 			$params = [
 				self::PARAM_DB_NAME => $dbName,
 				self::PARAM_SITE_ID => $cityId,
+			    self::PARAM_DB_MISSING => $this->dbMissing,
 			];
 
 			try {
@@ -219,29 +238,60 @@ class RunOnCluster extends Maintenance {
 			}
 		}
 
-		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
+		$delta = F::app()->wg->Lang->formatTimePeriod( time() - $startTime );
 		fwrite( STDERR, "Finished in $delta\n" );
+	}
+
+	private function readOptions() {
+		$this->test = $this->hasOption( 'test' ) ? true : false;
+		$this->verbose = $this->hasOption( 'verbose' ) ? true : false;
+		$this->master = $this->hasOption( 'master' ) ? true : false;
+		$this->cluster = $this->getOption( 'cluster', '1' );
+		$this->class = $this->getOption( 'class' );
+		$this->method = $this->getOption( 'method', 'run' );
+
+		$filter = $this->getOption( 'filter', 'public' );
+		if ( strtolower( $filter ) == 'all' ) {
+			$this->filter = Filters::All;
+		} else if ( strtolower( $filter ) == 'public' ) {
+			$this->filter = Filters::Public;
+		} else if ( strtolower( $filter ) == 'private' ) {
+			$this->filter = Filters::Private;
+		}
+
+		$this->singleDBname = $this->getOption( 'db-name', '' );
+
+		// The --no-db-check is useful on the command line, but negate it here so we don't have
+		// the possibility of double negatives in a conditional
+		$this->dbCheck = ! $this->getOption( 'no-db-check', false );
+
+		$this->file = $this->getOption( 'file' );
 	}
 
 	/**
 	 * Get the list of dbnames that exist on our cluster
 	 *
-	 * @param string $dbname
 	 * @return array An array of database names
 	 */
-	private function getClusterWikis( $dbname = '' ) {
+	private function getClusterWikis() {
 		$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
-		if ( empty( $dbname ) ) {
+		if ( empty( $this->singleDBname ) ) {
 			$sqlWhere = 'city_cluster = '.$db->addQuotes( 'c'.$this->cluster );
 		} else {
-			$sqlWhere = 'city_dbname = '.$db->addQuotes( $dbname );
+			$sqlWhere = 'city_dbname = '.$db->addQuotes( $this->singleDBname );
 		}
 
-		$sql = 'SELECT city_dbname, city_id
+		if ( $this->filter == Filters::Public ) {
+			$sqlWhere .= ' AND city_public = 1';
+		} else if ( $this->filter == Filters::Private ) {
+			$sqlWhere .= ' AND city_public = 0';
+		}
+
+		$sql = "SELECT city_dbname, city_id
 		 		FROM city_list
-				WHERE city_public = 1 AND '.$sqlWhere.'
-		 		ORDER BY city_dbname';
+				WHERE $sqlWhere
+				ORDER BY city_dbname";
 
 		$result = $db->query( $sql, __METHOD__ );
 
