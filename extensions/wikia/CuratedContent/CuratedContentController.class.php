@@ -346,15 +346,8 @@ class CuratedContentController extends WikiaController {
 				// extend images
 				$curated = array_map( function ( $section ) {
 					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
-					$section['items'] = array_filter( $section['items'], function ( $item ) {
-						return Title::newFromText( $item['title'] )->isKnown();
-					} );
 					return $section;
 				}, $this->communityDataService->getCurated() );
-
-				$curated = array_filter( $curated, function ( $section ) {
-					return !empty( $section['items'] );
-				} );
 
 				$featured = $this->communityDataService->getFeatured();
 				if ( !empty( $featured ) ) {
@@ -368,10 +361,17 @@ class CuratedContentController extends WikiaController {
 
 				$data = array_map( function ( $section ) {
 					$section[ 'node_type' ] = 'section';
+					$section['items'] = array_filter( $section['items'], function ( $item ) {
+						return Title::newFromText( $item['title'] )->isKnown();
+					} );
 					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
 					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
 					return $section;
 				}, $curated );
+
+				$data = array_filter( $data, function ( $section ) {
+					return !empty( $section['items'] );
+				} );
 
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
