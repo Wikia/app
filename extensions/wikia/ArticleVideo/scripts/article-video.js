@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], function (window, onScroll, tracker, OoyalaVideo) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo', 'youtubeVideo'], function (window, onScroll, tracker, OoyalaVideo, YouTubeVideo) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -6,16 +6,17 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
 			$videoPlayBtn = $videoContainer.find('.video-play-button'),
-			ooyalaVideoController,
-			ooyalaVideoElementId = 'ooyala-article-video',
-			$ooyalaVideo = $('#' + ooyalaVideoElementId),
+			videoController,
+			featuredVideoElementId = 'featured-video-player',
+			$featuredVideo = $('#' + featuredVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
 			transitionEndEventName = getTransitionEndEventName(),
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
-			});
+			}),
+			playMode = 'CLICK';
 
 		function getTransitionEndEventName() {
 			var el = document.createElement('div'),
@@ -36,9 +37,14 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		}
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgArticleVideoData.videoId;
+			var videoId = window.wgArticleVideoData.videoId;
+			var videoProvider = window.wgArticleVideoData.videoProvider;
 
-			ooyalaVideoController = new OoyalaVideo(ooyalaVideoElementId, ooyalaVideoId, onCreate);
+			if(videoProvider === 'youtube') {
+				YouTubeVideo.create(featuredVideoElementId, videoId, onCreate);
+			} else {
+				OoyalaVideo.create(featuredVideoElementId, videoId, onCreate);
+			}
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -49,7 +55,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			collapsingDisabled = false;
 			videoCollapsed = true;
 			$video.addClass('collapsed-ready');
-			if (ooyalaVideoController) {
+			if (videoController && videoController.videoProvider === 'ooyala') {
 				updatePlayerControls(true);
 			}
 			$videoContainer.css({
@@ -58,7 +64,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 				'width': videoWidth
 			});
 			$videoThumbnail.css('height', videoHeight);
-			$ooyalaVideo.css('height', videoHeight);
+			$featuredVideo.css('height', videoHeight);
 			setTimeout(function () {
 				if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
 					$video.addClass('collapsed');
@@ -77,9 +83,9 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 				'width': ''
 			});
 			$videoThumbnail.css('height', '');
-			$ooyalaVideo.css('height', '');
+			$featuredVideo.css('height', '');
 			$video.removeClass('collapsed collapsed-ready');
-			if (ooyalaVideoController) {
+			if (videoController && videoController.videoProvider === 'ooyala') {
 				updatePlayerControls(false);
 			}
 
@@ -87,8 +93,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 
 		function closeButtonClicked(event) {
 			event.stopPropagation();
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				ooyalaVideoController.player.pause();
+			if (videoController) {
+				videoController.pause();
 			}
 			uncollapseVideo();
 			collapsingDisabled = true;
@@ -99,35 +105,29 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		}
 
 		function updatePlayerControls(waitForTransition) {
-			ooyalaVideoController.hideControls();
+			videoController.hideControls();
 			if (waitForTransition && transitionEndEventName) {
 				$videoContainer.on(transitionEndEventName, function () {
-					ooyalaVideoController.sizeChanged();
-					ooyalaVideoController.showControls();
+					videoController.sizeChanged();
+					videoController.showControls();
 				});
 			} else {
-				ooyalaVideoController.sizeChanged();
-				ooyalaVideoController.showControls();
+				videoController.sizeChanged();
+				videoController.showControls();
 			}
 		}
 
 		function isVideoPlaying() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
-			}
-			return false;
+			return videoController.isPlaying();
 		}
 
 		function isVideoPausedOrReady() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PAUSED || ooyalaVideoController.player.getState() === OO.STATE.READY;
-			}
-			return false;
+			return videoController.isReadyToPlay();
 		}
 
 		function isVideoInFullScreenMode() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getFullscreen();
+			if (videoController) {
+				return videoController.inFullscreen();
 			}
 			return false;
 		}
@@ -154,10 +154,12 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		}
 
 		function showAndPlayVideo() {
-			$ooyalaVideo.show();
+			$('#' + featuredVideoElementId).show(); // fixme
+			videoController.play();
 			$video.addClass('played');
-			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
-			ooyalaVideoController.player.play();
+			if(videoController.videoProvider === 'ooyala') {
+				videoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
+			}
 			track({
 				action: tracker.ACTIONS.PLAY_VIDEO,
 				label: 'featured-video'
@@ -169,13 +171,13 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 				return;
 			}
 			if (isVideoPausedOrReady()) {
-				ooyalaVideoController.player.play();
+				videoController.play();
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-collapsed-play'
 				});
 			} else if (isVideoPlaying()) {
-				ooyalaVideoController.player.pause();
+				videoController.pause();
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-collapsed-pause'
@@ -183,25 +185,37 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			}
 		}
 
-		initVideo(function (player) {
+		initVideo(function (controller) {
+			videoController = controller;
 			$video.addClass('ready-to-play');
-			$video.one('click', showAndPlayVideo);
+			switch(playMode) {
+				case 'CLICK':
+					$video.one('click', showAndPlayVideo);
+					break;
+				case 'AUTOPLAY':
+					showAndPlayVideo();
+					break;
+				case 'COUNTDOWN':
+					// TODO
+					showAndPlayVideo();
+					break;
+			}
 
-			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+			videoController.onPlay(function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-play'
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.PLAYED, 'featured-video', function () {
+			videoController.onPlayed(function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-played'
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.PAUSED, 'featured-video', function () {
+			videoController.onPause(function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-paused'
@@ -219,6 +233,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		$videoPlayBtn.click(playPauseVideo);
 
 		onScroll.bind(toggleCollapse);
+
 	});
-	
+
 });

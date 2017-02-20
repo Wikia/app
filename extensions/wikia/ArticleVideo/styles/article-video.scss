@@ -195,7 +195,7 @@ $spinnerSize: 48;
 			}
 		}
 
-		.ooyala-article-video {
+		.featured-video-player {
 			bottom: auto;
 			height: $video-collapsed-height !important;
 			transition: height $video-collapse-animation-speed;
@@ -232,13 +232,15 @@ $spinnerSize: 48;
 	}
 }
 
-.ooyala-article-video {
+.featured-video-player {
 	bottom: 0;
 	left: 0;
 	position: absolute;
 	right: 0;
 	top: 0;
 	display: none;
+	width: 100%;
+	height: 100%;
 
 	>div {
 		// that's because ooyala sets max z-index value when player is switched to fullscreen mode

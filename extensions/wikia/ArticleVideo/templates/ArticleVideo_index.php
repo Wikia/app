@@ -16,7 +16,7 @@
 				<img src="<?= $videoPlayButtonUrl; ?>" class="video-play-button">
 			</div>
 		</div>
-		<div id="ooyala-article-video" class="ooyala-article-video"></div>
+		<div id="featured-video-player" class="featured-video-player"></div>
 	</div>
 </div>
 

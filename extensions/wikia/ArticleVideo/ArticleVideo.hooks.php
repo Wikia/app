@@ -20,6 +20,8 @@ class ArticleVideoHooks {
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
 			$vars['wgArticleVideoData'] = [
 				'videoId' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoId'],
+				'videoProvider' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoProvider']
+				                   ?? 'ooyala',
 			];
 		}
 
@@ -31,7 +33,13 @@ class ArticleVideoHooks {
 		$articleId = $wg->Title->getArticleID();
 
 		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
+			if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId]['videoProvider'] ) &&
+			     $wg->videoMVPArticles[$wg->cityId][$articleId]['videoProvider'] === 'youtube'
+			) {
+				$text .= Html::linkedScript( 'https://www.youtube.com/iframe_api' );
+			} else {
+				$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
+			}
 		}
 
 		return true;

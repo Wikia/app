@@ -3204,6 +3204,7 @@ $config[ 'article_video_js' ] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-video.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-video.js'
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/youtube-video.js'
 	]
 ];
