@@ -35,21 +35,6 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
-	function selectTemplate(videoSettings) {
-		var params = videoSettings.getParams(),
-			template = UITemplate.defaultLayout;
-
-		if (params.splitLayoutVideoPosition) {
-			template = UITemplate.splitLayout;
-		} else if (videoSettings.isAutoPlay()) {
-			template = UITemplate.autoPlayLayout;
-		}
-
-		log(['VUAP UI elements', template], log.levels.debug, logGroup);
-
-		return template;
-	}
-
 	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
 
@@ -67,7 +52,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			})
 			.then(function (video) {
 				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
-					template = selectTemplate(videoSettings)
+					template = UITemplate.selectTemplate(videoSettings);
 
 				videoInterface.setup(video, template, {
 					aspectRatio: params.aspectRatio,
