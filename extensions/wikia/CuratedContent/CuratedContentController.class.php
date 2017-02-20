@@ -346,6 +346,9 @@ class CuratedContentController extends WikiaController {
 				// extend images
 				$curated = array_map( function ( $section ) {
 					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
+					$section['items'] = array_filter( $section['items'], function ( $item ) {
+						return Title::newFromText( $item['title'] )->isKnown();
+					} );
 					return $section;
 				}, $this->communityDataService->getCurated() );
 
