@@ -352,6 +352,10 @@ class CuratedContentController extends WikiaController {
 					return $section;
 				}, $this->communityDataService->getCurated() );
 
+				$curated = array_filter( $curated, function ( $section ) {
+					return !empty( $section['items'] );
+				} );
+
 				$featured = $this->communityDataService->getFeatured();
 				if ( !empty( $featured ) ) {
 					$featured[ 'featured' ] = 'true';
