@@ -605,7 +605,7 @@ class WallHelper {
 			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
-		$ci = $wm->getCommentsIndex();
+		$ci = $wm->getCommentsIndexEntry();
 		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = Title::newFromText( $row->page_title, NS_USER_WALL );

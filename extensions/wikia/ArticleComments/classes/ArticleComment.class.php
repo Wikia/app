@@ -1045,8 +1045,6 @@ class ArticleComment {
 		/** @var Article|WikiPage $article */
 		$article = new Article( $commentTitle, 0 );
 
-		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
-
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 

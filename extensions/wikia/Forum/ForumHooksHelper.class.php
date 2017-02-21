@@ -296,7 +296,7 @@ class ForumHooksHelper {
 			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			// cleare board info
-			$commentsIndex = CommentsIndex::newFromId( $comment_id );
+			$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
 			if ( empty( $commentsIndex ) ) {
 				return true;
 			}

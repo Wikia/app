@@ -23,6 +23,9 @@ include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
@@ -39,6 +42,11 @@ $wgAutoloadClasses['WallHistory'] =  $dir . '/WallHistory.class.php';
 $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.php';
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
+
+$wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/builders/WallBuilderException.class.php';
+$wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
+$wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
