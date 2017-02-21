@@ -28,46 +28,54 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 
 	it('Should show close button element if there is no autoplay and there is no split screen', function () {
 		var UITemplate = getModule(),
-			videoSettings = mocks.videoSettings;
+			videoSettings = mocks.videoSettings,
+			result;
 
 		mocks.videoSettings.isAutoPlay.and.returnValue(false);
 		mocks.videoSettings.isSplitLayout.and.returnValue(false);
 
-		expect(UITemplate.selectTemplate(videoSettings)).toContain(UI.CLOSE_BUTTON);
-		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.REPLAY_OVERLAY);
+		result = UITemplate.selectTemplate(videoSettings);
+		expect(result).toContain(UI.CLOSE_BUTTON);
+		expect(result).not.toContain(UI.REPLAY_OVERLAY);
 	});
 
 	it('Should hide close button element if there is autoplay for not split ad', function () {
 		var UITemplate = getModule(),
-			videoSettings = mocks.videoSettings;
+			videoSettings = mocks.videoSettings,
+			result;
 
 		mocks.videoSettings.isAutoPlay.and.returnValue(true);
 		mocks.videoSettings.isSplitLayout.and.returnValue(false);
 
-		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.CLOSE_BUTTON);
-		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.REPLAY_OVERLAY);
+		result = UITemplate.selectTemplate(videoSettings);
+		expect(result).not.toContain(UI.CLOSE_BUTTON);
+		expect(result).not.toContain(UI.REPLAY_OVERLAY);
 	});
 
 	it('Should hide close button element if there is auto play for split ad', function () {
 		var UITemplate = getModule(),
-			videoSettings = mocks.videoSettings;
+			videoSettings = mocks.videoSettings,
+			result;
 
 		mocks.videoSettings.isAutoPlay.and.returnValue(true);
 		mocks.videoSettings.isSplitLayout.and.returnValue(true);
 
-		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.CLOSE_BUTTON);
-		expect(UITemplate.selectTemplate(videoSettings)).toContain(UI.REPLAY_OVERLAY);
+		result = UITemplate.selectTemplate(videoSettings);
+		expect(result).not.toContain(UI.CLOSE_BUTTON);
+		expect(result).toContain(UI.REPLAY_OVERLAY);
 	});
 
 	it('Should show replay button and close for click to play and split', function () {
 		var UITemplate = getModule(),
-			videoSettings = mocks.videoSettings;
+			videoSettings = mocks.videoSettings,
+			result;
 
 		mocks.videoSettings.isAutoPlay.and.returnValue(false);
 		mocks.videoSettings.isSplitLayout.and.returnValue(true);
 
-		expect(UITemplate.selectTemplate(videoSettings)).toContain(UI.CLOSE_BUTTON);
-		expect(UITemplate.selectTemplate(videoSettings)).toContain(UI.REPLAY_OVERLAY);
+		result = UITemplate.selectTemplate(videoSettings);
+		expect(result).toContain(UI.CLOSE_BUTTON);
+		expect(result).toContain(UI.REPLAY_OVERLAY);
 	});
 });
 
