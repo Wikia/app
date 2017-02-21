@@ -1373,7 +1373,7 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * SUS-1649: Clear all block-related info from this instance of User class
+	 * Wikia change - SUS-1649: Clear all block-related info from this instance of User class
 	 * This allows us to re-run block check functions with different parameters (e.g. checking for only local blocks)
 	 * @see User::getBlockedStatus()
 	 */
