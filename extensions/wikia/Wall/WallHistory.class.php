@@ -17,7 +17,7 @@ class WallHistory extends WikiaModel {
 	 * Events of message creation, edit, delete and restore are stored in wall_history table.
 	 *
 	 * - Messages deleted using MediaWiki flow are removed from the table.
-	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1
+	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1 (its used by Forum activity module only)
 	 *
 	 * @param int $type one of WH_* defines
 	 * @param WallNotificationAdminEntity $feed
