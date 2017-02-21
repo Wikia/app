@@ -539,7 +539,7 @@ var NodeChatUsers = Backbone.View.extend({
 			offset = $element.offset(),
 			menu = $('#UserStatsMenu').html($(element).find('.UserStatsMenu').html()),
 			menuActions = menu.find('.actions'),
-			username = menu.find('.username').data('name'),
+			username = $(element).data('user'),
 			ul = $('<ul>');
 
 		// position menu
