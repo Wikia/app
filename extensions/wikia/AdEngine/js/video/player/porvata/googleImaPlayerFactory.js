@@ -1,9 +1,10 @@
 /*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
+	'ext.wikia.adEngine.video.player.porvata.moatVideoTracker',
 	'wikia.document',
 	'wikia.log'
-], function(imaSetup, doc, log) {
+], function (imaSetup, moatVideoTracker, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
@@ -18,6 +19,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
+
+			moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL);
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
