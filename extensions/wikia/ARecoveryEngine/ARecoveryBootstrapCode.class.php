@@ -2,7 +2,7 @@
 class ARecoveryBootstrapCode {
 	
 	public static function getHeadBootstrapCode() {
-		if (ARecoveryModule::isPageFairRecoveryEnabled()) {
+		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
 			$bootstrap = new PageFairBootstrapCode();
 			return $bootstrap->getHeadCode();
 		}
@@ -11,7 +11,7 @@ class ARecoveryBootstrapCode {
 	
 	//TODO: move sourcepoint bootstrap here
 	public static function getTopBodyBootstrapCode() {
-		if (ARecoveryModule::isPageFairRecoveryEnabled()) {
+		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
 			$bootstrap = new PageFairBootstrapCode();
 			return $bootstrap->getTopBodyCode();
 		}
@@ -19,7 +19,7 @@ class ARecoveryBootstrapCode {
 	}
 	
 	public static function getBottomBodyBootstrapCode() {
-		if (ARecoveryModule::isPageFairRecoveryEnabled()) {
+		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
 			$bootstrap = new PageFairBootstrapCode();
 			return $bootstrap->getBottomBodyCode();
 		}
@@ -27,7 +27,7 @@ class ARecoveryBootstrapCode {
 	}
 	
 	public static function getSlotMarker( $slotName ) {
-		if (ARecoveryModule::isPageFairRecoveryEnabled()) {
+		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
 			return PageFairBootstrapCode::getSlotMarker( $slotName );
 		}
 		return '';

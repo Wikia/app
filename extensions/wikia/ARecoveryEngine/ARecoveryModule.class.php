@@ -4,34 +4,48 @@ class ARecoveryModule {
 	const DISABLED_MESSAGE = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
 
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether PageFair recovery is enabled (on current wiki)
 	 *
 	 * @return bool
 	 */
-	public static function isDisabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+	public function isPageFairRecoveryEnabled() {
+		global $wgUser;
 
-		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
-			return true;
-		}
-
-		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
+		return $wgUser->isAnon() &&
+			!$this->hasSourcePointEnabledWgVars() &&
+			$this->hasPageFairEnabledWgVars();
 	}
 
-	public static function getSourcePointBootstrapCode() {
-		return static::isDisabled() ? self::DISABLED_MESSAGE : self::getBootstrapCode();
+	protected function hasPageFairEnabledWgVars() {
+		global $wgAdDriverEnablePageFairRecovery;
+
+		return $wgAdDriverEnablePageFairRecovery;
 	}
 
-	public static function isLockEnabled() {
-		return !self::isDisabled();
+	/**
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * @return bool
+	 */
+	public function isSourcePointRecoveryEnabled() {
+		global $wgUser;
+
+		return $wgUser->isAnon() &&
+			!$this->hasPageFairEnabledWgVars() &&
+			$this->hasSourcePointEnabledWgVars();
 	}
 
-	private static function getBootstrapCode() {
+	protected function hasSourcePointEnabledWgVars() {
+		global $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+
+		return $wgAdDriverEnableSourcePointRecovery && $wgAdDriverEnableSourcePointMMS;
+	}
+
+	public function getSourcePointBootstrapCode() {
+		return $this->isSourcePointRecoveryEnabled() ? $this->getBootstrapCode() : static::DISABLED_MESSAGE;
+	}
+
+	private function getBootstrapCode() {
 		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
-	}
-	
-	public static function isPageFairRecoveryEnabled() {
-		//TODO: change this
-		return true;
 	}
 }
