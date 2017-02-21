@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
+define('ext.wikia.adEngine.video.player.uiTemplate', [
+	'wikia.log'
+], function (log) {
 	'use strict';
 
 	var autoPlayLayout = [
@@ -29,7 +31,8 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			'toggleVideo',
 			'replayOverlay',
 			'closeButton'
-		];
+		],
+		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 
 	function selectTemplate(videoSettings) {
 		var template = defaultLayout;
@@ -42,6 +45,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [], function () {
 			template = autoPlayLayout;
 		}
 
+		log(['VUAP UI elements', template], log.levels.debug, logGroup);
 		return template;
 	}
 

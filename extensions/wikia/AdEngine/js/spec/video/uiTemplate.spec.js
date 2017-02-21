@@ -8,14 +8,17 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 		},
 		noop = function () {},
 		mocks = {
+			log: noop,
 			videoSettings: {
 				isAutoPlay: noop,
 				isSplitLayout: noop
 			}
 		};
 
+	mocks.log.levels = { debug: 1 };
+
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.uiTemplate']();
+		return modules['ext.wikia.adEngine.video.player.uiTemplate'](mocks.log);
 	}
 
 	beforeEach(function () {
