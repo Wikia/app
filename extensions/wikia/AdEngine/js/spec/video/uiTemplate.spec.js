@@ -26,7 +26,7 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 		mocks.videoSettings.isSplitLayout.and.returnValue(false);
 	});
 
-	it('Should should show close button element if there is no autoplay and there is no split screen', function () {
+	it('Should show close button element if there is no autoplay and there is no split screen', function () {
 		var UITemplate = getModule(),
 			videoSettings = mocks.videoSettings;
 
@@ -37,7 +37,7 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.REPLAY_OVERLAY);
 	});
 
-	it('Should should hide close button element if there is autoplay for not split ad', function () {
+	it('Should hide close button element if there is autoplay for not split ad', function () {
 		var UITemplate = getModule(),
 			videoSettings = mocks.videoSettings;
 
@@ -48,7 +48,7 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 		expect(UITemplate.selectTemplate(videoSettings)).not.toContain(UI.REPLAY_OVERLAY);
 	});
 
-	it('Should should hide close button element if there is auto play for split ad', function () {
+	it('Should hide close button element if there is auto play for split ad', function () {
 		var UITemplate = getModule(),
 			videoSettings = mocks.videoSettings;
 
@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 		expect(UITemplate.selectTemplate(videoSettings)).toContain(UI.REPLAY_OVERLAY);
 	});
 
-	it('Should should show replay button and close for click to play and split', function () {
+	it('Should show replay button and close for click to play and split', function () {
 		var UITemplate = getModule(),
 			videoSettings = mocks.videoSettings;
 
