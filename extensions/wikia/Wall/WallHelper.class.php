@@ -407,7 +407,11 @@ class WallHelper {
 	 * @return string
 	 */
 	public function getMessageSnippet( WallMessage $wallMessage ) {
-		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
+		$messageText = $wallMessage->getRawText();
+		// SUS-1684: Remove quotes and other HTML tags before parsing
+		$messageText = Sanitizer::stripAllTags( $messageText );
+
+		$formatted = Linker::formatComment( $messageText, $wallMessage->getTitle() );
 
 		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
