@@ -475,7 +475,7 @@ class WallHelper {
 		$app = F::App();
 		$rev = Revision::newFromId( $revOldId );
 		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
-		$wh = new WallHistory( $app->wg->CityId );
+		$wh = new WallHistory();
 
 		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User );
 

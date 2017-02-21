@@ -1111,7 +1111,7 @@ class WallMessage {
 			$this->addAdminNotificationFromEntity( $wnae );
 		}
 
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( $history, $wnae, $user );
 	}
 
@@ -1254,7 +1254,7 @@ class WallMessage {
 				$this->addAdminNotificationFromEntity( $wnae );
 			}
 
-			$wh = new WallHistory( $this->cityId );
+			$wh = new WallHistory();
 			$wh->add( WH_DELETE, $wnae, $user );
 
 			if ( $this->isMain() === true ) {
@@ -1410,7 +1410,7 @@ class WallMessage {
 		$this->customActionNotifyRC( $user, 'wall_restore', $reason );
 
 		$wne = $this->getAdminNotificationEntity( $user, $reason );
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( WH_RESTORE, $wne, $user );
 
 		$this->addWatch( $user );
