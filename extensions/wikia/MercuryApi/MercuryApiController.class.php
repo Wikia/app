@@ -52,35 +52,15 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigation() {
-		global $wgLang;
-
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
 		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [ ];
+			$localNavigation = [];
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
-
-		$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes();
-
-		// Add link to explore wikia only for EN language
-		if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
-			$navigationNodes['exploreDropdown'][] = [
-				'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
-				'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
-				'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
-				'trackingLabel' => 'explore-wikia'
-			];
-		}
-
-		return [
-			'hubsLinks' => $navigationNodes['hubs'],
-			'exploreWikia' => $navigationNodes['exploreWikia'],
-			'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
-			'localNav' => $localNavigation,
-			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
-		];
+    
+		return $localNavigation;
 	}
 
 	/**
@@ -163,7 +143,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables['navigation2016'] = $navigation;
+		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 

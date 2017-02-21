@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
+			 VideoSettings,
 			 doc,
 			 log,
 			 win,
@@ -38,7 +40,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		adsModule.setSiteHeadOffset(height);
 	}
 
-	function runOnReady(iframe, params) {
+	function runOnReady(iframe, params, videoSettings) {
 		function onResize(aspectRatio) {
 			adjustPadding(iframe, aspectRatio);
 		}
@@ -58,7 +60,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params)
+			uapVideo.loadVideoAd(videoSettings)
 				.then(function (video) {
 					video.addEventListener('loaded', function () {
 						onResize(params.videoAspectRatio);
@@ -72,6 +74,8 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	}
 
 	function show(params) {
+		var videoSettings;
+
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
@@ -79,11 +83,12 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
-		params = resolvedState.setImage(params);
+		videoSettings = VideoSettings.create(params);
+		resolvedState.setImage(videoSettings);
 
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			runOnReady(iframe, params);
+			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
 		});
 

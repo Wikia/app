@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
+			 VideoSettings,
 			 doc,
 			 log,
 			 throttle,
@@ -45,7 +47,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function runOnReady(iframe, params) {
+	function runOnReady(iframe, params, videoSettings) {
 		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
 		nav.style.top = '';
@@ -75,11 +77,13 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params);
+			uapVideo.loadVideoAd(videoSettings);
 		}
 	}
 
 	function show(params) {
+		var videoSettings;
+
 		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
@@ -89,11 +93,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
-		params = resolvedState.setImage(params);
+		videoSettings = VideoSettings.create(params);
+		resolvedState.setImage(videoSettings);
 
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			runOnReady(iframe, params);
+			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
 		});
 

@@ -6,10 +6,7 @@
 
 
 class GlobalNavigationWallNotificationsController extends WallNotificationControllerBase {
-	protected function addAssets() {
-		$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss' );
-		$this->response->addAsset( 'wall_notifications_global_navigation_js' );
-	}
+	protected function addAssets() {}
 
 	protected function updateExt( $notificationCounts ) {
 		$this->response->setVal( 'wikiCount', count( $notificationCounts ) );

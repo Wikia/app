@@ -584,7 +584,7 @@ class EmailNotification {
 		// its not a blog.
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace( NS_BLOG_ARTICLE ) )
+			( defined( 'NS_BLOG_ARTICLE' ) && !$this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}
 

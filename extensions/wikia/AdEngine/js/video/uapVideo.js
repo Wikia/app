@@ -6,12 +6,13 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'ext.wikia.adEngine.video.player.playwire',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.player.uiTemplate',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, doc, log, throttle, win, mercuryListener) {
+], function (uapContext, adSlot, porvata, playwire, videoInterface, UITemplate, VideoSettings, doc, log, throttle, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
@@ -34,12 +35,27 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		};
 	}
 
-	function loadPorvata(params, slotContainer, providerContainer) {
+	function selectTemplate(videoSettings) {
+		var params = videoSettings.getParams(),
+			template = UITemplate.defaultLayout;
+
+		if (params.splitLayoutVideoPosition) {
+			template = UITemplate.splitLayout;
+		} else if (videoSettings.isAutoPlay()) {
+			template = UITemplate.autoPlayLayout;
+		}
+
+		log(['VUAP UI elements', template], log.levels.debug, logGroup);
+
+		return template;
+	}
+
+	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
 		params.container = slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		return porvata.inject(params)
+		return porvata.inject(videoSettings)
 			.then(function (video) {
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
@@ -51,22 +67,15 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			})
 			.then(function (video) {
 				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
-					template = UITemplate.defaultLayout;
-
-				if (params.splitLayoutVideoPosition) {
-					template = UITemplate.splitLayout;
-				} else if (params.autoPlay) {
-					template = UITemplate.autoPlayLayout;
-				}
-
-				log(['VUAP UI elements', template], log.levels.debug, logGroup);
+					template = selectTemplate(videoSettings)
 
 				videoInterface.setup(video, template, {
-					image: providerContainer,
-					container: slotContainer,
 					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio,
-					hideWhenPlaying: params.videoPlaceholderElement || params.image
+					autoPlay: videoSettings.isAutoPlay(),
+					container: slotContainer,
+					hideWhenPlaying: params.videoPlaceholderElement || params.image,
+					image: providerContainer,
+					videoAspectRatio: params.videoAspectRatio
 				});
 
 				if (splitLayoutVideoPosition) {
@@ -117,8 +126,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			});
 	}
 
-	function loadVideoAd(params) {
-		var loadedPlayer,
+	function loadVideoAd(videoSettings) {
+		var params = videoSettings.getParams(),
+			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
 			videoContainer = providerContainer.parentNode,
 			size;
@@ -141,7 +151,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		if (params.player === 'playwire') {
 			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer);
 		} else {
-			loadedPlayer = loadPorvata(params, videoContainer, providerContainer);
+			loadedPlayer = loadPorvata(params, videoContainer, providerContainer, videoSettings);
 		}
 
 		return loadedPlayer.then(function (video) {

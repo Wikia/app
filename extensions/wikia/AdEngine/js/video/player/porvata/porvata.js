@@ -9,8 +9,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
-	function inject(params) {
-		var isFirstPlay = true,
+	function inject(videoSettings) {
+		var params = videoSettings.getParams(),
+			isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
 			viewportListener = null;
@@ -36,18 +37,18 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			.then(function () {
 				log('google ima loaded', log.levels.debug, logGroup);
 
-				return googleIma.getPlayer(params);
+				return googleIma.getPlayer(videoSettings);
 			}).then(function (ima) {
 				log(['ima player set up', ima], log.levels.debug, logGroup);
 
-				return porvataPlayerFactory.create(params, ima);
+				return porvataPlayerFactory.create(videoSettings, ima);
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
 
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time
-					if (isVisible && !autoPlayed && params.autoPlay) {
+					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
 						video.play();
 						autoPlayed = true;
 					// Don't resume when video was paused manually
@@ -94,8 +95,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					}
 				});
 
-				if (params.autoPlay) {
-					muteFirstPlay(video, isFirstPlay);
+				if (videoSettings.isAutoPlay()) {
+					muteFirstPlay(video);
 				}
 
 				if (params.onReady) {

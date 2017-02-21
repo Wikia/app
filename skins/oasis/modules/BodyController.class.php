@@ -454,5 +454,10 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
+
+		$articleId = $this->wg->Title->getArticleID();
+		$enableArticleVideo =
+			$this->wg->enableArticleVideo && isset( $this->wg->videoMVPArticles[$this->wg->cityId][$articleId] );
+		$this->setVal( 'enableArticleVideo', $enableArticleVideo );
 	}
 }
