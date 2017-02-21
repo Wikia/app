@@ -93,7 +93,7 @@ $uap-video-animation-duration: 0.4s;
 		width: 100%;
 	}
 
-	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+	#TOP_LEADERBOARD {
 		@include transition(height, $uap-video-animation-duration, ease, 0);
 		background: $color-black;
 		max-width: none;
@@ -118,66 +118,42 @@ $uap-video-animation-duration: 0.4s;
 	right: 10px;
 
 	.speaker {
-		background-color: #fff;
-		border-radius: 50%;
+		&.mute {
+			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg');
+		}
+
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
 		display: inline-block;
 		height: 30px;
-		opacity: 0.5;
 		overflow: hidden;
 		position: relative;
 		width: 30px;
-
-		span {
-			background: #000;
-			display: block;
-			height: 8px;
-			margin: 11px 0 0 2px;
-			width: 8px;
-
-			&:after {
-				border-color: transparent #000 transparent transparent;
-				border-style: solid;
-				border-width: 10px 14px 10px 15px;
-				content: '';
-				height: 0;
-				left: -13px;
-				position: absolute;
-				top: 5px;
-				width: 0;
-			}
-
-			&:before {
-				border-color: #000;
-				border-radius: 0 50px 0 0;
-				border-style: double;
-				border-width: 7px 7px 0 0;
-				content: '';
-				height: 5px;
-				left: 18px;
-				position: absolute;
-				top: 9px;
-				transform: rotate(45deg);
-				transition: all 0.2s ease-out;
-				width: 5px;
-			}
-		}
-
-		&:hover {
-			span:before {
-				transform: scale(.8) translate(-3px, 0) rotate(42deg);
-			}
-		}
-
-		&.mute {
-			span:before {
-				opacity: 0;
-				transform: scale(.5) translate(-15px, 0) rotate(36deg);
-			}
-		}
 	}
 }
 
-.bfaa-template .video-ima-container, .bfab-template .video-ima-container {
+.bfab-template {
+	position: relative;
+}
+
+.wikia-ad .replay-overlay {
+	background: rgba(0,0,0,0.7) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+
+.video-player {
+	position: relative;
+
+	&#{&}-left, &#{&}-right {
+		z-index: $wikia-top-ads-index;
+	}
+
+	&#{&}-right {
+		right: 0;
+	}
+
 	video {
 		left: 0;
 	}
@@ -198,6 +174,25 @@ $uap-video-animation-duration: 0.4s;
 		max-width: 100%;
 		width: 0;
 	}
+
+	.pause-overlay {
+		cursor: pointer;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.close-ad {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		cursor: pointer;
+		height: 30px;
+		margin: 10px 10px 30px 30px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
+	}
 }
 
 #TOP_BUTTON_WIDE {
@@ -210,14 +205,14 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #TOP_LEADERBOARD {
 	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
@@ -339,16 +334,8 @@ $uap-video-animation-duration: 0.4s;
 	display: none;
 }
 
-#HOME_TOP_RIGHT_BOXAD {
-	margin-bottom: 10px;
-	position: relative;
-	width: 300px;
-	z-index: 100;
-}
-
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
 		padding: 15px;
@@ -363,13 +350,13 @@ $uap-video-animation-duration: 0.4s;
 	}
 }
 
-#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+#TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
-}
 
-#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 #PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
@@ -552,22 +539,6 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-.overVideoLayer {
-	cursor: pointer;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	width: 100%;
-
-	.close-ad {
-		background-image: url('/skins/oasis/images/player/collapse_light.svg');
-		float: right;
-		height: 30px;
-		margin: 10px 10px 30px 30px;
-		width: 30px;
-	}
-}
-
 #WikiaArticleMsg {
-  display: none;
+	display: none;
 }

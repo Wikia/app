@@ -31,6 +31,8 @@ function renderVerbatim( $input ) {
 		|| startsWith( $formattedInput, Wikia::CUSTOM_INTERFACE_PREFIX, /* $case = */ false )
 		|| startsWith( $formattedInput, Wikia::EDITNOTICE_INTERFACE_PREFIX, /* $case = */ false )
 		|| startsWith( $formattedInput, Wikia::TAG_INTERFACE_PREFIX, /* $case = */ false )
+		|| startsWith( $formattedInput, Wikia::GADGETS_INTERFACE_PREFIX, /* $case = */ false )
+		|| startsWith( $formattedInput, Wikia::GADGET_INTERFACE_PREFIX, /* $case = */ false )
 	) {
 		// Do not allow transclusion into Verbatim tags
 		return '';

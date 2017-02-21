@@ -9,6 +9,10 @@ $background-color-secondary: #e5e5e5;
 		margin: 0;
 	}
 
+	.pi-data-label:not(.pi-horizontal-group-item):not(.pi-smart-data-label) {
+		padding: 0;
+	}
+
 	.pi-secondary-background {
 		background-color: $background-color-secondary;
 	}

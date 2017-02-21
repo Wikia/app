@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdEngine II Hooks
  */
@@ -36,8 +37,8 @@ class AdEngine2Hooks {
 	 *
 	 * @return bool
 	 */
-	public static function onInstantGlobalsGetVariables( array &$vars )
-	{
+	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverDelayCountries';
@@ -51,6 +52,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
@@ -70,13 +72,15 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverVelesBidderCountries';
 		$vars[] = 'wgAdDriverYavliCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
+		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
 		 * Disaster Recovery
-		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
@@ -94,6 +98,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		global $wgTitle;
+
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
@@ -108,14 +113,14 @@ class AdEngine2Hooks {
 
 		// Legacy vars:
 		// Queue for ads registration
-		$vars['adslots2'] = [];
+		$vars['adslots2'] = [ ];
 		// Used to hop by DART ads
-		$vars['adDriverLastDARTCallNoAds'] = [];
+		$vars['adDriverLastDARTCallNoAds'] = [ ];
 		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
-		$vars['adDriver2ForcedStatus'] = [];
+		$vars['adDriver2ForcedStatus'] = [ ];
 
 		// GA vars
-		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
+		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
 		return true;
 	}
@@ -249,8 +254,8 @@ class AdEngine2Hooks {
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
 		// File pages handle their own rendering of related pages wrapper
-		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . F::app()->renderView( 'AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_ARTICLE'] );
+		if ( ($skin === 'oasis') && $wgTitle->getNamespace() !== NS_FILE ) {
+			$text = $text . F::app()->renderView( 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_ARTICLE' ] );
 		}
 
 		return true;

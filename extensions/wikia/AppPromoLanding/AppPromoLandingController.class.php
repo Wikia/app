@@ -72,9 +72,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->debug = "";
 
 		// render global and user navigation
-		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
-			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
-			F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' );
 
 		// Get the config for this app, from the service.
 		$this->config = AppPromoLandingController::getConfigForWiki( $this->wg->CityId );

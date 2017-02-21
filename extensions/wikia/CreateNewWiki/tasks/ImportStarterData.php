@@ -22,7 +22,10 @@ class ImportStarterData extends Task {
 
 	public function run() {
 		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
-		$starterDatabase = Starters::getStarterByLanguage( $this->taskContext->getLanguage() );
+		$starterDatabase = Starters::getStarterByLanguageAndVertical(
+			$this->taskContext->getLanguage(),
+			(int) $this->taskContext->getVertical()
+		);
 		$this->taskContext->setStarterDb( $starterDatabase );
 
 		// import a starter database XML dump from DFS
@@ -62,10 +65,11 @@ class ImportStarterData extends Task {
 		global $IP;
 
 		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
+			"SERVER_ID=%d %s %s/maintenance/importStarter.php --vertical=%d",
 			$this->taskContext->getCityId(),
 			$this->phpBin,
-			"{$IP}/extensions/wikia/CreateNewWiki"
+			"{$IP}/extensions/wikia/CreateNewWiki",
+			$this->taskContext->getVertical()
 		);
 
 		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );

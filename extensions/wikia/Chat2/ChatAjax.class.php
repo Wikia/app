@@ -66,6 +66,7 @@ class ChatAjax {
 			'avatarSrc' => AvatarService::getAvatarUrl( $user->getName(), self::CHAT_AVATAR_DIMENSION ),
 			'editCount' => "",
 			'since' => '',
+			'groups' => $user->getGroups(),
 
 			// Extra wg variables that we need.
 			'wgCityId' => $wgCityId,
@@ -194,7 +195,7 @@ class ChatAjax {
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
 		if ( empty( $subjectUserName ) ) {
-			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text;
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text();
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;

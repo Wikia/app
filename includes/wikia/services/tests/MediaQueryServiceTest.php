@@ -20,7 +20,8 @@ class MediaQueryServiceTest extends WikiaBaseTest {
 			$this->assertEquals( $e->getMessage(), "\$sort was none of '"
 				. MediaQueryService::SORT_RECENT_FIRST . "', '"
 				. MediaQueryService::SORT_POPULAR_FIRST . "', '"
-				. MediaQueryService::SORT_TRENDING_FIRST . "'."
+				. MediaQueryService::SORT_TRENDING_FIRST . "', '"
+				. MediaQueryService::SORT_TRENDING_FIRST_LEGACY . "'."
 			);
 			return;
 		}

@@ -6,7 +6,7 @@
  */
 class InspectletService extends WikiaService {
 	const MAIN_PAGE = 'MainPage';
-	const ADD_NEW_PAGE = 'AddNewPage';
+	const HARRY_POTTER_ARTICLES = 'HarryPotterArticles';
 
 	private static $applicationIds = [
 		/**
@@ -21,7 +21,7 @@ class InspectletService extends WikiaService {
 		 * - overwatch.wikia.com
 		 */
 		self::MAIN_PAGE => 1469642463,
-		self::ADD_NEW_PAGE => 1424713574,
+		self::HARRY_POTTER_ARTICLES => 904885521
 	];
 
 	private $inspectletExperimentId;

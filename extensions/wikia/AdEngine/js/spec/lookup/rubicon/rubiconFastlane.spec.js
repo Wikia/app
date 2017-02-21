@@ -43,10 +43,14 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 				node: {
 					parentNode: {
 						insertBefore: noop
-					}
+					},
+					appendChild: noop
 				},
 				createElement: function () {
 					return mocks.doc.node;
+				},
+				createDocumentFragment: function() {
+					return mocks.doc.node
 				},
 				getElementsByTagName: function () {
 					return [mocks.doc.node];
@@ -77,7 +81,10 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 				}
 			},
 			rubiconTier: {
-				parsePrice: function () {
+				parseOpenMarketPrice: function () {
+					return 0;
+				},
+				parsePrivatePrice: function () {
 					return 0;
 				}
 			},
@@ -181,7 +188,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {
@@ -252,8 +259,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(rubiconFastlane.getSlotParams('INCONTENT_BOXAD_1')).toEqual({
-			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050']
+		expect(rubiconFastlane.getSlotParams('TOP_LEADERBOARD')).toEqual({
+			'rpfl_7450': ['2_tierNONE', '8_tier0100', '15_tier0010', '54_tier0050', '57_tierNONE']
 		});
 	});
 

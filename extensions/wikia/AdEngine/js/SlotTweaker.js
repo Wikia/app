@@ -108,18 +108,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function getRecoveredProviderContainer(providerContainer) {
-		var elementId = providerContainer.childNodes.length > 0 && providerContainer.childNodes[0].id,
-			recoveredElementId = win._sp_.getElementId(elementId),
-			element = doc.getElementById(recoveredElementId);
-
-		if (element && element.parentNode) {
-			return element.parentNode;
-		}
-
-		return null;
-	}
-
 	function isBlockedElement(original) {
 		return original.style.display === 'none';
 	}
@@ -139,16 +127,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	function makeResponsive(slotName, aspectRatio) {
 		var slot = doc.getElementById(slotName),
-			providerContainer = slot.lastElementChild,
-			recoveredProviderContainer;
-
-		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
-			recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
-
-			if (recoveredProviderContainer) {
-				providerContainer = recoveredProviderContainer;
-			}
-		}
+			providerContainer = adSlot.getProviderContainer(slotName);
 
 		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
 		slot.classList.add('slot-responsive');

@@ -1,8 +1,12 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.wrappers.prebid'
-], function (adaptersRegistry, prebid) {
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
+	'ext.wikia.adEngine.wrappers.prebid',
+	'wikia.log'
+], function (adaptersRegistry, priceGranularityHelper, prebid, log) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
 
 	function getSlotBestPrice(slotName) {
 		var prebidCmd = prebid.get(),
@@ -10,21 +14,36 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 			bestPrices = {};
 
 		adaptersRegistry.getAdapters().forEach(function(adapter) {
-			bestPrices[adapter.getName()] = undefined;
+			bestPrices[adapter.getName()] = '';
 		});
 
-		slotBids.forEach(function(bid) {
-			bestPrices[bid.bidderCode] = Math.max(bestPrices[bid.bidderCode], bid.pbMg) || 0;
+		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
-			if (typeof bestPrices[bid.bidderCode] !== 'undefined') {
-				bestPrices[bid.bidderCode] = (bestPrices[bid.bidderCode] / 100).toFixed(2).toString();
+		slotBids.forEach(function(bid) {
+			if (isValidPrice(bid)) {
+				var bidderCode = bid.bidderCode,
+					cpmPrice = priceGranularityHelper.transformPriceFromCpm(bid.cpm);
+
+				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
+				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 			}
+
 		});
 
 		return bestPrices;
 	}
 
+	/**
+	 * Checks if bidder has correct status code (is available).
+	 * @param bid object
+	 * @returns {boolean}
+	 */
+	function isValidPrice(bid) {
+		return bid.getStatusCode && bid.getStatusCode() === prebid.validResponseStatusCode;
+	}
+
 	return {
-		getSlotBestPrice: getSlotBestPrice
+		getSlotBestPrice: getSlotBestPrice,
+		_isValidPrice: isValidPrice //for testing only
 	}
 });

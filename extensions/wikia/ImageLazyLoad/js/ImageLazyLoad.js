@@ -4,9 +4,6 @@
 require(['jquery', 'wikia.ImgLzy', 'wikia.browserDetect', 'wikia.window'], function ($, ImgLzy, browserDetect, w) {
 	'use strict';
 
-	// detect WebP support as early as possible
-	ImgLzy.checkWebPSupport();
-
 	// expose as a global
 	window.ImgLzy = ImgLzy;
 

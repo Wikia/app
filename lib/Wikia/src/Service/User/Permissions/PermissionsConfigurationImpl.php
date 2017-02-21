@@ -36,8 +36,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'vanguard',
 		'voldev',
 		'vstf',
-		'fancontributor-staff',
-		'fancontributor-contributor',
 	];
 
 	private $implicitGroups = [
@@ -225,10 +223,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'templatedraft',
 		'textregex',
 		'themedesigner',
-		'toplists-create-edit-list',
-		'toplists-create-item',
-		'toplists-edit-item',
-		'toplists-delete-item',
 		'usermanagement',
 		'removeavatar',
 		'renameuser',
@@ -252,8 +246,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'createclass',
 		'first-edit-dialog-exempt',
 		'hideblockername',
-		'fancontributor-staff',
-		'fancontributor-contributor',
 		'clearuserprofile',
 		'smw-patternedit',
 	];
@@ -408,11 +400,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fancontributor-staff', 'fancontributor-contributor' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fancontributor-staff', 'fancontributor-contributor' ];
-
-		$this->groupsSelfAddableByGroup['fancontributor-staff'] = [ 'fancontributor-contributor' ];
-		$this->groupsSelfRemovableByGroup['fancontributor-staff'] = [ 'fancontributor-staff', 'fancontributor-contributor' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];

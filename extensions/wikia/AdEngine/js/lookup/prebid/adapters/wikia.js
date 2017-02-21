@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	}
 
 	function isEnabled() {
-		return getPrice() !== 0;
+		return qs.getVal('wikia_adapter', false) !== false;
 	}
 
 	function prepareAdUnit(slotName, config) {

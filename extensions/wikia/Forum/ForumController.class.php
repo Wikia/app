@@ -31,30 +31,20 @@ class ForumController extends WallBaseController {
 
 		parent::index( self::BOARD_PER_PAGE );
 
-		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
-		$this->response->addAsset( 'forum_js' );
-		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
-		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
-
-		// VOLDEV-36: separate monobook styling
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
-		}
-
-		$this->addMiniEditorAssets();
-
-		$this->description = '';
+		$this->addAssets();
+		$this->response->setVal( 'description', '' );
+		/** @var Wall $wall */
+		$wall = $this->response->getVal( 'wall' );
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = ForumBoard::getEmpty();
 
-			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
+			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
-			$boardId = $this->wall->getId();
+			$boardId = $wall->getId();
 			/** @var ForumBoard $board */
 			$board = ForumBoard::newFromId( $boardId );
 
@@ -66,7 +56,7 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );
 
-			$this->description = $board->getDescription();
+			$this->response->setVal( 'description', $board->getDescription() );
 
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-title', $this->wg->title->getBaseText() )->plain() );
 		}
@@ -113,17 +103,29 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
-		$this->isTopicPage = $this->getVal( 'isTopicPage', false );
-		if ( $this->isTopicPage ) {
+		$isTopicPage = $this->getVal( 'isTopicPage', false );
+		$this->response->setVal( 'isTopicPage', $isTopicPage );
+
+		if ( $isTopicPage ) {
 			$forum = new Forum();
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
+			$destinationBoards = [
+				[
+					'value' => '',
+					'content' => wfMessage( 'forum-board-destination-empty' )->escaped()
+				]
+			];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
+				$destinationBoards[] = [
+					'value' => htmlspecialchars( $value[ 'name' ] ),
+					'content' => htmlspecialchars( $value[ 'name' ] )
+				];
 			}
+
+			$this->response->setVal( 'destinationBoards', $destinationBoards );
 		}
 
 		// MAIN-7865: Don't render MiniEditor on Monobook
@@ -142,7 +144,8 @@ class ForumController extends WallBaseController {
 
 		$this->response->setVal( 'id', $wallMessage->getId() );
 		$this->response->setVal( 'feedtitle', htmlspecialchars( $wallMessage->getMetaTitle() ) );
-		$this->response->setVal( 'isWatched', $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false ) );
+		$isWatched = $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false );
+		$this->response->setVal( 'isWatched', $isWatched );
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
@@ -168,7 +171,7 @@ class ForumController extends WallBaseController {
 			$name = $lastReply->getUser()->getName();
 		}
 
-		if ( $lastReply->getUser()->getId() == 0 ) {// anynymous contributor
+		if ( $lastReply->getUser()->isAnon() ) {
 			$displayname = wfMessage( 'oasis-anon-user' )->escaped();
 			$displayname2 = $lastReply->getUser()->getName();
 			$url = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $lastReply->getUser()->getName();
@@ -216,15 +219,16 @@ class ForumController extends WallBaseController {
 		$title = $this->wg->Title;
 		$pageHeading = wfMessage( 'forum-specialpage-heading' )->escaped();
 		$pageDescription = '';
-		$this->showStats = true;
+		$showStats = true;
+
 		$nameSpace = $title->getNamespace();
 		if ( $nameSpace === NS_WIKIA_FORUM_BOARD ) {
-			$this->showStats = false;
+			$showStats = false;
 			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
 			$board = ForumBoard::newFromTitle( $title );
 			$pageDescription = $board->getDescription();
 		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
-			$this->showStats = false;
+			$showStats = false;
 			$messageKey = $title->getText();
 			$message = WallMessage::newFromId( $messageKey );
 			if ( !empty( $message ) ) {
@@ -233,8 +237,9 @@ class ForumController extends WallBaseController {
 			}
 		}
 
-		$this->pageHeading = $pageHeading;
-		$this->pageDescription = $pageDescription;
+		$this->response->setVal('showStats', $showStats);
+		$this->response->setVal('pageHeading', $pageHeading);
+		$this->response->setVal('pageDescription', $pageDescription);
 	}
 
 	public function threadMessage() {
@@ -253,17 +258,9 @@ class ForumController extends WallBaseController {
 		parent::messageButtons();
 	}
 
-	protected function addMiniEditorAssets() {
-		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
-			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
-			);
-		}
-	}
-
 	// get sorting options
 	protected function getSortingOptionsText() {
-		switch( $this->sortingType ) {
+		switch ( $this->sortingType ) {
 			case 'history' :
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
@@ -325,22 +322,22 @@ class ForumController extends WallBaseController {
 			$messages = [ ];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
-				if ( $title->getArticleId() == $val['comment_id'] ) {
+				if ( $title->getArticleId() == $val[ 'comment_id' ] ) {
 					continue;
 				}
 
-				$msg = WallMessage::newFromId( $val['comment_id'] );
+				$msg = WallMessage::newFromId( $val[ 'comment_id' ] );
 				if ( !empty( $msg ) ) {
 					$msg->load();
 
 					$message = [ 'message' => $msg ];
 
-					if ( !empty( $val['last_child'] ) ) {
-						$childMsg = WallMessage::newFromId( $val['last_child'] );
+					if ( !empty( $val[ 'last_child' ] ) ) {
+						$childMsg = WallMessage::newFromId( $val[ 'last_child' ] );
 
 						if ( !empty( $childMsg ) ) {
 							$childMsg->load();
-							$message['reply'] = $childMsg;
+							$message[ 'reply' ] = $childMsg;
 						}
 					}
 
@@ -357,7 +354,22 @@ class ForumController extends WallBaseController {
 		}
 	}
 
-	public function messageTopic() {
-		// stub function
+	private function addAssets() {
+		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
+		$this->response->addAsset( 'forum_js' );
+		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
+		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
+
+		// VOLDEV-36: separate monobook styling
+		if ( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
+		}
+
+		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
+			$this->sendRequest( 'MiniEditor', 'loadAssets',
+				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
+			);
+		}
 	}
 }

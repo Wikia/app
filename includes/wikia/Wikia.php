@@ -94,11 +94,14 @@ class Wikia {
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
+	// one for the extension messages, one for the user messages
+	const GADGETS_INTERFACE_PREFIX = 'gadgets-';
+	const GADGET_INTERFACE_PREFIX = 'gadget-';
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
-	private static $vars = array();
+	private static $vars = [];
 	private static $cachedLinker;
 
 	public static function setVar($key, $value) {
@@ -2421,6 +2424,8 @@ class Wikia {
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGETS_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGET_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed( 'editinterface' );
 		}

@@ -23,6 +23,8 @@ $wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
 $wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 $wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
 $wgAutoloadClasses['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
+$wgAutoloadClasses['ForumBoardInfo'] =  $dir . 'ForumBoardInfo.class.php' ;
+$wgAutoloadClasses['ForumPostInfo'] =  $dir . 'ForumPostInfo.class.php' ;
 $wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
 $wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
 $wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
@@ -47,7 +49,6 @@ $wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
 $wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
 $wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
-$wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
 $wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
 $wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
 $wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
@@ -73,7 +74,6 @@ $wgHooks['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreR
 $wgHooks['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
 
 $wgHooks['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
-$wgHooks['ArticleRobotPolicy'][] = 'ForumHooksHelper::onArticleRobotPolicy';
 
 // For activity module tag
 $wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
@@ -87,6 +87,9 @@ $wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGe
 
 // SUS-1196: Invalidate "Forum Activity" rail module when deleting a thread via Nuke / Quick Tools
 $wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
+
+// SUS-260: Prevent moving pages within, into or out of Forum namespaces
+$wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
 
 include ( $dir . '/Forum.namespace.setup.php' );
 

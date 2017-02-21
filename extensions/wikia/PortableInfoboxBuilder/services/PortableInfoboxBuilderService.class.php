@@ -79,7 +79,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 			->setPrefix( dirname( dirname( __FILE__ ) ) . '/templates' )
 			->setData( [
 				'title' => $title->getText(),
-				'sources' => $infobox->getSource()
+				'sources' => $infobox->getSources()
 			] )
 			->render( 'PortableInfoboxBuilderService_getDocumentation.php' );
 	}

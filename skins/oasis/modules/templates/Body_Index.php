@@ -19,7 +19,7 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= ( !empty( $wg->EnableDesignSystem ) ) ? $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) : $app->renderView( 'GlobalNavigation', 'index' ); ?>
+<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
@@ -92,6 +92,9 @@
 					}
 				?>
 
+				<?php if ( $enableArticleVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
+				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
@@ -101,7 +104,7 @@
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
-								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
+								'slotName' => 'TOP_RIGHT_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}

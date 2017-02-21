@@ -24,6 +24,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/wikia/polyfills/promise.js',
 			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
@@ -48,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/browserDetect.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
+			'resources/wikia/modules/domCalculator.js',
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
@@ -61,8 +63,10 @@ module.exports = function (config) {
 			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
+			'resources/wikia/modules/throttle.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/modules/viewportObserver.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
@@ -96,7 +100,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
-			'extensions/wikia/AdEngine/js/video/*.js',
+			'extensions/wikia/AdEngine/js/video/**/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
@@ -166,12 +170,6 @@ module.exports = function (config) {
 			// LyricFind PV tracking
 			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js',
-
-			// ImageLazyLoad
-			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
-			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
 
 			// Thumbnails
 			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',

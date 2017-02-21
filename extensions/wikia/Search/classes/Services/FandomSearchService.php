@@ -24,14 +24,14 @@ class FandomSearchService extends EntitySearchService {
 	}
 
 	protected function consumeResponse( $response ) {
-		$results = [ ];
+		$results = [];
 		foreach ( $response as $item ) {
 			$results[] = [
-				'title' => $item[ 'title' ],
-				'excerpt' => $item[ 'excerpt_t' ],
-				'vertical' => $item[ 'vertical_s' ],
-				'image' => $item[ 'image_s' ],
-				'url' => $item[ 'url' ]
+				'title' => $item['title'],
+				'excerpt' => $item['excerpt_t'],
+				'vertical' => $item['vertical_s'],
+				'image' => $item['image_s'],
+				'url' => $item['url']
 			];
 		}
 

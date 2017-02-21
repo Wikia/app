@@ -54,6 +54,10 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 		.append( this.$uploadLabel )
 		.append( this.uploadButton.$element )
 		.append( this.$form );
+
+	if ( mw.user.anonymous() ) {
+		this.setupForLoggedOut();
+	}
 };
 
 /* Inheritance */
@@ -107,7 +111,9 @@ ve.ui.WikiaUploadWidget.static.validateFile = function ( file ) {
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.onClick = function () {
-	this.$file[0].click();
+	if ( !mw.user.anonymous() ) {
+		this.$file[0].click();
+	}
 };
 
 /**
@@ -219,4 +225,56 @@ ve.ui.WikiaUploadWidget.prototype.hideUploadAnimation = function () {
  */
 ve.ui.WikiaUploadWidget.prototype.getUploadButton = function () {
 	return this.uploadButton;
+};
+
+ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
+	var loginButtonConfig = {
+			$: this.$,
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
+			flags: ['primary']
+		},
+		registerButtonConfig = {
+			$: this.$,
+			classes: [ 've-ui-wikiaRegisterButton' ],
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-register-button' ),
+			flags: ['primary']
+		};
+
+	this.logInButton = new OO.ui.ButtonWidget( loginButtonConfig );
+	this.registerButton = new OO.ui.ButtonWidget( registerButtonConfig );
+
+	this.$logInLabel = this.$( '<span>' )
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' ) );
+
+	this.logInButton.on( 'click', function () {
+		this.emit( 'logInButtonClicked' );
+	}.bind( this ) );
+
+	this.registerButton.on( 'click', function () {
+		this.emit( 'registerButtonClicked' );
+	}.bind( this ) );
+
+	this.$uploadLabel.hide();
+	this.uploadButton.$element.hide();
+
+	this.$element
+		.addClass( 've-ui-wikiaUploadButtonWidgetLogIn' )
+		.append( this.$logInLabel, this.logInButton.$element, this.registerButton.$element );
+};
+
+ve.ui.WikiaUploadWidget.prototype.onLogInSuccess = function ( keepUploadLabelHidden ) {
+	this.$element
+		.removeClass( 've-ui-wikiaUploadButtonWidgetLogIn' );
+
+	this.$logInLabel.remove();
+	this.logInButton.$element.remove();
+	this.registerButton.$element.remove();
+
+	// There is a CSS rule that hides the label when this widget is used in the WikiaMediaQueryWidget
+	// We don't want to show it in this case
+	if ( keepUploadLabelHidden !== true ) {
+		this.$uploadLabel.show();
+	}
+
+	this.uploadButton.$element.show();
 };
