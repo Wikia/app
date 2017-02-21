@@ -2059,15 +2059,6 @@ class WallHooksHelper {
 		return true;
 	}
 
-	// TODO: implement this :)
-	static public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
-		/*
-
-		$oldtext = ArticleComment::removeMetadataTag($oldtext);
-		$newtext = ArticleComment::removeMetadataTag($newtext);; */
-		return true;
-	}
-
 	static public function onAdvancedBoxSearchableNamespaces( &$namespace ) {
 		$namespace = WallHelper::clearNamespaceList( $namespace );
 		return true;
