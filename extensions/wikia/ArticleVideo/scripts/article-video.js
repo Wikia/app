@@ -16,7 +16,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo', 'yout
 				category: 'article-video',
 				trackingMethod: 'analytics'
 			}),
-			playMode = 'CLICK';
+			playMode = getPlayMode();
+
 
 		function getTransitionEndEventName() {
 			var el = document.createElement('div'),
@@ -34,6 +35,14 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo', 'yout
 			}
 
 			return null;
+		}
+
+		function getPlayMode() {
+			var experimentGroup = window.Wikia.AbTest.getGroup('FEATURED_VIDEO_AUTOPLAY');
+			if(experimentGroup) {
+				return experimentGroup;
+			}
+			return 'CLICK';
 		}
 
 		function initVideo(onCreate) {
