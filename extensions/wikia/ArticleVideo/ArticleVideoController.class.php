@@ -5,7 +5,7 @@ class ArticleVideoController extends WikiaController {
 		$wg = F::app()->wg;
 
 		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		$thumbnailPath = $wg->videoMVPArticles[$wg->cityId][$articleId]['thumbnailPath'];
+		$thumbnailPath = $wg->featuredVideos[$articleId]['thumbnailPath'];
 
 		$this->setVal( 'thumbnailUrl', $wg->extensionsPath . $thumbnailPath );
 
@@ -14,6 +14,6 @@ class ArticleVideoController extends WikiaController {
 			$wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 		$this->setVal( 'videoPlayButtonUrl',
 			$wg->extensionsPath . '/wikia/ArticleVideo/images/play-button-solid.svg' );
-		$this->setVal( 'videoDetails', $wg->videoMVPArticles[$wg->cityId][$articleId] );
+		$this->setVal( 'videoDetails', $wg->featuredVideos[$articleId] );
 	}
 }

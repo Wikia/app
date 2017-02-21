@@ -457,7 +457,12 @@ class BodyController extends WikiaController {
 
 		$articleId = $this->wg->Title->getArticleID();
 		$enableArticleVideo =
-			$this->wg->enableArticleVideo && isset( $this->wg->videoMVPArticles[$this->wg->cityId][$articleId] );
+			$this->wg->enableArticleVideo && isset( $this->wg->featuredVideos[$articleId] ) &&
+			$this->isFeaturedVideosValid( $this->wg->featuredVideos[$articleId] );
 		$this->setVal( 'enableArticleVideo', $enableArticleVideo );
+	}
+
+	private function isFeaturedVideosValid( $featuredVideo ) {
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailPath'], $featuredVideo['time'], $featuredVideo['title'] );
 	}
 }
