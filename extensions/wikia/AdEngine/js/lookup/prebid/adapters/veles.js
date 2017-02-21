@@ -48,11 +48,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function fetchPrice(responseXML) {
-		var adParameters,
+		var ad,
+			adParameters,
+			adConfigPrice,
 			parameters;
 
 		if (!responseXML) {
 			return 0;
+		}
+
+		ad = responseXML.documentElement.querySelector('Ad');
+		if (ad && ad.getAttribute('id') && instantGlobals.wgAdDriverVelesBidderConfig) {
+			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
+			if (adConfigPrice) {
+				return parseInt(adConfigPrice, 10) / 100;
+			}
 		}
 
 		adParameters = responseXML.documentElement.querySelector('AdParameters');
