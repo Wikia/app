@@ -542,6 +542,9 @@ var NodeChatUsers = Backbone.View.extend({
 			username = $element.data('user'),
 			ul = $('<ul>');
 
+		// SUS-1695: add username to menu
+		menu.find('.username').data('name', username);
+
 		// position menu
 		menu.css('right', $('#Rail').outerWidth()).css('top', offset.top);
 
