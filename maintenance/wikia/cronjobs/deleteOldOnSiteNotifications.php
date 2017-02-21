@@ -15,6 +15,7 @@ class deleteOldOnSiteNotifications extends Maintenance {
 	const SERVICE_NAME = "on-site-notifications";
 	const TIMEOUT = 5;
 	const REQUIRED_HEADER_ARG = 1;
+	const NO_CONTENT = 204;
 
 	public function __construct() {
 		parent::__construct();
@@ -25,7 +26,7 @@ class deleteOldOnSiteNotifications extends Maintenance {
 		$api = $this->getMaintenanceApi();
 		try {
 			list( $notUsed, $statusCode, $httpHeader ) = $api->clearOldNotificationsWithHttpInfo( self::REQUIRED_HEADER_ARG );
-			if ( $statusCode == 204 ) {
+			if ( $statusCode == self::NO_CONTENT ) {
 				$this->logSuccess();
 			} else {
 				$this->logFailure( $statusCode, $httpHeader );
@@ -49,7 +50,7 @@ class deleteOldOnSiteNotifications extends Maintenance {
 	}
 
 	private function logException( Exception $e ) {
-		WikiaLogger::instance()->error( 'ONSITE_NOTIFICATIONS exception occurred when attempting to clearn old notifications',
+		WikiaLogger::instance()->error( 'ONSITE_NOTIFICATIONS exception occurred when attempting to clear old notifications',
 			[
 				'exception' => $e
 			]
@@ -58,9 +59,9 @@ class deleteOldOnSiteNotifications extends Maintenance {
 
 	private function getMaintenanceApi(): MaintenanceApi {
 		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		$api = $apiProvider->getApi(self::SERVICE_NAME, MaintenanceApi::class);
-		$api->getApiClient()->getConfig()->setCurlTimeout(self::TIMEOUT);
+		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
 
 		return $api;
 	}
