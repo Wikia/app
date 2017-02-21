@@ -173,8 +173,8 @@ class ApiQueryUsers extends ApiQueryBase {
 						$data[$name]['phalanxblockreason'] = $blockInfo->mReason;
 						$data[$name]['phalanxblockexpiry'] = $blockInfo->getExpiry();
 
-						// reset field so that we can load info for local block
-						$user->mBlockedby = -1;
+						// reset fields so that we can load info for local block
+						$user->clearBlockInfo();
 
 						// load info for local block and display it in its own fields
 						$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );

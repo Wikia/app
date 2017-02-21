@@ -1373,6 +1373,19 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * SUS-1649: Clear all block-related info from this instance of User class
+	 * This allows us to re-run block check functions with different parameters (e.g. checking for only local blocks)
+	 * @see User::getBlockedStatus()
+	 */
+	public function clearBlockInfo() {
+		$this->mBlock = null;
+		$this->mBlockedby = -1;
+		$this->mBlockreason = '';
+		$this->mHideName = 0;
+		$this->mAllowUsertalk = false;
+	}
+
+	/**
 	 * Whether the given IP is in a DNS blacklist.
 	 *
 	 * @param $ip String IP to check
