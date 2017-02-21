@@ -40,8 +40,8 @@ class WallHelperTest extends WikiaBaseTest {
 				'Karawan z Holandii, on przyjechał tutaj wreszcie, Są już Kula, Czarny Dusioł - słychać strzały na mieście. Znam jednak takie miejsca gd...'
 			],
 			'message with interwoven HTML' => [
-				'Classic: <div class="quote">Name und Vorname? Grzegorz Brzęczyszczykiewic.</div>',
-				'Classic: Name und Vorname? Grzegorz Brzęczyszczykiewic.'
+				'Classic: <div class="quote">Name und Vorname? Grzegorz Brzęczyszczykiewicz.</div>',
+				'Classic: Name und Vorname? Grzegorz Brzęczyszczykiewicz.'
 			],
 			'long message with interwoven HTML' => [
 				'Read the license: <div class="quote">MediaWiki is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</div>',
