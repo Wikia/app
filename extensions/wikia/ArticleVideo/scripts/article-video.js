@@ -5,7 +5,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
-			$videoPlayBtn = $videoContainer.find('.video-play-button'),
+			$videoBtn = $videoContainer.find('.video-button'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
@@ -125,6 +125,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			return false;
 		}
 
+		function isCountdownActive() {
+			alert($videoBtn.hasClass('paused'));
+			return $videoBtn.hasClass('paused');
+		}
+
 		function isVideoInFullScreenMode() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.getFullscreen();
@@ -168,24 +173,30 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			if (!$video.hasClass('played')) {
 				return;
 			}
-			if (isVideoPausedOrReady()) {
+
+			if (isVideoPlaying() || isCountdownActive()) {
+				ooyalaVideoController.player.pause();
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-collapsed-pause'
+				})
+			}
+			else if (isVideoPausedOrReady()) {
 				ooyalaVideoController.player.play();
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-collapsed-play'
 				});
-			} else if (isVideoPlaying()) {
-				ooyalaVideoController.player.pause();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-pause'
-				});
-			}
+			};
 		}
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 			$video.one('click', showAndPlayVideo);
+
+			$videoBtn.one('animationend oAnimationEnd webkitAnimationEnd', '.countdown-track', function () {
+				$videoBtn.removeClass('paused');
+			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
 				track({
@@ -216,7 +227,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 
 		$closeBtn.click(closeButtonClicked);
 
-		$videoPlayBtn.click(playPauseVideo);
+		$videoBtn.click(playPauseVideo);
 
 		onScroll.bind(toggleCollapse);
 	});

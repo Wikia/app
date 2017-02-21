@@ -1,9 +1,17 @@
+@import 'skins/shared/color';
+
 $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
 
 $spinner-color: #ccc;
 $spinnerSize: 48;
+
+$play-countdown-time: 5s;
+$play-countdown-border-width: 8px;
+$play-countdown-track-width: 6px;
+$play-countdown-track-padding: ($play-countdown-border-width  - $play-countdown-track-width) / 2;
+$play-button-size: 80px;
 
 @keyframes spinner {
 	0% {
@@ -72,12 +80,52 @@ $spinnerSize: 48;
 		text-transform: uppercase;
 	}
 
-	.video-play-button {
+	.video-button {
+		background-color: $color-buttons;
+		border-radius: $play-button-size;
 		bottom: 15px;
-		height: 120px;
+		height: $play-button-size;
 		position: absolute;
 		right: 15px;
-		width: 120px;
+		width: $play-button-size;
+
+		&:before, &:after {
+			background-repeat: no-repeat;
+			content: '';
+			display: block;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			-webkit-transition: opacity 1.5s;
+			transition: opacity .15s;
+		}
+
+		&:before {
+			background-image: url('/extensions/wikia/ArticleVideo/images/play-button.svg'); /* wgCdnStylePath */
+			height: 30px;
+			margin-left: 4px;
+			opacity: 1;
+			width: 22px;
+		}
+
+		&:after {
+			background-image: url('/extensions/wikia/ArticleVideo/images/pause-button.svg'); /* wgCdnStylePath */
+			height: 26px;
+			opacity: 0;
+			width: 26px;
+		}
+
+		&.paused {
+			&:before {
+				opacity: 0;
+			}
+
+			&:after {
+				opacity: 1;
+			}
+		}
 	}
 
 	.video-container {
@@ -123,7 +171,7 @@ $spinnerSize: 48;
 	&.played.ready-to-play {
 		cursor: default;
 
-		.video-play-button {
+		.video-button {
 			cursor: pointer;
 		}
 	}
@@ -187,7 +235,7 @@ $spinnerSize: 48;
 				position: static;
 			}
 
-			.video-play-button {
+			.video-button {
 				height: 60px;
 				margin: 0;
 				position: static;
@@ -253,4 +301,94 @@ $spinnerSize: 48;
 
 .WikiaMainContent {
 	z-index: 3;
+}
+
+@-webkit-keyframes left-rotate {
+	0% { -webkit-transform: rotate(0deg); }
+	50% { -webkit-transform: rotate(-180deg); }
+	100% { -webkit-transform: rotate(-180deg); }
+}
+
+@-webkit-keyframes right-rotate {
+	0% { -webkit-transform: rotate(0deg); }
+	50% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(-180deg); }
+}
+
+@keyframes left-rotate {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(-180deg); }
+	100% { transform: rotate(-180deg); }
+}
+
+@keyframes right-rotate {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(0deg); }
+	100% { transform: rotate(-180deg); }
+}
+
+
+.video-button {
+	.countdown-timer {
+		-webkit-border-radius: 100%;
+		border-radius: 100%;
+		bottom: $play-countdown-track-padding;
+		box-shadow: inset 0 0 0 $play-countdown-border-width rgba(#000, .08);
+		left: $play-countdown-track-padding;
+		position: absolute;
+		right: $play-countdown-track-padding;
+		top: $play-countdown-track-padding;
+
+		.left-half, .right-half {
+			float: left;
+			height: 100%;
+			overflow: hidden;
+			width: 50%;
+
+			.countdown-track {
+				-webkit-animation-duration: $play-countdown-time;
+				animation-duration: $play-countdown-time;
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-animation-timing-function: linear;
+				animation-timing-function: linear;
+				border: $play-countdown-track-width solid rgba(#fff, .75);
+				box-sizing: border-box;
+				content: '';
+				display: block;
+				height: 100%;
+				width: 100%;
+			}
+		}
+
+		.left-half .countdown-track {
+			border-bottom-left-radius: $play-button-size;
+			border-right: 0;
+			border-top-left-radius: $play-button-size;
+			-webkit-transform-origin: right center;
+			transform-origin: right center;
+		}
+
+		.right-half .countdown-track {
+			border-bottom-right-radius: $play-button-size;
+			border-left: 0;
+			border-top-right-radius: $play-button-size;
+			-webkit-transform-origin: left center;
+			transform-origin: left center;
+		}
+	}
+}
+
+.ready-to-play .video-button {
+	.countdown-timer {
+		.left-half .countdown-track {
+			-webkit-animation-name: left-rotate;
+			animation-name: left-rotate;
+		}
+
+		.right-half .countdown-track {
+			-webkit-animation-name: right-rotate;
+			animation-name: right-rotate;
+		}
+	}
 }

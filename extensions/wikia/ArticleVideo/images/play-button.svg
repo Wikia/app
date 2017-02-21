@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="22px" height="30px" viewBox="0 0 22 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>753C192B-1994-4736-9E7A-37C82D2C03C5</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Countdown" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Vide-Play-Button-UI" transform="translate(-907.000000, -232.000000)" fill="#FFFFFF">
+            <g id="Play" transform="translate(874.000000, 207.000000)">
+                <path d="M54.573,40.8184795 L34.573,54.8184795 C34.402,54.9384795 34.201,54.9994795 34,54.9994795 C33.842,54.9994795 33.684,54.9614795 33.538,54.8864795 C33.207,54.7144795 33,54.3724795 33,53.9994795 L33,25.9994795 C33,25.6264795 33.207,25.2844795 33.538,25.1124795 C33.868,24.9414795 34.267,24.9664795 34.573,25.1804795 L54.573,39.1804795 C54.841,39.3674795 55,39.6734795 55,39.9994795 C55,40.3254795 54.841,40.6314795 54.573,40.8184795 Z" id="Play-Triangle"></path>
+            </g>
+        </g>
+    </g>
+</svg>
