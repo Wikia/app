@@ -329,6 +329,7 @@ class WallExternalController extends WikiaController {
 		 */
 		switch( $mode ) {
 			case 'rev':
+				// removes Wall's page table entry via ArticleComment::doDeleteComment)
 				if ( $mw->canDelete( $this->wg->User ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
 				} else {
@@ -337,6 +338,7 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'admin':
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props and deleted = 1 in comments_index table
 				if ( $mw->canAdminDelete( $this->wg->User ) ) {
 					$result = $mw->adminDelete( $this->wg->User, $reason, $notify );
 				} else {
@@ -345,6 +347,8 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'fastadmin':
+				// same as above, but does not require reason to be provided
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props
 				if ( $mw->canFastAdminDelete( $this->wg->User ) ) {
 					$result = $mw->adminDelete( $this->wg->User );
 				} else {
@@ -353,6 +357,7 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'remove':
+				// marks a comment with WPP_WALL_REMOVE entry in page_wikia_props and removed = 1 in comments_index table
 				if ( !$mw->canModerate( $this->wg->User ) ) {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
