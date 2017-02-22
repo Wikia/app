@@ -424,8 +424,10 @@ var NodeChatUsers = Backbone.View.extend({
 
 		this.delegateEventsToTrigger(this.triggerEvents, function(e) {
     		e.preventDefault();
+    		// handle click on opened dropdown menu
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
-    		if(!(name.length > 0)) {
+    		if (!name) {
+    			// handle click on right rail user item
     			name = $(e.target).closest('li.User').data('user');
     		}
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
