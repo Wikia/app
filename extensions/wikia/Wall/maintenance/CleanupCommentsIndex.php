@@ -17,7 +17,7 @@ class CleanupCommentsIndex extends Maintenance {
 		$ids = $db->selectFieldValues(
 			[ 'page', 'comments_index' ],
 			'comment_id',
-			[ 'page_id=comment_id', 'page_namespace not in (1,500,501,1200,1201,2000,2001)' ],
+			[ 'page_id=comment_id', 'page_namespace not in (500,501,1200,1201,2000,2001)' ],
 			__METHOD__
 		);
 
