@@ -426,7 +426,7 @@ var NodeChatUsers = Backbone.View.extend({
     		e.preventDefault();
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
     		if(!(name.length > 0)) {
-    			name = $(e.target).closest('li').find('.username').first().data('name');
+    			name = $(e.target).closest('li.User').data('user');
     		}
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
 		});
