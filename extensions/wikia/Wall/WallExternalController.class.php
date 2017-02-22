@@ -332,6 +332,10 @@ class WallExternalController extends WikiaController {
 				// removes Wall's page table entry via ArticleComment::doDeleteComment)
 				if ( $mw->canDelete( $this->wg->User ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
+
+					// we just want to set status field in JSON response
+					$this->response->setVal( 'status', $result );
+					return true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
