@@ -315,14 +315,20 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		$isDeleteOrRemove = true;
-
+		/**
+		 * As documented in Wall.js:557
+		 *
+		 * work as delete(mode: rev),
+		 * admin delete(mode:admin),
+		 * remove(mode: remove),
+		 * restore(mode: restore)
+		 *
+		 * Mode name is kept as data-mode attribute in HTML templates
+		 */
 		switch( $this->request->getVal( 'mode' ) ) {
 			case 'rev':
 				if ( $mw->canDelete( $this->wg->User ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
-					$this->response->setVal( 'status', $result );
-					return true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
@@ -331,8 +337,6 @@ class WallExternalController extends WikiaController {
 			case 'admin':
 				if ( $mw->canAdminDelete( $this->wg->User ) ) {
 					$result = $mw->adminDelete( $this->wg->User, $reason, $notify );
-					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
@@ -340,9 +344,7 @@ class WallExternalController extends WikiaController {
 
 			case 'fastadmin':
 				if ( $mw->canFastAdminDelete( $this->wg->User ) ) {
-					$result = $mw->fastAdminDelete( $this->wg->User, $reason, $notify );
-					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
+					$result = $mw->adminDelete( $this->wg->User );
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
@@ -354,26 +356,19 @@ class WallExternalController extends WikiaController {
 				}
 
 				if ( $mw->canRemove( $this->wg->User ) ) {
-					$this->response->setVal( 'status', $result );
 					$result = $mw->remove( $this->wg->User, $reason, $notify );
-
-					$this->response->setVal( 'status', $result );
-					// TODO: log/save data
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 		}
 
-		if ( $isDeleteOrRemove ) {
-			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
-			$mw->getLastActionReason();
-			$mw->invalidateCache();
-			$this->response->setVal( 'deleteInfoBox', 'INFO BOX' );
-		}
-
+		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
 		$this->response->setVal( 'status', $result );
+
+		$mw->getLastActionReason();
+		$mw->invalidateCache();
+
 		return true;
 	}
 
