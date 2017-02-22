@@ -1,8 +1,8 @@
-<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >
+<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($removedOrDeletedMessage ?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >
 	<?php echo $head ?>
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', [ 'showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment ] ); ?>
 
-	<? if($showRemovedBox): ?>
+	<? if( $removedOrDeletedMessage ): ?>
 		<div class='removed-info speech-bubble-message-removed' >
 			<?php echo wfMsg('wall-removed-reply'); ?>
 		</div>
