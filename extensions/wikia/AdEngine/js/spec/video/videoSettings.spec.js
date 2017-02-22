@@ -17,21 +17,24 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 
 	it('Should be not auto play without autoplay parameter', function () {
 		var videoSettings = getSettings();
-		expect(false).toMatch(videoSettings.isAutoPlay());
+
+		expect(videoSettings.isAutoPlay()).toBeFalsy()
 	});
 
 	it('Should be auto play for default state with parameter', function () {
 		var videoSettings = getSettings({
 			autoPlay: true
 		});
-		expect(true).toMatch(videoSettings.isAutoPlay());
+
+		expect(videoSettings.isAutoPlay()).toBeTruthy()
 	});
 
 	it('Should not be auto play for default state with incorrect parameter', function () {
 		var videoSettings = getSettings({
 			autoPlay: false
 		});
-		expect(false).toMatch(videoSettings.isAutoPlay());
+
+		expect(videoSettings.isAutoPlay()).toBeFalsy()
 	});
 
 	it('Should be auto play for resolved state with autoplay parameter', function () {
@@ -43,7 +46,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			resolvedStateAutoPlay: true
 		});
 
-		expect(true).toMatch(videoSettings.isAutoPlay());
+		expect(videoSettings.isAutoPlay()).toBeTruthy()
 	});
 
 	it('Should not be auto play for resolved state without autoplay parameter', function () {
@@ -54,7 +57,8 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			autoPlay: false,
 			resolvedAutoPlay: false
 		});
-		expect(false).toMatch(videoSettings.isAutoPlay());
+
+		expect(videoSettings.isAutoPlay()).toBeFalsy()
 	});
 });
 
