@@ -2,29 +2,29 @@
 class ARecoveryBootstrapCode {
 	public static function getHeadBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
-			(new PageFairBootstrapCode())->getHeadCode() :
-			static::getBootstrapDisabledMessage('Head');
+		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
+			static::getBootstrapDisabledMessage('Head') :
+			(new PageFairBootstrapCode())->getHeadCode();
 	}
 	
 	public static function getTopBodyBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
-			(new PageFairBootstrapCode())->getTopBodyCode() :
-			static::getBootstrapDisabledMessage('Top body');
+		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
+			static::getBootstrapDisabledMessage('Top body') :
+			(new PageFairBootstrapCode())->getTopBodyCode();
 	}
 	
 	public static function getBottomBodyBootstrapCode() {
 
-		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
-			(new PageFairBootstrapCode())->getBottomBodyCode() :
-			static::getBootstrapDisabledMessage('Bottom body');
+		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
+			static::getBootstrapDisabledMessage('Bottom body') :
+			(new PageFairBootstrapCode())->getBottomBodyCode();
 	}
 
 	public static function getSourcePointBootstrapCode() {
-		return (new ARecoveryModule())->isSourcePointRecoveryEnabled() ?
-			static::getBootstrapCode() :
-			static::getBootstrapDisabledMessage();
+		return (new ARecoveryModule())->isSourcePointRecoveryDisabled() ?
+			static::getBootstrapDisabledMessage() :
+			static::getBootstrapCode();
 	}
 
 	private static function getBootstrapCode() {

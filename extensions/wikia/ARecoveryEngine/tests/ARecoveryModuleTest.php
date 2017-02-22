@@ -4,10 +4,10 @@
 class ARecoveryModuleTest extends WikiaBaseTest {
 	const BOOTSTRAP_CODE = 'BOOTSTRAP_CODE';
 
-	public function getUser( $isAnon ) {
+	public function getUser( $isLoggedIn ) {
 		$stubs = $this->getMockBuilder( User::class )->getMock();
-		$stubs->method( 'isAnon' )
-			->willReturn( $isAnon );
+		$stubs->method( 'isLoggedIn' )
+			->willReturn( $isLoggedIn );
 		return $stubs;
 	}
 
@@ -15,38 +15,38 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		// User is logged in, SPRecoveryEnabled, SPMMSEnabled, isDisabled (expected value)
 		return [
 			// User is not logged in
-			[true, false, false, false],
-			[true, false, true, false],
-			[true, true, false, true],
-			[true, true, true, false],
+			[false, false, false, false],
+			[false, false, true, false],
+			[false, true, false, true],
+			[false, true, true, false],
 
 			// User is logged in
-			[false, true, true, false],
-			[false, false, false, false],
+			[true, true, false, false],
+			[true, false, false, false],
 		];
 	}
 
 	/**
 	 * @dataProvider getData
 	 *
-	 * @param $isAnon boolean - current user is loggedIn
-	 * @param $hasSourcePointEnabledWgVars
-	 * @param $hasPageFairEnabledWgVars
-	 * @param $expected boolean - is SourcePoint recovery enabled
+	 * @param $isLoggedIn boolean
+	 * @param $hasSourcePointDisabledWgVars
+	 * @param $hasPageFairDisabledWgVars
+	 * @param $expected boolean - is SourcePoint recovery disabled
 	 */
-	public function testSourcePointRecoveryEnabled($isAnon, $hasSourcePointEnabledWgVars, $hasPageFairEnabledWgVars, $expected ) {
-		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isAnon ) );
+	public function testSourcePointRecoveryDisabled( $isLoggedIn, $hasSourcePointDisabledWgVars, $hasPageFairDisabledWgVars, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isLoggedIn ) );
 
 		$object = $this->getMockBuilder('ARecoveryModule')
-			->setMethods(['hasPageFairEnabledWgVars', 'hasSourcePointEnabledWgVars'])
+			->setMethods(['hasPageFairDisabledWgVars', 'hasSourcePointDisabledWgVars'])
 			->getMock();
 		$object->expects($this->any())
-			->method('hasPageFairEnabledWgVars')
-			->will($this->returnValue($hasPageFairEnabledWgVars));
+			->method('hasPageFairDisabledWgVars')
+			->will($this->returnValue($hasPageFairDisabledWgVars));
 		$object->expects($this->any())
-			->method('hasSourcePointEnabledWgVars')
-			->will($this->returnValue($hasSourcePointEnabledWgVars));
+			->method('hasSourcePointDisabledWgVars')
+			->will($this->returnValue($hasSourcePointDisabledWgVars));
 
-		$this->assertEquals( $expected, $object->isSourcePointRecoveryEnabled() );
+		$this->assertEquals( $expected, $object->isSourcePointRecoveryDisabled() );
 	}
 }

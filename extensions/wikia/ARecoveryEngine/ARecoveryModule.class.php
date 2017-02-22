@@ -6,18 +6,17 @@ class ARecoveryModule {
 	 *
 	 * @return bool
 	 */
-	public function isPageFairRecoveryEnabled() {
+	public function isPageFairRecoveryDisabled() {
 		global $wgUser;
 
-		return $wgUser->isAnon() &&
-			!$this->hasSourcePointEnabledWgVars() &&
-			$this->hasPageFairEnabledWgVars();
+		return $wgUser->isLoggedIn() ||
+			( $this->hasSourcePointDisabledWgVars() && !$this->hasPageFairDisabledWgVars() );
 	}
 
-	protected function hasPageFairEnabledWgVars() {
+	protected function hasPageFairDisabledWgVars() {
 		global $wgAdDriverEnablePageFairRecovery;
 
-		return $wgAdDriverEnablePageFairRecovery;
+		return $wgAdDriverEnablePageFairRecovery === false;
 	}
 
 	/**
@@ -25,17 +24,16 @@ class ARecoveryModule {
 	 *
 	 * @return bool
 	 */
-	public function isSourcePointRecoveryEnabled() {
+	public function isSourcePointRecoveryDisabled() {
 		global $wgUser;
 
-		return $wgUser->isAnon() &&
-			!$this->hasPageFairEnabledWgVars() &&
-			$this->hasSourcePointEnabledWgVars();
+		return $wgUser->isLoggedIn() ||
+			( $this->hasPageFairDisabledWgVars() && !$this->hasSourcePointDisabledWgVars() );
 	}
 
-	protected function hasSourcePointEnabledWgVars() {
+	protected function hasSourcePointDisabledWgVars() {
 		global $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
-		return $wgAdDriverEnableSourcePointRecovery && $wgAdDriverEnableSourcePointMMS;
+		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
 	}
 }

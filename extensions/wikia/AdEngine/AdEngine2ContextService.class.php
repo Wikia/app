@@ -93,8 +93,13 @@ class AdEngine2ContextService {
 
 			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
 			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
-			// look at
-			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->wgAdDriverEnablePageFairRecovery : false;
+
+			/**
+			* $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+			* $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+			* $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverPageFairRecoveryCountries
+			*/
+			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnablePageFairRecovery : false;
 
 			return $context;
 		} );
