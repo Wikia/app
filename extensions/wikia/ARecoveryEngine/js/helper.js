@@ -39,13 +39,17 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function isSourcePointRecoveryEnabled() {
-		log(['isSourcePointRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
-		return !!context.opts.sourcePointRecovery;
+		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
+
+		log(['isSourcePointRecoveryEnabled', enabled, 'debug', logGroup]);
+		return enabled;
 	}
 
 	function isPageFairRecoveryEnabled() {
-		log(['isPageFairRecoveryEnabled', !!context.opts.pageFairRecovery], 'debug', logGroup);
-		return !!context.opts.pageFairRecovery;
+		var enabled = !!context.opts.pageFairRecovery && !context.opts.sourcePointRecovery;
+
+		log(['isPageFairRecoveryEnabled', enabled, 'debug', logGroup]);
+		return enabled;
 	}
 
 	function isBlocking() {
@@ -53,9 +57,8 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
-	function isRecoverable(slotName, recoverableSlots) {
-		//@TODO ADEN-3893 - this should take pagefair var under consideration as well - SP recovery is disabled
-		return true && recoverableSlots.indexOf(slotName) !== -1;
+	function isSourcePointRecoverable(slotName, recoverableSlots) {
+		return isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
 	function track(type) {
@@ -106,7 +109,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		getSafeUri: getSafeUri,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isRecoverable: isRecoverable,
+		isSourcePointRecoverable: isSourcePointRecoverable,
 		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
 		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
 		track: track,
