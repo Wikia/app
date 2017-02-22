@@ -31,12 +31,6 @@ class CommentsIndexEntry {
 	private $deleted = false;
 	/** @var bool $removed */
 	private $removed = false;
-	/** @var bool $locked */
-	private $locked = false;
-	/** @var bool $protected */
-	private $protected = false;
-	/** @var bool $sticky */
-	private $sticky = false;
 
 	/** @var string $createdAt */
 	private $createdAt = "";
@@ -58,9 +52,6 @@ class CommentsIndexEntry {
 				->setArchived( $row->archived )
 				->setDeleted( $row->deleted )
 				->setRemoved( $row->removed )
-				->setLocked( $row->locked )
-				->setProtected( $row->protected )
-				->setSticky( $row->sticky )
 				->setFirstRevId( $row->first_rev_id )
 				->setCreatedAt( $row->created_at )
 				->setLastRevId( $row->last_rev_id )
@@ -148,57 +139,6 @@ class CommentsIndexEntry {
 	 */
 	public function setRemoved( bool $removed ): CommentsIndexEntry {
 		$this->removed = $removed;
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isLocked(): bool {
-		return $this->locked;
-	}
-
-	/**
-	 * @param bool $locked
-	 * @return CommentsIndexEntry
-	 */
-	public function setLocked( bool $locked ): CommentsIndexEntry {
-		$this->locked = $locked;
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isProtected(): bool {
-		return $this->protected;
-	}
-
-	/**
-	 * @param bool $protected
-	 * @return CommentsIndexEntry
-	 */
-	public function setProtected( bool $protected ): CommentsIndexEntry {
-		$this->protected = $protected;
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isSticky(): bool {
-		return $this->sticky;
-	}
-
-	/**
-	 * @param bool $sticky
-	 * @return CommentsIndexEntry
-	 */
-	public function setSticky( bool $sticky ): CommentsIndexEntry {
-		$this->sticky = $sticky;
 
 		return $this;
 	}
@@ -336,9 +276,6 @@ class CommentsIndexEntry {
 			'archived' => $this->archived,
 			'deleted' => $this->deleted,
 			'removed' => $this->removed,
-			'locked' => $this->locked,
-			'protected' => $this->protected,
-			'sticky' => $this->sticky,
 			'first_rev_id' => $this->firstRevId,
 			'created_at' => $this->createdAt,
 			'last_rev_id' => $this->lastRevId,
