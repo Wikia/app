@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/../../Maintenance.php');
 class deleteOldOnSiteNotifications extends Maintenance {
 
 	const SERVICE_NAME = "on-site-notifications";
-	const TIMEOUT = 5;
+	const TIMEOUT = 15;
 	const REQUIRED_HEADER_ARG = 1;
 	const NO_CONTENT = 204;
 
@@ -25,9 +25,10 @@ class deleteOldOnSiteNotifications extends Maintenance {
 	public function execute() {
 		$api = $this->getMaintenanceApi();
 		try {
+			$startTime = microtime( true );
 			list( $notUsed, $statusCode, $httpHeader ) = $api->clearOldNotificationsWithHttpInfo( self::REQUIRED_HEADER_ARG );
 			if ( $statusCode == self::NO_CONTENT ) {
-				$this->logSuccess();
+				$this->logSuccess( $startTime );
 			} else {
 				$this->logFailure( $statusCode, $httpHeader );
 			}
@@ -36,8 +37,12 @@ class deleteOldOnSiteNotifications extends Maintenance {
 		}
 	}
 
-	private function logSuccess() {
-		WikiaLogger::instance()->info( 'ONSITE_NOTIFICATIONS Successfully cleared old notifications' );
+	private function logSuccess( $startTime ) {
+		WikiaLogger::instance()->info( 'ONSITE_NOTIFICATIONS Successfully cleared old notifications',
+			[
+				'elapsedTime' => microtime( true ) - $startTime
+			]
+		);
 	}
 
 	private function logFailure( $statusCode, $httpHeader ) {
