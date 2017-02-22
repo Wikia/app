@@ -279,6 +279,11 @@ class CuratedContentController extends WikiaController {
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = json_decode( $this->request->getVal( 'data' ), true );
+			// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+			if ( $data === null ) {
+				// fallback to old format
+				$data = $this->request->getArray( 'data', [ ] );
+			}
 			$properData = [ ];
 			$status = false;
 
@@ -314,6 +319,11 @@ class CuratedContentController extends WikiaController {
 				$this->response->setVal( 'errors', $errors );
 			} else {
 				$community_data = json_decode( $this->request->getVal( 'community_data' ), true );
+				// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+				if ( $community_data === null ) {
+					// fallback to old format
+					$community_data = $this->request->getArray( 'community_data', [ ] );
+				}
 				if ( $community_data ) {
 					$community_data[ 'community_data' ] = 'true';
 					$sections[] = $community_data;
