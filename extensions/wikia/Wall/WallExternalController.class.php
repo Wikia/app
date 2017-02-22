@@ -320,10 +320,10 @@ class WallExternalController extends WikiaController {
 		/**
 		 * As documented in Wall.js:557
 		 *
-		 * work as delete(mode: rev),
-		 * admin delete(mode:admin),
-		 * remove(mode: remove),
-		 * restore(mode: restore)
+		 * work as delete (mode: rev),
+		 * admin delete (mode:admin),
+		 * remove (mode: remove),
+		 * restore (mode: restore)
 		 *
 		 * Mode name is kept as data-mode attribute in HTML templates
 		 */
