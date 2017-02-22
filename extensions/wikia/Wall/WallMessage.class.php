@@ -204,9 +204,10 @@ class WallMessage {
 	 */
 	public function canEdit( User $user, $shouldLogBlockInStats = true ) {
 		wfProfileIn( __METHOD__ );
-		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) && (
-				$this->isAuthor( $user ) || $this->can( $user, 'walledit', $shouldLogBlockInStats ) ||
-				$this->can( $user, 'rollback', $shouldLogBlockInStats )
+		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) &&
+			(
+				$this->isAuthor( $user ) ||
+				$this->can( $user, 'walledit', $shouldLogBlockInStats )
 			);
 		wfProfileOut( __METHOD__ );
 		return $out;
