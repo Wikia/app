@@ -38,8 +38,8 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		onNotBlockingEventsQueue.push(callback);
 	}
 
-	function isRecoveryEnabled() {
-		log(['isRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
+	function isSourcePointRecoveryEnabled() {
+		log(['isSourcePointRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
 		return !!context.opts.sourcePointRecovery;
 	}
 
@@ -88,7 +88,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function getSafeUri(url) {
-		if (isRecoveryEnabled() && isBlocking()) {
+		if (isSourcePointRecoveryEnabled() && isBlocking()) {
 			url = win._sp_.getSafeUri(url);
 		}
 
@@ -102,7 +102,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
-		isRecoveryEnabled: isRecoveryEnabled,
+		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};

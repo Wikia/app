@@ -165,7 +165,7 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (recoveryHelper.isRecoveryEnabled()) {
+					if (recoveryHelper.isSourcePointRecoveryEnabled()) {
 						recoveryHelper.addOnBlockingCallback(initRecoveredPlayer);
 						recoveryHelper.addOnNotBlockingCallback(initRegularPlayer);
 					} else {

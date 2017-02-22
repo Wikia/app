@@ -49,7 +49,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	}
 
 	function isTweakable() {
-		return recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking();
+		return recoveryHelper.isSourcePointRecoveryEnabled() && recoveryHelper.isBlocking();
 	}
 
 	return {

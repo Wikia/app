@@ -31,7 +31,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				recoverSlots: noop,
 				isBlocking: noop,
 				isRecoverable: noop,
-				isRecoveryEnabled: noop
+				isSourcePointRecoveryEnabled: noop
 			},
 			slotTweaker: {
 				show: noop,

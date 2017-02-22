@@ -115,7 +115,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					win.adslots2.push({
 						slotName: slotName,
 						onSuccess: function () {
-							if (recoveryHelper.isRecoveryEnabled()) {
+							if (recoveryHelper.isSourcePointRecoveryEnabled()) {
 								recoveryHelper.addOnBlockingCallback(replaceAdSlot);
 							}
 
