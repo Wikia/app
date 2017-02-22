@@ -370,18 +370,19 @@ class CuratedContentController extends WikiaController {
 				}
 
 				$data = array_map( function ( $section ) {
-					$section[ 'node_type' ] = 'section';
-					$section['items'] = array_filter( $section['items'], function ( $item ) {
-						return Title::newFromText( $item['title'] )->isKnown();
-					} );
-					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
-					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
+					$section['node_type'] = 'section';
+					$section['items'] = array_values( array_filter( $section['items'], function ( $item ) {
+						$title = Title::newFromText( $item['title'] );
+						return $title->isKnown() || Category::newFromTitle( $title )->getPageCount() > 0;
+					} ) );
+					$section['items'] = $this->extendItemsWithImages( $section['items'] );
+					$section['items'] = $this->extendItemsWithType( $section['items'] );
 					return $section;
 				}, $curated );
 
-				$data = array_filter( $data, function ( $section ) {
+				$data = array_values( array_filter( $data, function ( $section ) {
 					return !empty( $section['items'] );
-				} );
+				} ) );
 
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
