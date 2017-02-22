@@ -22,16 +22,16 @@
 		<div class="speech-bubble-message">
 			<? if(!$isreply): ?>
 				<?php if($isWatched): ?>
-					<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
+					<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMessage('wikiafollowedpages-following')->text(); ?></a>
 				<?php else: ?>
-					<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('oasis-follow'); ?></a>
+					<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMessage('oasis-follow')->text(); ?></a>
 				<?php endif;?>
 			<? endif; ?>
 
 			<?php if($showVotes): ?>
 				<div class="voting-controls">
 					<a class="votes<?= $votes > 0 ? "" : " notlink" ?>" data-votes="<?= $votes ?>">
-						<?= wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>') ?>
+						<?= wfMessage('wall-votes-number', '<span class="number" >'.$votes.'</span>')->text() ?>
 					</a>
 					<?php if($canVotes):?>
 						<a class="vote <?php if($isVoted): ?>voted<?php endif;?>">
@@ -62,7 +62,7 @@
 			<?php if($quote_of): ?>
 			<div class="quote-of">
 				<a href="<?php echo $quote_of_url; ?>" data-postfix="<?php echo $quote_of_postfix; ?>" >
-					<?= wfMsg('wall-quote-reply-to', $quote_of_postfix) ?>
+					<?= wfMessage('wall-quote-reply-to', $quote_of_postfix)->text() ?>
 				</a>
 			</div>
 			<?php endif; ?>
@@ -80,9 +80,9 @@
 				<div class="timestamp">
 					<?php if($isEdited):?>
 						<? if($showSummary): ?>
-							<? echo wfMsg('wall-message-edited-summary', [ '$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl ] ); ?>
+							<? echo wfMessage('wall-message-edited-summary', [ '$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl ] )->text(); ?>
 						<? else: ?>
-							<? echo wfMsg('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] ); ?>
+							<? echo wfMessage('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] )->text(); ?>
 						<? endif; ?>
 					<?php endif; ?>
 					<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
@@ -129,7 +129,7 @@
 			<? if( $repliesNumber < $repliesLimit ) {
 				echo $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, [ 'showReplyForm' => $showReplyForm ] );
 			} else {
-				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', [ 'parsemag' ], [ $repliesLimit ] ) . "</div>";
+				echo "<div class=message-topic-error >" . wfMessage('wall-message-limit-reached')->numParams( $repliesLimit )->parse() . "</div>";
 			} ?>
 			<?php if($showTopics): ?>
 				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', [ 'relatedTopics' => $relatedTopics ] ) ?>
