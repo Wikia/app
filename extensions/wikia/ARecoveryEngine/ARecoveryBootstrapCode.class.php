@@ -1,35 +1,41 @@
 <?php
 class ARecoveryBootstrapCode {
-	
 	public static function getHeadBootstrapCode() {
-		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
-			$bootstrap = new PageFairBootstrapCode();
-			return $bootstrap->getHeadCode();
-		}
-		return '<!-- Recovery bootstrap disabled / head -->';
+
+		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+			(new PageFairBootstrapCode())->getHeadCode() :
+			static::getBootstrapDisabledMessage('Head');
 	}
 	
-	//TODO: move sourcepoint bootstrap here
 	public static function getTopBodyBootstrapCode() {
-		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
-			$bootstrap = new PageFairBootstrapCode();
-			return $bootstrap->getTopBodyCode();
-		}
-		return '<!-- Recovery bootstrap disabled / top body -->';
+
+		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+			(new PageFairBootstrapCode())->getTopBodyCode() :
+			static::getBootstrapDisabledMessage('Top body');
 	}
 	
 	public static function getBottomBodyBootstrapCode() {
-		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
-			$bootstrap = new PageFairBootstrapCode();
-			return $bootstrap->getBottomBodyCode();
-		}
-		return '<!-- Recovery bootstrap disabled / bottom body -->';
+
+		return (new ARecoveryModule())->isPageFairRecoveryEnabled() ?
+			(new PageFairBootstrapCode())->getBottomBodyCode() :
+			static::getBootstrapDisabledMessage('Bottom body');
 	}
-	
-	public static function getSlotMarker( $slotName ) {
-		if ((new ARecoveryModule)->isPageFairRecoveryEnabled()) {
-			return PageFairBootstrapCode::getSlotMarker( $slotName );
-		}
-		return '';
+
+	public static function getSourcePointBootstrapCode() {
+		return (new ARecoveryModule())->isSourcePointRecoveryEnabled() ?
+			static::getBootstrapCode() :
+			static::getBootstrapDisabledMessage();
+	}
+
+	private static function getBootstrapCode() {
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+	}
+
+	private static function getBootstrapDisabledMessage( $placement = '' ) {
+		return PHP_EOL .
+			'<!-- Recovery disabled. ' .
+			$placement .
+			'-->' .
+			PHP_EOL;
 	}
 }
