@@ -295,7 +295,9 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		$mode = $this->request->getVal( 'mode' );
 		$result = false;
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -310,7 +312,7 @@ class WallExternalController extends WikiaController {
 		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 		$notify = isset( $formassoc['notify-admin'] ) ? true : false;
 
-		if ( empty( $reason ) && !$this->request->getVal( 'mode' ) == 'rev' ) {
+		if ( empty( $reason ) && !$mode == 'rev' ) {
 			$this->response->setVal( 'status', false );
 			return true;
 		}
@@ -325,7 +327,7 @@ class WallExternalController extends WikiaController {
 		 *
 		 * Mode name is kept as data-mode attribute in HTML templates
 		 */
-		switch( $this->request->getVal( 'mode' ) ) {
+		switch( $mode ) {
 			case 'rev':
 				if ( $mw->canDelete( $this->wg->User ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
@@ -361,13 +363,17 @@ class WallExternalController extends WikiaController {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
+
+			default:
+				throw new BadRequestException( __METHOD__ . ' - unknown mode provided: ' . $mode );
 		}
 
-		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
 		$this->response->setVal( 'status', $result );
 
-		$mw->getLastActionReason();
-		$mw->invalidateCache();
+		if ( $result === true ) {
+			$this->response->setVal('html', $this->app->renderView('WallController', 'messageRemoved', ['showundo' => true, 'comment' => $mw]));
+			$mw->invalidateCache();
+		}
 
 		return true;
 	}
