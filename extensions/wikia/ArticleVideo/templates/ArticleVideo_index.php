@@ -17,11 +17,13 @@
 		</div>
 		<div class="video-button paused">
 			<div class="countdown-timer">
-				<div class="left-half"><div class="countdown-track"></div></div>
-				<div class="right-half"><div class="countdown-track"></div></div>
+<!--				<div class="left-half"><div class="countdown-track"></div></div>-->
+<!--				<div class="right-half"><div class="countdown-track"></div></div>-->
 			</div>
+			<svg class="countdown-circle">
+				<circle cx="40" cy="40" r="36"></circle>
+			</svg>
 		</div>
 		<div id="ooyala-article-video" class="ooyala-article-video"></div>
 	</div>
 </div>
-

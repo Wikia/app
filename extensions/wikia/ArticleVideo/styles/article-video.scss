@@ -329,6 +329,23 @@ $play-button-size: 80px;
 
 
 .video-button {
+	.countdown-circle {
+		height:100%;
+		width: 100%;
+		opacity: 0;
+		circle {
+			cx: 40px;
+			cy: 40px;
+			r: 36px;
+			fill: transparent;
+			stroke: #fff;
+			stroke-width: 6px;
+			stroke-linecap: round;
+			stroke-dashoffset: 220;
+			stroke-dasharray: 222;
+			transform: translate3d(0px,80px,0px) rotate(-90deg);
+		}
+	}
 	.countdown-timer {
 		-webkit-border-radius: 100%;
 		border-radius: 100%;
@@ -380,6 +397,14 @@ $play-button-size: 80px;
 }
 
 .ready-to-play .video-button {
+	.countdown-circle {
+		opacity: 1;
+		circle {
+			transition: stroke-dashoffset 5s;
+			transition-timing-function: linear;
+			stroke-dashoffset: 0;
+		}
+	}
 	.countdown-timer {
 		.left-half .countdown-track {
 			-webkit-animation-name: left-rotate;
