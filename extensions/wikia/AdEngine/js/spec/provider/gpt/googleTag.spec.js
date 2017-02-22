@@ -42,6 +42,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			recoveryHelper: {
 				isBlocking: function () {
 					return false;
+				},
+				isPageFairRecoveryEnabled: function() {
+					return false;
 				}
 			},
 			window: {
