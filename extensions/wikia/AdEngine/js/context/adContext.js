@@ -68,7 +68,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		// PageFair integration
+		// PageFair detection
 		if (!noExternals) {
 			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
 				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
@@ -78,6 +78,15 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
+
+		// PageFair recovery
+		if (!noExternals &&
+			context.opts.pageFairRecovery !== false) //&&
+			//geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries))
+		{
+			context.opts.pageFairRecovery = true;
+		}
+
 
 		// SourcePoint recovery
 		if (

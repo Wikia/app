@@ -43,6 +43,11 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return !!context.opts.sourcePointRecovery;
 	}
 
+	function isPageFairRecoveryEnabled() {
+		log(['isPageFairRecoveryEnabled', !!context.opts.pageFairRecovery], 'debug', logGroup);
+		return !!context.opts.pageFairRecovery;
+	}
+
 	function isBlocking() {
 		log(['isBlocking', !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking)], 'debug', logGroup);
 		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
@@ -103,6 +108,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
 		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
+		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};
