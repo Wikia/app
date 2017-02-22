@@ -84,42 +84,51 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			->getMock();
 		$wallMessageCounter = 0;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'load' );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getWallOwner' )
 			->willReturn( $wallOwnerMock );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getArticleTitle' )
 			->willReturn( $articleTitleMock );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getText' )
 			->willReturn( $params['wallMessage']['text'] );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getTitle' )
 			->willReturn( $titleMock );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getMessagePageUrl' )
 			->willReturn( $params['wallMessage']['messagePageUrl'] );
+		$wallMessageCounter++;
 
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getNotifyeveryone' )
 			->willReturn( $params['wallMessage']['notifyeveryone'] );
+		$wallMessageCounter++;
 
 		$isEdited = $params['wallMessage']['isEdited'];
-		$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'isEdited' )
 			->willReturn( $isEdited );
+		$wallMessageCounter++;
 
 		if ( $isEdited ) {
-			$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 				->method( 'getLastEditSummary' )
 				->willReturn( $params['wallMessage']['lastEditSummary'] );
+			$wallMessageCounter++;
 		}
 
 		if ( !empty( $params['parentWallMessage']['id'] ) ) {
@@ -129,9 +138,10 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				->method( 'getTopParentObj' )
 				->willReturn( $parentWallMessageMock );
 		} else {
-			$wallMessageMock->expects( $this->at( $wallMessageCounter++ ) )
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 				->method( 'getTopParentObj' )
 				->willReturn( null );
+			$wallMessageCounter++;
 
 			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 				->method( 'getMetaTitle' )
@@ -250,20 +260,24 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		$parentWallMessageCounter = 0;
 
 
-		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter++ ) )
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'load' );
+		$parentWallMessageCounter++;
 
-		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter++ ) )
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getTitle' )
 			->willReturn( $parentTitleMock );
+		$parentWallMessageCounter++;
 
-		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter++ ) )
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getMetaTitle' )
 			->willReturn( $params['parentWallMessage']['metaTitle'] );
+		$parentWallMessageCounter++;
 
-		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter++ ) )
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getUser' )
 			->willReturn( $parentUserMock );
+		$parentWallMessageCounter++;
 
 		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getId' )
