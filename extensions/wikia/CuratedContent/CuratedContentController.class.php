@@ -278,7 +278,7 @@ class CuratedContentController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = $this->request->getArray( 'data', [ ] );
+			$data = json_decode( $this->request->getVal( 'data' ), true );
 			$properData = [ ];
 			$status = false;
 
@@ -313,7 +313,7 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
 			} else {
-				$community_data = $this->request->getArray( 'community_data', [ ] );
+				$community_data = json_decode( $this->request->getVal( 'community_data' ), true );
 				if ( $community_data ) {
 					$community_data[ 'community_data' ] = 'true';
 					$sections[] = $community_data;
