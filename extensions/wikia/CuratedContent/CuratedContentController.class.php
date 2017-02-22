@@ -346,6 +346,8 @@ class CuratedContentController extends WikiaController {
 	public function getData() {
 		global $wgUser;
 
+		$validator = new CuratedContentValidator();
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
@@ -364,24 +366,30 @@ class CuratedContentController extends WikiaController {
 					$featured[ 'featured' ] = 'true';
 					$curated[] = $featured;
 				}
+
 				$optional = $this->communityDataService->getOptional();
 				if ( !empty( $optional ) ) {
 					$curated[] = $optional;
 				}
 
-				$data = array_map( function ( $section ) {
+				$data = array_map( function ( $section ) use ( $validator ) {
+					$featured = $section['featured'];
 					$section['node_type'] = 'section';
-					$section['items'] = array_values( array_filter( $section['items'], function ( $item ) {
-						$title = Title::newFromText( $item['title'] );
-						return $title->isKnown() || Category::newFromTitle( $title )->getPageCount() > 0;
-					} ) );
+					$section['items'] = array_values(
+						array_filter( $section['items'], function ( $item ) use ( $validator, $featured ) {
+							$error = $featured ? $validator->validateFeaturedItem( $item ) :
+								$validator->validateSectionItem( $item );
+							return empty($error);
+						} )
+					);
 					$section['items'] = $this->extendItemsWithImages( $section['items'] );
 					$section['items'] = $this->extendItemsWithType( $section['items'] );
 					return $section;
 				}, $curated );
 
-				$data = array_values( array_filter( $data, function ( $section ) {
-					return !empty( $section['items'] );
+				$data = array_values( array_filter( $data, function ( $section ) use ( $validator ) {
+					$error = $section['featured'] ? false : $validator->validateSection( $section );
+					return empty( $error );
 				} ) );
 
 				$community = $this->communityDataService->getCommunityData();
