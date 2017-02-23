@@ -18,7 +18,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 $uap-progress-bar-color: #666;
 $uap-progress-bar-current-time-color: #b7b7b7;
 $uap-video-animation-duration: 0.4s;
-$uap-video-player-ui-icon-size: 24px;
+$uap-video-player-button-size: 24px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -125,10 +125,10 @@ $uap-video-player-ui-icon-size: 24px;
 
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
 		display: inline-block;
-		height: $uap-video-player-ui-icon-size;
+		height: $uap-video-player-button-size;
 		overflow: hidden;
 		position: relative;
-		width: $uap-video-player-ui-icon-size;
+		width: $uap-video-player-button-size;
 	}
 }
 
@@ -187,12 +187,12 @@ $uap-video-player-ui-icon-size: 24px;
 	.close-ad {
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
 		cursor: pointer;
-		height: $uap-video-player-ui-icon-size;
+		height: $uap-video-player-button-size;
 		margin: 10px 10px 30px 30px;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: $uap-video-player-ui-icon-size;
+		width: $uap-video-player-button-size;
 	}
 }
 
