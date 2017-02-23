@@ -99,7 +99,12 @@ class WallMessageBuilder extends WallBuilder {
 
 		/** @var Article $article */
 		list( $status, $article ) = $result;
-		$this->newMessage = WallMessage::newFromTitle( $article->getTitle() );
+
+		// SUS-1719: this call has a nice side-effect, it first queries DB_SLAVE and then - as a fallback - DB_MASTER
+		// TODO: consider improving handling of slave lag (wfWaitForSlaves / update the cache instead of invalidating it)
+		$ac = ArticleComment::newFromId( $article->getID() );
+
+		$this->newMessage = new WallMessage( $ac->getTitle(), $ac );
 
 		return $this;
 	}
