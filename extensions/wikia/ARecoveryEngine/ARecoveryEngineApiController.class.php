@@ -24,6 +24,24 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
 	}
 
+	public function getPageFairBootstrapHead() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptObserver() );
+	}
+
+	public function getPageFairBootstrapTopBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptWrapper() );
+	}
+
+	public function getPageFairBootstrapBottomBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptLoader() );
+	}
+
 	public function getLogInfo() {
 		\Wikia\Logger\WikiaLogger::instance()
 			->warning( 'AdBlock Interference',

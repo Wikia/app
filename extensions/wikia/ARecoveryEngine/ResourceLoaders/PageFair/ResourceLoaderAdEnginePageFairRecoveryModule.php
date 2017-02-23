@@ -2,9 +2,9 @@
 
 class ResourceLoaderAdEnginePageFairRecoveryModule extends ResourceLoaderAdEngineBase {
 
-	const LOADER_SCRIPT = __DIR__ . '/../../js/PageFair/loader.html';
-	const OBSERVER_SCRIPT = __DIR__ . '/../../js/PageFair/observer.html';
-	const WRAPPER_SCRIPT = __DIR__ . '/../../js/PageFair/wrapper.html';
+	const LOADER_SCRIPT = __DIR__ . '/../../js/PageFair/loader.js';
+	const OBSERVER_SCRIPT = __DIR__ . '/../../js/PageFair/observer.js';
+	const WRAPPER_SCRIPT = __DIR__ . '/../../js/PageFair/wrapper.js';
 	protected $script = self::WRAPPER_SCRIPT;
 	protected $context = null;
 

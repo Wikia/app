@@ -1,0 +1,23 @@
+<!-- Begin PageFair recovery -->
+<script type="text/javascript">
+	require([
+		"ext.wikia.adEngine.adContext"
+	], function (adContext) {
+		var context = adContext.getContext(),
+			logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFairBootstrap';
+
+		if (context.opts.pageFairBootstrap === true && !window.wgUserName) {
+
+			{{{code}}}
+
+			window.Wikia.log('PageFair bootstrap code called', window.Wikia.log.levels.debug, logGroup);
+			window.addEventListener('load', function () {
+				require(['ext.wikia.aRecoveryEngine.recovery.pageFair'], function (pageFair) {
+					'use strict';
+					pageFair.track('loaded');
+				});
+			});
+		}
+	});
+</script>
+<!-- End PageFair recovery-->

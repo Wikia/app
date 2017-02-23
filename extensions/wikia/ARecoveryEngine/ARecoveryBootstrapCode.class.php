@@ -4,31 +4,27 @@ class ARecoveryBootstrapCode {
 
 		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
 			static::getBootstrapDisabledMessage('Head') :
-			(new PageFairBootstrapCode())->getHeadCode();
+			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapHead' );
 	}
 	
 	public static function getTopBodyBootstrapCode() {
 
 		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
 			static::getBootstrapDisabledMessage('Top body') :
-			(new PageFairBootstrapCode())->getTopBodyCode();
+			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapTopBody' );
 	}
-	
+
 	public static function getBottomBodyBootstrapCode() {
 
 		return (new ARecoveryModule())->isPageFairRecoveryDisabled() ?
 			static::getBootstrapDisabledMessage('Bottom body') :
-			(new PageFairBootstrapCode())->getBottomBodyCode();
+			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getPageFairBootstrapBottomBody' );
 	}
 
 	public static function getSourcePointBootstrapCode() {
 		return (new ARecoveryModule())->isSourcePointRecoveryDisabled() ?
 			static::getBootstrapDisabledMessage() :
-			static::getBootstrapCode();
-	}
-
-	private static function getBootstrapCode() {
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
 
 	private static function getBootstrapDisabledMessage( $placement = '' ) {

@@ -64,9 +64,9 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 			if (Wikia && Wikia.Tracker) {
 				Wikia.Tracker.track({
 					eventName: 'ads.recovery',
-					ga_category: 'ads-recovery-blocked',
-					ga_action: Wikia.Tracker.ACTIONS.IMPRESSION,
-					ga_label: type,
+					category: 'ads-recovery-blocked',
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					label: type,
 					trackingMethod: 'analytics'
 				});
 			}

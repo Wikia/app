@@ -7,9 +7,9 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFair',
 		context = adContext.getContext(),
 		recoverableSlots = {
-		'TOP_LEADERBOARD': true,
-		'TOP_RIGHT_BOXAD': true
-	};
+			'TOP_LEADERBOARD': true,
+			'TOP_RIGHT_BOXAD': true
+		};
 
 	function isPageFairRecoveryEnabled() {
 		var enabled = !!context.opts.pageFairRecovery;
@@ -27,7 +27,20 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 
 	function addMarker(slotId) {
 		var slot = document.getElementById(slotId);
+
 		slot.setAttribute('adonis-marker', '');
+	}
+
+	function track(label) {
+		if (Wikia && Wikia.Tracker) {
+			Wikia.Tracker.track({
+				eventName: 'ads.recovery',
+				category: 'ads-recovery-page-fair',
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
+				label: label,
+				trackingMethod: 'analytics'
+			});
+		}
 	}
 
 	return {
