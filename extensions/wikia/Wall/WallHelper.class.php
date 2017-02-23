@@ -475,13 +475,13 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification( $revOldId, $rcType = RC_NEW, $useMasterDB = false ) {
-		$app = F::App();
-		$rev = Revision::newFromId( $revOldId );
-		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
-		$wh = new WallHistory( $app->wg->CityId );
+	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
+		global $wgUser;
 
-		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User );
+		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
+		$wh = new WallHistory();
+
+		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $wgUser );
 
 		if ( $rcType == RC_NEW ) {
 			$wn = new WallNotifications();
