@@ -887,7 +887,8 @@ class ArticleComment {
 			if ( $preserveMetadata ) {
 				$this->mMetadata = $metadata;
 			}
-			$retval = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
+
+			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
@@ -896,13 +897,22 @@ class ArticleComment {
 			}
 
 			ArticleCommentList::purgeCache( $purgeTarget );
-			$res = [ $retval, $article ];
+			$res = [ $status, $article ];
 		} else {
 			$res = false;
 		}
 
-		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
-		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		// If the edit was successful, set revision info returned by edit method
+		if ( isset( $status ) && $status->isOK() ) {
+			/** @var Revision $rev */
+			$rev = $status['value']->revision;
+			$this->mLastRevision = $rev;
+			$this->mLastRevId = $rev->getId();
+		} else {
+			// Edit failed, let's work with slave data
+			$this->mLastRevId = $this->mTitle->getLatestRevID();
+			$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		}
 
 		return $res;
 	}
