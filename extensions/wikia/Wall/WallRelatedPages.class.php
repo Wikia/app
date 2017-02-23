@@ -142,6 +142,14 @@ class WallRelatedPages extends WikiaModel {
 	}
 
 
+	/**
+	 * TODO: Used by RelatedForumDiscussionController only, move there?
+	 *
+	 * @param $pageId
+	 * @param $messageCount
+	 * @param $replyCount
+	 * @return array
+	 */
 	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount, $replyCount ) {
 		$messages = $this->getArticlesRelatedMessgesIds( $pageId, 'last_update desc', $messageCount );
 
