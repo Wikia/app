@@ -659,7 +659,7 @@ class WallMessage {
 		return $id;
 	}
 
-	public function getMessagePageUrl( $withoutAnchor = false ) {
+	public function getMessagePageUrl( $withoutAnchor = false, $fullUrl = true ) {
 		wfProfileIn( __METHOD__ );
 
 		// local cache consider cache this in memc
@@ -676,7 +676,7 @@ class WallMessage {
 
 		$this->messagePageUrl = [ ];
 
-		$this->messagePageUrl[ true ] = $title->getFullUrl();
+		$this->messagePageUrl[ true ] = $fullUrl ? $title->getFullUrl() : $title->getLocalURL();
 		$this->messagePageUrl[ false ] = $this->messagePageUrl[ true ] . $postFix;
 
 		wfProfileOut( __METHOD__ );
