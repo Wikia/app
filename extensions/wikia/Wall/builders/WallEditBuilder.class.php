@@ -31,8 +31,14 @@ class WallEditBuilder extends WallBuilder {
 		Hooks::register( 'ArticleDoEdit', [ $this, 'updateCommentsIndexEntry' ] );
 
 		$result = $this->message->getArticleComment()->doSaveComment( $this->messageText, $this->editor );
-		if ( !$result ) {
-			$this->throwException( 'Failed to save edited message' );
+		if ( !$result || !$result[0]->isOK() ) {
+			$reason =  $result && (
+					$result[0]->value == EditPage::AS_FILTERING ||
+					in_array( 'EditFilter', $result[0]->errors[0]['params'] )
+				)
+				? 'editfilter'
+				: '';
+			$this->throwException( 'Failed to save edited message', $reason );
 		}
 
 		if ( !$this->message->isMain() ) {

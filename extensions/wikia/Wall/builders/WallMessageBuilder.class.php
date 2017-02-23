@@ -95,8 +95,9 @@ class WallMessageBuilder extends WallBuilder {
 			// Text is matched there against Phalanx filters and all user blocks (global and local) are also checked
 			// This can cause edit to fail
 			$reason =  $result && (
-				$result[0]->value == EditPage::AS_FILTERING || in_array( 'EditFilter', $result[0]->errors[0]['params'] )
-			)
+					$result[0]->value == EditPage::AS_FILTERING ||
+					in_array( 'EditFilter', $result[0]->errors[0]['params'] )
+				)
 				? 'editfilter'
 				: '';
 			$this->throwException( 'Failed to create article comment', $reason );
