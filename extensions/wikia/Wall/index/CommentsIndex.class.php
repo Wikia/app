@@ -154,6 +154,8 @@ class CommentsIndex {
 			return $this->objectCache[$commentId];
 		}
 
+		wfProfileIn( __METHOD__ );
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'comments_index', '*', [ 'comment_id' => $commentId ], __METHOD__ );
 
@@ -170,6 +172,7 @@ class CommentsIndex {
 				$this->error( 'SUS-1680 - No match for comment id in master comments_index', [
 					'commentId' => $commentId
 				] );
+				wfProfileOut( __METHOD__ );
 				return null;
 			}
 		}
@@ -177,6 +180,7 @@ class CommentsIndex {
 		$entry = CommentsIndexEntry::newFromRow( $row );
 		$this->objectCache[$commentId] = $entry;
 
+		wfProfileOut( __METHOD__ );
 		return $entry;
 	}
 

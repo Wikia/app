@@ -21,7 +21,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndexEntry
 	 */
-	public $commentsIndex = false;
+	private $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -158,7 +158,7 @@ class WallMessage {
 	/**
 	 * @return CommentsIndexEntry
 	 */
-		public function getCommentsIndexEntry() {
+	public function getCommentsIndexEntry() {
 		if ( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
 			$this->commentsIndex = CommentsIndex::getInstance()->entryFromId( $this->getId() ); // note: can return null
 		}
@@ -1203,15 +1203,15 @@ class WallMessage {
 	}
 
 	public function isArchive() {
-		return $this->isMarkInProps( WPP_WALL_ARCHIVE );
+		return $this->getCommentsIndexEntry()->isArchived();
 	}
 
 	public function isRemove() {
-		return $this->isMarkInProps( WPP_WALL_REMOVE );
+		return $this->getCommentsIndexEntry()->isRemoved();
 	}
 
 	public function isAdminDelete() {
-		return $this->isMarkInProps( WPP_WALL_ADMINDELETE );
+		return $this->getCommentsIndexEntry()->isDeleted();;
 	}
 
 	public function canReply() {
