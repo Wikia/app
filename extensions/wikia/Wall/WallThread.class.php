@@ -10,8 +10,12 @@ class WallThread {
 	// cached data
 	private $data;
 
-	public function __construct() {
+	/**
+	 * @param int $id thread ID
+	 */
+	private function __construct( int $id ) {
 		$this->initializeReplyData();
+		$this->mThreadId = $id;
 		$this->mCached = null;
 		$this->mCityId = F::app()->wg->CityId;
 	}
@@ -26,11 +30,24 @@ class WallThread {
 	 * @param int $id
 	 * @return WallThread
 	 */
-	static public function newFromId( $id ) {
-		$wt = new WallThread();
-		$wt->mThreadId = $id;
+	static public function newFromId( int $id ) : WallThread {
+		return new WallThread( $id );
+	}
 
-		return $wt;
+	/**
+	 * TODO: batch fetching of threads metadata
+	 *
+	 * @param int[] $ids
+	 * @return WallThread[]
+	 */
+	static public function newFromIds( array $ids ) : array {
+		$threads = [];
+
+		foreach( $ids as $id ) {
+			$threads[] = self::newFromId( $id );
+		}
+
+		return $threads;
 	}
 
 	public function loadIfCached() {
