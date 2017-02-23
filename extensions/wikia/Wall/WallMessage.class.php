@@ -202,15 +202,8 @@ class WallMessage {
 	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canEdit( User $user, $shouldLogBlockInStats = true ) {
-		wfProfileIn( __METHOD__ );
-		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) &&
-			(
-				$this->isAuthor( $user ) ||
-				$this->can( $user, 'walledit', $shouldLogBlockInStats )
-			);
-		wfProfileOut( __METHOD__ );
-		return $out;
+	public function canEdit( User $user ) {
+		return $this->isAuthor( $user ) || $user->isAllowed( 'walledit' );
 	}
 
 	/**
@@ -254,86 +247,44 @@ class WallMessage {
 	}
 
 	/**
-	 * Check user permission
-	 *
-	 * @param User $user
-	 * @param string $permissionName
-	 * @param bool|true $shouldLogBlockInStats
+	 * Check if we should display company logo next to this post
+	 * (if author has proper rights)
 	 * @return bool
 	 */
-	protected function can( User $user, $permissionName, $shouldLogBlockInStats = true ) {
-		wfProfileIn( __METHOD__ );
-		$username = $user->getName();
-		if ( isset( self::$permissionsCache[ $username ][ $permissionName ] ) ) {
-			wfProfileOut( __METHOD__ );
-			return self::$permissionsCache[ $username ][ $permissionName ];
-		}
-
-		if ( empty( self::$permissionsCache[ $username ] ) ) {
-			self::$permissionsCache[ $username ] = [ ];
-		}
-
-		wfProfileIn( __METHOD__ . "2" );
-		if ( $permissionName == 'wallshowwikiaemblem' ) {
-			self::$permissionsCache[ $username ][ $permissionName ] = $user->isAllowed( $permissionName );
-		} else {
-			self::$permissionsCache[ $username ][ $permissionName ] = $user->isAllowed( $permissionName ) &&
-				!$user->isBlocked( true, $shouldLogBlockInStats );
-		}
-		wfProfileOut( __METHOD__ . "2" );
-
-		wfProfileOut( __METHOD__ );
-		return self::$permissionsCache[ $username ][ $permissionName ];
-	}
-
 	public function showWikiaEmblem() {
-		return $this->can( $this->getUser(), 'wallshowwikiaemblem', false );
+		return $this->getUser()->isAllowed( 'wallshowwikiaemblem' );
 	}
 
 	/**
 	 * Check if user has permission to delete Wall
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canDelete( User $user, $shouldLogBlockInStats = true ) {
-		return $this->can( $user, 'walldelete', $shouldLogBlockInStats ) &&
-		$user->getGlobalPreference( 'walldelete', false );
+	public function canDelete( User $user ) {
+		return $user->isAllowed( 'walldelete') && $user->getGlobalPreference( 'walldelete', false );
 	}
 
 	/**
 	 * Check if user has permission to remove WallMessage
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canRemove( User $user, $shouldLogBlockInStats = true ) {
-		if ( $user->isBlocked( true, $shouldLogBlockInStats ) ) {
-			return false;
-		}
-
-		if ( $this->can( $user, 'wallremove', $shouldLogBlockInStats ) ) {
-			return true;
-		}
-
-		if ( $this->isAuthor( $user ) || $this->isWallOwner( $user ) ) {
-			return !$this->isMarkInProps( WPP_WALL_MODERATORREMOVE );
-		}
-
-		return false;
+	public function canRemove( User $user ) {
+		return
+			!$this->isRemove() &&
+			( $user->isAllowed( 'wallremove' ) || $this->isAuthor( $user ) || $this->isWallOwner( $user ) );
 	}
 
 	/**
 	 * Check if user can admin delete - after admin delete revision is not visible for regular user
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canAdminDelete( User $user, $shouldLogBlockInStats = true ) {
-		return $this->can( $user, 'walladmindelete', $shouldLogBlockInStats ) &&
+	public function canAdminDelete( User $user ) {
+		return $user->isAllowed( 'walladmindelete' ) &&
 		!$this->isAdminDelete() && $this->isRemove() && $this->isMain();
 	}
 
@@ -342,11 +293,10 @@ class WallMessage {
 	 * TODO Probably fastAdminDelete is equivalent to adminDelete - think of refactoring
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canFastAdminDelete( User $user, $shouldLogBlockInStats = true ) {
-		return $this->can( $user, 'wallfastadmindelete', $shouldLogBlockInStats );
+	public function canFastAdminDelete( User $user ) {
+		return $user->isAllowed( 'wallfastadmindelete' );
 	}
 
 	/**
@@ -356,23 +306,21 @@ class WallMessage {
 	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canFastRestore( User $user, $shouldLogBlockInStats = true ) {
-		return $this->can( $user, 'walladmindelete', $shouldLogBlockInStats ) || $this->isWallOwner( $user );
+	public function canFastRestore( User $user ) {
+		return $this->isWallOwner( $user ) || $user->isAllowed( 'walladmindelete' );
 	}
 
 	/**
-	 * Check if user can archive WallMessage - in fact it's closing
+	 * Check if user can close this WallMessage (only possible if this is a Thread)
 	 *
 	 * @param User $user
 	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canArchive( User $user, $shouldLogBlockInStats = true ) {
-		if ( $user->isBlocked( true, $shouldLogBlockInStats ) ) {
-			return false;
-		}
+	public function canCloseThread( User $user ) {
+		global $wgWallThreadCloseNS;
 
-		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), $wgWallThreadCloseNS ) ) {
 			return false;
 		}
 
@@ -384,7 +332,7 @@ class WallMessage {
 			return false;
 		}
 
-		if ( $this->can( $user, 'wallarchive', $shouldLogBlockInStats ) ) {
+		if ( $user->isAllowed( 'wallarchive' ) ) {
 			return true;
 		}
 
@@ -399,15 +347,12 @@ class WallMessage {
 	 * Check if user can reopen WallMessage
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canReopen( User $user, $shouldLogBlockInStats = true ) {
-		if ( $user->isBlocked( true, $shouldLogBlockInStats ) ) {
-			return false;
-		}
+	public function canReopen( User $user ) {
+		global $wgWallThreadCloseNS;
 
-		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), $wgWallThreadCloseNS ) ) {
 			return false;
 		}
 
@@ -423,7 +368,7 @@ class WallMessage {
 			return false;
 		}
 
-		if ( $this->can( $user, 'wallarchive', $shouldLogBlockInStats ) ) {
+		if ( $user->isAllowed( 'wallarchive' ) ) {
 			return true;
 		}
 
@@ -933,7 +878,7 @@ class WallMessage {
 	}
 
 	public function canModerate( User $user ) {
-		return $this->can( $user, 'wallarchive' ) || $this->can( $user, 'wallremove' );
+		return $user->isAllowedAny( 'wallarchive', 'wallremove' );
 	}
 
 	public function isWallWatched( User $user ) {
@@ -983,9 +928,9 @@ class WallMessage {
 		$wh->add( $history, $wnae, $user );
 	}
 
-	public function archive( $user, $reason = '' ) {
+	public function archive( User $user, $reason = '' ) {
 		$status = $this->markInProps( WPP_WALL_ARCHIVE );
-		if ( $this->can( $user, 'wallarchive' ) ) {
+		if ( $user->isAllowed( 'wallarchive' ) ) {
 			$this->markInProps( WPP_WALL_MODERATORARCHIVE ); // VOLDEV-79
 		}
 		$this->recordAdminHistory( $user, $reason, WH_ARCHIVE );
@@ -994,12 +939,12 @@ class WallMessage {
 		return $status;
 	}
 
-	public function reopen( $user ) {
+	public function reopen( User $user ) {
 		$this->unMarkInProps( WPP_WALL_ARCHIVE );
 		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
 			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
 		}
-		if ( $this->can( $user, 'wallarchive' ) ) {
+		if ( $user->isAllowed( 'wallarchive' ) ) {
 			$this->markInProps( WPP_WALL_MODERATORREOPEN );
 		}
 		$this->recordAdminHistory( $user, '', WH_REOPEN );
@@ -1007,7 +952,7 @@ class WallMessage {
 		return true;
 	}
 
-	public function remove( $user, $reason = '', $notifyAdmins = false ) {
+	public function remove( User $user, $reason = '', $notifyAdmins = false ) {
 		$this->saveReason( $user, $reason );
 
 		$this->unMarkInProps( WPP_WALL_ARCHIVE );
@@ -1018,7 +963,7 @@ class WallMessage {
 			$this->unMarkInProps( WPP_WALL_MODERATORREOPEN );
 		}
 		$status = $this->markInProps( WPP_WALL_REMOVE );
-		if ( $this->can( $user, 'wallremove' ) ) {
+		if ( $user->isAllowed( 'wallremove' ) ) {
 			$this->markInProps( WPP_WALL_MODERATORREMOVE );
 		}
 
@@ -1140,12 +1085,8 @@ class WallMessage {
 		return $status;
 	}
 
-	public function fastAdminDelete( $user ) {
-		if ( $this->adminDelete( $user ) ) {
-			return true;
-		}
-
-		return false;
+	public function fastAdminDelete( User $user ) {
+		return $this->adminDelete( $user );
 	}
 
 	protected function customActionNotifyRC( $user, $action, $reason ) {
@@ -1222,44 +1163,20 @@ class WallMessage {
 	 * Check if user can restore WallMessage
 	 *
 	 * @param $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canRestore( $user, $shouldLogBlockInStats = true ) {
-		wfProfileIn( __METHOD__ );
-		if ( $this->isAdminDelete() ) {
-			if ( $this->can( $user, 'walladmindelete', $shouldLogBlockInStats ) ) {
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		} elseif ( $this->isRemove() ) {
-			if ( $this->canRemove( $user, $shouldLogBlockInStats ) ) {
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return false;
-	}
-
-	public function isVisible( $user ) {
-		if ( !$this->isAdminDelete( $user ) ) {
-			return true;
-		}
-
-		return false;
+	public function canRestore( User $user ) {
+		return
+			( $this->isAdminDelete() && $this->canAdminDelete( $user ) ) ||
+			( $this->isRemove() && $this->canRemove( $user ) );
 	}
 
 	/*
 	 * expanded view, you can use it if you want to check if you can see deleted message
 	 */
 
-	public function canViewDeletedMessage( $user ) {
-		if ( $this->can( $user, 'walladmindelete', false ) ) {
-			return true;
-		}
-
-		return false;
+	public function canViewDeletedMessage( User $user ) {
+		return $user->isAllowed( 'walladmindelete' );
 	}
 
 	/*
@@ -1571,13 +1488,14 @@ class WallMessage {
 	 * Check if user can move WallMessage
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
-	public function canMove( User $user, $shouldLogBlockInStats = true ) {
+	public function canMove( User $user ) {
+		global $wgWallTopicsNS;
+
 		return ( $this->isMain() && !$this->isRemove() &&
-			$this->can( $user, 'wallmessagemove', $shouldLogBlockInStats ) &&
-			in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::App()->wg->WallTopicsNS ) );
+			$user->isAllowed( 'wallmessagemove' ) &&
+			in_array( MWNamespace::getSubject( $this->title->getNamespace() ), $wgWallTopicsNS ) );
 	}
 
 	/**

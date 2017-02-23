@@ -11,6 +11,21 @@ class WallExternalController extends WikiaController {
 	use \Wikia\Logger\Loggable;
 
 	/**
+	 * @var string[] BLOCKED_USER_PREVENTED_FROM_METHODS
+	 * Array of methods where we must check if user is blocked.
+	 * For message editing/posting, block is checked by core MW editpage class - no need to check twice.
+	 */
+	const BLOCKED_USER_PREVENTED_FROM_METHODS = [
+		'moveThread',
+		'deleteMessage',
+		'changeThreadStatus',
+		'undoAction',
+		'restoreMessage',
+		'notifyEveryoneSave',
+		'updateTopics'
+	];
+
+	/**
 	 * @var $helper WallHelper
 	 */
 	protected $helper;
@@ -22,6 +37,22 @@ class WallExternalController extends WikiaController {
 
 		// SUS-1554: Mark this transaction as a valid one for editing or creating Wall/Forum content
 		$wgIsValidWallTransaction = true;
+	}
+
+	/**
+	 * Check if action should be prevented because user is blocked.
+	 * Invoked automatically by Nirvana dispatcher.
+	 *
+	 * @param User $user user performing action
+	 * @param string $method name of Nirvana method being called
+	 * @return bool whether to prevent the action
+	 */
+	public function preventBlockedUsage( User $user, string $method ) {
+		if ( in_array( $method, static::BLOCKED_USER_PREVENTED_FROM_METHODS ) ) {
+			return $user->isBlocked();
+		}
+
+		return false;
 	}
 
 	/**
@@ -72,14 +103,7 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( BadRequestException $e ) {
 			$this->setTokenMismatchError();
-			return false;
-		}
-
-		// permission check needed here
-		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
-			$this->displayRestrictionError();
-			return false;
-			// skip rendering
+			return;
 		}
 
 		$this->status = 'error';
@@ -89,11 +113,16 @@ class WallExternalController extends WikiaController {
 
 		if ( empty( $destinationId ) ) {
 			$this->errormsg = wfMsg( 'wall-action-move-validation-select-wall' );
-			return true;
+			return;
 		}
 
 		$wall = Wall::newFromId( $destinationId );
 		$thread = WallThread::newFromId( $threadId );
+
+		if ( !$thread->getThreadMainMsg()->canMove( $this->getContext()->getUser() ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
 
 		if ( empty( $wall ) ) {
 			$this->errormsg = 'unknown';
@@ -309,9 +338,10 @@ class WallExternalController extends WikiaController {
 
 		$isDeleteOrRemove = true;
 
+		$user = $this->getContext()->getUser();
 		switch( $this->request->getVal( 'mode' ) ) {
 			case 'rev':
-				if ( $mw->canDelete( $this->wg->User ) ) {
+				if ( $mw->canDelete( $user ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
 					$this->response->setVal( 'status', $result );
 					return true;
@@ -321,8 +351,8 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'admin':
-				if ( $mw->canAdminDelete( $this->wg->User ) ) {
-					$result = $mw->adminDelete( $this->wg->User, $reason, $notify );
+				if ( $mw->canAdminDelete( $user ) ) {
+					$result = $mw->adminDelete( $user, $reason, $notify );
 					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
@@ -331,8 +361,8 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'fastadmin':
-				if ( $mw->canFastAdminDelete( $this->wg->User ) ) {
-					$result = $mw->fastAdminDelete( $this->wg->User, $reason, $notify );
+				if ( $mw->canFastAdminDelete( $user ) ) {
+					$result = $mw->fastAdminDelete( $user );
 					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
@@ -341,13 +371,13 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'remove':
-				if ( !$mw->canModerate( $this->wg->User ) ) {
+				if ( !$mw->canModerate( $user ) ) {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
 
-				if ( $mw->canRemove( $this->wg->User ) ) {
+				if ( $mw->canRemove( $user ) ) {
 					$this->response->setVal( 'status', $result );
-					$result = $mw->remove( $this->wg->User, $reason, $notify );
+					$result = $mw->remove( $user, $reason, $notify );
 
 					$this->response->setVal( 'status', $result );
 					// TODO: log/save data
@@ -380,9 +410,6 @@ class WallExternalController extends WikiaController {
 
 		$result = false;
 		$newState = $this->request->getVal( 'newState', false );
-		/**
-		 * @var $mw WallMessage
-		 */
 		$mw =  WallMessage::newFromId( $this->request->getVal( 'msgid' ) );
 
 		if ( empty( $mw ) || empty( $newState ) ) {
@@ -392,17 +419,18 @@ class WallExternalController extends WikiaController {
 
 		$formassoc = $this->processModalForm( $this->request );
 		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
+		$user = $this->getContext()->getUser();
 
 		switch( $newState ) {
 			case 'close':
-				if ( $mw->canArchive( $this->wg->User ) ) {
-					$result = $mw->archive( $this->wg->User, $reason );
+				if ( $mw->canCloseThread( $user ) ) {
+					$result = $mw->archive( $user, $reason );
 					$mw->invalidateCache();
 				}
 				break;
 			case 'open':
-				if ( $mw->canReopen( $this->wg->User ) ) {
-					$result = $mw->reopen( $this->wg->User );
+				if ( $mw->canReopen( $user ) ) {
+					$result = $mw->reopen( $user );
 					$mw->invalidateCache();
 				}
 				break;

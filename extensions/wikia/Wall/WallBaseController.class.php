@@ -143,21 +143,23 @@ class WallBaseController extends WikiaService {
 
 	public function messageButtons() {
 		$wallMessage = $this->getWallMessage();
-		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $this->wg->User, false ) );
-		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User, false ) && $wallMessage->isRemove() );
-		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User, false ) && !$wallMessage->isRemove() );
-		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User, false ) );
-		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User, false ) );
-		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
+		$user = $this->getContext()->getUser();
+		
+		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $user ) );
+		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $user ) );
+		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $user ) );
+		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $user ) );
+		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $user ) );
+		$this->response->setVal( 'canClose', $wallMessage->canCloseThread( $user ) );
+		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $user ) );
+		$this->response->setVal( 'showViewSource', $user->getGlobalPreference( 'wallshowsource', false ) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl( true ) . '?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
-		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
+		$this->response->setVal( 'isAnon', $user->isAnon() );
 		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
 		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
-		$this->response->setVal( 'canMove', $wallMessage->canMove( $this->wg->User, false ) );
+		$this->response->setVal( 'canMove', $wallMessage->canMove( $user ) );
 
 		$wallThread = $wallMessage;
 		if ( !$wallMessage->isMain() ) {
@@ -377,8 +379,8 @@ class WallBaseController extends WikiaService {
 				$this->response->setVal( 'statusInfo', $info );
 				$this->response->setVal( 'id', $wallMessage->getId() );
 				if ( $showRemoveOrDeleteInfo ) {
-					$this->response->setVal( 'canRestore', $wallMessage->canRestore( $this->app->wg->User, false ) );
-					$this->response->setVal( 'fastrestore', $wallMessage->canFastRestore( $this->app->wg->User, false ) );
+					$this->response->setVal( 'canRestore', $wallMessage->canRestore( $this->app->wg->User ) );
+					$this->response->setVal( 'fastrestore', $wallMessage->canFastRestore( $this->app->wg->User ) );
 					$this->response->setVal( 'isreply', !$wallMessage->isMain() );
 				}
 			}
