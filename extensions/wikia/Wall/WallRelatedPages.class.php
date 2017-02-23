@@ -159,6 +159,7 @@ class WallRelatedPages extends WikiaModel {
 		$helper = new WallHelper();
 
 		foreach ( $messages as $value ) {
+			// TODO: use WallThread::newFromIds to fetch all threads in a single batch
 			$wallThread = WallThread::newFromId( $value['comment_id'] );
 
 			if ( empty( $wallThread ) ) {
