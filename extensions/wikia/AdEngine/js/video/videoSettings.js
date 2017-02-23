@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	function create(params) {
 		var state = {
 			autoPlay: false,
-			resolvedState: false
+			resolvedState: false,
+			splitLayout: false
 		};
 
 		init();
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		function init() {
 			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = isAutoPlay(params);
+			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
 		}
 
 		function isAutoPlay(params) {
@@ -32,6 +34,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isResolvedState: function () {
 				return state.resolvedState;
+			},
+			isSplitLayout: function () {
+				return state.splitLayout;
 			}
 		};
 	}
