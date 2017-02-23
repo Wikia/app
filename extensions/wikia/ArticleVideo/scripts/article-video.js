@@ -191,11 +191,31 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 		}
 
 		initVideo(function (player) {
-			$video.addClass('ready-to-play');
+			// $(window).load(function () {
+				$video.addClass('ready-to-play');
+			// });
 			$video.one('click', showAndPlayVideo);
+
+			if($video.hasClass('countdown-timer')) {
+				var $time = $video.find('.countdown-time');
+				var interval = setInterval(function () {
+					var time = $time.text()-1;
+					$time.text(time);
+					if(time === 0) {
+						clearInterval(interval);
+						showAndPlayVideo();
+					}
+
+				}, 1000);
+			}
+
 
 			$videoBtn.one('animationend oAnimationEnd webkitAnimationEnd', '.countdown-track', function () {
 				$videoBtn.removeClass('paused');
+			});
+
+			$video.find('.countdown-circle circle').one('animationend oAnimationEnd webkitAnimationEnd', function () {
+				showAndPlayVideo();
 			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {

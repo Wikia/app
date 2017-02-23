@@ -1,4 +1,4 @@
-<div id="article-video" class="article-video">
+<div id="article-video" class="article-video <?= $countdownClass; ?>">
 	<img class="video-thumbnail" src="<?= $thumbnailUrl; ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
@@ -16,13 +16,10 @@
 			</div>
 		</div>
 		<div class="video-button paused">
-			<div class="countdown-timer">
-<!--				<div class="left-half"><div class="countdown-track"></div></div>-->
-<!--				<div class="right-half"><div class="countdown-track"></div></div>-->
-			</div>
 			<svg class="countdown-circle">
 				<circle cx="40" cy="40" r="36"></circle>
 			</svg>
+			<div class="countdown-time">5</div>
 		</div>
 		<div id="ooyala-article-video" class="ooyala-article-video"></div>
 	</div>

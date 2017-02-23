@@ -28,6 +28,12 @@ $play-button-size: 80px;
 	}
 }
 
+@keyframes countdown {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
 .article-video {
 	background-position: center;
 	background-size: cover;
@@ -83,10 +89,10 @@ $play-button-size: 80px;
 	.video-button {
 		background-color: $color-buttons;
 		border-radius: $play-button-size;
-		bottom: 15px;
+		bottom: 30px;
 		height: $play-button-size;
 		position: absolute;
-		right: 15px;
+		right: 30px;
 		width: $play-button-size;
 
 		&:before, &:after {
@@ -329,6 +335,15 @@ $play-button-size: 80px;
 
 
 .video-button {
+	.countdown-time {
+		display: none;
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		right: 0;
+		text-align: center;
+		color: #fff;
+	}
 	.countdown-circle {
 		height:100%;
 		width: 100%;
@@ -400,9 +415,7 @@ $play-button-size: 80px;
 	.countdown-circle {
 		opacity: 1;
 		circle {
-			transition: stroke-dashoffset 5s;
-			transition-timing-function: linear;
-			stroke-dashoffset: 0;
+			animation: countdown 5s linear;
 		}
 	}
 	.countdown-timer {
@@ -415,5 +428,30 @@ $play-button-size: 80px;
 			-webkit-animation-name: right-rotate;
 			animation-name: right-rotate;
 		}
+	}
+}
+
+.ready-to-play.countdown-steps-50 .video-button {
+	.countdown-circle {
+		circle {
+			animation: countdown 5s steps(50, end);
+		}
+	}
+}
+
+.ready-to-play.countdown-steps-5 .video-button {
+	.countdown-circle {
+		circle {
+			animation: countdown 5s steps(5, end);
+		}
+	}
+}
+
+.ready-to-play.countdown-timer .video-button {
+	.countdown-circle {
+		display: none;
+	}
+	.countdown-time {
+		display: block;
 	}
 }
