@@ -905,7 +905,7 @@ class ArticleComment {
 		// If the edit was successful, set revision info returned by edit method
 		if ( isset( $status ) && $status->isOK() ) {
 			/** @var Revision $rev */
-			$rev = $status['value']->revision;
+			$rev = $status->revision;
 			$this->mLastRevision = $rev;
 			$this->mLastRevId = $rev->getId();
 		} else {

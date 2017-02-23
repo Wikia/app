@@ -106,7 +106,7 @@ class WallMessageBuilder extends WallBuilder {
 		 */
 		list( $status, $article ) = $result;
 		$title = $article->getTitle();
-		$rev = $status->value['revision'];
+		$rev = $status->revision;
 
 		// Preload article ID - saves DB call
 		$this->newRevision = $rev;
