@@ -56,5 +56,21 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 		expect(false).toMatch(videoSettings.isAutoPlay());
 	});
+
+	it('Should be split layout for correct parameter', function () {
+		var videoSettings = getSettings({
+			splitLayoutVideoPosition: 'right'
+		});
+
+		expect(true).toMatch(videoSettings.isSplitLayout());
+	});
+
+	it('Should be split layout for incorrect parameter', function () {
+		var videoSettings = getSettings({
+			splitLayoutVideoPosition: ''
+		});
+
+		expect(false).toMatch(videoSettings.isSplitLayout());
+	});
 });
 
