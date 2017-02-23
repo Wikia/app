@@ -23,14 +23,6 @@ class WallExternalController extends WikiaController {
 		// SUS-1554: Mark this transaction as a valid one for editing or creating Wall/Forum content
 		$wgIsValidWallTransaction = true;
 	}
-	/*
-	 *
-	 * Use for external testing of mail template
-	 *  http://www.communitycarenc.org/elements/media/images/under-construction.jpg ;)
-	 */
-	public function mail() {
-
-	}
 
 	/**
 	 * Move thread (TODO: Should this be in Forums?)
