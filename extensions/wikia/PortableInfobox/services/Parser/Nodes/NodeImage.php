@@ -23,12 +23,12 @@ class NodeImage extends Node {
 
 	public static function getGalleryData( $marker ) {
 		$galleryData = PortableInfoboxDataBag::getInstance()->getGallery( $marker );
-		return array_map( function ( $image ) {
+		return isset( $galleryData['images'] ) ? array_map( function ( $image ) {
 			return [
-				'label' => $image[ 'caption' ],
-				'title' => $image[ 'name' ]
+				'label' => $image['caption'],
+				'title' => $image['name']
 			];
-		}, $galleryData[ 'images' ] );
+		}, $galleryData['images'] ) : [ ];
 	}
 
 	public static function getTabberData( $html ) {
