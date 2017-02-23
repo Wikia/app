@@ -226,14 +226,14 @@ class WallMessageBuilder extends WallBuilder {
 				->createMetaData()
 				->postNewMessage()
 				->doNewThreadUpdates()
-				->addWatchAndNotifyIfNeeded()
+				->notifyIfNeeded()
 				->notifyEveryoneForNewThreadIfNeeded();
 		} else {
 			// reply
 			$this
 				->postNewMessage()
 				->doNewReplyUpdates()
-				->addWatchAndNotifyIfNeeded();
+				->notifyIfNeeded();
 		}
 
 		Hooks::run( 'AfterBuildNewMessageAndPost', [ &$this->newMessage ] );
