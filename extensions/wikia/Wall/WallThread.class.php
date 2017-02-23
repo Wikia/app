@@ -10,6 +10,8 @@ class WallThread {
 	// cached data
 	private $data;
 
+	private $main_message = false;
+
 	/**
 	 * @param int $id thread ID
 	 */
@@ -35,16 +37,25 @@ class WallThread {
 	}
 
 	/**
-	 * TODO: batch fetching of threads metadata
-	 *
 	 * @param int[] $ids
 	 * @return WallThread[]
 	 */
 	static public function newFromIds( array $ids ) : array {
 		$threads = [];
 
-		foreach( $ids as $id ) {
-			$threads[] = self::newFromId( $id );
+		// fetch main wall messages for requested threads in a single batch
+		$wall_messages = WallMessage::newFromIds( $ids );
+
+		foreach( $ids as $i => $id ) {
+			$thread = self::newFromId( $id );
+
+			// this saves one select query on comments_index table for each item in $ids
+			// i.e. number of parent wall messages on a single wall page
+			if ( !empty( $wall_messages[ $id ] ) ) {
+				$thread->main_message = $wall_messages[ $id ];
+			}
+
+			$threads[] = $thread;
 		}
 
 		return $threads;
@@ -172,8 +183,17 @@ class WallThread {
 		$this->mForceMaster = false;
 	}
 
+	/**
+	 * This field is set by WallThread::newFromIds to avoid DB queries for single rows
+	 *
+	 * @return WallMessage|null
+	 */
 	public function getThreadMainMsg() {
-		return WallMessage::newFromId( $this->mThreadId );
+		if ( $this->main_message === false ) {
+			$this->main_message = WallMessage::newFromId( $this->mThreadId );
+		}
+
+		return $this->main_message;
 	}
 
 	public function getRepliesCount() {

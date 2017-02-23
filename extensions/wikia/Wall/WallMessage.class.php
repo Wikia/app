@@ -130,7 +130,7 @@ class WallMessage {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return array_values( $wallMessages );
+		return $wallMessages;
 	}
 
 	static public function newFromTitle( Title $title ) {
