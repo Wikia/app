@@ -5,9 +5,8 @@ class ArticleVideoController extends WikiaController {
 		$wg = F::app()->wg;
 
 		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
-		$thumbnailPath = $wg->featuredVideos[$articleId]['thumbnailPath'];
 
-		$this->setVal( 'thumbnailUrl', $wg->extensionsPath . $thumbnailPath );
+		$this->setVal( 'thumbnailUrl', $wg->featuredVideos[$articleId]['thumbnailUrl'] );
 
 		// TODO: replace it with DS icon when it's ready (XW-2824)
 		$this->setVal( 'closeIconUrl',
