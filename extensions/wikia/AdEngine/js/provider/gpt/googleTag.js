@@ -136,9 +136,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			slot.addService(window.googletag.pubads());
 
-			debugger
-
 			if (recovery.isPageFairRecoveryEnabled() && pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
+				console.log("adding marker for slot: ", slotId);
 				pageFair.addMarker(slotId);
 			}
 

@@ -3,37 +3,31 @@
 class ARecoveryModule {
 	/**
 	 * Checks whether PageFair recovery is enabled (on current wiki)
-	 *
+	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === null; // will depend on $wgAdDriverPageFairRecoveryCountries
 	 * @return bool
 	 */
 	public function isPageFairRecoveryDisabled() {
-		global $wgUser;
+		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		return $wgUser->isLoggedIn() ||
-			( $this->hasSourcePointDisabledWgVars() && !$this->hasPageFairDisabledWgVars() );
-	}
-
-	protected function hasPageFairDisabledWgVars() {
-		global $wgAdDriverEnablePageFairRecovery;
-
-		return $wgAdDriverEnablePageFairRecovery === false;
+		return $wgUser->isLoggedIn() || $wgAdDriverEnablePageFairRecovery === false;
 	}
 
 	/**
 	 * Checks whether SourcePoint recovery is enabled (on current wiki)
 	 *
+	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === null; // will depend on $wgAdDriverSourcePointRecoveryCountries
+	 *
 	 * @return bool
 	 */
 	public function isSourcePointRecoveryDisabled() {
-		global $wgUser;
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
-		return $wgUser->isLoggedIn() ||
-			( $this->hasPageFairDisabledWgVars() && !$this->hasSourcePointDisabledWgVars() );
-	}
-
-	protected function hasSourcePointDisabledWgVars() {
-		global $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
-
-		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
+		return $wgUser->isLoggedIn() || (
+			$wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false
+		);
 	}
 }

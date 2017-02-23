@@ -46,7 +46,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function isPageFairRecoveryEnabled() {
-		var enabled = !!context.opts.pageFairRecovery && !context.opts.sourcePointRecovery;
+		var enabled = !!context.opts.pageFairRecovery;
 
 		log(['isPageFairRecoveryEnabled', enabled, 'debug', logGroup]);
 		return enabled;
@@ -54,7 +54,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 
 	function isBlocking() {
 		log(['isBlocking', !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking)], 'debug', logGroup);
-		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+		return isSourcePointRecoveryEnabled() && !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
 	function isSourcePointRecoverable(slotName, recoverableSlots) {
