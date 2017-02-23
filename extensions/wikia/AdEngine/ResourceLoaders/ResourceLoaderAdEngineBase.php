@@ -101,7 +101,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		}
 		return $now;
 	}
-	
+
 	/**
 	 * Get data from cache / generate new data if TTL is less than time()
 	 * @return array|bool|Object

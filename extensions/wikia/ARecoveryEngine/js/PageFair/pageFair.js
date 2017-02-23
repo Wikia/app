@@ -19,7 +19,7 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	}
 
 	function isSlotRecoverable(slotName) {
-		var result = !!recoverableSlots[slotName];
+		var result = isPageFairRecoveryEnabled() && !!recoverableSlots[slotName];
 
 		log(['isSlotRecoverable', result], log.levels.info, logGroup);
 		return result;
