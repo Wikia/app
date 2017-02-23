@@ -15,14 +15,16 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		// User is logged in, SPRecoveryEnabled, SPMMSEnabled, isDisabled (expected value)
 		return [
 			// User is not logged in
-			[false, false, false, false],
+			[false, false, false, true],
 			[false, false, true, false],
-			[false, true, false, true],
+			[false, true, false, false],
 			[false, true, true, false],
+			[false, null, null, false],
+			[false, false, null, false],
 
 			// User is logged in
-			[true, true, false, false],
-			[true, false, false, false],
+			[true, true, false, true],
+			[true, false, false, true],
 		];
 	}
 
@@ -30,23 +32,15 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 	 * @dataProvider getData
 	 *
 	 * @param $isLoggedIn boolean
-	 * @param $hasSourcePointDisabledWgVars
-	 * @param $hasPageFairDisabledWgVars
+	 * @param $wgAdDriverEnableSourcePointRecovery
+	 * @param $wgAdDriverEnableSourcePointMMS
 	 * @param $expected boolean - is SourcePoint recovery disabled
 	 */
-	public function testSourcePointRecoveryDisabled( $isLoggedIn, $hasSourcePointDisabledWgVars, $hasPageFairDisabledWgVars, $expected ) {
+	public function testSourcePointRecoveryDisabled( $isLoggedIn, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS, $expected ) {
 		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isLoggedIn ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $wgAdDriverEnableSourcePointRecovery );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
 
-		$object = $this->getMockBuilder('ARecoveryModule')
-			->setMethods(['hasPageFairDisabledWgVars', 'hasSourcePointDisabledWgVars'])
-			->getMock();
-		$object->expects($this->any())
-			->method('hasPageFairDisabledWgVars')
-			->will($this->returnValue($hasPageFairDisabledWgVars));
-		$object->expects($this->any())
-			->method('hasSourcePointDisabledWgVars')
-			->will($this->returnValue($hasSourcePointDisabledWgVars));
-
-		$this->assertEquals( $expected, $object->isSourcePointRecoveryDisabled() );
+		$this->assertEquals( $expected, (new ARecoveryModule())->isSourcePointRecoveryDisabled() );
 	}
 }
