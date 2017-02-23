@@ -1511,7 +1511,7 @@ class WallMessage {
 	}
 
 	protected function getPropCacheKey() {
-		return wfMemcKey( __CLASS__, __METHOD__, $this->cityId, $this->getId(), 'v5' );
+		return wfMemcKey( __CLASS__, __METHOD__, $this->cityId, $this->getId(), 'v6' );
 	}
 
 	private function getCache() {
