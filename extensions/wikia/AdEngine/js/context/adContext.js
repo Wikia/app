@@ -87,11 +87,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.pageFairRecovery = true;
 		}
 
-		if (context.opts.pageFairRecovery || context.opts.pageFairDetection) {
-			context.opts.pageFairBootstrap = true;
-		}
-
-
 		// SourcePoint recovery
 		if (
 			!noExternals &&

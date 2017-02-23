@@ -31,18 +31,6 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 		slot.setAttribute('adonis-marker', '');
 	}
 
-	function track(label) {
-		if (Wikia && Wikia.Tracker) {
-			Wikia.Tracker.track({
-				eventName: 'ads.recovery',
-				category: 'ads-recovery-page-fair',
-				action: Wikia.Tracker.ACTIONS.IMPRESSION,
-				label: label,
-				trackingMethod: 'analytics'
-			});
-		}
-	}
-
 	return {
 		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
 		isSlotRecoverable: isSlotRecoverable,

@@ -3,20 +3,10 @@
 	require([
 		"ext.wikia.adEngine.adContext"
 	], function (adContext) {
-		var context = adContext.getContext(),
-			logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFairBootstrap';
+		var context = adContext.getContext();
 
-		if (context.opts.pageFairBootstrap === true && !window.wgUserName) {
-
+		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
 			{{{code}}}
-
-			window.Wikia.log('PageFair bootstrap code called', window.Wikia.log.levels.debug, logGroup);
-			window.addEventListener('load', function () {
-				require(['ext.wikia.aRecoveryEngine.recovery.pageFair'], function (pageFair) {
-					'use strict';
-					pageFair.track('loaded');
-				});
-			});
 		}
 	});
 </script>
