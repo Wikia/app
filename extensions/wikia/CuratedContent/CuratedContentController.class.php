@@ -606,7 +606,7 @@ class CuratedContentController extends WikiaController {
 		$validator = new CuratedContentValidator();
 
 		$data = array_map( function ( $section ) use ( $validator ) {
-			$featured = $section['featured'];
+			$featured = isset( $section['featured'] );
 			$section['node_type'] = 'section';
 			$section['items'] = array_values(
 				array_filter( $section['items'], function ( $item ) use ( $validator, $featured ) {
@@ -621,7 +621,7 @@ class CuratedContentController extends WikiaController {
 		}, $curatedContent );
 
 		$data = array_values( array_filter( $data, function ( $section ) use ( $validator ) {
-			$error = $section['featured'] ? false : $validator->validateSection( $section );
+			$error = isset( $section['featured'] ) ? false : $validator->validateSection( $section );
 			return empty( $error );
 		} ) );
 		return $data;
