@@ -31,14 +31,27 @@ class WallEditBuilder extends WallBuilder {
 		Hooks::register( 'ArticleDoEdit', [ $this, 'updateCommentsIndexEntry' ] );
 
 		$result = $this->message->getArticleComment()->doSaveComment( $this->messageText, $this->editor );
-		if ( !$result ) {
+		if ( !$result || !$result[0]->isOK() ) {
 			$this->throwException( 'Failed to save edited message' );
 		}
 
 		if ( !$this->message->isMain() ) {
-			// after changing reply invalidate thread cache
+			// after changing reply invalidate thread cache on memc level
 			$this->message->getThread()->invalidateCache();
 		}
+
+		// Purge URLs for Wall/Board page etc., catch up with slaves
+		$this->message->invalidateCache();
+
+		/**
+		 * @var Status $status
+		 * @var Article $article
+		 * @var Revision $rev
+		 */
+		list( $status, $article ) = $result;
+		$rev = $status['value']->revision;
+
+		WallHelper::sendNotification( $rev, RC_EDIT );
 
 		$this->articleComment = $this->message->getArticleComment();
 		return $this;
