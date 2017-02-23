@@ -1,5 +1,5 @@
 <div id="article-video" class="article-video">
-	<img class="video-thumbnail" src="<?= htmlspecialchars( $thumbnailUrl ); ?>">
+	<img class="video-thumbnail" src="<?= Sanitizer::encodeAttribute( $thumbnailUrl ); ?>">
 	<div class="video-container">
 		<div class="video-placeholder">
 			<img class="video-thumbnail" src="<?= $thumbnailUrl; ?>">
