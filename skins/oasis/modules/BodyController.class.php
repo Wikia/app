@@ -457,8 +457,8 @@ class BodyController extends WikiaController {
 
 		$articleId = $this->wg->Title->getArticleID();
 		$enableArticleVideo =
-			$this->wg->enableArticleVideo && isset( $this->wg->featuredVideos[$articleId] ) &&
-			$this->isFeaturedVideosValid( $this->wg->featuredVideos[$articleId] );
+			$this->wg->enableArticleVideo && isset( $this->wg->articleVideoFeaturedVideos[$articleId] ) &&
+			$this->isFeaturedVideosValid( $this->wg->articleVideoFeaturedVideos[$articleId] );
 		$this->setVal( 'enableArticleVideo', $enableArticleVideo );
 	}
 

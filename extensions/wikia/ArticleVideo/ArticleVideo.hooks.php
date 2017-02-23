@@ -5,7 +5,7 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
-		if ( isset( $wg->featuredVideos[$articleId] ) ) {
+		if ( isset( $wg->articleVideoFeaturedVideos[$articleId] ) ) {
 			\Wikia::addAssetsToOutput( 'article_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_video_js' );
 		}
@@ -17,9 +17,9 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
-		if ( isset( $wg->featuredVideos[$articleId]['videoId'] ) ) {
+		if ( isset( $wg->articleVideoFeaturedVideos[$articleId]['videoId'] ) ) {
 			$vars['wgArticleVideoData'] = [
-				'videoId' => $wg->featuredVideos[$articleId]['videoId'],
+				'videoId' => $wg->articleVideoFeaturedVideos[$articleId]['videoId'],
 			];
 		}
 
@@ -30,7 +30,7 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$articleId = $wg->Title->getArticleID();
 
-		if ( isset( $wg->featuredVideos[$articleId] ) ) {
+		if ( isset( $wg->articleVideoFeaturedVideos[$articleId] ) ) {
 			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
 		}
 
