@@ -1109,7 +1109,7 @@ class EditPage {
 		if ( !wfRunHooks( 'EditPage::attemptSave', array( $this ) ) ) {
 			wfDebug( "Hook 'EditPage::attemptSave' aborted article saving\n" );
 			$result['hookaborted'] = 'EditPage::attemptSave'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditPage::attemptSave' ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__  );
@@ -1156,7 +1156,7 @@ class EditPage {
 		if ( !wfRunHooks( 'EditFilter', array( $this, $this->textbox1, $this->section, &$this->hookError, $this->summary ) ) ) {
 			# Error messages etc. could be handled within the hook...
 			$result['hookaborted'] = 'EditFilter'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditFilter' ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
@@ -1164,7 +1164,7 @@ class EditPage {
 		} elseif ( $this->hookError != '' ) {
 			# ...or the hook could be expecting us to produce an error
 			$result['hookaborted'] = 'EditFilter'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditFilter' ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR_EXPECTED;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
@@ -1258,14 +1258,14 @@ class EditPage {
 			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $this->textbox1, &$this->hookError, $this->summary ) ) ) {
 				# Error messages etc. could be handled within the hook...
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR;
 				wfProfileOut( __METHOD__ );
 				return $status;
 			} elseif ( $this->hookError != '' ) {
 				# ...or the hook could be expecting us to produce an error
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR_EXPECTED;
 				wfProfileOut( __METHOD__ );
 				return $status;
@@ -1383,14 +1383,14 @@ class EditPage {
 			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $text, &$this->hookError, $this->summary ) ) ) {
 				# Error messages etc. could be handled within the hook...
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR;
 				wfProfileOut( __METHOD__ );
 				return $status;
 			} elseif ( $this->hookError != '' ) {
 				# ...or the hook could be expecting us to produce an error
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR_EXPECTED;
 				wfProfileOut( __METHOD__ );
 				return $status;

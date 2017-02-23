@@ -278,6 +278,7 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', $builderException->getContext()['reason'] );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		}
@@ -690,8 +691,7 @@ class WallExternalController extends WikiaController {
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
 		try {
-			$reply =
-				( new WallMessageBuilder() )
+			$reply = ( new WallMessageBuilder() )
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setMessageText( $body )
 					->setParentMessage( $wallMessage )
@@ -700,6 +700,7 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', $builderException->getContext()['reason'] );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		}

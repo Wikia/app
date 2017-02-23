@@ -79,15 +79,19 @@ class WallEditBuilder extends WallBuilder {
 
 	/**
 	 * Populate an exception with proper context for logging, and throw it
+	 *
 	 * @param string $message
+	 * @param string $reason
+	 *
 	 * @throws WallBuilderException
 	 */
-	protected function throwException( string $message ) {
+	protected function throwException( string $message, string $reason = '' ) {
 		$context = [
 			'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
 			'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
 			'messageTitle' => $this->message->getTitle()->getPrefixedText(),
-			'messageId' => $this->message->getTitle()->getArticleID()
+			'messageId' => $this->message->getTitle()->getArticleID(),
+			'reason' => $reason
 		];
 
 		throw new WallBuilderException( $message, $context );

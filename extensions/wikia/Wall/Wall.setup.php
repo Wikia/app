@@ -193,6 +193,8 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-confirm-monobook-*',
 	'wall-posting-message-failed-title',
 	'wall-posting-message-failed-body',
+	'wall-posting-message-failed-filter-title',
+	'wall-posting-message-failed-filter-body',
 	'preview',
 	'savearticle',
 	'back',

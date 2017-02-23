@@ -94,11 +94,18 @@ class WallMessageBuilder extends WallBuilder {
 			// Permissions check are performed on article comment level by EditPage class of Mediawiki
 			// Text is matched there against Phalanx filters and all user blocks (global and local) are also checked
 			// This can cause edit to fail
-			$this->throwException( 'Failed to create article comment' );
+			$reason =  $result && (
+				$result[0]->value == EditPage::AS_FILTERING || in_array( 'EditFilter', $result[0]->errors[0]['params'] )
+			)
+				? 'editfilter'
+				: '';
+			$this->throwException( 'Failed to create article comment', $reason );
 		}
 
 		/** @var Article $article */
+		/** @var Status $status */
 		list( $status, $article ) = $result;
+
 		$this->newMessage = WallMessage::newFromTitle( $article->getTitle() );
 
 		return $this;
@@ -221,15 +228,19 @@ class WallMessageBuilder extends WallBuilder {
 
 	/**
 	 * Populate an exception with proper context for logging, and throw it
+	 *
 	 * @param string $message
+	 * @param string $reason
+	 *
 	 * @throws WallBuilderException
 	 */
-	protected function throwException( string $message ) {
+	protected function throwException( string $message, string $reason = '' ) {
 		$context = [
 			'parentPageTitle' => $this->parentPageTitle->getPrefixedText(),
 			'parentPageId' => $this->parentPageTitle->getArticleID(),
 			'parentMessageTitle' => $this->parentMessage ? $this->parentMessage->getTitle()->getPrefixedText() : '',
 			'parentMessageId' => $this->parentMessage ? $this->parentMessage->getId() : '',
+			'reason' => $reason
 		];
 
 		throw new WallBuilderException( $message, $context );
