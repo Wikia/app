@@ -8,7 +8,7 @@
  */
 
 define('wikia.videohandler.ooyala', [
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),

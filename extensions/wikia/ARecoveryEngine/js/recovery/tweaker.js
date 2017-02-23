@@ -2,7 +2,7 @@
 define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'

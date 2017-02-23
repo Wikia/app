@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.helper', [
+define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.instantGlobals',
@@ -16,7 +16,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
+	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		cb = function (callback) {
@@ -38,17 +38,15 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		onNotBlockingEventsQueue.push(callback);
 	}
 
+	/**
+	 * SourcePoint can be enabled only if PF recovery is disabled
+	 *
+	 * @returns {boolean}
+	 */
 	function isSourcePointRecoveryEnabled() {
 		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
 
 		log(['isSourcePointRecoveryEnabled', enabled, 'debug', logGroup]);
-		return enabled;
-	}
-
-	function isPageFairRecoveryEnabled() {
-		var enabled = !!context.opts.pageFairRecovery;
-
-		log(['isPageFairRecoveryEnabled', enabled, 'debug', logGroup]);
 		return enabled;
 	}
 
@@ -111,7 +109,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		isBlocking: isBlocking,
 		isSourcePointRecoverable: isSourcePointRecoverable,
 		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
-		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};

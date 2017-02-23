@@ -3,7 +3,7 @@
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -63,8 +63,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0],
 			// load GPT when API not ready and recovery is non blocking or recovery is pageFair (never blocking)
+			pageFairRecovery = pageFair && pageFair.isPageFairRecoveryEnabled(),
 			gptCanBeLoaded = !window.googletag.apiReady &&
-				(!recovery.isBlocking() || recovery.isPageFairRecoveryEnabled());
+				(!recovery.isBlocking() || pageFairRecovery);
 
 		if (gptCanBeLoaded) {
 			gads.async = true;
@@ -136,8 +137,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			slot.addService(window.googletag.pubads());
 
-			if (recovery.isPageFairRecoveryEnabled() && pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
-				console.log("adding marker for slot: ", slotId);
+			if (pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
 				pageFair.addMarker(slotId);
 			}
 

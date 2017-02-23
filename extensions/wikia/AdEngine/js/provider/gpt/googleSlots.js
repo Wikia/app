@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.window'
 ], function (recoveryHelper, win) {
 	'use strict';

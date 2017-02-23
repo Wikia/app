@@ -81,8 +81,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// PageFair recovery
 		if (!noExternals &&
-			context.opts.pageFairRecovery !== false) //&&
-			//geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries))
+			context.opts.pageFairRecovery !== false &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries))
 		{
 			context.opts.pageFairRecovery = true;
 		}

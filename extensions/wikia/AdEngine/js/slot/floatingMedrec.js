@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',

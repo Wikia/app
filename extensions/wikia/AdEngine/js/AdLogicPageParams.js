@@ -179,8 +179,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: targeting.esrbRating,
-			geo: geo.getCountryCode() || 'none',
-			requestSource: 'GPT'
+			geo: geo.getCountryCode() || 'none'
 		};
 
 		if (pvs) {
