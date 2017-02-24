@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			vulcanSlotDefinition['tg_i.' + key] = placeholder.targeting[key];
 		});
 
-		log(['defineSlot', placeholder.placeholderName, vulcanSlotDefinition], 'debug', logGroup);
+		log(['defineSlot', placeholder.placeholderName, vulcanSlotDefinition], log.levels.debug, logGroup);
 		win.rubiconVulcan.defineSlot(placeholder.placeholderName, vulcanSlotDefinition);
 	}
 
@@ -82,14 +82,14 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function getSlotParams(slotName) {
-		var parameters = {};
+		var parameters = {},
+			placeholderName = slotMapping[slotName];
 
-		slotName = slotMapping[slotName] || slotName;
 		parameters[rubiconVideoTierKey] = placeholder.sizeId + '_tierNONE';
 
-		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
-		if (priceMap[slotName]) {
-			parameters[rubiconVideoTierKey] = priceMap[slotName];
+		log(['getSlotParams', slotName, placeholderName, parameters], log.levels.debug, logGroup);
+		if (priceMap[placeholderName]) {
+			parameters[rubiconVideoTierKey] = priceMap[placeholderName];
 		}
 
 		return parameters;
@@ -97,12 +97,11 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 	function getBestSlotPrice(slotName) {
 		var cpm,
+			placeholderName = slotMapping[slotName],
 			price;
 
-		slotName = slotMapping[slotName] || slotName;
-
-		if (priceMap[slotName]) {
-			cpm = rubiconTier.parseOpenMarketPrice(priceMap[slotName]) / 100;
+		if (priceMap[placeholderName]) {
+			cpm = rubiconTier.parseOpenMarketPrice(priceMap[placeholderName]) / 100;
 			price = cpm.toFixed(2).toString();
 		}
 
@@ -113,12 +112,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
-			allSlots = win.rubiconVulcan.getAllSlots() || [];
+			vulcanSlots = win.rubiconVulcan.getAllSlots() || [];
 
-		slotName = slotMapping[slotName] || slotName;
-
-		allSlots.forEach(function (slot) {
-			if (slot.id === slotName) {
+		vulcanSlots.forEach(function (slot) {
+			if (slot.id === slotMapping[slotName]) {
 				bestResponse = slot.getBestCpm();
 			}
 		});
@@ -127,13 +124,14 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function deleteBid(slotName) {
-		var response;
+		var placeholderName = slotMapping[slotName],
+			response;
 
-		slotName = slotMapping[slotName] || slotName;
-		response = getSingleResponse(slotName);
+		response = getSingleResponse(placeholderName);
 		response.used = true;
 
-		delete priceMap[slotName];
+		priceMap[placeholderName] = undefined;
+		log(['deleteBid', slotName, placeholderName], log.levels.debug, logGroup)
 	}
 
 	function encodeParamsForTracking(params) {
@@ -145,26 +143,26 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function calculatePrices() {
-		var allSlots = win.rubiconVulcan.getAllSlots();
+		var vulcanSlots = win.rubiconVulcan.getAllSlots();
 
-		allSlots.forEach(function (vulcanSlot) {
+		vulcanSlots.forEach(function (vulcanSlot) {
 			var ad = vulcanSlot.getBestCpm(),
-				slotName = vulcanSlot.id,
+				placeholderName = vulcanSlot.id,
 				sizeId = vulcanSlot.sizeId,
 				cpm,
 				tier,
 				vastUrl;
 
-			log(['onResponse', slotName, ad.status, ad], 'debug', logGroup);
+			log(['onResponse', placeholderName, ad.status, ad], log.levels.debug, logGroup);
 			if (ad.status === 'ok' && ad.type === 'vast') {
 				cpm = ad[vulcanCpmKey] || 0;
 				tier = rubiconTier.create(sizeId, cpm * 100);
 				vastUrl = ad[vulcanUrlKey];
 
-				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
-				priceMap[slotName] = tier;
+				log(['VAST ad', placeholderName, cpm, tier, vastUrl], log.levels.debug, logGroup);
+				priceMap[placeholderName] = tier;
 			} else {
-				priceMap[slotName] = placeholder.sizeId + '_tier0000';
+				priceMap[placeholderName] = placeholder.sizeId + '_tier0000';
 			}
 		});
 	}

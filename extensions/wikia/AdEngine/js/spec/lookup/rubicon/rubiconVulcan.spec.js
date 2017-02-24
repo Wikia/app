@@ -105,6 +105,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
