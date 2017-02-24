@@ -107,8 +107,8 @@ The original post and your summary will still appear in the wiki\'s history.',
 	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
-	'wall-posting-message-failed-filter-title' => 'Inapropriate content detected', //TODO: set proper message
-	'wall-posting-message-failed-filter-body' => 'The message you are trying to post contains inapropriate phrase(s). Please remove them and try again', //TODO: set proper message
+	'wall-posting-message-failed-filter-title' => 'Inappropriate content detected',
+	'wall-posting-message-failed-filter-body' => 'This edit could not be saved as it contains inappropriate content. Please rephrase.',
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
 	'wall-notifications-markasread' => 'Mark all as read',
