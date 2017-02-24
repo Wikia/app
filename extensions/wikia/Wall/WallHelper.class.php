@@ -475,6 +475,14 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
+	/**
+	 * Create a new Wall Notification from revision info, and dispatch it to wall_notifications table.
+	 *
+	 * @deprecated this interface should be converted to use background task at some point
+	 * @param Revision $rev
+	 * @param int $rcType whether this is a new thread/reply (RC_NEW = 1) or edit to existing one/wall action (RC_EDIT = 2)
+	 * @param bool $useMasterDB
+	 */
 	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
 		global $wgUser;
 

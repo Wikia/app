@@ -847,7 +847,7 @@ class ArticleComment {
 	 * @param string $summary
 	 * @param bool $preserveMetadata : hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 *
-	 * @return array|bool TODO: Document what the array contains.
+	 * @return array|bool False on failure, array on success. First element is Status instance returned by EditPage::internalAttemptSave, second is Article instance.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
