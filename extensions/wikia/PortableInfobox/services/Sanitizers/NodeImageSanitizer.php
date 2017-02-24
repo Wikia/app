@@ -19,7 +19,8 @@ class NodeImageSanitizer extends NodeSanitizer {
 				return $image;
 			}, $data['images'] );
 		} else {
-			$data['caption'] = $this->sanitizeElementData( $data['caption'] );
+			$caption = $data['caption'] ?? '';
+			$data['caption'] = $this->sanitizeElementData( $caption );
 		}
 
 		return $data;
