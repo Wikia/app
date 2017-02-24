@@ -343,7 +343,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @brief add history to wall toolbar
+	 * @brief modify toolbar
 	 *
 	 * @param $items
 	 *
@@ -356,7 +356,6 @@ class WallHooksHelper {
 		}
 
 		$title = $app->wg->Title;
-		$action = $app->wg->Request->getText( 'action' );
 
 		if ( $title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			if ( is_array( $items ) ) {
@@ -367,35 +366,6 @@ class WallHooksHelper {
 					}
 				}
 
-			}
-		}
-
-		if ( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty( $action ) ) {
-			$item = [
-					'type' => 'html',
-					'html' => Xml::element( 'a', [ 'href' => $title->getFullUrl( 'action=history' ) ], wfMessage( 'wall-toolbar-history' )->text() )
-			];
-
-			if ( is_array( $items ) ) {
-				$inserted = false;
-				$itemsout = [ ];
-
-				foreach ( $items as $value ) {
-					$itemsout[] = $value;
-
-					if ( $value['type'] == 'follow' ) {
-						$itemsout[] = $item;
-						$inserted = true;
-					}
-				}
-
-				if ( !$inserted ) {
-					array_unshift( $items, $item );
-				} else {
-					$items = $itemsout;
-				}
-			} else {
-				$items = [ $item ];
 			}
 		}
 
@@ -905,7 +875,7 @@ class WallHooksHelper {
 				$wm->load();
 
 				if ( !$wm->isMain() ) {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 					$wm = $wm->getTopParentObj();
 					if ( is_null( $wm ) ) {
 						Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
@@ -914,7 +884,7 @@ class WallHooksHelper {
 						$wm->load();
 					}
 				} else {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 				}
 
 				$title = $wm->getMetaTitle();
@@ -2056,15 +2026,6 @@ class WallHooksHelper {
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
-		return true;
-	}
-
-	// TODO: implement this :)
-	static public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
-		/*
-
-		$oldtext = ArticleComment::removeMetadataTag($oldtext);
-		$newtext = ArticleComment::removeMetadataTag($newtext);; */
 		return true;
 	}
 

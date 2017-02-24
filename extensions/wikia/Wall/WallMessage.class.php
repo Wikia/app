@@ -204,9 +204,10 @@ class WallMessage {
 	 */
 	public function canEdit( User $user, $shouldLogBlockInStats = true ) {
 		wfProfileIn( __METHOD__ );
-		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) && (
-				$this->isAuthor( $user ) || $this->can( $user, 'walledit', $shouldLogBlockInStats ) ||
-				$this->can( $user, 'rollback', $shouldLogBlockInStats )
+		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) &&
+			(
+				$this->isAuthor( $user ) ||
+				$this->can( $user, 'walledit', $shouldLogBlockInStats )
 			);
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -658,7 +659,7 @@ class WallMessage {
 		return $id;
 	}
 
-	public function getMessagePageUrl( $withoutAnchor = false ) {
+	public function getMessagePageUrl( $withoutAnchor = false, $fullUrl = true ) {
 		wfProfileIn( __METHOD__ );
 
 		// local cache consider cache this in memc
@@ -675,7 +676,7 @@ class WallMessage {
 
 		$this->messagePageUrl = [ ];
 
-		$this->messagePageUrl[ true ] = $title->getFullUrl();
+		$this->messagePageUrl[ true ] = $fullUrl ? $title->getFullUrl() : $title->getLocalURL();
 		$this->messagePageUrl[ false ] = $this->messagePageUrl[ true ] . $postFix;
 
 		wfProfileOut( __METHOD__ );

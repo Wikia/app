@@ -262,16 +262,6 @@ class WallBaseController extends WikiaService {
 			$this->response->setVal( 'editorUrl', $editorUrl );
 			$this->response->setVal( 'isEdited', true );
 
-			$summary = $wallMessage->getLastEditSummary();
-
-			if ( !empty( $summary ) ) {
-				$summary = Linker::formatComment( $summary );
-				$this->response->setVal( 'summary', $summary );
-				$this->response->setVal( 'showSummary', true );
-			} else {
-				$this->response->setVal( 'showSummary', false );
-			}
-
 			$query = [
 				'diff' => 'prev',
 				'oldid' => $wallMessage->getTitle()->getLatestRevID(),

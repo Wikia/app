@@ -1439,17 +1439,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgSitewideDisableIVW2
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW2
- *
- * Disable IVW2 Analytics pixel sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisableIVW2 = false;
-
-/**
  * @name $wgSitewideDisableIVW3
  * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
@@ -1465,7 +1454,7 @@ $wgSitewideDisableIVW3 = false;
  *
  * List of countries with enabled IVW3 tracking
  */
-$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH'];
 
 /**
  * @name $wgSitewideDisablePaidAssetDrop

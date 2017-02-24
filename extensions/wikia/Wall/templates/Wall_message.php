@@ -40,8 +40,7 @@
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
-
-
+			
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', [
 					'attributes' => [ 'data-min-height' => 100, 'data-max-height' => 400 ]
