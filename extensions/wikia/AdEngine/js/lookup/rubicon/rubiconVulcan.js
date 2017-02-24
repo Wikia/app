@@ -86,14 +86,14 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		return placeholder.sizeId + '_tier' + value;
 	}
 
-	function isUsedBy(slotName) {
+	function isNotUsedBy(slotName) {
 		var placeholderName = slotMapping[slotName];
 
 		return usedResponses[placeholderName] && usedResponses[placeholderName] !== slotName;
 	}
 
 	function getSlotParams(slotName) {
-		var isUsed = isUsedBy(slotName),
+		var isUsed = isNotUsedBy(slotName),
 			parameters = {},
 			placeholderName = slotMapping[slotName];
 
@@ -116,7 +116,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			placeholderName = slotMapping[slotName],
 			price;
 
-		if (isUsedBy(slotName)) {
+		if (isNotUsedBy(slotName)) {
 			price = 'used';
 		} else if (priceMap[placeholderName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[placeholderName]) / 100;
