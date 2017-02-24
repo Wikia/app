@@ -38,6 +38,7 @@ class PurgeWebPThumbs extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
+		$this->addOption( 'skip-cdn-purges', 'Don\'t purge CDN entries' );
 		$this->mDescription = 'This script removes WebP thumbnails from DFS and purges their CDN entries';
 	}
 
@@ -58,7 +59,9 @@ class PurgeWebPThumbs extends Maintenance {
 		}
 		else {
 			$this->storage->remove($thumb);
-			SquidUpdate::purge([$url]);
+			if (!$this->skipCdnPurges) {
+				SquidUpdate::purge([$url]);
+			}
 
 			$this->output("done\n");
 		}
@@ -70,6 +73,7 @@ class PurgeWebPThumbs extends Maintenance {
 		$container = $this->storage->getContainer();
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
+		$this->skipCdnPurges = $this->hasOption( 'skip-cdn-purges' );
 
 		// get the list of WebP thumbs
 		$prefix = sprintf('%s/thumb', trim($this->storage->getPathPrefix(), '/'));
