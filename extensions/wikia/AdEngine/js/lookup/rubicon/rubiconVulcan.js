@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 				size: [640, 480],
 				sizeId: 203,
 				targeting: {
-					loc: 'top'
+					loc: 'outstream'
 				},
 				zoneId: 519058
 			},
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 				size: [640, 480],
 				sizeId: 203,
 				targeting: {
-					loc: 'hivi'
+					loc: 'outstream'
 				},
 				zoneId: 563110
 			}
@@ -44,6 +44,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			'TOP_LEADERBOARD': 'outstream-desktop',
 			'MOBILE_IN_CONTENT': 'outstream-mobile'
 		},
+		usedResponses = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
 
@@ -81,14 +82,29 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		win.rubiconVulcan.run(onResponse);
 	}
 
+	function createTier(value) {
+		return placeholder.sizeId + '_tier' + value;
+	}
+
+	function isUsedBy(slotName) {
+		var placeholderName = slotMapping[slotName];
+
+		return usedResponses[placeholderName] && usedResponses[placeholderName] !== slotName;
+	}
+
 	function getSlotParams(slotName) {
-		var parameters = {},
+		var isUsed = isUsedBy(slotName),
+			parameters = {},
 			placeholderName = slotMapping[slotName];
 
-		parameters[rubiconVideoTierKey] = placeholder.sizeId + '_tierNONE';
+		if (isUsed) {
+			parameters[rubiconVideoTierKey] = createTier('USED');
+		} else {
+			parameters[rubiconVideoTierKey] = createTier('NONE');
+		}
 
 		log(['getSlotParams', slotName, placeholderName, parameters], log.levels.debug, logGroup);
-		if (priceMap[placeholderName]) {
+		if (!isUsed && priceMap[placeholderName]) {
 			parameters[rubiconVideoTierKey] = priceMap[placeholderName];
 		}
 
@@ -100,7 +116,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			placeholderName = slotMapping[slotName],
 			price;
 
-		if (priceMap[placeholderName]) {
+		if (isUsedBy(slotName)) {
+			price = 'used';
+		} else if (priceMap[placeholderName]) {
 			cpm = rubiconTier.parseOpenMarketPrice(priceMap[placeholderName]) / 100;
 			price = cpm.toFixed(2).toString();
 		}
@@ -124,14 +142,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function deleteBid(slotName) {
-		var placeholderName = slotMapping[slotName],
-			response;
+		var placeholderName = slotMapping[slotName];
 
-		response = getSingleResponse(placeholderName);
-		response.used = true;
-
-		priceMap[placeholderName] = undefined;
-		log(['deleteBid', slotName, placeholderName], log.levels.debug, logGroup)
+		usedResponses[placeholderName] = slotName;
+		log(['deleteBid', slotName, placeholderName], log.levels.debug, logGroup);
 	}
 
 	function encodeParamsForTracking(params) {
@@ -162,7 +176,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 				log(['VAST ad', placeholderName, cpm, tier, vastUrl], log.levels.debug, logGroup);
 				priceMap[placeholderName] = tier;
 			} else {
-				priceMap[placeholderName] = placeholder.sizeId + '_tier0000';
+				priceMap[placeholderName] = createTier('0000');
 			}
 		});
 	}
