@@ -64,10 +64,12 @@ class WallEditBuilder extends WallBuilder {
 	 * @return bool true
 	 */
 	public function updateCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
-		$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
-		$entry->setLastRevId( $rev->getId() );
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
+			$entry->setLastRevId( $rev->getId() );
 
-		CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+			CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+		}
 
 		return true;
 	}

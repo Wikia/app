@@ -198,20 +198,24 @@ class WallMessageBuilder extends WallBuilder {
 	 * @return bool true if comments index was successfully updated, else false to force MW to rollback the transaction
 	 */
 	public function insertNewCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
-		$parentPageId = $this->parentPageTitle->getArticleID();
-		$parentCommentId = $this->parentMessage ? $this->parentMessage->getId() : 0;
-		$revId = $rev->getId();
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$parentPageId = $this->parentPageTitle->getArticleID();
+			$parentCommentId = $this->parentMessage ? $this->parentMessage->getId() : 0;
+			$revId = $rev->getId();
 
-		$entry =
-			( new CommentsIndexEntry() )
-				->setNamespace( $title->getNamespace() )
-				->setParentPageId( $parentPageId )
-				->setParentCommentId( $parentCommentId )
-				->setCommentId( $title->getArticleID() )
-				->setFirstRevId( $revId )
-				->setLastRevId( $revId );
+			$entry =
+				( new CommentsIndexEntry() )
+					->setNamespace( $title->getNamespace() )
+					->setParentPageId( $parentPageId )
+					->setParentCommentId( $parentCommentId )
+					->setCommentId( $title->getArticleID() )
+					->setFirstRevId( $revId )
+					->setLastRevId( $revId );
 
-		return CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+			return CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+		}
+
+		return true;
 	}
 
 	/**
