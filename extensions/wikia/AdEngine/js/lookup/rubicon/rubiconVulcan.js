@@ -13,15 +13,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		bidder,
 		config = {
 			oasis: {
-				INCONTENT_LEADERBOARD: {
-					siteId: 55412,
-					size: [640, 480],
-					sizeId: 203,
-					targeting: {
-						loc: 'hivi'
-					},
-					zoneId: 260296
-				},
 				TOP_LEADERBOARD: {
 					siteId: 55412,
 					size: [640, 480],
@@ -49,7 +40,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
 		slotMapping = {
-			'INCONTENT_PLAYER': 'INCONTENT_LEADERBOARD'
+			'INCONTENT_LEADERBOARD': 'TOP_LEADERBOARD',
+			'INCONTENT_PLAYER': 'TOP_LEADERBOARD'
 		},
 		slots = {},
 		vulcanCpmKey = 'cpm',

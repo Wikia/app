@@ -75,7 +75,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				}
 			},
 			slot: {
-				id: 'INCONTENT_LEADERBOARD',
+				id: 'TOP_LEADERBOARD',
 				getBestCpm: function () {
 					return mocks.vulcanResponse;
 				}
@@ -161,8 +161,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		vulcan.call();
 		defineSlotsCalls = mocks.win.rubicontag.video.defineSlot.calls;
 
-		expect(defineSlotsCalls.count()).toEqual(2);
-		expect(defineSlotsCalls.argsFor(0)[0]).toEqual('INCONTENT_LEADERBOARD');
+		expect(defineSlotsCalls.count()).toEqual(1);
+		expect(defineSlotsCalls.argsFor(0)[0]).toEqual('TOP_LEADERBOARD');
 
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'account_id');
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'site_id');
