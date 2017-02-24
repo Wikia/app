@@ -423,6 +423,8 @@ See also:
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
 	'wall-posting-message-failed-title' => 'Popup title when posting message failed',
 	'wall-posting-message-failed-body' => 'Popup body when posting message failed',
+	'wall-posting-message-failed-filter-title' => 'Popup title when posting message failed due to content filters block',
+	'wall-posting-message-failed-filter-body' => 'Popup body when posting message failed due to content filters block',
 	'wall-notifications' => 'Title of notification dropdown.
 {{Identical|Notification}}',
 	'wall-notifications-all' => 'Text in notification dropdown menu.
