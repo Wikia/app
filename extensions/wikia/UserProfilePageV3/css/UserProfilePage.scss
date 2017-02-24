@@ -151,7 +151,6 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	  	#discussion-bio {
 		  max-height: 100px;
 		  overflow: hidden;
-		  transition: max-height 1s;
 		}
 
 	  	#discussion-bio-toggle {
