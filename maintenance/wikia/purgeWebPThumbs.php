@@ -39,6 +39,7 @@ class PurgeWebPThumbs extends Maintenance {
 		parent::__construct();
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
 		$this->addOption( 'skip-cdn-purges', 'Don\'t purge CDN entries' );
+		$this->addOption( 'purge-all', 'Purge all WebP thumbnails (without timestamp constraints)' );
 		$this->mDescription = 'This script removes WebP thumbnails from DFS and purges their CDN entries';
 	}
 
@@ -74,6 +75,7 @@ class PurgeWebPThumbs extends Maintenance {
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 		$this->skipCdnPurges = $this->hasOption( 'skip-cdn-purges' );
+		$this->purgeAll = $this->hasOption( 'purge-all' );
 
 		// get the list of WebP thumbs
 		$prefix = sprintf('%s/thumb', trim($this->storage->getPathPrefix(), '/'));
@@ -109,7 +111,7 @@ class PurgeWebPThumbs extends Maintenance {
 					// check the timestamp
 					$lastMod = strtotime($thumb->last_modified);
 
-					if ($lastMod > $timestampFrom && $lastMod < $timestampTo) {
+					if ($this->purgeAll || ($lastMod > $timestampFrom && $lastMod < $timestampTo)) {
 						$this->purgeThumb($name);
 						$removed++;
 					}
