@@ -4,7 +4,7 @@ class ArticleVideoController extends WikiaController {
 	public function index() {
 		$wg = F::app()->wg;
 
-		$title = RequestContext::getMain()->getTitle()->getPartialURL();
+		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
 		// TODO: replace it with DS icon when it's ready (XW-2824)
 		$this->setVal( 'closeIconUrl',

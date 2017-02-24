@@ -3,7 +3,7 @@
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPartialURL();
+		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
 			\Wikia::addAssetsToOutput( 'article_video_scss' );
@@ -15,7 +15,7 @@ class ArticleVideoHooks {
 
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPartialURL();
+		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
 			$vars['wgArticleVideoData'] = [
@@ -28,7 +28,7 @@ class ArticleVideoHooks {
 
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPartialURL();
+		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
 			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
