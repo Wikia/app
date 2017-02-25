@@ -4,6 +4,7 @@
  * Class WallEditBuilder builds newly edited version of Wall/Forum thread or reply
  */
 class WallEditBuilder extends WallBuilder {
+	use \Wikia\Logger\Loggable;
 
 	/** @var string $messageText */
 	private $messageText;
@@ -68,7 +69,16 @@ class WallEditBuilder extends WallBuilder {
 			$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
 			$entry->setLastRevId( $rev->getId() );
 
-			CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+			$result = CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+			if ( !$result ) {
+				$this->error( 'Failed to update Comments Index Entry', [
+					'title' => $title->getPrefixedText(),
+					'revision' => $rev->getId(),
+					'articleId' => $rev->getPage()
+				] );
+			}
+
+			return $result;
 		}
 
 		return true;

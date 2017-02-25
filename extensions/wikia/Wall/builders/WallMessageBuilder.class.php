@@ -5,6 +5,7 @@
  * and performs associated updates
  */
 class WallMessageBuilder extends WallBuilder {
+	use \Wikia\Logger\Loggable;
 
 	// Mandatory fields
 	/** @var string $messageText */
@@ -212,7 +213,16 @@ class WallMessageBuilder extends WallBuilder {
 					->setFirstRevId( $revId )
 					->setLastRevId( $revId );
 
-			return CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+			$result = CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+			if ( !$result ) {
+				$this->error( __METHOD__ . ' - SUS-1719: Failed to insert Comments Index Entry', [
+					'title' => $title->getPrefixedText(),
+					'revision' => $rev->getId(),
+					'articleId' => $rev->getPage()
+				] );
+			}
+
+			return $result;
 		}
 
 		return true;
