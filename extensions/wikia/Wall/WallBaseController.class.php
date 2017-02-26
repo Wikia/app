@@ -78,7 +78,9 @@ class WallBaseController extends WikiaService {
 		if ( !empty( $title ) && $title->exists() && in_array( MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->load();
-			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+			// VOLDEV-3: fix Thread watchlist issues
+			$this->wg->User->clearNotification( $title );
+			$this->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 		}
 
 		// TODO: keep the varnish cache and do purging on post
