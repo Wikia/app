@@ -40,7 +40,10 @@ class CommentsIndex {
 		$updateSuccess = $dbw->update(
 			'comments_index',
 			$entry->getDatabaseRepresentation(),
-			[ 'comment_id' => $entry->getCommentId() ],
+			[
+				'parent_page_id' => $entry->getParentPageId(),
+				'comment_id' => $entry->getCommentId()
+			],
 			__METHOD__
 		);
 
