@@ -35,9 +35,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 		};
 
 	function isEnabled() {
-		// TODO: add and set and check here instantGlobals.wgAdDriverAudienceNetworkBidderCountries
-		// https://wikia-inc.atlassian.net/browse/ADEN-4638
-		return adContext.getContext().targeting.skin === 'mercury';
+		return adContext.getContext().targeting.skin === 'mercury' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries);
 	}
 
 	function getSlots(skin) {
