@@ -875,7 +875,7 @@ class WallHooksHelper {
 				$wm->load();
 
 				if ( !$wm->isMain() ) {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 					$wm = $wm->getTopParentObj();
 					if ( is_null( $wm ) ) {
 						Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
@@ -884,7 +884,7 @@ class WallHooksHelper {
 						$wm->load();
 					}
 				} else {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 				}
 
 				$title = $wm->getMetaTitle();

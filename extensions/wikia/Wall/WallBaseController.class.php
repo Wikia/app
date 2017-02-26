@@ -199,8 +199,6 @@ class WallBaseController extends WikiaService {
 
 		$isThreadPage = $this->request->getVal( 'isThreadPage', false );
 
-		$this->response->setVal( 'showRemovedBox', false );
-
 		$this->response->setVal( 'showDeleteOrRemoveInfo', $isThreadPage );
 		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() & !$isThreadPage );
 
@@ -295,7 +293,6 @@ class WallBaseController extends WikiaService {
 
 		if ( $wallMessage->isRemove() && !$wallMessage->isMain() ) {
 			$this->response->setVal( 'removedOrDeletedMessage', true );
-			$this->response->setVal( 'showRemovedBox', true );
 		}
 
 
