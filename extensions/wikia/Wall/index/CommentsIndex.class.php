@@ -30,22 +30,26 @@ class CommentsIndex {
 	 *
 	 * @param CommentsIndexEntry $entry
 	 * @param DatabaseBase $dbw
+	 * @return bool Whether database was successfully updated
 	 */
 	public function updateEntry( CommentsIndexEntry $entry, DatabaseBase $dbw = null ) {
 		$dbw = $dbw ?? wfGetDB( DB_MASTER );
 
 		$entry->setLastTouched( $dbw->timestamp() );
 
-		$dbw->update(
+		$updateSuccess = $dbw->update(
 			'comments_index',
 			$entry->getDatabaseRepresentation(),
-			[ 'comment_id' => $entry->getCommentId() ],
+			[
+				'parent_page_id' => $entry->getParentPageId(),
+				'comment_id' => $entry->getCommentId()
+			],
 			__METHOD__
 		);
 
 		// If this update action changes visibility of comment,
 		// update last_child_comment_id for parent thread
-		if ( $this->shouldUpdateParentInfoFor( $entry ) ) {
+		if ( $updateSuccess && $this->shouldUpdateParentInfoFor( $entry ) ) {
 			$parentId = $entry->getParentCommentId();
 
 			$lastCommentId = $dbw->selectField(
@@ -62,11 +66,12 @@ class CommentsIndex {
 
 			$parentEntry = static::entryFromId( $parentId );
 			$parentEntry->setLastChildCommentId( $lastCommentId );
-			$this->updateEntry( $parentEntry );
+			$updateSuccess &= $this->updateEntry( $parentEntry );
 		}
 
 		// store new entry in object cache
 		$this->objectCache[$entry->getCommentId()] = $entry;
+		return $updateSuccess;
 	}
 
 	/**
