@@ -77,7 +77,7 @@ $spinnerSize: 48;
 	.video-wiki-play-button {
 		align-items: center;
 		background-color: $color-buttons;
-		border: 6px solid rgba(0,0,0,0.08);
+		border: 6px solid rgba(0, 0, 0, 0.32);
 		border-radius: 100%;
 		bottom: 35px;
 		box-sizing: border-box;
@@ -264,7 +264,7 @@ $spinnerSize: 48;
 	top: 0;
 	display: none;
 
-	>div {
+	> div {
 		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
 		// and it doesn't remove this style when user leaves this mode
 		z-index: 10000 !important;
