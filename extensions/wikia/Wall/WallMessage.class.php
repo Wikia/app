@@ -1110,7 +1110,13 @@ class WallMessage {
 		return $wnoe;
 	}
 
-	public function adminDelete( $user, $reason = '', $notifyAdmins = false ) {
+	/**
+	 * @param User $user
+	 * @param string $reason
+	 * @param bool $notifyAdmins
+	 * @return bool
+	 */
+	public function adminDelete( User $user, $reason = '', $notifyAdmins = false ) : bool {
 		$this->saveReason( $user, $reason );
 		$this->setInCommentsIndex( WPP_WALL_ADMINDELETE, true );
 
@@ -1134,8 +1140,7 @@ class WallMessage {
 		$this->hideRelatedNotifications();
 
 		$this->addWatch( $user );
-
-		return $status;
+		return true;
 	}
 
 	public function fastAdminDelete( $user ) {
