@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
-	// only first size for each slot will be requested anyways
+	// only first size for each slot will be requested anyways - this is how Audience Network works
 		slots = {
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 				{
 					bidder: bidderName,
 					params: {
-						// todo: remove after testing
+						// TODO: remove after testing
 						testMode: true,
 						placementId: config.placementId
 					}

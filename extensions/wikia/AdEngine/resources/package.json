@@ -16,6 +16,6 @@
   "author": "dianafa",
   "dependencies": {
     "gulp": "^3.9.1",
-    "prebid.js": "git+ssh://git@github.com/Wikia/Prebid.js.git#ADEN-4638"
+    "prebid.js": "git+ssh://git@github.com/Wikia/Prebid.js.git"
   }
 }
