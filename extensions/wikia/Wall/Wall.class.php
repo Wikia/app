@@ -301,13 +301,12 @@ class Wall extends WikiaModel {
 
 	/**
 	 * @param int $page
-	 * @param bool $master
 	 * @return WallThread[]
 	 */
-	public function getThreads( int $page = 1, bool $master = false ) : array {
+	public function getThreads( int $page = 1 ) : array {
 		wfProfileIn( __METHOD__ );
 		// get list of threads (article IDs) on Message Wall
-		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE );
 
 		$offset = ( $page - 1 ) * $this->mMaxPerPage;
 
