@@ -49,6 +49,8 @@ class WallExternalControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07031 ms
 	 * SUS-1716: Verify that blocked user cannot change state of Wall/Forum content (post message, move thread etc.)
 	 */
 	public function testBlockedUserIsPreventedFromStateChangingMethods() {
@@ -100,6 +102,8 @@ class WallExternalControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05185 ms
 	 * SUS-1716: Verify that blocked user can still do things on their own Wall if permitted in block options
 	 */
 	public function testBlockedUserCanAccessSomeStateChangingMethodsOnOwnWallIfPermitted() {
