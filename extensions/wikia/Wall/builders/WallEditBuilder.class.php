@@ -4,6 +4,7 @@
  * Class WallEditBuilder builds newly edited version of Wall/Forum thread or reply
  */
 class WallEditBuilder extends WallBuilder {
+	use \Wikia\Logger\Loggable;
 
 	/** @var string $messageText */
 	private $messageText;
@@ -30,17 +31,23 @@ class WallEditBuilder extends WallBuilder {
 		 */
 		Hooks::register( 'ArticleDoEdit', [ $this, 'updateCommentsIndexEntry' ] );
 
-		$result = $this->message->getArticleComment()->doSaveComment( $this->messageText, $this->editor );
-		if ( !$result ) {
+		$comment = $this->message->getArticleComment();
+		$result = $comment->doSaveComment( $this->messageText, $this->editor );
+		if ( !$result || !$result[0]->isOK() ) {
 			$this->throwException( 'Failed to save edited message' );
 		}
 
 		if ( !$this->message->isMain() ) {
-			// after changing reply invalidate thread cache
+			// after changing reply invalidate thread cache on memc level
 			$this->message->getThread()->invalidateCache();
 		}
 
-		$this->articleComment = $this->message->getArticleComment();
+		// Purge URLs for Wall/Board page etc., catch up with slaves
+		$this->message->invalidateCache();
+
+		WallHelper::sendNotification( $comment->mLastRevision, RC_EDIT );
+
+		$this->articleComment = $comment;
 		return $this;
 	}
 
@@ -58,10 +65,21 @@ class WallEditBuilder extends WallBuilder {
 	 * @return bool true
 	 */
 	public function updateCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
-		$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
-		$entry->setLastRevId( $rev->getId() );
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$entry = CommentsIndex::getInstance()->entryFromId( $title->getArticleID() );
+			$entry->setLastRevId( $rev->getId() );
 
-		CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+			$result = CommentsIndex::getInstance()->updateEntry( $entry, $dbw );
+			if ( !$result ) {
+				$this->error( 'Failed to update Comments Index Entry', [
+					'title' => $title->getPrefixedText(),
+					'revision' => $rev->getId(),
+					'articleId' => $rev->getPage()
+				] );
+			}
+
+			return $result;
+		}
 
 		return true;
 	}

@@ -6,7 +6,7 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 
-		$this->sanitizer = SanitizerBuilder::createFromType('image');
+		$this->sanitizer = SanitizerBuilder::createFromType( 'image' );
 		parent::setUp();
 	}
 
@@ -67,6 +67,18 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 			[
 				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ],
 				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ]
+			],
+			[
+				[ 'images' => [
+					[ 'caption' => 'Test <a>Title with</a> <span><small>small</small></span> tag, span tag and <img src="sfefes"/>tag' ],
+					[ 'caption' => '' ],
+					[ 'caption' => 'test' ]
+				] ],
+				[ 'images' => [
+					[ 'caption' => 'Test <a>Title with</a> small tag, span tag and tag' ],
+					[ 'caption' => '' ],
+					[ 'caption' => 'test' ]
+				] ]
 			]
 		];
 	}

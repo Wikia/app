@@ -667,30 +667,6 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @param RecentChange $recentChange
-	 * @return bool
-	 */
-	static public function onRecentChangeSave( $recentChange ) {
-		wfProfileIn( __METHOD__ );
-		// notifications
-		$app = F::app();
-
-		if (  MWNamespace::isTalk( $recentChange->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $recentChange->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
-			$rcType = $recentChange->getAttribute( 'rc_type' );
-
-			// FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
-			$revOldId = $recentChange->getAttribute( 'rc_this_oldid' );
-			if ( $rcType == RC_EDIT && !empty( $revOldId ) ) {
-				$helper = new WallHelper();
-				$helper->sendNotification( $revOldId, $rcType );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
 	 * @param ArticleComment $comment
 	 * @return bool
 	 */
@@ -1349,7 +1325,7 @@ class WallHooksHelper {
 					unset( $parent );
 				}
 
-				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getArticleId();
+				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getId();
 			}
 		}
 
