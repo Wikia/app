@@ -133,7 +133,7 @@ class WallMessage {
 		return array_values( $wallMessages );
 	}
 
-	static private function isWallMessage( Title $title ) {
+	static public function isWallMessage( Title $title ) {
 		return in_array( $title->getNamespace(), [ NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_WIKIA_FORUM_BOARD_THREAD ] );
 	}
 
