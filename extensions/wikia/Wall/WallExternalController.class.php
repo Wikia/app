@@ -283,7 +283,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -640,7 +640,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -715,7 +715,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
