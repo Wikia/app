@@ -128,7 +128,6 @@
 				}),
 				//fail callback
 				this.proxy(function () {
-					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
 					this.buttons.removeAttr('disabled');
 				}.bind(this))
 			);

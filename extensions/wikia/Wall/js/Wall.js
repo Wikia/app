@@ -402,38 +402,16 @@
 		undoRemoveOrAdminDelete: function (e) {
 			var $target = $(e.target),
 				id = $target.attr('data-id');
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'undoAction',
-				type: 'POST',
-				data: {
-					msgid: id
-				},
-				callback: this.proxy(function () {
-					var msg = $target.closest('li');
-					msg.fadeOut('fast', this.proxy(function () {
-						if (this.deletedMessages[id]) {
-							msg.remove();
-							this.deletedMessages[id].fadeIn('slow');
-						}
-					}));
-				})
-			});
-		},
 
-		doRestore: function (id, target, formdata) {
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'restoreMessage',
-				type: 'POST',
-				data: {
-					msgid: id,
-					formdata: formdata
-				},
-				callback: this.proxy(function () {
-					window.location.reload();
-				})
-			});
+			this.model.undoRemoveOrAdminDelete(id, this.proxy(function () {
+				var msg = $target.closest('li');
+				msg.fadeOut('fast', this.proxy(function () {
+					if (this.deletedMessages[id]) {
+						msg.remove();
+						this.deletedMessages[id].fadeIn('slow');
+					}
+				}));
+			}));
 		},
 
 		confirmAction: function (e) {
@@ -563,75 +541,15 @@
 		doAction: function (id, mode, msg, target, formdata, modal) {
 			switch (mode) {
 			case 'close':
-				this.doThreadChangeSendRequest(id, 'close', formdata);
+				this.model.changeThreadStatus(id, 'close', formdata);
 				break;
 			case 'restore':
-				this.doRestore(id, target, formdata);
+				this.model.restoreMessage(id, formdata);
 				break;
 			default:
-				this.doDelete(id, mode, msg, formdata, modal);
+				this.model.deleteMessage(id, mode, msg, formdata, modal);
 				break;
 			}
-		},
-
-		doDelete: function (id, mode, msg, formdata, modal) {
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'deleteMessage',
-				type: 'POST',
-				format: 'json',
-				data: {
-					mode: mode,
-					msgid: id,
-					username: this.username,
-					formdata: formdata,
-					token: mw.user.tokens.get('editToken')
-				},
-				callback: this.proxy(function (data) {
-					if (data.status) {
-						if (data.html) {
-							this.deletedMessages[id] = msg;
-
-							msg.fadeOut('fast', this.proxy(function () {
-								$(data.html).hide().insertBefore(msg).fadeIn('fast');
-							}));
-						} else {
-							msg.fadeOut('fast', function () {
-								msg.remove();
-							});
-						}
-
-						if (typeof (modal) !== 'undefined') {
-							// VSTF can delete without confirmation modal
-							modal.trigger('close');
-						}
-					}
-				})
-			});
-		},
-
-		doThreadChangeSendRequest: function (id, newState, formdata) {
-			$.nirvana.sendRequest({
-				controller: 'WallExternalController',
-				method: 'changeThreadStatus',
-				format: 'json',
-				type: 'POST',
-				data: {
-					msgid: id,
-					newState: newState,
-					formdata: formdata,
-					token: mw.user.tokens.get('editToken')
-				},
-				callback: this.proxy(function (json) {
-					if (json.status) {
-						if (typeof window.UserLoginAjaxForm === 'function') {
-							window.UserLoginAjaxForm.prototype.reloadPage();
-						} else {
-							window.location.reload();
-						}
-					}
-				})
-			});
 		},
 
 		doThreadChange: function (e) {
@@ -820,7 +738,9 @@
 				format: 'html',
 				type: 'POST',
 				data: {
-					id: id
+					id: id,
+					title: this.page.title,
+					namespace: this.page.namespace
 				},
 				callback: function (html) {
 					require(['wikia.ui.factory'], function (uiFactory) {
@@ -883,6 +803,8 @@
 												moveThreadModal.activate();
 											}
 										}
+									}).fail(function(json) {
+										form.showGenericError(json.blockInfo);
 									});
 								});
 
@@ -891,7 +813,7 @@
 						});
 					});
 				}
-			});
+			}).fail();
 		},
 
 		proxy: function (func) {

@@ -2,6 +2,11 @@
 (function ($, mw) {
 	'use strict';
 
+	function showErrorModal(data) {
+		var modalContent = data.blockInfo || $.msg('wall-posting-message-failed-body');
+		$.showModal($.msg('wall-posting-message-failed-title'), modalContent );
+	}
+
 	Wall.BackendBridge = $.createClass(Observable, {
 		pageController: 'WallExternalController',
 		bucky: window.Bucky('Wall.BackendBridge'),
@@ -62,6 +67,8 @@
 				}
 				this.fire('newPosted', newmsg);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -96,6 +103,8 @@
 
 				this.fire('postReply', newMessage);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -175,6 +184,8 @@
 				}
 				this.fire('editSaved', data);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -229,7 +240,7 @@
 					this.fire('notifyEveryoneSaved', data);
 					this.bucky.timer.stop('notifyEveryone');
 				})
-			});
+			}).fail(showErrorModal);
 		},
 
 		updateTopics: function (msgid, relatedTopics, callback) {
@@ -251,7 +262,94 @@
 					}
 					this.bucky.timer.stop('updateTopics');
 				})
-			});
+			}).fail(showErrorModal);
+		},
+
+		undoRemoveOrAdminDelete: function (id, callback) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'undoAction',
+				type: 'POST',
+				data: {
+					msgid: id,
+					title: page.title,
+					namespace: page.namespace
+				},
+				callback: callback
+			}).fail(showErrorModal);
+		},
+
+		restoreMessage: function (id, formdata) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'restoreMessage',
+				type: 'POST',
+				data: {
+					msgid: id,
+					formdata: formdata
+				},
+				callback: window.location.reload
+			}).fail(showErrorModal);
+		},
+
+		deleteMessage: function (id, mode, msg, formdata, modal) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'deleteMessage',
+				type: 'POST',
+				format: 'json',
+				data: {
+					mode: mode,
+					msgid: id,
+					username: this.username,
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (data) {
+					if (data.status) {
+						if (data.html) {
+							this.deletedMessages[id] = msg;
+
+							msg.fadeOut('fast', this.proxy(function () {
+								$(data.html).hide().insertBefore(msg).fadeIn('fast');
+							}));
+						} else {
+							msg.fadeOut('fast', function () {
+								msg.remove();
+							});
+						}
+
+						if (typeof (modal) !== 'undefined') {
+							// VSTF can delete without confirmation modal
+							modal.trigger('close');
+						}
+					}
+				})
+			}).fail(showErrorModal);
+		},
+
+		changeThreadStatus: function (id, newState, formdata) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'changeThreadStatus',
+				format: 'json',
+				type: 'POST',
+				data: {
+					msgid: id,
+					newState: newState,
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (json) {
+					if (json.status) {
+						if (typeof window.UserLoginAjaxForm === 'function') {
+							window.UserLoginAjaxForm.prototype.reloadPage();
+						} else {
+							window.location.reload();
+						}
+					}
+				})
+			}).fail(showErrorModal);
 		}
 	});
 })(jQuery, mediaWiki);
