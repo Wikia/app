@@ -183,9 +183,11 @@ class WikiaRssExternalController extends WikiaController {
 		$app = F::app();
 		$result = array();
 
-		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
+		$supportedEncodings = array_map( 'strtolower', mb_list_encodings() );
+		$charset = !empty( $options['charset'] ) && in_array( strtolower( $options['charset'] ), $supportedEncodings ) ?
+			$options['charset'] : [ ];
 		// dateFormat is only for backwards compatibility of requests.
-		$date = $options['date'] || $options['dateFormat'];
+		$date = ( $options['date'] ?? false ) || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
