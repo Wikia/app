@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		'DirectGpt',
 		'gpt',
 		{
-			BOTTOM_LEADERBOARD:         {size: '728x90,970x250,1024x416', loc: 'footer'},
+			BOTTOM_LEADERBOARD:         {size: '728x90', loc: 'footer'},
 			EXIT_STITIAL_BOXAD_1:       {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},

@@ -15,9 +15,10 @@
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
-$uap-progress-bar-color: #666;
-$uap-progress-bar-current-time-color: #b7b7b7;
+$uap-progress-bar-color: #b7b7b7;
+$uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
+$uap-video-player-button-size: 24px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -124,10 +125,10 @@ $uap-video-animation-duration: 0.4s;
 
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
 		display: inline-block;
-		height: 30px;
+		height: $uap-video-player-button-size;
 		overflow: hidden;
 		position: relative;
-		width: 30px;
+		width: $uap-video-player-button-size;
 	}
 }
 
@@ -186,12 +187,12 @@ $uap-video-animation-duration: 0.4s;
 	.close-ad {
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
 		cursor: pointer;
-		height: 30px;
+		height: $uap-video-player-button-size;
 		margin: 10px 10px 30px 30px;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: 30px;
+		width: $uap-video-player-button-size;
 	}
 }
 
