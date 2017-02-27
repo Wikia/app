@@ -136,9 +136,12 @@ class WallBaseController extends WikiaService {
 	}
 
 	public function reply() {
+		if ( !$this->request->getBool( 'showReplyForm', true ) ) {
+			$this->skipRendering();
+			return;
+		}
+
 		$this->response->setVal( 'username', $this->wg->User->getName() );
-		$this->response->setVal( 'showReplyForm', $this->request->getVal( 'showReplyForm', true ) );
-		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 
 	public function messageButtons() {
@@ -585,29 +588,6 @@ class WallBaseController extends WikiaService {
 		}
 
 		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
-
-		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
-	}
-
-	/** @param User $wallOwner */
-	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
-		$user = $this->app->wg->User;
-
-		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
-			if ( !empty( $wallOwner ) &&
-				$wallOwner->getName() == $this->wg->User->getName() &&
-				!( empty( $user->mAllowUsertalk ) )
-			) {
-				// user is blocked, but this is his wall and he was not blocked
-				// from user talk page
-				$this->response->setVal( 'userBlocked', false );
-			} else {
-				$this->response->setVal( 'userBlocked', true );
-			}
-		} else {
-			$this->response->setVal( 'userBlocked', false );
-		}
-
 	}
 
 	/**
