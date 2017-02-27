@@ -19,7 +19,6 @@ class WallThread {
 		$this->initializeReplyData();
 		$this->mThreadId = $id;
 		$this->mCached = null;
-		$this->mCityId = F::app()->wg->CityId;
 	}
 
 	protected function initializeReplyData() {
@@ -71,7 +70,7 @@ class WallThread {
 	public function move( Wall $dest, $user ) {
 		CommentsIndex::getInstance()->moveThread( $this->mThreadId, $dest->getId() );
 
-		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory = new WallHistory();
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
 
 		$main = $this->getThreadMainMsg();
