@@ -30,6 +30,8 @@ $wgAutoloadClasses['WallNotificationsHooksHelper'] =  __DIR__ . '/WallNotificati
 // lower-left corner notification bubbles from Wall Wikis
 $wgAutoloadClasses['WallHelper'] =  __DIR__ . '/../Wall/WallHelper.class.php';
 $wgAutoloadClasses['WallMessage'] =  __DIR__ . '/../Wall/WallMessage.class.php';
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/../Wall/index/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/../Wall/index/CommentsIndexEntry.class.php';
 
 // add script in monobook
 $wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';

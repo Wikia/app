@@ -77,8 +77,6 @@ $wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageCha
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 // recent changes adjusting
-
-$wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
 $wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
 $wgHooks['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
@@ -113,7 +111,6 @@ $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 $wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
-$wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
 // right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
