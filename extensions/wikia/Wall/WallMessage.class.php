@@ -199,7 +199,6 @@ class WallMessage {
 	 * Check if user can edit WallMessage
 	 *
 	 * @param User $user
-	 * @param bool|true $shouldLogBlockInStats
 	 * @return bool
 	 */
 	public function canEdit( User $user ) {
