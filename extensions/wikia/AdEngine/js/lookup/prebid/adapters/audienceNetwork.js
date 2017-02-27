@@ -20,16 +20,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
-					],
+						[300, 250]					],
 					placementId: '963689110376230_1245838625494609'
 				},
 				MOBILE_PREFOOTER: {
 					sizes: [
-						[300, 250],
-						[320, 50]
-					],
+						[300, 250]					],
 					placementId: '963689110376230_1245839585494513'
 				}
 			}
