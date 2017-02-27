@@ -169,7 +169,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			//fail callback
 			this.proxy(function () {
 				buttons.removeAttr('disabled');
-				$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
 			})
 		);
 	},
