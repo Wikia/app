@@ -281,7 +281,6 @@ class WallExternalController extends WikiaController {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		} catch ( InappropriateContentException $exception) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $exception->getMessage(), $exception->getContext() );
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
@@ -639,7 +638,6 @@ class WallExternalController extends WikiaController {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		} catch ( InappropriateContentException $exception ) {
-			$this->error( $exception->getMessage(), $exception->getContext() );
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
@@ -715,7 +713,6 @@ class WallExternalController extends WikiaController {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		} catch ( InappropriateContentException $exception ) {
-			$this->error( $exception->getMessage(), $exception->getContext() );
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
