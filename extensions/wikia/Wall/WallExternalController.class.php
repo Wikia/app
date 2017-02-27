@@ -13,7 +13,6 @@ class WallExternalController extends WikiaController {
 	/**
 	 * @var string[] BLOCKED_USER_PREVENTED_FROM_METHODS
 	 * Array of methods where we must check if user is blocked.
-	 * For message editing/posting, block is checked by core MW editpage class - no need to check twice.
 	 */
 	const BLOCKED_USER_PREVENTED_FROM_METHODS = [
 		'moveThread',
@@ -22,7 +21,18 @@ class WallExternalController extends WikiaController {
 		'undoAction',
 		'restoreMessage',
 		'notifyEveryoneSave',
-		'updateTopics'
+		'updateTopics',
+		'postNewMessage',
+		'editMessageSave',
+		'replyToMessage'
+	];
+
+	/**
+	 * @var string[] BLOCKED_USER_ALWAYS_PREVENTED_FROM_METHODS
+	 * Methods which a blocked user is never allowed to access, even if they can post on their own Wall
+	 */
+	const BLOCKED_USER_ALWAYS_PREVENTED_FROM_METHODS = [
+		'moveThread'
 	];
 
 	/**
@@ -48,8 +58,39 @@ class WallExternalController extends WikiaController {
 	 * @return bool whether to prevent the action
 	 */
 	public function preventBlockedUsage( User $user, string $method ) {
+		$context = $this->getContext();
+		$pageTitle = $context->getTitle();
+
 		if ( in_array( $method, static::BLOCKED_USER_PREVENTED_FROM_METHODS ) ) {
-			return $user->isBlocked();
+			// check if user is allowed to post on their wall per block options
+			$talkPage = $user->getTalkPage();
+			$isOwnWall = !in_array( $method, static::BLOCKED_USER_ALWAYS_PREVENTED_FROM_METHODS ) &&
+				// we may be viewing the Message Wall page, or the Thread page
+				( $pageTitle->equals( $talkPage ) || $pageTitle->getSubjectPage()->equals( $talkPage ) );
+
+			// we need to call getTalkPage twice because NS_USER_WALL is not a talk namespace (wie pan co? i to jest skandal)
+			$isBlocked = $isOwnWall ? $user->isBlockedFrom( $pageTitle->getTalkPage() ) : $user->isBlocked();
+
+			if ( $isBlocked ) {
+				$block = $user->getBlock();
+				$language = $context->getLanguage();
+
+				$blockInfo = [
+					$block->shouldHideBlockerName() ? $block->getGroupNameForHiddenBlocker() : $block->getByName(),
+					$block->mReason,
+					$context->getRequest()->getIP(),
+					'', // removed by Wikia
+					$block->getId(),
+					$language->formatExpiry( $block->getExpiry() ),
+					$block->getTarget(),
+					$language->timeanddate( wfTimestamp( TS_MW, $block->mTimestamp ) ),
+				];
+
+				$this->response->setVal( 'blockInfo', $context->msg( 'blockedtext' )->params( $blockInfo )->parseAsBlock() );
+				$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+				$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+				return true;
+			}
 		}
 
 		return false;
@@ -269,10 +310,11 @@ class WallExternalController extends WikiaController {
 			$titleMeta = $helper->getDefaultTitle();
 		}
 
-		$ns = $this->request->getInt( 'pagenamespace' );
+		$parentTitle = $this->getContext()->getTitle();
+		$parentNamespace = $parentTitle->getNamespace();
 
 		// SUS-1387: Namespace parameter must be valid Wall or Forum namespace
-		if ( empty( $body ) || !WallHelper::isWallNamespace( $ns ) ) {
+		if ( empty( $body ) || !WallHelper::isWallNamespace( $parentNamespace ) ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
@@ -280,11 +322,9 @@ class WallExternalController extends WikiaController {
 
 
 		$notifyEveryone = false;
-		if ( $helper->isAllowedNotifyEveryone( $ns, $this->wg->User ) ) {
+		if ( $helper->isAllowedNotifyEveryone( $parentNamespace, $this->wg->User ) ) {
 			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
 		}
-
-		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
 
 		try {
 			$wallMessage =
@@ -294,7 +334,7 @@ class WallExternalController extends WikiaController {
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setRelatedTopics( $relatedTopics )
 					->setNotifyEveryone( $notifyEveryone )
-					->setParentPageTitle( $title )
+					->setParentPageTitle( $parentTitle )
 					->build();
 		} catch ( WallBuilderException $builderException ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
