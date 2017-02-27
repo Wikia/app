@@ -78,7 +78,10 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				id: 'outstream-desktop',
 				getBestCpm: function () {
 					return mocks.vulcanResponse;
-				}
+				},
+				rawResponses: [
+					{}
+				]
 			},
 			targeting: {
 				skin: 'oasis'

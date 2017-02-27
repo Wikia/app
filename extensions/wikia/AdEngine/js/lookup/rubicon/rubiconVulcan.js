@@ -138,7 +138,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 			}
 		});
 
-		return bestResponse;
+		return bestResponse || {};
 	}
 
 	function deleteBid(slotName) {
@@ -148,8 +148,15 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		log(['deleteBid', slotName, placeholderName], log.levels.debug, logGroup);
 	}
 
-	function encodeParamsForTracking(params) {
-		if (!params[rubiconVideoTierKey]) {
+	function hasResponse(slotName) {
+		var placeholderName = slotMapping[slotName],
+			vulcanResponse = win.rubiconVulcan.slots && win.rubiconVulcan.slots[placeholderName];
+
+		return vulcanResponse.rawResponses && vulcanResponse.rawResponses.length > 0;
+	}
+
+	function encodeParamsForTracking(params, slotName) {
+		if (!params[rubiconVideoTierKey] || !hasResponse(slotName)) {
 			return;
 		}
 

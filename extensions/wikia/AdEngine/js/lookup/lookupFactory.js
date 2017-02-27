@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			if (module.name === 'prebid') {
 				module.trackAdaptersSlotState(providerName, slotName, params);
 			} else {
-				encodedParams = module.encodeParamsForTracking(params);
+				encodedParams = module.encodeParamsForTracking(params, slotName);
 				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
 				category = module.name + '/' + eventName + '/' + providerName;
 
