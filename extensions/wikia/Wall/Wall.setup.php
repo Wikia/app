@@ -113,7 +113,6 @@ $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 $wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
-$wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
 // right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
