@@ -331,10 +331,15 @@
 						}
 					}
 				})
-			}).fail(showErrorModal);
+			}).fail(function (json) {
+				if (modal) {
+					modal.trigger('close');
+				}
+				showErrorModal(json);
+			});
 		},
 
-		changeThreadStatus: function (id, newState, formdata) {
+		changeThreadStatus: function (id, newState, formdata, modal) {
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'changeThreadStatus',
@@ -355,7 +360,12 @@
 						}
 					}
 				})
-			}).fail(showErrorModal);
+			}).fail(function (json) {
+				if (modal) {
+					modal.trigger('close');
+				}
+				showErrorModal(json);
+			});
 		}
 	});
 })(jQuery, mediaWiki);

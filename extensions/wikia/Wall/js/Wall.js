@@ -541,7 +541,7 @@
 		doAction: function (id, mode, msg, target, formdata, modal) {
 			switch (mode) {
 			case 'close':
-				this.model.changeThreadStatus(id, 'close', formdata);
+				this.model.changeThreadStatus(id, 'close', formdata, modal);
 				break;
 			case 'restore':
 				this.model.restoreMessage(id, formdata);
