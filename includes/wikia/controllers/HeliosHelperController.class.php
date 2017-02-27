@@ -262,6 +262,26 @@ class HelperController extends \WikiaController {
 		$this->response->setData( [ 'blocked' => $user->isBlocked() ] );
 	}
 
+	public function isDisabled() {
+		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$user = \User::newFromName( $username );
+		if (
+			!$user instanceof \User ||
+			$user->getId() == 0
+		) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_USER_NOT_FOUND );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+
+			return;
+		}
+
+		$this->response->setData( [ 'disabled' => ( bool )$user->getGlobalFlag( 'disabled', false ) ] );
+	}
+
 	public function logPiggybackAction() {
 		$this->response->setVal( self::FIELD_SUCCESS, false );
 

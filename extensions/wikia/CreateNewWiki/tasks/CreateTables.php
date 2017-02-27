@@ -26,7 +26,7 @@ class CreateTables extends Task {
 			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql",
 
 			//article comments list use by wall/forum
-			"{$IP}/extensions/wikia/ArticleComments/patch-create-comments_index.sql",
+			"{$IP}/extensions/wikia/Wall/sql/patch-create-comments_index.sql",
 
 			//wall tables (SUS-1556)
 			"{$IP}/extensions/wikia/Wall/sql/wall_history_local.sql",

@@ -407,7 +407,11 @@ class WallHelper {
 	 * @return string
 	 */
 	public function getMessageSnippet( WallMessage $wallMessage ) {
-		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
+		$messageText = $wallMessage->getRawText();
+		// SUS-1684: Remove quotes and other HTML tags before parsing
+		$messageText = Sanitizer::stripAllTags( $messageText );
+
+		$formatted = Linker::formatComment( $messageText, $wallMessage->getTitle() );
 
 		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
@@ -605,7 +609,7 @@ class WallHelper {
 			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
-		$ci = $wm->getCommentsIndex();
+		$ci = $wm->getCommentsIndexEntry();
 		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = Title::newFromText( $row->page_title, NS_USER_WALL );

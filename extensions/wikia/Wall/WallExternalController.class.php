@@ -264,10 +264,19 @@ class WallExternalController extends WikiaController {
 		}
 
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
-		$wallMessage = WallMessage::buildNewMessageAndPost( $body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone );
 
-		if ( $wallMessage === false ) {
-			error_log( 'WALL_NOAC_ON_POST' );
+		try {
+			$wallMessage =
+				( new WallMessageBuilder() )
+					->setMessageTitle( $titleMeta )
+					->setMessageText( $body )
+					->setMessageAuthor( $this->getContext()->getUser() )
+					->setRelatedTopics( $relatedTopics )
+					->setNotifyEveryone( $notifyEveryone )
+					->setParentPageTitle( $title )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
@@ -610,7 +619,20 @@ class WallExternalController extends WikiaController {
 		$wallMessage->load();
 
 		$wallMessage->setMetaTitle( $newtitle );
-		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
+
+		try {
+			$text =
+				( new WallEditBuilder() )
+					->setMessage( $wallMessage )
+					->setMessageText( $newbody )
+					->setEditor( $this->getContext()->getUser() )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			$this->error( $builderException->getMessage(), $builderException->getContext() );
+			$this->response->setVal( 'status', false );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		}
 
 		$this->response->setVal( 'isotime', wfTimestamp( TS_ISO_8601 ) );
 		$this->response->setVal( 'fulltime', $this->wg->Lang->timeanddate( wfTimestamp( TS_MW ) ) );
@@ -666,10 +688,19 @@ class WallExternalController extends WikiaController {
 		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $parentTitle );
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
-		$reply = $wallMessage->addNewReply( $body, $this->wg->User );
 
-		if ( $reply === false ) {
+		try {
+			$reply =
+				( new WallMessageBuilder() )
+					->setMessageAuthor( $this->getContext()->getUser() )
+					->setMessageText( $body )
+					->setParentMessage( $wallMessage )
+					->setParentPageTitle( $wallMessage->getArticleTitle() )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		}
 
@@ -710,14 +741,6 @@ class WallExternalController extends WikiaController {
 
 	protected function replyToMessageBuildResponse( $context, $reply ) {
 		$context->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'comment' => $reply, 'isreply' => true ] ) );
-	}
-
-	private function getDisplayName() {
-		$displayname  = $this->wg->User->getName();
-		$displayname2 = '';
-
-		return [ $displayname, $displayname2 ];
-
 	}
 
 	/**
