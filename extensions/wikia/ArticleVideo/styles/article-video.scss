@@ -1,3 +1,5 @@
+@import 'skins/shared/color';
+
 $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
@@ -72,12 +74,27 @@ $spinnerSize: 48;
 		text-transform: uppercase;
 	}
 
-	.video-play-button {
-		bottom: 15px;
-		height: 120px;
+	.video-wiki-play-button {
+		align-items: center;
+		background-color: $color-buttons;
+		border: 6px solid rgba(0,0,0,0.08);
+		border-radius: 100%;
+		bottom: 35px;
+		box-sizing: border-box;
+		display: flex;
+		height: 80px;
+		justify-content: center;
 		position: absolute;
-		right: 15px;
-		width: 120px;
+		right: 35px;
+		width: 80px;
+
+		svg {
+			margin-left: 5px;
+
+			path {
+				fill: $color-button-text;
+			}
+		}
 	}
 
 	.video-container {
@@ -187,11 +204,18 @@ $spinnerSize: 48;
 				position: static;
 			}
 
-			.video-play-button {
-				height: 60px;
-				margin: 0;
+			.video-wiki-play-button {
+				border-width: 3px;
+				height: 40px;
+				margin: 10px;
 				position: static;
-				width: 60px;
+				width: 40px;
+
+				svg {
+					height: 15px;
+					margin-left: 2px;
+					width: 11px;
+				}
 			}
 		}
 
