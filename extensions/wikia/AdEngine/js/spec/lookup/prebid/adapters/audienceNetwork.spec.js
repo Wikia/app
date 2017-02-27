@@ -6,16 +6,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 
 	var mocks = {
 		instantGlobals: {
-			wgAdDriverIndexExchangeBidderCountries: ['PL']
+			wgAdDriverIndexExchangeBidderCountries: null
 		},
 		geo: {
 			isProperGeo: noop
 		},
-		slotsContext: {
-			filterSlotMap: function (map) {
-				return map;
-			}
-		},
+		slotsContext: {},
 		adContext: {
 			getContext: noop
 		}
