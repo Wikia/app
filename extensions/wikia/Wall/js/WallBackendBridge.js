@@ -48,8 +48,8 @@
 					body: body,
 					messagetitle: title,
 					notifyeveryone: notifyEveryone,
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					relatedTopics: relatedTopics,
 					token: mw.user.tokens.get('editToken')
@@ -81,8 +81,8 @@
 					body: body,
 					parent: parent,
 
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					quotedFrom: quotedFrom || '',
 					token: mw.user.tokens.get('editToken')
@@ -164,8 +164,8 @@
 					newtitle: title,
 					newbody: body,
 					isreply: isreply,
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					token: mw.user.tokens.get('editToken')
 				}
