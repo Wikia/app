@@ -669,7 +669,7 @@ class WikiaMiniUpload {
 
 				Wikia::setVar('EditFromViewMode', true);
 
-				$summary = wfMsg( 'wmu-added-from-plc' ) ;
+				$summary = wfMessage( 'wmu-added-from-plc' )->inContentLanguage()->plain();
 				$success = $article_obj->doEdit( $text, $summary);
 			}
 
