@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.adContext'
-], function (slotsContext, geo, instantGlobals, adContext) {
+	'ext.wikia.adEngine.adContext',
+	'wikia.querystring'
+], function (slotsContext, geo, instantGlobals, adContext, querystring) {
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
@@ -51,8 +52,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 				{
 					bidder: bidderName,
 					params: {
-						// TODO: remove after testing
-						testMode: true,
+						testMode: querystring().getVal('audiencenetworktest', '') === 'true',
 						placementId: config.placementId
 					}
 				}
