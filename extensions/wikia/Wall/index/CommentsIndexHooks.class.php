@@ -29,6 +29,10 @@ class CommentsIndexHooks {
 			// we have either Wall message or Forum post - mark comments_index entry
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 ); // set deleted = 1
+
+			// invalidate message and thread cache
+			$wallMessage->getThread()->invalidateCache();
+			$wallMessage->invalidateCache();
 		}
 
 		return true;
@@ -65,6 +69,10 @@ class CommentsIndexHooks {
 				[ 'comment_id' => $oldPageId ],
 				__METHOD__
 			);
+
+			// invalidate message and thread cache
+			$wallMessage->getThread()->invalidateCache();
+			$wallMessage->invalidateCache();
 		}
 
 		return true;

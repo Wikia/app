@@ -1535,7 +1535,7 @@ class WallMessage {
 	 */
 	public function invalidateCache() {
 		if ( $this->title instanceof Title ) {
-			$this->getWall()->getTitle()->invalidateCache();
+			$this->getWall()->getTitle()->invalidateCache(); // bumps page_touched
 			wfWaitForSlaves();
 			$this->title->purgeSquid();
 		}
