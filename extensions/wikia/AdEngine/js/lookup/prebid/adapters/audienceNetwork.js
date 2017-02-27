@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
-	// only first size for each slot will be requested anyways - this is how Audience Network works
+		// only first size for each slot will be requested anyways - this is how Audience Network works
 		slots = {
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
@@ -20,12 +20,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250]					],
+						[300, 250]
+					],
 					placementId: '963689110376230_1245838625494609'
 				},
 				MOBILE_PREFOOTER: {
 					sizes: [
-						[300, 250]					],
+						[300, 250]
+					],
 					placementId: '963689110376230_1245839585494513'
 				}
 			}
