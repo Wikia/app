@@ -81,7 +81,7 @@ class WallHooksHelper {
 			$app->wg->SuppressPageHeader = true;
 
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
-			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
+			$isDeleted = $wallMessage->isAdminDelete();
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
 				&& $app->wg->Request->getVal( 'show' ) == '1' );
 
