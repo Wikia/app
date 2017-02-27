@@ -307,7 +307,7 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumActivityModule() {
-		$wallHistory = new WallHistory( $this->app->wg->CityId );
+		$wallHistory = new WallHistory();
 		$out = $wallHistory->getLastPosts( NS_WIKIA_FORUM_BOARD );
 		$this->response->setVal( 'posts', $out );
 	}

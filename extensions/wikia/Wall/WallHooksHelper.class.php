@@ -644,7 +644,7 @@ class WallHooksHelper {
 		$title = $self->getTitle();
 		$app = F::app();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wh = new WallHistory( $app->wg->CityId );
+			$wh = new WallHistory();
 			$wh->remove( $id );
 		}
 		return true;
