@@ -147,10 +147,9 @@ class WallRelatedPages extends WikiaModel {
 	 *
 	 * @param $pageId
 	 * @param $messageCount
-	 * @param $replyCount
 	 * @return array
 	 */
-	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount, $replyCount ) {
+	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount ) {
 		$messages = $this->getArticlesRelatedMessgesIds( $pageId, 'last_update desc', $messageCount );
 
 		$out = [ ];

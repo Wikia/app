@@ -60,7 +60,7 @@ class RelatedForumDiscussionController extends WikiaService {
 		$key = wfMemcKey( __CLASS__, 'getData', $articleId );
 		return WikiaDataAccess::cache( $key, self::CACHE_EXPIRY, function() use ( $articleId ) {
 			$wlp = new WallRelatedPages();
-			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
+			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2 );
 			return $messages;
 		} );
 	}
