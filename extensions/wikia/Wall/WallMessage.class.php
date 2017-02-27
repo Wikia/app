@@ -1202,18 +1202,36 @@ class WallMessage {
 		}
 	}
 
+	/**
+	 * Is given Forum thread marked as closed?
+	 *
+	 * @return bool
+	 */
 	public function isArchive() {
 		return $this->getCommentsIndexEntry()->isArchived();
 	}
 
+	/**
+	 * Was given Wall / Forum entry deleted via Wall's drop-down menu "remove" item?
+	 *
+	 * @return bool
+	 */
 	public function isRemove() {
 		return $this->getCommentsIndexEntry()->isRemoved();
 	}
 
+	/**
+	 * Was given Wall / Forum entry was deleted via "VSTF Delete" button or "delete" dropdown item?
+	 *
+	 * @return bool
+	 */
 	public function isAdminDelete() {
 		return $this->getCommentsIndexEntry()->isDeleted();;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function canReply() {
 		return !$this->isArchive() && !$this->isAdminDelete() && !$this->isRemove();
 	}
