@@ -1579,34 +1579,6 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.10373 ms
-	 * @covers Wikia\Search\MediaWikiService::isSkinMobile
-	 */
-	public function testIsSkinMobile() {
-		$user = $this->getMockBuilder( 'User' )
-		             ->disableOriginalConstructor()
-		             ->setMethods( array( 'getSkin' ) )
-		             ->getMock();
-		$skin = $this->getMockBuilder( '\SkinWikiaMobile' )
-		             ->disableOriginalConstructor()
-		             ->getMock();
-		$user
-		    ->expects( $this->once() )
-		    ->method ( 'getSkin' )
-		    ->will   ( $this->returnValue( $skin ) )
-		;
-		$app = (object) array( 'wg' => (object ) array( 'User' => $user ) );
-		$service = $this->service->setMethods( null )->getMock();
-		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiService', 'app' );
-		$reflApp->setAccessible( true );
-		$reflApp->setValue( $service, $app );
-		$this->assertTrue(
-				$service->isSkinMobile()
-		);
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.08888 ms
 	 * @covers Wikia\Search\MediaWikiService::isOnDbCluster
 	 */
