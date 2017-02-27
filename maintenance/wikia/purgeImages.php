@@ -100,11 +100,11 @@ class PurgeImages extends Maintenance {
 			$images = [];
 			foreach ( $objects as $obj ) {
 				$name = $obj->name;
-				// skip thumbnails, temp images and archive
+				// skip thumbnails, temp images, archived and deleted
 				if ( ( 0 === strpos( $name, 'images/thumb/' ) ) ||
 					( 0 === strpos( $name, 'images/archive/' ) ) ||
 					( 0 === strpos( $name, 'images/temp/' ) ) ||
-					( 0 === strpos( $name, 'images/archive/' ) )
+					( 0 === strpos( $name, 'images/deleted/' ) )
 				) {
 					continue;
 				}
