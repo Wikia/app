@@ -168,7 +168,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 				this.enable(reply);
 
-				if (dataJson['reason'] == "editfilter") {
+				if (dataJson['reason'] == "badcontent") {
 					$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body'));
 				} else {
 					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));

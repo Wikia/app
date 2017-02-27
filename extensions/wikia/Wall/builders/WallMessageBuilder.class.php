@@ -43,7 +43,7 @@ class WallMessageBuilder extends WallBuilder {
 
 			$status = $page->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $robot );
 			if ( !$status->isOK() ) {
-				$this->throwException( 'Failed to create parent page for message' );
+				$this->throwException( WallBuilderException::class, 'Failed to create parent page for message' );
 			}
 		}
 
@@ -85,7 +85,7 @@ class WallMessageBuilder extends WallBuilder {
 			// This can happen in two cases
 			// 1) thread was removed or deleted but the user has not refreshed the page and attempted to post a reply
 			// 2) direct nirvana invocation of WallExternalController::replyToMessage ("hack")
-			$this->throwException( 'Attempted to post reply on deleted or removed thread' );
+			$this->throwException( WallBuilderException::class, 'Attempted to post reply on deleted or removed thread' );
 		} else {
 			$result = ArticleComment::doPost( $this->messageText, $this->messageAuthor, $this->parentMessage->getTitle(), $this->parentMessage->getId() );
 		}
@@ -94,13 +94,16 @@ class WallMessageBuilder extends WallBuilder {
 			// Permissions check are performed on article comment level by EditPage class of Mediawiki
 			// Text is matched there against Phalanx filters and all user blocks (global and local) are also checked
 			// This can cause edit to fail
-			$reason =  $result && (
-					$result[0]->value == EditPage::AS_FILTERING ||
-					in_array( 'EditFilter', $result[0]->errors[0]['params'] )
+			if ( $result
+				&& (
+					$result[0]->value == EditPage::AS_FILTERING
+					|| in_array( 'EditFilter', $result[0]->errors[0]['params'] )
 				)
-				? 'editfilter'
-				: '';
-			$this->throwException( 'Failed to create article comment', $reason );
+			) {
+				$this->throwException( InappropriateContentException::class, 'Inappropriate content detected' );
+			} else {
+				$this->throwException( WallBuilderException::class, 'Failed to create article comment' );
+			}
 		}
 
 		/** @var Article $article */
@@ -230,21 +233,21 @@ class WallMessageBuilder extends WallBuilder {
 	/**
 	 * Populate an exception with proper context for logging, and throw it
 	 *
+	 * @param string $class
 	 * @param string $message
-	 * @param string $reason
 	 *
 	 * @throws WallBuilderException
+	 *
 	 */
-	protected function throwException( string $message, string $reason = '' ) {
+	protected function throwException( string $class, string $message ) {
 		$context = [
 			'parentPageTitle' => $this->parentPageTitle->getPrefixedText(),
 			'parentPageId' => $this->parentPageTitle->getArticleID(),
 			'parentMessageTitle' => $this->parentMessage ? $this->parentMessage->getTitle()->getPrefixedText() : '',
 			'parentMessageId' => $this->parentMessage ? $this->parentMessage->getId() : '',
-			'reason' => $reason
 		];
 
-		throw new WallBuilderException( $message, $context );
+		throw new $class( $message, $context );
 	}
 
 	/**

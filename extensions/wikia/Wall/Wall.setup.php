@@ -44,9 +44,12 @@ $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
 $wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
-$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/builders/WallBuilderException.class.php';
 $wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
 $wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
+
+$wgAutoloadClasses['InappropriateContentException'] = __DIR__ . '/exceptions/InappropriateContentException.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
+$wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 

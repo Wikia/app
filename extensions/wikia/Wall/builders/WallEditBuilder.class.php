@@ -21,7 +21,7 @@ class WallEditBuilder extends WallBuilder {
 	 */
 	public function editWallMessage(): WallEditBuilder {
 		if ( !$this->message->canEdit( $this->editor ) ) {
-			$this->throwException( 'User not allowed to edit message' );
+			$this->throwException( WallBuilderException::class, 'User not allowed to edit message' );
 		}
 
 		/**
@@ -32,13 +32,16 @@ class WallEditBuilder extends WallBuilder {
 
 		$result = $this->message->getArticleComment()->doSaveComment( $this->messageText, $this->editor );
 		if ( !$result || !$result[0]->isOK() ) {
-			$reason =  $result && (
-					$result[0]->value == EditPage::AS_FILTERING ||
-					in_array( 'EditFilter', $result[0]->errors[0]['params'] )
+			if ( $result
+				&& (
+					$result[0]->value == EditPage::AS_FILTERING
+					|| in_array( 'EditFilter', $result[0]->errors[0]['params'] )
 				)
-				? 'editfilter'
-				: '';
-			$this->throwException( 'Failed to save edited message', $reason );
+			) {
+				$this->throwException( InappropriateContentException::class, 'Inappropriate content detected' );
+			} else {
+				$this->throwException( WallBuilderException::class, 'Failed to save edited message' );
+			}
 		}
 
 		if ( !$this->message->isMain() ) {
@@ -86,21 +89,21 @@ class WallEditBuilder extends WallBuilder {
 	/**
 	 * Populate an exception with proper context for logging, and throw it
 	 *
+	 * @param string $class
 	 * @param string $message
-	 * @param string $reason
 	 *
 	 * @throws WallBuilderException
+	 *
 	 */
-	protected function throwException( string $message, string $reason = '' ) {
+	protected function throwException( string $class, string $message) {
 		$context = [
 			'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
 			'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
 			'messageTitle' => $this->message->getTitle()->getPrefixedText(),
 			'messageId' => $this->message->getTitle()->getArticleID(),
-			'reason' => $reason
 		];
 
-		throw new WallBuilderException( $message, $context );
+		throw new $class( $message, $context );
 	}
 
 	/**
