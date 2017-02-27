@@ -3,7 +3,13 @@
 	'use strict';
 
 	function showErrorModal(data) {
-		var modalContent = data.blockInfo || $.msg('wall-posting-message-failed-body');
+		var modalContent;
+		try {
+			modalContent = JSON.parse(data.responseText).blockInfo;
+		} catch (e) {
+			modalContent = $.msg('wall-posting-message-failed-body');
+		}
+
 		$.showModal($.msg('wall-posting-message-failed-title'), modalContent );
 	}
 
