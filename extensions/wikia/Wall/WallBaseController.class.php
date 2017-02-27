@@ -199,8 +199,6 @@ class WallBaseController extends WikiaService {
 
 		$isThreadPage = $this->request->getVal( 'isThreadPage', false );
 
-		$this->response->setVal( 'showRemovedBox', false );
-
 		$this->response->setVal( 'showDeleteOrRemoveInfo', $isThreadPage );
 		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() & !$isThreadPage );
 
@@ -264,16 +262,6 @@ class WallBaseController extends WikiaService {
 			$this->response->setVal( 'editorUrl', $editorUrl );
 			$this->response->setVal( 'isEdited', true );
 
-			$summary = $wallMessage->getLastEditSummary();
-
-			if ( !empty( $summary ) ) {
-				$summary = Linker::formatComment( $summary );
-				$this->response->setVal( 'summary', $summary );
-				$this->response->setVal( 'showSummary', true );
-			} else {
-				$this->response->setVal( 'showSummary', false );
-			}
-
 			$query = [
 				'diff' => 'prev',
 				'oldid' => $wallMessage->getTitle()->getLatestRevID(),
@@ -305,7 +293,6 @@ class WallBaseController extends WikiaService {
 
 		if ( $wallMessage->isRemove() && !$wallMessage->isMain() ) {
 			$this->response->setVal( 'removedOrDeletedMessage', true );
-			$this->response->setVal( 'showRemovedBox', true );
 		}
 
 

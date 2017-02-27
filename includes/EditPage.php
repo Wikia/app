@@ -1490,6 +1490,8 @@ class EditPage {
 		$doEditStatus = $this->mArticle->doEdit( $text, $this->summary, $flags );
 
 		if ( $doEditStatus->isOK() ) {
+			// Wikia: SUS-1719 hack - pass revision info back to caller
+			$status->revision = $doEditStatus->value['revision'];
 			$result['redirect'] = Title::newFromRedirect( $text ) !== null;
 			$this->commitWatch();
 			wfProfileOut( __METHOD__ );

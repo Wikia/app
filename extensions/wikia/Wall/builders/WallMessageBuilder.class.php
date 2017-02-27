@@ -5,6 +5,7 @@
  * and performs associated updates
  */
 class WallMessageBuilder extends WallBuilder {
+	use \Wikia\Logger\Loggable;
 
 	// Mandatory fields
 	/** @var string $messageText */
@@ -31,6 +32,8 @@ class WallMessageBuilder extends WallBuilder {
 	private $metaData;
 	/** @var WallMessage $newMessage */
 	private $newMessage;
+	/** @var Revision $newRevision */
+	private $newRevision;
 
 	/**
 	 * Check if Forum Board or Message Wall we are posting on exists, and try to create it if does not yet exist.
@@ -97,10 +100,19 @@ class WallMessageBuilder extends WallBuilder {
 			$this->throwException( 'Failed to create article comment' );
 		}
 
-		/** @var Article $article */
+		/**
+		 * @var Article $article
+		 * @var Status $status
+		 * @var Revision $rev
+		 */
 		list( $status, $article ) = $result;
-		$this->newMessage = WallMessage::newFromTitle( $article->getTitle() );
+		$title = $article->getTitle();
+		$rev = $status->revision;
 
+		// Preload article ID - saves DB call
+		$this->newRevision = $rev;
+		$title->mArticleID = $rev->getPage();
+		$this->newMessage = WallMessage::newFromTitle( $title );
 		return $this;
 	}
 
@@ -111,7 +123,12 @@ class WallMessageBuilder extends WallBuilder {
 	public function doNewThreadUpdates(): WallMessageBuilder {
 		$this->newMessage->storeRelatedTopicsInDB( $this->relatedTopics );
 		$this->newMessage->setOrderId();
-		$this->newMessage->getWall()->invalidateCache();
+
+		// purge URLs for Wall/Board etc., catch up with slaves
+		$this->newMessage->invalidateCache();
+
+		// have user watch new message
+		$this->newMessage->addWatch( $this->messageAuthor );
 
 		return $this;
 	}
@@ -130,8 +147,12 @@ class WallMessageBuilder extends WallBuilder {
 			$this->newMessage->setOrderId( $count );
 		}
 
-		// after successful posting invalidate Thread cache
+		// after successful posting invalidate Thread memcache...
 		$this->newMessage->getThread()->invalidateCache();
+
+		// ...and purge Wall/Board URLs.
+		$this->newMessage->invalidateCache();
+
 		$rp = new WallRelatedPages();
 		$rp->setLastUpdate( $this->parentMessage->getId() );
 
@@ -139,14 +160,12 @@ class WallMessageBuilder extends WallBuilder {
 	}
 
 	/**
-	 * Have current user watch new message, and optionally notify users following this thread about the change.
+	 * Optionally notify users following this thread about the change.
 	 * @return WallMessageBuilder
 	 */
-	public function addWatchAndNotifyIfNeeded(): WallMessageBuilder {
-		$this->newMessage->addWatch( $this->messageAuthor );
-
+	public function notifyIfNeeded(): WallMessageBuilder {
 		if ( $this->notify ) {
-			$this->newMessage->sendNotificationAboutLastRev();
+			WallHelper::sendNotification( $this->newRevision );
 		}
 
 		return $this;
@@ -158,7 +177,10 @@ class WallMessageBuilder extends WallBuilder {
 	 */
 	public function notifyEveryoneForNewThreadIfNeeded(): WallMessageBuilder {
 		if ( $this->notifyEveryone ) {
-			$this->newMessage->notifyEveryone();
+			$notif = WallNotificationEntity::createFromRev( $this->newRevision );
+
+			$wne = new WallNotificationsEveryone();
+			$wne->addNotificationToQueue( $notif );
 		}
 
 		return $this;
@@ -177,20 +199,33 @@ class WallMessageBuilder extends WallBuilder {
 	 * @return bool true if comments index was successfully updated, else false to force MW to rollback the transaction
 	 */
 	public function insertNewCommentsIndexEntry( DatabaseBase $dbw, Title $title, Revision $rev ): bool {
-		$parentPageId = $this->parentPageTitle->getArticleID();
-		$parentCommentId = $this->parentMessage ? $this->parentMessage->getArticleID() : 0;
-		$revId = $rev->getId();
+		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			$parentPageId = $this->parentPageTitle->getArticleID();
+			$parentCommentId = $this->parentMessage ? $this->parentMessage->getId() : 0;
+			$revId = $rev->getId();
 
-		$entry =
-			( new CommentsIndexEntry() )
-				->setNamespace( $title->getNamespace() )
-				->setParentPageId( $parentPageId )
-				->setParentCommentId( $parentCommentId )
-				->setCommentId( $title->getArticleID() )
-				->setFirstRevId( $revId )
-				->setLastRevId( $revId );
+			$entry =
+				( new CommentsIndexEntry() )
+					->setNamespace( $title->getNamespace() )
+					->setParentPageId( $parentPageId )
+					->setParentCommentId( $parentCommentId )
+					->setCommentId( $title->getArticleID() )
+					->setFirstRevId( $revId )
+					->setLastRevId( $revId );
 
-		return CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+			$result = CommentsIndex::getInstance()->insertEntry( $entry, $dbw );
+			if ( !$result ) {
+				$this->error( __METHOD__ . ' - SUS-1719: Failed to insert Comments Index Entry', [
+					'title' => $title->getPrefixedText(),
+					'revision' => $rev->getId(),
+					'articleId' => $rev->getPage()
+				] );
+			}
+
+			return $result;
+		}
+
+		return true;
 	}
 
 	/**
@@ -205,14 +240,14 @@ class WallMessageBuilder extends WallBuilder {
 				->createMetaData()
 				->postNewMessage()
 				->doNewThreadUpdates()
-				->addWatchAndNotifyIfNeeded()
+				->notifyIfNeeded()
 				->notifyEveryoneForNewThreadIfNeeded();
 		} else {
 			// reply
 			$this
 				->postNewMessage()
 				->doNewReplyUpdates()
-				->addWatchAndNotifyIfNeeded();
+				->notifyIfNeeded();
 		}
 
 		Hooks::run( 'AfterBuildNewMessageAndPost', [ &$this->newMessage ] );

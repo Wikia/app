@@ -407,7 +407,11 @@ class WallHelper {
 	 * @return string
 	 */
 	public function getMessageSnippet( WallMessage $wallMessage ) {
-		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
+		$messageText = $wallMessage->getRawText();
+		// SUS-1684: Remove quotes and other HTML tags before parsing
+		$messageText = Sanitizer::stripAllTags( $messageText );
+
+		$formatted = Linker::formatComment( $messageText, $wallMessage->getTitle() );
 
 		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
@@ -471,13 +475,21 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification( $revOldId, $rcType = RC_NEW, $useMasterDB = false ) {
-		$app = F::App();
-		$rev = Revision::newFromId( $revOldId );
-		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
-		$wh = new WallHistory( $app->wg->CityId );
+	/**
+	 * Create a new Wall Notification from revision info, and dispatch it to wall_notifications table.
+	 *
+	 * @deprecated this interface should be converted to use background task at some point
+	 * @param Revision $rev
+	 * @param int $rcType whether this is a new thread/reply (RC_NEW = 1) or edit to existing one/wall action (RC_EDIT = 2)
+	 * @param bool $useMasterDB
+	 */
+	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
+		global $wgUser;
 
-		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User );
+		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
+		$wh = new WallHistory();
+
+		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $wgUser );
 
 		if ( $rcType == RC_NEW ) {
 			$wn = new WallNotifications();
