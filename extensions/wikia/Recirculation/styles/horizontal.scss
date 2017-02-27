@@ -110,10 +110,23 @@ $recirculation-footer-thumbnail-height: 110px;
 	}
 
 	.item {
-		width: 32.5%;
+		flex: 1;
+		padding: 0 1rem;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
 	}
 
 	.thumbnail {
 		width: 100%;
+
+		img {
+			width: 100%;
+		}
 	}
 }
