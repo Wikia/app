@@ -106,7 +106,7 @@ class TitleBlacklist {
 					return $article->getContent();
 				}
 			}
-		} elseif( $source['type'] == TBLSRC_URL && count( $source ) >= 2 ) {
+		} elseif( $source['type'] == TBLSRC_GLOBALPAGE && count( $source ) >= 2 ) {
 			list( $title, $ns, $wikia ) = $source['src'];
 			return GlobalTitle::newFromText( $title, $ns, $wikia )->getContent();
 		} elseif( $source['type'] == TBLSRC_FILE && count( $source ) >= 2 ) {
