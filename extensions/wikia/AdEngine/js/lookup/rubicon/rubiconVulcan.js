@@ -156,11 +156,9 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function encodeParamsForTracking(params, slotName) {
-		if (!params[rubiconVideoTierKey] || !hasResponse(slotName)) {
-			return;
+		if (params[rubiconVideoTierKey] && hasResponse(slotName)) {
+			return params[rubiconVideoTierKey];
 		}
-
-		return params[rubiconVideoTierKey];
 	}
 
 	function calculatePrices() {
