@@ -4,9 +4,8 @@
  */
 
 use Wikia\Logger\SyslogHandler;
-use Monolog\Formatter\LineFormatter;
 
-class SyslogHandlerTest extends PHPUnit_Framework_TestCase {
+class SyslogHandlerTest extends \PHPUnit\Framework\TestCase {
 
 	function testGetFormatter() {
 		$handler = new SyslogHandler('test');

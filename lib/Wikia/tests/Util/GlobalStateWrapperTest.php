@@ -2,7 +2,7 @@
 
 use Wikia\Util\GlobalStateWrapper;
 
-class GlobalStateWrapperTest extends PHPUnit_Framework_TestCase {
+class GlobalStateWrapperTest extends \PHPUnit\Framework\TestCase {
 
 	private $scalarValue = "a-scalar-value";
 	private $arrayValue = array( 'foo' => 'bar' );

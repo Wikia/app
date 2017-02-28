@@ -2,7 +2,9 @@
 
 namespace Wikia\Domain\User\Preferences;
 
-class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class UserPreferencesTest extends TestCase {
 
 	public function testEmptyPreferences() {
 		$prefs = new UserPreferences();

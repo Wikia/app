@@ -7,7 +7,7 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Logger\SyslogHandler;
 use Wikia\Logger\WebProcessor;
 
-class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
+class WikiaLoggerTest extends \PHPUnit\Framework\TestCase {
 
 	function testInstance() {
 		$logger = WikiaLogger::instance();

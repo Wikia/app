@@ -5,7 +5,7 @@
 
 use Wikia\Util\Statistics\BernoulliTrial;
 
-class BernoulliTrialTest extends PHPUnit_Framework_TestCase {
+class BernoulliTrialTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @param float $probability

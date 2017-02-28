@@ -2,12 +2,12 @@
 
 namespace Wikia\Service\User\Attributes;
 
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Attribute;
 use Doctrine\Common\Cache\CacheProvider;
 
-class UserAttributeTest extends PHPUnit_Framework_TestCase {
+class UserAttributeTest extends TestCase {
 	/** @var int */
 	protected $userId = 1;
 
