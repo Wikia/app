@@ -2,16 +2,18 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.aol',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
+	'ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 	'wikia.window'
-], function(aol, appnexus, index, wikia, veles, win) {
+], function(aol, appnexus, audienceNetwork, indexExchange, wikia, veles, win) {
 	'use strict';
 
 	var adapters = [
 			appnexus,
-			index,
+			audienceNetwork,
+			indexExchange,
 			aol
 		],
 		customAdapters = [
