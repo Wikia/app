@@ -283,7 +283,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setVal( 'block', $exception->getContext()['block'] );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
@@ -641,7 +641,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setVal( 'block', $exception->getContext()['block'] );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
@@ -717,7 +717,7 @@ class WallExternalController extends WikiaController {
 		} catch ( InappropriateContentException $exception ) {
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'reason', 'badcontent' );
-			$this->response->setVal( 'block', $exception->getContext()['block'] );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
