@@ -180,7 +180,7 @@ class MercuryApiController extends WikiaController {
 		$htmlTitle = new WikiaHtmlTitle();
 		$wikiVariables['htmlTitle'] = [
 			'separator' => $htmlTitle->getSeparator(),
-			'parts' => $htmlTitle->getAllParts(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
 		return $wikiVariables;
