@@ -66,14 +66,17 @@ $wikia-bar-height: 25px;
 			cursor: pointer;
 			display: block;
 			left: 0;
-			padding: 10px;
+			margin: 10px;
 			position: absolute;
 			top: 10px;
 		}
 	}
 
 	.floating-close-button {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
 		display: none;
+		height: 20px;
+		width: 20px;
 	}
 }
 

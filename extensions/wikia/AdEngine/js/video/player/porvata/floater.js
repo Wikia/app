@@ -1,7 +1,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
 		'wikia.window',
-		'wikia.document',
+		'wikia.document'
 	], function (win, doc) {
 		'use strict';
 
@@ -29,12 +29,9 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function createCloseButton() {
-			var a = doc.createElement('a'),
-				img = doc.createElement('img');
+			var a = doc.createElement('a');
 
-			img.src = 'http://slot1.images.wikia.nocookie.net/__cb1487851645/common/extensions/wikia/ArticleVideo/images/close.svg';
 			a.classList.add('floating-close-button');
-			a.appendChild(img);
 
 			return a;
 		}
@@ -50,7 +47,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			}
 		}
 
-		function enableFloatingOn(elements) {
+		function enableFloating(elements) {
 			var width = ((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding,
 				height = width;
 
@@ -62,7 +59,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			elements.video.resize(width, height);
 		}
 
-		function disableFloatingOn(elements, params, imageMarginTop) {
+		function disableFloating(elements, params, imageMarginTop) {
 			elements.top.classList.toggle(activeFloatingCssClass);
 			resetAdContainer(elements.top);
 			resetDimensions(elements.iframe, params);
@@ -95,12 +92,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 							imageMarginTop = elements.image.style.marginTop;
 						}
 
-						enableFloatingOn(elements);
+						enableFloating(elements);
 
 						if (!floatingContext.closeButton) {
 							floatingContext.closeButton = createCloseButton();
 							floatingContext.closeButton.addEventListener('click', function () {
-								disableFloatingOn(elements, params, imageMarginTop);
+								disableFloating(elements, params, imageMarginTop);
 								win.removeEventListener('scroll', floatingContext.scrollListener);
 
 								if (onClose) {
@@ -117,7 +114,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 					}
 				} else {
 					if (floatingContext.floating) {
-						disableFloatingOn(elements, params, imageMarginTop);
+						disableFloating(elements, params, imageMarginTop);
 
 						if (floatingContext.closeButton) {
 							floatingContext.closeButton.classList.add('hidden');
