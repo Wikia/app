@@ -36,6 +36,20 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return a;
 		}
 
+		function createOnCloseListener(elements, params, floatingContext, imageMarginTop) {
+			return function () {
+				disableFloating(elements, params, imageMarginTop);
+				win.removeEventListener('scroll', floatingContext.scrollListener);
+
+				if (floatingContext.onClose) {
+					floatingContext.onClose();
+				}
+
+				deleteCloseButton(elements, floatingContext);
+
+			};
+		}
+
 		function deleteCloseButton(elements, floatingContext) {
 			if (floatingContext.closeButton) {
 				elements.top.removeChild(floatingContext.closeButton);
@@ -101,17 +115,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 						enableFloating(elements);
 
 						if (!floatingContext.closeButton) {
+							floatingContext.onClose = onClose;
 							floatingContext.closeButton = createCloseButton();
-							floatingContext.closeButton.addEventListener('click', function () {
-								disableFloating(elements, params, imageMarginTop);
-								win.removeEventListener('scroll', floatingContext.scrollListener);
-
-								if (onClose) {
-									onClose();
-								}
-
-								deleteCloseButton(elements, floatingContext);
-							});
+							floatingContext.closeButton.addEventListener('click',
+								createOnCloseListener(elements, params, floatingContext, imageMarginTop));
 
 							elements.top.appendChild(floatingContext.closeButton);
 						} else {
