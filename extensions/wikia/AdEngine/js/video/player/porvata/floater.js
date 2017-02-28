@@ -36,6 +36,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return a;
 		}
 
+		function deleteCloseButton(elements, floatingContext) {
+			if (floatingContext.closeButton) {
+				elements.top.removeChild(floatingContext.closeButton);
+			}
+		}
+
 		function resetDimensions(element, params) {
 			updateDimensions(element, params.width, params.height);
 		}
@@ -103,6 +109,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 								if (onClose) {
 									onClose();
 								}
+
+								deleteCloseButton(elements, floatingContext);
 							});
 
 							elements.top.appendChild(floatingContext.closeButton);
@@ -122,6 +130,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 						if (floatingContext.videoEnded) {
 							win.removeEventListener('scroll', floatingContext.scrollListener);
+
+							deleteCloseButton(elements, floatingContext);
 						}
 
 						floatingContext.floating = false;
