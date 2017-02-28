@@ -94,13 +94,12 @@ class WallMessageBuilder extends WallBuilder {
 			// Permissions check are performed on article comment level by EditPage class of Mediawiki
 			// Text is matched there against Phalanx filters and all user blocks (global and local) are also checked
 			// This can cause edit to fail
-			if ( $result
-				&& (
-					$result[0]->value == EditPage::AS_FILTERING
-					|| in_array( 'EditFilter', $result[0]->errors[0]['params'] )
-				)
-			) {
-				$this->throwException( InappropriateContentException::class, 'Inappropriate content detected' );
+			if ( $result && 'EditFilter' == $result[0]->errors[0]['params'][0] ) {
+				$this->throwException(
+						InappropriateContentException::class,
+						'Inappropriate content detected',
+						[ 'block' => $result[0]->errors[0]['params'][1] ]
+					);
 			} else {
 				$this->throwException( WallBuilderException::class, 'Failed to create article comment' );
 			}
@@ -235,17 +234,16 @@ class WallMessageBuilder extends WallBuilder {
 	 *
 	 * @param string $class
 	 * @param string $message
-	 *
-	 * @throws WallBuilderException
-	 *
+	 * @param array $additionalContext
 	 */
-	protected function throwException( string $class, string $message ) {
-		$context = [
-			'parentPageTitle' => $this->parentPageTitle->getPrefixedText(),
-			'parentPageId' => $this->parentPageTitle->getArticleID(),
-			'parentMessageTitle' => $this->parentMessage ? $this->parentMessage->getTitle()->getPrefixedText() : '',
-			'parentMessageId' => $this->parentMessage ? $this->parentMessage->getId() : '',
-		];
+	protected function throwException( string $class, string $message, array $additionalContext=[] ) {
+		$context = array_merge( $additionalContext,
+			[
+				'parentPageTitle' => $this->parentPageTitle->getPrefixedText(),
+				'parentPageId' => $this->parentPageTitle->getArticleID(),
+				'parentMessageTitle' => $this->parentMessage ? $this->parentMessage->getTitle()->getPrefixedText() : '',
+				'parentMessageId' => $this->parentMessage ? $this->parentMessage->getId() : '',
+			]);
 
 		throw new $class( $message, $context );
 	}

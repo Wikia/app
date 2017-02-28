@@ -9,11 +9,11 @@ abstract class WallBuilder {
 	 *
 	 * @param string $class
 	 * @param string $message
+	 * @param array $additionalContext
 	 *
 	 * @return
-	 *
 	 */
-	abstract protected function throwException( string $class, string $message);
+	abstract protected function throwException( string $class, string $message, array $additionalContext=[] );
 
 	/**
 	 * Get the data which should be generated at the end of the builder flow

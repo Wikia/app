@@ -200,6 +200,7 @@ JSMessages::registerPackage( 'Wall', [
 	'preview',
 	'savearticle',
 	'back',
+	'spamprotectionmatch'
 ] );
 
 /**

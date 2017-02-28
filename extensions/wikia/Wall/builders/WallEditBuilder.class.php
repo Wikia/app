@@ -32,13 +32,12 @@ class WallEditBuilder extends WallBuilder {
 
 		$result = $this->message->getArticleComment()->doSaveComment( $this->messageText, $this->editor );
 		if ( !$result || !$result[0]->isOK() ) {
-			if ( $result
-				&& (
-					$result[0]->value == EditPage::AS_FILTERING
-					|| in_array( 'EditFilter', $result[0]->errors[0]['params'] )
-				)
-			) {
-				$this->throwException( InappropriateContentException::class, 'Inappropriate content detected' );
+			if ( $result && in_array( 'EditFilter', $result[0]->errors[0]['params'] ) ) {
+				$this->throwException(
+					InappropriateContentException::class,
+					'Inappropriate content detected',
+					[ 'block' => $result[0]->errors[0]['params'][1] ]
+				);
 			} else {
 				$this->throwException( WallBuilderException::class, 'Failed to save edited message' );
 			}
@@ -91,17 +90,15 @@ class WallEditBuilder extends WallBuilder {
 	 *
 	 * @param string $class
 	 * @param string $message
-	 *
-	 * @throws WallBuilderException
-	 *
+	 * @param array $additionalContext
 	 */
-	protected function throwException( string $class, string $message) {
-		$context = [
-			'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
-			'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
-			'messageTitle' => $this->message->getTitle()->getPrefixedText(),
-			'messageId' => $this->message->getTitle()->getArticleID(),
-		];
+	protected function throwException( string $class, string $message, array $additionalContext=[] ) {
+		$context = array_merge( $additionalContext, [
+				'parentPageTitle' => $this->message->getArticleTitle()->getPrefixedText(),
+				'parentPageId' => $this->message->getArticleTitle()->getArticleID(),
+				'messageTitle' => $this->message->getTitle()->getPrefixedText(),
+				'messageId' => $this->message->getTitle()->getArticleID(),
+			]);
 
 		throw new $class( $message, $context );
 	}
