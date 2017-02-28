@@ -52,6 +52,28 @@ $uap-video-player-button-size: 24px;
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
+
+	&.floating {
+		bottom: 0;
+		margin-bottom: 25px + 10px;
+		margin-right: 10px;
+		position: fixed;
+		right: 0;
+		z-index: 10;
+
+		.floating-close-button {
+			cursor: pointer;
+			display: block;
+			left: 0;
+			padding: 10px;
+			position: absolute;
+			top: 10px;
+		}
+	}
+
+	.floating-close-button {
+		display: none;
+	}
 }
 
 .wikia-ad {
