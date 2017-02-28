@@ -93,7 +93,9 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				threshold = 100,
 				scrollYOffset = top.offsetTop + top.offsetHeight + threshold,
 				imageMarginTop,
-				floatingContext = {};
+				floatingContext = {
+					onClose: onClose
+				};
 
 			floatingContext.scrollListener = function () {
 				var imageContainer = params.container.parentElement.querySelector('#image'),
@@ -115,7 +117,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 						enableFloating(elements);
 
 						if (!floatingContext.closeButton) {
-							floatingContext.onClose = onClose;
 							floatingContext.closeButton = createCloseButton();
 							floatingContext.closeButton.addEventListener('click',
 								createOnCloseListener(elements, params, floatingContext, imageMarginTop));
