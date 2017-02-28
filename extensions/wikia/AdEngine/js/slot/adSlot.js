@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		var cssSelector = '#' + slotName + ' > .provider-container:not(.hidden) div[id*="_container_"] > iframe',
 			iframe = doc.querySelector(cssSelector);
 
-		if (!iframe && recoveryHelper && recoveryHelper.isSourcePointRecoveryEnabled() && recoveryHelper.isBlocking()) {
+		if (!iframe && recoveryHelper && recoveryHelper.isBlocking()) {
 			iframe = getRecoveredIframe(slotName);
 		}
 
@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	}
 
 	function getProviderContainer(slotName) {
-		var isRecovering = recoveryHelper.isSourcePointRecoveryEnabled() && recoveryHelper.isBlocking(),
+		var isRecovering = recoveryHelper.isBlocking(),
 			providerContainer,
 			slotContainer = doc.getElementById(slotName);
 
