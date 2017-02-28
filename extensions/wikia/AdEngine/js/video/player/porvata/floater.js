@@ -32,6 +32,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			var a = doc.createElement('a');
 
 			a.classList.add('floating-close-button');
+			a.classList.add('hidden');
 
 			return a;
 		}
@@ -95,19 +96,26 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				imageMarginTop,
 				floatingContext = {
 					onClose: onClose
+				},
+				imageContainer = params.container.parentElement.querySelector('#image'),
+				elements = {
+					top: top,
+					background: doc.getElementById('WikiaPageBackground'),
+					iframe: top.querySelector('iframe'),
+					imageContainer: imageContainer,
+					image: imageContainer ? imageContainer.querySelector('img') : null,
+					video: video
 				};
 
-			floatingContext.scrollListener = function () {
-				var imageContainer = params.container.parentElement.querySelector('#image'),
-					elements = {
-						top: top,
-						background: doc.getElementById('WikiaPageBackground'),
-						iframe: top.querySelector('iframe'),
-						imageContainer: imageContainer,
-						image: imageContainer ? imageContainer.querySelector('img') : null,
-						video: video
-					};
+			if (!floatingContext.closeButton) {
+				floatingContext.closeButton = createCloseButton();
+				floatingContext.closeButton.addEventListener('click',
+					createOnCloseListener(elements, params, floatingContext, imageMarginTop));
 
+				elements.top.appendChild(floatingContext.closeButton);
+			}
+
+			floatingContext.scrollListener = function () {
 				if (win.scrollY > scrollYOffset) {
 					if (!floatingContext.floating) {
 						if (imageMarginTop === undefined && elements.image) {
@@ -116,13 +124,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 						enableFloating(elements);
 
-						if (!floatingContext.closeButton) {
-							floatingContext.closeButton = createCloseButton();
-							floatingContext.closeButton.addEventListener('click',
-								createOnCloseListener(elements, params, floatingContext, imageMarginTop));
-
-							elements.top.appendChild(floatingContext.closeButton);
-						} else {
+						if (floatingContext.closeButton) {
 							floatingContext.closeButton.classList.remove('hidden');
 						}
 
