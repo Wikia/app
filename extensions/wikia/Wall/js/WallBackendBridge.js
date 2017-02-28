@@ -298,7 +298,7 @@
 			}).fail(showErrorModal);
 		},
 
-		deleteMessage: function (id, mode, msg, formdata, modal) {
+		deleteMessage: function (id, mode, msg, formdata, modal, callback) {
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'deleteMessage',
@@ -311,26 +311,7 @@
 					formdata: formdata,
 					token: mw.user.tokens.get('editToken')
 				},
-				callback: this.proxy(function (data) {
-					if (data.status) {
-						if (data.html) {
-							this.deletedMessages[id] = msg;
-
-							msg.fadeOut('fast', this.proxy(function () {
-								$(data.html).hide().insertBefore(msg).fadeIn('fast');
-							}));
-						} else {
-							msg.fadeOut('fast', function () {
-								msg.remove();
-							});
-						}
-
-						if (typeof (modal) !== 'undefined') {
-							// VSTF can delete without confirmation modal
-							modal.trigger('close');
-						}
-					}
-				})
+				callback: callback
 			}).fail(function (json) {
 				if (modal) {
 					modal.trigger('close');

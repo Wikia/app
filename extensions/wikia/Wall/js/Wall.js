@@ -547,7 +547,26 @@
 				this.model.restoreMessage(id, formdata);
 				break;
 			default:
-				this.model.deleteMessage(id, mode, msg, formdata, modal);
+				this.model.deleteMessage(id, mode, msg, formdata, modal, this.proxy(function (data) {
+					if (data.status) {
+						if (data.html) {
+							this.deletedMessages[id] = msg;
+
+							msg.fadeOut('fast', this.proxy(function () {
+								$(data.html).hide().insertBefore(msg).fadeIn('fast');
+							}));
+						} else {
+							msg.fadeOut('fast', function () {
+								msg.remove();
+							});
+						}
+
+						if (typeof (modal) !== 'undefined') {
+							// VSTF can delete without confirmation modal
+							modal.trigger('close');
+						}
+					}
+				}));
 				break;
 			}
 		},
