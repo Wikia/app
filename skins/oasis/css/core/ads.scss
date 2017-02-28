@@ -19,6 +19,7 @@ $uap-progress-bar-color: #b7b7b7;
 $uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
+$wikia-bar-height: 25px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -55,7 +56,7 @@ $uap-video-player-button-size: 24px;
 
 	&.floating {
 		bottom: 0;
-		margin-bottom: 25px + 10px;
+		margin-bottom: $wikia-bar-height + 10px;
 		margin-right: 10px;
 		position: fixed;
 		right: 0;

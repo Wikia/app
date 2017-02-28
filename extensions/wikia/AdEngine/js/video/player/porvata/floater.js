@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			}
 		}
 
-		function enable(elements) {
+		function enableFloatingOn(elements) {
 			var width = ((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding,
 				height = width;
 
@@ -62,7 +62,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			elements.video.resize(width, height);
 		}
 
-		function disable(elements, params, imageMarginTop) {
+		function disableFloatingOn(elements, params, imageMarginTop) {
 			elements.top.classList.toggle(activeFloatingCssClass);
 			resetAdContainer(elements.top);
 			resetDimensions(elements.iframe, params);
@@ -76,64 +76,63 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				threshold = 100,
 				scrollYOffset = top.offsetTop + top.offsetHeight + threshold,
 				imageMarginTop,
-				floatignContext = {};
+				floatingContext = {};
 
-			floatignContext.scrollListener = function () {
+			floatingContext.scrollListener = function () {
 				var imageContainer = params.container.parentElement.querySelector('#image'),
-					image = imageContainer ? imageContainer.querySelector('img') : null,
 					elements = {
 						top: top,
 						background: doc.getElementById('WikiaPageBackground'),
 						iframe: top.querySelector('iframe'),
 						imageContainer: imageContainer,
-						image: image,
+						image: imageContainer ? imageContainer.querySelector('img') : null,
 						video: video
 					};
 
 				if (win.scrollY > scrollYOffset) {
-					if (!floatignContext.floating) {
-						if (imageMarginTop === undefined && image) {
-							imageMarginTop = image.style.marginTop;
+					if (!floatingContext.floating) {
+						if (imageMarginTop === undefined && elements.image) {
+							imageMarginTop = elements.image.style.marginTop;
 						}
 
-						enable(elements);
+						enableFloatingOn(elements);
 
-						if (!floatignContext.closeButton) {
-							floatignContext.closeButton = createCloseButton();
-							floatignContext.closeButton.addEventListener('click', function () {
-								disable(elements, params, imageMarginTop);
-								win.removeEventListener('scroll', floatignContext.scrollListener);
+						if (!floatingContext.closeButton) {
+							floatingContext.closeButton = createCloseButton();
+							floatingContext.closeButton.addEventListener('click', function () {
+								disableFloatingOn(elements, params, imageMarginTop);
+								win.removeEventListener('scroll', floatingContext.scrollListener);
 
 								if (onClose) {
 									onClose();
 								}
 							});
 
-							elements.top.appendChild(floatignContext.closeButton);
+							elements.top.appendChild(floatingContext.closeButton);
 						} else {
-							floatignContext.closeButton.classList.remove('hidden');
+							floatingContext.closeButton.classList.remove('hidden');
 						}
 
-						floatignContext.floating = true;
+						floatingContext.floating = true;
 					}
 				} else {
-					if (floatignContext.floating) {
-						disable(elements, params, imageMarginTop);
+					if (floatingContext.floating) {
+						disableFloatingOn(elements, params, imageMarginTop);
 
-						if (floatignContext.closeButton) {
-							floatignContext.closeButton.classList.add('hidden');
+						if (floatingContext.closeButton) {
+							floatingContext.closeButton.classList.add('hidden');
 						}
 
-						if (floatignContext.videoEnded) {
-							win.removeEventListener('scroll', floatignContext.scrollListener);
+						if (floatingContext.videoEnded) {
+							win.removeEventListener('scroll', floatingContext.scrollListener);
 						}
 
-						floatignContext.floating = false;
+						floatingContext.floating = false;
 					}
 				}
 			};
 
-			return floatignContext;
+			return floatingContext;
 		}
 
 		function makeFloat(video, params, onClose) {
