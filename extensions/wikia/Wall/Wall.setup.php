@@ -25,6 +25,7 @@ $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+$wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
@@ -161,6 +162,10 @@ $wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 
 // SUS-260: Prevent moving pages within, into or out of Wall namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
+
+// handle MediaWiki delete flow and comments_index updates
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
+$wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
 
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',

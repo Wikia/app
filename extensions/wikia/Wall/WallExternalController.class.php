@@ -358,7 +358,9 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		$mode = $this->request->getVal( 'mode' );
 		$result = false;
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -373,18 +375,29 @@ class WallExternalController extends WikiaController {
 		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 		$notify = isset( $formassoc['notify-admin'] ) ? true : false;
 
-		if ( empty( $reason ) && !$this->request->getVal( 'mode' ) == 'rev' ) {
+		if ( empty( $reason ) && !$mode == 'rev' ) {
 			$this->response->setVal( 'status', false );
 			return true;
 		}
 
-		$isDeleteOrRemove = true;
-
 		$user = $this->getContext()->getUser();
-		switch( $this->request->getVal( 'mode' ) ) {
+		/**
+		 * As documented in Wall.js:557
+		 *
+		 * work as delete (mode: rev),
+		 * admin delete (mode:admin),
+		 * remove (mode: remove),
+		 * restore (mode: restore)
+		 *
+		 * Mode name is kept as data-mode attribute in HTML templates
+		 */
+		switch( $mode ) {
 			case 'rev':
+				// removes Wall's page table entry via ArticleComment::doDeleteComment)
 				if ( $mw->canDelete( $user ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
+
+					// we just want to set status field in JSON response
 					$this->response->setVal( 'status', $result );
 					return true;
 				} else {
@@ -393,26 +406,27 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'admin':
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props and deleted = 1 in comments_index table
 				if ( $mw->canAdminDelete( $user ) ) {
 					$result = $mw->adminDelete( $user, $reason, $notify );
 					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
 			case 'fastadmin':
+				// same as above, but does not require reason to be provided
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props
 				if ( $mw->canFastAdminDelete( $user ) ) {
 					$result = $mw->fastAdminDelete( $user );
-					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
 			case 'remove':
+				// marks a comment with WPP_WALL_REMOVE entry in page_wikia_props and removed = 1 in comments_index table
 				if ( !$mw->canModerate( $user ) ) {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
@@ -420,24 +434,22 @@ class WallExternalController extends WikiaController {
 				if ( $mw->canRemove( $user ) ) {
 					$this->response->setVal( 'status', $result );
 					$result = $mw->remove( $user, $reason, $notify );
-
-					$this->response->setVal( 'status', $result );
-					// TODO: log/save data
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
-		}
 
-		if ( $isDeleteOrRemove ) {
-			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
-			$mw->getLastActionReason();
-			$mw->invalidateCache();
-			$this->response->setVal( 'deleteInfoBox', 'INFO BOX' );
+			default:
+				throw new BadRequestException( __METHOD__ . ' - unknown mode provided: ' . $mode );
 		}
 
 		$this->response->setVal( 'status', $result );
+
+		if ( $result === true ) {
+			$this->response->setVal('html', $this->app->renderView('WallController', 'messageRemoved', ['showundo' => true, 'comment' => $mw]));
+			$mw->invalidateCache();
+		}
+
 		return true;
 	}
 

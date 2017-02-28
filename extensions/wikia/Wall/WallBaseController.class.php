@@ -176,7 +176,7 @@ class WallBaseController extends WikiaService {
 
 		$wallMessage = $this->getWallMessage();
 
-		if ( !( $wallMessage instanceof WallMessage ) ) {
+		if ( !( $wallMessage instanceof WallMessage ) || !WallMessage::isWallMessage( $wallMessage->getTitle() ) ) {
 			$this->forward( 'WallBaseController', 'message_error' );
 			wfProfileOut( __METHOD__ );
 			return true;

@@ -21,7 +21,7 @@ class PurgeWebPThumbs extends Maintenance {
 	const LIST_LIMIT = 1000;
 
 	const THUMB_SUFFIX = '.webp';
-	#const THUMB_SUFFIX = '.png';
+	const FORMAT_WEBP_MARKER = '[format=webp]';
 
 	// remove thumbnails generated during given period
 	const TIMESTAMP_FROM = '2014-06-09 09:00:00';
@@ -38,6 +38,8 @@ class PurgeWebPThumbs extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
+		$this->addOption( 'skip-cdn-purges', 'Don\'t purge CDN entries' );
+		$this->addOption( 'purge-all', 'Purge all WebP thumbnails (without timestamp constraints)' );
 		$this->mDescription = 'This script removes WebP thumbnails from DFS and purges their CDN entries';
 	}
 
@@ -58,7 +60,9 @@ class PurgeWebPThumbs extends Maintenance {
 		}
 		else {
 			$this->storage->remove($thumb);
-			SquidUpdate::purge([$url]);
+			if (!$this->skipCdnPurges) {
+				SquidUpdate::purge([$url]);
+			}
 
 			$this->output("done\n");
 		}
@@ -70,6 +74,8 @@ class PurgeWebPThumbs extends Maintenance {
 		$container = $this->storage->getContainer();
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
+		$this->skipCdnPurges = $this->hasOption( 'skip-cdn-purges' );
+		$this->purgeAll = $this->hasOption( 'purge-all' );
 
 		// get the list of WebP thumbs
 		$prefix = sprintf('%s/thumb', trim($this->storage->getPathPrefix(), '/'));
@@ -99,13 +105,13 @@ class PurgeWebPThumbs extends Maintenance {
 			foreach($thumbs as $thumb) {
 				$name = $thumb->name;
 
-				if (endsWith($name, self::THUMB_SUFFIX)) {
+				if (endsWith($name, self::THUMB_SUFFIX) || (FALSE !== strpos($name, self::FORMAT_WEBP_MARKER))) {
 					$name = substr($name, strlen($this->storage->getPathPrefix())); // remove path prefix from thumb path
 
 					// check the timestamp
 					$lastMod = strtotime($thumb->last_modified);
 
-					if ($lastMod > $timestampFrom && $lastMod < $timestampTo) {
+					if ($this->purgeAll || ($lastMod > $timestampFrom && $lastMod < $timestampTo)) {
 						$this->purgeThumb($name);
 						$removed++;
 					}

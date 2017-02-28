@@ -634,17 +634,16 @@ class WallHooksHelper {
 
 	/**
 	 * clean history after delete
-	 * @param Article $self
+	 * @param Article $article
 	 * @param $user
 	 * @param $reason
 	 * @param $id
 	 * @return bool
 	 */
-	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id ) {
-		$title = $self->getTitle();
-		$app = F::app();
+	static public function onArticleDeleteComplete( $article, $user, $reason, $id ) {
+		$title = $article->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wh = new WallHistory( $app->wg->CityId );
+			$wh = new WallHistory();
 			$wh->remove( $id );
 		}
 		return true;
