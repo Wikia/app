@@ -32,7 +32,10 @@ class WikiaLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	function testOnError() {
-		$wikiaLoggerMock = $this->createMock( WikiaLogger::class );
+		$wikiaLoggerMock = $this->getMockBuilder( WikiaLogger::class )
+			->setMethods( [ 'getErrorReporting' ] )
+			->disableOriginalConstructor()
+			->getMock();
 
 		$loggerMock = $this->getMockBuilder( Monolog\Logger::class )
 			->setConstructorArgs( [ 'phpunit' ] )

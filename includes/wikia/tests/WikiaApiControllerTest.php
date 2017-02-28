@@ -133,6 +133,7 @@ class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
 
 		$mockResponse = $this->getMockBuilder( WikiaResponse::class )
 			->setMethods( [ 'setData', 'setCacheValidity', 'getVal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockResponse->expects( $this->once() )
@@ -151,6 +152,7 @@ class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
 
 		$mockRequest = $this->getMockBuilder( WikiaRequest::class )
 			->setMethods( [ 'getVal', 'isInternal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockRequest->expects( $this->any() )
@@ -287,6 +289,7 @@ class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
 
 		$mockResponse = $this->getMockBuilder( WikiaResponse::class )
 			->setMethods( [ 'setData', 'setCacheValidity', 'getVal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockResponse->expects( $this->once() )
@@ -299,6 +302,7 @@ class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
 
 		$mockRequest = $this->getMockBuilder( WikiaRequest::class )
 			->setMethods( [ 'getVal', 'isInternal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockRequest->expects( $this->any() )

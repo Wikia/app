@@ -211,7 +211,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 
 	private function getUserMock() {
 		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'isLoggedIn', 'getName', 'isBlocked' ] )
+			->setMethods( [ 'isLoggedIn', 'getName', 'isBlocked', 'isAllowed' ] )
 			->disableOriginalConstructor()
 			->getMock();
 

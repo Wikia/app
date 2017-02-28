@@ -46,34 +46,33 @@ class ControllerTest extends WikiaBaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.02133 ms
-	 * @group UsingDB
 	 */
 	function testWikiaLink() {
 		$titleMock = $this->createMock( Title::class );
 
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->once() )
 			->method( 'getDBkey' )
 			->willReturn( 'Test' );
-		$titleMock->expects( static::exactly( 3 ) )
+		$titleMock->expects( $this->any() )
 			->method( 'getNamespace' )
 			->willReturn( NS_MAIN );
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->once() )
 			->method( 'getFragment' )
 			->willReturn( '' );
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->once() )
 			->method( 'getInterwiki' )
 			->willReturn( '' );
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->once() )
 			->method( 'getLinkURL' )
-			->with( static::isEmpty() )
+			->with( $this->isEmpty() )
 			->willReturn( '/wiki/Test' );
-		$titleMock->expects( static::exactly( 4 ) )
+		$titleMock->expects( $this->exactly( 4 ) )
 			->method( 'getPrefixedText' )
 			->willReturn( 'Test' );
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->once() )
 			->method( 'isKnown' )
 			->willReturn( true );
-		$titleMock->expects( static::once() )
+		$titleMock->expects( $this->any() )
 			->method( 'isExternal' )
 			->willReturn( false );
 

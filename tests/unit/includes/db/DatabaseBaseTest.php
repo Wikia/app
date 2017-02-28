@@ -7,7 +7,7 @@
 use Wikia\Util\Statistics\BernoulliTrial;
 
 class DatabaseBaseTester extends DatabaseBase {
-	function doQuery( $sql ) {}
+	protected function doQuery( $sql ) {}
 	function open( $server, $user, $password, $dbName ) {}
 	function getType() {}
 	function fetchObject( $res ) {}
@@ -39,7 +39,9 @@ class DatabaseBaseTest extends \PHPUnit\Framework\TestCase {
 			->will( $this->returnValue( true ) );
 
 		$return = 'a value';
-		$databaseBaseTesterMock = $this->createMock( DatabaseBaseTester::class );
+		$databaseBaseTesterMock = $this->getMockBuilder( DatabaseBaseTester::class )
+			->setMethods( [ 'doQuery', 'getWikiaLogger', 'resultObject' ] )
+			->getMock();
 		$databaseBaseTesterMock->expects( $this->once() )
 			->method( 'doQuery' )
 			->will( $this->returnValue( $return ) );
