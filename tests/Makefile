@@ -7,6 +7,10 @@ LOGS_PATH=build/logs
 CMD_PHPUNIT=php -v && php -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--configuration=phpunit.xml
 
+# command to run PHPUnit with code coverage enabled
+CMD_PHPUNIT_COVERAGE=php -v && php -d xdebug.coverage_enable=1 -d opcache.enable=0 run-test.php \
+	--configuration=phpunit.xml
+
 # command to run karma
 CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
@@ -62,7 +66,7 @@ phpunit-single: prepare
 # runs all tests from given directory or file and produce HTML and console tests coverage result
 phpunit-single-coverage: prepare
 		rm -rf coverage && mkdir -p coverage
-		${CMD_PHPUNIT} \
+		${CMD_PHPUNIT_COVERAGE} \
 				--coverage-html "coverage" \
 				--coverage-text \
 				--exclude-group Broken \
@@ -109,7 +113,7 @@ karma-integration: prepare
 phpunit-coverage: prepare
 	mkdir -p build/coverage
 
-	${CMD_PHPUNIT} ${test} \
+	${CMD_PHPUNIT_COVERAGE} ${test} \
 		--log-junit=${LOGS_PATH}/phpunit-coverage.xml \
 		--exclude-group Broken \
 		--coverage-html build/coverage \

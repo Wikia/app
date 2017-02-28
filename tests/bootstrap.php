@@ -52,3 +52,7 @@ if ($wgRunningUnitTests && $wgNoDBUnits) {
 require_once 'Zend/Exception.php';
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Exception.php';
+
+if ( ini_get( 'xdebug.coverage_enable' ) ) {
+	require_once "$IP/lib/composer/phpunit/php-token-stream/PHP/Token/Stream/Autoload.php";
+}
