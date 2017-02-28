@@ -19,7 +19,7 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= ( !empty( $wg->EnableDesignSystem ) ) ? $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) : $app->renderView( 'GlobalNavigation', 'index' ); ?>
+<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 

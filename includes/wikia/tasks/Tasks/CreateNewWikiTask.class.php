@@ -325,9 +325,17 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		if ( !empty( $wgEnableWallExt ) ) {
-			$wallMessage = \WallMessage::buildNewMessageAndPost( $talkBody, $this->founder->getName(), $wgUser, $wallTitle,
-				false, array(), true, false );
-			if ( $wallMessage === false ) {
+			try {
+				$wallPage = $this->founder->getTalkPage();
+
+				( new \WallMessageBuilder() )
+					->setMessageAuthor( $wgUser )
+					->setMessageTitle( $wallTitle )
+					->setMessageText( $talkBody )
+					->setParentPageTitle( $wallPage )
+					->build();
+			} catch ( \WallBuilderException $builderException ) {
+				$this->error( $builderException->getMessage(), $builderException->getContext() );
 				return false;
 			}
 

@@ -321,6 +321,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
@@ -2361,54 +2362,6 @@ $config['wikia_maps_parser_tag_js_wikiamobile'] = [
 	],
 ];
 
-/** GlobalNavigation extension */
-$config['global_navigation_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationUserLoginDropdown.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationInverse.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GoogleSearchAPI.scss',
-		'//skins/shared/styles/transparent-out.scss',
-	],
-];
-
-$config['global_navigation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'#group_delayed_hover_js',
-		'//resources/wikia/modules/scrollToLink.js',
-		'//skins/shared/scripts/transparent-out.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationDropdownsHandler.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GoogleSearchAPI.js',
-		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationInverseTransition.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAccountNavigation.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationExploreWikiaDropdown.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-	],
-];
-
-$config['wall_notifications_global_navigation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationNotifications.js',
-	],
-];
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -3078,8 +3031,7 @@ $config['design_system_user_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss'
+		'//resources/wikia/libraries/headroom/headroom.scss'
 	],
 ];
 

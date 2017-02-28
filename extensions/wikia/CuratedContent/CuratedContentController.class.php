@@ -278,7 +278,12 @@ class CuratedContentController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = $this->request->getArray( 'data', [ ] );
+			$data = json_decode( $this->request->getVal( 'data' ), true );
+			// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+			if ( $data === null ) {
+				// fallback to old format
+				$data = $this->request->getArray( 'data', [ ] );
+			}
 			$properData = [ ];
 			$status = false;
 
@@ -313,7 +318,12 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
 			} else {
-				$community_data = $this->request->getArray( 'community_data', [ ] );
+				$community_data = json_decode( $this->request->getVal( 'community_data' ), true );
+				// TODO: remove fallback after format change is released to mercury (see: XW-2854)
+				if ( $community_data === null ) {
+					// fallback to old format
+					$community_data = $this->request->getArray( 'community_data', [ ] );
+				}
 				if ( $community_data ) {
 					$community_data[ 'community_data' ] = 'true';
 					$sections[] = $community_data;
@@ -354,17 +364,13 @@ class CuratedContentController extends WikiaController {
 					$featured[ 'featured' ] = 'true';
 					$curated[] = $featured;
 				}
+
 				$optional = $this->communityDataService->getOptional();
 				if ( !empty( $optional ) ) {
 					$curated[] = $optional;
 				}
 
-				$data = array_map( function ( $section ) {
-					$section[ 'node_type' ] = 'section';
-					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
-					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
-					return $section;
-				}, $curated );
+				$data = $this->extendSections( $curated );
 
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
@@ -590,6 +596,35 @@ class CuratedContentController extends WikiaController {
 			}
 			return $accu;
 		}, [ 'tooLongTitlesCount' => 0, 'missingImagesCount' => 0, 'totalNumberOfItems' => 0 ] );
+	}
+
+	/**
+	 * @param array $curatedContent curated sections data
+	 * @return array
+	 */
+	private function extendSections( $curatedContent ) {
+		$validator = new CuratedContentValidator();
+
+		$data = array_map( function ( $section ) use ( $validator ) {
+			$featured = isset( $section['featured'] );
+			$section['node_type'] = 'section';
+			$section['items'] = array_values(
+				array_filter( $section['items'], function ( $item ) use ( $validator, $featured ) {
+					$error = $featured ? $validator->validateFeaturedItem( $item ) :
+						$validator->validateSectionItem( $item );
+					return empty( $error );
+				} )
+			);
+			$section['items'] = $this->extendItemsWithImages( $section['items'] );
+			$section['items'] = $this->extendItemsWithType( $section['items'] );
+			return $section;
+		}, $curatedContent );
+
+		$data = array_values( array_filter( $data, function ( $section ) use ( $validator ) {
+			$error = isset( $section['featured'] ) ? false : $validator->validateSection( $section );
+			return empty( $error );
+		} ) );
+		return $data;
 	}
 }
 

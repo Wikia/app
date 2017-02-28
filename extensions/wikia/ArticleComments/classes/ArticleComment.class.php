@@ -847,7 +847,7 @@ class ArticleComment {
 	 * @param string $summary
 	 * @param bool $preserveMetadata : hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 *
-	 * @return array|bool TODO: Document what the array contains.
+	 * @return array|bool False on failure, array on success. First element is Status instance returned by EditPage::internalAttemptSave, second is Article instance.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
@@ -887,7 +887,8 @@ class ArticleComment {
 			if ( $preserveMetadata ) {
 				$this->mMetadata = $metadata;
 			}
-			$retval = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
+
+			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
@@ -896,13 +897,22 @@ class ArticleComment {
 			}
 
 			ArticleCommentList::purgeCache( $purgeTarget );
-			$res = [ $retval, $article ];
+			$res = [ $status, $article ];
 		} else {
 			$res = false;
 		}
 
-		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
-		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		// If the edit was successful, set revision info returned by edit method
+		if ( isset( $status ) && $status->isOK() ) {
+			/** @var Revision $rev */
+			$rev = $status->revision;
+			$this->mLastRevision = $rev;
+			$this->mLastRevId = $rev->getId();
+		} else {
+			// Edit failed, let's work with slave data
+			$this->mLastRevId = $this->mTitle->getLatestRevID();
+			$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		}
 
 		return $res;
 	}
@@ -1044,8 +1054,6 @@ class ArticleComment {
 
 		/** @var Article|WikiPage $article */
 		$article = new Article( $commentTitle, 0 );
-
-		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );

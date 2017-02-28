@@ -23,6 +23,9 @@ include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
@@ -39,6 +42,11 @@ $wgAutoloadClasses['WallHistory'] =  $dir . '/WallHistory.class.php';
 $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.php';
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
+
+$wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/builders/WallBuilderException.class.php';
+$wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
+$wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
@@ -69,8 +77,6 @@ $wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageCha
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 // recent changes adjusting
-
-$wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
 $wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
 $wgHooks['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
@@ -105,7 +111,6 @@ $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 $wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
-$wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
 // right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';

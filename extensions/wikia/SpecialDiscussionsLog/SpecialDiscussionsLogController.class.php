@@ -191,7 +191,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							'userUrl' => $this->getTitle()->getLocalURL(
 									[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 							),
-							'site' => $userLogRecord->site,
+							'site' => $userLogRecord->site['title'],
+							'siteUrl' => 'http://'.$userLogRecord->site['domain'] . '/d/u/' .
+							             $userLogRecord->user->getId(),
 							'ip' => $userLogRecord->ip,
 							'ipUrl' => $this->getTitle()->getLocalURL(
 								[ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
@@ -300,7 +302,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					$this->logger->warning( sprintf( 'Site not found: %d', $site ) );
 					continue;
 				} else {
-					$domainCache[$site] = sprintf( '%s (%s)', $cityTitle, $wikiDomain );
+					$domainCache[$site] = ['title' => $cityTitle, 'domain' => $wikiDomain ];
 				}
 			}
 
