@@ -3,7 +3,7 @@
 class GameGuideToCuratedContentMigrationTest extends WikiaBaseTest {
 
 	protected function setUp() {
-		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
+		$this->setupFile = __DIR__ . '/../maintenance/GameGuideToCuratedContentHelper.php';
 		parent::setUp();
 	}
 

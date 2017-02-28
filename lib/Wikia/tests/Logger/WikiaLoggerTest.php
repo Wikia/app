@@ -17,7 +17,10 @@ class WikiaLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	function testLogger() {
-		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
+		$loggerMock = $this->getMockBuilder( Monolog\Logger::class )
+			->setConstructorArgs( [ 'phpunit' ] )
+			->getMock();
+
 		$loggerMock->expects($this->any())
 			->method('debug')
 			->will($this->returnValue('bar'));
@@ -29,9 +32,12 @@ class WikiaLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	function testOnError() {
-		$wikiaLoggerMock = $this->getMock('\Wikia\Logger\WikiaLogger', ['getErrorReporting'], [], '', false);
+		$wikiaLoggerMock = $this->createMock( WikiaLogger::class );
 
-		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
+		$loggerMock = $this->getMockBuilder( Monolog\Logger::class )
+			->setConstructorArgs( [ 'phpunit' ] )
+			->getMock();
+
 		$loggerMock->expects($this->atLeastOnce())
 			->method('notice')
 			->will($this->returnValue('bar'));

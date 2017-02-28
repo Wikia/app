@@ -2,9 +2,7 @@
 
 namespace Wikia\Helios;
 
-use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClientImpl;
-use Wikia\Util\AssertionException;
 
 
 class HeliosClientTest extends \WikiaBaseTest {
@@ -15,7 +13,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 	}
 
 	/**
-	 * @expectedException AssertionException
+	 * @expectedException \Wikia\Util\AssertionException
 	 */
 	public function testCannotMakeRequests() {
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
@@ -25,7 +23,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 	}
 
 	/**
-	 * @expectedException ClientException
+	 * @expectedException \Wikia\Service\Helios\ClientException
 	 * @expectedExceptionMessage Invalid Helios response
 	 */
 	public function testInvalidResponse() {

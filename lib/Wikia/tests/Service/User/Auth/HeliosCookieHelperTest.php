@@ -25,7 +25,7 @@ class HeliosCookieHelperTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->request = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$this->request = $this->createMock( \WebRequest::class );
 
 		$this->cookieHelper = new HeliosCookieHelper( $this->helios );
 	}

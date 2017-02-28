@@ -37,8 +37,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	function testWikiaSpecialPageLink() {
-		$this->assertTag (
-			array("tag" => "a"),
+		$this->assertXmlStringEqualsXmlString(
+			'<a href="/wiki/Special:CreatePage" title="Special:CreatePage" class="wikia-button">Add a Page</a>',
 			Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button')
 		);
 	}
@@ -49,9 +49,38 @@ class ControllerTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	function testWikiaLink() {
-		$this->assertTag (
-			array("tag" => "a"),
-			Wikia::link(Title::newFromText("Test"))
+		$titleMock = $this->createMock( Title::class );
+
+		$titleMock->expects( static::once() )
+			->method( 'getDBkey' )
+			->willReturn( 'Test' );
+		$titleMock->expects( static::exactly( 3 ) )
+			->method( 'getNamespace' )
+			->willReturn( NS_MAIN );
+		$titleMock->expects( static::once() )
+			->method( 'getFragment' )
+			->willReturn( '' );
+		$titleMock->expects( static::once() )
+			->method( 'getInterwiki' )
+			->willReturn( '' );
+		$titleMock->expects( static::once() )
+			->method( 'getLinkURL' )
+			->with( static::isEmpty() )
+			->willReturn( '/wiki/Test' );
+		$titleMock->expects( static::exactly( 4 ) )
+			->method( 'getPrefixedText' )
+			->willReturn( 'Test' );
+		$titleMock->expects( static::once() )
+			->method( 'isKnown' )
+			->willReturn( true );
+		$titleMock->expects( static::once() )
+			->method( 'isExternal' )
+			->willReturn( false );
+
+
+		$this->assertXmlStringEqualsXmlString(
+			'<a href="/wiki/Test" title="Test">Test</a>',
+			Wikia::link( $titleMock )
 		);
 	}
 
