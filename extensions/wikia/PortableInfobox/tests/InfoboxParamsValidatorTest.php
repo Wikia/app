@@ -17,7 +17,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	 * @dataProvider testInfoboxParamsFailValidationDataProvider
 	 */
 	public function testInfoboxParamsFailValidation( $params ) {
-		$this->setExpectedException( $this->invalidParamsExpectionName );
+		$this->expectException( $this->invalidParamsExpectionName );
 		$this->InfoboxParamsValidator->validateParams( $params );
 	}
 

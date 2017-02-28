@@ -88,8 +88,10 @@ class ControllerTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @expectedException ControllerNotFoundException
+	 */
 	function testNotExistingController() {
-		$this->setExpectedException('ControllerNotFoundException');
 		F::app()->sendRequest("DoesNotExist");
 	}
 
