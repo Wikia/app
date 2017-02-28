@@ -134,7 +134,7 @@ class WallMessage {
 	}
 
 	static public function isWallMessage( Title $title ) {
-		return in_array( $title->getNamespace(), [ NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_WIKIA_FORUM_BOARD_THREAD ] );
+		return $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_WIKIA_FORUM_BOARD_THREAD );
 	}
 
 	static public function newFromTitle( Title $title ) {
