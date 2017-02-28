@@ -12,7 +12,7 @@
 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 * @see WikiaTemplateEngineIntegration for the integration test
 */
-class WikiaTemplateEngineTest extends PHPUnit_Framework_TestCase {
+class WikiaTemplateEngineTest extends \PHPUnit\Framework\TestCase {
 	public function engines() {
 		return [
 			['Wikia\Template\PHPEngine'],

@@ -1,6 +1,6 @@
 <?php
 
-class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * @var Boolean
 	 */
@@ -22,14 +22,14 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @covers WikiaApiController::hideNonCommercialContent
 	 */
 	public function test_hideNonCommercialContent() {
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/v1...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertTrue($controller->hideNonCommercialContent(), "This request should allowed only content".
 											" that may be used commercially");	
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/wikia.php?...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
@@ -40,19 +40,19 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @covers WikiaApiController::getApiVersion
 	 */
 	public function test_getApiVersion() {
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/v1...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertEquals($controller->getApiVersion(), 1);
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/wikia.php?...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertEquals($controller->getApiVersion(), WikiaApiController::API_ENDPOINT_INTERNAL );
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/test...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);

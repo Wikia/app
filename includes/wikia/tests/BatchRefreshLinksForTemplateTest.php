@@ -2,7 +2,7 @@
 
 use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
 
-class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
+class BatchRefreshLinksForTemplateTest extends \PHPUnit\Framework\TestCase {
 
 	public function testIsValidTask() {
 		$start = 1;
@@ -29,7 +29,7 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 		$task = new BatchRefreshLinksForTemplate();
 		$task->setStartAndEndBoundaries( $start, $end );
 
-		$title = $this->getMock( '\Title', ['getLinksFromBacklinkCache'] );
+		$title = $this->createMock( Title::class );
 		$title->expects( $this->once() )
 			->method( 'getLinksFromBacklinkCache' )
 			->with( BatchRefreshLinksForTemplate::BACKLINK_CACHE_TABLE, $start, $end )

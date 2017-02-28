@@ -2,7 +2,7 @@
 /**
  * @ingroup mwabstract
  */
-class WikiaGlobalRegistryTest extends PHPUnit_Framework_TestCase {
+class WikiaGlobalRegistryTest extends \PHPUnit\Framework\TestCase {
 	const VALID_KEY   = 'registryTestKey';
 	const OTHER_VALID_KEY = 'otherRegistryTestKey';
 	const INVALID_NULL_KEY = null;

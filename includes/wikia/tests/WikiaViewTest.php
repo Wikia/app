@@ -2,7 +2,7 @@
 /**
  * @ingroup mwabstract
  */
-class WikiaViewTest extends PHPUnit_Framework_TestCase {
+class WikiaViewTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * WikiaView object
@@ -49,7 +49,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		if ($classExists) {
 			$this->mockAutoloadedController($controllerName);
 		} else {
-			$this->setExpectedException( 'WikiaException' );
+			$this->expectException( WikiaException::class );
 		}
 
 		$this->object->setTemplate( $controllerName, 'hello' );

@@ -1,6 +1,6 @@
 <?php
 
-class WikiaValidatorUrlTest extends PHPUnit_Framework_TestCase {
+class WikiaValidatorUrlTest extends \PHPUnit\Framework\TestCase {
 
 	/* @var $validator WikiaValidatorUrl */
 	private $validator;
