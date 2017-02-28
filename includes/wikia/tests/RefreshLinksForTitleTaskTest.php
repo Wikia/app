@@ -5,7 +5,9 @@ use Wikia\Tasks\Tasks\RefreshLinksForTitleTask;
 class RefreshLinksForTitleTaskTest extends \PHPUnit\Framework\TestCase {
 
 	public function testRefreshGetRevisionFromTitle() {
-		$task = $this->createMock( RefreshLinksForTitleTask::class );
+		$task = $this->getMockBuilder( RefreshLinksForTitleTask::class )
+			->setMethods( [ 'getRevisionFromTitle' ] )
+			->getMock();
 		$title = $this->createMock( Title::class );
 
 		$task->setTitle( $title );
@@ -18,7 +20,9 @@ class RefreshLinksForTitleTaskTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testRefreshCallsMocked() {
-		$task = $this->createMock( RefreshLinksForTitleTask::class );
+		$task = $this->getMockBuilder( RefreshLinksForTitleTask::class )
+			->setMethods( [ 'getRevisionFromTitle', 'parseRevisionAndUpdateLinks' ] )
+			->getMock();
 		$title = $this->createMock( Title::class );
 		$revision = $this->createMock( Revision::class );
 
@@ -37,7 +41,9 @@ class RefreshLinksForTitleTaskTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testParseRevisionAndUpdateLinks() {
-		$task = $this->createMock( RefreshLinksForTitleTask::class );
+		$task = $this->getMockBuilder( RefreshLinksForTitleTask::class )
+			->setMethods( [ 'getParser', 'getParserOptions', 'updateLinks' ] )
+			->getMock();
 		$title = $this->createMock( Title::class );
 		$parser = $this->createMock( Parser::class );
 		$parserOptions = $this->createMock( ParserOptions::class );

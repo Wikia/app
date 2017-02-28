@@ -7,7 +7,7 @@
 use Wikia\Util\Statistics\BernoulliTrial;
 
 class DatabaseBaseTester extends DatabaseBase {
-	protected function doQuery( $sql ) {}
+	function doQuery( $sql ) {}
 	function open( $server, $user, $password, $dbName ) {}
 	function getType() {}
 	function fetchObject( $res ) {}
