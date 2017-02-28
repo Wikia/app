@@ -275,8 +275,7 @@ class WallMessage {
 	 * @return bool
 	 */
 	public function canRemove( User $user ) {
-		return
-			!$this->isRemove() &&
+		return !$this->isRemove() &&
 			( $user->isAllowed( 'wallremove' ) || $this->isAuthor( $user ) || $this->isWallOwner( $user ) );
 	}
 
@@ -1126,8 +1125,7 @@ class WallMessage {
 	 * @return bool
 	 */
 	public function canRestore( User $user ) {
-		return
-			( $this->isAdminDelete() && $this->canAdminDelete( $user ) ) ||
+		return ( $this->isAdminDelete() && $this->canAdminDelete( $user ) ) ||
 			( $this->isRemove() && $this->canRemove( $user ) );
 	}
 
