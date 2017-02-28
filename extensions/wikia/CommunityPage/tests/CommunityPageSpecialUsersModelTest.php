@@ -1,7 +1,12 @@
 <?php
-require_once( $IP . '/extensions/wikia/CommunityPage/models/CommunityPageSpecialUsersModel.class.php' );
 
 class CommunityPageSpecialUsersModelTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CommunityPage.setup.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @param int $userId
 	 * @param array $admins
