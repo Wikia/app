@@ -2,10 +2,11 @@
 
 require_once dirname(__FILE__) . '/_fixtures/TestController.php';
 
+use PHPUnit\Framework\TestCase;
 /**
  * @ingroup mwabstract
  */
-class WikiaControllerTest extends \PHPUnit\Framework\TestCase {
+class WikiaControllerTest extends TestCase {
 
 	public function generatingHelpDataProvider() {
 		return array(

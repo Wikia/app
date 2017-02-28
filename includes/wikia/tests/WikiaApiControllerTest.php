@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class WikiaApiControllerTest extends \PHPUnit\Framework\TestCase {
+class WikiaApiControllerTest extends TestCase {
 	/**
 	 * @var Boolean
 	 */

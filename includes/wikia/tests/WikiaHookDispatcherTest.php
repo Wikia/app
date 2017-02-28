@@ -1,10 +1,12 @@
 <?php
 require_once dirname(__FILE__) . '/_fixtures/TestHookHandler.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaHookDispatcherTest extends \PHPUnit\Framework\TestCase {
+class WikiaHookDispatcherTest extends TestCase {
 	private $dispatcher;
 	
 	public function setUp() {

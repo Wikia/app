@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
@@ -19,7 +20,7 @@ use \Wikia\Util\GlobalStateWrapper;
  *    parent::setUp();
  * }
  */
-abstract class WikiaBaseTest extends \PHPUnit\Framework\TestCase {
+abstract class WikiaBaseTest extends TestCase {
 	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [

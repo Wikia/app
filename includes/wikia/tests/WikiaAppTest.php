@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaAppTest extends \PHPUnit\Framework\TestCase {
+class WikiaAppTest extends TestCase {
 	/* @var WikiaApp */
 	private $application;
 	/* @var PHPUnit_Framework_MockObject_MockObject */

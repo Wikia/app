@@ -1,8 +1,9 @@
 <?php
 
 use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
+use PHPUnit\Framework\TestCase;
 
-class BatchRefreshLinksForTemplateTest extends \PHPUnit\Framework\TestCase {
+class BatchRefreshLinksForTemplateTest extends TestCase {
 
 	public function testIsValidTask() {
 		$start = 1;

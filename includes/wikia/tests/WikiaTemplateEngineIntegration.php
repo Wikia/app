@@ -1,4 +1,7 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * @group Integration
  *
@@ -12,7 +15,7 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  * @see WikiaTemplateEngineTest for the unit test
  */
-class WikiaTemplateEngineIntegration extends \PHPUnit\Framework\TestCase {
+class WikiaTemplateEngineIntegration extends TestCase {
 	protected $path;
 
 	protected function setUp() {

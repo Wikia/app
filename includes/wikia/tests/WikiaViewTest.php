@@ -1,8 +1,11 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaViewTest extends \PHPUnit\Framework\TestCase {
+class WikiaViewTest extends TestCase {
 
 	/**
 	 * WikiaView object

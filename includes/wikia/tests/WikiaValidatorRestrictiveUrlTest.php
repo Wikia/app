@@ -1,6 +1,8 @@
 <?php
 
-class WikiaValidatorRestrictiveUrlTest extends \PHPUnit\Framework\TestCase {
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorRestrictiveUrlTest extends TestCase {
 
 	/* @var $validator WikiaValidatorRestrictiveUrl */
 	private $validator;

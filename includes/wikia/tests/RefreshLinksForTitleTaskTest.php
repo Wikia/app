@@ -1,8 +1,9 @@
 <?php
 
 use Wikia\Tasks\Tasks\RefreshLinksForTitleTask;
+use PHPUnit\Framework\TestCase;
 
-class RefreshLinksForTitleTaskTest extends \PHPUnit\Framework\TestCase {
+class RefreshLinksForTitleTaskTest extends TestCase {
 
 	public function testRefreshGetRevisionFromTitle() {
 		$task = $this->getMockBuilder( RefreshLinksForTitleTask::class )

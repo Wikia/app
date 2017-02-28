@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaResponseTest extends \PHPUnit\Framework\TestCase {
+class WikiaResponseTest extends TestCase {
 
 	const TEST_HEADER_NAME = 'X-WikiaResponseTest';
 	const TEST_HEADER_VALUE1 = 'TestValue1';
