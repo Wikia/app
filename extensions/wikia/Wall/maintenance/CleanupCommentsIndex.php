@@ -18,7 +18,7 @@ class CleanupCommentsIndex extends Maintenance {
 		$updated = $this->updateDeletedFlag( $dbMaster, $dbSlave );
 		$deleted = $this->removeBrokenRows( $dbMaster, $dbSlave );
 
-		$this->output( "db:{$wgDBname} before:{$deleted['count']} updated:{$updated} deleted:{$deleted['deleted']}\n" );
+		$this->output( "db: {$wgDBname} before: {$deleted['count']} updated: {$updated} deleted: {$deleted['deleted']}\n" );
 	}
 
 	public function updateDeletedFlag( DatabaseMysqli $dbMaster, DatabaseMysqli $dbSlave ) {
