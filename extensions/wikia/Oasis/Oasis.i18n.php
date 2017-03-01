@@ -847,18 +847,6 @@ $messages['de'] = array(
 	'oasis-label-wiki-category-id-26' => 'Haus und Garten',
 	'oasis-label-wiki-category-id-27' => 'Filme',
 	'oasis-label-wiki-category-id-28' => 'Anime',
-	'oasis-share' => 'Teilen',
-	'oasis-related-categories' => 'Ähnliche Kategorien',
-	'oasis-sharing-toolbar-mail-subject' => '$1 hat dir einen Link von Wikia geschickt',
-	'oasis-sharing-toolbar-mail-body' => 'Hi!
-$1 hat dir auf Wikia diese Seite von {{SITENAME}} geschickt:
-      $2
-Viel Spaß damit!
-- Das Wikia-Team
-
-___________________________________________
-* Hilfe und Empfehlungen findest du im Community-Wiki: http://community.wikia.com
-* Möchtest du weniger Nachrichten von uns erhalten? Hier kannst du die Nachrichten abbestellen oder deine E-Mail-Einstellungen ändern: http://community.wikia.com/Special:Preferences',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/wikia_de',
 	'oasis-social-facebook' => 'Facebook',
@@ -1026,12 +1014,9 @@ $messages['es'] = array(
 	'oasis-navigation-v2-validation-next' => 'Siguiente',
 	'oasis-navigation-v2-new-photos' => 'Imágenes',
 	'oasis-on-the-wiki' => 'En el wiki',
-	'hub-Entertainment' => 'Entretenimiento',
-	'hub-Gaming' => 'Videojuegos',
-	'hub-Lifestyle' => 'Estilo de vida',
 	'oasis-community-social-twitter-link' => 'http://twitter.com/es_fandom',
 	'oasis-community-social-facebook-link' => 'http://www.facebook.com/fandom.espanol',
-	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
+	'oasis-community-social-googleplus-link' => 'http://plus.google.com/u/0/b/100619811191022321712/100619811191022321712',
 	'oasis-desc' => 'Proporciona una manera sencilla de agregar ganchos para los módulos de piel Oasis',
 	'oasis-global-page-header' => 'Fandom',
 	'oasis-button-random-page-tooltip' => '{{int:oasis-button-random-page}}',
@@ -1087,18 +1072,6 @@ $messages['es'] = array(
 	'oasis-label-wiki-category-id-26' => 'Casa y jardín',
 	'oasis-label-wiki-category-id-27' => 'Películas',
 	'oasis-label-wiki-category-id-28' => 'Anime',
-	'oasis-share' => 'Compartir',
-	'oasis-related-categories' => 'Categorías relacionadas',
-	'oasis-sharing-toolbar-mail-subject' => '$1 te ha enviado un enlace en Fandom',
-	'oasis-sharing-toolbar-mail-body' => 'Hola.
-$1 le envió esta página de {{SITENAME}} en Wikia:
-      $2
-¡Que la disfrute!
-- El equipo de Wikia
-
-___________________________________________
-* Encuentre ayuda y consejos en Comunidad Central: http://comunidad.wikia.com
-* ¿Desea recibir menos mensajes de nosotros? Puede cancelar su suscripción o cambiar sus preferencias de correo electrónico aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-social-facebook' => 'Facebook',
@@ -1526,18 +1499,6 @@ $messages['fr'] = array(
 	'oasis-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-social-youtube' => 'YouTube',
 	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
-	'oasis-share' => 'Partager',
-	'oasis-related-categories' => 'Catégories liées',
-	'oasis-sharing-toolbar-mail-subject' => '$1 vous a envoyé un lien sur Fandom',
-	'oasis-sharing-toolbar-mail-body' => "Bonjour,
-$1 vous a envoyé cette page de {{SITENAME}} sur Wikia :
-      $2
-Bonne lecture !
-- L'équipe Wikia
-
-___________________________________________
-* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
-* Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.",
 	'oasis-button-add-new-page' => 'Ajouter une page',
 	'oasis-social-reddit' => 'Reddit',
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
@@ -2139,18 +2100,6 @@ $messages['it'] = array(
 	'oasis-label-wiki-category-id-26' => 'Casa e giardino',
 	'oasis-label-wiki-category-id-27' => 'Film',
 	'oasis-label-wiki-category-id-28' => 'Anime',
-	'oasis-share' => 'Condividi',
-	'oasis-related-categories' => 'Categorie correlate',
-	'oasis-sharing-toolbar-mail-subject' => '$1 ti ha mandato un link su Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Ciao.
-$1 ti ha mandato questa pagina da {{SITENAME}} su Wikia:
-$2
-Buona lettura!
-- Il team di Wikia
-
-___________________________________________
-* Trova aiuto e consigli su Wiki della Community: http://it.community.wikia.com/wiki/Wiki_della_Community
-* Vuoi ricevere meno messaggi da noi? Puoi disiscriverti o modificare le tue preferenze per le email qui: http://community.wikia.com/wiki/Special:Preferences?cb=9946',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-social-facebook' => 'Facebook',
@@ -2353,18 +2302,6 @@ $messages['ja'] = array(
 	'oasis-label-wiki-category-id-26' => '家庭・ガーデニング',
 	'oasis-label-wiki-category-id-27' => '映画',
 	'oasis-label-wiki-category-id-28' => 'アニメ',
-	'oasis-share' => 'シェア',
-	'oasis-related-categories' => '関連カテゴリ',
-	'oasis-sharing-toolbar-mail-subject' => '$1さんからWikiaのリンクが送信されました',
-	'oasis-sharing-toolbar-mail-body' => 'こんにちは。
-$1さんからWikiaの{{SITENAME}}内にある次のページが送信されました:
-      $2
-お楽しみください！
-- Wikia チーム
-
-___________________________________________
-* コミュニティセントラルのヘルプ: http://ja.community.wikia.com/wiki/メインページ
-* Wikiaから送信される通知の数の変更をご希望の場合は、こちらで登録を解除するか、メール設定をご変更ください: http://community.wikia.com/Special:Preferences',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/WikiaJapan',
 	'oasis-social-twitter-link' => 'https://twitter.com/WikiaJapan',
 	'oasis-social-facebook' => 'Facebook',
@@ -3476,18 +3413,6 @@ $messages['pl'] = array(
 	'oasis-label-wiki-category-id-26' => 'Dom i ogród',
 	'oasis-label-wiki-category-id-27' => 'Filmy',
 	'oasis-label-wiki-category-id-28' => 'Anime',
-	'oasis-share' => 'Podziel się',
-	'oasis-related-categories' => 'Kategorie pokrewne',
-	'oasis-sharing-toolbar-mail-subject' => '$1 przesyła Ci łącze na Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Witaj,
-$1 przesyła Ci stronę {{SITENAME}} z Wikia:
-      $2
-Miłej lektury!
-- Zespół Wikii
-
-___________________________________________
-* Aby dowiedzieć się co nowego na Wikii, odwiedź http://spolecznosc.wikia.com/
-* Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: http://spolecznosc.wikia.com/wiki/Specjalna:Preferencje',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-social-facebook' => 'Facebook',
@@ -3588,7 +3513,7 @@ $messages['pt'] = array(
 	'oasis-page-header-subtitle-forum' => 'Página do fórum',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'Ver todas as atividades >',
 	'oasis-search-results-from' => 'Mostrando resultados de: $1',
-	'oasis-search-results-from-all-wikis' => 'Showing results from all of Fandom',
+	'oasis-search-results-from-all-wikis' => 'Mostrando resultados de todo o Fandom',
 	'oasis-user-page-change-avatar' => 'Alterar avatar',
 	'oasis-content-picture-added-by' => 'Adicionado de $1',
 	'oasis-confirmation-page-deleted' => '"$1" foi excluído. ([[Special:Undelete/$1|recuperar]])',
@@ -3644,15 +3569,15 @@ $messages['pt'] = array(
 	'oasis-global-page-header' => 'Fandom',
 	'oasis-button-random-page-tooltip' => '{{int:oasis-button-random-page}}',
 	'oasis-button-wiki-activity-tooltip' => '{{int:oasis-button-wiki-activity}}',
-	'oasis-global-nav-header' => 'Fandom Navigation',
+	'oasis-global-nav-header' => 'Navegação do Fandom',
 	'oasis-global-nav-create-wiki-alt' => 'Criar uma wikia',
 	'oasis-button-add-video' => 'Adicionar vídeo',
 	'oasis-button-create-page' => 'Adicionar página',
 	'oasis-button-add-photo' => 'Adicionar imagem',
-	'oasis-button-edit-wikia-local-menu' => 'Edit local community menu',
-	'oasis-button-edit-wikia-global-menu' => 'Edit global Fandom menu',
-	'oasis-community-social-twitter-link' => 'https://twitter.com/getfandom',
-	'oasis-community-social-facebook-link' => 'https://www.facebook.com/getfandom',
+	'oasis-button-edit-wikia-local-menu' => 'Editar o menu local da comunidade',
+	'oasis-button-edit-wikia-global-menu' => 'Editar o menu global do Fandom',
+	'oasis-community-social-twitter-link' => 'https://twitter.com/FandomBrasil',
+	'oasis-community-social-facebook-link' => 'https://www.facebook.com/FandomBrasil',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
 	'oasis-generic-error' => 'Desculpe, houve um erro ao processar seu pedido.  Por favor, tente novamente mais tarde.',
 	'oasis-comments-user-prompt' => 'Conectado como $1',
@@ -3670,8 +3595,8 @@ $messages['pt'] = array(
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-add-photo' => 'Adicionar foto',
 	'oasis-navigation-v2-add-video' => 'Adicionar vídeo',
-	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edit local community menu',
-	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edit global Fandom menu',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Editar o menu local da comunidade',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Editar o menu global do Fandom',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegação da Wikia',
 	'oasis-navigation-v2-level1-validation' => 'O seu menu de nível 1 está muito largo. Por favor diminua o menu para que caiba. <a href="http://community.wikia.com/wiki/Help:Navigation">Você necessita de mais ajuda?</a>
 ',
@@ -3718,24 +3643,12 @@ $messages['pt'] = array(
 	'oasis-label-wiki-category-id-26' => 'Casa e Jardim',
 	'oasis-label-wiki-category-id-27' => 'Filmes',
 	'oasis-label-wiki-category-id-28' => 'Anime',
-	'oasis-share' => 'Compartilhar',
-	'oasis-related-categories' => 'Categorias relacionadas',
-	'oasis-sharing-toolbar-mail-subject' => '$1 enviou-lhe um link na Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Olá.
-$1 enviou-lhe esta página de {{SITENAME}} na Wikia:
-   $2
-Divirta-se!
-Equipe Wikia
-
-___________________________________________
-* Encontre ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
-* Você gostaria de receber menos emails da nossa equipe? Você pode cancelar ou alterar suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/WikiaemPT',
 	'oasis-social-twitter-link' => 'https://twitter.com/ComunidadeWikia',
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
-	'oasis-button-add-new-page' => 'Add New Page',
+	'oasis-button-add-new-page' => 'Adicione uma página',
 	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 	'oasis-social-reddit' => 'Reddit',
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
@@ -4045,18 +3958,6 @@ $messages['ru'] = array(
 	'oasis-label-wiki-category-id-26' => 'Дом и сад',
 	'oasis-label-wiki-category-id-27' => 'Кино',
 	'oasis-label-wiki-category-id-28' => 'Аниме',
-	'oasis-share' => 'Поделиться',
-	'oasis-related-categories' => 'Связанные категории',
-	'oasis-sharing-toolbar-mail-subject' => '$1 отправил(а) вам ссылку на Викия',
-	'oasis-sharing-toolbar-mail-body' => 'Привет!
-$1 прислал(а) вам страницу с {{SITENAME}} на Викия:
-      $2
-Приятного просмотра!
-- Команда Викия
-
-___________________________________________
-* Нужна помощь или совет? Посетите Сообщества Викия: http://ru.community.wikia.com/wiki/Викия
-* Хотите получать меньше сообщений? Вы можете отписаться или изменить настройки электронной почты здесь: http://community.wikia.com/Special:Preferences',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/ru.fandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/ru_fandom',
 	'oasis-social-facebook' => 'Facebook',
@@ -4986,18 +4887,6 @@ $messages['zh-hans'] = array(
 	'oasis-label-wiki-category-id-26' => '家居与园艺',
 	'oasis-label-wiki-category-id-27' => '电影',
 	'oasis-label-wiki-category-id-28' => '动漫',
-	'oasis-share' => '分享',
-	'oasis-related-categories' => '相关类别',
-	'oasis-sharing-toolbar-mail-subject' => '$1给您发送了一个维基链接',
-	'oasis-sharing-toolbar-mail-body' => '您好，
-$1给您发送的这个页面来自Wikia的{{SITENAME}}：
-      $
-请仔细阅读！
-- 维基团队
-
-___________________________________________
-* 访问社区中心寻求帮助和建议：http://zh.community.wikia.com
-* 不再希望收到任何消息?您可以前往以下页面取消订阅或更改您的电子邮件偏好设置：http://zh.community.wikia.com/Special:Preferences',
 	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter-link' => 'https://twitter.com/getfandom',
 	'oasis-social-facebook' => 'Facebook',
@@ -5116,7 +5005,6 @@ $messages['zh-hant'] = array(
 	'oasis-on-the-wiki' => '本維基',
 	'oasis-desc' => '提供一種簡單的方式在Oasis皮膚介面上添加文檔',
 	'oasis-global-page-header' => 'Fandom',
-	'oasis-share' => '分享',
 	'oasis-button-random-page-tooltip' => '{{int:oasis-button-random-page}}',
 	'oasis-button-wiki-activity-tooltip' => '{{int:oasis-button-wiki-activity}}',
 	'oasis-global-nav-header' => '維基導航',
@@ -5158,22 +5046,12 @@ $messages['zh-hant'] = array(
 	'oasis-upload-photos-caption' => '字幕',
 	'oasis-upload-photos-overwrite-file' => '覆蓋文件',
 	'oasis-skip-to-site-navigation' => '跳轉到網站導航',
-	'oasis-related-categories' => '相關類別',
 	'oasis-navigation-v2-edit-wikia-local-menu' => '編輯社區功能表',
 	'oasis-navigation-v2-edit-wikia-global-menu' => '編輯全域Fandom功能表',
 	'oasis-navigation-v2-level1-validation' => '很抱歉，你的1級功能表太寬了。請根據需要縮短功能表。<a href="http://zh.community.wikia.com/wiki/Help:Navigation">需要更多幫助嗎？</a>',
 	'oasis-navigation-v2-level2-validation' => '很抱歉，你的2級功能表太寬了。請根據需要縮短功能表。 <a href="http://zh.community.wikia.com/wiki/Help:Navigation">需要更多幫助嗎？</a>',
 	'oasis-navigation-v2-level12-validation' => '很抱歉，你的1級和2級功能表都太寬了。請根據需要縮短功能表。<a href="http://zh.community.wikia.com/wiki/Help:Navigation">需要更多幫助嗎？</a>',
 	'oasis-navigation-v2-magic-word-validation' => '很抱歉，类似"#類別1#"的词语只能用于2級功能表中，看起來你好像在你的1級功能表中也使用了一些類似的詞語，你需要刪除那些文字后才能發佈你做的更改。<a href="http://zh.community.wikia.com/wiki/Help:Navigation">需要更多幫助嗎?</a>',
-	'oasis-sharing-toolbar-mail-subject' => '$1給你發送了一個維基鏈接',
-	'oasis-sharing-toolbar-mail-body' => '您好，此網頁是$1從{{SITENAME}}維基上給您發送的：
-      $2
-趕快看一下吧！
-- Wikia團隊
-
-___________________________________________
-* 訪問社區中心尋求説明和建議：http://zh.community.wikia.com
-* 不再希望收到任何消息?您可以前往以下頁面取消訂閱或更改您的電子郵件偏好設置：http://zh.community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => '其他',
 	'oasis-label-wiki-vertical-id-1' => '電視',
 	'oasis-label-wiki-vertical-id-2' => '視頻遊戲',
