@@ -1,0 +1,22 @@
+.oo-text-track-container {
+  @include horizontal-center;
+  position: relative;
+  display: inline-block;
+  max-width: 80%;
+  margin: 0 auto 12px auto;
+
+  .oo-text-track-window {
+    padding: 10px;
+    border-radius: 8px;
+
+    .oo-text-track-background {
+      padding: 4px 16px;
+      border-radius: 8px;
+
+      .oo-text-track {
+        text-align: center;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
