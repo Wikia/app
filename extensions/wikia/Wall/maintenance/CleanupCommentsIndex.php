@@ -32,7 +32,7 @@ class CleanupCommentsIndex extends Maintenance {
 		if ( is_array( $ids ) ) {
 			$ids = array_map( function( $item ) {
 				return intval( $item );
-			}, $ids);
+			}, $ids );
 
 			$this->output( "{$wgDBname}: " . count( $ids ) . " rows to update\n" );
 
@@ -60,13 +60,7 @@ class CleanupCommentsIndex extends Maintenance {
 		if ( is_array( $ids ) ) {
 			$ids = array_map( function( $item ) {
 				return intval( $item );
-			}, $ids);
-
-			//TODO: remove it
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"{$wgDBname}: " . count( $ids ) . " rows to remove",
-				[ "rows_count" => count( $ids ) ]
-			);
+			}, $ids );
 
 			$this->output( "{$wgDBname}: " . count( $ids ) . " rows to remove\n" );
 
