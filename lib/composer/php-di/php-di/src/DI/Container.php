@@ -35,7 +35,7 @@ use Invoker\ParameterResolver\ResolverChain;
  *
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
-class Container implements ContainerInterface, FactoryInterface, \DI\InvokerInterface
+class Container implements ContainerInterface, FactoryInterface, InvokerInterface
 {
     /**
      * Map of entries with Singleton scope that are already resolved.

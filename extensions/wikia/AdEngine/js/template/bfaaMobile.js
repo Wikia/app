@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
+	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
 	'wikia.document',
@@ -10,6 +11,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (uapContext,
 			 btfBlocker,
+			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
 			 doc,
@@ -77,6 +79,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
+		params = resolvedState.setImage(params);
 
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {

@@ -23,7 +23,13 @@ define('ext.wikia.recirculation.utils', [
 				footerState.loading = true;
 				return renderTemplate('footer-index-container.mustache', {})
 					.then(function($html) {
-						$('#WikiaFooter').html($html);
+						$('#WikiaFooter')
+							.find('#BOTTOM_LEADERBOARD')
+							.siblings()
+							.remove()
+							.end()
+							.end()
+							.append($html);
 						footerState.cleared = true;
 						footerState.pending.forEach(function(d) {
 							d.resolve();

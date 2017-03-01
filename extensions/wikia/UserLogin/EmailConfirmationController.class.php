@@ -36,8 +36,12 @@ class EmailConfirmationController extends WikiaController {
 	 * @param $user
 	 */
 	private function confirmEmail( User $user ) {
+		$optionNewEmail = $user->getNewEmail();
+		if ( !empty( $optionNewEmail ) ) {
+			$user->setEmail( $optionNewEmail );
+		}
 		$user->confirmEmail();
+		$user->clearNewEmail();
 		$user->saveSettings();
-		wfRunHooks( 'ConfirmEmailComplete', [ &$user ] );
 	}
 }

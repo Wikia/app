@@ -27,6 +27,9 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 						AdsRequest: noop,
 						AdsRenderingSettings: noop
 					}
+				},
+				location: {
+					href: ''
 				}
 			}
 		};
@@ -100,5 +103,13 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		});
 
 		expect(settings.loadVideoTimeout).toBe(10000);
+	});
+
+	it('createRequest with adsResponse if passed', function () {
+		var request = imaSetup.createRequest({
+				vastResponse: '<foo xml/>'
+			});
+
+		expect(request.adsResponse).toBe('<foo xml/>');
 	});
 });

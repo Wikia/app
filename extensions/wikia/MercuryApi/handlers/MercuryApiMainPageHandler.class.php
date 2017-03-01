@@ -7,7 +7,7 @@ class MercuryApiMainPageHandler {
 	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
 		$mainPageData = [ ];
 		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null );
-		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
+		$trendingArticles = $mercuryApiModel->getTrendingArticlesData();
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 		$wikiDescription = self::getWikiDescription();
@@ -57,27 +57,6 @@ class MercuryApiMainPageHandler {
 			);
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
-		}
-
-		return $data;
-	}
-
-	private static function getTrendingArticlesData( MercuryApi $mercuryApiModel ) {
-		global $wgContentNamespaces;
-
-		$params = [
-			'abstract' => false,
-			'expand' => true,
-			'limit' => 10,
-			'namespaces' => implode( ',', $wgContentNamespaces )
-		];
-		$data = [ ];
-
-		try {
-			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $mercuryApiModel->processTrendingArticlesData( $rawData );
-		} catch ( NotFoundException $ex ) {
-			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;

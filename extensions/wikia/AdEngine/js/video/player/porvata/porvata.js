@@ -87,6 +87,12 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('pause', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPause');
 				});
+				video.addOnDestroyCallback(function() {
+					if (viewportListener) {
+						viewportObserver.removeListener(viewportListener);
+						viewportListener = null;
+					}
+				});
 
 				if (params.autoPlay) {
 					muteFirstPlay(video, isFirstPlay);

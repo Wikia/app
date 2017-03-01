@@ -106,30 +106,6 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Add wgEnableWebPSupportStats and wgEnableWebPThumbnails global JS variables
-	 *
-	 * wgEnableWebPSupportStats: report WebP support when enabled
-	 * wgEnableWebPThumbnails: request WebP thumbnails if enabled (and supported by the browser)
-	 *
-	 * @param array $vars JS variables
-	 * @return bool true
-	 */
-	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgEnableWebPSupportStats, $wgEnableWebPThumbnails;
-
-		if ( self::isEnabled() ) {
-			if ( !empty( $wgEnableWebPSupportStats ) ) {
-				$vars['wgEnableWebPSupportStats'] = true;
-			}
-
-			if ( !empty( $wgEnableWebPThumbnails ) ) {
-				$vars['wgEnableWebPThumbnails'] = true;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Update thumbnail img attributes when lazy loading
 	 * @param WikiaController $controller
 	 */

@@ -45,6 +45,7 @@ class Walls extends WikiaModel {
 		],
 			__METHOD__,
 			[ 'ORDER BY' => 'page_title' ],
+			[],
 			$db
 		);
 
