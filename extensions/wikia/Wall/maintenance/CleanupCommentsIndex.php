@@ -24,10 +24,12 @@ class CleanupCommentsIndex extends Maintenance {
 		$ids = $dbSlave->selectFieldValues(
 			[ 'archive', 'comments_index' ],
 			'comment_id',
-			[ 'archived=0', 'deleted=0', 'removed=0', 'comment_id=ar_page_id', 'ar_namespace in (500,501,1200,1201,2000,2001)' ],  //TODO: not sure about 500 and 501 here
+			[ 'archived=0', 'deleted=0', 'removed=0', 'comment_id=ar_page_id', 'ar_namespace in (500,501,1200,1201,2000,2001)', 'comment_id not in (SELECT page_id from page)' ],
 			__METHOD__,
 			[ 'DISTINCT' ]
 		);
+
+		$this->output($dbSlave->lastQuery() . "\n");
 
 		if ( is_array( $ids ) ) {
 			$ids = array_map( function( $item ) {
@@ -44,6 +46,8 @@ class CleanupCommentsIndex extends Maintenance {
 					__METHOD__
 				);
 			}
+
+			wfWaitForSlaves();
 		}
 	}
 
@@ -53,7 +57,7 @@ class CleanupCommentsIndex extends Maintenance {
 		$ids = $dbSlave->selectFieldValues(
 			[ 'page', 'comments_index' ],
 			'comment_id',
-			[ 'page_id=comment_id', 'page_namespace not in (500,501,1200,1201,2000,2001)' ],
+			[ 'page_id=comment_id', 'archived=0', 'deleted=0', 'removed=0', 'page_namespace not in (500,501,1200,1201,2000,2001)' ],
 			__METHOD__
 		);
 
