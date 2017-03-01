@@ -190,8 +190,8 @@
 					<? endif; ?>
 				<? endif; ?>
 				<? if ( !empty( $user['bio'] ) ): ?>
-					<li class="discussion-bio"><?= wfMessage( 'user-identity-bio' )->rawParams( $user['bio'] )->parse(); ?></li>
-					<div class="discussion-bio-toggle" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
+					<li class="bio" id="bio-content"><?= wfMessage( 'user-identity-bio' )->rawParams( $user['bio'] )->parse(); ?></li>
+					<div class="bio-toggle" id="bio-toggler" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
 						<span>
 							[<?= wfMessage( 'user-identity-bio-show-more' )->escaped(); ?>]
 						</span>
