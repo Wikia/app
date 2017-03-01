@@ -156,8 +156,8 @@
 				</ul>
 			<? endif; ?>
 		</div>
-		<div>
-			<ul class="details">
+		<div class="details">
+			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
 					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
 				<? else: ?>
