@@ -71,7 +71,8 @@ class CleanupCommentsIndex extends Maintenance {
 			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
 				$dbMaster->delete(
 					'comments_index',
-					[ "comment_id" => $ids ]
+					[ "comment_id" => $ids ],
+					__METHOD__
 				);
 			}
 		}
