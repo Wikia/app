@@ -83,10 +83,11 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
 					if (floater.canFloat(params)) {
-						isFloating = Boolean(floater.makeFloat(video, params, function() {
+						isFloating = true;
+						floater.makeFloat(video, params, function() {
 							isFloating = false;
 							inViewportCallback(false);
-						}));
+						});
 					}
 				});
 				video.addEventListener('resume', function () {

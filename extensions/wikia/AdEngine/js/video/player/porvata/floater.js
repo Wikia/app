@@ -47,7 +47,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				}
 
 				deleteCloseButton(elements, floatingContext);
-
 			};
 		}
 
