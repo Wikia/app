@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver',
-	'ext.wikia.adEngine.video.player.porvata.floater'
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
 ], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
-					if (floater.canFloat(params)) {
+					if (floater && floater.canFloat(params)) {
 						isFloating = true;
 						floater.makeFloat(video, params, function() {
 							isFloating = false;

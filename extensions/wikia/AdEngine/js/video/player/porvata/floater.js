@@ -7,11 +7,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		var activeFloatingCssClass = 'floating',
 			compatibleSlots = ['TOP_LEADERBOARD'],
-			floatingVideoPadding = 28;
+			floatingVideoPadding = 28,
+			minimumVideoWidth = 225;
 
-		function resetAdContainer(top) {
-			top.style.removeProperty('width');
-			top.style.removeProperty('height');
+		function resetAdContainer(topAds) {
+			topAds.style.removeProperty('width');
+			topAds.style.removeProperty('height');
 		}
 
 		function updateDimensions(element, width, height) {
@@ -52,7 +53,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		function deleteCloseButton(elements, floatingContext) {
 			if (floatingContext.closeButton) {
-				elements.top.removeChild(floatingContext.closeButton);
+				elements.topAds.removeChild(floatingContext.closeButton);
 			}
 		}
 
@@ -68,11 +69,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function enableFloating(elements) {
-			var width = ((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding,
+			var width = Math.max(
+					((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding, minimumVideoWidth),
 				height = width;
 
-			elements.top.classList.toggle(activeFloatingCssClass);
-			updateDimensions(elements.top, width, height);
+			elements.topAds.classList.toggle(activeFloatingCssClass);
+			updateDimensions(elements.topAds, width, height);
 			updateDimensions(elements.iframe, width, height);
 			updateDimensions(elements.imageContainer, width, height);
 			updateImage(elements.image, width, height);
@@ -80,8 +82,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function disableFloating(elements, params, imageMarginTop) {
-			elements.top.classList.toggle(activeFloatingCssClass);
-			resetAdContainer(elements.top);
+			elements.topAds.classList.toggle(activeFloatingCssClass);
+			resetAdContainer(elements.topAds);
 			resetDimensions(elements.iframe, params);
 			resetDimensions(elements.imageContainer, params);
 			resetImage(elements.image, imageMarginTop);
@@ -89,18 +91,18 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function enableFloatingOn(video, params, onClose) {
-			var top = doc.getElementById('WikiaTopAds'),
-				threshold = 100,
-				scrollYOffset = top.offsetTop + top.offsetHeight + threshold,
+			var topAds = doc.getElementById('WikiaTopAds'),
+				threshold = -60,
+				scrollYOffset = topAds.offsetTop + topAds.offsetHeight + threshold,
 				imageMarginTop,
 				floatingContext = {
 					onClose: onClose
 				},
 				imageContainer = params.container.parentElement.querySelector('#image'),
 				elements = {
-					top: top,
+					topAds: topAds,
 					background: doc.getElementById('WikiaPageBackground'),
-					iframe: top.querySelector('iframe'),
+					iframe: params.container.ownerDocument.defaultView.frameElement,
 					imageContainer: imageContainer,
 					image: imageContainer ? imageContainer.querySelector('img') : null,
 					video: video
@@ -111,7 +113,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				floatingContext.closeButton.addEventListener('click',
 					createOnCloseListener(elements, params, floatingContext, imageMarginTop));
 
-				elements.top.appendChild(floatingContext.closeButton);
+				elements.topAds.appendChild(floatingContext.closeButton);
 			}
 
 			floatingContext.scrollListener = function () {
