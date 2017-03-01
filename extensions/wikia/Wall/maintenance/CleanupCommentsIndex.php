@@ -10,17 +10,18 @@ class CleanupCommentsIndex extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgDBname;
 
 		$dbMaster = wfGetDB( DB_MASTER );
 		$dbSlave = wfGetDB( DB_SLAVE );
 
-		$this->updateDeletedFlag( $dbMaster, $dbSlave );
-		$this->removeBrokenRows( $dbMaster, $dbSlave );
+		$updated = $this->updateDeletedFlag( $dbMaster, $dbSlave );
+		$deleted = $this->removeBrokenRows( $dbMaster, $dbSlave );
+
+		$this->output( "db:{$wgDBname} before:{$deleted['count']} updated:{$updated} deleted:{$deleted['deleted']}\n" );
 	}
 
 	public function updateDeletedFlag( DatabaseMysqli $dbMaster, DatabaseMysqli $dbSlave ) {
-		global $wgDBname;
-
 		$ids = $dbSlave->selectFieldValues(
 			[ 'archive', 'comments_index' ],
 			'comment_id',
@@ -29,14 +30,10 @@ class CleanupCommentsIndex extends Maintenance {
 			[ 'DISTINCT' ]
 		);
 
-		$this->output($dbSlave->lastQuery() . "\n");
-
 		if ( is_array( $ids ) ) {
 			$ids = array_map( function( $item ) {
 				return intval( $item );
 			}, $ids );
-
-			$this->output( "{$wgDBname}: " . count( $ids ) . " rows to update\n" );
 
 			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
 				$dbMaster->update(
@@ -49,10 +46,17 @@ class CleanupCommentsIndex extends Maintenance {
 
 			wfWaitForSlaves();
 		}
+
+		return count( $ids );
 	}
 
 	public function removeBrokenRows( DatabaseMysqli $dbMaster, DatabaseMysqli $dbSlave ) {
-		global $wgDBname;
+		$count = $dbSlave->selectField(
+			'comments_index',
+			'count(*)',
+			[],
+			__METHOD__
+		);
 
 		$ids = $dbSlave->selectFieldValues(
 			[ 'page', 'comments_index' ],
@@ -66,8 +70,6 @@ class CleanupCommentsIndex extends Maintenance {
 				return intval( $item );
 			}, $ids );
 
-			$this->output( "{$wgDBname}: " . count( $ids ) . " rows to remove\n" );
-
 			if ( !$this->hasOption('dry-run') && !empty( $ids ) ) {
 				$dbMaster->delete(
 					'comments_index',
@@ -76,6 +78,8 @@ class CleanupCommentsIndex extends Maintenance {
 				);
 			}
 		}
+
+		return [ 'count' => $count, 'deleted' => count( $ids ) ];
 	}
 }
 
