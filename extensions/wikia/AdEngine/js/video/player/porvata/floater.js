@@ -9,8 +9,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		var activeFloatingCssClass = 'floating',
 			compatibleSlots = ['TOP_LEADERBOARD'],
 			floatingThreshold = -60,
-			floatingVideoPadding = 28,
-			minimumVideoWidth = 225;
+			videoWidth = 225;
 
 		function updateDimensions(element, width, height) {
 			if (element) {
@@ -41,8 +40,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				disableFloating(floatingContext, params);
 				win.removeEventListener('scroll', floatingContext.scrollListener);
 
-				if (floatingContext.onClose) {
-					floatingContext.onClose();
+				if (floatingContext.onEnd) {
+					floatingContext.onEnd();
 				}
 
 				deleteCloseButton(floatingContext);
@@ -55,15 +54,19 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		function enableFloating(floatingContext) {
 			var elements = floatingContext.elements,
-				width = Math.max(
-					((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding, minimumVideoWidth),
+				width = videoWidth,
 				height = width;
 
 			elements.topAds.style.height = elements.ad.offsetHeight + 'px';
 			elements.topAds.classList.toggle(activeFloatingCssClass);
-			updateDimensions(elements.iframe, width, height);
 			updateDimensions(elements.imageContainer, width, height);
 			elements.video.resize(width, height);
+
+			if (elements.closeButton) {
+				elements.closeButton.classList.remove('hidden');
+			}
+
+			floatingContext.floating = true;
 		}
 
 		function disableFloating(floatingContext, params) {
@@ -71,9 +74,24 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 			elements.topAds.classList.toggle(activeFloatingCssClass);
 			elements.topAds.style.removeProperty('height');
-			resetDimensions(elements.iframe, params);
 			resetDimensions(elements.imageContainer, params);
 			elements.video.resize(params.width, params.height);
+
+			if (elements.closeButton) {
+				elements.closeButton.classList.add('hidden');
+			}
+
+			if (floatingContext.videoEnded) {
+				win.removeEventListener('scroll', floatingContext.scrollListener);
+
+				deleteCloseButton(floatingContext);
+
+				if (floatingContext.onEnd) {
+					floatingContext.onEnd();
+				}
+			}
+
+			floatingContext.floating = false;
 		}
 
 		function createOnScrollListener(floatingContext, params) {
@@ -85,46 +103,27 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				if (win.scrollY > scrollYOffset) {
 					if (!floatingContext.floating) {
 						enableFloating(floatingContext);
-
-						if (elements.closeButton) {
-							elements.closeButton.classList.remove('hidden');
-						}
-
-						floatingContext.floating = true;
 					}
 				} else {
 					if (floatingContext.floating) {
 						disableFloating(floatingContext, params);
-
-						if (elements.closeButton) {
-							elements.closeButton.classList.add('hidden');
-						}
-
-						if (floatingContext.videoEnded) {
-							win.removeEventListener('scroll', floatingContext.scrollListener);
-
-							deleteCloseButton(floatingContext);
-						}
-
-						floatingContext.floating = false;
 					}
 				}
 			};
 		}
 
-		function enableFloatingOn(video, params, onClose) {
+		function enableFloatingOn(video, params, onEnd) {
 			var topAds = doc.getElementById('WikiaTopAds'),
 				elements = {
 					topAds: topAds,
 					ad: topAds.querySelector('.wikia-ad'),
 					background: doc.getElementById('WikiaPageBackground'),
-					iframe: params.container.ownerDocument.defaultView.frameElement,
 					imageContainer: params.container.parentElement.querySelector('#image'),
 					video: video
 				},
 				floatingContext = {
 					elements: elements,
-					onClose: onClose
+					onEnd: onEnd
 				};
 
 			if (!elements.closeButton) {
@@ -140,8 +139,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return floatingContext;
 		}
 
-		function makeFloat(video, params, onClose) {
-			var floatingContext = enableFloatingOn(video, params, onClose);
+		function makeFloat(video, params, onEnd) {
+			var floatingContext = enableFloatingOn(video, params, onEnd);
 
 			win.addEventListener('scroll', floatingContext.scrollListener);
 			video.addEventListener('wikiaAdCompleted', function () {

@@ -21,7 +21,7 @@ $uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
 
-$floating-ad-margin: 10px;
+$floating-ad-margin: 20px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -65,11 +65,14 @@ $floating-ad-margin: 10px;
 		z-index: $wikia-top-ads-index + 10;
 
 		.wikia-ad {
-			bottom: 0;
-			margin-bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
-			margin-right: $floating-ad-margin;
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
 			position: fixed;
-			right: 0;
+			right: $floating-ad-margin;
+
+			iframe {
+				height: 225px !important;
+				width: 225px !important;
+			}
 
 			.floating-close-button {
 				display: block;
@@ -82,10 +85,9 @@ $floating-ad-margin: 10px;
 		cursor: pointer;
 		display: none;
 		height: 20px;
-		left: 0;
-		margin: 10px;
+		left: 10px;
 		position: absolute;
-		top: 0;
+		top: 10px;
 		width: 20px;
 	}
 }
