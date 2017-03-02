@@ -23,7 +23,7 @@ class WallHistory extends WikiaModel {
 	 * @param WallNotificationAdminEntity $feed
 	 * @param User $user
 	 */
-	public function add( int $type, WallNotificationAdminEntity $feed, User $user ) {
+	public function add( int $type, $feed, User $user ) {
 
 		switch( $type ) {
 			case WH_EDIT:
@@ -92,7 +92,7 @@ class WallHistory extends WikiaModel {
 	 * @param WallNotificationEntity $feed
 	 * @param User $user
 	 */
-	private function addNewOrEdit( int $action, WallNotificationAdminEntity $feed, User $user ) {
+	private function addNewOrEdit( int $action, $feed, User $user ) {
 
 		$data = $feed->data;
 
@@ -115,7 +115,7 @@ class WallHistory extends WikiaModel {
 	 * @param int $action
 	 * @param WallNotificationAdminEntity $feed
 	 */
-	private function addStatChangeAction( int $action, WallNotificationAdminEntity $feed ) {
+	private function addStatChangeAction( int $action, $feed ) {
 
 		$data = $feed->data;
 		$title = Title::newFromID( $data->message_id );
