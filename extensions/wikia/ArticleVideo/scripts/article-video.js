@@ -11,6 +11,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
+			playTime = -1,
+			percentagePlayTime = -1,
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
@@ -200,6 +202,27 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				}
 			});
 
+			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
+				var secondsPlayed = Math.floor(time),
+					percentage = Math.round(time / totalTime * 100);
+
+				if ( secondsPlayed % 5 === 0 && secondsPlayed > playTime ) {
+					playTime = secondsPlayed;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-seconds-' + playTime
+					});
+				}
+
+				if ( percentage % 10 === 0 && percentage > percentagePlayTime ) {
+					percentagePlayTime = percentage;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-percentage-' + percentagePlayTime
+					});
+				}
+			});
+
 			track({
 				action: tracker.ACTIONS.IMPRESSION,
 				label: 'featured-video'
@@ -212,5 +235,4 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		onScroll.bind(toggleCollapse);
 	});
-	
 });
