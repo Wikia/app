@@ -81,14 +81,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function collapseSlot(slotName) {
-		var slot = doc.getElementById(slotName);
-		slot.classList.add('hidden');
-	}
-
 	function refreshMedrecSlot() {
 		var slotName = 'TOP_RIGHT_BOXAD';
-		collapseSlot(slotName);
+		slotTweaker.hide(slotName);
 		win.adslots2.push(slotName);
 	}
 
