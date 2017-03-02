@@ -2,9 +2,20 @@
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.videoSettings',
+	'wikia.document',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (porvata, videoSettings, mercuryListener) {
+], function (porvata, videoSettings, doc, mercuryListener) {
 	'use strict';
+
+	function getVideoContainer(slotName) {
+		var container = doc.createElement('div'),
+			providerContainer = doc.querySelector('#' + slotName + ' > .provider-container');
+
+		container.classList.add('vpaid-container');
+		providerContainer.insertBefore(container, providerContainer.firstChild);
+
+		return container;
+	}
 
 	/**
 	 * @param {object} params
@@ -17,7 +28,17 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
+		if (params.vpaidMode === 2) {
+			params.container = getVideoContainer(params.slotName);
+		}
+
 		porvata.inject(videoSettings.create(params)).then(function (video) {
+			if (params.vpaidMode === 2) {
+				video.addEventListener('allAdsCompleted', function () {
+					params.container.querySelector('.video-player').classList.add('hidden');
+				});
+			}
+
 			if (mercuryListener) {
 				mercuryListener.onPageChange(function () {
 					video.destroy();

@@ -35,6 +35,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 		}
 
 		adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
+		adsLoader.getSettings().setVpaidMode(videoSettings.getVpaidMode());
 
 		return imaPlayerFactory.create(adDisplayContainer, adsLoader, videoSettings);
 	}

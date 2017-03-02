@@ -29,6 +29,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			getParams: function() {
 				return params;
 			},
+			getVpaidMode: function () {
+				return params.vpaidMode !== undefined ? params.vpaidMode : 1;
+			},
 			isAutoPlay: function () {
 				return state.autoPlay;
 			},

@@ -60,20 +60,39 @@ $uap-video-player-button-size: 24px;
 		overflow: hidden;
 	}
 
+	.provider-container {
+		position: relative;
+	}
+
 	&.slot-responsive {
 		width: 100%;
 
-		.provider-container {
-			position: relative;
-
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
-			}
+		.provider-container iframe {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+			top: 0;
 		}
+	}
+}
+
+.vpaid-container {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	.video-player {
+		background: #000;
+	}
+
+	video, div:last-child {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		top: 0;
 	}
 }
 
