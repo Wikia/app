@@ -181,7 +181,7 @@ class AvatarService extends Service {
 			'width' => $avatarSize,
 			'height' => $avatarSize,
 			'class' => 'avatar',
-			'alt' => IP::isIPAddress( $userName ) ? wfMessage( 'oasis-anon-user' )->inContentLanguage()->text() : $userName,
+			'alt' => IP::isIPAddress( $userName ) ? wfMessage( 'oasis-anon-user' )->text() : $userName,
 		) );
 
 		wfProfileOut( __METHOD__ );
