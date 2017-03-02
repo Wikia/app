@@ -20,10 +20,10 @@ class WallHistory extends WikiaModel {
 	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1 (its used by Forum activity module only)
 	 *
 	 * @param int $type one of WH_* defines
-	 * @param WallNotificationAdminEntity $feed
+	 * @param WallNotificationAdminEntity|WallNotificationEntity|WallNotificationOwnerEntity $feed
 	 * @param User $user
 	 */
-	public function add( int $type, WallNotificationAdminEntity $feed, User $user ) {
+	public function add( int $type, $feed, User $user ) {
 
 		switch( $type ) {
 			case WH_EDIT:
