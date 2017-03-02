@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			providerContainer = doc.querySelector('#' + slotName + ' > .provider-container');
 
 		container.classList.add('vpaid-container');
-		providerContainer.insertBefore(container, providerContainer.firstChild);
+		providerContainer.appendChild(container);
 
 		return container;
 	}
@@ -28,12 +28,21 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
+		params.vpaidMode = 2;
 		if (params.vpaidMode === 2) {
 			params.container = getVideoContainer(params.slotName);
 		}
 
 		porvata.inject(videoSettings.create(params)).then(function (video) {
 			if (params.vpaidMode === 2) {
+				video.addEventListener('loaded', function () {
+					var ad = video.ima.getAdsManager().getCurrentAd(),
+						contentType = ad.getContentType() || '';
+
+					if (contentType.indexOf('application/') !== -1) {
+						params.container.classList.add('vpaid-enabled');
+					}
+				});
 				video.addEventListener('allAdsCompleted', function () {
 					params.container.querySelector('.video-player').classList.add('hidden');
 				});

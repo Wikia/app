@@ -20,6 +20,8 @@ $uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
 
+$vpaid-z-index: 10;
+
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
 .wikia-ad.hidden,
@@ -75,24 +77,39 @@ $uap-video-player-button-size: 24px;
 			top: 0;
 		}
 	}
-}
 
-.vpaid-container {
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-
-	.video-player {
-		background: #000;
-	}
-
-	video, div:last-child {
-		height: 100%;
+	.vpaid-container {
 		left: 0;
 		position: absolute;
-		width: 100%;
 		top: 0;
+		width: 100%;
+
+		video, & > div {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+			top: 0;
+		}
+
+		// Node elements created by IMA library
+		& > div {
+			pointer-events: none;
+
+			video {
+				pointer-events: auto;
+			}
+		}
+
+		&.vpaid-enabled video {
+			 z-index: $vpaid-z-index;
+		 }
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
+		}
 	}
 }
 
