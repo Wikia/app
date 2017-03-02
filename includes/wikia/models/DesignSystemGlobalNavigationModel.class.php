@@ -323,10 +323,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'header' => [
 				'type' => 'line-image',
 				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-bell',
+				'image' => 'wds-icons-note',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-bell',
+					'name' => 'wds-icons-note',
 				],
 				'title' => [
 					'type' => 'translatable-text',
