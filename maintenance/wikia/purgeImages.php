@@ -45,7 +45,6 @@ class PurgeImages extends Maintenance {
 	}
 
 	private function purgeImages( $images ) {
-		$images = [ $images[0] ];    // !!!
 		$requests = [];
 		foreach ( $images as $image ) {
 			$requests[ $image ] = [ 'url' => sprintf( $this->cdnUrl, $this->imageSurrogateKey( $image ) ) ];
