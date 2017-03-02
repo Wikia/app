@@ -40,7 +40,6 @@
     "showPlayButton": true,
     "playButtonPosition": "center",
     "playIconStyle": {
-      "color": "white",
       "opacity": 1
     },
     "showTitle": true,

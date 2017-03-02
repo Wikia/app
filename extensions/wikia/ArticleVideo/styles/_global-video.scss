@@ -20,7 +20,7 @@
 
 			.oo-action-icon {
 				align-items: center;
-				background-color: #5f1023;
+				background-color: $color-buttons;
 				border: 6px solid rgba(0, 0, 0, 0.32);
 				border-radius: 100%;
 				bottom: 35px;
@@ -38,6 +38,7 @@
 
 				> span {
 					font-size: 34px;
+					color: $color-button-text;
 				}
 			}
 		}
