@@ -65,7 +65,7 @@ class WallMessage {
 
 		$title = Title::newFromID( $id, $master == true ? Title::GAID_FOR_UPDATE : 0 );
 
-		if ( $title instanceof Title && $title->exists() ) {
+		if ( $title instanceof Title && $title->exists() && self::isWallMessage( $title ) ) {
 			wfProfileOut( __METHOD__ );
 			return self::$wallMessageCache[$id] = WallMessage::newFromTitle( $title );
 		}
@@ -100,7 +100,7 @@ class WallMessage {
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
-			if ( $title->exists() ) {
+			if ( $title->exists() && self::isWallMessage( $title ) ) {
 				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->getArticleID();
 			}
@@ -131,6 +131,10 @@ class WallMessage {
 
 		wfProfileOut( __METHOD__ );
 		return array_values( $wallMessages );
+	}
+
+	static public function isWallMessage( Title $title ) {
+		return $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING, NS_WIKIA_FORUM_BOARD_THREAD );
 	}
 
 	static public function newFromTitle( Title $title ) {
@@ -683,32 +687,6 @@ class WallMessage {
 		return $this->messagePageUrl[ $withoutAnchor ];
 	}
 
-	public function getArticleId( &$articleData = null ) {
-		$title = $this->getArticleComment()->getTitle();
-		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
-
-		if ( $articleId === false ) {
-			Wikia::log( __METHOD__, false, "WALL_NO_ARTILE_ID" . print_r( [ '$title' => $title ], true ) );
-			$articleId = 0;
-		}
-
-		return $articleId;
-	}
-
-	/**
-	 * @deprecated Probably we'll remove it it was supposed to return article timestamp but the article doesn't seem right one. more info in WallMessage::remove()
-	 */
-	public function getArticleTimestamp( &$articleData = null ) {
-		$articleId = $this->getId();
-
-		if ( $articleId !== 0 ) {
-			$article = Article::newFromID( $articleId );
-			return $article->getTimestamp();
-		}
-
-		return null;
-	}
-
 	public function getWallUrl() {
 		return $this->getArticleTitle()->getFullUrl();
 	}
@@ -860,23 +838,6 @@ class WallMessage {
 		return wfTimestamp( $format, $r->getTimestamp() );
 	}
 
-	public function notifyEveryone() {
-		$rev = $this->getArticleComment()->mLastRevision;
-
-		if ( empty( $rev ) ) {
-			return true;
-		}
-
-		$notif = WallNotificationEntity::createFromRev( $rev );
-
-		/*
-		 * experimental notfieverone
-		 */
-
-		$wne = new WallNotificationsEveryone();
-		$wne->addNotificationToQueue( $notif );
-	}
-
 	public function getVoteHelper() {
 		if ( !empty( $this->voteVoteHelper ) ) {
 			return $this->voteVoteHelper;
@@ -979,7 +940,7 @@ class WallMessage {
 			$this->addAdminNotificationFromEntity( $wnae );
 		}
 
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( $history, $wnae, $user );
 	}
 
@@ -1122,7 +1083,7 @@ class WallMessage {
 				$this->addAdminNotificationFromEntity( $wnae );
 			}
 
-			$wh = new WallHistory( $this->cityId );
+			$wh = new WallHistory();
 			$wh->add( WH_DELETE, $wnae, $user );
 
 			if ( $this->isMain() === true ) {
@@ -1278,7 +1239,7 @@ class WallMessage {
 		$this->customActionNotifyRC( $user, 'wall_restore', $reason );
 
 		$wne = $this->getAdminNotificationEntity( $user, $reason );
-		$wh = new WallHistory( $this->cityId );
+		$wh = new WallHistory();
 		$wh->add( WH_RESTORE, $wne, $user );
 
 		$this->addWatch( $user );
@@ -1542,14 +1503,6 @@ class WallMessage {
 		return $this->getArticleComment()->getData( $master, $title );
 	}
 
-	public function sendNotificationAboutLastRev( $useMasterDB = false ) {
-		$this->load();
-		$lastRevId = $this->getArticleComment()->mLastRevId;
-		if ( !empty( $lastRevId ) ) {
-			$this->helper->sendNotification( $lastRevId, RC_NEW, $useMasterDB );
-		}
-	}
-
 	public function showVotes() {
 		return in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::App()->wg->WallVotesNS );
 	}
@@ -1586,7 +1539,7 @@ class WallMessage {
 	 */
 	public function invalidateCache() {
 		if ( $this->title instanceof Title ) {
-			$this->getWall()->getTitle()->invalidateCache();
+			$this->getWall()->getTitle()->invalidateCache(); // bumps page_touched
 			wfWaitForSlaves();
 			$this->title->purgeSquid();
 		}
