@@ -13,4 +13,22 @@ class ArticleVideoController extends WikiaController {
 			$wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 		$this->setVal( 'videoDetails', $wg->articleVideoFeaturedVideos[$title] );
 	}
+
+	public function related() {
+		$wg = F::app()->wg;
+
+		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+
+		$this->setVal( 'relatedVideo', self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title) );
+	}
+
+	public static function getRelatedVideoData( $relatedVideos, $title ) {
+		foreach ( $relatedVideos as $videoData ) {
+			if ( isset($videoData['articles']) && in_array( $title, $videoData['articles'] ) ) {
+				return $videoData;
+			}
+		}
+
+		return null;
+	}
 }

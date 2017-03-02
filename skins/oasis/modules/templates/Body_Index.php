@@ -96,6 +96,10 @@
 					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
 				<?php endif; ?>
 
+				<?php if ( $enableArticleRelatedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
+				<?php endif; ?>
+
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
