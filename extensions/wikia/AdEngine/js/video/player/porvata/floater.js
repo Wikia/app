@@ -138,6 +138,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return floatingContext;
 		}
 
+		function isOutsideOfViewport(params) {
+			var slot = doc.querySelector('#' + params.slotName);
+
+			return Boolean(slot && slot.getBoundingClientRect().bottom < 0);
+		}
+
 		function makeFloat(video, params, onEnd) {
 			var floatingContext = enableFloatingOn(video, params, onEnd);
 
@@ -145,6 +151,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			video.addEventListener('wikiaAdCompleted', function () {
 				floatingContext.videoEnded = true;
 			});
+
+			if (isOutsideOfViewport(params)) {
+				enableFloating(floatingContext);
+			}
 
 			return floatingContext;
 		}

@@ -18,6 +18,17 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener = null,
 			isFloating = null;
 
+		function tryEnablingFloating(video, inViewportCallback) {
+			if (floater && floater.canFloat(params)) {
+				isFloating = true;
+				floater.makeFloat(video, params, function() {
+					isFloating = false;
+					inViewportCallback(false);
+				});
+				inViewportCallback(true);
+			}
+		}
+
 		function muteFirstPlay(video) {
 			video.addEventListener('loaded', function () {
 				if (isFirstPlay) {
@@ -82,13 +93,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 					}
-					if (floater && floater.canFloat(params)) {
-						isFloating = true;
-						floater.makeFloat(video, params, function() {
-							isFloating = false;
-							inViewportCallback(false);
-						});
-					}
 				});
 				video.addEventListener('resume', function () {
 					video.ima.getAdsManager().dispatchEvent('wikiaAdPlay');
@@ -113,6 +117,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+
+				tryEnablingFloating(video, inViewportCallback);
 
 				return video;
 			});
