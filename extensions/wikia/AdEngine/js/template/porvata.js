@@ -28,7 +28,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
-		params.vpaidMode = 2;
 		if (params.vpaidMode === 2) {
 			params.container = getVideoContainer(params.slotName);
 		}
