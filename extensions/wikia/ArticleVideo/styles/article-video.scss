@@ -1,4 +1,6 @@
 @import 'skins/shared/color';
+@import 'global-video';
+@import 'video-controls';
 
 $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
 $video-collapsed-height: 126px;
@@ -30,12 +32,6 @@ $spinnerSize: 48;
 	position: relative;
 	width: 100%;
 
-	.video-details {
-		* {
-			opacity: 0.6;
-		}
-	}
-
 	.video-thumbnail {
 		bottom: 0;
 		left: 0;
@@ -46,13 +42,13 @@ $spinnerSize: 48;
 	}
 
 	&:before {
-		background-image: $video-overlay-gradient;
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
 		bottom: 0;
 		content: '';
 		left: 0;
 		position: absolute;
 		right: 0;
-		top: 50%;
+		top: 0;
 		z-index: 1;
 	}
 
@@ -178,45 +174,6 @@ $spinnerSize: 48;
 			}
 		}
 
-		.video-details {
-			align-items: center;
-			background: #000;
-			display: flex;
-
-			* {
-				opacity: 0.7;
-			}
-
-			.video-details-left {
-				flex: 1;
-				margin-left: 10px;
-			}
-
-			.video-time {
-				font-size: 10px;
-				position: static;
-			}
-
-			.video-title {
-				font-size: 12px;
-				position: static;
-			}
-
-			.video-wiki-play-button {
-				border-width: 3px;
-				height: 40px;
-				margin: 10px;
-				position: static;
-				width: 40px;
-
-				svg {
-					height: 15px;
-					margin-left: 2px;
-					width: 11px;
-				}
-			}
-		}
-
 		.ooyala-article-video {
 			bottom: auto;
 			height: $video-collapsed-height !important;
@@ -260,16 +217,10 @@ $spinnerSize: 48;
 	position: absolute;
 	right: 0;
 	top: 0;
-	display: none;
 
-	> div {
-		// that's because ooyala sets max z-index value when player is switched to fullscreen mode
-		// and it doesn't remove this style when user leaves this mode
-		z-index: 10000 !important;
-	}
-
-	.oo_button, .oo_playhead, .oo_replay {
-		cursor: pointer;
+	.innerWrapper {
+		width: 100%;
+		height: 100%;
 	}
 }
 

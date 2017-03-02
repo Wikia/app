@@ -25,15 +25,4 @@ class ArticleVideoHooks {
 
 		return true;
 	}
-
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
-
-		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
-		}
-
-		return true;
-	}
 }
