@@ -40,16 +40,21 @@ $floating-ad-margin: 10px;
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
+
 		> div {
 			float: right;
 		}
+
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
 		> img {
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
@@ -57,27 +62,30 @@ $floating-ad-margin: 10px;
 	}
 
 	&.floating {
-		bottom: 0;
-		margin-bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
-		margin-right: $floating-ad-margin;
-		position: fixed;
-		right: 0;
-		z-index: 10;
+		z-index: $wikia-top-ads-index + 10;
 
-		.floating-close-button {
-			cursor: pointer;
-			display: block;
-			left: 0;
-			margin: 10px;
-			position: absolute;
-			top: 10px;
+		.wikia-ad {
+			bottom: 0;
+			margin-bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-right: $floating-ad-margin;
+			position: fixed;
+			right: 0;
+
+			.floating-close-button {
+				display: block;
+			}
 		}
 	}
 
 	.floating-close-button {
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		cursor: pointer;
 		display: none;
 		height: 20px;
+		left: 0;
+		margin: 10px;
+		position: absolute;
+		top: 0;
 		width: 20px;
 	}
 }

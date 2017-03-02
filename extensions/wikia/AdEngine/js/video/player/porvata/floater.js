@@ -1,31 +1,21 @@
 /*global define, require*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
-		'wikia.window',
-		'wikia.document'
-	], function (win, doc) {
+		'wikia.document',
+		'wikia.throttle',
+		'wikia.window'
+	], function (doc, throttle, win) {
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
 			compatibleSlots = ['TOP_LEADERBOARD'],
+			floatingThreshold = -60,
 			floatingVideoPadding = 28,
 			minimumVideoWidth = 225;
-
-		function resetAdContainer(topAds) {
-			topAds.style.removeProperty('width');
-			topAds.style.removeProperty('height');
-		}
 
 		function updateDimensions(element, width, height) {
 			if (element) {
 				element.style.width = width + 'px';
 				element.style.height = height + 'px';
-			}
-		}
-
-		function updateImage(image, width, height) {
-			if (image) {
-				image.width = width;
-				image.style.marginTop = ((height - image.height) / 2) + 'px';
 			}
 		}
 
@@ -38,117 +28,114 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return a;
 		}
 
-		function createOnCloseListener(elements, params, floatingContext, imageMarginTop) {
+		function deleteCloseButton(floatingContext) {
+			var elements = floatingContext.elements;
+
+			if (elements.closeButton) {
+				elements.ad.removeChild(elements.closeButton);
+			}
+		}
+
+		function createOnCloseListener(floatingContext, params) {
 			return function () {
-				disableFloating(elements, params, imageMarginTop);
+				disableFloating(floatingContext, params);
 				win.removeEventListener('scroll', floatingContext.scrollListener);
 
 				if (floatingContext.onClose) {
 					floatingContext.onClose();
 				}
 
-				deleteCloseButton(elements, floatingContext);
+				deleteCloseButton(floatingContext);
 			};
-		}
-
-		function deleteCloseButton(elements, floatingContext) {
-			if (floatingContext.closeButton) {
-				elements.topAds.removeChild(floatingContext.closeButton);
-			}
 		}
 
 		function resetDimensions(element, params) {
 			updateDimensions(element, params.width, params.height);
 		}
 
-		function resetImage(image, marginTop) {
-			if (image) {
-				image.removeAttribute('width');
-				image.style.marginTop = marginTop;
-			}
-		}
-
-		function enableFloating(elements) {
-			var width = Math.max(
+		function enableFloating(floatingContext) {
+			var elements = floatingContext.elements,
+				width = Math.max(
 					((win.innerWidth - elements.background.offsetWidth) / 2) - floatingVideoPadding, minimumVideoWidth),
 				height = width;
 
+			elements.topAds.style.height = elements.ad.offsetHeight + 'px';
 			elements.topAds.classList.toggle(activeFloatingCssClass);
-			updateDimensions(elements.topAds, width, height);
 			updateDimensions(elements.iframe, width, height);
 			updateDimensions(elements.imageContainer, width, height);
-			updateImage(elements.image, width, height);
 			elements.video.resize(width, height);
 		}
 
-		function disableFloating(elements, params, imageMarginTop) {
+		function disableFloating(floatingContext, params) {
+			var elements = floatingContext.elements;
+
 			elements.topAds.classList.toggle(activeFloatingCssClass);
-			resetAdContainer(elements.topAds);
+			elements.topAds.style.removeProperty('height');
 			resetDimensions(elements.iframe, params);
 			resetDimensions(elements.imageContainer, params);
-			resetImage(elements.image, imageMarginTop);
 			elements.video.resize(params.width, params.height);
 		}
 
-		function enableFloatingOn(video, params, onClose) {
-			var topAds = doc.getElementById('WikiaTopAds'),
-				threshold = -60,
-				scrollYOffset = topAds.offsetTop + topAds.offsetHeight + threshold,
-				imageMarginTop,
-				floatingContext = {
-					onClose: onClose
-				},
-				imageContainer = params.container.parentElement.querySelector('#image'),
-				elements = {
-					topAds: topAds,
-					background: doc.getElementById('WikiaPageBackground'),
-					iframe: params.container.ownerDocument.defaultView.frameElement,
-					imageContainer: imageContainer,
-					image: imageContainer ? imageContainer.querySelector('img') : null,
-					video: video
-				};
+		function createOnScrollListener(floatingContext, params) {
+			var elements = floatingContext.elements,
+				topAds = elements.topAds,
+				scrollYOffset = topAds.offsetTop + topAds.offsetHeight + floatingThreshold;
 
-			if (!floatingContext.closeButton) {
-				floatingContext.closeButton = createCloseButton();
-				floatingContext.closeButton.addEventListener('click',
-					createOnCloseListener(elements, params, floatingContext, imageMarginTop));
-
-				elements.topAds.appendChild(floatingContext.closeButton);
-			}
-
-			floatingContext.scrollListener = function () {
+			return function () {
 				if (win.scrollY > scrollYOffset) {
 					if (!floatingContext.floating) {
-						if (imageMarginTop === undefined && elements.image) {
-							imageMarginTop = elements.image.style.marginTop;
-						}
+						enableFloating(floatingContext);
 
-						enableFloating(elements);
-
-						if (floatingContext.closeButton) {
-							floatingContext.closeButton.classList.remove('hidden');
+						if (elements.closeButton) {
+							elements.closeButton.classList.remove('hidden');
 						}
 
 						floatingContext.floating = true;
 					}
 				} else {
 					if (floatingContext.floating) {
-						disableFloating(elements, params, imageMarginTop);
+						disableFloating(floatingContext, params);
 
-						if (floatingContext.closeButton) {
-							floatingContext.closeButton.classList.add('hidden');
+						if (elements.closeButton) {
+							elements.closeButton.classList.add('hidden');
 						}
 
 						if (floatingContext.videoEnded) {
 							win.removeEventListener('scroll', floatingContext.scrollListener);
 
-							deleteCloseButton(elements, floatingContext);
+							deleteCloseButton(floatingContext);
 						}
 
 						floatingContext.floating = false;
 					}
 				}
 			};
+		}
+
+		function enableFloatingOn(video, params, onClose) {
+			var topAds = doc.getElementById('WikiaTopAds'),
+				elements = {
+					topAds: topAds,
+					ad: topAds.querySelector('.wikia-ad'),
+					background: doc.getElementById('WikiaPageBackground'),
+					iframe: params.container.ownerDocument.defaultView.frameElement,
+					imageContainer: params.container.parentElement.querySelector('#image'),
+					video: video
+				},
+				floatingContext = {
+					elements: elements,
+					onClose: onClose
+				};
+
+			if (!elements.closeButton) {
+				elements.closeButton = createCloseButton();
+				elements.closeButton.addEventListener('click',
+					createOnCloseListener(floatingContext, params));
+
+				elements.ad.appendChild(elements.closeButton);
+			}
+
+			floatingContext.scrollListener = throttle(createOnScrollListener(floatingContext, params), 100);
 
 			return floatingContext;
 		}
