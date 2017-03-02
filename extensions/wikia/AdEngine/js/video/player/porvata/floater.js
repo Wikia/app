@@ -117,7 +117,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				elements = {
 					topAds: topAds,
 					ad: topAds.querySelector('.wikia-ad'),
-					background: doc.getElementById('WikiaPageBackground'),
 					imageContainer: params.container.parentElement.querySelector('#image'),
 					video: video
 				},
