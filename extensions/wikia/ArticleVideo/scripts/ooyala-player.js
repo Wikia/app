@@ -1,9 +1,6 @@
 define('ooyala-player', function () {
 
-	//TODO extract these variables outside
-	var baseJSONSkinUrl = window.wgExtensionsPath.replace('http://', 'http://harrypotter.') + '/wikia/ArticleVideo/scripts/ooyala/skin.json?v=2';
-	var pcode = 'J0MTUxOtPDJVNZastij14_v7VDRS'; // Part of an API might want to double check on the security of this
-	var playerBrandingId = '6d79ed36a62a4a9885d9c961c70289a8';	//Fandom player branding ID
+	var baseJSONSkinUrl = '/extensions/wikia/ArticleVideo/scripts/ooyala/skin.json?v=2';
 
 	function OoyalaHTML5Player(container, params, onPlayerCreate) {
 		var playerWidth = container.scrollWidth;
@@ -11,8 +8,6 @@ define('ooyala-player', function () {
 		this.params = params;
 		this.params.width = playerWidth;
 		this.params.height = Math.floor((playerWidth * 9) / 16);
-		this.params.pcode = pcode;
-		this.params.playerBrandingId = playerBrandingId;
 		this.params.onCreate = this.onCreate.bind(this);
 
 		this.onPlayerCreated = onPlayerCreate;
@@ -102,10 +97,12 @@ define('ooyala-player', function () {
 		$('.oo-control-bar').css('visibility', 'visible');
 	};
 
-	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, videoId, onCreate) {
+	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate) {
 		var params = {
 			videoId: videoId,
-			autoplay: false
+			autoplay: false,
+			pcode: playerParams.ooyalaPCode,
+			playerBrandingId: playerParams.ooyalaPlayerBrandingId
 		};
 		var html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();

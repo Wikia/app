@@ -20,6 +20,10 @@ class ArticleVideoHooks {
 		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
 			$vars['wgArticleVideoData'] = [
 				'videoId' => $wg->articleVideoFeaturedVideos[$title]['videoId'],
+				'playerParams' => [
+					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+				],
 			];
 		}
 
