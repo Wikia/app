@@ -64,7 +64,8 @@ define('ooyala-player', function () {
 		var durationElem = document.createElement('div');
 		durationElem.innerHTML = mw.message('articlevideo-watch', this.getFormattedDuration(this.player.getDuration())).text().toUpperCase();
 		durationElem.classList.add('video-duration');
-		document.getElementById(this.containerId).querySelector('.oo-state-screen-info').appendChild(durationElem);
+		var screenInfo = document.getElementById(this.containerId).querySelector('.oo-state-screen-info');
+		screenInfo.insertBefore(durationElem, screenInfo.firstChild);
 	};
 
 	/**
