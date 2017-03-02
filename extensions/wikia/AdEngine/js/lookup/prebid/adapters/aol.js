@@ -58,14 +58,16 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					network: network,
 					alias: '4431475',
 					sizeId: '529'
-				},
-				INCONTENT_BOXAD_1: {
-					size: [300, 250],
-					placement: '4431494',
-					network: network,
-					alias: '4431494',
-					sizeId: '170'
 				}
+				// Because of differences in AOL dashboard and DFP (ADEN-4750) this slot was disabled. To avoid making
+				// additional calls it is turned off. For more details see epic (ADEN-4580).
+				// INCONTENT_BOXAD_1: {
+				// 	size: [300, 250],
+				// 	placement: '4431494',
+				// 	network: network,
+				// 	alias: '4431494',
+				// 	sizeId: '170'
+				// }
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {

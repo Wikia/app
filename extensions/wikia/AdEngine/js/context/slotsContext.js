@@ -45,6 +45,10 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	function filterSlotMap(slotMap) {
 		var map = {};
 
+		if (!slotMap) {
+			return map;
+		}
+
 		Object.keys(slotMap).forEach(function (slotName) {
 			if (isApplicable(slotName)) {
 				map[slotName] = slotMap[slotName];
