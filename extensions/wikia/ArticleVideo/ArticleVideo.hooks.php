@@ -23,6 +23,16 @@ class ArticleVideoHooks {
 			];
 		}
 
+		if ( isset( $wg->articleVideoRelatedVideos ) ) {
+			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+
+			if ( isset( $relatedVideo['videoId'] ) ) {
+				$vars['wgArticleRelatedVideoData'] = [
+					'videoId' => $relatedVideo['videoId'],
+				];
+			}
+		}
+
 		return true;
 	}
 }

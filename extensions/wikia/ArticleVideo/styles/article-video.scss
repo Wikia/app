@@ -209,6 +209,16 @@ $spinnerSize: 48;
 			transform-origin: (0.5px * $spinnerSize) (0.5px * $spinnerSize) 0;
 		}
 	}
+
+	&.is-related-video {
+		display: none;
+		max-width: 300px;
+		padding-top: 0;
+
+		.video-thumbnail {
+			position: relative;
+		}
+	}
 }
 
 .ooyala-article-video {
@@ -226,8 +236,4 @@ $spinnerSize: 48;
 
 .WikiaMainContent {
 	z-index: 3;
-}
-
-.article-related-video {
-	display: none;
 }

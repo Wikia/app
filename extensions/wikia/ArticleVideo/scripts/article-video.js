@@ -2,6 +2,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 	$(function () {
 		var $video = $('#article-video'),
+			$relatedVideo = $('#article-related-video'),
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
@@ -20,9 +21,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				height: 127
 			};
 
-		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgArticleVideoData.videoId;
-			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaVideoElementId, ooyalaVideoId, onCreate);
+		function initVideo(ooyalaContainerId, videoId, onCreate) {
+			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaContainerId, videoId, onCreate);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -169,7 +169,15 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}
 		}
 
-		initVideo(function (player) {
+		function arrangeRelatedVideo() {
+			var $articleContent = $('#mw-content-text');
+			
+			$relatedVideo = $relatedVideo.detach();
+			$articleContent.children('h2').first().before( $relatedVideo );
+			$relatedVideo.show();
+		}
+		
+		initVideo('ooyala-article-video', window.wgArticleVideoData.videoId, function (player) {
 			$video.addClass('ready-to-play');
 			$video.one('click', showAndPlayVideo);
 
@@ -204,6 +212,39 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				action: tracker.ACTIONS.IMPRESSION,
 				label: 'featured-video'
 			});
+		});
+		
+		initVideo('ooyala-article-related-video', window.wgArticleRelatedVideoData.videoId, function (player) {
+			arrangeRelatedVideo();
+			
+			// $relatedVideo.addClass('ready-to-play');
+			// $relatedVideo.one('click', showAndPlayVideo);
+
+			// player.mb.subscribe(OO.EVENTS.PLAY, 'related-video', function () {
+			// 	track({
+			// 		action: tracker.ACTIONS.CLICK,
+			// 		label: 'related-video-play'
+			// 	});
+			// });
+			//
+			// player.mb.subscribe(OO.EVENTS.PLAYED, 'related-video', function () {
+			// 	track({
+			// 		action: tracker.ACTIONS.CLICK,
+			// 		label: 'related-video-played'
+			// 	});
+			// });
+			//
+			// player.mb.subscribe(OO.EVENTS.PAUSED, 'related-video', function () {
+			// 	track({
+			// 		action: tracker.ACTIONS.CLICK,
+			// 		label: 'related-video-paused'
+			// 	});
+			// });
+			//
+			// track({
+			// 	action: tracker.ACTIONS.IMPRESSION,
+			// 	label: 'related-video'
+			// });
 		});
 
 		$closeBtn.click(closeButtonClicked);

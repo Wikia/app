@@ -1,4 +1,4 @@
-<div id="article-related-video" class="article-related-video">
+<div id="article-related-video" class="article-video is-related-video">
 	<img class="video-thumbnail"
 	     src="<?= Sanitizer::encodeAttribute( $relatedVideo['thumbnailUrl'] ); ?>">
 	<div class="video-container">
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="ooyala-article-video" class="ooyala-article-video"></div>
+		<div id="ooyala-article-related-video" class="ooyala-article-video"></div>
 	</div>
 </div>
 
