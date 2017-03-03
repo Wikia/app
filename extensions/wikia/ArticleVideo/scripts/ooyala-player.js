@@ -104,15 +104,18 @@ define('ooyala-player', function () {
 		$('.oo-control-bar').css('visibility', 'visible');
 	};
 
-	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate) {
+	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
 		var params = {
 			videoId: videoId,
-			autoplay: false,
+			autoplay: autoplay,
 			pcode: playerParams.ooyalaPCode,
 			playerBrandingId: playerParams.ooyalaPlayerBrandingId
 		};
 		var html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
+		if (autoplay) {
+			html5Player.player.setVolume(0);
+		}
 		return html5Player;
 	};
 
