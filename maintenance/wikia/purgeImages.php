@@ -47,7 +47,9 @@ class PurgeImages extends Maintenance {
 	private function purgeImages( $images ) {
 		$requests = [];
 		foreach ( $images as $image ) {
-			$requests[ $image ] = [ 'url' => sprintf( $this->cdnUrl, $this->imageSurrogateKey( $image ) ) ];
+			$key = $this->imageSurrogateKey( $image );
+			$this->output( "Will purge image {$image} using surrogate key {$key}\n" );
+			$requests[ $image ] = [ 'url' => sprintf( $this->cdnUrl, $key ) ];
 		}
 		$options = \CurlMultiClient::getDefaultOptions();
 		unset( $options[ CURLOPT_PROXY ] );
