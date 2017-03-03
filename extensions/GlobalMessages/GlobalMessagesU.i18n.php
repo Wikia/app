@@ -2455,10 +2455,6 @@ Ta kobura va iyeltak, koe tazukasiki va gluyasiki favel
 	'uploadscripted' => 'Bat iyeltak va HTML ok Script beksa rotir narujutuna gan web exulesiki ruldar.',
 	'uploadvirus' => 'Iyeltak va kio ruldar ! Pinta se : $1',
 	'upload-maxfilesize' => 'Cugafo iyeltakaldo : $1',
-	'upload-wasdeleted' => "'''Obral: Rin va sulayan iyeltak djukalvajal.'''
-
-Gokrafial ede tolkalvajara va bat iyeltak tir vodanhafa.
-Sulara \"log\" va batu bu krafiason batlize zo nedir :",
 	'upload-proto-error' => 'Kitsendaj',
 	'upload-file-error' => 'Koefa rokla',
 	'upload-file-error-text' => 'Yawason va ugaloraf iyeltak mo zanisiko, koefa rokla sokir. Va [[Special:ListUsers/sysop|bolkristusik]] vay uzeral !',
@@ -5985,10 +5981,6 @@ $messages['ckb'] = array(
 	'upload-maxfilesize' => 'ئەو پەری قەبارەی فایل: $1',
 	'upload-description' => 'پێناسەی پەڕگە',
 	'upload-options' => 'ھەڵبژاردەکانی  بارکردن',
-	'upload-wasdeleted' => "'''ئاگاداری: خەریکی پەڕگەیەک باردەکەی کە لەم دواییانەدا سڕاوەتەوە.'''
-
-پێش بارکردن ئەرخەیان ببە کە بارکردنی ئەو پەڕگە بەسوودە.
-لۆگی سڕینەوەی ئەم پەڕگە بۆ ئاسوودەیی لێرە دانراوە:",
 	'upload-proto-error' => 'پرۆتۆکۆڵی هەڵە',
 	'upload-proto-error-text' => 'بۆ بارکردن لە تۆڕ، URL دەبێ بە <code>http://</code>  یان <code>ftp://</code> دەست‌پێ‌بکات.',
 	'upload-file-error' => 'ھەڵەی ناوخۆیی',
@@ -6488,7 +6480,6 @@ Kontaktuje prosím [[Special:ListUsers/sysop|správce]].',
 	'upload-too-many-redirects' => 'URL obsahovalo příliš mnoho přesměrování',
 	'upload-unknown-size' => 'Neznámá velikost',
 	'upload-http-error' => 'Došlo k chybě HTTP: $1',
-	'upload-copy-upload-invalid-domain' => 'Načítání kopírováním není dostupné z této domény.',
 	'uploadstash' => 'Skrýš načtených souborů',
 	'uploadstash-summary' => 'Tato stránka nabízí přístup k načteným (nebo právě načítaným) souborům, které dosud nejsou zveřejněny na wiki. Tyto soubory se nezobrazí nikomu kromě uživatele, který je načetl.',
 	'uploadstash-clear' => 'Vymazat soubory ve skrýši',
@@ -7509,10 +7500,6 @@ Um ein '''Bild''' in einer Seite zu verwenden, nutzen Sie einen Link in der folg
 * '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Datei.png|200px|thumb|left|Alternativer Text]]</nowiki></tt>''' – für ein 200px breites Bild innerhalb einer Box, mit „Alternativer Text“ als Bildbeschreibung
 * '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Datei.ogg]]</nowiki></tt>''' – für einen direkten Link auf die Datei, ohne Darstellung der Datei",
 	'uploadwarning-text' => 'Bitte ändern Sie unten die Dateibeschreibung und versuchen Sie es erneut.',
-	'upload-wasdeleted' => "'''Achtung: Sie laden eine Datei hoch, die bereits früher gelöscht wurde.'''
-
-Bitte prüfen Sie sorgfältig, ob das erneute Hochladen den Richtlinien entspricht.
-Zu Ihrer Information folgt das Lösch-Logbuch mit der Begründung für die vorhergehende Löschung:",
 	'upload-file-error-text' => 'Bei der Erstellung einer temporären Datei auf dem Server ist ein interner Fehler aufgetreten.
 Bitte informieren Sie einen [[Special:ListUsers/sysop|System-Administrator]].',
 	'upload-misc-error-text' => 'Beim Hochladen ist ein unbekannter Fehler aufgetreten.
@@ -7554,7 +7541,6 @@ $messages['de-weigsbrag'] = array(
 	'username' => 'Benudsesnam:',
 	'uid' => 'Benudses-ID:',
 	'userpage-userdoesnotexist' => 'Dose Benudsesgond „$1“ gar noggs geb. Bid brüw, ob wol werg erschdel dose Seid.',
-	'usercssjsyoucanpreview' => '<strong>Tipp:</strong> Benudsdar dose Worschau-Gnobw su desd neues CSS/JS wor dose Schbeig.',
 	'usercsspreview' => "== Worschau won Deines Benuds-CSS ==
 '''Beagd:''' Nag dose Schbeig musdar Braus anweis, dose neues Wersion lad: '''Mosila/Waierwogs:''' ''Strg-Shift-R'', '''Inderned Egsblor:''' ''Strg-F5'', '''Obera:''' ''F5'', '''Sawari:''' ''Cmd-Shift-R'', '''Gongueror:''' ''F5''.",
 	'userjspreview' => "== Worschau won Deines Benuds-JawaSgribd ==
@@ -7570,17 +7556,10 @@ $messages['de-weigsbrag'] = array(
 	'userrights-user-editname' => 'Benudsesnam:',
 	'userrights-editusergroup' => 'Benudses-Grubbessugehöriggeid bearbeid',
 	'userrights-groupsmember' => 'Midglied won:',
-	'userrights-groupsremovable' => 'Grubbes won gön rausnehm:',
-	'userrights-groupsavailable' => 'Grubbes wo werwügbares:',
 	'userrights-groups-help' => 'Gön Grubbessugehöriggeid won dose Benuds änd:
 * Wan dose Gäsd margärdes sei dose heis, das dose Benuds Midglied won dose Grubb sei
 * Dose * heis, das dose Benudsesregd nag Erdeil noggs mehr gön surügnehm (od umgegehrdes).',
 	'userrights-reason' => 'Grund:',
-	'userrights-available-none' => 'Du noggs dörw Benudsesregdes weränd.',
-	'userrights-available-add' => 'Gön Benudses {{PLURAL:$2|su wolgendes Grubb|su wolgendes $2 Grubbes}} dasugeb: $1.',
-	'userrights-available-remove' => 'Gön Benudses aus {{PLURAL:$2|dose wolgendes Grubb|dose wolgendes $2 Grubbes}} rausnehm: $1.',
-	'userrights-available-add-self' => 'Gön Dig selb su {{PLURAL:$2|dose Grubb|dose Grubbes}} dasugeb: $1.',
-	'userrights-available-remove-self' => 'Gön Dig selb aus {{PLURAL:$2|dose Grubb|dose Grubbes}} rausnehm: $1.',
 	'userrights-no-interwiki' => 'Haddar noggs Beregd, das gön Benudsesregdes in anderes Wigis änd.',
 	'userrights-nodatabase' => 'Dose Dadesbang $1 gar noggs geb od noggs logales.',
 	'userrights-nologin' => 'Musdar mid eines Adminisdrad-Benudsesgond [[{{#special:Userlogin}}|anmeld]], das gön Benudsesregdes änd.',
@@ -7622,13 +7601,8 @@ Bid beagd das, wie bei normales Seidesinhaldes aug, anderes Benudses gön lösch
 	'uploaddisabled' => 'Endschuld, dose Hoglad deagdiwärdes sei.',
 	'uploaddisabledtext' => 'Dose Hoglad won Dadeies in dose {{SITENAME}} deagdiwärdes sei.',
 	'uploadscripted' => 'Dose Dadei haddar HDML- od Sgribdgod drin, wo eines Nedsbraus gön aus Werseddar auswühr.',
-	'uploadcorrupt' => 'Dose Dadei gabuddes sei od haddar walsches Dadei-Erweid. Bid übbrüw dose Dadei und wiedhöl dose Hoglad-Worgang.',
 	'uploadvirus' => 'In dose Dadei eines Wirus drin sei! Dedailes: $1',
 	'upload-maxfilesize' => 'Magsimales Dadeigrös: $1',
-	'upload-wasdeleted' => "'''Obagd: Du eines Dadei hoglad, wo haddar wrüheres schon lösch.'''
-
-Bid genaues brüw, ob dose nogmales Hoglad dose Rigdlines endsbreg.
-Wür Deines Inwormasion jedsd dose Lösch-Logbug gom mid dose Begründ wies dose haddar worher lösch:",
 	'upload-proto-error' => 'Walsches Brodogol',
 	'upload-proto-error-text' => 'Dose URL musdar mid <code>http://</code> od <code>ftp://</code> anwäng.',
 	'upload-file-error' => 'Indernes Wehl',
@@ -7643,22 +7617,13 @@ Wür Deines Inwormasion jedsd dose Lösch-Logbug gom mid dose Begründ wies dose
 	'upload_source_file' => ' (eines Dadei auw Deines Gombjud)',
 	'uploadnewversion-linktext' => 'Eines neues Wersion won dose Dadei hoglad',
 	'unwatchedpages' => 'Noggs beobagdedes Seides',
-	'unwatchedpages-summary' => 'Dose Schbesialseid ales Seides seig, wo noggs Benuds haddar auw eines Beobagdlisd.',
 	'unusedtemplates' => 'Noggs benudsdes Worlages',
-	'unusedtemplates-summary' => 'Dose Seid ales Worlages auwlisd, wo noggs in anderes Seides eingebundenes sei. Übbrüw anderes Werweises su dose Worlages, bewor dose lösch.',
 	'unusedtemplatestext' => '',
 	'unusedtemplateswlh' => 'Anderes Werweises',
-	'userstats' => 'Benudsesschdadisdig',
-	'userstatstext' => "Gebdar '''$1''' {{PLURAL:$1|regisdrärdes|regisdrärdes}} [[Special:Listusers|Benudses]].
-Won dose {{PLURAL:$2|haddar|haddar}} '''$2''' Benudses (=$4 %) $5-Regdes.",
 	'uncategorizedpages' => 'Noggs gadegorisärdes Seides',
-	'uncategorizedpages-summary' => 'Dose Schbesialseid ales Seides seig, wo haddar nog su noggs Gadegorä suweis.',
 	'uncategorizedcategories' => 'Noggs gadegorisärdes Gadegoräes',
-	'uncategorizedcategories-summary' => 'Dose Schbesialseid ales Gadegoräes seig, wo haddar selb nog su noggs Gadegorä suweis.',
 	'uncategorizedimages' => 'Noggs gadegorisärdes Dadeies',
-	'uncategorizedimages-summary' => 'Dose Schbesialseid ales Dadeies seig, wo haddar noggs in Gadegorä einord.',
 	'uncategorizedtemplates' => 'Noggs gadegorisärdes Worlages',
-	'uncategorizedtemplates-summary' => 'Dose Schbesialseid ales Worlages seig, wo haddar noggs in Gadegorä einord.',
 	'unusedcategories' => 'Noggsbenudsdes Gadegoräes',
 	'unusedimages' => 'Noggsbenudsdes Dadeies',
 	'unusedimagestext' => 'Bid beagd, das anderes Nedsseides gön dose Dadei mid eines diregdes URL wergnübw. Dose noggs als Werwend ergen, drum dose Dadei da auwwühr.',
@@ -7726,7 +7691,6 @@ $1',
 	'unlockbtn' => 'Dadesbang wreigeb',
 	'unlockdbsuccesssub' => 'Haddar Dadesbang erwolgreiges wreigeb',
 	'unlockdbsuccesstext' => 'Dose {{SITENAME}}-Dadesbang haddar wreigeb.',
-	'useajaxsearch' => 'Benuds AJAX-undschdüdsdes Sug',
 	'unknown_extension_tag' => 'Noggsbegandes Egsdenschn-Däg „$1“',
 );
 
@@ -8038,7 +8002,6 @@ $1',
 	'upload-too-many-redirects' => 'URL jo pśewjele dalejpósrědnjenja wopśimjeł',
 	'upload-unknown-size' => 'Njeznata wjelikosć',
 	'upload-http-error' => 'HTTP-zmólka nastata: $1',
-	'upload-copy-upload-invalid-domain' => 'Kopijowe nagraśa z toś teje domeny njestoje k dispoziciji.',
 	'uploadstash' => 'Schowanje nagratych datajow',
 	'uploadstash-summary' => 'Toś ten bok zmóžnja dostup do datajow, kótarež su nagrate (abo so nagrawaju), ale hyšći njejsu do wikija wózjawjone. Toś te dataje njejsu widobne za nikogo, mimo až za wužywarja, kótaryž jo je nagrał.',
 	'uploadstash-clear' => 'Schowane nagrate dataje wulašowaś',
@@ -9086,7 +9049,6 @@ Kui probleem ei kao, võta ühendust [[Special:ListUsers/sysop|administraatoriga
 	'upload-too-many-redirects' => 'URL sisaldas liiga palju ümbersuunamisi',
 	'upload-unknown-size' => 'Tundmatu suurus',
 	'upload-http-error' => 'HTTP-viga: $1',
-	'upload-copy-upload-invalid-domain' => 'Sellest domeenist pole kopeerimise teel üleslaadimine võimalik.',
 	'uploadstash' => 'Üleslaaditud failide algne hoidla',
 	'uploadstash-summary' => 'See lehekülg pakub juurdepääsu failidele, mis on üles laaditud (või mida parasjagu üles laaditakse), kuid mis pole veel vikis avaldatud. Need failid on nähtavad üksnes kasutajale, kes need üles laadis.',
 	'uploadstash-clear' => 'Kustuta failid algsest hoidlast',
@@ -12767,7 +12729,6 @@ $1',
 	'upload-too-many-redirects' => 'הכתובת מכילה הפניות רבות מדי',
 	'upload-unknown-size' => 'גודל בלתי ידוע',
 	'upload-http-error' => 'התרחשה שגיאת HTTP‏: $1',
-	'upload-copy-upload-invalid-domain' => 'העלאת קבצים משרת זה אינה אפשרית.',
 	'uploadstash' => 'מאגר העלאות',
 	'uploadstash-summary' => 'דף זה מאפשר גישה לקבצים שהועלו (או נמצאים בתהליך העלאה), אך טרם פורסמו באתר הוויקי. קבצים אלה אינם גלויים לאיש מלבד המשתמש שהעלה אותם.',
 	'uploadstash-clear' => 'מחיקת הקבצים במאגר',
@@ -12957,10 +12918,6 @@ $messages['hi'] = array(
 	'upload-maxfilesize' => 'ज्यादासे ज्यादा फ़ाइलका आकार: $1',
 	'upload-description' => 'संचिका विवरण',
 	'upload-options' => 'अपलोड करने के विकल्प',
-	'upload-wasdeleted' => "'''सूचना: आप पहले हटाई गई फ़ाईल फिर से अपलोड कर रहें हैं।'''
-
-आपको यह क्रिया वैध हैं इसके बारें में सोचना चाहियें।
-इस फ़ाईल की हटाने की सूची आपके सहायता के लिये यहां दी गई हैं:",
 	'upload-proto-error' => 'गलत प्रोटोकोल',
 	'upload-proto-error-text' => 'रिमोट अपलोड के लिये URL का नाम <code>http://</code> या <code>ftp://</code> से शुरु होना आवश्यक हैं।',
 	'upload-file-error' => 'आंतर्गत गलती',
@@ -13152,10 +13109,6 @@ $messages['hif'] = array(
 	'upload-maxfilesize' => 'ज्यादासे ज्यादा फ़ाइलका आकार: $1',
 	'upload-description' => 'संचिका विवरण',
 	'upload-options' => 'अपलोड करने के विकल्प',
-	'upload-wasdeleted' => "'''सूचना: आप पहले हटाई गई फ़ाईल फिर से अपलोड कर रहें हैं।'''
-
-आपको यह क्रिया वैध हैं इसके बारें में सोचना चाहियें।
-इस फ़ाईल की हटाने की सूची आपके सहायता के लिये यहां दी गई हैं:",
 	'upload-proto-error' => 'गलत प्रोटोकोल',
 	'upload-proto-error-text' => 'रिमोट अपलोड के लिये URL का नाम <code>http://</code> या <code>ftp://</code> से शुरु होना आवश्यक हैं।',
 	'upload-file-error' => 'आंतर्गत गलती',
@@ -13349,9 +13302,6 @@ Visual overview ke khatir [[Special:NewFiles|nawaa file ke gallery]] ke dekho.',
 	'upload-maxfilesize' => 'jaada se jaada file size: $1',
 	'upload-description' => 'File ke baare me jaankari',
 	'upload-options' => 'Upload kare ke version',
-	'upload-wasdeleted' => "'''Chetauni: Aap uu file ke upload karta hai jiske pahile delete karaa gais hai.'''
-Aap ke ii soche ke chaahi ki ii file ke upload karna appropriate hai ki nai.
-Aap ke subidha khatir deletion log hian pe hai:",
 	'upload-proto-error' => 'Protocol right nai hai',
 	'upload-proto-error-text' => 'Duur ke upload maange hai URLs jon ki suruu hoe hai <code>http://</code> nai to <code>ftp://</code>.',
 	'upload-file-error' => 'Bhitri error',
@@ -15483,7 +15433,6 @@ Ef vandamálið lagast ekki, hafðu samband við [[Special:ListUsers/sysop|stjó
 	'upload-too-many-redirects' => 'Vefslóðin inniheldur of margar tilvísanir.',
 	'upload-unknown-size' => 'Óþekkt stærð',
 	'upload-http-error' => 'HTTP villa kom upp við upphal skráarinnar: $1',
-	'upload-copy-upload-invalid-domain' => 'Lokað er fyrir afritun skráa frá öðrum vefþjón á þessu vefsvæði.',
 	'uploadstash' => 'Óútgefnar skrár',
 	'uploadstash-summary' => 'Þessi síða gefur aðgang að þeim skrám sem hafa verið hlaðið inn (eða eru í biðröð eftir því að vera hlaðið inn) en hafa ekki verið útgefnar. Þessar skrár eru eingöngu sýnilegar þeim notanda sem hlóð þeim inn.',
 	'uploadstash-clear' => 'Tæma listann',
@@ -16494,10 +16443,6 @@ Mangga mirsani [[Special:NewFiles|galeri berkas-berkas anyar]] kanggo pratélan 
 	'upload-maxfilesize' => 'Ukuran maksimal berkas: $1',
 	'upload-description' => 'Katrangan berkas',
 	'upload-options' => 'Opsi pangundhuhan',
-	'upload-wasdeleted' => "'''PÈNGET: Panjenengan ngunggahaké sawijining berkas sing wis tau dibusak.'''
-
-Panjenengan kudu nggalih perlu utawa ora mbanjuraké pangunggahan berkas ini.
-Log pambusakan berkas iki kaya mangkéné:",
 	'upload-proto-error' => 'Protokol ora bener',
 	'upload-proto-error-text' => 'Pangunggahan jarah adoh mbutuhaké URL sing diawali karo <code>http://</code> utawa <code>ftp://</code>.',
 	'upload-file-error' => 'Kaluputan internal',
@@ -16684,10 +16629,6 @@ $messages['ka'] = array(
 	'upload-maxfilesize' => 'ფაილის მაქსიმალური ზომაა $1',
 	'upload-description' => 'ფაილის აღწერა',
 	'upload-options' => 'ატვირთვის პარამეტრები',
-	'upload-wasdeleted' => "'''გაფრთხილეა: თქვენ ტვირთავთ ფაილს, რომელიც წინათ წაიშალა.'''
-
-გთხოვთ დაფიქრდეთ რამდენად მიზანშეწონილია ამ ფაილის აქ ატვირთვა.
-ინფორმაციისთვის ქვემოთ ამ ფაილის წაშლის ისტორია:",
 	'upload-proto-error' => 'არასწორი პროტოკოლი',
 	'upload-proto-error-text' => 'ატვირთვის წასაშლელად საჭიროა მისამართი, რომელიც იწყება <code>http://</code> or <code>ftp://</code>-ით.',
 	'upload-file-error' => 'შიდა შეცდომა',
@@ -23101,7 +23042,6 @@ $1',
 	'upload-too-many-redirects' => 'या आंतरजालपत्त्यात खूप पुनर्निर्देशने आहेत',
 	'upload-unknown-size' => 'अज्ञात आकारमान',
 	'upload-http-error' => 'एक एचटीटीपी चूक उद्भवली: $1',
-	'upload-copy-upload-invalid-domain' => 'संक्रमित केलेली महिती अधिक्षेत्रात उपलब्ध नाही.',
 	'uploadstash' => 'चढवणे लपवा',
 	'uploadstash-summary' => 'या पानावर अश्या संचिका पहावयास् मिळतात ज्या चढवल्या आहेत (अथवा चढवल्या जात आहेत) परंतु अजुन विकी वर प्रकाशित केल्या नाहित. या संचिका फक्त त्या सदस्यास् दिसतील ज्याने त्या चढवल्या आहेत, इतर सदस्यांस् त्या दिसणार नाहीत.',
 	'uploadstash-clear' => 'लपवलेल्या संचिका काढा',
@@ -27792,7 +27732,7 @@ $1',
 	'unblocked' => '[[User:$1|$1]] foi desbloqueado',
 	'unblocked-range' => '$1 foi desbloqueado',
 	'unblocked-id' => 'O bloqueio de $1 foi removido com sucesso',
-	'unblocked-ip' => '[[Special:Contributions/$1|$1]] has been unblocked.',
+	'unblocked-ip' => '[[Special:Contributions/$1|$1]] foi desbloqueado.',
 	'unblocklink' => 'desbloquear',
 	'unblocklogentry' => 'desbloqueou $1',
 	'unblock-hideuser' => 'Você não pode desbloquear este usuário, porque o nome de usuário dele foi ocultado.',
@@ -27804,10 +27744,10 @@ Por favor, confirme que realmente pretende fazer isso.',
 	'unlockdbsuccesssub' => 'Desbloqueio bem sucedido',
 	'unlockdbsuccesstext' => 'O banco de dados foi desbloqueado.',
 	'unknown_extension_tag' => '"$1" é uma tag de extensão desconhecida',
-	'unrate_it' => 'Unrate it',
-	'use_old_formatting' => 'Switch to Monobook skin',
-	'use_new_formatting' => 'Try new skin',
-	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki.',
+	'unrate_it' => 'Anule o seu voto',
+	'use_old_formatting' => 'Mudar para o formato Monobook',
+	'use_new_formatting' => 'Usar o formato novo',
+	'usesitejs-disabled-warning' => 'O JavaScript personalizado está desabilitado nesta wiki.',
 	'userinvalidcssjstitle' => "<span class='error'>'''Warning:''' There is no skin \"\$1\".
 Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>",
 	'userrights-summary' => '',
@@ -27966,7 +27906,6 @@ Caso o problema persista, procure um [[Special:ListUsers/sysop|administrador]].'
 	'upload-too-many-redirects' => 'A URL contém redirecionamentos demais',
 	'upload-unknown-size' => 'Tamanho desconhecido',
 	'upload-http-error' => 'Ocorreu um erro HTTP: $1',
-	'upload-copy-upload-invalid-domain' => 'Não é possível realizar envios remotos neste domínio.',
 	'uploadstash' => 'Arquivos escondidos',
 	'uploadstash-summary' => 'Esta página dá acesso aos arquivos enviados (ou que estão no processo de envio) mas que ainda não foram publicados no wiki. Estes arquivos não são visíveis para ninguém, exceto para o usuário que os enviou.',
 	'uploadstash-clear' => 'Apagar os arquivos escondidos',
@@ -28175,7 +28114,6 @@ $1',
 	'upload-too-many-redirects' => 'URL tiyayqa nisyu pusapunayuqmi',
 	'upload-unknown-size' => 'Mana riqsisqa chhikan',
 	'upload-http-error' => 'HTTP pantasqam tukusqa: $1',
-	'upload-copy-upload-invalid-domain' => 'Kay duminyumantaqa iskaychay churkuyta manam atinkichu.',
 	'uploadstash' => 'Ñawpaqta waqaychaspa churkuy',
 	'uploadstash-summary' => "Kay p'anqapiqa wikiman churkusqaña (icha churkusqa kachkaq), ichataq manaraq uyaychasqa willañiqikunatam rikunki. Kay willañiqikunataqa churkuqllam rikuyta atin, mana pi wakinpas rikunchu.",
 	'uploadstash-clear' => 'Ñawpaqta waqaychasqa willañiqikunata qulluy',
@@ -31166,7 +31104,6 @@ Ak problém pretrváva, kontaktujte [[Special:ListUsers/sysop|správcu systému]
 	'upload-too-many-redirects' => 'URL obsahoval príliš mnoho presmerovaní',
 	'upload-unknown-size' => 'Neznáma veľkosť',
 	'upload-http-error' => 'Vyskytla sa chyba HTTP: $1',
-	'upload-copy-upload-invalid-domain' => 'Kopírovanie nahraných súborov nie je dostupné z tejto domény.',
 	'uploadstash' => 'Skrýša nahraných súborov',
 	'uploadstash-summary' => 'Táto stránka poskytuje prístup k súborom nahraným (alebo práve nahrávaným), ktoré zatiaľ nie sú zverejnené na wiki. Tieto súbory nevidí nikto iný okrem používateľa, ktorý ich nahral.',
 	'uploadstash-clear' => 'Vymazať skrýšu nahraných súborov',
@@ -32490,10 +32427,6 @@ Sliku dodajete u pogodne članke koristeći sintaksu:
 	'upload-maxfilesize' => 'Maksimalna veličina fajla: $1',
 	'upload-description' => 'Opis fajla',
 	'upload-options' => 'Opcije slanja',
-	'upload-wasdeleted' => "'''Pažnja: Šaljete fajl koji je prethodno obrisan.'''
-
-Razmislite da li ste sigurni da želite poslati ovaj fajl.
-Razlog brisanja ovog fajla ranije je:",
 	'upload-proto-error' => 'Nekorektni protokol',
 	'upload-proto-error-text' => 'Slanje eksternih fajlova zahteva URLove koji počinju sa <code>http://</code> ili <code>ftp://</code>.',
 	'upload-file-error' => 'Interna greška',
@@ -36283,7 +36216,6 @@ $messages['val'] = array(
 	'userexists' => 'El nom que has entrat ya està en us. Escolliu un atre.',
 	'username' => "Nom d'usuari:",
 	'uid' => "Identificador d'usuari:",
-	'usercssjsyoucanpreview' => '<strong>Consell:</strong> Utilisa el botó «Mostra previsualisació» per probar el teu nou CSS/JS abans de guardar-lo.',
 	'usercsspreview' => "'''Recorda que estàs previsualisant el teu CSS d'usuari i que encara no s'ha guardat!'''",
 	'userjspreview' => "'''Recorda que només estàs provant/previsualisant el teu JavaScript, encara no ho has guardat!'''",
 	'userinvalidcssjstitle' => "'''Atenció:''' No existix l'apariència «$1». Recorda que les subpàgines personalisades en extensions .css i .js utilisen el títul en minúscules, per eixemple, Usuari:NOM/monobook.css no es el mateix que Usuari:NOM/Monobook.css.",
@@ -36295,9 +36227,6 @@ $messages['val'] = array(
 	'userrights-user-editname' => "Introduïx un nom d'usuari:",
 	'userrights-editusergroup' => "Edita els grups d'usuaris",
 	'userrights-groupsmember' => 'Membre de:',
-	'userrights-groupsavailable' => 'Grups disponibles:',
-	'userrights-groupshelp' => "Selecciona els grups dels quals vols suprimir-ne l'usuari o afegir-lo.
-Els grups no seleccionats no se canviaran. Pots traure la selecció d'un grup en CTRL + Clic",
 	'upload' => 'Pujar image',
 	'uploadbtn' => 'Puja un ficher',
 	'uploadnologin' => 'No has iniciat una sessió',
@@ -36321,7 +36250,6 @@ Totes les hores són les del servidor (UTC).",
 	'uploaddisabled' => "S'ha inhabilitat la càrrega",
 	'uploaddisabledtext' => "S'ha inhabilitat la càrrega de fichers en este wiki.",
 	'uploadscripted' => 'Este ficher conté codi HTML o de seqüències que pot ser interpretat equivocadament per un navegador.',
-	'uploadcorrupt' => 'El ficher està corrupte o té una extensió incorrecte. Reviseu-lo i torneu-lo a pujar.',
 	'uploadvirus' => 'El ficher conté un virus! Detalls: $1',
 	'upload-proto-error' => 'El protocol es incorrecte',
 	'upload-proto-error-text' => 'Per a les càrregues remotes fa falta que els URL comencen en <code>http://</code> o <code>ftp://</code>.',
@@ -36340,9 +36268,6 @@ Totes les hores són les del servidor (UTC).",
 	'unusedtemplates' => 'Plantilles no utilisades',
 	'unusedtemplatestext' => "Esta pàgina mostra les pàgines en l'espai de noms de plantilles, que no estan incloses en cap atra pàgina. Enecorda't de comprovar les pàgines que hi enllacen abans d'esborrar-les.",
 	'unusedtemplateswlh' => 'atres enllaços',
-	'userstats' => "Estadístiques d'usuari",
-	'userstatstext' => "Hi ha '''$1''' usuaris registrats, dels quals 
-{{PLURAL:$2|un (el '''$4%''') n'és $5|'''$2''' (el '''$4%''') en són $5}}.",
 	'uncategorizedpages' => 'Pàgines sense categoria',
 	'uncategorizedcategories' => 'Categories sense categoria',
 	'uncategorizedimages' => 'Images sense categoria',
@@ -36355,8 +36280,6 @@ Totes les hores són les del servidor (UTC).",
 	'unwatch' => 'Desatén',
 	'unwatchthispage' => 'Desatén',
 	'unwatching' => "S'està desatenent...",
-	'unprotectedarticul' => '«[[$1]]» desprotegida',
-	'unprotectsub' => "(S'està desprotegint «$1»)",
 	'undelete' => 'Restaura una pàgina borrada',
 	'undeletepage' => 'Mostra i restaura pàgines borrades',
 	'undeletepagetext' => "Les següents pàgines han segut borrades pero encara són a l'archiu i poden ser restaurades. L'archiu pot ser netejat
@@ -36377,7 +36300,6 @@ abans de la seua eliminació. El text de les revisions eliminades només està a
 	'undeletebtn' => 'Recupera!',
 	'undeletereset' => 'Reinicia',
 	'undeletecomment' => 'Comentari:',
-	'undeletedarticul' => 'restaurat "$1"',
 	'undeletedrevisions' => '$1 revisions restaurades',
 	'undeletedrevisions-files' => '$1 revisions i $2 archiu(s) restaurats',
 	'undeletedfiles' => '$1 {{PLURAL:$1|archiu restaurat|archius restaurats}}',
@@ -36389,8 +36311,6 @@ Consulta el [[Special:Log/delete|registre de borrats]] per a vore els borrats i 
 	'undelete-search-prefix' => 'Mostra pàgines que comencen:',
 	'undelete-search-submit' => 'Busca',
 	'undelete-no-results' => "No s'ha trobat cap pàgina que hi coincidix en l'archiu d'eliminació.",
-	'ucnote' => "A baix hi ha els últims <b>$1</b> canvis d'este usuari en els últims<b>$2</b> dies.",
-	'uclinks' => 'Mostra els últims $1 canvis; mostra els últims $2 dies.',
 	'uctop' => ' (actual)',
 	'unblockip' => "Desbloqueja l'usuari",
 	'unblockiptext' => "Utilisa el següent formulari per restaurar
@@ -37123,9 +37043,6 @@ Ad pladön ragivi ini pad semik, gebolös yümi fomätü:
 	'uploadvirus' => 'Ragiv at labon virudi! Pats: $1',
 	'upload-source' => 'Ragiv fonätik',
 	'upload-maxfilesize' => 'Ragivagretot gretikün: $1',
-	'upload-wasdeleted' => "'''Nuned: Löpükol ragivi büo pimoüköl.'''
-
-Vätälolös, va pötos ad löpükön ragivi at. Kodü koveniäl, jenotalised tefü moükam ragiva at pagivon is.",
 	'upload-proto-error' => 'Protok neverätik',
 	'upload-proto-error-text' => 'Löpükam flagon elis URLs me <code>http://</code> u <code>ftp://</code> primölis.',
 	'upload-file-error' => 'Pöl ninik',
