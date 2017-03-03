@@ -1,3 +1,4 @@
+
 /*global beforeEach, describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.context.uapContext', function () {
 	'use strict';
@@ -147,5 +148,12 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			PREFOOTER_LEFT_BOXAD: 3,
 			PREFOOTER_MIDDLE_BOXAD: 4
 		});
+	});
+
+	it('filter slot map that is undefined - no slot maps for given skin', function () {
+		var context = getContext(),
+			slotMap;
+
+		expect(context.filterSlotMap(slotMap)).toEqual({});
 	});
 });

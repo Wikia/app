@@ -27,7 +27,7 @@ $wgAutoloadClasses['TitleBlacklistHooks'] = dirname( __FILE__ ) . '/TitleBlackli
  */
 define( 'TBLSRC_MSG',       0 );	///< For internal usage
 define( 'TBLSRC_LOCALPAGE', 1 );	///< Local wiki page
-define( 'TBLSRC_URL',	    2 );	///< Load blacklist from URL
+define( 'TBLSRC_GLOBALPAGE',2 );	///< Global wiki page
 define( 'TBLSRC_FILE',      3 );	///< Load from file
 /** @} */
 

@@ -21,7 +21,7 @@ class PurgeWebPThumbs extends Maintenance {
 	const LIST_LIMIT = 1000;
 
 	const THUMB_SUFFIX = '.webp';
-	#const THUMB_SUFFIX = '.png';
+	const FORMAT_WEBP_MARKER = '[format=webp]';
 
 	// remove thumbnails generated during given period
 	const TIMESTAMP_FROM = '2014-06-09 09:00:00';
@@ -105,7 +105,7 @@ class PurgeWebPThumbs extends Maintenance {
 			foreach($thumbs as $thumb) {
 				$name = $thumb->name;
 
-				if (endsWith($name, self::THUMB_SUFFIX)) {
+				if (endsWith($name, self::THUMB_SUFFIX) || (FALSE !== strpos($name, self::FORMAT_WEBP_MARKER))) {
 					$name = substr($name, strlen($this->storage->getPathPrefix())); // remove path prefix from thumb path
 
 					// check the timestamp
