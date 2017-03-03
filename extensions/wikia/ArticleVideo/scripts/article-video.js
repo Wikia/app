@@ -97,7 +97,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
-			if(!waitForTransition) {
+			if (!waitForTransition) {
 				updateOoyalaSize();
 			}
 			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
@@ -199,8 +199,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
-			player.mb.subscribe( OO.EVENTS.SIZE_CHANGED, "asd", function(eventName, width, height ){
-				if(width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width, height) {
+				if (width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
 					updateOoyalaSize();
 				}
 			});
@@ -238,4 +238,5 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 
 		onScroll.bind(toggleCollapse);
 	});
+
 });

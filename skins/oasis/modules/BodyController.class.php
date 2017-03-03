@@ -463,6 +463,6 @@ class BodyController extends WikiaController {
 	}
 
 	private function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'], $featuredVideo['time'], $featuredVideo['title'] );
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
 	}
 }
