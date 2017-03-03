@@ -109,7 +109,7 @@ $messages['da'] = array(
 );
 
 $messages['de'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 Zeile $2, Spalte $3, (Byte $4): $5',
 );
 
 $messages['de-weigsbrag'] = array(
@@ -133,7 +133,7 @@ $messages['eo'] = array(
 );
 
 $messages['es'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 en la línea $2, col $3 (byte $4): $5',
 );
 
 $messages['et'] = array(
@@ -161,7 +161,7 @@ $messages['fiu-vro'] = array(
 );
 
 $messages['fr'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 à la ligne $2, colonne $3 (octet $4) : $5',
 );
 
 $messages['frp'] = array(
@@ -249,7 +249,7 @@ $messages['is'] = array(
 );
 
 $messages['it'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 a riga $2, colonna $3 (byte $4): $5',
 );
 
 $messages['iu'] = array(
@@ -257,7 +257,7 @@ $messages['iu'] = array(
 );
 
 $messages['ja'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1、$2行の$3文字目（$4バイト目）：$5',
 );
 
 $messages['jv'] = array(
@@ -393,7 +393,7 @@ $messages['ne'] = array(
 );
 
 $messages['nl'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 op regel $2, kolom $3 (byte $4): $5',
 );
 
 $messages['nn'] = array(
@@ -417,7 +417,7 @@ $messages['pam'] = array(
 );
 
 $messages['pl'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 linia $2, kolumna $3 (bajt $4): $5',
 );
 
 $messages['pms'] = array(
@@ -433,7 +433,7 @@ $messages['prg'] = array(
 );
 
 $messages['pt'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 na linha $2, coluna $3 (byte $4): $5',
 );
 
 $messages['pt-br'] = array(
@@ -457,7 +457,7 @@ $messages['roa-tara'] = array(
 );
 
 $messages['ru'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 в строке $2, позиции $3 (байт $4): $5',
 );
 
 $messages['rue'] = array(
@@ -581,10 +581,10 @@ $messages['yue'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1于行$2，列$3（$4字节）：$5',
 );
 
 $messages['zh-hant'] = array(
-	'xml-error-string' => '$1 at line $2, col $3 (byte $4): $5',
+	'xml-error-string' => '$1 於行$2，欄$3 （$4位元組）: $5',
 );
 
