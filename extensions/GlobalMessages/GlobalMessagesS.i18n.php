@@ -278,25 +278,24 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'see_more' => 'See more...',
 	'specialpages-group-wikia' => 'Fandom pages',
 	'staffsigs' => '* de
-** ForestFairy
+** Mira Laime
 * en
 ** Sannse
 ** DaNASCAT
 ** Brandon Rhea
 ** Rappy 4187
-** Ducksoup
-** Mira Laime
 ** BertH
 * es
 ** Luchofigo85
-** Vpinas
+** Bola
 * fr
+** Wyz
 ** Hypsoline
 * it
 ** Leviathan_89
 ** Cresh.
 * ja
-** Kuro0222
+** Charicocco
 * ko
 ** Miri-Nae
 * nl
@@ -310,6 +309,8 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 * pt-br
 ** Macherie ana
 * ru
+** Kuzura
+** Wildream
 ** vlazovskiy
 * vi
 ** KhangND
