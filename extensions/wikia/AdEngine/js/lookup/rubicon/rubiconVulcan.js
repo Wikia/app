@@ -149,10 +149,18 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function hasResponse(slotName) {
+		if (!win.rubiconVulcan) {
+			return false;
+		}
+
 		var placeholderName = slotMapping[slotName],
 			vulcanResponse = win.rubiconVulcan.slots && win.rubiconVulcan.slots[placeholderName];
 
-		return vulcanResponse.rawResponses && vulcanResponse.rawResponses.length > 0;
+		if (vulcanResponse && vulcanResponse.rawResponses) {
+			return vulcanResponse.rawResponses.length > 0;
+		}
+
+		return false;
 	}
 
 	function encodeParamsForTracking(params, slotName) {
@@ -167,7 +175,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		vulcanSlots.forEach(function (vulcanSlot) {
 			var ad = vulcanSlot.getBestCpm(),
 				placeholderName = vulcanSlot.id,
-				sizeId = vulcanSlot.sizeId,
+				sizeId = placeholder.sizeId,
 				cpm,
 				tier,
 				vastUrl;
