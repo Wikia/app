@@ -5335,7 +5335,7 @@ $messages['pt'] = array(
 	'group-bot' => 'Robôs',
 	'group-sysop' => 'Administradores',
 	'group-bureaucrat' => 'Burocratas',
-	'group-suppress' => 'Oversights',
+	'group-suppress' => 'Supervisores',
 	'group-all' => '(todos)',
 	'group-user-member' => '{{GENDER:$1|usuário|usuária}}',
 	'group-autoconfirmed-member' => '{{GENDER:$1|usuário autoconfirmado|usuária autoconfirmada}}',
@@ -5348,15 +5348,15 @@ $messages['pt'] = array(
 	'grouppage-bot' => '{{ns:project}}:Robôs',
 	'grouppage-sysop' => '{{ns:project}}:Administradores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
-	'grouppage-suppress' => '{{ns:project}}:Oversight',
-	'group-content-moderator' => 'Content Moderators',
-	'group-content-moderator-member' => 'Content Moderator',
-	'group-helper' => 'Fandom Helpers',
-	'group-helper-member' => 'Fandom Helper',
-	'group-staff' => 'Fandom Staff',
-	'group-staff-member' => 'Fandom Staff',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'grouppage-suppress' => '{{ns:project}}:Supervisores',
+	'group-content-moderator' => 'Moderadores de conteúdo',
+	'group-content-moderator-member' => 'Moderador de conteúdo',
+	'group-helper' => 'Ajudantes do Fandom',
+	'group-helper-member' => 'Ajudante do Fandom',
+	'group-staff' => 'Staff do Fandom',
+	'group-staff-member' => 'Staff do Fandom',
+	'group-util' => 'Utilitários do Fandom',
+	'group-util-member' => 'Utilitários do Fandom',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -5638,8 +5638,8 @@ $messages['ru'] = array(
 	'group-helper-member' => 'Помощник Фэндома',
 	'group-staff' => 'Сотрудники Фэндома',
 	'group-staff-member' => 'Сотрудник Фэндома',
-	'group-util' => 'Fandom Utilities',
-	'group-util-member' => 'Fandom Utilities',
+	'group-util' => 'Утилиты Фэндома',
+	'group-util-member' => 'Утилита Фэндома',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -6981,8 +6981,6 @@ $messages['val'] = array(
 	'grouppage-bot' => 'Proyecte:Bots',
 	'grouppage-sysop' => 'Proyecte:Administradors',
 	'grouppage-bureaucrat' => 'Proyecte:Burócrates',
-	'getimagelist' => " obtenint el llistat d'images",
-	'groups' => "Grups d'usuaris",
 );
 
 $messages['vec'] = array(
