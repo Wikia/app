@@ -248,11 +248,57 @@ $spinnerSize: 48;
 
 	&.is-related-video {
 		display: none;
+		float: left;
+		margin: 5px 30px 10px 0;
 		max-width: 300px;
 		padding-top: 0;
 
-		.video-thumbnail {
+		&:before {
+			display: none;
+		}
+
+		.video-container, .video-thumbnail {
 			position: relative;
+		}
+
+		.ooyala-article-video {
+			position: relative;
+
+			.oo-state-screen-info {
+				display: none;
+			}
+
+			.oo-action-icon {
+				bottom: auto;
+				left: 50%;
+				right: auto;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		.related-video-details {
+			border-bottom: 7px solid $color-buttons;
+			bottom: auto;
+			color: $color-text;
+			font-weight: bold;
+			left: auto;
+			line-height: normal;
+			padding: 9px 12px;
+			position: relative;
+			top: auto;
+
+			.related-video-title {
+				font-size: 14px;
+			}
+
+			.related-video-label {
+				font-size: 12px;
+				letter-spacing: .2px;
+				margin-bottom: 3px;
+				opacity: .5;
+				text-transform: uppercase;
+			}
 		}
 	}
 }

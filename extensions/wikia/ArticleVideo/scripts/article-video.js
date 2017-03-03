@@ -171,12 +171,18 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}
 		}
 
-		function arrangeRelatedVideo() {
+		function arrangeRelatedVideo(player) {
 			var $articleContent = $('#mw-content-text');
 			
 			$relatedVideo = $relatedVideo.detach();
-			$articleContent.children('h2').eq(1).before( $relatedVideo );
-			$relatedVideo.show();
+			$articleContent.children('h2').eq(1).prev('p').before( $relatedVideo );
+
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+				var videoTitle = $relatedVideo.find('.oo-state-screen-title').text();
+
+				$relatedVideo.find('.related-video-title').text(videoTitle);
+				$relatedVideo.show();
+			});
 		}
 		
 		initVideo('ooyala-article-video', window.wgArticleVideoData.videoId, function (player) {
@@ -217,7 +223,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		});
 		
 		initVideo('ooyala-article-related-video', window.wgArticleRelatedVideoData.videoId, function (player) {
-			arrangeRelatedVideo();
+			arrangeRelatedVideo(player);
 			
 			// $relatedVideo.addClass('ready-to-play');
 			// $relatedVideo.one('click', showAndPlayVideo);
