@@ -21,8 +21,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			};
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgArticleVideoData.videoId;
-			var playerParams = window.wgArticleVideoData.playerParams;
+			var ooyalaVideoId = window.wgArticleVideoData.videoId,
+				playerParams = window.wgArticleVideoData.playerParams;
 
 			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate);
 		}
@@ -94,7 +94,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
-			if(!waitForTransition) {
+			if (!waitForTransition) {
 				updateOoyalaSize();
 			}
 			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
@@ -196,8 +196,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				});
 			});
 
-			player.mb.subscribe( OO.EVENTS.SIZE_CHANGED, "asd", function(eventName, width, height ){
-				if(width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width, height) {
+				if (width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
 					updateOoyalaSize();
 				}
 			});
@@ -214,5 +214,5 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		onScroll.bind(toggleCollapse);
 	});
-	
+
 });

@@ -41,8 +41,8 @@ define('ooyala-player', function () {
 	 * @returns {void}
 	 */
 	OoyalaHTML5Player.prototype.onCreate = function (player) {
-		var messageBus = player.mb;
-		var self = this;
+		var messageBus = player.mb,
+			self = this;
 
 		this.onPlayerCreated(player);
 
@@ -57,17 +57,17 @@ define('ooyala-player', function () {
 	 * @returns {void}
 	 */
 	OoyalaHTML5Player.prototype.onPlaybackReady = function () {
+		var durationElem = document.createElement('div'),
+			playButton = document.getElementById(this.containerId).querySelector('.oo-start-screen .oo-action-icon'),
+			screenInfo = document.getElementById(this.containerId).querySelector('.oo-state-screen-info');
+
 		// Add video duration to start screen
-		var durationElem = document.createElement('div');
 		durationElem.innerHTML = mw.message('articlevideo-watch', this.getFormattedDuration(this.player.getDuration())).text().toUpperCase();
 		durationElem.classList.add('video-duration');
-		var screenInfo = document.getElementById(this.containerId).querySelector('.oo-state-screen-info');
 		screenInfo.insertBefore(durationElem, screenInfo.firstChild);
 
 		// Replace default play icon with ours.
-		var playButton = document.getElementById(this.containerId).querySelector('.oo-start-screen .oo-action-icon');
 		playButton.innerHTML = playIcon;
-
 	};
 
 	/**
@@ -106,12 +106,12 @@ define('ooyala-player', function () {
 
 	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate) {
 		var params = {
-			videoId: videoId,
-			autoplay: false,
-			pcode: playerParams.ooyalaPCode,
-			playerBrandingId: playerParams.ooyalaPlayerBrandingId
-		};
-		var html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
+				videoId: videoId,
+				autoplay: false,
+				pcode: playerParams.ooyalaPCode,
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+			},
+			html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
 		return html5Player;
 	};
