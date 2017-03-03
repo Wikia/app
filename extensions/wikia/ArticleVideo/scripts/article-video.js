@@ -137,6 +137,13 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
+			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.PLAY_VIDEO,
+					label: 'featured-video'
+				});
+			});
+
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
