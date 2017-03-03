@@ -173,7 +173,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			var $articleContent = $('#mw-content-text');
 			
 			$relatedVideo = $relatedVideo.detach();
-			$articleContent.children('h2').first().before( $relatedVideo );
+			$articleContent.children('h2').eq(1).before( $relatedVideo );
 			$relatedVideo.show();
 		}
 		
