@@ -110,6 +110,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		addEventListener('resume', setStatus('playing'));
 		addEventListener('start', setStatus('playing'));
 		addEventListener('pause', setStatus('paused'));
+		addEventListener('complete', setStatus('completed'));
 
 		return {
 			addEventListener: addEventListener,

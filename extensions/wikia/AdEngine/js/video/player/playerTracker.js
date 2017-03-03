@@ -8,8 +8,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
-], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan) {
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'),
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
+], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan, floater) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -25,6 +26,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 	function prepareData(params, playerName, eventName, errorCode) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
+			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
 			trackingData = {
 				'pv_unique_id': win.adEnginePvUID,
 				'pv_number': pageLevelParams.pv,
@@ -41,7 +43,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_network': emptyValue.int,
 				'vulcan_advertiser': emptyValue.int,
 				'vulcan_price': emptyValue.price,
-				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' ')
+				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+				'additional_1': canFloat,
+				'additional_2': (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : '')
 			},
 			vulcanResponse;
 
