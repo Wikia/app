@@ -343,7 +343,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @brief add history to wall toolbar
+	 * @brief modify toolbar
 	 *
 	 * @param $items
 	 *
@@ -356,7 +356,6 @@ class WallHooksHelper {
 		}
 
 		$title = $app->wg->Title;
-		$action = $app->wg->Request->getText( 'action' );
 
 		if ( $title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			if ( is_array( $items ) ) {
@@ -367,35 +366,6 @@ class WallHooksHelper {
 					}
 				}
 
-			}
-		}
-
-		if ( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty( $action ) ) {
-			$item = [
-					'type' => 'html',
-					'html' => Xml::element( 'a', [ 'href' => $title->getFullUrl( 'action=history' ) ], wfMessage( 'wall-toolbar-history' )->text() )
-			];
-
-			if ( is_array( $items ) ) {
-				$inserted = false;
-				$itemsout = [ ];
-
-				foreach ( $items as $value ) {
-					$itemsout[] = $value;
-
-					if ( $value['type'] == 'follow' ) {
-						$itemsout[] = $item;
-						$inserted = true;
-					}
-				}
-
-				if ( !$inserted ) {
-					array_unshift( $items, $item );
-				} else {
-					$items = $itemsout;
-				}
-			} else {
-				$items = [ $item ];
 			}
 		}
 
@@ -664,17 +634,16 @@ class WallHooksHelper {
 
 	/**
 	 * clean history after delete
-	 * @param Article $self
+	 * @param Article $article
 	 * @param $user
 	 * @param $reason
 	 * @param $id
 	 * @return bool
 	 */
-	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id ) {
-		$title = $self->getTitle();
-		$app = F::app();
+	static public function onArticleDeleteComplete( $article, $user, $reason, $id ) {
+		$title = $article->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wh = new WallHistory( $app->wg->CityId );
+			$wh = new WallHistory();
 			$wh->remove( $id );
 		}
 		return true;
@@ -693,30 +662,6 @@ class WallHooksHelper {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			return $wallMessage->canDelete( $user );
 		}
-		return true;
-	}
-
-	/**
-	 * @param RecentChange $recentChange
-	 * @return bool
-	 */
-	static public function onRecentChangeSave( $recentChange ) {
-		wfProfileIn( __METHOD__ );
-		// notifications
-		$app = F::app();
-
-		if (  MWNamespace::isTalk( $recentChange->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $recentChange->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
-			$rcType = $recentChange->getAttribute( 'rc_type' );
-
-			// FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
-			$revOldId = $recentChange->getAttribute( 'rc_this_oldid' );
-			if ( $rcType == RC_EDIT && !empty( $revOldId ) ) {
-				$helper = new WallHelper();
-				$helper->sendNotification( $revOldId, $rcType );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -905,7 +850,7 @@ class WallHooksHelper {
 				$wm->load();
 
 				if ( !$wm->isMain() ) {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 					$wm = $wm->getTopParentObj();
 					if ( is_null( $wm ) ) {
 						Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
@@ -914,7 +859,7 @@ class WallHooksHelper {
 						$wm->load();
 					}
 				} else {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 				}
 
 				$title = $wm->getMetaTitle();
@@ -1379,7 +1324,7 @@ class WallHooksHelper {
 					unset( $parent );
 				}
 
-				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getArticleId();
+				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getId();
 			}
 		}
 
@@ -2056,15 +2001,6 @@ class WallHooksHelper {
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
-		return true;
-	}
-
-	// TODO: implement this :)
-	static public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
-		/*
-
-		$oldtext = ArticleComment::removeMetadataTag($oldtext);
-		$newtext = ArticleComment::removeMetadataTag($newtext);; */
 		return true;
 	}
 

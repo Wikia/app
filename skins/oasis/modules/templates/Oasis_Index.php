@@ -75,7 +75,6 @@
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
-<?= $ivw2 ?>
 <?= $sourcePoint ?>
 <?= $gfc ?>
 

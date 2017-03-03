@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			if (module.name === 'prebid') {
 				module.trackAdaptersSlotState(providerName, slotName, params);
 			} else {
-				encodedParams = module.encodeParamsForTracking(params);
+				encodedParams = module.encodeParamsForTracking(params, slotName);
 				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
 				category = module.name + '/' + eventName + '/' + providerName;
 
@@ -111,6 +111,10 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return response;
 		}
 
+		function isSlotSupported(slotName) {
+			return module.isSlotSupported(slotName);
+		}
+
 		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
 			callback();
 		});
@@ -122,6 +126,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			getName: getName,
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
+			isSlotSupported: isSlotSupported,
 			trackState: trackState,
 			wasCalled: wasCalled
 		};
