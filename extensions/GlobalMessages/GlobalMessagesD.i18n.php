@@ -185,7 +185,6 @@ $messages['qqq'] = array(
 	'delete-confirm' => 'The title of the form to delete a page.
 
 $1 = the name of the page',
-	'delete-backlink' => '{{optional}}',
 	'delete-legend' => '{{Identical|Delete}}',
 	'deletedtext' => 'Parameters:
 * $1 is a page that was deleted
@@ -2941,7 +2940,6 @@ $messages['ckb'] = array(
 	'defemailsubject' => 'ئیمەیلی {{SITENAME}}',
 	'deletepage' => 'پەڕە بسڕەوەو',
 	'delete-confirm' => 'سڕینەوەی "$1"',
-	'delete-backlink' => '→ $1',
 	'delete-legend' => 'سڕینەوە',
 	'deletedtext' => '"<nowiki>$1</nowiki>"  سڕایەوە.
 سەیری $2 بکە بۆ تۆمارێکی دوایین سڕینەوەکان.',
@@ -3210,11 +3208,7 @@ Poslední dotaz byl:
 z funkce „$2“.
 Databáze vrátila chybu „$3: $4“',
 	'directorycreateerror' => 'Nelze vytvořit adresář „$1“.',
-	'delete-hook-aborted' => 'Smazání bylo bez bližšího vysvětlení zrušeno přípojným bodem.',
-	'defaultmessagetext' => 'Výchozí text hlášení',
 	'deletedhist' => 'Smazaná historie',
-	'difference-title' => '$1: Porovnání verzí',
-	'difference-title-multipage' => '$1 a $2: Porovnání stránek',
 	'difference-multipage' => '(Rozdíly mezi stránkami)',
 	'diff-multi' => '({{PLURAL:$1|Není zobrazena 1 mezilehlá verze|Nejsou zobrazeny $1 mezilehlé verze|Není zobrazeno $1 mezilehlých verzí}} od {{PLURAL:$2|1 uživatele|$2 uživatelů}}.)',
 	'diff-multi-manyusers' => '(Není zobrazeno $1 mezilehlých verzí od více než $2 {{PLURAL:$2|uživatele|uživatelů}}.)',
@@ -3278,15 +3272,6 @@ Cílová stránka „[[:$1]]“ již existuje. Přejete si ji smazat pro uvolně
 	'dberr-usegoogle' => 'Mezitím můžete zkusit hledat pomocí Google.',
 	'dberr-outofdate' => 'Uvědomte si, že jejich vyhledávací index našeho obsahu může být zastaralý.',
 	'dberr-cachederror' => 'Následující stránka je kopie z cache a nemusí být aktuální.',
-	'duration-seconds' => '$1 {{PLURAL:$1|sekunda|sekundy|sekund}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuta|minuty|minut}}',
-	'duration-hours' => '$1 {{PLURAL:$1|hodina|hodiny|hodin}}',
-	'duration-days' => '$1 {{PLURAL:$1|den|dny|dní}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|týden|týdny|týdnů}}',
-	'duration-years' => '$1 {{PLURAL:$1|rok|roky|let}}',
-	'duration-decades' => '$1 {{PLURAL:$1|dekáda|dekády|dekád}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|století}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|tisíciletí}}',
 );
 
 $messages['csb'] = array(
@@ -3572,125 +3557,109 @@ hvorfor siden blev slettet. Hvis du gemmer siden bliver den oprettet igen.',
 );
 
 $messages['de'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'Dezember',
+	'december-gen' => 'Dezembers',
+	'dec' => 'Dez.',
+	'delete' => 'Löschen',
+	'deletethispage' => 'Diese Seite löschen',
+	'disclaimers' => 'Impressum',
+	'disclaimerpage' => '{{ns:project}}:Lizenzbestimmungen',
+	'databaseerror' => 'Datenbankfehler',
+	'dberrortext' => 'Es ist ein Datenbankfehler aufgetreten.
+Der Grund kann ein Programmierfehler sein.
+Die letzte Datenbankabfrage lautete:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+aus der Funktion „<tt>$2</tt>“.
+Die Datenbank meldete den Fehler „<tt>$3: $4</tt>“.',
+	'dberrortextcl' => 'Es gab einen Syntaxfehler in der Datenbankabfrage.
+Die letzte Datenbankabfrage lautete: „$1“ aus der Funktion „<tt>$2</tt>“.
+Die Datenbank meldete den Fehler: „<tt>$3: $4</tt>“.',
+	'directorycreateerror' => 'Das Verzeichnis „$1“ konnte nicht angelegt werden.',
+	'deletedhist' => 'Gelöschte Versionen',
+	'difference' => '(Unterschied zwischen Versionen)',
+	'difference-multipage' => '(Unterschied zwischen Seiten)',
+	'diff-multi' => '({{PLURAL:$1|Eine dazwischenliegende Version|$1 dazwischenliegende Versionen}} von {{PLURAL:$2|einem Benutzer|$2 Benutzern}} {{PLURAL:$1|wird|werden}} nicht angezeigt)',
+	'diff-multi-manyusers' => '({{PLURAL:$1|$1 dazwischenliegende Versionen}} von mehr als {{PLURAL:$2|$2 Benutzern}}, die nicht angezeigt werden)',
+	'datedefault' => 'Standard',
+	'defaultns' => 'Anderenfalls in diesen Namensräumen suchen:',
+	'default' => 'Voreinstellung',
+	'diff' => 'Unterschied',
+	'destfilename' => 'Zielname:',
+	'duplicatesoffile' => 'Die {{PLURAL:$1|folgende Datei ist ein Duplikat|folgenden $1 Dateien sind Duplikate}} dieser Datei ([[Special:FileDuplicateSearch/$2|weitere Details]]):',
+	'download' => 'Herunterladen',
+	'disambiguations' => 'Seiten die auf Begriffsklärungsseiten verlinken',
+	'disambiguationspage' => 'Template:Begriffsklärung',
+	'disambiguations-text' => 'Die folgenden Seiten verlinken auf eine Seite zur Begriffsklärung. Sie sollten statt dessen auf die eigentlich gemeinte Seite verlinken.
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
+Eine Seite gilt als Begriffsklärungsseite, wenn sie eine der in [[MediaWiki:Disambiguationspage]] aufgeführte(n) Vorlage(n) einbindet.<br />
+Links aus Namensräumen werden hier nicht aufgelistet.',
+	'doubleredirects' => 'Doppelte Weiterleitungen',
+	'doubleredirectstext' => 'Diese Liste enthält Weiterleitungen, die auf Weiterleitungen verlinken.
+Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel der zweiten Weiterleitung, welches für gewöhnlich die gewünschte Zielseite ist, auf die bereits die erste Weiterleitung zeigen sollte.
+<del>Durchgestrichene</del> Einträge wurden bereits erfolgreich bearbeitet.',
+	'double-redirect-fixed-move' => '[[$1]] wurde verschoben und leitet nun nach [[$2]] weiter.',
+	'double-redirect-fixed-maintenance' => 'Bereinigung der doppelten Weiterleitung von [[$1]] nach [[$2]].',
+	'double-redirect-fixer' => 'RedirectBot',
+	'deadendpages' => 'Nicht verlinkende Seiten',
+	'deadendpagestext' => 'Die folgenden Seiten verweisen nicht auf andere Seiten von {{SITENAME}}.',
+	'deletedcontributions' => 'Gelöschte Beiträge',
+	'deletedcontributions-title' => 'Gelöschte Beiträge',
+	'defemailsubject' => '[{{SITENAME}}-E-Mail]',
+	'deletepage' => 'Seite löschen',
+	'delete-confirm' => 'Löschen von „$1“',
+	'delete-legend' => 'Löschen',
+	'deletedtext' => '„<nowiki>$1</nowiki>“ wurde gelöscht. Im $2 findest du eine Liste der letzten Löschungen.
 
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
+Je nach Grund für die Löschung ist es vielleicht auch sinnvoll, alle [[Special:WhatLinksHere/$1|Links auf diese Seite]] zu entfernen. Achte auch darauf ob die gelöschte Seite eine dazugehörige Diskussionsseite hatte.',
+	'dellogpage' => 'Lösch-Logbuch',
+	'dellogpagetext' => 'Dies ist das Logbuch der gelöschten Seiten und Dateien.',
+	'deletionlog' => 'Lösch-Logbuch',
+	'deletecomment' => 'Grund:',
+	'deleteotherreason' => 'Anderer/ergänzender Grund:',
+	'deletereasonotherlist' => 'Anderer Grund',
+	'deletereason-dropdown' => '* Allgemeine Löschgründe
+** Wunsch des Autors
+** Urheberrechtsverletzung
+** Offensiv/Angriffe auf andere Benutzer oder Menschen
+* Inhaltsbezogen
+** Inhalt ist nicht im Wiki erwünscht
+** Löschantrag
 ** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
-	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
-	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
-	'deletedarticle' => 'deleted "[[$1]]"',
+** Vandalismus
+* Seitenspezifisch
+** Existiert bereits
+** Falsche Schreibweise',
+	'delete-edit-reasonlist' => 'Löschgründe bearbeiten',
+	'delete-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen solcher Seiten wurde eingeschränkt, um eine versehentliche Überlastung der Server zu verhindern.',
+	'delete-warning-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen kann zu Störungen im Datenbankbetrieb führen.',
+	'databasenotlocked' => 'Die Datenbank ist nicht gesperrt.',
+	'delete_and_move' => 'Löschen und Verschieben',
+	'delete_and_move_text' => '== Löschung erforderlich ==
+
+Die Seite „[[:$1]]“ existiert bereits. Möchtest du diese löschen, um die Seite verschieben zu können?',
+	'delete_and_move_confirm' => 'Ja, Seite löschen',
+	'delete_and_move_reason' => 'gelöscht, um Platz für die Verschiebung von „[[$1]]“ zu machen',
+	'djvu_page_error' => 'DjVu-Seite außerhalb des Seitenbereichs',
+	'djvu_no_xml' => 'XML-Daten können für die DjVu-Datei nicht abgerufen werden',
+	'deletedrevision' => 'alte Version $1 gelöscht',
+	'days' => '{{PLURAL:$1|$1 Tag|$1 Tage}}',
+	'deletedwhileediting' => 'Achtung: Diese Seite wurde gelöscht, nachdem du angefangen hast sie zu bearbeiten!
+Im [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Lösch-Logbuch] findest du den Grund für die Löschung. Wenn du die Seite speicherst, wird sie neu angelegt.',
+	'descending_abbrev' => 'ab',
+	'duplicate-defaultsort' => 'Achtung: Der Sortierungsschlüssel „$2“ überschreibt den vorher verwendeten Schlüssel „$1“.',
+	'dberr-header' => 'Dieses Wiki hat ein Problem',
+	'dberr-problems' => 'Entschuldigung. Diese Seite hat momentan technische Schwierigkeiten.',
+	'dberr-again' => 'Warte einige Minuten und versuche dann neu zu laden.',
+	'dberr-info' => '(Kann keine Verbindung zum Datenbank-Server herstellen: $1)',
+	'dberr-usegoogle' => 'Du könntest in der Zwischenzeit mit Google suchen.',
+	'dberr-outofdate' => 'Beachte, dass der Suchindex unserer Inhalte bei Google veraltet sein kann.',
+	'dberr-cachederror' => 'Folgendes ist eine Kopie des Caches der angeforderten Seite und kann veraltet sein.',
+	'discuss' => 'Diskussion',
+	'defaultskin1' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt.',
+	'defaultskin2' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt. Klicke <a href="$2">hier</a> um den Quellcode zu sehen.',
+	'defaultskin3' => 'Die Admins dieses Wikis haben keinen Standard-Skin gewählt. Benutzt wird der Standard-Skin von Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Setze das Standard-Farbschema für dieses Wiki:',
+	'deletedarticle' => '"[[$1]]" gelöscht',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -3735,13 +3704,10 @@ MySQL haddar dose Wehl „<tt>$3: $4</tt>“ meld.',
 Dose ledsdes Dadesbangabwräg wesdar: „$1“ aus dose Wungsion „<tt>$2</tt>“.
 MySQL haddar meld dose Wehl: „<tt>$3: $4</tt>“.',
 	'directorycreateerror' => 'Dose Werseig „$1“ haddar noggs gön anleg.',
-	'deletedrev' => '[gelöschdes]',
 	'deletedhist' => 'Gelöschdes Wersiones',
 	'difference' => '(Undschied swisch Wersiones)',
 	'diff-multi' => '(Dose Wersionswergleig {{PLURAL:$1|1 daswisch liegdares Wersion|$1 daswisch liegdares Wersiones}} mid einbesiehdar.)',
-	'dateformat' => 'Dadumeswormad',
 	'datedefault' => 'Schdandard',
-	'datetime' => 'Dadum und Dseid',
 	'defaultns' => 'In dose Namesräumes schdandardmäs sol sug:',
 	'default' => 'Woreinschdel',
 	'diff' => 'Undschied',
@@ -3752,12 +3718,8 @@ MySQL haddar meld dose Wehl: „<tt>$3: $4</tt>“.',
 	'disambiguationspage' => 'Template:Begriwsglär',
 	'disambiguations-text' => 'Dose wolgendes Seides auw eines Seid su Begriwsglär werweis. Schdadd dose sol dose auw dose Seid wo eig mein werweis.<br />Eines Seid als Begriwsglärseid behand, wan [[MediaWiki:Disambiguationspage]] auw dose werweis.<br />Werweises aus Namesräumes noggs auw dose auwlisd.',
 	'doubleredirects' => 'Dobbeldes Weidleides',
-	'doubleredirects-summary' => 'In dose Lisd seddar Weidleides, wo auw eines weideres Weidleid werweis.
-In jedes Dseil Werweises sei su dose ersdes und suaides Weidleid und dose Siel won dose suaides Weidleid, wo normales dose gewünschdes Sielseid sei,
-wo aba schon dose ersdes Weidleid sol drauwseig, werschdeddar?.',
 	'doubleredirectstext' => '',
 	'deadendpages' => 'Sagggassesseides',
-	'deadendpages-summary' => 'Dose Schbesialseid eines Lisd won Seides seig, wo hadddar noggs Werweises auw anderes Seides od haddar nur Werweises auw Seides wo nog gar noggs geb.',
 	'deadendpagestext' => '',
 	'defemailsubject' => '{{SITENAME}}-I-Mehl',
 	'deletepage' => 'Seid lösch',
@@ -3903,12 +3865,7 @@ Slědne wopytane wótpšašowanje jo było:
 z funkcije "$2".
 Datowa banka jo zmólku "$3: $4" wrośiła',
 	'directorycreateerror' => 'Njejo było móžno, zapis „$1“ wutwóriś.',
-	'delete-hook-aborted' => 'Wulašowanje pśez kokulu pśetergnjone.
-Njejo žedno wujasnjenje.',
-	'defaultmessagetext' => 'Standardny tekst powěźeńki',
 	'deletedhist' => 'wulašowane stawizny',
-	'difference-title' => '$1: Rozdźěl mjazy wersijami',
-	'difference-title-multipage' => '$1 a $2: Rozdźěl mjazy bokami',
 	'difference-multipage' => '(Rozdźěl mjazy bokami)',
 	'diff-multi' => '({{PLURAL:$1|Jadna mjazywersija|$1 mjazywersiji|$1 mjazywersije|$1 mjazywersijow}} wót {{PLURAL:$2|jadnogo wužywarja|$2 wužywarjowu|$2 wužywarjow|$2 wužywarjow}} {{PLURAL:$1|njepokazana|njepokazanej|njepokazane|njepokazane}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Jadna mjazywersija|$1 mjazywersiji|$1 mjazywersije|$1 mjazywersijow}} wót wěcej ako {{PLURAL:$2|jadnogo wužywarja|$2 wužywarjowu|$2 wužywarjow|$2 wužywarjow}} {{PLURAL:$1|njepokazana|njepokazanej|njepokazane|njepokazane}})',
@@ -3974,15 +3931,6 @@ Bok „[[:$1]]“ južo eksistěrujo. Coš jen wulašowaś, aby mógał toś ten
 	'dberr-usegoogle' => 'Móžoš mjaztym pśez Google pytaś.',
 	'dberr-outofdate' => 'Źiwaj na to, až jich indekse našogo wopśimjeśa by mógli zestarjone byś.',
 	'dberr-cachederror' => 'Slědujuca jo pufrowana kopija pominanego boka a by mógła zestarjona byś.',
-	'duration-seconds' => '$1 {{PLURAL:$1|sekunda|sekunźe|sekundy|sekundow}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuta|minuśe|minuty|minutow}}',
-	'duration-hours' => '$1 {{PLURAL:$1|góźina|góźinje|góźiny|góźinow}}',
-	'duration-days' => '$1 {{PLURAL:$1|źeń|dnja|dny|dnjow}}',
-	'duration-weeks' => '$1 {{PLURAL: $1|tyźeń|tyźenja|tyźenje|tyźenjow}}',
-	'duration-years' => '$1 {{PLURAL: $1|lěto|lěśe|lěta|lět}}',
-	'duration-decades' => '$1 {{PLURAL:$1|lětźasetk|lětźasetka|lětźasetki|lětźastkow}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|stolěśe|stolěśi|stolěśa|stolěśow}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|lěttysac|lěttysaca|lěttysace|lěttysacow}}',
 );
 
 $messages['dtp'] = array(
@@ -4270,124 +4218,106 @@ La celartikolo "[[:$1]]" jam ekzistas. Ĉu vi volas forigi ĝin por krei spacon 
 );
 
 $messages['es'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'diciembre',
+	'december-gen' => 'diciembre',
+	'dec' => 'dic',
+	'delete' => 'Borrar',
+	'deletethispage' => 'Borrar esta página',
+	'disclaimers' => 'Aviso legal',
+	'disclaimerpage' => 'Project:Limitación general de responsabilidad',
+	'databaseerror' => 'Error de la base de datos',
+	'dberrortext' => 'Ha ocurrido un error de sintaxis en una consulta a la base de datos.
+Esto puede indicar un error en el software.
+La última consulta a la base de datos que se intentó fue:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
+dentro de la función «<tt>$2</tt>».
+La base de datos devolvió el error «<tt>$3: $4</tt>».',
+	'dberrortextcl' => 'Ha ocurrido un error de sintaxis en una consulta a la base de datos.
+La última consulta a la base de datos que se intentó fue:
+«$1»
+desde la función «$2».
+Base de datos retornó error «$3: $4».',
+	'directorycreateerror' => 'No se pudo crear el directorio "$1".
 <br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+Por favor, reporta el error anterior a través de [[Special:Contact/bug|este formulario]].',
+	'deletedhist' => 'Historial borrado',
+	'difference' => '(Diferencias entre revisiones)',
+	'difference-multipage' => '(Diferencia entre las páginas)',
+	'diff-multi' => '({{plural:$1|Una edición intermedia no se muestra|$1 ediciones intermedias no se muestran}}.)',
+	'diff-multi-manyusers' => '(No se {{PLURAL:$1|muestra una edición intermedia|muestran $1 ediciones intermedias}} de {{PLURAL:$2|un usuario|$2 usuarios}})',
+	'datedefault' => 'Sin preferencia',
+	'defaultns' => 'Buscar en estos espacios de nombres por defecto:',
+	'default' => 'por defecto',
+	'diff' => 'dif',
+	'destfilename' => 'Nombre del archivo de destino:',
+	'duplicatesoffile' => '{{PLURAL:$1|El siguiente archivo es un duplicado|Los siguientes $1 archivos son duplicados}} de éste ([[Special:FileDuplicateSearch/$2|más detalles]]):',
+	'download' => 'descargar',
+	'disambiguations' => 'Páginas que enlazan con páginas de desambiguación',
+	'disambiguationspage' => 'Template:Desambiguación',
+	'disambiguations-text' => "Las siguientes páginas enlazan a una '''página de desambiguación'''. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].",
+	'doubleredirects' => 'Redirecciones dobles',
+	'doubleredirectstext' => '<b>Atención:</b> Esta lista puede contener enlaces falsos. Esto quiere decir normalmente que hay texto adicional con enlaces bajo el primer #REDIRECT.<br /> Cada fila contiene enlaces al segundo y tercer redirect, así como la primera línea del segundo redirect, en la que normalmente se encontrará el artículo "real" al que el primer redirect debería apuntar.',
+	'double-redirect-fixed-move' => '[[$1]] ha sido trasladado, ahora es una redirección a [[$2]]',
+	'double-redirect-fixed-maintenance' => 'Corrigiendo la doble redirección desde [[$1]] a [[$2]].',
+	'double-redirect-fixer' => 'Corrector de redirecciones',
+	'deadendpages' => 'Páginas sin salida',
+	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas en este wiki.',
+	'deletedcontributions' => 'Contribuciones de usuario borradas',
+	'deletedcontributions-title' => 'Contribuciones borradas de usuario',
+	'defemailsubject' => 'Has recibido un email desde {{SITENAME}}',
+	'deletepage' => 'Borrar esta página',
+	'delete-confirm' => 'Borrar «$1»',
+	'delete-legend' => 'Borrar',
+	'deletedtext' => "'''\"\$1\" ha sido borrado!'''
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
+* Ten en cuenta que otras páginas pueden seguir [[Special:WhatLinksHere/\$1|enlazando a esta página]].
+* Puedes seguir viendo la página borrada [[Special:Undelete/\$1|aquí]].
+* Visita \$2 para un registro de borrados recientes.
 
 {{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
+Esta página tiene también una '''[[{{TALKPAGENAME}}|página de discusión]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=edit}} editar], [{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Página+de+discusión+de+un+borrado}} delete]</small>). Quizás quieras borrarla también.
 |}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
+	'dellogpage' => 'Registro de borrados',
+	'dellogpagetext' => 'Abajo hay una lista de los borrados más recientes.',
+	'deletionlog' => 'registro de borrados',
+	'deletecomment' => 'Motivo:',
+	'deleteotherreason' => 'Otro motivo:',
+	'deletereasonotherlist' => 'Otro motivo',
+	'deletereason-dropdown' => '*Razones comunes de borrado
+** A petición del mismo autor
+** Violación de copyright
+** Vandalismo',
+	'delete-edit-reasonlist' => 'Editar razones de borrado',
+	'delete-toobig' => 'Esta página tiene un historial muy grande, con más de $1 {{PLURAL:$1|revisión|revisiones}}. Borrar este tipo de páginas ha sido restringido para prevenir posibles problemas en {{SITENAME}}.',
+	'delete-warning-toobig' => 'Esta página tiene un historial de más de $1 {{PLURAL:$1|revisión|revisiones}}. Eliminarla puede perturbar las operaciones de la base de datos de {{SITENAME}}. Ten cuidado al borrar.',
+	'databasenotlocked' => 'La base de datos no está bloqueada.',
+	'delete_and_move' => 'Borrar y renombrar',
+	'delete_and_move_text' => '==Se necesita borrado==
+
+La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al traslado?',
+	'delete_and_move_confirm' => 'Sí, borrar la página',
+	'delete_and_move_reason' => 'Borrada para trasladar [[$1]]',
+	'djvu_page_error' => 'Página DjVu fuera de rango',
+	'djvu_no_xml' => 'Imposible obtener XML para el archivo DjVu',
+	'deletedrevision' => 'Borrada revisión antigua $1',
+	'days' => '{{PLURAL:$1|un día|$1 días}}',
+	'deletedwhileediting' => "'''Aviso''': ¡Esta página fue borrada después de que usted empezara a editar!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
-	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
-	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+	'duplicate-defaultsort' => "'''Atención:''' La clave de ordenamiento predeterminada «$2» anula la clave de ordenamiento anterior «$1».",
+	'dberr-header' => 'Este wiki tiene problemas',
+	'dberr-problems' => 'Lo sentimos.
+Este sitio está experimentando dificultades técnicas.',
+	'dberr-again' => 'Prueba a recargar dentro de unos minutos.',
+	'dberr-info' => '(No se puede contactar con la base de datos del servidor: $1)',
+	'dberr-usegoogle' => 'Mientras tanto puedes probar buscando a través de Google.',
+	'dberr-outofdate' => 'Ten en cuenta que su índice de nuestro contenido puede estar desactualizado.',
+	'dberr-cachederror' => 'La siguiente es una página guardada de la página solicitada, y puede no estar actualizada.',
+	'discuss' => 'Discusión',
+	'defaultskin1' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada',
+	'defaultskin2' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada. Haz clic <a href="$2">here</a> para ver el código.',
+	'defaultskin3' => 'Los administradores de este wiki no han elegido una piel predeterminada. Utilizando la predeterminada de Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Configurar la piel predeterminada para este wiki:',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -4416,10 +4346,7 @@ Viimane andmebaasipäring oli:
 ja see kutsuti funktsioonist "$2".
 Andmebaas tagastas veateate "$3: $4".',
 	'directorycreateerror' => 'Ei suuda luua kausta "$1".',
-	'defaultmessagetext' => 'Sõnumi vaiketekst',
 	'deletedhist' => 'Kustutatud ajalugu',
-	'difference-title' => 'Erinevus lehekülje "$1" redaktsioonide vahel',
-	'difference-title-multipage' => 'Erinevus lehekülgede "$1" ja "$2" vahel',
 	'difference-multipage' => '(Lehekülgede erinevus)',
 	'diff-multi' => '({{PLURAL:$1|Ühte|$1}} vahepealset {{PLURAL:$2|ühe|$2}} kasutaja redaktsiooni ei näidata.)',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Ühte|$1}} vahepealset rohkem kui {{PLURAL:$2|ühe|$2}} kasutaja redaktsiooni ei näidata.)',
@@ -4488,15 +4415,6 @@ Kas kustutad selle, et luua võimalus teisaldamiseks?',
 	'dberr-usegoogle' => "Proovi vahepeal otsida Google'ist.",
 	'dberr-outofdate' => "Pane tähele, et Google'is talletatud meie sisu võib olla iganenud.",
 	'dberr-cachederror' => 'See koopia taotletud leheküljest on vahemälus ja ei pruugi olla ajakohane.',
-	'duration-seconds' => '$1 {{PLURAL:$1|sekundi}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuti}}',
-	'duration-hours' => '$1 {{PLURAL:$1|tunni}}',
-	'duration-days' => '$1 {{PLURAL:$1|päeva}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|nädala}}',
-	'duration-years' => '$1 {{PLURAL:$1|aasta}}',
-	'duration-decades' => '$1 {{PLURAL:$1|kümnendi}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|sajandi}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|aastatuhande}}',
 );
 
 $messages['eu'] = array(
@@ -4997,121 +4915,99 @@ Grein við navninum "[[:$1]]" finst longu. Ynskir tú at strika hana til tess at
 );
 
 $messages['fr'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'décembre',
+	'december-gen' => 'décembre',
+	'dec' => 'déc',
+	'delete' => 'Supprimer',
+	'deletethispage' => 'Supprimer cette page',
+	'disclaimers' => 'Avertissements',
+	'disclaimerpage' => 'Project:Avertissements généraux',
+	'databaseerror' => 'Erreur de la base de données',
+	'dberrortext' => 'Une erreur de syntaxe de la requête dans la base de données est survenue.
+Ceci peut indiquer un bogue dans le logiciel.
+La dernière requête traitée par la base de données était :
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
+depuis la fonction « <tt>$2</tt> ».
+La base de données a renvoyé l’erreur « <tt>$3 : $4</tt> ».',
+	'dberrortextcl' => 'Une requête dans la base de données comporte une erreur de syntaxe.
+La dernière requête émise était :
+« $1 »
+dans la fonction « $2 ».
+La base de données a renvoyé l’erreur « $3 : $4 ».',
+	'directorycreateerror' => 'Impossible de créer le dossier « $1 ».',
+	'deletedhist' => 'Historique supprimé',
+	'difference' => '(Différences entre les versions)',
+	'difference-multipage' => '(Différence entre les pages)',
+	'diff-multi' => '({{PLURAL:$1|Une révision intermédiaire|$1 révisions intermédiaires}} par {{PLURAL:$2|un utilisateur|$2 utilisateurs}} {{PLURAL:$1|est masquée|sont masquées}})',
+	'diff-multi-manyusers' => "({{PLURAL:$1|Une révision intermédiaire|$1 révisions intermédiaires}} par plus {{PLURAL:$2|d'un utilisateur|de $2 utilisateurs}} {{PLURAL:$1|est masquée|sont masquées}})",
+	'datedefault' => 'Aucune préférence',
+	'defaultns' => 'Rechercher par défaut dans ces espaces de noms :',
+	'default' => 'défaut',
 	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
-
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+	'destfilename' => 'Nom sous lequel le fichier sera enregistré :',
+	'duplicatesoffile' => '{{PLURAL:$1|Le fichier suivant est un duplicata|Les fichiers suivants sont des duplicatas}} de celui-ci ([[Special:FileDuplicateSearch/$2|plus de détails]]) :',
+	'download' => 'télécharger',
+	'disambiguations' => 'Pages ayant des liens vers des pages d’homonymie',
+	'disambiguationspage' => 'Template:Homonymie',
+	'disambiguations-text' => "Les pages suivantes comportent un lien vers une '''page d’homonymie'''.
+Ces liens ambigus devraient plutôt pointer vers le bon article.<br />
+Une page est considérée comme une page d’homonymie si elle inclut (directement ou récursivement) un des modèles listés sur [[MediaWiki:Disambiguationspage]].",
+	'doubleredirects' => 'Doubles redirections',
+	'doubleredirectstext' => 'Voici une liste des pages qui redirigent vers des pages qui sont elles-mêmes des pages de redirection.
+Chaque entrée contient des liens vers la première et la seconde redirections, ainsi que la première ligne de texte de la seconde page, ce qui fournit habituellement la « vraie » page cible, vers laquelle la première redirection devrait rediriger.
+Les entrées <del>barrées</del> ont été résolues.',
+	'double-redirect-fixed-move' => 'Cette redirection, dont la cible [[$1]] a été renommée, mène maintenant vers [[$2]].',
+	'double-redirect-fixed-maintenance' => 'Corrige la double redirection de [[$1]] vers [[$2]].',
+	'double-redirect-fixer' => 'Correcteur de redirection',
+	'deadendpages' => 'Pages en impasse',
+	'deadendpagestext' => 'Les pages suivantes ne contiennent aucun lien vers d’autres pages du wiki.',
+	'deletedcontributions' => 'Contributions supprimées',
+	'deletedcontributions-title' => 'Contributions supprimées',
+	'defemailsubject' => '{{SITENAME}} E-mail de l’utilisateur « $1 »',
+	'deletepage' => 'Supprimer la page',
+	'delete-confirm' => 'Supprimer « $1 »',
+	'delete-legend' => 'Supprimer',
+	'deletedtext' => '« $1 » a été supprimée.
+Voir $2 pour une liste des suppressions récentes.',
+	'dellogpage' => 'Journal des suppressions de page',
+	'dellogpagetext' => 'Voici la liste des suppressions les plus récentes.',
+	'deletionlog' => 'journal des suppressions',
+	'deletecomment' => 'Motif :',
+	'deleteotherreason' => 'Motif autre ou supplémentaire :',
+	'deletereasonotherlist' => 'Autre motif',
+	'deletereason-dropdown' => '* Motifs de suppression les plus courants
+** Demande de l’auteur
+** Violation des droits d’auteur
+** Vandalisme',
+	'delete-edit-reasonlist' => 'Modifier les motifs de suppression de page',
+	'delete-toobig' => 'Cette page possède un historique important de modifications, dépassant $1 version{{PLURAL:$1||s}}.
+La suppression de telles pages a été restreinte pour prévenir des perturbations accidentelles de {{SITENAME}}.',
+	'delete-warning-toobig' => 'Cette page possède un historique important de modifications, dépassant $1 version{{PLURAL:$1||s}}.
+La supprimer peut perturber le fonctionnement de la base de données de {{SITENAME}} ;
+veuiller ne procéder qu’avec prudence.',
+	'databasenotlocked' => 'La base de données n’est pas verrouillée.',
+	'delete_and_move' => 'Supprimer et renommer',
+	'delete_and_move_text' => '== Suppression requise ==
+La page de destination « [[:$1]] » existe déjà.
+Êtes-vous certain{{GENDER:||e|}} de vouloir la supprimer pour permettre ce renommage ?',
+	'delete_and_move_confirm' => 'Oui, supprimer la page de destination',
+	'delete_and_move_reason' => 'Page supprimée pour permettre le renommage depuis "[[$1]]"',
+	'djvu_page_error' => 'Page DjVu hors limites',
+	'djvu_no_xml' => 'Impossible de récupérer le XML pour le fichier DjVu',
+	'deletedrevision' => 'Ancienne version $1 supprimée',
+	'days' => '{{PLURAL:$1|$1 jour|$1 jours}}',
+	'deletedwhileediting' => "'''Attention''' : cette page a été supprimée après que vous avez commencé à la modifier !",
+	'descending_abbrev' => 'décr.',
+	'duplicate-defaultsort' => 'Attention : la clé de tri par défaut « $2 » écrase la précédente « $1 ».',
+	'dberr-header' => 'Ce wiki a un problème',
+	'dberr-problems' => 'Désolé ! Ce site rencontre des difficultés techniques.',
+	'dberr-again' => 'Essayez d’attendre quelques minutes et rechargez.',
+	'dberr-info' => '(Connexion au serveur de base de données impossible : $1)',
+	'dberr-usegoogle' => 'Vous pouvez essayer de chercher avec Google pendant ce temps.',
+	'dberr-outofdate' => 'Notez que leurs index de notre contenu peuvent être dépassés.',
+	'dberr-cachederror' => 'Ceci est une copie cachée de la page demandée et peut être dépassée.',
+	'discuss' => 'Discuter',
+	'defaultskin_choose' => 'Choisir le thème par défaut pour ce wiki :',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -5170,10 +5066,7 @@ La dèrriére requéta trètâ per la bâsa de balyês ére :
 dês la fonccion « $2 ».
 La bâsa de balyês at retornâ l’èrror « $3 : $4 ».',
 	'directorycreateerror' => 'Empossiblo de fâre lo dossiér « $1 ».',
-	'defaultmessagetext' => 'Mèssâjo per dèfôt',
 	'deletedhist' => 'Historico suprimâ',
-	'difference-title' => 'Difèrences entre les vèrsions de « $1 »',
-	'difference-title-multipage' => 'Difèrences entre les pâges « $1 » et « $2 »',
 	'difference-multipage' => '(Difèrences entre les pâges)',
 	'diff-multi' => '({{PLURAL:$1|Yona vèrsion entèrmèdièra|$1 vèrsions entèrmèdières}} per {{PLURAL:$2|yon usanciér|$2 usanciérs}} {{PLURAL:$1|est pas montrâ|sont pas montrâs}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Yona vèrsion entèrmèdièra|$1 vèrsions entèrmèdières}} per més de $2 usanciér{{PLURAL:$2||s}} {{PLURAL:$1|est pas montrâ|sont pas montrâs}})',
@@ -5244,15 +5137,6 @@ La voléd-vos suprimar por pèrmetre lo changement de nom ?',
 	'dberr-usegoogle' => 'Vos pouede tâchiér de chèrchiér avouéc Google pendent cél temps.',
 	'dberr-outofdate' => 'Notâd que lors endèxes de noutron contegnu pôvont étre dèpassâs.',
 	'dberr-cachederror' => 'O est una copia cachiê de la pâge demandâ et pôt étre dèpassâ.',
-	'duration-seconds' => '$1 second{{PLURAL:$1|a|es}}',
-	'duration-minutes' => '$1 menut{{PLURAL:$1|a|es}}',
-	'duration-hours' => '$1 hor{{PLURAL:$1|a|es}}',
-	'duration-days' => '$1 jorn{{PLURAL:$1||s}}',
-	'duration-weeks' => '$1 seman{{PLURAL:$1|a|es}}',
-	'duration-years' => '$1 an{{PLURAL:$1||s}}',
-	'duration-decades' => '$1 dècèni{{PLURAL:$1|a|es}}',
-	'duration-centuries' => '$1 sièclo{{PLURAL:$1||s}}',
-	'duration-millennia' => '$1 milènèro{{PLURAL:$1||s}}',
 );
 
 $messages['frr'] = array(
@@ -6233,12 +6117,7 @@ $messages['he'] = array(
 מתוך הפונקציה "$2".
 בסיס הנתונים החזיר את השגיאה "$3: $4".',
 	'directorycreateerror' => 'יצירת התיקייה "$1" נכשלה.',
-	'delete-hook-aborted' => 'המחיקה הופסקה על־ידי מבנה Hook.
-לא ניתן הסבר.',
-	'defaultmessagetext' => 'טקסט ההודעה המקורי',
 	'deletedhist' => 'הגרסאות המחוקות',
-	'difference-title' => '$1: הבדלים בין גרסאות',
-	'difference-title-multipage' => '$1 ו{{GRAMMAR:תחילית|$2}}: הבדלים בין דפים',
 	'difference-multipage' => '(הבדלים בין דפים)',
 	'diff-multi' => '({{PLURAL:$1|גרסת ביניים אחת|$1 גרסאות ביניים}} של {{PLURAL:$2|משתמש אחד|$2 משתמשים}} {{PLURAL:$1|אינה מוצגת|אינן מוצגות}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|גרסת ביניים אחת|$1 גרסאות ביניים}} של יותר {{PLURAL:$2|ממשתמש אחד|מ־$2 משתמשים}} {{PLURAL:$1|אינה מוצגת|אינן מוצגות}})',
@@ -6304,15 +6183,6 @@ $messages['he'] = array(
 	'dberr-usegoogle' => 'באפשרותכם לנסות לחפש דרך גוגל בינתיים.',
 	'dberr-outofdate' => 'שימו לב שהתוכן שלנו כפי שנשמר במאגר שם עשוי שלא להיות מעודכן.',
 	'dberr-cachederror' => 'זהו עותק שמור של המידע, והוא עשוי שלא להיות מעודכן.',
-	'duration-seconds' => '{{PLURAL:$1|שנייה|$1 שניות}}',
-	'duration-minutes' => '{{PLURAL:$1|דקה|$1 דקות}}',
-	'duration-hours' => '{{PLURAL:$1|שעה|$1 שעות|שעתיים}}',
-	'duration-days' => '{{PLURAL:$1|יום|$1 ימים|יומיים}}',
-	'duration-weeks' => '{{PLURAL:$1|שבוע|$1 שבועות|שבועיים}}',
-	'duration-years' => '{{PLURAL:$1|שנה|$1 שנים|שנתיים}}',
-	'duration-decades' => '{{PLURAL:$1|עשור|$1 עשורים}}',
-	'duration-centuries' => '{{PLURAL:$1|מאה שנה|$1 מאות שנים|מאתיים שנה}}',
-	'duration-millennia' => '{{PLURAL:$1|אלף שנה|$1 אלפי שנים|אלפיים שנה}}',
 	'discuss' => 'שיחה',
 );
 
@@ -7457,8 +7327,6 @@ Síðasta gagnagrunnsfyrirspurnin var:
 MySQL skilar villuboðanum „$3: $4“',
 	'directorycreateerror' => 'Gat ekki búið til efnisskrána "$1".',
 	'deletedhist' => 'Eyðingaskrá',
-	'difference-title' => '$1: Munur á milli útgáfa',
-	'difference-title-multipage' => '$1 og $2: Munur á milli síðna',
 	'difference-multipage' => '(Munur á milli síðna)',
 	'diff-multi' => '({{PLURAL:$1|Ein millibreyting ekki sýnd|$1 millibreytingar ekki sýndar}} frá {{PLURAL:$2|notanda|$2 notendum}}.)',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Ein millibreyting ekki sýnd|$1 millibreytingar ekki sýndar}} frá fleiri en {{PLURAL:$2|einum notanda|$2 notendum}}.)',
@@ -7527,131 +7395,96 @@ Tæknilegir örðugleikar eru á þessari síðu.',
 	'dberr-usegoogle' => 'Þú getur notað Google til að leita á meðan.',
 	'dberr-outofdate' => 'Athugaðu að afrit þeirra gætu verið úreld.',
 	'dberr-cachederror' => 'Þetta er afritað eintak af umbeðinni síðu og gæti verið úreld.',
-	'duration-seconds' => '$1 {{PLURAL:$1|sekúnda|sekúndur}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|mínúta|mínútur}}',
-	'duration-hours' => '$1 {{PLURAL:$1|klukkustund|klukkustundir}}',
-	'duration-days' => '$1 {{PLURAL:$1|dagur|dagar}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|vika|vikur}}',
-	'duration-years' => '$1 {{PLURAL:$1|ár|ár}}',
-	'duration-decades' => '$1 {{PLURAL:$1|áratugur|áratugir}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|öld|aldir}}',
 	'discuss' => 'Spjall',
 );
 
 $messages['it'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'dicembre',
+	'december-gen' => 'dicembre',
+	'dec' => 'dic',
+	'delete' => 'Cancella',
+	'deletethispage' => 'Cancella questa pagina',
+	'disclaimers' => 'Avvertenze',
+	'disclaimerpage' => 'Project:Avvertenze generali',
+	'databaseerror' => 'Errore del database',
+	'dberrortext' => 'Errore di sintassi nella richiesta inoltrata al database.
+Ciò potrebbe indicare la presenza di un bug nel software.
+L\'ultima query inviata al database è stata:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
+richiamata dalla funzione "<tt>$2</tt>".
+Il database ha restituito il seguente errore "<tt>$3: $4</tt>".',
+	'dberrortextcl' => 'Errore di sintassi nella richiesta inoltrata al database.
+L\'ultima query inviata al database è stata:
 "$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
+richiamata dalla funzione "$2".
+Il database ha restituito il seguente errore "$3: $4".',
+	'directorycreateerror' => 'Impossibile creare la directory "$1".',
+	'deletedhist' => 'Cronologia cancellata',
+	'difference' => '(Differenze fra le revisioni)',
+	'difference-multipage' => '(Differenze fra le pagine)',
+	'diff-multi' => '({{PLURAL:$1|Una revisione intermedia|$1 revisioni intermedie}} di {{PLURAL:$2|un utente|$2 utenti}} non mostrate)',
+	'diff-multi-manyusers' => '({{PLURAL:$1|Una revisione intermedia|$1 revisioni intermedie}} di oltre $2 {{PLURAL:$2|utente|utenti}} non mostrate)',
+	'datedefault' => 'Nessuna preferenza',
+	'defaultns' => 'In caso contrario, cerca in questi namespace:',
+	'default' => 'predefinito',
 	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+	'destfilename' => 'Nome del file di destinazione:',
+	'duplicatesoffile' => '{{PLURAL:$1|Il seguente file è un duplicato|I seguenti $1 file sono duplicati}} di questo file ([[Special:FileDuplicateSearch/$2|ulteriori dettagli]]):',
+	'download' => 'scarica',
+	'disambiguations' => 'Pagine che si collegano a pagine di disambiguazione',
+	'disambiguationspage' => 'Template:Disambigua',
+	'disambiguations-text' => "Le pagine nella lista che segue contengono dei collegamenti a '''pagine di disambiguazione''' e non all'argomento cui dovrebbero fare riferimento.<br />Vengono considerate pagine di disambiguazione tutte quelle che contengono i template elencati in [[MediaWiki:Disambiguationspage]]",
+	'doubleredirects' => 'Redirect doppi',
+	'doubleredirectstext' => 'In questa pagina sono elencate pagine che reindirizzano ad altre pagine di redirect.
+Ciascuna riga contiene i collegamenti al primo ed al secondo redirect, oltre alla prima riga di testo del secondo redirect che di solito contiene la pagina di destinazione "corretta" alla quale dovrebbe puntare anche il primo redirect.
+I redirect <del>cancellati</del> sono stati corretti.',
+	'double-redirect-fixed-move' => '[[$1]] è stata spostata automaticamente, ora è un redirect a [[$2]]',
+	'double-redirect-fixed-maintenance' => 'Corretto doppio redirect da [[$1]] a [[$2]].',
+	'double-redirect-fixer' => 'Correttore di redirect',
+	'deadendpages' => 'Pagine senza uscita',
+	'deadendpagestext' => 'Le pagine indicate di seguito sono prive di collegamenti verso altre pagine di {{SITENAME}}.',
+	'deletedcontributions' => 'Contributi utente cancellati',
+	'deletedcontributions-title' => 'Contributi utente cancellati',
+	'defemailsubject' => 'Messaggio da {{SITENAME}} dall\'utente "$1"',
+	'deletepage' => 'Cancella pagina',
+	'delete-confirm' => 'Cancella "$1"',
+	'delete-legend' => 'Cancella',
+	'deletedtext' => 'La pagina "$1" è stata cancellata.
+Consultare il log delle $2 per un elenco delle pagine cancellate di recente.',
+	'dellogpage' => 'Cancellazioni',
+	'dellogpagetext' => 'Di seguito sono elencate le pagine cancellate di recente.',
+	'deletionlog' => 'cancellazioni',
+	'deletecomment' => 'Motivo:',
+	'deleteotherreason' => 'Altra motivazione o motivazione aggiuntiva:',
+	'deletereasonotherlist' => 'Altra motivazione',
+	'deletereason-dropdown' => "*Motivazioni più comuni per la cancellazione
+** Richiesta dell'autore
+** Violazione di copyright
+** Vandalismo",
+	'delete-edit-reasonlist' => 'Modifica i motivi di cancellazione',
+	'delete-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione è stata limitata per evitare di creare accidentalmente dei problemi di funzionamento al database di {{SITENAME}}.',
+	'delete-warning-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione può creare dei problemi di funzionamento al database di {{SITENAME}}; procedere con cautela.',
+	'databasenotlocked' => 'Il database non è bloccato.',
+	'delete_and_move' => 'Cancella e sposta',
+	'delete_and_move_text' => '==Cancellazione richiesta==
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
+La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla per proseguire con lo spostamento?',
+	'delete_and_move_confirm' => 'Sì, sovrascrivi la pagina esistente',
+	'delete_and_move_reason' => 'Cancellata per rendere possibile lo spostamento da "[[$1]]"',
+	'djvu_page_error' => 'Numero di pagina DjVu errato',
+	'djvu_no_xml' => "Impossibile ottenere l'XML per il file DjVu",
+	'deletedrevision' => 'Cancellata la vecchia revisione di $1.',
+	'days' => '{{PLURAL:$1|un giorno|$1 giorni}}',
+	'deletedwhileediting' => "'''Attenzione''': questa pagina è stata cancellata dopo che hai cominciato a modificarla!",
+	'descending_abbrev' => 'decresc',
+	'duplicate-defaultsort' => 'Attenzione: la chiave di ordinamento predefinita "$2" sostituisce la precedente "$1".',
+	'dberr-header' => 'Questa wiki ha un problema',
+	'dberr-problems' => 'Questo sito sta avendo dei problemi tecnici.',
+	'dberr-again' => 'Prova ad attendere qualche minuto e ricaricare.',
+	'dberr-info' => '(Impossibile contattare il server del database: $1)',
+	'dberr-usegoogle' => 'Puoi provare a cercare su Google nel frattempo.',
+	'dberr-outofdate' => 'Nota che la loro indicizzazione dei nostri contenuti potrebbe non essere aggiornata.',
+	'dberr-cachederror' => 'Quella che segue è una copia cache della pagina richiesta, e potrebbe non essere aggiornata.',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -7754,124 +7587,116 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 );
 
 $messages['ja'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
-<blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
+	'december' => '12月',
+	'december-gen' => '12月',
+	'dec' => '12月',
+	'delete' => '削除',
+	'deletethispage' => 'このページを削除',
+	'disclaimers' => '免責事項',
+	'disclaimerpage' => 'Project:免責事項',
+	'databaseerror' => 'データベース・エラー',
+	'dberrortext' => 'データベースクエリの構文エラーが発生しました。
+ソフトウェアにバグがある可能性があります。
+最後に実行を試みたクエリは次の通りです：
+関数「<tt>$2</tt>」内
+<blockquote><tt>$1</tt></blockquote>。
+データベースの返したエラー「<tt>$3：$4</tt>」',
+	'dberrortextcl' => 'データベースクエリの構文エラーが発生しました。
+最後に実行を試みたクエリは次の通りです:
+関数 "$2" 内
 "$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
-
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
-	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
-	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+データベースの返したエラー "$3: $4"',
+	'directorycreateerror' => 'ディレクトリー「$1」を作成できませんでした。',
+	'deletedhist' => '削除された履歴',
+	'difference' => '（版間での差分）',
+	'difference-multipage' => '（ページ間の差分）',
+	'diff-multi' => '（$2人の利用者による、間の$1版が非表示）',
+	'diff-multi-manyusers' => '（$2人以上の利用者による、間の$1版が非表示）',
+	'datedefault' => '選択なし',
+	'defaultns' => 'その他の場合、次の名前空間でのみ検索する：',
+	'default' => '既定',
+	'diff' => '差分',
+	'destfilename' => '掲載するファイル名',
+	'duplicatesoffile' => '以下の$1ファイルが、このファイルと内容が同一です（[[Special:FileDuplicateSearch/$2|詳細]]）：',
+	'download' => 'ダウンロード',
+	'disambiguations' => '曖昧さ回避ページにリンクしているページ',
+	'disambiguationspage' => 'Template:曖昧回避',
+	'disambiguations-text' => "以下のページは'''曖昧さ回避ページ'''へリンクしています。
+これらのページは、より適した主題のページへリンクされるべきです。<br />
+[[MediaWiki:Disambiguationspage]]からリンクされたテンプレートを使用しているページは、曖昧さ回避ページと見なされます。",
+	'doubleredirects' => '二重転送',
+	'doubleredirectstext' => 'これは他のリダイレクトページへのリダイレクトの一覧です。
+各行には、最初のリダイレクトと、その転送先のリダイレクト、そのまた転送先へのリンクが表示されています。多くの場合、最終の転送先が正しい転送先であり、最初のリダイレクトは直接最後の転送先に向けるべきです。
+<del>打ち消し線</del>のはいった項目は既に修正されています。',
+	'double-redirect-fixed-move' => '[[$1]]が移動されました。
+これからは[[$2]]に転送されます。',
+	'double-redirect-fixed-maintenance' => '[[$1]]から[[$2]]への二重転送を修正します。',
+	'double-redirect-fixer' => '転送修正係',
+	'deadendpages' => '行き止まりページ',
+	'deadendpagestext' => '以下のページは、{{SITENAME}}の他のページにリンクしていません。',
+	'deletedcontributions' => '削除された記事を含む投稿履歴',
+	'deletedcontributions-title' => '利用者の削除された投稿',
+	'defemailsubject' => '{{SITENAME}} のユーザーからの新着メール',
+	'deletepage' => 'ページを削除',
+	'delete-confirm' => '「$1」の削除',
+	'delete-legend' => '削除',
+	'deletedtext' => '「$1」は削除されました。
+最近の削除に関しては、$2を参照してください。',
+	'dellogpage' => '削除記録',
+	'dellogpagetext' => '以下は、最近の削除と復帰の一覧です。',
+	'deletionlog' => '削除記録',
+	'deletecomment' => '理由：',
+	'deleteotherreason' => '他の、または追加の理由：',
+	'deletereasonotherlist' => 'その他の理由',
+	'deletereason-dropdown' => '*よくある削除理由
+** 投稿者依頼
+** 著作権侵害
+** 荒らし
+* ヴァンダリズムと問題
+** 著作権侵害
+** スパム
+** ヴァンダリズム
+* メンテナンス
+** 作者による依頼
+** ハウスキーピング
+** 削除マーク
+* リダイレクト
+** 壊れたリダイレクト
+** 未使用のリダイレクト
+** ページ移動によるリダイレクトの残骸',
+	'delete-edit-reasonlist' => '削除理由を編集する',
+	'delete-toobig' => 'このページには、$1版より多い編集履歴があります。
+このようなページの削除は、{{SITENAME}}の偶発的な問題を避けるため、制限されています。',
+	'delete-warning-toobig' => 'このページには、 $1版より多い編集履歴があります。
+削除すると、{{SITENAME}}のデータベース処理に大きな負荷がかかります。
+十分に注意してください。',
+	'databasenotlocked' => 'データベースはロックされていません。',
+	'delete_and_move' => '削除して移動する',
+	'delete_and_move_text' => '== 削除が必要です ==
+移動先「[[:$1]]」は既に存在しています。
+移動するためにこのページを削除しますか？',
+	'delete_and_move_confirm' => 'ページを削除します',
+	'delete_and_move_reason' => '「[[$1]]」からの移動のために削除',
+	'djvu_page_error' => 'DjVuページが範囲外です',
+	'djvu_no_xml' => 'DjVuファイルのXMLデータを取得できません',
+	'deletedrevision' => '古い版$1を削除しました',
+	'days' => '{{PLURAL:$1|$1日}}',
+	'deletedwhileediting' => "'''警告：'''このページが、編集開始後に削除されました！",
+	'descending_abbrev' => '降順',
+	'duplicate-defaultsort' => "'''警告：'''既定の並び替えキー「$2」が、その前に書かれている既定の並び替えキー「$1」を上書きしています。",
+	'dberr-header' => '問題発生中です',
+	'dberr-problems' => '申し訳ありません！
+このウェブサイトに技術的な問題が発生しています。',
+	'dberr-again' => '数分間待った後、もう一度読み込んでください。',
+	'dberr-info' => '（データベースサーバー：$1に接続できませんでした。）',
+	'dberr-usegoogle' => '元に戻るまで、Googleを利用して検索することができます。',
+	'dberr-outofdate' => 'それらが収集した内容は古い可能性があることに注意してください。',
+	'dberr-cachederror' => 'これは要求されたページをキャッシュした複製であり、古くなっている可能性があります。',
+	'discuss' => 'このページについて話し合う',
+	'defaultskin1' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。',
+	'defaultskin2' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。<a href="$2">ここ</a>をクリックすると、スタイルシートのコードを見ることが出来ます。',
+	'defaultskin3' => 'このウィキの管理者は、デフォルトの外装を選択していません。デフォルトを使う場合は、<b>$1</b>になります。',
+	'defaultskin_choose' => 'このウィキのデフォルトの外装:',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -11218,8 +11043,6 @@ $messages['mr'] = array(
 MySQL returned error "$3: $4".',
 	'directorycreateerror' => '"$1" कार्यधारीका (directory) तयार केली जाऊ शकली नाही.',
 	'deletedhist' => 'वगळलेला इतिहास',
-	'difference-title' => '"$1" च्या विविध उजळण्या',
-	'difference-title-multipage' => '"$1" व "$2" या पानान मधला फरक',
 	'difference-multipage' => '(पानांमधील फरक)',
 	'diff-multi' => '{{PLURAL:$2|सदस्याची|$2 सदस्यांच्या}} ({{PLURAL:$1|आवृत्ती|$1 आवृत्त्या}} दाखवल्या नाहीत)',
 	'diff-multi-manyusers' => '{{PLURAL:$2|सदस्याची|$2 सदस्यांच्या}} ({{PLURAL:$1|आवृत्ती|$1 आवृत्त्या}} दाखवल्या नाहीत)',
@@ -11285,14 +11108,6 @@ MySQL returned error "$3: $4".',
 	'dberr-usegoogle' => 'तोपर्यंत गूगलवर शोधून पहा',
 	'dberr-outofdate' => 'लक्षात घ्या, आमच्या मजकुराबाबत त्यांची सुची कालबाह्य असु शकते',
 	'dberr-cachederror' => 'ही मागवलेल्या पानाची सयीतील प्रत आहे, ती अद्ययावत नसण्याची शक्यता आहे.',
-	'duration-seconds' => '$1 {{PLURAL:$1|सेकंदापूर्वी|सेकंदांपूर्वी}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|मिनिटापूर्वी|मिनिटांपूर्वी}}',
-	'duration-hours' => '$1 {{PLURAL:$1|तासापूर्वी|तासांपूर्वी}}',
-	'duration-days' => '$1 {{PLURAL:$1|दिवसापूर्वी|दिवसांपूर्वी}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|आठवड्यापूर्वी | आठवड्यांपूर्वी}}',
-	'duration-years' => '$1 {{PLURAL:$1|वर्षापूर्वी|वर्षांपूर्वी}}',
-	'duration-decades' => '$1 {{PLURAL:$1|दशकापूर्वी|दशकांपूर्वी }}',
-	'duration-centuries' => '$1 {{PLURAL:$1|शतकापूर्वी|शतकांपूर्वी }}',
 );
 
 $messages['mrj'] = array(
@@ -12122,120 +11937,99 @@ $messages['niu'] = array(
 );
 
 $messages['nl'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'december',
+	'december-gen' => 'december',
+	'dec' => 'dec',
+	'delete' => 'Verwijderen',
+	'deletethispage' => 'Deze pagina verwijderen',
+	'disclaimers' => 'Voorbehoud',
+	'disclaimerpage' => 'Project:Algemeen voorbehoud',
+	'databaseerror' => 'Databasefout',
+	'dberrortext' => 'Er is een syntaxisfout in het databaseverzoek opgetreden.
+Mogelijk zit er een fout in de software.
+Het laatste verzoek aan de database was:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
-
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
+vanuit de functie “<tt>$2</tt>”.
+De database gaf de volgende foutmelding “<tt>$3: $4</tt>”.',
+	'dberrortextcl' => 'Er is een syntaxisfout in het databaseverzoek opgetreden.
+Het laatste verzoek aan de database was:
+“$1”
+vanuit de functie “$2”.
+De database gaf de volgende foutmelding: “$3: $4”',
+	'directorycreateerror' => 'Map “$1” kon niet aangemaakt worden.',
+	'deletedhist' => 'verwijderde geschiedenis',
+	'difference' => '(Verschil tussen bewerkingen)',
+	'difference-multipage' => "(Verschil tussen pagina's)",
+	'diff-multi' => '({{PLURAL:$1|Eén tussenliggende versie|$1 tussenliggende versies}} door {{PLURAL:$2|één gebruiker|$2 gebruikers}} {{PLURAL:$1|wordt|worden}} niet weergegeven)',
+	'diff-multi-manyusers' => '($1 tussenliggende {{PLURAL:$1|versie|versies}} door meer dan $2 {{PLURAL:$2|gebruiker|gebruikers}}  worden niet weergegeven)',
+	'datedefault' => 'Geen voorkeur',
+	'defaultns' => 'Anders in de volgende naamruimten zoeken:',
+	'default' => 'standaard',
+	'diff' => 'wijz',
+	'destfilename' => 'Opslaan als:',
+	'duplicatesoffile' => '{{PLURAL:$1|Het volgende bestand is|De volgende $1 bestanden zijn}} identiek aan dit bestand ([[Special:FileDuplicateSearch/$2|meer details]]):',
+	'download' => 'downloaden',
+	'disambiguations' => "Pagina's die verwijzen naar doorverwijspagina's",
+	'disambiguationspage' => 'Template:Doorverwijspagina',
+	'disambiguations-text' => "Hieronder staan pagina's die verwijzen naar een '''doorverwijspagina'''.
+Deze horen waarschijnlijk direct naar het juiste onderwerp te verwijzen.
+<br />Een pagina wordt gezien als doorverwijspagina als er een sjabloon op staat dat opgenomen is op [[MediaWiki:Disambiguationspage]]",
+	'doubleredirects' => 'Dubbele doorverwijzingen',
+	'doubleredirectstext' => "Deze lijst bevat pagina's die doorverwijzen naar andere doorverwijspagina's.
+Elke rij bevat verwijzingen naar de eerste en de tweede doorverwijspagina en een verwijzing naar de doelpagina van de tweede doorverwijspagina.
+Meestal is de laatste pagina het eigenlijke doel, waar de eerste pagina naar zou moeten doorverwijzen.
+<del>Doorgehaalde regels</del> geven aan dat het probleem al is opgelost.",
+	'double-redirect-fixed-move' => '[[$1]] is verplaatst en is nu een doorverwijzing naar [[$2]]',
+	'double-redirect-fixed-maintenance' => 'Correctie dubbele doorverwijzing van [[$1]] naar [[$2]].',
+	'double-redirect-fixer' => 'Doorverwijzingen opschonen',
+	'deadendpages' => "Pagina's zonder verwijzingen",
+	'deadendpagestext' => "De onderstaande pagina's verwijzen niet naar andere pagina's in deze wiki.",
+	'deletedcontributions' => 'Verwijderde bijdragen',
+	'deletedcontributions-title' => 'Verwijderde gebruikersbijdragen',
+	'defemailsubject' => 'E-mail van {{SITENAME}}-gebruiker "$1"',
+	'deletepage' => 'Pagina verwijderen',
+	'delete-confirm' => '"$1" verwijderen',
+	'delete-legend' => 'Verwijderen',
+	'deletedtext' => '"$1" is verwijderd.
+Zie het $2 voor een overzicht van recente verwijderingen.',
+	'dellogpage' => 'Verwijderingslogboek',
+	'dellogpagetext' => "Hieronder wordt een lijst met recent verwijderde pagina's en bestanden weergegeven.",
+	'deletionlog' => 'verwijderingslogboek',
+	'deletecomment' => 'Reden:',
+	'deleteotherreason' => 'Andere reden:',
+	'deletereasonotherlist' => 'Andere reden',
+	'deletereason-dropdown' => '*Veel voorkomende verwijderredenen
+** Op aanvraag van auteur
+** Schending van auteursrechten
+** Vandalisme',
+	'delete-edit-reasonlist' => 'Redenen voor verwijderen bewerken',
+	'delete-toobig' => "Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
+Het verwijderen van dit soort pagina's is met rechten beperkt om het per ongeluk verstoren van de werking van {{SITENAME}} te voorkomen.",
+	'delete-warning-toobig' => 'Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
+Het verwijderen van deze pagina kan de werking van de database van {{SITENAME}} verstoren.
+Wees voorzichtig.',
+	'databasenotlocked' => 'De database is niet geblokkeerd.',
+	'delete_and_move' => 'Verwijderen en hernoemen',
+	'delete_and_move_text' => '==Verwijdering nodig==
+Onder de naam "[[:$1]]" bestaat al een pagina.
+Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
+	'delete_and_move_confirm' => 'Ja, de pagina verwijderen',
+	'delete_and_move_reason' => 'Verwijderd in verband met hernoeming van "[[$1]]"',
+	'djvu_page_error' => 'DjVu-pagina buiten bereik',
+	'djvu_no_xml' => 'De XML voor het DjVu-bestand kon niet opgehaald worden',
+	'deletedrevision' => 'De oude versie $1 is verwijderd',
+	'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
+	'deletedwhileediting' => "'''Let op''': deze pagina is verwijderd terwijl je bezig was met je bewerking!",
+	'descending_abbrev' => 'afl.',
+	'duplicate-defaultsort' => 'Waarschuwing: De standaardsortering "$2" krijgt voorrang voor de sortering "$1".',
+	'dberr-header' => 'Deze wiki heeft een probleem',
+	'dberr-problems' => 'Onze excuses. Deze site ondervindt op het moment technische problemen.',
+	'dberr-again' => 'Wacht een aantal minuten en probeer het daarna opnieuw.',
+	'dberr-info' => '(Kan geen verbinding maken met de databaseserver: $1)',
+	'dberr-usegoogle' => 'Wellicht kun je in de tussentijd zoeken via Google.',
+	'dberr-outofdate' => "Let op: hun indexen van onze pagina's zijn wellicht niet recent.",
+	'dberr-cachederror' => 'Deze pagina is een kopie uit de cache en is wellicht niet de meest recente versie.',
+	'discuss' => 'Overleg',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -12911,121 +12705,101 @@ $messages['pi'] = array(
 );
 
 $messages['pl'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'grudzień',
+	'december-gen' => 'grudnia',
+	'dec' => 'gru',
+	'delete' => 'Usuń',
+	'deletethispage' => 'Usuń tę stronę',
+	'disclaimers' => 'Informacje prawne',
+	'disclaimerpage' => 'Project:Informacje prawne',
+	'databaseerror' => 'Błąd bazy danych',
+	'dberrortext' => 'Wystąpił błąd składni w zapytaniu do bazy danych.
+Może to oznaczać błąd w oprogramowaniu.
+Ostatnie, nieudane zapytanie to:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
-
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'deletedarticle' => 'deleted "[[$1]]"',
+wysłane przez funkcję „<tt>$2</tt>”.
+Baza danych zgłosiła błąd „<tt>$3: $4</tt>”.',
+	'dberrortextcl' => 'Wystąpił błąd składni w zapytaniu do bazy danych.
+Ostatnie, nieudane zapytanie to:
+„$1”
+wywołane zostało przez funkcję „$2”.
+Baza danych zgłosiła błąd „$3: $4”',
+	'directorycreateerror' => 'Nie udało się utworzyć katalogu „$1”.',
+	'deletedhist' => 'Usunięta historia edycji',
+	'difference' => '(Różnice między wersjami)',
+	'difference-multipage' => '(Różnica między stronami)',
+	'diff-multi' => '(Nie pokazano $1 wersji {{PLURAL:$1|utworzonej|utworzonych}} przez {{PLURAL:$2|jednego użytkownika|$2 użytkowników}})',
+	'diff-multi-manyusers' => '(Nie pokazano $1 {{PLURAL:$1|pośredniej wersji utworzonej|pośrednich wersji utworzonych}} przez {{PLURAL:$2|jednego użytkownika|$2 użytkowników}})',
+	'datedefault' => 'Domyślny',
+	'defaultns' => 'Albo przeszukuj przestrzenie nazw:',
+	'default' => 'domyślnie',
+	'diff' => 'różn.',
+	'destfilename' => 'Nazwa docelowa',
+	'duplicatesoffile' => '{{PLURAL:$1|Następujący plik jest kopią|Następujące pliki są kopiami}} pliku ([[Special:FileDuplicateSearch/$2|więcej informacji]]):',
+	'download' => 'pobierz',
+	'disambiguations' => 'Strony linkujące do stron ujednoznaczniających',
+	'disambiguationspage' => '* Template:disambig
+* Template:ujednoznacznienie',
+	'disambiguations-text' => "Poniższe strony odwołują się do '''stron ujednoznaczniających''',
+a powinny odwoływać się bezpośrednio do stron treści.<br />
+Strona uznawana jest za ujednoznaczniającą, jeśli zawiera szablon linkowany przez stronę [[MediaWiki:Disambiguationspage]]",
+	'doubleredirects' => 'Podwójne przekierowania',
+	'doubleredirectstext' => 'Lista zawiera strony z przekierowaniami do stron, które przekierowują do innej strony.
+Każdy wiersz zawiera linki do pierwszego i drugiego przekierowania oraz link, do którego prowadzi drugie przekierowanie. Ostatni link prowadzi zazwyczaj do strony, do której powinna w rzeczywistości przekierowywać pierwsza strona.
+<del>Skreślenie</del> oznacza naprawienie przekierowania.',
+	'double-redirect-fixed-move' => 'Naprawa podwójnego przekierowania [[$1]] → [[$2]]',
+	'double-redirect-fixed-maintenance' => 'Naprawiono podwójne przekierowanie z [[$1]] do [[$2]].',
+	'double-redirect-fixer' => 'Naprawiacz przekierowań',
+	'deadendpages' => 'Strony bez linków wewnętrznych',
+	'deadendpagestext' => 'Poniższe strony nie posiadają odnośników do innych stron znajdujących się w {{GRAMMAR:MS.lp|{{SITENAME}}}}.',
+	'deletedcontributions' => 'Usunięty wkład użytkownika',
+	'deletedcontributions-title' => 'Usunięty wkład użytkownika',
+	'defemailsubject' => '{{SITENAME}} – e‐mail od użytkownika „$1“',
+	'deletepage' => 'Usuń stronę',
+	'delete-confirm' => 'Usuwanie „$1”',
+	'delete-legend' => 'Usuń',
+	'deletedtext' => 'Usunięto „$1”.
+Zobacz na stronie $2 rejestr ostatnio wykonanych usunięć.',
+	'dellogpage' => 'Usunięte',
+	'dellogpagetext' => 'Poniżej znajduje się lista ostatnio wykonanych usunięć.',
+	'deletionlog' => 'rejestr usunięć',
+	'deletecomment' => 'Powód',
+	'deleteotherreason' => 'Inny lub dodatkowy powód:',
+	'deletereasonotherlist' => 'Inny powód',
+	'deletereason-dropdown' => '* Najczęstsze powody usunięcia
+** Prośba autora
+** Naruszenie praw autorskich
+** Wandalizm
+** Niepotrzebna strona
+** Zbędne przekierowanie',
+	'delete-edit-reasonlist' => 'Edytuj listę przyczyn usunięcia',
+	'delete-toobig' => 'Ta strona ma bardzo długą historię edycji, ponad $1 {{PLURAL:$1|zmianę|zmiany|zmian}}.
+Usunięcie jej mogłoby spowodować zakłócenia w pracy {{GRAMMAR:D.lp|{{SITENAME}}}} i dlatego zostało ograniczone.',
+	'delete-warning-toobig' => 'Ta strona ma bardzo długą historię edycji, ponad $1 {{PLURAL:$1|zmianę|zmiany|zmian}}.
+Bądź ostrożny, ponieważ usunięcie jej może spowodować zakłócenia w pracy {{GRAMMAR:D.lp|{{SITENAME}}}}.',
+	'databasenotlocked' => 'Baza danych nie jest zablokowana.',
+	'delete_and_move' => 'Usuń i przenieś',
+	'delete_and_move_text' => '== Przeniesienie wymaga usunięcia innej strony ==
+Strona docelowa „[[:$1]]” istnieje.
+Czy chcesz ją usunąć, by zrobić miejsce dla przenoszonej strony?',
+	'delete_and_move_confirm' => 'Tak, usuń stronę',
+	'delete_and_move_reason' => 'Usunięto, by zrobić miejsce dla przenoszonej strony „[[$1]]”',
+	'djvu_page_error' => 'Strona DjVu poza zakresem',
+	'djvu_no_xml' => 'Nie można pobrać danych w formacie XML dla pliku DjVu',
+	'deletedrevision' => 'Usunięto poprzednie wersje $1',
+	'days' => '{{PLURAL:$1|$1 dzień|$1 dni}}',
+	'deletedwhileediting' => "'''Uwaga!''' Ta strona została usunięta po tym, jak rozpoczął{{GENDER:|eś|aś|eś(‐aś)}} jej edycję!",
+	'descending_abbrev' => 'mal.',
+	'duplicate-defaultsort' => 'Uwaga: Domyślnym kluczem sortowania będzie „$2” i zastąpi on wcześniej wykorzystywany klucz „$1”.',
+	'dberr-header' => 'Ta wiki nie działa poprawnie',
+	'dberr-problems' => 'Przepraszamy! Witryna ma problemy techniczne.',
+	'dberr-again' => 'Spróbuj przeładować stronę za kilka minut.',
+	'dberr-info' => '(Brak komunikacji z serwerem bazy danych – $1)',
+	'dberr-usegoogle' => 'Możesz spróbować wyszukać w międzyczasie za pomocą Google.',
+	'dberr-outofdate' => 'Uwaga – indeksy zawartości serwisu mogą być nieaktualne.',
+	'dberr-cachederror' => 'Strona została pobrana z pamięci podręcznej i może być nieaktualna.',
+	'discuss' => 'Dyskutuj',
+	'deletedarticle' => 'usunięto [[$1]]',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -13401,120 +13175,117 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => 'Dezembro',
+	'december-gen' => 'Dezembro',
+	'dec' => 'Dez.',
+	'delete' => 'Eliminar',
+	'deletethispage' => 'Eliminar esta página',
+	'disclaimers' => 'Exoneração de responsabilidade',
+	'disclaimerpage' => 'Project:Aviso_geral',
+	'databaseerror' => 'Erro na base de dados',
+	'dberrortext' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
+Isto pode indicar um defeito neste programa.
+A última tentativa de consulta à base de dados foi:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
+na função "<tt>$2</tt>".
+A base de dados devolveu o erro "<tt>$3: $4</tt>".',
+	'dberrortextcl' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
+A última tentativa de consulta à base de dados foi:
 "$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
+na função "$2".
+A base de dados devolveu o erro "$3: $4"',
+	'directorycreateerror' => 'Não foi possível criar o directório "$1".',
+	'deletedhist' => 'Histórico de eliminações',
+	'difference' => '(Diferença entre edições)',
+	'difference-multipage' => '(Diferenças entre páginas)',
+	'diff-multi' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de {{PLURAL:$2|um utilizador|$2 utilizadores}} {{PLURAL:$1|não apresentada|não apresentadas}})',
+	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de mais de {{PLURAL:$2|um utilizador|$2 utilizadores}} não {{PLURAL:$1|apresentada|apresentadas}})',
+	'datedefault' => 'Sem preferência',
+	'defaultns' => 'Por omissão, pesquisar nestes espaços nominais:',
+	'default' => 'padrão',
+	'diff' => 'dif',
+	'destfilename' => 'Nome do ficheiro de destino:',
+	'duplicatesoffile' => '{{PLURAL:$1|O seguinte ficheiro é duplicado|Os seguintes $1 ficheiros são duplicados}} deste ficheiro ([[Special:FileDuplicateSearch/$2|mais detalhes]]):',
 	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
+	'disambiguations' => 'Páginas com ligações para páginas de desambiguação',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+	'disambiguations-text' => 'As páginas abaixo contêm links para uma página de desambiguação.
+Estes links deviam ser desambiguados, apontando-os para a página apropriada.<br />
+Considera-se que uma página é de desambiguação se nela for utilizada uma predefinição que esteja definida em [[MediaWiki:Disambiguationspage]].',
+	'doubleredirects' => 'Redireccionamentos duplos',
+	'doubleredirectstext' => 'Esta página lista todas as páginas que redireccionam para outras páginas de redireccionamento.
+Cada linha contém links para o primeiro e segundo redireccionamentos, bem como o destino do segundo redireccionamento, geralmente contendo a verdadeira página de destino, que devia ser o destino do primeiro redireccionamento.
+<del>Entradas cortadas</del> já foram solucionadas.',
+	'double-redirect-fixed-move' => '[[$1]] foi movido.
+Agora redirecciona para [[$2]].',
+	'double-redirect-fixed-maintenance' => 'A corrigir redireccionamento duplo de [[$1]] para [[$2]].',
+	'double-redirect-fixer' => 'Corrector de redireccionamentos',
+	'deadendpages' => 'Páginas sem saída',
+	'deadendpagestext' => 'As seguintes páginas não contêm links para outras páginas na {{SITENAME}}.',
+	'deletedcontributions' => 'Edições eliminadas',
+	'deletedcontributions-title' => 'Edições eliminadas',
+	'defemailsubject' => '{{SITENAME}} e-mail do usuário "$1"',
+	'deletepage' => 'Eliminar página',
+	'delete-confirm' => 'Eliminar "$1"',
+	'delete-legend' => 'Eliminar',
+	'deletedtext' => '"<nowiki>$1</nowiki>" foi eliminada.
+Consulte $2 para um registro de eliminações recentes.
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
 
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+\'\'\'"$1" foi apagada.!\'\'\'
+
+* Por favor, atente que algumas paginas ainda podem [[Special:WhatLinksHere/$1|ligar a esta pagina]].
+* Voce pode ver a pagina apagada [[Special:Undelete/$1|aqui]].
+* Veja  $2 para um registro de eliminações recentes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Usuario||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
+Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Voce pode preferir apaga-la tambem.
+|}}}}}}',
+	'dellogpage' => 'Registo de eliminações',
+	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
+	'deletionlog' => 'registo de eliminações',
+	'deletecomment' => 'Motivo:',
+	'deleteotherreason' => 'Outro/motivo adicional:',
+	'deletereasonotherlist' => 'Outro motivo',
+	'deletereason-dropdown' => '* Motivos de eliminação comuns
+** Pedido do autor
+** Violação de direitos de autor
+** Vandalismo
+** SPAM 
+** Texto sem sentido
+** Duplicado
+** Obscenidade / Cconteudo inapropriado
+** O texto não é uma pergunta
+** Redirecionamento desnecessário
+** Atentado ortográfico',
+	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
+	'delete-toobig' => 'Esta página tem um histórico longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
+A eliminação de páginas como esta foi restringida na {{SITENAME}}, para evitar problemas acidentais.',
+	'delete-warning-toobig' => 'Esta página tem um histórico de edições longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
+Eliminá-la poderá causar problemas na base de dados da {{SITENAME}};
+prossiga com precaução.',
+	'databasenotlocked' => 'A base de dados não está bloqueada.',
+	'delete_and_move' => 'Eliminar e mover',
+	'delete_and_move_text' => '==Eliminação necessária==
+A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder mover?',
+	'delete_and_move_confirm' => 'Sim, eliminar a página',
+	'delete_and_move_reason' => 'Eliminada para poder mover "[[$1]]" para este título',
+	'djvu_page_error' => 'página DjVu inacessível',
+	'djvu_no_xml' => 'Não foi possível aceder ao XML para o ficheiro DjVU',
+	'deletedrevision' => 'Apagou a versão antiga $1',
+	'days' => '{{PLURAL:$1|um dia|$1 dias}}',
+	'deletedwhileediting' => "'''Aviso''': Esta página foi eliminada após ter começado a editá-la!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
+	'duplicate-defaultsort' => 'Aviso: A chave de ordenação padrão "$2" sobrepõe-se à anterior chave de ordenação padrão "$1".',
+	'dberr-header' => 'Esta wiki tem um problema',
+	'dberr-problems' => 'Desculpe! Este site está a experienciar dificuldades técnicas.',
+	'dberr-again' => 'Experimente esperar uns minutos e actualizar.',
+	'dberr-info' => '(Não foi possível contactar o servidor da base de dados: $1)',
+	'dberr-usegoogle' => 'Pode tentar pesquisar no Google entretanto.',
+	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desactualizados.',
+	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não estar actualizada.',
+	'discuss' => 'Discussão',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -13547,10 +13318,7 @@ A última tentativa de busca no banco de dados foi:
 na função "$2".
 O banco de dados retornou o erro "$3: $4".',
 	'directorycreateerror' => 'Não foi possível criar o diretório "$1".',
-	'defaultmessagetext' => 'Texto da mensagem padrão',
 	'deletedhist' => 'Histórico de eliminações',
-	'difference-title' => 'Mudanças entre as edições de "$1"',
-	'difference-title-multipage' => 'Mudanças entre as páginas "$1" e "$2"',
 	'difference-multipage' => '(Diferenças entre páginas)',
 	'diff-multi' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de {{PLURAL:$2|um usuário|$2 usuários}} {{PLURAL:$1|não apresentada|não apresentadas}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de mais de {{PLURAL:$2|um usuário|$2 usuário}} não {{PLURAL:$1|apresentada|apresentadas}})',
@@ -13637,15 +13405,6 @@ A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder 
 	'dberr-usegoogle' => 'Você pode tentar pesquisar no Google entretanto.',
 	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desatualizados.',
 	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não ser atual.',
-	'duration-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuto|minutos}}',
-	'duration-hours' => '$1 {{PLURAL:$1|hora|horas}}',
-	'duration-days' => '$1 {{PLURAL:$1|dia|dias}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
-	'duration-years' => '$1 {{PLURAL:$1|ano|anos}}',
-	'duration-decades' => '$1 {{PLURAL:$1|década|décadas}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|século|séculos}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|milênio|milênios}}',
 );
 
 $messages['qu'] = array(
@@ -13666,10 +13425,7 @@ Qayna willañiqimanta mañakusqaqa karqan kaymi:
 kay ruraymantam: "$2".
 MySQL-pa kutichisqan pantasqaqa karqan "$3: $4".',
 	'directorycreateerror' => 'Manam atinichu "$1" sutiyuq willañiqi churanata kamayta.',
-	'defaultmessagetext' => 'Ñawpaq qillqa',
 	'deletedhist' => 'Qullusqa wiñay kawsay',
-	'difference-title' => '$1 nisqapaq musuqchasqapura wakin kaynin',
-	'difference-title-multipage' => '$1, $2 sutiyuq willañiqipura wakin kaynin',
 	'difference-multipage' => "(P'anqakunaqa manam kaqllachu)",
 	'diff-multi' => "({{PLURAL:$2|Huk ruraqpa|$2 ruraqpa}} {{PLURAL:$1|chawpipi huk llamk'apusqanqa manam rikuchisqachu|chawpipi $1 llamk'apusqankunaqa manam rikuchisqachu}})",
 	'diff-multi-manyusers' => "({{PLURAL:$2|Hukmanta|$2-manta}} aswan ruraqkunap {{PLURAL:$1|chawpipi huk llamk'apusqanqa manam rikuchisqachu|chawpipi $1 llamk'apusqankunaqa manam rikuchisqachu}})",
@@ -13733,15 +13489,6 @@ Tukuna p\'anqaqa ("[[:$1]]") kachkañam. Astanapaq qulluyta munankichu?',
 	'dberr-usegoogle' => 'Hinaptinqa Google nisqawan maskayta atinkiman.',
 	'dberr-outofdate' => "Musyariy, ñuqaykup samiqniykumanta yuyarisqankunaqa mawk'ayasqañachá.",
 	'dberr-cachederror' => "Kay qatiqpiqa mañakusqa p'anqamanta hallch'asqa iskaychasqam, mawk'ayasqañachá.",
-	'duration-seconds' => '$1 {{PLURAL:$1|sikundu|sikundukuna}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minutu|minutukuna}}',
-	'duration-hours' => '$1 {{PLURAL:$1|ura|urakuna}}',
-	'duration-days' => "{{PLURAL:$1|p'unchaw|p'unchawkuna}}",
-	'duration-weeks' => '{{PLURAL:$1|simana|simanakuna}}',
-	'duration-years' => '{{PLURAL:$1|wata|watakuna}}',
-	'duration-decades' => '{{PLURAL:$1|chunkawata|chunkawatakuna}}',
-	'duration-centuries' => '{{PLURAL:$1|pachakwata|pachakwatakuna}}',
-	'duration-millennia' => '{{PLURAL:$1|waranqawata|waranqawatakuna}}',
 );
 
 $messages['qug'] = array(
@@ -14110,122 +13857,100 @@ Tu à vuè ccu scangille o vuè ccù iacchie \'nu mode pe spustarle?',
 );
 
 $messages['ru'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
-<blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
-
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days-abbrev' => '$1d',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'discuss' => 'Discuss this page',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+	'december' => 'декабрь',
+	'december-gen' => 'декабря',
+	'dec' => 'дек',
+	'delete' => 'Удалить',
+	'deletethispage' => 'Удалить эту страницу',
+	'disclaimers' => 'Отказ от ответственности',
+	'disclaimerpage' => 'Project:Отказ от ответственности',
+	'databaseerror' => 'Ошибка базы данных',
+	'dberrortext' => 'Обнаружена ошибка синтаксиса запроса к базе данных.
+Это может означать ошибку в программном обеспечении.
+Последний запрос к базе данных:
+: <code>$1</code>
+произошёл из функции «<code>$2</code>».
+База данных возвратила ошибку «<code>$3: $4</code>».',
+	'dberrortextcl' => 'Обнаружена ошибка синтаксиса запроса к базе данных.
+Последний запрос к базе данных:
+: «<code>$1</code>»
+произошёл из функции «<code>$2</code>».
+База данных возвратила ошибку «<code>$3: $4</code>».',
+	'directorycreateerror' => 'Невозможно создать директорию «$1».',
+	'deletedhist' => 'История удалений',
+	'difference' => '(Различия между версиями)',
+	'difference-multipage' => '(Различия между страницами)',
+	'diff-multi' => '({{PLURAL:$1|не показана $1 промежуточная версия|не показаны $1 промежуточные версии|не показаны $1 промежуточных версий}} {{PLURAL:$2|$2 участника|$2 участников|$2 участников}})',
+	'diff-multi-manyusers' => '(не {{PLURAL:$1|показана $1 промежуточная версия|показаны $1 промежуточные версии|показаны $1 промежуточных версий}}, сделанные более чем $2 {{PLURAL:$2|участником|участниками}})',
+	'datedefault' => 'По умолчанию',
+	'defaultns' => 'Иначе искать в следующих пространствах имён:',
+	'default' => 'по умолчанию',
+	'diff' => 'разн.',
+	'destfilename' => 'Новое имя файла:',
+	'duplicatesoffile' => '{{PLURAL:$1|Следующий $1 файл является дубликатом|Следующие $1 файла являются дубликатами|Следующие $1 файлов являются дубликатами}} этого файла ([[Special:FileDuplicateSearch/$2|подробности]]):',
+	'download' => 'загрузить',
+	'disambiguations' => 'Страницы, ссылающиеся на страницы разрешения неоднозначности',
+	'disambiguationspage' => 'Template:Неоднозначность',
+	'disambiguations-text' => "Следующие страницы ссылаются на '''многозначные страницы'''.
+Вместо этого они, вероятно, должны указывать на соответствующую конкретную статью.<br />
+Страница считается многозначной, если на ней размещён шаблон, имя которого указано на странице [[MediaWiki:Disambiguationspage]].",
+	'doubleredirects' => 'Двойные перенаправления',
+	'doubleredirectstext' => 'На этой странице представлен список перенаправлений на другие перенаправления.
+Каждая строка содержит ссылки на первое и второе перенаправления, а также целевую страницу второго перенаправления, в которой обычно указывается название страницы, куда должно ссылаться первое перенаправление.
+<del>Зачёркнутые</del> записи были исправлены.',
+	'double-redirect-fixed-move' => 'Страница [[$1]] была переименована, сейчас она перенаправляет на [[$2]]',
+	'double-redirect-fixed-maintenance' => 'Исправление двойного перенаправления с [[$1]] на [[$2]].',
+	'double-redirect-fixer' => 'Исправитель перенаправлений',
+	'deadendpages' => 'Тупиковые страницы',
+	'deadendpagestext' => 'Следующие страницы не содержат ссылок на другие страницы в этой вики.',
+	'deletedcontributions' => 'Удалённый вклад участника',
+	'deletedcontributions-title' => 'Удалённый вклад',
+	'defemailsubject' => '{{SITENAME}} — Письмо от $1',
+	'deletepage' => 'Удалить страницу',
+	'delete-confirm' => '$1 — удаление',
+	'delete-legend' => 'Удаление',
+	'deletedtext' => '«$1» была удалена.
+См. $2 для просмотра списка последних удалений.',
+	'dellogpage' => 'Журнал удалений',
+	'dellogpagetext' => 'Ниже приведён журнал последних удалений.',
+	'deletionlog' => 'журнал удалений',
+	'deletecomment' => 'Причина:',
+	'deleteotherreason' => 'Другая причина/дополнение:',
+	'deletereasonotherlist' => 'Другая причина',
+	'deletereason-dropdown' => '* Типовые причины удаления
+** вандализм
+** по запросу автора
+** нарушение авторских прав',
+	'delete-edit-reasonlist' => 'Править список причин',
+	'delete-toobig' => 'У этой страницы очень длинная история изменений, более $1 {{PLURAL:$1|версии|версий|версий}}.
+Удаление таких страниц было запрещено во избежание нарушений в работе сайта {{SITENAME}}.',
+	'delete-warning-toobig' => 'У этой страницы очень длинная история изменений, более $1 {{PLURAL:$1|версии|версий|версий}}.
+Её удаление может привести к нарушению нормальной работы базы данных сайта {{SITENAME}};
+действуйте с осторожностью.',
+	'databasenotlocked' => 'База данных не была заблокирована.',
+	'delete_and_move' => 'Удалить и переименовать',
+	'delete_and_move_text' => '== Требуется удаление ==
+Страница с именем «[[:$1]]» уже существует.
+Хотите удалить её, чтобы сделать возможным переименование?',
+	'delete_and_move_confirm' => 'Да, удалить эту страницу',
+	'delete_and_move_reason' => 'Удалено для возможности переименования «[[$1]]»',
+	'djvu_page_error' => 'Номер страницы DjVu вне досягаемости',
+	'djvu_no_xml' => 'Невозможно получить XML для DjVu',
+	'deletedrevision' => 'Удалена старая версия $1',
+	'days-abbrev' => '$1 д',
+	'days' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}}',
+	'deletedwhileediting' => "'''Внимание'''. Эта страница была удалена после того, как вы начали её править!",
+	'descending_abbrev' => 'убыв',
+	'duplicate-defaultsort' => 'Внимание. Ключ сортировки по умолчанию «$2» переопределяет прежний ключ сортировки по умолчанию «$1».',
+	'dberr-header' => 'Эта вики испытывает затруднения',
+	'dberr-problems' => 'Извините! На данном сайте возникли технические трудности.',
+	'dberr-again' => 'Попробуйте обновить страницу через несколько минут.',
+	'dberr-info' => '(невозможно соединиться с сервером баз данных: $1)',
+	'dberr-usegoogle' => 'Пока вы можете попробовать поискать с помощью Google.',
+	'dberr-outofdate' => 'Но имейте в виду, что его индекс может оказаться устаревшим.',
+	'dberr-cachederror' => 'Ниже представлена закэшированная версия запрашиваемой страницы, возможно, она не отражает последних изменений.',
+	'discuss' => 'Обсудить',
+	'defaultskin_choose' => 'Установка оформления по-умолчанию:',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -15128,12 +14853,7 @@ Posledná požiadavka na databázu bola:
 z funkcie „$2“.
 Databáza vrátila chybu „$3: $4“.',
 	'directorycreateerror' => 'Nebolo možné vytvoriť adresár „$1“.',
-	'delete-hook-aborted' => 'Zmazanie zrušila prídavná funkcia (prípojný bod syntaktického analyzátora).
-Neudala vysvetlenie.',
-	'defaultmessagetext' => 'Predvolený text správy',
 	'deletedhist' => 'Zmazaná história',
-	'difference-title' => '$1: Rozdiel medzi revíziami',
-	'difference-title-multipage' => '$1 a $2: Rozdiel medzi stránkami',
 	'difference-multipage' => '(Rozdiel medzi stránkami)',
 	'diff-multi' => '{{PLURAL:$1|Jedna medziľahlá revízia|$1 medziľahlé revízie|$1 medziľahlých revízií}} od {{PLURAL:$2|jedného používateľa|$2 používateľov}} {{PLURAL:$1|nie je zobrazená|nie sú zobrazené|nie je zobrazených}}.',
 	'diff-multi-manyusers' => '({{PLURAL:$1|$1 medziľahlá revízia|$1 medziľahlé revízie|$1 medziľahlých revízií}} od viac ako {{PLURAL:$2|$2 používateľa|$2 používateľov}} {{PLURAL:$1|nie je zobrazená|nie sú zobrazené|nie je zobrazených}})',
@@ -15200,15 +14920,6 @@ Cieľová stránka „[[:$1]]“ už existuje. Chcete ho vymazať a vytvoriť ta
 	'dberr-usegoogle' => 'Zatiaľ môžete skúsiť hľadať pomocou Google.',
 	'dberr-outofdate' => 'Pamätajte, že ich indexy nemusia byť aktuálne.',
 	'dberr-cachederror' => 'Toto je kópia požadovanej stránky z vyrovnávacej pamäte a nemusí byť aktuálna.',
-	'duration-seconds' => '$1 {{PLURAL:$1|sekunda|sekundy|sekúnd}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minúta|minúty|minút}}',
-	'duration-hours' => '$1 {{PLURAL:$1|hodina|hodiny|hodín}}',
-	'duration-days' => '$1 {{PLURAL:$1|deň|dni|dní}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|týždeň|týždne|týždňov}}',
-	'duration-years' => '$1 {{PLURAL:$1|rok|roky|rokov}}',
-	'duration-decades' => '$1 {{PLURAL:$1|dekáda|dekády|dekád}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|storočie|storočia|storočí}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|tisícročie|tisícročia|tisícročí}}',
 );
 
 $messages['sl'] = array(
@@ -17583,18 +17294,13 @@ L'última consulta que s'ha intentat fer ha segut:
 <blockquote><tt>$1</tt></blockquote>
 des de la funció «<tt>$2</tt>».
 L'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».",
-	'deletedrev' => '[suprimit]',
 	'difference' => '(Diferència entre revisions)',
 	'diff-multi' => '(Hi ha {{plural:$1|una revisió intermedia|$1 revisions intermedies}})',
-	'dateformat' => 'Format de la data',
 	'datedefault' => 'Cap preferència',
-	'datetime' => 'Data i hora',
 	'defaultns' => 'Busca per defecte en els següents espais de noms:',
 	'default' => 'per defecte',
 	'diff' => 'dif',
 	'destfilename' => 'Nom del ficher de destinació',
-	'deleteimg' => 'bor',
-	'deleteimgcompletely' => "Borra totes les versions d'este archiu",
 	'download' => 'descarrega',
 	'disambiguations' => 'Pàgines de desambiguació',
 	'disambiguationspage' => 'Template:desambiguació',
@@ -17608,13 +17314,10 @@ Cada fila conté enllaços al segon i tercer redireccionament, així com la prim
 segon redireccionament, la qual cosa dòna normalment l\'artícul "real", al que el primer redireccionamet hauria d\'apuntar.',
 	'deadendpages' => 'Pàgines assucac',
 	'deadendpagestext' => "Estes pàgines no tenen enllaços a d'atres pàgines d'esta mateixa wiki.",
-	'data' => 'Dades',
 	'defemailsubject' => 'Direcció correu de {{SITENAME}}',
 	'deletepage' => 'Borra esta pàgina',
-	'deletesub' => '(Borrant "$1")',
 	'deletedtext' => '"$1" ha segut borrat.
 Mostra $2 per a un registre dels artículs borrats més recents.',
-	'deletedarticul' => 'borrat "$1"',
 	'dellogpage' => 'Registre_de_borrats',
 	'dellogpagetext' => 'Baix hi ha una llista dels artículs borrats recentment.',
 	'deletionlog' => 'Registre de borrats',
@@ -18695,121 +18398,87 @@ MySQL返回错误“$3: $4”。',
 );
 
 $messages['zh-hans'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => '12月',
+	'december-gen' => '十二月',
+	'dec' => '12月',
+	'delete' => '删除',
+	'deletethispage' => '删除本页',
+	'disclaimers' => '免责声明',
+	'disclaimerpage' => 'Project:免责声明',
+	'databaseerror' => '数据库错误',
+	'dberrortext' => '发生了数据库查询语法错误，可能是由于软件自身的错误所引起。最后一次数据库查询指令是：
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+来自函数“<tt>$2</tt>”内。数据库返回错误“<tt>$3: $4</tt>”。',
+	'dberrortextcl' => '发生了数据库查询语法错误。最后一次数据库查询指令是：
+“$1”
+来自函数“$2”内。数据库返回错误“$3: $4”。',
+	'directorycreateerror' => '无法创建目录“$1”。',
+	'deletedhist' => '已删除历史',
+	'difference' => '（版本间的差异）',
+	'difference-multipage' => '（页面间的差异）',
+	'diff-multi' => '（未显示$2个用户的$1个中间版本）',
+	'diff-multi-manyusers' => '（未显示超过$2个用户的$1个中间版本）',
+	'datedefault' => '默认值',
+	'defaultns' => '否则在这些名字空间中搜索：',
+	'default' => '默认',
+	'diff' => '差异',
+	'destfilename' => '目标文件名：',
+	'duplicatesoffile' => '以下的$1个文件跟这个文件重复（[[Special:FileDuplicateSearch/$2|更多细节]]）：',
+	'download' => '下载',
+	'disambiguations' => '链接到消歧义页的页面',
+	'disambiguationspage' => 'Template:消歧义',
+	'disambiguations-text' => "以下的页面都有到'''消歧义页'''的链接，但它们应该链接到适当的页面。<br />一个页面如果使用了[[MediaWiki:Disambiguationspage]]内的模板，则会被视为消歧义页。",
+	'doubleredirects' => '双重重定向页',
+	'doubleredirectstext' => '此页列出了所有重定向到另一重定向页面的页面。每一行都包含有到第一和第二个重定向页面的链接，以及第二个重定向页面的目标——通常就是“真正的”目标页面，亦即是第一个重定向页面应该指向的页面。<del>已划去</del>的为已经解决的项目。',
+	'double-redirect-fixed-move' => '[[$1]]已被移动。它现在重定向至[[$2]]。',
+	'double-redirect-fixed-maintenance' => '修复双重重定向自[[$1]]至[[$2]]。',
+	'double-redirect-fixer' => '重定向页修复器',
+	'deadendpages' => '断链页面',
+	'deadendpagestext' => '以下页面没有链接到{{SITENAME}}中的其它页面。',
+	'deletedcontributions' => '已删除的用户贡献',
+	'deletedcontributions-title' => '已删除的用户贡献',
+	'defemailsubject' => '来自{{SITENAME}} 的用户 "$1" 的电子邮件',
+	'deletepage' => '删除页面',
+	'delete-confirm' => '删除“$1”',
+	'delete-legend' => '删除',
+	'deletedtext' => '"$1"已经被删除。最近删除的记录请参见$2。',
+	'dellogpage' => '删除日志',
+	'dellogpagetext' => '以下是最近的删除的列表。',
+	'deletionlog' => '删除记录',
+	'deletecomment' => '原因：',
+	'deleteotherreason' => '其他/附加原因：',
+	'deletereasonotherlist' => '其他原因',
+	'deletereason-dropdown' => '*常见删除原因
+** 作者申请
+** 侵犯著作权
+** 破坏行为',
+	'delete-edit-reasonlist' => '编辑删除理由',
+	'delete-toobig' => '这个页面有一个十分大量的编辑历史，超过$1次修订。删除此类页面的动作已经被限制，以防止在{{SITENAME}}上的意外扰乱。',
+	'delete-warning-toobig' => '这个页面有一个十分大量的编辑历史，超过$1次修订。删除它可能会扰乱{{SITENAME}}的数据库操作；在继续此动作前请小心。',
+	'databasenotlocked' => '数据库没有锁定。',
+	'delete_and_move' => '删除并移动',
+	'delete_and_move_text' => '==　需要删除　==
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
-	'discuss' => 'Discuss this page',
+目标页面“[[:$1]]”已存在。是否确认删除该页面以便进行移动？',
+	'delete_and_move_confirm' => '是，删除该页面',
+	'delete_and_move_reason' => '删除以便移动[[$1]]',
+	'djvu_page_error' => 'DjVu页面超出范围',
+	'djvu_no_xml' => '无法在DjVu文件中获取XML',
+	'deletedrevision' => '已删除旧版本$1',
+	'days' => '$1天',
+	'deletedwhileediting' => "'''警告'''：此页在您开始编辑之后已经被删除！",
+	'descending_abbrev' => '降',
+	'duplicate-defaultsort' => "'''警告：'''默认排序关键字“$2”覆盖了之前的默认排序关键字“$1”。",
+	'dberr-header' => '本wiki出现了问题',
+	'dberr-problems' => '抱歉！
+本网站出现了一些技术问题。',
+	'dberr-again' => '请等待几分钟后重试。',
+	'dberr-info' => '（无法连接到数据库服务器：$1）',
+	'dberr-usegoogle' => '在此期间您可以尝试用Google来搜索。',
+	'dberr-outofdate' => '须注意他们索引出来的内容可能不是最新的。',
+	'dberr-cachederror' => '这是所请求页面的缓存副本，可能不是最新的。',
+	'defaultskin_choose' => '设定此站预设皮肤:',
+	'discuss' => '讨论这个页面',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
@@ -18821,121 +18490,99 @@ This site is experiencing technical difficulties.',
 );
 
 $messages['zh-hant'] = array(
-	'december' => 'December',
-	'december-gen' => 'December',
-	'dec' => 'Dec',
-	'delete' => 'Delete',
-	'deletethispage' => 'Delete this page',
-	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
-	'databaseerror' => 'Database error',
-	'dberrortext' => 'A database query syntax error has occurred.
-This may indicate a bug in the software.
-The last attempted database query was:
+	'december' => '12月',
+	'december-gen' => '十二月',
+	'dec' => '12月',
+	'delete' => '刪除',
+	'deletethispage' => '刪除本頁',
+	'disclaimers' => '免責聲明',
+	'disclaimerpage' => 'Project:一般免責聲明',
+	'databaseerror' => '資料庫錯誤',
+	'dberrortext' => '發生資料庫查詢語法錯誤。
+可能是由於軟體自身的錯誤所引起。
+最後一次資料庫查詢指令是:
 <blockquote><tt>$1</tt></blockquote>
-from within function "<tt>$2</tt>".
-Database returned error "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'A database query syntax error has occurred.
-The last attempted database query was:
-"$1"
-from within function "$2".
-Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".
-<br/>
-Please report the above error [[Special:Contact/bug|using this form]]',
-	'deletedhist' => 'Deleted history',
-	'difference' => '(Difference between revisions)',
-	'difference-multipage' => '(Difference between pages)',
-	'diff-multi' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by {{PLURAL:$2|one user|$2 users}} not shown)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|One intermediate revision|$1 intermediate revisions}} by more than $2 {{PLURAL:$2|user|users}} not shown)',
-	'datedefault' => 'No preference',
-	'defaultns' => 'Otherwise search in these namespaces:',
-	'default' => 'default',
-	'diff' => 'diff',
-	'destfilename' => 'Destination filename:',
-	'duplicatesoffile' => 'The following {{PLURAL:$1|file is a duplicate|$1 files are duplicates}} of this file ([[Special:FileDuplicateSearch/$2|more details]]):',
-	'download' => 'download',
-	'disambiguations' => 'Pages linking to disambiguation pages',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
-They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Double redirects',
-	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
-Each row contains links to the first and second redirect, as well as the target of the second redirect, which is usually the "real" target page, which the first redirect should point to.
-<del>Crossed out</del> entries have been solved.',
-	'double-redirect-fixed-move' => '[[$1]] has been moved.
-It now redirects to [[$2]].',
-	'double-redirect-fixed-maintenance' => 'Fixing double redirect from [[$1]] to [[$2]].',
-	'double-redirect-fixer' => 'Redirect fixer',
-	'deadendpages' => 'Dead-end pages',
-	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted contributions',
-	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
-	'deletepage' => 'Delete page',
-	'delete-confirm' => 'Delete "$1"',
-	'delete-legend' => 'Delete',
-	'deletedtext' => "'''\"\$1\" has been deleted!'''
+來自於函數 "<tt>$2</tt>"。
+數據庫返回錯誤 "<tt>$3: $4</tt>"。',
+	'dberrortextcl' => '發生了一個資料庫查詢語法錯誤。
+最後一次的資料庫查詢是:
+「$1」
+來自於函數「$2」。
+數據庫返回錯誤「$3: $4」。',
+	'directorycreateerror' => '無法建立目錄"$1"。',
+	'deletedhist' => '已刪除之歷史',
+	'difference' => '（修訂版本間的差異）',
+	'difference-multipage' => '（頁面間的差異）',
+	'diff-multi' => '（由{{PLURAL:$2|1名用戶|$2名用戶}}作出的{{PLURAL:$1|一個中途修訂版本|$1個中途修訂版本}}未被顯示）',
+	'diff-multi-manyusers' => '（由多於$2名用戶作出的{{PLURAL:$1|一個中途修訂版本|$1個中途修訂版本}} 未被顯示）',
+	'datedefault' => '預設值',
+	'defaultns' => '否則在這些名字空間搜尋：',
+	'default' => '預設',
+	'diff' => '差異',
+	'destfilename' => '目標檔案名：',
+	'duplicatesoffile' => '以下的$1個檔案跟這個檔案重覆（[[Special:FileDuplicateSearch/$2|更多細節]]）：',
+	'download' => '下載',
+	'disambiguations' => '鏈接到消歧義頁的頁面',
+	'disambiguationspage' => 'Template:disambig
+Template:消含糊
+Template:消除含糊
+Template:消歧义
+Template:消除歧义
+Template:消歧義
+Template:消除歧義',
+	'disambiguations-text' => "以下的頁面都有到'''消歧義頁'''的鏈接，但它們應該鏈接到適當的頁面。<br />一個頁面如果使用了[[MediaWiki:Disambiguationspage]]內的模板，則會被視為消歧義頁。",
+	'doubleredirects' => '雙重重定向頁面',
+	'doubleredirectstext' => '這一頁列出所有重定向頁面重定向到另一個重定向頁的頁面。每一行都包含到第一和第二個重定向頁面的連結，以及第二個重定向頁面的目標，通常顯示的都會是"真正"的目標頁面，也就是第一個重定向頁面應該指向的頁面。
+<del>已劃去</del>的為已經解決之項目。',
+	'double-redirect-fixed-move' => '[[$1]]已經完成移動，它現在重新定向到[[$2]]。',
+	'double-redirect-fixed-maintenance' => '修復從[[$1]]到[[$2]]的雙重重定向。',
+	'double-redirect-fixer' => '重新定向修正器',
+	'deadendpages' => '斷連頁面',
+	'deadendpagestext' => '以下頁面沒有連結到{{SITENAME}}中的其它頁面。',
+	'deletedcontributions' => '已刪除的用戶貢獻',
+	'deletedcontributions-title' => '已刪除的用戶貢獻',
+	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
+	'deletepage' => '刪除頁面',
+	'delete-confirm' => '刪除「$1」',
+	'delete-legend' => '刪除',
+	'deletedtext' => '「$1」已經被刪除。最近刪除的記錄請參見$2。',
+	'dellogpage' => '刪除紀錄',
+	'dellogpagetext' => '以下是最近的刪除的列表。',
+	'deletionlog' => '刪除紀錄',
+	'deletecomment' => '理由：',
+	'deleteotherreason' => '其它／附加的理由:',
+	'deletereasonotherlist' => '其它理由',
+	'deletereason-dropdown' => '*常用刪除理由
+** 作者請求
+** 侵犯版權
+** 破壞',
+	'delete-edit-reasonlist' => '編輯刪除理由',
+	'delete-toobig' => '這個頁面有一個十分大量的編輯歷史，超過$1次修訂。刪除此類頁面的動作已經被限制，以防止在{{SITENAME}}上的意外擾亂。',
+	'delete-warning-toobig' => '這個頁面有一個十分大量的編輯歷史，超過$1次修訂。刪除它可能會擾亂{{SITENAME}}的資料庫操作；在繼續此動作前請小心。',
+	'databasenotlocked' => '資料庫沒有鎖定。',
+	'delete_and_move' => '刪除並移動',
+	'delete_and_move_text' => '==需要刪除==
 
-* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
-* See the \$2 for a record of recent deletions.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}",
-	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
-	'deletionlog' => 'deletion log',
-	'deletecomment' => 'Reason:',
-	'deleteotherreason' => 'Other/additional reason:',
-	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Vandalism and problems
-** Copyright violation
-** Spam
-** Vandalism
-*Maintenance
-** Author request
-** Housekeeping
-** Marked for deletion
-*Redirects
-** Broken redirect
-** Unused redirect
-** Redirect left from pagemove',
-	'delete-edit-reasonlist' => 'Edit deletion reasons',
-	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
-	'delete-warning-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
-Deleting it may disrupt database operations of {{SITENAME}};
-proceed with caution.',
-	'databasenotlocked' => 'The database is not locked.',
-	'delete_and_move' => 'Delete and move',
-	'delete_and_move_text' => '== Deletion required ==
-The destination page "[[:$1]]" already exists.
-Do you want to delete it to make way for the move?',
-	'delete_and_move_confirm' => 'Yes, delete the page',
-	'delete_and_move_reason' => 'Deleted to make way for move from "[[$1]]"',
-	'djvu_page_error' => 'DjVu page out of range',
-	'djvu_no_xml' => 'Unable to fetch XML for DjVu file',
-	'deletedrevision' => 'Deleted old revision $1',
-	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
-<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
-</div>',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-	'dberr-header' => 'This wiki has a problem',
-	'dberr-problems' => 'Sorry!
-This site is experiencing technical difficulties.',
-	'dberr-again' => 'Try waiting a few minutes and reloading.',
-	'dberr-info' => '(Cannot contact the database server: $1)',
-	'dberr-usegoogle' => 'You can try searching via Google in the meantime.',
-	'dberr-outofdate' => 'Note that their indexes of our content may be out of date.',
-	'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
-	'defaultskin_choose' => 'Set the default theme for this wiki: ',
-	'discuss' => 'Discuss this page',
+目標頁面"[[:$1]]"已經存在。{{GENDER:|你|妳|你}}確認需要刪除原頁面並以進行移動嗎？',
+	'delete_and_move_confirm' => '是的，刪除此頁面',
+	'delete_and_move_reason' => '刪除以便移動[[$1]]',
+	'djvu_page_error' => 'DjVu頁面超出範圍',
+	'djvu_no_xml' => '無法在DjVu檔案中擷取XML',
+	'deletedrevision' => '已刪除舊版本$1',
+	'days' => '$1天',
+	'deletedwhileediting' => '警告: 此頁在您開始編輯之後已經被刪除﹗',
+	'descending_abbrev' => '遞減',
+	'duplicate-defaultsort' => '警告: 預設的排序鍵 "$2" 覆蓋先前的預設排序鍵 "$1"。',
+	'dberr-header' => '這個 wiki 出現了問題',
+	'dberr-problems' => '抱歉！
+這個網站出現了一些技術上的問題。',
+	'dberr-again' => '嘗試等候數分鐘後，然後再試。',
+	'dberr-info' => '（無法連繫到資料庫伺服器: $1）',
+	'dberr-usegoogle' => '在現階段您可以嘗試透過 Google 搜尋。',
+	'dberr-outofdate' => '留意他們索引出來之內容可能不是最新的。',
+	'dberr-cachederror' => '這個是所要求出來的快取複本，可能不是最新的。',
+	'defaultskin_choose' => '設定此站預設面板:',
+	'discuss' => '討論這個頁面',
 	'disambiguations-summary' => '',
 	'doubleredirects-summary' => '',
 	'deadendpages-summary' => '',
