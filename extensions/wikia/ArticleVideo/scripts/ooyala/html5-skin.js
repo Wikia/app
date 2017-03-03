@@ -1848,6 +1848,7 @@
 		},
 
 		handleVolumeClick: function(evt) {
+			debugger;
 			evt.preventDefault();
 			var newVolume = parseFloat(evt.target.dataset.volume);
 			this.props.controller.setVolume(newVolume);
@@ -1936,7 +1937,7 @@
 					"oo-volume-bar": true,
 					"oo-on": turnedOn
 				});
-				var barStyle = {backgroundColor: this.props.skinConfig.controlBar.volumeControl.color ? this.props.skinConfig.controlBar.volumeControl.color : this.props.skinConfig.general.accentColor};
+				var barStyle = turnedOn ? {backgroundColor: this.props.skinConfig.controlBar.volumeControl.color ? this.props.skinConfig.controlBar.volumeControl.color : this.props.skinConfig.general.accentColor} : null;
 
 				volumeBars.push(React.createElement("a", {"data-volume": (i+1)/10, className: volumeClass, key: i,
 					style: barStyle,
