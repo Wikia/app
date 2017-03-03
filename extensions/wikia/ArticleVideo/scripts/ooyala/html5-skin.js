@@ -1848,7 +1848,6 @@
 		},
 
 		handleVolumeClick: function(evt) {
-			debugger;
 			evt.preventDefault();
 			var newVolume = parseFloat(evt.target.dataset.volume);
 			this.props.controller.setVolume(newVolume);
