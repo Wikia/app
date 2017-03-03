@@ -391,8 +391,6 @@ $messages['qqq'] = array(
 	'changepassword' => "Section heading on [[Special:Preferences]], tab 'User profile'.
 {{Identical|Change password}}",
 	'columns' => 'Used on [[Special:Preferences]], "Editing" section in the "Size of editing window" fieldset',
-	'contextlines' => "Option on the 'Search options' tab of [[Special:Preferences]]",
-	'contextchars' => 'Used in Preferences/Search tab',
 	'categories' => 'The page name of [[Special:Categories]].
 
 {{Identical|Categories}}',
@@ -2051,7 +2049,6 @@ $messages['avk'] = array(
 	'currentevents-url' => 'Project:Noelaf bif yo',
 	'cannotdelete' => 'Sulara va bazenu bu oku ewava tir merotisa.',
 	'cascadeprotected' => 'Batu bu icde betara zo nendar, kire va vlevefu {{PLURAL:$1|bu|bu}} pasur, danu kan tegisa "stoyakorafa" rotisaca zo nendad : $2',
-	'customcssjsprotected' => 'Va batu bu me robetal kire in va ar favesikaf titickaks ruldar.',
 	'createaccount' => 'Warzon pataredú',
 	'createaccountmail' => 'kan e-mail',
 	'createaccount-title' => 'Pataredura koe {{SITENAME}}',
@@ -2075,8 +2072,6 @@ Bazeyena lazava ke $3 tir ''$2''.",
 	'compareselectedversions' => 'Dodisukera va reban siatos yo',
 	'changepassword' => 'Betara va remravlem',
 	'columns' => 'Brizeem',
-	'contextlines' => 'Fuxetrasikson conhota',
-	'contextchars' => 'Fuxeconhon orkastaota',
 	'categories' => 'Bulomeem',
 	'categoriespagetext' => 'Radimiasa loma se moe wiki krulded.
 [[Special:UnusedCategories|Unused categories]] are not shown here.
@@ -4979,7 +4974,6 @@ $messages['ckb'] = array(
 لەوانەیە پێشتر لە لایەن کەسێکی ترەوە سڕابێتەوە.',
 	'cascadeprotected' => 'ئەم لاپەڕە پارێزراوە لە دەستکاریی، چونکا خراوەتە سەر ڕیزی ئەم {{PLURAL:$1|لاپەڕانه‌، کە}} که‌ به‌ هه‌ڵکردنی بژارده‌ی داڕژان هه‌ڵکراوه‌:
 $2',
-	'customcssjsprotected' => 'تۆ ناتوانی ئەم لاپەڕە دەستکاریی بکەی، چونکا ڕێکراوە تاکەکەسییەکانی بەکارھێنەرێکی دیکەی تێدایە.',
 	'createaccount' => 'ھەژمار دروست بکە',
 	'createaccountmail' => 'بە ئیمەیل',
 	'createaccount-title' => 'درووست‌کردنی هەژمارە بۆ {{SITENAME}}',
@@ -5011,8 +5005,6 @@ $3 هۆکاری "$2" خستوەتەڕوو',
 	'compareselectedversions' => 'ھەڵسەنگاندنی وەشانە ھەڵبژێردراوەکان',
 	'changepassword' => 'تێپەڕوشە بگۆڕە',
 	'columns' => 'ستوونەکان:',
-	'contextlines' => 'ژمارەی دێڕەکانی ھەر ئەنجام:',
-	'contextchars' => 'ژمارەی پیتەکانی ھەر دێڕ:',
 	'categories' => 'پۆلەكان',
 	'categoriespagetext' => 'ئەم {{PLURAL:$1|پۆلە پەڕە یان پەڕگەی|پۆلانە پەڕە یان پەڕگەیان}} لەخۆگرتە.<br />
 [[Special:UnusedCategories|پۆلە بەکارنەھێنراوەکان]] لێرەدا نیشان نەدراون.<br />
@@ -5465,8 +5457,6 @@ Pokud byl účet vytvořen omylem, považujte tuto zprávu za bezpředmětnou.',
 * '''Internet Explorer:''' Při kliknutí na ''Aktualizovat'' držte ''Ctrl'' nebo stiskněte ''Ctrl-F5''.
 * '''Konqueror:''' Klikněte na ''Aktualizovat'' nebo stiskněte ''F5''.
 * '''Opera:''' Smažte obsah cache v menu ''Nástroje → Nastavení''.",
-	'continue-editing' => 'Pokračovat v editaci',
-	'creating' => 'Vytváření $1',
 	'copyrightwarning' => "Všechny příspěvky do {{grammar:2sg|{{SITENAME}}}} jsou zveřejňovány podle $2 (podrobnosti najdete na $1).
 Pokud si nepřejete, aby váš text byl nemilosrdně upravován a volně šířen, pak ho do {{grammar:2sg|{{SITENAME}}}} neukládejte.<br />
 Uložením příspěvku se zavazujete, že je vaším dílem nebo je zkopírován ze zdrojů, které nejsou chráněny autorským právem (tzv. <em>public domain</em>).
@@ -5486,9 +5476,6 @@ $3 uvádí toto zdůvodnění: ''$2''",
 	'changepassword' => 'Změna hesla',
 	'columns' => 'Sloupce',
 	'copyuploaddisabled' => 'Načítání souborů prostřednictvím URL je vypnuto.',
-	'cachedspecial-viewing-cached-ttl' => 'Prohlížíte si cachovanou verzi této stránky, která může být až $1 stará.',
-	'cachedspecial-viewing-cached-ts' => 'Prohlížíte si cachovanou verzi této stránky, která nemusí být zcela aktuální.',
-	'cachedspecial-refresh-now' => 'Zobrazit nejnovější.',
 	'categories' => 'Kategorie',
 	'categoriespagetext' => 'Následující kategorie {{PLURAL:$1|obsahuje|obsahují}} stránky nebo soubory.
 Nezobrazují se tu [[Special:UnusedCategories|nepoužívané kategorie]].
@@ -6367,7 +6354,6 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.",
 );
 
 $messages['de-formal'] = array(
-	'customcssjsprotected' => 'Sie sind nicht berechtigt, diese Seite zu bearbeiten, da sie zu den persönlichen Einstellungen eines anderen Benutzers gehört.',
 	'createaccount-text' => 'Es wurde für Sie ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Das automatisch generierte Passwort für „$2“ ist „$3“. Sie sollten sich nun anmelden und das Passwort ändern.
 
 Falls das Benutzerkonto irrtümlich angelegt wurde, können Sie diese Nachricht ignorieren.',
@@ -6435,22 +6421,18 @@ $messages['de-weigsbrag'] = array(
 	'cancel' => 'Abbrug',
 	'create' => 'Erschdel',
 	'copyright' => 'Inhald sei werwügbares undd dose $1.',
-	'copyrightpagename' => '{{SITENAME}} Urhebregd',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Agdueles Ereiges',
 	'currentevents-url' => 'Project:Agdueles Ereiges',
-	'cachederror' => 'Dose Wolgendes eines Gobä aus dose Gedsch und wileigd noggs mehr agdueles sei.',
 	'cannotdelete' => 'Dose gewähldes Seid noggs gön lösch. Wileigd dose haddar schon lösch.',
 	'cascadeprotected' => 'Dose Seid haddar wür Bearbeid schber. Dose in dose {{PLURAL:$1|wolgendes Seid|wolgendes Seides}} haddar einbind, wo mid dose Gasgadesschberobsion geschüdsdes {{PLURAL:$1|sei|sei}}:
 $2',
-	'customcssjsprotected' => 'Haddar noggs Beregd su bearbeid dose Seid, weil dose gehördar su bersönliges Einschdeles won anderes Benuds.',
 	'createaccount' => 'Benudsesgond anleg',
 	'createaccountmail' => 'üb I-Mehl',
 	'createaccount-title' => 'Erschdel won eines Benudsgond wür dose {{SITENAME}}',
 	'createaccount-text' => 'Haddar eines Benudsesgond "$2" auw dose {{SITENAME}} ($4) erschdel. Dose audomadisches generärdes Basword wür "$2" sei "$3". Bes wan gleig anmeld und dose Basword änd.
 
 Wan haddar aus Werseddar dose Benudsesgond anleg, gön dose Nagrigd ignorär.',
-	'confirmedittitle' => 'Wür Bearbeid dose I-Mehl-Beschdäd braugdar.',
 	'confirmedittext' => 'Musdar suersd I-Mehl-Adres beschdäd, bewor gön Bearbeides mag. Bid ergäns und beschdäd Deines I-Mehl in dose [[Special:Preferences|Einschdeles]].',
 	'clearyourcache' => "'''Hinweis:''' Das Ändes seddar, bid dose Gedsch leer: '''Mosila/Waierwogs:''' ''Shift-Strg-R'', '''Inderned Egsblor:''' ''Strg-F5'', '''Obera:''' ''F5'', '''Sawari:''' ''?-R'', '''Gongueror:''' ''Strg-R''.",
 	'copyrightwarning' => '<strong>Bid <big>noggs Nedsseides gobär</big>, wo noggs deines eigenes sei, nehmdar <big>noggs urhebregdliges geschüdsdes Werges</big> ohn Erlaub won Gobyraid-Inhab!</strong><br />
@@ -6472,8 +6454,6 @@ Grund won Schber: ''$2''",
 	'compareselectedversions' => 'Gewähldes Wersiones wergleig',
 	'changepassword' => 'Basword änd',
 	'columns' => 'Schbaldes',
-	'contextlines' => 'Dseiles bro Drew:',
-	'contextchars' => 'Seiges bro Dseil:',
 	'categories' => 'Gadegoräes',
 	'categoriespagetext' => 'Wolgendes Gadegoräes in dose {{SITENAME}} haddar Seides od Dadeies drin:',
 	'categoriesfrom' => 'Seig Gadegoräes ab:',
@@ -6527,7 +6507,6 @@ Dose Beschdädgod güldiges sei bis $4.',
 	'confirmrecreate' => "Benuds [[User:$1|$1]] ([[User_talk:$1|Disgusion]]) haddar dose Seid lösch, nagdem Du haddar anwäng su bearbeid dose. Dose Begründ sei:
 ''$2''
 Bid beschdäd, das dose Seid werg wol neues erschdel.",
-	'confirm_purge' => 'Dose Seid aus dose Sörw-Gedsch lösch? $1',
 	'confirm_purge_button' => 'SOCK',
 );
 
@@ -6721,8 +6700,6 @@ Móžoš toś te zdźělenje ignorowaś, jolic toś te konto jo se jano zamólnj
 * '''Internet Explorer:''' Źarź ''Strg'' tłocony, mjaztym až kliknjoš na ''Aktualisieren'' abo tłoc ''Strg-F5''
 * '''Konqueror:''' Klikni na ''Aktualisieren'' abo tłoc ''F5''
 * '''Opera:''' Wuprozni cache w ''Extras → Einstellungen''",
-	'continue-editing' => 'Dalej wobźěłaś',
-	'creating' => '$1 se napórajo',
 	'copyrightwarning' => "Pšosym buź se togo wědobny, až wšykne pśinoski na {{SITENAME}} se wózjawiju pód $2 (za detajle glědaj $1). Jolic až njocoš, až twój tekst se mimo zmilnosći wobźěłujo a za spódobanim drugich redistribuěrujo, pón njeskładuj jen how.<br />
 Ty teke wobkšuśijoš, až sy tekst sam napisał abo sy jen wót public domainy resp. wót pódobneje lichotneje resursy kopěrował.
 
@@ -6741,9 +6718,6 @@ Pśicyna, kótaruž $3 jo zapódał, jo ''$2''.",
 	'changepassword' => 'Šćitne gronidło změniś',
 	'columns' => 'Słupy:',
 	'copyuploaddisabled' => 'Nagraśe pśez URL znjemóžnjone.',
-	'cachedspecial-viewing-cached-ttl' => 'Woglědujoš se pufrowanu wersiju toś togo boka, kótaraž móžo do $1 stara byś.',
-	'cachedspecial-viewing-cached-ts' => 'Woglědujoš se pufrowanu wersiju toś togo boka, kótaraž by mógła njeaktualna byś.',
-	'cachedspecial-refresh-now' => 'Aktualnu wersiju se woglědaś.',
 	'categories' => 'Kategorije',
 	'categoriespagetext' => '{{PLURAL:$1|Slědujuca kategorija wopśimujo|Slědujucej kategoriji wopśimujotej|Slědujuce kategorije wopśimuju|Slědujuce kategorije wopśimuju}} boki abo medije.
 [[Special:UnusedCategories|Njewužywane kategorije]] se how njepokazuju.
@@ -7712,8 +7686,6 @@ Palun määra ja kinnita e-posti aadress [[Special:Preferences|eelistuste lehek�
 * '''Internet Explorer:''' Hoia all ''Ctrl''-klahvi ja klõpsa ''Värskenda'' või vajuta ''Ctrl-F5''.
 * '''Konqueror:''' Klõpsa ''Reload'' või vajuta ''F5''.
 * '''Opera:''' Tühjenda puhver asukohas ''Seaded → Eelistused''.",
-	'continue-editing' => 'Jätka redigeerimist',
-	'creating' => 'Alustamisel on $1',
 	'copyrightwarning' => "Pidage silmas, et kogu teie kaastöö võrgukohale {{SITENAME}} loetakse avaldatuks litsentsi $2 all (vaata ka $1). Kui te ei soovi, et teie kirjutatut halastamatult redigeeritakse ja oma äranägemise järgi kasutatakse, siis ärge seda siia salvestage.<br />
 Te kinnitate ka, et kirjutasite selle ise või võtsite selle kopeerimiskitsenduseta allikast.<br />
 '''ÄRGE SAATKE AUTORIÕIGUSEGA KAITSTUD MATERJALI ILMA LOATA!'''",
@@ -7732,9 +7704,6 @@ Kasutaja $3 märkis põhjuseks ''$2''",
 	'changepassword' => 'Muuda parool',
 	'columns' => 'Veerge:',
 	'copyuploaddisabled' => 'Internetiaadressilt üleslaadimine on keelatud.',
-	'cachedspecial-viewing-cached-ttl' => 'Vaata vahemälus olevat lehekülje versiooni, mis võib olla kuni $1 vanune.',
-	'cachedspecial-viewing-cached-ts' => 'Vaatad vahemälus olevat lehekülje versiooni, mis ei pruugi olla täiesti ajakohane.',
-	'cachedspecial-refresh-now' => 'Vaata uusimat versiooni.',
 	'categories' => 'Kategooriad',
 	'categoriespagetext' => 'Vikis on {{PLURAL:$1|järgmine kategooria|järgmised kategooriad}}.
 Siin ei näidata [[Special:UnusedCategories|kasutamata kategooriaid]].
@@ -9148,8 +9117,6 @@ Volyéd buchiér et pués validar voutra adrèce èlèctronica dens voutres [[Sp
 * '''Internet Explorer :''' mantegnéd la toche ''Ctrl'' en cliquent sur lo boton ''Rafrèchir'' (''Refresh'') ou ben prèssâd ''Ctrl-F5''
 * '''Konqueror :''' clicâd sur lo boton ''Rechargiér'' ou ben prèssâd ''F5''
 * '''Opera :''' èfaciéd lo cache dens ''Outils → Prèferences''",
-	'continue-editing' => 'Continuar lo changement',
-	'creating' => 'Crèacion de $1',
 	'copyrightwarning' => "Volyéd notar que totes les contribucions a {{SITENAME}} sont considèrâs coment publeyês desot los tèrmos de la $2 (vêde $1 por més de dètalys).
 Se vos voléd pas que voutros ècrits seyont changiês sen gins de rèstriccion et pués rebalyês a volontât, adonc los volyéd pas sometre ique.<br />
 Vos nos assurâd asse-ben que vos éd cen ècrit vos-mémo, ou ben que vos l’éd copiyê d’una sôrsa que vint du domêno publico, ou ben d’una ressôrsa libra.
@@ -9172,7 +9139,6 @@ La rêson balyê per $3 ére ''$2''.",
 	'changepassword' => 'Changiér lo contresegno',
 	'columns' => 'Colones :',
 	'copyuploaddisabled' => 'Tèlèchargement de fichiér per URL dèsactivâ.',
-	'cachedspecial-refresh-now' => 'Vêre lo ples novél.',
 	'categories' => 'Catègories',
 	'categoriespagetext' => '{{PLURAL:$1|Ceta catègorie contint|Cetes catègories contegnont}} des pâges ou ben des fichiérs mèdia.
 Les [[Special:UnusedCategories|catègories inutilisâs]] sont pas montrâs ique.
@@ -10157,7 +10123,6 @@ $messages['grc'] = array(
 Ἴσως τάχ\'ἂν τόδε ἤδη διαγεγραμμένον εἴη.',
 	'cascadeprotected' => 'Ἥδε ἡ δέλτος πεφύλακται, διότι συμπεριλαμβάνεται ἐν {{PLURAL:$1|τῇ ἑξῆς δέλτῳ ἥπερ πεφυλαγμένη ἐστὶ|ταῖς ἑξῆς δέλτοις αἵπερ πεφυλαγμέναι εἰσὶ}} μέσῳ τῆς ἐνεργοποιηθεῖσας διαδοχικῆς προστασίας ἐν τῷ:
 $2',
-	'customcssjsprotected' => 'Οὐκ ἔξεστί σοι μεταγράφειν τήνδε τὴν δέλτον, διότι περιέχει προσωπικὰς ῥυθμίσεις ἑτέρου χρωμένου.',
 	'createaccount' => 'Λογισμὸν ποιεῖν',
 	'createaccountmail' => 'ἠλεκτρονικῇ ἐπιστολῇ',
 	'createaccounterror' => 'Ἀδύνατος ἡ ποίησις λογισμοῦ: $1',
@@ -10182,8 +10147,6 @@ $2',
 	'compareselectedversions' => 'Συγκρίνειν τὰς ἐπειλεγμένας δέλτους',
 	'changepassword' => 'Ἀλλάττειν σύνθημα',
 	'columns' => 'Στῆλαι:',
-	'contextlines' => 'Σειραὶ ἀνά ἀποτέλεσμα:',
-	'contextchars' => 'Συναφὲς κείμενον ἀνά σειράν:',
 	'categories' => 'Κατηγορίαι',
 	'categoriesfrom' => 'Δεικνύναι κατηγορίας (γραμμαὶ ἐκκινουμέναι ἐκ/ἐξ):',
 	'changed' => 'ἠλλαγμένη',
@@ -10607,7 +10570,6 @@ $messages['gv'] = array(
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Cooishyn y laa',
 	'currentevents-url' => 'Project:Cooishyn y laa',
-	'customcssjsprotected' => 'Cha nel kiart ayd y duillag shoh y reaghey.  Ta tosheeaghtyn persoonagh ymmydeyr elley ayn.',
 	'createaccount' => 'Croo coontys',
 	'createaccountmail' => 'er post-L',
 	'createaccounterror' => 'Cha dod shin croo coontys: $1',
@@ -10825,8 +10787,6 @@ $2',
 * '''אינטרנט אקספלורר:''' לחצו על Ctrl בעת לחיצתכם על '''רענן''' (Refresh), או הקישו על ''Ctrl-F5''
 * '''Konqueror:''' לחצו על '''טען מחדש''' (Reload) או הקישו על ''F5''
 * '''אופרה''': נקו את המטמון ב־''Tools‏ ← Preferences''",
-	'continue-editing' => 'להמשך העריכה',
-	'creating' => 'יצירת $1',
 	'copyrightwarning' => "'''שימו לב:''' תרומתכם ל{{grammar:תחילית|{{SITENAME}}}} תפורסם תחת תנאי הרישיון $2 (ראו $1 לפרטים נוספים). אם אינכם רוצים שעבודתכם תהיה זמינה לעריכה על ידי אחרים, שתופץ לעיני כל, ושאחרים יוכלו להעתיק ממנה בציון המקור – אל תפרסמו אותה פה. כמו־כן, אתם מבטיחים לנו כי כתבתם את הטקסט הזה בעצמכם, או העתקתם אותו ממקור שאינו מוגן על ידי זכויות יוצרים. '''אל תעשו שימוש בחומר המוגן בזכויות יוצרים ללא רשות!'''",
 	'copyrightwarning2' => "'''שימו לב:''' תורמים אחרים עשויים לערוך או אף להסיר את תרומתכם ל{{grammar:תחילית|{{SITENAME}}}}. אם אינכם רוצים שעבודתכם תהיה זמינה לעריכה על ידי אחרים, אל תפרסמו אותה פה. כמו־כן, אתם מבטיחים לנו כי כתבתם את הטקסט הזה בעצמכם, או העתקתם אותו ממקור שאינו מוגן על ידי זכויות יוצרים (ראו $1 לפרטים נוספים). '''אל תעשו שימוש בחומר המוגן בזכויות יוצרים ללא רשות!'''",
 	'cascadeprotectedwarning' => "'''אזהרה:''' דף זה מוגן כך שרק מפעילי מערכת יכולים לערוך אותו, כי הוא מוכלל {{PLURAL:$1|בדף הבא, שמופעלת עליו|בדפים הבאים, שמופעלת עליהם}} הגנה מדורגת:",
@@ -10840,9 +10800,6 @@ $2',
 	'changepassword' => 'שינוי סיסמה',
 	'columns' => 'עמודות:',
 	'copyuploaddisabled' => 'העלאת קבצים מכתובת URL מבוטלת.',
-	'cachedspecial-viewing-cached-ttl' => 'זוהי גרסה שמורה בזיכרון המטמון של דף זה, שעשויה להיות בת $1.',
-	'cachedspecial-viewing-cached-ts' => 'זוהי גרסה שמורה בזיכרון המטמון של דף זה, שעשויה שלא להיות מעודכנת.',
-	'cachedspecial-refresh-now' => 'צפייה באחרון.',
 	'categories' => 'קטגוריות',
 	'categoriespagetext' => '{{PLURAL:$1|הקטגוריה הבאה כוללת|הקטגוריות הבאות כוללות}} דפים או קובצי מדיה.
 [[Special:UnusedCategories|קטגוריות שאינן בשימוש]] אינן מוצגות כאן.
@@ -10973,7 +10930,6 @@ $messages['hi'] = array(
 शायद किसी और ने इसे पहले ही हटा दिया हो.',
 	'cascadeprotected' => 'यह पन्ना सुरक्षित हैं, क्योंकी यह निम्नलिखित {{PLURAL:$1|पन्ने की|पन्नों की}} सुरक्षा-सीढीमें समाविष्ट हैं:
 $2',
-	'customcssjsprotected' => 'इस पन्नेपर दुसरे सदस्यकी व्यक्तिगत वरीयताएं होने के कारण, आपको यह पन्ना बदलने की अनुमति नहीं हैं ।',
 	'createaccount' => 'खाता बनाएँ',
 	'createaccountmail' => 'ई-मेल द्वारा',
 	'createaccounterror' => 'नहीं बना पाए $1 खाता',
@@ -11011,8 +10967,6 @@ $2',
 	'compareselectedversions' => 'च़यन किये हुए अवतरणोंमें फर्क देखियें',
 	'changepassword' => 'कूटशब्द बदलें',
 	'columns' => 'कॉलम:',
-	'contextlines' => 'प्रति हिट कतारें:',
-	'contextchars' => 'प्रति कतार संदर्भ:',
 	'categories' => 'श्रेणियाँ',
 	'categoriespagetext' => 'निम्नोक्त {{PLURAL:$1|श्रेणी में पन्ने या माध्यम है।|श्रेणियों में पन्ने या माध्यम हैं।}}
 जिन श्रेणियों का [[Special:UnusedCategories|इस्तेमाल नहीं किया गया है]] वे यहाँ नहीं दिखाई गई हैं।
@@ -11108,7 +11062,6 @@ $messages['hif'] = array(
 शायद किसी और ने इसे पहले ही हटा दिया हो.',
 	'cascadeprotected' => 'यह पन्ना सुरक्षित हैं, क्योंकी यह निम्नलिखित {{PLURAL:$1|पन्ने की|पन्नों की}} सुरक्षा-सीढीमें समाविष्ट हैं:
 $2',
-	'customcssjsprotected' => 'इस पन्नेपर दुसरे सदस्यकी व्यक्तिगत वरीयताएं होने के कारण, आपको यह पन्ना बदलने की अनुमति नहीं हैं ।',
 	'createaccount' => 'खाता बनाएँ',
 	'createaccountmail' => 'ई-मेल द्वारा',
 	'createaccounterror' => 'नहीं बना पाए $1 खाता',
@@ -11146,8 +11099,6 @@ $2',
 	'compareselectedversions' => 'च़यन किये हुए अवतरणोंमें फर्क देखियें',
 	'changepassword' => 'कूटशब्द बदलें',
 	'columns' => 'कॉलम:',
-	'contextlines' => 'प्रति हिट कतारें:',
-	'contextchars' => 'प्रति कतार संदर्भ:',
 	'categories' => 'श्रेणियाँ',
 	'categoriespagetext' => 'निम्नोक्त {{PLURAL:$1|श्रेणी में पन्ने या माध्यम है।|श्रेणियों में पन्ने या माध्यम हैं।}}
 जिन श्रेणियों का [[Special:UnusedCategories|इस्तेमाल नहीं किया गया है]] वे यहाँ नहीं दिखाई गई हैं।
@@ -11242,7 +11193,6 @@ $messages['hif-latn'] = array(
 	'cannotdelete' => '{{PLURAL:$1|Template|Template}} ke ii jhalak me kaam me lawa gais hae:',
 	'cascadeprotected' => 'Ii panna ke badlao se bachawa gais hai, kahe ki iske {{PLURAL:$1|panna, jon ki|panna, jon ki}} surakchhit hae "cascading" option turned on ke saathe me rakkhaa gais hai:
 $2',
-	'customcssjsprotected' => 'Aap ke paas ii panna ke badle ke adkikar nai hai, kahe ki isme duusra sadasya ke personal settings hai.',
 	'createaccount' => 'Nawaa account banao',
 	'createaccountmail' => 'e-mail se',
 	'createaccounterror' => 'Account ke nai banae sakaa hae: $1',
@@ -11272,8 +11222,6 @@ Iske kaaran, jon ki $3 diis hai, ''$2'' hai",
 	'compareselectedversions' => 'Chuna gae version ke compare karo',
 	'changepassword' => 'Pasword ke badlo',
 	'columns' => 'Column:',
-	'contextlines' => 'Ek hit me ketnaa line hae:',
-	'contextchars' => 'Ek line me ketnaa context hae:',
 	'categories' => 'Vibhag',
 	'categoriespagetext' => 'Niche ke {{PLURAL:$1|vibhag me|vibhag me}}  panna aur media hae.
 [[Special:UnusedCategories|Unused categories]] hian nai dekhawa jaawe hae.
@@ -12901,8 +12849,6 @@ $2',
 '''Konqueror: '''smelltu á ''Reload'' eða ýttu á ''F5''
 '''Opera:''' hreinsaðu skyndiminnið í ''Tools → Prefernces'';
 '''Internet Explorer:''' haltu ''Ctrl'' og smelltu á ''Refresh'', eða ýttu á ''Ctrl-F5''.",
-	'continue-editing' => 'Halda áfram að breyta',
-	'creating' => 'Skapa $1',
 	'copyrightwarning' => "Vinsamlegast athugaðu að öll framlög á {{SITENAME}} eru álitin leyfisbundin samkvæmt $2 (sjá $1 fyrir frekari upplýsingar).  Ef þú vilt ekki að skrif þín falli undir þetta leyfi og öllum verði frjálst að breyta og endurútgefa efnið samkvæmt því skaltu ekki leggja þau fram hér.<br />
 Þú berð ábyrgð á framlögum þínum, þau verða að vera þín skrif eða afrit texta í almannaeigu eða sambærilegs frjáls texta.
 '''AFRITIÐ EKKI HÖFUNDARRÉTTARVARIN VERK Á ÞESSA SÍÐU ÁN LEYFIS'''",
@@ -13728,16 +13674,6 @@ $5
 	'createwikimailsub' => '新しいウィキを申請する',
 	'createwikisubmitcomplete' => '送信完了しました。メールアドレスを設定してない場合は、新しいウィキそのものを参照してください。{{SITENAME}}を申請していただいてありがとうございます。',
 	'createwikilang' => 'このウィキに設定する言語',
-	'contact' => 'ウィキアに連絡する',
-	'contactpagetitle' => 'ウィキアに連絡する',
-	'contactproblem' => '件名',
-	'contactproblemdesc' => '内容',
-	'contactmailsub' => 'Wikia Contact Mail',
-	'contactmail' => '送信',
-	'contactsubmitcomplete' => 'ウィキアへの連絡、ありがとうございます。',
-	'contactrealname' => 'お名前',
-	'contactwikiname' => 'ウィキの名前',
-	'contactintro' => '詳しくは、<a href=http://www.wikia.com/wiki/Report_a_problem>問題の報告</a>のページをお読みの上、連絡用フォームをお使いになって報告をお願いします。また、ウィキアのコミュニティへは、<a href=http://www.wikia.com/wiki/Community_portal>Community portal</a>からコンタクトをとれます。ソフトウェアのバグに関しては、<a href=http://bugs.wikia.com>bugs.wikia.com</a>にお願いします。<p>もし、<a href=http://ja.wikia.com/wiki/Wikia>ウィキア</a>に個人的なメッセージを送りたいのであれば、下記連絡用フォームを使ってください。<i>全ての入力欄は、必須ではありません。</i>',
 	'create_an_account' => 'アカウントを作成する',
 	'createpage' => '新規ページを作成',
 	'choose_reason' => '理由を選択する',
@@ -13949,7 +13885,6 @@ $messages['jv'] = array(
 Manawa wis dibusak déning wong liya.',
 	'cascadeprotected' => 'Kaca iki wis direksa saka panyuntingan amerga disertakaké ing {{PLURAL:$1|kaca|kaca-kaca}} ngisor iki sing wis direksa mawa opsi "runtun" diaktifaké:
 $2',
-	'customcssjsprotected' => 'Panjenengan ora kagungan idin kanggo nyunting kaca iki amerga ngandhut pangaturan pribadi panganggo liya.',
 	'createaccount' => 'Nggawé akun anyar',
 	'createaccountmail' => 'liwat layang e-mail',
 	'createaccounterror' => 'Ora bisa nyipta akun: $1',
@@ -13975,8 +13910,6 @@ Alesané miturut $3 yaiku ''$2''",
 	'compareselectedversions' => 'Bandhingna vèrsi kapilih',
 	'changepassword' => 'Ganti tembung sandi',
 	'columns' => 'Kolom:',
-	'contextlines' => 'Baris dituduhaké per pituwas (kasil):',
-	'contextchars' => 'Karakter kanggo kontèks per baris:',
 	'categories' => 'Daftar kategori',
 	'categoriespagetext' => '{{PLURAL:$1|kategori ing ngisor iki ngandhut|kategori ing ngisor iki ngandhut}} kaca utawa media.
 [[Special:UnusedCategories|Kategori sing ora dianggo]] ora ditampilaké ing kéné.
@@ -14060,7 +13993,6 @@ $messages['ka'] = array(
 შესაძლოა, იგი უკვე წაშალა სხვა მომხმარებელმა.',
 	'cascadeprotected' => 'ეს გვერდი რედაქტირებისგან დაცულია, რადგან იგი ჩართულია შემდეგ {{PLURAL:$1|გვერდში, რომლის |გვერდებში, რომელთა}} დასაცავადაც ჩართულია პარამეტრი "იერარქიული":
 $2',
-	'customcssjsprotected' => 'თქვენ არ გაქვთ ამ გვერდის რედაქტირების უფლება, ვინაიდან ის სხვა მომხმარებლის პირად კონფიგურაციას შეიცავს.',
 	'createaccount' => 'გახსენი ანგარიში',
 	'createaccountmail' => 'ელ-ფოსტით',
 	'createaccounterror' => '$1 ანგარიშის შექმნა ვერ მოხერხდა.',
@@ -14089,8 +14021,6 @@ $3 -ემ ამგვარი ახსნა : ''$2''",
 	'compareselectedversions' => 'არჩეული ვერსიების შედარება',
 	'changepassword' => 'პაროლის შეცვლა',
 	'columns' => 'სვეტები',
-	'contextlines' => 'სტრიქონები შედეგის მიხედვით',
-	'contextchars' => 'კონტექსტი სტრიქონების მიხედვით',
 	'categories' => 'კატეგორიები',
 	'categoriespagetext' => 'შემდეგი {{PLURAL:$1|კატეგორია შეიცავს|კატეგორია შეიცავს}} გვერდს ან მედიას.
 [[Special:UnusedCategories|გამოუყენებელი კატეგორიები]] აქ ნაჩვენები არ არის.
@@ -17317,8 +17247,6 @@ De door $3 opgegaeve reje is ''$2''",
 	'compareselectedversions' => 'Vergeliek geselecteerde versies',
 	'changepassword' => 'Wachwaord verangere',
 	'columns' => 'Kolomme',
-	'contextlines' => 'Aantal reigels per gevónje pazjena',
-	'contextchars' => 'Aantal teikes van de conteks per reigel',
 	'copyuploaddisabled' => 't Uploade van bestenj via nen URL is oetgezat.',
 	'categories' => 'Categorieë',
 	'categoriespagetext' => "De volgende {{PLURAL:$1|categorie bevat|categorieë bevatte}} pazjena's of mediabestenj.
@@ -19383,8 +19311,6 @@ $2',
 *'''इंटरनेट एक्सप्लोरर:''' ''Reload'' करताना ''Ctrl'' दाबून ठेवा, किंवा ''Ctrl-F5'' दाबा
 *'''कॉन्क्वरर:''' '''Reload''' दाबा किंवा ''F5'' दाबा
 *'''ऑपेरा:''' ''Tools → Preferences'' मधून सय रिकामी करा",
-	'continue-editing' => 'संपादन चालु राहुदे',
-	'creating' => '$1 ची निर्मिती सुरु आहे',
 	'copyrightwarning' => "{{SITENAME}} येथे केलेले कोणतेही लेखन $2 (अधिक माहितीसाठी $1 पहा) अंतर्गत मुक्त उद्घोषित केले आहे असे गृहित धरले जाईल याची कृपया नोंद घ्यावी. आपणास आपल्या लेखनाचे मुक्त संपादन आणि मुक्त वितरण होणे पसंत नसेल तर येथे संपादन करू नये.<br />
 तुम्ही येथे लेखन करताना हे सुद्धा गृहित धरलेले असते की येथे केलेले लेखन तुमचे स्वतःचे आणि केवळ स्वतःच्या प्रताधिकार (कॉपीराईट) मालकीचे आहे किंवा प्रताधिकाराने गठीत न होणाऱ्या सार्वजनिक ज्ञानक्षेत्रातून घेतले आहे किंवा तत्सम मुक्त स्रोतातून घेतले आहे. तुम्ही संपादन करताना तसे वचन देत आहात. '''प्रताधिकारयुक्त लेखन सुयोग्य परवानगीशिवाय मुळीच चढवू/भरू नये!'''",
 	'copyrightwarning2' => "{{SITENAME}} येथे केलेले कोणतेही लेखन हे इतर संपादकांकरवी बदलले अथवा काढले जाऊ शकते. जर आपणास आपल्या लेखनाचे मुक्त संपादन होणे पसंत नसेल तर येथे संपादन करू नये.<br />
@@ -19402,7 +19328,6 @@ $3ने ''$2'' कारण दिले आहे.",
 	'changepassword' => 'परवलीचा शब्द बदला',
 	'columns' => 'स्तंभ:',
 	'copyuploaddisabled' => 'आंतरजालपत्त्याद्वारे चढवणे प्रतिबंधित आहे.',
-	'cachedspecial-refresh-now' => 'आखेरचे दृश्य',
 	'categories' => 'वर्ग',
 	'categoriespagetext' => 'विकिवर खालील वर्ग {{PLURAL:$1|आहे|आहेत}}.
 [[Special:UnusedCategories|न वापरलेले वर्ग]] येथे दाखवलेले नाहीत.
@@ -20803,7 +20728,6 @@ $messages['ne'] = array(
 यो अघिबाट नैं मेटिएको हुनुपर्छ।',
 	'cascadeprotected' => 'यो पृष्ठ सम्पादन गर्नबाट सुरक्षित गरिएकोछ किनभनें   {{PLURAL:$1|पृष्ठ |पृष्ठहरु}}मा  सुरक्षित गर्नुका साथै प्रपात ("cascading") विकल्प खुल्ला राखिएकोछ:
 $2',
-	'customcssjsprotected' => 'यो पृष्ठ सम्पादन गर्ने अनुमति यहाँलाई छैन ,किनकी यसमा अरु प्रयोगकर्ताको व्यक्तिगत जानकारीहरु छन् ।',
 	'createaccount' => 'खाता खोल्नुहोस्',
 	'createaccountmail' => 'इ-मेलबाट',
 	'createaccounterror' => 'खाता बनाउन सकिएन: $1',
@@ -20825,8 +20749,6 @@ $2',
 	'compareselectedversions' => 'छानिएका संस्करणहरू दाँज्नुहोस्',
 	'changepassword' => 'पासवर्ड परिवर्तन गर्नुहोस्',
 	'columns' => 'स्तम्भहरु :',
-	'contextlines' => 'प्रति पंक्ति  मेल :',
-	'contextchars' => 'प्रति पंक्ति सन्दर्भ :',
 	'categories' => 'श्रेणीहरू',
 	'categoriesfrom' => 'श्रेणीहरु देखाउन शुरु हुने यहाँ:',
 	'changed' => 'परिवर्तन भइसकेको',
@@ -22573,7 +22495,6 @@ Czy na pewno chcesz ją ponownie utworzyć?",
 	'contris' => 'Edycje',
 	'cockpit_hide' => 'Ukryj kokpit',
 	'create-account-new' => 'Stwórz konto na portalu Fandom',
-	'cięta-riposta' => 'Ojtam ojtam',
 	'community' => 'Społeczność',
 	'corporatepage-go-to-wiki' => 'Idź do $1',
 	'contris_s' => 'Edycje',
@@ -23497,10 +23418,10 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'compare-invalid-title' => 'O título que você especificou é inválido.',
 	'compare-title-not-exists' => 'O título que você especificou não existe.',
 	'compare-revision-not-exists' => 'A revisão que você especificou não existe.',
-	'create_an_account' => 'Sign up',
-	'createpage' => 'Create a new page',
-	'choose_reason' => 'Choose reason',
-	'create-account-new' => 'Create your Fandom Account',
+	'create_an_account' => 'Criar uma conta',
+	'createpage' => 'Criar uma página nova',
+	'choose_reason' => 'Escolha a razão',
+	'create-account-new' => 'Crie a sua conta no Fandom',
 	'contris_s' => 'Contribuições',
 	'categories-summary' => '',
 	'comma-separator' => ',&#32;',
@@ -23658,8 +23579,6 @@ Por favor, introduza um e valide-o através das suas [[Special:Preferences|prefe
 * '''Internet Explorer:''' pressione ''Ctrl'' enquanto clica em ''Recarregar'' ou pressione ''Ctrl-F5'';
 * '''Konqueror:''' clique no botão ''Recarregar'' ou pressione ''F5'';
 * '''Opera:''' limpe o ''cache'' em ''Ferramentas → Preferências'' (''Tools → Preferences'')",
-	'continue-editing' => 'Continuar editando',
-	'creating' => 'Criando $1',
 	'copyrightwarning' => "Por favor, note que todas as suas contribuições em {{SITENAME}} são consideradas como lançadas nos termos da licença $2 (veja $1 para detalhes). Se não deseja que o seu texto seja inexoravelmente editado e redistribuído de tal forma, não o envie.<br />
 Você está, ao mesmo tempo, garantindo-nos que isto é algo escrito por você mesmo ou algo copiado de uma fonte de textos em domínio público ou similarmente de teor livre.
 '''NÃO ENVIE TRABALHO PROTEGIDO POR DIREITOS AUTORAIS SEM A DEVIDA PERMISSÃO!'''",
@@ -23679,9 +23598,6 @@ A justificativa apresentada por $3 foi ''$2''",
 	'changepassword' => 'Alterar senha',
 	'columns' => 'Colunas:',
 	'copyuploaddisabled' => 'O upload por URL encontra-se desativado.',
-	'cachedspecial-viewing-cached-ttl' => 'Você está visualizando uma versão de cache desta página que pode ser de $1 atrás.',
-	'cachedspecial-viewing-cached-ts' => 'Você está visualizando uma versão de cache desta página que pode estar desatualizada.',
-	'cachedspecial-refresh-now' => 'Ver a mais recente.',
 	'categories' => 'Categorias',
 	'categoriespagetext' => '{{PLURAL:$1|A seguinte categoria contém|As seguintes contém}} páginas ou mídia.
 [[Special:UnusedCategories|Categorias não utilizadas]] não são mostradas aqui.
@@ -23849,8 +23765,6 @@ Kay willay pantasqa kaptinqa, qhawarparillay.',
 * '''Internet Explorer:''' ''Ctrl'' yatachkaspa ''Refresh'' ñit'iy, icha ''Ctrl-F5'' yatay
 * '''Konqueror: '''''Reload'' ñit'iy icha ''F5'' yatay
 * '''Opera:''' ''cache'' nisqata ch'usaqchay kaypi: ''Tools → Preferences''",
-	'continue-editing' => "Llamk'apuyta qatiykuy",
-	'creating' => 'Kamarispa: $1',
 	'copyrightwarning' => "Lliw {{SITENAME}}paq llamk'apuykunaqa $2 nisqawanmi uyaychasqa kanqa ($1 p'anqata qhaway). Llamk'asqaykikunata huk runakunap allinchayninta qispilla mast'ariyninta mana munaspaykiqa, ama kayman qillqamuychu.<br />
 Takyachichkankim: Kayqa ñuqap qillqasqaymi icha qispi pukyumanta iskaychamusqaymi, nispa.
 <br />'''Mana saqillasqa kaspaykiqa, ama qillqarimuychu iskaychay hayñi ''(copyright)'' nisqayuq qillqakunata iskaychamuspa!'''",
@@ -23870,9 +23784,6 @@ $3-qa nirqan kayraykum: ''$2''",
 	'changepassword' => 'Yaykuna rimata hukchay',
 	'columns' => 'Wachukuna:',
 	'copyuploaddisabled' => 'URL-pa churkunanqa manam atinchu.',
-	'cachedspecial-viewing-cached-ttl' => "Kay p'anqapaq hallch'asqa musuqchasqatam rikuchkanki, $1 pachakamam ñaqha kanman.",
-	'cachedspecial-viewing-cached-ts' => "Kay p'anqapaq hallch'asqa musuqchasqatam rikuchkanki, manachá kunallan musuqchasqachu kanman.",
-	'cachedspecial-refresh-now' => 'Qhipaq kaqta qhaway.',
 	'categories' => 'Katiguriyakuna',
 	'categoriespagetext' => "Kay qatiq {{PLURAL:$1|katiguriyaqa|katiguriyakunaqa}} p'anqayuqmi icha midyayuqmi.
 [[Special:UnusedCategories|Ch'usaq katiguriyakunataqa]] kaypi manam rikunkichu.
@@ -26169,8 +26080,6 @@ ikhssak ola kiyi ador tnqilt ɣtamani yadni.
 	'compareselectedversions' => 'Snahya gr ilqmn lli tuystaynin',
 	'changepassword' => 'bdl awal ihdan',
 	'columns' => 'aamida:',
-	'contextlines' => 'stour gh natija',
-	'contextchars' => 'lhrof gh natija',
 	'categories' => 'imggrad',
 	'confirmdeletetext' => 'Ḥan tbidt f attkkist tasna yad kullu d kullu amzruy nes.
 illa fllak ad ni tẓrt is trit ast tkkist d is tssnt marad igguṛu iɣt tkkist d is iffaɣ mayad i [[{{MediaWiki:Policy-url}}|tasrtit]].',
@@ -26425,8 +26334,6 @@ Ak bol účet vytvorený omylom, túto správu môžete ignorovať.',
 * '''Internet Explorer:''' Držte ''Ctrl'' a kliknite na ''Refresh'' alebo stlačte ''Ctrl-F5''
 * '''Konqueror:''' Kliknite na tlačidlo ''Reload'' alebo stlačte ''F5''
 * '''Opera:''' Vymazať vyrovnávaciu pamäť prehliadača v ponuke ''Tools→Preferences''",
-	'continue-editing' => 'Pokračovať v úpravách',
-	'creating' => 'Vytvára sa $1',
 	'copyrightwarning' => "Nezabudnite, že všetky príspevky do {{GRAMMAR:genitív|{{SITENAME}}}} sa považujú za príspevky pod licenciou $2 (podrobnosti pozri pod $1). Ak nechcete, aby bolo to, čo ste napísali, neúprosne upravované a ďalej ľubovoľne rozširované, tak sem váš text neumiestňujte.<br />
 
 Týmto sa právne zaväzujete, že ste tento text buď napísali sám, alebo že je skopírovaný
@@ -26450,9 +26357,6 @@ Dôvod, ktorý $3 uviedol, je ''$2''",
 	'changepassword' => 'Zmeniť heslo',
 	'columns' => 'Stĺpce:',
 	'copyuploaddisabled' => 'Nahrávanie prostredníctvom URL nie je povolené.',
-	'cachedspecial-viewing-cached-ttl' => 'Prezeráte si kópiu stránky z vyrovnávacej pamäte, môže byť stará až $1.',
-	'cachedspecial-viewing-cached-ts' => 'Prezeráte si kópiu stránky z vyrovnávacej pamäte, nemusí byť úplne aktuálna.',
-	'cachedspecial-refresh-now' => 'Zobraziť aktuálnu.',
 	'categories' => 'Kategórie',
 	'categoriespagetext' => '{{PLURAL:$1|Nasledovná kategória obsahuje|Nasledovné kategórie obsahujú}} stránky alebo multimediálne súbory.
 Nie sú tu zobrazené [[Special:UnusedCategories|nepoužité kategórie]].
@@ -27495,7 +27399,6 @@ $messages['sr-el'] = array(
 Moguće je da ju je neko već obrisao.',
 	'cascadeprotected' => 'Ova stranica je zaključana i njeno uređivanje je onemogućeno jer je uključena u sadržaj {{PLURAL:$1|sledeće stranice|sledećih stranica}}, koji je zaštićen sa opcijom „prenosive“ zaštite:
 $2',
-	'customcssjsprotected' => 'Nemate ovlašćenja da uređujete ovu stranicu jer sadrži lična podešavanja drugog korisnika.',
 	'createaccount' => 'Napravi nalog',
 	'createaccountmail' => 'E-poštom',
 	'createaccounterror' => 'Nije moguće napraviti nalog: $1',
@@ -27525,8 +27428,6 @@ Razlog koji je dao $3 je ''$2''",
 	'compareselectedversions' => 'Uporedi označene verzije',
 	'changepassword' => 'Promeni lozinku',
 	'columns' => 'Kolona',
-	'contextlines' => 'Linija po pogotku:',
-	'contextchars' => 'Karaktera konteksta po liniji:',
 	'categories' => 'Kategorije stranica',
 	'categoriespagetext' => '{{PLURAL:$1|Sledeća kategorija sadrži|Sledeće kategorije sadrže}} strane ili fajlove.
 [[Special:UnusedCategories|Nekorišćene kategorije]] nisu prikazane ovde.
@@ -30581,16 +30482,13 @@ $messages['val'] = array(
 	'category-media-header' => 'Contingut multimédia en la categoria "$1"',
 	'cancel' => 'Anula',
 	'copyright' => "El contingut està disponible baix els termes d'una llicència $1",
-	'copyrightpagename' => '{{SITENAME}}, tots els drets reservats',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Actualitat',
 	'currentevents-url' => 'Proyecte:Actualitat',
-	'cachederror' => 'Ací tens una còpia provinent de la memòria cache de la pàgina que hi has demanat i, per això, podria no estar actualisada.',
 	'cannotdelete' => "No s'ha pogut borrar la pàgina o el ficher especificat, o potser ya ha segut esborrat per algú atre.",
 	'cascadeprotected' => "S'ha protegit esta pàgina de modificacions al trobar-se inclosa entre les següents pàgines protegides l'opció en cascada:",
 	'createaccount' => 'Crea un nou conte',
 	'createaccountmail' => 'per correu electrònic',
-	'confirmedittitle' => 'Cal una confirmació de la direcció electrònica per a poder editar',
 	'confirmedittext' => "Tens que confirmar la teua direcció electrònica adés de poder editar pàgines. Indica i valida la teua direcció electrònica a través de les teues [[Special:Preferences|preferències d'usuari]].",
 	'clearyourcache' => "'''Nota:''' Després de guardar, tens que posar al dia la memòria cache del teu navegador per vore els canvis. '''Mozilla / Firefox / Safari:''' Pressiona ''Shift'' mentres fas clic ''Actualisa'' (Reload), o pressiona ''Ctrl+Shift+R'' (''Cmd+Shift+R'' en un Mac Apple); '''Internet Explorer:''' pressiona ''Ctrl'' mentres fas clic ''Actualisa'' (Refresh), o pressiona ''Ctrl+F5''; '''Konqueror:''': simplement fes clic el botó ''Recarregar'' (Reload), o pressiona ''F5''; '''Opera''' hauràs de borrar completament la teua memòria cache a ''Ferramentes→Preferències''.",
 	'copyrightwarning' => "Per favor, Tin en conte que totes les contribucions per al proyecte {{SITENAME}} se consideren com a publicades baix els termes de la llicència $2 (mira més detalls a $1). Si no desiges la modificació i distribució lliure dels teues escrits sense el teu consentiment, no els poses ací.<br />
@@ -30600,26 +30498,20 @@ A més a més, al manar el teu text, dona fe que tot es baix la teua autoria, o 
 A més a més, en enviar el teu text, dona fe què tot es baix la teua autoria, o copiats des de fonts en el domini públic o pareguts (mira $1). Tens que saber que este <strong>no</strong> es el cas de la majoria de pàgines que hi ha a Internet.<strong>No utilises textos en drets d'autor sense permís!</strong>",
 	'cascadeprotectedwarning' => "'''Avís:''' S'ha bloquejat esta pàgina, per tant només els usuaris en permissos d'administrador poden editar-lo, ya que se troba en les següents pàgines protegides en cascada:",
 	'cantcreateaccounttitle' => 'No se pot crear el conte',
-	'cantcreateaccounttext' => "La creació de contes d'usuari des d'esta direcció IP (<b>$1</b>) s'ha bloquejat. 
-Provablement se deu a atacs insistents de vandalisme per part d'usuaris del teu mateix proveïdor d'internet.",
 	'currentrev' => 'Revisió actual',
 	'currentrevisionlink' => 'Versió actual',
 	'cur' => 'act',
 	'compareselectedversions' => 'Compara les versions seleccionades',
 	'changepassword' => 'Canvia la contrasenya',
 	'columns' => 'Columnes',
-	'contextlines' => 'Llínies a mostrar per resultat',
-	'contextchars' => 'Caràcters de context per línia',
 	'categoriespagetext' => 'Les categories següents existixen en el wiki.',
 	'changed' => 'modificat',
 	'created' => 'publicat',
 	'confirm' => 'Confirma',
-	'confirmdelete' => 'Confirma que desixes borrar',
 	'confirmdeletetext' => "Estàs a punt de borrar de forma permanent una pàgina o image i tot el seu historial de la base de dades.
 Confirma que realment ho vols fer, que entens les
 conseqüències, i que el que estàs fent està d'acort en la [[{{MediaWiki:policy-url}}|política]] del proyecte.",
 	'cantrollback' => "No s'ha pogut revertir les edicions; el darrer colaborador es l'únic autor d'este articul.",
-	'confirmprotect' => 'Confirma la protecció',
 	'cannotundelete' => "No s'ha pogut restaurar; algú atre pot estar restaurant la mateixa pàgina.",
 	'contributions' => "Contribucions de l'usuari",
 	'contribsub2' => 'Per $1 ($2)',
@@ -30628,8 +30520,6 @@ conseqüències, i que el que estàs fent està d'acort en la [[{{MediaWiki:poli
 	'common.css' => '/* Edita este ficher per personalisar totes les apariències per al lloc sancer */',
 	'common.js' => "/* Se carregarà per a tots els usuaris, i per a qualsevol pàgina, el codi JavaScript que hi haja després d'esta llínia. */",
 	'creditspage' => 'Títuls de la pàgina',
-	'categoryarticulcount' => 'Hi ha {{PLURAL:$1|un artícul|$1 artículs}} en esta categoria.',
-	'category-media-count' => 'Esta categoria conté {{PLURAL:$1|un archiu|$1 archius}}.',
 	'confirmemail' => 'Confirma la direcció de correu electrònic',
 	'confirmemail_noemail' => "No has introduït una direcció vàlida de correu electrònic en les teues [[Special:Preferences|preferències d'usuari]].",
 	'confirmemail_text' => "El programa del sistema necessita que valides la teua direcció de correu electrònic per a poder disfrutar d'algunes facilitats. Fes clic el botó inferior
@@ -30668,9 +30558,6 @@ caducarà a $4.",
 	'confirmrecreate' => "L'usuari [[User:$1|$1]] ([[User talk:$1|discussió]]) va borrar esta pàgina que havies creat donant-ne el següent motiu:
 : ''$2''
 Confirma que realment vols tornar-la a crear.",
-	'confirm_purge' => "Vols buidar la memòria d'esta pàgina?
-
-$1",
 	'confirm_purge_button' => "D'acort",
 );
 
@@ -31166,7 +31053,6 @@ $messages['vo'] = array(
 	'cannotdelete' => 'No emögos ad moükön padi u ragivi: "$1".
 Ba ya pemoükon fa geban votik.',
 	'cascadeprotected' => 'Pad at pejelon ta redakam, bi pakeninükon fa {{PLURAL:$1|pad|pads}} sököl, kels pejelons ma „jänajel“: $2',
-	'customcssjsprotected' => 'No dalol redakön padi at, bi keninükon parametis pösodik gebana votik.',
 	'createaccount' => 'Jafön kali',
 	'createaccountmail' => 'me pot leäktronik',
 	'createaccounterror' => 'Kal no pejafon: $1',
@@ -31200,8 +31086,6 @@ Kod blokama fa el $3 pegivöl binon ''$2''",
 	'compareselectedversions' => 'Leigodolöd fomamis pevälöl',
 	'changepassword' => 'Votükön letavödi',
 	'columns' => 'Padüls:',
-	'contextlines' => 'Kedets a pad petuvöl:',
-	'contextchars' => 'Kevödem a kedet:',
 	'categories' => 'Klads',
 	'categoriespagetext' => 'Klads sököl labons padis u ragivis.
 [[Special:UnusedCategories|Klads no pageböls]] no pajonons is.
@@ -31940,7 +31824,6 @@ $messages['yo'] = array(
 	'currentevents-url' => 'Project:Ìṣẹ̀lẹ̀ lọ́wọ́lọ́wọ́',
 	'cannotdelete' => 'Ojúewé tàbí fáìlì "$1" kò ṣe é parẹ́.
 Oníṣe mìíràn le ti paárẹ́.',
-	'customcssjsprotected' => 'Ẹ kò ní ìyọ̀nda láti ṣàtúnṣe ojúewé yìí nítorípé ó ní ìtòjọ oníṣe ẹlòmíràn.',
 	'createaccount' => 'Ẹ fi orúkọ sílẹ̀',
 	'createaccountmail' => 'pẹ̀lú e-mail',
 	'createaccounterror' => 'Kò le dá àkópamọ́: $1',
@@ -31971,7 +31854,6 @@ Bákannà ẹ tún ṣèlérí fún wa wípé ẹ̀yin lẹkọ́ fúnra arayín
 	'compareselectedversions' => 'Ìfiwéra àwọn àtúnṣe ìṣàyàn',
 	'changepassword' => 'Ìyípadà ọ̀rọ̀ìpamọ́',
 	'columns' => 'Àwọn ìtẹ̀lé gogoro:',
-	'contextlines' => 'Ìye ìlà lórí èsì kọ̀ọ̀kan:',
 	'categories' => 'Àwọn ẹ̀ka',
 	'categoriesfrom' => 'Ìfihàn àwọn ẹ̀ka nípa bíbẹ̀rẹ̀ láti:',
 	'changed' => 'títúnṣẹ',
