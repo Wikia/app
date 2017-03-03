@@ -610,13 +610,12 @@ $messages['da'] = array(
 );
 
 $messages['de'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Finden',
+	'qbbrowse' => 'Durchsuchen',
+	'qbpageoptions' => 'Seitenoptionen',
+	'qbpageinfo' => 'Seitendaten',
+	'querypage-no-updates' => "'''Die Aktualisierungsfunktion dieser Seite ist zurzeit deaktiviert. Die Daten werden bis auf Weiteres nicht erneuert.'''",
+	'querypage-disabled' => 'Diese Spezialseite wurde aus Gründen der Leistungserhaltung deaktiviert.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -829,13 +828,12 @@ Datenoj ĉi tie ne estos nune refreŝigitaj.',
 );
 
 $messages['es'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Buscar',
+	'qbbrowse' => 'Navegar',
+	'qbpageoptions' => 'Opciones de página',
+	'qbpageinfo' => 'Información de página',
+	'querypage-no-updates' => 'Actualmente las actualizaciones de esta página están desactivadas. Estos datos no serán actualizados a corto plazo.',
+	'querypage-disabled' => 'Esta página especial está deshabilitada por motivos de rendimiento.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -1043,13 +1041,12 @@ Dáta higani verður í løtuni ikki endurnýggjað.',
 );
 
 $messages['fr'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Rechercher',
+	'qbbrowse' => 'Parcourir',
+	'qbpageoptions' => 'Cette page',
+	'qbpageinfo' => 'Contexte',
+	'querypage-no-updates' => 'Les mises à jour pour cette page sont actuellement désactivées. Les données ci-dessous ne sont pas mises à jour.',
+	'querypage-disabled' => 'Cette page spéciale est désactivée pour des raisons de performances.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -1497,13 +1494,12 @@ $messages['is'] = array(
 );
 
 $messages['it'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Trova',
+	'qbbrowse' => 'Sfoglia',
+	'qbpageoptions' => 'Opzioni pagina',
+	'qbpageinfo' => 'Informazioni sulla pagina',
+	'querypage-no-updates' => 'Gli aggiornamenti della pagina sono temporaneamente sospesi. I dati in essa contenuti non verranno aggiornati.',
+	'querypage-disabled' => 'Questa pagina speciale è disattivata per motivi di prestazioni.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -1658,13 +1654,13 @@ $messages['iu'] = array(
 );
 
 $messages['ja'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => '検索',
+	'qbbrowse' => '閲覧',
+	'qbpageoptions' => 'このページについて',
+	'qbpageinfo' => '関連情報',
+	'querypage-no-updates' => 'ページの更新は無効になっています。
+以下のデータの更新は現在行われていません。',
+	'querypage-disabled' => 'パフォーマンスに悪影響を与えるおそれがあるため、この特別ページは無効になっています。',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -2382,13 +2378,13 @@ $messages['new'] = array(
 );
 
 $messages['nl'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Zoeken',
+	'qbbrowse' => 'Bladeren',
+	'qbpageoptions' => 'Deze pagina',
+	'qbpageinfo' => 'Pagina-informatie',
+	'querypage-no-updates' => 'Deze pagina wordt niet bijgewerkt.
+Gegevens op deze pagina worden niet ververst.',
+	'querypage-disabled' => 'Deze speciale pagina is uitgeschakeld om performanceredenen.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -2627,13 +2623,12 @@ $messages['pfl'] = array(
 );
 
 $messages['pl'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Znajdź',
+	'qbbrowse' => 'Przeglądanie',
+	'qbpageoptions' => 'Ta strona',
+	'qbpageinfo' => 'Kontekst',
+	'querypage-no-updates' => 'Uaktualnienia dla tej strony są obecnie wyłączone. Znajdujące się tutaj dane nie zostaną odświeżone.',
+	'querypage-disabled' => 'Ta strona specjalna została wyłączona ze względu na ograniczenia wydajności.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -2820,13 +2815,13 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Procurar',
+	'qbbrowse' => 'Navegar',
+	'qbpageoptions' => 'Esta página',
+	'qbpageinfo' => 'Contexto',
+	'querypage-no-updates' => 'As actualizações estão presentemente desactivadas para esta página.
+Por enquanto, os dados aqui presentes não poderão ser actualizados.',
+	'querypage-disabled' => 'Esta página especial está desactivada para não prejudicar o desempenho.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -3040,13 +3035,13 @@ Le date ca stonne aqquà jndre non ge sonde aggiornete.",
 );
 
 $messages['ru'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => 'Поиск',
+	'qbbrowse' => 'Просмотреть',
+	'qbpageoptions' => 'Настройки страницы',
+	'qbpageinfo' => 'Сведения о странице',
+	'querypage-no-updates' => 'Обновление этой страницы сейчас отключено.
+Представленные здесь данные не будут обновляться.',
+	'querypage-disabled' => 'Эта спецстраница отключена для повышения производительности.',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -3760,13 +3755,12 @@ $messages['zea'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => '查找',
+	'qbbrowse' => '浏览',
+	'qbpageoptions' => '页面选项',
+	'qbpageinfo' => '页面信息',
+	'querypage-no-updates' => '当前禁止对此页面进行更新。此处的数据将不能被立即刷新。',
+	'querypage-disabled' => '此特殊页面基于效能的原因已经被停用。',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
@@ -3912,13 +3906,12 @@ div.wikiaDialog h2,
 );
 
 $messages['zh-hant'] = array(
-	'qbfind' => 'Find',
-	'qbbrowse' => 'Browse',
-	'qbpageoptions' => 'This page',
-	'qbpageinfo' => 'Context',
-	'querypage-no-updates' => 'Updates for this page are currently disabled.
-Data here will not presently be refreshed.',
-	'querypage-disabled' => 'This special page is disabled for performance reasons.',
+	'qbfind' => '尋找',
+	'qbbrowse' => '瀏覽',
+	'qbpageoptions' => '頁面選項',
+	'qbpageinfo' => '頁面訊息',
+	'querypage-no-updates' => '目前禁止對此頁面進行更新。此處的資料將不能被立即重新整理。',
+	'querypage-disabled' => '此特殊頁面基於效能的原因已經被停用。',
 	'quartz_skins' => 'Quartz',
 	'quartz-smoke' => 'Smoke',
 	'quartz-slate' => 'Slate',
