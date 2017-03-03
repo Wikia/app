@@ -211,6 +211,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			return params.enableLeaderboardFloating && compatibleSlots.indexOf(params.slotName) > -1;
 		}
 
+		/**
+		 *
+		 * @param floatingContext - floating context object, containing state parameter
+		 * @returns {boolean} - true if state is different from stopped - stopped state is set when floating element
+		 * was closed or when scrolling up floating mode was turned off and video ended
+		 */
 		function isEnabled(floatingContext) {
 			return Boolean(floatingContext && floatingContext.state !== state.stopped);
 		}
