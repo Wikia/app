@@ -34,7 +34,7 @@ describe('ext.wikia.adEngine.utils.sampler', function () {
 			Math.random.and.returnValue(randomResult);
 
 			var sampler = getModule();
-			expect(sampler.sample(2, 10)).toEqual(testResult);
+			expect(sampler.sample('test', 2, 10)).toEqual(testResult);
 		});
 	});
 

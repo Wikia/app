@@ -1,7 +1,7 @@
 define('ext.wikia.adEngine.utils.sampler', function () {
 	'use strict';
 
-	function sample(partToSample, all) {
+	function sample(name, partToSample, all) {
 		return getRandomInt(0, all) < partToSample;
 	}
 
