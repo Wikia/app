@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.porvata',
+	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (porvata, videoSettings, doc, mercuryListener) {
+], function (porvata, googleIma, videoSettings, doc, mercuryListener) {
 	'use strict';
 
 	function getVideoContainer(slotName) {
@@ -15,6 +16,10 @@ define('ext.wikia.adEngine.template.porvata', [
 		providerContainer.appendChild(container);
 
 		return container;
+	}
+
+	function isVpaid(contentType) {
+		return contentType.indexOf('application/') === 0;
 	}
 
 	/**
@@ -28,17 +33,16 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
-		if (params.vpaidMode === 2) {
+		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 			params.container = getVideoContainer(params.slotName);
 		}
 
 		porvata.inject(videoSettings.create(params)).then(function (video) {
-			if (params.vpaidMode === 2) {
+			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 				video.addEventListener('loaded', function () {
-					var ad = video.ima.getAdsManager().getCurrentAd(),
-						contentType = ad.getContentType() || '';
+					var ad = video.ima.getAdsManager().getCurrentAd();
 
-					if (contentType.indexOf('application/') !== -1) {
+					if (ad && isVpaid(ad.getContentType() || '')) {
 						params.container.classList.add('vpaid-enabled');
 					}
 				});

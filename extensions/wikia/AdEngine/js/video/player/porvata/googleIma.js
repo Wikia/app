@@ -42,6 +42,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 	return {
 		load: load,
-		getPlayer: getPlayer
+		getPlayer: getPlayer,
+		vpaidMode: {
+			DISABLED: 0,
+			ENABLED: 1,
+			INSECURE: 2
+		}
 	};
 });

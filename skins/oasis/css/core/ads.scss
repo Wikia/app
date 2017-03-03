@@ -22,6 +22,14 @@ $uap-video-player-button-size: 24px;
 
 $vpaid-z-index: 10;
 
+@mixin absolute-fill() {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
+
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
 .wikia-ad.hidden,
@@ -70,26 +78,15 @@ $vpaid-z-index: 10;
 		width: 100%;
 
 		.provider-container iframe {
-			height: 100%;
-			left: 0;
-			position: absolute;
-			width: 100%;
-			top: 0;
+			@include absolute-fill();
 		}
 	}
 
 	.vpaid-container {
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
+		@include absolute-fill();
 
 		video, & > div {
-			height: 100%;
-			left: 0;
-			position: absolute;
-			width: 100%;
-			top: 0;
+			@include absolute-fill();
 		}
 
 		// Node elements created by IMA library
