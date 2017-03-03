@@ -97,6 +97,10 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 					background-color: $video-player-volume-bar-off-color;
 				}
 			}
+
+			.oo-control-bar-duration {
+				font-weight: bold;
+			}
 		}
 
 		// For all default icons (new icons stay transparent) make the hover state the default video blue color

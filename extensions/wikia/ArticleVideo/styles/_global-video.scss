@@ -36,9 +36,9 @@
 				transform: none;
 				width: 80px;
 
-				> span {
-					font-size: 34px;
-					color: $color-button-text;
+				svg {
+					fill: $color-button-text;
+					margin-left: 4px;
 				}
 			}
 		}
@@ -59,10 +59,12 @@
 			}
 
 			.video-duration {
-				color: #656e78;
+				color: #fff;
 				font-size: 14px;
 				font-weight: bold;
+				letter-spacing: 0.25px;
 				line-height: 18px;
+				opacity: .75;
 			}
 		}
 

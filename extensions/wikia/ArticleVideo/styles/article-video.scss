@@ -164,7 +164,7 @@ $spinnerSize: 48;
 			.close {
 				cursor: pointer;
 				display: block;
-				z-index: 10001;
+				z-index: 11001;
 			}
 
 			.video-thumbnail {
@@ -187,8 +187,10 @@ $spinnerSize: 48;
 					bottom: 10px;
 					right: 10px;
 
-					>span {
-						font-size: 17px;
+					svg {
+						width: 12px;
+						height: 16px;
+						margin-left: 3px;
 					}
 				}
 
@@ -207,8 +209,8 @@ $spinnerSize: 48;
 
 					.video-duration {
 						font-size: 10px;
-						line-height: 12px;
 						font-weight: bold;
+						line-height: 14px;
 					}
 				}
 			}
