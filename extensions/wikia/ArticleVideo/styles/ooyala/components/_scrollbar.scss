@@ -45,7 +45,7 @@
     position: absolute;
     background: none;
     opacity: .4;
-    z-index: 9999;
+    z-index: $zindex-scrollbar;
 
     -webkit-transition: all .4s;
     -moz-transition: all .4s;

@@ -105,23 +105,33 @@ $cursor-disabled:                not-allowed !default;
 //$form-icon-error: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNyb3NzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYxMiA3OTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYxMiA3OTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiNEOTUzNEYiIGQ9Ik00NDcsNTQ0LjRjLTE0LjQsMTQuNC0zNy42LDE0LjQtNTEuOSwwTDMwNiw0NTEuN2wtODkuMSw5Mi43Yy0xNC40LDE0LjQtMzcuNiwxNC40LTUxLjksMGMtMTQuNC0xNC40LTE0LjQtMzcuNiwwLTUxLjlsOTIuNC05Ni40TDE2NSwyOTkuNmMtMTQuNC0xNC40LTE0LjQtMzcuNiwwLTUxLjlzMzcuNi0xNC40LDUxLjksMGw4OS4yLDkyLjdsODkuMS05Mi43YzE0LjQtMTQuNCwzNy42LTE0LjQsNTEuOSwwYzE0LjQsMTQuNCwxNC40LDM3LjYsMCw1MS45TDM1NC43LDM5Nmw5Mi40LDk2LjRDNDYxLjQsNTA2LjgsNDYxLjQsNTMwLDQ0Nyw1NDQuNHoiLz48L3N2Zz4=" !default;
 //
 //
-//// Z-index master list
-////
-//// Warning: Avoid customizing these values. They're used for a bird's eye view
-//// of components dependent on the z-axis and are designed to all work together.
-////
-//// Note: These variables are not generated into the Customizer.
+// Z-index master list
 //
-//$zindex-navbar:            1000 !default;
-//$zindex-dropdown:          1000 !default;
-//$zindex-popover:           1060 !default;
-//$zindex-tooltip:           1070 !default;
-//$zindex-navbar-fixed:      1030 !default;
-//$zindex-navbar-sticky:     1030 !default;
-//$zindex-modal-bg:          1040 !default;
-//$zindex-modal:             1050 !default;
+// Values sorted in ascending order for bird's eye view.
+// Components dependent on z-index are designed to work together
 //
-//
+$zindex-player-skin-plugins-blur:        -10000 !default;
+$zindex-closed-caption-overlay:              -1 !default;
+$zindex-playhead-padding:                     1 !default;
+$zindex-scrollbar:                         9999 !default;
+$VIDEO_Z_INDEX:                           10000 !default; //in core, here for bird's eye view tracking
+$zindex-discovery-count-down-icon:        10005 !default;
+$OVERLAY_Z_INDEX:                         10500 !default; //in core, here for bird's eye view tracking
+$ALICE_SKIN_Z_INDEX:                      11000 !default; //in core, here for bird's eye view tracking
+$zindex-player-skin:                      11000 !default;
+$zindex-action-icon-pause-hidden:         11990 !default;
+$zindex-player-skin-plugins:              12000 !default;
+$zindex-start-screen:                     12005 !default;
+$zindex-player-skin-plugins-click-layer:  12005 !default;
+$zindex-ad-screen-panel-click-layer:      12005 !default;
+$zindex-control-bar:                      12500 !default;
+$zindex-scrubber-bar:                     12600 !default;
+$zindex-action-icon-pause-animate:        12600 !default;
+$zindex-ad-top-bar:                       12600 !default;
+$zindex-popover:                          12600 !default;
+$SUPER_Z_INDEX:                           20000 !default; //in core, here for bird's eye view tracking
+$zindex-fullscreen:                  2147483647 !default; //in screenfull, here for bird's eye view tracking
+
 //// Form states and alerts
 ////
 //// Define colors for form feedback states and, by default, alerts.
@@ -174,3 +184,6 @@ $control-bar-gradient: linear-gradient(to bottom, rgba(0,0,0,0) 23%,rgba(0,0,0,0
 
 //transition - easing
 $medium-transition: transition, opacity .2s ease-in-out, height .3s ease-in-out;
+
+//watermark
+$watermark-margin: 15px;

@@ -8,13 +8,14 @@
   }
 
   .oo-action-icon.oo-icon-hidden {
-    z-index: 11990;
+    z-index: $zindex-action-icon-pause-hidden;
     visibility: hidden;
   }
 
   .oo-action-icon-pause.oo-animate-pause {
-    z-index: 12600;
+    z-index: $zindex-action-icon-pause-animate;
     cursor: default;
+    pointer-events: none; // Allow click to pass through
   }
 }
 
