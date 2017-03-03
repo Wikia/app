@@ -43,10 +43,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		geo: {
 			isProperGeo: noop
 		},
+		log: noop,
 		win: {
 			XMLHttpRequest: noop
 		}
 	};
+
+	mocks.log.levels = {};
 
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
@@ -55,6 +58,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			mocks.vastUrlBuilder,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.log,
 			mocks.win
 		);
 	}
