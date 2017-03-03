@@ -3188,6 +3188,7 @@ $config['article_video_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/core.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/main_html5.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/html5-skin.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
 		'//extensions/wikia/ArticleVideo/scripts/article-video.js',
 	],

@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], function (window, onScroll, tracker, OoyalaPlayer) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest'], function (window, onScroll, tracker, OoyalaPlayer, abTest) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -236,5 +236,12 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		$videoPlayBtn.click(playPauseVideo);
 
 		onScroll.bind(toggleCollapse);
+
+		if (abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY')) {
+			if (ooyalaVideoController) {
+				ooyalaVideoController.player.setVolume(0);
+				showAndPlayVideo();
+			}
+		}
 	});
 });
