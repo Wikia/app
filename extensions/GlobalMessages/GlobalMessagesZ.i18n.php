@@ -184,12 +184,12 @@ Den kan ikke kontrolleres rigtigt for sikkerhed.',
 );
 
 $messages['de'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Es ist ein Fehler beim Öffnen der Datei zur ZIP-Überprüfung aufgetreten.',
+	'zip-wrong-format' => 'Die angegebene Datei ist keine ZIP-Datei.',
+	'zip-bad' => 'Die Datei ist beschädigt oder eine aus anderweitigen Gründen nicht lesbare ZIP-Datei.
+Sie kann daher keiner ordnungsgemäßen Sicherheitsüberprüfung unterzogen werden.',
+	'zip-unsupported' => 'Diese ZIP-Datei verfügt über Komprimierungseigenschaften, die nicht von MediaWiki unterstützt werden.
+Sie kann daher keiner ordnungsgemäßen Sicherheitsüberprüfung unterzogen werden.',
 );
 
 $messages['dsb'] = array(
@@ -219,12 +219,12 @@ $messages['eo'] = array(
 );
 
 $messages['es'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Se encontró un error al abrir el archivo ZIP para su comprobación.',
+	'zip-wrong-format' => 'El archivo especificado no es un archivo ZIP.',
+	'zip-bad' => 'El archivo es un ZIP dañado o que no se puede leer.
+No se puede comprobar su seguridad.',
+	'zip-unsupported' => 'El archivo es un archivo que utiliza características ZIP no compatibles con MediaWiki.
+No puede comprobarse adecuadamente su seguridad.',
 );
 
 $messages['et'] = array(
@@ -268,12 +268,12 @@ Sitä ei voida tarkistaa tietoturvan varalta kunnolla.',
 );
 
 $messages['fr'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => "Une erreur s'est produite lors de l'ouverture du fichier ZIP pour contrôle.",
+	'zip-wrong-format' => "Le fichier spécifié n'est pas un fichier ZIP.",
+	'zip-bad' => 'Le fichier est un fichier ZIP corrompu ou illisible.
+Il ne peut pas être correctement vérifié pour la sécurité.',
+	'zip-unsupported' => 'Le fichier est un fichier ZIP qui utilise ZIP non supportées par MediaWiki.
+Il ne peut pas être correctement vérifé pour la sécurité.',
 );
 
 $messages['frp'] = array(
@@ -386,12 +386,12 @@ Ekki er hægt að athuga öryggi skráarinnar almennilega.',
 );
 
 $messages['it'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => "Si è verificato un errore durante l'apertura del file per i controlli ZIP.",
+	'zip-wrong-format' => 'Il file specificato non è un file ZIP.',
+	'zip-bad' => 'Il file è un file ZIP corrotto o altrimenti illeggibile.
+Non può essere adeguatamente controllato per la sicurezza.',
+	'zip-unsupported' => 'Il file è un file ZIP che usa caratteristiche ZIP non supportate da MediaWiki.
+Non può essere adeguatamente controllato per la sicurezza.',
 );
 
 $messages['iu'] = array(
@@ -404,12 +404,12 @@ Non può essere adeguatamente controllato per la sicurezza.',
 );
 
 $messages['ja'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'ZIPのチェックを行った際にエラーが検出されました。',
+	'zip-wrong-format' => '指定されたファイルはZIPファイルではありませんでした。',
+	'zip-bad' => 'このファイルは破損しているか解読不能のZIPファイルです。
+セキュリティについて適切に検査することができません。',
+	'zip-unsupported' => 'このファイルはMediaWikiで利用することができないZIP形式を使用したZIPファイルです。
+セキュリティについて適切に検査することができません。',
 );
 
 $messages['ko'] = array(
@@ -554,12 +554,12 @@ De veiligheid kan niet ekontroleerd wörden.',
 );
 
 $messages['nl'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Er is een fout opgetreden bij het openen van het bestand voor de ZIP-controle.',
+	'zip-wrong-format' => 'Het opgegeven bestand was geen ZIP-bestand.',
+	'zip-bad' => 'Het bestand is een corrupt of onleesbare ZIP-bestand.
+De veiligheid kan niet worden gecontroleerd.',
+	'zip-unsupported' => 'Het bestand is een ZIP-bestand dat gebruik maakt van ZIP-mogelijkheden die MediaWiki niet ondersteunt.
+De veiligheid kan niet worden gecontroleerd.',
 );
 
 $messages['or'] = array(
@@ -572,12 +572,12 @@ $messages['or'] = array(
 );
 
 $messages['pl'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Wystąpił błąd podczas otwierania pliku ZIP, aby go sprawdzić.',
+	'zip-wrong-format' => 'Wybrany plik nie jest w formacie ZIP.',
+	'zip-bad' => 'Plik ZIP jest uszkodzony lub w inny sposób niemożliwy do odczytania.
+Nie może zostać odpowiednio sprawdzony pod kątem bezpieczeństwa.',
+	'zip-unsupported' => 'Plik jest w formacie ZIP ale wykorzystuje funkcje, które nie są obsługiwane przez MediaWiki.
+Plik nie może zostać odpowiednio sprawdzony pod kątem bezpieczeństwa.',
 );
 
 $messages['pms'] = array(
@@ -603,12 +603,12 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Foi encontrado um erro ao abrir o ficheiro ZIP para verificação.',
+	'zip-wrong-format' => 'O ficheiro especificado não é um ficheiro ZIP.',
+	'zip-bad' => 'O ficheiro ZIP encontra-se corrompido ou não é legível.
+A sua segurança não pode ser devidamente verificada.',
+	'zip-unsupported' => 'Este ficheiro ZIP usa funcionalidades ZIP não suportadas pelo MediaWiki.
+A sua segurança não pode ser devidamente verificada.',
 );
 
 $messages['pt-br'] = array(
@@ -648,12 +648,12 @@ Non g'è possibbele verificà pa securezze.",
 );
 
 $messages['ru'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => 'Произошла ошибка при открытии файла для проверки архива.',
+	'zip-wrong-format' => 'Указанный файл не является файлом ZIP.',
+	'zip-bad' => 'ZIP-файл повреждён, или не может быть прочитан.
+Он не может быть должным образом проверен.',
+	'zip-unsupported' => 'Этот ZIP-файл использует возможности, не поддерживаемые MediaWiki.
+Он не может быть должным образом проверен.',
 );
 
 $messages['rue'] = array(
@@ -846,20 +846,20 @@ $messages['yue'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => '打开文件的 ZIP 检查时遇到一个错误。',
+	'zip-wrong-format' => '指定的文件不是一个 ZIP 文件。',
+	'zip-bad' => '该文件是已损坏或以其它方式无法读取的 ZIP 文件。
+不能正确检查安全。',
+	'zip-unsupported' => '该文件是 ZIP 文件，其中使用 MediaWiki 不支持的ZIP功能。
+不能正确检查安全。',
 );
 
 $messages['zh-hant'] = array(
-	'zip-file-open-error' => 'An error was encountered when opening the file for ZIP checks.',
-	'zip-wrong-format' => 'The specified file was not a ZIP file.',
-	'zip-bad' => 'The file is a corrupt or otherwise unreadable ZIP file.
-It cannot be properly checked for security.',
-	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
-It cannot be properly checked for security.',
+	'zip-file-open-error' => '打開檔案的 ZIP 檢查時遇到一個錯誤。',
+	'zip-wrong-format' => '指定的檔案不是ZIP檔案。',
+	'zip-bad' => '該檔案是已損壞或以其它方式無法讀取的 ZIP 檔案。
+不能正確檢查安全。',
+	'zip-unsupported' => '該檔案是 ZIP 檔案，其中使用 MediaWiki 不支持的ZIP功能。
+不能正確檢查安全。',
 );
 
