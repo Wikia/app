@@ -2624,7 +2624,6 @@ $messages['de-weigsbrag'] = array(
 	'hist' => 'Wersiones',
 	'hide' => 'ausblend',
 	'historywarning' => 'Obagd, dose Seid wo wol lösch, haddar eines Wersionsgeschigd:',
-	'hideresults' => 'Werberg',
 );
 
 $messages['diq'] = array(
@@ -9322,7 +9321,7 @@ Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
 	'http-host-unreachable' => 'Não foi possível atingir a URL.',
 	'http-bad-status' => 'Ocorreu um problema durante a requisição HTTP: $1 $2',
 	'historywarning' => "'''Atenção:''' A página que você está prestes a eliminar possui um histórico com aproximadamente $1 {{PLURAL:$1|revisão|revisões}}:",
-	'handheld.css' => '/* CSS placed here will affect handheld devices based on the skin configured in $wgHandheldStyle */',
+	'handheld.css' => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
 	'htmlform-invalid-input' => 'Existem problemas com alguns dos dados introduzidos',
 	'htmlform-select-badoption' => 'O valor que você especificou não é uma opção válida.',
@@ -9334,9 +9333,9 @@ Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
 	'htmlform-submit' => 'Enviar',
 	'htmlform-reset' => 'Desfazer alterações',
 	'htmlform-selectorother-other' => 'Outros',
-	'home' => 'Home',
-	'helpfaq' => 'Help & FAQ',
-	'highest_ratings' => 'Highest voted',
+	'home' => 'Página principal',
+	'helpfaq' => 'Ajuda e perguntas mais freqüentes',
+	'highest_ratings' => 'Melhores pontuações',
 	'hub-Wikia' => 'Fandom',
 	'htmlform-no' => 'Não',
 	'htmlform-yes' => 'Sim',
@@ -12091,7 +12090,6 @@ Intenta [[Special:Search|buscar al mateix wiki]] per a noves pàgines rellevants
 	'hist' => 'hist',
 	'hide' => 'amaga',
 	'historywarning' => 'Avís: La pàgina que vols eliminar té un historial:',
-	'hideresults' => 'Amaga els resultats',
 );
 
 $messages['vec'] = array(
