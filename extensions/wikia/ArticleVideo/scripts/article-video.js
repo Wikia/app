@@ -5,7 +5,6 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
-			$videoPlayBtn = $videoContainer.find('.video-play-button'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
@@ -107,13 +106,6 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			return false;
 		}
 
-		function isVideoPausedOrReady() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PAUSED || ooyalaVideoController.player.getState() === OO.STATE.READY;
-			}
-			return false;
-		}
-
 		function isVideoInFullScreenMode() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.isFullscreen();
@@ -142,38 +134,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}
 		}
 
-		function showAndPlayVideo() {
-			$ooyalaVideo.show();
-			$video.addClass('played');
-			ooyalaVideoController.player.play();
-			track({
-				action: tracker.ACTIONS.PLAY_VIDEO,
-				label: 'featured-video'
-			});
-		}
-
-		function playPauseVideo() {
-			if (!$video.hasClass('played')) {
-				return;
-			}
-			if (isVideoPausedOrReady()) {
-				ooyalaVideoController.player.play();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-play'
-				});
-			} else if (isVideoPlaying()) {
-				ooyalaVideoController.player.pause();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-pause'
-				});
-			}
-		}
-
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
-			$video.one('click', showAndPlayVideo);
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
 				track({
@@ -209,8 +171,6 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		});
 
 		$closeBtn.click(closeButtonClicked);
-
-		$videoPlayBtn.click(playPauseVideo);
 
 		onScroll.bind(toggleCollapse);
 	});
