@@ -175,7 +175,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		vulcanSlots.forEach(function (vulcanSlot) {
 			var ad = vulcanSlot.getBestCpm(),
 				placeholderName = vulcanSlot.id,
-				sizeId = vulcanSlot.sizeId,
+				sizeId = placeholder.sizeId,
 				cpm,
 				tier,
 				vastUrl;
