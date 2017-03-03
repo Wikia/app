@@ -130,7 +130,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
-			vulcanSlots = win.rubiconVulcan.getAllSlots() || [];
+			vulcanSlots = win.rubiconVulcan && win.rubiconVulcan.getAllSlots() || [];
 
 		vulcanSlots.forEach(function (slot) {
 			if (slot.id === slotMapping[slotName]) {
