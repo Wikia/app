@@ -32,8 +32,8 @@ $messages['ckb'] = array(
 );
 
 $messages['de'] = array(
-	'1movedto2' => 'moved [[$1]] to [[$2]]',
-	'1movedto2_redir' => 'moved [[$1]] to [[$2]] over redirect',
+	'1movedto2' => 'verschob [[$1]] zu [[$2]]',
+	'1movedto2_redir' => 'verschob [[$1]] zu [[$2]] und überschrieb Weiterleitung',
 	'#voted#' => 'Top voted articles',
 	'#popular#' => 'Most popular articles',
 	'#visited#' => 'Most visited articles',
@@ -47,8 +47,8 @@ $messages['de-weigsbrag'] = array(
 );
 
 $messages['es'] = array(
-	'1movedto2' => 'moved [[$1]] to [[$2]]',
-	'1movedto2_redir' => 'moved [[$1]] to [[$2]] over redirect',
+	'1movedto2' => 'movió [[$1]] a [[$2]]',
+	'1movedto2_redir' => 'movió [[$1]] a [[$2]] sobre una redirección',
 	'#voted#' => 'Top voted articles',
 	'#popular#' => 'Most popular articles',
 	'#visited#' => 'Most visited articles',
@@ -57,8 +57,8 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'1movedto2' => 'moved [[$1]] to [[$2]]',
-	'1movedto2_redir' => 'moved [[$1]] to [[$2]] over redirect',
+	'1movedto2' => 'a renommé [[$1]] en [[$2]]',
+	'1movedto2_redir' => 'a renommé [[$1]] en [[$2]] en écrasant la redirection',
 	'#voted#' => 'Top voted articles',
 	'#popular#' => 'Most popular articles',
 	'#visited#' => 'Most visited articles',
@@ -102,8 +102,8 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'1movedto2' => 'moved [[$1]] to [[$2]]',
-	'1movedto2_redir' => 'moved [[$1]] to [[$2]] over redirect',
+	'1movedto2' => '[[$1]]を[[$2]]へ移動',
+	'1movedto2_redir' => '[[$1]]を、[[$2]]へ移動し転送を上書き',
 	'#voted#' => 'Top voted articles',
 	'#popular#' => 'Most popular articles',
 	'#visited#' => 'Most visited articles',
