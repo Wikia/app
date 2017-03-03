@@ -44,9 +44,10 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isPageFairRecoveryEnabled (noExternals, instantGlobals) {
 		var isGeoSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries),
-			isExternalEnabled = !noExternals;
+			isExternalEnabled = !noExternals,
+			isNotDisabledOnWiki = context.opts.pageFairRecovery !== false;
 
-		return Boolean(isExternalEnabled && context.opts.pageFairRecovery !== false && isGeoSupported);
+		return Boolean(isExternalEnabled && isNotDisabledOnWiki && isGeoSupported);
 	}
 
 	function setContext(newContext) {
