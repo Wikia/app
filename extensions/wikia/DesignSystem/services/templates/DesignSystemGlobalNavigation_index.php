@@ -33,6 +33,7 @@
 					]
 				); ?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
+				<?= $app->renderView( 'DesignSystemGlobalNavigationOnSiteNotificationsService', 'index' ); ?>
 			<?php elseif ( isset( $model['anon'] ) ): ?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 			<?php endif; ?>
