@@ -22,7 +22,9 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			};
 
 		function initVideo(ooyalaContainerId, videoId, onCreate) {
-			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaContainerId, videoId, onCreate);
+			var playerParams = window.wgArticleVideoData.playerParams;
+
+			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaContainerId, playerParams, videoId, onCreate);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {

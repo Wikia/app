@@ -13,7 +13,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  z-index: 12500;
+  z-index: $zindex-control-bar;
+  pointer-events: auto;
 
   .oo-control-bar-items-wrapper {
     display: -webkit-flex;
@@ -66,6 +67,7 @@
 
     .oo-control-bar-item.oo-selected > span {
       color:$blue-light !important;
+      color: inherit !important;
       opacity:1 !important;
     }
 

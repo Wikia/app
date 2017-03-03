@@ -9,15 +9,12 @@
  */
 
 //Vars (Some are from the config.json file)
-$video-player-blue: $color-buttons;
+$video-player-blue: #2cd3f8;
 $video-scrubber-height: 3px;
 $video-scrubber-played-color: $video-player-blue;
-$video-scrubber-buffered-color: rgba(254, 254, 254, .3);
-$video-scrubber-unplayed-color: rgba(255, 255, 255, .2);
 $video-player-head-color: $video-player-blue;
 $video-player-head-size: 13px;
 $video-player-head-size-scrubbing: 20px;
-$video-player-icon-size: 23px;
 $video-player-volume-bar-height: 16px;
 $video-player-volume-bar-off-color: rgba(255,255,255,0.2);
 
@@ -100,12 +97,16 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 					background-color: $video-player-volume-bar-off-color;
 				}
 			}
+
+			.oo-control-bar-duration {
+				font-weight: bold;
+			}
 		}
 
 		// For all default icons (new icons stay transparent) make the hover state the default video blue color
 		.oo-icon:not(.fandom-video-icon) {
 			&:hover {
-				color: #ccc !important;
+				color: $video-player-blue !important;
 			}
 		}
 

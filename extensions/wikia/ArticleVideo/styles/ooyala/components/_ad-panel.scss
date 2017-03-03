@@ -4,6 +4,15 @@
   bottom: 64px;
   width: 100%;
 
+  .oo-ad-screen-panel-click-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $zindex-ad-screen-panel-click-layer;
+  }
+
   .oo-ad-top-bar {
     display: -webkit-flex;
     display: flex;
@@ -19,7 +28,7 @@
     justify-content: flex-start;
     @include vendor-prefixes(user-select, none);
     transition: bottom 0.5s, height 0.5s;
-    z-index: 12600;
+    z-index: $zindex-ad-top-bar;
 
     .oo-ad-title, .oo-ad-playback-info {
       font-size: 0.9em;
@@ -72,7 +81,7 @@
 
     .oo-skip-button.oo-visible {
       visibility: visible;
-      width: initial;
+      width: auto;
       margin: auto 15px;
       text-align: center;
       cursor: pointer;

@@ -7,7 +7,7 @@
     top: 0px;
     width: inherit;
     height: 80%;
-    z-index: -1;
+    z-index: $zindex-closed-caption-overlay;
     background: rgba(10,10,10,.8);
     background: linear-gradient(rgba(10,10,10,1), rgba(10,10,10,.6) 70%, rgba(20,20,20,0));
   }

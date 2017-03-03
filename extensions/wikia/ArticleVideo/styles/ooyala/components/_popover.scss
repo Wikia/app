@@ -5,7 +5,14 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
   border: 0;
   border-radius: 4px;
+  z-index: $zindex-popover;
   @include horizontal-center;
+
+  &.oo-popover-pull-right {
+    left: auto;
+    right: 0;
+    @include vendor-prefixes(transform, none);
+  }
 
   ul.oo-popover-horizontal {
     display: inline-block;
@@ -41,7 +48,7 @@
         padding: 4px 10px;
         color:$white;
         background-color: #333;
-        text-transform: uppercase;
+        text-transform: capitalize;
         font-size:12px;
         font-weight:bold;
       }

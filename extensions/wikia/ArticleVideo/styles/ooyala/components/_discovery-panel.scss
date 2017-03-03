@@ -100,7 +100,7 @@ a.oo-right-button {
 .oo-discovery-count-down-wrapper-style a.oo-discovery-count-down-icon-style span {
   @include absolute-center;
   line-height: 40px;
-  z-index: 10005;
+  z-index: $zindex-discovery-count-down-icon;
   color: $white;
   font-size: 25px;
   cursor: pointer

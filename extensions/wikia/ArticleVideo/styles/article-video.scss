@@ -164,7 +164,7 @@ $spinnerSize: 48;
 			.close {
 				cursor: pointer;
 				display: block;
-				z-index: 10001;
+				z-index: 11001;
 			}
 
 			.video-thumbnail {
@@ -178,6 +178,42 @@ $spinnerSize: 48;
 			bottom: auto;
 			height: $video-collapsed-height !important;
 			transition: height $video-collapse-animation-speed;
+
+			&.oo-player-container .oo-state-screen.oo-start-screen {
+				.oo-action-icon {
+					border-width: 3px;
+					bottom: 10px;
+					height: 40px;
+					right: 10px;
+					width: 40px;
+
+					svg {
+						height: 16px;
+						margin-left: 3px;
+						width: 12px;
+					}
+				}
+
+				.oo-state-screen-info {
+					bottom: 10px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					left: 10px;
+					min-height: 40px;
+
+					.oo-state-screen-title {
+						font-size: 12px;
+						line-height: 14px;
+					}
+
+					.video-duration {
+						font-size: 10px;
+						font-weight: bold;
+						line-height: 14px;
+					}
+				}
+			}
 		}
 
 		.spinner {
@@ -192,12 +228,12 @@ $spinnerSize: 48;
 	}
 
 	.spinner {
-		width: $spinnerSize + px;
 		height: $spinnerSize + px;
-		position: absolute;
-		top: 50%;
 		left: 50%;
 		margin: (-$spinnerSize/2 + px) 0 0 (-$spinnerSize/2 + px);
+		position: absolute;
+		top: 50%;
+		width: $spinnerSize + px;
 
 		circle {
 			animation: spinner 2s linear infinite;
