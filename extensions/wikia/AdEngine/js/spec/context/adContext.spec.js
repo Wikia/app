@@ -85,4 +85,18 @@ describe('ext.wikia.adEngine.adContext', function () {
 		expect(context.opts.pageFairRecovery).toBeFalsy();
 	});
 
+	it('Should disable PageFair recovery if there is no proper geo but its enabled by backend (wgVariable)', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+		spyOn(mocks.geo, 'isProperGeo');
+		mocks.geo.isProperGeo.and.returnValue(false);
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
 });
