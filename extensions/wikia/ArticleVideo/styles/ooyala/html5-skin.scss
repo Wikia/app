@@ -2,16 +2,6 @@
 
 // namespace root
 .oo-player-container {
-  // Fandom variable overrides START
-  $font-path: '/extensions/wikia/ArticleVideo/fonts';
-  $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  $font-family-roboto: $font-family-sans-serif;
-  $font-family-roboto-condensed: $font-family-sans-serif;
-  $font-family-roboto-bold: $font-family-sans-serif;
-  $font-family-roboto-condensed-bold: $font-family-sans-serif;
-  $font-family-verdana: $font-family-sans-serif;
-  // Fandom variable overrides END
-
   // Core variables
   @import "base/variables";
 
@@ -41,9 +31,7 @@
   // Components
   @import "components/discovery-panel";
   @import "components/share-panel";
-  // Fandom change START -- Closed caption functionality isn't used
-  //@import "components/closed-captions";
-  // Fandom change END
+  @import "components/closed-captions";
   @import "components/scrollbar";
   @import "components/webvtt";
   @import "components/buttons";
@@ -62,6 +50,7 @@
   @import "components/video-quality";
   @import "components/tabs";
   @import "components/thumbnail";
+  @import "components/watermark";
 
   // Responsive
   @import "responsive/xsmall";
@@ -71,4 +60,15 @@
 
   // Skin
   @import "skin/default";
+}
+
+//override non-responsive css on debug.ooyala.com
+//remove this after test site updated
+#video_container {
+  display: inline !important;
+  margin: 0 !important;
+}
+#ooplayer {
+  width:auto !important;
+  height:auto !important;
 }

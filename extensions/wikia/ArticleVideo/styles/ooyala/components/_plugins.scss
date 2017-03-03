@@ -1,5 +1,5 @@
 .oo-player-skin-plugins {
-  z-index: 12000;
+  z-index: $zindex-player-skin-plugins;
   top: 0;
   left: 0;
   right: 0;
@@ -21,12 +21,12 @@
   -webkit-filter: blur(3px);
   -moz-filter: blur(3px);
   filter: blur(3px);
-  z-index: -10000;
+  z-index: $zindex-player-skin-plugins-blur;
   position: absolute;
 }
 
 .oo-player-skin-plugins-click-layer {
-  z-index: 12005;
+  z-index: $zindex-player-skin-plugins-click-layer;
   top: 0;
   left: 0;
   right: 0;

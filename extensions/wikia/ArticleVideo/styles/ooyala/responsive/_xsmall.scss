@@ -236,6 +236,20 @@
   }
 
   //Ad Panel
+  .oo-ad-screen {
+    .oo-action-icon-pause {
+      display:none;
+    }
+  }
+
+  //Share Panel
+  .oo-share-panel {
+    .oo-embed-form {
+      height: calc(8vh);
+      margin: 12px 0px;
+    }
+  }
+
   .oo-ad-top-bar {
      height: 17px;
 
@@ -572,5 +586,9 @@
 
   .oo-scrubber-carousel-container {
     bottom: 88px;
+  }
+
+  .oo-watermark-bottom.oo-watermark-bottom-cb {
+    bottom: $control-bar-height-small;
   }
 }

@@ -1,5 +1,6 @@
 .oo-spinner-screen {
   @extend .oo-state-screen;
+  pointer-events: none; // Allow click to pass through
 }
 
 .oo-spinner-wrapper {

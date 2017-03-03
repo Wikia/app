@@ -1,88 +1,12 @@
-$icon-fandom-video-large: 'http://vignette.wikia.nocookie.net/6857d275-0eb0-4e97-9401-3d23da474ed0';
-
-
 /**
  * Global video styles will live here
  *
  */
-
-.collapsed {
-	.oo-player-container .oo-state-screen.oo-start-screen .oo-action-icon {
-		width: 40px;
-		height: 40px;
-		border-width: 3px;
-		bottom: 10px;
-		right: 10px;
-
-		>span {
-			font-size: 17px;
-		}
-	}
-
-	.oo-player-container .oo-state-screen .oo-state-screen-info {
-		bottom: 10px;
-		left: 10px;
-		min-height: 40px;
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-
-		.oo-state-screen-title {
-			font-size: 12px;
-			line-height: 14px;
-		}
-	}
-
-	//.oo-control-bar-duration {
-	//	display: none;
-	//}
-	//
-	//.oo-player-container .oo-control-bar .oo-control-bar-items-wrapper .oo-control-bar-item {
-	//	font-size: 17px;
-	//}
-	//
-	//.oo-player-container .oo-control-bar .oo-control-bar-items-wrapper .oo-volume .oo-volume-bar {
-	//	height: 12px;
-	//	width: 4px;
-	//	padding-left: 3px;
-	//	margin-bottom: 2px;
-	//}
-	//
-	//.oo-player-container .oo-control-bar .oo-control-bar-items-wrapper {
-	//	margin-top: 4px;
-	//}
-	//
-	//.oo-player-container .oo-control-bar {
-	//	height: 32px !important;
-	//}
-	//
-	//.oo-playhead-scrubbing {
-	//	height: 15px !important;
-	//	width: 15px !important;
-	//}
-	//
-	//.oo-scrubber-carousel-container, .oo-scrubber-thumbnail-container {
-	//	display: none;
-	//}
-	//
-	.oo-player-container .oo-state-screen .oo-state-screen-info .video-duration {
-		font-size: 10px;
-		line-height: 12px;
-		font-weight: bold;
-	}
-}
-
-.oo-control-bar {
-	transition: none !important;
-	* {
-		transition: none !important;
-	}
-}
-
 .oo-player-container {
 	min-width: 0 !important;
 
 	.oo-state-screen {
+		// hides title on pause screen
 		&.oo-pause-screen {
 			.oo-state-screen-title {
 				display: none;
@@ -91,45 +15,30 @@ $icon-fandom-video-large: 'http://vignette.wikia.nocookie.net/6857d275-0eb0-4e97
 
 		&.oo-start-screen {
 			.oo-start-screen-linear-gradient {
-				background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+				background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
 			}
 
 			.oo-action-icon {
-
-			}
-
-			.oo-action-icon {
-				//background-image: url($icon-fandom-video-large);
-				//background-size: cover;
-				//bottom: 25px;
-				//height: 80px;
-				//left: auto;
-				//right: 25px;
-				//// Hide font icon
-				//text-indent: 8000px;
-				//top: auto;
-				//transform: nogne;
-				//width: 80px;
 				align-items: center;
-				background-color: #5f1023;
-				border: 6px solid rgba(0,0,0,0.32);
+				background-color: $color-buttons;
+				border: 6px solid rgba(0, 0, 0, 0.32);
 				border-radius: 100%;
 				bottom: 35px;
-				box-shadow: 0 0 15px 5px rgba(0,0,0,0.3);
+				box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.3);
 				box-sizing: border-box;
 				display: flex;
 				height: 80px;
 				justify-content: center;
+				left: auto;
 				position: absolute;
 				right: 35px;
-				width: 80px;
-				/* display: block; */
-				left: auto;
 				top: auto;
 				transform: none;
+				width: 80px;
 
-				>span {
-					font-size: 34px;
+				svg {
+					fill: $color-button-text;
+					margin-left: 4px;
 				}
 			}
 		}
@@ -144,17 +53,18 @@ $icon-fandom-video-large: 'http://vignette.wikia.nocookie.net/6857d275-0eb0-4e97
 			top: auto;
 
 			.oo-state-screen-title {
-				//@include medium-font;
 				font-size: 24px;
-				line-height: 29px;
+				line-height: 32px;
 				margin-bottom: 0;
 			}
 
 			.video-duration {
+				color: #fff;
 				font-size: 14px;
-				line-height: 18px;
-				//color: $color-slate-gray;
 				font-weight: bold;
+				letter-spacing: 0.25px;
+				line-height: 18px;
+				opacity: .75;
 			}
 		}
 

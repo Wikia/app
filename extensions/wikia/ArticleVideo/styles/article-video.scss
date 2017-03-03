@@ -164,7 +164,7 @@ $spinnerSize: 48;
 			.close {
 				cursor: pointer;
 				display: block;
-				z-index: 10001;
+				z-index: 11001;
 			}
 
 			.video-thumbnail {
@@ -178,6 +178,42 @@ $spinnerSize: 48;
 			bottom: auto;
 			height: $video-collapsed-height !important;
 			transition: height $video-collapse-animation-speed;
+
+			&.oo-player-container .oo-state-screen.oo-start-screen {
+				.oo-action-icon {
+					width: 40px;
+					height: 40px;
+					border-width: 3px;
+					bottom: 10px;
+					right: 10px;
+
+					svg {
+						width: 12px;
+						height: 16px;
+						margin-left: 3px;
+					}
+				}
+
+				.oo-state-screen-info {
+					bottom: 10px;
+					left: 10px;
+					min-height: 40px;
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+
+					.oo-state-screen-title {
+						font-size: 12px;
+						line-height: 14px;
+					}
+
+					.video-duration {
+						font-size: 10px;
+						font-weight: bold;
+						line-height: 14px;
+					}
+				}
+			}
 		}
 
 		.spinner {
