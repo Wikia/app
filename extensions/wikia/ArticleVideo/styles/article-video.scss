@@ -181,26 +181,26 @@ $spinnerSize: 48;
 
 			&.oo-player-container .oo-state-screen.oo-start-screen {
 				.oo-action-icon {
-					width: 40px;
-					height: 40px;
 					border-width: 3px;
 					bottom: 10px;
+					height: 40px;
 					right: 10px;
+					width: 40px;
 
 					svg {
-						width: 12px;
 						height: 16px;
 						margin-left: 3px;
+						width: 12px;
 					}
 				}
 
 				.oo-state-screen-info {
 					bottom: 10px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
 					left: 10px;
 					min-height: 40px;
-					display: flex;
-					justify-content: center;
-					flex-direction: column;
 
 					.oo-state-screen-title {
 						font-size: 12px;
@@ -228,12 +228,12 @@ $spinnerSize: 48;
 	}
 
 	.spinner {
-		width: $spinnerSize + px;
 		height: $spinnerSize + px;
-		position: absolute;
-		top: 50%;
 		left: 50%;
 		margin: (-$spinnerSize/2 + px) 0 0 (-$spinnerSize/2 + px);
+		position: absolute;
+		top: 50%;
+		width: $spinnerSize + px;
 
 		circle {
 			animation: spinner 2s linear infinite;
