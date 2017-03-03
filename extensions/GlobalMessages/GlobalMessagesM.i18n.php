@@ -379,9 +379,6 @@ $messages['qqq'] = array(
 	'may-gen' => 'The fifth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
 	'mar' => 'Abbreviation of March, the thrird month of the Gregorian calendar',
 	'may' => 'Abbreviation of May, the fifth month of the Gregorian calendar',
-	'mainpagetext' => 'Along with {{msg|mainpagedocfooter}}, the text you will see on the Main Page when your wiki is installed.',
-	'mainpagedocfooter' => 'Along with {{msg|mainpagetext}}, the text you will see on the Main Page when your wiki is installed.
-This might be a good place to put information about <nowiki>{{GRAMMAR:}}</nowiki>. See [[{{NAMESPACE}}:{{BASEPAGENAME}}/fi]] for an example. For languages having grammatical distinctions and not having an appropriate <nowiki>{{GRAMMAR:}}</nowiki> software available, a suggestion to check and possibly amend the messages having <nowiki>{{SITENAME}}</nowiki> may be valuable. See [[{{NAMESPACE}}:{{BASEPAGENAME}}/ksh]] for an example.',
 	'moredotdotdot' => '{{Identical|More...}}',
 	'mytalk' => 'In the personal urls page section - right upper corner.',
 	'mainpage' => 'Defines the link and display name of the main page of the wiki. Shown as the top link in the navigation part of the interface. Please do not change it too often, that could break things!
@@ -410,8 +407,6 @@ This might be a good place to put information about <nowiki>{{GRAMMAR:}}</nowiki
 
 [http://translatewiki.net/w/i.php?title=Translating:Tasks&diff=372398&oldid=371789000 Click here] to see an example of such an error message.',
 	'mailmypassword' => 'Shown at [[Special:UserLogin]]',
-	'math_sample' => 'The sample formula text that you get when you press the fourth button from the right on the edit toolbar.',
-	'math_tip' => 'This is the text that appears when you hover the mouse over the fourth button from the right on the edit toolbar.',
 	'media_sample' => '{{optional}}',
 	'media_tip' => 'This is the text that appears when you hover the mouse over the fifth button from the right in the edit toolbar.',
 	'minoredit' => 'Text above Save page button in editor',
@@ -464,9 +459,6 @@ Example:
 	'mycontris' => 'In the personal urls page section - right upper corner.',
 	'month' => 'Used in [[Special:Contributions]] and history pages ([{{fullurl:Sandbox|action=history}} example]), as label for a dropdown box to select a specific month to view the edits made in that month, and the earlier months. See also {{msg|year}}.',
 	'move-page' => 'Header of the special page to move pages. $1 is the name of the page to be moved.',
-	'move-page-backlink' => '{{optional|Translate it only if you have to change it, i.e. for RTL wikis}}
-
-Shown as subtitle of [[Special:MovePage/testpage]]. $1 is the title of the page to be moved.',
 	'move-page-legend' => 'Legend of the fieldset around the input form of [[Special:MovePage/testpage]].
 
 {{Identical|Move page}}',
@@ -505,13 +497,6 @@ Parameters:
 {{Identical|Reason}}',
 	'monobook.css' => 'CSS applied to users using Monobook skin.',
 	'monobook.js' => 'JS for users using Monobook skin.',
-	'mw_math_png' => 'In user preferences.',
-	'mw_math_simple' => 'In [[Special:Preferences|user preferences]].',
-	'mw_math_html' => 'In user preferences.',
-	'mw_math_source' => 'In user preferences (math)',
-	'mw_math_modern' => 'In user preferences (math)',
-	'mw_math_mathml' => 'In user preferences.',
-	'math_syntax_error' => '{{Identical|Syntax error}}',
 	'markedaspatrolledtext' => '{{Identical|Markedaspatrolled}}',
 	'mediawarning' => 'Shows up on file description pages if the file type is not listed in [[mw:Manual:$wgTrustedMediaFormats|Manual:$wgTrustedMediaFormats]].',
 	'minutes-abbrev' => '{{optional}}',
@@ -2443,7 +2428,6 @@ $messages['avk'] = array(
 	'may-gen' => 'Alubeaksat',
 	'mar' => '3-at',
 	'may' => '5-at',
-	'mainpagetext' => "'''MediaWiki inkeyen talpeyot.'''",
 	'moredotdotdot' => 'Ostik...',
 	'mypage' => 'Jinafu bu',
 	'mytalk' => 'Jinafo keyaksexo',
@@ -2453,8 +2437,6 @@ $messages['avk'] = array(
 	'missingarticle-diff' => '(Amid-: $1, $2)',
 	'mailmypassword' => 'Warzaf staksaremravlem',
 	'mailerror' => 'Rokla stakseson va e-mail staksa : $1',
-	'math_sample' => 'Va rinaf tazukoy batliz cenkal',
-	'math_tip' => 'Solokseropaf tazukoy (LaTeX)',
 	'media_sample' => 'Tula.ogg',
 	'media_tip' => 'Gluyasiki va iyeltak',
 	'minoredit' => 'Betamaks.',
@@ -2536,21 +2518,6 @@ Dans ce cas, vous devrez renommer ou fusionner la page manuellement si vous le d
 	'movelogpage' => 'Arrundara va "log" bu',
 	'movelogpagetext' => 'Vleveon vexala dem arrundayanu bu se.',
 	'movereason' => 'Lazava :',
-	'mw_math_png' => 'Toujours produire une image PNG',
-	'mw_math_simple' => 'HTML si très simple, autrement PNG',
-	'mw_math_html' => 'HTML si possible, autrement PNG',
-	'mw_math_source' => 'Laisser le code TeX original',
-	'mw_math_modern' => 'Pour les navigateurs modernes',
-	'mw_math_mathml' => 'MathML',
-	'math_failure' => 'Erreur math',
-	'math_unknown_error' => 'erreur indéterminée',
-	'math_unknown_function' => 'megrupen fliok',
-	'math_lexing_error' => 'ravlemafa rokla',
-	'math_syntax_error' => 'erurafa rokla',
-	'math_image_error' => "La conversion en PNG a échouée, vérifiez l'installation de Latex, dvips, gs et convert",
-	'math_bad_tmpdir' => 'Redura ik sutera ko ugaloraxo tid merotisa',
-	'math_bad_output' => 'Redura ik sutera ko divaxo tid merotisa',
-	'math_notexvc' => "L'éxécutable « texvc » est introuvable. Lisez math/README pour le configurer.",
 	'markaspatrolleddiff' => 'Marquer comme vérifiée',
 	'markaspatrolledtext' => 'Marquer cet article comme vérifié',
 	'markedaspatrolled' => 'Marqué comme vérifié',
@@ -5792,13 +5759,6 @@ $messages['ckb'] = array(
 	'may-gen' => 'مایسی',
 	'mar' => 'مارت',
 	'may' => 'مای',
-	'mainpagetext' => "'''میدیاویکی بە سەرکەوتوویی دامەزرا.'''",
-	'mainpagedocfooter' => 'پرس بکە بە [http://meta.wikimedia.org/wiki/Help:Contents ڕێنوێنی بەکارھێنەران] بۆ زانیاری سەبارەت بە بەکارھێنانی نەرمامێری ویکی.
-
-== دەستپێکردن ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings لیستی ھەڵبژاردەکانی ڕێکخستنەکان]
-* [http://www.mediawiki.org/wiki/Manual:FAQ پرسیارە دوپاتکراوەکانی میدیاویکی (FAQ)]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce لیستی ئیمەیڵەکانی وەشانی میدیاویکی]',
 	'moredotdotdot' => 'زیاتر',
 	'mypage' => 'په‌ڕه‌ی من',
 	'mytalk' => 'لێدوانەکەم',
@@ -5814,8 +5774,6 @@ $messages['ckb'] = array(
 	'missingarticle-diff' => '(جیاوازی: $1، $2)',
 	'mailmypassword' => 'تێپەڕوشەیەکی نوێ بنێرە بۆ ئیمەیلەکەم',
 	'mailerror' => 'هەڵە ڕوویدا لە ناردنی ئیمەیل: $1',
-	'math_sample' => 'فۆرموول لێرە بنووسە',
-	'math_tip' => 'فۆرموولی بیرکاری (LaTeX)',
 	'media_sample' => 'نموونە.ogg',
 	'media_tip' => 'لینکی پەڕگە',
 	'minoredit' => 'ئەم گۆڕانکارییە بچووکە',
@@ -5918,14 +5876,6 @@ $messages['ckb'] = array(
 	'movenosubpage' => 'ئەم پەڕە ھیچ ژێرپەڕەیەکی نییە.',
 	'movereason' => 'هۆکار:',
 	'move-leave-redirect' => 'لە پاشەوە ڕەوانکەرێک دابنە',
-	'mw_math_png' => 'ھەموو جارێک وەک PNG نیشان بدە',
-	'mw_math_simple' => 'HTML ئەگەر ساکار بێت, ئەگەرنا PNG',
-	'mw_math_html' => 'ئەگەر بکرێ بە HTML ، ئەگەرنا بە PNG',
-	'mw_math_source' => 'وەک TeX بمێنێتەوە (بۆ وێبگەڕە دەقی‌یەکان)',
-	'mw_math_modern' => 'بۆ وێبگەڕە مۆدێڕنەکان باشترە',
-	'math_unknown_error' => 'هەڵەیەکی نەزانراو',
-	'math_unknown_function' => 'فەرمانێکی نەناسراو',
-	'math_syntax_error' => 'ڕستەکار هەڵەیە',
 	'markaspatrolleddiff' => 'وەک چاودێری‌کراو نیشان‌کردن',
 	'markaspatrolledtext' => 'ئەم لاپەڕە وەک چاودێری‌کراو نیشان بکە',
 	'markedaspatrolled' => 'وەک چاودێری‌کراو نیشان‌کرا',
@@ -7063,147 +7013,175 @@ Du kan beskadige dit system hvis du udfører den.",
 );
 
 $messages['de'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'Montag',
+	'mon' => 'Mo',
+	'march' => 'März',
+	'may_long' => 'Mai',
+	'march-gen' => 'Märzes',
+	'may-gen' => 'Mais',
+	'mar' => 'Mär.',
+	'may' => 'Mai',
+	'moredotdotdot' => 'Mehr…',
+	'mypage' => 'Eigene Seite',
+	'mytalk' => 'Eigene Diskussion',
+	'mainpage' => 'Hauptseite',
+	'mainpage-description' => 'Hauptseite',
+	'missing-article' => 'Der Text von „$1“ $2 wurde nicht in der Datenbank gefunden.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Die Seite ist möglicherweise gelöscht oder verschoben worden.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+Falls dies nicht  zutrifft, hast du eventuell einen Fehler in der Software gefunden. Bitte melde dies einem [[Special:ListUsers/sysop|Administrator]] unter Nennung der URL.',
+	'missingarticle-rev' => '(Versionsnummer: $1)',
+	'missingarticle-diff' => '(Unterschied zwischen Versionen: $1, $2)',
+	'mailmypassword' => 'Neues Passwort zusenden',
+	'mailerror' => 'Fehler beim Senden der E-Mail: $1',
+	'media_sample' => 'Beispiel.ogg',
+	'media_tip' => 'Mediendatei-Link',
+	'minoredit' => 'Kleine Änderung',
+	'missingsummary' => "'''Hinweis:''' Du hast keine Zusammenfassung angegeben. Wenn du erneut auf „{{int:savearticle}}“ klickst, wird deine Änderung ohne Zusammenfassung übernommen.",
+	'missingcommenttext' => 'Dein Abschnitt enthält keinen Text.',
+	'missingcommentheader' => "'''Achtung:''' Du hast kein Betreff/Überschrift eingegeben. Wenn du erneut auf „{{int:savearticle}}“ klickst, wird deine Bearbeitung ohne Überschrift gespeichert.",
+	'moveddeleted-notice' => 'Diese Seite wurde gelöscht. Zur Information folgt das Lösch- und Verschiebungs-Logbuch dieser Seite.',
+	'mergehistory' => 'Versionsgeschichten vereinen',
+	'mergehistory-header' => 'Mit dieser Spezialseite kannst du die Versionsgeschichte einer Ursprungsseite mit der Versionsgeschichte einer Zielseite vereinen.
+Stelle sicher, dass die Versionsgeschichte einer Seite historisch korrekt ist.',
+	'mergehistory-box' => 'Versionsgeschichten zweier Seiten vereinen',
+	'mergehistory-from' => 'Ursprungsseite:',
+	'mergehistory-into' => 'Zielseite:',
+	'mergehistory-list' => 'Versionen, die vereinigt werden können',
+	'mergehistory-merge' => 'Die folgenden Versionen von „[[:$1]]“ können nach „[[:$2]]“ übertragen werden. Markiere die Version, bis zu der (einschließlich) die Versionen übertragen werden sollen. Bitte beachte, dass die Nutzung der Navigationslinks die Auswahl zurücksetzt.',
+	'mergehistory-go' => 'Zeige Versionen, die vereinigt werden können',
+	'mergehistory-submit' => 'Vereinige Versionen',
+	'mergehistory-empty' => 'Es können keine Versionen vereinigt werden.',
+	'mergehistory-success' => '{{PLURAL:$3|1 Version|$3 Versionen}} von „[[:$1]]“ erfolgreich nach „[[:$2]]“ vereinigt.',
+	'mergehistory-fail' => 'Versionsvereinigung nicht möglich, bitte prüfe die Seite und die Zeitangaben.',
+	'mergehistory-no-source' => 'Ursprungsseite „$1“ ist nicht vorhanden.',
+	'mergehistory-no-destination' => 'Zielseite „$1“ ist nicht vorhanden.',
+	'mergehistory-invalid-source' => 'Ursprungsseite muss ein gültiger Seitenname sein.',
+	'mergehistory-invalid-destination' => 'Zielseite muss ein gültiger Seitenname sein.',
+	'mergehistory-autocomment' => '„[[:$1]]“ vereinigt nach „[[:$2]]“',
+	'mergehistory-comment' => '„[[:$1]]“ vereinigt nach „[[:$2]]“: $3',
+	'mergehistory-same-destination' => 'Ausgangs- und Zielseite dürfen nicht identisch sein',
+	'mergehistory-reason' => 'Grund:',
+	'mergelog' => 'Vereinigungs-Logbuch',
+	'mergelogpagetext' => 'Dies ist das Logbuch der vereinigten Versionsgeschichten.',
+	'mwsuggest-disable' => 'Vorschläge per Ajax deaktivieren',
+	'mypreferences' => 'Einstellungen',
+	'minoreditletter' => 'K',
+	'minlength1' => 'Dateinamen müssen mindestens einen Buchstaben lang sein.',
+	'morelinkstoimage' => '[[Special:WhatLinksHere/$1|Weitere Links]] auf diese Datei.',
+	'mimesearch' => 'Suche nach MIME-Typ',
+	'mimesearch-summary' => 'Auf dieser Spezialseite können die Dateien nach dem MIME-Typ gefiltert werden. Die Eingabe muss immer den Medien- und Subtyp beinhalten: <tt>image/jpeg</tt> (siehe Dateibeschreibungsseite).',
+	'mimetype' => 'MIME-Typ:',
+	'mostlinked' => 'Meistverlinkte Seiten',
+	'mostlinkedcategories' => 'Meistbenutzte Kategorien',
+	'mostlinkedtemplates' => 'Meistbenutzte Vorlagen',
+	'mostcategories' => 'Seiten mit den meisten Kategorien',
+	'mostimages' => 'Meistbenutzte Dateien',
+	'mostrevisions' => 'Seiten mit den meisten Versionen',
+	'move' => 'Verschieben',
+	'movethispage' => 'Seite verschieben',
+	'mailnologin' => 'Fehler beim E-Mail-Versand',
+	'mailnologintext' => 'Du musst [[Special:UserLogin|angemeldet sein]] und eine bestätigte E-Mail-Adresse in deinen [[Special:Preferences|Einstellungen]] eingetragen haben, um anderen Benutzern E-Mails schicken zu können.',
+	'mywatchlist' => 'Beobachtungsliste',
+	'modifiedarticleprotection' => 'änderte den Schutz von „[[$1]]“',
+	'movedarticleprotection' => 'übertrug den Seitenschutz von „[[$2]]“ auf „[[$1]]“',
+	'minimum-size' => 'Mindestgröße',
+	'maximum-size' => 'Maximalgröße:',
+	'mycontris' => 'Eigene Beiträge',
+	'month' => 'und Monat:',
+	'move-page' => 'Verschieben von „$1“',
+	'move-page-legend' => 'Seite verschieben',
+	'movepagetext' => "Mit untenstehendem Formular kannst du eine Seite umbenennen, indem du sie mitsamt allen Versionen auf einen neuen Titel verschiebst.
+Der alte Titel wird danach zum neuen weiterleiten.
+Du kannst Weiterleitungen, die auf den Originaltitel verlinken, automatisch korrigieren lassen.
+Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|kaputten Weiterleitungen]] überprüfst.
+Du bist dafür verantwortlich, dass Links weiterhin auf das korrekte Ziel verweisen.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese ist leer oder eine Weiterleitung ohne Versionsgeschichte.
+Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine Seite überschreiben.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''Warnung!'''
+Die Verschiebung kann weitreichende und unerwartete Folgen für häufig besuchte Seiten haben.
+Du solltest daher die Konsequenzen verstanden haben, bevor du jetzt fortfährst.",
+	'movepagetext-noredirectfixer' => "Mit untenstehendem Formular kannst du eine Seite umbenennen, indem du sie mitsamt allen Versionen auf einen neuen Titel verschiebst.
+Der alte Titel wird danach zum neuen weiterleiten.
+Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|kaputten Weiterleitungen]] überprüfst.
+Du bist dafür verantwortlich, dass Links weiterhin auf das korrekte Ziel verweisen.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese ist leer oder eine Weiterleitung ohne Versionsgeschichte.
+Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine Seite überschreiben.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''Warnung!'''
+Die Verschiebung kann weitreichende und unerwartete Folgen für häufig besuchte Seiten haben.
+Du solltest daher die Konsequenzen verstanden haben, bevor du jetzt fortfährst.",
+	'movepagetalktext' => "Die dazugehörige Diskussionsseite wird, sofern vorhanden, mitverschoben, '''es sei denn:'''
+*Es existiert bereits eine Diskussionsseite mit diesem Namen, oder
+*du wählst die unten stehende Option ab.
+
+In diesen Fällen musst du, falls gewünscht, den Inhalt der Seite von Hand verschieben oder zusammenführen.
+
+Bitte den '''neuen''' Titel unter '''Ziel''' eintragen, darunter die Umbenennung bitte '''begründen.'''",
+	'movearticle' => 'Seite verschieben:',
+	'moveuserpage-warning' => "'''Warnung:''' Du bist dabei, eine Benutzerseite zu verschieben. Bitte bedenke, dass dadurch nur die Benutzerseite verschoben, '''nicht''' aber der Benutzer umbenannt wird.",
+	'movenologin' => 'Du bist nicht angemeldet',
+	'movenologintext' => 'Du musst ein registrierter Benutzer und [[Special:UserLogin|angemeldet]] sein, um eine Seite zu verschieben.',
+	'movenotallowed' => 'Du hast nicht die erforderliche Berechtigung, um Seiten verschieben zu können.',
+	'movenotallowedfile' => 'Du hast nicht die erforderliche Berechtigung, um Dateien verschieben zu können.',
+	'move-watch' => 'Seite beobachten',
+	'movepagebtn' => 'Seite verschieben',
+	'movepage-moved' => "'''Die Seite „$1“ wurde nach „$2“ verschoben.'''",
+	'movepage-moved-redirect' => 'Es wurde eine Weiterleitung erstellt.',
+	'movepage-moved-noredirect' => 'Die Erstellung einer Weiterleitung wurde unterdrückt.',
+	'movedto' => 'verschoben nach',
+	'movetalk' => 'Sofern möglich, die Diskussionsseite mitverschieben',
+	'move-subpages' => 'Unterseiten verschieben (bis zu $1)',
+	'move-talk-subpages' => 'Unterseiten der Diskussionsseite verschieben (bis zu $1)',
+	'movepage-page-exists' => 'Die Seite „$1“ ist bereits vorhanden und kann nicht automatisch überschrieben werden.',
+	'movepage-page-moved' => 'Die Seite „$1“ wurde nach „$2“ verschoben.',
+	'movepage-page-unmoved' => 'Die Seite „$1“ konnte nicht nach „$2“ verschoben werden.',
+	'movepage-max-pages' => 'Die Maximalanzahl von $1 {{PLURAL:$1|Seite|Seiten}} wurde verschoben, Alle weiteren Seiten können nicht automatisch verschoben werden.',
+	'movelogpage' => 'Verschiebungs-Logbuch',
+	'movelogpagetext' => 'Dies ist eine Liste aller verschobenen Seiten.',
+	'movesubpage' => '{{PLURAL:$1|Unterseite|Unterseiten}}',
+	'movesubpagetext' => 'Diese Seite hat $1 {{PLURAL:$1|Unterseite|Unterseiten}}.',
+	'movenosubpage' => 'Diese Seite hat keine Unterseiten.',
+	'movereason' => 'Grund:',
+	'move-leave-redirect' => 'Weiterleitung erstellen',
+	'move-over-sharedrepo' => '==Datei existiert==
+[[:$1]] existiert in einem gemeinsam genutzten Repositorium. Das Verschieben einer Datei zu diesem Titel überschreibt die gemeinsam genutzte Datei.',
+	'monobook.css' => "/***** CSS an dieser Stelle wirkt sich auf die Monobook-Skin für alle Benutzer aus *****/
+
+/* Siehe auch: [[MediaWiki:Common.css]] */
+
+/* <pre><nowiki> */
+
+
+/*** Kleinschreibung nicht erzwingen ***/
+
+.portlet h5,
+.portlet h6,
+#p-personal ul,
+#p-cactions li a {
+    text-transform: none;
+}
+
+
+/*** Fetter Bearbeiten-Link ***/
 
 #ca-edit a { 
     font-weight: bold !important; 
 }
 
-/* Infobox template style */
+
+/*** Reiter in linker Navigation ***/
+
+.portlet h5 {
+    background-color: #e0e3e6;
+    border: thin solid silver;
+}
+
+/* Infobox Vorlagen-Style */
 .infobox {
    border: 1px solid #aaaaaa;
    background-color: #f9f9f9;
@@ -7234,136 +7212,97 @@ In those cases, you will have to move or merge the page manually if desired.",
    border: 0;
 }
 
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
+/*** Forum-Formatierung (von -Algorithm und -Splarka) ***/
+
+.forumheader { 
+    border:1px solid #a3bfb1; background:darkseagreen; color:#000; font-size:120%; font-weight:bold; text-align:left; -moz-border-radius:0.2em; margin-top: 0.5em; padding: 10px; 
 }
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
+.forumlist td.forum_edited a { 
+     color: black; text-decoration: none;
 }
-.forumlist td.forum_title a {
-   padding-left: 20px;
+.forumlist td.forum_title a { 
+     padding-left: 20px; 
 }
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
+.forumlist td.forum_title a.forum_new {  
+     font-weight: bold; background: url(/images/4/4e/Forum_new.gif) center left no-repeat; padding-left: 20px; 
 }
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
+.forumlist td.forum_title a.forum_new:visited { 
+     font-weight: normal; background: none; padding-left: 20px; 
 }
-.forumlist th.forum_title {
-   padding-left: 20px;
+.forumlist th.forum_title { 
+     padding-left: 20px; 
 }
 
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
+ /* Markierung von Weiterleitungen in [[Special:Allpages]]  */
+ 
+ .allpagesredirect {
+     background-color:#F5F5F5;
+     font-style: italic;
+ }
+
+/*** (± Zahl) wird in den letzen Änderungen bei minus rot dargestellt, bei plus grün ***/
+ span.mw-plusminus-pos {color: #006400;} 
+ span.mw-plusminus-neg {color: #8B0000;}
+
+/*** font class für 'hellklick' in Balkennavigation ***/
+
+.hellklick a, .hellklick a:visited { 
+     text-decoration: underline; color: #fefefe !important;
 }
-.mw-plusminus-neg {
-   color: #8B0000;
+.hellklick a:hover, .hellklick a:active { 
+     color: #9ad9ff !important;
 }
 
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
+/*** font class für 'hellklick2' in Tutorial ***/
+
+.hellklick2 a, .hellklick2 a:visited { 
+     text-decoration: none; color: #fefefe !important;
+}
+.hellklick2 a:hover, .hellklick2 a:active { 
+     color: #9ad9ff !important; text-decoration: underline;
 }
 
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+/* Ausklappen per Mauklick (s.a. [[MediaWiki:Common.js]]  */
+ 
+ .klapp {
+      cursor: pointer;
+ }
+ span.klapp {
+      text-decoration: none;
+      color: #002bb8;
+      background: none;
+      }
+ 
+ span.klapp:hover {
+      text-decoration: underline;
+      }
+ 
+ /* Drag & Drop */
+ .jstest{
+      position:relative;
+      cursor:move;
+      z-index: 100;
+      padding:20px 45px 20px 0px;
+      border-width:1px;
+      }
+/* </nowiki></pre> */",
+	'monobook.js' => '/* Veraltet; benutze stattdessen [[MediaWiki:common.js]] */',
+	'markaspatrolleddiff' => 'Als kontrolliert markieren',
+	'markaspatrolledtext' => 'Diese Seite als kontrolliert markieren',
+	'markedaspatrolled' => 'Als kontrolliert markiert',
+	'markedaspatrolledtext' => 'Die ausgewählte Version von [[:$1]] wurde als kontrolliert markiert.',
+	'markedaspatrollederror' => 'Markierung als „kontrolliert“ nicht möglich.',
+	'markedaspatrollederrortext' => 'Du musst eine Seitenänderung auswählen.',
+	'markedaspatrollederror-noautopatrol' => 'Es ist nicht erlaubt, eigene Bearbeitungen als kontrolliert zu markieren.',
+	'mediawarning' => "'''Warnung:''' Dieser Dateityp kann böswilligen Programmcode enthalten.
+Durch das Herunterladen und Öffnen der Datei kann dein Computer beschädigt werden.",
+	'minutes' => '{{PLURAL:$1|$1 Minute|$1 Minuten}}',
+	'metadata' => 'Metadaten',
+	'metadata-help' => 'Diese Datei enthält weitere Informationen, die in der Regel von der Digitalkamera oder dem verwendeten Scanner stammen. Durch nachträgliche Bearbeitung der Originaldatei können einige Details verändert worden sein.',
+	'metadata-expand' => 'Erweiterte Details einblenden',
+	'metadata-collapse' => 'Erweiterte Details ausblenden',
+	'metadata-fields' => 'Die folgenden Felder der EXIF-Metadaten, die in diesem MediaWiki-Systemtext angegeben sind, werden auf Bildbeschreibungsseiten mit eingeklappter Metadatentabelle angezeigt.
+Weitere werden standardmäßig nicht angezeigt.
 * make
 * model
 * datetimeoriginal
@@ -7377,47 +7316,36 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'magicfooterlinks' => '<b>Featured pages</b>',
-	'manage_widgets' => 'Manage widgets',
+	'monthsall' => 'alle',
+	'most_popular_articles' => 'Beliebteste Seiten',
+	'my_stuff' => 'Meine Sachen',
+	'most_popular' => 'Am beliebtesten',
+	'most_visited' => 'Am häufigsten besucht',
+	'most_emailed' => 'Am häufigsten verschickt',
+	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
+	'manage_widgets' => 'Widgets verwalten',
 	'masthead-anonymous-user' => 'Ein Fandom-Benutzer',
-	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
-	'mobile-hide' => 'Hide',
-	'mobile-show' => 'Show',
+	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
+	'mobile-hide' => 'ausblenden',
+	'mobile-show' => 'anzeigen',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
-*randompage-url|randompage
-*mainpage|TopContent
-**#visited#|most_visited
-**#newlychanged#|newly_changed
-* newfiles-url|NewPictures
-*blogs-recent-url|blogs-recent-url-text
+*mainpage|Top-Inhalte
+**#popular#|Ausgewählte Artikel
+**#visited#|Am häufigsten besucht
+**#voted#|Am besten bewertet
+**#newlychanged#|Zuletzt geändert
+*portal-url|Community
+**#topusers#|Top-Benutzer
+**{{SITENAME}}:Community Portal|Community-Portal
+**blogs-recent-url|Letzte Blog-Beiträge
+**Forum:Index|Forum
 *#category1#
-*#category2#
-*portal-url|community
-**portal-url|portal
-**forum-url|forum',
-	'move-redirect-suppressed' => 'redirect suppressed',
-	'mu_login' => 'You must be logged in to upload files.',
-	'multiplefileuploadsummary' => 'Summary:',
-	'mwlink_tip' => 'Internal link',
-	'mycontributions' => 'My contributions',
+*#category2#',
+	'move-redirect-suppressed' => 'Weiterleitung unterdrückt',
+	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
+	'multiplefileuploadsummary' => 'Zusammenfassung:',
+	'mwlink_tip' => 'Interner Link',
+	'mycontributions' => 'Meine Beiträge',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -7452,12 +7380,6 @@ $messages['de-ch'] = array(
 );
 
 $messages['de-formal'] = array(
-	'mainpagedocfooter' => 'Hilfe zur Benutzung und Konfiguration der Wiki-Software finden Sie im [http://meta.wikimedia.org/wiki/Help:Contents Benutzerhandbuch].
-
-== Starthilfen ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Liste der Konfigurationsvariablen]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki-FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Mailingliste neuer MediaWiki-Versionen]',
 	'missing-article' => 'Der Text von „$1“ $2 wurde nicht in der Datenbank gefunden.
 
 Die Seite ist möglicherweise gelöscht oder verschoben worden.
@@ -7509,18 +7431,9 @@ $messages['de-weigsbrag'] = array(
 	'may-gen' => 'Mais',
 	'mar' => 'Märs',
 	'may' => 'Mai',
-	'mainpagetext' => 'Haddar MediaWigi erwolgreiges insdalär.',
-	'mainpagedocfooter' => 'Hilw su Benuds und Gonwigurär won dose Wigi-Sowdwär gön wend in dose [http://meta.wikimedia.org/wiki/Help:Contents Benudseshandbug].
-
-== Schdardhilwes ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Lisd won Gonwigurärwariables]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWigi-FAQ]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Mehlinglisd won neues MediaWigi-Wersiones]',
 	'moredotdotdot' => 'Mehr …',
 	'mypage' => 'Eigenes Seid',
 	'mytalk' => 'Eigenes Disgusion',
-	'metadata_help' => 'Medadades:',
 	'mainpage' => 'Haubdseid',
 	'mainpage-description' => 'Haubdseid',
 	'missing-article' => 'Dose Degsd wür „$1“ $2 haddar noggs wend in dose Dadesbang.
@@ -7532,8 +7445,6 @@ Wan dose noggs sei, haddar ewenduel eines Wehl in dose Sowdwär wend. Bid dose e
 	'missingarticle-diff' => '(Undschied swisch Wersiones: $1, $2)',
 	'mailmypassword' => 'Neues Basword suschig',
 	'mailerror' => 'Wehl bei Schig won I-Mehl: $1',
-	'math_sample' => 'Wormel da einwüg',
-	'math_tip' => 'Madhemadisches Wormel (LaTeX)',
 	'media_sample' => 'Beischb.ogg',
 	'media_tip' => 'Mediesdadei-Werweis',
 	'minoredit' => 'Haddar nur bis weränd dose',
@@ -7563,36 +7474,18 @@ Musdar sock sei, das dose Wersionsgeschigd won eines Ardig hisdorisches goregdes
 	'mergelogpagetext' => 'Dose dose Logbug won wereinigdes Wersionsgeschigdes sei.',
 	'mwsuggest-disable' => 'Worschläges ber Ajags deagdiwär',
 	'mypreferences' => 'Einschdeles',
-	'math' => 'TeX',
-	'math_failure' => 'Barser-Wehl',
-	'math_unknown_error' => 'Noggsbegandes Wehl',
-	'math_unknown_function' => 'Noggsbegandes Wungsion',
-	'math_lexing_error' => "'Lexing'-Wehl",
-	'math_syntax_error' => 'Syndagswehl',
-	'math_image_error' => 'dose PNG-Gonwerdär daneb geddar',
-	'math_bad_tmpdir' => 'Dose demboräres Werseig wür madhemadisches Wormeles haddar noggs gön anleg od beschreib.',
-	'math_bad_output' => 'Dose Sielwerseig wür madhemadisches Wormeles haddar noggs gön anleg od beschreib.',
-	'math_notexvc' => 'Dose texvc-Brogram haddar noggs wend. Bid math/README beagd.',
 	'minoreditletter' => 'G',
 	'minlength1' => 'Dadeinämes musdar haddar mind eines Bugschdab.',
 	'morelinkstoimage' => '[[Special:Whatlinkshere/$1|Weideres Werweises]] wür dose Dadei.',
 	'mimesearch' => 'Sug nag MIME-Dyb',
 	'mimesearch-summary' => 'Auw dose Schbesialseid gön dose Dadeies nag dose MIME-Dyb wild. In dose Eingab musdar imm dose Medies- und Subdyb drin sei: <tt>image/jpeg</tt> (seddar Bildbeschreibseid).',
 	'mimetype' => 'MIME-Dyb:',
-	'missingfiles' => 'Dadeies wo wehldar',
-	'missingfiles-summary' => 'Dose Schbesialseid ales Dadeies auwlisd, wo auw Seides wergnübwdes sei, aba gar noggs gebdar.',
 	'mostlinked' => 'Häuwig wergnübwdes Seides',
-	'mostlinked-summary' => 'Dose Schbesialseid unabhängiges won Namesraum ales Seides seig, wo besond häuwiges vergnübwdes sei.',
 	'mostlinkedcategories' => 'Meisdbenudsdes Gadegoräes',
-	'mostlinkedcategories-summary' => 'Dose Schbesialseid eines Lisd won meisdbenudsdes Gadegoräes seig.',
 	'mostlinkedtemplates' => 'Meisdbenudsdes Worlages',
-	'mostlinkedtemplates-summary' => 'Dose Schbesialseid eines Lisd won meisdbenudsdes Worlages seig.',
 	'mostcategories' => 'Meisdgadegorisärdes Seides',
-	'mostcategories-summary' => 'Dose Schbesialseid besond häuwiges gadegorisärdes Seides anseig.',
 	'mostimages' => 'Meisdbenudsdes Dadeies',
-	'mostimages-summary' => 'Dose Schbesialseid eines Lisd won meisdbenudsdes Dadeies seig.',
 	'mostrevisions' => 'Seides mid meisdes Wersiones',
-	'mostrevisions-summary' => 'Dose Schbesialseid eines Lisd won Seides mid meisdes Bearbeides seig.',
 	'move' => 'Werschieb',
 	'movethispage' => 'Seid werschieb',
 	'mailnologin' => 'Wehl bei I-Mehl-Wersänd',
@@ -7639,12 +7532,6 @@ Bid dose '''neues''' Did undd '''Siel''' eindräg, und undd dose dose Umbenen bi
 	text-transform: none;
 }',
 	'monobook.js' => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-	'mw_math_png' => 'Imm als PNG darschdel',
-	'mw_math_simple' => 'Einwages TeX als HDML darschdel, sonsd PNG',
-	'mw_math_html' => 'Wan mög als HDML darschdel, sonsd PNG',
-	'mw_math_source' => 'Als TeX belas (wür Degsdbraus)',
-	'mw_math_modern' => 'Embwehlwerdes wür modernes Brauses',
-	'mw_math_mathml' => 'MathML (egsberimendeles)',
 	'markaspatrolleddiff' => 'Als gondrolärdes margär',
 	'markaspatrolledtext' => 'Dose neues Seid als gondrolärdes margär',
 	'markedaspatrolled' => 'Als gondrolärdes margär',
@@ -8607,308 +8494,162 @@ Aliaj estos kaŝitaj defaŭlte.
 );
 
 $messages['es'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'lunes',
+	'mon' => 'lun',
+	'march' => 'marzo',
+	'may_long' => 'mayo',
+	'march-gen' => 'marzo',
+	'may-gen' => 'mayo',
+	'mar' => 'mar',
+	'may' => 'may',
+	'moredotdotdot' => 'Más...',
+	'mypage' => 'Mi página',
+	'mytalk' => 'Mi discusión',
+	'mainpage' => 'Portada',
+	'mainpage-description' => 'Página principal',
+	'missing-article' => "La base de datos no encuentra el texto de una página que debería hallarse, llamada «$1» $2.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+La causa de esto suele deberse a un ''diff'' anacrónico o un enlace al historial de una página que ha sido borrada.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
+Si no fuera el caso, puedes haber encontrado un fallo en el software.
+
+Por favor, avisa a un [[Special:ListUsers/sysop|administrador]], tomando nota de la URL.",
+	'missingarticle-rev' => '(n.º de revisión: $1)',
+	'missingarticle-diff' => '(Dif.: $1, $2)',
+	'mailmypassword' => 'Enviar una nueva contraseña por correo electrónico',
+	'mailerror' => 'Error al enviar correo: $1',
+	'media_sample' => 'Ejemplo.ogg',
+	'media_tip' => 'Enlace a archivo',
+	'minoredit' => 'Edición menor',
+	'missingsummary' => "'''Atención:''' No has escrito un resumen de edición. Si haces clic nuevamente en «{{int:savearticle}}» tu edición se grabará sin él.",
+	'missingcommenttext' => 'Por favor introduce texto debajo.',
+	'missingcommentheader' => "'''Recordatorio:''' No has escrito un título para este comentario. Si haces clic nuevamente en \"{{int:savearticle}}\" tu edición se grabará sin él.",
+	'moveddeleted-notice' => 'Esta página ha sido borrada.
+El registro de borrados y traslados para la página están provistos debajo como referencia.',
+	'mergehistory' => 'Fusionar historiales de páginas',
+	'mergehistory-header' => 'Esta página te permite fusionar revisiones del historial de una página origen en otra más reciente.
+Asegúrate de que esto mantendrá la continuidad histórica de la página.',
+	'mergehistory-box' => 'Fusionar los historiales de dos páginas:',
+	'mergehistory-from' => 'Página origen:',
+	'mergehistory-into' => 'Página destino:',
+	'mergehistory-list' => 'Historial de ediciones fusionable',
+	'mergehistory-merge' => 'Las siguientes revisiones de [[:$1]] pueden fusionarse en [[:$2]].
+Usa la columna de casillas para fusionar sólo las revisiones creadas en y antes de la fecha especificada.
+Ten en cuenta que usar los enlaces de navegación borrará las selecciones de esta columna.',
+	'mergehistory-go' => 'Mostrar ediciones fusionables',
+	'mergehistory-submit' => 'Fusionar revisiones',
+	'mergehistory-empty' => 'No hay revisiones fusionables.',
+	'mergehistory-success' => '$3 {{PLURAL:$3|revisión|revisiones}} de [[:$1]] fusionadas de forma exitosa en [[:$2]].',
+	'mergehistory-fail' => 'No se puede realizar la fusión de historiales, por favor revisa la página y los parámetros de tiempo.',
+	'mergehistory-no-source' => 'La página origen $1 no existe.',
+	'mergehistory-no-destination' => 'La página destino $1 no existe.',
+	'mergehistory-invalid-source' => 'La página origen debe tener un título válido.',
+	'mergehistory-invalid-destination' => 'La página de destino ha de tener un título válido.',
+	'mergehistory-autocomment' => 'Fusionando [[:$1]] en [[:$2]]',
+	'mergehistory-comment' => 'Fusionando [[:$1]] en [[:$2]]: $3',
+	'mergehistory-same-destination' => 'Las páginas de origen y destino no pueden ser la misma',
+	'mergehistory-reason' => 'Razón:',
+	'mergelog' => 'Registro de fusiones',
+	'mergelogpagetext' => 'Debajo está una lista de las fusiones más recientes de historial de una página en otra.',
+	'mwsuggest-disable' => 'Desactivar AJAX al realizar búsquedas',
+	'mypreferences' => 'Preferencias',
 	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+	'minlength1' => 'Los nombres de archivo deben tener al menos una letra.',
+	'morelinkstoimage' => 'Vea [[Special:WhatLinksHere/$1|más enlaces]] a este archivo.',
+	'mimesearch' => 'Búsqueda MIME',
+	'mimesearch-summary' => 'Esta página permite el filtrado de ficheros por su tipo MIME.
+Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
+	'mimetype' => 'Tipo MIME:',
+	'mostlinked' => 'Páginas más enlazadas',
+	'mostlinkedcategories' => 'Categorías más enlazadas',
+	'mostlinkedtemplates' => 'Plantillas más enlazadas',
+	'mostcategories' => 'Páginas con más categorías',
+	'mostimages' => 'Imágenes más usadas',
+	'mostrevisions' => 'Páginas con más ediciones',
+	'move' => 'Renombrar',
+	'movethispage' => 'Renombrar esta página',
+	'mailnologin' => 'Ninguna dirección de envio',
+	'mailnologintext' => 'Debes [[Special:UserLogin|iniciar sesión]] y tener una dirección electrónica válida en tus [[Special:Preferences|preferencias]] para enviar un correo electrónico a otros usuarios.',
+	'mywatchlist' => 'Lista de seguimiento',
+	'modifiedarticleprotection' => 'cambió el nivel de protección de «[[$1]]»',
+	'movedarticleprotection' => 'cambiadas protecciones de «[[$2]]» a «[[$1]]»',
+	'minimum-size' => 'Tamaño mínimo',
+	'maximum-size' => 'Tamaño máximo:',
+	'mycontris' => 'Contribuciones',
+	'month' => 'Desde el mes (y anterior):',
+	'move-page' => 'Renombrar $1',
+	'move-page-legend' => 'Renombrar página',
+	'movepagetext' => "Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre. 
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+El título anterior se convertirá en una redirección al nuevo título. Los enlaces al antiguo título de la página no se cambiarán. Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]]. 
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+Eres responsable de hacer que los enlaces sigan apuntando adonde se supone que deberían hacerlo. Recuerda que la página '''no''' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial. Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente. 
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+'''¡Advertencia!''' Este puede ser un cambio drástico e inesperado para una página popular; por favor, asegúrate de entender las consecuencias del procedimiento antes de seguir adelante.",
+	'movepagetext-noredirectfixer' => "Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre.
+El título anterior se convertirá en una redirección al nuevo título.
+Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]].
+Tú eres responsable de hacer que los enlaces sigan apuntando adonde se supone que deberían hacerlo.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+Recuerda que la página '''no''' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial.
+Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente.
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
+'''¡Aviso!'''
+Este puede ser un cambio drástico e inesperado para una página popular;
+por favor, asegúrate de entender las consecuencias del procedimiento antes de seguir adelante.",
+	'movepagetalktext' => "La página de discusión asociada, si existe, será renombrada automáticamente '''a menos que:'''
+*Esté moviendo la página entre espacios de nombres diferentes,
+*Una página de discusión no vacía ya exista con el nombre nuevo, o
+*No actives la opción «Renombrar la página de discusión también».
 
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
+En estos casos, deberás trasladar manualmente el contenido de la página de discusión.",
+	'movearticle' => 'Renombrar página',
+	'moveuserpage-warning' => "'''Advertencia:''' estás a punto de renombrar una página de usuario. Ten en cuenta de que sólo se renombrará la página, pero el usuario '''no''' será renombrado. Si quieres cambiar tu nombre de usuario, deberás solicitarlo por [[special:contact]] (puedes hacerlo en español).",
+	'movenologin' => 'No has iniciado sesión',
+	'movenologintext' => 'Es necesario ser usuario registrado y [[Special:UserLogin|haber iniciado sesión]] para renombrar una página.',
+	'movenotallowed' => 'No tienes permiso para renombrar páginas.',
+	'movenotallowedfile' => 'No tienes permiso para renombrar archivos.',
+	'move-watch' => 'Vigilar páginas de origen y destino',
+	'movepagebtn' => 'Renombrar página',
+	'movepage-moved' => '\'\'\'"$1" ha sido renombrada a "$2".\'\'\'',
+	'movepage-moved-redirect' => 'Se ha creado una redirección.',
+	'movepage-moved-noredirect' => 'Se ha suprimido la creación de la redirección.',
+	'movedto' => 'renombrado a',
+	'movetalk' => 'Renombrar la página de discusión asociada',
+	'move-subpages' => 'Renombrar las subpáginas (máximo $1)',
+	'move-talk-subpages' => 'Renombrar las subpáginas de la página de discusión (máximo $1)',
+	'movepage-page-exists' => 'La página $1 ya existe, por lo que no puede ser renombrada automáticamente.',
+	'movepage-page-moved' => 'La página $1 ha sido renombrada a $2.',
+	'movepage-page-unmoved' => 'La página $1 no se ha podido renombrar a $2.',
+	'movepage-max-pages' => 'Ya se {{PLURAL:$1|ha renombrado una página|han renombrado $1 páginas}}, y ese es el máximo de páginas que se pueden renombrar, por lo que no se van a renombrar más automáticamente.',
+	'movelogpage' => 'Registro de traslados',
+	'movelogpagetext' => 'Abajo se encuentra una lista de páginas trasladadas.',
+	'movesubpage' => '{{PLURAL:$1|Subpágina|Subpáginas}}',
+	'movesubpagetext' => 'Esta página tiene {{PLURAL:$1|la siguiente subpágina|las siguientes $1 subpáginas}}:',
+	'movenosubpage' => 'Esta página no tiene subpáginas.',
+	'movereason' => 'Motivo:',
+	'move-leave-redirect' => 'Dejar una redirección',
+	'move-over-sharedrepo' => '== El archivo ya existe ==
+[[:$1]] existe en una base de datos compartida. Renombrar el archivo a este título invalidará el archivo compartido.',
+	'monobook.css' => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
+	'monobook.js' => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
+	'markaspatrolleddiff' => 'Marcar como revisado',
+	'markaspatrolledtext' => 'Marcar este artículo como revisado',
+	'markedaspatrolled' => 'Marcado como revisado',
+	'markedaspatrolledtext' => 'La revisión seleccionada de [[:$1|$1]] ha sido marcada como revisada.',
+	'markedaspatrollederror' => 'No se puede marcar como patrullada',
+	'markedaspatrollederrortext' => 'Debes especificar una revisión para marcarla como patrullada.',
+	'markedaspatrollederror-noautopatrol' => 'No tienes permisos para marcar tus propios cambios como revisados.',
+	'mediawarning' => "'''Atención''': Este fichero puede contener código malicioso.
+Ejecutarlo podría comprometer la seguridad de su equipo.",
 	'minutes-abbrev' => '$1m',
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+	'minutes' => '{{PLURAL:$1|un minuto|$1 minutos}}',
+	'metadata' => 'Metadatos',
+	'metadata-help' => 'Este archivo contiene información adicional (metadatos), probablemente añadida por la cámara digital, el escáner o el programa usado para crearlo o digitalizarlo. Si el archivo ha sido modificado desde su estado original, pueden haberse perdido algunos detalles.',
+	'metadata-expand' => 'Mostrar datos detallados',
+	'metadata-collapse' => 'Ocultar datos detallados',
+	'metadata-fields' => 'Los campos de metadatos que se listan en este mensaje se mostrarán en la página de descripción de la imagen aún cuando la tabla de metadatos esté plegada.
+Existen otros campos que se mantendrán ocultos por defecto.
 * make
 * model
 * datetimeoriginal
@@ -8922,32 +8663,20 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'magicfooterlinks' => '<b>Featured pages</b>',
-	'manage_widgets' => 'Manage widgets',
+	'monthsall' => 'todos',
+	'most_popular_articles' => 'artículos más populares',
+	'my_stuff' => 'mis útiles',
+	'most_popular' => 'Selección del editor',
+	'most_visited' => 'Lo más visitado',
+	'most_emailed' => 'Los más contactados por e-mail',
+	'magicfooterlinks' => '<b>Páginas destacadas</b>',
+	'manage_widgets' => 'Organizar widgets',
 	'masthead-anonymous-user' => 'Un usuario de Fandom',
-	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
-	'mu_login' => 'You must be logged in to upload files.',
-	'multiplefileuploadsummary' => 'Summary:',
-	'mwlink_tip' => 'Internal link',
-	'mycontributions' => 'My contributions',
+	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
+	'mu_login' => 'Debes identificarte para subir archivos',
+	'multiplefileuploadsummary' => 'Resumen:',
+	'mwlink_tip' => 'Enlace interno',
+	'mycontributions' => 'Mis contribuciones',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -10153,306 +9882,154 @@ Onnur metadáta verða fjald sum standard.
 
 $messages['fr'] = array(
 	'monday' => 'Lundi',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'mon' => 'lun',
+	'march' => 'mars',
+	'may_long' => 'mai',
+	'march-gen' => 'mars',
+	'may-gen' => 'mai',
+	'mar' => 'mars',
+	'may' => 'mai',
+	'moredotdotdot' => 'Plus...',
+	'mypage' => 'Ma page',
+	'mytalk' => 'Page de discussion',
+	'mainpage' => 'Accueil',
+	'mainpage-description' => 'Accueil',
+	'missing-article' => 'La base de données n’a pas trouvé le texte d’une page qu’elle aurait dû trouver, intitulée « $1 » $2.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Généralement, cela survient en suivant un lien vers un diff périmé ou vers l’historique d’une page supprimée.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
+Si ce n’est pas le cas, il peut s’agir d’un bogue dans le programme.
+Veuillez le signaler à un [[Special:ListUsers/sysop|administrateur]] sans oublier de lui indiquer l’URL du lien.',
+	'missingarticle-rev' => '(numéro de version : $1)',
+	'missingarticle-diff' => '(diff : $1, $2)',
+	'mailmypassword' => 'Recevoir un nouveau mot de passe par e-mail',
+	'mailerror' => 'Erreur lors de l’envoi de l’e-mail : $1',
+	'media_sample' => 'Exemple.ogg',
+	'media_tip' => 'Lien vers un fichier média',
+	'minoredit' => 'Modification mineure',
+	'missingsummary' => "'''Rappel :''' vous n’avez pas encore fourni le résumé de votre modification.
+Si vous cliquez de nouveau sur le bouton « {{int:savearticle}} », la publication sera faite sans nouvel avertissement.",
+	'missingcommenttext' => 'Veuillez entrer un commentaire ci-dessous.',
+	'missingcommentheader' => "'''Rappel :''' vous n’avez pas fourni de sujet ou de titre à ce commentaire.
+Si vous cliquez de nouveau sur « {{int:Savearticle}} », votre modification sera enregistrée sans titre.",
+	'moveddeleted-notice' => 'Cette page a été supprimée. Le journal des suppressions et des déplacements est affiché ci-dessous pour référence.',
+	'mergehistory' => 'Fusionner les historiques des pages',
+	'mergehistory-header' => 'Cette page vous permet de fusionner des versions de l’historique d’une page d’origine vers une nouvelle page.
+Assurez-vous que cette opération conservera la continuité de l’historique de la page.',
+	'mergehistory-box' => 'Fusionner les versions de deux pages :',
+	'mergehistory-from' => 'Page d’origine :',
+	'mergehistory-into' => 'Page de destination :',
+	'mergehistory-list' => 'Historique des modifications fusionnable',
+	'mergehistory-merge' => 'Les versions suivantes de [[:$1]] peuvent être fusionnées avec [[:$2]]. Utilisez la colonne de boutons radio pour fusionner uniquement les versions créées du début jusqu’à la date indiquée. Notez bien que l’utilisation des liens de navigation réinitialisera cette colonne.',
+	'mergehistory-go' => 'Voir les modifications qui peuvent être fusionnées',
+	'mergehistory-submit' => 'Fusionner les versions',
+	'mergehistory-empty' => 'Aucune version ne peut être fusionnée.',
+	'mergehistory-success' => '$3 version{{PLURAL:$3||s}} de [[:$1]] fusionnée{{PLURAL:$3||s}} dans [[:$2]].',
+	'mergehistory-fail' => 'Impossible de procéder à la fusion des historiques. Resélectionner la page ainsi que les paramètres de date.',
+	'mergehistory-no-source' => 'La page d’origine $1 n’existe pas.',
+	'mergehistory-no-destination' => 'La page de destination $1 n’existe pas.',
+	'mergehistory-invalid-source' => 'La page d’origine doit avoir un titre valide.',
+	'mergehistory-invalid-destination' => 'La page de destination doit avoir un titre valide.',
+	'mergehistory-autocomment' => '[[:$1]] fusionnée avec [[:$2]]',
+	'mergehistory-comment' => '[[:$1]] fusionnée avec [[:$2]] : $3',
+	'mergehistory-same-destination' => 'Les pages d’origine et de destination ne peuvent pas être la même',
+	'mergehistory-reason' => 'Motif :',
+	'mergelog' => 'Journal des fusions',
+	'mergelogpagetext' => 'Voici la liste des fusions de l’historique d’une page dans celui d’une autre les plus récentes.',
+	'mwsuggest-disable' => 'Désactiver les suggestions AJAX',
+	'mypreferences' => 'Préférences',
 	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+	'minlength1' => 'Le noms de fichiers doivent comprendre au moins une lettre.',
+	'morelinkstoimage' => 'Voir [[Special:WhatLinksHere/$1|plus de liens]] vers ce fichier.',
+	'mimesearch' => 'Recherche par type de contenu MIME',
+	'mimesearch-summary' => "Cette page vous permet de lister les fichiers accessibles par ce wiki en fonction de leur type de contenu MIME.
+Entrée : ''typedecontenu''/''sous-type'', par exemple <tt>image/jpeg</tt>.",
+	'mimetype' => 'Type MIME :',
+	'mostlinked' => 'Pages les plus liées',
+	'mostlinkedcategories' => 'Catégories les plus utilisées',
+	'mostlinkedtemplates' => 'Modèles les plus utilisés',
+	'mostcategories' => 'Pages utilisant le plus de catégories',
+	'mostimages' => 'Fichiers les plus utilisés',
+	'mostrevisions' => 'Pages les plus modifiées',
+	'move' => 'Renommer',
+	'movethispage' => 'Renommer cette page',
+	'mailnologin' => 'Pas d’adresse d’expéditeur',
+	'mailnologintext' => 'Vous devez être [[Special:UserLogin|connecté]] et avoir indiqué une adresse électronique valide dans vos [[Special:Preferences|préférences]] pour pouvoir envoyer des e-mails à d’autres utilisateurs.',
+	'mywatchlist' => 'Liste de suivi',
+	'modifiedarticleprotection' => 'a modifié le niveau de protection de « [[$1]] »',
+	'movedarticleprotection' => 'a déplacé les paramètres de protection depuis « [[$2]] » vers « [[$1]] »',
+	'minimum-size' => 'Taille minimum',
+	'maximum-size' => 'Taille maximum',
+	'mycontris' => 'Contributions',
+	'month' => 'À partir du mois (et précédents) :',
+	'move-page' => 'Renommer $1',
+	'move-page-legend' => 'Renommer une page',
+	'movepagetext' => "Utilisez le formulaire ci-dessous pour renommer une page, en déplaçant tout son historique vers le nouveau nom. L’ancien titre deviendra une page de redirection vers le nouveau titre. Vous pouvez mettre à jour automatiquement les redirections actuelles qui pointent vers le titre original. Si vous choisissez de ne pas le faire, assurez-vous de vérifier toute [[Special:DoubleRedirects|double redirection]] ou [[Special:BrokenRedirects|redirection cassée]]. Vous avez la responsabilité de vous assurer que les liens continuent de pointer vers leur destination supposée.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Notez que la page ne sera '''pas''' renommée s’il existe déjà une page avec le nouveau titre, sauf si cette dernière a un historique de modifications vierge et est soit vide, soit une simple redirection. Ceci permet de renommer une page vers sa position d’origine si le déplacement s’avère erroné.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''Attention !'''
+Ceci peut provoquer un changement radical et imprévu pour une page souvent consultée ; assurez-vous d’en avoir compris les conséquences avant de continuer.",
+	'movepagetext-noredirectfixer' => "Utilisez le formulaire ci-dessous pour renommer une page, en déplaçant tout son historique vers le nouveau nom.
+L’ancien titre deviendra une page de redirection vers le nouveau titre.
+Vérifiez bien les [[Special:DoubleRedirects|doubles redirections]] ou les [[Special:BrokenRedirects|redirections cassées]].
+Vous avez la responsabilité de vous assurer que les liens continuent de pointer vers leur destination supposée.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Notez que la page ne sera '''pas''' déplacée s’il existe déjà une page avec le nouveau titre, sauf si cette dernière a un historique de modifications vierge et est soit vide, soit une simple redirection. Ceci permet de renommer une page vers sa position d’origine si le déplacement s’avère erroné, et il est impossible d’écraser une page existante.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''Attention !'''
+Ceci peut provoquer un changement radical et imprévu pour une page souvent consultée ; assurez-vous d’en avoir compris les conséquences avant de continuer.",
+	'movepagetalktext' => "La page de discussion associée, si présente, sera automatiquement renommée '''sauf si :'''
+* vous déplacez la page vers un autre espace de noms, ou
+* une page de discussion non vide existe déjà sous le nouveau nom, ou
+* vous décochez la case ci-dessous.
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
+Dans ces cas-là, vous devrez renommer ou fusionner cette page de discussion manuellement si vous le désirez.",
+	'movearticle' => 'Renommer la page :',
+	'moveuserpage-warning' => "'''Attention :''' Vous êtes sur le point de renommer une page d’utilisateur. Veuillez noter que seul la page sera renommée et que l’utilisateur '''ne''' sera '''pas''' renommé.",
+	'movenologin' => 'Vous n’êtes pas identifié{{GENDER:||e|(e)}}.',
+	'movenologintext' => 'Pour pouvoir renommer une page, vous devez être [[Special:UserLogin|identifié{{GENDER:||e|(e)}}]] avec un compte utilisateur enregistré et d’ancienneté suffisante.',
+	'movenotallowed' => 'Vous n’avez pas la permission de renommer les pages.',
+	'movenotallowedfile' => 'Vous n’avez pas la permission de renommer les fichiers.',
+	'move-watch' => 'Suivre les pages originale et nouvelle',
+	'movepagebtn' => 'Renommer la page',
+	'movepage-moved' => "'''« $1 »''' a été renommé '''« $2 »'''",
+	'movepage-moved-redirect' => 'Une redirection depuis l’ancien nom a été créée.',
+	'movepage-moved-noredirect' => 'La création d’une redirection depuis l’ancien nom a été annulée.',
+	'movedto' => 'renommé en',
+	'movetalk' => 'Renommer aussi la page de discussion associée',
+	'move-subpages' => 'Renommer les sous-pages (jusqu’à $1 pages)',
+	'move-talk-subpages' => 'Renommer les sous-pages de la page de discussion (jusqu’à $1 pages)',
+	'movepage-page-exists' => 'La page $1 existe déjà et ne peut pas être écrasée automatiquement.',
+	'movepage-page-moved' => 'La page $1 a été renommée en $2.',
+	'movepage-page-unmoved' => 'La page $1 n’a pas pu être renommée en $2.',
+	'movepage-max-pages' => 'Le maximum de $1 {{PLURAL:$1|page renommée|pages renommées}} a été atteint et aucune autre page ne sera renommée automatiquement.',
+	'movelogpage' => 'Journal des renommages',
+	'movelogpagetext' => 'Voici la liste de toutes les pages renommées ou déplacées.',
+	'movesubpage' => 'Sous-page{{PLURAL:$1||s}}',
+	'movesubpagetext' => 'Cette page a $1 {{PLURAL:$1|sous-page affichée|sous-pages affichées}} ci-dessous.',
+	'movenosubpage' => 'Cette page n’a aucune sous-page.',
+	'movereason' => 'Motif :',
+	'move-leave-redirect' => 'Laisser une redirection vers le nouveau titre',
+	'move-over-sharedrepo' => '== Le fichier existe ==
+[[:$1]] existe déjà sur un dépôt partagé. Renommer ce fichier rendra le fichier sur le dépôt partage inaccessible.',
+	'monobook.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
+	'monobook.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
+	'markaspatrolleddiff' => 'Marquer comme relue',
+	'markaspatrolledtext' => 'Marquer cette page comme relue',
+	'markedaspatrolled' => 'Marquée comme relue',
+	'markedaspatrolledtext' => 'La version sélectionnée de [[:$1]] a été marquée comme relue.',
+	'markedaspatrollederror' => 'Ne peut être marquée comme relue',
+	'markedaspatrollederrortext' => 'Vous devez sélectionner une version pour pouvoir la marquer comme relue.',
+	'markedaspatrollederror-noautopatrol' => 'Vous n’avez pas le droit de marquer vos propres modifications comme relues.',
+	'mediawarning' => "'''Attention :''' ce type de fichier peut contenir du code malveillant.
+Si vous l’exécutez, votre système peut être compromis.",
 	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+	'metadata' => 'Métadonnées',
+	'metadata-help' => 'Ce fichier contient des informations supplémentaires, probablement ajoutées par l’appareil photo numérique ou le numériseur utilisé pour le créer. Si le fichier a été modifié depuis son état original, certains détails peuvent ne pas refléter entièrement l’image modifiée.',
+	'metadata-expand' => 'Afficher les informations détaillées',
+	'metadata-collapse' => 'Masquer les informations détaillées',
+	'metadata-fields' => 'Les champs de métadonnées d’image listés dans ce message seront inclus dans la page de description de l’image quand la table de métadonnées sera réduite. Les autres champs seront cachés par défaut.
 * make
 * model
 * datetimeoriginal
@@ -10466,43 +10043,31 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'manage_widgets' => 'Manage widgets',
+	'monthsall' => 'tous',
+	'most_popular_articles' => 'Articles les plus populaires',
+	'my_stuff' => 'Mon espace',
+	'most_popular' => 'Les plus populaires',
+	'most_visited' => 'Pages les plus vues',
+	'most_emailed' => 'Les plus envoyés',
+	'manage_widgets' => 'Gérer les widgets',
 	'masthead-anonymous-user' => 'Un utilisateur de Fandom',
-	'mobile-hide' => 'Hide',
-	'mobile-show' => 'Show',
+	'mobile-hide' => 'Masquer',
+	'mobile-show' => 'Afficher',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
-*randompage-url|randompage
-*mainpage|TopContent
-**#visited#|most_visited
-**#newlychanged#|newly_changed
-* newfiles-url|NewPictures
-*blogs-recent-url|blogs-recent-url-text
+*mainpage|Palmarès
+**#popular#|Contenu le plus vu
+**#visited#|Pages les plus visitées
+**#voted#|Pages les plus annotées
+**#newlychanged#|Pages modifiées récemment
+*portal-url|Communauté
+**#topusers#|Utilisateurs les plus actifs
+**portal-url|Portail
+**forum-url|Forum
 *#category1#
-*#category2#
-*portal-url|community
-**portal-url|portal
-**forum-url|forum',
-	'mu_login' => 'You must be logged in to upload files.',
-	'multiplefileuploadsummary' => 'Summary:',
-	'mycontributions' => 'My contributions',
+*#category2#',
+	'mu_login' => 'Vous devez être connecté pour importer des fichiers.',
+	'multiplefileuploadsummary' => 'Résumé :',
+	'mycontributions' => 'Mes contributions',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -11889,13 +11454,6 @@ $messages['grc'] = array(
 	'may-gen' => 'Μαΐου',
 	'mar' => 'Μάρ',
 	'may' => 'Μάϊ',
-	'mainpagetext' => "'''Ἡ ἐγκατάστασις τῆς MediaWiki ἦν ἐπιτυχής'''",
-	'mainpagedocfooter' => 'Βουλευθήσεσθε τὰς [http://meta.wikimedia.org/wiki/Help:Contents βουλὰς τοῖς Χρωμένοις] ἵνα πληροφορηθῇτε ἐπὶ τοῦ βίκι-λογισμικοῦ.
-
-== Ἄρξασθε ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Διαλογή παραμέτρων διαμορφώσεως]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki: τὰ πολλάκις αἰτηθέντα]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Διαλογή διαλέξεων ἐπὶ τῶν διανομῶν τῆς MediaWiki]',
 	'moredotdotdot' => 'πλέον...',
 	'mypage' => 'Δέλτος μου',
 	'mytalk' => 'Ἡ διάλεξίς μου',
@@ -11911,8 +11469,6 @@ $messages['grc'] = array(
 	'missingarticle-diff' => '(Διαφ: $1, $2)',
 	'mailmypassword' => 'Τὸ νέον σύνθημα μέσῳ ἠλεκτρονικῆς ἐπιστολῆς πέμψειν',
 	'mailerror' => 'Σφάλμα κατὰ τὴν ἀποστολὴν τῆσδε ἐπιστολῆς: $1',
-	'math_sample' => 'Εἰσάγειν τύπον ὧδε',
-	'math_tip' => 'Μαθηματικὸς τύπος (LaTeX)',
 	'media_tip' => 'Τὸ προσάγον πρὸς τὸ φορτίον',
 	'minoredit' => 'Μικρὰ ἥδε ἡ μεταβολή',
 	'missingcommenttext' => 'Εἰσάγαγε σχόλιον τι κατωτέρω.',
@@ -12004,23 +11560,6 @@ $messages['grc'] = array(
 	'movenosubpage' => 'Ἥδε ἡ δέλτος οὐ περιέχει ὑποδέλτους τινάς.',
 	'movereason' => 'Ἀπολογία:',
 	'move-leave-redirect' => 'Παρέχειν ἐμπρόσθιον ἀναδιεύθυνσίν τινα',
-	'mw_math_png' => 'Ἀπόδοσις PNG πάντοτε',
-	'mw_math_simple' => 'HTML εἰ λίαν ἁπλοῦν, εἰδἄλλως PNG',
-	'mw_math_html' => 'HTML εἰ δυνατὸν, εἰδἄλλως PNG',
-	'mw_math_source' => 'Ἄφες το ὡς TeX (διὰ πλοηγητήρια κειμένων)',
-	'mw_math_modern' => 'Προτεινομένη διὰ σύγχρονα πλοηγητήρια',
-	'mw_math_mathml' => 'MathML εἰ δυνατόν (πειραστικόν)',
-	'math_failure' => 'Λεξιανάλυσις ἀποτετυχηκυῖα',
-	'math_unknown_error' => 'ἄγνωστον σφάλμα',
-	'math_unknown_function' => 'ἄγνωστος ἐνέργεια',
-	'math_lexing_error' => 'σφάλμα λεξικῆς ἀναλύσεως',
-	'math_syntax_error' => 'σφάλμα συντάξεως',
-	'math_image_error' => 'Ἡ PNG-μετατροπὴ ἀπετεύχθη·
-ἔλεγξον τὴν ὀρθὴν ἐγκατάστασιν τῶν latex, dvips, gs, καὶ μετάτρεψον',
-	'math_bad_tmpdir' => 'Ἀδύνατος ἦτο ἡ ποίησις μαθηματικῶν δεδομένων ἢ ἡ ἐγγραφὴ ἐν προσκαίρῳ ἀρχειοκαταλόγῳ',
-	'math_bad_output' => 'Ἀδύνατος ἦτο ἡ ποίησις μαθηματικῶν δεδομένων ἢ ἡ ἐγγραφὴ ἐν ἀρχειοκαταλόγῳ ἐξόδου',
-	'math_notexvc' => 'Ἐλλεῖπον ἐκτελέσιμον texvc;
-ἴδε math/README διὰ τὸ διαμορφοῦν.',
 	'markaspatrolleddiff' => 'Σεσημασμένη ὡς φρουρουμένη',
 	'markaspatrolledtext' => 'Σημαίνειν τήνδε τὴν δέλτον ὡς φρουρούμενη',
 	'markedaspatrolled' => 'Σεσημασμένη ὡς φρουρουμένη',
@@ -12385,7 +11924,6 @@ $messages['gv'] = array(
 	'may-gen' => 'Boaldyn',
 	'mar' => 'Mart',
 	'may' => 'Boal',
-	'mainpagetext' => "'''Ta MediaWiki currit stiagh nish.'''",
 	'moredotdotdot' => 'Tooilley...',
 	'mypage' => 'My ghuillag',
 	'mytalk' => 'My resoonaght',
@@ -12399,8 +11937,6 @@ Mannagh vel eh y chooish, foddee dy vel doghan \'sy chooid vog er ve feddynit ma
 Cur coontey jeh da [[Special:ListUsers/sysop|reireyder]], as gow notey jeh\'n URL.',
 	'missingarticle-rev' => '(caghlaa#: $1)',
 	'mailmypassword' => "Cur dou m'ockle arrey er post-L",
-	'math_sample' => 'Cur formley stiagh ayns shoh',
-	'math_tip' => 'Formley maddaghtoil (LaTeX)',
 	'media_tip' => 'Kiangley yn choadan',
 	'minoredit' => 'She myn-arraghey eh shoh',
 	'missingcommenttext' => 'Taggloo er heese, my sailt.',
@@ -12453,8 +11989,6 @@ Foddee oo y duillag resooney y scughey er lheh ny yei shen.",
 	'movetalk' => 'Scughey yn duillag resoonaght ta cochianglt lesh',
 	'movelogpage' => 'Lioar chooishyn y scughey',
 	'movereason' => 'Fa:',
-	'mw_math_png' => 'Jean PNG dagh ooilley hraa',
-	'math_syntax_error' => 'Co-ordrail marranagh',
 	'metadata' => 'Metadata',
 	'metadata-help' => "Ta'n coadan shoh goaill tooilley oayllys stiagh, currit veih'n shamraig bun-earrooagh ny yn scanreyder as eh ymmydit dys y coadan y chroo ny y yannoo bun-earrooagh, foddee.<br />
 My vel y coadan ceaghlit veih'n chummey bunneydagh, foddee nagh beagh mynphoyntyn ennagh cohoilshaghey yn coadan ceaghlit.",
@@ -12888,13 +12422,6 @@ $messages['hi'] = array(
 	'may-gen' => 'मई',
 	'mar' => 'मार्च',
 	'may' => 'मई',
-	'mainpagetext' => "'''मीडियाविकिका इन्स्टॉलेशन पूरा हो गया हैं ।'''",
-	'mainpagedocfooter' => 'विकि सॉफ्टवेयरके इस्तेमाल के लिये [http://meta.wikimedia.org/wiki/Help:Contents उपयोगकर्ता गाईड] देखें ।
-
-== शुरुवात करें ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings कॉन्फिगरेशन सेटींगकी सूची]
-* [http://www.mediawiki.org/wiki/Manual:FAQ मीडियाविकिके बारे में प्राय: पूछे जाने वाले सवाल]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce मीडियाविकि मेलिंग लिस्ट]',
 	'moredotdotdot' => 'और...',
 	'mypage' => 'मेरा पृष्ठ',
 	'mytalk' => 'मेरी सदस्य वार्ता',
@@ -12910,8 +12437,6 @@ $messages['hi'] = array(
 	'missingarticle-diff' => '(फर्क: $1, $2)',
 	'mailmypassword' => 'डाक द्वारा नया कूटशब्द भेजें',
 	'mailerror' => 'इ-मेल भेजनेमें समस्या: $1',
-	'math_sample' => 'गणितीय सूत्र यहाँ डालें',
-	'math_tip' => 'गणितीय सूत्र (लेटेक्स)',
 	'media_sample' => 'उदाहरण.ogg',
 	'media_tip' => 'संचिका की कड़ी',
 	'minoredit' => 'यह एक छोटा बदलाव है',
@@ -13025,23 +12550,6 @@ $messages['hi'] = array(
 	'move-leave-redirect' => 'एक पुनर्निर्देशन पीछे छोड़ते जाएँ',
 	'monobook.css' => '/* यहां रखी गई css मोनोबुक त्वचा का इस्तेमाल करने वाले सभी सदस्योंपर असर करेगी */',
 	'monobook.js' => '/* डिप्रिकेटेड;[[MediaWiki:common.js]] का इस्तेमाल करें */',
-	'mw_math_png' => 'हमेशा PNG बनायें',
-	'mw_math_simple' => 'HTML अलग आसानी से बनें या फिर PNG बनायें',
-	'mw_math_html' => 'HTML अगर हो सकें तो अन्यथा PNG',
-	'mw_math_source' => 'उसे TeX ही रखियें (पाठ ब्राउज़र के लिये)',
-	'mw_math_modern' => 'आधुनिक ब्राउज़रके लिये उपयुक्त',
-	'mw_math_mathml' => 'MathML अगर हो सके तो (प्रायोगिक)',
-	'math_failure' => 'पार्स नहीं कर पायें',
-	'math_unknown_error' => 'अपरिचीत समस्या',
-	'math_unknown_function' => 'अज्ञात कार्य',
-	'math_lexing_error' => 'लेक्सींग समस्या',
-	'math_syntax_error' => 'सिन्टैक्स गलती',
-	'math_image_error' => 'PNG में रुपांतरण अयशस्वी;
-latex, dvips, gs, और convert के इन्स्टॉलेशन की जाँच करें',
-	'math_bad_tmpdir' => 'मैथ अस्थायी डाइरेक्टरी या तो बना नहीं सकतें या फिर उसमें लिख नहीं सकतें',
-	'math_bad_output' => 'मैथ आउटपुट डाइरेक्टरी या तो बना नहीं सकतें या फिर उसमें लिख नहीं सकतें',
-	'math_notexvc' => 'texvc एक्झीक्यूटेबल फ़ाईल मिल नहीं रहीं;
-समनुरूप बनाने के लियें math/README देखें।',
 	'markaspatrolleddiff' => 'देख लिया ऐसा मार्क करें',
 	'markaspatrolledtext' => 'इस पन्ने को देख लिया ऐसा मार्क करें',
 	'markedaspatrolled' => 'देख लिया ऐसा मार्क करें',
@@ -13075,13 +12583,6 @@ $messages['hif'] = array(
 	'may-gen' => 'मई',
 	'mar' => 'मार्च',
 	'may' => 'मई',
-	'mainpagetext' => "'''मीडियाविकिका इन्स्टॉलेशन पूरा हो गया हैं ।'''",
-	'mainpagedocfooter' => 'विकि सॉफ्टवेयरके इस्तेमाल के लिये [http://meta.wikimedia.org/wiki/Help:Contents उपयोगकर्ता गाईड] देखें ।
-
-== शुरुवात करें ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings कॉन्फिगरेशन सेटींगकी सूची]
-* [http://www.mediawiki.org/wiki/Manual:FAQ मीडियाविकिके बारे में प्राय: पूछे जाने वाले सवाल]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce मीडियाविकि मेलिंग लिस्ट]',
 	'moredotdotdot' => 'और...',
 	'mypage' => 'मेरा पृष्ठ',
 	'mytalk' => 'मेरी सदस्य वार्ता',
@@ -13097,8 +12598,6 @@ $messages['hif'] = array(
 	'missingarticle-diff' => '(फर्क: $1, $2)',
 	'mailmypassword' => 'डाक द्वारा नया कूटशब्द भेजें',
 	'mailerror' => 'इ-मेल भेजनेमें समस्या: $1',
-	'math_sample' => 'गणितीय सूत्र यहाँ डालें',
-	'math_tip' => 'गणितीय सूत्र (लेटेक्स)',
 	'media_sample' => 'उदाहरण.ogg',
 	'media_tip' => 'संचिका की कड़ी',
 	'minoredit' => 'यह एक छोटा बदलाव है',
@@ -13212,23 +12711,6 @@ $messages['hif'] = array(
 	'move-leave-redirect' => 'एक पुनर्निर्देशन पीछे छोड़ते जाएँ',
 	'monobook.css' => '/* यहां रखी गई css मोनोबुक त्वचा का इस्तेमाल करने वाले सभी सदस्योंपर असर करेगी */',
 	'monobook.js' => '/* डिप्रिकेटेड;[[MediaWiki:common.js]] का इस्तेमाल करें */',
-	'mw_math_png' => 'हमेशा PNG बनायें',
-	'mw_math_simple' => 'HTML अलग आसानी से बनें या फिर PNG बनायें',
-	'mw_math_html' => 'HTML अगर हो सकें तो अन्यथा PNG',
-	'mw_math_source' => 'उसे TeX ही रखियें (पाठ ब्राउज़र के लिये)',
-	'mw_math_modern' => 'आधुनिक ब्राउज़रके लिये उपयुक्त',
-	'mw_math_mathml' => 'MathML अगर हो सके तो (प्रायोगिक)',
-	'math_failure' => 'पार्स नहीं कर पायें',
-	'math_unknown_error' => 'अपरिचीत समस्या',
-	'math_unknown_function' => 'अज्ञात कार्य',
-	'math_lexing_error' => 'लेक्सींग समस्या',
-	'math_syntax_error' => 'सिन्टैक्स गलती',
-	'math_image_error' => 'PNG में रुपांतरण अयशस्वी;
-latex, dvips, gs, और convert के इन्स्टॉलेशन की जाँच करें',
-	'math_bad_tmpdir' => 'मैथ अस्थायी डाइरेक्टरी या तो बना नहीं सकतें या फिर उसमें लिख नहीं सकतें',
-	'math_bad_output' => 'मैथ आउटपुट डाइरेक्टरी या तो बना नहीं सकतें या फिर उसमें लिख नहीं सकतें',
-	'math_notexvc' => 'texvc एक्झीक्यूटेबल फ़ाईल मिल नहीं रहीं;
-समनुरूप बनाने के लियें math/README देखें।',
 	'markaspatrolleddiff' => 'देख लिया ऐसा मार्क करें',
 	'markaspatrolledtext' => 'इस पन्ने को देख लिया ऐसा मार्क करें',
 	'markedaspatrolled' => 'देख लिया ऐसा मार्क करें',
@@ -13262,13 +12744,6 @@ $messages['hif-latn'] = array(
 	'may-gen' => 'May',
 	'mar' => 'Mar',
 	'may' => 'May',
-	'mainpagetext' => "'''MediaWiki ke safalta se install kar dewa gais hai.'''",
-	'mainpagedocfooter' => "Wiki software ke use kare ke aur jaankari ke khatir [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] ke dekho.
-
-== Getting started ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 	'moredotdotdot' => 'Aur...',
 	'mypage' => 'Hamaar panna',
 	'mytalk' => 'Hamaar bichar',
@@ -13284,8 +12759,6 @@ Iske, URL ke likh ke, koi administrator ke report karo.',
 	'missingarticle-diff' => '(Antar: $1, $2)',
 	'mailmypassword' => 'Nawaa password ke E-mail karo',
 	'mailerror' => 'Mail bheje me galti hoe gais hai: $1',
-	'math_sample' => 'Hian pe formula insert karo',
-	'math_tip' => 'Mathematiical niyam (LaTeX)',
 	'media_tip' => 'File ke jorre waala',
 	'minoredit' => 'Ii chhota badlao hai',
 	'missingsummary' => "'''Suchna:''' Aap badlao ke sanchhit me nai likha hai.
@@ -13393,23 +12866,6 @@ Ii prastithi me, aap ke manually move yah merge kare ke parri.",
 	'move-leave-redirect' => 'Ek redirect ke pichhe chhorro',
 	'move-over-sharedrepo' => '==File hae==
 [[:$1]] shared repository me hae. Ek file ke naam badal ke ii naam kare se shared file mit jaai.',
-	'mw_math_png' => 'PNG ke sab time render karo',
-	'mw_math_simple' => 'HTML agar bahut sahaj hai, nai to PNG',
-	'mw_math_html' => 'HTML agar hoe sake, nai to PNG',
-	'mw_math_source' => 'TeX ke rakam chhorr do (text browsers ke khatir)',
-	'mw_math_modern' => 'Modern browsers khatir thiik hai',
-	'mw_math_mathml' => 'MathML hoe sake tab (experimental)',
-	'math_failure' => 'Parse nai kare sakaa',
-	'math_unknown_error' => 'galti ke nai samajhta',
-	'math_unknown_function' => 'nai samajhta ki ii kon chij khatir hai',
-	'math_lexing_error' => 'lexing me galti',
-	'math_syntax_error' => 'syntax me galti',
-	'math_image_error' => 'PNG conversion fail hoe gais;
-latex, dvips aur gs ke correct installation ke check kar ke convert convert karo',
-	'math_bad_tmpdir' => 'Math temporary directory nai banae sakta hai',
-	'math_bad_output' => 'Math output directory me likhe nai to banae nai sakta hai',
-	'math_notexvc' => 'Texvc executable nai hai;
-Configure kare khatir meharbani kar ke math/README ke dekho.',
 	'markaspatrolleddiff' => 'Mark karo ke pahraa dewa jaawe hai',
 	'markaspatrolledtext' => 'Mark karo ki panna pe pahraa dewa jaawe hai',
 	'markedaspatrolled' => 'Mark karo ke pahraa dewa jaawe hai',
@@ -15347,307 +14803,148 @@ Ef skránni hefur verið breytt, kann að vera að einhverjar upplýsingar eigi 
 );
 
 $messages['it'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'lunedì',
+	'mon' => 'lun',
+	'march' => 'marzo',
+	'may_long' => 'maggio',
+	'march-gen' => 'marzo',
+	'may-gen' => 'maggio',
+	'mar' => 'mar',
+	'may' => 'mag',
+	'moredotdotdot' => 'Altro...',
+	'mypage' => 'La mia pagina',
+	'mytalk' => 'Le mie discussioni',
+	'mainpage' => 'Pagina principale',
+	'mainpage-description' => 'Pagina principale',
+	'missing-article' => 'Il database non ha trovato il testo di una pagina che avrebbe dovuto trovare sotto il nome di "$1" $2.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Di solito ciò si verifica quando viene richiamato, a partire dalla cronologia o dal confronto tra revisioni, un collegamento a una pagina cancellata, a un confronto tra revisioni inesistenti o a un confronto tra revisioni ripulite dalla cronologia.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
+In caso contrario, si è probabilmente scoperto un errore del software MediaWiki.
+Si prega di segnalare l\'accaduto a un [[Special:ListUsers/sysop|amministratore]] specificando la URL in questione.',
+	'missingarticle-rev' => '(numero della revisione: $1)',
 	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
+	'mailmypassword' => 'Invia una nuova password al mio indirizzo e-mail',
+	'mailerror' => "Errore nell'invio del messaggio: $1",
+	'media_sample' => 'Esempio.ogg',
+	'media_tip' => 'Collegamento a file multimediale',
+	'minoredit' => 'Questa è una modifica minore',
+	'missingsummary' => "'''Attenzione:''' non è stato specificato l'oggetto di questa modifica. Premendo di nuovo '''Salva la pagina''' la modifica verrà salvata con l'oggetto vuoto.",
+	'missingcommenttext' => 'Inserire un commento qui sotto.',
+	'missingcommentheader' => "'''Attenzione:''' non è stata specificato l'oggetto/l'intestazione di questo commento. Premendo di nuovo \"{{int:savearticle}}\" la modifica verrà salvata senza intestazione.",
+	'moveddeleted-notice' => "Questa pagina è stata cancellata. L'elenco delle relative cancellazioni e degli spostamenti viene riportato di seguito per informazione.",
+	'mergehistory' => 'Unione cronologie',
+	'mergehistory-header' => 'Questa pagina consente di unire le revisioni appartenenti alla cronologia di una pagina (detta pagina di origine) alla cronologia di una pagina più recente.
+È necessario accertarsi che la continuità storica della pagina non venga alterata.',
+	'mergehistory-box' => 'Unisci la cronologia di due pagine:',
+	'mergehistory-from' => 'Pagina di origine:',
+	'mergehistory-into' => 'Pagina di destinazione:',
+	'mergehistory-list' => "Cronologia cui è applicabile l'unione",
+	'mergehistory-merge' => 'È possibile unire le revisioni di [[:$1]] indicate di seguito alla cronologia di [[:$2]]. Usare la colonna con i pulsanti di opzione per unire tutte le revisioni fino alla data e ora indicate. Si noti che se vengono usati i pulsanti di navigazione, la colonna con i pulsanti di opzione viene azzerata.',
+	'mergehistory-go' => 'Mostra le modifiche che possono essere unite',
+	'mergehistory-submit' => 'Unisci le revisioni',
+	'mergehistory-empty' => 'Nessuna revisione da unire.',
+	'mergehistory-success' => '{{PLURAL:$3|Una revisione di [[:$1]] è stata unita|$3 revisioni di [[:$1]] sono state unite}} alla cronologia di [[:$2]].',
+	'mergehistory-fail' => 'Impossibile unire le cronologie. Verificare la pagina e i parametri temporali.',
+	'mergehistory-no-source' => 'La pagina di origine $1 non esiste.',
+	'mergehistory-no-destination' => 'La pagina di destinazione $1 non esiste.',
+	'mergehistory-invalid-source' => 'La pagina di origine deve avere un titolo corretto.',
+	'mergehistory-invalid-destination' => 'La pagina di destinazione deve avere un titolo corretto.',
+	'mergehistory-autocomment' => 'Unione di [[:$1]] in [[:$2]]',
+	'mergehistory-comment' => 'Unione di [[:$1]] in [[:$2]]: $3',
+	'mergehistory-same-destination' => 'Le pagine di origine e di destinazione non possono coincidere',
+	'mergehistory-reason' => 'Motivo:',
+	'mergelog' => 'Unioni',
+	'mergelogpagetext' => 'Di seguito sono elencate le ultime operazioni di unione della cronologia di due pagine.',
+	'mwsuggest-disable' => 'Disattiva suggerimenti AJAX',
+	'mypreferences' => 'Preferenze',
 	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+	'minlength1' => "Il nome del file dev'essere composto da almeno un carattere.",
+	'morelinkstoimage' => 'Visualizza [[Special:WhatLinksHere/$1|altri link]] a questo file.',
+	'mimesearch' => 'Ricerca in base al tipo MIME',
+	'mimesearch-summary' => 'Questa pagina consente di filtrare i file in base al tipo MIME. Inserire la stringa di ricerca nella forma tipo/sottotipo, ad es. <tt>image/jpeg</tt>.',
+	'mimetype' => 'Tipo MIME:',
+	'mostlinked' => 'Pagine più richiamate',
+	'mostlinkedcategories' => 'Categorie più richiamate',
+	'mostlinkedtemplates' => 'Template più utilizzati',
+	'mostcategories' => 'Voci con più categorie',
+	'mostimages' => 'File più richiamati',
+	'mostrevisions' => 'Voci con più revisioni',
+	'move' => 'Sposta',
+	'movethispage' => 'Sposta questa pagina',
+	'mailnologin' => 'Nessun indirizzo cui inviare il messaggio',
+	'mailnologintext' => 'Per inviare messaggi e-mail ad altri utenti è necessario [[Special:UserLogin|accedere al sito]] e aver registrato un indirizzo valido nelle proprie [[Special:Preferences|preferenze]].',
+	'mywatchlist' => 'osservati speciali',
+	'modifiedarticleprotection' => 'ha modificato il livello di protezione di "[[$1]]"',
+	'movedarticleprotection' => 'ha spostato la protezione da "[[$2]]" a "[[$1]]"',
+	'minimum-size' => 'Dimensione minima',
+	'maximum-size' => 'Dimensione massima:',
+	'mycontris' => 'miei contributi',
+	'month' => 'Dal mese (e precedenti):',
+	'move-page' => 'Spostamento di $1',
+	'move-page-legend' => 'Spostamento di pagina',
+	'movepagetext' => "Questo modulo consente di rinominare una pagina, spostando tutta la sua cronologia al nuovo nome. La pagina attuale diverrà automaticamente un redirect al nuovo titolo. Puoi aggiornare automaticamente i redirect che puntano al titolo originale. Puoi decidere di non farlo, ma ricordati di verificare che lo spostamento non abbia creato [[Special:DoubleRedirects|doppi redirect]] o [[Special:BrokenRedirects|redirect errati]]. L'onere di garantire che i collegamenti alla pagina restino corretti spetta a chi la sposta.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Si noti che la pagina '''non''' sarà spostata se ne esiste già una con il nuovo nome, a meno che non sia vuota o costituita solo da un redirect alla vecchia e sia priva di versioni precedenti. In caso di spostamento errato si può quindi tornare subito al vecchio titolo, e non è possibile sovrascrivere per errore una pagina già esistente.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''ATTENZIONE:'''
+Un cambiamento così drastico può creare contrattempi e problemi, soprattutto per le pagine più visitate. Accertarsi di aver valutato le conseguenze dello spostamento prima di procedere.",
+	'movepagetext-noredirectfixer' => "Questo modulo consente di rinominare una pagina, spostando tutta la sua cronologia al nuovo nome. La pagina attuale diverrà automaticamente un redirect al nuovo titolo. Controlla che lo spostamento non abbia creato [[Special:DoubleRedirects|doppi redirect]] o [[Special:BrokenRedirects|redirect errati]]. L'onere di garantire che i collegamenti alla pagina restino corretti spetta a chi la sposta.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Si noti che la pagina '''non''' sarà spostata se ne esiste già una con il nuovo nome, a meno che non sia vuota o costituita solo da un redirect alla vecchia e sia priva di versioni precedenti. In caso di spostamento errato si può quindi tornare subito al vecchio titolo, e non è possibile sovrascrivere per errore una pagina già esistente.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''ATTENZIONE:'''
+Un cambiamento così drastico può creare contrattempi e problemi, soprattutto per le pagine più visitate. Accertarsi di aver valutato le conseguenze dello spostamento prima di procedere.",
+	'movepagetalktext' => "La corrispondente pagina di discussione, se esiste, sarà spostata automaticamente insieme alla pagina principale, '''tranne che nei seguenti casi''':
+* lo spostamento della pagina è tra namespace diversi;
+* in corrispondenza del nuovo titolo esiste già una pagina di discussione (non vuota);
+* la casella qui sotto è stata deselezionata.
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manualmente le informazioni contenute nella pagina di discussione.",
+	'movearticle' => 'Sposta la pagina:',
+	'moveuserpage-warning' => "'''Attenzione:''' Si sta per spostare una pagina utente. Nota che verrà spostata solamente la pagina. L'utente ''non'' sarà rinominato.",
+	'movenologin' => 'Accesso non effettuato',
+	'movenologintext' => "Lo spostamento delle pagine è consentito solo agli utenti registrati che hanno eseguito l'[[Special:UserLogin|accesso]] al sito.",
+	'movenotallowed' => 'Non si dispone dei permessi necessari per spostare le pagine.',
+	'movenotallowedfile' => 'Non si dispone dei permessi necessari per spostare i file.',
+	'move-watch' => 'Aggiungi la pagina agli osservati speciali',
+	'movepagebtn' => 'Sposta la pagina',
+	'movepage-moved' => '\'\'\'"$1" è stata spostata a "$2"\'\'\'',
+	'movepage-moved-redirect' => 'È stato creato un redirect.',
+	'movepage-moved-noredirect' => 'La creazione di un redirect è stata soppressa.',
+	'movedto' => 'spostata a',
+	'movetalk' => 'Sposta anche la pagina di discussione.',
+	'move-subpages' => 'Sposta le sottopagine (sino a $1)',
+	'move-talk-subpages' => 'Sposta le sottopagine di discussione (fino a $1)',
+	'movepage-page-exists' => 'La pagina $1 esiste già e non può essere automaticamente sovrascritta.',
+	'movepage-page-moved' => 'La pagina $1 è stata spostata a $2.',
+	'movepage-page-unmoved' => 'La pagina $1 non può essere spostata a $2.',
+	'movepage-max-pages' => 'È stato spostato il numero massimo di $1 {{PLURAL:$1|pagina|pagine}} e non potranno essere spostate ulteriori pagine automaticamente.',
+	'movelogpage' => 'Spostamenti',
+	'movelogpagetext' => 'Di seguito sono elencate le pagine spostate di recente.',
+	'movesubpage' => '{{PLURAL:$1|Sottopagina|Sottopagine}}',
+	'movesubpagetext' => 'Questa pagina ha $1 {{PLURAL:$1|sottopagina mostrata|sottopagine mostrate}} di seguito.',
+	'movenosubpage' => 'Questa pagina non ha sottopagine.',
+	'movereason' => 'Motivo:',
+	'move-leave-redirect' => 'Crea un redirect con lo spostamento',
+	'move-over-sharedrepo' => '== File già esistente ==
+[[:$1]] è già presente in una struttura condivisa. Spostare un file a questo titolo comporterà la sovrascrittura del file condiviso.',
+	'monobook.css' => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Monobook */',
+	'monobook.js' => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MonoBook */',
+	'markaspatrolleddiff' => 'Segna la modifica come verificata',
+	'markaspatrolledtext' => 'Segna questa pagina come verificata',
+	'markedaspatrolled' => 'Modifica verificata',
+	'markedaspatrolledtext' => 'La modifica di [[:$1]] selezionata è stata segnata come verificata.',
+	'markedaspatrollederror' => 'Impossibile contrassegnare la voce come verificata',
+	'markedaspatrollederrortext' => 'Occorre specificare una modifica da contrassegnare come verificata.',
+	'markedaspatrollederror-noautopatrol' => 'Non si dispone dei permessi necessari per segnare le proprie modifiche come verificate.',
+	'mediawarning' => "'''Attenzione''': Questo file potrebbe contenere codice maligno. La sua esecuzione potrebbe danneggiare il tuo sistema.",
+	'minutes' => '{{PLURAL:$1|un minuto|$1 minuti}}',
+	'metadata' => 'Metadati',
+	'metadata-help' => 'Questo file contiene informazioni aggiuntive, probabilmente aggiunte dalla fotocamera o dallo scanner usati per crearlo o digitalizzarlo. Se il file è stato modificato, alcuni dettagli potrebbero non corrispondere alla realtà.',
+	'metadata-expand' => 'Mostra dettagli',
+	'metadata-collapse' => 'Nascondi dettagli',
+	'metadata-fields' => "I campi relativi ai metadati dell'immagine elencati in questo messaggio verranno mostrati sulla pagina dell'immagine quando la tabella dei metadati è presentata nella forma breve. Per impostazione predefinita, gli altri campi verranno nascosti.
 * make
 * model
 * datetimeoriginal
@@ -15660,26 +14957,14 @@ Others will be hidden by default.
 * imagedescription
 * gpslatitude
 * gpslongitude
-* gpsaltitude',
-	'monthsall' => 'all',
+* gpsaltitude",
+	'monthsall' => 'tutti',
 	'masthead-anonymous-user' => 'Un utente Fandom',
-	'mobile-hide' => 'Hide',
-	'mobile-show' => 'Show',
-	'most_popular' => "Editor's pick",
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'most_visited' => 'Most visited',
+	'mobile-hide' => 'Nascondi',
+	'mobile-show' => 'Mostra',
+	'most_popular' => 'Più popolari',
+	'most_popular_articles' => 'pagine più popolari',
+	'most_visited' => 'Più visitate',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -15875,308 +15160,169 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 );
 
 $messages['ja'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => '月曜日',
+	'mon' => '月',
+	'march' => '3月',
+	'may_long' => '5月',
+	'march-gen' => '3月',
+	'may-gen' => '5月',
+	'mar' => '3月',
+	'may' => '5月',
+	'moredotdotdot' => '続き・・・',
+	'mypage' => '自分のページ',
+	'mytalk' => '自分のトーク',
+	'mainpage' => 'メインページ',
+	'mainpage-description' => 'メインページ',
+	'missing-article' => '「$1」$2というページの本文をデータベース上に見つけることができませんでした。
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+ページの削除された版への古い差分表示や固定リンクをたどった時にこのようなことになります。
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+それ以外の操作でこのメッセージが表示された場合、ソフトウェアのバグである可能性があります。
+[[Special:ListUsers/sysop|管理者]]までそのURLを添えてお知らせください。',
+	'missingarticle-rev' => '（版番号：$1）',
+	'missingarticle-diff' => '（差分：$1、$2）',
+	'mailmypassword' => '新しいパスワードを電子メールで送る',
+	'mailerror' => 'メールの送信中にエラーが発生しました：$1',
+	'media_sample' => 'サンプル.ogg',
+	'media_tip' => 'ファイルへのリンク',
+	'minoredit' => 'これは細部の編集です',
+	'missingsummary' => "'''注意：'''要約欄が空欄です。
+「{{int:savearticle}}」をもう一度クリックすると、編集は要約なしで保存されます。",
+	'missingcommenttext' => '以下にコメントを入力してください。',
+	'missingcommentheader' => "'''注意:：'' このコメントに対する題名・見出しが空欄です。
+「{{int:savearticle}}」ボタンをもう一度押すと、空のまま編集が保存されます。",
+	'moveddeleted-notice' => 'このページは削除されています。
+参考のため、このページの削除と移動の記録を以下に表示します。',
+	'mergehistory' => 'ページ履歴の統合',
+	'mergehistory-header' => 'このページでは、ある元ページの履歴を新しいページに統合することができます。
+この変更を行ってもページの履歴の連続性が確実に保たれるようにしてください。',
+	'mergehistory-box' => '2ページの過去の版を統合する：',
+	'mergehistory-from' => '統合元となるページ：',
+	'mergehistory-into' => '統合先のページ：',
+	'mergehistory-list' => '統合できる編集履歴',
+	'mergehistory-merge' => '以下の[[:$1]]の履歴が、[[:$2]]へ統合可能です。
+特定の時間以前に作成された版のみを統合するには、ラジオボタンで版を選択してください。
+案内リンクを使うと、選択が初期化されるので注意してください。',
+	'mergehistory-go' => '統合可能な版の表示',
+	'mergehistory-submit' => '版を統合する',
+	'mergehistory-empty' => '統合できる版がありません。',
+	'mergehistory-success' => '[[:$1]]の$3{{PLURAL:$3|版}}を[[:$2]]へ統合しました。',
+	'mergehistory-fail' => '履歴の統合を実行できません。ページと時刻の引数を再確認してください。',
+	'mergehistory-no-source' => '統合元ページ「$1」が存在しません。',
+	'mergehistory-no-destination' => '統合先のページ$1が存在しません。',
+	'mergehistory-invalid-source' => '統合元のページは有効な名前でなければなりません。',
+	'mergehistory-invalid-destination' => '統合先のページは有効な名前でなければなりません。',
+	'mergehistory-autocomment' => '[[:$1]]を[[:$2]]に統合',
+	'mergehistory-comment' => '[[:$1]]を[[:$2]]に統合：$3',
+	'mergehistory-same-destination' => '統合元と統合先に同じページを設定することはできません。',
+	'mergehistory-reason' => '理由：',
+	'mergelog' => '統合記録',
+	'mergelogpagetext' => '以下は、最近行われたあるページから別のページへの統合の一覧です。',
+	'mwsuggest-disable' => 'AJAXによる検索候補の提示を無効にする',
+	'mypreferences' => '個人設定',
+	'minoreditletter' => '細',
+	'minlength1' => 'ファイル名は1文字以上である必要があります。',
+	'morelinkstoimage' => 'このファイルへの[[Special:WhatLinksHere/$1|リンク元を更に]]を表示する。',
+	'mimesearch' => 'MIMEタイプ検索',
+	'mimesearch-summary' => '指定したMIMEタイプに合致するファイルを検索します。
+contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</tt>）。',
+	'mimetype' => 'MIMEタイプ：',
+	'mostlinked' => '被リンク数の多いページ',
+	'mostlinkedcategories' => '被リンク数の多いカテゴリ',
+	'mostlinkedtemplates' => '使用箇所の多いテンプレート',
+	'mostcategories' => 'カテゴリの多いページ',
+	'mostimages' => '被リンク数の多いファイル',
+	'mostrevisions' => '版の多いページ',
+	'move' => '移動',
+	'movethispage' => 'このページを移動',
+	'mailnologin' => '送信アドレスがありません',
+	'mailnologintext' => '他の利用者宛にメールを送信するためには、[[Special:UserLogin|ログイン]]し、[[Special:Preferences|個人設定]]で有効なメールアドレスを設定する必要があります。',
+	'mywatchlist' => 'ウォッチリスト',
+	'modifiedarticleprotection' => '「[[$1]]」の保護レベルを変更しました',
+	'movedarticleprotection' => '保護の設定を「[[$2]]」から「[[$1]]」へ移動しました',
+	'minimum-size' => '最小サイズ',
+	'maximum-size' => '最大サイズ：',
+	'mycontris' => '自分の投稿記録',
+	'month' => 'これ以前の月：',
+	'move-page' => '「$1」の移動',
+	'move-page-legend' => 'ページの移動',
+	'movepagetext' => "下のフォームを利用すると、ページ名が変更され、その履歴も変更先へ移動します。
+古いページは変更先への転送ページとなります。
+変更前のページへの転送は自動的に修正することができます。
+自動的な修正を選択しない場合は、[[Special:DoubleRedirects|二重リダイレクト]]や[[Special:BrokenRedirects|迷子のリダイレクト]]を確認する必要があります。
+リンクを正しく維持するのは移動した人の責任です。
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+移動先がすでに存在する場合には、そのページが空またはリダイレクトで、かつ過去の版を持たない場合を除いて移動'''できません'''。
+つまり、間違えてページ名を変更した場合には元に戻せます。また移動によって既存のページを上書きしてしまうことはありません。
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''注意！'''
+よく閲覧されるページや、他の多くのページからリンクされているページを移動すると予期せぬ結果が起こるかもしれません。
+ページの移動に伴う影響をよく考えてから移動してください。",
+	'movepagetext-noredirectfixer' => "下のフォームを利用すると、ページ名が変更され、ページの履歴も変更先へ移動します。
+古いページは変更先への転送ページとなります。
+自動的な修正を選択しない場合は、[[Special:DoubleRedirects|二重リダイレクト]]や[[Special:BrokenRedirects|迷子のリダイレクト]]を確認する必要があります。
+つながるべき場所にリンクがつながるよう維持するのは移動した人の責任です。
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'move-redirect-suppressed' => 'redirect suppressed',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+移動先がすでに存在する場合には、そのページが空またはリダイレクトで、かつ過去の版を持たない場合を除いて移動'''できません'''。
+つまり、間違えてページ名を変更した場合には元に戻せます。また移動によって既存のページを上書きしてしまうことはありません。
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''警告！'''
+多く閲覧されたりリンクされているページを移動すると、予期せぬ大きな変化が起こるかもしれません。
+ページの移動に伴う影響をよく考えてから移動してください。",
+	'movepagetalktext' => "付随するトークページは自動的に一緒に移動されます。
+'''ただし、以下の場合を除きます:'''
+*同じ名前で空ではないトークページがすでに存在する場合
+*下のチェックボックスのチェックマークを消した場合
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+そのような場合、必要に応じてページを移動またはマージする必要があります。",
+	'movearticle' => '移動するページ：',
+	'moveuserpage-warning' => "'''警告：'''利用者ページを移動しようとしています。移動を行った場合、ページだけが移動され、利用者名は''変更されない''点に注意してください。",
+	'movenologin' => 'ログインしていません',
+	'movenologintext' => 'ページを移動するためには、登録利用者でありかつ、[[Special:UserLogin|ログイン]]している必要があります。',
+	'movenotallowed' => 'ページを移動する権限がありません。',
+	'movenotallowedfile' => 'ファイルを移動する権限がありません。',
+	'move-watch' => '移動元と移動先ページをウォッチ',
+	'movepagebtn' => 'ページを移動',
+	'movepage-moved' => "'''「$1」は「$2」へ移動されました'''",
+	'movepage-moved-redirect' => '転送が作成されました。',
+	'movepage-moved-noredirect' => '転送の作成は抑制されました。',
+	'movedto' => '移動先：',
+	'movetalk' => 'トークページが付随する場合には、それも一緒に移動する',
+	'move-subpages' => '下位ページも移動する（$1ページまで）',
+	'move-talk-subpages' => 'トークページのサブページも移動する ($1件まで)',
+	'movepage-page-exists' => 'ページ$1は既に存在するため、自動的に上書きされませんでした。',
+	'movepage-page-moved' => 'ページ$1は$2へ移動されました。',
+	'movepage-page-unmoved' => 'ページ$1は$2へ移動できませんでした。',
+	'movepage-max-pages' => '自動的に移動できる{{PLURAL:$1|ページ}}は $1件までで、それ以上は移動されません。',
+	'move-redirect-suppressed' => '転送は非作成',
+	'movelogpage' => '移動記録',
+	'movelogpagetext' => '以下は全てのページ移動の一覧です。',
+	'movesubpage' => '{{PLURAL:$1|下位ページ}}',
+	'movesubpagetext' => 'このページには、以下に示す$1下位ページがあります。',
+	'movenosubpage' => 'このページに下位ページはありません。',
+	'movereason' => '理由：',
+	'move-leave-redirect' => '跡地に転送を残す',
+	'move-over-sharedrepo' => '== ファイルが存在します ==
+[[:$1]]は共有リポジトリー上に存在します。ファイルをこの名前に移動すると共有ファイルを上書きします。',
+	'monobook.css' => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
+	'monobook.js' => '/* このページの利用は中止してください。代わりに、[[MediaWiki:common.js]]を御利用下さい。 */',
+	'markaspatrolleddiff' => '巡回済みにする',
+	'markaspatrolledtext' => 'このページを巡回済みにする',
+	'markedaspatrolled' => '巡回済みにしました',
+	'markedaspatrolledtext' => '選択された[[:$1|$1]]の版を巡回済みにしました。',
+	'markedaspatrollederror' => '巡回済みにできません。',
+	'markedaspatrollederrortext' => '巡回済みにするためにはどの版かを指定する必要があります。',
+	'markedaspatrollederror-noautopatrol' => '自分自身による編集を巡回済みにする権限がありません。',
+	'mediawarning' => "'''警告：'''この種類のファイルは悪意のあるコードを含んでいる可能性があります。
+実行するとシステムが危険にさらされる可能性があります。",
+	'minutes' => '{{PLURAL:$1|$1分}}',
+	'metadata' => 'メタデータ',
+	'metadata-help' => 'このファイルには、追加情報があります（おそらく、作成やデジタル化する際に使われたデジタルカメラやスキャナーによって追加されたものです）。
+このファイルが元の状態から変更されている場合、いくつかの項目は、修正されたファイルを完全に反映していないかもしれません。',
+	'metadata-expand' => '拡張項目を表示',
+	'metadata-collapse' => '拡張項目を非表示',
+	'metadata-fields' => 'ここのメッセージにあるEXIFメタデータフィールドは、メタデータ表が折りたたまれている状態のときに画像ページに読み込まれます。
+他のものは既定では非表示です。
 * make
 * model
 * datetimeoriginal
@@ -16190,41 +15336,29 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
+	'monthsall' => 'すべて',
+	'most_popular_articles' => 'もっとも人気のある記事',
+	'messagebar_mess' => '<a href="$1">このページを編集したり</a>、<a href="$2">新しい記事を作ったり</a>することが可能です。どうすればいいかは、<a href="$3">ここから検索してみてください</a>。',
 	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'manage_widgets' => 'Manage widgets',
+	'most_popular' => '編集者の厳選',
+	'most_visited' => '最多アクセス',
+	'most_emailed' => 'メールの使われた記事',
+	'manage_widgets' => 'ウィジェットの設定',
 	'masthead-anonymous-user' => 'Fandomユーザー',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
-*randompage-url|randompage
-*mainpage|TopContent
+*mainpage|コンテンツ
+**#popular#|お薦め記事
 **#visited#|most_visited
-**#newlychanged#|newly_changed
-* newfiles-url|NewPictures
-*blogs-recent-url|blogs-recent-url-text
-*#category1#
-*#category2#
-*portal-url|community
+**#voted#|レートの高い記事
+**#newlychanged#|recentchanges
+*portal-url|Community
+**#topusers#|活発な利用者
 **portal-url|portal
-**forum-url|forum',
-	'mu_login' => 'You must be logged in to upload files.',
-	'multiplefileuploadsummary' => 'Summary:',
+**Forum:Index|forum
+*#category1#
+*#category2#',
+	'mu_login' => 'ファイルをアップロードするには、ログインする必要があります。',
+	'multiplefileuploadsummary' => 'ファイルの概要:',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -16436,12 +15570,6 @@ $messages['jv'] = array(
 	'may-gen' => 'Méi',
 	'mar' => 'Mar',
 	'may' => 'Méi',
-	'mainpagetext' => "'''Prangkat empuk wiki wis suksès dipasang.'''",
-	'mainpagedocfooter' => "Mangga maca [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] kanggo katrangan luwih langkung prakara panggunan prangkat empuk wiki
-== Miwiti panggunan  ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Daftar pangaturan préférènsi]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Milis rilis MediaWiki]",
 	'moredotdotdot' => 'Liyané...',
 	'mypage' => 'Kacaku',
 	'mytalk' => 'Gunemanku',
@@ -16454,8 +15582,6 @@ Yèn dudu iki panyebabé, panjenengan manawa bisa nemokaké kasalahan (''bug'') 
 	'missingarticle-diff' => '(Béda: $1, $2)',
 	'mailmypassword' => 'Kirim tembung sandhi anyar',
 	'mailerror' => 'Kasalahan ing ngirimaké layang e-mail: $1',
-	'math_sample' => 'Lebokna rumus ing kéné',
-	'math_tip' => 'Rumus matematika (LaTeX)',
 	'media_sample' => 'Conto.ogg',
 	'media_tip' => 'Pranala berkas media',
 	'minoredit' => 'Iki suntingan cilik.',
@@ -16554,22 +15680,6 @@ Ing kasus-kasus iku, yèn panjenengan gayuh, panjenengan bisa mindhahaké utawa 
 	'movenosubpage' => 'Kaca iki ora duwé anak-kaca.',
 	'movereason' => 'Alesan:',
 	'move-leave-redirect' => 'Gawé pangalihan menyang irah-irahan anyar',
-	'mw_math_png' => 'Mesthi nggawé PNG',
-	'mw_math_simple' => 'HTML yèn prasaja banget utawa yèn ora PNG',
-	'mw_math_html' => 'HTML yèn bisa utawa PNG',
-	'mw_math_source' => 'Dijarna waé minangka TeX (kanggo panjlajah wèb tèks)',
-	'mw_math_modern' => 'Disaranaké kanggo panjlajah wèb modèrn',
-	'mw_math_mathml' => 'MathML yèn bisa (pracoban)',
-	'math_failure' => 'Gagal nglakoni parse',
-	'math_unknown_error' => 'Kaluputan sing ora dimangertèni',
-	'math_unknown_function' => 'fungsi sing ora dimangertèni',
-	'math_lexing_error' => "kaluputan ''lexing''",
-	'math_syntax_error' => "''syntax error'' (kaluputan sintaksis)",
-	'math_image_error' => 'Konversi PNG gagal; priksa apa latex, dvips, gs, lan convert wis diinstalasi sing bener',
-	'math_bad_tmpdir' => 'Ora bisa nulis utawa nggawé dirèktori sauntara math',
-	'math_bad_output' => 'Ora bisa nulis utawa nggawé dirèktori paweton math',
-	'math_notexvc' => 'Executable texvc ilang;
-mangga delengen math/README kanggo cara konfigurasi.',
 	'markaspatrolleddiff' => 'Tandhanana wis dipatroli',
 	'markaspatrolledtext' => 'Tandhanana artikel iki wis dipatroli',
 	'markedaspatrolled' => 'Ditandhani wis dipatroli',
@@ -16601,14 +15711,6 @@ $messages['ka'] = array(
 	'may-gen' => 'მაისის',
 	'mar' => 'მარ',
 	'may' => 'მაი',
-	'mainpagetext' => "'''მედიავიკი წარმატებით ჩაიტვირთა.'''",
-	'mainpagedocfooter' => 'ვიკი პროგრამის გამოყენების ინფორმაციისთვის იხილეთ [http://meta.wikimedia.org/wiki/Help:Contents მომხმარებლის მეგზური].
-
-== დაწყება ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings კონფიგურაციის მაჩვენებლების სია]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce მედიავიკის გამოცემის დაგზავნის სია]',
 	'moredotdotdot' => 'ვრცლად...',
 	'mypage' => 'ჩემი გვერდი',
 	'mytalk' => 'ჩემი განხილვა',
@@ -16624,8 +15726,6 @@ $messages['ka'] = array(
 	'missingarticle-diff' => '(ცვლილება: $1, $2)',
 	'mailmypassword' => 'ახალი პაროლის გამოგზავნა',
 	'mailerror' => 'შეცდომა ფოსტის გაგზავნაში: $1',
-	'math_sample' => 'ჩასვით ფორმულა აქ',
-	'math_tip' => 'მათემატიკური ფორმულა (LaTeX)',
 	'media_sample' => 'მაგალითი.ogg',
 	'media_tip' => 'ბმული ფაილზე',
 	'minoredit' => 'მცირე რედაქტირება',
@@ -16725,21 +15825,6 @@ $messages['ka'] = array(
 	'move-over-sharedrepo' => '==ფაილი არსებობს==
 [[:$1]] არსებობს საზიარო საცავში. ფაილის ამ სათაურზე გადმოტანა საზიარო ფაილს გადაფარავს.',
 	'monobook.css' => '/* აქ ჩასმული CSS გავლენას იქონიებს Monobook ინტერფეისის მომხმარებლებზე */',
-	'mw_math_png' => 'მუდამ გამოიყენე PNG',
-	'mw_math_simple' => 'HTML თუ მარტივია, სხვაგვარად PNG',
-	'mw_math_html' => 'HTML თუ შესაძლებელია, სხვაგვარად PNG',
-	'mw_math_source' => 'დატოვე როგორც TeX (ტექსტური ბრაუზერებისთვის)',
-	'mw_math_modern' => 'მიზანშეწონილია უფრო თანამედროვე ბრაუზერებისთვის',
-	'mw_math_mathml' => 'MathML თუ შესაძლებელია (ექსპერიმენტული)',
-	'math_failure' => 'შეუძლებელია გამონათქვამის გარჩევაშ',
-	'math_unknown_error' => 'უცნობი შეცდომა',
-	'math_unknown_function' => 'უცნობი ფუნქცია',
-	'math_lexing_error' => 'ლექსიკური შეცდომა',
-	'math_syntax_error' => 'სინტაქსი არასწორია',
-	'math_image_error' => 'PNG-ში გარდაქმნისას წარმოიშვა შეცდომა; შეამოწმეთ latex, dvips, gs და convert-ის დაყენების სისწორე',
-	'math_bad_tmpdir' => 'შეუძლებელია ჩანაწერის შექმნა მათემატიკურ დროებით კატალოგში',
-	'math_bad_output' => 'შეუძლებელია შექმნა ან ჩაწერა მათემატიკურ გამსვლელ კატალოგში',
-	'math_notexvc' => 'შემსრულებელი ფაილი texvc არ არის ნაპოვნი; იხ.math/README ინფორმაციისთვის.',
 	'markaspatrolleddiff' => 'მონიშნე როგორც პატროლირებული',
 	'markaspatrolledtext' => 'მონიშნე ეს სტატია როგორც პატრულირებული',
 	'markedaspatrolled' => 'მონიშნულია როგორც პატროლირებული',
@@ -17232,13 +16317,6 @@ $messages['kiu'] = array(
 	'may-gen' => 'Gulane',
 	'mar' => 'Mar',
 	'may' => 'Gul',
-	'mainpagetext' => "↓ '''MediaWiki fist ra ser, vıraziya.'''",
-	'mainpagedocfooter' => "↓ Serba melumatê gurenaena ''wiki software''i [http://meta.wikimedia.org/wiki/Help:Contents İdarê karberi] de mıracaet ke.
-
-== Gamê verêni ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Lista ayarunê vıraştene]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki de ÇZP]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki ra lista serbest-daena postey]",
 	'moredotdotdot' => '↓ Zêde...',
 	'mypage' => 'Pela mı',
 	'mytalk' => 'Hurênayişê mı',
@@ -24631,13 +23709,6 @@ $messages['ne'] = array(
 	'may-gen' => 'मे',
 	'mar' => 'मार्च',
 	'may' => 'मे',
-	'mainpagetext' => "'''MediaWiki सफलतापूर्वक स्थापना भयो ।'''",
-	'mainpagedocfooter' => " विकी अनुप्रयोग कसरी प्रयोग गर्ने भन्ने जानकारीको लागि  [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] हेर्नुहोस्
-
-== सुरू गर्नको लागि  ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 	'moredotdotdot' => 'थप...',
 	'mypage' => 'मेरो पृष्ठ',
 	'mytalk' => 'मेरो कुरा',
@@ -24653,8 +23724,6 @@ $messages['ne'] = array(
 	'missingarticle-diff' => '(डिफ diff: $1, $2)',
 	'mailmypassword' => 'नयाँ प्रवेशशव्द इमेल गर्नुहोस्',
 	'mailerror' => ' चिठी :$1 पठाउँदा त्रुटी भयो',
-	'math_sample' => 'सूत्र यहाँ थप्नुहोस्',
-	'math_tip' => 'गणितीय सूत्र (LaTeX)',
 	'media_sample' => 'उदाहरण.ogg',
 	'media_tip' => 'फाइल लिङ्क',
 	'minoredit' => 'यो सानो सम्पादन हो',
@@ -24744,16 +23813,6 @@ $messages['ne'] = array(
 	'movepage-page-unmoved' => '$1 पृष्ठलाई $2 मा सार्न सकिएन ।',
 	'movelogpage' => 'लग सार्ने',
 	'movereason' => 'कारण :',
-	'mw_math_png' => 'जहिले  PNG खोल्ने',
-	'mw_math_simple' => 'धेरै साधारण भएमा HTML नत्र  PNG',
-	'mw_math_html' => 'संभव भएसम्म HTML नत्र  PNG',
-	'mw_math_source' => 'यसलाई TeX को रुपमा  छोड्ने(पाठ प्रदर्शको लागि)',
-	'mw_math_modern' => 'आधुनिक ब्राउजरको लागि सिफारिस गरिएको',
-	'math_failure' => 'पढ्न सकिएन',
-	'math_unknown_error' => 'अज्ञात समस्या',
-	'math_unknown_function' => 'अज्ञात निर्देशन',
-	'math_lexing_error' => 'वर्ण(lexing) त्रुटी',
-	'math_syntax_error' => 'सुत्र(syntax) त्रुटी',
 	'markaspatrolleddiff' => 'गस्ती गरिएको(patrolled) को रुपमा चिनो लगाउने',
 	'markaspatrolledtext' => 'यस पृष्ठलाई गस्ती गरिएको(patrolled) को रुपमा चिनो लगाउने',
 	'markedaspatrolled' => 'गस्ती गरिएको(patrolled) को रुपमा चिनो लगाइयो',
@@ -24816,307 +23875,166 @@ $messages['niu'] = array(
 );
 
 $messages['nl'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'maandag',
+	'mon' => 'ma',
+	'march' => 'maart',
+	'may_long' => 'mei',
+	'march-gen' => 'maart',
+	'may-gen' => 'mei',
+	'mar' => 'mrt',
+	'may' => 'mei',
+	'moredotdotdot' => 'Meer…',
+	'mypage' => 'Mijn gebruikerspagina',
+	'mytalk' => 'Mijn overleg',
+	'mainpage' => 'Hoofdpagina',
+	'mainpage-description' => 'Hoofdpagina',
+	'missing-article' => 'In de database is geen inhoud aangetroffen voor de pagina "$1" die er wel zou moeten zijn ($2).
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Dit kan voorkomen als je een verouderde verwijzing naar het verschil tussen twee versies van een pagina volgt of een versie opvraagt die is verwijderd.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+Als dit niet het geval is, heb je wellicht een fout in de software gevonden.
+Maak hiervan melding bij een [[Special:ListUsers/sysop|systeembeheerder]] van {{SITENAME}} en vermeld daarbij de URL van deze pagina.',
+	'missingarticle-rev' => '(versienummer: $1)',
+	'missingarticle-diff' => '(Wijziging: $1, $2)',
+	'mailmypassword' => 'Nieuw wachtwoord e-mailen',
+	'mailerror' => 'Fout bij het verzenden van e-mail: $1',
+	'media_sample' => 'Voorbeeld.ogg',
+	'media_tip' => 'Verwijzing naar bestand',
+	'minoredit' => 'Dit is een kleine bewerking',
+	'missingsummary' => "'''Herinnering:''' je hebt geen samenvatting opgegeven voor je bewerking.
+Als je nogmaals op ''Pagina opslaan'' klikt wordt de bewerking zonder samenvatting opgeslagen.",
+	'missingcommenttext' => 'Plaats je opmerking hieronder.',
+	'missingcommentheader' => "'''Let op:''' Je hebt geen onderwerp/kop voor deze opmerking opgegeven.
+Als je opnieuw op \"{{int:savearticle}}\" klikt, wordt je wijziging zonder een onderwerp/kop opgeslagen.",
+	'moveddeleted-notice' => 'Deze pagina is verwijderd.
+Ter informatie worden het verwijderingslogboek en het hernoemingslogboek van deze pagina hieronder weergegeven.',
+	'mergehistory' => "Geschiedenis van pagina's samenvoegen",
+	'mergehistory-header' => 'Via deze pagina kun je versies van de geschiedenis van een bronpagina naar een nieuwere pagina samenvoegen.
+Zorg dat deze wijziging de geschiedenisdoorlopendheid van de pagina behoudt.',
+	'mergehistory-box' => "Versies van twee pagina's samenvoegen:",
+	'mergehistory-from' => 'Bronpagina:',
+	'mergehistory-into' => 'Bestemmingspagina:',
+	'mergehistory-list' => 'Samenvoegbare bewerkingsgeschiedenis',
+	'mergehistory-merge' => 'De volgende versies van [[:$1]] kunnen samengevoegd worden naar [[:$2]].
+Gebruik de kolom met keuzerondjes om alleen de versies gemaakt op en voor de aangegeven tijd samen te voegen.
+Let op dat het gebruiken van de navigatieverwijzingen deze kolom opnieuw instelt.',
+	'mergehistory-go' => 'Samenvoegbare bewerkingen bekijken',
+	'mergehistory-submit' => 'Versies samenvoegen',
+	'mergehistory-empty' => 'Er zijn geen versies die samengevoegd kunnen worden.',
+	'mergehistory-success' => '$3 {{PLURAL:$3|versie|versies}} van [[:$1]] zijn succesvol samengevoegd naar [[:$2]].',
+	'mergehistory-fail' => 'Kan geen geschiedenis samenvoegen, controleer opnieuw de pagina- en tijdinstellingen.',
+	'mergehistory-no-source' => 'De bronpagina $1 bestaat niet.',
+	'mergehistory-no-destination' => 'De bestemmingspagina $1 bestaat niet.',
+	'mergehistory-invalid-source' => 'De bronpagina moet een geldige paginanaam zijn.',
+	'mergehistory-invalid-destination' => 'De bestemmingspagina moet een geldige paginanaam zijn.',
+	'mergehistory-autocomment' => '[[:$1]] samengevoegd naar [[:$2]]',
+	'mergehistory-comment' => '[[:$1]] samengevoegd naar [[:$2]]: $3',
+	'mergehistory-same-destination' => 'De bronpagina en doelpagina kunnen niet hetzelfde zijn',
+	'mergehistory-reason' => 'Reden:',
+	'mergelog' => 'Samenvoegingslogboek',
+	'mergelogpagetext' => 'Hieronder ziet u een lijst van recente samenvoegingen van een paginageschiedenis naar een andere.',
+	'mwsuggest-disable' => 'Suggesties via AJAX uitschakelen',
+	'mypreferences' => 'Mijn voorkeuren',
+	'minoreditletter' => 'k',
+	'minlength1' => 'Bestandsnamen moeten minstens één letter bevatten.',
+	'morelinkstoimage' => '[[Special:WhatLinksHere/$1|Meer verwijzingen]] naar dit bestand bekijken.',
+	'mimesearch' => 'Zoeken op MIME-type',
+	'mimesearch-summary' => 'Deze pagina maakt het filteren van bestanden voor het MIME-type mogelijk.
+Invoer: inhoudstype/subtype, bijvoorbeeld <tt>image/jpeg</tt>.',
+	'mimetype' => 'MIME-type:',
+	'mostlinked' => "Pagina's waar het meest naar verwezen wordt",
+	'mostlinkedcategories' => 'Categorieën waar het meest naar verwezen wordt',
+	'mostlinkedtemplates' => 'Meestgebruikte sjablonen',
+	'mostcategories' => "Pagina's met de meeste categorieën",
+	'mostimages' => 'Meestgebruikte bestanden',
+	'mostrevisions' => "Pagina's met de meeste bewerkingen",
+	'move' => 'Hernoemen',
+	'movethispage' => 'Deze pagina hernoemen',
+	'mailnologin' => 'Geen verzendadres beschikbaar',
+	'mailnologintext' => 'Je moet [[Special:UserLogin|aangemeld]] zijn en een geldig e-mailadres in je [[Special:Preferences|voorkeuren]] vermelden om andere gebruikers te kunnen e-mailen.',
+	'mywatchlist' => 'Mijn volglijst',
+	'modifiedarticleprotection' => 'heeft het beveiligingsniveau voor "[[$1]]" gewijzigd',
+	'movedarticleprotection' => 'heeft beveiligingsinstellingen verplaatst van "[[$2]]" naar "[[$1]]"',
+	'minimum-size' => 'Min. grootte',
+	'maximum-size' => 'Max. grootte:',
+	'mycontris' => 'Mijn bijdragen',
+	'month' => 'Van maand (en eerder):',
+	'move-page' => '"$1" hernoemen',
+	'move-page-legend' => 'Pagina hernoemen',
+	'movepagetext' => "Door middel van het onderstaande formulier kun je een pagina hernoemen.
+De geschiedenis gaat mee naar de nieuwe pagina.
+* De oude naam wordt automatisch een doorverwijzing naar de nieuwe pagina.
+* Verwijzingen naar de oude pagina worden niet aangepast.
+* De pagina's die doorverwijzen naar de oorspronkelijke paginanaam worden automatisch bijgewerkt.
+Als je dit niet wenst, controleer dan of er geen [[Special:DoubleRedirects|dubbele]] of [[Special:BrokenRedirects|onjuiste doorverwijzingen]] zijn ontstaan.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Een pagina kan '''alleen''' hernoemd worden als de nieuwe paginanaam niet bestaat of een doorverwijspagina zonder verdere geschiedenis is.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''WAARSCHUWING!'''
+Voor veel bekeken pagina's kan het hernoemen drastische en onvoorziene gevolgen hebben.
+Zorg ervoor dat je die gevolgen overziet voordat je deze handeling uitvoert.",
+	'movepagetext-noredirectfixer' => "Door middel van het onderstaande formulier kunt u een pagina en alle bijbehorende oude versies hernoemen.
+De oude naam wordt automatisch een doorverwijzing naar de nieuwe pagina.
+Controleer dan of er geen [[Special:DoubleRedirects|dubbele]] of [[Special:BrokenRedirects|onjuiste doorverwijzingen]] zijn ontstaan.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Een pagina kan '''alleen''' hernoemd worden als de nieuwe paginanaam niet bestaat of een doorverwijspagina zonder verdere geschiedenis is.
+U kunt dus een pagina die abusievelijk is hernoemd terug hernoemen en u kunt een bestaande pagina niet overschrijven.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
-
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
+'''Waarschuwing!'''
+Voor veel bekeken pagina's kan het hernoemen drastische en onvoorziene gevolgen hebben.
+Zorg ervoor dat u die gevolgen overziet voordat u deze handeling uitvoert.",
+	'movepagetalktext' => "De bijbehorende overlegpagina krijgt automatisch een andere naam, '''tenzij''':
+* De overlegpagina onder de nieuwe naam al bestaat;
+* Je het onderstaande vinkje deselecteert.",
+	'movearticle' => 'Te hernoemen pagina:',
+	'moveuserpage-warning' => "'''Waarschuwing:''' Je gaat een gebruikerspagina hernoemen.
+Houd er rekening mee dat alleen de pagina wordt hernoemd, ''niet'' de gebruiker.",
+	'movenologin' => 'Niet aangemeld',
+	'movenologintext' => 'Je moet [[Special:UserLogin|aangemeld]] zijn om een pagina te hernoemen.',
+	'movenotallowed' => "Je hebt geen rechten om pagina's te hernoemen.",
+	'movenotallowedfile' => 'Je hebt geen rechten om bestanden te hernoemen.',
+	'move-watch' => 'Bronpagina en doelpagina volgen',
+	'movepagebtn' => 'Pagina hernoemen',
+	'movepage-moved' => '\'\'\'"$1" is hernoemd naar "$2"\'\'\'',
+	'movepage-moved-redirect' => 'Er is een doorverwijzing aangemaakt.',
+	'movepage-moved-noredirect' => 'Er is geen doorverwijzing aangemaakt.',
+	'movedto' => 'hernoemd naar',
+	'movetalk' => 'Bijbehorende overlegpagina hernoemen',
+	'move-subpages' => "Subpagina's hernoemen (maximaal $1)",
+	'move-talk-subpages' => "Subpagina's van overlegpagina's hernoemen (maximaal $1)",
+	'movepage-page-exists' => 'De pagina $1 bestaat al en kan niet automatisch verwijderd worden.',
+	'movepage-page-moved' => 'De pagina $1 is hernoemd naar $2.',
+	'movepage-page-unmoved' => 'De pagina $1 kon niet hernoemd worden naar $2.',
+	'movepage-max-pages' => "Het maximale aantal automatisch te hernoemen pagina's is bereikt ({{PLURAL:$1|$1|$1}}).
+De overige pagina's worden niet automatisch hernoemd.",
+	'movelogpage' => 'Hernoemingslogboek',
+	'movelogpagetext' => "Hieronder staan hernoemde pagina's.",
+	'movesubpage' => "{{PLURAL:$1|Subpagina|Subpagina's}}",
+	'movesubpagetext' => "De {{PLURAL:$1|subpagina|$1 subpagina's}} van deze pagina {{PLURAL:$1|wordt|worden}} hieronder weergegeven.",
+	'movenosubpage' => "Deze pagina heeft geen subpagina's.",
+	'movereason' => 'Reden:',
+	'move-leave-redirect' => 'Een doorverwijzing achterlaten',
+	'move-over-sharedrepo' => '== Het bestand bestaat al ==
+[[:$1]] bestaat al in een gedeelde mediadatabank.
+Door een bestand te hernoemen naar deze naam, is het bestand uit de gedeelde mediadatabank niet langer te gebruiken.',
+	'monobook.css' => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
+	'monobook.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
+	'markaspatrolleddiff' => 'Als gecontroleerd markeren',
+	'markaspatrolledtext' => 'Deze pagina als gecontroleerd markeren',
+	'markedaspatrolled' => 'Gemarkeerd als gecontroleerd',
+	'markedaspatrolledtext' => 'De geselecteerde versie van [[:$1]] is gemarkeerd als gecontroleerd.',
+	'markedaspatrollederror' => 'Kan niet als gecontroleerd worden aangemerkt',
+	'markedaspatrollederrortext' => 'Selecteer een versie om als gecontroleerd aan te merken.',
+	'markedaspatrollederror-noautopatrol' => 'Je kunt je eigen wijzigingen niet als gecontroleerd markeren.',
+	'mediawarning' => "'''Waarschuwing''': dit bestandstype bevat mogelijk programmacode die je systeem schade kan berokkenen.",
+	'minutes' => '{{PLURAL:$1|$1 minuut|$1 minuten}}',
 	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+	'metadata-help' => 'Dit bestand bevat aanvullende informatie, die door een fotocamera, scanner of fotobewerkingsprogramma toegevoegd kan zijn.
+Als het bestand aangepast is, komen details mogelijk niet overeen met het gewijzigde bestand.',
+	'metadata-expand' => 'Uitgebreide gegevens bekijken',
+	'metadata-collapse' => 'Uitgebreide gegevens verbergen',
+	'metadata-fields' => 'De afbeeldingsmetadatavelden in dit bericht worden ook weergegeven op een afbeeldingspagina als de metadatatabel ingeklapt is.
+Andere velden worden verborgen.
 * make
 * model
 * datetimeoriginal
@@ -25130,23 +24048,11 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
+	'monthsall' => 'alle',
+	'most_popular_articles' => 'Populaire artikelen',
+	'most_popular' => 'Populairste',
+	'most_visited' => 'Meest bezocht',
+	'most_emailed' => 'am häufigsten verschickt',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -25628,8 +24534,6 @@ Bega se go  [[Special:ListUsers/sysop|administrator]], o fana ka URL.',
 	'missingarticle-rev' => '(Thumeletšo#: $1)',
 	'mailmypassword' => 'Romela ditlhaka-tša-siphiri tše mpšha ka e-mail',
 	'mailerror' => 'Gobile le phošo go romeleng molaetša  : $1',
-	'math_sample' => "Lokela ''formula'' mo",
-	'math_tip' => 'Formula ya dipalo (LaTeX)',
 	'media_sample' => 'Mohlala.ogg',
 	'media_tip' => 'Hlomaganyo ya Faele',
 	'minoredit' => 'Ye ke phetogo ye nnyenyane',
@@ -25678,8 +24582,6 @@ Ge go le bjalo,o tla swanela ke go huduša goba go kopanya matlakala ka bowena."
 	'movetalk' => 'Huduša letlakala la dipoledišano la go hlobana le letlakala le',
 	'movelogpage' => "''log'' yago huduša",
 	'movereason' => 'Lebaka:',
-	'math_unknown_error' => 'Phošo ya gose tsebege',
-	'math_syntax_error' => 'phošo ya popafoko',
 	'metadata' => 'Metadata',
 	'metadata-help' => "Faele enale sedi yengwe, yeo ekabago e tšwa go khamera goba ''scanner'' tšeo di šumišitšwego go bopa faele ye. Sedi ye itsego ga ego goba gona go faele ye e fetolwago.",
 	'metadata-expand' => 'Bontšha sedi ya gotlala(extended)',
@@ -26419,13 +25321,6 @@ $messages['pdc'] = array(
 	'may-gen' => 'Moi',
 	'mar' => 'Matz',
 	'may' => 'Moi',
-	'mainpagedocfooter' => "Hilf fer's Yuuse unn Konfiguriere vun de Wiki-Software kansch finne im [http://meta.wikimedia.org/wiki/Help:Contents Handbuch fer Yuuser].
-
-== Hilf zum Schtaerte ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Lischt vun Gnepp zum Konfiguriere]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki-FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Eposchde-Lischt fer neie MediaWiki-Versione]",
 	'moredotdotdot' => 'Mehner…',
 	'mypage' => 'Mei Blatt',
 	'mytalk' => 'Mei Gschwetz-Blatt',
@@ -26439,7 +25334,6 @@ Wenns des net iss, hoscht verleicht en Fehler in de Daadebank gfunne. Bitte meld
 	'missingarticle-rev' => '(Version: $1)',
 	'missingarticle-diff' => '(Unnerschidd zwische Versione: $1, $2)',
 	'mailmypassword' => 'Neies Paesswadd eposchde',
-	'math_sample' => 'Formula hier eigewwe',
 	'media_sample' => 'Beeschpiel.ogg',
 	'media_tip' => 'Gleecher fer Feil',
 	'minoredit' => 'Nur gleene Enneringe gemacht',
@@ -26618,308 +25512,168 @@ $messages['pih'] = array(
 );
 
 $messages['pl'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'poniedziałek',
+	'mon' => 'Pon',
+	'march' => 'marzec',
+	'may_long' => 'maj',
+	'march-gen' => 'marca',
+	'may-gen' => 'maja',
+	'mar' => 'mar',
+	'may' => 'maj',
+	'moredotdotdot' => 'Więcej...',
+	'mypage' => 'Moja strona',
+	'mytalk' => 'Moja dyskusja',
+	'mainpage' => 'Strona główna',
+	'mainpage-description' => 'Strona główna',
+	'missing-article' => 'W bazie danych nie odnaleziono treści strony „$1” $2.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Zazwyczaj jest to spowodowane odwołaniem do nieaktualnego linku prowadzącego do różnicy pomiędzy dwoma wersjami strony lub do wersji z historii usuniętej strony.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
+Jeśli tak nie jest, możliwe, że problem został wywołany przez błąd w oprogramowaniu.
+Można zgłosić ten fakt [[Special:ListUsers/sysop|administratorowi]], podając adres URL.',
+	'missingarticle-rev' => '(wersja $1)',
+	'missingarticle-diff' => '(różnica: $1, $2)',
+	'mailmypassword' => 'Wyślij mi nowe hasło poprzez e‐mail',
+	'mailerror' => 'W trakcie wysyłania wiadomości e‐mail wystąpił błąd: $1',
+	'media_sample' => 'Przykład.ogg',
+	'media_tip' => 'Link do pliku',
+	'minoredit' => 'To jest drobna zmiana',
+	'missingsummary' => "'''Uwaga:''' Nie wprowadz{{GENDER:|iłeś|iłaś|ono}} opisu zmian.
+Jeżeli nie chcesz go wprowadzać, naciśnij przycisk „Zapisz” jeszcze raz.",
+	'missingcommenttext' => 'Wprowadź komentarz poniżej.',
+	'missingcommentheader' => "'''Uwaga''' – treść tytułu lub nagłówka komentarza jest pusta.
+Jeśli ponownie klikniesz „{{int:savearticle}}“, zmiany zostaną zapisane bez niego.",
+	'moveddeleted-notice' => 'Ta strona została usunięta.
+Rejestr usunięć i zmian nazwy tej strony jest pokazany poniżej.',
+	'mergehistory' => 'Scalanie historii stron',
+	'mergehistory-header' => 'Ta strona pozwala na scalenie historii zmian jednej strony z historią innej, nowszej strony.
+Upewnij się, że zmiany będą zapewniać ciągłość historyczną edycji strony.',
+	'mergehistory-box' => 'Scal historię zmian dwóch stron:',
+	'mergehistory-from' => 'Strona źródłowa:',
+	'mergehistory-into' => 'Strona docelowa:',
+	'mergehistory-list' => 'Historia zmian możliwa do scalenia',
+	'mergehistory-merge' => 'Następujące zmiany strony [[:$1]] mogą zostać scalone z [[:$2]].
+Oznacz w kolumnie kropeczką, która zmiana, łącznie z wcześniejszymi, ma zostać scalona.
+Użycie linków nawigacyjnych kasuje wybór w kolumnie.',
+	'mergehistory-go' => 'Pokaż możliwe do scalenia zmiany',
+	'mergehistory-submit' => 'Scal historię zmian',
+	'mergehistory-empty' => 'Brak historii zmian do scalenia.',
+	'mergehistory-success' => '$3 {{PLURAL:$3|zmiana|zmiany|zmian}} w [[:$1]] zostało scalonych z [[:$2]].',
+	'mergehistory-fail' => 'Scalenie historii zmian jest niewykonalne. Zmień ustawienia parametrów.',
+	'mergehistory-no-source' => 'Strona źródłowa $1 nie istnieje.',
+	'mergehistory-no-destination' => 'Strona docelowa $1 nie istnieje.',
+	'mergehistory-invalid-source' => 'Strona źródłowa musi mieć poprawną nazwę.',
+	'mergehistory-invalid-destination' => 'Strona docelowa musi mieć poprawną nazwę.',
+	'mergehistory-autocomment' => 'Historia [[:$1]] scalona z [[:$2]]',
+	'mergehistory-comment' => 'Historia [[:$1]] scalona z [[:$2]]: $3',
+	'mergehistory-same-destination' => 'Strona źródłowa i docelowa nie mogą być takie same',
+	'mergehistory-reason' => 'Powód',
+	'mergelog' => 'Scalone',
+	'mergelogpagetext' => 'Poniżej znajduje się lista ostatnich scaleń historii zmian stron.',
+	'mwsuggest-disable' => 'Wyłącz dynamiczne podpowiedzi',
+	'mypreferences' => 'Preferencje',
 	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+	'minlength1' => 'Nazwa pliku musi składać się co najmniej z jednej litery.',
+	'morelinkstoimage' => 'Pokaż [[Special:WhatLinksHere/$1|więcej odnośników]] do tego pliku.',
+	'mimesearch' => 'Wyszukiwanie MIME',
+	'mimesearch-summary' => 'Ta strona umożliwia wyszukiwanie plików ze względu na ich typ MIME.
+Użycie: typ_treści/podtyp, np. <tt>image/jpeg</tt>.',
+	'mimetype' => 'Typ MIME',
+	'mostlinked' => 'Najczęściej linkowane strony',
+	'mostlinkedcategories' => 'Kategorie o największej liczbie stron',
+	'mostlinkedtemplates' => 'Najczęściej linkowane szablony',
+	'mostcategories' => 'Strony z największą liczbą kategorii',
+	'mostimages' => 'Najczęściej linkowane pliki',
+	'mostrevisions' => 'Strony o największej liczbie wersji',
+	'move' => 'Zmień nazwę',
+	'movethispage' => 'Przenieś tę stronę',
+	'mailnologin' => 'Brak adresu',
+	'mailnologintext' => 'Musisz się [[Special:UserLogin|zalogować]] i mieć wpisany aktualny adres e‐mailowy w swoich [[Special:Preferences|preferencjach]], aby móc wysłać e‐mail do innego użytkownika.',
+	'mywatchlist' => 'Obserwowane',
+	'modifiedarticleprotection' => 'zmienił poziom zabezpieczenia [[$1]]',
+	'movedarticleprotection' => 'przeniósł ustawienia zabezpieczeń z [[$2]] do [[$1]]',
+	'minimum-size' => 'Minimalny rozmiar',
+	'maximum-size' => 'Maksymalny rozmiar',
+	'mycontris' => 'Moje edycje',
+	'month' => 'Przed miesiącem (włącznie)',
+	'move-page' => 'Przenieś $1',
+	'move-page-legend' => 'Przeniesienie strony',
+	'movepagetext' => "Za pomocą poniższego formularza zmienisz nazwę strony, przenosząc jednocześnie jej historię.
+Pod starym tytułem zostanie umieszczona strona przekierowująca.
+Możesz automatycznie zaktualizować przekierowania wskazujące na tytuł przed zmianą.
+Jeśli nie wybierzesz tej opcji, upewnij się po przeniesieniu strony, czy nie powstały [[Special:DoubleRedirects|podwójne]] lub [[Special:BrokenRedirects|zerwane przekierowania]].
+Jesteś odpowiedzialny za to, by linki w dalszym ciągu pokazywały tam, gdzie powinny.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Strona '''nie''' zostanie przeniesiona, jeśli strona o nowej nazwie już istnieje, chyba że jest pusta lub jest przekierowaniem i ma pustą historię edycji.
+To oznacza, że błędną operację zmiany nazwy można bezpiecznie odwrócić, zmieniając nową nazwę strony na poprzednią, i że nie można nadpisać istniejącej strony.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''UWAGA!'''
+Może to być drastyczna lub nieprzewidywalna zmiana w przypadku popularnych stron.
+Upewnij się co do konsekwencji tej operacji, zanim się na nią zdecydujesz.",
+	'movepagetext-noredirectfixer' => "Za pomocą poniższego formularza zmienisz nazwę strony, przenosząc jednocześnie jej historię.
+Pod starym tytułem zostanie umieszczona strona przekierowująca.
+Upewnij się po przeniesieniu strony, czy nie powstały [[Special:DoubleRedirects|podwójne]] lub [[Special:BrokenRedirects|zerwane przekierowania]].
+Jesteś odpowiedzialny za to, by linki w dalszym ciągu pokazywały tam, gdzie powinny.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Strona '''nie''' zostanie przeniesiona, jeśli strona o nowej nazwie już istnieje, chyba że jest pusta lub jest przekierowaniem i ma pustą historię edycji.
+To oznacza, że błędną operację zmiany nazwy można bezpiecznie odwrócić, zmieniając nową nazwę strony na poprzednią, i że nie można nadpisać istniejącej strony.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''UWAGA!'''
+Może to być drastyczna lub nieprzewidywalna zmiana w przypadku popularnych stron.
+Upewnij się co do konsekwencji tej operacji, zanim się na nią zdecydujesz.",
+	'movepagetalktext' => 'Powiązana strona dyskusji, jeśli istnieje, będzie przeniesiona automatycznie, chyba że:
+*niepusta strona dyskusji już jest pod nową nazwą
+*usuniesz zaznaczenie z poniższego pola wyboru
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes-abbrev' => '$1m',
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+W takich przypadkach treść dyskusji można przenieść tylko ręcznie.',
+	'movearticle' => 'Przeniesienie strony',
+	'moveuserpage-warning' => "'''Uwaga!''' Masz zamiar przenieść stronę użytkownika. Miej na uwadze, że zostanie przeniesiona tylko strona, a '''nazwa użytkownika pozostanie niezmieniona'''.",
+	'movenologin' => 'Nie jesteś zalogowany',
+	'movenologintext' => 'Przenoszenie stron jest możliwe dopiero po zarejestrowaniu się i [[Special:UserLogin|zalogowaniu]].',
+	'movenotallowed' => 'Nie masz uprawnień do przenoszenia stron.',
+	'movenotallowedfile' => 'Nie masz uprawnień do przenoszenia plików.',
+	'move-watch' => 'Obserwuj',
+	'movepagebtn' => 'Przenieś stronę',
+	'movepage-moved' => "'''„$1” została przeniesiona do „$2”'''",
+	'movepage-moved-redirect' => 'Zostało utworzone przekierowanie.',
+	'movepage-moved-noredirect' => 'Nie zostało utworzone przekierowanie.',
+	'movedto' => 'przeniesiono do',
+	'movetalk' => 'Przenieś także stronę dyskusji, jeśli to możliwe.',
+	'move-subpages' => 'Przenieś podstrony (nie więcej niż $1)',
+	'move-talk-subpages' => 'Przenieś strony dyskusji podstron (nie więcej niż $1)',
+	'movepage-page-exists' => 'Strona $1 istnieje. Automatyczne nadpisanie nie jest możliwe.',
+	'movepage-page-moved' => 'Strona $1 została przeniesiona do $2.',
+	'movepage-page-unmoved' => 'Nazwa strony $1 nie może zostać zmieniona na $2.',
+	'movepage-max-pages' => 'Przeniesionych zostało $1 {{PLURAL:$1|strona|strony|stron}}. Większa liczba nie może być przeniesiona automatycznie.',
+	'movelogpage' => 'Przeniesione',
+	'movelogpagetext' => 'Lista stron, które ostatnio zostały przeniesione.',
+	'movesubpage' => '{{PLURAL:$1|Podstrona|Podstrony}}',
+	'movesubpagetext' => 'Ta strona posiada $1 {{PLURAL:$1|podstronę|podstrony|podstron}}:',
+	'movenosubpage' => 'Ta strona nie posiada podstron.',
+	'movereason' => 'Powód:',
+	'move-leave-redirect' => 'Pozostaw przekierowanie pod dotychczasowym tytułem',
+	'move-over-sharedrepo' => '== Plik istnieje ==
+[[:$1]] istnieje we wspólnym repozytorium. Zmiana nazwy pliku na tę spowoduje przesłonięcie współdzielonego pliku.',
+	'monobook.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Monobook */',
+	'monobook.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Monobook */',
+	'markaspatrolleddiff' => 'oznacz edycję jako „sprawdzoną”',
+	'markaspatrolledtext' => 'Oznacz tę stronę jako „sprawdzoną”',
+	'markedaspatrolled' => 'Sprawdzone',
+	'markedaspatrolledtext' => 'Wybrana wersja [[:$1]] została oznaczona jako „sprawdzona”.',
+	'markedaspatrollederror' => 'Nie można oznaczyć jako „sprawdzone”',
+	'markedaspatrollederrortext' => 'Musisz wybrać wersję żeby oznaczyć ją jako „sprawdzoną”.',
+	'markedaspatrollederror-noautopatrol' => 'Nie masz uprawnień wymaganych do oznaczania swoich edycji jako „sprawdzone”.',
+	'mediawarning' => "'''Uwaga!''' Plik w tym formacie może zawierać złośliwy kod.
+Jeśli go otworzysz, możesz zarazić swój system.",
+	'minutes-abbrev' => '$1&nbsp;min',
+	'minutes' => '{{PLURAL:$1|$1 minuta|$1 minuty|$1 minut}}',
+	'metadata' => 'Metadane',
+	'metadata-help' => 'Niniejszy plik zawiera dodatkowe informacje, prawdopodobnie dodane przez aparat cyfrowy lub skaner użyte do wygenerowania tego pliku.
+Jeśli plik był modyfikowany, dane mogą być częściowo niezgodne z parametrami zmodyfikowanego pliku.',
+	'metadata-expand' => 'Pokaż szczegóły',
+	'metadata-collapse' => 'Ukryj szczegóły',
+	'metadata-fields' => 'Wymienione poniżej pola metadanych będą wyświetlane na stronie grafiki po zwinięciu tabeli metadanych.
+Pozostałe pola zostaną domyślnie ukryte.
 * make
 * model
 * datetimeoriginal
@@ -26933,27 +25687,15 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'manage_widgets' => 'Manage widgets',
+	'monthsall' => 'wszystkie',
+	'most_popular_articles' => 'Najpopularniejsze artykuły',
+	'my_stuff' => 'moje rzeczy',
+	'most_popular' => 'Najpopularniejsze',
+	'most_visited' => 'Najczęściej odwiedzane',
+	'most_emailed' => 'Najczęściej przesyłane',
+	'manage_widgets' => 'Zarządzaj widgetami',
 	'masthead-anonymous-user' => 'Użytkownik Fandom',
-	'mycontributions' => 'My contributions',
+	'mycontributions' => 'Moje edycje',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
 	'mostlinkedcategories-summary' => '',
@@ -27705,307 +26447,165 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'Segunda-feira',
+	'mon' => 'Seg',
+	'march' => 'Março',
+	'may_long' => 'Maio',
+	'march-gen' => 'Março',
+	'may-gen' => 'Maio',
+	'mar' => 'Mar.',
+	'may' => 'Maio',
+	'moredotdotdot' => 'Mais...',
+	'mypage' => 'Utilizador',
+	'mytalk' => 'Discussão',
+	'mainpage' => 'Página principal',
+	'mainpage-description' => 'Página principal',
+	'missing-article' => 'A base de dados não encontrou o texto de uma página que deveria ter encontrado, com o nome "$1" $2.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Geralmente, esta situação ocorre ao clicar um link para diferenças desactualizado ou para o histórico de uma página que tenha sido removida.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_sample' => 'Example.ogg',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
+Se nenhuma destas situações se verifica, pode ter encontrado um defeito no programa.
+Anote a URL e reporte este incidente a um [[Special:ListUsers/sysop|administrador]], por favor.',
+	'missingarticle-rev' => '(revisão#: $1)',
+	'missingarticle-diff' => '(Dif.: $1, $2)',
+	'mailmypassword' => 'Enviar uma palavra-chave nova por correio electrónico',
+	'mailerror' => 'Erro ao enviar correio: $1',
+	'media_sample' => 'Exemplo.ogg',
+	'media_tip' => 'Link para ficheiro',
+	'minoredit' => 'Marcar como edição menor',
+	'missingsummary' => "'''Atenção:''' Não introduziu um resumo da edição.
+Se clicar novamente \"Gravar página\" a sua edição será gravada sem resumo.",
+	'missingcommenttext' => 'Introduza um comentário abaixo, por favor.',
+	'missingcommentheader' => "'''Atenção:''' Não introduziu um assunto ou cabeçalho para este comentário.
+Se clicar novamente \"{{int:savearticle}}\", a sua edição será gravada sem assunto ou cabeçalho.",
+	'moveddeleted-notice' => 'Esta página foi eliminada.
+Para referência, é apresentado de seguida o registo de eliminações e de movimento da página.',
+	'mergehistory' => 'Fundir histórico de páginas',
+	'mergehistory-header' => 'Esta página permite fundir o histórico de revisões de uma página no de outra.
+Certifique-se de que esta alteração manterá a continuidade histórica da página.',
+	'mergehistory-box' => 'Fundir edições de duas páginas:',
+	'mergehistory-from' => 'Página de origem:',
+	'mergehistory-into' => 'Página de destino:',
+	'mergehistory-list' => 'Histórico de edições fundíveis',
+	'mergehistory-merge' => 'As seguintes revisões de [[:$1]] podem fundir-se em [[:$2]].
+Usando os botões de opção, pode escolher fundir apenas as revisões até àquela que marcar.
+Note que, se usar os links de navegação, os botões de opção voltarão aos valores originais.',
+	'mergehistory-go' => 'Mostrar edições que podem ser fundidas',
+	'mergehistory-submit' => 'Fundir edições',
+	'mergehistory-empty' => 'Não existem revisões fundíveis.',
+	'mergehistory-success' => 'Foram fundidas $3 {{PLURAL:$3|edição|edições}} de [[:$1]] em [[:$2]].',
+	'mergehistory-fail' => 'Não foi possível fundir os históricos; verifique a página e os parâmetros de tempo, por favor.',
+	'mergehistory-no-source' => 'A página de origem $1 não existe.',
+	'mergehistory-no-destination' => 'A página de destino $1 não existe.',
+	'mergehistory-invalid-source' => 'A página de origem precisa ser um título válido.',
+	'mergehistory-invalid-destination' => 'A página de destino precisa ser um título válido.',
+	'mergehistory-autocomment' => '[[:$1]] fundida com [[:$2]]',
+	'mergehistory-comment' => '[[:$1]] fundida com [[:$2]]: $3',
+	'mergehistory-same-destination' => 'As páginas de origem e de destino não podem ser a mesma',
+	'mergehistory-reason' => 'Motivo:',
+	'mergelog' => 'Registo de fusão de históricos',
+	'mergelogpagetext' => 'Segue-se um registo das mais recentes fusões de históricos de páginas.',
+	'mwsuggest-disable' => 'Desactivar sugestões AJAX',
+	'mypreferences' => 'Preferências',
 	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+	'minlength1' => 'Os nomes de ficheiros devem de ter pelo menos uma letra.',
+	'morelinkstoimage' => 'Ver a [[Special:WhatLinksHere/$1|lista completa]] de páginas que contêm links para este ficheiro.',
+	'mimesearch' => 'Pesquisa MIME',
+	'mimesearch-summary' => 'Esta página permite pesquisar os ficheiros da wiki, filtrando-os a partir do seu tipo MIME. O tipo MIME deve ser especificado na forma: tipo/subtipo. Alguns exemplos de tipos frequentes: <tt>image/jpeg</tt>, <tt>image/gif</tt>, <tt>image/png</tt>, <tt>application/pdf</tt>, <tt>application/vnd.ms-excel</tt>, <tt>application/zip</tt>, <tt>application/vnd.ms-powerpoint</tt>.',
+	'mimetype' => 'Tipo MIME:',
+	'mostlinked' => 'Páginas com mais afluentes',
+	'mostlinkedcategories' => 'Categorias com mais membros',
+	'mostlinkedtemplates' => 'Predefinições com mais afluentes',
+	'mostcategories' => 'Páginas com mais categorias',
+	'mostimages' => 'Ficheiros com mais afluentes',
+	'mostrevisions' => 'Páginas com mais revisões',
+	'move' => 'Mover',
+	'movethispage' => 'Mover esta página',
+	'mailnologin' => 'Nenhum endereço de envio',
+	'mailnologintext' => 'Precisa de estar [[Special:UserLogin|autenticado]] e possuir um endereço de correio válido nas suas [[Special:Preferences|preferências]], para poder enviar correio electrónico a outros utilizadores.',
+	'mywatchlist' => 'Páginas vigiadas',
+	'modifiedarticleprotection' => 'alterou o nível de protecção para "[[$1]]"',
+	'movedarticleprotection' => 'moveu as configurações de protecção de "[[$2]]" para "[[$1]]"',
+	'minimum-size' => 'Tamanho mín.',
+	'maximum-size' => 'Tamanho máx.:',
+	'mycontris' => 'Minhas contribuições',
+	'month' => 'Até o mês:',
+	'move-page' => 'Mover $1',
+	'move-page-legend' => 'Mover página',
+	'movepagetext' => "Usando o formulário abaixo pode mover esta página e todo o seu histórico de edições para uma página nova com outro nome.
+A página original será transformada num redireccionamento para a página nova.
+Pode corrigir de forma automática os redireccionamentos existentes que apontam para a página original.
+Caso escolha não o fazer, após a operação certifique-se de que dela não resultaram  [[Special:DoubleRedirects|redireccionamentos duplos]] ou [[Special:BrokenRedirects|quebrados]].
+É da sua responsabilidade verificar que os links continuam a apontar para onde é suposto que apontem.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Note que a página '''não''' será movida se já existir uma página com o novo nome, a menos que esta esteja vazia ou seja um redireccionamento sem qualquer histórico de edições.
+Isto significa que pode mover uma página de volta para o seu nome original se a tiver movido por engano e que não pode mover uma página para cima de outra já existente.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''CUIDADO!'''
+Numa página popular esta operação pode representar uma mudança drástica e inesperada;
+certifique-se de que compreende as consequências da mudança antes de prosseguir, por favor.",
+	'movepagetext-noredirectfixer' => "Usando o formulário abaixo, pode alterar o nome de uma página e mover todo o histórico desta para o nome novo.
+A página antiga é transformada numa página de redireccionamento para a nova.
+Verifique a existência de [[Special:DoubleRedirects|redireccionamentos duplos]] ou [[Special:BrokenRedirects|quebrados]].
+É da sua responsabilidade certificar-se de que os links continuam a apontar para onde é suposto.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Note que a página '''não''' será movida se já existir uma página com o nome novo, a menos que esta página já existente esteja vazia ou seja uma página de redireccionamento e não tenha um histórico de edições.
+Isto também significa que, se se tiver enganado, pode alterar o nome da página movida de volta para o seu nome original; e que não pode sobrescrever o conteúdo de uma página existente.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''Aviso!'''
+Para páginas populares, esta operação pode representar uma mudança drástica e inesperada;
+certifique-se de que compreende as consequências da operação antes de continuar.",
+	'movepagetalktext' => "Se existir uma página de discussão associada, ela será automaticamente movida, '''a não ser que:'''
+*já exista uma página de discussão com o novo título que não esteja vazia, ou
+*desmarque a correspondente caixa de selecção abaixo.
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+Nestes casos, terá de mover a página de discussão manualmente, ou fundi-la com a existente, se assim desejar.",
+	'movearticle' => 'Mover página',
+	'moveuserpage-warning' => "'''Aviso:''' Está prestes a mover uma página de utilizador. Note que a página será apenas movida, ''sem'' alterar o nome do utilizador.",
+	'movenologin' => 'Não autenticado',
+	'movenologintext' => 'Precisa de ser um utilizador registado e [[Special:UserLogin|autenticado]] para poder mover uma página.',
+	'movenotallowed' => 'Não tem permissão para mover páginas.',
+	'movenotallowedfile' => 'Não possui permissão para mover ficheiros.',
+	'move-watch' => 'Vigiar esta página',
+	'movepagebtn' => 'Mover página',
+	'movepage-moved' => '\'\'\'"$1" foi movida para "$2"\'\'\'',
+	'movepage-moved-redirect' => 'Foi criado um redireccionamento.',
+	'movepage-moved-noredirect' => 'A criação de um redireccionamento foi suprimida.',
+	'movedto' => 'movido para',
+	'movetalk' => 'Mover também a página de discussão associada.',
+	'move-subpages' => 'Mover subpáginas (até $1)',
+	'move-talk-subpages' => 'Mover subpáginas da página de discussão (até $1)',
+	'movepage-page-exists' => 'A página $1 já existe e não pode ser substituída.',
+	'movepage-page-moved' => 'A página $1 foi movida para $2.',
+	'movepage-page-unmoved' => 'Não foi possível mover a página $1 para $2.',
+	'movepage-max-pages' => 'O limite de $1 {{PLURAL:$1|página movida|páginas movidas}} foi atingido; não será possível mover mais páginas de forma automática.',
+	'movelogpage' => 'Registo de movimento',
+	'movelogpagetext' => 'Abaixo encontra-se uma lista de páginas movidas.',
+	'movesubpage' => '{{PLURAL:$1|Subpágina|Subpáginas}}',
+	'movesubpagetext' => 'Esta página tem $1 {{PLURAL:$1|subpágina mostrada|subpáginas mostradas}} abaixo.',
+	'movenosubpage' => 'Esta página não tem subpáginas.',
+	'movereason' => 'Motivo:',
+	'move-leave-redirect' => 'Criar um redireccionamento',
+	'move-over-sharedrepo' => '== O ficheiro existe ==
+[[:$1]] já existe num repositório partilhado. Mover um ficheiro para o título [[:$1]] irá sobrepô-lo ao ficheiro partilhado.',
+	'monobook.css' => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
+	'monobook.js' => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
+	'markaspatrolleddiff' => 'Marcar como patrulhada',
+	'markaspatrolledtext' => 'Marcar esta página como patrulhada',
+	'markedaspatrolled' => 'Marcada como patrulhada',
+	'markedaspatrolledtext' => 'A edição seleccionada de [[:$1]] foi marcada como patrulhada.',
+	'markedaspatrollederror' => 'Não é possível marcar como patrulhada',
+	'markedaspatrollederrortext' => 'É necessário especificar uma edição a ser marcada como patrulhada.',
+	'markedaspatrollederror-noautopatrol' => 'Não está autorizado a marcar as suas próprias edições como edições patrulhadas.',
+	'mediawarning' => "'''Aviso''': Este tipo de ficheiro pode conter código malicioso.
+Executá-lo poderá comprometer a segurança do seu sistema.",
+	'minutes' => '{{PLURAL:$1|um minuto|$1 minutos}}',
+	'metadata' => 'Metadados',
+	'metadata-help' => 'Este ficheiro contém informação adicional, provavelmente acrescentada pela câmara digital ou pelo digitalizador usados para criá-lo.
+Caso o ficheiro tenha sido modificado a partir do seu estado original, alguns detalhes poderão não reflectir completamente as mudanças efectuadas.',
+	'metadata-expand' => 'Mostrar detalhes adicionais',
+	'metadata-collapse' => 'Esconder detalhes adicionais',
+	'metadata-fields' => 'Os campos de metadados de imagens listados nesta mensagem serão incluídos na página de descrição da imagem quando a tabela de metadados estiver recolhida. Por omissão, outros campos estarão ocultos.
 * make
 * model
 * datetimeoriginal
@@ -28019,24 +26619,12 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
+	'monthsall' => 'todos',
+	'most_popular_articles' => 'Artigos mais populares',
+	'my_stuff' => 'minhas coisas',
+	'most_popular' => 'os mais populares',
+	'most_visited' => 'Os mais visitados',
+	'most_emailed' => 'Os mais contatados por correio eletrônico',
 	'masthead-anonymous-user' => 'Um usuário do Fandom',
 	'mainpage-nstab' => '',
 	'mostlinked-summary' => '',
@@ -29210,307 +27798,163 @@ Otre avènene scunnute pe defolt.
 );
 
 $messages['ru'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => 'понедельник',
+	'mon' => 'Пн',
+	'march' => 'март',
+	'may_long' => 'май',
+	'march-gen' => 'марта',
+	'may-gen' => 'мая',
+	'mar' => 'мар',
+	'may' => 'мая',
+	'moredotdotdot' => 'Далее…',
+	'mypage' => 'Личная страница',
+	'mytalk' => 'Моя страница обсуждения',
+	'mainpage' => 'Заглавная страница',
+	'mainpage-description' => 'Заглавная страница',
+	'missing-article' => 'В базе данных не найдено запрашиваемого текста страницы «$1» $2, который следовало найти.
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+Подобная ситуация обычно возникает при попытке перехода по устаревшей ссылке на историю изменения страницы, которая была удалена.
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+Если дело не в этом, то скорее всего, вы обнаружили ошибку в программном обеспечении.
+Пожалуйста, сообщите об этом [[Special:Contact|сотрудникам Викия]], указав данный URL.',
+	'missingarticle-rev' => '(версия № $1)',
+	'missingarticle-diff' => '(разность: $1, $2)',
+	'mailmypassword' => 'Выслать новый пароль по электронной почте',
+	'mailerror' => 'Ошибка при отправке почты: $1',
+	'media_tip' => 'Ссылка на медиа-файл',
+	'minoredit' => 'Малое изменение',
+	'missingsummary' => "'''Напоминание.''' Вы не дали краткого описания изменений. При повторном нажатии на кнопку «{{int:savearticle}}», ваши изменения будут сохранены без комментария.",
+	'missingcommenttext' => 'Пожалуйста, введите ниже ваше сообщение.',
+	'missingcommentheader' => "'''Напоминание.''' Вы не указали тему/заголовок для этого комментария.
+При повторном нажатии на кнопку «{{int:savearticle}}», ваша правка будет записана без заголовка.",
+	'moveddeleted-notice' => 'Эта страница была удалена.
+Для справки ниже показаны соответствующие записи из журналов удалений и переименований.',
+	'mergehistory' => 'Объединение историй правок',
+	'mergehistory-header' => 'Эта страница позволяет вам объединить историю правок двух различных страниц.
+Убедитесь, что это изменение сохранит целостность истории страницы.',
+	'mergehistory-box' => 'Объединить истории правок двух страниц:',
+	'mergehistory-from' => 'Исходная страница:',
+	'mergehistory-into' => 'Целевая страница:',
+	'mergehistory-list' => 'Объединяемая история правок',
+	'mergehistory-merge' => 'Следующие версии [[:$1]] могут быть объединены в [[:$2]]. Используйте переключатели для того, чтобы объединить только выбранный диапазон правок. Учтите, что использование навигационных ссылок сбросит эту колонку.',
+	'mergehistory-go' => 'Показать объединяемые правки',
+	'mergehistory-submit' => 'Объединить правки',
+	'mergehistory-empty' => 'Не найдены правки для объединения.',
+	'mergehistory-success' => '$3 {{PLURAL:$3|правка|правки|правок}} из [[:$1]] успешно {{PLURAL:$3|перенесена|перенесены|перенесены}} в [[:$2]].',
+	'mergehistory-fail' => 'Не удалось произвести объединение историй страниц, пожалуйста, проверьте параметры страницы и времени.',
+	'mergehistory-no-source' => 'Исходная страница «$1» не существует.',
+	'mergehistory-no-destination' => 'Целевая страница «$1» не существует.',
+	'mergehistory-invalid-source' => 'Источник должен иметь правильный заголовок.',
+	'mergehistory-invalid-destination' => 'Целевая страница должна иметь правильный заголовок.',
+	'mergehistory-autocomment' => 'Перенос [[:$1]] в [[:$2]]',
+	'mergehistory-comment' => 'Перенос [[:$1]] в [[:$2]]: $3',
+	'mergehistory-same-destination' => 'Исходная и целевая страницы должны различаться',
+	'mergehistory-reason' => 'Причина:',
+	'mergelog' => 'Журнал объединений',
+	'mergelogpagetext' => 'Ниже приведён список последних объединений историй страниц.',
+	'mwsuggest-disable' => 'Отключить AJAX-подсказки',
+	'mypreferences' => 'Настройки',
+	'minoreditletter' => 'м',
+	'minlength1' => 'Название файла должно содержать хотя бы одну букву.',
+	'morelinkstoimage' => 'Просмотреть [[Special:WhatLinksHere/$1|остальные ссылки]] на этот файл.',
+	'mimesearch' => 'Поиск по MIME',
+	'mimesearch-summary' => 'Эта страница позволяет отбирать файлы по их MIME-типу. Формат ввода: типсодержимого/подтип, например <tt>image/jpeg</tt>.',
+	'mimetype' => 'MIME-тип:',
+	'mostlinked' => 'Страницы, на которые больше всего ссылок',
+	'mostlinkedcategories' => 'Категории, на которые больше всего ссылок',
+	'mostlinkedtemplates' => 'Самые используемые шаблоны',
+	'mostcategories' => 'Страницы, включённые в большое количество категорий',
+	'mostimages' => 'Самые используемые файлы',
+	'mostrevisions' => 'Наиболее часто редактировавшиеся страницы',
+	'move' => 'Переименовать',
+	'movethispage' => 'Переименовать эту страницу',
+	'mailnologin' => 'Адрес для отправки отсутствует',
+	'mailnologintext' => 'Вы должны [[Special:UserLogin|представиться системе]] и иметь действительный адрес электронной почты в ваших [[Special:Preferences|настройках]], чтобы иметь возможность отправлять электронную почту другим участникам.',
+	'mywatchlist' => 'Список наблюдения',
+	'modifiedarticleprotection' => 'изменён уровень защиты страницы «[[$1]]»',
+	'movedarticleprotection' => 'перенёс настройки защиты с «[[$2]]» на «[[$1]]»',
+	'minimum-size' => 'Минимальный размер',
+	'maximum-size' => 'Максимальный размер:',
+	'mycontris' => 'Мой вклад',
+	'month' => 'С месяца (и ранее):',
+	'move-page' => '$1 — переименование',
+	'move-page-legend' => 'Переименование страницы',
+	'movepagetext' => "Воспользовавшись формой ниже, вы переименуете страницу, одновременно переместив на новое место её журнал изменений.
+Старое название станет перенаправлением на новое название.
+Вы можете автоматически обновить перенаправления, которые вели на старое название.
+Если вы этого не сделаете, пожалуйста, проверьте наличие [[Special:DoubleRedirects|двойных]] и [[Special:BrokenRedirects|разорванных перенаправлений]].
+Вы отвечаете за то, что бы ссылки продолжали и далее указывают туда, куда предполагалось.
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+Обратите внимание, что страница '''не будет''' переименована, если страница с новым названием уже существует, кроме случаев, если она является перенаправлением или пуста и не имеет истории правок.
+Это означает, что вы можете переименовать страницу обратно в то название, которое у него только что было, если вы переименовали по ошибке, но вы не можете случайно затереть существующую страницу.
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''ПРЕДУПРЕЖДЕНИЕ!'''
+Переименование может привести к масштабным и неожиданным изменениям для ''популярных'' страниц.
+Пожалуйста, прежде чем вы продолжите, убедитесь, что вы понимаете все возможные последствия.",
+	'movepagetext-noredirectfixer' => "Воспользовавшись формой ниже, вы переименуете страницу, одновременно переместив на новое место её журнал изменений.
+Старое название станет перенаправлением на новое название.
+Пожалуйста, проверьте наличие [[Special:DoubleRedirects|двойных]] и [[Special:BrokenRedirects|разорванных перенаправлений]].
+Вы отвечаете за то, что бы ссылки продолжали и далее указывают туда, куда предполагалось.
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+Обратите внимание, что страница '''не будет''' переименована, если страница с новым названием уже существует, кроме случаев, если она является перенаправлением или пуста и не имеет истории правок.
+Это означает, что вы можете переименовать страницу обратно в то название, которое у него только что было, если вы переименовали по ошибке, но вы не можете случайно затереть существующую страницу.
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''ПРЕДУПРЕЖДЕНИЕ!'''
+Переименование может привести к масштабным и неожиданным изменениям для ''популярных'' страниц.
+Пожалуйста, прежде чем вы продолжите, убедитесь, что вы понимаете все возможные последствия.",
+	'movepagetalktext' => "Присоединённая страница обсуждения будет также автоматически переименована, '''кроме случаев, когда:'''
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
+*Не пустая страница обсуждения уже существует под таким же именем или
+*Вы не поставили галочку в поле ниже.
 
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes-abbrev' => '$1m',
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+В этих случаях, вы будете вынуждены переместить или объединить страницы вручную, если это нужно.",
+	'movearticle' => 'Переименовать страницу',
+	'moveuserpage-warning' => "'''Внимание.''' Вы собираетесь переименовать страницу участника. Пожалуйста, обратите внимание, что переименована будет только страница, участник '''не''' будет переименован.",
+	'movenologin' => 'Вы не представились системе',
+	'movenologintext' => 'Вы должны [[Special:UserLogin|представиться системе]],
+чтобы иметь возможность переименовать страницы.',
+	'movenotallowed' => 'У вас нет разрешения переименовывать страницы.',
+	'movenotallowedfile' => 'У вас нет разрешения переименовывать файлы.',
+	'move-watch' => 'Включить эту страницу в список наблюдения',
+	'movepagebtn' => 'Переименовать страницу',
+	'movepage-moved' => "'''Страница «$1» переименована в «$2»'''",
+	'movepage-moved-redirect' => 'Было создано перенаправление.',
+	'movepage-moved-noredirect' => 'Создание перенаправления было подавлено.',
+	'movedto' => 'переименована в',
+	'movetalk' => 'Переименовать соответствующую страницу обсуждения',
+	'move-subpages' => 'Переименовать подстраницы (до $1)',
+	'move-talk-subpages' => 'Переименовать подстраницы страницы обсуждения (до $1)',
+	'movepage-page-exists' => 'Страница $1 уже существует и не может быть автоматически перезаписана.',
+	'movepage-page-moved' => 'Страница $1 была переименована в $2.',
+	'movepage-page-unmoved' => 'Страница $1 не может быть переименована в $2.',
+	'movepage-max-pages' => '$1 {{PLURAL:$1|страница была переименована|страницы было переименовано|страниц было переименовано}} — это максимум, больше страниц нельзя переименовать автоматически.',
+	'movelogpage' => 'Журнал переименований',
+	'movelogpagetext' => 'Ниже представлен список переименованных страниц.',
+	'movesubpage' => '{{PLURAL:$1|Подстраница|Подстраницы}}',
+	'movesubpagetext' => 'У этой страницы $1 {{PLURAL:$1|подстраница|подстраницы|подстраниц}}.',
+	'movenosubpage' => 'У этой страницы нет подстраниц.',
+	'movereason' => 'Причина:',
+	'move-leave-redirect' => 'Оставить перенаправление',
+	'move-over-sharedrepo' => '== Файл уже существует ==
+В общем хранилище существует [[:$1]]. Переименование файла в это название вызовет перекрытие файла из общего хранилища.',
+	'monobook.css' => '/* Размещённый здесь CSS будет применяться к теме оформления Monobook */',
+	'monobook.js' => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления MonoBook */',
+	'markaspatrolleddiff' => 'Отметить как проверенную',
+	'markaspatrolledtext' => 'Отметить эту статью как проверенную',
+	'markedaspatrolled' => 'Отмечена как проверенная',
+	'markedaspatrolledtext' => 'Выбранная версия статьи [[:$1]] была отмечена как отпатрулированная.',
+	'markedaspatrollederror' => 'Невозможно отметить как проверенную',
+	'markedaspatrollederrortext' => 'Вы должны указать версию, которая будет отмечена как проверенная.',
+	'markedaspatrollederror-noautopatrol' => 'Вам не разрешено отмечать собственные правки как проверенные.',
+	'mediawarning' => "'''Внимание'''. Этот тип файла может содержать вредоносный программный код.
+При его запуске ваша система может быть заражена.",
+	'minutes-abbrev' => '$1 м',
+	'minutes' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}}',
+	'metadata' => 'Метаданные',
+	'metadata-help' => 'Файл содержит дополнительные данные, обычно добавляемые цифровыми камерами или сканерами. Если файл после создания редактировался, то некоторые параметры могут не соответствовать текущему изображению.',
+	'metadata-expand' => 'Показать дополнительные данные',
+	'metadata-collapse' => 'Скрыть дополнительные данные',
+	'metadata-fields' => 'Поля метаданных изображения, перечисленные в этом списке, будут показаны на странице изображения при свёрнутой таблице метаданных. Остальные поля будут по умолчанию скрыты.
 * make
 * model
 * datetimeoriginal
@@ -29524,30 +27968,18 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
-
-Special:CreateWiki|Start a new Wikia
-
-Hub:Big_wikis|Big wikis
-
-Gaming
-
-Entertainment
-
-Blog:Wikia_Staff_Blog|Staff Blogs
-
-Forum:Help_desk|User Support Forums',
-	'my_stuff' => 'my stuff',
-	'most_popular' => "Editor's pick",
-	'most_visited' => 'Most visited',
-	'most_emailed' => 'Most emailed',
-	'magicfooterlinks' => '<b>Featured pages</b>',
+	'monthsall' => 'все',
+	'most_popular_articles' => 'Самые популярные статьи',
+	'my_stuff' => 'Моё',
+	'most_popular' => 'Самые популярные',
+	'most_visited' => 'Самые посещаемые',
+	'most_emailed' => 'Самые популярные по количеству электронных писем',
+	'magicfooterlinks' => '<b>Избранные страницы</b>',
 	'masthead-anonymous-user' => 'Участник Фэндома',
-	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
-	'mu_login' => 'You must be logged in to upload files.',
-	'mwlink_tip' => 'Internal link',
-	'mycontributions' => 'My contributions',
+	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
+	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
+	'mwlink_tip' => 'Внутренняя ссылка',
+	'mycontributions' => 'Мой вклад',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
 	'mostlinked-summary' => '',
@@ -31039,13 +29471,6 @@ $messages['shi'] = array(
 	'may-gen' => 'Mayyu',
 	'mar' => 'Mar',
 	'may' => 'Mayyuh',
-	'mainpagetext' => "↓ '''MediaWiki tǧizn (tsrbk) bla tamukrist.'''",
-	'mainpagedocfooter' => 'Ẓr taǧttnn  [http://meta.wikimedia.org/wiki/Aide:Contenu Guide de l’utilisateur] bac ad tawit inɣmisn yaḍn f manik sa tswwurt asɣẓan ad.
-
-== Izwir d MediaWiki ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Umuɣ n iɣwwarn n usgadda ]
-* [http://www.mediawiki.org/wiki/Manual:FAQ/fr Isqqsitn f MidyWiki]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Umuɣ n imsgdaln f imbḍitn n MidyaWiki]',
 	'moredotdotdot' => 'Uggar...',
 	'mypage' => 'Tasnat inu',
 	'mytalk' => 'Amsgdal inu',
@@ -31062,8 +29487,6 @@ ini mayad ikra [[Special:ListUsers/sysop|lmodir]] tfktas ladriss ntwriqt an.',
 	'missingarticle-diff' => '(lfarq: $1, $2)',
 	'mailmypassword' => 'sifd yi awal ihdan yadni',
 	'mailerror' => 'Gar azn n tbrat : $1',
-	'math_sample' => 'Skcm talɣat ɣid',
-	'math_tip' => 'Talɣiwt tusnakt (LaTeX)',
 	'media_tip' => 'Azday s usdaw usɣmas (midya)',
 	'minoredit' => 'Imbddl ifssusn',
 	'missingsummary' => "'''Adakt nskti :''' ur ta tfit awal imun n imbddln nk.
@@ -32498,13 +30921,6 @@ $messages['sr-el'] = array(
 	'may-gen' => 'maja',
 	'mar' => 'mar',
 	'may' => 'maj',
-	'mainpagetext' => "'''MedijaViki je uspešno instaliran.'''",
-	'mainpagedocfooter' => 'Molimo vidite [http://meta.wikimedia.org/wiki/Help:Contents korisnički vodič] za informacije o upotrebi viki softvera.
-
-== Za početak ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Pomoć u vezi sa podešavanjima]
-* [http://www.mediawiki.org/wiki/Manual:FAQ Najčešće postavljena pitanja]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Mejling lista o izdanjima MedijaVikija]',
 	'moredotdotdot' => 'Još...',
 	'mypage' => 'Moja stranica',
 	'mytalk' => 'Moj razgovor',
@@ -32520,8 +30936,6 @@ U tom slučaju, prijavite grešku [[Special:ListUsers/sysop|administratoru]] uz 
 	'missingarticle-diff' => '(Raz: $1, $2)',
 	'mailmypassword' => 'Pošalji mi novu lozinku',
 	'mailerror' => 'Greška pri slanju e-pošte: $1',
-	'math_sample' => 'Ovde unesite formulu',
-	'math_tip' => 'Matematička formula (LaTeX)',
 	'media_sample' => 'ime_medija_fajla.ogg',
 	'media_tip' => 'Putanja ka multimedijalnom fajlu',
 	'minoredit' => 'Ovo je mala izmena',
@@ -32633,21 +31047,6 @@ da biste premestili stranicu.',
 	'move-over-sharedrepo' => '== Datoteka postoji ==
 [[:$1]] se nalazi na deljenom skladištu. Ako premestite datoteku na ovaj naslov, to će zameniti deljenu datoteku.',
 	'monobook.css' => '/* CSS stavljen ovde će se odnositi na korisnike Monobuk kože */',
-	'mw_math_png' => 'Uvek prikaži PNG',
-	'mw_math_simple' => 'HTML ako je vrlo jednostavno, inače PNG',
-	'mw_math_html' => 'HTML ako je moguće, inače PNG',
-	'mw_math_source' => 'Ostavi kao TeH (za tekstualne brauzere)',
-	'mw_math_modern' => 'Preporučeno za savremene brauzere',
-	'mw_math_mathml' => 'MathML ako je moguće (eksperimentalno)',
-	'math_failure' => 'Neuspeh pri parsiranju',
-	'math_unknown_error' => 'nepoznata greška',
-	'math_unknown_function' => 'nepoznata funkcija',
-	'math_lexing_error' => 'rečnička greška',
-	'math_syntax_error' => 'sintaksna greška',
-	'math_image_error' => 'PNG konverzija neuspešna; proverite tačnu instalaciju latex-a, dvips-a, gs-a i convert-a',
-	'math_bad_tmpdir' => 'Ne mogu da napišem ili napravim privremeni math direktorijum',
-	'math_bad_output' => 'Ne mogu da napišem ili napravim direktorijum za math izlaz.',
-	'math_notexvc' => 'Nedostaje izvršno texvc; molimo pogledajte math/README da biste podesili.',
 	'markaspatrolleddiff' => 'Označi kao patroliran',
 	'markaspatrolledtext' => 'Označi ovaj članak kao patroliran',
 	'markedaspatrolled' => 'Označen kao patroliran',
@@ -35447,7 +33846,6 @@ $messages['tyv'] = array(
 	'mainpage' => 'Кол Арын',
 	'mainpage-description' => 'Кол Арын',
 	'mailmypassword' => 'Меңээ чаа чажыт сөсту чорудаары',
-	'math_sample' => 'Формуланы мынаар киирери',
 	'media_sample' => 'Чижек.ogg',
 	'media_tip' => 'Файлдың холбаазы',
 	'minoredit' => 'Бо өскерлиишкин биче-дир',
@@ -35469,7 +33867,6 @@ $messages['tyv'] = array(
 	'move-watch' => 'Бо арынны хайгаараары',
 	'movepagebtn' => 'Арынны шимчээри',
 	'movereason' => 'Чылдагаан:',
-	'math_unknown_error' => 'билбес алдаг',
 	'monthsall' => 'шупту',
 );
 
@@ -36023,48 +34420,19 @@ $messages['val'] = array(
 	'may-gen' => 'maig',
 	'mar' => 'març',
 	'may' => 'maig',
-	'mainpagetext' => "<big>'''MediaWiki s'ha instalat correctament.'''</big>",
-	'mainpagedocfooter' => "Consulta la [http://meta.wikimedia.org/wiki/Help:Contents Guia d'Usuari] per a més informació sobre com utilisar el programa wiki.
-
-== Per a començar ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Llista de característiques que pots configurar]
-* [http://www.mediawiki.org/wiki/Manual:FAQ PMF del MediaWiki]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Llista de correu (''listserv'') per a anuncis del MediaWiki]",
 	'moredotdotdot' => 'Més...',
 	'mypage' => 'Pàgina personal',
 	'mytalk' => 'Discussió',
-	'metadata_help' => 'Mitadades:',
 	'mainpage' => 'Portada',
-	'missingarticul' => 'La base de dades no ha trobat el text d\'una
-pàgina que hauria d\'haver trobat, nomenada "$1".
-Això acostuma a passar quan se seguix un enllaç a una pàgina que ha segut eliminada.
-
-Si este no es el cas, provablement se tracta d\'un error de la uep.
-Informa per favor a un administrador, fent-ne arribar la direcció URL.',
 	'mailmypassword' => "Envia'm una nova contrasenya per correu electrònic",
 	'mailerror' => "S'ha produït un error en enviar el mensage: $1",
-	'math_sample' => 'Inserta una fòrmula ací',
-	'math_tip' => 'Fòrmula matemàtica (LaTeX)',
 	'media_sample' => 'Eixemple.ogg',
 	'media_tip' => 'Enllaç cap al ficher multimédia',
 	'minoredit' => 'Esta es una edició menor.',
 	'missingsummary' => "'''Recordatori''': Has deixat en blanc el sumari d'edició. Si tornes a clicar el botó de guardar, l'edició se guardarà sense sumari.",
 	'missingcommenttext' => 'Introduïu un comentari a continuació.',
 	'missingcommentheader' => "'''Recordatori:''' No hi has proporcionat l'assunt o l'encapçalament del teu comentari. Si hi fas clic el botó de guardar una atra vegada, la teua contribució serà desada sense açò.",
-	'matchtotals' => 'La consulta "$1" ha coincidit en $2  títuls d\'artículs
-i el text de $3 artículs.',
 	'mypreferences' => 'Preferències',
-	'math' => 'Com se mostren les fòrmules',
-	'math_failure' => "No s'ha pogut entendre",
-	'math_unknown_error' => 'error desconegut',
-	'math_unknown_function' => 'funció desconeguda',
-	'math_lexing_error' => 'error de lèxic',
-	'math_syntax_error' => 'error de sintaxis',
-	'math_image_error' => "Hi ha hagut una errada en la conversió cap el format PNG; verifica la instalació de ''Latex'', ''dvips'', ''gs'' i ''convert''.",
-	'math_bad_tmpdir' => 'No ha segut possible crear el directori temporal de math o escriure-hi dins.',
-	'math_bad_output' => "No ha segut possible crear el directori d'eixida de math o escriure-hi dins.",
-	'math_notexvc' => "No s'ha trobat el ficher eixecutable ''texvc''; per favor, mira math/README per a configurar-lo.",
 	'minoreditletter' => 'm',
 	'mimesearch' => 'Busca per MIME',
 	'mimesearch-summary' => 'Esta pàgina permet filtrar archius de tipo MIME. Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
@@ -36082,7 +34450,6 @@ i tenir una direcció electrònica vàlida en les teues [[Special:Preferences|pr
 per enviar un correu electrònic a atres usuaris.',
 	'mywatchlist' => 'Llista de seguiment',
 	'mycontris' => 'Contribucions',
-	'movepage' => 'Renomena la pàgina',
 	'movepagetext' => "Utilisant el següent formulari renomenaràs una pàgina,
 movent tota la seua història al nou nom.
 El títul anterior se convertirà en un redireccionament al nou títul.
@@ -36102,7 +34469,6 @@ assegurat d'entendre les conseqüències que comporta adés de seguir avant.",
 *Hages desseleccionat la opció de baix.
 
 En estes casos, hauràs de traslladar o fusionar la pàgina manualment si ho desigeu.",
-	'movearticul' => 'Renomena la pàgina',
 	'movenologin' => "No sou a dins d'una sessió",
 	'movenologintext' => "Tens que ser un usuari registrat i estar [[Special:Userlogin|dintre d'una sessió]]
 per renomenar una pàgina.",
@@ -36113,15 +34479,8 @@ per renomenar una pàgina.",
 	'movelogpage' => 'Registre de reanomenaments',
 	'movelogpagetext' => 'Mira la llista de les últimes pàgines renomenades.',
 	'movereason' => 'Motiu',
-	'missingimage' => '<b>Manca la image</b><br /><i>$1</i>',
 	'monobook.css' => '/* Edita este ficher per personalisar monobook per a tot el lloc sancer */',
 	'monobook.js' => '/* Deprecated; use [[MediaWiki:common.js]] */',
-	'mw_math_png' => 'Produïx sempre PNG',
-	'mw_math_simple' => 'HTML si es molt simple, si no PNG',
-	'mw_math_html' => 'HTML si es possible, si no PNG',
-	'mw_math_source' => 'Deixa com a TeX (per a navegadors de text)',
-	'mw_math_modern' => 'Recomanat per navegadors moderns',
-	'mw_math_mathml' => 'MathML si es possible (experimental)',
 	'markaspatrolleddiff' => 'Marca com a supervisat',
 	'markaspatrolledtext' => "Marca l'artícul com a supervisat",
 	'markedaspatrolled' => 'Marca com a supervisat',
@@ -36740,14 +35099,6 @@ $messages['vo'] = array(
 	'may-gen' => 'mayul',
 	'mar' => 'mäz',
 	'may' => 'may',
-	'mainpagetext' => "'''El MediaWiki pestiton benosekiko.'''",
-	'mainpagedocfooter' => 'Konsultolös [http://meta.wikimedia.org/wiki/Help:Contents Gebanageidian] ad tuvön nünis dö geb programema vükik.
-
-== Nüdugot ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Parametalised]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki: SSP]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Potalised tefü fomams nulik ela MediaWiki]',
 	'moredotdotdot' => 'Plu...',
 	'mypage' => 'Pad obik',
 	'mytalk' => 'Bespiks obik',
@@ -36762,8 +35113,6 @@ Atos kösömiko jenon sekü difa- u jenotemayüm dädik (o.b. lü pad pemoüköl
 	'missingarticle-diff' => '(Dif: $1, $2)',
 	'mailmypassword' => 'Sedön letavödi nulik',
 	'mailerror' => 'Pöl dü sedam pota: $1',
-	'math_sample' => 'Pladolös malatami isio',
-	'math_tip' => 'Malatam matematik (LaTeX)',
 	'media_tip' => 'Yüm lü ragiv mediatik',
 	'minoredit' => 'Votükam pülik',
 	'missingsummary' => "'''Noet:''' No epenol redakamipläni. If ovälol dönu knopi: Dakipolöd, redakam olik podakipon nen plän.",
@@ -36860,23 +35209,6 @@ Votükam at kanon binön mu staböfik ä no paspetöl pö pad pöpedik. Suemolö
 	'movereason' => 'Kod:',
 	'move-leave-redirect' => 'Posbinükön as lüodüköm',
 	'monobook.css' => '/* El CSS isio pepladöl otefon gebanis padafomäta: Monobook */',
-	'mw_math_png' => 'Ai el PNG',
-	'mw_math_simple' => 'El HTML if go balugik, voto eli PNG',
-	'mw_math_html' => 'El HTML if mögos, voto eli PNG',
-	'mw_math_source' => 'Dakipolöd oni as TeX (pro bevüresodatävöms fomätü vödem)',
-	'mw_math_modern' => 'Pakomandöl pro bevüresodatävöms nulädik',
-	'mw_math_mathml' => 'El MathML if mögos (nog sperimänt)',
-	'math_failure' => 'Diletam fomüla no eplöpon',
-	'math_unknown_error' => 'pök nesevädik',
-	'math_unknown_function' => 'dun nesevädik',
-	'math_lexing_error' => 'vödidiletam no eplöpon',
-	'math_syntax_error' => 'süntagapöl',
-	'math_image_error' => 'Feajafam ela PNG no eplöpon;
-vestigolös stitami verätik ela latex, ela dvips, ela gs, e feajafön',
-	'math_bad_tmpdir' => 'No mögos ad penön ini / jafön ragiviär(i) matematik nelaidüpik.',
-	'math_bad_output' => 'No mögos ad penön ini / jafön ragiviär(i) matematik labü seks',
-	'math_notexvc' => 'Program-texvc ledunovik no petuvon;
-logolös eli math/README ad givulön parametemi.',
 	'markaspatrolleddiff' => 'Zepön',
 	'markaspatrolledtext' => 'Zepön padi at',
 	'markedaspatrolled' => 'Pezepon',
@@ -37902,12 +36234,6 @@ $messages['yo'] = array(
 	'may-gen' => 'Oṣù Kàrún',
 	'mar' => 'Oṣù 3',
 	'may' => 'Oṣù 5',
-	'mainpagedocfooter' => "Ẹ ṣàbẹ̀wò sí [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] fún ìfitólétí nípa líló atòlànà wíkì.
-
-== Láti bẹ̀rẹ̀ ==
-*  [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 	'moredotdotdot' => 'Ẹ̀kúnrẹ́rẹ́...',
 	'mypage' => 'Ojúewé mi',
 	'mytalk' => 'Ọ̀rọ̀ mi',
@@ -37923,8 +36249,6 @@ Tí kì bá ṣe bẹ́ẹ̀, ó lè jẹ́ pé ẹ ti rí àsìṣe nínú atò
 	'missingarticle-diff' => '(Ìyàtọ̀: $1, $2)',
 	'mailmypassword' => 'Ìfiránṣẹ́ ọ̀rọ̀ìpamọ́ tuntun',
 	'mailerror' => 'Àsìṣe ìfiránṣẹ́: $1',
-	'math_sample' => "Ẹ fi àgbékalẹ̀ s'íhín",
-	'math_tip' => 'Àgbékalẹ̀ ìsirò (LaTeX)',
 	'media_tip' => 'Ìjápọ̀ fáìlì',
 	'minoredit' => 'Àtúnṣe kékeré nìyí',
 	'missingsummary' => "'''Ìránlétí:''' Ẹ kò pèsè àkótán fún àtúnṣe yìí
@@ -38006,9 +36330,6 @@ Tí ó bá jẹ́ báhun, ẹ gbúdọ̀ ṣe ìyípò rẹ̀ fúnra yín.",
 	'movenosubpage' => 'Ojúewé yìí kò ní àwọn abẹ́ojúewé.',
 	'movereason' => 'Ìdíẹ̀:',
 	'move-leave-redirect' => 'Ẹ fún ní àtúnjúwe',
-	'math_unknown_error' => 'àsiṣe àwámárìdí',
-	'math_unknown_function' => 'ìfiṣe àwámárìdí',
-	'math_lexing_error' => 'àsiṣe òye ọ̀rọ̀',
 	'metadata' => 'Metadata',
 	'metadata-help' => 'Fáìlì yìí ní ìfitólétí aláròpọ̀mọ́, ó ṣe é ṣe kí ó jẹ́ ríròpọ̀ látọwọ́ kámẹ́rà oníka tàbí ẹ̀rọ skani lílò fún ìdá rẹ̀ tàbí ṣoníka rẹ̀.
 Tóbájẹ́pé fáìlì ọ̀hún ti jẹ́ títúnṣe sí bóṣewà ní bẹ̀rẹ̀, àwọn ẹ̀kúnrẹ́rẹ́ méèló kan le mọ́ fi fáìlì títúnṣe náà hàn dáadáa.',
@@ -38338,306 +36659,165 @@ $messages['zh-cn'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => '星期一',
+	'mon' => '一',
+	'march' => '3月',
+	'may_long' => '5月',
+	'march-gen' => '三月',
+	'may-gen' => '五月',
+	'mar' => '3月',
+	'may' => '5月',
+	'moredotdotdot' => '更多',
+	'mypage' => '我的页面',
+	'mytalk' => '我的讨论页',
+	'mainpage' => '首页',
+	'mainpage-description' => '首页',
+	'missing-article' => '数据库找不到预期的页面文字：“$1”$2。
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+这通常是由于点击了链向旧有差异或历史的链接，而原有修订已被删除导致的。
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+如果情况不是这样，您可能找到了软件的一个内部错误。请记录下URL地址，并向[[Special:ListUsers/sysop|管理员]]报告。',
+	'missingarticle-rev' => '（修订版本编号：$1）',
+	'missingarticle-diff' => '（差异：$1，$2）',
+	'mailmypassword' => '用电子邮件发送新密码',
+	'mailerror' => '发送邮件错误：$1',
+	'media_tip' => '文件链接',
+	'minoredit' => '标记为小编辑',
+	'missingsummary' => "'''提示：''' 您没有提供一个编辑摘要。如果您再次单击“{{int:savearticle}}”，您的编辑将不带编辑摘要保存。",
+	'missingcommenttext' => '请在下面输入评论。',
+	'missingcommentheader' => "'''提示：''' 您没有为此评论提供一个标题。如果您再次单击“{{int:savearticle}}”，您的编辑将不带标题保存。",
+	'moveddeleted-notice' => '本页面已被删除。下面提供本页的删除和移动日志以供参考。',
+	'mergehistory' => '合并页面历史',
+	'mergehistory-header' => '这一页可以让您将来源页面的修订历史合并到新页面中去。
+请确保此次更改能继续保持历史页面的连续性。',
+	'mergehistory-box' => '合并两个页面的修订历史：',
+	'mergehistory-from' => '来源页面：',
+	'mergehistory-into' => '目的页面：',
+	'mergehistory-list' => '可以合并的编辑历史',
+	'mergehistory-merge' => '以下[[:$1]]的修订可以合并到[[:$2]]。用该选项按钮列去合并只有在指定时间以前所创建的修订。要留意的是使用导航链接便会重设这一栏。',
+	'mergehistory-go' => '显示可以合并的编辑',
+	'mergehistory-submit' => '合并版本',
+	'mergehistory-empty' => '没有可以合并的版本。',
+	'mergehistory-success' => '[[:$1]]的$3个版本成功合并至[[:$2]]。',
+	'mergehistory-fail' => '不可以进行历史合并，请重新检查该页面以及时间参数。',
+	'mergehistory-no-source' => '来源页面$1不存在。',
+	'mergehistory-no-destination' => '目的页面$1不存在。',
+	'mergehistory-invalid-source' => '来源页面必须是一个有效的标题。',
+	'mergehistory-invalid-destination' => '目的页面必须是一个有效的标题。',
+	'mergehistory-autocomment' => '合并[[:$1]]至[[:$2]]',
+	'mergehistory-comment' => '合并[[:$1]]至[[:$2]]：$3',
+	'mergehistory-same-destination' => '来源页面与目的页面不可以相同',
+	'mergehistory-reason' => '原因：',
+	'mergelog' => '合并日志',
+	'mergelogpagetext' => '以下是一个最近由一个页面的修订历史合并到另一个页面的列表。',
+	'mwsuggest-disable' => '禁用AJAX建议',
+	'mypreferences' => '设置',
+	'minoreditletter' => '小',
+	'minlength1' => '文件名至少要有一个字符。',
+	'morelinkstoimage' => '查看连接到这个文件的[[Special:WhatLinksHere/$1|更多链接]]。',
+	'mimesearch' => 'MIME 搜索',
+	'mimesearch-summary' => '本页面启用文件MIME类型过滤器。输入：内容类型/子类型，如 <tt>image/jpeg</tt>。',
+	'mimetype' => 'MIME 类型：',
+	'mostlinked' => '最多链接页面',
+	'mostlinkedcategories' => '最多链接分类',
+	'mostlinkedtemplates' => '最多链接模板',
+	'mostcategories' => '最多分类页面',
+	'mostimages' => '最多链接文件',
+	'mostrevisions' => '最多版本页面',
+	'move' => '移动',
+	'movethispage' => '移动此页',
+	'mailnologin' => '无电邮地址',
+	'mailnologintext' => '你必须[[Special:UserLogin|登录]]并在你的[[Special:Preferences|系统设置]]中拥有有效的电子邮件地址才能向其他用户发送电子邮件。',
+	'mywatchlist' => '监视列表',
+	'modifiedarticleprotection' => '更改“[[$1]]”的保护级别',
+	'movedarticleprotection' => '移动保护设置自“[[$2]]”至“[[$1]]”',
+	'minimum-size' => '最小大小',
+	'maximum-size' => '最大大小：',
+	'mycontris' => '贡献',
+	'month' => '自月份（及之前内容）：',
+	'move-page' => '移动$1',
+	'move-page-legend' => '移动页面',
+	'movepagetext' => "用下面的表单来重命名一个页面，并将其修订历史同时移动到新页面。
+老的页面将成为新页面的重定向页。
+您可以自动地更新指到原标题的重定向。
+如果您选择不去做的话，请检查[[Special:DoubleRedirects|双重]]或[[Special:BrokenRedirects|损坏重定向]]链接。
+您应当负责确定所有链接依然会链到指定的页面。
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+注意如果新页面已经有内容的话，页面将'''不会'''被移动，
+除非新页面无内容或是重定向页，而且没有修订历史。
+这意味着您再必要时可以在移动到新页面后再移回老的页面，
+同时您也无法覆盖现有页面。
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''警告！'''
+对一个经常被访问的页面而言这可能是一个重大与唐突的更改；
+请在行动前先了解其所可能带来的后果。",
+	'movepagetext-noredirectfixer' => "用下面的表单来重命名一个页面，并将其修订历史同时移动到新页面。
+老的页面将成为新页面的重定向页。
+请检查[[Special:DoubleRedirects|双重重定向]]或[[Special:BrokenRedirects|损坏重定向]]链接。
+您应当负责确定所有链接依然会链到指定的页面。
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+注意如果新页面已经有内容的话，页面将'''不会'''被移动，
+除非新页面无内容或是重定向页，而且没有修订历史。
+这意味着您再必要时可以在移动到新页面后再移回老的页面，
+同时您也无法覆盖现有页面。
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''警告！'''
+对一个经常被访问的页面而言这可能是一个重大与唐突的更改；
+请在行动前先确定您了解其所可能带来的后果。",
+	'movepagetalktext' => "有关的讨论页将被自动与该页面一起移动，'''除非''':
+*新页面已经有一个包含内容的讨论页，或者
+*您不勾选下面的复选框。
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
+在这些情况下，您在必要时必须手工移动或合并页面。",
+	'movearticle' => '移动页面：',
+	'moveuserpage-warning' => "'''警告：'''您将会移动一个用户页面。请留意该页面在移动后该用户的名字是''不会''变更的。",
+	'movenologin' => '未登录',
+	'movenologintext' => '您必须是一名登记用户并且[[Special:UserLogin|登录]]
+后才可移动一个页面。',
+	'movenotallowed' => '您并没有权限去移动页面。',
+	'movenotallowedfile' => '您并没有权限去移动文件。',
+	'move-watch' => '监视来源以及目标页',
+	'movepagebtn' => '移动页面',
+	'movepage-moved' => "'''“$1”已移动到“$2”'''",
+	'movepage-moved-redirect' => '重定向已创建。',
+	'movepage-moved-noredirect' => '重定向的创建已被禁用。',
+	'movedto' => '移动到',
+	'movetalk' => '移动关联的讨论页',
+	'move-subpages' => '移动子页面（上至$1页）',
+	'move-talk-subpages' => '如果可能，移动子对话页面（上至$1页）',
+	'movepage-page-exists' => '页面$1已存在，无法自动覆盖。',
+	'movepage-page-moved' => '页面$1已经移动到$2。',
+	'movepage-page-unmoved' => '页面$1无法移动到$2。',
+	'movepage-max-pages' => '所移动$1个页面的数量已达最大限额，无法同时自动移动更多页面。',
+	'movelogpage' => '移动日志',
+	'movelogpagetext' => '以下是所有移动的页面列表：',
+	'movesubpage' => '{{PLURAL:$1|子页面|子页面}}',
+	'movesubpagetext' => '这个页面有$1个子页面，列示如下。',
+	'movenosubpage' => '这个页面没有子页面。',
+	'movereason' => '原因：',
+	'move-leave-redirect' => '保留重定向',
+	'move-over-sharedrepo' => '== 文件已存在 ==
+[[:$1]]已于共享资源存在，将文件移动到此标题会覆盖共享资源中的文件。',
+	'monobook.css' => '/* 此处的 CSS 将影响使用 Monobook 皮肤的用户 */',
+	'monobook.js' => '/* 此处的JavaScript将加载于使用Monobook皮肤的用户 */',
+	'markaspatrolleddiff' => '标记为已巡查',
+	'markaspatrolledtext' => '标记此页面为已巡查',
+	'markedaspatrolled' => '标记为已检查',
+	'markedaspatrolledtext' => '[[:$1]]的已选中修订版本已被标识为已巡查。',
+	'markedaspatrollederror' => '不能标志为已检查',
+	'markedaspatrollederrortext' => '你需要指定某个版本才能标志为已检查。',
+	'markedaspatrollederror-noautopatrol' => '您无法将你自己所作的更改标记为已检查。',
+	'mediawarning' => "'''警告'''：该文件类型可能包含恶意代码。
+运行它可能对您的系统带来危险。",
+	'minutes' => '$1分钟',
+	'metadata' => '原始数据',
+	'metadata-help' => '此文件中包含有扩展的信息。这些信息可能是由数码相机或扫描仪在创建或数字化过程中所添加的。
 
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+如果此文件的源文件已经被修改，一些信息在修改后的文件中将不能完全反映出来。',
+	'metadata-expand' => '显示详细资料',
+	'metadata-collapse' => '隐藏详细资料',
+	'metadata-fields' => '在本信息中所列出的 EXIF 元数据域将包含在图片显示页面，当元数据表损坏时只显示以下信息。
+其他的元数据默认为隐藏。
 * make
 * model
 * datetimeoriginal
@@ -38651,10 +36831,10 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'mobile-hide' => 'Hide',
-	'mobile-show' => 'Show',
-	'most_visited' => 'Most visited',
+	'monthsall' => '全部',
+	'mobile-hide' => '隐藏',
+	'mobile-show' => '显示',
+	'most_visited' => '最多人访问',
 	'masthead-anonymous-user' => 'Fandom用户',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
@@ -38707,306 +36887,170 @@ Forum:Help_desk|User Support Forums',
 );
 
 $messages['zh-hant'] = array(
-	'monday' => 'Monday',
-	'mon' => 'Mon',
-	'march' => 'March',
-	'may_long' => 'May',
-	'march-gen' => 'March',
-	'may-gen' => 'May',
-	'mar' => 'Mar',
-	'may' => 'May',
-	'moredotdotdot' => 'More...',
-	'mypage' => 'My page',
-	'mytalk' => 'My talk',
-	'mainpage' => 'Main Page',
-	'mainpage-description' => 'Main page',
-	'missing-article' => 'The database did not find the text of a page that it should have found, named "$1" $2.
+	'monday' => '星期一',
+	'mon' => '一',
+	'march' => '3月',
+	'may_long' => '5月',
+	'march-gen' => '三月',
+	'may-gen' => '五月',
+	'mar' => '3月',
+	'may' => '5月',
+	'moredotdotdot' => '更多...',
+	'mypage' => '我的頁面',
+	'mytalk' => '我的對話頁',
+	'mainpage' => '首頁',
+	'mainpage-description' => '首頁',
+	'missing-article' => '資料庫找不到文字"$1" $2。
 
-This is usually caused by following an outdated diff or history link to a page that has been deleted.
+<p>通常這是由於修訂歷史頁上過時的連結到已經被刪除的頁面所導致的。</p>
 
-If this is not the case, you may have found a bug in the software.
-Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
-	'missingarticle-rev' => '(revision#: $1)',
-	'missingarticle-diff' => '(Diff: $1, $2)',
-	'mailmypassword' => 'E-mail new password',
-	'mailerror' => 'Error sending mail: $1',
-	'media_tip' => 'File link',
-	'minoredit' => 'Minor edit',
-	'missingsummary' => "'''Reminder:''' You have not provided an edit summary.
-If you click Publish again, your edit will be published without one.",
-	'missingcommenttext' => 'Please enter a comment below.',
-	'missingcommentheader' => "'''Reminder:''' You have not provided a subject/headline for this comment.
-If you click \"{{int:savearticle}}\" again, your edit will be saved without one.",
-	'moveddeleted-notice' => 'This page has been deleted.
-The deletion and move log for the page are provided below for reference.',
-	'mergehistory' => 'Merge page histories',
-	'mergehistory-header' => 'This page lets you merge revisions of the history of one source page into a newer page.
-Make sure that this change will maintain historical page continuity.',
-	'mergehistory-box' => 'Merge revisions of two pages:',
-	'mergehistory-from' => 'Source page:',
-	'mergehistory-into' => 'Destination page:',
-	'mergehistory-list' => 'Mergeable edit history',
-	'mergehistory-merge' => 'The following revisions of [[:$1]] can be merged into [[:$2]].
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
-	'mergehistory-go' => 'Show mergeable edits',
-	'mergehistory-submit' => 'Merge revisions',
-	'mergehistory-empty' => 'No revisions can be merged.',
-	'mergehistory-success' => '$3 {{PLURAL:$3|revision|revisions}} of [[:$1]] successfully merged into [[:$2]].',
-	'mergehistory-fail' => 'Unable to perform history merge, please recheck the page and time parameters.',
-	'mergehistory-no-source' => 'Source page $1 does not exist.',
-	'mergehistory-no-destination' => 'Destination page $1 does not exist.',
-	'mergehistory-invalid-source' => 'Source page must be a valid title.',
-	'mergehistory-invalid-destination' => 'Destination page must be a valid title.',
-	'mergehistory-autocomment' => 'Merged [[:$1]] into [[:$2]]',
-	'mergehistory-comment' => 'Merged [[:$1]] into [[:$2]]: $3',
-	'mergehistory-same-destination' => 'Source and destination pages cannot be the same',
-	'mergehistory-reason' => 'Reason:',
-	'mergelog' => 'Merge log',
-	'mergelogpagetext' => 'Below is a list of the most recent merges of one page history into another.',
-	'mwsuggest-disable' => 'Disable AJAX suggestions',
-	'mypreferences' => 'My preferences',
-	'minoreditletter' => 'm',
-	'minlength1' => 'Filenames must be at least one letter.',
-	'morelinkstoimage' => 'View [[Special:WhatLinksHere/$1|more links]] to this photo.',
-	'mimesearch' => 'MIME search',
-	'mimesearch-summary' => 'This page enables the filtering of files for their MIME type.
-Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
-	'mimetype' => 'MIME type:',
-	'mostlinked' => 'Most linked-to pages',
-	'mostlinkedcategories' => 'Most linked-to categories',
-	'mostlinkedtemplates' => 'Most linked-to templates',
-	'mostcategories' => 'Pages with the most categories',
-	'mostimages' => 'Most linked-to photos',
-	'mostrevisions' => 'Pages with the most revisions',
-	'move' => 'Rename',
-	'movethispage' => 'Rename this page',
-	'mailnologin' => 'No send address',
-	'mailnologintext' => 'You must be [[Special:UserLogin|logged in]] and have a valid e-mail address in your [[Special:Preferences|preferences]] to send e-mail to other users.',
-	'mywatchlist' => 'My watchlist',
-	'modifiedarticleprotection' => 'changed protection level for "[[$1]]"',
-	'movedarticleprotection' => 'moved protection settings from "[[$2]]" to "[[$1]]"',
-	'minimum-size' => 'Min size',
-	'maximum-size' => 'Max size:',
-	'mycontris' => 'My contributions',
-	'month' => 'From month (and earlier):',
-	'move-page' => 'Rename $1',
-	'move-page-legend' => 'Rename page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
-	'movepagetext-noredirectfixer' => "Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
+<p>如果情況不是這樣，您可能找到了軟體內的一個臭蟲。
+請記錄下URL地址，並向[[Special:ListUsers/sysop|管理員]]報告。</p>',
+	'missingarticle-rev' => '（修訂#: $1）',
+	'missingarticle-diff' => '（差異: $1, $2）',
+	'mailmypassword' => '將新密碼寄給我',
+	'mailerror' => '發送郵件錯誤: $1',
+	'media_tip' => '檔案連結',
+	'minoredit' => '這是一個小修改',
+	'missingsummary' => "'''提示:''' 您沒有提供一個編輯摘要。如果您再次單擊「{{int:savearticle}}」，您的編輯將不帶編輯摘要儲存。",
+	'missingcommenttext' => '請在下面輸入評論。',
+	'missingcommentheader' => "'''提示:''' 您沒有為此評論提供一個標題。如果您再次單擊「{{int:savearticle}}」，您的編輯將不帶標題儲存。",
+	'moveddeleted-notice' => '這個頁面已經刪除。
+這個頁面的刪除和移動日誌已在下面提供以便參考。',
+	'mergehistory' => '合併頁面歷史',
+	'mergehistory-header' => '這一頁可以講您合併一個來源頁面的歷史到另一個新頁面中。
+請確認這次更改會繼續保留該頁面先前的歷史版本。',
+	'mergehistory-box' => '合併兩個頁面的修訂:',
+	'mergehistory-from' => '來源頁面:',
+	'mergehistory-into' => '目的頁面:',
+	'mergehistory-list' => '可以合併的編輯歷史',
+	'mergehistory-merge' => '以下[[:$1]]的修訂可以合併到[[:$2]]。用該選項按鈕欄去合併只有在指定時間以前所創建的修訂。要留意的是使用導航連結便會重設這一欄。',
+	'mergehistory-go' => '顯示可以合併的編輯',
+	'mergehistory-submit' => '合併修訂',
+	'mergehistory-empty' => '沒有可以合併的修訂',
+	'mergehistory-success' => '[[:$1]]的$3次修訂已經成功地合併到[[:$2]]。',
+	'mergehistory-fail' => '不可以進行歷史合併，請重新檢查該頁面以及時間參數。',
+	'mergehistory-no-source' => '來源頁面$1不存在。',
+	'mergehistory-no-destination' => '目的頁面$1不存在。',
+	'mergehistory-invalid-source' => '來源頁面必須是一個有效的標題。',
+	'mergehistory-invalid-destination' => '目的頁面必須是一個有效的標題。',
+	'mergehistory-autocomment' => '已經合併[[:$1]]去到[[:$2]]',
+	'mergehistory-comment' => '已經合併[[:$1]]去到[[:$2]]: $3',
+	'mergehistory-same-destination' => '來源頁面與目的頁面不可以相同',
+	'mergehistory-reason' => '理由：',
+	'mergelog' => '合併日誌',
+	'mergelogpagetext' => '以下是一個最近由一個頁面的修訂歷史合併到另一個頁面的列表。',
+	'mwsuggest-disable' => '停用AJAX建議',
+	'mypreferences' => '我的偏好設定',
+	'minoreditletter' => '小',
+	'minlength1' => '檔案名字必須至少有一個字母。',
+	'morelinkstoimage' => '檢視連接到這個檔案的[[Special:WhatLinksHere/$1|更多連結]]。',
+	'mimesearch' => 'MIME 搜尋',
+	'mimesearch-summary' => '本頁面啟用檔案MIME類型過濾器。輸入︰內容類型/子類型，如 <tt>image/jpeg</tt>。',
+	'mimetype' => 'MIME 類型:',
+	'mostlinked' => '最多連結頁面',
+	'mostlinkedcategories' => '最多連結分類',
+	'mostlinkedtemplates' => '最多連結模板',
+	'mostcategories' => '最多分類頁面',
+	'mostimages' => '最多連結檔案',
+	'mostrevisions' => '最多修訂頁面',
+	'move' => '移動',
+	'movethispage' => '移動本頁',
+	'mailnologin' => '無電郵地址',
+	'mailnologintext' => '您必須先[[Special:UserLogin|登入]]
+並在[[Special:Preferences|偏好設定]]
+中有一個有效的 e-mail 地址才可以電郵其他用戶。',
+	'mywatchlist' => '我的監視列表',
+	'modifiedarticleprotection' => '已經更改「[[$1]]」的保護等級',
+	'movedarticleprotection' => '已將「[[$2]]」的保護設定移動至「[[$1]]」',
+	'minimum-size' => '最小大小',
+	'maximum-size' => '最大大小:',
+	'mycontris' => '我的貢獻',
+	'month' => '從該月份 （或更早）:',
+	'move-page' => '移動$1',
+	'move-page-legend' => '移動頁面',
+	'movepagetext' => "用下面的表單來重新命名一個頁面，並將其修訂歷史同時移動到新頁面。
+老的頁面將成為新頁面的重定向頁。
+您可以自動地更新指到原標題的重定向。
+如果您選擇不去做的話，請檢查[[Special:DoubleRedirects|雙重]]或[[Special:BrokenRedirects|損壞重定向]]連結。
+您應當負責確定所有連結依然會連到指定的頁面。
 
-Note that the page will '''not''' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+注意如果新頁面已經有內容的話，頁面將'''不會'''被移動，
+除非新頁面無內容或是重定向頁，而且沒有修訂歷史。
+這意味著您再必要時可以在移動到新頁面後再移回老的頁面，
+同時您也無法覆蓋現有頁面。
 
-'''Warning!'''
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.",
-	'movepagetalktext' => "The associated talk page will be automatically moved along with it '''unless:'''
-*A non-empty talk page already exists under the new name, or
-*You uncheck the box below.
+'''警告！'''
+對一個經常被訪問的頁面而言這可能是一個重大與唐突的更改；
+請在行動前先了解其所可能帶來的後果。",
+	'movepagetext-noredirectfixer' => "用下面的表單來重命名一個頁面，並將其修訂歷史同時移動到新頁面。
+老的頁面將成為新頁面的重定向頁。
+請檢查[[Special:DoubleRedirects|雙重重定向]]或[[Special:BrokenRedirects|損壞重定向]]連結。
+您應當負責確定所有連結依然會連到指定的頁面。
 
-In those cases, you will have to move or merge the page manually if desired.",
-	'movearticle' => 'Rename page:',
-	'moveuserpage-warning' => "'''Warning:''' You are about to rename a user page. Please note that only the page title will be changed, and the user will ''not'' be renamed.",
-	'movenologin' => 'Not logged in',
-	'movenologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to move a page.',
-	'movenotallowed' => 'You do not have permission to rename pages.',
-	'movenotallowedfile' => 'You do not have permission to rename files.',
-	'move-watch' => 'Follow this page',
-	'movepagebtn' => 'Rename page',
-	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
-	'movepage-moved-redirect' => 'A redirect has been created.',
-	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
-	'movedto' => 'moved to',
-	'movetalk' => 'Rename associated talk page',
-	'move-subpages' => 'Rename subpages (up to $1)',
-	'move-talk-subpages' => 'Rename subpages of talk page (up to $1)',
-	'movepage-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',
-	'movepage-page-moved' => 'The page $1 has been moved to $2.',
-	'movepage-page-unmoved' => 'The page $1 could not be moved to $2.',
-	'movepage-max-pages' => 'The maximum of $1 {{PLURAL:$1|page|pages}} has been moved and no more will be moved automatically.',
-	'movelogpage' => 'Move log',
-	'movelogpagetext' => 'Below is a list of page moves.',
-	'movesubpage' => '{{PLURAL:$1|Subpage|Subpages}}',
-	'movesubpagetext' => 'This page has $1 {{PLURAL:$1|subpage|subpages}} shown below.',
-	'movenosubpage' => 'This page has no subpages.',
-	'movereason' => 'Reason:',
-	'move-leave-redirect' => 'Leave a redirect behind',
-	'move-over-sharedrepo' => '== File exists ==
-[[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => "/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia's Terms of Use by obscuring or removing the advertising. *****/
-/* See also: [[MediaWiki:Common.css]] */
+注意如果新頁面已經有內容的話，頁面將'''不會'''被移動，
+除非新頁面無內容或是重定向頁，而且沒有修訂歷史。
+這意味著您再必要時可以在移動到新頁面後再移回老的頁面，
+同時您也無法覆蓋現有頁面。
 
-/*** Bold 'edit this page' link to encourage newcomers ***/
+'''警告！'''
+對一個經常被訪問的頁面而言這可能是一個重大與唐突的更改；
+請在行動前先確定您了解其所可能帶來的後果。",
+	'movepagetalktext' => "有關的對話頁（如果有的話）將被自動與該頁面一起移動，'''除非'''：
+*您將頁面移動到不同的名字空間；
+*新頁面已經有一個包含內容的對話頁，或者
+*您不勾選下面的覆選框。
 
-#ca-edit a { 
-    font-weight: bold !important; 
-}
+在這些情況下，您在必要時必須手工移動或合併頁面。",
+	'movearticle' => '移動頁面:',
+	'moveuserpage-warning' => "'''警告：'''您將會移動一個用戶頁面。請留意該頁面在移動後該用戶的名字是''不會''變更的。",
+	'movenologin' => '未登入',
+	'movenologintext' => '您必須是一名登記用戶並且[[Special:UserLogin|登入]]
+後才可移動一個頁面。',
+	'movenotallowed' => '您並沒有許可權去移動頁面。',
+	'movenotallowedfile' => '您並沒有許可權去移動檔案。',
+	'move-watch' => '監視來源以及目標頁',
+	'movepagebtn' => '移動頁面',
+	'movepage-moved' => "'''「$1」已經移動到「$2」'''",
+	'movepage-moved-redirect' => '一個重新定向已經被創建。',
+	'movepage-moved-noredirect' => '已經壓制創建重新定向。',
+	'movedto' => '移動到',
+	'movetalk' => '移動關聯的對話頁',
+	'move-subpages' => '移動子頁面（上至$1頁）',
+	'move-talk-subpages' => '移動子對話頁面（上至$1頁）',
+	'movepage-page-exists' => '頁面 $1 已經存在，不可以自動地覆寫。',
+	'movepage-page-moved' => '頁面 $1 已經移動到 $2。',
+	'movepage-page-unmoved' => '頁面 $1 不可以移動到 $2。',
+	'movepage-max-pages' => '最多有$1個頁面已經移動同時不可以自動地再移動更多。',
+	'movelogpage' => '移動日誌',
+	'movelogpagetext' => '以下是所有移動的頁面清單:',
+	'movesubpage' => '{{PLURAL:$1|子頁面|子頁面}}',
+	'movesubpagetext' => '這個頁面有$1個子頁面列示如下。',
+	'movenosubpage' => '這個頁面沒有子頁面。',
+	'movereason' => '原因',
+	'move-leave-redirect' => '留下重新定向',
+	'move-over-sharedrepo' => '== 檔案已存在 ==
+[[:$1]]已於共享資源存在，將檔案移動到此標題會覆蓋共享資源中的檔案。',
+	'monobook.css' => '/* 此處的 CSS 將影響使用 Monobook 面板的用戶 */',
+	'monobook.js' => '/* 此處的JavaScript將載入於使用Monobook面板的用戶 */',
+	'markaspatrolleddiff' => '標記為已巡查',
+	'markaspatrolledtext' => '標記此頁面為已巡查',
+	'markedaspatrolled' => '標記為已檢查',
+	'markedaspatrolledtext' => '[[:$1]]的已選定修訂版本已被標識為已巡查。',
+	'markedaspatrollederror' => '不能標誌為已檢查',
+	'markedaspatrollederrortext' => '{{GENDER:|你|妳|你}}需要指定某個版本才能標誌為已檢查。',
+	'markedaspatrollederror-noautopatrol' => '您無法將{{GENDER:|你|妳|你}}自己所作的更改標記為已檢查。',
+	'mediawarning' => "'''警告''': 該檔案類型可能包含惡意代碼。
+執行它可能對您的系統帶來危險。",
+	'minutes' => '$1分鍾',
+	'metadata' => '元數據',
+	'metadata-help' => '此檔案中包含有擴展的訊息。這些訊息可能是由數位相機或掃描儀在創建或數字化過程中所添加的。
 
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-   border: 1px solid #aaa;
-   margin-top: 1em;
-   padding: 12px;
-}
-.forumlist td.forum_edited a {
-   color: black;
-   text-decoration: none;
-}
-.forumlist td.forum_title a {
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-   font-weight: bold;
-   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
-   padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-   font-weight: normal;
-   background: none;
-   padding-left: 20px;
-}
-.forumlist th.forum_title {
-   padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos {
-   color: #006500;
-}
-.mw-plusminus-neg {
-   color: #8B0000;
-}
-
-/* Image frame fix */
-div.tright, div.tleft {
-   border: 1px solid silver;
-}
-
-div.thumbinner {
-   background: inherit;
-   border: none;
-   color: inherit;
-}
-#article div.thumb {
-   color:inherit;
-}
-
-/* === Babel === */
-
-div.babelbox {
-   float: right;
-   margin-left: 1em;
-   margin-bottom: 0.5em;
-   width: 246px;
-   border: 1px solid #99B3FF;
-   padding: 2px 0 2px 0;
-}
-.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
-   margin: 2px 4px 2px 4px; /* t, l, b, r */
-   width:238px;
-   border-collapse: collapse;
-}
-td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
-   text-align:center;
-   font-size:14pt;
-   width:45px;
-   height:45px;
-}
-td.lang-descriptionN, td.lang-description0, td.lang-description1,
-td.lang-description2, td.lang-description3 {
-  font-size:8pt;
-  padding:4pt;
-  line-height:1.25em;
-}
-
-.lang-block0 {
-   border:1px solid #FFB3B3;
-}
-td.lang-code0 {
-  background-color: #FFB3B3;
-  color: black;
-}
-td.lang-description0 {
-  background-color: #FFE0E8;
-  color: black;
-}
-
-.lang-block1,  .lang-block2, .lang-block3  {
-   border:1px solid #99B3FF;
-}
-td.lang-code1, td.lang-code2, td.lang-code3 {
-  background-color: #99B3FF;
-  color: black;
-}
-td.lang-description1,  td.lang-description2, td.lang-description3 {
-  background-color: #E0E8FF;
-  color: black;
-}
-
-.lang-blockN {
-   border:1px solid #6EF7A7;
-}
-td.lang-codeN {
-  background-color: #6EF7A7;
-  color: black;
-}
-td.lang-descriptionN {
-  background-color: #C5FCDC;
-  color: black;
-}",
-	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
-	'markaspatrolleddiff' => 'Mark as patrolled',
-	'markaspatrolledtext' => 'Mark this page as patrolled',
-	'markedaspatrolled' => 'Marked as patrolled',
-	'markedaspatrolledtext' => 'The selected revision of [[:$1]] has been marked as patrolled.',
-	'markedaspatrollederror' => 'Cannot mark as patrolled',
-	'markedaspatrollederrortext' => 'You need to specify a revision to mark as patrolled.',
-	'markedaspatrollederror-noautopatrol' => 'You are not allowed to mark your own changes as patrolled.',
-	'mediawarning' => "'''Warning''': This file type may contain malicious code.
-By executing it, your system may be compromised.",
-	'minutes' => '{{PLURAL:$1|$1 minute|$1 minutes}}',
-	'metadata' => 'Metadata',
-	'metadata-help' => 'This file contains additional information, probably added from the digital camera or scanner used to create or digitize it.
-If the file has been modified from its original state, some details may not fully reflect the modified file.',
-	'metadata-expand' => 'Show extended details',
-	'metadata-collapse' => 'Hide extended details',
-	'metadata-fields' => 'Image metadata fields listed in this message will be included on image page display when the metadata table is collapsed.
-Others will be hidden by default.
+如果此檔案的源檔案已經被修改，一些訊息在修改後的檔案中將不能完全反映出來。',
+	'metadata-expand' => '顯示詳細資料',
+	'metadata-collapse' => '隱藏詳細資料',
+	'metadata-fields' => '在本訊息中所列出的 EXIF 元數據域將包含在圖片顯示頁面，當元數據表損壞時只顯示以下訊息。
+其他的元數據預設為隱藏。
 * make
 * model
 * datetimeoriginal
@@ -39020,10 +37064,10 @@ Others will be hidden by default.
 * gpslatitude
 * gpslongitude
 * gpsaltitude',
-	'monthsall' => 'all',
-	'mobile-hide' => 'Hide',
-	'mobile-show' => 'Show',
-	'most_visited' => 'Most visited',
+	'monthsall' => '全部',
+	'mobile-hide' => '隱藏',
+	'mobile-show' => '顯示',
+	'most_visited' => '最多人訪問',
 	'masthead-anonymous-user' => 'Fandom用戶',
 	'mainpage-nstab' => '',
 	'media_sample' => 'Example.ogg',
