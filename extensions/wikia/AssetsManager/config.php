@@ -2206,7 +2206,8 @@ $config['design_system_user_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js'
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js'
 	],
 ];
 
