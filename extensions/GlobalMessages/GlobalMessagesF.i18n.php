@@ -290,7 +290,6 @@ $1 - URL of upload page for this file.
 
 Filepage-nofile and Filepage-nofile-link message deprecate {{msg-mw|Noimage}}",
 	'filerevert' => '{{Identical|Revert}}',
-	'filerevert-backlink' => '{{optional}}',
 	'filerevert-legend' => '{{Identical|Revert}}',
 	'filerevert-intro' => 'Message displayed when you try to revert a version of a file.
 * $1 is the name of the media
@@ -309,7 +308,6 @@ Filepage-nofile and Filepage-nofile-link message deprecate {{msg-mw|Noimage}}",
 * $3 is a hour
 * $4 is an URL and must follow square bracket: [$4
 {{Identical|Revert}}',
-	'filedelete-backlink' => '{{optional}}',
 	'filedelete-legend' => '{{Identical|Delete}}',
 	'filedelete-intro-old' => 'Message displayed when you try to delete a version of a file.
 * $1 is the name of the media
@@ -4500,7 +4498,6 @@ $messages['ckb'] = array(
 	'filepage-nofile' => 'پەڕگەیەک بەم ناوە نیە.',
 	'filepage-nofile-link' => 'پەڕگەیەک بەم ناوە نیە بەڵام دەتوانی [$1 باری بکەی].',
 	'filerevert' => 'پێچەوانەکردنەوەی $1',
-	'filerevert-backlink' => '→ $1',
 	'filerevert-legend' => 'پێچەوانەکردنەوەی پەڕگە',
 	'filerevert-intro' => "خەریکی پەڕگەی '''[[Media:$1|$1]]''' دەگەڕینیتەوە بۆ [$4 وەشانی $3، $2].",
 	'filerevert-comment' => 'هۆکار:',
@@ -4509,7 +4506,6 @@ $messages['ckb'] = array(
 	'filerevert-success' => "'''[[Media:$1|$1]]''' گەڕێندراوەتەوە بۆ [$4 وەشانی $3، $2].",
 	'filerevert-badversion' => 'وەشانێکی پێشووی ئەم  پەڕگە بەو کاتە ڕاچاوکراوه ‌نەدۆزرایەوە.',
 	'filedelete' => 'سڕینەوەی $1',
-	'filedelete-backlink' => '→ $1',
 	'filedelete-legend' => 'سڕینەوەی پەڕگە',
 	'filedelete-intro' => "خەریکی پەڕگەی '''[[Media:$1|$1]]''' دەگەڵ هەموو مێژووی دەسڕیتەوە.",
 	'filedelete-intro-old' => "خەریکی وەشانی [$4 $3، $2] لە '''[[Media:$1|$1]]''' دەسڕیتەوە.",
@@ -4844,9 +4840,6 @@ $messages['cs'] = array(
 	'filenotfound' => 'Nebylo možné najít soubor „$1“.',
 	'fileexistserror' => 'Nelze uložit do souboru „$1“: soubor existuje',
 	'formerror' => 'Chyba: nebylo možné odeslat formulář',
-	'filereadonlyerror' => "Nelze změnit soubor „$1“, protože úložiště souborů „$2“ je momentálně pouze pro čtení.
-
-Správce serveru, který úložiště zamkl, poskytl toto zdůvodnění: „''$3''“.",
 	'filename' => 'Soubor',
 	'filedesc' => 'Popis',
 	'fileuploadsummary' => 'Popis:',
@@ -4901,8 +4894,6 @@ JD # Jenoptik
 MGP # Pentax
 PICT # různé
  #</pre> <!-- tuto řádku ponechte beze změny -->',
-	'filejournal-fail-dbconnect' => 'Nelze se připojit k žurnálové databázi pro koncový úložný systém „$1“.',
-	'filejournal-fail-dbquery' => 'Nepodařilo se aktualizovat žurnálovou databázi pro koncový úložný systém „$1“.',
 	'file-anchor-link' => 'Soubor',
 	'filehist' => 'Historie souboru',
 	'filehist-help' => 'Kliknutím na datum a čas se zobrazí tehdejší verze souboru.',
@@ -5697,7 +5688,6 @@ $messages['de-weigsbrag'] = array(
 	'filenotfound' => 'Dose Dadei „$1“ haddar noggs wend.',
 	'fileexistserror' => 'Haddar noggs gön in dose Dadei „$1“ schreib, weil dose Dadei schon geb.',
 	'formerror' => 'Wehl: Dose Eingabes haddar noggs gön werarbeid.',
-	'files' => 'Dadeies',
 	'filename' => 'Dadeinam',
 	'filedesc' => 'Beschreib',
 	'fileuploadsummary' => 'Beschreib/Guel:',
@@ -5713,7 +5703,6 @@ $messages['de-weigsbrag'] = array(
 Nam won Dadei wo wol hoglad: <strong><tt>$1</tt></strong><br />
 Nam won worhandenes Dadei: <strong><tt>$2</tt></strong><br />
 Nur dose Dadeiend in Groses/Gleinesschreib undscheid. Bid brüw, ob dose Dadeies inhaldliges idendisches sei.',
-	'fileexists-thumb' => "<center>'''Worhandenes Dadei'''</center>",
 	'fileexists-thumbnail-yes' => 'Dose Dadei anschein eines Bild sei wo haddar werglein <i>(thumbnail)</i>. Bid brüw dose Dadei <strong><tt>$1</tt></strong>.<br />
 Wan dose Bild in Originalgrös sei, braugdar noggs seberades Worschaubild hoglad.',
 	'file-thumbnail-no' => 'Dose Dadeinam mid <strong><tt>$1</tt></strong> anwäng. Dose sei Hinweis auw eines Bild wo haddar werglein <i>(thumbnail)</i>.
@@ -5753,7 +5742,6 @@ Bid dose Dadei eines Nam geb, wo dose Inhald beseres beschreibdar.',
 	'filedelete-success-old' => '<span class="plainlinks">Won dose Dadei \'\'\'„[[Media:$1|$1]]“\'\'\' haddar dose Wersion $2, $3 Uhr lösch.</span>',
 	'filedelete-nofile' => "'''„$1“''' auw dose {{SITENAME}} gar noggs geb.",
 	'filedelete-nofile-old' => "Gebdar won '''„$1“''' noggs Wersion won $2, $3 Uhr.",
-	'filedelete-iscurrent' => 'Du brobär su lösch dose agdueles Wersion won dose Dadei. Bid dose worher auw eines älderes Wersion surügseds.',
 	'filedelete-otherreason' => 'Anderes/ergänsendes Grund:',
 	'filedelete-reason-otherlist' => 'Anderes Grund',
 	'filedelete-reason-dropdown' => '
@@ -5762,7 +5750,6 @@ Bid dose Dadei eines Nam geb, wo dose Inhald beseres beschreibdar.',
 ** Dubligad',
 	'filedelete-edit-reasonlist' => 'Löschgründes bearbeid',
 	'fewestrevisions' => 'Seides mid wenigsdes Wersiones',
-	'fewestrevisions-summary' => 'Dose Schbesialseid dose Seides mid wenigsdes Bearbeides auwlisd.',
 	'filemissing' => 'Dadei wehldar',
 	'filedeleteerror-short' => 'Wehl bei dose Dadei-Lösch: $1',
 	'filedeleteerror-long' => 'Bei dose Dadei-Lösch haddar Wehles wesdschdel:
@@ -5949,9 +5936,6 @@ $messages['dsb'] = array(
 	'filenotfound' => 'Njejo było móžno dataju „$1” namakaś.',
 	'fileexistserror' => 'Njejo było móžno do dataje "$1" pisaś: Wóna južo eksistěrujo.',
 	'formerror' => 'Zmólka: Njejo móžno formular wótpósłaś.',
-	'filereadonlyerror' => 'Njejo móžno dataju "$1" změniś, dokulaž datajowy repozitorium "$2" jo jano cytajobny.
-
-Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 	'filename' => 'Mě dataje',
 	'filedesc' => 'Zespominanje',
 	'fileuploadsummary' => 'Zespominanje:',
@@ -6006,8 +5990,6 @@ JD # Jenoptik
 MGP # Pentax
 PICT # misc.
  #</pre> <!-- Njezměń nic na toś tej rědce! -->',
-	'filejournal-fail-dbconnect' => 'Njejo žeden zwisk ze žurnaloweju datoweju banku za składowański backend "$1" móžno.',
-	'filejournal-fail-dbquery' => 'Žurnalowa datowa banka za składowański backend "$1" njedajo se aktualizěrowaś.',
 	'file-anchor-link' => 'Dataja',
 	'filehist' => 'Stawizny dataje',
 	'filehist-help' => 'Tłoc na datum/cas aby tencasna wersija se lodowała.',
@@ -6743,9 +6725,6 @@ $messages['et'] = array(
 	'filenotfound' => 'Faili nimega "$1" ei leitud.',
 	'fileexistserror' => 'Kirjutamine faili "$1" ebaõnnestus: fail on juba olemas',
 	'formerror' => 'Viga: vormi ei saanud salvestada',
-	'filereadonlyerror' => 'Faili "$1" ei saa muuta, sest hoidla "$2" on kirjutuskaitstud.
-
-Administraator lukustas selle järgmisel põhjusel: "$3".',
 	'filename' => 'Faili nimi',
 	'filedesc' => 'Lühikirjeldus',
 	'fileuploadsummary' => 'Info faili kohta:',
@@ -9464,9 +9443,6 @@ $messages['he'] = array(
 	'filenotfound' => 'הקובץ "$1" לא נמצא.',
 	'fileexistserror' => 'הכתיבה לקובץ "$1" נכשלה: הקובץ קיים',
 	'formerror' => 'שגיאה: לא יכול לשלוח טופס.',
-	'filereadonlyerror' => 'לא ניתן לשנות את הקובץ "$1" כיוון שמאגר הקבצים "$2" במצב קריאה בלבד.
-
-מנהל המערכת שנעל את המאגר סיפק את ההסבר הבא: "\'\'\'$3\'\'\'".',
 	'filename' => 'שם הקובץ',
 	'filedesc' => 'תקציר',
 	'fileuploadsummary' => 'תיאור:',
@@ -9524,8 +9500,6 @@ JD # Jenoptik
 MGP # Pentax
 PICT # שונות
  #</pre> <!-- נא להשאיר שורה זו בדיוק כפי שהיא -->',
-	'filejournal-fail-dbconnect' => 'לא ניתן היה להתחבר לבסיס הנתונים של היומן עבור מאגר אחסון הקבצים הפנימי "$1".',
-	'filejournal-fail-dbquery' => 'לא ניתן היה לעדכן את בסיס הנתונים של היומן עבור מאגר אחסון הקבצים הפנימי "$1".',
 	'file-anchor-link' => 'קובץ',
 	'filehist' => 'היסטוריית הקובץ',
 	'filehist-help' => 'לחצו על תאריך/שעה כדי לראות את הקובץ כפי שנראה בעת זו.',
@@ -11403,9 +11377,6 @@ $messages['is'] = array(
 	'filenotfound' => 'Gat ekki fundið skrána „$1“.',
 	'fileexistserror' => 'Ekki var hægt að skrifa í "$1" skjalið: það er nú þegar til',
 	'formerror' => 'Villa: gat ekki sent eyðublað',
-	'filereadonlyerror' => 'Ekki var hægt að breyta skránni "$1" því skráin í skráarsafninu "$2" er engöngu hægt að lesa.
-
-Möppudýrið sem læsti skránni gaf þessa ástæðu: "\'\'$3\'\'".',
 	'filename' => 'Skráarnafn',
 	'filedesc' => 'Lýsing',
 	'fileuploadsummary' => 'Ágrip:',
@@ -20515,7 +20486,7 @@ $messages['pt'] = array(
 	'february-gen' => 'fevereiro',
 	'feb' => 'fev.',
 	'faq' => 'FAQ',
-	'feedlinks' => 'Feed:',
+	'feedlinks' => "''Feed'':",
 	'feed-invalid' => 'Tipo inválido de inscrição de feeds.',
 	'feed-unavailable' => 'Os "feeds" não se encontram disponíveis',
 	'fileappenderrorread' => 'Não foi possível ler "$1" durante a anexação.',
@@ -20680,7 +20651,7 @@ As imagens serão exibidas em sua resolução máxima, outros tipos de arquivos 
 	'feedback-error2' => 'Erro: A edição falhou',
 	'feedback-error3' => 'Erro: A API não responde',
 	'feedback-close' => 'Feito',
-	'forum' => 'Forum',
+	'forum' => 'Fórum',
 	'feed-watom' => 'Fandom Atom',
 	'feed-atom' => 'Atom',
 	'feed-rss' => 'RSS',
@@ -20729,9 +20700,6 @@ $messages['pt-br'] = array(
 	'filenotfound' => 'Não foi possível encontrar o arquivo "$1".',
 	'fileexistserror' => 'Não foi possível gravar no arquivo "$1": ele já existe',
 	'formerror' => 'Erro: Não foi possível enviar o formulário',
-	'filereadonlyerror' => 'Não é possível modificar o arquivo "$1" porque o repositório do arquivo "$2" está em modo somente leitura.
-
-O administrador que bloqueou ofereceu a seguinte explicação: "$3".',
 	'filename' => 'Nome do arquivo',
 	'filedesc' => 'Descrição do arquivo',
 	'fileuploadsummary' => 'Sumário:',
@@ -20795,8 +20763,6 @@ JD # Jenoptik
 MGP # Pentax
 PICT # misc.
  #</pre> <!-- deixe esta linha exatamente como está -->',
-	'filejournal-fail-dbconnect' => 'Não foi possível se conectar ao banco de dados de registros do sistema de armazenamento "$1".',
-	'filejournal-fail-dbquery' => 'Não foi possível atualizar o banco de dados de registros do sistema de armazenamento "$1".',
 	'file-anchor-link' => 'Arquivo',
 	'filehist' => 'Histórico do arquivo',
 	'filehist-help' => 'Clique em uma data/horário para ver como o arquivo estava em um dado momento.',
@@ -20913,9 +20879,6 @@ $messages['qu'] = array(
 	'filenotfound' => 'Manam tarinichu "$1" sutiyuq willañiqita.',
 	'fileexistserror' => 'Manam atinichu "$1" sutiyuq willañiqiman qillqamuyta: willañiqiqa kachkanñam',
 	'formerror' => "Pantasqa: manam atinichu hunt'ana p'anqata kachayta",
-	'filereadonlyerror' => 'Manam atinichu "$1" sutiyuq willañiqita hukchayta, "$2" sutiyuq willañiqi churamuna ñawirillanapaq kachkaptinmi.
-
-Amachaq kamachiqqa kayrayku amachani nispa nirqanmi: "$3".',
 	'filename' => 'Willañiqip sutin',
 	'filedesc' => 'Pisichay',
 	'fileuploadsummary' => "T'iktu:",
@@ -20952,8 +20915,6 @@ Kay churkunayki rikcha hunt'a chhikan kayniyuq kaptinqa, chay hunt'atam churkuy,
 	'file-deleted-duplicate' => 'Kay hinalla ([[:$1]]) willañiqiña qullusqam karqa. Qhawariy imarayku qullusqa karqa, manaraq musuqmanta churkuykachaspa.',
 	'filewasdeleted' => 'Kay sutiyuq willañiqi huk kutiña churkusqa karqaspa chaymanta qullusqam karqan. $1-ta llanchinaykim tiyanman manaraq musuqmanta churkuspayki.',
 	'filename-bad-prefix' => "Churkunayasqayki willañiqip sutinqa '''\"\$1\"''' nisqawanmi qallarin. Chay sutinqa iliktruniku rikcha hap'inap kamasqanmanmi rikch'akun. Ama hina kaspa, willañiqiykita astawan t'iktuq sutinta akllay.",
-	'filejournal-fail-dbconnect' => "Manam atinichu \"\$1\" sutiyuq willañiqi hallch'ana sirwiqpaq p'unchawnintin hallch'awan t'inkiyta.",
-	'filejournal-fail-dbquery' => 'Manam atinichu "$1" sutiyuq willañiqi hallch\'ana sirwiqpaq p\'unchawnintin hallch\'ata musuqchayta.',
 	'file-anchor-link' => 'Rikcha',
 	'filehist' => 'Willañiqip wiñay kawsaynin',
 	'filehist-help' => "P'unchaw/pacha nisqapi ñit'iy chaypacha willañiqi kachkasqata qhawanaykipaq.",
@@ -23130,9 +23091,6 @@ $messages['sk'] = array(
 	'filenotfound' => 'Nebolo možné nájsť súbor „$1“.',
 	'fileexistserror' => 'Nebolo možné zapisovať do súboru „$1“: súbor existuje',
 	'formerror' => 'Chyba: nepodarilo sa odoslať formulár',
-	'filereadonlyerror' => 'Nebolo možné modifikovať súbor „$1“, pretože úložisko „$2“ je momentálne v režime len na čítanie.
-
-Správca, ktorý ho zamkol ponúkol toto vysvetlenie: „$3“.',
 	'filename' => 'Názov súboru',
 	'filedesc' => 'Opis súboru',
 	'fileuploadsummary' => 'Zhrnutie:',
@@ -23189,8 +23147,6 @@ JD # Jenoptik
 MGP # Pentax
 PICT # rôzne
   #</pre> <!-- tento riadok ponechajte bez zmeny -->',
-	'filejournal-fail-dbconnect' => 'Nepodarilo sa pripojiť k žurnálovej databáze úložiska „$1“.',
-	'filejournal-fail-dbquery' => 'Nepodarilo sa aktualizovať žurnálovú databázu úložiska „$1“.',
 	'file-anchor-link' => 'Súbor',
 	'filehist' => 'História súboru',
 	'filehist-help' => 'Po kliknutí na dátum/čas uvidíte súbor ako vyzeral vtedy.',
@@ -26986,7 +26942,6 @@ $messages['val'] = array(
 	'filedeleteerror' => 'No s\'ha pogut borrar el ficher "$1".',
 	'filenotfound' => 'No s\'ha pogut trobar el ficher "$1".',
 	'formerror' => "Error: no s'ha pogut enviar les dades del formulari",
-	'files' => 'Fichers',
 	'filename' => 'Nom de ficher',
 	'filedesc' => 'Sumari',
 	'fileuploadsummary' => 'Resum:',
