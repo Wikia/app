@@ -198,13 +198,6 @@ Parameters:
 {{Identical|Block user}}',
 	'badipaddress' => 'An error message shown when one entered an invalid IP address in blocking page.',
 	'blockipsuccesstext' => '<nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is supported.',
-	'blocklistline' => 'This is the text of an entry in the [[Special:BlockList]].
-* $1 is the hour and date of the block.
-* $2 is the sysop.
-* $3 is the blocked user or IP (with link to contributions and talk)
-* $4 contains "hour and date of expiry" ({{msg-mw|Expiringblock}} or {{msg-mw|Infiniteblock}})
-
-See also {{msg-mw|Blocklogentry}}.',
 	'blocklist-nousertalk' => 'Used in [[Special:IPBlockList]] when "Allow this user to edit own talk page while blocked" option hasn\'t been flagged. See also {{msg-mw|Block-log-flags-nousertalk}}.',
 	'blocklink' => "Display name for a link that, when selected, leads to a form where a user can be blocked. Used in page history and recent changes pages. Example: \"''UserName (Talk | contribs | '''block''')''\".",
 	'blocklogpage' => "The page name of [[Special:Log/block]]. Also appears in the drop down menu of [[Special:Log]] pages and in the action links of Special:Contributions/''Username'' pages (e.g. \"For Somebody (talk | block log | logs)\").
@@ -1264,8 +1257,6 @@ Ta keyaksera va $1 ok konar [[{{MediaWiki:Grouppage-sysop}}|ristusik]] rotuzeral
 Va \'"e-mail" staksara pu bat favesik\' me rofavel vaxede "e-mail" mane tir koe rinaf [[Special:Preferences|lodamaceem]] ise vaon faveson me zo elekayal.
 Rinaf tise IP mane tir $3 ise ID elekara tir #$5. Va bate ik bane mane ko kota erura vay bazel !',
 	'blockednoreason' => 'Meka bazena lazava',
-	'blockedoriginalsource' => "Klita ke '''$1''' vleveon zo nedir :",
-	'blockededitsource' => "Krent ke '''rinaf betakseem''' va '''$1''' vleveon zo betar :",
 	'badsig' => 'Meenafa rilafa sugdara; va HTML tcala yo stujel !',
 	'badsiglength' => 'Sugdara tir abrotcarsafa.
 Gotir le $1 {{PLURAL:$1|staa|staa}}.',
@@ -1287,7 +1278,6 @@ Va lazavanha (tulon ozwason va cidayanu bu se) vlevon bazel !',
 	'badipaddress' => 'IP mane tir mewadafe.',
 	'blockipsuccesssub' => 'Elekanhara',
 	'blockipsuccesstext' => "L'adresse IP « $1 » a été bloquée.<br />Vous pouvez consulter sur cette [[Special:IPBlockList|page]] la liste des adresses IP bloquées.",
-	'blocklistline' => '$1 (tenuwer ba $4): $2 va $3 al elekar',
 	'blocklink' => 'elekara',
 	'blocklogpage' => 'Elekara log',
 	'blocklogentry' => 'Elekan [[$1]] kali $2 ke $3 evledja',
@@ -3106,8 +3096,6 @@ $messages['ckb'] = array(
 ئای‌پی ئەدرەسی ئێستای تۆ $3 و پەێناسەی بەربەست‌کراو #$5.<br />
 تکایە لە هەر پرس و داواکاریەکت‌دا هەموو وردەکاریەکانی سەرەوە بگونجێنە.',
 	'blockednoreason' => 'هیچ هۆکارێک نەدراوە',
-	'blockedoriginalsource' => "سەرچاوەی '''$1''' لەخوارەوە پیشاندراوە:",
-	'blockededitsource' => "دەقی '''دەستکاریەکانی تۆ''' بۆ '''$1''' لە خوارەوە نیشان‌دراوە:",
 	'badsig' => 'ئیمزاكه‌ هه‌ڵه‌یه‌، ته‌ماشای كۆدی HTML بكه‌‌',
 	'badsiglength' => 'واژۆکەت زۆر درێژە.
 واژۆ نابێ لە $1 {{PLURAL:$1|نووسە|نووسە}} درێژتر بێت.',
@@ -3132,7 +3120,6 @@ $messages['ckb'] = array(
 	'blockipsuccesssub' => 'بەربەست کردن سەرکەوتوو بوو',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] بەربەست‌کراوە.<br />
 بۆ دیتنی بەربەست‌کراوەکان، چاو لە [[Special:IPBlockList|لیستی بەربەستی ئای‌پی]] بکە.',
-	'blocklistline' => '$1، $2 بەربەستی کرد $3 ($4)',
 	'blocklist-nousertalk' => 'دەستکاری لاپەڕەی وتووێژی خۆ ناکرێت',
 	'blocklink' => 'بەربەستن',
 	'blocklogpage' => 'لۆگی بەربەستن',
@@ -3395,14 +3382,12 @@ Zde je pro přehled zobrazen nejnovější záznam z knihy zablokování:',
 	'backend-fail-closetemp' => 'Dočasný soubor nelze zavřít.',
 	'backend-fail-read' => 'Soubor $1 nelze číst.',
 	'backend-fail-create' => 'Nepodařilo se zapsat do souboru $1.',
-	'backend-fail-maxsize' => 'Nepodařilo se zapsat do souboru $1, protože je větší než {{PLURAL:$2|$2 bajt|$2 bajty|$2 bajtů}}.',
 	'backend-fail-readonly' => 'Koncový úložný systém „$1“ je momentálně pouze pro čtení. Udaným důvodem je: „$2“',
 	'backend-fail-synced' => 'Soubor „$1“ je v interních koncových úložných systémech v nekonzistentním stavu',
 	'backend-fail-connect' => 'Nepodařilo se připojit ke koncovému úložnému systému „$1“.',
 	'backend-fail-internal' => 'V koncovém úložném systému „$1“ došlo k neznámé chybě.',
 	'backend-fail-contenttype' => 'Nelze určit typ obsahu souboru k uložení do „$1“.',
 	'backend-fail-batchsize' => 'Koncový úložný systém přijal dávku s $1 {{PLURAL:souborovou operací|souborovými operacemi}}; maximum je {{PLURAL:$2|$2}}.',
-	'backend-fail-usable' => 'Nepodařilo se zapsat do souboru $1 kvůli nedostatečným oprávněním nebo chybějícím adresářům/kontejnerům.',
 	'brokenredirects' => 'Přerušená přesměrování',
 	'brokenredirectstext' => 'Tato přesměrování vedou na neexistující stránky:',
 	'brokenredirects-edit' => 'editovat',
@@ -3795,123 +3780,111 @@ Kun indholdet af lister (linjer startende med *) bliver brugt. Den første henvi
 );
 
 $messages['de'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Seiten mit defekten Dateilinks',
+	'badaccess' => 'Keine ausreichenden Rechte',
+	'badaccess-group0' => 'Du hast nicht die erforderliche Berechtigung für diese Aktion.',
+	'badaccess-groups' => 'Diese Aktion ist auf Benutzer beschränkt, die {{PLURAL:$2|der Gruppe|einer der Gruppen}} „$1“ angehören.',
+	'badarticleerror' => 'Diese Aktion kann auf diese Seite nicht angewendet werden.',
+	'badtitle' => 'Ungültiger Titel',
+	'badtitletext' => 'Der Titel der angeforderten Seite ist ungültig, leer oder ein ungültiger Sprachlink von einem anderen Wiki.',
+	'badretype' => 'Die beiden Passwörter stimmen nicht überein.',
+	'blocked-mailpassword' => 'Die von dir verwendete IP-Adresse ist für das Ändern von Seiten gesperrt. Um einen Missbrauch zu verhindern, wurde die Möglichkeit zur Anforderung eines neuen Passwortes ebenfalls gesperrt.',
+	'bold_sample' => 'Fetter Text',
+	'bold_tip' => 'Fetter Text',
+	'blockedtitle' => 'Benutzer ist gesperrt',
+	'blockedtext' => 'Dein Benutzername oder Deine IP-Adresse wurde von $1 blockiert.
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+Folgender Grund wurde angegeben: $2
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+Du kannst $1 oder andere [[Project:Administratoren|Administratoren]] kontaktieren, um über die Blockierung zu diskutieren. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Wikia]] aufnehmen.
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+Bitte gib bei entsprechenden Anfragen immer Deine IP-Adresse ($3), den Namen dieses Wikis und das heutige Datum an.',
+	'blockednoreason' => 'keine Begründung angegeben',
+	'blocked-notice-logextract' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} ist zurzeit gesperrt.
+Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
+	'badsig' => 'Die Syntax der Signatur ist ungültig; bitte HTML überprüfen.',
+	'badsiglength' => 'Die Signatur darf maximal $1 {{PLURAL:$1|Zeichen|Zeichen}} lang sein.',
+	'boteditletter' => 'B',
+	'badfilename' => 'Der Dateiname wurde zu „$1“ abgeändert.',
+	'backend-fail-stream' => 'Die Datei $1 konnte nicht übertragen werden.',
+	'backend-fail-backup' => 'Die Datei $1 konnte nicht gesichert werden.',
+	'backend-fail-notexists' => 'Die Datei $1 ist nicht vorhanden.',
+	'backend-fail-hashes' => 'Die Streuwerte der Datei konnten nicht zum Vergleichen abgerufen werden.',
+	'backend-fail-notsame' => 'Es ist bereits eine Datei $1 vorhanden, die nicht identisch ist.',
+	'backend-fail-invalidpath' => '$1 ist kein gültiger Pfad zum Speichern.',
+	'backend-fail-delete' => 'Die Datei $1 konnte nicht gelöscht werden.',
+	'backend-fail-alreadyexists' => 'Die Seite $1 ist bereits vorhanden',
+	'backend-fail-store' => 'Die Datei $1 konnte nicht unter $2 gespeichert werden.',
+	'backend-fail-copy' => 'Die Datei $1 konnte nicht nach $2 kopiert werden.',
+	'backend-fail-move' => 'Die Datei $1 konnte nicht nach $2 verschoben werden.',
+	'backend-fail-opentemp' => 'Die temporäre Datei konnte nicht geöffnet werden.',
+	'backend-fail-writetemp' => 'Die temporäre Datei konnte nicht geschrieben werden.',
+	'backend-fail-closetemp' => 'Die temporäre Datei konnte nicht geschlossen werden.',
+	'backend-fail-read' => 'Die Datei $1 konnte nicht gelesen werden.',
+	'backend-fail-create' => 'Die Datei $1 konnte nicht erstellt werden.',
+	'backend-fail-readonly' => 'Das Speicher-Backend „$1“ befindet sich derzeit im Lesemodus. Der angegebene Grund lautet: „$2“',
+	'backend-fail-synced' => 'Die Datei „$1“ befindet sich, innerhalb des internen Speicher-Backends, in einem inkonsistenten Zustand.',
+	'backend-fail-connect' => 'Es konnte keine Verbindung zum Speicher-Backend „$1“ hergestellt werden.',
+	'backend-fail-internal' => 'Im Speicher-Backend „$1“ ist ein unbekannter Fehler aufgetreten.',
+	'backend-fail-contenttype' => 'Der Inhaltstyp, der im Pfad „$1“ zu speichernden Datei, konnte nicht bestimmt werden.',
+	'backend-fail-batchsize' => 'Eine Stapelverarbeitungsdatei, die {{PLURAL:$1|eine Operation|$1 Operationen}} enthält, wurde an das Speicher-Backend gesandt. Die Begrenzung liegt allerdings bei {{PLURAL:$2|einer Operation|$2 Operationen}}.',
+	'brokenredirects' => 'Defekte Weiterleitungen',
+	'brokenredirectstext' => 'Die folgenden Weiterleitungen führen zu einer nicht (mehr) existenten Seite.',
+	'brokenredirects-edit' => 'bearbeiten',
+	'brokenredirects-delete' => 'löschen',
+	'booksources' => 'ISBN-Suche',
+	'booksources-search-legend' => 'Suche nach Bezugsquellen für Bücher',
+	'booksources-go' => 'Suchen',
+	'booksources-text' => 'Dies ist eine Liste mit Links zu Internetseiten, die neue und gebrauchte Bücher verkaufen. Dort kann es auch weitere Informationen über die Bücher geben. {{SITENAME}} ist mit keinem dieser Anbieter geschäftlich verbunden.',
+	'booksources-invalid-isbn' => 'Vermutlich ist die ISBN ungültig.
+Bitte prüfe, ob sie korrekt von der Quelle übertragen wurde.',
+	'blanknamespace' => '(Seiten)',
+	'block' => 'Benutzer sperren',
+	'blockip' => 'Benutzer sperren',
+	'blockip-title' => 'Benutzer sperren',
+	'blockip-legend' => 'IP-Adresse/Benutzer sperren',
+	'blockiptext' => 'Mit diesem Formular sperrst du eine IP-Adresse oder einen Benutzernamen, so dass von dort keine Änderungen mehr vorgenommen werden können.
+Dies sollte nur erfolgen, um Vandalismus zu verhindern und in Übereinstimmung mit den [[{{ns:project}}:Leitlinien|Projektleitlinien]] geschehen.
+Bitte gib immer einen Grund für die Blockade an.',
+	'badipaddress' => 'Die IP-Adresse hat ein falsches Format.',
+	'blockipsuccesssub' => 'Sperre erfolgreich',
+	'blockipsuccesstext' => 'Der Benutzer/die IP-Adresse [[Special:Contributions/$1|$1]] wurde gesperrt.<br />
+Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperren]].',
+	'blocklist' => 'Gesperrte Benutzer',
+	'blocklist-userblocks' => 'Benutzersperren ausblenden',
+	'blocklist-tempblocks' => 'Befristete Sperren ausblenden',
+	'blocklist-addressblocks' => 'Sperren einzelner IP-Adressen ausblenden',
+	'blocklist-rangeblocks' => 'Bereichssperren ausblenden',
+	'blocklist-timestamp' => 'Zeitstempel',
+	'blocklist-target' => 'Ziel',
+	'blocklist-expiry' => 'Sperrdauer bis',
+	'blocklist-by' => 'Gesperrt von',
+	'blocklist-params' => 'Sperrparameter',
+	'blocklist-reason' => 'Grund',
+	'blocklist-nousertalk' => 'darf eigene Diskussionsseite nicht bearbeiten',
+	'blocklink' => 'Sperren',
+	'blocklogpage' => 'Benutzersperr-Logbuch',
+	'blocklog-showlog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon früher gesperrt. Es folgt der Eintrag aus dem Benutzersperr-Logbuch:',
+	'blocklog-showsuppresslog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon früher gesperrt und versteckt.
+Es folgt der Eintrag aus dem Unterdrückungs-Logbuch:',
+	'blocklogentry' => 'sperrte „[[$1]]“ für den Zeitraum: $2 $3',
+	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen. Die Spezialseite [[Special:Ipblocklist|Liste gesperrter Benutzer/IP-Adressen]] führt alle aktuell gesperrten Benutzer auf, einschließlich automatisch geblockter IP-Adressen.',
+	'block-log-flags-anononly' => 'nur Anonyme',
+	'block-log-flags-nocreate' => 'Erstellung von Benutzerkonten gesperrt',
+	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
+	'block-log-flags-noemail' => 'E-Mail-Versand gesperrt',
+	'block-log-flags-nousertalk' => 'darf eigene Diskussionsseite nicht bearbeiten',
+	'block-log-flags-angry-autoblock' => 'erweiterter Autoblock aktiviert',
+	'block-log-flags-hiddenname' => 'Benutzername versteckt',
+	'blockme' => 'Sperre mich',
+	'bydate' => 'nach Datum',
+	'bad_image_list' => 'Format:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
-	'button-createpage' => 'Add a Page',
+Nur Zeilen, die mit einem * anfangen, werden ausgewertet. Als erstes nach dem * muss ein Link auf eine unerwünschte Datei stehen.
+Darauf folgende Seitenlinks in derselben Zeile definieren Ausnahmen, in deren Kontext die Datei trotzdem erscheinen darf.',
+	'blankpage' => 'Leere Seite',
+	'back' => 'Zurück',
+	'button-createpage' => 'Neue Seite',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -3950,7 +3923,6 @@ Sie könnten $1 oder einen der anderen [[{{MediaWiki:Grouppage-sysop}}|Administr
 Sie können die „E-Mail an diesen Benutzer“-Funktion nicht nutzen, solange keine gültige E-Mail-Adresse in Ihren [[Special:Preferences|Benutzerkonto-Einstellungen]] eingetragen ist, oder diese Funktion für Sie gesperrt wurde.
 Ihre aktuelle IP-Adresse ist $3, und die Sperr-ID ist $5.
 Bitte fügen Sie alle Informationen jeder Anfrage hinzu, die Sie stellen.",
-	'blockededitsource' => "Der Quelltext '''Ihrer Änderungen''' an '''$1''':",
 	'booksources-invalid-isbn' => 'Vermutlich ist die ISBN ungültig.
 Bitte prüfen Sie, ob sie korrekt von der Quelle übertragen wurde.',
 	'blockiptext' => 'Mit diesem Formular sperren Sie eine IP-Adresse oder einen Benutzernamen, so dass von dort keine Änderungen mehr vorgenommen werden können.
@@ -3959,12 +3931,8 @@ Bitte geben Sie den Grund für die Sperre an.',
 );
 
 $messages['de-weigsbrag'] = array(
-	'bugreports' => 'Gondagd',
-	'bugreportspage' => 'Project:Gondagd',
 	'badaccess' => 'Noggs ausreigendes Regdes',
 	'badaccess-group0' => 'Haddar noggs nödiges Beregd wür dose Agsion.',
-	'badaccess-group1' => 'Dose Agsion nur Benudses gön mag, wo su dose Grubb „$1“ gehördar.',
-	'badaccess-group2' => 'Dose Agsion nur Benudses gön mag, wo su eines won dose Grubbes „$1“ gehördar.',
 	'badaccess-groups' => 'Dose Agsion nur Benudses gön mag, wo su eines won dose Grubbes „$1“ gehördar.',
 	'badarticleerror' => 'Dose Agsion auw dose Seid noggs gön anwend.',
 	'badtitle' => 'Noggsgüldiges Did',
@@ -3997,17 +3965,13 @@ Gön $1 od eines won anderes [[{{MediaWiki:Grouppage-sysop}}|Adminisdradores]] g
 *Schber-ID: #$5
 </div>',
 	'blockednoreason' => 'haddar gar noggs Begründ angeb',
-	'blockedoriginalsource' => "Dose Gueldegsd won dose '''$1''' da anseig:",
-	'blockededitsource' => "Dose Gueldegsd won '''Deines Ändes''' an dose '''$1''':",
 	'boteditletter' => 'B',
 	'badfilename' => 'Dose Dadeinam haddar änd in „$1“.',
 	'brokenredirects' => 'Gabuddes Weidleides',
-	'brokenredirects-summary' => 'Dose Schbesialseid Weidleides auw Seides wo gar noggs geb auwlisd.',
 	'brokenredirectstext' => '',
 	'brokenredirects-edit' => '(bearbeid)',
 	'brokenredirects-delete' => '(lösch)',
 	'booksources' => 'ISBN-Sug',
-	'booksources-summary' => 'Auw dose Schbesialseid gön eines ISBN eingeb, dan griegdar eines Lisd mid Onlain-Gadalöges und hald wo Büges gön gauw su dose ISBN. Dose Bindschdriges od Leerseiges swisch dose Dsähles wür dose Sug noggs Rol schbäl.',
 	'booksources-search-legend' => 'Sug nag Besugsgueles wür Büges',
 	'booksources-go' => 'Sug',
 	'booksources-text' => 'Dose eines Lisd sei mid Werweises su Nedsseides, wo neues und gebraugdes Büges wergauw. Bei dose gön aug wend mehres Inwormasiones üb dose Büges. Dose {{SITENAME}} haddar mid noggs won dose Anbiedes geschäwdliges su duddar.',
@@ -4022,7 +3986,6 @@ Bid Grund wür dose Schber angeb.',
 	'blockipsuccesstext' => 'Dose Benuds/dose IB-Adres [[{{ns:special}}:Contributions/$1|$1]] haddar schber und dose Agsion in dose [[{{ns:special}}:Log/block|Benudsesschber-Logbug]] brodogolär
 
 Wür Auwheb won Schber seddar dose [[{{ns:special}}:Ipblocklist|Lisd won ales agdiwes Schberes]].',
-	'blocklistline' => '$1, $2 haddar schber $3 (bis $4)',
 	'blocklink' => 'Schber',
 	'blocklogpage' => 'Benudsesschber-Logbug',
 	'blocklogentry' => 'haddar schber dose „[[$1]]“ wür dose Dseidraum: $2 $3',
@@ -4170,14 +4133,12 @@ Nejnowšy zapisk blokěrowańskego protokola pódawa se dołojce ako referenca:'
 	'backend-fail-closetemp' => 'Temporerna dataja njedajo se zacyniś.',
 	'backend-fail-read' => 'Dataja $1 njedajo se cytaś.',
 	'backend-fail-create' => 'Dataja $1 njedajo se pisaś.',
-	'backend-fail-maxsize' => 'Dataja $1 njedajo se pisaś, dokulaž jo wětša ako {{PLURAL:$2|jaden bajt|$2 bajta|$2 bajty|$2 bajtow}}.',
 	'backend-fail-readonly' => 'Składowański backend "$1" dajo se tuchylu jano cytaś. Pśicyna jo była: "$2"',
 	'backend-fail-synced' => 'Dataja "$1" jo  w internem składowańskem backenźe w inkonsistentnem stawje',
 	'backend-fail-connect' => 'Zwisk z datajowym składowańskem backendom "$1" njejo móžno.',
 	'backend-fail-internal' => 'W składowańskem backenźe "$1" jo njeznata zmólka nastała.',
 	'backend-fail-contenttype' => 'Wopśimjeśowy typ dataje, kótaraž ma se na "$1" składowaś, njedajo se zwěsćiś.',
 	'backend-fail-batchsize' => 'Štapjelowa dataja, kótaraž wopśimujo {{PLURAL:$1|jadnu operaciju|$1 operaciji|$1 operacije|$1 operacijow}},  jo se  na składowański backend pósłała; limit jo $2 {{PLURAL:$1|operaciju|operaciji|operacije|operacijow}}.',
-	'backend-fail-usable' => 'Dataja $1 njedajo se dla njedosegajucych  abo felujucych zapisow pisaś.',
 	'brokenredirects' => 'Skóńcowane dalejpósrědnjenja',
 	'brokenredirectstext' => 'Slědujuce dalejpósrědnjenja wótkazuju na njeeksistěrujuce boki:',
 	'brokenredirects-edit' => 'wobźěłaś',
@@ -4589,129 +4550,126 @@ Sekvaj ligilo en la sama linio estas konsiderata kiel esceptoj (paĝoj kiel la b
 );
 
 $messages['es'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Páginas con enlaces rotos a archivos',
+	'badaccess' => 'Error de permisos',
+	'badaccess-group0' => 'No tienes autorización para ejecutar la acción que ha solicitado.',
+	'badaccess-groups' => 'La acción que has solicitado está restringida a los usuarios {{PLURAL:$2|del grupo|de uno de estos $2 grupos}}: $1.',
+	'badarticleerror' => 'Esta acción no se puede llevar a cabo en esta página.',
+	'badtitle' => 'Título incorrecto',
+	'badtitletext' => 'El título de la página solicitada está vacío, no es válido, o es un enlace interidioma o interwiki incorrecto.
+Puede que contenga uno o más caracteres que no se pueden usar en los títulos.',
+	'badretype' => 'Las contraseñas no coinciden.',
+	'blocked-mailpassword' => 'Tu dirección IP está bloqueada, y no se te permite el uso de la función de recuperación de contraseñas para prevenir abusos.',
+	'bold_sample' => 'Texto en negrita',
+	'bold_tip' => 'Texto en negrita',
+	'blockedtitle' => 'El usuario está bloqueado',
+	'blockedtext' => "'''Tu nombre de usuario o dirección IP ha sido bloqueada.'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+El bloqueo fue hecho por $1.
+La razón dada es ''$2''.
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Inicio del bloqueo: $8
+* Caducidad del bloqueo: $6
+* Bloqueo destinado a: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+Puedes contactar con $1 u otro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir el bloqueo.
+No puedes utilizar la función «enviar correo electrónico a este usuario»  a menos que tengas una dirección de correo electrónico válida registrada en tus [[Special:Preferences|preferencias de usuario]] y que el bloqueo no haya inhabilitado esta función.
+
+Tu dirección IP actual es $3, y el identificador del bloqueo es #$5.
+Por favor incluye todos los datos aquí mostrados en cualquier consulta que hagas.",
+	'blockednoreason' => 'no se ha especificado el motivo',
+	'blocked-notice-logextract' => 'Este usuario está actualmente bloqueado.
+La última entrada del registro de bloqueos se proporciona debajo para mayor referencia:',
+	'badsig' => 'El código de tu firma no es válido; comprueba las etiquetas HTML.',
+	'badsiglength' => 'La firma es muy larga. Debe contener un máximo de {{PLURAL:$1|un carácter|$1 caracteres}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'El nombre de la imagen se ha cambiado a «$1».',
+	'backend-fail-stream' => 'No se pudo transmitir el archivo «$1».',
+	'backend-fail-backup' => 'No pudo hacer copia de seguridad del archivo «$1».',
+	'backend-fail-notexists' => 'El archivo  $1  no existe.',
+	'backend-fail-hashes' => 'No se pudieron obtener los hashes de los ficheros para compararlos.',
+	'backend-fail-notsame' => 'Ya existe un fichero distinto en $1.',
+	'backend-fail-invalidpath' => '$1 no es una ruta de almacenamiento válida',
+	'backend-fail-delete' => 'No se pudo borrar el archivo «$1».',
+	'backend-fail-alreadyexists' => 'El archivo  $1  ya existe.',
+	'backend-fail-store' => 'No se pudo almacenar el archivo $1 en $2.',
+	'backend-fail-copy' => 'No se pudo copiar el archivo $1 a $2.',
+	'backend-fail-move' => 'No se pudo mover el archivo $1 a $2.',
+	'backend-fail-opentemp' => 'No se pudo crear archivo temporal.',
+	'backend-fail-writetemp' => 'No se pudo escribir en el archivo temporal.',
+	'backend-fail-closetemp' => 'No se pudo cerrar el archivo temporal.',
+	'backend-fail-read' => 'No se pudo leer el archivo «$1».',
+	'backend-fail-create' => 'No se pudo crear el archivo «$1».',
+	'backend-fail-readonly' => 'El servidor (back-end) de almacenamiento "$1" está actualmente en estado de sólo lectura. La razón aducida fue: "$2"',
+	'backend-fail-synced' => 'El archivo "$1" se encuentra en un estado incoherente dentro de los servidores (backends) de almacenamiento interno',
+	'backend-fail-connect' => 'No se pudo conectar al servidor (backend) de almacenamiento "$1".',
+	'backend-fail-internal' => 'Se ha producido un error desconocido en el servidor (backend) de almacenamiento "$1".',
+	'backend-fail-contenttype' => 'No se pudo determinar el tipo de contenido del archivo a guardar en " $1 ".',
+	'backend-fail-batchsize' => 'El servidor (back-end) de almacenamiento ha suministrado un lote de $1 {{PLURAL:$1|operación|operaciones}} de archivo; el límite es de $2 {{PLURAL:$2|operación|operaciones}}.',
+	'brokenredirects' => 'Redirecciones incorrectas',
+	'brokenredirectstext' => 'Las siguientes redirecciones enlazan a páginas que no existen:',
+	'brokenredirects-edit' => '(editar)',
+	'brokenredirects-delete' => '(borrar)',
+	'booksources' => 'Fuentes de libros',
+	'booksources-search-legend' => 'Buscar fuentes de libros',
+	'booksources-go' => 'Ir',
+	'booksources-text' => 'Abajo hay una lista de enlaces a otros sitios que venden libros nuevos y usados, puede que contengan más información sobre los libros que estás buscando.',
+	'booksources-invalid-isbn' => 'El número de ISBN no parece ser válido; comprueba los errores copiándolo de la fuente original.',
+	'blanknamespace' => '(Principal)',
+	'block' => 'Bloquear usuario',
+	'blockip' => 'Bloquear usuario',
+	'blockip-title' => 'Bloquear usuario',
+	'blockip-legend' => 'Bloquear usuario',
+	'blockiptext' => 'Usa el siguiente formulario para bloquear el acceso de escritura desde una dirección IP específica o nombre de usuario.
+Esto debería hacerse sólo para prevenir vandalismos, y de acuerdo a las [[{{MediaWiki:Policy-url}}|políticas]].
+Explica la razón específica del bloqueo (por ejemplo, citando las páginas en particular que han sido objeto de vandalismo).',
+	'badipaddress' => 'La dirección IP no tiene el formato correcto.',
+	'blockipsuccesssub' => 'Bloqueo realizado con éxito',
+	'blockipsuccesstext' => '"[[Special:Contributions/$1|$1]]" ha sido bloqueado.<br />
+Véase la [[Special:BlockList|lista de bloqueos]] para revisarlo.',
+	'blocklist' => 'Usuarios bloqueados',
+	'blocklist-userblocks' => 'Ocultar bloqueos de cuenta',
+	'blocklist-tempblocks' => 'Ocultar bloqueos temporales',
+	'blocklist-addressblocks' => 'Ocultar bloqueos de una sola dirección IP',
+	'blocklist-rangeblocks' => 'Ocultar bloqueos de rango',
+	'blocklist-timestamp' => 'Marca de tiempo',
+	'blocklist-target' => 'Destino',
+	'blocklist-expiry' => 'Caduca',
+	'blocklist-by' => 'Bloqueo de administrador',
+	'blocklist-params' => 'Parámetros de bloqueo',
+	'blocklist-reason' => 'Motivo',
+	'blocklist-nousertalk' => 'no puede editar su propia página de discusión',
+	'blocklink' => 'bloquear',
+	'blocklogpage' => 'Registro de bloqueos',
+	'blocklog-showlog' => 'Este usuario ha sido bloqueado previamente. Debajo se provee el registro de bloqueos para mayor referencia:',
+	'blocklog-showsuppresslog' => 'Este usuario ha sido bloqueado y ocultado. Se provee el registro de supresiones para más detalle:',
+	'blocklogentry' => 'bloqueó a [[$1]] $3 durante un plazo de $2',
+	'blocklogtext' => 'Esto es un registro de bloqueos y desbloqueos de usuarios.
+Las direcciones bloqueadas automáticamente no aparecen aquí.
+Consulte la [[Special:BlockList|lista de direcciones IP bloqueadas]] para ver la lista de bloqueos vigente.',
+	'block-log-flags-anononly' => 'sólo anónimos',
+	'block-log-flags-nocreate' => 'desactivada la creación de cuentas',
+	'block-log-flags-noautoblock' => 'bloqueo automático desactivado',
+	'block-log-flags-noemail' => 'correo electrónico deshabilitado',
+	'block-log-flags-nousertalk' => 'no puede editar su propia página de discusión',
+	'block-log-flags-angry-autoblock' => 'autobloqueo avanzado habilitado',
+	'block-log-flags-hiddenname' => 'nombre de usuario oculto',
+	'blockme' => 'Bloquéame',
+	'bydate' => 'por fecha',
+	'bad_image_list' => 'El formato es el siguiente:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
+Solo se reconocen elementos de lista (líneas que comienzan con «*»).
+El primer enlace de cada línea debe ser un enlace al archivo que se quiere bloquear.
+Todos los demás enlaces en la misma línea se tomarán como excepciones (es decir, páginas donde sí se puede usar el archivo).',
+	'blankpage' => 'Página vacía',
+	'back' => 'Atrás',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'button-createpage' => 'Add a Page',
+	'button-createpage' => 'Crear una página',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -4781,9 +4739,7 @@ See ei tohi olla pikem kui $1 {{PLURAL:$1|sümbol|sümbolit}}.',
 	'backend-fail-closetemp' => 'Ajutist faili ei saa sulgeda.',
 	'backend-fail-read' => 'Faili $1 ei saa lugeda.',
 	'backend-fail-create' => 'Faili $1 ei saa kirjutada.',
-	'backend-fail-maxsize' => 'Faili $1 ei saa kirjutada, sest see on {{PLURAL:$2|ühest baidist|$2 baidist}} suurem.',
 	'backend-fail-contenttype' => 'Faili, mida soovitakse talletada asukohas "$1", sisutüüpi saanud kindlaks teha.',
-	'backend-fail-usable' => 'Faili $1 ei saa ebapiisavate õiguste või puuduvate kataloogide/konteinerite tõttu kirjutada.',
 	'brokenredirects' => 'Vigased ümbersuunamised',
 	'brokenredirectstext' => 'Järgmised leheküljed on ümber suunatud olematutele lehekülgedele:',
 	'brokenredirects-edit' => 'redigeeri',
@@ -5392,124 +5348,120 @@ Fylgjandi slóðir á somu linju eru undantøk, tvs. síður har fílan kann fyr
 );
 
 $messages['fr'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Pages avec des liens de fichiers brisés',
+	'badaccess' => 'Erreur de permission',
+	'badaccess-group0' => 'Vous n’avez pas les droits suffisants pour réaliser l’action demandée.',
+	'badaccess-groups' => 'L’action que vous essayez de réaliser n’est accessible qu’aux utilisateurs {{PLURAL:$2|du groupe|des groupes}} : $1.',
+	'badarticleerror' => 'Cette action ne peut pas être effectuée sur cette page.',
+	'badtitle' => 'Mauvais titre',
+	'badtitletext' => 'Le titre de la page demandée est invalide, vide, ou il s’agit d’un titre inter-langue ou inter-projet mal lié. Il contient peut-être un ou plusieurs caractères qui ne peuvent pas être utilisés dans les titres.',
+	'badretype' => 'Les mots de passe que vous avez saisis ne correspondent pas.',
+	'blocked-mailpassword' => 'Votre adresse IP est bloquée en écriture, la fonction de rappel du mot de passe est donc désactivée pour éviter les abus.',
+	'bold_sample' => 'Texte gras',
+	'bold_tip' => 'Texte gras',
+	'blockedtitle' => 'L’utilisateur est bloqué.',
+	'blockedtext' => "'''Votre compte utilisateur ou votre adresse IP a été bloqué.'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+Le blocage a été effectué par $1.
+La raison invoquée est la suivante : ''$2''.
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Début du blocage : $8
+* Expiration du blocage : $6
+* Compte bloqué : $7.
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrateur]] pour en discuter.
+Vous ne pouvez utiliser la fonction « {{MediaWiki:emailpage}} » que si une adresse e-mail valide est spécifiée dans vos [[Special:Preferences|préférences]] et que cette fonctionnalité n’a pas été bloquée.
+Votre adresse IP actuelle est $3 et votre identifiant de blocage est $5.
+Veuillez préciser ces indications dans toutes les requêtes que vous ferez.",
+	'blockednoreason' => 'aucune raison donnée',
+	'blocked-notice-logextract' => 'Cet utilisateur est actuellement bloqué.
+La dernière entrée du registre des blocages est indiquée ci-dessous à titre d’information :',
+	'badsig' => 'Signature brute incorrecte.
+Vérifiez les balises HTML.',
+	'badsiglength' => 'Votre signature est trop longue.
+Elle ne doit pas dépasser $1 caractère{{PLURAL:$1||s}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-isbn' => 'ISBN:',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'Le fichier a été renommé en « $1 ».',
+	'backend-fail-stream' => 'Impossible de lire le fichier $1.',
+	'backend-fail-backup' => 'Impossible de sauvegarder le fichier $1.',
+	'backend-fail-notexists' => "Le fichier $1 n'existe pas.",
+	'backend-fail-hashes' => "Impossible d'obtenir les hachages du fichier pour comparaison.",
+	'backend-fail-notsame' => 'Un fichier différent existe déjà pour $1 .',
+	'backend-fail-invalidpath' => '$1 n’est pas un chemin de stockage valide.',
+	'backend-fail-delete' => 'Impossible de supprimer le fichier $1.',
+	'backend-fail-alreadyexists' => 'Le fichier $1 existe déjà.',
+	'backend-fail-store' => 'Impossible de stocker le fichier $1 en $2.',
+	'backend-fail-copy' => 'Impossible de copier le fichier $1 en $2.',
+	'backend-fail-move' => 'Impossible de déplacer le fichier $1 en $2.',
+	'backend-fail-opentemp' => "Impossible d'ouvrir le fichier temporaire.",
+	'backend-fail-writetemp' => "Impossible d'écrire dans le fichier temporaire.",
+	'backend-fail-closetemp' => 'Impossible de fermer le fichier temporaire.',
+	'backend-fail-read' => 'Impossible de lire le fichier $1.',
+	'backend-fail-create' => 'Impossible de créer le fichier $1.',
+	'backend-fail-readonly' => 'Le support de stockage "$1" est actuellement en lecture seule. La raison indiquée est: "$2"',
+	'backend-fail-synced' => 'Le fichier "$1" est dans un état incohérent dans les supports de stockage internes',
+	'backend-fail-connect' => 'Impossible de se connecter au support de stockage "$1".',
+	'backend-fail-internal' => 'Une erreur inconnue s\'est produite dans le support de stockage "$1".',
+	'backend-fail-contenttype' => 'Impossible de déterminer le type de contenu du fichier à stocker en "$1".',
+	'backend-fail-batchsize' => 'Le support de stockage a fourni un lot de $1 {{PLURAL:$1|opération|opérations}} de fichier; la limite est $2 {{PLURAL:$2|opération|opérations}}.',
+	'brokenredirects' => 'Redirections cassées',
+	'brokenredirectstext' => 'Ces redirections mènent vers des pages inexistantes :',
+	'brokenredirects-edit' => 'modifier',
+	'brokenredirects-delete' => 'supprimer',
+	'booksources' => 'Ouvrages de référence',
+	'booksources-search-legend' => 'Rechercher parmi des ouvrages de référence',
+	'booksources-isbn' => 'ISBN :',
+	'booksources-go' => 'Lister',
+	'booksources-text' => 'Voici une liste indicative et non exclusive de liens vers d’autres sites vendant des livres neufs et d’occasion et sur lesquels vous trouverez peut-être des informations sur les ouvrages que vous cherchez :',
+	'booksources-invalid-isbn' => 'L’ISBN donné ne semble pas être correct ; vérifiez si vous avez fait une erreur en copiant la source originale.',
+	'blanknamespace' => '(Principal)',
+	'block' => 'Bloquer l’utilisateur',
+	'blockip' => 'Bloquer l’utilisateur',
+	'blockip-title' => 'Bloquer l’utilisateur',
+	'blockip-legend' => 'Bloquer l’utilisateur',
+	'blockiptext' => 'Utilisez le formulaire ci-dessous pour bloquer l’accès aux modifications faites à partir d’une adresse IP spécifique ou d’un nom d’utilisateur.
+Une telle mesure ne devrait être prise que pour prévenir le vandalisme et en accord avec les [[{{MediaWiki:Policy-url}}|règles internes]].
+Donnez ci-dessous un motif précis (par exemple en citant les pages qui ont été vandalisées).',
+	'badipaddress' => 'Adresse IP incorrecte',
+	'blockipsuccesssub' => 'Blocage réussi',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] a été bloqué{{GENDER:$1||e|}}.<br />
+Consultez la [[Special:BlockList|liste des adresses IP et comptes bloqués]] pour revoir les blocages.',
+	'blocklist' => 'Utilisateurs bloqués',
+	'blocklist-userblocks' => 'Masquer les blocages de comptes',
+	'blocklist-tempblocks' => 'Masquer les blocages temporaires',
+	'blocklist-addressblocks' => 'Masquer les blocages d’adresses IP uniques',
+	'blocklist-rangeblocks' => 'Masquer les blocs de portée',
+	'blocklist-timestamp' => 'Date et heure',
+	'blocklist-target' => 'Cible',
+	'blocklist-expiry' => 'Date d’expiration',
+	'blocklist-by' => 'Administrateur ayant effectué le blocage',
+	'blocklist-params' => 'Paramètres de blocage',
+	'blocklist-reason' => 'Motif',
+	'blocklist-nousertalk' => 'ne peut modifier sa propre page de discussion',
+	'blocklink' => 'bloquer',
+	'blocklogpage' => 'Journal des blocages',
+	'blocklog-showlog' => 'Cet utilisateur a été bloqué précédemment. Le journal des blocages est disponible ci-dessous :',
+	'blocklog-showsuppresslog' => 'Cet utilisateur a été bloqué et caché précédemment. Le journal des suppressions est disponible ci-dessous :',
+	'blocklogentry' => 'a bloqué [[$1]] ; expiration : $2 $3',
+	'blocklogtext' => 'Ceci est le journal des actions de blocages et déblocages d’utilisateurs.
+Les adresses IP automatiquement bloquées ne sont pas listées.
+Consultez la [[Special:BlockList|liste des IP bloquées]] pour voir les bannissements et blocages effectivement en cours.',
+	'block-log-flags-anononly' => 'utilisateurs anonymes seulement',
+	'block-log-flags-nocreate' => 'création de compte interdite',
+	'block-log-flags-noautoblock' => 'autoblocage des IP désactivé',
+	'block-log-flags-noemail' => "envoi d'e-mails interdit",
+	'block-log-flags-nousertalk' => 'ne peut modifier sa propre page de discussion',
+	'block-log-flags-angry-autoblock' => 'autoblocage amélioré activé',
+	'block-log-flags-hiddenname' => 'nom d’utilisateur caché',
+	'blockme' => 'Bloquez-moi',
+	'bydate' => 'par date',
+	'bad_image_list' => 'Le format est le suivant :
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
-	'button-createpage' => 'Add a Page',
+Seules les listes d’énumération (commençant par *) sont prises en compte. Le premier lien d’une ligne doit être celui d’une mauvaise image.
+Les autres liens sur la même ligne sont considérés comme des exceptions, par exemple des pages sur lesquelles l’image peut apparaître.',
+	'blankpage' => 'Page vide',
+	'back' => 'Retour',
+	'button-createpage' => 'Créer page',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -6261,8 +6213,6 @@ $messages['grc'] = array(
 Ἡ τρέχουσα IP-διεύθυνσις σου $3 ἐστίν, καὶ ἡ ἀναγνώρισις τῆς φραγῆς #$5 ἐστίν.
 Παρακαλοῦμεν σε περιλαμβάνειν οἱανδήποτε ἐξ αὐτῶν ἢ καὶ ἀμφοτέρας ἐν ταῖς ἐρωτήσεσί σου.",
 	'blockednoreason' => 'οὐδεμία αἰτία ἐδόθη',
-	'blockedoriginalsource' => "Ἡ πηγὴ τοῦ '''$1''' δείκνυται κατωτέρω:",
-	'blockededitsource' => "Τὸ κείμενον τῶν '''μεταγραφῶν ὑπ' ἐσοῦ''' τοῦ '''$1''' δείκνυται κάτωθι:",
 	'badsig' => 'Ἄκυρος πρωτογενὴς ὑπογραφή. Ἔλεγξον τὰ HTML-σήμαντρα.',
 	'badsiglength' => 'Ἡ ὑπογραφή σου πέρα τοῦ δέοντος μεγάλη ἐστίν.
 Οὐκ ἔξεστί ταύτῃ πλέον τῶν $1 {{PLURAL:$1|χαρακτῆρος|χαρακτῆρας}} ἔχει.',
@@ -6282,7 +6232,6 @@ $messages['grc'] = array(
 	'blockip-legend' => 'Φράττειν χρώμενον',
 	'badipaddress' => 'Ἄκυρος IP-διεύθυνσις',
 	'blockipsuccesssub' => 'Φραγὴ ἐπιτευκτός ἐστιν',
-	'blocklistline' => '$3 ἐφράχθη ὑπὸ $1, $2 ($4)',
 	'blocklist-nousertalk' => 'ἀδύνατον τὸ μεταγράφειν τὴν ἑαυτὴν δέλτον διαλέξεως',
 	'blocklink' => 'ἀπόκλῃσις',
 	'blocklogpage' => 'Αἱ ἀποκλῄσεις',
@@ -6545,7 +6494,6 @@ She $3 dt'enmys IP roie, as she dt'enney ghlass na #$5. Cur ad lesh dagh ooilley
 	'blockip' => 'Glass magh yn ymmydeyr',
 	'blockip-legend' => 'Glass magh yn ymmydeyr',
 	'badipaddress' => 'Enmys IP gyn vree',
-	'blocklistline' => '$1, $3 er ny g(h)lassey magh ec $2 ($4)',
 	'blocklink' => 'glassey magh',
 	'blocklogpage' => 'Lioar chooishyn ghlassaghyn magh',
 	'blocklogentry' => 'er nglassey magh [[$1]] rish/derrey $2 $3',
@@ -6703,14 +6651,12 @@ $messages['he'] = array(
 	'backend-fail-closetemp' => 'לא הייתה אפשרות לסגור את הקובץ הזמני.',
 	'backend-fail-read' => 'קריאת הקובץ $1 לא הצליחה',
 	'backend-fail-create' => 'כתיבת הקובץ $1 לא הצליחה',
-	'backend-fail-maxsize' => 'כתיבת הקובץ $1 לא הצליחה כיוון שהוא גדול יותר {{PLURAL:$2|מבית אחד|מ־$2 בתים}}.',
 	'backend-fail-readonly' => 'מאגר האחסון לקבצים "$1" הוא כרגע במצב קריאה בלבד. הסיבה שניתנה לכך היא: "\'\'\'$2\'\'\'"',
 	'backend-fail-synced' => 'הקובץ "$1" נמצא במצב לא עקבי בתוך מאגרי אחסון הקבצים הפנימיים',
 	'backend-fail-connect' => 'לא ניתן היה להתחבר למאגר אחסון הקבצים הפנימי "$1".',
 	'backend-fail-internal' => 'אירעה שגיאה בלתי־ידועה במאגר אחסון הקבצים הפנימי "$1".',
 	'backend-fail-contenttype' => 'לא ניתן היה לקבוע את סוג התוכן של הקובץ לאחסון ב־"$1".',
 	'backend-fail-batchsize' => 'למאגר אחסון הקבצים הפנימי הועבר אוסף של {{PLURAL:$1|פעולת קובץ אחת|$1 פעולות קובץ}}; המגבלה היא {{PLURAL:$2|פעולה אחת|$2 פעולות}}.',
-	'backend-fail-usable' => 'כתיבת הקובץ $1 לא הצליחה כיוון שההרשאות אינן מספיקות או כיוון שהספריות/המכלים חסרים.',
 	'brokenredirects' => 'הפניות לא תקינות',
 	'brokenredirectstext' => 'ההפניות שלהלן מפנות לדפים שאינם קיימים:',
 	'brokenredirects-edit' => 'עריכה',
@@ -6797,8 +6743,6 @@ $messages['hi'] = array(
 आपका मौजूदा आईपी पता $3 है और अवरोध क्रमांक #$5 है।
 आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।",
 	'blockednoreason' => 'कारण दिया नहीं हैं',
-	'blockedoriginalsource' => "'''$1''' का स्रोत इसके नीचे दिया गया है:",
-	'blockededitsource' => "'''$1''' को '''आपके बदलाव''' का पाठ्य नीचे दर्शाया गया हैं:",
 	'blocked-notice-logextract' => 'यह सदस्य फ़िलहाल अवरोधित हैं। सदंर्भ के लिए ताज़ातरीन अवरोध चिट्ठा प्रविष्टि नीचे है:',
 	'badsig' => 'गलत कच्चा दस्तखत, HTML टैग की जाँच करें ।',
 	'badsiglength' => 'यह हस्ताक्षर बहुत बड़ा है।
@@ -6826,7 +6770,6 @@ $messages['hi'] = array(
 	'blockipsuccesssub' => 'अवरोधन सफल ।(संपादन करने से रोक दिया गया है)',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] को बाध्य किया जा चुका है।<br />
 बाध्यों की समीक्षा के लिए [[Special:IPBlockList|IP बाध्य सूची]] देखें।',
-	'blocklistline' => '$1, $2 ने $3 को बदलाव करने से रोक दिया है (यह रोक $4 तक मान्य है)',
 	'blocklist-nousertalk' => 'अपना वार्ता पन्ना भी संपादित नहीं कर सकेंगे',
 	'blocklink' => 'अवरोधित करें',
 	'blocklogpage' => 'ब्लॉक सूची',
@@ -6877,8 +6820,6 @@ $messages['hif'] = array(
 आपका मौजूदा आईपी पता $3 है और अवरोध क्रमांक #$5 है।
 आप जो भी तफ़्तीश करें उसमें उपरोक्त सभी जानकारी भी शामिल करें।",
 	'blockednoreason' => 'कारण दिया नहीं हैं',
-	'blockedoriginalsource' => "'''$1''' का स्रोत इसके नीचे दिया गया है:",
-	'blockededitsource' => "'''$1''' को '''आपके बदलाव''' का पाठ्य नीचे दर्शाया गया हैं:",
 	'blocked-notice-logextract' => 'यह सदस्य फ़िलहाल अवरोधित हैं। सदंर्भ के लिए ताज़ातरीन अवरोध चिट्ठा प्रविष्टि नीचे है:',
 	'badsig' => 'गलत कच्चा दस्तखत, HTML टैग की जाँच करें ।',
 	'badsiglength' => 'यह हस्ताक्षर बहुत बड़ा है।
@@ -6906,7 +6847,6 @@ $messages['hif'] = array(
 	'blockipsuccesssub' => 'अवरोधन सफल ।(संपादन करने से रोक दिया गया है)',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] को बाध्य किया जा चुका है।<br />
 बाध्यों की समीक्षा के लिए [[Special:IPBlockList|IP बाध्य सूची]] देखें।',
-	'blocklistline' => '$1, $2 ने $3 को बदलाव करने से रोक दिया है (यह रोक $4 तक मान्य है)',
 	'blocklist-nousertalk' => 'अपना वार्ता पन्ना भी संपादित नहीं कर सकेंगे',
 	'blocklink' => 'अवरोधित करें',
 	'blocklogpage' => 'ब्लॉक सूची',
@@ -6957,8 +6897,6 @@ Aap ii sadasya ke 'email this user' feature ke kaam me lae ke baat nai kare sakt
 Aap ke abhi ke IP address $3 hai, aur roka gae ID hai #$5.
 Meharbani kar ke chahe ek nai to duno ke aapan sawaal me rakho.",
 	'blockednoreason' => 'koi kaaran nai dewa gais hai',
-	'blockedoriginalsource' => "'''$1''' ke kahaan se suruu bhais hai, niche likha hai:",
-	'blockededitsource' => "Aap ke '''$1 ke badlao''' ke akchhar niche likha hai:",
 	'blocked-notice-logextract' => 'Ii sadasya ke abhi rok dewa gais hae.
 Sab se nawaa block log entry, aap ke reference ke khatir,  niche dewa gais hae:',
 	'badsig' => 'Invalid raw signature; HTML tags ke check karo.',
@@ -6986,7 +6924,6 @@ Niche ek khaas kaaran likho (jaise ki, citing particular pages that were vandali
 	'blockipsuccesssub' => 'Rukawat safal rahaa',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] ke rok dewa gais hai.<br />
 Ii rukawat pe fir se bichar kare ke khatir [[Special:IPBlockList|IP block list]] ke dekho.',
-	'blocklistline' => '$1, $2 $3 ($4) ke rok diis hai',
 	'blocklist-nousertalk' => 'aapan baat waala panna ke badle ke adhikar nai hai',
 	'blocklink' => 'rok do',
 	'blocklogpage' => 'Suchi ke roko',
@@ -8064,7 +8001,6 @@ Hún þarf að vera færri en $1 {{PLURAL:$1|stafur|stafir}}.',
 	'backend-fail-closetemp' => 'Mistókst að loka tímabundinni skrá.',
 	'backend-fail-read' => 'Mistókst að lesa skrá $1.',
 	'backend-fail-create' => 'Mistókst að búa til skrá $1.',
-	'backend-fail-maxsize' => 'Mistókst að búa til skránna $1 því hún er stærri en {{PLURAL:$2|eitt bæti|$2 bæti}}.',
 	'backend-fail-readonly' => 'Gagnabankann "$1" er engöngu hægt að lesa í augnablikinu. Ástæðan sem var gefin er: "\'\'$2\'\'"',
 	'backend-fail-connect' => 'Mistókst að tengjast gagnabankanum "$1".',
 	'backend-fail-internal' => 'Óþekkt villa átti sér stað í gagnabankanum "$1".',
@@ -8129,123 +8065,116 @@ Allir síðari tenglar á sömu línu eru taldir vera undantekningar, þ.e. sí�
 );
 
 $messages['it'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Pagine che includono file inesistenti',
+	'badaccess' => 'Permessi non sufficienti',
+	'badaccess-group0' => "Non si dispone dei permessi necessari per eseguire l'azione richiesta.",
+	'badaccess-groups' => 'La funzione richiesta è riservata agli utenti che appartengono {{PLURAL:$2|al gruppo|a uno dei seguenti gruppi}}: $1.',
+	'badarticleerror' => 'Operazione non consentita per questa pagina.',
+	'badtitle' => 'Titolo non corretto',
+	'badtitletext' => 'Il titolo della pagina richiesta è vuoto, errato o con caratteri non ammessi oppure deriva da un errore nei collegamenti tra siti wiki diversi o versioni in lingue diverse dello stesso sito.',
+	'badretype' => 'Le password inserite non coincidono tra loro.',
+	'blocked-mailpassword' => 'Per prevenire abusi, non è consentito usare la funzione "Invia nuova password" da un indirizzo IP bloccato.',
+	'bold_sample' => 'Grassetto',
+	'bold_tip' => 'Grassetto',
+	'blockedtitle' => 'Utente bloccato.',
+	'blockedtext' => "'''Questo nome utente o indirizzo IP sono stati bloccati.'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+Il blocco è stato imposto da $1. La motivazione del blocco è la seguente: ''$2''
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Inizio del blocco: $8
+* Scadenza del blocco: $6
+* Intervallo di blocco: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+Se lo si desidera, è possibile contattare $1 o un altro [[{{MediaWiki:Grouppage-sysop}}|amministratore]] per discutere del blocco.
+
+Si noti che la funzione 'Scrivi all'utente' non è attiva se non è stato registrato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]] o se l'utilizzo di tale funzione è stato bloccato.
+
+L'indirizzo IP attuale è $3, il numero ID del blocco è #$5.
+Si prega di specificare tutti i dettagli precedenti in qualsiasi richiesta di chiarimenti.",
+	'blockednoreason' => 'nessuna motivazione indicata',
+	'blocked-notice-logextract' => "Questo utente è attualmente bloccato.
+L'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:",
+	'badsig' => 'Errore nella firma non standard, verificare i tag HTML.',
+	'badsiglength' => 'La firma scelta è troppo lunga, non deve superare $1 {{PLURAL:$1|carattere|caratteri}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-isbn' => 'ISBN:',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'Il nome del file è stato convertito in "$1".',
+	'backend-fail-stream' => 'Impossibile trasmettere il file $1.',
+	'backend-fail-backup' => 'Impossibile eseguire il backup del file $1 .',
+	'backend-fail-notexists' => 'Il file $1 non esiste.',
+	'backend-fail-hashes' => 'Impossibile ottenere hash dei file per confronto.',
+	'backend-fail-notsame' => 'Esiste già un file non identico a  $1 .',
+	'backend-fail-invalidpath' => '$1 non è un percorso di archiviazione valido.',
+	'backend-fail-delete' => 'Impossibile eliminare il file  $1 .',
+	'backend-fail-alreadyexists' => 'Il file $1 esiste già.',
+	'backend-fail-store' => 'Impossibilie memorizzare file  $1  in  $2 .',
+	'backend-fail-copy' => 'Impossibile copiare il file  $1  in  $2 .',
+	'backend-fail-move' => 'Impossibile spostare file  $1  in  $2 .',
+	'backend-fail-opentemp' => 'Impossibile aprire il file temporaneo.',
+	'backend-fail-writetemp' => 'Impossibile creare il file temporaneo.',
+	'backend-fail-closetemp' => 'Impossibile chiudere il file temporaneo.',
+	'backend-fail-read' => 'Impossibile leggere il file  $1 .',
+	'backend-fail-create' => 'Impossibile creare il file  $1 .',
+	'backend-fail-readonly' => 'Il backend "$1" è attualmente di sola lettura. La ragione indicata è: "$2"',
+	'backend-fail-synced' => 'Il file "$1" è in uno stato non coerente nei backend di memoria interna.',
+	'backend-fail-connect' => 'Impossibile connettersi al backend di memoria "$1".',
+	'backend-fail-internal' => 'Si è verificato un errore sconosciuto nel backend di memoria "$1".',
+	'backend-fail-contenttype' => 'Impossibile determinare la tipologia del file da archiviare in "$1".',
+	'backend-fail-batchsize' => 'Il backend di memoria ha programmato una serie di $1 {{PLURAL:$1|operazione|operazioni}} su file; il limite è di $2 {{PLURAL:$2|operazione|operazioni}}.',
+	'brokenredirects' => 'Redirect errati',
+	'brokenredirectstext' => 'I seguenti redirect puntano a pagine inesistenti:',
+	'brokenredirects-edit' => 'modifica',
+	'brokenredirects-delete' => 'cancella',
+	'booksources' => 'Fonti librarie',
+	'booksources-search-legend' => 'Ricerca di fonti librarie',
+	'booksources-isbn' => 'Codice ISBN:',
+	'booksources-go' => 'Vai',
+	'booksources-text' => 'Di seguito sono elencati alcuni collegamenti verso siti esterni che vendono libri nuovi e usati, attraverso i quali è possibile ottenere maggiori informazioni sul testo cercato.',
+	'booksources-invalid-isbn' => "L'ISBN inserito sembra non essere valido; verificare che non siano stati commessi errori nel copiarlo dalla fonte originale.",
+	'blanknamespace' => '(Principale)',
+	'block' => 'Blocca utente',
+	'blockip' => 'Blocco utente',
+	'blockip-title' => 'Blocca utente',
+	'blockip-legend' => 'Blocca l’utente',
+	'blockiptext' => "Usare il modulo sottostante per bloccare l'accesso in scrittura a uno specifico indirizzo IP o un utente registrato.
+Il blocco dev'essere operato per prevenire atti di vandalismo e in stretta osservanza della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]].
+Indicare il motivo specifico per il quale si procede al blocco (per esempio, citando i titoli di eventuali pagine oggetto di vandalismo).",
+	'badipaddress' => 'Indirizzo IP non valido.',
+	'blockipsuccesssub' => 'Blocco eseguito',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] è stato bloccato. <br />
+Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi attivi.',
+	'blocklist' => 'Utenti bloccati',
+	'blocklist-userblocks' => 'Nascondi i blocchi degli account',
+	'blocklist-tempblocks' => 'Nascondi i blocchi temporanei',
+	'blocklist-addressblocks' => 'Nascondi i blocchi di un solo IP',
+	'blocklist-rangeblocks' => 'Nascondi i blocchi di range',
+	'blocklist-timestamp' => 'Data e ora',
+	'blocklist-target' => 'Destinazione',
+	'blocklist-expiry' => 'Scade',
+	'blocklist-by' => 'Amministratore che ha bloccato',
+	'blocklist-params' => 'Parametri di blocco',
+	'blocklist-reason' => 'Motivo',
+	'blocklist-nousertalk' => 'non può modificare la propria pagina di discussione',
+	'blocklink' => 'blocca',
+	'blocklogpage' => 'Blocchi',
+	'blocklog-showlog' => 'Questo utente è stato bloccato in precedenza. Il registro dei blocchi è riportato di seguito per informazione:',
+	'blocklog-showsuppresslog' => 'Questo utente è stato bloccato e nascosto in precedenza. Il registro delle rimozioni è riportato di seguito per informazione:',
+	'blocklogentry' => 'ha bloccato [[$1]] per un periodo di $2 $3',
+	'blocklogtext' => "Di seguito sono elencate le azioni di blocco e sblocco utenti. Gli indirizzi IP bloccati automaticamente non sono elencati. Consultare l'[[Special:BlockList|elenco IP bloccati]] per l'elenco degli indirizzi e nomi utente il cui blocco è operativo.",
+	'block-log-flags-anononly' => 'solo utenti anonimi',
+	'block-log-flags-nocreate' => 'creazione account bloccata',
+	'block-log-flags-noautoblock' => 'blocco automatico disattivato',
+	'block-log-flags-noemail' => 'e-mail bloccate',
+	'block-log-flags-nousertalk' => 'non può modificare la propria pagina di discussione',
+	'block-log-flags-angry-autoblock' => 'blocco automatico avanzato attivo',
+	'block-log-flags-hiddenname' => 'nome utente nascosto',
+	'blockme' => 'Bloccami',
+	'bydate' => 'per data',
+	'bad_image_list' => "Il formato è il seguente:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
+Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev'essere un collegamento a un file indesiderato.
+I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).",
+	'blankpage' => 'Pagina vuota',
+	'back' => 'Indietro',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
@@ -8381,125 +8310,124 @@ I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (o
 );
 
 $messages['ja'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => '壊れたファイルへのリンクがあるページ',
+	'badaccess' => '権限がありません',
+	'badaccess-group0' => '要求した操作を行うことは許可されていません。',
+	'badaccess-groups' => 'この操作は、$1{{PLURAL:$2|の|のいずれかの}}グループに属する利用者のみが実行できます。',
+	'badarticleerror' => 'このページでは要求された操作を行えません。',
+	'badtitle' => '不正なページ名',
+	'badtitletext' => '要求されたページ名は、無効、空、または正しくない言語間リンク・ウィキ間リンクのページ名です。
+ページ名に利用できない文字が1つ以上含まれている可能性があります。',
+	'badretype' => '入力したパスワードが一致しません。',
+	'blocked-mailpassword' => '使用しているIPアドレスからの編集はブロックされており、不正利用防止のため、パスワードの再発行機能は使用できません。',
+	'bold_sample' => '太字',
+	'bold_tip' => '太字',
+	'blockedtitle' => '利用者はブロックされています',
+	'blockedtext' => "'''この利用者名またはIPアドレスはブロックされています。'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+ブロックは$1によって実施されました。
+ブロックの理由は「$2」です。
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* ブロック開始時期：$8
+* ブロック解除予定：$6
+* ブロック対象：$7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+このブロックについて、$1もしくは他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]に問い合わせることができます。
+ただし、[[Special:Preferences|個人設定]]で有効なメールアドレスが登録されていない場合、またはメール送信機能の使用がブロックされている場合、「この利用者にメールを送信」の機能は使えません。
+現在のIPアドレスは$3、このブロックIDは&#x23;$5です。
+問い合わせを行う際には、上記の情報を必ず書いてください。",
+	'blockednoreason' => '理由が設定されていません',
+	'blocked-notice-logextract' => 'この利用者は現在ブロックされています。
+参考のために最新のブロック記録を以下に表示します。',
+	'badsig' => '署名用のソースが正しくありません。
+HTMLタグを見直してください。',
+	'badsiglength' => '署名が長すぎます。$1文字以下でなければなりません。',
+	'boteditletter' => 'ボ',
+	'badfilename' => 'ファイル名は「$1」へ変更されました。',
+	'backend-fail-stream' => 'ファイル $1 をストリームできませんでした。',
+	'backend-fail-backup' => 'ファイル $1 をバックアップできませんでした。',
+	'backend-fail-notexists' => 'ファイル $1 は存在しません。',
+	'backend-fail-notsame' => 'ファイル名 $1 はすでに違うファイルが使用しています。',
+	'backend-fail-invalidpath' => '$1 はストレージパスに使用することができません。',
+	'backend-fail-delete' => 'ファイル $1 を削除できませんでした。',
+	'backend-fail-alreadyexists' => 'ファイル $1 はすでに存在します。',
+	'backend-fail-store' => 'ファイル $1 を $2 に格納できませんでした。',
+	'backend-fail-copy' => 'ファイル $1 を $2 にコピーできませんでした。',
+	'backend-fail-move' => 'ファイル $1 を $2 に移動できませんでした。',
+	'backend-fail-opentemp' => '一時ファイルを開けませんでした。',
+	'backend-fail-writetemp' => '一時ファイルに書き込めませんでした。',
+	'backend-fail-closetemp' => '一時ファイルを閉じることができませんでした。',
+	'backend-fail-read' => 'ファイル $1 を読み込めませんでした。',
+	'backend-fail-create' => 'ファイル $1 を作成できませんでした。',
+	'backend-fail-readonly' => '申し訳ありません、「$1」は現在読み取り専用となっています。理由:「$2」',
+	'backend-fail-synced' => 'ファイル「$1」は、ストレージバックエンド内部において不一致の状態にあります。',
+	'backend-fail-contenttype' => '「$1」に保存するコンテンツの種類が判断できませんでした。',
+	'brokenredirects' => '迷子のリダイレクト',
+	'brokenredirectstext' => '以下の転送は、存在しないページにリンクしています：',
+	'brokenredirects-edit' => '編集',
+	'brokenredirects-delete' => '削除',
+	'booksources' => '書籍情報源',
+	'booksources-search-legend' => '書籍情報源を検索',
+	'booksources-go' => '検索',
+	'booksources-text' => '以下は、新古本を販売している外部サイトへのリンクの一覧で、検索中の本について、更に詳しい情報が提供されているかもしれません：',
+	'booksources-invalid-isbn' => '指定されたISBN番号は有効ではないようです。参照している情報源から写し間違えていませんか。',
+	'blanknamespace' => '（標準）',
+	'block' => '利用者をブロック',
+	'blockip' => '利用者をブロック',
+	'blockip-title' => '利用者のブロック',
+	'blockip-legend' => '利用者をブロック',
+	'blockiptext' => '以下のフォームを使用して、指定した利用者やIPアドレスからの書き込みアクセスをブロックすることができます。
+このような措置は、荒らしからの防御のためにのみ行われるべきで、また[[{{MediaWiki:Policy-url}}|方針]]に沿ったものであるべきです。
+以下にブロックの理由を具体的に書いてください（例えば、荒らされたページへの言及など）。',
+	'badipaddress' => '不正なIPアドレス',
+	'blockipsuccesssub' => 'ブロックしました',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]をブロックしました。<br />
+[[Special:BlockList|投稿ブロック中の利用者やIPアドレス]]を参照してください。',
+	'blocklist' => 'ブロック中の利用者',
+	'blocklist-userblocks' => 'アカウントのブロックを非表示',
+	'blocklist-tempblocks' => '有期ブロックを非表示',
+	'blocklist-addressblocks' => '単一IPのブロックを非表示',
+	'blocklist-rangeblocks' => 'レンジブロックを非表示',
+	'blocklist-timestamp' => 'タイムスタンプ',
+	'blocklist-target' => '対象',
+	'blocklist-expiry' => '期限',
+	'blocklist-by' => 'ブロックした管理者',
+	'blocklist-params' => 'ブロックのパラメータ',
+	'blocklist-reason' => '理由',
+	'blocklist-nousertalk' => '自身のトークページ編集禁止',
+	'blocklink' => 'ブロック',
+	'blocklogpage' => 'ブロック記録',
+	'blocklog-showlog' => 'この利用者は以前にブロックされたことがあります。
+参考のため、ブロックの記録を以下に示します：',
+	'blocklog-showsuppresslog' => 'この利用者は以前にブロックされ、隠されたことがあります。
+参考のため、隠蔽記録を以下に示します：',
+	'blocklogentry' => '[[$1]] を$2ブロックしました。ブロックの詳細$3',
+	'blocklogtext' => 'このページは利用者のブロックと解除の記録です。
+自動的にブロックされたIPアドレスは表示されていません。
+現時点で有効なブロックは[[Special:BlockList|ブロックの一覧]]をご覧ください。',
+	'block-log-flags-anononly' => '匿名利用者のみ',
+	'block-log-flags-nocreate' => 'アカウント作成のブロック',
+	'block-log-flags-noautoblock' => '自動ブロック無効',
+	'block-log-flags-noemail' => 'メール送信のブロック',
+	'block-log-flags-nousertalk' => '自身のトークページの編集禁止',
+	'block-log-flags-angry-autoblock' => '拡張自動ブロック有効',
+	'block-log-flags-hiddenname' => '利用者名を隠す',
+	'blockme' => '自分をブロック',
+	'bydate' => '日付順',
+	'bad_image_list' => '書式は以下の通りです：
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
+箇条書き項目（*で始まる行）のみが考慮されます。
+各行最初のリンクは、好ましくないファイルへのリンクとしてください。
+同じ行でそれ以降にあるリンクは例外、つまりインライン挿入されてもよいページとみなされます。',
+	'blankpage' => '白紙ページ',
+	'back' => '戻る',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'button-createpage' => 'Add a Page',
+	'button-createpage' => '次へ',
 	'backlinksubtitle' => '← $1',
 	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
 	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
@@ -8631,8 +8559,6 @@ Panjenengan ora bisa nggunakaké fitur 'Kirim layang e-mail panganggo iki' kejab
 Alamat IP panjenengan iku $3, lan ID pamblokiran iku #$5.
 Tulung kabèh informasi ing ndhuwur iki disertakaké ing saben pitakon panjenengan.",
 	'blockednoreason' => 'ora ana alesan sing diwènèhaké',
-	'blockedoriginalsource' => "Isi sumber '''$1''' dituduhaké ing ngisor iki:",
-	'blockededitsource' => "Tèks '''suntingan panjenengan''' tumrap ing '''$1''' dituduhaké ing ngisor iki:",
 	'blocked-notice-logextract' => 'Panganggo iki saiki lagi diblokir.
 Log pamblokiran pungkasan dituduhaké ing ngisor iki minangka bahan rujukan:',
 	'badsig' => 'Tapak astanipun klèntu; cèk rambu HTML.',
@@ -8660,7 +8586,6 @@ Lebokna alesan panjenengan ing ngisor iki (contoné njupuk conto kaca sing wis t
 	'blockipsuccesssub' => 'Pemblokiran suksès',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] wis diblokir.<br />
 Pirsani [[Special:IPBlockList|Daftar blokir IP]] kanggo ninjo ulang pamblokiran.',
-	'blocklistline' => '$1, $2 mblokir $3 ($4)',
 	'blocklist-nousertalk' => 'ora éntuk nyunting kaca gunemané dhéwé',
 	'blocklink' => 'blokir',
 	'blocklogpage' => 'Log pamblokiran',
@@ -8710,8 +8635,6 @@ $messages['ka'] = array(
 თქვენი ამჟამინდელი IP მისამართია $3, ხოლო ბლოკის იდენტიფიკატორი #$5.
 გთხოვთ, მიუთითოთ ყველა ზემოთხსენებული მონაცემი თქვენს კორესპონდენციაში.',
 	'blockednoreason' => 'საბაბი მითითებული არ არის',
-	'blockedoriginalsource' => "'''$1'''-ის წყარო მოყვანილია ქვემოთ:",
-	'blockededitsource' => "ქვემოთ მოყვანილია '''$1'''-ში თქვენი რედაქტირების ტექსტი:",
 	'blocked-notice-logextract' => 'ეს მომხმარებელი უკვე დაიბლოკა.
 დაბლოკვის მიზეზი შემდეგშია:',
 	'badsig' => 'არასწორი ნედლი ხელმოწერა; შეამოწმეთ HTML ჭდეები.',
@@ -8742,7 +8665,6 @@ $messages['ka'] = array(
 	'blockipsuccesssub' => 'ბლოკირება შესრულებულია',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] ბლოკირებულ იქნა.<br />
 იხილეთ [[Special:IPBlockList|ბლოკირებული IP მისამართების სია]].',
-	'blocklistline' => '$1, $2 დაბლოკა $3 ($4)',
 	'blocklist-nousertalk' => 'ვერ შეასწორებთ განხილვის გვერდს',
 	'blocklink' => 'ბლოკირება',
 	'blocklogpage' => 'დაბლოკილთა აღრიცხვა',
@@ -12046,7 +11968,6 @@ $messages['mr'] = array(
 	'backend-fail-closetemp' => 'तात्पुरती संचिका बंद करणे जमले नाही.',
 	'backend-fail-read' => '$1 ही संचिका वाचता आली नाही.',
 	'backend-fail-create' => '$1 ही संचिका लिहिता आली नाही.',
-	'backend-fail-maxsize' => '$1 ही संचिका लिहिता आली नाही कारण ती {{PLURAL:$2|one byte|$2 bytes}} पेक्षा मोठी आहे.',
 	'backend-fail-readonly' => 'पार्श्वभौमीक साठवण "$1" “फक्त वाचा” असे आहे. दिलेले कारण "$2" आहे.',
 	'backend-fail-synced' => 'अंतर्गत पार्श्वभौमीक साठवणीतील फाईल "$1" विसंगत आहे.',
 	'backend-fail-connect' => 'पार्श्वभौमीक साठा "$1"शी संबंध जोडू शकत नाही.',
@@ -12990,8 +12911,6 @@ $messages['ne'] = array(
 तपाईको IP ठेगाना $3 को, र रोक्का संख्या #$5.
 कृपया तपाईँको प्रश्नमा सबै जानकारी खुलाउनुहोला ।",
 	'blockednoreason' => 'कारण दिइएको छैन',
-	'blockedoriginalsource' => "'''$1''' को स्रोत तल देखाइएको छ:",
-	'blockededitsource' => "'''$1'''को '''तपाईँको सम्पादन'''को पाठ तल देखाइएको छ:",
 	'blocked-notice-logextract' => 'यो प्रयोगकर्ता हाल प्रतिबन्धित छ।
 The latest block log entry is provided below for reference:',
 	'badsig' => 'अमान्य कच्चा दस्तखत।
@@ -13018,7 +12937,6 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 	'blockipsuccesssub' => 'निषेधकार्य सफल भयो',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] निषेधगरिएको छ।<br />
 पुनरावलकोनको लागि [[Special:IPBlockList|IP निषेध सूची]] हेर्नहोस् ।',
-	'blocklistline' => '$1, $2 द्वारा रोकियो $3 ($4)',
 	'blocklist-nousertalk' => 'वार्तालाप पृष्ठ सम्पादन गर्न सकिएन',
 	'blocklink' => 'रोक्नुहोस्',
 	'blocklogpage' => 'निषेध सूची',
@@ -13057,121 +12975,122 @@ $messages['niu'] = array(
 );
 
 $messages['nl'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => "Pagina's met onjuiste bestandsverwijzingen",
+	'badaccess' => 'Geen toestemming',
+	'badaccess-group0' => 'Je hebt geen rechten om de gevraagde handeling uit te voeren.',
+	'badaccess-groups' => 'De gevraagde handeling is voorbehouden aan gebruikers in {{PLURAL:$2|de groep $1|een van de volgende groepen: $1}}.',
+	'badarticleerror' => 'Deze handeling kan niet op deze pagina worden uitgevoerd.',
+	'badtitle' => 'Ongeldige paginanaam',
+	'badtitletext' => 'De naam van de opgevraagde pagina was ongeldig, leeg of bevatte een verkeerde intertaal- of interwikinaamverwijzing.
+Wellicht bevat de paginanaam niet toegestane karakters.',
+	'badretype' => 'De ingevoerde wachtwoorden verschillen van elkaar.',
+	'blocked-mailpassword' => 'Je IP-adres is geblokkeerd voor het maken van wijzigingen.
+Om misbruik te voorkomen is het niet mogelijk om een nieuw wachtwoord aan te vragen.',
+	'bold_sample' => 'Vetgedrukte tekst',
+	'bold_tip' => 'Vet',
+	'blockedtitle' => 'Gebruiker is geblokkeerd',
+	'blockedtext' => '\'\'\'Je gebruiker of IP-adres is geblokkeerd.\'\'\'
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+De blokkade is uitgevoerd door $1.
+De opgegeven reden is \'\'$2\'\'.
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Aanvang blokkade: $8
+* Einde blokkade: $6
+* Bedoeld te blokkeren: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+Je kunt contact opnemen met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]] om de blokkade te bespreken.
+Je kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij je een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet geblokkeerd is.
+Je huidige IP-adres is $3 en het blokkadenummer is #$5.
+Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
+	'blockednoreason' => 'geen reden opgegeven',
+	'blocked-notice-logextract' => 'Deze gebruiker is op het moment geblokkeerd.
+De laatste regel uit het blokkeerlogboek wordt hieronder ter referentie weergegeven:',
+	'badsig' => 'Ongeldige ondertekening; controleer de HTML-tags.',
+	'badsiglength' => 'Uw ondertekening is te lang.
+Deze moet minder dan $1 {{PLURAL:$1|karakters|karakters}} bevatten.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'De naam van het bestand is gewijzigd in "$1".',
+	'backend-fail-stream' => 'Het was niet mogelijk het bestand $1 te streamen.',
+	'backend-fail-backup' => 'Het was niet mogelijk een reservekopie van het bestand $1 te maken.',
+	'backend-fail-notexists' => 'Het bestand $1 bestaat niet.',
+	'backend-fail-hashes' => 'Het was niet mogelijk de hashes voor het bestand op te halen om ze te vergelijken.',
+	'backend-fail-notsame' => 'Er staat al een niet-identiek bestand op de plaats $1.',
+	'backend-fail-invalidpath' => '$1 is geen geldig opslagpad.',
+	'backend-fail-delete' => 'Het bestand $1 kon niet verwijderd worden.',
+	'backend-fail-alreadyexists' => 'Het bestand $1 bestaat al.',
+	'backend-fail-store' => 'Het was niet mogelijk het bestand $1 op te slaan op locatie $2.',
+	'backend-fail-copy' => 'Het was niet mogelijk het bestand $1 te kopiëren naar $2.',
+	'backend-fail-move' => 'Het was niet mogelijk het bestand $1 te verplaatsen naar $2.',
+	'backend-fail-opentemp' => 'Het was niet mogelijk een tijdelijk bestand te openen.',
+	'backend-fail-writetemp' => 'Het was niet mogelijk naar een tijdelijk bestand te schrijven.',
+	'backend-fail-closetemp' => 'Het was niet mogelijk een tijdelijk bestand te sluiten.',
+	'backend-fail-read' => 'Het was niet mogelijk het bestand $1 te lezen.',
+	'backend-fail-create' => 'Het was niet mogelijk het bestand $1 aan te maken.',
+	'backend-fail-readonly' => 'Het opslagbackend "$1" kan op dit moment alleen gelezen worden. De opgegeven reden was: "$2"',
+	'backend-fail-synced' => 'Het bestand "$1" bevindt zich in een inconsistente toestand in de interne opslagbackends.',
+	'backend-fail-connect' => 'Het was niet mogelijk een verbinding te maken met het opslagbackend "$1".',
+	'backend-fail-internal' => 'Er is een onbekende fout opgetreden in het opslagbackend "$1".',
+	'backend-fail-contenttype' => 'Kon het inhoudstype van het bestand om op "$1" op te slaan niet bepalen.',
+	'backend-fail-batchsize' => 'Reeks van $1 bestands{{PLURAL:$1|operatie|operaties}} in de opslagbackend; de limiet is $2 {{PLURAL:$2|operatie|operaties}}.',
+	'brokenredirects' => 'Defecte doorverwijzingen',
+	'brokenredirectstext' => "De onderstaande doorverwijzigingen verwijzen naar niet-bestaande pagina's.",
+	'brokenredirects-edit' => 'bewerken',
+	'brokenredirects-delete' => 'verwijderen',
+	'booksources' => 'Boekinformatie',
+	'booksources-search-legend' => 'Bronnen en gegevens over een boek zoeken',
+	'booksources-go' => 'OK',
+	'booksources-text' => 'Hieronder staat een lijst met koppelingen naar andere websites die nieuwe of gebruikte boeken verkopen, en die wellicht meer informatie over het boek dat je zoekt hebben:',
+	'booksources-invalid-isbn' => 'Het ingegeven ISBN lijkt niet geldig te zijn.
+Controleer of u wellicht een fout hebt gemaakt bij de invoer.',
+	'blanknamespace' => '(Hoofdnaamruimte)',
+	'block' => 'Gebruiker blokkeren',
+	'blockip' => 'Gebruiker blokkeren',
+	'blockip-title' => 'Gebruiker blokkeren',
+	'blockip-legend' => 'Gebruiker blokkeren',
+	'blockiptext' => "Gebruik het onderstaande formulier om schrijftoegang voor een gebruiker of IP-adres in te trekken.
+Doe dit alleen als bescherming tegen vandalisme en in overeenstemming met het [[{{MediaWiki:Policy-url}}|beleid]].
+Geef hieronder een reden op (bijvoorbeeld welke pagina's gevandaliseerd zijn).",
+	'badipaddress' => 'Geen geldig IP-adres',
+	'blockipsuccesssub' => 'De blokkering is ingesteld',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] is geblokkeerd.<br />
+Zie de [[Special:BlockList|Lijst van geblokkeerde IP-adressen]] voor recente blokkades.',
+	'blocklist' => 'Geblokkeerde gebruikers',
+	'blocklist-userblocks' => 'Geblokkeerde gebruikers verbergen',
+	'blocklist-tempblocks' => 'Tijdelijke blokkades verbergen',
+	'blocklist-addressblocks' => 'Blokkades van één IP-adres verbergen',
+	'blocklist-rangeblocks' => 'IP-adresblokken verbergen',
+	'blocklist-timestamp' => 'Tijdstip',
+	'blocklist-target' => 'Doel',
+	'blocklist-expiry' => 'Vervalt',
+	'blocklist-by' => 'Geblokkeerd door',
+	'blocklist-params' => 'Blokkadeparameters',
+	'blocklist-reason' => 'Reden',
+	'blocklist-nousertalk' => 'kan eigen overlegpagina niet bewerken',
+	'blocklink' => 'blokkeren',
+	'blocklogpage' => 'Blokkeerlogboek',
+	'blocklog-showlog' => 'Deze gebruiker is voorheen geblokkeerd geweest.
+Het blokkeerlogboek wordt hieronder ter referentie weergegeven:',
+	'blocklog-showsuppresslog' => 'Deze gebruiker is voorheen geblokkeerd geweest en er zijn (delen van) bewerkingen van deze gebruiker verborgen.
+Het verbergingslogboek wordt hieronder ter referentie weergegeven:',
+	'blocklogentry' => 'blokkeerde [[$1]] met als vervaltijd $2 $3',
+	'blocklogtext' => 'Hier ziet u een lijst van de recente blokkeringen en deblokkeringen.
+Automatische blokkeringen en deblokkeringen komen niet in het logboek.
+Zie ook [[Special:BlockList|Geblokkeerde IP-adressen en gebruikers]].',
+	'block-log-flags-anononly' => 'alleen anoniemen',
+	'block-log-flags-nocreate' => 'registreren gebruikers geblokkeerd',
+	'block-log-flags-noautoblock' => 'autoblokkeren is uitgeschakeld',
+	'block-log-flags-noemail' => 'e-mail geblokkeerd',
+	'block-log-flags-nousertalk' => 'kan eigen overlegpagina niet bewerken',
+	'block-log-flags-angry-autoblock' => 'uitgebreide automatische blokkade ingeschakeld',
+	'block-log-flags-hiddenname' => 'gebruiker verborgen',
+	'blockme' => 'Mij blokkeren',
+	'bydate' => 'op datum',
+	'bad_image_list' => "De opmaak is als volgt:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
+Alleen regels in een lijst (regels die beginnen met *) worden verwerkt.
+De eerste verwijzing op een regel moet een verwijzing zijn naar een ongewenst bestand.
+Alle volgende verwijzingen die op dezelfde regel staan, worden behandeld als uitzondering, zoals bijvoorbeeld pagina's waarop het bestand in de tekst is opgenomen.",
+	'blankpage' => 'Lege pagina',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -13439,7 +13358,6 @@ O ka se kgone go šumiša thulusu ya 'romela mošomiši molaetša' ka ntle gage 
 [[Special:Preferences|dikgatlhegelo]] gape ge o sa thibelwa go e šomiša.
 IP atrese ya gago ke $3, ge ID ya go thiba ele #$5. Ka kgopelo šumiša ID le IP go dipoledišano ka moka tšeo dilego mabapi le go go thiba.",
 	'blockednoreason' => 'gago lebaka leo le filwego',
-	'blockedoriginalsource' => "Mothopo wa '''$1''' oa botšhwa tlase:",
 	'badsiglength' => 'Leina la boreelo le letelele kudu.
 Le swanela goba fase ga $1 {{PLURAL:$1|ya tlhaka|tša ditlhaka}}',
 	'boteditletter' => 'b',
@@ -13451,7 +13369,6 @@ Le swanela goba fase ga $1 {{PLURAL:$1|ya tlhaka|tša ditlhaka}}',
 	'booksources-go' => 'Sepela',
 	'blanknamespace' => '(Hlogo)',
 	'blockip' => 'Thibela mošomiši go tsena',
-	'blocklistline' => '$1, $2 o thibile $3 ($4)',
 	'blocklink' => 'thibela',
 	'blocklogpage' => "''log'' yago Thiba",
 	'blocklogentry' => 'Thibela [[$1]] ka fetšatši ya $2 $3',
@@ -13922,123 +13839,118 @@ $messages['pi'] = array(
 );
 
 $messages['pl'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Strony z odwołaniami do nieistniejących plików',
+	'badaccess' => 'Niewłaściwe uprawnienia',
+	'badaccess-group0' => 'Nie masz uprawnień wymaganych do wykonania tej operacji.',
+	'badaccess-groups' => 'Wykonywanie tej operacji zostało ograniczone do użytkowników w {{PLURAL:$2|grupie|jednej z grup:}} $1.',
+	'badarticleerror' => 'Dla tej strony ta operacja nie może być wykonana.',
+	'badtitle' => 'Niepoprawny tytuł',
+	'badtitletext' => 'Podano niepoprawny tytuł strony. Prawdopodobnie jest pusty lub zawiera znaki, których użycie jest zabronione.',
+	'badretype' => 'Wprowadzone hasła różnią się między sobą.',
+	'blocked-mailpassword' => 'Twój adres IP został zablokowany i nie możesz używać funkcji odzyskiwania hasła z powodu możliwości jej nadużywania.',
+	'bold_sample' => 'Tekst tłustą czcionką',
+	'bold_tip' => 'Tekst tłustą czcionką',
+	'blockedtitle' => 'Użytkownik jest zablokowany',
+	'blockedtext' => "'''Twoje konto lub adres IP zostały zablokowane.'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+Blokada została nałożona przez $1.
+Podany powód to: ''$2''.
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Początek blokady: $8
+* Wygaśnięcie blokady: $6
+* Zablokowany został: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[{{MediaWiki:Grouppage-sysop}}|administratorem]].
+Twój obecny adres IP to $3, a numer identyfikacyjny blokady to $5.
+Prosimy o podanie obu tych informacji przy wyjaśnianiu blokady.",
+	'blockednoreason' => 'nie podano przyczyny',
+	'blocked-notice-logextract' => '{{GENDER:$1|Ten użytkownik|Ta użytkowniczka}} jest obecnie {{GENDER:$1|zablokowany|zablokowana}}.
+Ostatni wpis rejestru blokad jest pokazany poniżej.',
+	'badsig' => 'Nieprawidłowy podpis, sprawdź znaczniki HTML.',
+	'badsiglength' => 'Twój podpis jest zbyt długi.
+Dopuszczalna długość to $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'Nazwa pliku została zmieniona na „$1”.',
+	'backend-fail-stream' => 'Nie można odczytać pliku $1.',
+	'backend-fail-backup' => 'Nie można utworzyć kopii zapasowej pliku  $1 .',
+	'backend-fail-notexists' => 'Plik  $1  nie istnieje.',
+	'backend-fail-hashes' => 'Nie można uzyskać sum kontrolnych do porównania.',
+	'backend-fail-notsame' => 'Plik o podobnej nazwie już istnieje w $1.',
+	'backend-fail-invalidpath' => '$1nie jest poprawną ścieżką zapisu.',
+	'backend-fail-delete' => 'Nie można usunąć pliku $1.',
+	'backend-fail-alreadyexists' => 'Plik „$1” już istnieje',
+	'backend-fail-store' => 'Nie może zapisać pliku  $1  w  $2 .',
+	'backend-fail-copy' => 'Nie może skopiować pliku $1 do $2.',
+	'backend-fail-move' => 'Nie można przenieść pliku $1 do $2.',
+	'backend-fail-opentemp' => 'Nie można otworzyć pliku tymczasowego.',
+	'backend-fail-writetemp' => 'Nie można otworzyć pliku tymczasowego.',
+	'backend-fail-closetemp' => 'Nie można zamknąć pliku tymczasowego.',
+	'backend-fail-read' => 'Nie można odczytać pliku $1.',
+	'backend-fail-create' => 'Nie można utworzyć pliku $1.',
+	'backend-fail-readonly' => 'Interfejs magazynowania "$1" jest obecnie tylko do odczytu. Powód: "$2"',
+	'backend-fail-synced' => 'Plik "$1" jest w niespójnym stanie w ramach wewnętrznych funkcji magazynowania',
+	'backend-fail-connect' => 'Nie można nawiązać połączenia do wewnętrznych funkcji magazynowania "$1".',
+	'backend-fail-internal' => 'Wystąpił nieznany błąd w wewnętrznych funkcjach magazynowania "$1".',
+	'backend-fail-contenttype' => 'Nie można określić typ zawartości pliku do przechowywania w "$1".',
+	'backend-fail-batchsize' => 'Wewnętrzne funkcje magazynowania otrzymały $1 {{PLURAL:$1|operację|operacje|operacji}} na pliku; limit wynosi $2 {{PLURAL:$2| operacja|operacje|operacji}}.',
+	'brokenredirects' => 'Zerwane przekierowania',
+	'brokenredirectstext' => 'Poniższe przekierowania wskazują na nieistniejące strony.',
+	'brokenredirects-edit' => 'edytuj',
+	'brokenredirects-delete' => 'usuń',
+	'booksources' => 'Książki',
+	'booksources-search-legend' => 'Szukaj informacji o książkach',
+	'booksources-go' => 'Pokaż',
+	'booksources-text' => 'Poniżej znajduje się lista odnośników do innych witryn, które pośredniczą w sprzedaży nowych i używanych książek, a także mogą posiadać dalsze informacje na temat poszukiwanej przez Ciebie książki.',
+	'booksources-invalid-isbn' => 'Podany numer ISBN został rozpoznany jako nieprawidłowy. Sprawdź czy podany numer zgadza się z numerem zaczerpniętym ze źródła.',
+	'blanknamespace' => '(główna)',
+	'block' => 'Zablokuj użytkownika',
+	'blockip' => 'Zablokuj użytkownika',
+	'blockip-title' => 'Zablokowanie użytkownika',
+	'blockip-legend' => 'Zablokuj użytkownika',
+	'blockiptext' => 'Użyj poniższego formularza do zablokowania możliwości edycji spod określonego adresu IP lub konkretnemu użytkownikowi.
+Blokować należy jedynie po to, by zapobiec wandalizmom. Zobacz także: [[Pomoc:Blokowanie]].
+Podaj powód (np. umieszczając nazwy stron, na których dopuszczono się wandalizmu).',
+	'badipaddress' => 'Niepoprawny adres IP',
+	'blockipsuccesssub' => 'Zablokowanie powiodło się',
+	'blockipsuccesstext' => '{{GENDER:$1|Użytkownik|Użytkowniczka}} [[Special:Contributions/$1|$1]] {{GENDER:$1|został zablokowany|została zablokowana}}.<br />
+Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć blokady.',
+	'blocklist' => 'Zablokowani użytkownicy',
+	'blocklist-userblocks' => 'Ukryj blokady konta',
+	'blocklist-tempblocks' => 'Ukryj tymczasowe blokady',
+	'blocklist-addressblocks' => 'Ukryj blokady pojedynczych adresów IP',
+	'blocklist-rangeblocks' => 'Ukryj blokady zakresów',
+	'blocklist-timestamp' => 'Sygnatura czasowa',
+	'blocklist-target' => 'Cel',
+	'blocklist-expiry' => 'Upływa',
+	'blocklist-by' => 'Administrator blokujący',
+	'blocklist-params' => 'Parametry blokad',
+	'blocklist-reason' => 'Powód',
+	'blocklist-nousertalk' => 'nie mogą edytować własnych stron dyskusji',
+	'blocklink' => 'zablokuj',
+	'blocklogpage' => 'Historia blokad',
+	'blocklog-showlog' => '{{GENDER:$1|Ten użytkownik był|Ta użytkowniczka była}} już wcześniej {{GENDER:$1|blokowany|blokowana}}. Poniżej znajduje się rejestr blokad:',
+	'blocklog-showsuppresslog' => '{{GENDER:$1|Ten użytkownik był|Ta użytkowniczka była}} już wcześniej {{GENDER:$1|blokowany oraz ukrywany|blokowana oraz ukrywana}}. Poniżej znajduje się rejestr ukrywania:',
+	'blocklogentry' => 'zablokował [[$1]], czas blokady: $2 $3',
+	'blocklogtext' => 'Poniżej znajduje się lista blokad założonych i zdjętych z poszczególnych adresów IP.
+Na liście nie znajdą się adresy IP, które zablokowano w sposób automatyczny.
+By przejrzeć listę obecnie aktywnych blokad, przejdź na stronę [[Special:BlockList|zablokowanych adresów i użytkowników]].',
+	'block-log-flags-anononly' => 'tylko anonimowi',
+	'block-log-flags-nocreate' => 'blokada tworzenia konta',
+	'block-log-flags-noautoblock' => 'automatyczne blokowanie wyłączone',
+	'block-log-flags-noemail' => 'e‐mail zablokowany',
+	'block-log-flags-nousertalk' => 'nie może edytować własnej strony dyskusji',
+	'block-log-flags-angry-autoblock' => 'rozszerzone automatyczne blokowanie włączone',
+	'block-log-flags-hiddenname' => 'nazwa użytkownika jest ukryta',
+	'blockme' => 'Zablokuj mnie',
+	'bydate' => 'według daty',
+	'bad_image_list' => 'Dane należy wprowadzić w formacie:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
-	'button-createpage' => 'Add a Page',
+Jedynie elementy listy (linie zaczynające się od znaku gwiazdki *) brane są pod uwagę.
+Pierwszy link w linii musi być linkiem do zabronionego pliku.
+Następne linki w linii są traktowane jako wyjątki – są to nazwy stron, na których plik o zabronionej nazwie może być użyty.',
+	'blankpage' => 'Pusta strona',
+	'back' => 'Powrót',
+	'button-createpage' => 'Dodaj stronę',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -14496,115 +14408,115 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Páginas com links quebrados para ficheiros',
+	'badaccess' => 'Erro de permissão',
+	'badaccess-group0' => 'Não está autorizado a executar a operação solicitada.',
+	'badaccess-groups' => 'A operação solicitada está limitada a utilizadores {{PLURAL:$2|do grupo|de um dos seguintes grupos}}: $1.',
+	'badarticleerror' => 'Esta operação não pode ser realizada nesta página.',
+	'badtitle' => 'Título inválido',
+	'badtitletext' => 'O título de página solicitado era inválido, vazio, ou um link interlínguas ou interwikis incorrecto.
+Talvez contenha um ou mais caracteres que não podem ser usados em títulos.',
+	'badretype' => 'As palavras-chave que introduziu não são iguais.',
+	'blocked-mailpassword' => 'O seu endereço IP foi bloqueado e, portanto, não será possível utilizar a função de recuperação da palavra-chave, para prevenir o uso abusivo.',
+	'bold_sample' => 'Texto a negrito',
+	'bold_tip' => 'Texto a negrito',
+	'blockedtitle' => 'O utilizador está bloqueado',
+	'blockedtext' => 'O seu nome de utilizador ou endereço IP foram bloqueados
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+O bloqueio foi realizado por $1.
+O motivo apresentado foi \'\'$2\'\'.
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Início do bloqueio: $8
+* Expiração do bloqueio: $6
+* Destinatário do bloqueio: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
+Pode contactar $1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir o bloqueio.
+
+Note que para utilizar a funcionalidade "Contactar utilizador" precisa de ter um endereço de correio electrónico válido nas suas [[Special:Preferences|preferências de utilizador]] e de não lhe ter sido bloqueado o uso desta funcionalidade.
+
+O seu endereço IP neste momento é $3 e a identificação (ID) do bloqueio é #$5.
+Inclua todos os detalhes acima em quaisquer contactos relacionados com este bloqueio, por favor.',
+	'blockednoreason' => 'sem motivo especificado',
+	'blocked-notice-logextract' => 'Este utilizador encontra-se actualmente bloqueado.
+Para referência, o último registo de bloqueio é apresentado abaixo:',
+	'badsig' => 'Assinatura inválida; verifique o código HTML utilizado.',
+	'badsiglength' => 'A sua assinatura é demasiado longa.
+Não deverá conter mais de $1 {{PLURAL:$1|carácter|caracteres}}.',
 	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'badfilename' => 'O nome do ficheiro foi alterado para "$1".',
+	'backend-fail-stream' => 'Não foi possível transmitir o ficheiro $1.',
+	'backend-fail-backup' => 'Não foi possível fazer backup do ficheiro $1.',
+	'backend-fail-notexists' => 'O ficheiro $1 não existe.',
+	'backend-fail-hashes' => 'Não foi possível obter os hashes do ficheiro para comparação.',
+	'backend-fail-notsame' => 'Já existe um ficheiro não idêntico em $1 .',
+	'backend-fail-invalidpath' => '$1 não é um caminho de armazenamento válido.',
+	'backend-fail-delete' => 'Não foi possível excluir o ficheiro $1.',
+	'backend-fail-alreadyexists' => 'O ficheiro $1 já existe.',
+	'backend-fail-store' => 'Não foi possível armazenar o arquivo $1 em $2.',
+	'backend-fail-copy' => 'Não foi possível copiar o ficheiro $1 para $2.',
+	'backend-fail-move' => 'Não é possível mover o ficheiro $1 para $2.',
+	'backend-fail-opentemp' => 'Não foi possível abrir o arquivo temporário.',
+	'backend-fail-writetemp' => 'Não foi possível gravar para arquivo temporário.',
+	'backend-fail-closetemp' => 'Não foi possível fechar o arquivo temporário.',
+	'backend-fail-read' => 'Não foi possível ler o arquivo $1.',
+	'backend-fail-create' => 'Não foi possível criar o arquivo $1.',
+	'brokenredirects' => 'Redireccionamentos quebrados',
+	'brokenredirectstext' => 'Os seguintes redireccionamentos ligam para páginas inexistentes:',
+	'brokenredirects-edit' => 'editar',
+	'brokenredirects-delete' => 'eliminar',
+	'booksources' => 'Fontes de livros',
+	'booksources-search-legend' => 'Procurar fontes de livros',
+	'booksources-go' => 'Prosseguir',
+	'booksources-text' => 'É apresentada abaixo uma lista de links para outros sites na internet que vendem livros novos e usados e talvez possuam informações adicionais sobre os livros que procura:',
+	'booksources-invalid-isbn' => 'O número ISBN fornecido não parece ser válido; verifique a existência de erros ao copiar da fonte original.',
+	'blanknamespace' => '(Principal)',
+	'block' => 'Bloquear utilizador',
+	'blockip' => 'Bloquear utilizador',
+	'blockip-title' => 'Bloquear utilizador',
+	'blockip-legend' => 'Bloquear utilizador',
+	'blockiptext' => 'Utilize o formulário abaixo para bloquear o acesso de escrita a um endereço IP específico ou a um nome de utilizador.
+Isto só deve ser feito para prevenir vandalismo e de acordo com a [[{{MediaWiki:Policy-url}}|política]]. Indique a seguir um motivo de bloqueio específico (por exemplo, indicando as páginas que foram alvo de vandalismo).',
+	'badipaddress' => 'Endereço IP inválido',
+	'blockipsuccesssub' => 'Bloqueio bem sucedido',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] foi bloqueado.<br />
+Consulte a [[Special:BlockList|lista de IPs bloqueados]] para rever os bloqueios.',
+	'blocklist' => 'Utilizadores bloqueados',
+	'blocklist-userblocks' => 'Esconder bloqueios de contas',
+	'blocklist-tempblocks' => 'Esconder bloqueios temporários',
+	'blocklist-addressblocks' => 'Esconder bloqueios de IP único',
+	'blocklist-rangeblocks' => 'Ocultar range blocks',
+	'blocklist-timestamp' => 'Data e hora',
+	'blocklist-target' => 'Destinatário',
+	'blocklist-expiry' => 'Duração',
+	'blocklist-by' => 'Administrador que realizou o bloqueio',
+	'blocklist-params' => 'Parâmetros do bloqueio',
+	'blocklist-reason' => 'Motivo',
+	'blocklist-nousertalk' => 'impedido de editar a própria página de discussão',
+	'blocklink' => 'bloquear',
+	'blocklogpage' => 'Registo de bloqueio',
+	'blocklog-showlog' => 'Este utilizador foi já bloqueado anteriormente.
+O registo de bloqueios é fornecido abaixo para referência:',
+	'blocklog-showsuppresslog' => 'Este utilizador foi bloqueado e ocultado anteriomente.
+O registo de supressão é fornecido abaixo para referência:',
+	'blocklogentry' => 'bloqueou "[[$1]]" $3. O bloqueio expira em $2.',
+	'blocklogtext' => 'Este é um registo de acções de bloqueio e desbloqueio.
+Endereços IP sujeitos a bloqueio automático não são listados.
+Consulte a [[Special:BlockList|lista de IPs bloqueados]] para obter a lista de bloqueios e banimentos actualmente válidos.',
+	'block-log-flags-anononly' => 'apenas utilizadores anónimos',
+	'block-log-flags-nocreate' => 'criação de contas impossibilitada',
+	'block-log-flags-noautoblock' => 'bloqueio automático desactivado',
+	'block-log-flags-noemail' => 'correio electrónico bloqueado',
+	'block-log-flags-nousertalk' => 'impossibilitado de editar a própria página de discussão',
+	'block-log-flags-angry-autoblock' => 'activado o bloqueio automático melhorado',
+	'block-log-flags-hiddenname' => 'nome de utilizador ocultado',
+	'blockme' => 'Bloquear-me',
+	'bydate' => 'por data',
+	'bad_image_list' => 'O formato é o seguinte:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
+Só são reconhecidos elementos na forma de lista (linhas começadas por *).
+O primeiro link em cada linha deve apontar para o ficheiro que se pretende bloquear.
+Quaisquer outros links nessa mesma linha são considerados excepções (ou seja, páginas de onde se pode aceder ao ficheiro).',
+	'blankpage' => 'Página em branco',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
@@ -14687,7 +14599,6 @@ Ela deve ter menos de $1 {{PLURAL:$1|caractere|caracteres}}.',
 	'backend-fail-closetemp' => 'Não foi possível fechar o arquivo temporário.',
 	'backend-fail-read' => 'Não foi possível ler o arquivo $1.',
 	'backend-fail-create' => 'Não foi possível criar ou alterar o arquivo $1.',
-	'backend-fail-maxsize' => 'Não foi possível criar ou alterar o arquivo $1 por ele ser maior que {{PLURAL:$2|1 byte|$2 bytes}}.',
 	'backend-fail-readonly' => 'O servidor de armazenamento "$1" está atualmente no modo "somente leitura". A razão dada foi: "$2"',
 	'backend-fail-synced' => 'O arquivo "$1" está em um estado inconsistente dentro do sistema de armazenamento interno',
 	'backend-fail-connect' => 'Não foi possível se conectar com o servidor de armazenamento "$1".',
@@ -14801,14 +14712,12 @@ $1 {{PLURAL:$1|sanampamanta|sanampakunamanta}} aswan pisi kananmi.',
 	'backend-fail-closetemp' => "Manam atinichu mit'alla willañiqita wichq'ayta.",
 	'backend-fail-read' => 'Manam atinichu $1 sutiyuq willañiqita ñawiriyta.',
 	'backend-fail-create' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta.',
-	'backend-fail-maxsize' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta, {{PLURAL:$2|huk bytemanta|$2 bytemanta}} aswan hatun kaptinmi.',
 	'backend-fail-readonly' => '"$1" sutiyuq willañiqi hallch\'ana sirwiqqa ñawirinallapaqmi kachkan, kayrayku: "$2"',
 	'backend-fail-synced' => '"$1" sutiyuq willañiqiqa manam sinchichu kachkan ukhupi willañiqi hallch\'ana sirwiqkunapi',
 	'backend-fail-connect' => 'Manam atinichu "$1" sutiyuq willañiqi hallch\'ana sirwiqwan t\'inkinakuyta.',
 	'backend-fail-internal' => '"$1" sutiyuq willañiqi hallch\'ana sirwiqpi mana riqsisqa pantasqam tukurqan.',
 	'backend-fail-contenttype' => 'Manam atinichu "$1" nisqapi hallch\'ana willañiqip samiqninpa layanta yuqanchayta.',
 	'backend-fail-batchsize' => "Willañiqi hallch'ana sirwiqmanqa $1 willañiqi {{PLURAL:$1|ruranayuq|ruranayuq}} tawqam qusqa; saywataq $2 {{PLURAL:$1|ruranam|ruranam}}.",
-	'backend-fail-usable' => 'Manam atinichu $1 sutiyuq willañiqita qillqayta, mana aypalla saqillaykuna icha mana churanakuna/qullqakuna kaptinmi.',
 	'brokenredirects' => 'Panta pusapunakuna',
 	'brokenredirectstext' => "Kay pusapuna p'anqakunaqa mana kachkaq p'anqakunamanmi pusapuchkan:",
 	'brokenredirects-edit' => "llamk'apuy",
@@ -15278,135 +15187,130 @@ Tutte le sottosequenze ca appondene a stessa linea sonde considerete eccezziune,
 );
 
 $messages['ru'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => 'Страницы с неработающими файловыми ссылками',
+	'badaccess' => 'Ошибка доступа',
+	'badaccess-group0' => 'У вас недостаточно прав на выполнение запрошенного действия.',
+	'badaccess-groups' => 'Запрошенное действие могут выполнять только участники из {{PLURAL:$2|группы|групп}} «$1».',
+	'badarticleerror' => 'Это действие не может быть выполнено на данной странице.',
+	'badtitle' => 'Недопустимое название',
+	'badtitletext' => 'Запрашиваемое название страницы неправильно, пусто, либо неправильно указано межъязыковое или интервики название. Возможно, в названии используются недопустимые символы.',
+	'badretype' => 'Введённые вами пароли не совпадают.',
+	'blocked-mailpassword' => 'Редактирование с вашего IP-адреса запрещено, поэтому заблокирована и функция восстановления пароля.',
+	'bold_sample' => 'Полужирное начертание',
+	'bold_tip' => 'Полужирное начертание',
+	'blockedtitle' => 'Участник заблокирован',
+	'blockedtext' => "'''Ваша учётная запись или IP-адрес заблокированы.'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+Блокировка произведена администратором $1.
+Указана следующая причина: «''$2''».
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* Начало блокировки: $8
+* Окончание блокировки: $6
+* Цель блокировки: $7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
+Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
+
+Ваш IP-адрес — $3, идентификатор блокировки — $5.
+Пожалуйста, указывайте эти сведения в любых своих обращениях.",
+	'blockednoreason' => 'причина не указана',
+	'blocked-notice-logextract' => 'Этот участник в данный момент заблокирован.
+Ниже приведена последняя запись из журнала блокировок:',
+	'badsig' => 'Неверная подпись. Проверьте корректность HTML-тегов.',
+	'badsiglength' => 'Слишком длинная подпись.
+Подпись не должна превышать $1 {{PLURAL:$1|символа|символов|символов}}.',
+	'boteditletter' => 'б',
+	'badfilename' => 'Название файла было изменено на $1.',
+	'backend-fail-stream' => 'Не удалось транслировать файл $1.',
+	'backend-fail-backup' => 'Невозможно сделать резервную копию файла $1.',
+	'backend-fail-notexists' => 'Файл $1 не существует.',
+	'backend-fail-hashes' => 'Не удалось получить хэши файлов для сравнения.',
+	'backend-fail-notsame' => 'Уже есть неидентичный файл $1.',
+	'backend-fail-invalidpath' => '$1 не является допустимым путём хранения.',
+	'backend-fail-delete' => 'Не удалось удалить файл  $1.',
+	'backend-fail-alreadyexists' => 'Файл $1 уже существует.',
+	'backend-fail-store' => 'Не удалось сохранить файл $1 на $2 .',
+	'backend-fail-copy' => 'Не удалось скопировать файл $1 в $2 .',
+	'backend-fail-move' => 'Не удалось переместить файл $1 в $2.',
+	'backend-fail-opentemp' => 'Не удаётся открыть временный файл.',
+	'backend-fail-writetemp' => 'Не удалось записать во временный файл.',
+	'backend-fail-closetemp' => 'Не удаётся закрыть временный файл.',
+	'backend-fail-read' => 'Не удалось прочитать файл $1.',
+	'backend-fail-create' => 'Не удалось создать файл $1.',
+	'backend-fail-readonly' => 'Хранилище «$1» сейчас находится в режиме «только чтение». Причина: «$2»',
+	'backend-fail-synced' => 'Файл «$1» находится в несогласованном состоянии во внутреннем хранилище',
+	'backend-fail-connect' => 'Не удалось подключиться к хранилищу «$1».',
+	'backend-fail-internal' => 'Произошла неизвестная ошибка в хранилище «$1».',
+	'backend-fail-contenttype' => 'Не удалось определить тип содержимого файла, чтобы сохранить его в «$1».',
+	'backend-fail-batchsize' => 'Хранилище болучило блок из $1 {{PLURAL:$1|файловой операции|файловых операций|файловых операций}}, ограничение составляет $2 {{PLURAL:$1|операцию|операции|файловых операций}}.',
+	'brokenredirects' => 'Разорванные перенаправления',
+	'brokenredirectstext' => 'Следующие перенаправления указывают на несуществующие страницы:',
+	'brokenredirects-edit' => 'править',
+	'brokenredirects-delete' => 'удалить',
+	'booksources' => 'Источники книг',
+	'booksources-search-legend' => 'Поиск информации о книге',
 	'booksources-isbn' => 'ISBN:',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+	'booksources-go' => 'Найти',
+	'booksources-text' => 'На этой странице приведён список ссылок на сайты, где вы, возможно, найдёте дополнительную информацию о книге. Это интернет-магазины и системы поиска в библиотечных каталогах.',
+	'booksources-invalid-isbn' => 'Указанный номер ISBN, судя по всему, содержит ошибку. Пожалуйста, проверьте, что при переносе номера из первоисточника не возникло искажений.',
+	'blanknamespace' => '(основное)',
+	'block' => 'Блокировка участника',
+	'blockip' => 'Заблокировать',
+	'blockip-title' => 'Блокирование участника',
+	'blockip-legend' => 'Блокировка участника',
+	'blockiptext' => 'Используйте форму ниже, чтобы заблокировать возможность записи с определённого IP-адреса.
+Это может быть сделано только для предотвращения вандализма и только в соответствии с [[{{MediaWiki:Policy-url}}|правилами]].
+Ниже укажите конкретную причину (к примеру, процитируйте некоторые страницы с признаками вандализма).',
+	'badipaddress' => 'IP-адрес записан в неправильном формате, или участника с таким именем не существует.',
+	'blockipsuccesssub' => 'Блокировка произведена',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|«$1»]] заблокирован.<br />
+См. [[Special:BlockList|список заблокированных IP-адресов]].',
+	'blocklist' => 'Заблокированные участники',
+	'blocklist-userblocks' => 'Скрыть блокировки учётных записей',
+	'blocklist-tempblocks' => 'Скрыть временные блокировки',
+	'blocklist-addressblocks' => 'Скрыть блокировки отдельных IP',
+	'blocklist-rangeblocks' => 'Скрыть блокировки диапазонов',
+	'blocklist-timestamp' => 'Дата/время',
+	'blocklist-target' => 'Цель',
+	'blocklist-expiry' => 'Истекает',
+	'blocklist-by' => 'Заблокировавший администратор',
+	'blocklist-params' => 'Параметры блокировки',
+	'blocklist-reason' => 'Причина',
+	'blocklist-nousertalk' => 'не может править свою страницу обсуждения',
+	'blocklink' => 'заблокировать',
+	'blocklogpage' => 'Журнал блокировок',
+	'blocklog-showlog' => '{{GENDER:$1|Этот участник уже блокировался|Эта участница уже блокировалась}} ранее.
+Ниже приведён журнал блокировок:',
+	'blocklog-showsuppresslog' => '{{GENDER:$1|Этот участник уже заблокирован и скрыт|Эта участница уже заблокирована и скрыта}}. Журнал сокрытий приведён ниже:',
+	'blocklogentry' => 'заблокировал [[$1]] на период $2 $3',
+	'blocklogtext' => 'Журнал блокировок и разблокировок участников. Автоматически блокируемые IP-адреса здесь не указываются. См. [[Special:BlockList|список текущих блокировок]].',
+	'block-log-flags-anononly' => 'только анонимные пользователи',
+	'block-log-flags-nocreate' => 'запрещена регистрация учётных записей',
+	'block-log-flags-noautoblock' => 'автоблокировка отключена',
+	'block-log-flags-noemail' => 'запрещена отправка писем',
+	'block-log-flags-nousertalk' => 'не может править свою страницу обсуждения',
+	'block-log-flags-angry-autoblock' => 'включена расширенная автоблокировка',
+	'block-log-flags-hiddenname' => 'имя участника скрыто',
+	'blockme' => 'Заблокируй меня',
+	'bydate' => 'по дате',
+	'bad_image_list' => 'Формат должен быть следующим:
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'bitrate-bits' => '$1bps',
-	'bitrate-kilobits' => '$1kbps',
-	'bitrate-megabits' => '$1Mbps',
-	'bitrate-gigabits' => '$1Gbps',
-	'bitrate-terabits' => '$1Tbps',
-	'blankpage' => 'Blank page',
-	'back' => 'Back',
+Будут учитываться только элементы списка (строки, начинающиеся на символ *).
+Первая ссылка строки должна быть ссылкой на запрещённое для вставки изображение.
+Последующие ссылки в той же строке будут рассматриваться как исключения, то есть статьи, куда изображение может быть включено.',
+	'bitrate-bits' => '$1 б/с',
+	'bitrate-kilobits' => '$1 Кб/с',
+	'bitrate-megabits' => '$1 Мб/с',
+	'bitrate-gigabits' => '$1 Гб/с',
+	'bitrate-terabits' => '$1 Тб/с',
+	'blankpage' => 'Пустая страница',
+	'back' => 'Назад',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
 Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'button-createpage' => 'Add a Page',
+	'button-createpage' => 'Добавить страницу',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -16250,8 +16154,6 @@ $messages['shi'] = array(
 	'bold_tip' => 'Aḍṛiṣ iḍnin',
 	'blockedtitle' => 'lmostkhdim ad itbloka',
 	'blockednoreason' => 'ta yan sabab oritfki',
-	'blockedoriginalsource' => "Tangalt taɣbalut '''$1'''  ar ttuymmal ɣ uzddar.",
-	'blockededitsource' => "Aṭṛiṣ n iẓṛign nk llid tiwid i '''$1''' rad tnin taft ɣiḍ ɣ uzddar",
 	'boteditletter' => 'q',
 	'booksources' => 'Iɣbula n udlis',
 	'booksources-search-legend' => 'Acnubc s iɣbula n idlisn',
@@ -16433,14 +16335,12 @@ Musí obsahovať menej ako $1 {{PLURAL:$1|znak|znaky|znakov}}.',
 	'backend-fail-closetemp' => 'Nebolo možné zatvoriť dočasný súbor.',
 	'backend-fail-read' => 'Nebolo možné prečítať súbor „$1“.',
 	'backend-fail-create' => 'Nebolo možné zapísať súbor $1.',
-	'backend-fail-maxsize' => 'Nie je možné zapísať súbor  $1  pretože je väčší ako  {{PLURAL:$2| jeden byte| $2  bajtov}}.',
 	'backend-fail-readonly' => 'Úložisko „$1“ je momentálne v režime len na čítanie. Udaný dôvod: „$2“',
 	'backend-fail-synced' => 'Súbor „$1“ je v nekonzistentnom stave v rámci vnútorného úložiska',
 	'backend-fail-connect' => 'Nepodarilo sa pripojiť k úložisku „$1“.',
 	'backend-fail-internal' => 'Vyskytla sa neznáma chyba v úložisku „$1“.',
 	'backend-fail-contenttype' => 'Nebolo možné určiť typ obsahu súboru, ktorý sa má uložiť na „$1“.',
 	'backend-fail-batchsize' => 'Do úložiska bola zaslaná dávka s $1 {{PLURAL:$1|operáciou|operáciami}}; limit je $2 {{PLURAL:$2|operácia|operácie|operácií}}.',
-	'backend-fail-usable' => 'Nie je možné zapísať súbor  $1  kvôli nedostatočným povoleniam alebo chýbajúcim adresárom/kontajnerom.',
 	'brokenredirects' => 'Pokazené presmerovania',
 	'brokenredirectstext' => 'Nasledovné presmerovania odkazujú na neexistujúce stránky:',
 	'brokenredirects-edit' => 'upraviť',
@@ -16707,7 +16607,6 @@ $messages['so'] = array(
 	'badaccess-group0' => 'Laguuma ogala in aad sameyso waxaad dooneysid.',
 	'badtitle' => 'Cinwaan qaldan',
 	'badretype' => 'Ereysiryada aad gelisay ismalaha.',
-	'blockededitsource' => "Qoraalkii '''aad waxkaga bedashay''' '''$1''' waxaad ku arkikartaa hoos:",
 	'badsiglength' => 'Naaneysta aad bey u dheertahay.
 Waa in aysan ka badanin $1 {{PLURAL:$1|eray|erayo}}.',
 	'badfilename' => 'Faylka magaciisa waxaa lagu badalay "$1".',
@@ -17082,8 +16981,6 @@ Razlog za blokiranje je \'\'$2\'\'.
 Možete kontaktirati korisnika $1 ili nekog drugog [[{{MediaWiki:Grouppage-sysop}}|administratora]] kako biste razgovarali o blokadi. Ne možete da koristite opciju "Pošalji e-poštu ovom korisniku" ukoliko nemate valjanu adresu e-pošte navedenu u vašim [[Special:Preferences|podešavanjima]]. Vaša trenutna IP adresa je $3 i ID bloka je #$5.
 Molimo uključite gornje detalje u svaki vaš zahtev.',
 	'blockednoreason' => 'nije dat razlog',
-	'blockedoriginalsource' => "Izvor '''$1''' je prikazan ispod:",
-	'blockededitsource' => "Tekst '''vaših izmena''' za '''$1''' je prikazan ispod:",
 	'blocked-notice-logextract' => 'Ovaj korisnik je trenutno blokrian.
 Podaci o poslednjem blokiranju su priloženi ispod kao dodatna informacija:',
 	'badsig' => 'Greška u potpisu; proverite HTML tagove.',
@@ -17114,7 +17011,6 @@ stranice su vandalizovane).',
 	'blockipsuccesssub' => 'Blokiranje je uspelo',
 	'blockipsuccesstext' => '[[{{ns:special}}:Contributions/$1|$1]] je blokiran.
 <br />Vidite [[{{ns:special}}:Ipblocklist|spisak blokiranja]] da biste pregledali blokiranja.',
-	'blocklistline' => '$1, $2 blokirao korisnika [[User:$3|$3]], (ističe $4)',
 	'blocklist-nousertalk' => 'ne može da izmeni sopstvenu stranu za razgovor',
 	'blocklink' => 'blokiraj',
 	'blocklogpage' => 'Istorijat blokiranja',
@@ -18903,14 +18799,9 @@ Sizning hozirgi IP manzilingiz - $3, chetlashtirish raqamingiz - #$5. Arizaga bu
 );
 
 $messages['val'] = array(
-	'bugreports' => "Informes d'errors del programa",
-	'bugreportspage' => "Proyecte:Informes d'errors",
 	'badaccess' => 'Error de permissos',
 	'badaccess-group0' => "No tens permissos per a eixecutar l'acció que has solicitat.",
-	'badaccess-group1' => "L'acció que has solicitat se llimita als usuaris del grup $1.",
-	'badaccess-group2' => "L'acció que has solicitat se llimita a un dels usuaris dels grups $1.",
 	'badaccess-groups' => "L'acció que has solicitat se llimita als usuaris d'un dels grups $1.",
-	'badarticulerror' => 'Esta operació no se pot dur a terme en esta pàgina',
 	'badtitle' => 'El títul no es correcte',
 	'badtitletext' => 'El títul de la pàgina que has demanat no es correcte, està en blanc o es un enllaç inter-lingüístic trencat. Podria haver-hi algun caràcter no permés per al seu ús en els títuls.',
 	'badretype' => 'Les contrasenyes que has introduït no coincidixen.',
@@ -18928,19 +18819,10 @@ Pots contactar $1 o un dels [[{{MediaWiki:grouppage-sysop}}|administradors]] per
 Tin un conte que no pots utilisar el formulari d'enviament de mensages de correu a cap usuari, fins que tingues una direcció de correu vàlida registrada a les teues [[Special:Preferences|preferències d'usuari]].
 
 La teua direcció IP es $3, i el núm. ID del bloqueig es #$5. Per favor, inclou esta direcció en totes les consultes que fases.",
-	'blockedoriginalsource' => "La font de '''$1''' se mostra a sota:",
-	'blockededitsource' => "El text de les teues edicions a '''$1''' se mostra a continuació:",
-	'badquery' => 'Consulta formulada de manera incorrecta',
-	'badquerytext' => "No s'ha pogut processar la búsqueda.
-El motiu es provablement perque has intentat buscar una paraula de menys de tres lletres, la qual cosa encara no es possible.
-També pot ser que hajau comés un error en escriure el terme.
-Torna a provar en una atra búsqueda.",
 	'blanknamespace' => '(Portada)',
 	'boteditletter' => 'b',
 	'badfilename' => 'El nom de la image s\'ha canviat a "$1".',
-	'byname' => 'per nom',
 	'bydate' => 'per data',
-	'bysize' => 'per mida',
 	'brokenredirects' => 'Redireccions rompudes',
 	'brokenredirectstext' => 'Les següents redireccions enllacen a pàgines inexistents:',
 	'brokenredirects-edit' => '(edita)',
@@ -18960,7 +18842,6 @@ quines pàgines en concret estan sent vandalisades).",
 	'blockipsuccesssub' => "S'ha bloquejat en èxit",
 	'blockipsuccesstext' => 'L\'usuari "[[Special:Contributions/$1|$1]]" ha segut bloquejat.
 <br />Mira la [[Special:Ipblocklist|llista d\'IP blocades]] per revisar els bloquejos.',
-	'blocklistline' => '$1, $2 bloqueja $3 ($4)',
 	'blocklink' => 'bloqueja',
 	'blocklogpage' => 'Registre de bloquejats',
 	'blocklogentry' => 's\'ha bloquejat "[[$1]]" per a un periodo de $2 $3',
@@ -19317,8 +19198,6 @@ Kod binon: ''$2''.
 Kanol penön gebane: $1, u [[{{MediaWiki:Grouppage-sysop}}|guvane]] votik, ad bespikön blokami.
 Kanol gebön yümi: 'penön gebane at' bisä ladet leäktronik verätik lonöföl patuvon in [[Special:Preferences|buükams kala]] olik e geb onik no peblokon. Ladet-IP nuik ola binon $3 e nüm blokama binon #$5. Mäniotolös nünis löpik valik in peneds ola.",
 	'blockednoreason' => 'kod nonik pegivon',
-	'blockedoriginalsource' => "Fonät pada: '''$1''' pajonon dono:",
-	'blockededitsource' => "Vödem '''redakamas olik''' pada: '''$1''' pajonon dono:",
 	'badsig' => 'Dispenäd no lonöföl: dönulogolös eli HTML.',
 	'badsiglength' => 'Dispenäd olik binon tu lunik.
 Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
@@ -19342,7 +19221,6 @@ Muton labön {{PLURAL:$1|malati|malatis}} läs $1.',
 	'blockipsuccesssub' => 'Blokam eplöpon',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] peblokon.
 <br />Logolös [[Special:IPBlockList|lisedi ladetas-IP pebloköl]] ad vestigön blokamis.',
-	'blocklistline' => '$1, $2 äblokon $3 ($4)',
 	'blocklist-nousertalk' => 'no dalon redakön bespikapadi okik',
 	'blocklink' => 'blokön',
 	'blocklogpage' => 'Jenotalised blokamas',
@@ -19841,8 +19719,6 @@ $1 ni ó ṣe ìdínà.
 Àdírẹ́sì IP yín lọ́wọ́lọ́wọ́ ni $3, bẹ́ ẹ̀ sì ni ID fún ìdínà yín ni #$5.
 Ẹ jọ̀wọ́ ẹ fi gbogbo ẹ̀kúnrẹ́rẹ́ òkè yìí kún ìbérè tí ẹ bá ṣe.",
 	'blockednoreason' => 'kó sí àlàyé kankan',
-	'blockedoriginalsource' => "Orísun fún '''$1''' hàn ni sàlẹ̀:",
-	'blockededitsource' => "Ìkọ̀wé fún '''àwọn atúnṣe yín''' sí '''$1''' hàn nísàlẹ̀ yìí:",
 	'blocked-notice-logextract' => 'Lọ́wọ́lọ́wọ́ oníṣe yìí jẹ́ dídílọ́nà.
 Àkọsílẹ̀ ìdínà àìpẹ́ nìyí nísàlẹ̀ fún ìtọ́kasí:',
 	'badsiglength' => 'Ìtọwọ́bọ̀ yín ti gùnjù.
@@ -19863,7 +19739,6 @@ Kò gbodọ̀ ju $1 {{PLURAL:$1|àmìlẹ́tà|àwọn àmìlẹ́tà}} lọ.',
 	'blockipsuccesssub' => 'Ìdínà yọrí sí rere',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] ti jẹ́ dídílọ́nà.<br />
 Ẹ wo [[Special:IPBlockList|IP àkójọ ìdínà]] láti ṣàtúnyẹ̀wò àwọn ìdínà.',
-	'blocklistline' => '$1, $2 ti dínà $3 ($4)',
 	'blocklink' => 'dínà',
 	'blocklogpage' => 'Àkosílẹ̀ ìdínà',
 	'blocklogentry' => 'ìdínà [[$1]] yíò parí ní $2 $3',
@@ -20047,122 +19922,110 @@ $messages['zh-cn'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => '损坏的文件的链接的页面',
+	'badaccess' => '权限错误',
+	'badaccess-group0' => '你被禁止执行你刚才请求的操作。',
+	'badaccess-groups' => '您刚才请求的操作只有{{PLURAL:$2|这个用户组|以下用户组}}中的用户才能使用： $1',
+	'badarticleerror' => '无法在此页进行该操作。',
+	'badtitle' => '错误的标题',
+	'badtitletext' => '所请求页面的标题是无效的、不存在，跨语言或跨wiki链接的标题错误。它可能包含一个或更多的不能用于标题的字符。',
+	'badretype' => '您所输入的密码并不相同。',
+	'blocked-mailpassword' => '您的IP地址已被禁止编辑，同时为了防止密码恢复功能被滥用，亦已禁用该功能。',
+	'bold_sample' => '粗体文字',
+	'bold_tip' => '粗体文字',
+	'blockedtitle' => '用户被封禁',
+	'blockedtext' => "'''您的用户名或IP地址已被封禁。'''
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+此次封禁操作由$1完成，封禁原因为''$2''。
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* 起始时间：$8
+* 终止时间：$6
+* 拟封禁对象：$7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-isbn' => 'ISBN:',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+您可以联系$1或其他的[[{{MediaWiki:Grouppage-sysop}}|管理员]]讨论此次封禁。若您已在[[Special:Preferences|帐号设置]]中配置了一个有效的电子邮件地址，且未被封禁电子邮件功能，则您可通过“发送电子邮件给这位用户”功能来联络相关管理员。您当前的IP地址是$3，此次封禁的ID为#$5。请在您的查询中注明上述所有信息。",
+	'blockednoreason' => '无给出原因',
+	'blocked-notice-logextract' => '这位用户目前已被封禁。以下提供最近的封禁日志以供参考：',
+	'badsig' => '错误的原始签名。请检查HTML标签。',
+	'badsiglength' => '签名过长。
+它的长度不可超过$1个字符。',
+	'boteditletter' => '机',
+	'badfilename' => '文件名已被改为“$1”。',
+	'backend-fail-stream' => '无法流传送文件$1。',
+	'backend-fail-backup' => '无法备份文件$1。',
+	'backend-fail-notexists' => '条目$1不存在。',
+	'backend-fail-hashes' => '比较无法获取文件hashes',
+	'backend-fail-notsame' => '$1已存在不同的文件。',
+	'backend-fail-invalidpath' => '$1不是有效的存储路径。',
+	'backend-fail-delete' => '无法删除文件“$1”。',
+	'backend-fail-alreadyexists' => '“$1”页面已存在',
+	'backend-fail-store' => '无法在$2存储文件$1。',
+	'backend-fail-copy' => '无法复制文件$1到$2。',
+	'backend-fail-move' => '无法移动文件$1到$2。',
+	'backend-fail-opentemp' => '无法打开临时文件。',
+	'backend-fail-writetemp' => '无法写临时文件。',
+	'backend-fail-closetemp' => '无法创建临时文件。',
+	'backend-fail-read' => '找不到文件“$1”。',
+	'backend-fail-create' => '找不到文件“$1”。',
+	'backend-fail-readonly' => '“$1”存储后端目前在只读模式，因为：“$2”',
+	'backend-fail-synced' => '文件“$1”在内部后端是不一致的区域。',
+	'backend-fail-connect' => '无法连接到文件后端“$1”。',
+	'backend-fail-internal' => '文件后端“$1”发生了一个未知错误。',
+	'backend-fail-contenttype' => '无法判断文件的内容类型来储存于“$1”。',
+	'backend-fail-batchsize' => '鉴于一批后端 $1 文件 {{PLURAL:$1| operation|operations}} ；限制是 $2   {{PLURAL:$2| operation|operations}}。',
+	'brokenredirects' => '损坏的重定向页',
+	'brokenredirectstext' => '以下的重定向页面指向的是不存在的页面：',
+	'brokenredirects-edit' => '编辑',
+	'brokenredirects-delete' => '删除',
+	'booksources' => '网络书源',
+	'booksources-search-legend' => '搜索网络书源',
+	'booksources-isbn' => '国际标准书号：',
+	'booksources-go' => '提交',
+	'booksources-text' => '以下是一些网络书店的链接列表，其中可能有您要找的书籍的更多信息：',
+	'booksources-invalid-isbn' => '提供的ISBN号码并不正确，请检查原始复制来源号码是否有误。',
+	'blanknamespace' => '（主要）',
+	'block' => '封禁用户',
+	'blockip' => '封禁用户',
+	'blockip-title' => '封禁用户',
+	'blockip-legend' => '封禁用户',
+	'blockiptext' => '使用下方的表单来禁止来自特定IP地址或用户名的写访问。
+只有在为了防止破坏，并符合[[{{MediaWiki:Policy-url}}|方针]]的情况下才可采取此行动。
+请在下面输入一个具体的理由（例如引述一个被破坏的页面）。',
+	'badipaddress' => '无效IP地址',
+	'blockipsuccesssub' => '封禁成功',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]已被封禁。<br />
+参见[[Special:BlockList|封禁列表]]以复核封禁。',
+	'blocklist' => '被封禁用户',
+	'blocklist-userblocks' => '隐藏帐户封禁',
+	'blocklist-tempblocks' => '隐藏临时封禁',
+	'blocklist-addressblocks' => '隐藏单个IP封禁',
+	'blocklist-rangeblocks' => '隐藏IP段封禁',
+	'blocklist-timestamp' => '时间戳',
+	'blocklist-target' => '目标',
+	'blocklist-expiry' => '过期',
+	'blocklist-by' => '执行者',
+	'blocklist-params' => '封禁设置',
+	'blocklist-reason' => '原因',
+	'blocklist-nousertalk' => '禁止编辑自己的用户讨论页',
+	'blocklink' => '封禁',
+	'blocklogpage' => '封禁日志',
+	'blocklog-showlog' => '此用户曾被封禁。以下列出封禁日志以供参考：',
+	'blocklog-showsuppresslog' => '此用户曾被封禁并隐藏。以下列出隐藏日志以供参考：',
+	'blocklogentry' => '封禁[[$1]]，终止时间为$2$3',
+	'blocklogtext' => '此处给出了封禁和解封用户的操作日志，被自动封禁的IP地址不在此表。请查看[[Special:BlockList|封禁列表]]获知当前被封禁的用户和IP地址。',
+	'block-log-flags-anononly' => '仅限匿名用户',
+	'block-log-flags-nocreate' => '停用账户创建',
+	'block-log-flags-noautoblock' => '禁用自动封禁',
+	'block-log-flags-noemail' => '禁止电子邮件',
+	'block-log-flags-nousertalk' => '禁止编辑自己的用户讨论页',
+	'block-log-flags-angry-autoblock' => '已启用增强型自动封禁',
+	'block-log-flags-hiddenname' => '隐藏用户名',
+	'blockme' => '封禁我',
+	'bydate' => '按日期',
+	'bad_image_list' => '请按照下列格式编写：
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
+只有（以 * 开头）列出的项目会被考虑。每一行的第一个链接必须是不雅文件的链接。
+然后同一行后方的链接会被视为例外，即是该文件可以在哪些页面内被显示。',
+	'blankpage' => '空白页面',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
@@ -20187,122 +20050,115 @@ Avatar6.jpg',
 );
 
 $messages['zh-hant'] = array(
-	'broken-file-category' => 'Pages with broken file links',
-	'badaccess' => 'Permission error',
-	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
-	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
-	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
-	'badtitle' => 'Bad title',
-	'badtitletext' => "The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters that can't be used in titles.",
-	'badretype' => 'The passwords you entered do not match.',
-	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
-	'bold_sample' => 'Bold text',
-	'bold_tip' => 'Bold text',
-	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
+	'broken-file-category' => '有連結至已損壞檔案頁的連結之頁面',
+	'badaccess' => '權限錯誤',
+	'badaccess-group0' => '你所請求執行的操作被禁止。',
+	'badaccess-groups' => '您剛才的請求只有{{PLURAL:$2|這個|這些}}用戶組的用戶才能使用：$1',
+	'badarticleerror' => '無法在此頁進行該操作。',
+	'badtitle' => '錯誤的標題',
+	'badtitletext' => '所請求頁面的標題是無效的、不存在，跨語言或跨wiki連結的標題錯誤。它可能包含一個或更多的不能用於標題的字符。',
+	'badretype' => '您所輸入的密碼並不相同。',
+	'blocked-mailpassword' => '您的IP地址處於查封狀態而不允許編輯，為了安全起見，密碼恢復功能已被禁用。',
+	'bold_sample' => '粗體文字',
+	'bold_tip' => '粗體文字',
+	'blockedtitle' => '用戶被查封',
+	'blockedtext' => "{{GENDER:|你|妳|你}}的用戶名或IP地址已經被$1查封。
 
-<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
-The block was made by $1.
+這次查封是由$1所封的。當中的原因是''$2''。
 
-* Reason given: $2
-* Start of block: $8
-* Expiry of block: $6
-* Intended blockee: $7
-* Block ID: #$5
-* Current IP address: $3
-</div>
+* 這次查封開始的時間是：$8
+* 這次查封到期的時間是：$6
+* 對於被查封者：$7
 
-You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
-Please include all details in the above box in any queries you make.',
-	'blockednoreason' => 'no reason given',
-	'blocked-notice-logextract' => 'This user is currently blocked.
-The latest block log entry is provided below for reference:',
-	'badsig' => 'Invalid raw signature.
-Check HTML tags.',
-	'badsiglength' => 'Your signature is too long.
-It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
-	'boteditletter' => 'b',
-	'badfilename' => 'Filename has been changed to "$1".',
-	'backend-fail-stream' => 'Could not stream file $1.',
-	'backend-fail-backup' => 'Could not backup file $1.',
-	'backend-fail-notexists' => 'The file $1 does not exist.',
-	'backend-fail-hashes' => 'Could not get file hashes for comparison.',
-	'backend-fail-notsame' => 'A non-identical file already exists at $1.',
-	'backend-fail-invalidpath' => '$1 is not a valid storage path.',
-	'backend-fail-delete' => 'Could not delete file $1.',
-	'backend-fail-alreadyexists' => 'The file $1 already exists.',
-	'backend-fail-store' => 'Could not store file $1 at $2.',
-	'backend-fail-copy' => 'Could not copy file $1 to $2.',
-	'backend-fail-move' => 'Could not move file $1 to $2.',
-	'backend-fail-opentemp' => 'Could not open temporary file.',
-	'backend-fail-writetemp' => 'Could not write to temporary file.',
-	'backend-fail-closetemp' => 'Could not close temporary file.',
-	'backend-fail-read' => 'Could not read file $1.',
-	'backend-fail-create' => 'Could not create file $1.',
-	'backend-fail-readonly' => 'The storage backend "$1" is currently read-only. The reason given was: "$2"',
-	'backend-fail-synced' => 'The file "$1" is in an inconsistent state within the internal storage backends',
-	'backend-fail-connect' => 'Could not connect to storage backend "$1".',
-	'backend-fail-internal' => 'An unknown error occurred in storage backend "$1".',
-	'backend-fail-contenttype' => 'Could not determine the content type of the file to store at "$1".',
-	'backend-fail-batchsize' => 'Storage backend given a batch of $1 file {{PLURAL:$1|operation|operations}}; the limit is $2 {{PLURAL:$2|operation|operations}}.',
-	'brokenredirects' => 'Broken redirects',
-	'brokenredirectstext' => 'The following redirects link to non-existent pages:',
-	'brokenredirects-edit' => 'edit',
-	'brokenredirects-delete' => 'delete',
-	'booksources' => 'Book sources',
-	'booksources-search-legend' => 'Search for book sources',
-	'booksources-isbn' => 'ISBN:',
-	'booksources-go' => 'Go',
-	'booksources-text' => 'Below is a list of links to other sites that sell new and used books, and may also have further information about books you are looking for:',
-	'booksources-invalid-isbn' => 'The given ISBN does not appear to be valid; check for errors copying from the original source.',
-	'blanknamespace' => '(Main)',
-	'block' => 'Block user',
-	'blockip' => 'Block user',
-	'blockip-title' => 'Block user',
-	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
-	'badipaddress' => 'Invalid IP address',
-	'blockipsuccesssub' => 'Block succeeded',
-	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
-See [[Special:BlockList|IP block list]] to review blocks.',
-	'blocklist' => 'Blocked users',
-	'blocklist-userblocks' => 'Hide account blocks',
-	'blocklist-tempblocks' => 'Hide temporary blocks',
-	'blocklist-addressblocks' => 'Hide single IP blocks',
-	'blocklist-rangeblocks' => 'Hide range blocks',
-	'blocklist-timestamp' => 'Timestamp',
-	'blocklist-target' => 'Target',
-	'blocklist-expiry' => 'Expires',
-	'blocklist-by' => 'Blocking admin',
-	'blocklist-params' => 'Block parameters',
-	'blocklist-reason' => 'Reason',
-	'blocklist-nousertalk' => 'cannot edit own talk page',
-	'blocklink' => 'block',
-	'blocklogpage' => 'Block log',
-	'blocklog-showlog' => 'This user has been blocked previously.
-The block log is provided below for reference:',
-	'blocklog-showsuppresslog' => 'This user has been blocked and hidden previously.
-The suppress log is provided below for reference:',
-	'blocklogentry' => 'blocked [[$1]] with an expiry time of $2 $3',
-	'blocklogtext' => 'This is a log of user blocking and unblocking actions.
-Automatically blocked IP addresses are not listed.
-See the [[Special:BlockList|IP block list]] for the list of currently operational bans and blocks.',
-	'block-log-flags-anononly' => 'anonymous users only',
-	'block-log-flags-nocreate' => 'account creation disabled',
-	'block-log-flags-noautoblock' => 'autoblock disabled',
-	'block-log-flags-noemail' => 'e-mail blocked',
-	'block-log-flags-nousertalk' => 'cannot edit own talk page',
-	'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
-	'block-log-flags-hiddenname' => 'username hidden',
-	'blockme' => 'Block me',
-	'bydate' => 'by date',
-	'bad_image_list' => 'The format is as follows:
+{{GENDER:|你|妳|你}}可以聯絡$1或者其他的[[{{MediaWiki:Grouppage-sysop}}|管理員]]，討論這次查封。
+除非{{GENDER:|你|妳|你}}已經在{{GENDER:|你|妳|你}}的[[Special:Preferences|賬號參數設置]]中設定了一個有效的電子郵件地址，否則{{GENDER:|你|妳|你}}是不能使用「電郵這位用戶」的功能。當設定了一個有效的電子郵件地址後，這個功能是不會封鎖的。
 
-Only list items (lines starting with *) are considered.
-The first link on a line must be a link to a bad file.
-Any subsequent links on the same line are considered to be exceptions, i.e. pages where the file may occur inline.',
-	'blankpage' => 'Blank page',
+{{GENDER:|你|妳|你}}目前的IP地址是$3，而該查封ID是 #$5。 請在{{GENDER:|你|妳|你}}的查詢中註明以上所有的資料。",
+	'blockednoreason' => '無給出原因',
+	'blocked-notice-logextract' => '這位用戶現正被封鎖。
+下面有最近的封鎖紀錄以供參考：',
+	'badsig' => '錯誤的原始簽名。請檢查HTML標籤。',
+	'badsiglength' => '您的簽名過長。
+它的長度不可超過$1個字元。',
+	'boteditletter' => '機',
+	'badfilename' => '檔案名已被改為「$1」。',
+	'backend-fail-stream' => '無法流傳送文件$1。',
+	'backend-fail-backup' => '無法備份文件$1。',
+	'backend-fail-notexists' => '條目$1不存在。',
+	'backend-fail-hashes' => '比較無法獲取文件hashes',
+	'backend-fail-notsame' => '$1已存在不同的文件。',
+	'backend-fail-invalidpath' => '$1不是有效的存儲路徑。',
+	'backend-fail-delete' => '無法刪除「$1」檔案。',
+	'backend-fail-alreadyexists' => '“$1”頁面已存在',
+	'backend-fail-store' => '無法在$2存儲文件$1。',
+	'backend-fail-copy' => '無法複製文件$1到$2。',
+	'backend-fail-move' => '無法移動文件$1到$2。',
+	'backend-fail-opentemp' => '無法打開臨時文件。',
+	'backend-fail-writetemp' => '無法寫臨時文件。',
+	'backend-fail-closetemp' => '無法創建臨時文件。',
+	'backend-fail-read' => '找不到文件“$1”。',
+	'backend-fail-create' => '找不到「$1」檔案。',
+	'backend-fail-readonly' => '「$1」儲存後端目前是唯讀模式，因為：「$2」',
+	'backend-fail-synced' => '文件"$1"在內部後端是不一致的區域。',
+	'backend-fail-connect' => '無法連結至檔案後方“$1”。',
+	'backend-fail-internal' => '檔案後方“$1”發生了一個未知錯誤。',
+	'backend-fail-contenttype' => '無法確定檔案的內容類型以存儲於“$1”。',
+	'backend-fail-batchsize' => '鑒於一批後端 $1 檔 {{PLURAL:$1| operation|operations}} ；限制是 $2   {{PLURAL:$2| operation|operations}}。',
+	'brokenredirects' => '損壞的重定向頁',
+	'brokenredirectstext' => '以下的重定向頁指向的是不存在的頁面:',
+	'brokenredirects-edit' => '編輯',
+	'brokenredirects-delete' => '刪除',
+	'booksources' => '網路書源',
+	'booksources-search-legend' => '尋找網路書源',
+	'booksources-isbn' => '國際標準書號：',
+	'booksources-go' => '送出',
+	'booksources-text' => '以下是一份銷售新書或二手書的列表，並可能有{{GENDER:|你|妳|你}}正尋找的書的進一步訊息：',
+	'booksources-invalid-isbn' => '提供的ISBN號碼並不正確，請檢查原始複製來源號碼是否有誤。',
+	'blanknamespace' => '（主）',
+	'block' => '封禁用戶',
+	'blockip' => '封禁用戶',
+	'blockip-title' => '封禁用戶',
+	'blockip-legend' => '查封用戶',
+	'blockiptext' => '用下面的表單來禁止來自某一特定IP地址的修改許可權。
+只有在為防止破壞，及符合[[{{MediaWiki:Policy-url}}|守則]]的情況下才可採取此行動。
+請在下面輸入一個具體的理由（例如引述一個被破壞的頁面）。',
+	'badipaddress' => '無效IP地址',
+	'blockipsuccesssub' => '查封成功',
+	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]]已經被查封。
+<br />參看[[Special:BlockList|被封IP地址列表]]以覆審查封。',
+	'blocklist' => '封禁用戶',
+	'blocklist-userblocks' => '隱藏用戶封禁',
+	'blocklist-tempblocks' => '隱藏臨時封禁',
+	'blocklist-addressblocks' => '隱藏單一IP封禁',
+	'blocklist-rangeblocks' => '隱藏IP段封禁',
+	'blocklist-timestamp' => '時間',
+	'blocklist-target' => '目標',
+	'blocklist-expiry' => '過期',
+	'blocklist-by' => '封禁管理員',
+	'blocklist-params' => '封禁參數',
+	'blocklist-reason' => '原因',
+	'blocklist-nousertalk' => '禁止編輯自己的用戶討論頁',
+	'blocklink' => '查封',
+	'blocklogpage' => '查封日誌',
+	'blocklog-showlog' => '這位用戶曾經被封鎖過。在下列提供封鎖記錄以便參考：',
+	'blocklog-showsuppresslog' => '這位用戶曾經被封鎖和隱藏過。在下列提供廢止記錄以便參考：',
+	'blocklogentry' => '已封禁“[[$1]]” $3而終止時間為$2',
+	'blocklogtext' => '這是關於用戶封禁和解除封禁操作的記錄。被自動封禁的IP地址沒有被列出。請參閱[[Special:BlockList|被查封的IP地址和用戶列表]]。',
+	'block-log-flags-anononly' => '僅限匿名用戶',
+	'block-log-flags-nocreate' => '建立帳號已禁用',
+	'block-log-flags-noautoblock' => '停用自動封禁',
+	'block-log-flags-noemail' => '禁止電子郵件',
+	'block-log-flags-nousertalk' => '禁止編輯自己的用戶討論頁',
+	'block-log-flags-angry-autoblock' => '加強自動封鎖已啟用',
+	'block-log-flags-hiddenname' => '隱藏用戶名稱',
+	'blockme' => '查封我',
+	'bydate' => '按日期',
+	'bad_image_list' => '請按照下列格式編寫：
+
+只有（以 * 開頭）列出的項目會被考慮。
+每一行的第一個連結必須是損壞檔案的連結。
+然後同一行後方的連結會被視為例外，即是該檔案可以在哪些頁面內被顯示。',
+	'blankpage' => '空白頁面',
 	'backlinksubtitle' => '← $1',
 	'brokenredirects-summary' => '',
 	'booksources-summary' => '',
