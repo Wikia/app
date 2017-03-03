@@ -241,10 +241,6 @@ $1 is a page title",
 	'wantedfiles' => 'Name of special page displayed in [[Special:SpecialPages]] and title of [[Special:WantedFiles]].',
 	'wantedtemplates' => 'The page name of [[Special:WantedTemplates]].',
 	'watchlist' => '{{Identical|My watchlist}}',
-	'watchlistfor' => 'Subtitle on [[Special:Watchlist]].
-
-*$1: Username of current user
-{{Identical|For $1}}',
 	'watchlistanontext' => '* $1 is a link to [[Special:UserLogin]] with {{msg-mw|loginreqlink}} as link description',
 	'watchnologin' => '{{Identical|Not logged in}}',
 	'watch' => 'Name of the Watch tab. Should be in the imperative mood.',
@@ -257,7 +253,6 @@ $1 is a page title",
 	'whatlinkshere' => 'The text of the link in the toolbox (on the left, below the search menu) going to [[Special:WhatLinksHere]].',
 	'whatlinkshere-title' => "Title of the special page [[Special:WhatLinksHere]]. This page appears when you click on the 'What links here' button in the toolbox. $1 is the name of the page concerned.",
 	'whatlinkshere-page' => '{{Identical|Page}}',
-	'whatlinkshere-backlink' => '{{optional}}',
 	'whatlinkshere-prev' => 'This is part of the navigation message on the top and bottom of Whatlinkshere pages, where it is used as the first argument of {{msg-mw|Viewprevnext}}.
 $1 is the number of items shown per page. It is not used when $1 is zero; not sure what happens when $1 is one.
 Special pages use {{msg-mw|Prevn}} instead (still as an argument to {{msg-mw|Viewprevnext}}).
@@ -315,7 +310,6 @@ Hint: the text "Remove Titles" is in {{msg-mw|watchlistedit-normal-submit}}',
 	'watchlisttools-raw' => '[[Special:Watchlist]]: Navigation link under the title. See also {{msg|watchlisttools-view}} and {{msg|watchlisttools-edit}}.
 
 {{Identical|Edit raw watchlist}}',
-	'wikia-pagetitle' => 'Wikia page title',
 	'wikia-read-only-mode' => 'Missing documentation',
 	'widget-desc-wikiamessages' => 'Missing documentation',
 	'widget-title-advertiser' => 'Missing documentation',
@@ -1242,7 +1236,6 @@ Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 	'wrongpassword' => 'Remravlem tir volenaf. Tollwil !',
 	'wrongpasswordempty' => 'Remravlem bazeyen tir vlardaf.Vay tolon bazel !',
 	'watchthis' => 'Va bat teliz suzdá',
-	'whitelistedittitle' => 'Kucilan login ta sutelara',
 	'whitelistedittext' => 'Ta bubetara rin gonaskil ta $1',
 	'watchthisupload' => 'Suzdara va batu bu',
 	'withoutinterwiki' => 'Avagluyasikiiskaf bueem',
@@ -1254,7 +1247,6 @@ Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 	'wantedfiles' => 'Erun iyeltak',
 	'wantedtemplates' => 'Eruna teza',
 	'watchlist' => 'Suzdasiki',
-	'watchlistfor' => "(tori '''$1''')",
 	'watchlistanontext' => 'Ta wira ik betara va ra ke rinafi suzdasiki vay $1.',
 	'watchnologin' => 'Dogluyariskaf',
 	'watchnologintext' => 'Ta betara va suzdasiki gotil [[Special:UserLogin|dogluyarakiraf]].',
@@ -1817,7 +1809,6 @@ $messages['be'] = array(
 	'watchlisttools-view' => 'Паказаць змяненні',
 	'watchlisttools-edit' => 'Паказаць назіранае',
 	'watchlisttools-raw' => 'Паказаць нефарматаванае назіранае',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['be-tarask'] = array(
@@ -1901,7 +1892,6 @@ $messages['be-tarask'] = array(
 	'watchlisttools-view' => 'Паказаць зьмены ў старонках зь сьпісу',
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['be-x-old'] = array(
@@ -1985,7 +1975,6 @@ $messages['be-x-old'] = array(
 	'watchlisttools-view' => 'Паказаць зьмены ў старонках зь сьпісу',
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['bg'] = array(
@@ -2066,7 +2055,6 @@ $messages['bg'] = array(
 	'watchlisttools-view' => 'Преглед на списъка за наблюдение',
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['bh'] = array(
@@ -2147,7 +2135,6 @@ $messages['bh'] = array(
 	'watchlisttools-view' => 'Преглед на списъка за наблюдение',
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['bho'] = array(
@@ -2807,7 +2794,6 @@ $messages['ce'] = array(
 	'watchlisttools-view' => 'Могlам чура агlонашан хийцамаш',
 	'watchlisttools-edit' => 'Хьажа/нисбé могlам',
 	'watchlisttools-raw' => 'Йоза санна нисдé',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ceb'] = array(
@@ -2894,7 +2880,6 @@ $messages['ckb'] = array(
 	'wrongpasswordempty' => 'تێپەڕەوشەی لێدراو بەتاڵبوو.
 تکایە هەوڵ بدەوە.',
 	'watchthis' => 'چاودێری ئەم پەڕەیە بکە',
-	'whitelistedittitle' => 'بۆ دەستکاریکردن پێویستە لەژوورەوە بیت',
 	'whitelistedittext' => 'بۆ دەستکاری کردنی لاپەڕەکان دەبێ $1.',
 	'watchthisupload' => 'چاودێریی ئەم پەڕگە بکە',
 	'withoutinterwiki' => 'پەڕەکانی بێ بەستەرەکانی زمان',
@@ -2907,7 +2892,6 @@ $messages['ckb'] = array(
 	'wantedfiles' => 'پەڕگە داواکراوەکان',
 	'wantedtemplates' => 'قاڵبە داواکراوەکان',
 	'watchlist' => 'لیستی چاودێڕییەکانی من',
-	'watchlistfor' => "(بۆ '''$1''')",
 	'watchlistanontext' => 'تکایە بۆ دیتن و دەستکاری بابەتەکانی لە ناو لیستی چاودێریەکەت‌دا $1.',
 	'watchnologin' => 'لە ژوورەوە نیت.',
 	'watchnologintext' => 'دەبی لە [[Special:UserLogin|ژوورەوە]] بیت بۆ ئەوەی بتوانی گۆڕانکاری بکەیت لە لیستی چاودێریەکەت‌دا.',
@@ -3273,7 +3257,6 @@ Seznam editovaných stránek můžete také [[Special:EditWatchlist|editovat ve 
 	'watchlisttools-view' => 'Zobrazit změny sledovaných stránek',
 	'watchlisttools-edit' => 'Zobrazit a editovat seznam sledovaných stránek',
 	'watchlisttools-raw' => 'Editovat textový soubor sledovaných stránek',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['csb'] = array(
@@ -3333,7 +3316,6 @@ $messages['cu'] = array(
 	'whatlinkshere-hideredirs' => '$1 прѣнаправлѥниꙗ',
 	'whatlinkshere-hidelinks' => '$1 съвѧꙁи',
 	'watchlistall2' => 'вьсꙗ',
-	'wikia-pagetitle' => '$1 · Wikia',
 );
 
 $messages['cv'] = array(
@@ -3609,7 +3591,6 @@ Du kannst auch die [[Special:EditWatchlist|Standardseite]] zum Bearbeiten benutz
 	'watchlisttools-edit' => 'normal bearbeiten',
 	'watchlisttools-raw' => 'im Listenformat bearbeiten (Import/Export)',
 	'watchlist_s' => 'Beobachtungsliste',
-	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unseren Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst. 
 Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@fandom.com Kontakt zum Fandom-Team aufnehmen.',
 	'widget-title-advertiser' => 'Fandom-Spotlight',
@@ -3776,23 +3757,15 @@ Haddar Benudsesgond einrigd. Noggs werges dose Einschdeles anbas.',
 	'wrongpassword' => 'Dose Basword walsches sei (od wehldar). Bid nogmal brobär.',
 	'wrongpasswordempty' => 'Haddar gar noggs Basword eingeb. Bid nogmal brobär.',
 	'watchthis' => 'Dose Seid beobagd',
-	'whitelistedittitle' => 'Wür Bearbeid musdar angemeldedes sei',
 	'whitelistedittext' => 'Musdar $1, wan wol Seides bearbeid.',
-	'whitelistreadtitle' => 'Wür Les musdar angemeldedes sei',
-	'whitelistreadtext' => 'Musdar [[Special:Userlogin|da anmeld]], wan wol Seides les.',
-	'whitelistacctitle' => 'Haddar nogs Beregd das gön eines Benudsesgond anleg.',
-	'whitelistacctext' => 'Wan wol Benudsesgondes anleg in dose {{SITENAME}}, musdar [[Special:Userlogin|da anmeld]] und dose nödiges Beregdes haddar.',
 	'watchthisupload' => 'Dose Seid beobagd',
 	'withoutinterwiki' => 'Seides ohn Werweises su anderes Sbrages',
 	'withoutinterwiki-summary' => 'Dose wolgendes Seides noggs auw anderes Sbragwersiones werweis.',
 	'withoutinterwiki-legend' => 'Bräwigs',
 	'withoutinterwiki-submit' => 'Seig',
 	'wantedcategories' => 'Benudsdes, aba noggs angelegdes Gadegoräres',
-	'wantedcategories-summary' => 'Dose Schbesialseid Gadegoräes auwlisd, wo in Seides werwend, wo haddar aba noggs als Gadegorä anleg.',
 	'wantedpages' => 'Gewünschdes Seides',
-	'wantedpages-summary' => 'Dose Schbesialseid ales Seides auwlisd, wo nog noggs gebdar, auw dose aba anderes Seides wo geb werweis.',
 	'watchlist' => 'Beobagdlisd',
-	'watchlistfor' => "(wür '''$1''')",
 	'watchlistanontext' => 'Musdar $1, das gön Deines Beobagdlisd seddar od Eindräges auw dose bearbeid.',
 	'watchnologin' => 'Noggs angemeldedes sei',
 	'watchnologintext' => 'Musdar [[Special:Userlogin|angemeldedes]] sei, das gön Deines Beobagdlisd bearbeid.',
@@ -3807,16 +3780,9 @@ Haddar Benudsesgond einrigd. Noggs werges dose Einschdeles anbas.',
 	'watchlistcontains' => 'Deines Beobagdlisd haddar $1 {{PLURAL:$1|Seid|Seides}} drin.',
 	'wlnote' => "Jedsd gom {{PLURAL:$1|dose ledsdes Änd|dose ledsdes '''$1''' Ändes}} won dose ledsdes {{PLURAL:$2|Schdund|'''$2''' Schdundes}}.",
 	'wlshowlast' => 'Seig dose Ändes won ledsdes $1 Schdundes, $2 Däges od $3 (in dose ledsdes 30 Däges).',
-	'watchlist-show-bots' => 'Bod-Ändes einblend',
-	'watchlist-hide-bots' => 'Bod-Ändes ausblend',
-	'watchlist-show-own' => 'eigenes Ändes einblend',
-	'watchlist-hide-own' => 'eigenes Ändes ausblend',
-	'watchlist-show-minor' => 'gleines Ändes einblend',
-	'watchlist-hide-minor' => 'gleines Ändes ausblend',
 	'watching' => 'Beobagd …',
 	'whatlinkshere' => 'Werweises auw dose Seid',
 	'whatlinkshere-title' => 'Seides, wo auw dose „$1“ werweis',
-	'whatlinkshere-summary' => 'Dose Schbesialseid ales indernes Werweises auw eines beschdämdes Seid auwlisd. Dose mögliges Susädses „(Worlageseinbind)“ und „(Weidleidseid)“ jeweils anseig, das dose Seid noggs durg eines normales Wigiwerweis eingebundenes sei. ',
 	'whatlinkshere-page' => 'Seid:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|woriges|woriges $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|nägsdes|nägsdes $1}}',
@@ -4575,7 +4541,6 @@ Sa võid [[Special:EditWatchlist|kasutada ka harilikku tekstiredaktorit]].',
 	'watchlisttools-view' => 'Näita vastavaid muudatusi',
 	'watchlisttools-edit' => 'Vaata ja redigeeri jälgimisloendit',
 	'watchlisttools-raw' => 'Muuda lähteteksti',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['eu'] = array(
@@ -4925,7 +4890,6 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-view' => 'Näytä muutokset',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
-	'wikia-pagetitle' => '$1 – Wikia',
 	'widget-desc-wikiamessages' => 'Wikian viestit',
 	'widget-title-wikiamessages' => 'Wikian viestit',
 	'wikia_messages' => 'Wikian viestit',
@@ -5092,7 +5056,6 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-view' => 'Näytä muutokset',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['fj'] = array(
@@ -5513,7 +5476,6 @@ Wees sü gödje än fersäk dåt nuch iinjsen.',
 	'watchlisttools-view' => 'Eefterkiiklist: änringe',
 	'watchlisttools-edit' => 'normåål beårbe',
 	'watchlisttools-raw' => 'Listeformoot beårbe (import/äksport)',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['fur'] = array(
@@ -6057,7 +6019,6 @@ $messages['grc'] = array(
 	'wrongpasswordempty' => 'Σύνθημα οὐκ ἔγραψας.
 Αὖθις πείρασον.',
 	'watchthis' => 'Ἐφορᾶν τήνδε τὴν δέλτον',
-	'whitelistedittitle' => 'Ἀπαιτούμενον τὸ συνδεῖσθαι πρὸ τοῦ μεταγράψειν',
 	'whitelistedittext' => 'Ἀπαιτούμενον τὸ $1 πρὸ τοῦ μεταγράψειν δέλτους.',
 	'watchthisupload' => 'Ἐφορᾶν τόδε τὸ ἀρχεῖον',
 	'withoutinterwiki' => 'Δέλτοι ἄνευ γλωσσικῶν συνδέσμων',
@@ -6070,7 +6031,6 @@ $messages['grc'] = array(
 	'wantedfiles' => 'Αἰτούμενα ἀρχεῖα',
 	'wantedtemplates' => 'Ζητούμενα πρότυπα',
 	'watchlist' => 'Τὰ ἐφορώμενά μου',
-	'watchlistfor' => "(διὰ '''$1''')",
 	'watchlistanontext' => '$1 πρὸ τοῦ ὁρᾶν ἢ τοῦ μεταγράφειν τεμάχια τινὰ ἐν τῇ ἐφοροδιαλογῇ σου.',
 	'watchnologin' => 'Μὴ συνδεδεμένος',
 	'watchnologintext' => 'Δεῖ σε [[Special:UserLogin|συνδεῖσθαι]] πρὸ τοῦ μεταβάλλειν τὴν ἐφοροδιαλογήν σου.',
@@ -6299,7 +6259,6 @@ Aascreeu, my sailliu.",
 	'wantedfiles' => 'Coadanyn ry-laccal',
 	'wantedtemplates' => 'Clowanyn ry-laccal',
 	'watchlist' => 'My rolley arrey',
-	'watchlistfor' => "(son '''$1''')",
 	'watchnologin' => 'Cha nel oo loggit stiagh',
 	'watch' => 'Freill arrey',
 	'watchthispage' => 'Freill arrey er y duillag shoh',
@@ -6522,7 +6481,6 @@ $messages['he'] = array(
 	'watchlisttools-view' => 'הצגת השינויים הרלוונטיים',
 	'watchlisttools-edit' => 'הצגה ועריכה של רשימת המעקב',
 	'watchlisttools-raw' => 'עריכת הרשימה הגולמית',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['hi'] = array(
@@ -6535,7 +6493,6 @@ $messages['hi'] = array(
 	'wrongpassword' => 'आपने जो कूटशब्द लिखा है वह गलत है। कृपया पुनः प्रयास करें।',
 	'wrongpasswordempty' => 'कूटशब्द खाली है; फिरसे यत्न किजीये ।',
 	'watchthis' => 'इस पृष्ठ को ध्यानसूची में डालें',
-	'whitelistedittitle' => 'संपादन के लिए सत्रारंभ करना होगा',
 	'whitelistedittext' => 'लेख संपादित करने के लियें $1 करें ।',
 	'watchthisupload' => 'इस संचिका पर ध्यान रखें',
 	'withoutinterwiki' => 'आंतरविकि कड़ियाँ न होनेवाले लेख',
@@ -6548,7 +6505,6 @@ $messages['hi'] = array(
 	'wantedfiles' => 'वांछित संचिकाएँ',
 	'wantedtemplates' => 'वांछित साँचे',
 	'watchlist' => 'मेरी ध्यानसूची',
-	'watchlistfor' => "('''$1''' के लिये)",
 	'watchlistanontext' => 'अपने ध्यानसूचीमें होने वाले लेख देखने या फिर संपादित करने के लिये कॄपया $1 करें।',
 	'watchnologin' => 'लॉग इन नहीं किया हैं',
 	'watchnologintext' => 'ध्यानसूचीमें बदलाव के लिये आपने [[Special:UserLogin|लॉग इन]] किया होना आवश्यक हैं।',
@@ -6613,7 +6569,6 @@ $messages['hif'] = array(
 	'wrongpassword' => 'आपने जो कूटशब्द लिखा है वह गलत है। कृपया पुनः प्रयास करें।',
 	'wrongpasswordempty' => 'कूटशब्द खाली है; फिरसे यत्न किजीये ।',
 	'watchthis' => 'इस पृष्ठ को ध्यानसूची में डालें',
-	'whitelistedittitle' => 'संपादन के लिए सत्रारंभ करना होगा',
 	'whitelistedittext' => 'लेख संपादित करने के लियें $1 करें ।',
 	'watchthisupload' => 'इस संचिका पर ध्यान रखें',
 	'withoutinterwiki' => 'आंतरविकि कड़ियाँ न होनेवाले लेख',
@@ -6626,7 +6581,6 @@ $messages['hif'] = array(
 	'wantedfiles' => 'वांछित संचिकाएँ',
 	'wantedtemplates' => 'वांछित साँचे',
 	'watchlist' => 'मेरी ध्यानसूची',
-	'watchlistfor' => "('''$1''' के लिये)",
 	'watchlistanontext' => 'अपने ध्यानसूचीमें होने वाले लेख देखने या फिर संपादित करने के लिये कॄपया $1 करें।',
 	'watchnologin' => 'लॉग इन नहीं किया हैं',
 	'watchnologintext' => 'ध्यानसूचीमें बदलाव के लिये आपने [[Special:UserLogin|लॉग इन]] किया होना आवश्यक हैं।',
@@ -6693,7 +6647,6 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 	'wrongpassword' => 'Galat password likha gais hai. Fir se kosis karo.',
 	'wrongpasswordempty' => 'Koi password nai likha gais hai. Fir se kosis karo.',
 	'watchthis' => 'Ii panna pe dhyaan rakkho',
-	'whitelistedittitle' => 'Badle khatir login kare ke jaruri hai',
 	'whitelistedittext' => 'Aap ke panna badle khatir $1 kare ke parri.',
 	'watchthisupload' => 'Ii panna pe dhyan rakhho',
 	'withoutinterwiki' => 'Bina bhasa ke link waala panna',
@@ -6706,7 +6659,6 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 	'wantedfiles' => 'Maange waala files',
 	'wantedtemplates' => 'Maange waala templates',
 	'watchlist' => 'Hamaar dhyan suchi',
-	'watchlistfor' => "('''$1''' ke khatir)",
 	'watchlistanontext' => 'Aapan dhyan suchi me ke dekhe nai to badle ke khatir meharbani kar ke $1 karo.',
 	'watchnologin' => 'Logged in nai hai',
 	'watchnologintext' => 'Aapan dhyan suchi ke badle ke khatir aap ke [[Special:UserLogin|logged in]] rahe ke chaahi.',
@@ -7070,7 +7022,6 @@ minden egyes sor egy figyelt lap címe. Ha kész vagy, kattints a lista alatt ta
 	'widget-desc-activetalkpages' => 'A legutóbb megváltozott vitalapok listája.',
 	'widget-title-ancientpages' => 'Elhagyott oldalak',
 	'widget-desc-ancientpages' => 'Nézd meg a legrégebben szerkesztett szócikkeket.',
-	'widget-bookmark-title' => 'Könyvjelzõk',
 	'widget-desc-bookmark' => 'Add hozzá a kedvenc oldalaidat.',
 	'widget-title-contribs' => 'Közremûködések',
 	'widget-desc-contribs' => 'Egyszerû módja a közremûködéseid megtekintésének.',
@@ -7184,7 +7135,6 @@ $messages['hy'] = array(
 	'watchlisttools-view' => 'Փոփոխությունները հսկացանկում',
 	'watchlisttools-edit' => 'Դիտել և խմբագրել հսկացանկը',
 	'watchlisttools-raw' => 'Խմբագրել հում հսկացանկը',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ia'] = array(
@@ -8348,7 +8298,6 @@ Akun panjenengan wis kacipta. Aja lali nata konfigurasi [[Special:Preferences|pr
 	'wrongpassword' => 'Tembung sandhi sing dipilih salah. Mangga coba manèh.',
 	'wrongpasswordempty' => 'Panjenengan ora milih tembung sandhi. Mangga dicoba manèh.',
 	'watchthis' => 'Awasana kaca iki',
-	'whitelistedittitle' => 'Prelu log mlebu kanggo nyunting',
 	'whitelistedittext' => 'Panjenengan kudu $1 supaya bisa nyunting artikel.',
 	'watchthisupload' => 'Awasana berkas iki',
 	'withoutinterwiki' => 'Kaca tanpa pranala antarbasa',
@@ -8361,7 +8310,6 @@ Akun panjenengan wis kacipta. Aja lali nata konfigurasi [[Special:Preferences|pr
 	'wantedfiles' => 'Berkas sing diperlokaké',
 	'wantedtemplates' => 'Cithakan sing diperlokaké',
 	'watchlist' => 'Daftar artikel pilihan',
-	'watchlistfor' => "(kanggo '''$1''')",
 	'watchlistanontext' => 'Mangga $1 kanggo mirsani utawa nyunting daftar pangawasan panjenengan.',
 	'watchnologin' => 'Durung mlebu log',
 	'watchnologintext' => 'Panjenengan kudu [[Special:UserLogin|mlebu log]] kanggo ngowahi daftar artikel pilihan.',
@@ -8427,7 +8375,6 @@ $messages['ka'] = array(
 	'wrongpassword' => 'პაროლი არასწორად არის შეყვანილი. სცადეთ განმეორებით.',
 	'wrongpasswordempty' => 'პაროლი არ არის შეყვანილი. სცადეთ განმეორებით.',
 	'watchthis' => 'უთვალთვალე ამ გვერდს',
-	'whitelistedittitle' => 'რედაქტირება საჭიროებს სისტემაში შესვლას',
 	'whitelistedittext' => 'გვერდების რედაქტირებისათვის თქვენ გესაჭიროებათ $1.',
 	'watchthisupload' => 'უთვალთვალე ამ ფაილს',
 	'withoutinterwiki' => 'გვერდები ენის ბმულების გარეშე',
@@ -8440,7 +8387,6 @@ $messages['ka'] = array(
 	'wantedfiles' => 'მოთხოვნილი ფაილები',
 	'wantedtemplates' => 'მოთხოვნილი თარგები',
 	'watchlist' => 'ჩემი კონტროლის სია',
-	'watchlistfor' => "('''$1'''-თვის)",
 	'watchlistanontext' => '$1
 
 იხილეთ ან რედაქტირება გაუკეთეთ თქვენი კონტროლის სიაში შეტანილ ერთეულებს.',
@@ -8877,7 +8823,6 @@ $messages['kk-arab'] = array(
 	'watchlisttools-view' => 'قاتىستى وزگەرىستەردى قاراۋ',
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kk-cn'] = array(
@@ -8953,7 +8898,6 @@ $messages['kk-cn'] = array(
 	'watchlisttools-view' => 'قاتىستى وزگەرىستەردى قاراۋ',
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kk-cyrl'] = array(
@@ -9031,7 +8975,6 @@ $messages['kk-cyrl'] = array(
 	'watchlisttools-view' => 'Қатысты өзгерістерді қарау',
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kk-kz'] = array(
@@ -9109,7 +9052,6 @@ $messages['kk-kz'] = array(
 	'watchlisttools-view' => 'Қатысты өзгерістерді қарау',
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kk-latn'] = array(
@@ -9185,7 +9127,6 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-view' => 'Qatıstı özgeristerdi qaraw',
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kk-tr'] = array(
@@ -9261,7 +9202,6 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-view' => 'Qatıstı özgeristerdi qaraw',
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['kl'] = array(
@@ -9818,7 +9758,6 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-view' => 'Oppaßliß — Änderunge zeije',
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ku'] = array(
@@ -9904,7 +9843,6 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-view' => 'Oppaßliß — Änderunge zeije',
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ku-latn'] = array(
@@ -12347,7 +12285,6 @@ $messages['ne'] = array(
 	'wrongpassword' => 'पासवर्ड गलत हालियो । कृपया फेरि प्रयास गर्नुहोला ।',
 	'wrongpasswordempty' => 'हालिएको पासवर्ड खालि थियो । कृपया फेरी प्रयास गर्नुहोला ।',
 	'watchthis' => 'यो पृष्ठ अवलोकन गर्नुहोस्',
-	'whitelistedittitle' => 'सम्पादन गर्नको लागि प्रवेश (लग इन) आवश्यक छ',
 	'whitelistedittext' => 'पाना सम्पादन गर्न तपाँईले $1 गर्नु पर्दछ।',
 	'watchthisupload' => 'यो पृष्ठ निगरानी गर्नुहोस्',
 	'withoutinterwiki' => 'भाषा नभएको पृष्ठहरु',
@@ -12360,7 +12297,6 @@ $messages['ne'] = array(
 	'wantedfiles' => 'माग भएका फाइलहरु',
 	'wantedtemplates' => 'माग भएका टेम्प्लेटहरु',
 	'watchlist' => 'मेरो अवलोकन',
-	'watchlistfor' => "('''$1''' को लागि)",
 	'watchnologin' => 'प्रवेश (लग ईन) नगरिएको',
 	'watchnologintext' => 'आफ्नो अवलोकनलाइ परिवर्तन गर्नको लागि त तपाइ यसमा [[Special:UserLogin|प्रवेश(लगइन)]] गर्नुपर्छ।',
 	'watch' => 'अवलोकन',
@@ -12839,7 +12775,6 @@ Tšhupaleloko (''account'') ya gago e tlhodilwe. O seke wa lebala go fetola [[Sp
 	'wrongpassword' => 'O loketše ditlhaka-tša-siphiri tšeo e sego tšona. Ka kgopelo, leka gape.',
 	'wrongpasswordempty' => 'Ga wa lokela ditlhaka-tša-siphiri. Ka kgopelo, leka gape.',
 	'watchthis' => 'Tlhapetša letlakala le',
-	'whitelistedittitle' => 'O swanela ke go tsena go fetola',
 	'whitelistedittext' => 'O swanela ke go $1 go fetola matlakala.',
 	'watchthisupload' => "Tlhapetša ''faele'' ye",
 	'withoutinterwiki' => 'Matlakala a senago dihlomaganyo tša dipolelo',
@@ -12847,7 +12782,6 @@ Tšhupaleloko (''account'') ya gago e tlhodilwe. O seke wa lebala go fetola [[Sp
 	'wantedcategories' => 'Dihlopha tšago nyakega',
 	'wantedpages' => 'Matlakala ago nyakega',
 	'watchlist' => 'Lenano la ditlhapetšo tša ka',
-	'watchlistfor' => "(ya '''$1''')",
 	'watch' => 'Tlhapetša',
 	'watchthispage' => 'Tlhapetša letlakala le',
 	'watchlist-details' => '{{PLURAL:$1|$1 ya letlakala|$1 ya matlakala}} a lenano la ditlhapetšo tša gago, re sa bale matlakala a dipoledišano (dipolelo).',
@@ -13114,7 +13048,6 @@ $messages['os'] = array(
 	'watchlisttools-view' => 'Баст ивдтытæ фен',
 	'watchlisttools-edit' => 'Бакæсын æмæ ивын цæстдард рæгъ',
 	'watchlisttools-raw' => 'Ивын цæстдард рæгъы бындуртекст',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['pa'] = array(
@@ -13284,7 +13217,6 @@ $messages['pdc'] = array(
 	'watchthisupload' => 'Watsch des Blatt',
 	'withoutinterwiki-submit' => 'Zeig',
 	'watchlist' => 'Mei Watsch-Lischt',
-	'watchlistfor' => "(fer '''$1''')",
 	'watch' => 'watsche',
 	'watchthispage' => 'watsch des Blatt',
 	'watchlist-details' => '{{PLURAL:$1|$1 Blatt|$1 Bledder}} uff dei Watch-Lischt, ohne Gschwetz-Bledder',
@@ -13442,15 +13374,11 @@ Możesz także użyć [[Special:EditWatchlist|standardowego edytora obserwowanyc
 	'wt_show_referrers' => 'Pokaż statystyki',
 	'wt_show_period' => 'Wybierz okres statystyk',
 	'widgets' => 'Lista widgetów',
-	'widgets-specialpage-info' => 'Widżety działają najlepiej w jednej z najnowszych skórek, np. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
-
-Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać widżetów.',
 	'wt_click_to_close' => 'Kliknij, aby zamknąć dymek...',
 	'widget-title-activetalkpages' => 'Lista ostatnio edytowanych strony dyskusji',
 	'widget-desc-activetalkpages' => 'Aktywne strony dyskusji',
 	'widget-title-ancientpages' => 'Najstarsze strony',
 	'widget-desc-ancientpages' => 'Lista stron nieedytowanych przez dłuższy czas',
-	'widget-bookmark-title' => 'Zakładki',
 	'widget-desc-bookmark' => 'Zachowaj swoje ulubione strony',
 	'widget-title-contribs' => 'Wkład',
 	'widget-desc-contribs' => 'Pomocna lista ostatnich edycji',
@@ -13492,7 +13420,6 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 	'watchlist_s' => 'Obserwowane',
 	'widget_name' => 'Nazwa',
 	'widget_description' => 'Opis',
-	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-read-only-mode' => 'O nie! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz mieć problem przy wykonywaniu niektórych czynności, takich jak edytowanie, przesyłanie plików lub korzystanie z czatu. 
 Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problemu. Jeżeli ta wiadomość jest widoczna przez dłuższy czas, możesz skontaktować się z Fandomem pisząc na adres community@wikia.com.',
 	'widget-desc-wikiamessages' => 'Wiadomości Fandomu',
@@ -13996,11 +13923,11 @@ Você também pode [[Special:EditWatchlist|editar a lista da maneira convenciona
 	'watchlisttools-raw' => 'Edição crua da lista de páginas vigiadas',
 	'wikia-read-only-mode' => 'Opa! Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, enviar arquivos ou entrar no chat.
 Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com o Fandom em comunidade@fandom.com.',
-	'widget-desc-wikiamessages' => 'Fandom messages',
+	'widget-desc-wikiamessages' => 'Mensagens do Fandom',
 	'widget-title-advertiser' => 'Fandom Spotlight',
-	'widget-title-wikiamessages' => 'Fandom messages',
-	'wikia_messages' => 'Fandom messages',
-	'wikicitieshome' => 'Fandom Home',
+	'widget-title-wikiamessages' => 'Mensagens do Fandom',
+	'wikia_messages' => 'Mensagens do Fandom',
+	'wikicitieshome' => 'Página inicial do Fandom',
 	'wantedcategories-summary' => '',
 	'wantedpages-summary' => '',
 	'wantedfiles-summary' => '',
@@ -14558,7 +14485,6 @@ $messages['roa-rup'] = array(
 
 Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {{SITENAME}}.',
 	'watchthis' => 'Mutrits-u frãndzã aistã',
-	'whitelistedittitle' => 'Lipseashce s-vã ligats ta s-alãxits',
 	'watchthisupload' => 'Mutrits-u frãndzã aistã',
 	'watchlist' => 'Lista-a mea di videare',
 	'watchnologin' => 'Nu hits ligats',
@@ -14733,7 +14659,6 @@ $messages['ru'] = array(
 	'watchlisttools-view' => 'Изменения на страницах из списка',
 	'watchlisttools-edit' => 'Смотреть/править список',
 	'watchlisttools-raw' => 'Править как текст',
-	'wikia-pagetitle' => '$1 — Wikia',
 	'wikia-read-only-mode' => 'Наш главный центр обработки данных в данный момент недоступен, поэтому вы подключены к резервному центру. К сожалению, это означает, что некоторые функции (редактирование, загрузка файлов или чат) могут быть временно недоступны.
 Пожалуйста, наберитесь терпения — мы работаем над устранением этой проблемы. Если вы продолжаете видеть эту ошибку в течение долгого периода времени, сообщите об этом нам по адресу community@wikia.com.',
 	'widget-desc-wikiamessages' => 'Сообщения Фэндома',
@@ -15629,7 +15554,6 @@ $messages['shi'] = array(
 lcont nek  tuyskar .
  Adur tut atbaddlt [[Special:Preferences|{{SITENAME}} issusmen]]',
 	'watchthis' => 'Ṭfr tasna yad',
-	'whitelistedittitle' => 'Illa zwar fllak ad tilit ɣ ifalan bac ad tsbadlt ma trit.',
 	'whitelistedittext' => 'Illa fllak ad tilit ɣ $1 bac adak ittuyskar ad tsbadlt mayllan ɣid',
 	'watchlist' => '↓ Umuɣ n imtfrn',
 	'watch' => 'zaydtin i tochwafin-niw',
@@ -15641,7 +15565,6 @@ lcont nek  tuyskar .
 	'whatlinkshere' => 'May izdayn ɣid',
 	'whatlinkshere-title' => 'Tisniwin li izdayn d "$1"',
 	'whatlinkshere-page' => 'Tasna:',
-	'whatlinkshere-backlink' => '← $1',
 	'whatlinkshere-prev' => '{{PLURAL:$1|amzwaru|amzwaru $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|wali d yuckan|wali d yuckan $1}}',
 	'whatlinkshere-links' => '← izdayn',
@@ -15905,7 +15828,6 @@ Uporabite lahko tudi [[Special:EditWatchlist|standardni urejevalnik]].',
 	'watchlisttools-view' => 'Oglej si ustrezne spremembe',
 	'watchlisttools-edit' => 'Poglej in uredi spisek nadzorov',
 	'watchlisttools-raw' => 'Uredi gol spisek nadzorov',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['sli'] = array(
@@ -16042,7 +15964,6 @@ Ha' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga]
 	'wrongpassword' => 'Ereysirka waa qalad. Fadlan iskuday markale.',
 	'wrongpasswordempty' => 'Ereysir aan waxba ku jirin lama ogola. Fadlan iskuday markale.',
 	'watchthis' => 'Boggaan waardiyey',
-	'whitelistedittitle' => 'Waxaa loo baahanyahay gudagal si aad wax uga bedeshid',
 	'whitelistedittext' => 'Waa in aad $1 si aad wax uga bedeshid boggaga.',
 	'watchthisupload' => 'Boggaan waardiyey',
 	'watchlist' => 'Liiskeyga waardiyeynta',
@@ -16300,7 +16221,6 @@ $messages['sr-ec'] = array(
 	'watchlisttools-view' => 'прикажи сродне измене',
 	'watchlisttools-edit' => 'прикажи и уреди списак надгледања',
 	'watchlisttools-raw' => 'измени сиров списак надгледања',
-	'wikia-pagetitle' => '$1 – Wikia',
 );
 
 $messages['sr-el'] = array(
@@ -16316,7 +16236,6 @@ Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} pode�
 	'wrongpassword' => 'Lozinka koju ste uneli je neispravna. Molimo pokušajte ponovo.',
 	'wrongpasswordempty' => 'Lozinka koju ste uneli je prazna. Molimo pokušajte ponovo.',
 	'watchthis' => 'Nadgledaj ovaj članak',
-	'whitelistedittitle' => 'Obavezno je prijavljivanje za uređivanje',
 	'whitelistedittext' => 'Morate da se [[Special:Userlogin|prijavite]] da biste menjali članke.',
 	'watchthisupload' => 'Nadgledaj ovaj fajl',
 	'withoutinterwiki' => 'Stranice bez jezičkih veza',
@@ -16329,7 +16248,6 @@ Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} pode�
 	'wantedfiles' => 'Traženi fajlovi',
 	'wantedtemplates' => 'Traženi šabloni',
 	'watchlist' => 'Moj spisak nadgledanja',
-	'watchlistfor' => "(za '''$1''')",
 	'watchlistanontext' => 'Molimo $1 da biste gledali ili menjali stavke na vašem spisku nadgledanja.',
 	'watchnologin' => 'Niste prijavljeni',
 	'watchnologintext' => 'Morate biti [[Special:UserLogin|prijavljeni]] da biste menjali spisak nadgledanja.',
@@ -17795,7 +17713,6 @@ $messages['tt-cyrl'] = array(
 	'watchlisttools-view' => 'Соңгы үзгәртүләрне күрсәтү',
 	'watchlisttools-edit' => 'Күзәтү исемлегене карау һәм үзгәртү',
 	'watchlisttools-raw' => 'Текст сыман үзгәртү',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['tt-latn'] = array(
@@ -17846,7 +17763,6 @@ Saytnıñ şäxsi [[Special:Preferences|köylänmälären]] qararğa onıtmağı
 	'watchlisttools-view' => 'Soñğı üzgärtülärne kürsätü',
 	'watchlisttools-edit' => 'Küzätü isemlegene qaraw häm üzgärtü',
 	'watchlisttools-raw' => 'Tekst sıman üzgärtü',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ty'] = array(
@@ -18077,7 +17993,6 @@ $messages['uk'] = array(
 	'watchlisttools-view' => 'Зміни на сторінках зі списку',
 	'watchlisttools-edit' => 'Переглянути/редагувати список',
 	'watchlisttools-raw' => 'Редагувати як текст',
-	'wikia-pagetitle' => '$1 — Wikia',
 );
 
 $messages['ur'] = array(
@@ -18143,19 +18058,12 @@ S'ha creat el teu conte. No oblides de canviar les teues preferències.",
 	'wrongpassword' => 'La contrasenya que has introduït es incorrecta. Torneu-ho a provar.',
 	'wrongpasswordempty' => "La contrasenya que s'ha introduït era en blanc. Torneu-ho a provar.",
 	'watchthis' => 'Vigila este artícul.',
-	'whitelistedittitle' => 'Tens que iniciar una sessió per a poder editar',
 	'whitelistedittext' => 'tens que $1 per editar pàgines.',
-	'whitelistreadtitle' => 'Tens que iniciar una sessió per a llegir-lo',
-	'whitelistreadtext' => 'Tens que [[Special:Userlogin|indentificar-te]] per llegir les pàgines.',
-	'whitelistacctitle' => 'No tens permissos per a crear un conte',
-	'whitelistacctext' => "Per estar autorisat a crear contes en esta Uiquipédia has d'[[Special:Userlogin|identificar-te]] i tenir els permissos apropiats.",
 	'watchthisupload' => 'Vigila esta pàgina',
 	'wantedcategories' => 'Categories demanades',
 	'wantedpages' => 'Pàgines demanades',
 	'watchlist' => 'Llista de seguiment',
-	'watchlistfor' => "(per a '''$1''')",
 	'watchlistanontext' => 'Fes clic $1 per a visualisar o editar elements de la teua llista de seguiment.',
-	'watchlistcount' => "'''Tens {{PLURAL:$1|$1 element|$1 elements}} en la teua llista de seguiment, incloent-hi les pàgines de discussió.'''",
 	'watchnologin' => 'No has iniciat la sessió',
 	'watchnologintext' => 'Tens que [[Special:Userlogin|entrar]]
 per modificar el teu llistat de seguiment.',
@@ -18170,13 +18078,6 @@ per modificar el teu llistat de seguiment.',
 	'watchlistcontains' => 'La teua llista de seguiment conté $1 pàgines.',
 	'wlnote' => 'A baix hi ha els últims $1 canvis en les últimes <b>$2</b> hores.',
 	'wlshowlast' => '<small>- Mostra les últimes $1 hores, els últims $2 dies o $3</small>',
-	'wlsaved' => 'Esta es una versió guardada de la teua llista de seguiment.',
-	'watchlist-show-bots' => 'Mostra les edicions dels bots',
-	'watchlist-hide-bots' => 'Amaga les edicions dels bots',
-	'watchlist-show-own' => 'Mostra les edicions pròpies',
-	'watchlist-hide-own' => 'Amaga les edicions pròpies',
-	'watchlist-show-minor' => 'Mostra les edicions menors',
-	'watchlist-hide-minor' => 'Amaga les edicions menors',
 	'watching' => "S'està vigilant...",
 	'whatlinkshere' => 'Qué enllaça ací',
 	'watchlistall2' => 'totes',
@@ -18410,7 +18311,6 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'watchlisttools-view' => 'Xem thay đổi trên các trang theo dõi',
 	'watchlisttools-edit' => 'Xem và sửa danh sách theo dõi',
 	'watchlisttools-raw' => 'Sửa danh sách theo dõi dạng thô',
-	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-days-ago' => '$1 ngày trước',
 	'wikia-hours-ago' => '$1 giờ trước',
 	'wikia-language-all' => 'Mọi ngôn ngữ',
@@ -18463,7 +18363,6 @@ No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]
 	'wrongpassword' => 'Letavöd neveräton. Steifülolös dönu.',
 	'wrongpasswordempty' => 'Letavöd vagon. Steifülolös dönu.',
 	'watchthis' => 'Galädolöd padi at',
-	'whitelistedittitle' => 'Mutol nunädön oli ad redakön',
 	'whitelistedittext' => 'Mutol $1 ad redakön padis.',
 	'watchthisupload' => 'Galädolöd ragivi at',
 	'withoutinterwiki' => 'Pads nen yüms bevüpükik',
@@ -18475,7 +18374,6 @@ No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]
 	'wantedfiles' => 'Ragivs mekabik',
 	'wantedtemplates' => 'Samafomots mekabik',
 	'watchlist' => 'Galädalised obik',
-	'watchlistfor' => "(tefü '''$1''')",
 	'watchlistanontext' => '$1 ad logön u redakön lienis galädaliseda olik',
 	'watchnologin' => 'No enunädon oki',
 	'watchnologintext' => 'Mutol [[Special:UserLogin|nunädön oli]] büä kanol votükön galädalisedi olik.',
@@ -18978,7 +18876,6 @@ A ti ṣ'èdá àpamọ́ yín.
 	'wrongpasswordempty' => 'Ọ̀ròìpamọ́ jẹ́ òfo.
 Ẹ gbìyànjú lẹ́ ẹ̀kan síi.',
 	'watchthis' => "M'ójútó ojúewé yìí",
-	'whitelistedittitle' => "Ìwọlé ṣe dandan láti ṣ'àtúnṣe",
 	'whitelistedittext' => "Ẹ gbọ́dọ̀ $1 láti ṣ'àtúnṣe àwọn ojúewé.",
 	'watchthisupload' => "M'ójútó fáilì yìí",
 	'withoutinterwiki' => 'Àwọn ojúewé tí kò ní ìjápọ̀ èdè',
@@ -18989,7 +18886,6 @@ A ti ṣ'èdá àpamọ́ yín.
 	'wantedfiles' => 'Àwọn fáìlì àìsí',
 	'wantedtemplates' => 'Àwọn àdàkọ àìsí',
 	'watchlist' => 'Ìmójútó mi',
-	'watchlistfor' => "(fún '''$1''')",
 	'watchlistanontext' => 'Ẹ jọ̀wọ́ $1 láti wò tàbí ṣàtúnṣe àwọn ohun inú ìmójútó yín.',
 	'watchnologin' => 'Ẹ kò tíì wọlé',
 	'watchnologintext' => 'Ẹ gbọ́dọ̀ [[Special:UserLogin|wọlè]] láti ṣàtúnṣe ìmójútó yín.',
