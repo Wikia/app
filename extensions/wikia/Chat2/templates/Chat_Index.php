@@ -92,7 +92,7 @@
 	</script>
 	<script type='text/template' id='user-template'>
 		<img src="<%= avatarSrc %>"/>
-		<span class="username" data-name="<%= name %>">
+		<span class="username">
 			<%= name %>
 			<span class="badge">
 				<% if(groups.indexOf('staff') !== -1) { %>

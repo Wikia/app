@@ -41,9 +41,9 @@ class WallThread {
 	}
 
 	public function move( Wall $dest, $user ) {
-		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId );
+		CommentsIndex::getInstance()->moveThread( $this->mThreadId, $dest->getId() );
 
-		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory = new WallHistory();
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
 
 		$main = $this->getThreadMainMsg();
@@ -191,10 +191,16 @@ class WallThread {
 		WikiaDataAccess::cachePurge( $key );
 	}
 
+	/**
+	 * TODO: used by ForumController::boardThread() method only. Move it there?
+	 *
+	 * @return null|WallMessage
+	 */
 	public function getLastMessage() {
 		$key = wfMemcKey( __CLASS__, '-thread-lastreply-key', $this->mThreadId );
+		$fname = __METHOD__;
 
-		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() {
+		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $fname ) {
 			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
 				[ 'comments_index' ],
@@ -205,7 +211,7 @@ class WallThread {
 						'deleted' => 0,
 						'removed' => 0
 				],
-				__METHOD__
+				$fname
 			);
 			return $row;
 		} );

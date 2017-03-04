@@ -111,6 +111,7 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
+		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
@@ -320,6 +321,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
@@ -1013,6 +1015,7 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
+		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
@@ -2359,54 +2362,6 @@ $config['wikia_maps_parser_tag_js_wikiamobile'] = [
 	],
 ];
 
-/** GlobalNavigation extension */
-$config['global_navigation_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationUserLoginDropdown.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationInverse.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GoogleSearchAPI.scss',
-		'//skins/shared/styles/transparent-out.scss',
-	],
-];
-
-$config['global_navigation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'#group_delayed_hover_js',
-		'//resources/wikia/modules/scrollToLink.js',
-		'//skins/shared/scripts/transparent-out.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationDropdownsHandler.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GoogleSearchAPI.js',
-		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationInverseTransition.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAccountNavigation.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationExploreWikiaDropdown.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-	],
-];
-
-$config['wall_notifications_global_navigation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationNotifications.js',
-	],
-];
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -3076,8 +3031,7 @@ $config['design_system_user_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss'
+		'//resources/wikia/libraries/headroom/headroom.scss'
 	],
 ];
 
@@ -3215,5 +3169,22 @@ $config[ 'rwe_page_header_js' ] = [
 		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js',
 		'//extensions/wikia/RWEPageHeader/scripts/search.js',
 		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
+	]
+];
+
+$config[ 'article_video_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/article-video.scss'
+	]
+];
+
+$config[ 'article_video_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/scripts/article-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala-video.js'
 	]
 ];

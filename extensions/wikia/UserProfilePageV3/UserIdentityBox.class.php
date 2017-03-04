@@ -103,7 +103,8 @@ class UserIdentityBox extends WikiaObject {
 			// data depends on which wiki it is displayed
 			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
-
+			$data['contributionsURL'] = Skin::makeSpecialUrlSubpage( 'Contributions', $userName );
+			
 			$data = call_user_func( array( $this, $dataType ), $data );
 
 			if ( !( $iEdits || $this->shouldDisplayFullMasthead() ) ) {
