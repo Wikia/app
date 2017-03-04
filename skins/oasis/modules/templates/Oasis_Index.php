@@ -103,6 +103,55 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+
+<script type="text/javascript">
+	console.log('== Qualaroo experiment enabled ==');
+
+	var wgKruxEventId = 'KTW2yYJt';
+
+	function fireKruxEvent(answer) {
+		var sanitizedAnswer = '';
+
+		if( Krux ) {
+			sanitizedAnswer = answer.toLowerCase();
+			
+			// It will not be sent if Krux is not enabled on the wiki
+			Krux('admEvent', wgKruxEventId, {'answer': sanitizedAnswer});
+			console.log("Qualaroo-Krux integration: fired a Krux event (" + sanitizedAnswer + ")");
+		} else {
+			console.log("Qualaroo-Krux integration: no Krux available. Event not sent for: " + sanitizedAnswer);
+		}
+	}
+
+	function validateAndSendKruxRequests(fieldsList, nudgeId) {
+		var answers;
+
+		if(!Object.keys) {
+			console.log('Qualaroo-Krux integration: unsupported browser');
+			return;
+		}
+
+		if(!fieldsList[0]['answer']) {
+			console.log('Qualaroo-Krux integration: no answers found');
+			return;
+		}
+
+		answers = fieldsList[0]['answer'];
+
+		if(typeof answers === 'string') {
+			fireKruxEvent(answers);
+		} else {
+			Object.keys(answers).forEach(function(i) {
+				fireKruxEvent(answers[i]);
+			});
+		}
+	}
+
+	window._kiq.push(['eventHandler', 'submit', function(field_list, nudge_id, node_id){
+		validateAndSendKruxRequests(field_list, nudge_id);
+	}]);
+</script>
+
 </body>
 
 <?= wfReportTime() . "\n" ?>
