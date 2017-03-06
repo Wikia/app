@@ -72,7 +72,7 @@ define('ext.wikia.adEngine.adContext', [
 		if (!noExternals) {
 			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
 				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
-				canBeSampled = sampler.sample(1, 10);
+				canBeSampled = sampler.sample('pageFairDetection',  1, 10);
 
 			if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
 				context.opts.pageFairDetection = true;
