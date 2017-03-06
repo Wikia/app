@@ -64,6 +64,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 
 			$fakeDiv = $('<div>').css({'overflow':'hidden'});
 			candidateWidth = $fakeDiv.insertBefore($candidate).width();
+			$fakeDiv.remove();
 			
 			if (candidateWidth < 500) {
 				return -1;
