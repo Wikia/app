@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
+	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (porvata, googleIma, videoSettings, doc, mercuryListener) {
+], function (DOMElementTweaker, porvata, googleIma, videoSettings, doc, mercuryListener) {
 	'use strict';
 
 	function getVideoContainer(slotName) {
@@ -39,15 +40,19 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		porvata.inject(videoSettings.create(params)).then(function (video) {
 			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
+				var videoPlayer = params.container.querySelector('.video-player');
+
 				video.addEventListener('loaded', function () {
 					var ad = video.ima.getAdsManager().getCurrentAd();
 
 					if (ad && isVpaid(ad.getContentType() || '')) {
 						params.container.classList.add('vpaid-enabled');
+						DOMElementTweaker.show(videoPlayer);
 					}
 				});
+
 				video.addEventListener('allAdsCompleted', function () {
-					params.container.querySelector('.video-player').classList.add('hidden');
+					DOMElementTweaker.hide(videoPlayer);
 				});
 			}
 
