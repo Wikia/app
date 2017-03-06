@@ -206,9 +206,22 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function isOutsideOfViewport(params) {
-			var slot = doc.querySelector('#' + params.slotName);
+			var globalNavigationOffset = 20,
+				slot = doc.querySelector('#' + params.slotName),
+				rect = null,
+				result = false;
 
-			return Boolean(slot && slot.getBoundingClientRect().bottom < 0);
+			if (slot) {
+				rect = slot.getBoundingClientRect();
+
+				if (params.height > rect.height) {
+					result = ((params.height - rect.height) + rect.bottom) < globalNavigationOffset;
+				} else {
+					result = rect.bottom < 0;
+				}
+			}
+
+			return result;
 		}
 
 		/**
