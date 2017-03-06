@@ -102,13 +102,6 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
 		}
 
-		function isVideoPlaying() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
-			}
-			return false;
-		}
-
 		function isVideoInFullScreenMode() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
 				return ooyalaVideoController.player.isFullscreen();
@@ -122,7 +115,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			if (isVideoInFullScreenMode()) {
 				return;
 			}
-			if (!collapsingDisabled || isVideoPlaying() || videoCollapsed) {
+			if (!collapsingDisabled || videoCollapsed) {
 				var scrollTop = $(window).scrollTop(),
 					videoHeight = $video.outerHeight(),
 					videoOffset = $video.offset(),
@@ -148,6 +141,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+				collapsingDisabled = false;
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-play'
