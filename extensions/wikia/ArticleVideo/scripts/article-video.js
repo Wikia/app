@@ -35,7 +35,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			videoCollapsed = true;
 			$video.addClass('collapsed-ready');
 			if (ooyalaVideoController) {
-				updatePlayerControls();
+				updatePlayerControls(true);
 			}
 			$videoContainer.css({
 				'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
@@ -65,7 +65,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$ooyalaVideo.css('height', '');
 			$video.removeClass('collapsed collapsed-ready');
 			if (ooyalaVideoController) {
-				updatePlayerControls();
+				updatePlayerControls(false);
 			}
 
 		}
@@ -92,8 +92,12 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}, 150);
 		}
 
-		function updatePlayerControls() {
+		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
+			if (!waitForTransition) {
+				updateOoyalaSize();
+			}
+			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
 		}
 
 		function isVideoInFullScreenMode() {
