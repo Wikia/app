@@ -475,6 +475,6 @@ class BodyController extends WikiaController {
 	}
 
 	private function isRelatedVideosValid( $relatedVideo ) {
-		return isset( $relatedVideo['articles'], $relatedVideo['videoId'], $relatedVideo['thumbnailUrl'], $relatedVideo['time'], $relatedVideo['title'] );
+		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
 	}
 }
