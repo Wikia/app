@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	var bidderName = 'veles',
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
-		loggerSampling = 0.01,
+		loggerSamplingPercent = 1,
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	function logVast(vastRequest) {
 		log(['logVast', vastRequest], log.levels.debug, logGroup);
-		if (Math.random() <= loggerSampling) {
+		if (Math.floor(Math.random() * 100) <= loggerSamplingPercent) {
 			sendRequest(vastRequest.response);
 		}
 	}
