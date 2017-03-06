@@ -67,8 +67,10 @@ $floating-ad-margin: 20px;
 
 		.wikia-ad {
 			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;
+			transition: margin-bottom $video-collapse-animation-speed;
 
 			iframe {
 				height: $video-container-width !important;
