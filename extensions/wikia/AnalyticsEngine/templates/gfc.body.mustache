@@ -4,11 +4,10 @@
 		'wikia.geo',
 		'wikia.instantGlobals'
 	], function (doc, geo, globals) {
-		var ac = globals['{{wgCountriesVarName}}'],
+		var acceptedCountries = globals['{{wgCountriesVarName}}'],
 			script;
 
-		if (true) {
-			//if (geo.isProperGeo(ac)) {
+		if (geo.isProperGeo(acceptedCountries)) {
 			script = doc.createElement('script');
 			script.src = '{{url}}';
 
