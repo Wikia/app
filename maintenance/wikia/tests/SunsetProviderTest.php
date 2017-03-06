@@ -71,7 +71,7 @@ class SunsetProviderTest extends WikiaBaseTest {
 			->method( 'select' )
 			->with(
 				[ 'page', 'imagelinks', 'video_info' ],
-				[ 'page_title', 'page_namespace', 'GROUP_CONCAT(video_title) as embedded_videos' ],
+				[ 'page_title', 'page_namespace', 'GROUP_CONCAT(video_title SEPARATOR "#") as embedded_videos' ],
 				[ 'provider' => $providerName, 'page_is_redirect' => 0 ],
 				'SunsetProvider::getProviderVideoEmbeds',
 				[ 'DISTINCT', 'GROUP BY' => 'page_id' ],
@@ -109,14 +109,6 @@ class SunsetProviderTest extends WikiaBaseTest {
 				->with( NS_FILE )
 				->willReturn( 'File' );
 
-			$languageMock->expects( $this->at( 1 ) )
-				->method( 'getCode' )
-				->willReturn( 'pl' );
-
-			$languageMock->expects( $this->at( 2 ) )
-				->method( 'getNsText' )
-				->willReturn( 'Plik' );
-
 			// expect script to edit all articles embedding video and remove embed code
 			foreach ( $articleData as $article ) {
 				$wikiPageMock->expects( $this->at( $pagePointer++ ) )
@@ -142,7 +134,12 @@ class SunsetProviderTest extends WikiaBaseTest {
 		$this->mockGlobalFunction( 'wfFindFile', $fileMock );
 		$this->mockClass( WikiPage::class, $wikiPageMock, 'factory' );
 		$this->mockClass( Language::class, $languageMock, 'factory' );
-		$this->mockGlobalVariable( 'wgContLang', $languageMock );
+
+		// Wiki content language is Polish
+		$this->mockGlobalVariable( 'wgContLang', $this->mockClassWithMethods( Language::class, [
+			'getCode' => 'pl',
+			'getNsText' => 'Plik',
+		]));
 
 		$this->mockStaticMethod( Hooks::class, 'run', true );
 	}
@@ -170,6 +167,7 @@ class SunsetProviderTest extends WikiaBaseTest {
 					'STAR WARS Najnowsza część Gwiezdnych Wojen',
 					'STRACHY NA LACHY - Dzień dobry, kocham Cię',
 					'Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail',
+					'X Rebirth - Fest oder Bugfest? - Das Weltraumspiel in der Analyse - Teil 1'
 				] ),
 				[
 					$this->article( '[[File:Stachu Jones Mistrz Ciętej Riposty]]', [ 'Stachu Jones Mistrz Ciętej Riposty' ], '' ),
@@ -212,7 +210,12 @@ class SunsetProviderTest extends WikiaBaseTest {
 						"foo [[File:Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail|thumb|center|335 px]] bar",
 						[ 'Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail' ],
 						"foo  bar"
-					)
+					),
+					$this->article(
+						"foo [[Plik:X Rebirth - Fest oder Bugfest? - Das Weltraumspiel in der Analyse - Teil 1]] bar",
+						[ 'X Rebirth - Fest oder Bugfest? - Das Weltraumspiel in der Analyse - Teil 1' ],
+						"foo  bar"
+					),
 				]
 			]
 		];
@@ -245,7 +248,7 @@ class SunsetProviderTest extends WikiaBaseTest {
 			'page_title' => 'test',
 			'page_namespace' => NS_MAIN,
 
-			'embedded_videos' => strtr( implode( ',', $videos ), ' ', '_' ),
+			'embedded_videos' => strtr( implode( '#', $videos ), ' ', '_' ),
 			'text' => $text,
 			'expectedText' => $expectedText
 		];

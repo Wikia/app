@@ -57,7 +57,7 @@ class SunsetProvider extends Maintenance {
 	private function getProviderVideoEmbeds( string $providerName ): ResultWrapper {
 		$videoEmbeds = $this->getDB( DB_SLAVE )->select(
 			[ 'page', 'imagelinks', 'video_info' ],
-			[ 'page_title', 'page_namespace', 'GROUP_CONCAT(video_title) as embedded_videos' ],
+			[ 'page_title', 'page_namespace', 'GROUP_CONCAT(video_title SEPARATOR "#") as embedded_videos' ],
 			[ 'provider' => $providerName, 'page_is_redirect' => 0 ],
 			__METHOD__,
 			[ 'DISTINCT', 'GROUP BY' => 'page_id' ],
@@ -140,8 +140,8 @@ class SunsetProvider extends Maintenance {
 			$text = $page->getText();
 
 			if ( $text ) {
-				// account for the possibility of a title containing comma
-				$videoList = str_getcsv( $embedData->embedded_videos );
+				// see GROUP_CONCAT query above
+				$videoList = explode( '#', $embedData->embedded_videos );
 
 				// escape regex characters in title
 				array_walk( $videoList, function ( string &$videoTitle ) {
