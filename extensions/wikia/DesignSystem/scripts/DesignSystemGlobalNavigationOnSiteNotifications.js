@@ -16,13 +16,46 @@ require(
 				this.$window = $(window);
 				this.$notificationsCount = $('.on-site-notifications-count');
 				this.$container = $('#on-site-notifications');
+
+				this.addDropdownLoadingEvent();
 			},
 
-			loadNotifications: function() {
-				for (var i = 0; i < this.unreadCount; ++i) {
-					var html = mustache.render(this.template, {'title': 'zorf' + i});
-					this.$container.append(html);
+			addDropdownLoadingEvent: function () {
+				var $dropdown = $('#on-site-notifications-dropdown');
+				$dropdown.click(function () {
+					OnSiteNotifications.loadFirstPage();
+				});
+			},
+
+			loadFirstPage: function() {
+				if (this.updateInProgress || this.nextPage) {
+					return;
 				}
+				this.updateInProgress = true;
+				this.bucky.timer.start('loadFirstPage');
+				$.ajax({
+					url: this.getBaseUrl() + '/notifications',
+					xhrFields: {
+						withCredentials: true
+					}
+				}).done(this.proxy(function (data) {
+					this.bucky.timer.stop('loadFirstPage');
+					this.nextPage = true;
+					this.renderNotifications(this.mapToModel(data.notifications));
+				})).fail(this.proxy(function() {
+					this.bucky.timer.stop('loadFirstPage');
+				}));
+			},
+
+			mapToModel: function(notifications) {
+				return notifications;
+			},
+
+			renderNotifications: function(notifications) {
+				notifications.forEach(this.proxy(function(notification){
+					var html = mustache.render(this.template, { 'title': notification.refersTo.title });
+					this.$container.append(html);
+				}));
 			},
 
 			updateCounts: function () {
@@ -35,7 +68,6 @@ require(
 				}).done(this.proxy(function (data) {
 					this.updateCountsHtml(data.unreadCount);
 					this.bucky.timer.stop('updateCounts');
-					setTimeout(this.proxy(this.loadNotifications), 300);
 				})).fail(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
