@@ -269,11 +269,15 @@ $spinnerSize: 48;
 			}
 
 			.oo-action-icon {
-				bottom: auto;
-				left: 50%;
-				right: auto;
-				top: 50%;
-				transform: translate(-50%, -50%);
+				border-width: 5px;
+				bottom: 15px;
+				height: 60px;
+				right: 15px;
+				width: 60px;
+
+				svg {
+					width: 18px;
+				}
 			}
 		}
 
@@ -284,7 +288,7 @@ $spinnerSize: 48;
 			font-weight: bold;
 			left: auto;
 			line-height: normal;
-			padding: 9px 12px;
+			padding: 9px 0;
 			position: relative;
 			top: auto;
 
