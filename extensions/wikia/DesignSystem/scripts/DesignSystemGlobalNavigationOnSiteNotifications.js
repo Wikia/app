@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.mustache'],
-	function ($, window, mustache) {
+	['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache'],
+	function ($, window, loader, mustache) {
 		'use strict';
 
 		var OnSiteNotifications = {
@@ -14,6 +14,7 @@ require(
 
 				this.$window = $(window);
 				this.$notificationsCount = $('.on-site-notifications-count');
+				this.$container = $('#on-site-notifications');
 			},
 
 			updateCounts: function () {
@@ -29,6 +30,22 @@ require(
 				})).fail(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
+			},
+
+			renderNotifications: function () {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
+						scripts: 'on_site_notifications_js'
+					}
+				}).done(function (assets) {
+					var html = mustache.render(assets.mustache[0], {});
+
+					loader.processScript(assets.scripts);
+
+					OnSiteNotifications.$container.append(html);
+				});
 			},
 
 			updateCountsHtml: function (count) {

@@ -13,7 +13,5 @@
 	</div>
 	<div id="on-site-notifications"
 	     class="wds-dropdown__content wds-is-right-aligned wds-global-navigation__dropdown-content">
-		<ul id="GlobalNavigationOnSiteNotifications"
-		    class="OnSiteNotifications global-nav-dropdown"></ul>
 	</div>
 </div>
