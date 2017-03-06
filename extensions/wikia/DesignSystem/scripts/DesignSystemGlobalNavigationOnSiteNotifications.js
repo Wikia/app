@@ -46,8 +46,7 @@ require(
 			},
 
 			getBaseUrl: function() {
-				return 'https://services.wikia-dev.pl/on-site-notifications';
-				// return mw.config.get('wgOnSiteNotificationsApiUrl');
+				return mw.config.get('wgOnSiteNotificationsApiUrl');
 			}
 
 		};

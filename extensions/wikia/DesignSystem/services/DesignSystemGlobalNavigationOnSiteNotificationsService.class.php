@@ -1,15 +1,35 @@
 <?php
 
 class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaService {
-	const NOTIFICATION_TITLE_LIMIT = 48;
 
 	public function Index() {
+		$isLoggedIn = $this->isLoggedIn();
+		$this->response->setVal( 'loggedIn', $isLoggedIn );
+
+		if ( $isLoggedIn && $this->areNotificationsEnabled() ) {
+			$this->addAssets();
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function isLoggedIn() {
 		global $wgUser;
 		$loggedIn = $wgUser->isLoggedIn();
-		$this->response->setVal( 'loggedIn', $loggedIn );
-		if ( $loggedIn ) {
-			$this->response->setVal( 'prehide', false );
-		}
+
+		return $loggedIn;
+	}
+
+	private function areNotificationsEnabled() {
+		global $wgEnableOnSiteNotifications;
+
+		return !empty( $wgEnableOnSiteNotifications );
+	}
+
+	private function addAssets() {
+		OasisController::addSkinAssetGroup( 'on_site_notifications_js' );
 	}
 
 }

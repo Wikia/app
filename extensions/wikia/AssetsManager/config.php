@@ -2208,6 +2208,13 @@ $config['design_system_user_js'] = [
 		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js',
+	],
+];
+
+$config['on_site_notifications_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js'
 	],
 ];
