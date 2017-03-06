@@ -27,6 +27,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	function prepareData(params, playerName, eventName, errorCode) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
+			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
 			trackingData = {
 				'pv_unique_id': win.adEnginePvUID,
 				'pv_number': pageLevelParams.pv,
@@ -45,7 +46,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
-				'additional_2': (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : '')
+				'additional_2': floatingState
 			},
 			vulcanResponse;
 
