@@ -109,7 +109,12 @@ class SunsetProvider extends Maintenance {
 			if ( !$pageDeleteResult || !$fileDeleteStatus->isOK() ) {
 				$this->error( "Failed to delete video: {$video->video_title}" );
 			}
+			else {
+				$this->output( sprintf("Deleted %s video\n", $title->getPrefixedDBkey()) );
+			}
 		}
+
+		$this->output("\nDone!\n");
 	}
 
 	/**
@@ -157,6 +162,9 @@ class SunsetProvider extends Maintenance {
 				$status = $page->doEdit( $text, static::VIDEO_REMOVE_EDIT_SUMMARY, EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT );
 				if ( !$status->isOK() ) {
 					$this->error( "Failed to remove videos from page: {$title->getPrefixedText()}\n" );
+				}
+				else {
+					$this->output( sprintf("Updated %s article\n", $title->getPrefixedDBkey()) );
 				}
 			}
 		}
