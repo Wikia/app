@@ -6,8 +6,17 @@ class ArticleVideoHooks {
 		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			\Wikia::addAssetsToOutput( 'article_video_scss' );
-			\Wikia::addAssetsToOutput( 'article_video_js' );
+			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
+		}
+		
+		if ( isset( $wg->articleVideoRelatedVideos ) ) {
+			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+			
+			if ( $relatedVideo ) {
+				\Wikia::addAssetsToOutput( 'article_related_video_scss' );
+				\Wikia::addAssetsToOutput( 'article_related_video_js' );
+			}
 		}
 
 		return true;
@@ -33,6 +42,10 @@ class ArticleVideoHooks {
 			if ( isset( $relatedVideo['videoId'] ) ) {
 				$vars['wgArticleRelatedVideoData'] = [
 					'videoId' => $relatedVideo['videoId'],
+					'playerParams' => [
+						'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+						'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+					],
 				];
 			}
 		}
