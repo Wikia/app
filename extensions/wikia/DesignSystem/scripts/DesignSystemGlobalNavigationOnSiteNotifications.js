@@ -32,19 +32,18 @@ require(
 				}));
 			},
 
-			renderNotifications: function () {
+			compileMustache: function () {
 				loader({
 					type: loader.MULTI,
 					resources: {
 						mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
-						scripts: 'on_site_notifications_js'
+						scripts: 'mustache_on_site_notifications_js'
 					}
 				}).done(function (assets) {
 					var html = mustache.render(assets.mustache[0], {});
-
 					loader.processScript(assets.scripts);
-
 					OnSiteNotifications.$container.append(html);
+					this.init();
 				});
 			},
 
@@ -69,6 +68,7 @@ require(
 		};
 
 		$(function () {
+			OnSiteNotifications.compileMustache();
 			OnSiteNotifications.init();
 		});
 	}

@@ -2219,6 +2219,12 @@ $config['on_site_notifications_js'] = [
 	],
 ];
 
+$config['mustache_on_site_notifications_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [],
+];
+
 /* extension/wikia/Bucky */
 $config['bucky_js'] = [
 	'type' => AssetsManager::TYPE_JS,
