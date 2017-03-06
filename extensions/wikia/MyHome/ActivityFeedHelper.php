@@ -79,7 +79,7 @@ class ActivityFeedHelper {
 						if (!empty($val)) {
 							$style = Sanitizer::checkCss($val);
 							if ($style) {
-								$parameters['style'] = htmlspecialchars( $style );
+								$parameters['style'] = $style;
 							}
 						}
 						break;
