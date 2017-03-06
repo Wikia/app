@@ -83,6 +83,7 @@ $floating-ad-margin: 20px;
 		&.with-article-video {
 			.wikia-ad {
 				margin-bottom: $video-container-width;
+				transition: margin-bottom $video-collapse-animation-speed;
 			}
 		}
 	}
