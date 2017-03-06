@@ -90,7 +90,7 @@ class SunsetProvider extends Maintenance {
 			// This logic is essentially a simplified form of FileDeleteForm::doDelete or VideoHandlerController::removeVideo
 			// However the order of execution is reversed, since we do not have to update an UI or perform permissions check in this context
 			// This allows for simplified structure
-			$fileDeleteStatus = Status::newGood();
+			$fileDeleteStatus = Status::newFatal( 'cannotdelete', wfEscapeWikiText( $title->getPrefixedText() ) );
 			$pageDeleteResult = true;
 			if ( ( $file instanceof File ) && $file->isLocal() ) {
 				/** @var Status $fileDeleteStatus */
