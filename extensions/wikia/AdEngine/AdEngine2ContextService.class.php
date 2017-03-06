@@ -12,8 +12,6 @@ class AdEngine2ContextService {
 		$wg = F::app()->wg;
 
 		return $wrapper->wrap( function () use ( $title, $wg, $skinName ) {
-			global $wgAllInOne;
-
 			$wikiFactoryHub = WikiFactoryHub::getInstance();
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
@@ -25,7 +23,7 @@ class AdEngine2ContextService {
 
 			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
-			$prebidBidderUrl = AssetsManager::getInstance()->getURL( empty( $wgAllInOne ) ? 'prebid_debug_js' : 'prebid_prod_js' , $type );
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -72,6 +70,7 @@ class AdEngine2ContextService {
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) )
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,

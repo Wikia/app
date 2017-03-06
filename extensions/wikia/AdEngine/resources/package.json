@@ -1,0 +1,21 @@
+{
+  "name": "ad-engine",
+  "version": "1.0.0",
+  "description": "Resources for adengine extension",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd node_modules/prebid.js && npm install && gulp build --adapters list-of-adapters.json",
+    "setup-prebid": "rm -rf node_modules && npm install && cd node_modules/prebid.js && npm install && gulp build --adapters list-of-adapters.json && mkdir -p ../../prebid && cp build/dist/prebid.js ../../prebid/prebid.min.js",
+    "build-prebid": "cd node_modules/prebid.js && gulp build --adapters list-of-adapters.json && cp build/dist/prebid.js ../../prebid/prebid.min.js",
+    "build-prebid-dev": "cd node_modules/prebid.js && gulp build-all --adapters list-of-adapters.json && cp build/dist/prebid.js ../../prebid/prebid.min.js && cp build/dev/prebid.js ../../prebid/prebid.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wikia/app/tree/dev/extensions/wikia/AdEngine"
+  },
+  "author": "dianafa",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "prebid.js": "git+ssh://git@github.com/Wikia/Prebid.js.git"
+  }
+}

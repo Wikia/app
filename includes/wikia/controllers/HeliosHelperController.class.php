@@ -27,20 +27,22 @@ class HelperController extends \WikiaController {
 	const FIELD_USERNAME = 'username';
 	const FACEBOOK_DISCONNECT_TOKEN_CONTEXT = 'facebook';
 
+	public function init() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			throw new \ForbiddenException( 'Invalid secret provided' );
+		}
+	}
+
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
 	 * @see extensions/AntiSpoof
 	 */
 	public function checkAntiSpoof() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			$this->response->setVal( self::FIELD_ALLOW, false );
-
-			return;
-		}
+		$this->response->setVal( self::FIELD_ALLOW, false );
 
 		$username = $this->getVal( self::FIELD_USERNAME );
 
@@ -65,13 +67,7 @@ class HelperController extends \WikiaController {
 	 * @see extensions/AntiSpoof
 	 */
 	public function updateAntiSpoof() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( self::FIELD_SUCCESS, false );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
 
 		$username = $this->getVal( self::FIELD_USERNAME );
 
@@ -87,13 +83,7 @@ class HelperController extends \WikiaController {
 	 * UserLogin: send a confirmation email a new account has been created
 	 */
 	public function sendConfirmationEmail() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( self::FIELD_SUCCESS, false );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
 
 		if ( !$this->wg->EmailAuthentication ) {
 			$this->response->setVal( self::FIELD_MESSAGE, 'email authentication is not required' );
@@ -159,13 +149,7 @@ class HelperController extends \WikiaController {
 	 * UserLogin: send an email with temporary password
 	 */
 	public function sendTemporaryPasswordEmail() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( self::FIELD_SUCCESS, false );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
 
 		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
 		if ( !isset( $username ) ) {
@@ -213,13 +197,7 @@ class HelperController extends \WikiaController {
 	 * @requestParam token_ctx : token context identifying the email content.
 	 */
 	public function sendPasswordResetLinkEmail() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( self::FIELD_SUCCESS, false );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
 
 		$userId = $this->getFieldFromRequest( 'user_id', self::ERR_INVALID_USER_ID );
 		$token = $this->getFieldFromRequest( self::FIELD_RESET_TOKEN, self::ERR_INVALID_TOKEN );
@@ -265,13 +243,6 @@ class HelperController extends \WikiaController {
 	}
 
 	public function isBlocked() {
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
-
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
-
 		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
 		if ( !isset( $username ) ) {
 			return;
@@ -289,6 +260,52 @@ class HelperController extends \WikiaController {
 		}
 
 		$this->response->setData( [ 'blocked' => $user->isBlocked() ] );
+	}
+
+	public function isDisabled() {
+		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$user = \User::newFromName( $username );
+		if (
+			!$user instanceof \User ||
+			$user->getId() == 0
+		) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_USER_NOT_FOUND );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+
+			return;
+		}
+
+		$this->response->setData( [ 'disabled' => ( bool )$user->getGlobalFlag( 'disabled', false ) ] );
+	}
+
+	public function logPiggybackAction() {
+		$this->response->setVal( self::FIELD_SUCCESS, false );
+
+		$performerUserId = $this->request->getInt( 'user_id' );
+		$targetUserId = $this->request->getInt( 'target' );
+		$login = $this->request->getCheck( 'login' ) && !$this->request->getCheck( 'logout' );
+
+		if ( $performerUserId === 0 || $targetUserId === 0 ) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_INVALID_USER_ID );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$performer = \User::newFromId( $performerUserId );
+		$target = \User::newFromId( $targetUserId );
+
+		if ( $login ) {
+			\StaffLogger::eventlogPiggybackLogIn( $performer, $target );
+		} else {
+			\StaffLogger::eventlogPiggybackLogOut( $performer, $target );
+		}
+
+		$this->response->setVal( self::FIELD_SUCCESS, true );
+		$this->response->setCode( \WikiaResponse::RESPONSE_CODE_OK );
 	}
 
 	private function getFieldFromRequest( $field, $failureMessage ) {
@@ -315,9 +332,6 @@ class HelperController extends \WikiaController {
 		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
 			return true;
 		}
-
-		$this->response->setVal( self::FIELD_MESSAGE, 'invalid secret' );
-		$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 
 		return false;
 	}

@@ -32,6 +32,7 @@ class SiteStatus {
 
 	private $siteId;
 	private $dbName;
+	private $dbMissing;
 
 	private $hasStatusRecord = false;
 
@@ -63,11 +64,13 @@ class SiteStatus {
 			$verbose,
 			$test,
 			$params[\RunOnCluster::PARAM_SITE_ID],
-			$params[\RunOnCluster::PARAM_DB_NAME]
+			$params[\RunOnCluster::PARAM_DB_NAME],
+			$params[\RunOnCluster::PARAM_DB_MISSING]
 		);
 
 		// Don't do anything if this has been recently updated by this script
 		if ( $status->skipCataloging() ) {
+			echo( "== Cataloged recently.  Skipping ..." );
 			return;
 		}
 
@@ -75,12 +78,13 @@ class SiteStatus {
 		$status->writeBack();
 	}
 
-	public function __construct( $localDbh, $verbose, $test, $siteId, $dbName ) {
+	public function __construct( $localDbh, $verbose, $test, $siteId, $dbName, $dbMissing ) {
 		$this->localDbh = $localDbh;
 		$this->verbose = $verbose;
 		$this->test = $test;
 		$this->siteId = $siteId;
 		$this->dbName = $dbName;
+		$this->dbMissing = $dbMissing;
 
 		$this->debug("== Checking status for site $siteId / $dbName");
 
@@ -133,16 +137,16 @@ class SiteStatus {
 		if ( !empty( $row->discussion_found ) ) {
 			$this->discussionsFound = new \DateTime( $row->discussions_found );
 		}
-		if ( !empty ( $row->first_post_found ) ) {
+		if ( !empty( $row->first_post_found ) ) {
 			$this->firstPostFound = new \DateTime( $row->first_post_found );
 		}
-		if ( !empty ( $row->last_migrated ) ) {
+		if ( !empty( $row->last_migrated ) ) {
 			$this->lastMigrated = new \DateTime( $row->last_migrated );
 		}
-		if ( !empty ( $row->last_updated ) ) {
+		if ( !empty( $row->last_updated ) ) {
 			$this->lastUpdated = new \DateTime( $row->last_updated );
 		}
-		if ( !empty ( $row->last_edit ) ) {
+		if ( !empty( $row->last_edit ) ) {
 			$this->lastPageEdit = new \DateTime( $row->last_edit );
 		}
 	}
@@ -163,7 +167,10 @@ class SiteStatus {
 			$statement
 				->UPDATE( self::TABLE_STATUS )
 				->WHERE( 'site_id' )->EQUAL_TO( $this->siteId );
-		} else {
+		} else if ( $this->siteAvailable ) {
+			// Only INSERT if the site is available.  We don't do this check with UPDATE
+			// so that if a site is ingested and then gets closed, we can update existing
+			// records to reflect the new status (rather than have it look like it was skipped)
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
@@ -260,6 +267,10 @@ class SiteStatus {
 	}
 
 	private function findLastEdit() {
+		if ( $this->dbMissing ) {
+			return '';
+		}
+
 		$date = ( new \WikiaSQL() )
 			->SELECT( "MAX(page_touched)" )->AS_( "last_edit_date" )
 			->FROM( self::TABLE_PAGE )
@@ -290,6 +301,10 @@ class SiteStatus {
 	}
 
 	private function findExistingThreadedForumPosts() {
+		if ( $this->dbMissing ) {
+			return 0;
+		}
+
 		$num = ( new \WikiaSQL() )
 			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_COMMENTS )
@@ -319,6 +334,10 @@ class SiteStatus {
 	}
 
 	private function findExistingWikiForumPosts() {
+		if ( $this->dbMissing ) {
+			return 0;
+		}
+
 		$num = ( new \WikiaSQL() )
 			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_PAGE )
@@ -367,8 +386,6 @@ class SiteStatus {
 			return;
 		}
 
-		$this->discussionsFound = new \DateTime();
-
 		$content = $response->getContent();
 		if ( empty( $content ) ) {
 			$this->debug( "\tGot no content back from discussion site: $url" );
@@ -380,6 +397,14 @@ class SiteStatus {
 			$this->debug( "\tGot no data when parsing JSON from discussion site: $url" );
 			return;
 		}
+
+		if ( empty( $data->_embedded->forums ) ) {
+			$this->debug( "Found no forums at discussion site: $url" );
+			return;
+		}
+
+		$this->debug( "\tFound forums" );
+		$this->discussionsFound = new \DateTime();
 
 		if ( empty( $data->_embedded->threads ) ) {
 			$this->debug( "Found no threads at discussion site: $url" );

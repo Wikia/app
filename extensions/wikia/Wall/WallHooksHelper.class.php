@@ -343,7 +343,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @brief add history to wall toolbar
+	 * @brief modify toolbar
 	 *
 	 * @param $items
 	 *
@@ -356,7 +356,6 @@ class WallHooksHelper {
 		}
 
 		$title = $app->wg->Title;
-		$action = $app->wg->Request->getText( 'action' );
 
 		if ( $title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			if ( is_array( $items ) ) {
@@ -367,35 +366,6 @@ class WallHooksHelper {
 					}
 				}
 
-			}
-		}
-
-		if ( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty( $action ) ) {
-			$item = [
-					'type' => 'html',
-					'html' => Xml::element( 'a', [ 'href' => $title->getFullUrl( 'action=history' ) ], wfMessage( 'wall-toolbar-history' )->text() )
-			];
-
-			if ( is_array( $items ) ) {
-				$inserted = false;
-				$itemsout = [ ];
-
-				foreach ( $items as $value ) {
-					$itemsout[] = $value;
-
-					if ( $value['type'] == 'follow' ) {
-						$itemsout[] = $item;
-						$inserted = true;
-					}
-				}
-
-				if ( !$inserted ) {
-					array_unshift( $items, $item );
-				} else {
-					$items = $itemsout;
-				}
-			} else {
-				$items = [ $item ];
 			}
 		}
 
@@ -664,17 +634,16 @@ class WallHooksHelper {
 
 	/**
 	 * clean history after delete
-	 * @param Article $self
+	 * @param Article $article
 	 * @param $user
 	 * @param $reason
 	 * @param $id
 	 * @return bool
 	 */
-	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id ) {
-		$title = $self->getTitle();
-		$app = F::app();
+	static public function onArticleDeleteComplete( $article, $user, $reason, $id ) {
+		$title = $article->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wh = new WallHistory( $app->wg->CityId );
+			$wh = new WallHistory();
 			$wh->remove( $id );
 		}
 		return true;
@@ -693,30 +662,6 @@ class WallHooksHelper {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			return $wallMessage->canDelete( $user );
 		}
-		return true;
-	}
-
-	/**
-	 * @param RecentChange $recentChange
-	 * @return bool
-	 */
-	static public function onRecentChangeSave( $recentChange ) {
-		wfProfileIn( __METHOD__ );
-		// notifications
-		$app = F::app();
-
-		if (  MWNamespace::isTalk( $recentChange->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $recentChange->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
-			$rcType = $recentChange->getAttribute( 'rc_type' );
-
-			// FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
-			$revOldId = $recentChange->getAttribute( 'rc_this_oldid' );
-			if ( $rcType == RC_EDIT && !empty( $revOldId ) ) {
-				$helper = new WallHelper();
-				$helper->sendNotification( $revOldId, $rcType );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -905,7 +850,7 @@ class WallHooksHelper {
 				$wm->load();
 
 				if ( !$wm->isMain() ) {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 					$wm = $wm->getTopParentObj();
 					if ( is_null( $wm ) ) {
 						Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
@@ -914,7 +859,7 @@ class WallHooksHelper {
 						$wm->load();
 					}
 				} else {
-					$link = $wm->getMessagePageUrl();
+					$link = $wm->getMessagePageUrl( false, false );
 				}
 
 				$title = $wm->getMetaTitle();
@@ -1379,7 +1324,7 @@ class WallHooksHelper {
 					unset( $parent );
 				}
 
-				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getArticleId();
+				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getId();
 			}
 		}
 
@@ -1422,38 +1367,6 @@ class WallHooksHelper {
 			$options[] = 'known';
 		}
 
-		return true;
-	}
-
-	/**
-	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param $action
-	 * @param $result
-	 * @return bool
-	 *
-	 * @author Tomek Odrobny
-	 *
-	 * @access public
-	 */
-	static public function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
-
-		if ( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
-			$result = [ ];
-
-			$wm = new WallMessage( $title );
-
-			if ( $user->isAllowed( 'walledit' ) || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
-				$result = null;
-				return true;
-			} else {
-				$result = [ 'badaccess-group0' ];
-				return false;
-			}
-		}
-		$result = null;
 		return true;
 	}
 
@@ -2075,7 +1988,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 * Purge wiki navigation cache when disabling/enabling Forum and Wall
 	 *
 	 * @param String $name
 	 * @param String $val
@@ -2085,27 +1998,9 @@ class WallHooksHelper {
 	public static function onAfterToggleFeature( $name, $val ) {
 		global $IP;
 		if ( $name == 'wgEnableWallExt' || $name == 'wgEnableForumExt' ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_history' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_history_local.sql" );
-			}
-
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_related_pages.sql" );
-			}
-
 			$nm = new NavigationModel();
 			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
-		return true;
-	}
-
-	// TODO: implement this :)
-	static public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
-		/*
-
-		$oldtext = ArticleComment::removeMetadataTag($oldtext);
-		$newtext = ArticleComment::removeMetadataTag($newtext);; */
 		return true;
 	}
 
@@ -2325,6 +2220,83 @@ class WallHooksHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * SUS-1554: Prevent invalid content manipulation in Wall Namespaces
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $action
+	 * @param array|null $result error message array (message name and optional params) or null
+	 * @return bool true if action is not handled or allowed, false if action should be prevented
+	 */
+	public static function onGetUserPermissionsErrors( Title $title, User $user, string $action, &$result ): bool {
+		$ns = $title->getNamespace();
+		if ( $ns === NS_USER_WALL_MESSAGE_GREETING ) {
+			return static::checkWallGreeting( $title, $user, $action, $result );
+		}
+
+		if ( !WallHelper::isWallNamespace( $ns ) ) {
+			return true;
+		}
+
+		global $wgIsValidWallTransaction, $wgCommandLineMode;
+		$isValidContext = $wgIsValidWallTransaction || $wgCommandLineMode;
+		$allow = true;
+
+		if ( !$isValidContext ) {
+			switch ( $action ) {
+				// don't let user create Message Wall page, or bogus Thread
+				case 'create':
+					$allow = false;
+					$result = [ 'badtitle' ];
+
+					break;
+
+				// don't let user edit or delete Message Wall page
+				case 'delete':
+				case 'edit':
+					if ( $ns === NS_USER_WALL ) {
+						$allow = false;
+						$result = [ 'badtitle' ];
+					}
+
+					break;
+			}
+		}
+
+		return $allow;
+	}
+
+
+	/**
+	 * control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 *
+	 * @author Tomek Odrobny
+	 */
+	static private function checkWallGreeting( Title $title, User $user, string $action, &$result ) {
+		$allow = true;
+
+		switch ( $action ) {
+			case 'create':
+			case 'edit':
+			case 'move':
+				$wm = new WallMessage( $title );
+
+				if ( !$user->isAllowed( 'walledit' ) && !$wm->isWallOwner( $user ) ) {
+					$allow = false;
+					$result = [ 'badaccess-group0' ];
+				}
+		}
+
+		return $allow;
 	}
 
 }

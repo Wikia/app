@@ -11,13 +11,17 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
+@import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
-$uap-progress-bar-color: #666;
-$uap-progress-bar-current-time-color: #b7b7b7;
+$uap-progress-bar-color: #b7b7b7;
+$uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
+$uap-video-player-button-size: 24px;
+
+$floating-ad-margin: 20px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -36,20 +40,55 @@ $uap-video-animation-duration: 0.4s;
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
+
 		> div {
 			float: right;
 		}
+
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
 		> img {
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
+	}
+
+	&.floating {
+		z-index: $wikia-top-ads-index + 10;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			position: fixed;
+			right: $floating-ad-margin;
+
+			iframe {
+				height: 225px !important;
+				width: 225px !important;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+	}
+
+	.floating-close-button {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		cursor: pointer;
+		display: none;
+		height: 20px;
+		left: 10px;
+		position: absolute;
+		top: 10px;
+		width: 20px;
 	}
 }
 
@@ -124,10 +163,10 @@ $uap-video-animation-duration: 0.4s;
 
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
 		display: inline-block;
-		height: 30px;
+		height: $uap-video-player-button-size;
 		overflow: hidden;
 		position: relative;
-		width: 30px;
+		width: $uap-video-player-button-size;
 	}
 }
 
@@ -136,7 +175,7 @@ $uap-video-animation-duration: 0.4s;
 }
 
 .wikia-ad .replay-overlay {
-	background: rgba(0,0,0,0.7) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
+	background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
 	cursor: pointer;
 	height: 100%;
 	position: absolute;
@@ -186,12 +225,12 @@ $uap-video-animation-duration: 0.4s;
 	.close-ad {
 		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
 		cursor: pointer;
-		height: 30px;
+		height: $uap-video-player-button-size;
 		margin: 10px 10px 30px 30px;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: 30px;
+		width: $uap-video-player-button-size;
 	}
 }
 

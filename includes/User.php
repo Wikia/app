@@ -1373,6 +1373,19 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Wikia change - SUS-1649: Clear all block-related info from this instance of User class
+	 * This allows us to re-run block check functions with different parameters (e.g. checking for only local blocks)
+	 * @see User::getBlockedStatus()
+	 */
+	public function clearBlockInfo() {
+		$this->mBlock = null;
+		$this->mBlockedby = -1;
+		$this->mBlockreason = '';
+		$this->mHideName = 0;
+		$this->mAllowUsertalk = false;
+	}
+
+	/**
 	 * Whether the given IP is in a DNS blacklist.
 	 *
 	 * @param $ip String IP to check
@@ -2611,13 +2624,13 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set a global user attribute.
+	 * Set a global user attribute. You also have to call `saveSettings` for the value to be saved in the DB.
 	 *
 	 * @param string $attribute
 	 * @param string $value
 	 * @see getGlobalAttribute for more documentation about attributes
 	 */
-	public function setGlobalAttribute($attribute, $value) {
+	public function setGlobalAttribute( $attribute, $value ) {
 		if ( $this->isPublicAttribute( $attribute ) ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
@@ -4076,24 +4089,18 @@ class User implements JsonSerializable {
 	 *
 	 * @param $password String Plain-text password
 	 * @param bool|string $salt Optional salt, may be random or the user ID.
-
 	 *                     If unspecified or false, will generate one automatically
 	 * @return String Password hash
 	 * @deprecated use HeliosClient
 	 */
 	public static function crypt( $password, $salt = false ) {
-		global $wgPasswordSalt;
+		global $wgPasswordSalt, $wgDevelEnvironment;
 		// Wikia change - begin
-		// @see PLATFORM-2502 comparing new passwords in PHP code.
-		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
-		WikiaLogger::instance()->debug(
-			'NEW_HASHING crypt called in PHP',
-			[
-				'wgPasswordSalt' => $wgPasswordSalt,
-				'caller' => wfGetCaller(),
-				'exception' => new Exception()
-			]
-		);
+		// Only allow on devboxes for now
+		// @todo Remove once old login code is removed (PLATFORM-2891)
+		if ( empty( $wgDevelEnvironment ) ) {
+			throw new MWException( 'Unsupported User::crypt method requested' );
+		}
 		// Wikia change - end
 		$hash = '';
 		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {

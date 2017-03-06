@@ -1,9 +1,12 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
+	const CACHE_TIME_TRENDING_ARTICLES = 60 * 60 * 24;
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -128,7 +131,6 @@ class MercuryApi {
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
-			'enableGlobalNav2016' => true,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
@@ -146,6 +148,9 @@ class MercuryApi {
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'comscore' => [
+					'c7Value' => AnalyticsProviderComscore::getC7Value(),
+				],
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
 					'cmKey' => AnalyticsProviderIVW3::getCMKey()
@@ -310,6 +315,35 @@ class MercuryApi {
 	}
 
 	/**
+	 * @param Title $title
+	 * @param string|null $displayTitle
+	 *
+	 * @return string
+	 */
+	public function getHtmlTitleForPage( Title $title, $displayTitle ) {
+		if ( $title->isMainPage() ) {
+			return '';
+		}
+
+		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
+			/*
+			 * Only run this code if SEOTweaks extension is enabled.
+			 * We don't use $wg variable because there are multiple switches enabling this extension
+			 */
+			$file = WikiaFileHelper::getFileFromTitle( $title );
+			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+		} else {
+			$htmlTitle = $displayTitle;
+		}
+
+		if ( empty( $htmlTitle ) ) {
+			$htmlTitle = $title->getPrefixedText();
+		}
+
+		return $htmlTitle;
+	}
+
+	/**
 	 * CuratedContent API returns data in a different format than we need.
 	 * Let's clean it up!
 	 *
@@ -397,6 +431,32 @@ class MercuryApi {
 					$data[] = $processedItem;
 				}
 			}
+		}
+
+		return $data;
+	}
+
+	public function getTrendingArticlesData( int $limit = 10, Title $category = null ) {
+		global $wgContentNamespaces;
+
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => $limit,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
+
+		if ( $category instanceof Title ) {
+			$params['category'] = $category->getText();
+		}
+
+		$data = [];
+
+		try {
+			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = self::processTrendingArticlesData( $rawData );
+		} catch ( NotFoundException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;

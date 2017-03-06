@@ -2,7 +2,7 @@
 <?php switch ($item['type']) { ?>
 <?php case 'follow': ?>
 <li class="overflow">
-	<a accesskey="w" id="<?= Sanitizer::encodeAttribute( $item['link-id'] ); ?>" href="<?= Sanitizer::encodeAttribute( $item['href'] ); ?>" data-name="<?= $item['tracker-name']; ?>"><?= htmlspecialchars( $item['caption'] ); ?></a>
+	<a accesskey="w" id="<?= Sanitizer::encodeAttribute( $item['link-id'] ); ?>" href="<?= Sanitizer::encodeAttribute( $item['href'] ); ?>" data-name="<?= Sanitizer::encodeAttribute( $item['tracker-name'] ); ?>"><?= htmlspecialchars( $item['caption'] ); ?></a>
 </li>
 <?php     break; ?>
 <?php case 'menu': ?>

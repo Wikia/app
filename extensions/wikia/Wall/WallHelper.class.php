@@ -357,21 +357,21 @@ class WallHelper {
 	 *
 	 * @desc Text is truncated to given limit (by default limit is equal to WA_WALL_COMMENTS_MAX_LEN constant) then it truncates it to last spacebar and adds ellipses.
 	 *
+	 * @param Language $language Language object to be used in formatting string
 	 * @param string $text text which needs to be shorter
 	 * @param integer $limit limit of characters
 	 *
 	 * @return string
 	 */
-	public function shortenText( $text, $limit = self::WA_WALL_COMMENTS_MAX_LEN ) {
-		$app = F::app();
+	public static function shortenText( Language $language, string $text, int $limit = self::WA_WALL_COMMENTS_MAX_LEN ): string {
 		wfProfileIn( __METHOD__ );
 
 		if ( mb_strlen( $text ) > $limit ) {
-			$text = $app->wg->Lang->truncate( $text, $limit );
+			$text = $language->truncate( $text, $limit );
 			$lastSpacePos = strrpos( $text, ' ' );
 
 			if ( $lastSpacePos !== false ) {
-				$text = $app->wg->Lang->truncate( $text, $lastSpacePos );
+				$text = $language->truncate( $text, $lastSpacePos );
 			}
 		}
 
@@ -407,9 +407,13 @@ class WallHelper {
 	 * @return string
 	 */
 	public function getMessageSnippet( WallMessage $wallMessage ) {
-		$formatted = Linker::formatComment( $wallMessage->getRawText(), $wallMessage->getTitle() );
+		$messageText = $wallMessage->getRawText();
+		// SUS-1684: Remove quotes and other HTML tags before parsing
+		$messageText = Sanitizer::stripAllTags( $messageText );
 
-		return $this->shortenText( $formatted );
+		$formatted = Linker::formatComment( $messageText, $wallMessage->getTitle() );
+
+		return static::shortenText( RequestContext::getMain()->getLanguage(), $formatted );
 	}
 
 	/**
@@ -471,13 +475,21 @@ class WallHelper {
 		return $comments->getCountAll() > 0;
 	}
 
-	public function sendNotification( $revOldId, $rcType = RC_NEW, $useMasterDB = false ) {
-		$app = F::App();
-		$rev = Revision::newFromId( $revOldId );
-		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
-		$wh = new WallHistory( $app->wg->CityId );
+	/**
+	 * Create a new Wall Notification from revision info, and dispatch it to wall_notifications table.
+	 *
+	 * @deprecated this interface should be converted to use background task at some point
+	 * @param Revision $rev
+	 * @param int $rcType whether this is a new thread/reply (RC_NEW = 1) or edit to existing one/wall action (RC_EDIT = 2)
+	 * @param bool $useMasterDB
+	 */
+	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
+		global $wgUser;
 
-		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User );
+		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
+		$wh = new WallHistory();
+
+		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $wgUser );
 
 		if ( $rcType == RC_NEW ) {
 			$wn = new WallNotifications();
@@ -605,7 +617,7 @@ class WallHelper {
 			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
-		$ci = $wm->getCommentsIndex();
+		$ci = $wm->getCommentsIndexEntry();
 		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = Title::newFromText( $row->page_title, NS_USER_WALL );

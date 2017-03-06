@@ -151,8 +151,6 @@ $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/Discover
 $wgAutoloadClasses['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
-$wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
-$wgAutoloadClasses['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 $wgAutoloadClasses['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
 $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiController.class.php";
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
@@ -178,8 +176,6 @@ $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiContr
 $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
-$wgWikiaApiControllers['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
-$wgWikiaApiControllers['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -323,7 +319,6 @@ $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarServic
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
-$wgAutoloadClasses['RevisionUpvotesService'] = $IP . '/includes/wikia/services/RevisionUpvotesService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
@@ -768,7 +763,6 @@ $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
-$wgRevisionUpvotesDB = 'revision_upvotes';
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
@@ -1185,24 +1179,6 @@ $wgPhalanxServiceOptions = [
 ];
 
 /**
- * @name $wgWikiaHubsFileRepoDBName
- * DB name of wiki that contains images for WikiaHubs
- */
-$wgWikiaHubsFileRepoDBName = 'corp';
-
-/**
- * @name $wgWikiaHubsFileRepoPath
- * URL prefix for the wiki with hubs images
- */
-$wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
-
-/**
- * @name $wgWikiaHubsFileRepoDirectory
- * filesystem path for hubs' images
- */
-$wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
-
-/**
  * @name $wgEnableGoogleFundingChoices
  * Enables Google Funding Choices
  */
@@ -1328,11 +1304,25 @@ $wgAdDriverRubiconVulcanCountries = null;
 $wgAdDriverPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAolBidderCountries
+ * List of countries where aol bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAolBidderCountries = null;
+
+/**
  * @name $wgAdDriverAppNexusBidderCountries
  * List of countries where appnexus bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAppNexusBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAudienceNetworkBidderCountries
+ * List of countries where Facebook Audience Network bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAudienceNetworkBidderCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1456,17 +1446,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgSitewideDisableIVW2
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW2
- *
- * Disable IVW2 Analytics pixel sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisableIVW2 = false;
-
-/**
  * @name $wgSitewideDisableIVW3
  * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
@@ -1482,7 +1461,7 @@ $wgSitewideDisableIVW3 = false;
  *
  * List of countries with enabled IVW3 tracking
  */
-$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH'];
 
 /**
  * @name $wgSitewideDisablePaidAssetDrop

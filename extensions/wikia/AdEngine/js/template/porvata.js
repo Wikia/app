@@ -1,7 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
-	'ext.wikia.adEngine.video.player.porvata'
-], function (porvata) {
+	'ext.wikia.adEngine.video.player.porvata',
+	'ext.wikia.adEngine.video.videoSettings',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (porvata, videoSettings, mercuryListener) {
 	'use strict';
 
 	/**
@@ -15,7 +17,15 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
-		porvata.inject(params);
+		porvata.inject(videoSettings.create(params)).then(function (video) {
+			if (mercuryListener) {
+				mercuryListener.onPageChange(function () {
+					video.destroy();
+				});
+			}
+
+			return video;
+		});
 	}
 
 	return {

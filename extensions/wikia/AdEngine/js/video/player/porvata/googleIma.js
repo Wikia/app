@@ -21,8 +21,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 		return scriptLoader.loadScript(recoveryHelper.getSafeUri(imaLibraryUrl));
 	}
 
-	function getPlayer(params) {
-		var adDisplayContainer = new win.google.ima.AdDisplayContainer(params.container),
+	function getPlayer(videoSettings) {
+		var params = videoSettings.getParams(),
+			adDisplayContainer = new win.google.ima.AdDisplayContainer(params.container),
 			adsLoader,
 			iframe = params.container.querySelector('div > iframe');
 
@@ -35,7 +36,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 		adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
 
-		return imaPlayerFactory.create(adDisplayContainer, adsLoader, params);
+		return imaPlayerFactory.create(adDisplayContainer, adsLoader, videoSettings);
 	}
 
 	return {
