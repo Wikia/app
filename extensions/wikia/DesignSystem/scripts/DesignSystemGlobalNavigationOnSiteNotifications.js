@@ -4,7 +4,8 @@ require(
 		'use strict';
 
 		var OnSiteNotifications = {
-			init: function () {
+			init: function (template) {
+				this.template = template;
 				this.bucky = window.Bucky('OnSiteNotifications');
 
 				// we only want 1 update simultaneously
@@ -17,6 +18,13 @@ require(
 				this.$container = $('#on-site-notifications');
 			},
 
+			loadNotifications: function() {
+				for (var i = 0; i < this.unreadCount; ++i) {
+					var html = mustache.render(this.template, {'title': 'zorf' + i});
+					this.$container.append(html);
+				}
+			},
+
 			updateCounts: function () {
 				this.bucky.timer.start('updateCounts');
 				$.ajax({
@@ -27,24 +35,10 @@ require(
 				}).done(this.proxy(function (data) {
 					this.updateCountsHtml(data.unreadCount);
 					this.bucky.timer.stop('updateCounts');
+					setTimeout(this.proxy(this.loadNotifications), 300);
 				})).fail(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
-			},
-
-			compileMustache: function () {
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
-						scripts: 'mustache_on_site_notifications_js'
-					}
-				}).done(function (assets) {
-					var html = mustache.render(assets.mustache[0], {});
-					loader.processScript(assets.scripts);
-					OnSiteNotifications.$container.append(html);
-					this.init();
-				});
 			},
 
 			updateCountsHtml: function (count) {
@@ -67,9 +61,21 @@ require(
 
 		};
 
+		function compileMustache() {
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
+					scripts: 'mustache_on_site_notifications_js'
+				}
+			}).done(function (assets) {
+				loader.processScript(assets.scripts);
+				OnSiteNotifications.init(assets.mustache[0]);
+			});
+		};
+
 		$(function () {
-			OnSiteNotifications.compileMustache();
-			OnSiteNotifications.init();
+			compileMustache();
 		});
 	}
 );
