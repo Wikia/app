@@ -27,8 +27,16 @@ require(
 				});
 			},
 
-			loadFirstPage: function() {
-				if (this.updateInProgress || this.nextPage) {
+			shouldLoadFirstPage: function () {
+				return !this.updateInProgress && this.nextPage && this.allPagesLoaded !== true;
+			},
+
+			shouldLoadNextPage: function () {
+				return !this.updateInProgress && !this.nextPage && this.allPagesLoaded !== true;
+			},
+
+			loadFirstPage: function () {
+				if (this.shouldLoadFirstPage()) {
 					return;
 				}
 				this.updateInProgress = true;
@@ -37,23 +45,45 @@ require(
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
 						withCredentials: true
-					}
+					},
+					dataType: 'json'
 				}).done(this.proxy(function (data) {
 					this.bucky.timer.stop('loadFirstPage');
-					this.nextPage = true;
 					this.renderNotifications(this.mapToModel(data.notifications));
-				})).fail(this.proxy(function() {
+					this.calculatePage(data);
+					this.updateInProgress = false;
+				})).fail(this.proxy(function () {
 					this.bucky.timer.stop('loadFirstPage');
 				}));
 			},
 
-			mapToModel: function(notifications) {
-				return notifications;
+			calculatePage: function (data) {
+				this.nextPage = getSafely(data, '_links.next');
+				if (!this.nextPage) {
+					this.allPagesLoaded = true;
+				}
 			},
 
-			renderNotifications: function(notifications) {
-				notifications.forEach(this.proxy(function(notification){
-					var html = mustache.render(this.template, { 'title': notification.refersTo.title });
+			mapToModel: function (notifications) {
+				return notifications.map(function (notification) {
+					return {
+						title: getSafely(notification, 'refersTo.title'),
+						snippet: getSafely(notification, 'refersTo.snippet'),
+						uri: getSafely(notification, 'refersTo.uri'),
+						timestamp: getSafely(notification, 'events.latestEvent.when'),
+						communityName: getSafely(notification, 'community.name'),
+						communityId: getSafely(notification, 'community.id'),
+						isUnread: notification.read === false,
+						totalUniqueActors: getSafely(notification, 'events.totalUniqueActors')
+						// latestActors: NotificationModel.createActors(x.events.latestActors')),
+						// type: NotificationModel.getTypeFromApiData(notificationData)
+					};
+				});
+			},
+
+			renderNotifications: function (notifications) {
+				notifications.forEach(this.proxy(function (notification) {
+					var html = mustache.render(this.template, notification);
 					this.$container.append(html);
 				}));
 			},
@@ -87,7 +117,7 @@ require(
 				return $.proxy(func, this);
 			},
 
-			getBaseUrl: function() {
+			getBaseUrl: function () {
 				return mw.config.get('wgOnSiteNotificationsApiUrl');
 			}
 
@@ -104,7 +134,13 @@ require(
 				loader.processScript(assets.scripts);
 				OnSiteNotifications.init(assets.mustache[0]);
 			});
-		};
+		}
+
+		function getSafely(obj, path) {
+			return path.split(".").reduce(function (acc, key) {
+				return (typeof acc == "undefined" || acc === null) ? acc : acc[key];
+			}, obj);
+		}
 
 		$(function () {
 			compileMustache();
