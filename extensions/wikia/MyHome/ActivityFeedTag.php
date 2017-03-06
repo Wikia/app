@@ -32,8 +32,6 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	$parameters['tagid'] = $tagid;
 
 	$feedHTML = ActivityFeedHelper::getList($parameters);
-
-	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
 
 	$snippetsDependencies = array('/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css');
@@ -53,6 +51,13 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 		)
 	);
 
+	$style = getStyle($parameters);
+
 	wfProfileOut(__METHOD__);
 	return "<div$style>$feedHTML</div>$snippets";
+}
+
+function getStyle( $parameters ) {
+	$style = $parameters['style'];
+	return empty($style) ? '' : ' style="' . $style . '"';
 }
