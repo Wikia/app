@@ -159,8 +159,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width, height) {
-				if (width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width) {
+				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
 				}
 			});
