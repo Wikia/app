@@ -1,32 +1,33 @@
 <?php
 
 class ARecoveryModule {
-	const DISABLED_MESSAGE = PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+	/**
+	 * Checks whether PageFair recovery is enabled (on current wiki)
+	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === null; // will depend on $wgAdDriverPageFairRecoveryCountries
+	 * @return bool
+	 */
+	public function isPageFairRecoveryDisabled() {
+		global $wgUser, $wgAdDriverEnablePageFairRecovery;
+
+		return $wgUser->isLoggedIn() || $wgAdDriverEnablePageFairRecovery === false;
+	}
 
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === null; // will depend on $wgAdDriverSourcePointRecoveryCountries
 	 *
 	 * @return bool
 	 */
-	public static function isDisabled() {
+	public function isSourcePointRecoveryDisabled() {
 		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
-		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
-			return true;
-		}
-
-		return $wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false;
-	}
-
-	public static function getSourcePointBootstrapCode() {
-		return static::isDisabled() ? self::DISABLED_MESSAGE : self::getBootstrapCode();
-	}
-
-	public static function isLockEnabled() {
-		return !self::isDisabled();
-	}
-
-	private static function getBootstrapCode() {
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		return $wgUser->isLoggedIn() || (
+			$wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false
+		);
 	}
 }
