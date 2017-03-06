@@ -11,7 +11,7 @@ $related-video-width: 280px;
 	max-width: $related-video-width;
 	width: 100%;
 
-	+ p + h2 {
+	+ p ~ h2 {
 		clear: left;
 	}
 

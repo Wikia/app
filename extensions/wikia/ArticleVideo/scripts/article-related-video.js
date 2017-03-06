@@ -14,22 +14,77 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			OoyalaPlayer.initHTMl5Players(ooyalaContainerId, playerParams, videoId, onCreate);
 		}
 
-		function arrangeRelatedVideo(player) {
-			var $articleContent = $('#mw-content-text');
+		function placeRelatedVideo(player) {
+			var $articleContent = $('#mw-content-text'), placements, $followingSibling, rating = 0;
+
+			// these functions return candidate for following DOM element for related video
+			placements = [
+				function () {
+					return $articleContent.children('h2').first().nextUntil('h2', 'p').last();
+				},
+				function () {
+					return $articleContent.children('h2').eq(1).nextUntil('h2', 'p').first();
+				},
+				function () {
+					return $articleContent.children('h2').first().nextUntil('h2', 'p').eq(-3);
+				}
+			];
 			
-			$video = $video.detach();
-			$articleContent.children('h2').eq(1).prev('p').before( $video );
+			$.each(placements, function (i, func) {
+				var $followingSiblingCandidate, candidateRating;
+				
+				$followingSiblingCandidate = func();
+				candidateRating = rateVideoPlacement($followingSiblingCandidate, $followingSibling);
 
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-				var videoTitle = $video.find('.oo-state-screen-title').text();
-
-				$video.find('.video-title').text(videoTitle);
-				$video.show();
+				if (candidateRating > rating) {
+					$followingSibling = $followingSiblingCandidate;
+					rating = candidateRating;
+				}
 			});
+			
+			if ($followingSibling && $followingSibling.length) {
+				$video = $video.detach();
+				$followingSibling.before( $video );
+
+				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+					var videoTitle = $video.find('.oo-state-screen-title').text();
+
+					$video.find('.video-title').text(videoTitle);
+					$video.show();
+				});
+			}
+		}
+
+		function rateVideoPlacement($candidate, $best) {
+			var rating = 0, $fakeDiv, bestWidth, candidateWidth;
+			
+			if (!$candidate || !$candidate.length) {
+				return -1;
+			}
+
+			$fakeDiv = $('<div>').css({'overflow':'hidden'});
+			candidateWidth = $fakeDiv.insertBefore($candidate).width();
+			
+			if (candidateWidth < 500) {
+				return -1;
+			}
+
+			if (!$best || !$best.length) {
+				return 1;
+			}
+
+			bestWidth = $fakeDiv.detach().insertBefore($best).width();
+			$fakeDiv.remove();
+
+			if (candidateWidth > bestWidth) {
+				rating += 2;
+			}
+
+			return rating;
 		}
 		
 		initVideo(ooyalaVideoElementId, window.wgArticleRelatedVideoData.videoId, function (player) {
-			arrangeRelatedVideo(player);
+			placeRelatedVideo(player);
 			
 			player.mb.subscribe(OO.EVENTS.PLAY, 'related-video', function () {
 				track({
