@@ -33,7 +33,7 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 }
 
 function renderElement($content, $attributes, $jsSnippets) {
-	return Html::element( 'div', $attributes, $content ) . $jsSnippets;
+	return Html::rawElement( 'div', $attributes, $content ) . $jsSnippets;
 }
 
 function getAttributes( $parameters ) {
