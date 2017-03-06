@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], function (window, onScroll, tracker, OoyalaPlayer) {
+require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tracker, OoyalaPlayer) {
 
 	$(function () {
 		var $video = $('#article-related-video'),
@@ -23,7 +23,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
 				var videoTitle = $video.find('.oo-state-screen-title').text();
 
-				$video.find('.related-video-title').text(videoTitle);
+				$video.find('.video-title').text(videoTitle);
 				$video.show();
 			});
 		}
@@ -58,5 +58,4 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			});
 		});
 	});
-	
 });
