@@ -25,20 +25,19 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	$parameters = ActivityFeedHelper::parseParameters($attributes);
 
 	$element =
-		renderElement( ActivityFeedHelper::getList( $parameters ), getStyle( $parameters ),
+		renderElement( ActivityFeedHelper::getList( $parameters ), getAttributes( $parameters ),
 			getSnippets( $parameters ) );
 	wfProfileOut( __METHOD__ );
 
 	return $element;
 }
 
-function renderElement($content, $style, $jsSnippets) {
-	return Html::element( 'div', [ 'style' => $style ], $content ) . $jsSnippets;
+function renderElement($content, $attributes, $jsSnippets) {
+	return Html::element( 'div', $attributes, $content ) . $jsSnippets;
 }
 
-function getStyle( $parameters ) {
-	$style = empty($parameters['style']) ? '' : $parameters['style'];
-	return sprintf(' style="%s"',  $style);
+function getAttributes( $parameters ) {
+	return empty($parameters['style']) ? [] : ['style' => $parameters['style']];
 }
 
 function getSnippets( &$parameters ) {
