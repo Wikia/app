@@ -31,6 +31,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				return mocks.prebidBid;
 			}
 		},
+		sampler: {
+			sample: function () {
+				return false;
+			}
+		},
 		vastUrlBuilder: {
 			build: function () {
 				return '//foo.vast';
@@ -54,6 +59,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
+			mocks.sampler,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
 			mocks.geo,

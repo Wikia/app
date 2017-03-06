@@ -1,18 +1,18 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.utils.sampler',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
+], function (adContext, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
-		loggerSamplingPercent = 1,
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	function logVast(vastRequest) {
 		log(['logVast', vastRequest], log.levels.debug, logGroup);
-		if (Math.floor(Math.random() * 100) <= loggerSamplingPercent) {
+		if (sampler.sample('velesLog', 1, 100)) {
 			sendRequest(vastRequest.response);
 		}
 	}
