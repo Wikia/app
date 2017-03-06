@@ -131,6 +131,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
+			removeEventListener: removeEventListener,
 			resize: resize,
 			setAutoPlay: setAutoPlay
 		};

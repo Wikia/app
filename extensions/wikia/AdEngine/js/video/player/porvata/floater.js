@@ -87,7 +87,9 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			var listeners = floatingContext.listeners;
 
 			win.removeEventListener('scroll', listeners.scroll);
-			floatingContext.elements.video.addEventListener('start', listeners.start);
+			if (listeners.start) {
+				floatingContext.elements.video.removeEventListener('start', listeners.start);
+			}
 			floatingContext.state = state.stopped;
 			fireEvent(floatingContext, events.end);
 		}
@@ -99,12 +101,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			};
 		}
 
-		function enableFloating(floatingContext) {
+		function enableFloating(floatingContext, params) {
 			var elements = floatingContext.elements,
 				width = videoWidth,
 				height = width;
 
-			elements.topAds.style.height = elements.ad.offsetHeight + 'px';
+			elements.topAds.style.height = params.height + 'px';
 			elements.topAds.classList.toggle(activeFloatingCssClass);
 			updateDimensions(elements.imageContainer, width, height);
 
@@ -154,7 +156,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				if (win.scrollY > scrollYOffset) {
 					showAboveArticleVideo(floatingContext);
 					if (floatingContext.state === state.never || floatingContext.state === state.paused) {
-						enableFloating(floatingContext);
+						enableFloating(floatingContext, params);
 					}
 				} else {
 					if (floatingContext.state === state.floating) {
@@ -172,22 +174,33 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 					imageContainer: params.container.parentElement.querySelector('#image'),
 					video: video
 				},
+				listeners = {},
 				floatingContext = {
 					elements: elements,
 					eventHandlers: eventHandlers,
-					listeners: {},
+					listeners: listeners,
 					state: state.never
 				};
 
 			if (!elements.closeButton) {
 				elements.closeButton = createCloseButton();
-				floatingContext.listeners.close = createOnCloseListener(floatingContext, params);
-				elements.closeButton.addEventListener('click', floatingContext.listeners.close);
+				listeners.close = createOnCloseListener(floatingContext, params);
+				elements.closeButton.addEventListener('click', listeners.close);
 
 				elements.ad.appendChild(elements.closeButton);
 			}
 
-			floatingContext.listeners.scroll = throttle(createOnScrollListener(floatingContext, params), 100);
+			listeners.scroll = throttle(createOnScrollListener(floatingContext, params), 100);
+			win.addEventListener('scroll', listeners.scroll);
+
+			listeners.adCompleted = function () {
+				if (floatingContext.state !== state.floating && floatingContext.state !== state.stopped) {
+					deleteCloseButton(floatingContext);
+					endFloating(floatingContext);
+				}
+				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
+			};
+			elements.video.addEventListener('wikiaAdCompleted', listeners.adCompleted);
 
 			return floatingContext;
 		}
@@ -213,10 +226,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function makeFloat(video, params, eventHandlers) {
 			var floatingContext = enableFloatingOn(video, params, eventHandlers);
 
-			win.addEventListener('scroll', floatingContext.listeners.scroll);
-
 			if (isOutsideOfViewport(params)) {
-				enableFloating(floatingContext);
+				enableFloating(floatingContext, params);
 			}
 
 			fireEvent(floatingContext, events.start);
