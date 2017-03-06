@@ -21,7 +21,8 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				paused: 'paused',
 				stopped: 'stopped'
 			},
-			videoWidth = 225;
+			videoWidth = 225,
+			wikiFloatingVideoSelector = '.video-container';
 
 		function fireEvent(floatingContext, eventName) {
 			var eventHandler = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
@@ -52,14 +53,18 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function resizeVideoAndShowCloseButton(floatingContext, width, height) {
-			var elements = floatingContext.elements;
+			var elements = floatingContext.elements,
+				listeners = floatingContext.listeners;
 
-			elements.video.addEventListener('start', function () {
-				elements.video.resize(width, height);
-				if (elements.closeButton) {
-					elements.closeButton.classList.remove('hidden');
-				}
-			});
+			if (!listeners.start) {
+				listeners.start = function () {
+					elements.video.resize(width, height);
+					if (elements.closeButton) {
+						elements.closeButton.classList.remove('hidden');
+					}
+				};
+				elements.video.addEventListener('start', listeners.start);
+			}
 
 			if (elements.video.isPlaying()) {
 				elements.video.resize(width, height);
@@ -78,7 +83,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function endFloating(floatingContext) {
-			win.removeEventListener('scroll', floatingContext.scrollListener);
+			win.removeEventListener('scroll', floatingContext.listeners.scroll);
 			floatingContext.state = state.stopped;
 			fireEvent(floatingContext, events.end);
 		}
@@ -155,18 +160,19 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				floatingContext = {
 					elements: elements,
 					eventHandlers: eventHandlers,
+					listeners: {},
 					state: state.never
 				};
 
 			if (!elements.closeButton) {
 				elements.closeButton = createCloseButton();
-				elements.closeButton.addEventListener('click',
-					createOnCloseListener(floatingContext, params));
+				floatingContext.listeners.close = createOnCloseListener(floatingContext, params);
+				elements.closeButton.addEventListener('click', floatingContext.listeners.close);
 
 				elements.ad.appendChild(elements.closeButton);
 			}
 
-			floatingContext.scrollListener = throttle(createOnScrollListener(floatingContext, params), 100);
+			floatingContext.listeners.scroll = throttle(createOnScrollListener(floatingContext, params), 100);
 
 			return floatingContext;
 		}
@@ -178,6 +184,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
+		 * Make video floating on the right rail.
 		 *
 		 * @param video - video object
 		 * @param params - parameters that video receives
@@ -191,7 +198,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function makeFloat(video, params, eventHandlers) {
 			var floatingContext = enableFloatingOn(video, params, eventHandlers);
 
-			win.addEventListener('scroll', floatingContext.scrollListener);
+			win.addEventListener('scroll', floatingContext.listeners.scroll);
 
 			if (isOutsideOfViewport(params)) {
 				enableFloating(floatingContext);
@@ -203,6 +210,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
+		 * Checks whether slot with given parameters can become floating.
 		 *
 		 * @param params - parameters that video receives
 		 * @returns {boolean} - true when floater can make given video & slot floatable
@@ -212,6 +220,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		/**
+		 * Checks whether floting is enabled for given floating context.
 		 *
 		 * @param floatingContext - floating context object, containing state parameter
 		 * @returns {boolean} - true if state is different from stopped - stopped state is set when floating element
