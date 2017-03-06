@@ -172,7 +172,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
 
-				if ( secondsPlayed % 5 === 0 && secondsPlayed > playTime ) {
+				if ( secondsPlayed % 5 === 0 && secondsPlayed !== playTime ) {
 					playTime = secondsPlayed;
 					track({
 						action: tracker.ACTIONS.VIEW,
@@ -180,7 +180,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					});
 				}
 
-				if ( percentage % 10 === 0 && percentage > percentagePlayTime ) {
+				if ( percentage % 10 === 0 && percentage !== percentagePlayTime ) {
 					percentagePlayTime = percentage;
 					track({
 						action: tracker.ACTIONS.VIEW,
