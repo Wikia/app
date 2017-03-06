@@ -168,7 +168,8 @@ class SunsetProviderTest extends WikiaBaseTest {
 					'Stachu Jones Mistrz Ciętej Riposty',
 					'Hity Polskiego Internetu',
 					'STAR WARS Najnowsza część Gwiezdnych Wojen',
-					'STRACHY NA LACHY - Dzień dobry, kocham Cię'
+					'STRACHY NA LACHY - Dzień dobry, kocham Cię',
+					'Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail',
 				] ),
 				[
 					$this->article( '[[File:Stachu Jones Mistrz Ciętej Riposty]]', [ 'Stachu Jones Mistrz Ciętej Riposty' ], '' ),
@@ -206,6 +207,11 @@ class SunsetProviderTest extends WikiaBaseTest {
 						"Test\n<gallery>File:Test.png|Text\nSTRACHY NA LACHY - Dzień dobry kocham Cię\nOther</gallery> [[File:Stachu Jones Mistrz Ciętej Riposty|500px|right]]",
 						[ 'Stachu Jones Mistrz Ciętej Riposty', 'STRACHY NA LACHY - Dzień dobry kocham Cię' ],
 						"Test\n<gallery>File:Test.png|Text\n\nOther</gallery> "
+					),
+					$this->article(
+						"foo [[File:Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail|thumb|center|335 px]] bar",
+						[ 'Star Citizen - Vorschau-Video Constellation, Freelancer & 300i im Detail' ],
+						"foo  bar"
 					)
 				]
 			]
