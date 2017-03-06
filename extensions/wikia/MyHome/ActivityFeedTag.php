@@ -23,13 +23,17 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	wfProfileIn(__METHOD__);
 
 	$parameters = ActivityFeedHelper::parseParameters($attributes);
-	$feedHTML = ActivityFeedHelper::getList($parameters);
 
-	$tag = Html::element( 'div', [ 'style' => getStyle( $parameters ) ], $feedHTML ) .
-	       getSnippets( $parameters );
+	$element =
+		renderElement( ActivityFeedHelper::getList( $parameters ), getStyle( $parameters ),
+			getSnippets( $parameters ) );
 	wfProfileOut( __METHOD__ );
 
-	return $tag;
+	return $element;
+}
+
+function renderElement($content, $style, $jsSnippets) {
+	return Html::element( 'div', [ 'style' => $style ], $content ) . $jsSnippets;
 }
 
 function getStyle( $parameters ) {
