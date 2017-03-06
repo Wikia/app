@@ -83,7 +83,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function endFloating(floatingContext) {
-			win.removeEventListener('scroll', floatingContext.listeners.scroll);
+			var listeners = floatingContext.listeners;
+
+			win.removeEventListener('scroll', listeners.scroll);
+			floatingContext.elements.video.addEventListener('start', listeners.start);
 			floatingContext.state = state.stopped;
 			fireEvent(floatingContext, events.end);
 		}
