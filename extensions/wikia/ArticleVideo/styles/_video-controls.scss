@@ -25,6 +25,7 @@ $video-player-volume-bar-off-color: rgba(255,255,255,0.2);
  *
  * It might make sense to create an svg sprite but I am not even sure if there would be any savings by doing that and it would
  * be harder to maintain.
+ * Ticket for replacing these icons is created XW-2897
  * @type {String}
  */
 $share-icon-uri: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjE0cHgiIGhlaWdodD0iMTdweCIgdmlld0JveD0iMCAwIDE0IDE3IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCAzOS4xICgzMTcyMCkgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+U2hhcmU8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz48L2RlZnM+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iVmlkZW8tUGxheWVyLVNraW4iIHRyYW5zZm9ybT0idHJhbnNsYXRlKC04NDMuMDAwMDAwLCAtNjA5LjAwMDAwMCkiIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8ZyBpZD0iVmlkZW8tQ29weSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjQ4LjAwMDAwMCwgMjU4LjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTU5Ny41NDU0NTUsMzYyLjQzNTkzNiBDNTk4LjI1OTQ1NSwzNjIuNDM1OTM2IDU5OC45MDM0NTUsMzYyLjEyNDYwMyA1OTkuMzY2MDkxLDM2MS42MjcyNjkgTDYwNC4wMDgzNjQsMzY0LjQwNTkzNiBDNjAzLjk1MDQ1NSwzNjQuNjI5MjY5IDYwMy45MDkwOTEsMzY0Ljg1OTkzNiA2MDMuOTA5MDkxLDM2NS4xMDI2MDMgQzYwMy45MDkwOTEsMzY2LjU3MzI2OSA2MDUuMDUwNzI3LDM2Ny43NjkyNjkgNjA2LjQ1NDU0NSwzNjcuNzY5MjY5IEM2MDcuODU4MzY0LDM2Ny43NjkyNjkgNjA5LDM2Ni41NzMyNjkgNjA5LDM2NS4xMDI2MDMgQzYwOSwzNjMuNjMxOTM2IDYwNy44NTgzNjQsMzYyLjQzNTkzNiA2MDYuNDU0NTQ1LDM2Mi40MzU5MzYgQzYwNS43NDA1NDUsMzYyLjQzNTkzNiA2MDUuMDk2NTQ1LDM2Mi43NDcyNjkgNjA0LjYzMzkwOSwzNjMuMjQ0NjAzIEw1OTkuOTkxNjM2LDM2MC40NjU5MzYgQzYwMC4wNDk1NDUsMzYwLjI0MjYwMyA2MDAuMDkwOTA5LDM2MC4wMTE5MzYgNjAwLjA5MDkwOSwzNTkuNzY5MjY5IEM2MDAuMDkwOTA5LDM1OS41MjY2MDMgNjAwLjA0OTU0NSwzNTkuMjk1OTM2IDU5OS45OTE2MzYsMzU5LjA3MjYwMyBMNjA0LjYzMzkwOSwzNTYuMjkzOTM2IEM2MDUuMDk2NTQ1LDM1Ni43OTEyNjkgNjA1Ljc0MDU0NSwzNTcuMTAyNjAzIDYwNi40NTQ1NDUsMzU3LjEwMjYwMyBDNjA3Ljg1ODM2NCwzNTcuMTAyNjAzIDYwOSwzNTUuOTA2NjAzIDYwOSwzNTQuNDM1OTM2IEM2MDksMzUyLjk2NTI2OSA2MDcuODU4MzY0LDM1MS43NjkyNjkgNjA2LjQ1NDU0NSwzNTEuNzY5MjY5IEM2MDUuMDUwNzI3LDM1MS43NjkyNjkgNjAzLjkwOTA5MSwzNTIuOTY1MjY5IDYwMy45MDkwOTEsMzU0LjQzNTkzNiBDNjAzLjkwOTA5MSwzNTQuNjc4NjAzIDYwMy45NTA0NTUsMzU0LjkwOTI2OSA2MDQuMDA4MzY0LDM1NS4xMzI2MDMgTDU5OS4zNjYwOTEsMzU3LjkxMTI2OSBDNTk4LjkwMzQ1NSwzNTcuNDEzOTM2IDU5OC4yNTk0NTUsMzU3LjEwMjYwMyA1OTcuNTQ1NDU1LDM1Ny4xMDI2MDMgQzU5Ni4xNDE2MzYsMzU3LjEwMjYwMyA1OTUsMzU4LjI5ODYwMyA1OTUsMzU5Ljc2OTI2OSBDNTk1LDM2MS4yMzk5MzYgNTk2LjE0MTYzNiwzNjIuNDM1OTM2IDU5Ny41NDU0NTUsMzYyLjQzNTkzNiIgaWQ9IlNoYXJlIj48L3BhdGg+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==';
@@ -41,7 +42,8 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 
 .oo-player-container {
 	.oo-scrubber-bar-container {
-		height: 5px; // Adjustment for smaller height on controlbar
+		// Adjustment for smaller height on controlbar
+		height: 5px;
 
 		.oo-scrubber-bar-padding {
 			.oo-scrubber-bar {
@@ -69,37 +71,43 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 	}
 
 	.oo-control-bar {
-		.oo-logo, .oo-closed-caption, .oo-more-options {
+		.oo-logo {
 			display: none !important;
 		}
 
 		.oo-icon {
 			&:hover {
-				filter: none !important; // Remove however glow effect added by js
+				// Remove however glow effect added by js
+				filter: none !important;
 			}
 		}
 
 		.oo-control-bar-items-wrapper {
-			margin-top: 12px; // Adjustment for smaller height on controlbar
+			// Adjustment for smaller height on controlbar
+			margin-top: 12px;
 
 			.oo-control-bar-item {
-				padding: 0 3px; // Reduce original horizontal spacing of icons
+				// Reduce original horizontal spacing of icons
+				padding: 0 3px;
 
 				// On selected don't show the icon behind the background image
 				&.oo-selected > .fandom-video-gear-icon {
-					color: transparent !important; // Already important from ooyala
+					// Already important from ooyala
+					color: transparent !important;
 				}
 			}
 
 			.oo-volume {
 				.oo-volume-bar {
-					height: $video-player-volume-bar-height; // Make all icon bars the same height
+					// Make all icon bars the same height
+					height: $video-player-volume-bar-height;
 					background-color: $video-player-volume-bar-off-color;
 				}
 			}
 
 			.oo-control-bar-duration {
 				font-weight: bold;
+				font-family: $wds-font-family;
 			}
 		}
 
@@ -112,7 +120,8 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 
 		// Make new icon font color transparent to keep spacing consistent
 		.fandom-video-icon {
-			color: transparent !important; // Added inline with JS need to override
+			// Added inline with JS need to override
+			color: transparent !important;
 		}
 
 		// See block comment above by the data uris for all fandom-video-<name>-icon classes

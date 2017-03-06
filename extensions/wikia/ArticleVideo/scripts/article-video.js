@@ -87,6 +87,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		}
 
 		function updateOoyalaSize() {
+			// we have to trigger resize event to make html5-skin resize controls
 			window.dispatchEvent(new Event('resize'));
 			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
 			setTimeout(function () {
@@ -162,8 +163,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width, height) {
-				if (width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width) {
+				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
 				}
 			});
