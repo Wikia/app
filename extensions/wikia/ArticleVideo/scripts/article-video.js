@@ -23,7 +23,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			var ooyalaVideoId = window.wgArticleVideoData.videoId,
 				playerParams = window.wgArticleVideoData.playerParams;
 
-			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -35,7 +35,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			videoCollapsed = true;
 			$video.addClass('collapsed-ready');
 			if (ooyalaVideoController) {
-				updatePlayerControls(true);
+				updatePlayerControls();
 			}
 			$videoContainer.css({
 				'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
@@ -65,7 +65,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$ooyalaVideo.css('height', '');
 			$video.removeClass('collapsed collapsed-ready');
 			if (ooyalaVideoController) {
-				updatePlayerControls(false);
+				updatePlayerControls();
 			}
 
 		}
@@ -84,6 +84,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		}
 
 		function updateOoyalaSize() {
+			// we have to trigger resize event to make html5-skin resize controls
 			window.dispatchEvent(new Event('resize'));
 			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
 			setTimeout(function () {
@@ -91,12 +92,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}, 150);
 		}
 
-		function updatePlayerControls(waitForTransition) {
+		function updatePlayerControls() {
 			ooyalaVideoController.hideControls();
-			if (!waitForTransition) {
-				updateOoyalaSize();
-			}
-			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
 		}
 
 		function isVideoInFullScreenMode() {

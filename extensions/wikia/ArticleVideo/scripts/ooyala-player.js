@@ -2,7 +2,7 @@ define('ooyala-player', function () {
 
 	var baseJSONSkinUrl = '/extensions/wikia/ArticleVideo/scripts/ooyala/skin.json?v=2';
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
-	var playIcon = '<svg width="22" height="30" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg"><path d="M21.573 15.818l-20 14c-.17.12-.372.18-.573.18-.158 0-.316-.037-.462-.112C.208 29.714 0 29.372 0 29V1C0 .625.207.283.538.11c.33-.17.73-.146 1.035.068l20 14c.268.187.427.493.427.82 0 .325-.16.63-.427.818z"/></svg>'
+	var playIcon = '<svg width="22" height="30" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg"><path d="M21.573 15.818l-20 14c-.17.12-.372.18-.573.18-.158 0-.316-.037-.462-.112C.208 29.714 0 29.372 0 29V1C0 .625.207.283.538.11c.33-.17.73-.146 1.035.068l20 14c.268.187.427.493.427.82 0 .325-.16.63-.427.818z"/></svg>';
 
 	function OoyalaHTML5Player(container, params, onPlayerCreate) {
 		var playerWidth = container.scrollWidth;
@@ -23,13 +23,6 @@ define('ooyala-player', function () {
 	}
 
 	OoyalaHTML5Player.prototype.setUpPlayer = function () {
-		this.createPlayer();
-	};
-
-	/**
-	 * @returns {void}
-	 */
-	OoyalaHTML5Player.prototype.createPlayer = function () {
 		var self = this;
 		window.OO.ready(function () {
 			self.player = OO.Player.create(self.containerId, self.params.videoId, self.params);
@@ -47,7 +40,7 @@ define('ooyala-player', function () {
 		this.onPlayerCreated(player);
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
-			self.onPlaybackReady()
+			self.onPlaybackReady();
 		});
 	};
 
@@ -58,8 +51,9 @@ define('ooyala-player', function () {
 	 */
 	OoyalaHTML5Player.prototype.onPlaybackReady = function () {
 		var durationElem = document.createElement('div'),
-			playButton = document.getElementById(this.containerId).querySelector('.oo-start-screen .oo-action-icon'),
-			screenInfo = document.getElementById(this.containerId).querySelector('.oo-state-screen-info');
+			container = document.getElementById(this.containerId),
+			playButton = container.querySelector('.oo-start-screen .oo-action-icon'),
+			screenInfo = container.querySelector('.oo-state-screen-info');
 
 		// Add video duration to start screen
 		durationElem.innerHTML = mw.message('articlevideo-watch', this.getFormattedDuration(this.player.getDuration())).text().toUpperCase();
@@ -104,7 +98,7 @@ define('ooyala-player', function () {
 		$('.oo-control-bar').css('visibility', 'visible');
 	};
 
-	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate) {
 		var params = {
 				videoId: videoId,
 				autoplay: false,
