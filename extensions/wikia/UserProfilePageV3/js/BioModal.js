@@ -7,7 +7,8 @@ require(['jquery', 'wikia.ui.factory'], function ($, uiFactory) {
 	'use strict';
 
 	var bioContent = $("#bio-content"),
-		bioToggler = $("#bio-toggler");
+		bioToggler = $("#bio-toggler"),
+		modalContent;
 
 	function getModalConfig() {
 		return {
@@ -15,7 +16,7 @@ require(['jquery', 'wikia.ui.factory'], function ($, uiFactory) {
 			vars: {
 				id: 'discussionsbiomodal',
 				size: 'content-size',
-				content: '<p>' + bioContent.text().replace(/(?:\r\n|\r|\n)/g, '<br />') + '</p>',
+				content: getModalContent(),
 				class: 'styleguide-example-content-size',
 				title: bioToggler[0].dataset.modalTitle,
 				closeText: 'Close',
@@ -35,6 +36,14 @@ require(['jquery', 'wikia.ui.factory'], function ($, uiFactory) {
 				]
 			}
 		};
+	}
+
+	function getModalContent() {
+		if (modalContent == null) {
+			modalContent = bioContent.clone();
+			modalContent.find("span").remove();
+		}
+		return '<p>' + modalContent.html() + '</p>';
 	}
 
 	function showModal(uiModal, modalConfig, callback) {
