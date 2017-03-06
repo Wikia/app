@@ -1,11 +1,11 @@
 @import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
-/**
- * Global video styles will live here
- *
- */
 .oo-player-container {
 	min-width: 0 !important;
+
+	.oo-player {
+		transition: none;
+	}
 
 	.oo-state-screen {
 		// hides title on pause screen
@@ -48,6 +48,7 @@
 		.oo-action-icon {
 			position: absolute;
 		}
+
 
 		.oo-state-screen-info {
 			bottom: 41px;
@@ -114,4 +115,7 @@
 		}
 	}
 
+	.oo-thumbnail-carousel-time, .oo-thumbnail-time {
+		font-family: $wds-font-family;
+	}
 }

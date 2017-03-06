@@ -5,7 +5,6 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
-			$videoPlayBtn = $videoContainer.find('.video-play-button'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
@@ -20,10 +19,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				height: 127
 			};
 
-		function initVideo(ooyalaContainerId, videoId, onCreate) {
-			var playerParams = window.wgArticleVideoData.playerParams;
+		function initVideo(onCreate) {
+			var ooyalaVideoId = window.wgArticleVideoData.videoId,
+				playerParams = window.wgArticleVideoData.playerParams;
 
-			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaContainerId, playerParams, videoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -84,6 +84,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 		}
 
 		function updateOoyalaSize() {
+			// we have to trigger resize event to make html5-skin resize controls
 			window.dispatchEvent(new Event('resize'));
 			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
 			setTimeout(function () {
@@ -93,24 +94,10 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
-			if(!waitForTransition) {
+			if (!waitForTransition) {
 				updateOoyalaSize();
 			}
 			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
-		}
-
-		function isVideoPlaying() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
-			}
-			return false;
-		}
-
-		function isVideoPausedOrReady() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PAUSED || ooyalaVideoController.player.getState() === OO.STATE.READY;
-			}
-			return false;
 		}
 
 		function isVideoInFullScreenMode() {
@@ -126,7 +113,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			if (isVideoInFullScreenMode()) {
 				return;
 			}
-			if (!collapsingDisabled || isVideoPlaying() || videoCollapsed) {
+			if (!collapsingDisabled || videoCollapsed) {
 				var scrollTop = $(window).scrollTop(),
 					videoHeight = $video.outerHeight(),
 					videoOffset = $video.offset(),
@@ -141,40 +128,18 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			}
 		}
 
-		function showAndPlayVideo() {
-			$ooyalaVideo.show();
-			$video.addClass('played');
-			ooyalaVideoController.player.play();
-			track({
-				action: tracker.ACTIONS.PLAY_VIDEO,
-				label: 'featured-video'
-			});
-		}
-
-		function playPauseVideo() {
-			if (!$video.hasClass('played')) {
-				return;
-			}
-			if (isVideoPausedOrReady()) {
-				ooyalaVideoController.player.play();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-play'
-				});
-			} else if (isVideoPlaying()) {
-				ooyalaVideoController.player.pause();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-pause'
-				});
-			}
-		}
-		
-		initVideo(ooyalaVideoElementId, window.wgArticleVideoData.videoId, function (player) {
+		initVideo(function (player) {
 			$video.addClass('ready-to-play');
-			$video.one('click', showAndPlayVideo);
+
+			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.PLAY_VIDEO,
+					label: 'featured-video'
+				});
+			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+				collapsingDisabled = false;
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-play'
@@ -195,8 +160,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 				});
 			});
 
-			player.mb.subscribe( OO.EVENTS.SIZE_CHANGED, "asd", function(eventName, width, height ){
-				if(width === collapsedVideoSize.width && height === collapsedVideoSize.height) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width) {
+				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
 				}
 			});
@@ -209,9 +174,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		$closeBtn.click(closeButtonClicked);
 
-		$videoPlayBtn.click(playPauseVideo);
-
 		onScroll.bind(toggleCollapse);
 	});
-	
+
 });

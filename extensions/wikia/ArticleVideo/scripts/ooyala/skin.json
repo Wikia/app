@@ -19,18 +19,6 @@
         "languageFile": "//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/en.json",
         "androidResource": "skin-config/en.json",
         "iosResource": "en"
-      },
-      {
-        "language": "es",
-        "languageFile": "//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/es.json",
-        "androidResource": "skin-config/es.json",
-        "iosResource": "es"
-      },
-      {
-        "language": "zh",
-        "languageFile": "//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/zh.json",
-        "androidResource": "skin-config/zh.json",
-        "iosResource": "zh"
       }
     ]
   },
@@ -88,71 +76,11 @@
     "showAdCountDown": true,
     "showControlBar": false
   },
-  "discoveryScreen": {
-    "panelTitle": {
-      "titleFont": {
-        "fontSize": 28,
-        "fontFamily": "Roboto Condensed",
-        "color": "white"
-      }
-    },
-    "contentTitle": {
-      "show": true,
-      "font": {
-        "fontSize": 22,
-        "fontFamily": "Roboto Condensed",
-        "color": "white"
-      }
-    },
-    "contentDuration": {
-      "show": true,
-      "font": {
-        "fontSize": 12,
-        "fontFamily": "Arial-BoldMT",
-        "color": "white"
-      }
-    },
-    "showCountDownTimerOnEndScreen": true,
-    "countDownTime": "10"
-  },
   "shareScreen": {
     "shareContent": ["social", "embed"],
     "embed": {
       "source": "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>"
     }
-  },
-  "moreOptionsScreen": {
-    "brightOpacity": 1.0,
-    "darkOpacity": 0.4,
-    "iconSize": 30,
-    "color": "white",
-    "iconStyle": {
-      "active": {
-        "color": "#FFFFFF",
-        "opacity": 1.0
-      },
-      "inactive": {
-        "color": "#FFFFFF",
-        "opacity": 0.95
-      }
-    }
-  },
-  "closedCaptionOptions": {
-    "enabled": true,
-    "language": "en",
-    "textColor": "White",
-    "windowColor": "Transparent",
-    "backgroundColor": "Black",
-    "textOpacity": 1,
-    "backgroundOpacity": 0.6,
-    "windowOpacity": 0,
-    "fontType": "Proportional Sans-Serif",
-    "fontSize": "Medium",
-    "textEnhancement": "Uniform"
-  },
-  "upNext": {
-    "showUpNext": true,
-    "timeToShow": "10"
   },
   "controlBar": {
     "volumeControl": {
@@ -193,9 +121,6 @@
       "thumbnailPreview": true
     }
   },
-  "live": {
-    "forceDvrDisabled": false
-  },
   "buttons": {
     "desktopContent": [
       {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 },
@@ -210,31 +135,6 @@
       {"name":"logo", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":125 },
       {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 },
       {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
-    ],
-    "desktopAd": [
-      {"name":"playPause", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 },
-      {"name":"volume", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":240 },
-      {"name":"flexibleSpace", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":1 },
-      {"name":"logo", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":125 },
-      {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 },
-      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
-    ],
-    "mobileContent": [
-      {"name":"volume", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 },
-      {"name":"live", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45},
-      {"name":"timeDuration", "location":"controlBar", "whenDoesNotFit":"drop", "minWidth":100 },
-      {"name":"flexibleSpace", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":1 },
-      {"name":"share", "location":"moreOptions" },
-      {"name":"discovery", "location":"moreOptions" },
-      {"name":"closedCaption", "location":"moreOptions" },
-      {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 },
-      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 }
-    ],
-    "mobileAd": [
-      {"name":"volume", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 },
-      {"name":"flexibleSpace", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":1 },
-      {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 },
-      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":50 }
     ]
   },
   "icons": {
