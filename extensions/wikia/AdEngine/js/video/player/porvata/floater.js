@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		'use strict';
 
 		var activeFloatingCssClass = 'floating',
+			withArticleVideoCssClass = 'with-article-video',
 			compatibleSlots = ['TOP_LEADERBOARD'],
 			events = {
 				attach: 'attach',
@@ -134,6 +135,16 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			fireEvent(floatingContext, events.attach);
 		}
 
+		function isArticleVideoFloating() {
+			var element = doc.querySelector(wikiFloatingVideoSelector);
+
+			return element && 'fixed' === win.getComputedStyle(element).position;
+		}
+
+		function showAboveArticleVideo(floatingContext) {
+			floatingContext.elements.topAds.classList.toggle(withArticleVideoCssClass, isArticleVideoFloating());
+		}
+
 		function createOnScrollListener(floatingContext, params) {
 			var elements = floatingContext.elements,
 				topAds = elements.topAds,
@@ -141,6 +152,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 			return function () {
 				if (win.scrollY > scrollYOffset) {
+					showAboveArticleVideo(floatingContext);
 					if (floatingContext.state === state.never || floatingContext.state === state.paused) {
 						enableFloating(floatingContext);
 					}
