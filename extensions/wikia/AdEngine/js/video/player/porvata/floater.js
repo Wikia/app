@@ -59,9 +59,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 			if (!listeners.start) {
 				listeners.start = function () {
-					elements.video.resize(width, height);
-					if (elements.closeButton) {
-						elements.closeButton.classList.remove('hidden');
+					if (floatingContext.state === state.floating) {
+						elements.video.resize(width, height);
+						if (elements.closeButton) {
+							elements.closeButton.classList.remove('hidden');
+
+						}
 					}
 				};
 				elements.video.addEventListener('start', listeners.start);
