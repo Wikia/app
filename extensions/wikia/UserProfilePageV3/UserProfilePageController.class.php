@@ -58,7 +58,6 @@ class UserProfilePageController extends WikiaController {
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
-		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
 
 		$sessionUser = $this->wg->User;
 
