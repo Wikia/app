@@ -14,7 +14,7 @@ require(
 				setTimeout(this.proxy(this.updateUnreadCount), 300);
 
 				this.$window = $(window);
-				this.$notificationsCount = $('.on-site-notifications-count');
+				this.$notificationsCount = $('#on-site-notifications-count');
 				this.$container = $('#on-site-notifications');
 
 				this.addDropdownLoadingEvent();
