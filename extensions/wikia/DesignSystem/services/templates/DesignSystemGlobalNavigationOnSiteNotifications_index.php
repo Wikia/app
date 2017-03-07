@@ -15,7 +15,7 @@
 	<div class="wds-dropdown__content wds-is-right-aligned wds-global-navigation__dropdown-content">
 		<div class="mark-all-as-read-button">
 			<a  class="mark-all-as-read">
-				<?= wfMessage( 'notifications.mark-all-as-read' )->escaped() ?>
+				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>
 			</a>
 		</div>
 		<div class="scrollable-part" id="on-site-notifications">
