@@ -112,14 +112,14 @@ $vpaid-z-index: 10;
 	}
 }
 
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
+}
+
 .wikia-ad {
 	&.slot-animation {
 		@include transition(max-height, 0.8s, ease, 0);
 		overflow: hidden;
-	}
-
-	.provider-container {
-		position: relative;
 	}
 
 	&.slot-responsive {
