@@ -41,6 +41,9 @@ $messages['en'] = [
 	'user-identity-box-was-born-in' => '<span>I was born in</span> $1',
 	'user-identity-box-occupation' => '<span>My occupation is</span> $1',
 	'user-identity-i-am' => '<span>I am</span> $1',
+	'user-identity-bio' => '<span>Bio</span> $1',
+	'user-identity-bio-show-more' => 'Show More',
+	'user-identity-bio-modal-title' => 'Biography',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
 	'user-identity-box-discussion-posts' => 'Discussion posts',
@@ -192,6 +195,9 @@ $messages['qqq'] = [
 	'user-identity-i-am' => 'Message that tells what gender the user identifies with, shown on user profile page. Requires HTML span tag for styling UI
 	Parameters:
  is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
+	'user-identity-bio' => 'Message with a short summary about the user. Bio is short of "Biography". $1 is the bio the user adds.',
+	'user-identity-bio-show-more' => 'Label for link to show the full bio of the user. This is used if their bio is super long in which case we only show a portion of it. The rest can be viewed by selecting the "show more" link',
+	'user-identity-bio-modal-title' => 'Title for the modal which displays the user\'s entire bio.',
 	'user-identity-box-edits-since-joining' => 'Message displayed right after edit counts on user profile page that tells how many edits the user performed since they joined this wiki.
 Parameters:
 * $1 is user registration date',
