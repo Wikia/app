@@ -2211,7 +2211,7 @@ $config['design_system_user_js'] = [
 	],
 ];
 
-$config['on_site_notifications_js'] = [
+$config['design_system_on_site_notifications_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
@@ -2219,7 +2219,7 @@ $config['on_site_notifications_js'] = [
 	],
 ];
 
-$config['mustache_on_site_notifications_js'] = [
+$config['design_system_on_site_notifications_mustache_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [],

@@ -11,7 +11,7 @@ require(
 				// we only want 1 update simultaneously
 				this.updateInProgress = false;
 
-				setTimeout(this.proxy(this.updateCounts), 300);
+				setTimeout(this.proxy(this.updateUnreadCount), 300);
 
 				this.$window = $(window);
 				this.$notificationsCount = $('.on-site-notifications-count');
@@ -48,11 +48,10 @@ require(
 					},
 					dataType: 'json'
 				}).done(this.proxy(function (data) {
-					this.bucky.timer.stop('loadFirstPage');
 					this.renderNotifications(this.mapToModel(data.notifications));
 					this.calculatePage(data);
+				})).always(this.proxy(function () {
 					this.updateInProgress = false;
-				})).fail(this.proxy(function () {
 					this.bucky.timer.stop('loadFirstPage');
 				}));
 			},
@@ -88,7 +87,7 @@ require(
 				}));
 			},
 
-			updateCounts: function () {
+			updateUnreadCount: function () {
 				this.bucky.timer.start('updateCounts');
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications/unread-count',
@@ -96,14 +95,13 @@ require(
 						withCredentials: true
 					}
 				}).done(this.proxy(function (data) {
-					this.updateCountsHtml(data.unreadCount);
-					this.bucky.timer.stop('updateCounts');
-				})).fail(this.proxy(function () {
+					this.updateUnreadCountHtml(data.unreadCount);
+				})).always(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
 			},
 
-			updateCountsHtml: function (count) {
+			updateUnreadCountHtml: function (count) {
 				this.unreadCount = count;
 
 				if (this.unreadCount > 0) {
@@ -128,7 +126,7 @@ require(
 				type: loader.MULTI,
 				resources: {
 					mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
-					scripts: 'mustache_on_site_notifications_js'
+					scripts: 'design_system_on_site_notifications_mustache_js'
 				}
 			}).done(function (assets) {
 				loader.processScript(assets.scripts);
