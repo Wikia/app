@@ -106,7 +106,9 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 
 		function isVideoInFullScreenMode() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.isFullscreen();
+				// isFullscreen() returns false just faster switching to fullscreen mode so we also
+				// check webkitIsFullScreen property - that's only for Safari
+				return ooyalaVideoController.player.isFullscreen() || document.webkitIsFullScreen;
 			}
 			return false;
 		}
