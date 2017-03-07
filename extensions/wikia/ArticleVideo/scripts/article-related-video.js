@@ -45,7 +45,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			});
 
 			if ($followingSibling && $followingSibling.length) {
-				$video.detach().insertBefore($followingSibling);
+				$video.insertBefore($followingSibling);
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
 					var videoTitle = player.getTitle(),
@@ -60,8 +60,10 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 		}
 
 		function isPlacementBetter($candidate, $currentBest) {
-			var $fakeDiv, bestWidth, candidateWidth;
-			
+			var $fakeDiv,
+				bestWidth,
+				candidateWidth;
+
 			if (!$candidate || !$candidate.length) {
 				return false;
 			}
@@ -78,7 +80,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				return true;
 			}
 
-			bestWidth = $fakeDiv.detach().insertBefore($currentBest).width();
+			bestWidth = $fakeDiv.insertBefore($currentBest).width();
 			$fakeDiv.remove();
 
 			if (candidateWidth > bestWidth) {
