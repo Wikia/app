@@ -15,15 +15,21 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
-			viewportListener = null,
-			isFloating = null;
+			viewportListener = null;
+
+		function isFloatingEnabled(params) {
+			return floater && floater.isEnabled(params.floatingContext);
+		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
 			if (floater && floater.canFloat(params)) {
-				isFloating = true;
-				floater.makeFloat(video, params, function() {
-					isFloating = false;
-					inViewportCallback(false);
+				params.floatingContext = floater.makeFloat(video, params, {
+					onStart: function() {
+						inViewportCallback(true);
+					},
+					onEnd: function() {
+						inViewportCallback(false);
+					}
 				});
 				inViewportCallback(true);
 			}
@@ -65,10 +71,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						video.play();
 						autoPlayed = true;
 					// Don't resume when video was paused manually
-					} else if (isVisible && autoPaused && !isFloating) {
+					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
 						video.resume();
 					// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-					} else if (!isVisible && video.isPlaying() && !isFloating) {
+					} else if (!isVisible && video.isPlaying() && !isFloatingEnabled(params)) {
 						video.pause();
 						autoPaused = true;
 					}
