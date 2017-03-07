@@ -1100,10 +1100,10 @@ abstract class Maintenance {
 	 */
 	protected function &getDB( $db, $groups = array(), $wiki = false ) {
 		if ( is_null( $this->mDb ) ) {
-			return wfGetDB( $db, $groups, $wiki );
-		} else {
-			return $this->mDb;
+			$this->mDb = wfGetDB( $db, $groups, $wiki );
 		}
+
+		return $this->mDb;
 	}
 
 	/**
