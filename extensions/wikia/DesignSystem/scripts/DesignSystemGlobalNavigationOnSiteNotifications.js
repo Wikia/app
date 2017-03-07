@@ -18,6 +18,14 @@ require(
 				this.$container = $('#on-site-notifications');
 
 				this.addDropdownLoadingEvent();
+				this.addMarkAllAsReadEvent();
+			},
+
+			addMarkAllAsReadEvent: function () {
+				var button = $('#mark-all-as-read-button');
+				button.click(function () {
+					OnSiteNotifications.markAllAsRead();
+				});
 			},
 
 			addDropdownLoadingEvent: function () {
@@ -35,6 +43,25 @@ require(
 				return !this.updateInProgress && !this.nextPage && this.allPagesLoaded !== true;
 			},
 
+			markAllAsRead: function () {
+				this.bucky.timer.start('markAllAsRead');
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify({since: "2017-01-01T12:12:12.000Z"}),
+					dataType: 'json',
+					contentType: "application/json; charset=UTF-8",
+					url: this.getBaseUrl() + '/notifications/mark-all-as-read',
+					xhrFields: {
+						withCredentials: true
+					}
+				}).done(this.proxy(function () {
+					this.renderUnreadCount(0);
+					//TODO clear read status from all loaded notifications
+				})).always(this.proxy(function () {
+					this.bucky.timer.stop('markAllAsRead');
+				}));
+			},
+
 			loadFirstPage: function () {
 				if (this.shouldLoadFirstPage()) {
 					return;
@@ -45,8 +72,7 @@ require(
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
 						withCredentials: true
-					},
-					dataType: 'json'
+					}
 				}).done(this.proxy(function (data) {
 					this.renderNotifications(this.mapToModel(data.notifications));
 					this.calculatePage(data);
@@ -95,13 +121,13 @@ require(
 						withCredentials: true
 					}
 				}).done(this.proxy(function (data) {
-					this.updateUnreadCountHtml(data.unreadCount);
+					this.renderUnreadCount(data.unreadCount);
 				})).always(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
 			},
 
-			updateUnreadCountHtml: function (count) {
+			renderUnreadCount: function (count) {
 				this.unreadCount = count;
 
 				if (this.unreadCount > 0) {

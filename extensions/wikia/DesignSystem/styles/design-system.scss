@@ -91,3 +91,49 @@ $global-navigation-z-index: 5000101;
 		}
 	}
 }
+
+
+
+// on-site-notifications to be moved to Design System
+
+$notifications-dropdown-content-color: #656d77;
+$notifications-dropdown-border-color: #363b41;
+
+.wds-notifications {
+  &__mark-all-as-read-button {
+	box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: flex-start;
+	min-height: 44px;
+	padding: 0;
+	width: 100%;
+  }
+  &__mark-all-as-read {
+	color: $wds-color-link;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 12px;
+	padding: 18px;
+	text-transform: uppercase;
+	cursor: pointer;
+  }
+
+  &__dropdown-content {
+	align-items: center;
+	color: $notifications-dropdown-content-color;
+	flex-direction: column;
+	font-size: 14px;
+	justify-content: center;
+	//padding 18 * 2 + content 320px
+	min-width: 356px;
+	width: 100%;
+
+	.notification-list {
+	  box-sizing: border-box;
+	  max-height: 420px;
+	  overflow-y: scroll;
+	  width: 100%;
+	  padding: 0 18px;
+	}
+  }
+}
