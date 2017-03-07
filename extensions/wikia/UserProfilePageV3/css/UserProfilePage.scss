@@ -148,18 +148,6 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				margin: 0 1px 0 6px;
 			}
 		}
-		.bio {
-			max-height: 100px;
-			overflow: hidden;
-		}
-
-		.bio-toggle {
-			display: none;
-			margin-top: 10px;
-			span {
-				cursor: pointer;
-			}
-		}
 	}
 
 	.masthead-info-lower {
