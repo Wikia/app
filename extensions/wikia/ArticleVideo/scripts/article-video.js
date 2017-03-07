@@ -22,11 +22,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			};
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgArticleVideoData.videoId,
-				playerParams = window.wgArticleVideoData.playerParams,
+			var ooyalaVideoId = window.wgFeaturedVideoId,
+				playerParams = window.wgOoyalaParams,
 				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
 
-			ooyalaVideoController = OoyalaPlayer.initHTMl5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -100,7 +100,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			if (!waitForTransition) {
 				updateOoyalaSize();
 			}
-			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
+			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function only if video width
+			// is equal to $collapsedVideoSize.width - so updateOoyalaSize won't be executed twice
 		}
 
 		function isVideoInFullScreenMode() {
@@ -163,7 +164,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, "featured-video", function (eventName, width) {
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
 				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
 				}

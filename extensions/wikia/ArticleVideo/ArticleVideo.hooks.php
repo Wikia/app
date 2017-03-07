@@ -18,13 +18,11 @@ class ArticleVideoHooks {
 		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
-			$vars['wgArticleVideoData'] = [
-				'videoId' => $wg->articleVideoFeaturedVideos[$title]['videoId'],
-				'playerParams' => [
-					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
-				],
+			$vars['wgOoyalaParams'] = [
+				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 			];
+			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
 		return true;

@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 // namespace root
+// some imports commented out to make css smaller. Feel free to uncomment it if you need any styles
 .oo-player-container {
   // Core variables
   @import "base/variables";
@@ -25,32 +26,32 @@
   @import "components/start-screen";
   @import "components/pause-screen";
   @import "components/error-screen";
-  @import "components/ad-screen";
+  //@import "components/ad-screen";
   @import "components/popover";
 
   // Components
-  @import "components/discovery-panel";
+  //@import "components/discovery-panel";
   @import "components/share-panel";
-  @import "components/closed-captions";
-  @import "components/scrollbar";
-  @import "components/webvtt";
+  //@import "components/closed-captions";
+  //@import "components/scrollbar";
+  //@import "components/webvtt";
   @import "components/buttons";
-  @import "components/forms";
+  //@import "components/forms";
   @import "components/scrubber-bar";
   @import "components/control-bar";
-  @import "components/up-next-panel";
-  @import "components/count-down-clock";
+  //@import "components/up-next-panel";
+  //@import "components/count-down-clock";
   @import "components/spinner";
-  @import "components/slider";
-  @import "components/ad-overlay";
-  @import "components/ad-panel";
-  @import "components/plugins";
-  @import "components/text-track";
-  @import "components/more-options";
-  @import "components/video-quality";
+  //@import "components/slider";
+  //@import "components/ad-overlay";
+  //@import "components/ad-panel";
+  //@import "components/plugins";
+  //@import "components/text-track";
+  //@import "components/more-options";
+  //@import "components/video-quality";
   @import "components/tabs";
   @import "components/thumbnail";
-  @import "components/watermark";
+  //@import "components/watermark";
 
   // Responsive
   @import "responsive/xsmall";

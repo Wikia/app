@@ -3,6 +3,10 @@
 .oo-player-container {
 	min-width: 0 !important;
 
+	.oo-player {
+		transition: none;
+	}
+
 	.oo-state-screen {
 		// hides title on pause screen
 		&.oo-pause-screen {
