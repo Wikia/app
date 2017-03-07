@@ -9,8 +9,9 @@ class ArticleVideoHooks {
 			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
 		}
 
-		if ( ( $wg->enableArticleFeaturedVideo || $wg->enableArticleRelatedVideo ) &&
-		     ( isset( $wg->articleVideoFeaturedVideos[$title] ) || isset( $relatedVideo ) )
+		if ( ( $wg->enableArticleFeaturedVideo &&
+		       isset( $wg->articleVideoFeaturedVideos[$title] ) ) ||
+		     ( $wg->enableArticleRelatedVideo && isset( $relatedVideo ) )
 		) {
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );
 			\Wikia::addAssetsToOutput( 'ooyala_js' );
