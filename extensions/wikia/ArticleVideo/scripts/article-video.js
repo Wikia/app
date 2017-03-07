@@ -169,6 +169,13 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				}
 			});
 
+			player.mb.subscribe(OO.EVENTS.REPLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-replay'
+				});
+			});
+
 			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
