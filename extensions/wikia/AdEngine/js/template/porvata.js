@@ -35,6 +35,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 */
 	function show(params) {
 		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
+			params.originalContainer = params.container;
 			params.container = getVideoContainer(params.slotName);
 		}
 

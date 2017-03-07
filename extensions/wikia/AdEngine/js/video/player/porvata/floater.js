@@ -169,12 +169,16 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			};
 		}
 
+		function selectContainer(params) {
+			return params.originalContainer || params.container;
+		}
+
 		function enableFloatingOn(video, params, eventHandlers) {
 			var topAds = doc.getElementById('WikiaTopAds'),
 				elements = {
 					topAds: topAds,
 					ad: topAds.querySelector('.wikia-ad'),
-					imageContainer: params.container.parentElement.querySelector('#image'),
+					imageContainer: selectContainer(params).parentElement.querySelector('#image'),
 					video: video
 				},
 				listeners = {},
