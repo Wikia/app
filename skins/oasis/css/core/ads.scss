@@ -82,7 +82,7 @@ $vpaid-z-index: 10;
 			right: $floating-ad-margin;
 			transition: margin-bottom $video-collapse-animation-speed;
 
-			iframe {
+			.video-player, iframe {
 				height: $video-container-width !important;
 				width: $video-container-width !important;
 			}
