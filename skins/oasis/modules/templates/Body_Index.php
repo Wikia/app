@@ -92,8 +92,8 @@
 					}
 				?>
 
-				<?php if ( $enableArticleVideo ): ?>
-					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
+				<?php if ( $enableArticleFeaturedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<?php endif; ?>
 
 				<?php if ( $enableArticleRelatedVideo ): ?>

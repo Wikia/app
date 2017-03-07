@@ -456,13 +456,13 @@ class BodyController extends WikiaController {
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 
 		$title = $this->wg->Title->getPrefixedDBkey();
-		$enableArticleVideo =
-			$this->wg->enableArticleVideo && isset( $this->wg->articleVideoFeaturedVideos[$title] ) &&
+		$enableArticleFeaturedVideo =
+			$this->wg->enableArticleFeaturedVideo && isset( $this->wg->articleVideoFeaturedVideos[$title] ) &&
 			$this->isFeaturedVideosValid( $this->wg->articleVideoFeaturedVideos[$title] );
-		$this->setVal( 'enableArticleVideo', $enableArticleVideo );
+		$this->setVal( 'enableArticleFeaturedVideo', $enableArticleFeaturedVideo );
 
 		$relatedVideo = null;
-		if ( $this->wg->enableArticleVideo && isset( $this->wg->articleVideoRelatedVideos )) {
+		if ( $this->wg->enableArticleRelatedVideo && isset( $this->wg->articleVideoRelatedVideos )) {
 			$relatedVideo = ArticleVideoController::getRelatedVideoData( $this->wg->articleVideoRelatedVideos, $title );
 		}
 

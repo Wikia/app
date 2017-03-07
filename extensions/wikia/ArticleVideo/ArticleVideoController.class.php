@@ -1,7 +1,7 @@
 <?php
 
 class ArticleVideoController extends WikiaController {
-	public function index() {
+	public function featured() {
 		$wg = F::app()->wg;
 
 		$wg->Out->addModules( 'ext.ArticleVideo' );
@@ -19,12 +19,12 @@ class ArticleVideoController extends WikiaController {
 
 		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
-		$this->setVal( 'relatedVideo', self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title) );
+		$this->setVal( 'relatedVideo', self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title ) );
 	}
 
 	public static function getRelatedVideoData( $relatedVideos, $title ) {
 		foreach ( $relatedVideos as $videoData ) {
-			if ( isset($videoData['articles']) && in_array( $title, $videoData['articles'] ) ) {
+			if ( isset( $videoData['articles'] ) && in_array( $title, $videoData['articles'] ) ) {
 				return $videoData;
 			}
 		}
