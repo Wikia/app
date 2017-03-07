@@ -2,9 +2,10 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
-		$wg = F::app()->wg;
+		global $wgTitle;
 
-		$title = $wg->Title->getPrefixedDBkey();
+		$wg = $this->getApp()->wg;
+		$title = $wgTitle->getPrefixedDBkey();
 
 		$enableArticleFeaturedVideo =
 			$wg->enableArticleFeaturedVideo &&
@@ -13,8 +14,6 @@ class ArticleVideoController extends WikiaController {
 
 		if ( $enableArticleFeaturedVideo ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
-
-			$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 
 			// TODO: replace it with DS icon when it's ready (XW-2824)
 			$this->setVal( 'closeIconUrl',
@@ -26,9 +25,10 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function related() {
-		$wg = F::app()->wg;
+		global $wgTitle;
 
-		$title = $wg->Title->getPrefixedDBkey();
+		$wg = $this->getApp()->wg;
+		$title = $wgTitle->getPrefixedDBkey();
 
 		$relatedVideo = null;
 		if ( $wg->enableArticleRelatedVideo &&
