@@ -28,10 +28,10 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 					return $articleHeaders.first().nextUntil('h2', 'p').last();
 				},
 				function () {
-					return $articleHeaders.eq(1).nextUntil('h2', 'p').first();
+					// return $articleHeaders.eq(1).nextUntil('h2', 'p').first();
 				},
 				function () {
-					return $articleHeaders.first().nextUntil('h2', 'p').eq(-3);
+					// return $articleHeaders.first().nextUntil('h2', 'p').eq(-3);
 				}
 			];
 

@@ -5,18 +5,13 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
-			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
-		}
-		
 		if ( isset( $wg->articleVideoRelatedVideos ) ) {
 			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-			
-			if ( $relatedVideo ) {
-				\Wikia::addAssetsToOutput( 'article_related_video_scss' );
-				\Wikia::addAssetsToOutput( 'article_related_video_js' );
-			}
+		}
+
+		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) || isset( $relatedVideo ) ) {
+			\Wikia::addAssetsToOutput( 'article_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_video_js' );
 		}
 
 		return true;
