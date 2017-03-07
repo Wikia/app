@@ -4,13 +4,13 @@
 			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
 		</div>
 		<?= DesignSystemHelper::renderSvg(
+			'wds-icons-dropdown-tiny',
+			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
+		) ?>
+		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-note',
 			'wds-icon wds-icon-small',
 			wfMessage( 'global-navigation-messages-title' )->escaped()
-		) ?>
-		<?= DesignSystemHelper::renderSvg(
-			'wds-icons-dropdown-tiny',
-			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>
 	</div>
 	<div id="notifications" class="wds-dropdown__content wds-is-right-aligned wds-global-navigation__dropdown-content">
