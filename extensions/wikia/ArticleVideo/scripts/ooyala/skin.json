@@ -1,12 +1,12 @@
 {
   "general": {
     "watermark": {"imageResource": {"url": "","androidResource" : "logo","iosResource" : "logo"  },
-                  "position": "bottomRight",
-                  "clickUrl": "",
-                  "target": "_blank",
-                  "transparency": 1,
-                  "scalingOption": "default",
-                  "scalingPercentage": 20
+      "position": "bottomRight",
+      "clickUrl": "",
+      "target": "_blank",
+      "transparency": 1,
+      "scalingOption": "default",
+      "scalingPercentage": 20
     },
     "loadingImage": {"imageResource": {"url": "//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/loader_svg.svg" } },
     "accentColor":"#448aff"
@@ -133,12 +133,8 @@
       {"name":"timeDuration", "location":"controlBar", "whenDoesNotFit":"drop", "minWidth":145 },
       {"name":"flexibleSpace", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":1 },
       {"name":"share", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":45 },
-      {"name":"discovery", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":45 },
-      {"name":"closedCaption", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":45 },
-      {"name":"quality", "location":"controlBar", "whenDoesNotFit":"moveToMoreOptions", "minWidth":45 },
       {"name":"logo", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":125 },
-      {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 },
-      {"name":"moreOptions", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
+      {"name":"fullscreen", "location":"controlBar", "whenDoesNotFit":"keep", "minWidth":45 }
     ]
   },
   "icons": {
