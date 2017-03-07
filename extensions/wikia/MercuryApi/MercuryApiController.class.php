@@ -329,8 +329,14 @@ class MercuryApiController extends WikiaController {
 			InterwikiDispatcher::getInterWikiaURL( $title, $interWikiUrl, '' );
 
 			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
-				// Empty category pages are not known but contain article list
-				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
+				// Empty category pages are not known but contain article list;
+				// InterwikiDispatcher::getInterWikiaURL does not support other prefixes than InterwikiDispatcher::SUPPORTED_IW_PREFIXES
+				// but other prefixes may be defined in `interwiki` table for given wiki - in such case $title->isKnown()
+				// returns true
+				if (
+					( !$title->isKnown() || !in_array($title->mInterwiki, InterwikiDispatcher::SUPPORTED_IW_PREFIXES ) )
+					&& $title->getNamespace() !== NS_CATEGORY
+				) {
 					throw new NotFoundApiException( 'Page doesn\'t exist' );
 				}
 

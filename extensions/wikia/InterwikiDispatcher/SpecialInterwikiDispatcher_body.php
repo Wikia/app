@@ -23,6 +23,8 @@ if (!defined('MEDIAWIKI')) {
 
 class InterwikiDispatcher extends UnlistedSpecialPage {
 	const IS_WIKI_EXISTS_CACHE_TTL = 10800;
+	const SUPPORTED_IW_PREFIXES = [ 'w', 'wikia', 'wikicities' ];
+
 	/**
 	 * contructor
 	 */
@@ -102,7 +104,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	public static function getInterWikiaURL(Title &$title, &$url, $query) {
 		global $wgArticlePath, $wgScriptPath;
 
-		if (in_array($title->mInterwiki, array('w', 'wikia', 'wikicities'))) {
+		if (in_array($title->mInterwiki, self::SUPPORTED_IW_PREFIXES)) {
 			$aLinkParts = explode(':', $title->getFullText());
 			if ($aLinkParts[1] == 'c') {
 				$iCityId = self::isWikiExists($aLinkParts[2]);
