@@ -92,7 +92,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
 			setTimeout(function () {
 				ooyalaVideoController.showControls();
-			}, 150);
+			}, 200);
 		}
 
 		function updatePlayerControls(waitForTransition) {

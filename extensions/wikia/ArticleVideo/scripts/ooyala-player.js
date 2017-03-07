@@ -94,11 +94,13 @@ define('ooyala-player', function () {
 	};
 
 	OoyalaHTML5Player.prototype.hideControls = function () {
-		$('.oo-control-bar').css('visibility', 'hidden');
+		$('.oo-control-bar').css('display', 'none');
+		$('.oo-action-icon').css('display', 'none');
 	};
 
 	OoyalaHTML5Player.prototype.showControls = function () {
-		$('.oo-control-bar').css('visibility', 'visible');
+		$('.oo-control-bar').css('display', '');
+		$('.oo-action-icon').css('display', '');
 	};
 
 	OoyalaHTML5Player.initHTML5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
