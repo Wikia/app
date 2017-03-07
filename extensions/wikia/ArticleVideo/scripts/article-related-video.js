@@ -3,15 +3,16 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 	$(function () {
 		var $video = $('#article-related-video'),
 			ooyalaVideoElementId = 'ooyala-article-related-video',
+			ooyalaVideoController,
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
 			});
 
 		function initVideo(ooyalaContainerId, videoId, onCreate) {
-			var playerParams = window.wgArticleRelatedVideoData.playerParams;
+			var playerParams = window.wgOoyalaParams;
 
-			OoyalaPlayer.initHTMl5Players(ooyalaContainerId, playerParams, videoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, playerParams, videoId, onCreate);
 		}
 
 		function placeRelatedVideo(player) {
@@ -47,11 +48,12 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				$followingSibling.before( $video );
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-					var videoTitle = $video.find('.oo-state-screen-title').text(),
-						videoTime = $video.find('.video-time').text();
+					var videoTitle = player.getTitle(),
+						videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
 
 					$video.find('.video-title').text(videoTitle);
 					$video.find('.video-time').text(videoTime);
+
 					$video.show();
 				});
 			}
@@ -86,7 +88,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			return rating;
 		}
 		
-		initVideo(ooyalaVideoElementId, window.wgArticleRelatedVideoData.videoId, function (player) {
+		initVideo(ooyalaVideoElementId, window.wgRelatedVideoId, function (player) {
 			placeRelatedVideo(player);
 			
 			player.mb.subscribe(OO.EVENTS.PLAY, 'related-video', function () {

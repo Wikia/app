@@ -38,13 +38,11 @@ class ArticleVideoHooks {
 			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
 
 			if ( isset( $relatedVideo['videoId'] ) ) {
-				$vars['wgArticleRelatedVideoData'] = [
-					'videoId' => $relatedVideo['videoId'],
-					'playerParams' => [
-						'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
-						'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
-					],
+				$vars['wgOoyalaParams'] = [
+					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+					'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 				];
+				$vars['wgRelatedVideoId'] = $relatedVideo['videoId'];
 			}
 		}
 
