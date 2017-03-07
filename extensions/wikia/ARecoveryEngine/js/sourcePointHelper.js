@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.helper', [
+define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.instantGlobals',
@@ -16,7 +16,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
+	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		cb = function (callback) {
@@ -38,18 +38,25 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		onNotBlockingEventsQueue.push(callback);
 	}
 
-	function isRecoveryEnabled() {
-		log(['isRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
-		return !!context.opts.sourcePointRecovery;
+	/**
+	 * SourcePoint can be enabled only if PF recovery is disabled
+	 *
+	 * @returns {boolean}
+	 */
+	function isSourcePointRecoveryEnabled() {
+		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
+
+		log(['isSourcePointRecoveryEnabled', enabled, 'debug', logGroup]);
+		return enabled;
 	}
 
 	function isBlocking() {
 		log(['isBlocking', !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking)], 'debug', logGroup);
-		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+		return isSourcePointRecoveryEnabled() && !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
-	function isRecoverable(slotName, recoverableSlots) {
-		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+	function isSourcePointRecoverable(slotName, recoverableSlots) {
+		return isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
 	function track(type) {
@@ -57,9 +64,9 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 			if (Wikia && Wikia.Tracker) {
 				Wikia.Tracker.track({
 					eventName: 'ads.recovery',
-					ga_category: 'ads-recovery-blocked',
-					ga_action: Wikia.Tracker.ACTIONS.IMPRESSION,
-					ga_label: type,
+					category: 'ads-recovery-blocked',
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					label: type,
 					trackingMethod: 'analytics'
 				});
 			}
@@ -87,7 +94,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function getSafeUri(url) {
-		if (isRecoveryEnabled() && isBlocking()) {
+		if (isBlocking()) {
 			url = win._sp_.getSafeUri(url);
 		}
 
@@ -100,8 +107,8 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		getSafeUri: getSafeUri,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isRecoverable: isRecoverable,
-		isRecoveryEnabled: isRecoveryEnabled,
+		isSourcePointRecoverable: isSourcePointRecoverable,
+		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};
