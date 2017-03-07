@@ -38,6 +38,9 @@ define('ooyala-player', function () {
 			self = this;
 
 		this.onPlayerCreate(player);
+		if (this.params.autoplay) {
+			player.setVolume(0);
+		}
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
@@ -107,9 +110,7 @@ define('ooyala-player', function () {
 			},
 			html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
-		if (autoplay) {
-			html5Player.player.setVolume(0);
-		}
+
 		return html5Player;
 	};
 
