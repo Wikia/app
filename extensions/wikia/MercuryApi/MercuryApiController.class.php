@@ -324,11 +324,11 @@ class MercuryApiController extends WikiaController {
 				'ns' => $title->getNamespace()
 			];
 
-			// handle cases like starwars.wikia.com/wiki/c:clashroyale:Tesla (interwiki links)
-			$url = '';
-			InterwikiDispatcher::getInterWikiaURL( $title, $url, '' );
+			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
+			$interWikiUrl = '';
+			InterwikiDispatcher::getInterWikiaURL( $title, $interWikiUrl, '' );
 
-			if ( empty( $url ) && $this->isSupportedByMercury( $title ) ) {
+			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
 				// Empty category pages are not known but contain article list
 				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
 					throw new NotFoundApiException( 'Page doesn\'t exist' );
@@ -428,9 +428,10 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		if ( !empty( $url ) ) {
+		// if $interwikiUrl is not empty it means that we should redirect to other wiki (follow interwiki link)
+		if ( !empty( $interWikiUrl ) ) {
 			$data = [
-				'redirectTo' => $url,
+				'redirectTo' => $interWikiUrl,
 			];
 		}
 
