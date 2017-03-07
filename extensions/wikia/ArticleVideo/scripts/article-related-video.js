@@ -16,25 +16,29 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 		}
 
 		function placeRelatedVideo(player) {
-			var $articleContent = $('#mw-content-text'), placements, $followingSibling, rating = 0;
+			var $articleContent = $('#mw-content-text'),
+				$articleHeaders = $articleContent.children('h2'),
+				placementCallbacks,
+				$followingSibling,
+				rating = 0;
 
-			// these functions return candidate for following DOM element for related video
-			placements = [
+			// these callbacks return candidate for following DOM element for related video
+			placementCallbacks = [
 				function () {
-					return $articleContent.children('h2').first().nextUntil('h2', 'p').last();
+					return $articleHeaders.first().nextUntil('h2', 'p').last();
 				},
 				function () {
-					return $articleContent.children('h2').eq(1).nextUntil('h2', 'p').first();
+					return $articleHeaders.eq(1).nextUntil('h2', 'p').first();
 				},
 				function () {
-					return $articleContent.children('h2').first().nextUntil('h2', 'p').eq(-3);
+					return $articleHeaders.first().nextUntil('h2', 'p').eq(-3);
 				}
 			];
-			
-			$.each(placements, function (i, func) {
+
+			placementCallbacks.forEach(function(callback) {
 				var $followingSiblingCandidate, candidateRating;
 				
-				$followingSiblingCandidate = func();
+				$followingSiblingCandidate = callback();
 				candidateRating = rateVideoPlacement($followingSiblingCandidate, $followingSibling);
 
 				if (candidateRating > rating) {
@@ -44,8 +48,8 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			});
 			
 			if ($followingSibling && $followingSibling.length) {
-				$video = $video.detach();
-				$followingSibling.before( $video );
+				// $video = $video.detach().insertBefore($followingSibling);
+				$video.detach().insertBefore($followingSibling);
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
 					var videoTitle = player.getTitle(),
@@ -60,7 +64,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 		}
 
 		function rateVideoPlacement($candidate, $best) {
-			var rating = 0, $fakeDiv, bestWidth, candidateWidth;
+			var $fakeDiv, bestWidth, candidateWidth;
 			
 			if (!$candidate || !$candidate.length) {
 				return -1;
