@@ -22,8 +22,8 @@ require(
 			},
 
 			addMarkAllAsReadEvent: function () {
-				var button = $('#mark-all-as-read-button');
-				button.click(function () {
+				this.$markAllAsReadButton = $('#mark-all-as-read-button');
+				this.$markAllAsReadButton.click(function () {
 					OnSiteNotifications.markAllAsRead();
 				});
 			},
@@ -44,6 +44,7 @@ require(
 			},
 
 			markAllAsRead: function () {
+				//TODO use the date of the first notification
 				this.bucky.timer.start('markAllAsRead');
 				$.ajax({
 					type: 'POST',
@@ -131,8 +132,10 @@ require(
 				this.unreadCount = count;
 
 				if (this.unreadCount > 0) {
+					this.$markAllAsReadButton.addClass('show');
 					this.$notificationsCount.html(this.unreadCount).parent('.bubbles').addClass('show');
 				} else {
+					this.$markAllAsReadButton.removeClass('show');
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			},
