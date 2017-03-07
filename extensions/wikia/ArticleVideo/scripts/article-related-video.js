@@ -19,8 +19,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			var $articleContent = $('#mw-content-text'),
 				$articleHeaders = $articleContent.children('h2'),
 				placementCallbacks,
-				$followingSibling,
-				rating = 0;
+				$followingSibling;
 
 			// these callbacks return candidate for following DOM element for related video
 			placementCallbacks = [
@@ -35,20 +34,17 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				}
 			];
 
-			placementCallbacks.forEach(function(callback) {
-				var $followingSiblingCandidate, candidateRating;
+			placementCallbacks.forEach(function(func) {
+				var $followingSiblingCandidate;
 				
-				$followingSiblingCandidate = callback();
-				candidateRating = rateVideoPlacement($followingSiblingCandidate, $followingSibling);
+				$followingSiblingCandidate = func();
 
-				if (candidateRating > rating) {
+				if (isPlacementBetter($followingSiblingCandidate, $followingSibling)) {
 					$followingSibling = $followingSiblingCandidate;
-					rating = candidateRating;
 				}
 			});
-			
+
 			if ($followingSibling && $followingSibling.length) {
-				// $video = $video.detach().insertBefore($followingSibling);
 				$video.detach().insertBefore($followingSibling);
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
@@ -63,11 +59,11 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			}
 		}
 
-		function rateVideoPlacement($candidate, $best) {
+		function isPlacementBetter($candidate, $currentBest) {
 			var $fakeDiv, bestWidth, candidateWidth;
 			
 			if (!$candidate || !$candidate.length) {
-				return -1;
+				return false;
 			}
 
 			$fakeDiv = $('<div>').css({'overflow':'hidden'});
@@ -75,26 +71,26 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			$fakeDiv.remove();
 			
 			if (candidateWidth < 500) {
-				return -1;
+				return false;
 			}
 
-			if (!$best || !$best.length) {
-				return 1;
+			if (!$currentBest || !$currentBest.length) {
+				return true;
 			}
 
-			bestWidth = $fakeDiv.detach().insertBefore($best).width();
+			bestWidth = $fakeDiv.detach().insertBefore($currentBest).width();
 			$fakeDiv.remove();
 
 			if (candidateWidth > bestWidth) {
-				rating += 2;
+				return true;
 			}
 
-			return rating;
+			return false;
 		}
-		
+
 		initVideo(ooyalaVideoElementId, window.wgRelatedVideoId, function (player) {
 			placeRelatedVideo(player);
-			
+
 			player.mb.subscribe(OO.EVENTS.PLAY, 'related-video', function () {
 				track({
 					action: tracker.ACTIONS.CLICK,

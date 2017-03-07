@@ -10,8 +10,18 @@ class ArticleVideoHooks {
 		}
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) || isset( $relatedVideo ) ) {
-			\Wikia::addAssetsToOutput( 'article_video_scss' );
-			\Wikia::addAssetsToOutput( 'article_video_js' );
+			\Wikia::addAssetsToOutput( 'ooyala_scss' );
+			\Wikia::addAssetsToOutput( 'ooyala_js' );
+		}
+
+		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
+			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
+		}
+		
+		if ( isset( $relatedVideo ) ) {
+			\Wikia::addAssetsToOutput( 'article_related_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_related_video_js' );
 		}
 
 		return true;
