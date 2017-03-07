@@ -47,9 +47,11 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				$followingSibling.before( $video );
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
-					var videoTitle = $video.find('.oo-state-screen-title').text();
+					var videoTitle = $video.find('.oo-state-screen-title').text(),
+						videoTime = $video.find('.video-time').text();
 
 					$video.find('.video-title').text(videoTitle);
+					$video.find('.video-time').text(videoTime);
 					$video.show();
 				});
 			}

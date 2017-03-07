@@ -61,13 +61,10 @@ $spinnerSize: 48;
 	}
 
 	.video-time {
-		bottom: 73px;
-		color: #656e78;
-		font-size: 14px;
-		font-weight: bold;
-		left: 38px;
-		position: absolute;
-		text-transform: uppercase;
+		&:before {
+			content: '\2022';
+			padding: 0 .5em;
+		}
 	}
 
 	.video-wiki-play-button {
