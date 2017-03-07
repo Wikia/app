@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'articlevideo-watch' => 'watch',
+	'articlevideo-watch' => 'watch • $1',
 	'articlevideo-related-video' => 'Related video',
 ];
 

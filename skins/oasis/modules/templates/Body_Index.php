@@ -92,11 +92,11 @@
 					}
 				?>
 
-				<?php if ( $enableArticleFeaturedVideo ): ?>
+				<?php if ( $wg->enableArticleFeaturedVideo ): ?>
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<?php endif; ?>
 
-				<?php if ( $enableArticleRelatedVideo ): ?>
+				<?php if ( $wg->enableArticleRelatedVideo ): ?>
 					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<?php endif; ?>
 

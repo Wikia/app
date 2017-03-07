@@ -4,22 +4,47 @@ class ArticleVideoController extends WikiaController {
 	public function featured() {
 		$wg = F::app()->wg;
 
-		$wg->Out->addModules( 'ext.ArticleVideo' );
+		$title = $wg->Title->getPrefixedDBkey();
 
-		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+		$enableArticleFeaturedVideo =
+			$wg->enableArticleFeaturedVideo &&
+			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
+			$this->isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
 
-		// TODO: replace it with DS icon when it's ready (XW-2824)
-		$this->setVal( 'closeIconUrl',
-			$wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
-		$this->setVal( 'videoDetails', $wg->articleVideoFeaturedVideos[$title] );
+		if ( $enableArticleFeaturedVideo ) {
+			$wg->Out->addModules( 'ext.ArticleVideo' );
+
+			$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+
+			// TODO: replace it with DS icon when it's ready (XW-2824)
+			$this->setVal( 'closeIconUrl',
+				$wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			$this->setVal( 'videoDetails', $wg->articleVideoFeaturedVideos[$title] );
+		} else {
+			$this->skipRendering();
+		}
 	}
 
 	public function related() {
 		$wg = F::app()->wg;
 
-		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+		$title = $wg->Title->getPrefixedDBkey();
 
-		$this->setVal( 'relatedVideo', self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title ) );
+		$relatedVideo = null;
+		if ( $wg->enableArticleRelatedVideo &&
+		     isset( $wg->articleVideoRelatedVideos )
+		) {
+			$relatedVideo =
+				self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		}
+		$enableArticleRelatedVideo = $relatedVideo && $this->isRelatedVideosValid( $relatedVideo );
+
+		if ( $enableArticleRelatedVideo ) {
+			$this->setVal( 'relatedVideo',
+				self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title ) );
+		} else {
+			$this->skipRendering();
+		}
 	}
 
 	public static function getRelatedVideoData( $relatedVideos, $title ) {
@@ -30,5 +55,13 @@ class ArticleVideoController extends WikiaController {
 		}
 
 		return null;
+	}
+
+	private function isFeaturedVideosValid( $featuredVideo ) {
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+	}
+
+	private function isRelatedVideosValid( $relatedVideo ) {
+		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
 	}
 }
