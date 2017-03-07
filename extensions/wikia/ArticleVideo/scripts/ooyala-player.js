@@ -12,7 +12,7 @@ define('ooyala-player', function () {
 		this.params.height = Math.floor((playerWidth * 9) / 16);
 		this.params.onCreate = this.onCreate.bind(this);
 
-		this.onPlayerCreated = onPlayerCreate;
+		this.onPlayerCreate = onPlayerCreate;
 
 		this.params.skin = {
 			config: baseJSONSkinUrl
@@ -37,7 +37,7 @@ define('ooyala-player', function () {
 		var messageBus = player.mb,
 			self = this;
 
-		this.onPlayerCreated(player);
+		this.onPlayerCreate(player);
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();

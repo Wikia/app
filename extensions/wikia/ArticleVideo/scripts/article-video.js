@@ -97,7 +97,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			if (!waitForTransition) {
 				updateOoyalaSize();
 			}
-			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function
+			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function only if video width
+			// is equal to $collapsedVideoSize.width - so updateOoyalaSize won't be executed twice
 		}
 
 		function isVideoInFullScreenMode() {
