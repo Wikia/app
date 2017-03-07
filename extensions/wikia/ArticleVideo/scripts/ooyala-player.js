@@ -98,7 +98,7 @@ define('ooyala-player', function () {
 		$('.oo-control-bar').css('visibility', 'visible');
 	};
 
-	OoyalaHTML5Player.initHTMl5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
+	OoyalaHTML5Player.initHTML5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
