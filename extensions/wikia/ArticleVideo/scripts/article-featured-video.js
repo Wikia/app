@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], function (window, onScroll, tracker, OoyalaPlayer) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest'], function (window, onScroll, tracker, OoyalaPlayer, abTest) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -10,6 +10,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
+			playTime = -1,
+			percentagePlayTime = -1,
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
@@ -21,9 +23,10 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
-				playerParams = window.wgOoyalaParams;
+				playerParams = window.wgOoyalaParams,
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -89,7 +92,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
 			setTimeout(function () {
 				ooyalaVideoController.showControls();
-			}, 150);
+			}, 200);
 		}
 
 		function updatePlayerControls(waitForTransition) {
@@ -166,6 +169,34 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player'], fu
 			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
 				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
+				}
+			});
+
+			player.mb.subscribe(OO.EVENTS.REPLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-replay'
+				});
+			});
+
+			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
+				var secondsPlayed = Math.floor(time),
+					percentage = Math.round(time / totalTime * 100);
+
+				if ( secondsPlayed % 5 === 0 && secondsPlayed !== playTime ) {
+					playTime = secondsPlayed;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-seconds-' + playTime
+					});
+				}
+
+				if ( percentage % 10 === 0 && percentage !== percentagePlayTime ) {
+					percentagePlayTime = percentage;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-percentage-' + percentagePlayTime
+					});
 				}
 			});
 

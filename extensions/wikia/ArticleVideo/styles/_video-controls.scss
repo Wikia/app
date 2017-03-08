@@ -1,3 +1,5 @@
+@import 'skins/shared/mixins/transition';
+
 /**
  * Styles affecting the video controls that cannot be changed through the
  * config.json file. Some of these need to be marked as important due to inline
@@ -71,6 +73,8 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 	}
 
 	.oo-control-bar {
+		@include transition-shorthand(none);
+
 		.oo-logo {
 			display: none !important;
 		}
@@ -99,6 +103,8 @@ $share-icon-uri-hover: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbm
 
 			.oo-volume {
 				.oo-volume-bar {
+					@include transition-shorthand(none);
+
 					// Make all icon bars the same height
 					height: $video-player-volume-bar-height;
 					background-color: $video-player-volume-bar-off-color;

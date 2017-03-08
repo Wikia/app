@@ -38,6 +38,9 @@ define('ooyala-player', function () {
 			self = this;
 
 		this.onPlayerCreate(player);
+		if (this.params.autoplay) {
+			player.setVolume(0);
+		}
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
@@ -50,15 +53,21 @@ define('ooyala-player', function () {
 	 * @returns {void}
 	 */
 	OoyalaHTML5Player.prototype.onPlaybackReady = function () {
-		var durationElem = document.createElement('div'),
+		var durationContainer = document.createElement('div'),
+			videoDuration = document.createElement('span'),
 			container = document.getElementById(this.containerId),
 			playButton = container.querySelector('.oo-start-screen .oo-action-icon'),
 			screenInfo = container.querySelector('.oo-state-screen-info');
 
 		// Add video duration to start screen
-		durationElem.innerHTML = mw.message('articlevideo-watch', this.getFormattedDuration(this.player.getDuration())).text().toUpperCase();
-		durationElem.classList.add('video-duration');
-		screenInfo.insertBefore(durationElem, screenInfo.firstChild);
+		videoDuration.innerHTML = this.getFormattedDuration(this.player.getDuration());
+		videoDuration.classList.add('video-time');
+
+		durationContainer.innerHTML = mw.message('articlevideo-watch').text().toUpperCase();
+		durationContainer.insertBefore(videoDuration, null);
+		durationContainer.classList.add('video-duration');
+
+		screenInfo.insertBefore(durationContainer, screenInfo.firstChild);
 
 		// Replace default play icon with ours.
 		playButton.innerHTML = playIcon;
@@ -91,22 +100,25 @@ define('ooyala-player', function () {
 	};
 
 	OoyalaHTML5Player.prototype.hideControls = function () {
-		$('.oo-control-bar').css('visibility', 'hidden');
+		$('.oo-control-bar').css('opacity', '0');
+		$('.oo-action-icon').css('display', 'none');
 	};
 
 	OoyalaHTML5Player.prototype.showControls = function () {
-		$('.oo-control-bar').css('visibility', 'visible');
+		$('.oo-control-bar').css('opacity', '');
+		$('.oo-action-icon').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate) {
+	OoyalaHTML5Player.initHTML5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
 		var params = {
 				videoId: videoId,
-				autoplay: false,
+				autoplay: autoplay,
 				pcode: playerParams.ooyalaPCode,
 				playerBrandingId: playerParams.ooyalaPlayerBrandingId
 			},
 			html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate);
 		html5Player.setUpPlayer();
+
 		return html5Player;
 	};
 
