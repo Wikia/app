@@ -101,10 +101,31 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 		return WikiFactory::getVarValueByName('wgServer', $iCityId);
 	}
 
-	public static function getInterWikiaURL(Title &$title, &$url, $query) {
-		global $wgArticlePath, $wgScriptPath;
+	/**
+	 * checks if prefix given as parameter is supported by InterwikiDispatcher
+	 *
+	 * @param string $prefix
+	 *
+	 * @return bool
+	 */
+	public static function isSupportedPrefix( string $prefix ) {
+		return in_array( $prefix, self::SUPPORTED_IW_PREFIXES );
+	}
 
-		if (in_array($title->mInterwiki, self::SUPPORTED_IW_PREFIXES)) {
+
+	/**
+	 * converts interwiki name (i.e. w:c:muppet:elmo) to url (http://muppet.wikia.com/wiki/Elmo)
+	 * TODO: This method does not respect environment, always returns url to production
+	 * TODO: This method does not respect custom prefixes (set in interwiki table in given wiki db)
+	 *
+	 * @param Title $title
+	 *
+	 * @return string, url if could convert, empty string otherwise
+	 */
+	public static function getInterWikiaURL( Title &$title ): string {
+		$url = '';
+
+		if ( self::isSupportedPrefix( $title->mInterwiki ) ) {
 			$aLinkParts = explode(':', $title->getFullText());
 			if ($aLinkParts[1] == 'c') {
 				$iCityId = self::isWikiExists($aLinkParts[2]);
@@ -144,6 +165,23 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 				}
 			}
 		}
+
+		return $url;
+	}
+
+	/**
+	 * hook run by Title::getFullURL()
+	 *
+	 * @param Title $title
+	 * @param $url
+	 * @param $query
+	 *
+	 * @return bool
+	 */
+	public static function getInterWikiaURLhook( Title &$title, &$url, $query ) {
+		$interwikiUrl = self::getInterWikiaURL( $title );
+		$url = empty( $interwikiUrl ) ? $url : $interwikiUrl;
+
 		return true;
 	}
 }

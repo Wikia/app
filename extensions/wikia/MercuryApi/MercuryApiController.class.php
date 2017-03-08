@@ -325,8 +325,7 @@ class MercuryApiController extends WikiaController {
 			];
 
 			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
-			$interWikiUrl = '';
-			InterwikiDispatcher::getInterWikiaURL( $title, $interWikiUrl, '' );
+			$interWikiUrl = InterwikiDispatcher::getInterWikiaURL( $title );
 
 			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
 				// Empty category pages are not known but contain article list;
@@ -337,7 +336,7 @@ class MercuryApiController extends WikiaController {
 				// InterwikiDispatcher::getInterWikiaURL does not support other prefixes than InterwikiDispatcher::SUPPORTED_IW_PREFIXES
 				// but other prefixes may be defined in `interwiki` table for given wiki - in such case $title->isKnown()
 				// returns true in previous `if` statement
-				if ( !empty( $title->mInterwiki ) && !in_array($title->mInterwiki, InterwikiDispatcher::SUPPORTED_IW_PREFIXES ) ) {
+				if ( !empty( $title->mInterwiki ) && !InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
 					throw new InvalidParameterApiException( 'title' );
 				}
 
