@@ -19,7 +19,7 @@
 				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>
 			</a>
 		</div>
-		<div class="notification-list" id="on-site-notifications">
+		<div class="wds-notification-list" id="on-site-notifications">
 		</div>
 	</div>
 </div>
