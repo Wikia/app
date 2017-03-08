@@ -1,0 +1,29 @@
+.oo-content-screen {
+  padding: $panel-padding;
+  background-color: $panel-bg;
+  @include expand;
+}
+
+.oo-content-screen-title-bar {
+  position: relative;
+}
+
+.oo-content-screen-title {
+  display:inline;
+  line-height: 1;
+  font-weight: bold;
+  font-size: $font-size-md-screen-title;
+  font-family: $font-family-roboto-condensed;
+  color: $white;
+  span.oo-icon {
+    top: 1px;
+    position: relative;
+    margin-left: 12px;
+    font-size: 0.8em;
+  }
+}
+
+.oo-content-panel {
+  height: 100%;
+  overflow: hidden;
+}

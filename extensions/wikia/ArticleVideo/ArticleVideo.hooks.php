@@ -18,20 +18,11 @@ class ArticleVideoHooks {
 		$title = $wg->Title->getPrefixedDBkey();
 
 		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
-			$vars['wgArticleVideoData'] = [
-				'videoId' => $wg->articleVideoFeaturedVideos[$title]['videoId'],
+			$vars['wgOoyalaParams'] = [
+				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 			];
-		}
-
-		return true;
-	}
-
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
-
-		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
+			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
 		return true;
