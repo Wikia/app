@@ -7,10 +7,7 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wgTitle->getPrefixedDBkey();
 
-		$enableArticleFeaturedVideo =
-			$wg->enableArticleFeaturedVideo &&
-			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-			$this->isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
+		$enableArticleFeaturedVideo = ArticleVideoHooks::isFeaturedVideoEmbedded( $title );
 
 		if ( $enableArticleFeaturedVideo ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
@@ -30,38 +27,28 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wgTitle->getPrefixedDBkey();
 
-		$relatedVideo = null;
-		if ( $wg->enableArticleRelatedVideo &&
-		     isset( $wg->articleVideoRelatedVideos )
-		) {
-			$relatedVideo =
-				self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		}
-		$enableArticleRelatedVideo = $relatedVideo && $this->isRelatedVideosValid( $relatedVideo );
+		$relatedVideo = self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		$enableArticleRelatedVideo = ArticleVideoHooks::isRelatedVideoEmbedded( $relatedVideo );;
 
 		if ( $enableArticleRelatedVideo ) {
-			$this->setVal( 'relatedVideo',
-				self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title ) );
+			$this->setVal( 'relatedVideo', $relatedVideo );
 		} else {
 			$this->skipRendering();
 		}
 	}
 
 	public static function getRelatedVideoData( $relatedVideos, $title ) {
-		foreach ( $relatedVideos as $videoData ) {
-			if ( isset( $videoData['articles'] ) && in_array( $title, $videoData['articles'] ) ) {
-				return $videoData;
+		$wg = F::app()->wg;
+		if ( isset( $wg->articleVideoRelatedVideos ) ) {
+			foreach ( $relatedVideos as $videoData ) {
+				if ( isset( $videoData['articles'] ) &&
+				     in_array( $title, $videoData['articles'] )
+				) {
+					return $videoData;
+				}
 			}
 		}
 
 		return null;
-	}
-
-	private function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
-	}
-
-	private function isRelatedVideosValid( $relatedVideo ) {
-		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
 	}
 }

@@ -5,24 +5,22 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->articleVideoRelatedVideos ) ) {
-			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		}
+		$relatedVideo =
+			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		$isFeaturedVideoEmbedded = self::isFeaturedVideoEmbedded( $title );
+		$isRelatedVideoEmbedded = self::isRelatedVideoEmbedded( $relatedVideo );
 
-		if ( ( $wg->enableArticleFeaturedVideo &&
-		       isset( $wg->articleVideoFeaturedVideos[$title] ) ) ||
-		     ( $wg->enableArticleRelatedVideo && isset( $relatedVideo ) )
-		) {
+		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );
 			\Wikia::addAssetsToOutput( 'ooyala_js' );
 		}
 
-		if ( $wg->enableArticleFeaturedVideo && isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
+		if ( $isFeaturedVideoEmbedded ) {
 			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
 		}
-		
-		if ( $wg->enableArticleRelatedVideo && isset( $relatedVideo ) ) {
+
+		if ( $isRelatedVideoEmbedded ) {
 			\Wikia::addAssetsToOutput( 'article_related_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_related_video_js' );
 		}
@@ -34,7 +32,7 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( $wg->enableArticleFeaturedVideo && isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
+		if ( self::isFeaturedVideoEmbedded( $title ) ) {
 			$vars['wgOoyalaParams'] = [
 				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
 				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
@@ -42,9 +40,9 @@ class ArticleVideoHooks {
 			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
-		if ( $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) ) {
-			$relatedVideo = ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-
+		$relatedVideo =
+			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		if ( self::isRelatedVideoEmbedded( $relatedVideo ) ) {
 			if ( isset( $relatedVideo['videoId'] ) ) {
 				$vars['wgOoyalaParams'] = [
 					'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
@@ -56,4 +54,28 @@ class ArticleVideoHooks {
 
 		return true;
 	}
+
+	public static function isFeaturedVideoEmbedded( $title ) {
+		$wg = F::app()->wg;
+
+		return $wg->enableArticleFeaturedVideo &&
+		       isset( $wg->articleVideoFeaturedVideos[$title] ) &&
+		       self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
+	}
+
+	public static function isRelatedVideoEmbedded( $relatedVideo ) {
+		$wg = F::app()->wg;
+
+		return $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) &&
+		       !empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
+	}
+
+	private static function isFeaturedVideosValid( $featuredVideo ) {
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+	}
+
+	private static function isRelatedVideosValid( $relatedVideo ) {
+		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
+	}
+
 }
