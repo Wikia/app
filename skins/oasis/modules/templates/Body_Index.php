@@ -33,6 +33,10 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+
+		<!-- fixme How should it work with BannerNotification - currently it doesn't look good -->
+		<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader') ?>
+
 		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
