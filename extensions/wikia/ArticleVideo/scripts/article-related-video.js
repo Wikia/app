@@ -21,7 +21,13 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				placementCallbacks,
 				$followingSibling;
 
-			// these callbacks return candidate for following DOM element for related video
+			// These callbacks return candidate for following DOM element for related video.
+			// The aim is to select the best placement from these three, where the determining factor is width of
+			// the following element - we want it to be wide, to have enough place for the text surrounding the video.
+			// We choose from 3 placements:
+			//      - last paragraph under the first header h2
+			//      - first paragraph under the second header h2
+			//      - last third paragraph under the first header h2
 			placementCallbacks = [
 				function () {
 					return $articleHeaders.first().nextUntil('h2', 'p, ul').last();
