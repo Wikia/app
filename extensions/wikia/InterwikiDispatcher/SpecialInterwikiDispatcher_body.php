@@ -113,7 +113,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	 *
 	 * @return bool
 	 */
-	public static function isSupportedPrefix( string $prefix ) {
+	public static function isSupportedPrefix( string $prefix ): bool {
 		return in_array( $prefix, self::SUPPORTED_IW_PREFIXES );
 	}
 
