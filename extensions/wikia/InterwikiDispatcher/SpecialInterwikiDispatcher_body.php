@@ -183,7 +183,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	 *
 	 * @return bool
 	 */
-	public static function getInterWikiaURLhook( Title &$title, &$url, $query ) {
+	public static function getInterWikiaURLHook( Title &$title, &$url, $query ) {
 		$interwikiUrl = self::getInterWikiaURL( $title );
 		$url = empty( $interwikiUrl ) ? $url : $interwikiUrl;
 
