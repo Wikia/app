@@ -34,6 +34,7 @@ require(
 
 
 			this.renderNotifications = function (notifications) {
+				//TODO move to one template
 				notifications.forEach(this.proxy(function (notification) {
 					var html = mustache.render(this.template, notification);
 					this.$container.append(html);
