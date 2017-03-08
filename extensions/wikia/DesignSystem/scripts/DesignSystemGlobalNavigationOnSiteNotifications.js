@@ -194,10 +194,8 @@ require(
 				type: loader.MULTI,
 				resources: {
 					mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
-					scripts: 'design_system_on_site_notifications_mustache_js'
 				}
 			}).done(function (assets) {
-				loader.processScript(assets.scripts);
 				OnSiteNotifications.init(assets.mustache[0]);
 			});
 		}
