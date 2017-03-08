@@ -35,9 +35,7 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			];
 
 			placementCallbacks.forEach(function(func) {
-				var $followingSiblingCandidate;
-				
-				$followingSiblingCandidate = func();
+				var $followingSiblingCandidate = func();
 
 				if (isPlacementBetter($followingSiblingCandidate, $followingSibling)) {
 					$followingSibling = $followingSiblingCandidate;
