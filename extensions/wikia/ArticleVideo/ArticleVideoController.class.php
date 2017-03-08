@@ -23,7 +23,7 @@ class ArticleVideoController extends WikiaController {
 		$title = $wg->Title->getPrefixedDBkey();
 
 		$relatedVideo = self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		$enableArticleRelatedVideo = ArticleVideoHooks::isRelatedVideoEmbedded( $relatedVideo );;
+		$enableArticleRelatedVideo = ArticleVideoHooks::isRelatedVideoEmbedded( $relatedVideo );
 
 		if ( $enableArticleRelatedVideo ) {
 			$this->setVal( 'relatedVideo', $relatedVideo );
