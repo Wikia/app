@@ -935,58 +935,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Count the number of edits of a user
-	 * @todo It should not be static and some day should be merged as proper member function / deprecated -- domas
-	 *
-	 * @param $uid Int User ID to check
-	 * @return Int the user's edit count
-	 */
-	public static function edits( $uid ) {
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		// check if the user_editcount field has been initialized
-		$field = $dbr->selectField(
-			'user', 'user_editcount',
-			array( 'user_id' => $uid ),
-			__METHOD__
-		);
-
-		if( $field === null ) { // it has not been initialized. do so.
-			$dbw = wfGetDB( DB_MASTER );
-			$count = $dbr->selectField(
-				'revision', 'count(*)',
-				array( 'rev_user' => $uid ),
-				__METHOD__
-			);
-
-			// Wikia change - begin
-			try {
-				$dbw->update(
-					'user',
-					[ 'user_editcount' => $count ],
-					[ 'user_id' => $uid ],
-					__METHOD__
-				);
-			} catch ( DBQueryError $dbQueryError ) {
-				// Wikia change
-				// SUS-1221: Some of these UPDATE queries are failing
-				// If this happens let's log exception details to try to identify root cause
-				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
-					'exception' => $dbQueryError,
-					'userId' => $uid,
-					'editCount' => $count
-				] );
-			}
-			// Wikia change - end
-
-		} else {
-			$count = $field;
-		}
-		wfProfileOut( __METHOD__ );
-		return $count;
-	}
-
-	/**
 	 * Return a random password.
 	 *
 	 * @return String new random password
@@ -2816,34 +2764,16 @@ class User implements JsonSerializable {
 		if( $this->getId() ) {
 			if ( !isset( $this->mEditCount ) ) {
 				/* Populate the count, if it has not been populated yet */
-				$this->mEditCount = User::edits( $this->mId );
+
+				// Wikia change - SUS-1771: use per-wiki service instead of cluster user table
+				$userStatsService = new UserStatsService( $this->getId() );
+				$this->mEditCount = $userStatsService->getEditCountWiki();
 			}
 			return $this->mEditCount;
 		} else {
 			/* nil */
 			return null;
 		}
-	}
-
-	/**
-	 * Wikia. Get number of edits localized for wiki,
-	 *
-	 * NOTE: UserStatsService:getEditCountWiki function retrieves User object inside
-	 * due to this fact localized editcount shouldn't be a field of User class
-	 * to avoid infinite loop
-	 *
-	 * @autor Kamil Koterba
-	 * @since Feb 2013
-	 * @return Int
-	 */
-	public function getEditCountLocal() {
-		if( $this->getId() ) {
-
-			$userStatsService = new UserStatsService( $this->mId );
-			return $userStatsService->getEditCountWiki();
-
-		}
-		return null;
 	}
 
 	/**
@@ -4048,35 +3978,15 @@ class User implements JsonSerializable {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgEnableEditCountLocal;
-		if( !$this->isAnon() ) {
-			// wikia change, load always from first cluster when we use
-			// shared users database
-			// @author Lucas Garczewski (tor)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
-
-			$dbw->update( '`user`',
-				array( 'user_editcount=user_editcount+1' ),
-				array( 'user_id' => $this->getId() ),
-				__METHOD__ );
-			$dbw->commit();
-
+		if ( !$this->isAnon() ) {
 			/**
 			 * Wikia change
 			 * Update editcount for wiki
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			if ( !empty($wgEnableEditCountLocal) ) {
-				$userStatsService = new UserStatsService( $this->getId() );
-				$userStatsService->increaseEditsCount();
-			}
+			$userStatsService = new UserStatsService( $this->getId() );
+			$userStatsService->increaseEditsCount();
 			/* end of change */
 
 		}

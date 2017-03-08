@@ -100,7 +100,7 @@ class Autopromote {
 	 * @return bool Whether the condition is true for the user
 	 */
 	private static function checkCondition( $cond, User $user ) {
-		global $wgEmailAuthentication, $wgEnableEditCountLocal;
+		global $wgEmailAuthentication;
 		if ( count( $cond ) < 1 ) {
 			return false;
 		}
@@ -120,8 +120,6 @@ class Autopromote {
 				// SUS-1290: If edit count condition is 0 skip edit count lookup
 				if ( $cond[1] === 0 ) {
 					return true;
-				} elseif ( !empty($wgEnableEditCountLocal) ) {
-					return $user->getEditCountLocal() >= $cond[1];
 				} else {
 					return $user->getEditCount() >= $cond[1];
 				}
