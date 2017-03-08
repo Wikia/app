@@ -2,10 +2,8 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
-		global $wgTitle;
-
 		$wg = $this->getApp()->wg;
-		$title = $wgTitle->getPrefixedDBkey();
+		$title = $wg->Title->getPrefixedDBkey();
 
 		$enableArticleFeaturedVideo = ArticleVideoHooks::isFeaturedVideoEmbedded( $title );
 
@@ -13,8 +11,7 @@ class ArticleVideoController extends WikiaController {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
 
 			// TODO: replace it with DS icon when it's ready (XW-2824)
-			$this->setVal( 'closeIconUrl',
-				$wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			$this->setVal( 'closeIconUrl', $wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 			$this->setVal( 'videoDetails', $wg->articleVideoFeaturedVideos[$title] );
 		} else {
 			$this->skipRendering();
@@ -22,10 +19,8 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function related() {
-		global $wgTitle;
-
 		$wg = $this->getApp()->wg;
-		$title = $wgTitle->getPrefixedDBkey();
+		$title = $wg->Title->getPrefixedDBkey();
 
 		$relatedVideo = self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
 		$enableArticleRelatedVideo = ArticleVideoHooks::isRelatedVideoEmbedded( $relatedVideo );;

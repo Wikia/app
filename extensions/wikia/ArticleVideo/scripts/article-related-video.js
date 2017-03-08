@@ -76,7 +76,9 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			$fakeDiv = $('<div>').css({'overflow':'hidden'});
 			candidateWidth = $fakeDiv.insertBefore($candidate).width();
 			$fakeDiv.remove();
-			
+
+			// minimum width of a container that will float around the video is 500px - below this value the width
+			// for the text content will be < 200px which is too narrow
 			if (candidateWidth < 500) {
 				return false;
 			}
