@@ -1,15 +1,9 @@
 <?php
 
-class UserStatsService extends WikiaModel {
+class UserStatsService extends WikiaModel implements IDBAccessObject {
 
 	const CACHE_TTL = 86400;
 	const CACHE_VERSION = 'v1.2';
-	const USER_STATS_PROPERTIES = [
-		'editcount',
-		'editcountThisWeek',
-		'firstContributionTimestamp',
-		'lastContributionTimestamp'
-	];
 
 	private $userId;
 	private $wikiId;
@@ -55,22 +49,22 @@ class UserStatsService extends WikiaModel {
 		global $wgMemc;
 
 		if ( !$this->validateUser() ) {
-			return false;
+			return;
 		}
 
-		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
+		$stats = $this->getStats( static::READ_LATEST );
 
 		// update edit counts on wiki
 		if ( empty( $stats['editcount'] ) ) {
-			$stats['editcount'] = $this->calculateEditCountWiki( Title::GAID_FOR_UPDATE );
-		} elseif ( $this->updateEditCount( 'editcount' ) ) {
+			$stats['editcount'] = $this->calculateEditCountWiki( static::READ_LATEST );
+		} else {
 			$stats['editcount']++;
 		}
 
 		// update weekly edit counts on wiki
 		if ( empty( $stats['editcountThisWeek'] ) ) {
-			$stats['editcountThisWeek'] = $this->calculateEditCountFromWeek( Title::GAID_FOR_UPDATE );
-		} elseif ( $this->updateEditCount( 'editcountThisWeek' ) ) {
+			$stats['editcountThisWeek'] = $this->calculateEditCountFromWeek( static::READ_LATEST );
+		} else {
 			$stats['editcountThisWeek']++;
 		}
 
@@ -92,6 +86,8 @@ class UserStatsService extends WikiaModel {
 		if ( $stats['editcount'] === 1 ) {
 			wfRunHooks( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
 		}
+
+		$this->scheduleStatsUpdateTask( $stats );
 	}
 
 	/**
@@ -100,7 +96,8 @@ class UserStatsService extends WikiaModel {
 	 * - last contribution date
 	 * - number of edits on given wiki
 	 * - number of edits in current week
-	 * @return array
+	 * @param int $flags bitfield determining if we should read from master on cache miss
+	 * @return array|UserStats
 	 */
 	public function getStats( $flags = 0 ) {
 		$stats = WikiaDataAccess::cache(
@@ -134,10 +131,22 @@ class UserStatsService extends WikiaModel {
 					$stats['lastContributionTimestamp'] = $this->initLastContributionTimestamp();
 				}
 
+				if ( $stats->needsUpdate() ) {
+					$this->scheduleStatsUpdateTask( $stats );
+				}
+
 				return $stats;
 			}
 		);
 		return $stats;
+	}
+
+	public function resetEditCount() {
+		$stats = $this->getStats();
+
+		$stats['editcount'] = $this->calculateEditCountWiki();
+
+		$this->scheduleStatsUpdateTask( $stats );
 	}
 
 	public static function purgeOptionsWikiCache( $userId, $wikiId ) {
@@ -147,9 +156,8 @@ class UserStatsService extends WikiaModel {
 	}
 
 	/**
-	 * Counts contributions from revision and archive
-	 * and resets value in wikia_user_properties table
-	 * for specified wiki.
+	 * Counts contributions from revision and archive tables
+	 * on the specified wiki.
 	 *
 	 * @since Feb 2013
 	 * @author Kamil Koterba
@@ -176,26 +184,11 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$this->setUserStat( 'editcount', $editCount );
 		return $editCount;
 	}
 
-	private function updateEditCount( $propertyName ) {
-		//update edit counts in options
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update(
-			'wikia_user_properties',
-			[ 'wup_value=wup_value+1' ],
-			[ 'wup_user' => $this->userId, 'wup_property' => $propertyName ],
-			__METHOD__
-		);
-
-		return $dbw->affectedRows() === 1;
-	}
-
 	/**
-	 * Counts contributions in last week from revision and archive
-	 * and resets value in wikia_user_properties table
+	 * Counts contributions in last week from revision and archive tables
 	 * for specified wiki.
 	 *
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
@@ -226,7 +219,6 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$this->setUserStat( 'editcountThisWeek', $editCount );
 		return $editCount;
 	}
 
@@ -235,67 +227,18 @@ class UserStatsService extends WikiaModel {
 	 * (wikia_user_properties table)
 	 * @since Nov 2013
 	 * @author Kamil Koterba
-	 * @return array
+	 * @return array|UserStats
 	 */
 	private function loadUserStatsFromDB() {
-		$stats = [];
-
 		$wikiId = $this->getWikiId();
 
 		/* Get option value from wiki specific user properties */
 		$dbr = $this->getDatabase( $wikiId );
-		$res = $dbr->select(
-			'wikia_user_properties',
-			[ 'wup_property', 'wup_value' ],
-			[ 'wup_user' => $this->userId, 'wup_property' => self::USER_STATS_PROPERTIES ],
-			__METHOD__
-		);
 
-		foreach( $res as $row ) {
-			$stats[ $row->wup_property ] = $row->wup_value;
-		}
+		$stats = new UserStats( $this->userId );
+		$stats->load( $dbr );
 
 		return $stats;
-	}
-
-	/**
-	 * Sets wiki specific user option
-	 * into wikia_user_properties table from wiki DB
-	 * @since Nov 2013
-	 * @author Kamil Koterba
-	 *
-	 * @param String $statName name of wiki specific user stat
-	 * @param String $statVal stat value to be set
-	 * @return boolean
-	 */
-	private function setUserStat( $statName, $statVal ) {
-		if ( !$this->validateUser() || wfReadOnly() ) {
-			return false;
-		}
-
-		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
-		try {
-			$dbw->replace(
-				'wikia_user_properties',
-				[],
-				[
-					'wup_user' => $this->userId,
-					'wup_property' => $statName,
-					'wup_value' => $statVal
-				],
-				__METHOD__
-			);
-		} catch ( DBQueryError $dbQueryError ) {
-			// SUS-1221: Some of these REPLACE queries are failing
-			// If this happens let's log exception details to try to identify root cause
-			Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - UserStatsService::setUserStat failed', [
-				'exception' => $dbQueryError,
-				'userId' => $this->userId,
-				'statName' => $statName,
-				'statValue' => $statVal
-			] );
-		}
-		return $dbw->affectedRows() === 1;
 	}
 
 	/**
@@ -317,7 +260,6 @@ class UserStatsService extends WikiaModel {
 		$firstContributionTimestamp = null;
 		if( !empty( $res ) ) {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
-			$this->setUserStat( 'firstContributionTimestamp', $firstContributionTimestamp );
 		}
 		return $firstContributionTimestamp;
 	}
@@ -334,7 +276,6 @@ class UserStatsService extends WikiaModel {
 		$lastContributionTimestamp = null;
 		if( !empty( $res ) ) {
 			$lastContributionTimestamp = $res->lastContributionTimestamp;
-			$this->setUserStat( 'lastContributionTimestamp', $lastContributionTimestamp );
 		}
 		return $lastContributionTimestamp;
 	}
@@ -349,9 +290,23 @@ class UserStatsService extends WikiaModel {
 
 	private function getDatabase( $flags = 0 ) {
 		$dbName = ( $this->getWikiId() === $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $this->getWikiId() );
-		$dbType = ( $flags & Title::GAID_FOR_UPDATE ) ? DB_MASTER : DB_SLAVE;
+		$dbType = ( $flags & static::READ_LATEST ) ? DB_MASTER : DB_SLAVE;
 
 		return $this->getWikiDB( $dbType, $dbName );
+	}
+
+	/**
+	 * Enqueue a background task to update user stats of this user.
+	 *
+	 * @param UserStats $userStats updated stats to persist to database
+	 */
+	private function scheduleStatsUpdateTask( UserStats $userStats ) {
+		global $wgCityId;
+
+		$task = new \Wikia\Tasks\Tasks\UserStatsUpdateTask();
+		$task->wikiId( $wgCityId );
+		$task->call( 'update', $userStats );
+		$task->queue();
 	}
 
 	private static function getUserStatsMemcKey( $userId, $wikiId ) {
