@@ -45,10 +45,10 @@ require(
 				this.unreadCount = count;
 
 				if (this.unreadCount > 0) {
-					this.$markAllAsReadButton.addClass('wds-visible');
+					this.$markAllAsReadButton.addClass('wds-is-visible');
 					this.$notificationsCount.html(this.unreadCount).parent('.bubbles').addClass('show');
 				} else {
-					this.$markAllAsReadButton.removeClass('wds-visible');
+					this.$markAllAsReadButton.removeClass('wds-is-visible');
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			};
