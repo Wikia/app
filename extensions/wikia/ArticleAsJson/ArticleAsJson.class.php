@@ -306,7 +306,7 @@ class ArticleAsJson extends WikiaService {
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON :
 				self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
-			$caption = isset( $frameParams['caption'] ) ? $frameParams['caption'] : null;
+			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
 			self::$media[] = $media;
 
