@@ -109,7 +109,7 @@ define('ooyala-player', function () {
 		$('.oo-action-icon').css('display', '');
 	};
 
-	OoyalaHTML5Player.initHTML5Players = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
+	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay) {
 		var params = {
 				videoId: videoId,
 				autoplay: autoplay,
