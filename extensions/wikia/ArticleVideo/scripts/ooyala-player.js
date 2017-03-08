@@ -94,12 +94,12 @@ define('ooyala-player', function () {
 	};
 
 	OoyalaHTML5Player.prototype.hideControls = function () {
-		$('.oo-control-bar').css('display', 'none');
+		$('.oo-control-bar').css('opacity', '0');
 		$('.oo-action-icon').css('display', 'none');
 	};
 
 	OoyalaHTML5Player.prototype.showControls = function () {
-		$('.oo-control-bar').css('display', '');
+		$('.oo-control-bar').css('opacity', '');
 		$('.oo-action-icon').css('display', '');
 	};
 
