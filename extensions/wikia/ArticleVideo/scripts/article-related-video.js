@@ -15,11 +15,23 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, playerParams, videoId, onCreate);
 		}
 
+		function getCandidate($element) {
+			var $fakeDiv = $('<div>').css({'overflow':'hidden'}),
+				candidateWidth = $fakeDiv.insertBefore($element).width();
+
+			$fakeDiv.remove();
+
+			return {
+				$element: $element,
+				candidateWidth: candidateWidth
+			};
+		}
+
 		function placeRelatedVideo(player) {
 			var $articleContent = $('#mw-content-text'),
 				$articleHeaders = $articleContent.children('h2'),
 				placementCallbacks,
-				$followingSibling;
+				followingSibling;
 
 			// These callbacks return candidate for following DOM element for related video.
 			// The aim is to select the best placement from these three, where the determining factor is width of
@@ -30,26 +42,29 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			//      - last third paragraph under the first header h2
 			placementCallbacks = [
 				function () {
-					return $articleHeaders.first().nextUntil('h2', 'p, ul').last();
+					var $element = $articleHeaders.first().nextUntil('h2', 'p, ul').last();
+					return getCandidate($element);
 				},
 				function () {
-					return $articleHeaders.eq(1).nextUntil('h2', 'p, ul').first();
+					var $element = $articleHeaders.eq(1).nextUntil('h2', 'p, ul').first();
+					return getCandidate($element);
 				},
 				function () {
-					return $articleHeaders.first().nextUntil('h2', 'p, ul').eq(-3);
+					var $element = $articleHeaders.first().nextUntil('h2', 'p, ul').eq(-3);
+					return getCandidate($element);
 				}
 			];
 
 			placementCallbacks.forEach(function(func) {
-				var $followingSiblingCandidate = func();
+				var followingSiblingCandidate = func();
 
-				if (isPlacementBetter($followingSiblingCandidate, $followingSibling)) {
-					$followingSibling = $followingSiblingCandidate;
+				if (isPlacementBetter(followingSiblingCandidate, followingSibling)) {
+					followingSibling = followingSiblingCandidate;
 				}
 			});
 
-			if ($followingSibling && $followingSibling.length) {
-				$video.insertBefore($followingSibling);
+			if (followingSibling && followingSibling.$element.length) {
+				$video.insertBefore(followingSibling.$element);
 
 				player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
 					var videoTitle = player.getTitle(),
@@ -68,33 +83,22 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 			}
 		}
 
-		function isPlacementBetter($candidate, $currentBest) {
-			var $fakeDiv,
-				bestWidth,
-				candidateWidth;
-
-			if (!$candidate || !$candidate.length) {
+		function isPlacementBetter(candidate, currentBest) {
+			if (!candidate || !candidate.$element.length) {
 				return false;
 			}
-
-			$fakeDiv = $('<div>').css({'overflow':'hidden'});
-			candidateWidth = $fakeDiv.insertBefore($candidate).width();
-			$fakeDiv.remove();
 
 			// minimum width of a container that will float around the video is 500px - below this value the width
 			// for the text content will be < 200px which is too narrow
-			if (candidateWidth < 500) {
+			if (candidate.candidateWidth < 500) {
 				return false;
 			}
 
-			if (!$currentBest || !$currentBest.length) {
+			if (!currentBest || !currentBest.$element.length) {
 				return true;
 			}
 
-			bestWidth = $fakeDiv.insertBefore($currentBest).width();
-			$fakeDiv.remove();
-
-			if (candidateWidth > bestWidth) {
+			if (candidate.candidateWidth > currentBest.candidateWidth) {
 				return true;
 			}
 
