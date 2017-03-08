@@ -22,6 +22,7 @@ class ImportMessagingWiki extends Maintenance {
 		$this->addOption( 'dry-run', 'Don\'t make any changes to i18n files - print output in /tmp/ folder.' );
 		$this->addOption( 'message', 'Message name to process', false, true /* $withArg */ );
 		$this->addOption( 'prefix', 'Prefix for messages to process (e.g. "achievements-")', false, true /* $withArg */ );
+		$this->addOption( 'dump-to-file', 'Dump all matching messaging wiki translations to a single i18n file', false, true /* $withArg */  );
 	}
 
 	/**
@@ -32,7 +33,12 @@ class ImportMessagingWiki extends Maintenance {
 		$hasData = $this->getMessagingWikiData();
 
 		if ( $hasData ) {
-			$this->processExtensions();
+			if ( $this->getOption( 'dump-to-file' ) ) {
+				$this->dumpToFile( $this->getOption( 'dump-to-file' ) );
+			}
+			else {
+				$this->processExtensions();
+			}
 		}
 	}
 
@@ -97,6 +103,17 @@ class ImportMessagingWiki extends Maintenance {
 		}
 
 		return !empty( $this->messages );
+	}
+
+	/**
+	 * Prepare a single i18n file with all messaging wiki translations
+	 *
+	 * @see SUS-1581
+	 *
+	 * @param string $fileName
+	 */
+	private function dumpToFile( string $fileName ) {
+		$this->updateI18nFile( 'Messaging Wiki', $fileName, $this->messages );
 	}
 
 	/**

@@ -1,44 +1,32 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], function (window, onScroll, tracker, OoyalaVideo) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest'], function (window, onScroll, tracker, OoyalaPlayer, abTest) {
 
 	$(function () {
 		var $video = $('#article-video'),
 			$videoContainer = $video.find('.video-container'),
 			$videoThumbnail = $videoContainer.find('.video-thumbnail'),
 			$closeBtn = $videoContainer.find('.close'),
-			$videoPlayBtn = $videoContainer.find('.video-play-button'),
 			ooyalaVideoController,
 			ooyalaVideoElementId = 'ooyala-article-video',
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
-			transitionEndEventName = getTransitionEndEventName(),
+			playTime = -1,
+			percentagePlayTime = -1,
 			track = tracker.buildTrackingFunction({
 				category: 'article-video',
 				trackingMethod: 'analytics'
-			});
-
-		function getTransitionEndEventName() {
-			var el = document.createElement('div'),
-				transitions = {
-					'transition': 'transitionend',
-					'OTransition': 'oTransitionEnd',
-					'MozTransition': 'transitionend',
-					'WebkitTransition': 'webkitTransitionEnd'
-				};
-
-			for (var t in transitions) {
-				if (el.style[t] !== undefined) {
-					return transitions[t];
-				}
-			}
-
-			return null;
-		}
+			}),
+			collapsedVideoSize = {
+				width: 225,
+				height: 127
+			};
 
 		function initVideo(onCreate) {
-			var ooyalaVideoId = window.wgArticleVideoData.videoId;
+			var ooyalaVideoId = window.wgFeaturedVideoId,
+				playerParams = window.wgOoyalaParams,
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
 
-			ooyalaVideoController = new OoyalaVideo(ooyalaVideoElementId, ooyalaVideoId, onCreate);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -98,36 +86,29 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			});
 		}
 
+		function updateOoyalaSize() {
+			// we have to trigger resize event to make html5-skin resize controls
+			window.dispatchEvent(new Event('resize'));
+			// wait for player resize - there is 150ms debounce on resize event in ooyala html5-skin
+			setTimeout(function () {
+				ooyalaVideoController.showControls();
+			}, 200);
+		}
+
 		function updatePlayerControls(waitForTransition) {
 			ooyalaVideoController.hideControls();
-			if (waitForTransition && transitionEndEventName) {
-				$videoContainer.on(transitionEndEventName, function () {
-					ooyalaVideoController.sizeChanged();
-					ooyalaVideoController.showControls();
-				});
-			} else {
-				ooyalaVideoController.sizeChanged();
-				ooyalaVideoController.showControls();
+			if (!waitForTransition) {
+				updateOoyalaSize();
 			}
-		}
-
-		function isVideoPlaying() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PLAYING;
-			}
-			return false;
-		}
-
-		function isVideoPausedOrReady() {
-			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getState() === OO.STATE.PAUSED || ooyalaVideoController.player.getState() === OO.STATE.READY;
-			}
-			return false;
+			// otherwise wait for SIZE_CHANGED event and then execute updateOoyalaSize function only if video width
+			// is equal to $collapsedVideoSize.width - so updateOoyalaSize won't be executed twice
 		}
 
 		function isVideoInFullScreenMode() {
 			if (ooyalaVideoController && ooyalaVideoController.player) {
-				return ooyalaVideoController.player.getFullscreen();
+				// isFullscreen() returns false just faster switching to fullscreen mode so we also
+				// check webkitIsFullScreen property - that's only for Safari
+				return ooyalaVideoController.player.isFullscreen() || document.webkitIsFullScreen;
 			}
 			return false;
 		}
@@ -138,7 +119,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			if (isVideoInFullScreenMode()) {
 				return;
 			}
-			if (!collapsingDisabled || isVideoPlaying() || videoCollapsed) {
+			if (!collapsingDisabled || videoCollapsed) {
 				var scrollTop = $(window).scrollTop(),
 					videoHeight = $video.outerHeight(),
 					videoOffset = $video.offset(),
@@ -153,41 +134,18 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 			}
 		}
 
-		function showAndPlayVideo() {
-			$ooyalaVideo.show();
-			$video.addClass('played');
-			ooyalaVideoController.sizeChanged(); // we have to trigger 'size changed' event to have controls in right size
-			ooyalaVideoController.player.play();
-			track({
-				action: tracker.ACTIONS.PLAY_VIDEO,
-				label: 'featured-video'
-			});
-		}
-
-		function playPauseVideo() {
-			if (!$video.hasClass('played')) {
-				return;
-			}
-			if (isVideoPausedOrReady()) {
-				ooyalaVideoController.player.play();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-play'
-				});
-			} else if (isVideoPlaying()) {
-				ooyalaVideoController.player.pause();
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: 'featured-video-collapsed-pause'
-				});
-			}
-		}
-
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
-			$video.one('click', showAndPlayVideo);
+
+			player.mb.subscribe(OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.PLAY_VIDEO,
+					label: 'featured-video'
+				});
+			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
+				collapsingDisabled = false;
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-play'
@@ -208,6 +166,40 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 				});
 			});
 
+			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
+				if (width === collapsedVideoSize.width) {
+					updateOoyalaSize();
+				}
+			});
+
+			player.mb.subscribe(OO.EVENTS.REPLAY, 'featured-video', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-replay'
+				});
+			});
+
+			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
+				var secondsPlayed = Math.floor(time),
+					percentage = Math.round(time / totalTime * 100);
+
+				if ( secondsPlayed % 5 === 0 && secondsPlayed !== playTime ) {
+					playTime = secondsPlayed;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-seconds-' + playTime
+					});
+				}
+
+				if ( percentage % 10 === 0 && percentage !== percentagePlayTime ) {
+					percentagePlayTime = percentage;
+					track({
+						action: tracker.ACTIONS.VIEW,
+						label: 'featured-video-played-percentage-' + percentagePlayTime
+					});
+				}
+			});
+
 			track({
 				action: tracker.ACTIONS.IMPRESSION,
 				label: 'featured-video'
@@ -216,9 +208,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyalaVideo'], func
 
 		$closeBtn.click(closeButtonClicked);
 
-		$videoPlayBtn.click(playPauseVideo);
-
 		onScroll.bind(toggleCollapse);
 	});
-	
+
 });

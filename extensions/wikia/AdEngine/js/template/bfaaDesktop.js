@@ -81,6 +81,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
+	function refreshMedrecSlot() {
+		var slotName = 'TOP_RIGHT_BOXAD';
+		slotTweaker.hide(slotName);
+		win.adslots2.push(slotName);
+	}
+
 	function show(params) {
 		var videoSettings;
 
@@ -93,6 +99,11 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
+
+		if (params.loadMedrecFromBTF) {
+			refreshMedrecSlot();
+		}
+
 		videoSettings = VideoSettings.create(params);
 		resolvedState.setImage(videoSettings);
 

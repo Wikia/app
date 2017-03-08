@@ -37,6 +37,18 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
+		function removeEventListener(eventName, callback) {
+			log(['removeEventListener to AdManager', eventName], log.levels.debug, logGroup);
+
+			if (isAdsManagerLoaded) {
+				adsManager.removeEventListener(eventName, callback);
+			} else {
+				adsLoader.addEventListener('adsManagerLoaded', function () {
+					adsManager.removeEventListener(eventName, callback);
+				});
+			}
+		}
+
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
@@ -113,6 +125,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		addEventListener('resume', setStatus('playing'));
 		addEventListener('start', setStatus('playing'));
 		addEventListener('pause', setStatus('paused'));
+		addEventListener('complete', setStatus('completed'));
 
 		return {
 			addEventListener: addEventListener,
@@ -121,6 +134,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
+			removeEventListener: removeEventListener,
 			resize: resize,
 			setAutoPlay: setAutoPlay
 		};

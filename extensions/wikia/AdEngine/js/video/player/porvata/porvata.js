@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
-	'wikia.viewportObserver'
-], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver) {
+	'wikia.viewportObserver',
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -15,6 +16,24 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			autoPlayed = false,
 			autoPaused = false,
 			viewportListener = null;
+
+		function isFloatingEnabled(params) {
+			return floater && floater.isEnabled(params.floatingContext);
+		}
+
+		function tryEnablingFloating(video, inViewportCallback) {
+			if (floater && floater.canFloat(params)) {
+				params.floatingContext = floater.makeFloat(video, params, {
+					onStart: function() {
+						inViewportCallback(true);
+					},
+					onEnd: function() {
+						inViewportCallback(false);
+					}
+				});
+				inViewportCallback(true);
+			}
+		}
 
 		function muteFirstPlay(video) {
 			video.addEventListener('loaded', function () {
@@ -52,10 +71,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						video.play();
 						autoPlayed = true;
 					// Don't resume when video was paused manually
-					} else if (isVisible && autoPaused) {
+					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
 						video.resume();
 					// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-					} else if (!isVisible && video.isPlaying()) {
+					} else if (!isVisible && video.isPlaying() && !isFloatingEnabled(params)) {
 						video.pause();
 						autoPaused = true;
 					}
@@ -104,6 +123,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+
+				tryEnablingFloating(video, inViewportCallback);
 
 				return video;
 			});

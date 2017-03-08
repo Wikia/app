@@ -95,7 +95,11 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 	function servicesUrl() {
 		if (mw.config.get('wgDevelEnvironment')) {
-			return 'https://services.wikia-dev.com';
+			if (mw.config.get('wgWikiaDatacenter') === 'poz') {
+				return 'https://services.wikia-dev.pl';
+			}
+
+			return 'https://services.wikia-dev.us';
 		}
 
 		return 'https://services.wikia.com';

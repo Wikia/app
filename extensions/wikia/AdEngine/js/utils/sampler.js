@@ -1,8 +1,19 @@
-define('ext.wikia.adEngine.utils.sampler', function () {
+/* global define */
+define('ext.wikia.adEngine.utils.sampler', [
+	'wikia.querystring'
+], function (QueryString) {
 	'use strict';
 
-	function sample(partToSample, all) {
-		return getRandomInt(0, all) < partToSample;
+	var qs = new QueryString(),
+		queryStringParam = 'ignored_samplers';
+
+	function samplerIsIgnored(name) {
+		var ignored = qs.getVal(queryStringParam, '').split(',');
+		return ignored.indexOf(name) > -1;
+	}
+
+	function sample(name, partToSample, all) {
+		return samplerIsIgnored(name) ? true : getRandomInt(0, all) < partToSample;
 	}
 
 	function getRandomInt(min, max) {

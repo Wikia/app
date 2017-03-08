@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	function track(params, eventName, errorCode, player) {
 		var data = playerTracker.track(params, playerName, eventName, errorCode);
 
-		if (params.adProduct === 'vulcan') {
+		if (data && params.adProduct === 'vulcan') {
 			logger.logVast(player, params, data);
 		}
 	}

@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_4': slotPrices.vulcan || '',
 			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': slotPrices.aol || '',
-			'bidder_7': '',
+			'bidder_7': slotPrices.audienceNetwork || '',
 			'bidder_8': slotPrices.veles || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',

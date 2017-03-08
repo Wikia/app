@@ -3,9 +3,9 @@
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$wg = F::app()->wg;
-		$articleId = $wg->Title->getArticleID();
+		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
+		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
 			\Wikia::addAssetsToOutput( 'article_video_scss' );
 			\Wikia::addAssetsToOutput( 'article_video_js' );
 		}
@@ -15,23 +15,14 @@ class ArticleVideoHooks {
 
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$wg = F::app()->wg;
-		$articleId = $wg->Title->getArticleID();
+		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
-			$vars['wgArticleVideoData'] = [
-				'videoId' => $wg->videoMVPArticles[$wg->cityId][$articleId]['videoId'],
+		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
+			$vars['wgOoyalaParams'] = [
+				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 			];
-		}
-
-		return true;
-	}
-
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		$wg = F::app()->wg;
-		$articleId = $wg->Title->getArticleID();
-
-		if ( isset( $wg->videoMVPArticles[$wg->cityId][$articleId] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
+			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
 		return true;

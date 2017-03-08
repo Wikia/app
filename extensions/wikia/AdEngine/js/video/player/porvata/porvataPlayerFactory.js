@@ -52,6 +52,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			isPlaying: function () {
 				return ima.getStatus() === 'playing';
 			},
+			isCompleted: function () {
+				return ima.getStatus() === 'completed';
+			},
 			pause: function () {
 				ima.getAdsManager().pause();
 			},
@@ -69,6 +72,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			},
 			reload: function () {
 				ima.reload();
+			},
+			removeEventListener: function(eventName, callback) {
+				ima.removeEventListener(eventName, callback);
 			},
 			resize: function (newWidth, newHeight) {
 				width = newWidth;

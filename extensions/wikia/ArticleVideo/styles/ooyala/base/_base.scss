@@ -1,0 +1,46 @@
+// mainVideoContainer (namespace root)
+& {
+  // sets a specific default font-size for user with em type scales
+  font-size: $font-size-root;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  line-height: $line-height;
+  color: $body-color;
+  // font smoothing
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  // changes the default tap highlight to be completely transparent in iOS
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  // min player width
+  min-width:$min-player-width;
+}
+
+// links
+a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  cursor: pointer;
+
+  @include hover-focus {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+
+  &:focus {
+    @include tab-focus();
+  }
+}
+
+// basic grid
+.oo-col-sm-2 {
+  width: (100/12)*2%;
+}
+
+.oo-col-sm-10 {
+  width: (100/12)*10%;
+}
+
+.oo-col-sm-offset-2 {
+  margin-left: (100/12)*2%;
+}
