@@ -103,7 +103,8 @@ require(
 						uri: notification.uri,
 						snippet: notification.snippet,
 						text: this.textFormatter.getText(notification),
-						isUnread: notification.isUnread
+						isUnread: notification.isUnread,
+						communityName: notification.communityName
 					}
 				}));
 			};
