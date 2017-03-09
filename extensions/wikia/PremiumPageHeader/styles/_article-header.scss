@@ -1,0 +1,69 @@
+@import 'skins/shared/color';
+
+.pph-article-header {
+	display: flex;
+	margin: 18px 0;
+}
+
+.pph-article-title {
+	flex: 1;
+
+	h1 {
+		font-size: 36px;
+		line-height: 1;
+		margin-top: 14px;
+	}
+}
+
+.pph-categories {
+	color: #0a56a0;
+	font-size: 12px;
+}
+
+.pph-article-contribution {
+}
+
+.pph-languages {
+	text-align: right;
+}
+
+.pph-contribution-buttons {
+	display: flex;
+	margin-top: 14px;
+}
+
+.pph-button-group {
+	display: flex;
+}
+
+.pph-button {
+	align-items: center;
+	background-color: $color-buttons;
+	box-sizing: border-box;
+	color: $color-button-text;
+	display: flex;
+	font-size: 10px;
+	height: 34px;
+	margin-left: 6px;
+	padding: 0 12px;
+	text-transform: uppercase;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	.pph-button-icon {
+		margin-right: 6px;
+	}
+
+	&.pph-button-secondary {
+		background-color: transparent;
+		border: 1px solid $color-buttons;
+		color: $color-buttons;
+	}
+
+	&.pph-button-chevron {
+		border-left: 1px solid $color-button-text;
+		margin-left: 0;
+	}
+}

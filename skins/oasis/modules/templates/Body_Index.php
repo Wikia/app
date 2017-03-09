@@ -75,6 +75,10 @@
 			}
 		?>
 
+		<?php if ( !empty( $wg->EnablePremiumPageHeader ) ): ?>
+			<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
+		<?php endif; ?>
+
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php

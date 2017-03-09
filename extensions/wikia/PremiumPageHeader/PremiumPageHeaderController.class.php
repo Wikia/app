@@ -21,4 +21,10 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'data',
 			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE ) );
 	}
+
+	public function articleHeader() {
+		$skinVars= $this->app->getSkinTemplateObj()->data;
+		$this->setVal('displaytitle', $skinVars['displaytitle']);
+		$this->setVal('title', $skinVars['title']);
+	}
 }

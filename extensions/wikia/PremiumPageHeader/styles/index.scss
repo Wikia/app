@@ -1,2 +1,7 @@
+@import 'article-header';
 @import 'wiki-header';
 @import 'local-navigation';
+
+#WikiHeader {
+	display: none;
+}
