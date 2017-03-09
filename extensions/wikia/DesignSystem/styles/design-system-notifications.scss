@@ -45,6 +45,7 @@ $wds-icon-color: #999;
 	//padding 18 * 2 + content 320px
 	min-width: 356px;
 	width: 100%;
+	white-space: normal;
 
 	.wds-notification-list {
 	  box-sizing: border-box;
@@ -64,6 +65,7 @@ $notification-card-anchor-color: #656d77;
   text-align: left;
   a {
   	cursor: pointer;
+	display: flex;
   }
 
   &__icon-wrapper {
@@ -71,7 +73,6 @@ $notification-card-anchor-color: #656d77;
 	padding-left: 12px;
 	width: 30px;
 	display: flex;
-	float: left;
 
 	.wds-icon {
 	  fill: $wds-icon-color;
