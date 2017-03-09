@@ -11,3 +11,9 @@
 .pph-local-nav-sub-menu {
 	display: none;
 }
+
+@media #{$breakpoint-small-only} {
+	.pph-local-nav {
+		left: 20px;
+	}
+}

@@ -3205,3 +3205,11 @@ $config['premium_page_header_scss'] = [
 		'//extensions/wikia/PremiumPageHeader/styles/index.scss',
 	],
 ];
+
+$config['premium_page_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
+	]
+];
