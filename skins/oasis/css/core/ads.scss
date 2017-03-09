@@ -44,12 +44,8 @@ $floating-ad-margin: 20px;
 
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-
-		> div {
-			float: right;
-		}
-
+		display: flex;
+		justify-content: center;
 	}
 
 	.standard-leaderboard {
@@ -242,10 +238,6 @@ $floating-ad-margin: 20px;
 		top: 0;
 		width: $uap-video-player-button-size;
 	}
-}
-
-#TOP_BUTTON_WIDE {
-	margin-right: 10px;
 }
 
 @media screen and (max-width: 1063px) {
