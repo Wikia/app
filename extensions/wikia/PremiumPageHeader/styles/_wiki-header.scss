@@ -16,22 +16,10 @@
 	}
 }
 
-@media #{$breakpoint-medium-only} {
-	.pph-wiki-header {
-		margin: -1px -21px 0;
-	}
-}
-
-@media #{$breakpoint-small-only} {
-	.pph-wiki-header {
-		margin: -1px -25px 0;
-	}
-}
-
 .pph-wordmark-text {
 	flex: 1;
 	font-size: 28px;
-	line-height: 28px;
+	line-height: 1;
 	margin-top: 24px;
 }
 
@@ -46,7 +34,7 @@
 		em {
 			display: block;
 			font-size: 24px;
-			line-height: 24px;
+			line-height: 1;
 		}
 
 		span {
@@ -65,7 +53,7 @@
 	display: flex;
 	font-size: 10px;
 	margin-left: 18px;
-	padding: 8px;
+	padding: 8px 12px;
 	text-transform: uppercase;
 
 	&:hover {
@@ -75,5 +63,38 @@
 	svg {
 		fill: $color-button-text;
 		margin-right: 6px;
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.pph-wiki-header {
+		margin: -1px -21px 0;
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.pph-wiki-header {
+		margin: -1px -25px 0;
+	}
+
+	.pph-wordmark-text {
+		font-size: 24px;
+		margin-top: 16px;
+	}
+
+	.wordmark img {
+		width: 175px;
+		height: 45.5px;
+	}
+
+	.pph-tally-area .pph-tally {
+		em {
+			font-size: 18px;
+		}
+
+		span {
+			font-size: 10px;
+			margin-top: 1px;
+		}
 	}
 }
