@@ -23,11 +23,12 @@ class FlagView {
 	 * Creates wikitext calls out of an array of names of templates and an array
 	 * of matching params. The wikitext calls are wrapped in an HTML element that
 	 * enables targeting control.
+	 * @param $flagTypeId
 	 * @param $flagView
 	 * @param $params
 	 * @return string
 	 */
-	public function wrapSingleFlag( $flagTargeting, $flagView, $params ) {
+	public function wrapSingleFlag( $flagTypeId, $flagTargeting, $flagView, $params ) {
 		if ( !isset( self::$flagsTargetingCssClasses[$flagTargeting] ) ) {
 			$flagTargeting = FlagType::FLAG_TARGETING_READERS;
 		}
@@ -43,7 +44,8 @@ class FlagView {
 		$viewCall .= "}}\n";
 
 		return \Html::rawElement( 'div', [
-			'class' => self::$flagsTargetingCssClasses[$flagTargeting]
+			'class' => self::$flagsTargetingCssClasses[$flagTargeting],
+			'data-type-id' => $flagTypeId,
 		], $viewCall );
 	}
 

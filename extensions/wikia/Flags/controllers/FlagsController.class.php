@@ -54,6 +54,7 @@ class FlagsController extends WikiaController {
 
 				foreach ( $flags as $flagId => $flag ) {
 					$templatesCalls[] = $flagView->wrapSingleFlag(
+						$flag['flag_type_id'],
 						$flag['flag_targeting'],
 						$flag['flag_view'],
 						$flag['params']
