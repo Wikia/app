@@ -3,7 +3,7 @@
 class UserStatsService extends WikiaModel implements IDBAccessObject {
 
 	const CACHE_TTL = 86400;
-	const CACHE_VERSION = 'v1.2';
+	const CACHE_VERSION = 'v2';
 
 	private $userId;
 	private $wikiId;
@@ -168,7 +168,7 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
-	public function calculateEditCountWiki( $flags = 0 ) {
+	private function calculateEditCountWiki( $flags = 0 ) {
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
