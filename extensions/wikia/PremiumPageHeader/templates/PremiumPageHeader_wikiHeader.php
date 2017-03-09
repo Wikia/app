@@ -3,8 +3,7 @@
 	<div class="pph-wordmark-text"><?= $wordmarkText; ?></div>
 	<div class="pph-tally-area">
 
-		<!-- fixme We should have here our own message -->
-		<div class="tally"><?= $tallyMsg ?></div>
+		<div class="pph-tally"><?= $tallyMsg ?></div>
 
 		<a href="<?= $addNewPageHref; ?>"
 		   class="pph-add-new-page">

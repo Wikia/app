@@ -30,8 +30,8 @@
 
 .pph-wordmark-text {
 	flex: 1;
-	font-size: 36px;
-	line-height: 24px;
+	font-size: 28px;
+	line-height: 28px;
 	margin-top: 24px;
 }
 
@@ -40,10 +40,11 @@
 	display: flex;
 	margin: 20px;
 
-	.tally {
+	.pph-tally {
 		text-align: right;
 
 		em {
+			display: block;
 			font-size: 24px;
 			line-height: 24px;
 		}
@@ -52,6 +53,7 @@
 			display: block;
 			float: none;
 			font-size: 12px;
+			text-transform: uppercase;
 		}
 	}
 }
