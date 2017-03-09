@@ -67,8 +67,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				}
 			},
 			rubiconTier: {
-				create: function () {
-					return '203_tier1600';
+				create: function (sizeId) {
+					return sizeId + '_tier1600';
 				},
 				parseOpenMarketPrice: function () {
 					return 0;

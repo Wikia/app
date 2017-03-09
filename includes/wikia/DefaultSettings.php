@@ -1575,13 +1575,6 @@ $wgAdDriverTurtleCountries = null;
  */
 $wgAdDriverSourcePointDetectionCountries = null;
 
-
-/**
- * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call PageFair detection scripts
- */
-$wgAdDriverPageFairDetectionCountries = null;
-
 /**
  * @name $wgAdDriverSourcePointDetectionMobileCountries
  * List of countries to call SourcePoint detection scripts on Mercury
@@ -1598,9 +1591,28 @@ $wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
  * @name wgAdDriverEnableSourcePointRecovery
- * Disable SourcePoint Recovery per wiki
+ * Enable SourcePoint Recovery per wiki
  */
 $wgAdDriverEnableSourcePointRecovery = null;
+
+/**
+ * @name $wgAdDriverPageFairDetectionCountries
+ * List of countries to call PageFair detection scripts
+ */
+$wgAdDriverPageFairDetectionCountries = null;
+
+/**
+ * @name $wgAdDriverPageFairRecoveryCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairRecoveryCountries = null;
+
+/**
+ * @name $wgAdDriverEnablePageFairRecovery
+ * Enable PageFair Recovery per wiki
+ */
+$wgAdDriverEnablePageFairRecovery = null;
 
 /**
  * trusted proxy service registry
