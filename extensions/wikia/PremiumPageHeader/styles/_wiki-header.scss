@@ -69,17 +69,17 @@
 @media #{$breakpoint-medium-only} {
 	.pph-wiki-header {
 		margin: -1px -21px 0;
-
-		.wordmark img {
-			width: 175px;
-			height: 45.5px;
-		}
 	}
 }
 
 @media #{$breakpoint-small-only} {
 	.pph-wiki-header {
 		margin: -1px -25px 0;
+		
+		.wordmark img {
+			width: 175px;
+			height: 45.5px;
+		}
 	}
 
 	.pph-wordmark-text {
