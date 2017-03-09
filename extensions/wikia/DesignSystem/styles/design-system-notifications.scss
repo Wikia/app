@@ -4,6 +4,7 @@
 
 $notifications-dropdown-content-color: #656d77;
 $notifications-dropdown-border-color: #363b41;
+$wds-icon-color: #999;
 
 .wds-hidden-svg {
   height: 0;
@@ -64,6 +65,9 @@ $notification-card-anchor-color: #656d77;
 
   &__icon-wrapper {
 	.wds-icon {
+	  fill: $wds-icon-color;
+	}
+	.is-unread {
 	  fill: $wds-color-link;
 	}
   }

@@ -102,7 +102,8 @@ require(
 						icon: getIcon(notification.type),
 						uri: notification.uri,
 						snippet: notification.snippet,
-						text: this.textFormatter.getText(notification)
+						text: this.textFormatter.getText(notification),
+						isUnread: notification.isUnread
 					}
 				}));
 			};

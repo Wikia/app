@@ -2,17 +2,32 @@
     <a href="{{uri}}" class="wds-notification-card">
         <a>
             <div class="wds-notification-card__icon-wrapper">
-                <svg class="wds-icon" viewBox="0 0 24 24">
+                <svg class="wds-icon {{#isUnread}}is-unread{{/isUnread}}" viewBox="0 0 24 24">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
                          xlink:href="#{{icon}}"></use>
                 </svg>
             </div>
         </a>
+        <div class="wds-notification-card__body">
+            <p class="wds-notification-card__text">
+                {{{text}}}
+            </p>
 
+            <p class="wds-notification-card__snippet">
+                {{snippet}}
+            </p>
 
-        <div class="notification-body">
-            {{{text}}}
-            <i>{{snippet}}</i>
+            <ul class="wds-notification-card__context-list">
+                <li class="wds-notification-card__context-item">
+                    {{timestamp}}
+                </li>
+                <li>
+                    <span class="wds-notification-card__context-separator">.</span>
+                </li>
+                <li class="wds-notification-card__context-item">
+                    {{communityName}}
+                </li>
+            </ul>
         </div>
     </a>
 {{/.}}
