@@ -1,6 +1,7 @@
 <?php
 
-class WallBuilderException extends Exception {
+
+class WallBuilderGenericException extends Exception {
 	/** @var array $context */
 	private $context = [];
 

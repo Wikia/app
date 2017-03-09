@@ -34,6 +34,18 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			}
 		}
 
+		function removeEventListener(eventName, callback) {
+			log(['removeEventListener to AdManager', eventName], log.levels.debug, logGroup);
+
+			if (isAdsManagerLoaded) {
+				adsManager.removeEventListener(eventName, callback);
+			} else {
+				adsLoader.addEventListener('adsManagerLoaded', function () {
+					adsManager.removeEventListener(eventName, callback);
+				});
+			}
+		}
+
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
@@ -44,12 +56,15 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		function playVideo(width, height) {
 			function callback() {
-				log('Video play: prepare player UI', log.levels.debug, logGroup);
+				var roundedWidth = Math.round(width),
+					roundedHeight = Math.round(height);
+
+				log(['Video play: prepare player UI', roundedWidth, roundedHeight], log.levels.debug, logGroup);
 				adsManager.dispatchEvent('wikiaAdPlayTriggered');
 
 				// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 				adDisplayContainer.initialize();
-				adsManager.init(width, height, google.ima.ViewMode.NORMAL);
+				adsManager.init(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
 				adsManager.start();
 				adsLoader.removeEventListener('adsManagerLoaded', callback);
 
@@ -76,10 +91,13 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		}
 
 		function resize(width, height) {
-			if (adsManager) {
-				adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+			var roundedWidth = Math.round(width),
+				roundedHeight = Math.round(height);
 
-				log(['IMA player resized', width, height], log.levels.debug, logGroup);
+			if (adsManager) {
+				adsManager.resize(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
+
+				log(['IMA player resized', roundedWidth, roundedHeight], log.levels.debug, logGroup);
 			}
 		}
 
@@ -110,6 +128,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		addEventListener('resume', setStatus('playing'));
 		addEventListener('start', setStatus('playing'));
 		addEventListener('pause', setStatus('paused'));
+		addEventListener('complete', setStatus('completed'));
 
 		return {
 			addEventListener: addEventListener,
@@ -118,6 +137,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			getStatus: getStatus,
 			playVideo: playVideo,
 			reload: reload,
+			removeEventListener: removeEventListener,
 			resize: resize,
 			setAutoPlay: setAutoPlay
 		};

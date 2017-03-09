@@ -3,6 +3,7 @@
 @import 'video-controls';
 
 $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+$video-container-width: 225px;
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
 
@@ -156,7 +157,7 @@ $spinnerSize: 48;
 			right: 20px !important;
 			top: auto;
 			transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
-			width: 225px !important;
+			width: $video-container-width !important;
 
 			.close {
 				cursor: pointer;
