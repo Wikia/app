@@ -14,7 +14,9 @@ class MediaWikiParserService implements ExternalParser {
 
 	/**
 	 * Method used for parsing wikitext provided through variable
+	 *
 	 * @param $wikitext
+	 *
 	 * @return mixed
 	 */
 	public function parse( $wikitext ) {
@@ -23,16 +25,20 @@ class MediaWikiParserService implements ExternalParser {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
-		$parsedText = $this->getParserInstance()
-			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
-			->getText();
+		$output = $this->parser->internalParse( $wikitext, false, $this->frame );
+		$this->parser->replaceLinkHolders( $output );
+		$result = $this->parser->killMarkers( $output );
+
 		wfProfileOut( __METHOD__ );
-		return $parsedText;
+
+		return $result;
 	}
 
 	/**
 	 * Method used for parsing wikitext provided in infobox that might contain variables
+	 *
 	 * @param $wikitext
+	 *
 	 * @return string HTML outcome
 	 */
 	public function parseRecursive( $wikitext ) {
@@ -43,12 +49,26 @@ class MediaWikiParserService implements ExternalParser {
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $ready );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
 		wfProfileOut( __METHOD__ );
+
 		return $marksstripped;
 	}
 
 	public function replaceVariables( $wikitext ) {
-		$output = $this->parser->replaceVariables ( $wikitext, $this->frame );
+		$output = $this->parser->replaceVariables( $wikitext, $this->frame );
+
 		return $output;
+	}
+
+	/**
+	 * Add image to parser output for later usage
+	 *
+	 * @param string $title
+	 */
+	public function addImage( $title ) {
+		$file = wfFindFile( $title );
+		$tmstmp = $file ? $file->getTimestamp() : false;
+		$sha1 = $file ? $file->getSha1() : false;
+		$this->parser->getOutput()->addImage( $title, $tmstmp, $sha1 );
 	}
 
 	private function getParserTitle() {
@@ -58,13 +78,7 @@ class MediaWikiParserService implements ExternalParser {
 	private function getParserOptions() {
 		$options = $this->parser->getOptions();
 		$options->enableLimitReport( false );
-		return $options;
-	}
 
-	private function getParserInstance() {
-		if ( !isset( $this->localParser ) ) {
-			$this->localParser = new \Parser();
-		}
-		return $this->localParser;
+		return $options;
 	}
 }

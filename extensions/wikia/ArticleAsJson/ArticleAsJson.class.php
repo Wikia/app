@@ -21,7 +21,8 @@ class ArticleAsJson extends WikiaService {
 
 	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
-
+		
+		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
@@ -30,6 +31,14 @@ class ArticleAsJson extends WikiaService {
 			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( isset( $details['context'] ) ) {
+			$context = $details['context'];
+		}
+
+		if ( is_string( $context ) && $context !== '' ) {
+			$media['context'] = $context;
+		}
 
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
@@ -118,6 +127,8 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			//TODO: When there will be more image contexts, move strings to const
+			$details['context'] = 'infobox-big';
 			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
