@@ -8,7 +8,6 @@ class PremiumPageHeaderController extends WikiaController {
 
 		$this->setVal( 'wordmarkText', $settings["wordmark-text"] );
 
-		// fixme we should define new message for tally
 		$this->setVal( 'tallyMsg',
 			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
 
