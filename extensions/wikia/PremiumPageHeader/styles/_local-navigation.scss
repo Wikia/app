@@ -105,9 +105,9 @@ $menu-item-horizontal-padding: 12px;
 		}
 
 		&:hover {
-			background-color: rgba($color-buttons, .1);
+			background-color: rgba($color-links, .1);
 
-			a {
+			> a {
 				color: $color-links;
 			}
 
