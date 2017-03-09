@@ -1,3 +1,5 @@
+@import 'skins/shared/color';
+
 .pph-local-nav {
 	bottom: 0;
 	left: 290px;
@@ -6,6 +8,52 @@
 
 .pph-local-nav-menu {
 	display: flex;
+
+	li {
+		padding: 14px 12px;
+		vertical-align: middle;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		a {
+			color: $color-button-text;
+			font-size: 12px;
+			font-weight: bold;
+			padding: 0 4px;
+			text-transform: uppercase;
+		}
+
+		.wds-icon {
+			height: 14px;
+			min-width: 14px;
+			vertical-align: top;
+			width: 14px;
+
+			&.pph-local-nav-chevron {
+				display: inline-block;
+				height: 8px;
+				min-width: 8px;
+				opacity: .5;
+				transition: opacity .1s;
+				vertical-align: baseline;
+				width: 8px;
+			}
+		}
+
+		&:hover {
+			a {
+				text-decoration: none;
+			}
+
+			.pph-local-nav-chevron {
+				opacity: 1;
+				transform: rotate(180deg);
+			}
+		}
+
+	}
 }
 
 .pph-local-nav-sub-menu {
