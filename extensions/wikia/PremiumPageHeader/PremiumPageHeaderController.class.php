@@ -17,7 +17,37 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	public function navigation() {
-		$this->setVal( 'data', ( new NavigationModel() )
-			->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE ) );
+		$this->setVal( 'data', ( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE ) );
+		$this->setVal( 'explore', $this->getExplore() );
+		$this->setVal( 'discuss', $this->getDiscuss() );
+	}
+
+	private function getExplore() {
+		$explore = [
+			'WikiActivity',
+			'Random',
+			'Community',
+			'Videos',
+			'Images',
+		];
+
+		return [
+			'text' => 'Explore',
+			'children' => array_map( function ( $page ) {
+				$title = Title::newFromText( $page, NS_SPECIAL );
+				return [
+					'text' => $title->getText(),
+					'textEscaped' => $title->getEscapedText(),
+					'href' => $title->getLocalURL()
+				];
+			}, $explore )
+		];
+	}
+
+	private function getDiscuss() {
+		return [
+			'text' => 'Discuss',
+			'href' => '/d'
+		];
 	}
 }
