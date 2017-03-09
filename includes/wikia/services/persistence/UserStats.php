@@ -4,7 +4,7 @@
  * Class UserStats represents a collection of user properties
  * that provide basic user statistics, such as edit count etc.
  */
-class UserStats implements ArrayAccess {
+class UserStats implements ArrayAccess, JsonSerializable {
 
 	const USER_STATS_PROPERTIES = [
 		'editcount',
@@ -70,23 +70,17 @@ class UserStats implements ArrayAccess {
 	 * @param DatabaseBase $db DB connection to use
 	 */
 	public function persist( DatabaseBase $db ) {
-		// Neither MW DB helpers nor FluentSql support conditional UPDATEs
-		$sql = "UPDATE wikia_user_properties SET wup_value = CASE wup_property";
+		$statInsert = [];
 
-		$statNames = array_keys( $this->propMap );
 		foreach ( $this->propMap as $statName => $statValue ) {
-			$sqlStatName = $db->addQuotes( $statName );
-			$sqlStatValue = $db->addQuotes( $statValue );
-
-			$sql .= " WHEN $sqlStatName THEN $sqlStatValue";
+			$statInsert[] = [
+				'wup_property' => $statName,
+				'wup_value' => $statValue,
+				'wup_user' => $this->userId
+			];
 		}
 
-		$sql .= ' ELSE wup_value END';
-		$sql .= ' WHERE wup_property IN ' . $db->makeList( $statNames );
-		$sql .= ' AND wup_user = ' . $db->addQuotes( $this->userId );
-		$sql .= ';';
-
-		$db->query( $sql, __METHOD__ );
+		$db->replace( 'wikia_user_properties', [], $statInsert, __METHOD__ );
 	}
 
 	/**
@@ -118,5 +112,13 @@ class UserStats implements ArrayAccess {
 	 */
 	public function offsetUnset( $offset ) {
 		unset( $this->propMap[$offset] );
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		return $this->propMap;
 	}
 }

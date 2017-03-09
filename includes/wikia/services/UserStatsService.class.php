@@ -306,7 +306,7 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 	private function scheduleStatsUpdateTask( UserStats $userStats ) {
 		$task = new \Wikia\Tasks\Tasks\UserStatsUpdateTask();
 		$task->wikiId( $this->wikiId );
-		$task->call( 'update', $userStats );
+		$task->call( 'update', $this->userId, $userStats );
 		$task->queue();
 	}
 

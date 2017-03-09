@@ -11,10 +11,18 @@ namespace Wikia\Tasks\Tasks;
 class UserStatsUpdateTask extends BaseTask {
 	/**
 	 * Persist the given user stats to DB
-	 * @param \UserStats $userStats
+	 * @param int $userId user ID of user these stats belong to
+	 * @param array $statData serialized data of UserStats
 	 */
-	public function update( \UserStats $userStats ) {
+	public function update( int $userId, $statData ) {
 		$db = wfGetDB( DB_MASTER );
+		$userStats = new \UserStats( $userId );
+
+		$statData = (array) $statData;
+		foreach ( $statData as $statName => $statValue ) {
+			$userStats[$statName] = $statValue;
+		}
+
 		$userStats->persist( $db );
 	}
 }
