@@ -1,4 +1,5 @@
 <div class="pph-wiki-header">
+	<?php // fixme it will not work with wikis without wordmark image  ?>
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	<div class="pph-wordmark-text">
 		<a href="<?= Sanitizer::encodeAttribute( $mainPageURL ); ?>"><?= $wordmarkText; ?></a>
