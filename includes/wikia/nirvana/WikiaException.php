@@ -181,6 +181,11 @@ class BadRequestException extends WikiaHttpException {
 	protected $message = 'Bad request';
 }
 
+class UnauthorizedException extends WikiaHttpException {
+	protected $code = 401;
+	protected $message = 'Unauthorized';
+}
+
 class ForbiddenException extends WikiaHttpException {
 	protected $code = 403;
 	protected $message = 'Forbidden';
