@@ -40,8 +40,29 @@ require(
 			};
 
 			this._getReplyText = function (notification) {
-				return fillArgs(window.mw.message('notifications-replied-by-with-title').parse(),
-					{postTitle: bold(notification.title)});
+				const key = this._getReplyKey(notification.title, notification.totalUniqueActors);
+				const message = window.mw.message(key).parse();
+				var args = {
+					postTitle: bold(notification.title)
+				};
+
+				if (notification.totalUniqueActors > 2) {
+					args.mostRecentUser = notification.latestActors[0].name;
+					args.number = notification.totalUniqueActors - 1;
+				} else if (notification.totalUniqueActors == 2) {
+					args.firstUser = notification.latestActors[0].name;
+					args.secondUser = notification.latestActors[1].name;
+				} else {
+					args.user = notification.latestActors[0].name;
+				}
+
+				return fillArgs(message, args);
+			};
+
+			this._getReplyKey = function (title, totalUniqueActors) {
+				const user = totalUniqueActors <= 1 ? '' :
+					totalUniqueActors == 2 ? 'two-users-' : 'multiple-users-';
+				return 'notifications-replied-by-' + user + (title ? 'with-title' : 'no-title');
 			};
 
 			this._getPostUpvoteText = function (notification) {
@@ -53,7 +74,6 @@ require(
 			this._getReplyUpvoteText = function (notification) {
 				const key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				const message = window.mw.message(key).parse();
-				console.log(key, message);
 				return fillArgs(message, {postTitle: bold(notification.title)});
 			};
 
@@ -153,6 +173,23 @@ require(
 				}
 			}
 
+			function createActors(actors) {
+				if (Array.isArray(actors)) {
+					return actors.map(function (data) {
+						return {
+							avatarUrl: data.avatarUrl,
+							badgePermission: data.badgePermission,
+							id: data.id,
+							name: data.name
+							//TODO profile URL
+							// profileUrl: DiscussionContributor.getProfileUrl(data.name)
+						};
+					})
+				} else {
+					return [];
+				}
+			}
+
 			function mapToModel(notifications) {
 				return notifications.map(function (notification) {
 					return {
@@ -164,7 +201,7 @@ require(
 						communityId: getSafely(notification, 'community.id'),
 						isUnread: notification.read === false,
 						totalUniqueActors: getSafely(notification, 'events.totalUniqueActors'),
-						// latestActors: NotificationModel.createActors(x.events.latestActors')),
+						latestActors: createActors(getSafely(notification, 'events.latestActors')),
 						type: getTypeFromApiData(notification)
 					};
 				});
