@@ -58,14 +58,14 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 		if ( empty( $stats['editcount'] ) ) {
 			$stats['editcount'] = $this->calculateEditCountWiki( static::READ_LATEST );
 		} else {
-			$stats['editcount']++;
+			$stats['editcount'] = $stats['editcount'] + 1;
 		}
 
 		// update weekly edit counts on wiki
 		if ( empty( $stats['editcountThisWeek'] ) ) {
 			$stats['editcountThisWeek'] = $this->calculateEditCountFromWeek( static::READ_LATEST );
 		} else {
-			$stats['editcountThisWeek']++;
+			$stats['editcountThisWeek'] = $stats['editcountThisWeek'] + 1;
 		}
 
 		// update first revision timestamp

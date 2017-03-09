@@ -45,6 +45,7 @@ class UserStats implements ArrayAccess {
 	 */
 	public function __construct( int $userId ) {
 		$this->userId = $userId;
+		$this->needsUpdate = false;
 	}
 
 	/**
