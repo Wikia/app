@@ -1,3 +1,4 @@
+<? if ( !empty( $appreciations ) ): ?>
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="thumbs-up-svg">
 <g class="thumbs-up-icon">
 	<path d="M7.2,48 L2.4,48 C0.96,48 0,47.04 0,45.6 L0,24 C0,22.56 0.96,21.6 2.4,21.6 L7.2,21.6 C8.64,21.6 9.6,22.56 9.6,24 L9.6,45.6 C9.6,47.04 8.64,48 7.2,48 L7.2,48 Z"/>
@@ -18,3 +19,4 @@
 		</a>
 	<?php endif ?>
 </div>
+<? endif ?>
