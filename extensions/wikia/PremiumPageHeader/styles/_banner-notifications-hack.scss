@@ -3,6 +3,7 @@
 
 .banner-notifications-wrapper {
 	position: relative;
+	z-index: $zTop;
 }
 
 @media #{$breakpoint-small-only} {
