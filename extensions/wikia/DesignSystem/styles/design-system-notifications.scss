@@ -5,6 +5,13 @@
 $notifications-dropdown-content-color: #656d77;
 $notifications-dropdown-border-color: #363b41;
 
+.wds-hidden-svg {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
 .wds-notifications {
   &__mark-all-as-read-button {
 	box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
@@ -46,4 +53,19 @@ $notifications-dropdown-border-color: #363b41;
 	  padding: 0 18px;
 	}
   }
+}
+
+$notification-card-text-color: #38424d;
+$notification-card-anchor-color: #656d77;
+
+.wds-notification-card {
+  padding: 12px 0 8px;
+  text-align: left;
+
+  &__icon-wrapper {
+	.wds-icon {
+	  fill: $wds-color-link;
+	}
+  }
+
 }

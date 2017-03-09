@@ -1,3 +1,7 @@
+<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small' , 'wds-hidden-svg' ) ?>
+<?//= DesignSystemHelper::renderSvg( 'wds-icons-megaphone' , 'wds-hidden-svg' ) ?>
+<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small' , 'wds-hidden-svg' ) ?>
+
 <div class="wds-global-navigation__notifications-menu wds-dropdown notifications-container">
 	<div id="on-site-notifications-dropdown"
 	     class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle"
@@ -19,7 +23,10 @@
 				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>
 			</a>
 		</div>
-		<div class="wds-notification-list" id="on-site-notifications">
+		<div class="wds-notification-list">
+			<ul class="wds-list wds-has-lines-between" id="on-site-notifications">
+
+			</ul>
 		</div>
 	</div>
 </div>

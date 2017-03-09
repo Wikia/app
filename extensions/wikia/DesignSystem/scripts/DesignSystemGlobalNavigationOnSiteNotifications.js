@@ -3,15 +3,36 @@ require(
 	function ($, window, loader, mustache) {
 		'use strict';
 
+		const notificationTypes = {
+			discussionUpvotePost: 'discussion-upvote-post',
+			discussionUpvoteReply: 'discussion-upvote-reply',
+			discussionReply: 'discussion-reply',
+			announcement: 'announcement'
+		};
+
 		function getSafely(obj, path) {
 			return path.split(".").reduce(function (acc, key) {
 				return (typeof acc == "undefined" || acc === null) ? acc : acc[key];
 			}, obj);
 		}
 
-		function View(logic, template) {
+		function TextFormatter() {
+			function fillArgs(message, args) {
+				return Object.keys(args).reduce(function (acc, key) {
+					return acc.replace('__' + key + '__', args[key])
+				}, message);
+			}
+
+			this.getText = function (notification) {
+				return fillArgs($.msg('notifications-replied-by-with-title'),
+					{postTitle: notification.title});
+			}
+		}
+
+		function View(logic, template, textFormatter) {
 			this.logic = logic;
 			this.template = template;
+			this.textFormatter = textFormatter;
 			this.$notificationsCount = $('#on-site-notifications-count');
 			this.$container = $('#on-site-notifications');
 			this.$markAllAsReadButton = $('#mark-all-as-read-button');
@@ -32,13 +53,31 @@ require(
 				});
 			};
 
+			this._mapToView = function (notifications) {
+
+				function getIcon(type) {
+					if (type === notificationTypes.discussionReply) {
+						return 'wds-icons-reply-small';
+					} else if (type === notificationTypes.announcement) {
+						return 'wds-icons-megaphone';
+					} else {
+						return 'wds-icons-upvote-small';
+					}
+				}
+
+				return notifications.map(this.proxy(function (notification) {
+					return {
+						icon: getIcon(notification.type),
+						uri: notification.uri,
+						snippet: notification.snippet,
+						text: this.textFormatter.getText(notification)
+					}
+				}));
+			};
 
 			this.renderNotifications = function (notifications) {
-				//TODO move to one template
-				notifications.forEach(this.proxy(function (notification) {
-					var html = mustache.render(this.template, notification);
-					this.$container.append(html);
-				}));
+				var html = mustache.render(this.template, this._mapToView(notifications));
+				this.$container.append(html);
 			};
 
 			this.renderUnreadCount = function (count) {
@@ -63,6 +102,20 @@ require(
 			this.notifications = [];
 			this.unreadCount = 0;
 
+			function getTypeFromApiData(notification) {
+				if (notification.type === 'upvote-notification') {
+					if (notification.refersTo.type === 'discussion-post') {
+						return notificationTypes.discussionUpvoteReply;
+					} else {
+						return notificationTypes.discussionUpvotePost;
+					}
+				} else if (notification.type === 'replies-notification') {
+					return notificationTypes.discussionReply;
+				} else if (notification.type === 'announcement-notification') {
+					return notificationTypes.announcement;
+				}
+			}
+
 			function mapToModel(notifications) {
 				return notifications.map(function (notification) {
 					return {
@@ -73,9 +126,9 @@ require(
 						communityName: getSafely(notification, 'community.name'),
 						communityId: getSafely(notification, 'community.id'),
 						isUnread: notification.read === false,
-						totalUniqueActors: getSafely(notification, 'events.totalUniqueActors')
+						totalUniqueActors: getSafely(notification, 'events.totalUniqueActors'),
 						// latestActors: NotificationModel.createActors(x.events.latestActors')),
-						// type: NotificationModel.getTypeFromApiData(notificationData)
+						type: getTypeFromApiData(notification)
 					};
 				});
 			}
@@ -182,7 +235,7 @@ require(
 		var OnSiteNotifications = {
 			init: function (template) {
 				this.logic = new Logic(window.Bucky('OnSiteNotifications'));
-				this.view = new View(this.logic, template);
+				this.view = new View(this.logic, template, new TextFormatter());
 				this.logic.model = new Model(this.view);
 
 				this.view.registerEvents();
