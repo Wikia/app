@@ -144,3 +144,9 @@ $menu-item-horizontal-padding: 12px;
 	position: absolute;
 	top: 0;
 }
+
+@media #{$breakpoint-small-only} {
+	.pph-local-nav {
+		left: 20px;
+	}
+}
