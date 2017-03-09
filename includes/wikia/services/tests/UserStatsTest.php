@@ -29,9 +29,21 @@ class UserStatsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSavesStatPropertiesToDB() {
-		$expectedSQL = 'UPDATE `wikia_user_properties` SET wup_value = CASE WHEN `test` THEN 123 ELSE wup_value END WHERE wup_property IN (test) AND wup_user = ' . static::TEST_USER_ID . ';';
+		$expectedSQL = 'UPDATE wikia_user_properties SET wup_value = CASE wup_property WHEN \'test\' THEN 123 ELSE wup_value END WHERE wup_property IN (test) AND wup_user = ' . static::TEST_USER_ID . ';';
 		/** @var PHPUnit_Framework_MockObject_MockObject|DatabaseMysqli $dbMock */
 		$dbMock = $this->getMockBuilder( DatabaseMysqli::class )->getMock();
+
+		$dbMock->expects( $this->any() )
+			->method( 'addQuotes' )
+			->willReturnCallback( function ( $s ) {
+				return is_string( $s ) ? "'$s'" : $s;
+			} );
+
+		$dbMock->expects( $this->any() )
+			->method( 'makeList' )
+			->willReturnCallback( function ( $a ) {
+				return "(" . implode( ',', $a ) . ")";
+			} );
 
 		$dbMock->expects( $this->once() )
 			->method( 'query' )

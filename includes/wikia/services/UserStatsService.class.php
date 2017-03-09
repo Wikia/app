@@ -141,6 +141,9 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 		return $stats;
 	}
 
+	/**
+	 * Reset edit count of this user - force a recalculation and trigger update
+	 */
 	public function resetEditCount() {
 		$stats = $this->getStats();
 
@@ -249,7 +252,7 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
 	private function initFirstContributionTimestamp() {
-		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
+		$dbw = $this->getDatabase( static::READ_LATEST );
 		$res = $dbw->selectRow(
 			'revision',
 			[ 'min(rev_timestamp) AS firstContributionTimestamp' ],
@@ -296,15 +299,13 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 	}
 
 	/**
-	 * Enqueue a background task to update user stats of this user.
+	 * SUS-1771: Enqueue a background task to update user stats of this user.
 	 *
 	 * @param UserStats $userStats updated stats to persist to database
 	 */
 	private function scheduleStatsUpdateTask( UserStats $userStats ) {
-		global $wgCityId;
-
 		$task = new \Wikia\Tasks\Tasks\UserStatsUpdateTask();
-		$task->wikiId( $wgCityId );
+		$task->wikiId( $this->wikiId );
 		$task->call( 'update', $userStats );
 		$task->queue();
 	}

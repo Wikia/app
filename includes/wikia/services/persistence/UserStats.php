@@ -39,6 +39,10 @@ class UserStats implements ArrayAccess {
 		return $this->needsUpdate;
 	}
 
+	/**
+	 * UserStats constructor - sets user ID of user we want to load stats for.
+	 * @param int $userId
+	 */
 	public function __construct( int $userId ) {
 		$this->userId = $userId;
 	}
@@ -66,7 +70,7 @@ class UserStats implements ArrayAccess {
 	 */
 	public function persist( DatabaseBase $db ) {
 		// Neither MW DB helpers nor FluentSql support conditional UPDATEs
-		$sql = "UPDATE `wikia_user_properties` SET wup_value = CASE";
+		$sql = "UPDATE wikia_user_properties SET wup_value = CASE wup_property";
 
 		$statNames = array_keys( $this->propMap );
 		foreach ( $this->propMap as $statName => $statValue ) {
@@ -77,21 +81,30 @@ class UserStats implements ArrayAccess {
 		}
 
 		$sql .= ' ELSE wup_value END';
-		$sql .= ' WHERE `wup_property` IN ' . $db->makeList( $statNames );
-		$sql .= ' AND `wup_user` = ' . $db->addQuotes( $this->userId );
+		$sql .= ' WHERE wup_property IN ' . $db->makeList( $statNames );
+		$sql .= ' AND wup_user = ' . $db->addQuotes( $this->userId );
 		$sql .= ';';
 
 		$db->query( $sql, __METHOD__ );
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function offsetExists( $offset ) {
 		return isset( $this->propMap[$offset] );
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function offsetGet( $offset ) {
 		return $this->propMap[$offset];
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function offsetSet( $offset, $value ) {
 		$this->propMap[$offset] = $value;
 
@@ -99,6 +112,9 @@ class UserStats implements ArrayAccess {
 		$this->needsUpdate = true;
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function offsetUnset( $offset ) {
 		unset( $this->propMap[$offset] );
 	}
