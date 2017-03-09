@@ -69,6 +69,11 @@
 @media #{$breakpoint-medium-only} {
 	.pph-wiki-header {
 		margin: -1px -21px 0;
+
+		.wordmark img {
+			width: 175px;
+			height: 45.5px;
+		}
 	}
 }
 
@@ -81,12 +86,6 @@
 		font-size: 24px;
 		margin-top: 16px;
 	}
-
-	.wordmark img {
-		width: 175px;
-		height: 45.5px;
-	}
-
 	.pph-tally-area .pph-tally {
 		em {
 			font-size: 18px;
