@@ -21,6 +21,7 @@
 			color: $color-button-text;
 			font-size: 12px;
 			font-weight: bold;
+			padding-right: 6px;
 			text-transform: uppercase;
 
 			.wds-icon {
@@ -35,7 +36,6 @@
 		.pph-local-nav-chevron {
 			display: inline-block;
 			height: 8px;
-			margin-left: 4px;
 			min-width: 8px;
 			opacity: .5;
 			transition: opacity .1s;
