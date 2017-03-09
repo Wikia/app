@@ -47,7 +47,7 @@
 	<li class="pph-local-nav-item-l1 pph-local-nav-discuss">
 		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-reply',
-			'wds-icon wds-icon-small rwe-page-header-nav__icon'
+			'wds-icon wds-icon-small pph-local-nav-discuss'
 		) ?>
 		<a href="<?= $discuss['href'] ?>"><?= $discuss['text'] ?></a>
 	</li>
