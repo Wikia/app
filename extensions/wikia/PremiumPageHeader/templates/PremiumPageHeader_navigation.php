@@ -10,6 +10,7 @@
 					<li class="pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<?endif;?>">
 						<a href="<?= $childL2['href'] ?>"><?= $childL2['textEscaped'] ?></a>
 						<? if ( !empty( $childL2['children'] ) ): ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
 							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
 									<li class="pph-local-nav-item-l3">

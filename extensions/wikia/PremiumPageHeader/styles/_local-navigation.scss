@@ -68,6 +68,10 @@ $menu-item-horizontal-padding: 12px;
 	}
 }
 
+.pph-local-nav-sub-chevron {
+	transform: rotate(-90deg);
+}
+
 .pph-local-nav-sub-menu {
 	background: mix($color-page, #000, 90%);
 	box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
