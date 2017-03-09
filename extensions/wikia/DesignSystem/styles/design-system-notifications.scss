@@ -68,6 +68,11 @@ $notification-card-anchor-color: #656d77;
 
   &__icon-wrapper {
 	cursor: pointer;
+	padding-left: 12px;
+	width: 30px;
+	display: flex;
+	float: left;
+
 	.wds-icon {
 	  fill: $wds-icon-color;
 	}
@@ -96,6 +101,7 @@ $notification-card-anchor-color: #656d77;
   }
 
   &__snippet {
+	color: $wds-color-blue-gray;
 	font-size: 14px;
 	font-style: italic;
 	line-height: 18px;
@@ -109,6 +115,7 @@ $notification-card-anchor-color: #656d77;
 	font-weight: bold;
 	list-style-type: none;
 	margin: 0;
+	padding: 8px 0 0;
   }
 
   &__context-separator {

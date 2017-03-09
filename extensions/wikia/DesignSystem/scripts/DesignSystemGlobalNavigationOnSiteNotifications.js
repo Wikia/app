@@ -17,6 +17,10 @@ require(
 		}
 
 		function TextFormatter() {
+			function bold(text) {
+				return text ? '<b>' + text + '</b>' : text;
+			}
+
 			function fillArgs(message, args) {
 				return Object.keys(args).reduce(function (acc, key) {
 					return acc.replace('__' + key + '__', args[key])
@@ -37,21 +41,20 @@ require(
 
 			this._getReplyText = function (notification) {
 				return fillArgs(window.mw.message('notifications-replied-by-with-title').parse(),
-					{postTitle: notification.title});
+					{postTitle: bold(notification.title)});
 			};
 
 			this._getPostUpvoteText = function (notification) {
 				const key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				const message = window.mw.message(key).parse();
-				console.log(key, message);
-				return fillArgs(message, {postTitle: notification.title});
+				return fillArgs(message, {postTitle: bold(notification.title)});
 			};
 
 			this._getReplyUpvoteText = function (notification) {
 				const key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				const message = window.mw.message(key).parse();
 				console.log(key, message);
-				return fillArgs(message, {postTitle: notification.title});
+				return fillArgs(message, {postTitle: bold(notification.title)});
 			};
 
 			this._getUpvoteKey = function (title, totalUniqueActors) {
