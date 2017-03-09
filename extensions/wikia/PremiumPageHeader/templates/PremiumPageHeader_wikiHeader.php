@@ -1,8 +1,10 @@
 <div class="pph-wiki-header">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
-	<div class="pph-wordmark-text"><?= $wordmarkText; ?></div>
-	<div class="pph-tally-area">
+	<div class="pph-wordmark-text">
+		<a href="<?= Sanitizer::encodeAttribute( $mainPageURL ); ?>"><?= $wordmarkText; ?></a>
+	</div>
 
+	<div class="pph-tally-area">
 		<div class="pph-tally"><?= $tallyMsg ?></div>
 
 		<a href="<?= $addNewPageHref; ?>"

@@ -14,10 +14,12 @@ class PremiumPageHeaderController extends WikiaController {
 
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
 
+		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );
+
 	}
 
 	public function navigation() {
-		$this->setVal( 'data', ( new NavigationModel() )
-			->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE ) );
+		$this->setVal( 'data',
+			( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE ) );
 	}
 }
