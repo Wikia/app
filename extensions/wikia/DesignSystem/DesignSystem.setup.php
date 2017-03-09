@@ -43,24 +43,27 @@ function addJsVariables( Array &$vars, &$scripts ) {
 	return true;
 }
 
-JSMessages::registerPackage( 'DesignSystem', [
-	'notifications-no-notifications-message',
-	'notifications-mark-all-as-read',
-	'notifications-replied-by-multiple-users-with-title',
-	'notifications-replied-by-multiple-users-no-title',
-	'notifications-replied-by-two-users-with-title',
-	'notifications-replied-by-two-users-no-title',
-	'notifications-replied-by-with-title',
-	'notifications-replied-by-no-title',
-	'notifications-post-upvote-single-user-with-title',
-	'notifications-post-upvote-single-user-no-title',
-	'notifications-post-upvote-multiple-users-with-title',
-	'notifications-post-upvote-multiple-users-no-title',
-	'notifications-reply-upvote-single-user-with-title',
-	'notifications-reply-upvote-single-user-no-title',
-	'notifications-reply-upvote-multiple-users-with-title',
-	'notifications-reply-upvote-multiple-users-no-title',
-	'notifications-notifications',
-] );
-
-JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
+/**
+ * ResourceLoader module
+ */
+$wgResourceModules['ext.designSystem'] = [
+	'messages' => [
+		'notifications-no-notifications-message',
+		'notifications-mark-all-as-read',
+		'notifications-replied-by-multiple-users-with-title',
+		'notifications-replied-by-multiple-users-no-title',
+		'notifications-replied-by-two-users-with-title',
+		'notifications-replied-by-two-users-no-title',
+		'notifications-replied-by-with-title',
+		'notifications-replied-by-no-title',
+		'notifications-post-upvote-single-user-with-title',
+		'notifications-post-upvote-single-user-no-title',
+		'notifications-post-upvote-multiple-users-with-title',
+		'notifications-post-upvote-multiple-users-no-title',
+		'notifications-reply-upvote-single-user-with-title',
+		'notifications-reply-upvote-single-user-no-title',
+		'notifications-reply-upvote-multiple-users-with-title',
+		'notifications-reply-upvote-multiple-users-no-title',
+		'notifications-notifications',
+	]
+];

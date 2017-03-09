@@ -20,8 +20,7 @@ class DesignSystemHooks {
 			}
 		}
 
-		JSMessages::enqueuePackage( 'DesignSystem', JSMessages::EXTERNAL );
-
+		$out->addModules( 'ext.designSystem' );
 		return true;
 	}
 }

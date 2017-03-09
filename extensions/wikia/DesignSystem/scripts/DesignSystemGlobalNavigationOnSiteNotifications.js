@@ -24,9 +24,41 @@ require(
 			}
 
 			this.getText = function (notification) {
-				return fillArgs($.msg('notifications-replied-by-with-title'),
+				if (notification.type === notificationTypes.discussionReply) {
+					return this._getReplyText(notification);
+				} else if (notification.type === notificationTypes.discussionUpvotePost) {
+					return this._getPostUpvoteText(notification)
+				} else if (notification.type === notificationTypes.discussionUpvoteReply) {
+					return this._getReplyUpvoteText(notification);
+				} else {
+					return notification.title;
+				}
+			};
+
+			this._getReplyText = function (notification) {
+				return fillArgs(window.mw.message('notifications-replied-by-with-title').parse(),
 					{postTitle: notification.title});
-			}
+			};
+
+			this._getPostUpvoteText = function (notification) {
+				const key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
+				const message = window.mw.message(key).parse();
+				console.log(key, message);
+				return fillArgs(message, {postTitle: notification.title});
+			};
+
+			this._getReplyUpvoteText = function (notification) {
+				const key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
+				const message = window.mw.message(key).parse();
+				console.log(key, message);
+				return fillArgs(message, {postTitle: notification.title});
+			};
+
+			this._getUpvoteKey = function (title, totalUniqueActors) {
+				return '-' + (totalUniqueActors <= 1 ? 'single-user' : 'multiple-users')
+					+ '-' + (title ? 'with-title' : 'no-title');
+			};
+
 		}
 
 		function View(logic, template, textFormatter) {
@@ -224,7 +256,7 @@ require(
 			};
 
 			this.getBaseUrl = function () {
-				return mw.config.get('wgOnSiteNotificationsApiUrl');
+				return window.mw.config.get('wgOnSiteNotificationsApiUrl');
 			};
 
 			this.proxy = function (func) {
