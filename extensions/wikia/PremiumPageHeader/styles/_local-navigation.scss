@@ -84,18 +84,35 @@ $menu-item-horizontal-padding: 12px;
 	}
 
 	li {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
 		padding: 12px 24px 12px 12px;
+		transition: background-color .2s;
 
 		a {
 			color: $color-text;
 			line-height: 14px;
+			transition: color .2s;
+			white-space: nowrap;
+		}
+
+		.pph-local-nav-sub-chevron {
+			fill: $color-text;
+			margin-bottom: 2px;
+			margin-left: 8px;
+			transition: fill .2s;
 		}
 
 		&:hover {
-			background: rgba($color-buttons, .1);
+			background-color: rgba($color-buttons, .1);
 
 			a {
 				color: $color-links;
+			}
+
+			.pph-local-nav-sub-chevron {
+				fill: $color-links;
 			}
 		}
 	}
