@@ -1,15 +1,30 @@
 @import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
 
 .pph-wiki-header {
 	background-color: $color-buttons;
 	color: $color-button-text;
 	display: flex;
-	margin: 0 -30px;
+	margin: -1px -31px 0;
 	position: relative;
 	z-index: 1;
 
 	.wordmark {
-		margin: 20px 20px 18px;
+		height: 65px;
+		margin: 20px 18px 20px 20px;
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.pph-wiki-header {
+		margin: -1px -21px 0;
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.pph-wiki-header {
+		margin: -1px -25px 0;
 	}
 }
 
