@@ -90,6 +90,9 @@ $notification-card-anchor-color: #656d77;
 	font-size: 14px;
 	line-height: 18px;
 	margin: 0;
+	b {
+	  font-weight:bold
+	}
   }
 
   &__snippet {
