@@ -663,6 +663,9 @@ class LocalisationCache {
 			$this->mergeItem( $key, $allData[$key], $item );
 		}
 
+		# Hot-fix for MAIN-8472
+		$allData['namespaceAliases'] = $coreData['namespaceAliases'];
+
 		# Add cache dependencies for any referenced globals
 		$deps['wgExtensionMessagesFiles'] = new GlobalDependency( 'wgExtensionMessagesFiles' );
 		$deps['version'] = new ConstantDependency( 'MW_LC_VERSION' );
