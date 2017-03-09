@@ -1,5 +1,29 @@
 {{#.}}
     <li class="wds-notification-card">
+        <div class="wds-avatar-stack">
+            {{#showAvatars}}
+                {{#avatars}}
+                    {{#avatarUrl}}
+                        {{#profileUrl}}
+                            <a href="{{profileUrl}}">
+                                <img class="wds-avatar" src="{{avatarUrl}}">
+                            </a>
+                        {{/profileUrl}}
+                        {{^profileUrl}}
+                            <img class="wds-avatar" src="{{avatarUrl}}">
+                        {{/profileUrl}}
+                    {{/avatarUrl}}
+                    {{^avatarUrl}}
+                        <img class="wds-avatar"
+                             src="http://vignette.wikia-dev.pl/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50?format=jpg">
+                    {{/avatarUrl}}
+                {{/avatars}}
+                {{#showAvatarOverflow}}
+                    <div class="wds-avatar-stack__overflow">+{{avatarOverflow}}</div>
+                {{/showAvatarOverflow}}
+            {{/showAvatars}}
+        </div>
+
         <a href="{{uri}}">
             <div class="wds-notification-card__icon-wrapper">
                 <svg class="wds-icon {{#isUnread}}is-unread{{/isUnread}}"

@@ -64,7 +64,7 @@ $notification-card-anchor-color: #656d77;
   padding: 12px 0 8px;
   text-align: left;
   a {
-  	cursor: pointer;
+	cursor: pointer;
 	display: flex;
   }
 
@@ -97,7 +97,7 @@ $notification-card-anchor-color: #656d77;
 	line-height: 18px;
 	margin: 0;
 	b {
-	  font-weight:bold
+	  font-weight: bold
 	}
   }
 
@@ -123,4 +123,26 @@ $notification-card-anchor-color: #656d77;
 	margin: 0 8px 0 8px;
   }
 
+}
+
+.wds-avatar-stack {
+  margin: 8px 18px 6px 40px;
+  display: inline-block;
+
+  @for $i from 1 to 6 {
+	.wds-avatar:nth-child(#{$i}) {
+	  position: relative;
+	  transform: translate(($i - 1) * - 15px);
+	  z-index: 5 - $i;
+	}
+  }
+
+  &__overflow {
+	background-color: $wds-color-white;
+	border: 0;
+	color: $wds-color-light-c6;
+	font-size: 12px;
+	transform: translate(-60px);
+	width: auto;
+  }
 }

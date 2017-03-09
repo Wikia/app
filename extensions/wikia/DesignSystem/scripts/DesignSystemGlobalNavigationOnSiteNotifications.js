@@ -81,7 +81,6 @@ require(
 				return '-' + (totalUniqueActors <= 1 ? 'single-user' : 'multiple-users')
 					+ '-' + (title ? 'with-title' : 'no-title');
 			};
-
 		}
 
 		function View(logic, template, textFormatter) {
@@ -120,6 +119,11 @@ require(
 					}
 				}
 
+				function getAvatars(actors) {
+					console.log(actors);
+					return actors.slice(0, 5);
+				}
+
 				return notifications.map(this.proxy(function (notification) {
 					return {
 						icon: getIcon(notification.type),
@@ -127,7 +131,12 @@ require(
 						snippet: notification.snippet,
 						text: this.textFormatter.getText(notification),
 						isUnread: notification.isUnread,
-						communityName: notification.communityName
+						communityName: notification.communityName,
+						showAvatars: notification.totalUniqueActors > 2,
+						// TODO change to 5 after tests
+						showAvatarOverflow: notification.totalUniqueActors > 2,
+						avatarOverflow: notification.totalUniqueActors - 5,
+						avatars: getAvatars(notification.latestActors)
 					}
 				}));
 			};
@@ -184,7 +193,7 @@ require(
 							//TODO profile URL
 							// profileUrl: DiscussionContributor.getProfileUrl(data.name)
 						};
-					})
+					});
 				} else {
 					return [];
 				}
