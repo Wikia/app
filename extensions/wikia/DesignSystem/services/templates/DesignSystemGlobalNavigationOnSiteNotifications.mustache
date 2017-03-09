@@ -1,31 +1,30 @@
 {{#.}}
-    <a href="{{uri}}" class="wds-notification-card">
-        <a>
+    <li class="wds-notification-card">
+        <a href="{{uri}}">
             <div class="wds-notification-card__icon-wrapper">
-                <svg class="wds-icon {{#isUnread}}is-unread{{/isUnread}}" viewBox="0 0 24 24">
+                <svg class="wds-icon {{#isUnread}}is-unread{{/isUnread}}"
+                     viewBox="0 0 24 24">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
                          xlink:href="#{{icon}}"></use>
                 </svg>
             </div>
+            <div class="wds-notification-card__body">
+                <p class="wds-notification-card__text">
+                    {{{text}}}
+                </p>
+                <p class="wds-notification-card__snippet">
+                    {{snippet}}
+                </p>
+                <ul class="wds-notification-card__context-list">
+                    <li class="wds-notification-card__context-item">
+                        {{timestamp}}now
+                    </li>
+                    <li class="wds-notification-card__context-separator"> ·</li>
+                    <li class="wds-notification-card__context-item">
+                        {{communityName}}
+                    </li>
+                </ul>
+            </div>
         </a>
-        <div class="wds-notification-card__body">
-            <p class="wds-notification-card__text">
-                {{{text}}}
-            </p>
-
-            <p class="wds-notification-card__snippet">
-                {{snippet}}
-            </p>
-
-            <ul class="wds-notification-card__context-list">
-                <li class="wds-notification-card__context-item">
-                    {{timestamp}}now
-                </li>
-                <li class="wds-notification-card__context-separator"> · </li>
-                <li class="wds-notification-card__context-item">
-                    {{communityName}}
-                </li>
-            </ul>
-        </div>
-    </a>
+    </li>
 {{/.}}

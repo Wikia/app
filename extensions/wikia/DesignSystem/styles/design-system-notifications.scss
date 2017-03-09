@@ -62,8 +62,12 @@ $notification-card-anchor-color: #656d77;
 .wds-notification-card {
   padding: 12px 0 8px;
   text-align: left;
+  a {
+  	cursor: pointer;
+  }
 
   &__icon-wrapper {
+	cursor: pointer;
 	.wds-icon {
 	  fill: $wds-icon-color;
 	}
