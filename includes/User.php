@@ -122,7 +122,6 @@ class User implements JsonSerializable {
 		'mEmailTokenExpires',
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
-		'mEditCount',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -134,7 +133,7 @@ class User implements JsonSerializable {
 	var $mId, $mName, $mRealName, $mNewpassword, $mNewpassTime,
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
-		$mCookiePassword, $mEditCount, $mAllowUsertalk;
+		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -1106,12 +1105,6 @@ class User implements JsonSerializable {
 			$this->mId = intval( $row->user_id );
 			$this->mFrom = 'id';
 			$this->setItemLoaded( 'id' );
-		} else {
-			$all = false;
-		}
-
-		if ( isset( $row->user_editcount ) ) {
-			$this->mEditCount = $row->user_editcount;
 		} else {
 			$all = false;
 		}
@@ -2762,14 +2755,9 @@ class User implements JsonSerializable {
 	 */
 	public function getEditCount() {
 		if( $this->getId() ) {
-			if ( !isset( $this->mEditCount ) ) {
-				/* Populate the count, if it has not been populated yet */
-
 				// Wikia change - SUS-1771: use per-wiki service instead of cluster user table
 				$userStatsService = new UserStatsService( $this->getId() );
-				$this->mEditCount = $userStatsService->getEditCountWiki();
-			}
-			return $this->mEditCount;
+				return $userStatsService->getEditCountWiki();
 		} else {
 			/* nil */
 			return null;
