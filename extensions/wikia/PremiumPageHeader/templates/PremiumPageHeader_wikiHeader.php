@@ -16,5 +16,7 @@
 			<?= wfMessage( 'oasis-button-add-new-page' )->escaped(); ?>
 		</a>
 	</div>
-	<div class="pph-local-nav">Local nav here</div>
+	<div class="pph-local-nav">
+		<?= $app->renderView( 'PremiumPageHeader', 'navigation' ) ?>
+	</div>
 </div>
