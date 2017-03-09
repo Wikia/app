@@ -121,10 +121,12 @@ class MercuryApiController extends WikiaController {
 	 * @desc returns an article in simplified json structure
 	 *
 	 * @param int $articleId
+	 * @param Title $title
+	 * @param string $sections List of section numbers or 'all'
 	 *
 	 * @return array
 	 */
-	private function getArticleJson( $articleId, Title $title ) {
+	private function getArticleJson( $articleId, Title $title, $sections = '' ) {
 		$redirect = $this->request->getVal( 'redirect' );
 
 		$articleAsJson = $this->sendRequest(
@@ -132,7 +134,8 @@ class MercuryApiController extends WikiaController {
 			'getAsJson',
 			[
 				'id' => $articleId,
-				'redirect' => $redirect
+				'redirect' => $redirect,
+				'sections' => $sections
 			]
 		)->getData();
 
@@ -144,6 +147,7 @@ class MercuryApiController extends WikiaController {
 
 		return $articleAsJson;
 	}
+
 
 	/**
 	 * @desc returns top contributors user details
@@ -321,6 +325,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
+			$sections = $this->getVal( 'sections' );
 
 			// getArticle is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $articleId );
@@ -342,7 +347,7 @@ class MercuryApiController extends WikiaController {
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $wgWikiaCuratedContent ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
-				$articleAsJson = $this->getArticleJson( $articleId, $title );
+				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
 				$data['article'] = $articleAsJson;
 			}
 

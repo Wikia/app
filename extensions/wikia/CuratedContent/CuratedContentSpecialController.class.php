@@ -115,6 +115,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
+			$this->response->setVal( 'featured', $this->sendSelfRequest( self::FEATURED_SECTION_TEMPLATE ) );
 			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
@@ -291,13 +292,16 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$sectionsAfterProcess = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as $section ) {
-				$sectionErr = $this->validateSection($section);
+				$sectionErr = $this->validateSection( $section );
 				if ( sizeof( $sectionErr ) ) {
-					$err = array_merge($err, $sectionErr);
+					$err = array_merge( $err, $sectionErr );
 				}
 				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
-				array_push( $sectionsAfterProcess, $newSection );
-				$err = array_merge( $err, $sectionErr );
+				// Don't push to output array featured section without items
+				if ( empty( $section['featured'] ) || !empty( $section['items'] ) ) {
+					array_push( $sectionsAfterProcess, $newSection );
+					$err = array_merge( $err, $sectionErr );
+				}
 			}
 		}
 		return [ $sectionsAfterProcess, $err ];
