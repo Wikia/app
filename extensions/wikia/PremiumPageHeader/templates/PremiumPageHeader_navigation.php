@@ -1,15 +1,14 @@
 <ul class="pph-local-nav-menu">
 	<? foreach ( $data as $item ) : ?>
-		<li class="pph-local-nav-item-l1">
+		<li class="pph-local-nav-item-l1<? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<?endif;?>">
 			<a href="<?= $item['href'] ?>"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
 			<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
 				<? foreach ( $item['children'] as $childL2 ): ?>
-					<li class="pph-local-nav-item-l2">
+					<li class="pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<?endif;?>">
 						<a href="<?= $childL2['href'] ?>"><?= $childL2['textEscaped'] ?></a>
-
 						<? if ( !empty( $childL2['children'] ) ): ?>
 							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
@@ -24,7 +23,7 @@
 			</ul>
 		</li>
 	<? endforeach; ?>
-	<li class="pph-local-nav-item-l1 pph-local-nav-explore">
+	<li class="pph-local-nav-item-l1 pph-local-nav-container pph-local-nav-explore">
 		<a>
 			<svg class="wds-icon wds-icon-small rwe-page-header-nav__icon" width="18" height="16" viewBox="0 0 18 16"
 			     xmlns="http://www.w3.org/2000/svg">
