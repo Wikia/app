@@ -92,6 +92,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
+		$this->markTestSkipped(__METHOD__);
+
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
