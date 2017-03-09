@@ -45,9 +45,14 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	private function getDiscuss() {
+		global $wgEnableDiscussionsNavigation, $wgEnableDiscussions, $wgEnableForumExt;
+
+		$href = !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ?
+			'/d' : Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL();
+
 		return [
 			'text' => 'Discuss',
-			'href' => '/d'
+			'href' => $href
 		];
 	}
 }
