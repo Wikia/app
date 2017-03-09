@@ -1,5 +1,9 @@
 @import 'skins/shared/color';
 
+$submenu-minimun-width: 150px;
+$menu-item-vertical-padding: 16px;
+$menu-item-horizontal-padding: 12px;
+
 .pph-local-nav {
 	bottom: 0;
 	left: 290px;
@@ -9,15 +13,17 @@
 .pph-local-nav-menu {
 	display: flex;
 
-	li {
-		padding: 14px 12px;
+	.pph-local-nav-item-l1 {
+		cursor: pointer;
+		padding: $menu-item-vertical-padding $menu-item-horizontal-padding;
+		position: relative;
 		vertical-align: middle;
 
 		&:first-child {
-			padding-left: 0;
+			margin-left: -$menu-item-horizontal-padding;
 		}
 
-		a {
+		> a {
 			color: $color-button-text;
 			font-size: 12px;
 			font-weight: bold;
@@ -53,17 +59,61 @@
 				transform: rotate(180deg);
 			}
 		}
+	}
 
+	li:hover {
+		> .pph-local-nav-sub-menu {
+			display: block;
+		}
 	}
 }
 
 .pph-local-nav-sub-menu {
+	background: mix($color-page, #000, 90%);
+	box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
 	display: none;
+	left: -24px + $menu-item-horizontal-padding;
+	margin-top: $menu-item-vertical-padding;
+	min-width: $submenu-minimun-width;
+	padding: 12px 0 12px 12px;
 	position: absolute;
-}
 
-.pph-local-nav-l3 {
-	left: 100%;
-	min-height: 100%;
-	top: 0;
+	@if $is-dark-wiki {
+		background: mix($color-page, #fff, 90%);
+	}
+
+	li {
+		padding: 12px 24px 12px 12px;
+
+		a {
+			color: $color-text;
+			line-height: 14px;
+		}
+
+		&:hover {
+			background: rgba($color-buttons, .1);
+
+			a {
+				color: $color-links;
+			}
+		}
+	}
+
+	&.pph-local-nav-l2 {
+		li a {
+			font-size: 14px;
+			font-weight: bold;
+		}
+	}
+
+	&.pph-local-nav-l3 {
+		left: 100%;
+		min-height: 100%;
+		top: 0;
+
+		li a {
+			font-size: 12px;
+			font-weight: normal;
+		}
+	}
 }
