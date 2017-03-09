@@ -1,0 +1,50 @@
+// WebVTT cues
+video::cue {
+  font: 16px/8px Arial, Helvetica, sans-serif;
+  color: #fff !important;
+  background:#000;
+  white-space:normal;
+  text-shadow: 1px 1px 2px black;
+}
+
+// Safari Live Stream
+video::-webkit-media-text-track-container {
+  margin-bottom: 60px !important;
+}
+
+video::-webkit-media-text-track-container {
+  margin-bottom: 60px !important;
+  font-size: 16px !important;
+  background-color:transparent !important;
+}
+
+video::-webkit-media-text-track-background {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+video::-webkit-media-text-track-display {
+  position: relative;
+  top: auto !important;
+  bottom: 20px;
+  width: 100% !important;
+  background-color: transparent !important;
+  padding: 1px !important;
+  margin: 0 !important;
+  font: 16px Arial, Helvetica, sans-serif;
+  color: #fff !important;
+  text-shadow: 1px 1px 2px black !important;
+}
+
+// firefox
+//.caption-box div:nth-child(2) {
+//  font: 16px Arial, Helvetica, sans-serif;
+//  color: #fff !important;
+//  background:transparent !important;
+//  white-space:normal;
+//  text-shadow: 1px 1px 2px black;
+//  margin-bottom: 60px !important;
+//  position:relative !important;
+//  top: 20% !important;
+//}

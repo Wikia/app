@@ -3,9 +3,9 @@
 $messages = [];
 
 $messages['en'] = [
-	'articlevideo-watch' => 'watch • $1',
+	'articlevideo-watch' => 'watch',
 ];
 
 $messages['qqq'] = [
-	'articlevideo-watch' => '"Watch" string with a video length',
+	'articlevideo-watch' => '"Watch" string',
 ];

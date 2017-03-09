@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
-				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+				recoveryHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
 			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slot.name,
 			recoveryHelper.isBlocking(),
 			recoverableSlots,
-			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+			recoveryHelper.isSourcePointRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
 
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
