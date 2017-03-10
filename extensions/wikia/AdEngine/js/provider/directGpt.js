@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			beforeHop: function(slotName) {
 				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
-			isPageFairRecoverable: pageFair.isSlotRecoverable,
+			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			sraEnabled: true,
 			recoverableSlots: [
 				'TOP_LEADERBOARD',

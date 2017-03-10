@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {
 				sraEnabled: extra.sraEnabled,
 				recoverableSlots: extra.recoverableSlots,
-				isPageFairRecoverable: extra.isPageFairRecoverable(slot.name)
+				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false
 			});
 			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 		}

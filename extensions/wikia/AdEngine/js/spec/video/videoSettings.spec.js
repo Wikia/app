@@ -66,7 +66,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			splitLayoutVideoPosition: 'right'
 		});
 
-		expect(true).toMatch(videoSettings.isSplitLayout());
+		expect(videoSettings.isSplitLayout()).toBeTruthy();
 	});
 
 	it('Should be split layout for incorrect parameter', function () {
@@ -74,7 +74,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			splitLayoutVideoPosition: ''
 		});
 
-		expect(false).toMatch(videoSettings.isSplitLayout());
+		expect(videoSettings.isSplitLayout()).toBeFalsy();
 	});
 });
 
