@@ -38,7 +38,7 @@ class PremiumPageHeaderController extends WikiaController {
 				$title = Title::newFromText( $page, NS_SPECIAL );
 				return [
 					'text' => $title->getText(),
-					'textEscaped' => $title->getEscapedText(),
+					'textEscaped' => htmlspecialchars( $title->getText() ),
 					'href' => $title->getLocalURL()
 				];
 			}, $explore )
