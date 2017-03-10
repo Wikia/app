@@ -62,8 +62,7 @@ $menu-item-horizontal-padding: 12px;
 	}
 
 	li:hover {
-		> .pph-local-nav-l2,
-		> .pph-local-nav-side-menu {
+		> .pph-local-nav-sub-menu {
 			display: block;
 		}
 	}
@@ -75,9 +74,11 @@ $menu-item-horizontal-padding: 12px;
 
 .pph-local-nav-sub-menu {
 	background: mix($color-page, #000, 90%);
+	display: none;
 	box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
 	min-width: $submenu-minimun-width;
 	padding: 12px 0 12px 12px;
+	position: absolute;
 
 	@if $is-dark-wiki {
 		background: mix($color-page, #fff, 90%);
@@ -120,10 +121,8 @@ $menu-item-horizontal-padding: 12px;
 	}
 
 	&.pph-local-nav-l2 {
-		display: none;
 		left: -24px + $menu-item-horizontal-padding;
 		margin-top: $menu-item-vertical-padding;
-		position: absolute;
 
 		li a {
 			font-size: 14px;
@@ -132,21 +131,15 @@ $menu-item-horizontal-padding: 12px;
 	}
 
 	&.pph-local-nav-l3 {
+		box-sizing: border-box;
+		left: 100%;
 		min-height: 100%;
+		top: 0;
 		li a {
 			font-size: 12px;
 			font-weight: normal;
 		}
 	}
-}
-
-.pph-local-nav-side-menu {
-	box-sizing: border-box;
-	display: none;
-	left: 100%;
-	min-height: 100%;
-	position: absolute;
-	top: 0;
 }
 
 .pph-local-nav-discuss:hover {

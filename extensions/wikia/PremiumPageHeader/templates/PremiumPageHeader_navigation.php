@@ -1,6 +1,6 @@
 <ul class="pph-local-nav-menu">
 	<? foreach ( $data as $item ) : ?>
-		<li class="pph-local-nav-item-l1<? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
+		<li class="pph-local-nav-item-l1 <? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
 			<a href="<?= $item['href'] ?>"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
@@ -11,7 +11,7 @@
 						<a href="<?= $childL2['href'] ?>"><?= $childL2['textEscaped'] ?></a>
 						<? if ( !empty( $childL2['children'] ) ): ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
-							<ul class="pph-local-nav-sub-menu pph-local-nav-side-menu pph-local-nav-l3">
+							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
 									<li class="pph-local-nav-item-l3">
 										<a href="<?= $childL3['href'] ?>"><?= $childL3['textEscaped'] ?></a>
