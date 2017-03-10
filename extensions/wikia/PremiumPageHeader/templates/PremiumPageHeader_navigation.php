@@ -1,20 +1,20 @@
 <ul class="pph-local-nav-menu">
 	<? foreach ( $data as $item ) : ?>
-		<li class="pph-local-nav-item-l1<? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
-			<a href="<?= $item['href'] ?>"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
+		<li class="pph-local-nav-tracking pph-local-nav-item-l1 <? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
+			<a href="<?= $item['href'] ?>" data-tracking="custom-level-1"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
 			<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
 				<? foreach ( $item['children'] as $childL2 ): ?>
-					<li class="pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
-						<a href="<?= $childL2['href'] ?>"><?= $childL2['textEscaped'] ?></a>
+					<li class="pph-local-nav-tracking pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
+						<a href="<?= $childL2['href'] ?>" data-tracking="custom-level-2"><?= $childL2['textEscaped'] ?></a>
 						<? if ( !empty( $childL2['children'] ) ): ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
-							<ul class="pph-local-nav-sub-menu pph-local-nav-side-menu pph-local-nav-l3">
+							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
-									<li class="pph-local-nav-item-l3">
-										<a href="<?= $childL3['href'] ?>"><?= $childL3['textEscaped'] ?></a>
+									<li class="pph-local-nav-tracking pph-local-nav-item-l3">
+										<a href="<?= $childL3['href'] ?>" data-tracking="custom-level-3"><?= $childL3['textEscaped'] ?></a>
 									</li>
 								<? endforeach; ?>
 							</ul>
@@ -25,7 +25,7 @@
 		</li>
 	<? endforeach; ?>
 	<li class="pph-local-nav-item-l1 pph-local-nav-container pph-local-nav-explore">
-		<a>
+		<a href="#">
 			<svg class="wds-icon wds-icon-small rwe-page-header-nav__icon" width="18" height="16" viewBox="0 0 18 16"
 				 xmlns="http://www.w3.org/2000/svg">
 				<path fill-rule="evenodd"
@@ -38,14 +38,14 @@
 		) ?>
 		<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
 			<? foreach ( $explore['children'] as $child ): ?>
-				<li class="pph-local-nav-item-l2">
-					<a href="<?= $child['href'] ?>"><?= $child['textEscaped'] ?></a>
+				<li class="pph-local-nav-tracking pph-local-nav-item-l2">
+					<a href="<?= $child['href'] ?>" data-tracking="<?= $child['tracking']?>"><?= $child['textEscaped'] ?></a>
 				</li>
 			<? endforeach; ?>
 		</ul>
 	</li>
-	<li class="pph-local-nav-item-l1 pph-local-nav-discuss">
-		<a href="<?= $discuss['href'] ?>">
+	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-discuss">
+		<a href="<?= $discuss['href'] ?>" data-tracking="discuss">
 			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-reply',
 				'wds-icon wds-icon-small pph-local-nav-discuss'
