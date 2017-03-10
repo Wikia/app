@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache'],
-	function ($, window, loader, mustache) {
+	['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.log'],
+	function ($, window, loader, mustache, log) {
 		'use strict';
 
 		const notificationTypes = {
@@ -8,7 +8,7 @@ require(
 			discussionUpvoteReply: 'discussion-upvote-reply',
 			discussionReply: 'discussion-reply',
 			announcement: 'announcement'
-		};
+		}, logTag = 'on-site-notifications';
 
 		/**
 		 * Gets timestamp from ISO string date
@@ -165,7 +165,7 @@ require(
 						const id = $(e.target).closest('.wds-notification-card').attr('id');
 						this.logic.markAsRead(id);
 					} catch (e) {
-						console.log(e);
+						log('Failed to mark as read ' + e, log.levels.error, logTag);
 					}
 					return false;
 				});
@@ -351,7 +351,7 @@ require(
 			this.markAllAsRead = function () {
 				const since = this.model.getLatestEventTime();
 				if (!since) {
-					// log info
+					log('Marking as read did not find since ' + this.model, log.levels.info, logTag);
 					return;
 				}
 				this.bucky.timer.start('markAllAsRead');
