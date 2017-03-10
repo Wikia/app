@@ -331,22 +331,21 @@ require(
 			};
 
 			this.markAsRead = function (id) {
-				this.model.markAsRead(id);
-				// this.bucky.timer.start('markAsRead');
-				// $.ajax({
-				// 	type: 'POST',
-				// 	data: JSON.stringify([id]),
-				// 	dataType: 'json',
-				// 	contentType: "application/json; charset=UTF-8",
-				// 	url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
-				// 	xhrFields: {
-				// 		withCredentials: true
-				// 	}
-				// }).done(this.proxy(function () {
-				// 	this.model.markAsRead(id);
-				// })).always(this.proxy(function () {
-				// 	this.bucky.timer.stop('markAsRead');
-				// }));
+				this.bucky.timer.start('markAsRead');
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify([id]),
+					dataType: 'json',
+					contentType: "application/json; charset=UTF-8",
+					url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
+					xhrFields: {
+						withCredentials: true
+					}
+				}).done(this.proxy(function () {
+					this.model.markAsRead(id);
+				})).always(this.proxy(function () {
+					this.bucky.timer.stop('markAsRead');
+				}));
 			};
 
 			this.markAllAsRead = function () {
