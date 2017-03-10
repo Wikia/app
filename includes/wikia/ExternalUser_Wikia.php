@@ -155,11 +155,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_real_name;
 	}
 
-	public function getPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_password . " \n" );
-		return $this->mRow->user_password;
-	}
-
 	public function getNewPassword() {
 		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpassword . " \n" );
 		return $this->mRow->user_newpassword;

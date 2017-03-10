@@ -1168,7 +1168,7 @@ class User implements JsonSerializable {
 			$all = false;
 		}
 
-		if ( isset( $row->user_password ) ) {
+		if ( isset( $row->user_email ) ) {
 			$this->mNewpassword = $row->user_newpassword;
 			$this->mNewpassTime = wfTimestampOrNull( TS_MW, $row->user_newpass_time );
 			$this->mEmail = $row->user_email;
