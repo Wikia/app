@@ -1,0 +1,54 @@
+{{#.}}
+    <li id={{uri}} class="wds-notification-card">
+        <div class="wds-avatar-stack">
+            {{#showAvatars}}
+                {{#avatars}}
+                    {{#avatarUrl}}
+                        {{#profileUrl}}
+                            <a href="{{profileUrl}}">
+                                <img class="wds-avatar" src="{{avatarUrl}}">
+                            </a>
+                        {{/profileUrl}}
+                        {{^profileUrl}}
+                            <img class="wds-avatar" src="{{avatarUrl}}">
+                        {{/profileUrl}}
+                    {{/avatarUrl}}
+                    {{^avatarUrl}}
+                        <img class="wds-avatar"
+                             src="http://vignette.wikia-dev.pl/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50?format=jpg">
+                    {{/avatarUrl}}
+                {{/avatars}}
+                {{#showAvatarOverflow}}
+                    <div class="wds-avatar-stack__overflow">+{{avatarOverflow}}</div>
+                {{/showAvatarOverflow}}
+            {{/showAvatars}}
+        </div>
+
+        <a href="{{uri}}">
+            <div class="wds-notification-card__icon-wrapper">
+                <svg class="wds-icon {{#isUnread}}wds-is-unread{{/isUnread}}"
+                     viewBox="0 0 18 18">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="#{{icon}}"></use>
+                </svg>
+            </div>
+            <div class="wds-notification-card__body">
+                <p class="wds-notification-card__text">
+                    {{{text}}}
+                </p>
+                <p class="wds-notification-card__snippet">
+                    {{snippet}}
+                </p>
+                <ul class="wds-notification-card__context-list">
+                    <li class="wds-notification-card__context-item">
+                        {{timestamp}}now
+                    </li>
+                    <li class="wds-notification-card__context-separator"> ·</li>
+                    <li class="wds-notification-card__context-item">
+                        {{communityName}}
+                    </li>
+                </ul>
+            </div>
+        </a>
+    </li>
+{{/.}}

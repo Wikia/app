@@ -72,5 +72,22 @@
   "global-navigation-wikis-community-central": "コミュニティセントラル",
   "global-navigation-wikis-explore": "Wikiコミュニティ",
   "global-navigation-wikis-fandom-university": "Fandomユニバーシティ",
-  "global-navigation-wikis-header": "Wiki"
+  "global-navigation-wikis-header": "Wiki",
+  "notifications-no-notifications-message": "新しい通知はありません。",
+  "notifications-mark-all-as-read": "すべての通知を確認済みにする",
+  "notifications-replied-by-multiple-users-with-title": "__mostRecentUser__さん、他__number__ 人のユーザーが__postTitle__に<b>返信</b>しました",
+  "notifications-replied-by-multiple-users-no-title": "__mostRecentUser__さん、他__number__ 人のユーザーが、あなたがフォローしているディスカッションに<b>返信</b>しました",
+  "notifications-replied-by-two-users-with-title": "__firstUser__さんと__secondUser__ さんが__postTitle__に<b>返信</b>しました",
+  "notifications-replied-by-two-users-no-title": "__firstUser__さんと__secondUser__ さんが、あなたがフォローしているディスカッションに<b>返信</b>しました",
+  "notifications-replied-by-with-title": "__user__さんが__postTitle__に<b>返信</b>しました",
+  "notifications-replied-by-no-title": "__user__さんが、あなたがフォローしているディスカッションに<b>返信</b>しました",
+  "notifications-post-upvote-single-user-with-title": "__number__人のユーザーが、あなたのディスカッションの__postTitle__に<b>「イイね！」</b>しました",
+  "notifications-post-upvote-single-user-no-title": "__user__さんが、あなたのディスカッションに<b>「イイね！」</b>しました",
+  "notifications-post-upvote-multiple-users-with-title": "__number__人のユーザーが、あなたのディスカッションの__postTitle__に<b>「イイね！」</b>しました",
+  "notifications-post-upvote-multiple-users-no-title": "__number__人のユーザーが、あなたのディスカッションに<b>「イイね！」</b>しました",
+  "notifications-reply-upvote-single-user-with-title": "__user__さんが、__postTitle__のあなたの返信に<b>「イイね！」</b>しました",
+  "notifications-reply-upvote-single-user-no-title": "__user__さんが、あなたの返信に<b>「イイね！」</b>しました",
+  "notifications-reply-upvote-multiple-users-with-title": "__number__人のユーザーが、__postTitle__のあなたの返信に<b>「イイね！」</b>しました",
+  "notifications-reply-upvote-multiple-users-no-title": "__number__人のユーザーが、あなたの返信に<b>「イイね！」</b>しました",
+  "notifications-notifications": "通知"
 }

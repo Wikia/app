@@ -29,7 +29,7 @@ class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaServic
 	}
 
 	private function addAssets() {
-		OasisController::addSkinAssetGroup( 'on_site_notifications_js' );
+		OasisController::addSkinAssetGroup( 'design_system_on_site_notifications_js' );
 	}
 
 }

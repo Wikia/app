@@ -2211,7 +2211,7 @@ $config['design_system_user_js'] = [
 	],
 ];
 
-$config['on_site_notifications_js'] = [
+$config['design_system_on_site_notifications_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
@@ -3033,6 +3033,7 @@ $config['design_system_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss',
+		'//extensions/wikia/DesignSystem/styles/design-system-notifications.scss'
 	],
 ];
 
