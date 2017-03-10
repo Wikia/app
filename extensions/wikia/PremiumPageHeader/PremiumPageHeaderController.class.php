@@ -25,21 +25,22 @@ class PremiumPageHeaderController extends WikiaController {
 
 	private function getExplore() {
 		$explore = [
-			'WikiActivity',
-			'Random',
-			'Community',
-			'Videos',
-			'Images',
+			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity' ],
+			[ 'title' => 'Random', 'tracking' => 'explore-random' ],
+			[ 'title' => 'Community', 'tracking' => 'explore-community' ],
+			[ 'title' => 'Videos', 'tracking' => 'explore-videos' ],
+			[ 'title' => 'Images', 'tracking' => 'explore-images' ]
 		];
 
 		return [
 			'text' => 'Explore',
 			'children' => array_map( function ( $page ) {
-				$title = Title::newFromText( $page, NS_SPECIAL );
+				$title = Title::newFromText( $page['title'], NS_SPECIAL );
 				return [
 					'text' => $title->getText(),
 					'textEscaped' => htmlspecialchars( $title->getText() ),
-					'href' => $title->getLocalURL()
+					'href' => $title->getLocalURL(),
+					'tracking' => $page['tracking']
 				];
 			}, $explore )
 		];
