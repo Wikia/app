@@ -33,11 +33,11 @@ $messages['fi'] = array(
 	'wikia-in-your-lang-description' => 'Näyttää ilmoituksen, mikäli wikia on saatavilla käyttäjän äidinkielellä. Tarkistus perustuu Geo -evästeisiin sekä selaimen kieleen.',
 	'wikia-in-your-lang-available' => '$1 on saatavilla myös suomeksi. Menehän katsomaan! [$2 $3]',
 	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 is also available in English. Check it out! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1 on saatavilla myös suomeksi. Menehän katsomaan! [$2 $3]',
 );
 
 $messages['fr'] = array(
-	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
+	'wikia-in-your-lang-description' => "Affiche un bandeau si un wikia est disponible dans la langue définie par l'utilisateur. La vérification se base sur un cookie de géolocalisation et la langue du navigateur.",
 	'wikia-in-your-lang-available' => '$1 est aussi disponible en français. Visitez-le ! [$2 $3]',
 	'wikia-in-your-lang-article-available' => 'Cette page est également disponible en français. Allez y jeter un œil ! [$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '$1 est aussi disponible en français. Visitez-le ! [$2 $3]',
@@ -61,7 +61,7 @@ $messages['ko'] = array(
 	'wikia-in-your-lang-description' => '같은 위키가 사용자의 모국어로도 있을 경우 그에 대해 알립니다. Geo 쿠키와 브라우저 언어를 통해 언어를 인식합니다.',
 	'wikia-in-your-lang-available' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
 	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 is also available in English. Check it out! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
 );
 
 $messages['nl'] = array(
@@ -100,7 +100,7 @@ $messages['vi'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
 	'wikia-in-your-lang-available' => '$1 nay đã có phiên bản tiếng Việt. Truy cập ngay! [$2 $3]',
 	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 is also available in English. Check it out! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1 nay đã có phiên bản tiếng Việt. Truy cập ngay! [$2 $3]',
 );
 
 $messages['zh'] = array(
