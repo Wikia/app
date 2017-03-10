@@ -106,7 +106,7 @@ require(
 			this.template = template;
 			this.textFormatter = textFormatter;
 			this.$notificationsCount = $('#on-site-notifications-count');
-			this.$container = $('#on-site-notifications');
+			this.$container = $('#notification-container');
 			this.$markAllAsReadButton = $('#mark-all-as-read-button');
 
 			this.registerEvents = function () {
@@ -174,9 +174,17 @@ require(
 				}
 			};
 
-			this.removeIsUnread = function () {
-				$(this).find('.wds-icon.wds-is-unread').each(function($elem) {
-					$elem.removeClass('wds-is-unread')
+			/**
+			 * .classRemove does not work on SVG
+			 * @param element
+			 */
+			function removeIsUnreadClass(element) {
+				element.classList.remove('wds-is-unread');
+			}
+
+			this.renderAllNotificationsAsRead = function () {
+				$(this.$container).find('.wds-icon.wds-is-unread').each(function (_, e) {
+					removeIsUnreadClass(e);
 				});
 			};
 
@@ -190,7 +198,7 @@ require(
 			this.notifications = [];
 			this.unreadCount = 0;
 
-			this.getLatestEventTime = function() {
+			this.getLatestEventTime = function () {
 				const latest = this.notifications[0];
 				if (latest) {
 					return latest.timestamp;
@@ -251,7 +259,7 @@ require(
 				this.notifications.forEach(function (notification) {
 					notification.isUnread = false;
 				});
-				this.view.removeIsUnread();
+				this.view.renderAllNotificationsAsRead();
 			};
 
 			this.setUnreadCount = function (count) {

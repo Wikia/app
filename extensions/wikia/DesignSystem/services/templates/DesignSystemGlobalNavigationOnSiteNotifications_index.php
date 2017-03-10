@@ -24,7 +24,7 @@
 			</a>
 		</div>
 		<div class="wds-notification-list">
-			<ul class="wds-list wds-has-lines-between" id="on-site-notifications">
+			<ul class="wds-list wds-has-lines-between" id="notification-container">
 
 			</ul>
 		</div>
