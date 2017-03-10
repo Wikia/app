@@ -126,7 +126,6 @@ require(
 			};
 
 			this._mapToView = function (notifications) {
-
 				function getIcon(type) {
 					if (type === notificationTypes.discussionReply) {
 						return 'wds-icons-reply-small';
@@ -160,6 +159,18 @@ require(
 			this.renderNotifications = function (notifications) {
 				var html = mustache.render(this.template, this._mapToView(notifications));
 				this.$container.append(html);
+
+				const markAsRead = this.proxy(function (e) {
+					try {
+						const id = $(e.target).closest('.wds-notification-card').attr('id');
+						this.logic.markAsRead(id);
+					} catch (e) {
+						console.log(e);
+					}
+					return false;
+				});
+
+				$(this.$container).find('.wds-notification-card__icon-wrapper').click(markAsRead);
 			};
 
 			this.renderUnreadCount = function (count) {
@@ -184,6 +195,12 @@ require(
 
 			this.renderAllNotificationsAsRead = function () {
 				$(this.$container).find('.wds-icon.wds-is-unread').each(function (_, e) {
+					removeIsUnreadClass(e);
+				});
+			};
+
+			this.renderNotificationAsRead = function (id) {
+				$(this.$container).find('[id=' + id + ']').each(function (_, e) {
 					removeIsUnreadClass(e);
 				});
 			};
@@ -255,10 +272,19 @@ require(
 				});
 			}
 
+			function setIsUnreadFalse(notification) {
+				notification.isUnread = false;
+			}
+
+			this.markAsRead = function (id) {
+				this.notifications.filter(function (notification) {
+					return notification.uri === id;
+				}).forEach(setIsUnreadFalse);
+				this.view.renderNotificationAsRead(id);
+			};
+
 			this.markAllAsRead = function () {
-				this.notifications.forEach(function (notification) {
-					notification.isUnread = false;
-				});
+				this.notifications.forEach(setIsUnreadFalse);
 				this.view.renderAllNotificationsAsRead();
 			};
 
@@ -299,6 +325,10 @@ require(
 				})).always(this.proxy(function () {
 					this.bucky.timer.stop('updateCounts');
 				}));
+			};
+
+			this.markAsRead = function (id) {
+				this.model.markAsRead(id);
 			};
 
 			this.markAllAsRead = function () {
