@@ -154,7 +154,6 @@ Parameters:
 );
 
 $messages['aa'] = array(
-	'autocreatewiki-tagline' => '[[help:wiki|Wikis]] are collaborative projects open to all editors and readers.',
 );
 
 $messages['af'] = array(
