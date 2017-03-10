@@ -193,16 +193,19 @@ require(
 				element.classList.remove('wds-is-unread');
 			}
 
-			this.renderAllNotificationsAsRead = function () {
-				$(this.$container).find('.wds-icon.wds-is-unread').each(function (_, e) {
+			function findUnreadAndClearClass($element) {
+				$element.find('.wds-icon.wds-is-unread').each(function (_, e) {
 					removeIsUnreadClass(e);
 				});
+			}
+
+			this.renderAllNotificationsAsRead = function () {
+				findUnreadAndClearClass(this.$container);
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				$(this.$container).find('[id=' + id + ']').each(function (_, e) {
-					removeIsUnreadClass(e);
-				});
+				const container = this.$container.find('[id="' + id + '"]');
+				findUnreadAndClearClass(container);
 			};
 
 			this.proxy = function (func) {
@@ -329,6 +332,21 @@ require(
 
 			this.markAsRead = function (id) {
 				this.model.markAsRead(id);
+				// this.bucky.timer.start('markAsRead');
+				// $.ajax({
+				// 	type: 'POST',
+				// 	data: JSON.stringify([id]),
+				// 	dataType: 'json',
+				// 	contentType: "application/json; charset=UTF-8",
+				// 	url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
+				// 	xhrFields: {
+				// 		withCredentials: true
+				// 	}
+				// }).done(this.proxy(function () {
+				// 	this.model.markAsRead(id);
+				// })).always(this.proxy(function () {
+				// 	this.bucky.timer.stop('markAsRead');
+				// }));
 			};
 
 			this.markAllAsRead = function () {
