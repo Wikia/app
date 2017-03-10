@@ -7,14 +7,10 @@ class PremiumPageHeaderController extends WikiaController {
 		$settings = $themeSettings->getSettings();
 
 		$this->setVal( 'wordmarkText', $settings["wordmark-text"] );
-
 		$this->setVal( 'tallyMsg',
 			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
-
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
-
 		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );
-
 	}
 
 	public function navigation() {
@@ -33,7 +29,7 @@ class PremiumPageHeaderController extends WikiaController {
 		];
 
 		return [
-			'text' => 'Explore',
+			'text' => wfMessage( 'pph-explore' )->escaped(),
 			'children' => array_map( function ( $page ) {
 				$title = Title::newFromText( $page['title'], NS_SPECIAL );
 				return [
@@ -53,7 +49,7 @@ class PremiumPageHeaderController extends WikiaController {
 			'/d' : Title::newFromText( 'Forum', NS_SPECIAL )->getLocalURL();
 
 		return [
-			'text' => 'Discuss',
+			'text' => wfMessage( 'pph-discuss' )->escaped(),
 			'href' => $href
 		];
 	}
