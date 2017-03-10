@@ -87,14 +87,16 @@ $menu-item-horizontal-padding: 12px;
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding: 12px 24px 12px 12px;
+		padding-right: 24px;
 		transition: background-color .2s;
 
 		a {
 			color: $color-text;
 			line-height: 14px;
+			padding: 12px 0 12px 12px;
 			transition: color .2s;
 			white-space: nowrap;
+			width: 100%;
 		}
 
 		.pph-local-nav-sub-chevron {
@@ -130,6 +132,7 @@ $menu-item-horizontal-padding: 12px;
 	}
 
 	&.pph-local-nav-l3 {
+		min-height: 100%;
 		li a {
 			font-size: 12px;
 			font-weight: normal;
@@ -138,11 +141,16 @@ $menu-item-horizontal-padding: 12px;
 }
 
 .pph-local-nav-side-menu {
+	box-sizing: border-box;
 	display: none;
 	left: 100%;
 	min-height: 100%;
 	position: absolute;
 	top: 0;
+}
+
+.pph-local-nav-discuss:hover {
+	text-decoration: underline;
 }
 
 @media #{$breakpoint-small-only} {
