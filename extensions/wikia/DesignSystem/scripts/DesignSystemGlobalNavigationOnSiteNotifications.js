@@ -132,9 +132,8 @@ require(
 						text: this.textFormatter.getText(notification),
 						isUnread: notification.isUnread,
 						communityName: notification.communityName,
-						showAvatars: notification.totalUniqueActors > 2,
-						// TODO change to 5 after tests
-						showAvatarOverflow: notification.totalUniqueActors > 2,
+						showAvatars: notification.totalUniqueActors > 2 && notification.type === notificationTypes.discussionReply,
+						showAvatarOverflow: notification.totalUniqueActors > 5,
 						avatarOverflow: notification.totalUniqueActors - 5,
 						avatars: getAvatars(notification.latestActors)
 					}

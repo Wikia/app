@@ -127,7 +127,8 @@ $notification-card-anchor-color: #656d77;
 
 .wds-avatar-stack {
   margin: 8px 18px 6px 40px;
-  display: inline-block;
+  display: flex;
+  align-items: center;
 
   @for $i from 1 to 6 {
 	.wds-avatar:nth-child(#{$i}) {
@@ -138,6 +139,7 @@ $notification-card-anchor-color: #656d77;
   }
 
   &__overflow {
+	padding-left: 6px;
 	background-color: $wds-color-white;
 	border: 0;
 	color: $wds-color-light-c6;
