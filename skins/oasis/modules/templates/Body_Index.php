@@ -35,7 +35,7 @@
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 
 		<!-- fixme How should it work with BannerNotification - currently it doesn't look good -->
-		<?php if ( !empty( $wg->EnablePremiumPageHeader ) ): ?>
+		<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
 			<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
 		<?php endif; ?>
 
