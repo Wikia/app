@@ -85,7 +85,13 @@
 	}
 }
 
-@media #{$breakpoint-small-only} {
+@media #{$breakpoint-small-plus} {
+	.pph-wiki-header {
+		margin: -1px -11px 0;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
 	.pph-wiki-header {
 		margin: -1px -25px 0;
 
