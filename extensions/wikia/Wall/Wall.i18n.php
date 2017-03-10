@@ -695,7 +695,6 @@ checkbox on Special:Block',
 {{Identical|Cancel}}',
 	'group-threadmoderator' => '{{doc-group|threadmoderator}}',
 	'group-threadmoderator-member' => '{{doc-group|threadmoderator|member}}',
-	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
 );
 
 $messages['ang'] = array(
@@ -1991,8 +1990,6 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4">$1 von</a> <a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Versionen',
 	'wall-posting-message-failed-filter-title' => 'Unangemessene Inhalte entdeckt',
 	'wall-posting-message-failed-filter-body' => 'Dieser Beitrag konnte nicht gespeichert werden, da er unangemessene Inhalte enthält. Bitte formuliere ihn neu.',
 );
@@ -2397,8 +2394,6 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 por </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Historial',
 	'wall-posting-message-failed-filter-title' => 'Contenido inapropiado detectado',
 	'wall-posting-message-failed-filter-body' => 'Esta edición no pudo ser guardada ya que tiene contenido inapropiado. Por favor, cambiar de contenido.',
 );
@@ -2716,7 +2711,6 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit-cancel' => 'Peruuta',
 	'group-threadmoderator-member' => 'Moderoija',
 	'group-threadmoderator' => 'Moderoijat',
-	'grouppage-threadmoderator' => 'w:c:yhteiso:Ohje:Moderoijat',
 );
 
 $messages['fo'] = array(
@@ -3011,8 +3005,6 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 par </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Historique',
 	'wall-posting-message-failed-filter-title' => 'Contenu inapproprié détecté',
 	'wall-posting-message-failed-filter-body' => "Cette modification n'a pas pu être enregistrée car elle inclut du contenu inapproprié. Veuillez reformuler.",
 );
@@ -4018,8 +4010,6 @@ Il messaggio originale e il motivo della tua rimozione continueranno ad apparire
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 da </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Cronologia',
 	'wall-posting-message-failed-filter-title' => 'Rilevati contenuti inappropriati',
 	'wall-posting-message-failed-filter-body' => 'Non è possibile salvare questa modifica, in quanto contiene contenuti inappropriati. Si prega di riformulare.',
 );
@@ -4272,7 +4262,6 @@ $messages['ja'] = array(
 	'group-threadmoderator' => 'ディスカッション・モデレーター',
 	'group-threadmoderator-member' => 'ディスカッション・モデレーター',
 	'grouppage-threadmoderator' => '',
-	'wall-message-edited-summary' => '<a href="$4" >$1</a>（編集：<a class="username" href="$2">$3さん</a>）',
 	'wall-message-limit-reached' => 'スレッドあたりの投稿数の上限は$1件までです。',
 	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'メッセージの投稿中にエラーが発生しました',
@@ -4288,7 +4277,6 @@ $messages['ja'] = array(
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-toolbar-history' => '履歴',
 	'wall-posting-message-failed-filter-title' => '不適切なコンテンツを検出',
 	'wall-posting-message-failed-filter-body' => '不適切なコンテンツが含まれているため、この編集を保存できませんでした。内容を言い換えた上、再度お試しください',
 );
@@ -4430,7 +4418,6 @@ $messages['ko'] = array(
 	'wall-message-staff-text' => '이 사용자는 위키아의 스탭입니다.',
 	'group-threadmoderator-member' => '모더레이터',
 	'group-threadmoderator' => '모더레이터',
-	'grouppage-threadmoderator' => 'w:c:ko.community:도움말:모더레이터',
 	'tog-enotifmywall-every' => '담벼락의 모든 메시지와 답글',
 	'tog-enotifmywall-noemail' => '메시지 담벼락에 관한 메일 수신 안함',
 	'tog-enotifmywall-sincevisited' => '마지막 방문 이래로 담벼락에 올라오는 새 글',
@@ -4939,7 +4926,6 @@ $messages['mk'] = array(
 	'wall-topic-edit-cancel' => 'Откажи',
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 $messages['ms'] = array(
@@ -5190,7 +5176,6 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-topic-edit-cancel' => 'Batalkan',
 	'group-threadmoderator' => 'Pengawal Selia',
 	'group-threadmoderator-member' => 'Pengawal Selia',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 $messages['nap'] = array(
@@ -5699,8 +5684,6 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 door </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Geschiedenis',
 	'wall-posting-message-failed-filter-title' => 'Inappropriate content detected',
 	'wall-posting-message-failed-filter-body' => 'This edit could not be saved as it contains inappropriate content. Please rephrase.',
 );
@@ -6047,8 +6030,6 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'right-wallfastadmindelete' => 'Can delete wall messages with one click',
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
-	'wall-message-edited-summary' => 'Zmiana „<a href="$4" >$1</a>” dokonana przez <a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Historia',
 	'wall-posting-message-failed-filter-title' => 'Wykryto nieodpowiednie treści',
 	'wall-posting-message-failed-filter-body' => 'Twoja edycja nie mogła zostać zapisana, ponieważ zawiera nieodpowiednie treści. Spróbuj inaczej sformułować zdanie.',
 );
@@ -6375,8 +6356,6 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 por </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'Histórico',
 	'wall-posting-message-failed-filter-title' => 'Conteúdo inadequado detectado',
 	'wall-posting-message-failed-filter-body' => 'Esta edição não pôde ser salva porque contém conteúdo impróprio. Por favor, reformule.',
 );
@@ -6578,7 +6557,6 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit-cancel' => 'Cancelar',
 	'group-threadmoderator-member' => 'Moderador',
 	'group-threadmoderator' => 'Moderadores',
-	'grouppage-threadmoderator' => 'w:c:comunidade:Ajuda:Moderadores',
 );
 
 $messages['qu'] = array(
@@ -6887,8 +6865,6 @@ $messages['ru'] = array(
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 на </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => 'История',
 	'wall-posting-message-failed-filter-title' => 'Обнаружено неприемлемое содержание',
 	'wall-posting-message-failed-filter-body' => 'Невозможно сохранить правку из-за её неприемлемого содержания. Пожалуйста, перепишите сообщение.',
 );
@@ -7383,7 +7359,6 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-topic-edit-cancel' => 'Avbryt',
 	'group-threadmoderator' => 'Moderatorer',
 	'group-threadmoderator-member' => 'Moderator',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 $messages['ta'] = array(
@@ -7970,7 +7945,6 @@ $messages['uk'] = array(
 	'wall-topic-edit-cancel' => 'Скасувати',
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
-	'grouppage-threadmoderator' => 'w:c:спільнота:допомога:Модератори',
 );
 
 $messages['uz'] = array(
@@ -8225,7 +8199,6 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
 	'group-threadmoderator-member' => 'Điều phối viên',
 	'group-threadmoderator' => 'Điều phối viên',
-	'grouppage-threadmoderator' => 'w:c:community:vi:Help:Điều_phối_viên',
 );
 
 $messages['wa'] = array(
@@ -8322,7 +8295,6 @@ $messages['yi'] = array(
 );
 
 $messages['zh'] = array(
-	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 	'wall-notifications-reminder' => '您有<span>$1</span>条未读消息',
 	'wall-placeholder-topic' => '主题是什么？',
 	'wall-topic-input-heading' => '话题',
@@ -8594,8 +8566,6 @@ $messages['zh-hans'] = array(
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 由 </a><a class="username" href="$2">$3编辑</a>',
-	'wall-toolbar-history' => '历史',
 	'wall-posting-message-failed-filter-title' => '检测到不恰当的内容',
 	'wall-posting-message-failed-filter-body' => '无法保存此编辑，因为它包含不恰当的内容。请重新撰写。',
 );
@@ -8863,27 +8833,22 @@ $messages['zh-hant'] = array(
 	'right-wallmessagemove' => 'Can move wall messages',
 	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
 	'right-editwallarchivedpages' => 'Can edit archived talk pages',
-	'wall-message-edited-summary' => '<a href="$4" >$1 由 </a><a class="username" href="$2">$3</a>',
-	'wall-toolbar-history' => '歷史記錄',
 	'wall-posting-message-failed-filter-title' => '檢測到不恰當的內容',
 	'wall-posting-message-failed-filter-body' => '無法保存此編輯，因為它包含不恰當的內容。請重新表述。',
 );
 
 $messages['zh-hk'] = array(
-	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 	'wall-placeholder-topic' => '主題是什麼？',
 	'wall-votes-number' => '$1 個{{PLURAL:$1|讚}}',
 	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
 );
 
 $messages['zh-tw'] = array(
-	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 	'wall-placeholder-topic' => '主題是什麼？',
 	'wall-votes-number' => '$1 個{{PLURAL:$1|讚}}',
 	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
 );
 
 $messages['zh－tw'] = array(
-	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 );
 
