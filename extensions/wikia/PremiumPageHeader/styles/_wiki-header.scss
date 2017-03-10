@@ -30,6 +30,7 @@
 .pph-tally-area {
 	align-items: flex-start;
 	display: flex;
+	font-weight: bold;
 	margin: 20px;
 
 	.pph-tally {
@@ -56,6 +57,7 @@
 	color: $color-button-text;
 	display: flex;
 	font-size: 10px;
+	font-weight: bold;
 	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
