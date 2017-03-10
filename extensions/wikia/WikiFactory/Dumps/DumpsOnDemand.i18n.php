@@ -9,7 +9,7 @@ $messages = [];
 
 $messages['en'] = [
 	'dump-database' => 'Database dumps',
-	'dump-database-info' => 'Database dumps can be used as a personal backup (Wikia produces separate backups of all wikis automatically) or for maintenance bots',
+	'dump-database-info' => 'Database dumps can be used as a personal backup (Fandom produces separate backups of all wikis automatically) or for maintenance bots',
 	'dump-database-curr-pages' => 'Current pages',
 	'dump-database-curr-pages-info' => '(This version is usually best for bot use)',
 	'dump-database-full-pages' => 'Current pages and history',
@@ -39,7 +39,7 @@ $messages['qqq'] = [
 $messages['af'] = [
 	'dump-database' => 'Databasis-dumps',
 	'dump-database-info' => "Databasisdumps kan gebruik word as persoonlike rugsteun (back-up) of vir onderhoudsrobotte.
-Wikia maak outomaties rugsteunkopieë van alle wiki's.",
+Fandom maak outomaties rugsteunkopieë van alle wiki's.",
 	'dump-database-curr-pages' => 'Huidige bladsye',
 	'dump-database-curr-pages-info' => '(Hierdie weergawe is gewoonlik die beste vir robotte)',
 	'dump-database-full-pages' => 'Huidige bladsye en geskiedenis',
@@ -87,7 +87,7 @@ $messages['az'] = [
  */
 $messages['be-tarask'] = [
 	'dump-database' => 'Копіі базы зьвестак',
-	'dump-database-info' => 'Копіі базы зьвестак могуць выкарыстоўвацца ў якасьці асабістай рэзэрвовай копіі (Wikia стварае асобныя рэзэрвовая копіі для ўсіх вікі аўтаматычна) альбо для робатаў падтрымкі',
+	'dump-database-info' => 'Копіі базы зьвестак могуць выкарыстоўвацца ў якасьці асабістай рэзэрвовай копіі (Fandom стварае асобныя рэзэрвовая копіі для ўсіх вікі аўтаматычна) альбо для робатаў падтрымкі',
 	'dump-database-curr-pages' => 'Цяперашнія старонкі',
 	'dump-database-curr-pages-info' => '(Гэтая вэрсія, звычайна, лепшая для выкарыстаньня робатамі)',
 	'dump-database-full-pages' => 'Цяперашнія старонкі і гісторыя',
@@ -129,7 +129,7 @@ $messages['bjn'] = [
  */
 $messages['br'] = [
 	'dump-database' => 'Tumpoù an diaz roadennoù',
-	'dump-database-info' => "Gallout a ra dilerc'hioù ar bank roadennoù bezañ implijet da eilenn savete personel (ent emgefre e sav Wikia eilennoù savete diforc'h evit an holl wikioù) pe evit ar botoù trezalc'h",
+	'dump-database-info' => "Gallout a ra dilerc'hioù ar bank roadennoù bezañ implijet da eilenn savete personel (ent emgefre e sav Fandom eilennoù savete diforc'h evit an holl wikioù) pe evit ar botoù trezalc'h",
 	'dump-database-curr-pages' => 'Pajennoù red',
 	'dump-database-curr-pages-info' => "(Gwelloc'h eo ar stumm-se evit implijoù ur bot)",
 	'dump-database-full-pages' => 'Pajennoù a-vremañ hag istor',
@@ -158,7 +158,7 @@ $messages['bs'] = [
  */
 $messages['ca'] = [
 	'dump-database' => 'Abocadors de base de dades',
-	'dump-database-info' => 'Abocadors de base de dades pot ser utilitzat com una còpia de seguretat personal (Wikia produeix separat les còpies de seguretat de tots els wikis automàticament) o per a robots de manteniment',
+	'dump-database-info' => 'Abocadors de base de dades pot ser utilitzat com una còpia de seguretat personal (Fandom produeix separat les còpies de seguretat de tots els wikis automàticament) o per a robots de manteniment',
 	'dump-database-curr-pages' => 'pàgines actuals',
 	'dump-database-curr-pages-info' => "(Aquesta versió és en general millor per a l'ús de bot)",
 	'dump-database-full-pages' => 'Actuals pàgines i història',
@@ -186,7 +186,7 @@ $messages['ce'] = [
  */
 $messages['cs'] = [
 	'dump-database' => 'Výstupy databáze',
-	'dump-database-info' => 'Výstupy z databáze mohou být využity pro osobní zálohování (Wikia automaticky produkuje odděléné zálohy všech wiki) nebo pro obsluhu botů',
+	'dump-database-info' => 'Výstupy z databáze mohou být využity pro osobní zálohování (Fandom automaticky produkuje odděléné zálohy všech wiki) nebo pro obsluhu botů',
 	'dump-database-curr-pages' => 'Aktuální stránky',
 	'dump-database-curr-pages-info' => '(Tato verze je obvykle nejlepší pro použití bota)',
 	'dump-database-full-pages' => 'Aktuální stránky a historie',
@@ -205,7 +205,7 @@ $messages['cs'] = [
  */
 $messages['da'] = [
 	'dump-database' => 'Database dumps',
-	'dump-database-info' => 'Database dumps kan bruges som en personlig backup (Wikia laver separate backups af alle wikier automatisk) eller til vedligeholdelses bots',
+	'dump-database-info' => 'Database dumps kan bruges som en personlig backup (Fandom laver separate backups af alle wikier automatisk) eller til vedligeholdelses bots',
 	'dump-database-curr-pages' => 'Nuværende sider',
 	'dump-database-curr-pages-info' => '(Denne version er normalt bedst til bot brug)',
 	'dump-database-full-pages' => ' Nuværende sider og historie',
@@ -225,7 +225,7 @@ $messages['da'] = [
  */
 $messages['de'] = [
 	'dump-database' => 'Datenbank-Dumps',
-	'dump-database-info' => 'Datenbank-Dumps können als persönliches Backup (Wikia produziert automatisch separate Backups aller Wikis) oder für Wartungsbots genutzt werden',
+	'dump-database-info' => 'Datenbank-Dumps können als persönliches Backup (Fandom produziert automatisch separate Backups aller Wikis) oder für Wartungsbots genutzt werden',
 	'dump-database-curr-pages' => 'Aktuelle Seiten',
 	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots)',
 	'dump-database-full-pages' => 'Aktuelle Seiten und Versionsgeschichte',
@@ -272,7 +272,7 @@ $messages['el'] = [
  */
 $messages['es'] = [
 	'dump-database' => 'Descarga de Base de Datos',
-	'dump-database-info' => 'La descarga de la base de datos puede ser usada como una copia de seguridad personal (Wikia produce copias de seguridad separadas para todos los wikis automáticamente) o para los bots de mantenimiento.',
+	'dump-database-info' => 'La descarga de la base de datos puede ser usada como una copia de seguridad personal (Fandom produce copias de seguridad separadas para todos los wikis automáticamente) o para los bots de mantenimiento.',
 	'dump-database-curr-pages' => 'Páginas actuales',
 	'dump-database-curr-pages-info' => '(Esta versión es normalmente la mejor para el uso de bots)',
 	'dump-database-full-pages' => 'Páginas actuales e historial',
@@ -312,7 +312,7 @@ $messages['fa'] = [
  */
 $messages['fi'] = [
 	'dump-database' => 'Tietokantavedokset',
-	'dump-database-info' => 'Tietokantavedoksia voidaan käyttää henkilökohtaisina varmuuskopioina (Wikia tuottaa erilliset varmuuskopiot kaikista wikeistä automaattisesti) tai bottitarkoituksiin.',
+	'dump-database-info' => 'Tietokantavedoksia voidaan käyttää henkilökohtaisina varmuuskopioina (Fandom tuottaa erilliset varmuuskopiot kaikista wikeistä automaattisesti) tai bottitarkoituksiin.',
 	'dump-database-curr-pages' => 'Nykyiset sivut',
 	'dump-database-curr-pages-info' => '(Tämä versio on yleensä paras bottikäyttöön)',
 	'dump-database-full-pages' => 'Nykyiset sivut ja historia',
@@ -334,7 +334,7 @@ $messages['fi'] = [
  */
 $messages['fr'] = [
 	'dump-database' => 'Dumps de la base de données',
-	'dump-database-info' => 'Les dumps de la base de données peuvent être utilisés comme sauvegarde personnelle (Wikia produit automatiquement des sauvegardes séparées de tous les wikis) ou pour les robots de maintenance',
+	'dump-database-info' => 'Les dumps de la base de données peuvent être utilisés comme sauvegarde personnelle (Fandom produit automatiquement des sauvegardes séparées de tous les wikis) ou pour les robots de maintenance',
 	'dump-database-curr-pages' => 'Pages actuelles',
 	'dump-database-curr-pages-info' => '(Cette version est généralement la meilleure pour une utilisation pour un bot)',
 	'dump-database-full-pages' => 'Pages actuelles et historique',
@@ -353,7 +353,7 @@ $messages['fr'] = [
  */
 $messages['gl'] = [
 	'dump-database' => 'Copias da base de datos',
-	'dump-database-info' => 'As copias da base de datos pódense usar como unha copia de seguridade persoal (Wikia produce automaticamente copias de seguridade separadas de todos os wikis) ou para os bots de mantemento',
+	'dump-database-info' => 'As copias da base de datos pódense usar como unha copia de seguridade persoal (Fandom produce automaticamente copias de seguridade separadas de todos os wikis) ou para os bots de mantemento',
 	'dump-database-curr-pages' => 'Páxinas actuais',
 	'dump-database-curr-pages-info' => '(Esta versión é a miúdo a mellor para o seu uso por parte dun bot)',
 	'dump-database-full-pages' => 'Páxinas actuais e historial',
@@ -382,7 +382,7 @@ $messages['he'] = [
  */
 $messages['hu'] = [
 	'dump-database' => 'Adatbázis dumpok',
-	'dump-database-info' => 'Az adatbázis dumpok használhatóak személyes biztonsági mentésként (a Wikia az összes wikiről automatikusan készít különálló mentéseket) vagy karbantartó botokhoz',
+	'dump-database-info' => 'Az adatbázis dumpok használhatóak személyes biztonsági mentésként (a Fandom az összes wikiről automatikusan készít különálló mentéseket) vagy karbantartó botokhoz',
 	'dump-database-curr-pages' => 'Aktuális lapok',
 	'dump-database-curr-pages-info' => '(Általában ez a verzió a legmegfelelőbb bottal való feldolgozásra)',
 	'dump-database-full-pages' => 'Aktuális lapok és laptörténet',
@@ -400,7 +400,7 @@ $messages['hu'] = [
  */
 $messages['ia'] = [
 	'dump-database' => 'Copias del base de datos',
-	'dump-database-info' => 'Le copias del base de datos pote esser usate como copia de securitate personal (Wikia produce automaticamente copias de securitate separate de tote le wikis) o pro le robots de mantenentia.',
+	'dump-database-info' => 'Le copias del base de datos pote esser usate como copia de securitate personal (Fandom produce automaticamente copias de securitate separate de tote le wikis) o pro le robots de mantenentia.',
 	'dump-database-curr-pages' => 'Paginas actual',
 	'dump-database-curr-pages-info' => '(Iste version es generalmente le melior pro uso per robots)',
 	'dump-database-full-pages' => 'Paginas actual e historia',
@@ -418,7 +418,7 @@ $messages['ia'] = [
  */
 $messages['id'] = [
 	'dump-database' => 'Limpahan basisdata',
-	'dump-database-info' => 'Limpahan basisdata dapat digunakan sebagai cadangan pribadi (Wikia menghasilkan cadangan terpisah dari semua wiki secara otomatis) atau untuk bot pemeliharaan',
+	'dump-database-info' => 'Limpahan basisdata dapat digunakan sebagai cadangan pribadi (Fandom menghasilkan cadangan terpisah dari semua wiki secara otomatis) atau untuk bot pemeliharaan',
 	'dump-database-curr-pages' => 'Halaman sekarang',
 	'dump-database-curr-pages-info' => '(Versi ini biasanya terbaik untuk menggunakan bot)',
 	'dump-database-full-pages' => 'Halaman saat ini dan sejarah',
@@ -438,7 +438,7 @@ $messages['id'] = [
  */
 $messages['it'] = [
 	'dump-database' => 'Dump del database',
-	'dump-database-info' => 'I dump del database possono essere utilizzati come backup personale (Wikia produce copie di backup separate di tutte le wiki automaticamente) o per i bot di manutenzione',
+	'dump-database-info' => 'I dump del database possono essere utilizzati come backup personale (Fandom produce copie di backup separate di tutte le wiki automaticamente) o per i bot di manutenzione',
 	'dump-database-curr-pages' => 'pagine attuali',
 	'dump-database-curr-pages-info' => '(Questa versione è normalmente la migliore da far usare ai bot)',
 	'dump-database-full-pages' => 'Pagine e cronologia attuali',
@@ -562,7 +562,7 @@ $messages['mr'] = [
  */
 $messages['ms'] = [
 	'dump-database' => 'Longgokan pangkalan data',
-	'dump-database-info' => 'Longgokan pangkalan data (<i>database dumps</i>) boleh digunakan sebagai sistem sandaran peribadi (Wikia menghasilkan sistem sandaran yang berasingan untuk semua wiki secara automatik) atau untuk kegunaan bot penyelenggaraan',
+	'dump-database-info' => 'Longgokan pangkalan data (<i>database dumps</i>) boleh digunakan sebagai sistem sandaran peribadi (Fandom menghasilkan sistem sandaran yang berasingan untuk semua wiki secara automatik) atau untuk kegunaan bot penyelenggaraan',
 	'dump-database-curr-pages' => 'Laman-laman semasa',
 	'dump-database-curr-pages-info' => '(Biasanya, versi ini terbaik untuk kegunaan bot)',
 	'dump-database-full-pages' => 'Laman-laman semasa dan sejarah',
@@ -589,7 +589,7 @@ $messages['my'] = [
  */
 $messages['nb'] = [
 	'dump-database' => 'Databasedumper',
-	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Wikia produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
+	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Fandom produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
 	'dump-database-curr-pages' => 'Nåværende sider',
 	'dump-database-curr-pages-info' => '(Denne versjonen er vanligvis best for bot-bruk)',
 	'dump-database-full-pages' => 'Nåværende sider og historikk',
@@ -608,7 +608,7 @@ $messages['nb'] = [
 $messages['nl'] = [
 	'dump-database' => 'Databasedumps',
 	'dump-database-info' => "Databasedumps kunnen gebruikt worden als persoonlijke back-up of voor beheerrobots.
-Wikia maakt automatisch back-ups van alle wiki's.",
+Fandom maakt automatisch back-ups van alle wiki's.",
 	'dump-database-curr-pages' => "Huidige pagina's",
 	'dump-database-curr-pages-info' => 'Deze versie is meestal de beste keus voor botgebruik.',
 	'dump-database-full-pages' => "Huidige pagina's en geschiedenis",
@@ -644,7 +644,7 @@ $messages['oc'] = [
  */
 $messages['pl'] = [
 	'dump-database' => 'Zrzuty bazy danych',
-	'dump-database-info' => 'Zrzuty bazy danych mogą być używane jako osobista kopia zapasowa (Wikia tworzy kopie zapasowe wszystkich wiki automatycznie) lub przez boty',
+	'dump-database-info' => 'Zrzuty bazy danych mogą być używane jako osobista kopia zapasowa (Fandom tworzy kopie zapasowe wszystkich wiki automatycznie) lub przez boty',
 	'dump-database-curr-pages' => 'Obecne strony',
 	'dump-database-curr-pages-info' => '(Ta wersja jest najlepsza dla używania przez boty)',
 	'dump-database-full-pages' => 'Obecne strony i historia',
@@ -664,7 +664,7 @@ $messages['pl'] = [
  */
 $messages['pms'] = [
 	'dump-database' => 'Dump ëd la base ëd dàit',
-	'dump-database-info' => 'Ij dump ëd la base ëd dàit a peulo esse dovrà com còpia përsonal (Wikia a produv automaticament dle còpie separà ëd tute le wiki) o për trigomiro ëd manutension',
+	'dump-database-info' => 'Ij dump ëd la base ëd dàit a peulo esse dovrà com còpia përsonal (Fandom a produv automaticament dle còpie separà ëd tute le wiki) o për trigomiro ëd manutension',
 	'dump-database-curr-pages' => 'Pàgine corente',
 	'dump-database-curr-pages-info' => "(Sta version-sì a l'é normalment la mej për l'usagi dij trigomiro)",
 	'dump-database-full-pages' => 'Pàgine corente e stòria',
@@ -693,7 +693,7 @@ $messages['ps'] = [
  */
 $messages['pt'] = [
 	'dump-database' => 'Cópias da base de dados em ficheiro',
-	'dump-database-info' => 'Cópias da base de dados em ficheiro podem ser usadas como cópia de segurança pessoal (a Wikia produz automaticamente cópias de segurança separadas, de todas as wikis) ou por robôs de manutenção',
+	'dump-database-info' => 'Cópias da base de dados em ficheiro podem ser usadas como cópia de segurança pessoal (a Fandom produz automaticamente cópias de segurança separadas, de todas as wikis) ou por robôs de manutenção',
 	'dump-database-curr-pages' => 'Páginas atuais',
 	'dump-database-curr-pages-info' => '(Normalmente, esta versão é melhor para uso por robôs)',
 	'dump-database-full-pages' => 'Páginas atuais e histórico',
@@ -714,7 +714,7 @@ $messages['pt'] = [
  */
 $messages['pt-br'] = [
 	'dump-database' => 'Descarregamento do banco de dados',
-	'dump-database-info' => 'Descarregamentos do banco de dados podem ser usados como cópias de segurança pessoais (Wikia produz cópias de segurança para todas wikis automaticamente) ou para robôs de manutenção',
+	'dump-database-info' => 'Descarregamentos do banco de dados podem ser usados como cópias de segurança pessoais (Fandom produz cópias de segurança para todas wikis automaticamente) ou para robôs de manutenção',
 	'dump-database-curr-pages' => 'Páginas atuais',
 	'dump-database-curr-pages-info' => '(Esta versão geralmente é melhor para uso por robôs)',
 	'dump-database-full-pages' => 'Páginas atuais e histórico',
@@ -812,7 +812,7 @@ $messages['sr-ec'] = [
  */
 $messages['sv'] = [
 	'dump-database' => 'Databasdumps',
-	'dump-database-info' => 'Databasdumps kan användas som en personlig backup (Wikia producerar separata säkerhetskopior av alla wikis automatiskt) eller för underhållsbots',
+	'dump-database-info' => 'Databasdumps kan användas som en personlig backup (Fandom producerar separata säkerhetskopior av alla wikis automatiskt) eller för underhållsbots',
 	'dump-database-curr-pages' => 'Nuvarande sidor',
 	'dump-database-curr-pages-info' => '(Denna version är oftast bäst för bot-användning)',
 	'dump-database-full-pages' => 'Aktuella sidor och historia',
@@ -850,7 +850,7 @@ $messages['te'] = [
  */
 $messages['tl'] = [
 	'dump-database' => 'Tapunan ng talaan ng mga dato',
-	'dump-database-info' => 'Magagamit ang tapunan ng talaan ng mga dato bilang isang reserbang pansarili (kusang gumagawa ang Wikia ng nakahiwalay na mga reserba ng lahat ng mga wiki)',
+	'dump-database-info' => 'Magagamit ang tapunan ng talaan ng mga dato bilang isang reserbang pansarili (kusang gumagawa ang Fandom ng nakahiwalay na mga reserba ng lahat ng mga wiki)',
 	'dump-database-curr-pages' => 'Kasalukuyang mga pahina',
 	'dump-database-curr-pages-info' => '(Ang bersyon na ito ay kadalasang pinakamahusay para sa paggamit ng bot)',
 	'dump-database-full-pages' => 'Kasalukuyang mga pahina at kasaysayan',
@@ -891,7 +891,7 @@ $messages['uk'] = [
  */
 $messages['vi'] = [
 	'dump-database' => 'Cơ sở dữ liệu',
-	'dump-database-info' => 'Kho cơ sở dữ liệu có thể được sử dụng như là một dự phòng cá nhân (Wikia riêng biệt sao lưu của tất cả wiki sản xuất tự động) hoặc cho các chương trình bảo trì.',
+	'dump-database-info' => 'Kho cơ sở dữ liệu có thể được sử dụng như là một dự phòng cá nhân (Fandom riêng biệt sao lưu của tất cả wiki sản xuất tự động) hoặc cho các chương trình bảo trì.',
 	'dump-database-curr-pages' => 'Số trang nội dung',
 	'dump-database-curr-pages-info' => '(Phiên bản này thường là tốt nhất để sử dụng bot)',
 	'dump-database-full-pages' => 'Trang hiện tại và lịch sử',
@@ -920,7 +920,7 @@ $messages['wuu'] = [
  */
 $messages['zh-hans'] = [
 	'dump-database' => '数据库转储',
-	'dump-database-info' => '数据库转储可以作为一个个人的备份（Wikia会对所有wiki自动生成单独的备份）或用于维护类机器人',
+	'dump-database-info' => '数据库转储可以作为一个个人的备份（Fandom会对所有wiki自动生成单独的备份）或用于维护类机器人',
 	'dump-database-curr-pages' => '当前页面',
 	'dump-database-curr-pages-info' => '（此版本通常是最适合机器人使用）',
 	'dump-database-full-pages' => '当前和历史页面',
@@ -941,7 +941,7 @@ $messages['zh-hans'] = [
  */
 $messages['zh-hant'] = [
 	'dump-database' => '資料庫轉存',
-	'dump-database-info' => '資料庫轉存可以作為個個人的備份（Wikia會自動產生所有wiki個別的備份），或於維護類機器人。',
+	'dump-database-info' => '資料庫轉存可以作為個個人的備份（Fandom會自動產生所有wiki個別的備份），或於維護類機器人。',
 	'dump-database-curr-pages' => '當前頁面',
 	'dump-database-curr-pages-info' => '（此版本通常最適合機器人使用）',
 	'dump-database-full-pages' => '當前頁面和歷史記錄',
