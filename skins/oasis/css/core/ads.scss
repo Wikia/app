@@ -45,6 +45,7 @@ $floating-ad-margin: 20px;
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: flex;
+		flex-direction: row-reverse;
 		justify-content: center;
 	}
 
