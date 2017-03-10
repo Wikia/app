@@ -63,7 +63,13 @@
 	text-transform: uppercase;
 
 	&:hover {
+		border: 1px solid mix($color-button-text, $color-black, 80);
+		color: mix($color-button-text, $color-black, 80);
 		text-decoration: none;
+
+		svg {
+			fill: mix($color-button-text, $color-black, 80);
+		}
 	}
 
 	svg {
