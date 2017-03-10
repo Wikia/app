@@ -138,7 +138,6 @@ require(
 				}
 
 				function getAvatars(actors) {
-					console.log(actors);
 					return actors.slice(0, 5);
 				}
 
@@ -175,6 +174,12 @@ require(
 				}
 			};
 
+			this.removeIsUnread = function () {
+				$(this).find('.wds-icon.wds-is-unread').each(function($elem) {
+					$elem.removeClass('wds-is-unread')
+				});
+			};
+
 			this.proxy = function (func) {
 				return $.proxy(func, this);
 			}
@@ -209,7 +214,9 @@ require(
 			}
 
 			function createActors(actors) {
-				if (Array.isArray(actors)) {
+				if (!Array.isArray(actors)) {
+					return [];
+				} else {
 					return actors.map(function (data) {
 						return {
 							avatarUrl: data.avatarUrl,
@@ -220,8 +227,6 @@ require(
 							// profileUrl: DiscussionContributor.getProfileUrl(data.name)
 						};
 					});
-				} else {
-					return [];
 				}
 			}
 
@@ -243,7 +248,10 @@ require(
 			}
 
 			this.markAllAsRead = function () {
-				//TODO clear read status from all loaded notifications
+				this.notifications.forEach(function (notification) {
+					notification.isUnread = false;
+				});
+				this.view.removeIsUnread();
 			};
 
 			this.setUnreadCount = function (count) {
