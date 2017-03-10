@@ -1,7 +1,19 @@
 <div class="pph-article-header">
 	<div class="pph-article-title">
 		<div class="pph-categories">
-			in: Characters, Heroes for Hire, Adventurers, and 26 more
+			in:&nbsp;
+			<span class="pph-category-links">
+				<?php foreach($visibleCategories as $i => $category): ?>
+					<?php if ($i === $visibleCategoriesLength - 1 && count($moreCategories) === 0): ?>
+						<?= $category ?>
+					<?php else: ?>
+						<?= $category ?>,
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php if($moreCategoriesLength > 0): ?>
+					<a href="#">and <?= $moreCategoriesLength ?> more</a>
+				<?php endif; ?>
+			</span>
 		</div>
 		<h1><?= $title ?></h1>
 	</div>

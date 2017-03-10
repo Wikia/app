@@ -1,35 +1,55 @@
 @import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 .pph-article-header {
 	display: flex;
-	margin: 18px 0;
+	margin: 5px 0 18px;
 }
 
 .pph-article-title {
 	flex: 1;
+	margin-right: 10px;
 
 	h1 {
 		font-size: 36px;
 		line-height: 1;
-		margin-top: 14px;
 	}
 }
 
 .pph-categories {
-	color: #0a56a0;
+	align-items: center;
+	display: flex;
 	font-size: 12px;
+	height: 32px;
+}
+
+.pph-category-links {
+	color: $color-links;
 }
 
 .pph-article-contribution {
+	align-items: flex-end;
+	display: flex;
+	flex-direction: column;
 }
 
 .pph-languages {
-	text-align: right;
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	height: 32px;
+	margin-right: -12px;
+	padding: 0 12px;
+
+	svg {
+		height: 9px;
+		margin-left: 6px;
+		width: 9px;
+	}
 }
 
 .pph-contribution-buttons {
 	display: flex;
-	margin-top: 14px;
 }
 
 .pph-button-group {
@@ -43,6 +63,7 @@
 	color: $color-button-text;
 	display: flex;
 	font-size: 10px;
+	font-weight: 600;
 	height: 34px;
 	margin-left: 6px;
 	padding: 0 12px;
@@ -63,7 +84,13 @@
 	}
 
 	&.pph-button-chevron {
-		border-left: 1px solid $color-button-text;
+		border-left: 1px solid transparentize($color-button-text, 0.5);
 		margin-left: 0;
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.pph-article-title h1 {
+		font-size: 28px;
 	}
 }

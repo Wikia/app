@@ -19,6 +19,7 @@
 .pph-wordmark-text {
 	flex: 1;
 	font-size: 28px;
+	font-weight: 600;
 	line-height: 1;
 	margin-top: 24px;
 
@@ -30,6 +31,7 @@
 .pph-tally-area {
 	align-items: flex-start;
 	display: flex;
+	font-weight: 600;
 	margin: 20px;
 
 	.pph-tally {
@@ -56,6 +58,7 @@
 	color: $color-button-text;
 	display: flex;
 	font-size: 10px;
+	font-weight: 600;
 	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
