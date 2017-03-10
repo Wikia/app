@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	AdElement,
 	googleTag,
 	slotTargeting,
-	recoveryHelper,
+	sourcePointHelper,
 	slotTweaker,
 	sraHelper,
 	scrollHandler
@@ -47,21 +47,23 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {Object}   extra              - optional parameters
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
+	 * @param {array}    extra.recoverableSlots - GPT recoverable slots
+	 * @param {bool}     extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
-				recoveryHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
-			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			shouldPushRecoverableAd = sourcePointHelper.isBlocking() &&
+				sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
+			shouldPush = !sourcePointHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
 			slot.name,
-			recoveryHelper.isBlocking(),
+			sourcePointHelper.isBlocking(),
 			recoverableSlots,
-			recoveryHelper.isSourcePointRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+			sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
 
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
@@ -72,7 +74,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			});
 		}
 
-		setAdditionalTargeting(slotTargetingData);
+		setAdditionalTargeting(slotTargetingData, extra);
 
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
@@ -83,7 +85,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
-		function setAdditionalTargeting(slotTargetingData) {
+		function setAdditionalTargeting(slotTargetingData, extra) {
 			if (scrollHandler) {
 				var count = scrollHandler.getReloadedViewCount(slot.name);
 				if (count !== null) {
@@ -91,7 +93,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				}
 			}
 
-			if (shouldPushRecoverableAd) {
+			// set src=rec for SourcePoint or PageFair recovery
+			if (shouldPushRecoverableAd || extra.isPageFairRecoverable) {
 				slotTargetingData.src = 'rec';
 			}
 

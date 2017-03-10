@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (uapContext, factory, slotTweaker, openXHelper) {
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
+], function (uapContext, factory, slotTweaker, openXHelper, pageFair) {
 	'use strict';
 
 	return factory.createProvider(
@@ -49,6 +50,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			beforeHop: function(slotName) {
 				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
+			isPageFairRecoverable: pageFair.isSlotRecoverable,
 			sraEnabled: true,
 			recoverableSlots: [
 				'TOP_LEADERBOARD',
