@@ -76,6 +76,9 @@ $notification-card-anchor-color: #656d77;
 
 	.wds-icon {
 	  fill: $wds-icon-color;
+	  width: 18px;
+	  height: 18px;
+	  min-width: inherit;
 	}
 	.is-unread {
 	  fill: $wds-color-link;
