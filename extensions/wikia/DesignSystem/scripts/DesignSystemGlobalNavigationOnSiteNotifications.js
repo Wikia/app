@@ -10,6 +10,24 @@ require(
 			announcement: 'announcement'
 		};
 
+		/**
+		 * Gets timestamp from ISO string date
+		 * @param {string} date
+		 * @returns {number} - timestamp
+		 */
+		function convertToTimestamp(date) {
+			return (new Date(date)).getTime() / 1000;
+		}
+
+		/**
+		 * Gets ISO string from timestamp
+		 * @param {string} timestamp
+		 * @returns {string} - ISO string
+		 */
+		function convertToIsoString(timestamp) {
+			return new Date(timestamp * 1000).toISOString();
+		}
+
 		function getSafely(obj, path) {
 			return path.split(".").reduce(function (acc, key) {
 				return (typeof acc == "undefined" || acc === null) ? acc : acc[key];
@@ -167,6 +185,15 @@ require(
 			this.notifications = [];
 			this.unreadCount = 0;
 
+			this.getLatestEventTime = function() {
+				const latest = this.notifications[0];
+				if (latest) {
+					return latest.timestamp;
+				} else {
+					return null;
+				}
+			};
+
 			function getTypeFromApiData(notification) {
 				if (notification.type === 'upvote-notification') {
 					if (notification.refersTo.type === 'discussion-post') {
@@ -204,7 +231,7 @@ require(
 						title: getSafely(notification, 'refersTo.title'),
 						snippet: getSafely(notification, 'refersTo.snippet'),
 						uri: getSafely(notification, 'refersTo.uri'),
-						timestamp: getSafely(notification, 'events.latestEvent.when'),
+						timestamp: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
 						communityName: getSafely(notification, 'community.name'),
 						communityId: getSafely(notification, 'community.id'),
 						isUnread: notification.read === false,
@@ -259,11 +286,15 @@ require(
 			};
 
 			this.markAllAsRead = function () {
-				//TODO use the date of the first notification
+				const since = this.model.getLatestEventTime();
+				if (!since) {
+					// log info
+					return;
+				}
 				this.bucky.timer.start('markAllAsRead');
 				$.ajax({
 					type: 'POST',
-					data: JSON.stringify({since: "2017-01-01T12:12:12.000Z"}),
+					data: JSON.stringify({since: convertToIsoString(since)}),
 					dataType: 'json',
 					contentType: "application/json; charset=UTF-8",
 					url: this.getBaseUrl() + '/notifications/mark-all-as-read',
