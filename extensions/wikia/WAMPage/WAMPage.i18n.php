@@ -84,9 +84,6 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'wam-html-title' => 'Wiki-Aktivitätsmonitor (WAM)',
 	'wampage-header' => 'WAM',
-	'wam-Gaming' => 'Videospiele',
-	'wam-Entertainment' => 'Entertainment',
-	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-wam' => 'WAM-Wert',
 	'wampage-header-faq' => 'Häufig gestellte Fragen',
 	'wampage-content' => 'Die WAM-Punktezahl wird täglich für die 5.000 Top-Wikia-Communitys berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends bei den Fandom-Wikis ab.',
@@ -150,9 +147,6 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 $messages['es'] = array(
 	'wam-html-title' => 'Monitor de Actividad Wiki (WAM)',
 	'wampage-header' => 'WAM',
-	'wam-Gaming' => 'Videojuegos',
-	'wam-Entertainment' => 'Entretenimiento',
-	'wam-Lifestyle' => 'Estilo de vida',
 	'wampage-header-wam' => 'Puntuación WAM',
 	'wampage-header-faq' => 'Preguntas más frecuentes',
 	'wampage-content' => 'El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de Fandom más visitadas y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias.',
@@ -211,9 +205,6 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 $messages['fr'] = array(
 	'wam-html-title' => "Moniteur d'Activité Wikia (WAM)",
 	'wampage-header' => 'Wam',
-	'wam-Gaming' => 'Jeux vidéo',
-	'wam-Entertainment' => 'Divertissement',
-	'wam-Lifestyle' => 'Mode de vie',
 	'wampage-header-wam' => 'Score WAM',
 	'wampage-header-faq' => 'Foire Aux Questions',
 	'wampage-content' => "Le WAM est calculé chaque jour pour les 5&nbsp;000 meilleurs wikis et inclut un classement global et par thème ainsi qu'une note comprise entre 0 et 100. Le classement WAM est sensible aux événements du monde réel et varie souvent, capturant les dernières tendances des wikis de Fandom.",
@@ -328,9 +319,6 @@ Per favore contatta il community support tramite [mailto:support@wikia-inc.com s
 $messages['ja'] = array(
 	'wam-html-title' => 'Wikiアクティビティ・モニター（WAM）',
 	'wampage-header' => 'Wam',
-	'wam-Gaming' => 'ゲーム',
-	'wam-Entertainment' => 'エンターテイメント',
-	'wam-Lifestyle' => 'ライフスタイル',
 	'wampage-header-faq' => 'よくある質問',
 	'wampage-header-wam' => 'WAMスコア',
 	'wampage-content' => 'WAMは上位5,000のwikiサイトに対し毎日計算されており、0～100の点数と、全体ランキング、ジャンル別ランキングが提供されています。WAMランキングは、世界で起こっているリアルタイムな出来事に応じて随時変動するので、定期的にWAMをチェックすることで、Fandomコミュニティの最新トレンドを追うことができます。',
@@ -495,9 +483,6 @@ Gelieve community support te contacteren via [mailto:support@wikia-inc.com suppo
 $messages['pl'] = array(
 	'wam-html-title' => 'Monitor Aktywności Wiki (WAM)',
 	'wampage-header' => 'WAM',
-	'wam-Gaming' => 'Gry',
-	'wam-Entertainment' => 'Rozrywka',
-	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-wam' => 'Punktacja WAM',
 	'wampage-header-faq' => 'Najczęściej zadawane pytania',
 	'wampage-content' => 'Punktacja WAM aktualizowana jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Ranking WAM uwzględnia aktualne wydarzenia i jest często aktualizowany, dzięki czemu odzwierciedla najnowsze trendy w Fandom.',
@@ -547,7 +532,7 @@ Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.c
 );
 
 $messages['pt'] = array(
-	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
+	'wam-html-title' => 'Monitor de Atividade de Wiki (WAM)',
 	'wampage-header' => 'WAM',
 	'wampage-header-faq' => 'Perguntas mais frequentes',
 	'wam-all' => 'Todos',
@@ -560,8 +545,8 @@ $messages['pt'] = array(
 	'wam-movies' => 'Filmes',
 	'wampage-top-gainers-header' => 'Maiores Destaques',
 	'wampage-header-wam' => 'Pontuação WAM',
-	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a Fandom community.',
-	'wampage-content' => "The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from Fandom's wikis.",
+	'wampage-subheader-wam' => 'A pontuação WAM é um indicador de força e dinamismo de uma comunidade do Fandom.',
+	'wampage-content' => 'A pontuação WAM é calculada diariamente para os 5.000 sites mais populares e inclui uma classificação geral, uma classificação vertical e uma pontuação de 0 a 100. A pontuação WAM é sensível aos acontecimentos do mundo real e muda com frequência, captando as tendências mais recentes das wikis do Fandom.',
 	'wampage-content-faq-link' => '[[$1|Perguntas frequentes]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Como o WAM é calculado?===
 A pontuação WAM é uma combinação de tráfego, contribuição e crescimento. Nós não podemos fornecer os detalhes, porque  não queremos que as wikias tentem manipular a classificação. Mas nós garantimos que incluimos os ingredientes essenciais para uma wikia próspera e bem-sucedida. 
@@ -592,7 +577,7 @@ Por favor, entre em contato com a equipe de apoio pelo endereço [mailto:support
 	'wam-index-header-admins' => 'Administradores',
 	'wampage-breadcrumb-back-to-wam' => 'Voltar à pontuação WAM',
 	'wam-index-header-peak-rank' => 'Melhor Classificação',
-	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so please check back. [mailto:support@wikia-inc.com Contact Fandom Community Support] if you have any questions.',
+	'wam-index-no-results' => 'A wiki que você pesquisou não está no topo das 5000 para a data selecionada. A pontuação WAM é atualizada diariamente, então cheque frequentemente. [mailto:suporte@wikia-inc.com Entre em contato com a Equipe de suporte da comunidade Fandom] se você tiver alguma dúvida.',
 	'wam-index-filter-search-placeholder' => 'Pesquise',
 	'wam-index-filter-sort-label' => 'Categoria',
 	'wam-index-filter-date-label' => 'Data',
