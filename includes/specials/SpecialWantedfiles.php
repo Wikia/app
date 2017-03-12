@@ -73,31 +73,31 @@ class WantedFilesPage extends WantedQueryPage {
 
 	function getQueryInfo() {
 		$queryInfo = [
-            'tables' => [
-                'imagelinks',
-                'pg1' => 'page',
-                'pg2' => 'page',
-                'image'
-            ],
-            'fields' => [
-                'namespace' => NS_FILE,
-                'title' => 'il_to',
-                'value' => 'COUNT(*)'
-            ],
-            'conds' => [
-                'img_name' => null,
+			'tables' => [
+				'imagelinks',
+				'pg1' => 'page',
+				'pg2' => 'page',
+				'image'
+			],
+			'fields' => [
+				'namespace' => NS_FILE,
+				'title' => 'il_to',
+				'value' => 'COUNT(*)'
+			],
+			'conds' => [
+				'img_name' => null,
 				"NOT (RIGHT(pg2.page_title, 3) = '.js' OR RIGHT(pg2.page_title, 4) = '.css' OR pg2.page_namespace = '" . NS_MODULE . "')"
-            ],
-            'options' => [ 'GROUP BY' => 'il_to' ],
-            'join_conds' => [
-                'image' => [ 'LEFT JOIN',
-                    'il_to = img_name'
-                ],
-                'pg1' => [ 'LEFT JOIN', [
-                    'il_to = pg1.page_title',
-                    'pg1.page_namespace' => NS_FILE,
-                ] ],
-                'pg2' => [ 'LEFT JOIN', 'pg2.page_id = il_from' ]
+			],
+			'options' => [ 'GROUP BY' => 'il_to' ],
+			'join_conds' => [
+				'image' => [ 'LEFT JOIN',
+					'il_to = img_name'
+				],
+				'pg1' => [ 'LEFT JOIN', [
+					'il_to = pg1.page_title',
+					'pg1.page_namespace' => NS_FILE,
+				] ],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = il_from' ]
 			]
 		];
 		

@@ -40,10 +40,10 @@ class WantedTemplatesPage extends WantedQueryPage {
 	function getQueryInfo() {
 		return [
 			'tables' => [
-			    'templatelinks',
-                'pg1' => 'page',
-                'pg2' => 'page'
-            ],
+				'templatelinks',
+				'pg1' => 'page',
+				'pg2' => 'page'
+			],
 			'fields' => [
 				'namespace' => 'tl_namespace',
 				'title' => 'tl_title',
@@ -56,12 +56,12 @@ class WantedTemplatesPage extends WantedQueryPage {
 			],
 			'options' => [ 'GROUP BY' => [ 'tl_namespace', 'tl_title' ] ],
 			'join_conds' => [
-			    'pg1' => [ 'LEFT JOIN', [
-			        'pg1.page_namespace = tl_namespace',
+				'pg1' => [ 'LEFT JOIN', [
+					'pg1.page_namespace = tl_namespace',
 					'pg1.page_title = tl_title'
-                ] ],
-                'pg2' => [ 'LEFT JOIN', 'pg2.page_id = tl_from' ]
-            ]
+				] ],
+				'pg2' => [ 'LEFT JOIN', 'pg2.page_id = tl_from' ]
+			]
 		];
 	}
 }
