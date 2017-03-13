@@ -1065,7 +1065,7 @@ $wgEnableEmail = true;
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
-$wgEnableUserEmail = true;
+$wgEnableUserEmail = false;
 
 /**
  * Minimum time, in hours, which must elapse between password reminder
