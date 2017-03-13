@@ -8,6 +8,8 @@
 	margin: -1px -31px 0;
 	position: relative;
 	z-index: 1001;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
 	.wordmark {
 		height: 65px;
