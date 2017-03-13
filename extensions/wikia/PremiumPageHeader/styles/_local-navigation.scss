@@ -48,28 +48,19 @@ $submenu-background-color: mix($color-page, #000, 90%);
 		}
 
 		&.pph-local-nav-container > a {
-			&:after, &:before {
+			&:after {
 				border: solid transparent;
+				border-bottom-color: $submenu-background-color;
+				border-width: $submenu-triangle-size;
 				bottom: -$menu-item-vertical-padding - 1px;
 				content: '';
 				display: none;
 				height: 0;
 				left: 50%;
+				margin-left: -$submenu-triangle-size;
 				pointer-events: none;
 				position: absolute;
 				width: 0;
-			}
-
-			&:after {
-				border-bottom-color: $submenu-background-color;
-				border-width: $submenu-triangle-size;
-				margin-left: -$submenu-triangle-size;
-			}
-
-			&:before {
-				border-bottom-color: $submenu-border-color;
-				border-width: $submenu-triangle-size + 1px;
-				margin-left: -$submenu-triangle-size - 1px;
 			}
 		}
 
