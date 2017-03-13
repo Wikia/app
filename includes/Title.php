@@ -4433,7 +4433,11 @@ class Title {
 		/* Wikia change end */
 
 		if ( $message->exists() ) {
-			return $message->plain();
+			$messageText = $message->plain();
+			/* Wikia change - restore $nbsp; tag */
+			$messageText = str_replace( "\xc2\xa0", '&nbsp;', $messageText );
+			/* Wikia change end */
+			return $messageText;
 		} else {
 			return false;
 		}
