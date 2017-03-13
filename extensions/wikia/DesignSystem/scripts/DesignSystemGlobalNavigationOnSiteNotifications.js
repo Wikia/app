@@ -109,6 +109,8 @@ require(
 			this.$container = $('#notificationContainer');
 			this.$markAllAsReadButton = $('#markAllAsReadButton');
 
+			var avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
+
 			this.registerEvents = function () {
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
@@ -137,7 +139,13 @@ require(
 				}
 
 				function getAvatars(actors) {
-					return actors.slice(0, 5);
+					return actors.slice(0, 5).map(function (avatar) {
+						if (!avatar.avatarUrl) {
+							avatar.avatarUrl = avatarPlaceholder;
+						}
+						avatar.profileUrl = '/wiki/User:' + avatar.name;
+						return avatar;
+					});
 				}
 
 				return notifications.map(this.proxy(function (notification) {
@@ -252,8 +260,6 @@ require(
 							badgePermission: data.badgePermission,
 							id: data.id,
 							name: data.name
-							//TODO profile URL
-							// profileUrl: DiscussionContributor.getProfileUrl(data.name)
 						};
 					});
 				}

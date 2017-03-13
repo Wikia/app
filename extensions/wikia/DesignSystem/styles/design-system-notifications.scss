@@ -50,7 +50,6 @@ $wds-icon-color: $wds-color-light-c5;
 	  max-height: 420px;
 	  overflow-y: auto;
 	  width: 100%;
-	  padding: 0 18px;
 	}
   }
 }
@@ -107,7 +106,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	font-size: $wds-typescale-size-minus-1;
 	font-style: italic;
 	line-height: 18px;
-	margin: 8px 0 0;
+	margin-top: 8px;
   }
 
   &__context-list {
@@ -131,8 +130,12 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   @include align-items(center);
   margin: 8px 18px 6px 40px;
 
+  &__avatar {
+	color: $wds-color-light-c4;
+  }
+
   @for $i from 1 to 6 {
-	.wds-avatar:nth-child(#{$i}) {
+	.wds-avatar-stack__avatar:nth-child(#{$i}) {
 	  position: relative;
 	  transform: translate(($i - 1) * - 15px);
 	  z-index: 5 - $i;

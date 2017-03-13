@@ -3,20 +3,10 @@
         <div class="wds-avatar-stack">
             {{#showAvatars}}
                 {{#avatars}}
-                    {{#avatarUrl}}
-                        {{#profileUrl}}
-                            <a href="{{profileUrl}}">
-                                <img class="wds-avatar" src="{{avatarUrl}}">
-                            </a>
-                        {{/profileUrl}}
-                        {{^profileUrl}}
-                            <img class="wds-avatar" src="{{avatarUrl}}">
-                        {{/profileUrl}}
-                    {{/avatarUrl}}
-                    {{^avatarUrl}}
-                        <img class="wds-avatar"
-                             src="http://vignette.wikia-dev.pl/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50?format=jpg">
-                    {{/avatarUrl}}
+                    <a class="wds-avatar-stack__avatar" href="{{profileUrl}}">
+                        <img class="wds-avatar" src="{{avatarUrl}}" title="{{name}}"
+                             alt="Avatar">
+                    </a>
                 {{/avatars}}
                 {{#showAvatarOverflow}}
                     <div class="wds-avatar-stack__overflow">+{{avatarOverflow}}</div>
