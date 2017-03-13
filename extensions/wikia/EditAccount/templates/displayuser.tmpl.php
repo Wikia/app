@@ -20,7 +20,6 @@
  * @var $emailStatus
  * @var $disabled
  * @var $changeEmailRequested
- * @var $editToken
  * @var $mailLogLink
  * @var $isClosureRequested
  */
@@ -86,7 +85,6 @@
 		</div>
 
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
-		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 
 </fieldset>
@@ -101,7 +99,6 @@
 			<input type="submit" value="<?= wfMessage( 'editaccount-submit-fan-contributor' )->escaped(); ?>" <?= $disabled; ?> />
 			<input type="hidden" name="wpAction" value="fan-contributor" />
 			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
-			<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 		</form>
 	<?php endif; ?>
 </fieldset>
@@ -113,7 +110,6 @@
 		<input type="submit" value="<?= wfMessage( 'editaccount-submit-logout' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="logout" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
-		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 </fieldset>
 
@@ -125,7 +121,6 @@
 		<input type="submit" value="<?= wfMessage( 'editaccount-submit-clearclosurerequest' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="clearclosurerequest" />
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
-		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php } ?>
 	<p><?= wfMessage( 'editaccount-usage-close' )->escaped(); ?></p>
@@ -133,7 +128,6 @@
 		<input type="submit" value="<?= wfMessage( 'editaccount-submit-close' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="closeaccount" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
-		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
 <?= wfMessage( 'edit-account-closed-flag' )->parse(); ?>
@@ -141,7 +135,6 @@
 		<input type="submit" value="<?= wfMessage( 'editaccount-submit-cleardisable' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="cleardisable" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
-		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php } //end undisable ?>
 </fieldset>

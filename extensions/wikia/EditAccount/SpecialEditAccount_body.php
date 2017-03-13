@@ -120,17 +120,6 @@ class EditAccount extends SpecialPage {
 		// FB:23860
 		if ( !( $this->mUser instanceof User ) ) $action = '';
 
-		// CSRF protection for EditAccount (CE-774)
-		if ( ( $action !== '' && $action !== 'displayuser' && $action !== 'closeaccount' )
-			&& ( !$request->wasPosted()
-				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
-		) {
-			$output->addHTML(
-				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
-			);
-			return;
-		}
-
 		// Displays a log of email changes for the selected user
 		if ($par && $par == "log") {
 			$this->displayLogData();
@@ -223,7 +212,6 @@ class EditAccount extends SpecialPage {
 			'emailStatus' => null,
 			'disabled' => null,
 			'changeEmailRequested' => null,
-			'editToken' => $user->getEditToken(),
 		] );
 
 		if( is_object( $this->mUser ) ) {
