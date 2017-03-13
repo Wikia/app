@@ -1,3 +1,4 @@
+<h1>Hello world!</h1>
 <section class="WikiaHomePage WikiaGrid">
 	<header class="wikiahomepage-header">
 		<div class="wikiahompage-heading-group">
