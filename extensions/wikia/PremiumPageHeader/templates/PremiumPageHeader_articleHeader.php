@@ -30,20 +30,22 @@
 		<h1><?= $title ?></h1>
 	</div>
 	<div class="pph-article-contribution">
-		<div class="pph-languages pph-dropdown-container">
-			<span>
-				English
-				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-dropdown-tiny',
-					'wds-icon wds-icon-tiny'
-				) ?>
-			</span>
-			<ul class="pph-dropdown">
-				<li><a href="#">Polish</a></li>
-				<li><a href="#">German</a></li>
-				<li><a href="#">Spanish</a></li>
-			</ul>
-		</div>
+		<?php if(!empty($language_list)): ?>
+			<div class="pph-languages pph-dropdown-container">
+				<span>
+					English<!-- English label hard-coded - can we take this label from somewhere? -->
+					<?= DesignSystemHelper::renderSvg(
+						'wds-icons-dropdown-tiny',
+						'wds-icon wds-icon-tiny'
+					) ?>
+				</span>
+				<ul class="pph-dropdown">
+					<?php foreach ( $language_list as $val ) : ?>
+						<li><a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"><?= htmlspecialchars( $val['name'] ); ?></a></li>
+					<?php endforeach ?>
+				</ul>
+			</div>
+		<?php endif; ?>
 		<div class="pph-contribution-buttons">
 			<div class="pph-button-group">
 				<?php if ( !empty( $action ) ): ?>
