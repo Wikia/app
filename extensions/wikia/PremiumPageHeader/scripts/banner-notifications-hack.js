@@ -14,7 +14,6 @@ require(['wikia.window', 'jquery'], function (window, $) {
 
 			var $notificationsWrapper = $('.banner-notifications-wrapper');
 
-			$notificationsWrapper.detach();
 			$notificationsWrapper.insertAfter($globalNav);
 
 			return this;
