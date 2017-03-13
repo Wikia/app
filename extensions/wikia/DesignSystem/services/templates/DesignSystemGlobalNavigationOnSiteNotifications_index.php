@@ -1,5 +1,4 @@
 <?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-hidden-svg' ) ?>
-<? //= DesignSystemHelper::renderSvg( 'wds-icons-megaphone' , 'wds-hidden-svg' ) ?>
 <?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small', 'wds-hidden-svg' ) ?>
 
 <div class="wds-global-navigation__notifications-menu wds-dropdown notifications-container">
