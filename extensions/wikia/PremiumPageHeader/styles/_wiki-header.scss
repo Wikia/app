@@ -1,7 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
-
 .pph-wiki-header {
 	background-color: $color-buttons;
 	color: $color-button-text;
@@ -95,16 +94,22 @@
 	.pph-wiki-header {
 		margin: -1px -25px 0;
 
-		.wordmark img {
-			width: 175px;
-			height: auto;
+		.wordmark {
+			height: 45px;
+			margin: 20px 18px 50px 20px;
+
+			img {
+				width: 175px;
+				height: auto;
+			}
 		}
 	}
 
 	.pph-wordmark-text {
 		font-size: 24px;
-		margin-top: 16px;
+		margin-top: 20px;
 	}
+
 	.pph-tally-area .pph-tally {
 		em {
 			font-size: 18px;
