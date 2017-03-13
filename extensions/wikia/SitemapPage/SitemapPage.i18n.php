@@ -1,10 +1,4 @@
 <?php
-/**
-* Internationalisation file for the SitemapPage extension.
-*
-* @addtogroup Languages
-*/
-
 $messages = array();
 
 $messages['en'] = array(
@@ -17,9 +11,6 @@ $messages['en'] = array(
 	'sitemap-page-wiki-description' => 'Description',
 );
 
-/**
- * Message documentation
- */
 $messages['qqq'] = array(
 	'sitemap-page-desc' => '{{desc}}',
 	'sitemap-page-header' => 'This is the title of the page',
@@ -101,7 +92,7 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'sitemap-page-header' => 'Global Sitemap',
+	'sitemap-page-header' => 'Mapa do site global',
 	'sitemap-page-desc' => 'Sitemap Page',
 	'sitemap-page-html-title' => 'Sitemap Page - Wikia.com/Sitemap',
 	'sitemap-page-wiki-title' => 'Title',
