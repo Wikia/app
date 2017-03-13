@@ -498,6 +498,56 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 }
 
 /**
+ * getPagesWithCategory
+ * Retrieves titles of pages with provided category name
+ * ie. Namespace:Page_name
+ * 
+ * @author Kamil Koterba <kamil@wikia-inc.com>
+ * @since Nov 2012 | MediaWiki 1.19
+ * 
+ * @param $category Title
+ * @param $skipCache Boolean
+ * @return array
+ */
+function getPagesWithCategory( Title $category, $skipCache = false ) {
+	global $wgMemc;
+
+	$method = __METHOD__;
+	wfProfileIn( $method );
+	$memckey = wfMemcKey( 'pages-with-category', $category->getDBKey() );
+	$pagesWithCategory = $wgMemc->get( $memckey );
+	if( empty( $pagesWithCategory ) || $skipCache ) {
+                $pagesWithCategory = array();
+                
+		wfProfileIn( $method . "-fromdb" );
+                $dbr = wfGetDB( DB_SLAVE, 'category' );
+                $res = $dbr->select(
+                        array( 'page', 'categorylinks' ),
+                        array( 'page_title', 'page_namespace' ),
+                        array( 'cl_to' => $category->getDBkey() ),
+                        __METHOD__,
+                        array(
+                                'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+                        ),
+                        array(
+                                'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
+                        )
+                );
+                wfProfileOut( $method . "-fromdb" );
+                
+                $count = 0;
+                foreach ( $res as $row ) {
+                        $title = Title::newFromRow( $row );
+                        $pagesWithCategory[] = $title->getPrefixedDbKey();
+                }
+
+		$wgMemc->set( $memckey , $pagesWithCategory, 3600 );
+	}
+	wfProfileOut( $method );
+	return $pagesWithCategory;
+}
+
+/**
  * @author emil@wikia.com
  * @return string default external cluster
  */
