@@ -29,6 +29,14 @@
 
 .pph-category-links {
 	color: $color-links;
+
+	.pph-dropdown-container {
+		display: inline-block;
+
+		.pph-dropdown {
+			margin-top: 10px;
+		}
+	}
 }
 
 .pph-article-contribution {
@@ -99,7 +107,7 @@
 	}
 }
 
-.pph-button-dropdown {
+.pph-dropdown {
 	background: $submenu-background-color;
 	border: 1px solid $submenu-border-color;
 	display: none;
@@ -164,11 +172,11 @@
 	}
 }
 
-.pph-button-dropdown-container {
+.pph-dropdown-container {
 	position: relative;
 
 	&:hover {
-		> .pph-button-dropdown {
+		> .pph-dropdown {
 			display: block;
 		}
 	}
