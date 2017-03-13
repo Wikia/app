@@ -102,7 +102,6 @@ $2
 	'templatedraft-invalid-template' => 'Ungültiger Vorlagenname angegeben.',
 	'templatedraft-module-approve-protected' => 'Diese Vorlage ist geschützt. Wende dich bitte an einen [[Special: ListAdmins| Administrator]], damit er diesen Entwurf freischalten kann.',
 	'templatedraft-protect-edit' => 'Du hast keine Berechtigung, die übergeordnete Vorlagenseite zu bearbeiten.',
-	'templatedraft-module-closelink-create' => 'Dies ist keine Infobox',
 	'right-templatedraft' => 'Ermöglicht den Zugriff auf einen Assistenten, der hilft, die nicht plattformunabhängigen Infoboxen zum neuen Markup zu konvertieren',
 	'templatedraft-preview-example-value' => 'Dies ist ein Test',
 );
@@ -142,7 +141,6 @@ $2
 	'templatedraft-invalid-template' => 'El nombre de la plantilla es inválido.',
 	'templatedraft-module-approve-protected' => 'Esta plantilla está protegida. Por favor pregunta a un [[Special:ListAdmins|administrador]] que apruebe este borrador.',
 	'templatedraft-protect-edit' => 'No tienes permiso para editar la página principal.',
-	'templatedraft-module-closelink-create' => 'Este no es una infobox',
 	'right-templatedraft' => 'Permite el acceso a un asistente que ayudará a convertir infoboxes no portátiles al nuevo marcador',
 	'templatedraft-preview-example-value' => 'Esta es una prueba',
 );
@@ -182,7 +180,6 @@ $2
 	'templatedraft-invalid-template' => 'Nom de modèle fourni non valide.',
 	'templatedraft-module-approve-protected' => "Ce modèle est protégé. Veuillez demander à un [[Special:ListAdmins|administrateur]] d'approuver cette version de travail.",
 	'templatedraft-protect-edit' => "Vous n'êtes pas autorisé à modifier la page parente.",
-	'templatedraft-module-closelink-create' => "Il ne s'agit pas d'une infobox.",
 	'right-templatedraft' => 'Permet d’accéder à un assistant qui vous aidera à convertir les infoboxes non portables au nouveau balisage',
 	'templatedraft-preview-example-value' => 'Ceci est un test',
 );
@@ -222,7 +219,6 @@ $2
 	'templatedraft-invalid-template' => 'Il nome del template fornito non è valido.',
 	'templatedraft-module-approve-protected' => 'Questo template è protetto. Chiedi ad un [[Special:ListAdmins|amministratore]] di approvare questo progetto.',
 	'templatedraft-protect-edit' => 'Non hai il permesso di modificare la pagina madre.',
-	'templatedraft-module-closelink-create' => 'Questo non è un infobox',
 	'right-templatedraft' => "Consente l'accesso ad una procedura guidata che aiuta nella conversione degli infobox al nuovo markup",
 	'templatedraft-preview-example-value' => 'Questo è un test',
 );
@@ -262,7 +258,6 @@ $2
 	'templatedraft-invalid-template' => '入力したテンプレート名は無効です。',
 	'templatedraft-module-approve-protected' => 'このテンプレートは保護されているようです。このドラフトを承認するには、[[Special:ListAdmins|アドミン]]にお問い合わせください。',
 	'templatedraft-protect-edit' => '親ページを編集していただくための権限がありません。',
-	'templatedraft-module-closelink-create' => 'これはインフォボックスではありません',
 	'right-templatedraft' => '新しいマークアップを使用したインフォボックスへの変換を補助するウィザードを許可する',
 	'templatedraft-preview-example-value' => 'これはテストです',
 );
@@ -325,7 +320,6 @@ $2
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
 	'templatedraft-module-approve-protected' => 'This template is protected. Please ask an [[Special:ListAdmins|Admin]] to approve this draft.',
 	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
-	'templatedraft-module-closelink-create' => 'This is not an infobox',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-preview-example-value' => 'This is a test',
 );
@@ -365,7 +359,6 @@ $2
 	'templatedraft-invalid-template' => 'Nieprawidłowa nazwa szablonu.',
 	'templatedraft-module-approve-protected' => 'Ten szablon jest chroniony. Poproś [[Special:ListAdmins|Admina]] o zatwierdzenie wersji roboczej.',
 	'templatedraft-protect-edit' => 'Nie masz uprawnień do edytowania strony nadrzędnej.',
-	'templatedraft-module-closelink-create' => 'To nie jest infoboks',
 	'right-templatedraft' => 'Udostępnia kreator pozwalający na konwersję nie-przenośnych infoboksów na nową składnię',
 	'templatedraft-preview-example-value' => 'To jest test',
 );
@@ -405,7 +398,6 @@ $2
 	'templatedraft-invalid-template' => 'Nome inválido de predefinição fornecido.',
 	'templatedraft-module-approve-protected' => 'Esta predefinição está protegida. Por favor, pergunte a um  [[Special:ListAdmins|Admin]] para aprovar este projeto.',
 	'templatedraft-protect-edit' => 'Você não tem permissão para editar esta página.',
-	'templatedraft-module-closelink-create' => 'Isto não é uma infobox',
 	'right-templatedraft' => 'Permite o acesso a um assistente que ajuda a converter infoboxes de não-portáteis para a nova marcação',
 	'templatedraft-preview-example-value' => 'Isto é um teste',
 );
@@ -445,7 +437,6 @@ $2
 	'templatedraft-invalid-template' => 'Недопустимое название шаблона.',
 	'templatedraft-module-approve-protected' => 'Этот шаблон был защищён. Пожалуйста, попросите [[Special:ListAdmins|администраторов]] вики одобрить этот черновик.',
 	'templatedraft-protect-edit' => 'Вы не имеете разрешения на редактирование родительской страницы.',
-	'templatedraft-module-closelink-create' => 'Это не инфобокс',
 	'right-templatedraft' => 'Доступ к инструменту конвертации немодульных инфобоксов с использованием новой разметки',
 	'templatedraft-preview-example-value' => 'Тест',
 );
@@ -485,7 +476,6 @@ $2
 	'templatedraft-invalid-template' => '提供的模版名称无效',
 	'templatedraft-module-approve-protected' => '此模板受到保护。请咨询[[Special:ListAdmins|管理员]]批准这一草案。',
 	'templatedraft-protect-edit' => '您没有权限编辑首页面。',
-	'templatedraft-module-closelink-create' => '这不是信息框',
 	'right-templatedraft' => '允许向导帮助非移动式讯息框转换成一个新的标记文件',
 	'templatedraft-preview-example-value' => '这是一个测试',
 );
@@ -525,7 +515,6 @@ $2
 	'templatedraft-invalid-template' => '提供的模版名稱無效',
 	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這一草案。',
 	'templatedraft-protect-edit' => '您沒有許可權編輯首頁面。',
-	'templatedraft-module-closelink-create' => '這不是一個資訊框',
 	'right-templatedraft' => '允許使用將非行動話訊息框轉變為新標記方式的協助精靈',
 	'templatedraft-preview-example-value' => '這是一個測試',
 );
