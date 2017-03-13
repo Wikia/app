@@ -61,7 +61,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 .wds-notification-card {
   padding: 12px 0 8px;
   text-align: left;
-  a {
+  .wds-notification-card__outer-body {
 	cursor: pointer;
 	display: flex;
   }
@@ -113,7 +113,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   &__context-list {
 	@include flexbox();
 	color: $wds-color-blue-gray;
-	font-size: 12$wds-typescale-size-minus-2;
+	font-size: $wds-typescale-size-minus-2;
 	font-weight: bold;
 	list-style-type: none;
 	margin: 0;
