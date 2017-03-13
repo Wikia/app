@@ -105,9 +105,9 @@ require(
 			this.logic = logic;
 			this.template = template;
 			this.textFormatter = textFormatter;
-			this.$notificationsCount = $('#on-site-notifications-count');
-			this.$container = $('#notification-container');
-			this.$markAllAsReadButton = $('#mark-all-as-read-button');
+			this.$notificationsCount = $('#onSiteNotificationsCount');
+			this.$container = $('#notificationContainer');
+			this.$markAllAsReadButton = $('#markAllAsReadButton');
 
 			this.registerEvents = function () {
 				this.addDropdownLoadingEvent();
@@ -119,7 +119,7 @@ require(
 			};
 
 			this.addDropdownLoadingEvent = function () {
-				var $dropdown = $('#on-site-notifications-dropdown');
+				var $dropdown = $('#onSiteNotificationsDropdown');
 				$dropdown.click(function () {
 					logic.loadFirstPage();
 				});
