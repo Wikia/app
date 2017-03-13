@@ -422,11 +422,7 @@ class WikiFactoryTags {
 	 * @return String json-ized answer
 	 */
 	static public function axQuery() {
-		global $wgRequest, $wgUser;
-
-		if ( !$wgUser->isAllowed('wikifactory') ) {
-			return '';
-		}
+		global $wgRequest;
 
 		$query = $wgRequest->getVal( "query", false );
 
@@ -442,7 +438,7 @@ class WikiFactoryTags {
 			$sth = $dbr->select(
 				array( "city_tag" ),
 				array( "id", "name" ),
-				array( 'name' . $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() ) ),
+				array( "name like '%{$query}%'" ),
 				__METHOD__
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {

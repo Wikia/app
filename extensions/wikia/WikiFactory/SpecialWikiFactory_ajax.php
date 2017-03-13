@@ -732,11 +732,7 @@ function axWFactoryDomainQuery() {
  * @return string: json string with array of variables
  */
 function axWFactoryFilterVariables() {
-	global $wgRequest, $wgUser;
-
-	if ( !$wgUser->isAllowed('wikifactory') ) {
-		return '';
-	}
+	global $wgRequest;
 	$defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
 	$editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
 	$wiki_id = $wgRequest->getVal("wiki", 0);
