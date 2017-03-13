@@ -114,6 +114,27 @@ require(
 			this.registerEvents = function () {
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
+				this.addOnScrollEvent();
+			};
+
+			this.addOnScrollEvent = function () {
+				var scrollableElement = $('.wds-notification-list');
+				scrollableElement.on('scroll', this.proxy(this.onScroll));
+			};
+
+			this.onScroll = function(e) {
+				if (this.hasScrolledToTheBottom($(e.target))) {
+					this.logic.loadMore();
+				}
+			};
+
+			/**
+			 * Has the user scrolled almost to the bottom?
+			 * @private
+			 */
+			this.hasScrolledToTheBottom = function (element) {
+				var almostBottom = 100;
+				return element[0].scrollHeight - almostBottom <= element.scrollTop() + element.innerHeight();
 			};
 
 			this.addMarkAllAsReadEvent = function () {
@@ -304,9 +325,9 @@ require(
 			};
 
 			this.addNotifications = function (notifications) {
-				this.notifications = this.notifications.concat(mapToModel(notifications));
-				// TODO render only the new notifications
-				this.view.renderNotifications(this.notifications);
+				var newNotifications = mapToModel(notifications);
+				this.notifications = this.notifications.concat(newNotifications);
+				this.view.renderNotifications(newNotifications);
 			};
 		}
 
@@ -319,7 +340,7 @@ require(
 			};
 
 			this.shouldLoadNextPage = function () {
-				return this.updateInProgress !== true && !this.nextPage && this.allPagesLoaded !== true;
+				return this.updateInProgress !== true && this.nextPage && this.allPagesLoaded !== true;
 			};
 
 			this.updateUnreadCount = function () {
@@ -376,6 +397,24 @@ require(
 				this.updateInProgress = true;
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications',
+					xhrFields: {
+						withCredentials: true
+					}
+				}).done(this.proxy(function (data) {
+					this.model.addNotifications(data.notifications);
+					this.calculatePage(data);
+				})).always(this.proxy(function () {
+					this.updateInProgress = false;
+				}));
+			};
+
+			this.loadMore = function () {
+				if (!this.shouldLoadNextPage()) {
+					return;
+				}
+				this.updateInProgress = true;
+				$.ajax({
+					url: this.getBaseUrl() + this.nextPage,
 					xhrFields: {
 						withCredentials: true
 					}
