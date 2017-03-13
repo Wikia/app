@@ -29,34 +29,60 @@
 		</div>
 		<div class="pph-contribution-buttons">
 			<div class="pph-button-group">
-				<a href="#" class="pph-button">
-					<?= DesignSystemHelper::renderSvg(
-						'wds-icons-pencil',
-						'wds-icon wds-icon-tiny pph-button-icon'
-					) ?>
-					Edit
-				</a>
+				<?php if ( !empty( $action ) ): ?>
+					<a href="<?= empty($action['href']) ? '' : Sanitizer::encodeAttribute( $action['href'] ) ?>" class="pph-button">
+						<?php if ( $actionImage === MenuButtonController::EDIT_ICON ) { ?>
+							<?= DesignSystemHelper::renderSvg(
+								'wds-icons-pencil',
+								'wds-icon wds-icon-tiny pph-button-icon'
+							) ?>
+						<?php } ?>
+						<?= htmlspecialchars($action['text']) ?>
+					</a>
+				<?php endif; ?>
 				<a href="#" class="pph-button pph-button-chevron">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-dropdown-tiny',
 						'wds-icon wds-icon-tiny pph-local-nav-chevron'
 					) ?>
 				</a>
+				<ul class="WikiaMenuElement" style="display: none">
+					<?php
+					foreach($dropdown as $key => $item) {
+						// render accesskeys
+						if ( !empty( $item['accesskey'] ) ) {
+							$accesskey =
+								' accesskey="' . Sanitizer::encodeAttribute( $item['accesskey'] ) .
+								'"';
+						} else {
+							$accesskey = '';
+						}
+
+						$href = $item['href'] ?? '#';
+						?>
+						<li>
+							<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?> data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty($item['title']) ? '' : ' title="'. Sanitizer::encodeAttribute( $item['title'] ) .'"'; ?> <?= empty($item['id']) ? '' : ' id="'. Sanitizer::encodeAttribute( $item['id'] ) .'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
+						</li>
+					<?php } ?>
+				</ul>
 			</div>
 			<a href="#" class="pph-button pph-button-secondary">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-reply-tiny',
 					'wds-icon wds-icon-tiny pph-button-icon'
 				) ?>
-				Talk
+				<?= wfMessage( $commentButtonMsg )->text(); ?>
 			</a>
-			<a href="#" class="pph-button pph-button-secondary">
-				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-share-small',
-					'wds-icon wds-icon-tiny pph-button-icon'
-				) ?>
-				Share
-			</a>
+
+			<? if ( Wikia::isContentNamespace() && $wg->Title->exists() && !$app->checkSkin('oasislight') ): ?>
+				<a id="PremiumPageHeaderShareEntryPoint" href="#" class="pph-button pph-button-secondary">
+					<?= DesignSystemHelper::renderSvg(
+						'wds-icons-share-small',
+						'wds-icon wds-icon-tiny pph-button-icon'
+					) ?>
+					<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

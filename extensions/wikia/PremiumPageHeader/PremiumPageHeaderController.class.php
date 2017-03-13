@@ -63,13 +63,145 @@ class PremiumPageHeaderController extends WikiaController {
 		];
 	}
 
+	/**
+	 * Copied from CommentsLikesController.class.php
+	 * Are article comments enabled for context title?
+	 */
+	private function checkArticleComments() {
+		global $wgTitle;
+		$this->isArticleComments = class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($wgTitle);
+		return $this->isArticleComments;
+	}
+
+	/**
+	 * Get content actions for dropdown
+	 */
+	protected function getDropdownActions() {
+		$ret = [ ];
+
+		$editActions = [ ];
+		if ( isset( $this->content_actions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
+		}
+		if ( isset( $this->content_actions['ve-edit'] ) ) {
+			if ( $this->content_actions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
+			} else {
+				array_push( $editActions, 've-edit' );
+			}
+		}
+		if ( isset( $this->content_actions['formedit'] ) ) {
+			array_push( $editActions, 'formedit' ); // SUS-533
+		}
+
+		// items to be added to "edit" dropdown
+		$actions = array_merge( $editActions,
+			[ 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ] );
+
+		// Enable to modify actions list on dropdown
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+
+		foreach ( $actions as $action ) {
+			if ( isset( $this->content_actions[$action] ) ) {
+				$ret[$action] = $this->content_actions[$action];
+			}
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * Use MW core variable to generate action button
+	 * Copied from PageHeaderController.class.php
+	 */
+	protected function prepareActionButton() {
+
+		global $wgTitle, $wgUser, $wgRequest;
+
+		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
+
+		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
+
+		// "Add topic" action
+		if ( isset( $this->content_actions['addsection'] ) ) {
+			// remove on diff pages (RT #72666)
+			if ( $isDiff ) {
+				unset( $this->content_actions['addsection'] );
+			}
+		}
+
+		// action button
+		# print_pre($this->content_actions);
+
+		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
+		if ( isset( $this->content_actions['viewsource'] ) &&
+		     !$wgTitle->isProtected() &&
+		     !$wgTitle->isNamespaceProtected( $wgUser ) &&
+		     !$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
+		) {
+			// force login to edit page that is not protected
+			$this->content_actions['edit'] = $this->content_actions['viewsource'];
+			$this->content_actions['edit']['text'] = wfMessage( 'edit' )->text();
+			unset( $this->content_actions['viewsource'] );
+		}
+
+		// If cascade protected, show viewsource button - BugId:VE-89
+		if ( isset( $this->content_actions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+			$this->content_actions['viewsource'] = $this->content_actions['edit'];
+			$this->content_actions['viewsource']['text'] = wfMessage( 'viewsource' )->text();
+			unset( $this->content_actions['edit'] );
+		}
+
+		// "Add topic"
+		if ( isset( $this->content_actions['addsection'] ) ) {
+			$action = $this->content_actions['addsection'];
+			$action['text'] = wfMsg( 'oasis-page-header-add-topic' );
+			$this->action = $action;
+
+			$this->actionImage = MenuButtonController::ADD_ICON;
+			$this->actionName = 'addtopic';
+		}  // ve-edit
+		else if ( isset( $this->content_actions['ve-edit'] ) && $this->content_actions['ve-edit']['main'] ) {
+			$this->action = $this->content_actions['ve-edit'];
+			$this->actionImage = MenuButtonController::EDIT_ICON;
+			$this->actionName = 've-edit';
+			unset( $this->content_actions['ve-edit'] );
+		} // edit
+		else if ( isset( $this->content_actions['edit'] ) ) {
+			$this->action = $this->content_actions['edit'];
+			$this->actionImage = MenuButtonController::EDIT_ICON;
+			$this->actionName = 'edit';
+			unset( $this->content_actions['edit'] );
+		} // view source
+		else if ( isset( $this->content_actions['viewsource'] ) ) {
+			$this->action = $this->content_actions['viewsource'];
+			$this->actionImage = MenuButtonController::LOCK_ICON;
+			$this->actionName = 'source';
+			unset( $this->content_actions['ve-edit'], $this->content_actions['edit'] );
+		}
+
+		# print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
+	}
+
 	public function articleHeader() {
 		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->content_actions = $skinVars['content_actions'];
+
+		// edit button preparation
+		// action button (edit / view soruce) and dropdown for it
+		$this->prepareActionButton();
+		// dropdown actions
+		$this->dropdown = $this->getDropdownActions();
+
+		// comments/talk button
+		$commentsEnabled = $this->checkArticleComments();
+		$this->commentButtonMsg = $commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
+
 		$this->setVal( 'displaytitle', $skinVars['displaytitle'] );
 		$this->setVal( 'title', $skinVars['title'] );
 
 		$categoryLinks = $this->getContext()->getOutput()->getCategoryLinks();
-		$normalCategoryLinks = $categoryLinks && $categoryLinks['normal'] ?: [];
+		$normalCategoryLinks = $categoryLinks['normal'] ?? [];
 
 		$visibleCategoriesLimit = 4;
 		if ( count( $normalCategoryLinks ) > 4 ) {

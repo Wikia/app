@@ -4,6 +4,8 @@
 .pph-article-header {
 	display: flex;
 	margin: 5px 0 18px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .pph-article-title {
