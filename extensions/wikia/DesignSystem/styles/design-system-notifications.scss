@@ -40,9 +40,8 @@ $wds-icon-color: $wds-color-light-c5;
 	@include justify-content(center);
 	@include align-items(center);
 	color: $notifications-dropdown-content-color;
-	font-size: 14px;
-	//padding 18 * 2 + content 320px
-	min-width: 356px;
+	font-size: $wds-typescale-size-minus-1;
+	min-width: 18px * 2 + 320px;
 	width: 100%;
 	white-space: normal;
 
@@ -95,7 +94,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 
   &__text {
 	color: $notification-card-text-color;
-	font-size: 14px;
+	font-size: $wds-typescale-size-minus-1;
 	line-height: 18px;
 	margin: 0;
 	b {
@@ -105,7 +104,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 
   &__snippet {
 	color: $wds-color-blue-gray;
-	font-size: 14px;
+	font-size: $wds-typescale-size-minus-1;
 	font-style: italic;
 	line-height: 18px;
 	margin: 8px 0 0;
@@ -114,7 +113,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   &__context-list {
 	@include flexbox();
 	color: $wds-color-blue-gray;
-	font-size: 12px;
+	font-size: 12$wds-typescale-size-minus-2;
 	font-weight: bold;
 	list-style-type: none;
 	margin: 0;
@@ -145,7 +144,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	background-color: $wds-color-white;
 	border: 0;
 	color: $wds-color-light-c6;
-	font-size: 12px;
+	font-size: $wds-typescale-size-minus-2;
 	transform: translate(-60px);
 	width: auto;
   }

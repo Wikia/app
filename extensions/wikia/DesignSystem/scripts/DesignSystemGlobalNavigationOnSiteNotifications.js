@@ -163,7 +163,7 @@ require(
 
 				var markAsRead = this.proxy(function (e) {
 					try {
-						var id = $(e.target).closest('.wds-notification-card').attr('id');
+						var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
 						this.logic.markAsRead(id);
 					} catch (e) {
 						log('Failed to mark as read ' + e, log.levels.error, logTag);
@@ -205,7 +205,7 @@ require(
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				var container = this.$container.find('[id="' + id + '"]');
+				var container = this.$container.find('[data-uri="' + id + '"]');
 				findUnreadAndClearClass(container);
 			};
 
@@ -404,7 +404,7 @@ require(
 				this.logic.model = new Model(this.view);
 
 				this.view.registerEvents();
-				setTimeout($.proxy(this.logic.updateUnreadCount, this.logic), 300);
+				this.logic.updateUnreadCount();
 			}
 		};
 
