@@ -21,8 +21,16 @@ $submenu-background-color: mix($color-page, #000, 90%);
 	}
 }
 
-.pph-local-nav-discuss-text:hover {
-	text-decoration: underline;
+.pph-local-nav-discuss:hover {
+	svg {
+		fill: rgba($color-button-text, .8);
+		transition: fill .2s;
+	}
+
+	.pph-local-nav-discuss-text {
+		color: rgba($color-button-text, .8);
+		transition: color .2s;
+	}
 }
 
 .pph-local-nav-item-l1 {

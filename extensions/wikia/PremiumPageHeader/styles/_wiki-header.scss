@@ -68,7 +68,7 @@
 	background-color: $color-buttons;
 	color: $color-button-text;
 	display: flex;
-	margin: -1px -31px 0;
+	margin: -1px -31px 20px;
 	position: relative;
 	z-index: 1001;
 	-webkit-font-smoothing: antialiased;
@@ -90,15 +90,15 @@
 	}
 
 	@media #{$breakpoint-medium-only} {
-		margin: -1px -21px 0;
+		margin: -1px -21px 20px;
 	}
 
 	@media #{$breakpoint-small-plus} {
-		margin: -1px -11px 0;
+		margin: -1px -11px 20px;
 	}
 
 	@media #{$breakpoint-below-small-plus} {
-		margin: -1px -25px 0;
+		margin: -1px -25px 20px;
 	}
 }
 
@@ -111,6 +111,12 @@
 
 	a {
 		color: $color-button-text;
+		text-decoration: none;
+
+		&:hover {
+			color: rgba($color-button-text, .8);
+			transition: color .2s;
+		}
 	}
 
 	@media #{$breakpoint-below-small-plus} {

@@ -35,7 +35,9 @@
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 
 		<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
-			<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
+			<div class="PremiumPageHeader">
+				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
+			</div>
 		<?php endif; ?>
 
 		<?php
