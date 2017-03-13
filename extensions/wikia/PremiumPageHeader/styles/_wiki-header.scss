@@ -117,6 +117,10 @@
 			color: rgba($color-button-text, .8);
 			transition: color .2s;
 		}
+
+		&:visited {
+			color: $color-button-text;
+		}
 	}
 
 	@media #{$breakpoint-below-small-plus} {
