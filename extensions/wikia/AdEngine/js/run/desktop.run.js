@@ -79,7 +79,7 @@ require([
 
 		sourcePoint.initDetection();
 
-		if (context.opts.pageFairDetection) {
+		if (context.opts && context.opts.pageFairDetection) {
 			pageFair.initDetection(context);
 		}
 

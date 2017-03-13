@@ -93,5 +93,4 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 		expect(mocks.document.dispatchEvent).not.toHaveBeenCalled();
 	});
-
 });
