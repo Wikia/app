@@ -304,8 +304,7 @@ require(
 			};
 		}
 
-		function Logic(bucky) {
-			this.bucky = bucky;
+		function Logic() {
 			this.updateInProgress = false;
 			this.model = null;
 
@@ -318,7 +317,6 @@ require(
 			};
 
 			this.updateUnreadCount = function () {
-				this.bucky.timer.start('updateCounts');
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications/unread-count',
 					xhrFields: {
@@ -326,13 +324,10 @@ require(
 					}
 				}).done(this.proxy(function (data) {
 					this.model.setUnreadCount(data.unreadCount);
-				})).always(this.proxy(function () {
-					this.bucky.timer.stop('updateCounts');
 				}));
 			};
 
 			this.markAsRead = function (id) {
-				this.bucky.timer.start('markAsRead');
 				$.ajax({
 					type: 'POST',
 					data: JSON.stringify([id]),
@@ -344,8 +339,6 @@ require(
 					}
 				}).done(this.proxy(function () {
 					this.model.markAsRead(id);
-				})).always(this.proxy(function () {
-					this.bucky.timer.stop('markAsRead');
 				}));
 			};
 
@@ -355,7 +348,6 @@ require(
 					log('Marking as read did not find since ' + this.model, log.levels.info, logTag);
 					return;
 				}
-				this.bucky.timer.start('markAllAsRead');
 				$.ajax({
 					type: 'POST',
 					data: JSON.stringify({since: convertToIsoString(since)}),
@@ -368,8 +360,6 @@ require(
 				}).done(this.proxy(function () {
 					this.model.setUnreadCount(0);
 					this.model.markAllAsRead();
-				})).always(this.proxy(function () {
-					this.bucky.timer.stop('markAllAsRead');
 				}));
 			};
 
@@ -378,7 +368,6 @@ require(
 					return;
 				}
 				this.updateInProgress = true;
-				this.bucky.timer.start('loadFirstPage');
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
@@ -389,7 +378,6 @@ require(
 					this.calculatePage(data);
 				})).always(this.proxy(function () {
 					this.updateInProgress = false;
-					this.bucky.timer.stop('loadFirstPage');
 				}));
 			};
 
@@ -411,7 +399,7 @@ require(
 
 		var OnSiteNotifications = {
 			init: function (template) {
-				this.logic = new Logic(window.Bucky('OnSiteNotifications'));
+				this.logic = new Logic();
 				this.view = new View(this.logic, template, new TextFormatter());
 				this.logic.model = new Model(this.view);
 

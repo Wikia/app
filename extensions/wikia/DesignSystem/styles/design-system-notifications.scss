@@ -28,9 +28,8 @@ $wds-icon-color: $wds-color-light-c5;
   }
   &__mark-all-as-read {
 	color: $wds-color-link;
-	font-size: 12px;
+	font-size: $wds-typescale-size-minus-2;
 	font-weight: bold;
-	line-height: 12px;
 	padding: 18px;
 	text-transform: uppercase;
 	cursor: pointer;
