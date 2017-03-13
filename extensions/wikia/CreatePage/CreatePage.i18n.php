@@ -63,8 +63,6 @@ Kies asseblief 'n ander naam.",
 	'createpage_spam' => 'Jammer, u wysiging kon nie gestoor word nie',
 	'createpage_cant_edit' => 'Dit was nie moontlik om die wysiging uit te voer nie',
 	'createpage-dialog-title' => "Skep 'n nuwe bladsy",
-	'createpage-dialog-message1' => "Veels geluk.
-U is besig om 'n nuwe bladsy te skep!",
 	'createpage-dialog-message2' => 'Wat wil u die bladsy noem?',
 	'createpage-dialog-choose' => "Kies 'n bladuitleg:",
 	'createpage-dialog-format' => 'Standaard uitleg',
@@ -1419,8 +1417,6 @@ Kies alstublieft een andere naam.',
 	'createpage_spam' => 'Sorry, your edit could not be saved.',
 	'createpage_cant_edit' => 'Het was niet mogelijk de bewerking uit te voeren',
 	'createpage-dialog-title' => 'Nieuwe pagina aanmaken',
-	'createpage-dialog-message1' => 'Gefeliciteerd.
-Je hebt een nieuwe pagina aangemaakt!',
 	'createpage-dialog-message2' => 'Hoe wil je de pagina noemen?',
 	'createpage-dialog-message3' => 'We currently have $1 {{PLURAL:$1|page|pages}} on {{SITENAME}}. We need to check if the name is available.',
 	'createpage-dialog-choose' => 'Kies uw paginauiterlijk:',
@@ -1454,8 +1450,6 @@ Schrijf hier de tweede paragraaf van uw pagina.',
 
 $messages['nl-informal'] = array(
 	'createpage_spam' => 'Sorry, je bewerking kon niet worden opgeslagen',
-	'createpage-dialog-message1' => 'Gefeliciteerd.
-Je hebt een nieuwe pagina aangemaakt!',
 	'createpage-dialog-message2' => 'Hoe wil je de pagina noemen?',
 	'createpage-error-empty-title' => 'Geef een naam op voor je pagina',
 	'createpage-error-article-exists' => 'Er bestaat als een pagina met die naam.
