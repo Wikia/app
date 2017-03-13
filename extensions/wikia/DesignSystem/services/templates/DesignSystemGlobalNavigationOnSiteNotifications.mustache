@@ -26,9 +26,11 @@
                 <p class="wds-notification-card__text">
                     {{{text}}}
                 </p>
-                <p class="wds-notification-card__snippet">
-                    {{snippet}}
-                </p>
+                {{#showSnippet}}
+                    <p class="wds-notification-card__snippet">
+                        {{snippet}}
+                    </p>
+                {{/showSnippet}}
                 <ul class="wds-notification-card__context-list">
                     <li class="wds-notification-card__context-item">
                         {{timeAgo}}

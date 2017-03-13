@@ -173,6 +173,7 @@ require(
 					return {
 						icon: getIcon(notification.type),
 						uri: notification.uri,
+						showSnippet: !notification.title,
 						snippet: notification.snippet,
 						text: this.textFormatter.getText(notification),
 						isUnread: notification.isUnread,
