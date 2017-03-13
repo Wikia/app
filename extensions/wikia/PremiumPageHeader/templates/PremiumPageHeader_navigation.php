@@ -1,20 +1,23 @@
 <ul class="pph-local-nav-menu">
 	<? foreach ( $data as $item ) : ?>
 		<li class="pph-local-nav-tracking pph-local-nav-item-l1 <? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
-			<a href="<?= $item['href'] ?>" data-tracking="custom-level-1"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
+			<a href="<?= $item['href'] ?>"
+			   data-tracking="custom-level-1"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
 			<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
 				<? foreach ( $item['children'] as $childL2 ): ?>
 					<li class="pph-local-nav-tracking pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
-						<a href="<?= $childL2['href'] ?>" data-tracking="custom-level-2"><?= $childL2['textEscaped'] ?></a>
+						<a href="<?= $childL2['href'] ?>"
+						   data-tracking="custom-level-2"><?= $childL2['textEscaped'] ?></a>
 						<? if ( !empty( $childL2['children'] ) ): ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
 							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
 									<li class="pph-local-nav-tracking pph-local-nav-item-l3">
-										<a href="<?= $childL3['href'] ?>" data-tracking="custom-level-3"><?= $childL3['textEscaped'] ?></a>
+										<a href="<?= $childL3['href'] ?>"
+										   data-tracking="custom-level-3"><?= $childL3['textEscaped'] ?></a>
 									</li>
 								<? endforeach; ?>
 							</ul>
@@ -39,7 +42,8 @@
 		<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
 			<? foreach ( $explore['children'] as $child ): ?>
 				<li class="pph-local-nav-tracking pph-local-nav-item-l2">
-					<a href="<?= $child['href'] ?>" data-tracking="<?= $child['tracking']?>"><?= $child['textEscaped'] ?></a>
+					<a href="<?= $child['href'] ?>"
+					   data-tracking="<?= $child['tracking'] ?>"><?= $child['textEscaped'] ?></a>
 				</li>
 			<? endforeach; ?>
 		</ul>
@@ -50,7 +54,7 @@
 				'wds-icons-reply',
 				'wds-icon wds-icon-small'
 			) ?>
-			<?= $discuss['text'] ?>
+			<span class="pph-local-nav-discuss-text"><?= $discuss['text'] ?></span>
 		</a>
 	</li>
 </ul>
