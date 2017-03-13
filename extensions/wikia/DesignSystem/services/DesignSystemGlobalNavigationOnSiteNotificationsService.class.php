@@ -17,9 +17,8 @@ class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaServic
 
 	private function isLoggedIn() {
 		global $wgUser;
-		$loggedIn = $wgUser->isLoggedIn();
 
-		return $loggedIn;
+		return $wgUser->isLoggedIn();
 	}
 
 	private function areNotificationsEnabled() {
