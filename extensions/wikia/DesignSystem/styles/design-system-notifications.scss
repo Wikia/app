@@ -1,10 +1,11 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'skins/shared/mixins/flexbox';
 
 // on-site-notifications to be moved to Design System
 
-$notifications-dropdown-content-color: #656d77;
+$notifications-dropdown-content-color: $wds-color-light-c7;
 $notifications-dropdown-border-color: #363b41;
-$wds-icon-color: #999;
+$wds-icon-color: $wds-color-light-c5;
 
 .wds-hidden-svg {
   height: 0;
@@ -15,15 +16,15 @@ $wds-icon-color: #999;
 
 .wds-notifications {
   &__mark-all-as-read-button {
+	@include justify-content(flex-start);
 	box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
 	display: none;
-	justify-content: flex-start;
 	min-height: 44px;
 	padding: 0;
 	width: 100%;
 
 	&.wds-is-visible {
-	  display: flex;
+	  @include flexbox();
 	}
   }
   &__mark-all-as-read {
@@ -37,11 +38,11 @@ $wds-icon-color: #999;
   }
 
   &__dropdown-content {
-	align-items: center;
+	@include flex-direction(column);
+	@include justify-content(center);
+	@include align-items(center);
 	color: $notifications-dropdown-content-color;
-	flex-direction: column;
 	font-size: 14px;
-	justify-content: center;
 	//padding 18 * 2 + content 320px
 	min-width: 356px;
 	width: 100%;
@@ -50,7 +51,7 @@ $wds-icon-color: #999;
 	.wds-notification-list {
 	  box-sizing: border-box;
 	  max-height: 420px;
-	  overflow-y: scroll;
+	  overflow-y: auto;
 	  width: 100%;
 	  padding: 0 18px;
 	}
@@ -58,7 +59,7 @@ $wds-icon-color: #999;
 }
 
 $notification-card-text-color: #38424d;
-$notification-card-anchor-color: #656d77;
+$notification-card-anchor-color: $notifications-dropdown-content-color;
 
 .wds-notification-card {
   padding: 12px 0 8px;
@@ -69,10 +70,10 @@ $notification-card-anchor-color: #656d77;
   }
 
   &__icon-wrapper {
+	@include flexbox();
 	cursor: pointer;
 	padding-left: 12px;
 	width: 30px;
-	display: flex;
 
 	.wds-icon {
 	  fill: $wds-icon-color;
@@ -86,10 +87,10 @@ $notification-card-anchor-color: #656d77;
   }
 
   &__body {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	justify-content: flex-start;
+	@include flexbox();
+	@include flex-direction(column);
+	@include flex-grow(1);
+	@include justify-content(flex-start);
 	padding-left: 12px;
 	padding-right: 12px;
   }
@@ -113,8 +114,8 @@ $notification-card-anchor-color: #656d77;
   }
 
   &__context-list {
+	@include flexbox();
 	color: $wds-color-blue-gray;
-	display: flex;
 	font-size: 12px;
 	font-weight: bold;
 	list-style-type: none;
@@ -129,9 +130,9 @@ $notification-card-anchor-color: #656d77;
 }
 
 .wds-avatar-stack {
+  @include flexbox();
+  @include align-items(center);
   margin: 8px 18px 6px 40px;
-  display: flex;
-  align-items: center;
 
   @for $i from 1 to 6 {
 	.wds-avatar:nth-child(#{$i}) {
