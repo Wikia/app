@@ -134,3 +134,14 @@ table.mw-abusefilter-diff th {
 .client-js #mw-abusefilter-export {
     display: none;
 }
+
+/* Wikia change - begin */
+/* Make the table legible in dark themes */
+.oasis-dark-theme table.mw-abuselog-details {
+	background: none repeat scroll 0 0 transparent;
+}
+
+.oasis-dark-theme table.mw-abuselog-details th {
+	background: none repeat scroll 0 0 #000000;
+}
+/* Wikia change - end */
