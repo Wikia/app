@@ -6,15 +6,11 @@ class PremiumPageHeaderController extends WikiaController {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		$this->setVal( 'wordmarkText', $settings["wordmark-text"] );
-
+		$this->setVal( 'wordmarkText', $settings['wordmark-text'] );
 		$this->setVal( 'tallyMsg',
 			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
-
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
-
 		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );
-
 	}
 
 	public function navigation() {
@@ -33,17 +29,23 @@ class PremiumPageHeaderController extends WikiaController {
 			[ 'title' => 'Images', 'tracking' => 'explore-images' ]
 		];
 
-		return [
-			'text' => 'Explore',
-			'children' => array_map( function ( $page ) {
-				$title = Title::newFromText( $page['title'], NS_SPECIAL );
+		$children = array_map( function ( $page ) {
+			$title = Title::newFromText( $page['title'], NS_SPECIAL );
+			if ( $title && $title->isKnown() ) {
 				return [
 					'text' => $title->getText(),
-					'textEscaped' => htmlspecialchars( $title->getText() ),
 					'href' => $title->getLocalURL(),
 					'tracking' => $page['tracking']
 				];
-			}, $explore ),
+			}
+			return [];
+		}, $explore );
+
+		return [
+			'text' => wfMessage( 'pph-explore' )->escaped(),
+			'children' => array_filter( $children, function ( $child ) {
+				return !empty( $child );
+			} )
 		];
 	}
 
@@ -58,8 +60,8 @@ class PremiumPageHeaderController extends WikiaController {
 				->getLocalURL();
 
 		return [
-			'text' => 'Discuss',
-			'href' => $href,
+			'text' => wfMessage( 'pph-discuss' )->escaped(),
+			'href' => $href
 		];
 	}
 

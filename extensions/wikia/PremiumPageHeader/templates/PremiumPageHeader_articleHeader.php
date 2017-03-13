@@ -12,7 +12,17 @@
 						<?php endif; ?>
 					<?php endforeach; ?>
 					<?php if($moreCategoriesLength > 0): ?>
-						<a href="#">and <?= $moreCategoriesLength ?> more</a>
+						<div class="pph-dropdown-container">
+							<a href="#">and <?= $moreCategoriesLength ?> more</a>
+							<ul class="pph-dropdown">
+								<li><a href="#">Category 1</a></li>
+								<li><a href="#">Category 2</a></li>
+								<li><a href="#">Category 3</a></li>
+								<li><a href="#">Category 4</a></li>
+								<li><a href="#">Category 5</a></li>
+								<li><a href="#">Category 6</a></li>
+							</ul>
+						</div>
 					<?php endif; ?>
 				</span>
 			</div>
@@ -20,12 +30,19 @@
 		<h1><?= $title ?></h1>
 	</div>
 	<div class="pph-article-contribution">
-		<div class="pph-languages">
-			English
-			<?= DesignSystemHelper::renderSvg(
-				'wds-icons-dropdown-tiny',
-				'wds-icon wds-icon-tiny'
-			) ?>
+		<div class="pph-languages pph-dropdown-container">
+			<span>
+				English
+				<?= DesignSystemHelper::renderSvg(
+					'wds-icons-dropdown-tiny',
+					'wds-icon wds-icon-tiny'
+				) ?>
+			</span>
+			<ul class="pph-dropdown">
+				<li><a href="#">Polish</a></li>
+				<li><a href="#">German</a></li>
+				<li><a href="#">Spanish</a></li>
+			</ul>
 		</div>
 		<div class="pph-contribution-buttons">
 			<div class="pph-button-group">
@@ -40,31 +57,33 @@
 						<?= htmlspecialchars($action['text']) ?>
 					</a>
 				<?php endif; ?>
-				<a href="#" class="pph-button pph-button-chevron">
-					<?= DesignSystemHelper::renderSvg(
-						'wds-icons-dropdown-tiny',
-						'wds-icon wds-icon-tiny pph-local-nav-chevron'
-					) ?>
-				</a>
-				<ul class="WikiaMenuElement" style="display: none">
-					<?php
-					foreach($dropdown as $key => $item) {
-						// render accesskeys
-						if ( !empty( $item['accesskey'] ) ) {
-							$accesskey =
-								' accesskey="' . Sanitizer::encodeAttribute( $item['accesskey'] ) .
-								'"';
-						} else {
-							$accesskey = '';
-						}
+				<div class="pph-dropdown-container">
+					<a href="#" class="pph-button pph-button-chevron">
+						<?= DesignSystemHelper::renderSvg(
+							'wds-icons-dropdown-tiny',
+							'wds-icon wds-icon-tiny pph-local-nav-chevron'
+						) ?>
+					</a>
+					<ul class="WikiaMenuElement pph-dropdown">
+						<?php
+						foreach($dropdown as $key => $item) {
+							// render accesskeys
+							if ( !empty( $item['accesskey'] ) ) {
+								$accesskey =
+									' accesskey="' . Sanitizer::encodeAttribute( $item['accesskey'] ) .
+									'"';
+							} else {
+								$accesskey = '';
+							}
 
-						$href = $item['href'] ?? '#';
-						?>
-						<li>
-							<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?> data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty($item['title']) ? '' : ' title="'. Sanitizer::encodeAttribute( $item['title'] ) .'"'; ?> <?= empty($item['id']) ? '' : ' id="'. Sanitizer::encodeAttribute( $item['id'] ) .'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
-						</li>
-					<?php } ?>
-				</ul>
+							$href = $item['href'] ?? '#';
+							?>
+							<li>
+								<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?> data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty($item['title']) ? '' : ' title="'. Sanitizer::encodeAttribute( $item['title'] ) .'"'; ?> <?= empty($item['id']) ? '' : ' id="'. Sanitizer::encodeAttribute( $item['id'] ) .'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
 			</div>
 			<a href="#" class="pph-button pph-button-secondary">
 				<?= DesignSystemHelper::renderSvg(
