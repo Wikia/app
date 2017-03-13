@@ -66,6 +66,40 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	/**
+	 * Get URL of the page comments button should be linking to
+	 */
+	private function getCommentsLink() {
+		wfProfileIn(__METHOD__);
+		global $wgTitle, $wgRequest;
+
+		$isHistory = $wgRequest->getVal('action') == 'history';
+
+		if ($this->checkArticleComments()) {
+			// link to article comments section
+			if ($wgTitle != $wgTitle || $isHistory) {
+				$commentsLink = $wgTitle->getLocalUrl() . '#WikiaArticleComments';
+			}
+			else {
+				// fix for redirected articles
+				$commentsLink = '#WikiaArticleComments';
+			}
+		}
+		else {
+			// link to talk page
+			if ($wgTitle->canTalk($wgTitle->getNamespace())) {
+				$commentsLink = $wgTitle->getTalkPage()->getLocalUrl();
+			} else {
+				// This case shouldn't happen other than Special:ThemeDesignerPreview
+				// We're faking some comments to show a user what an article would look like
+				$commentsLink = '';
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $commentsLink;
+	}
+
+	/**
 	 * Copied from CommentsLikesController.class.php
 	 * Are article comments enabled for context title?
 	 */
@@ -198,6 +232,7 @@ class PremiumPageHeaderController extends WikiaController {
 		// comments/talk button
 		$commentsEnabled = $this->checkArticleComments();
 		$this->commentButtonMsg = $commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
+		$this->commentsLink = $this->getCommentsLink();
 
 		$this->setVal( 'displaytitle', $skinVars['displaytitle'] );
 		$this->setVal( 'title', $skinVars['title'] );

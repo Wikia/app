@@ -85,7 +85,7 @@
 					</ul>
 				</div>
 			</div>
-			<a href="#" class="pph-button pph-button-secondary">
+			<a href="<?= $commentsLink; ?>" class="pph-button pph-button-secondary">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-reply-tiny',
 					'wds-icon wds-icon-tiny pph-button-icon'
