@@ -83,13 +83,13 @@ $messages['cy'] = array(
 );
 
 $messages['de'] = array(
-	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
+	'recaptcha-desc' => 'reCAPTCHA-Module für die Erweiterung „Confirm Edit“',
+	'recaptcha-edit' => 'Zum Schutz vor automatisiertem Spam, gib bitte die beiden folgenden Wörter in das untenstehende Feld ein:',
+	'recaptcha-addurl' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spam gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'recaptcha-badpass' => 'Zum Schutz gegen automatisiertes Knacken von Passwörtern, gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'recaptcha-createaccount' => 'Zum Schutz gegen die automatisierte Erstellung von Benutzerkonten bitten wir dich, die folgenden beiden Wörter in das untenstehende Feld einzugeben:',
+	'recaptcha-createaccount-fail' => 'Fehlerhafte oder fehlende reCAPTCHA Antwort.',
+	'recaptcha-create' => 'Zum Schutz gegen automatisierte Erstellung von Seiten gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
 	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
 );
 
@@ -113,13 +113,13 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => "Pour nous protéger des robots, merci d'écrire les deux mots visibles dans le cadre qui suit:",
+	'recaptcha-addurl' => 'Votre contribution contient des liens vers un site externe. Pour nous protéger des robots, merci d’écrire les deux mots visibles dans le cadre qui suit :',
+	'recaptcha-badpass' => "Pour nous protéger des essais automatiques de cassage de mot de passe, merci d'écrire les deux mots visibles dans le cadre qui suit:",
+	'recaptcha-createaccount' => "Pour nous protéger des créations automatiques de compte, merci d'écrire les deux mots visibles dans le cadre qui suit:",
+	'recaptcha-createaccount-fail' => 'Réponse de reCAPTCHA fausse ou manquante.',
+	'recaptcha-create' => "Pour nous protéger des créations automatiques de pages, merci d'écrire les deux mots visibles dans le cadre qui suit:",
+	'recaptcha-misconfigured' => 'ReCaptcha est mal configuré',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
@@ -179,25 +179,25 @@ $messages['id'] = array(
 );
 
 $messages['it'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => 'Per aiutarci a proteggerci dalle modifiche automatiche che aggiungono spam, scrivi le due parole mostrate nel riquadro sottostante:',
+	'recaptcha-addurl' => 'La tua modifica aggiunge qualche nuovo collegamento esterno. Per aiutarci a proteggerci dallo spam automatico, scrivi le due parole mostrate nel riquadro sottostante:',
+	'recaptcha-badpass' => 'Per aiutarci a proteggerci dalla forzatura automatica delle password, scrivi le due parole mostrate nel riquadro sottostante:',
+	'recaptcha-createaccount' => 'Per aiutarci a proteggerci dalla creazione automatica di nuovi accessi, scrivi le due parole mostrate nel riquadro sottostante:',
+	'recaptcha-createaccount-fail' => 'Risposta reCAPTCHA mancante o errata.',
+	'recaptcha-create' => 'Per aiutarci a proteggerci dalla creazione automatica di pagine, scrivi le due parole mostrate nel riquadro sottostante:',
+	'recaptcha-misconfigured' => 'ReCaptcha non è configurato correttamente',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
 $messages['ja'] = array(
-	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-desc' => 'Confirm Edit 用 reCAPTCHA モジュール',
+	'recaptcha-edit' => '自動編集スパムからの保護のため、下の画像に表示されている２つの言葉を入力 してください。',
+	'recaptcha-addurl' => 'あなたの編集は新しい外部リンクを含んでいます。自動スパムからの保護のた め、下の画像に表示されている２つの言葉を入力してください。',
+	'recaptcha-badpass' => '自動パスワードクラッキングからの保護のために、下の画像に表示されている２ つの言葉を入力してください。',
+	'recaptcha-createaccount' => '自動アカウント登録からの保護のために、下の画像に表示されている２つの言葉 を入力してください。',
+	'recaptcha-createaccount-fail' => '入力された文字列が正しくありません。',
+	'recaptcha-create' => '自動ページ作成からの保護のために、下の画像に表示されている２つの言葉を入 力してください。',
+	'recaptcha-misconfigured' => 'reCAPTCHAが正しく設定されていません',
 );
 
 $messages['ko'] = array(
@@ -256,24 +256,24 @@ $messages['nb'] = array(
 );
 
 $messages['nl'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => 'Voer ter bescherming tegen geautomatiseerde spam de twee woorden die u ziet in het invoervenster in:',
+	'recaptcha-addurl' => 'Uw bewerking bevat nieuwe externe verwijzingen. Voer ter bescherming tegen geautomatiseerde spam de twee woorden die u ziet in het invoervenster in:',
+	'recaptcha-badpass' => 'Voer ter bescherming tegen het automatisch kraken van wachtwoorden de twee woorden die u ziet in het invoervenster in:',
+	'recaptcha-createaccount' => 'Om het automatisch aanmaken van gebruikers tegen te gaan moet u de twee woorden die u ziet invoeren:',
+	'recaptcha-createaccount-fail' => 'Het reCAPTCHA-antwoord is onjuist of niet ingevoerd.',
+	'recaptcha-create' => "Om het automatisch aanmaken van pagina's tegen te gaan moet u de twee woorden die u ziet invoeren:",
+	'recaptcha-misconfigured' => 'ReCaptcha is niet correct geconfigureerd',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
 $messages['pl'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => 'Aby uchronić nas przed robotami, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-addurl' => 'Twoja edycja zawiera linki zewnętrzne. Aby uchronić nas przed robotami, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-badpass' => 'Aby uchronić nas przed złamaniem automatycznym haseł, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-createaccount' => 'Aby uchronić nas przed automatycznym stworzeniem użytkowników, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-createaccount-fail' => 'Odpowiedź na reCAPTCHA jest fałszywa lub brakująca.',
+	'recaptcha-create' => 'Aby uchronić nas przed tworzeniem stron przez robotów, proszę wpisać dwa widoczne słowa w poniższym polu:',
+	'recaptcha-misconfigured' => 'Niepoprawna konfiguracja ReCaptcha',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
@@ -287,13 +287,13 @@ $messages['pms'] = array(
 );
 
 $messages['pt'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => 'Para proteger-nos de spam, por favor escreva  as duas palavras visíveis abaixo:',
+	'recaptcha-addurl' => "A sua edição contém links externos novos. Como prevenção contra sistemas automatizados de inserção de ''spam'', escreva as duas palavras visíveis na caixa abaixo:",
+	'recaptcha-badpass' => 'Para proteger-nos de robots que tentam adivinhar senhas, por favor escreva  as duas palavras visíveis abaixo:',
+	'recaptcha-createaccount' => 'Para proteger-nos de criação automática de contas, por favor escreva  as duas palavras visíveis abaixo:',
+	'recaptcha-createaccount-fail' => 'A resposta ao reCAPTCHA é errada.',
+	'recaptcha-create' => 'Para proteger-nos da criação automática de páginas, por favor escreva  as duas palavras visíveis abaixo:',
+	'recaptcha-misconfigured' => 'ReCaptcha não está configurado corretamente',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
@@ -308,13 +308,13 @@ $messages['pt-br'] = array(
 );
 
 $messages['ru'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => 'В целях защиты от автоматического спама в правках, пожалуйста, введите два слова, которые вы видите ниже:',
+	'recaptcha-addurl' => 'Ваша правка содержит новые внешние ссылки. В целях защиты от автоматического спама, пожалуйста, введите два слова, которые вы видите ниже:',
+	'recaptcha-badpass' => 'В целях защиты от автоматического подбора пароля, пожалуйста, введите два слова, которые вы видите ниже:',
+	'recaptcha-createaccount' => 'В целях защиты от автоматического создания учётных записей, пожалуйста, введите два слова, которые вы видите ниже:',
+	'recaptcha-createaccount-fail' => 'Ответ reCAPTCHA неправильный или отсутствует.',
+	'recaptcha-create' => 'В целях защиты от автоматического создания страниц, пожалуйста, введите два слова, которые вы видите ниже:',
+	'recaptcha-misconfigured' => 'Обновление Captcha настроено не верно',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
@@ -372,24 +372,24 @@ $messages['zh'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => '为了避免垃圾用户自动编辑，请键入下面框中的两个单词：',
+	'recaptcha-addurl' => '您的编辑包含新的外部链接。为了避免垃圾用户自动编辑，请键入下面框中的两个单词：',
+	'recaptcha-badpass' => '为避免自动密码破解，请键入下面框中的两个单词：',
+	'recaptcha-createaccount' => '为了避免创建自动垃圾用户，请键入下面框中的两个单词：',
+	'recaptcha-createaccount-fail' => 'reCAPTCHA 答案不正确或未填写。',
+	'recaptcha-create' => '为了避免垃圾用户自动创建页面，请键入下面框中的两个单词：',
+	'recaptcha-misconfigured' => '验证码配置不正确',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
 $messages['zh-hant'] = array(
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
-	'recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
-	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'recaptcha-edit' => '要幫助保護免受垃圾郵件自動的編輯，請鍵入您在下面的框中看到這兩個詞：',
+	'recaptcha-addurl' => '您的編輯包含新的外部鏈接。為了幫助防止自動垃圾郵件，請鍵入您在下面的框中看到這兩個詞：',
+	'recaptcha-badpass' => '為幫助防止自動密碼破解，請鍵入您看到下面的框中的兩個字：',
+	'recaptcha-createaccount' => '為了幫助防止創建自動化的帳戶，請鍵入您在下面的框中看到的這兩個字：',
+	'recaptcha-createaccount-fail' => '不正確或缺失的 reCAPTCHA 答案。',
+	'recaptcha-create' => '為了幫助防止自動的頁創建，請鍵入您在下面的框中看到這兩個詞：',
+	'recaptcha-misconfigured' => '驗證碼配置不正確',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 );
 
