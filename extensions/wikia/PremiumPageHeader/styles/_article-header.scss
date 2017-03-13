@@ -26,11 +26,11 @@
 	align-items: center;
 	display: flex;
 	font-size: 12px;
-	line-height: 32px;
+	height: 32px;
 
 	.pph-categories-in {
-		padding-right: 4px;
 		font-weight: 600;
+		padding-right: 4px;
 	}
 }
 
@@ -40,6 +40,11 @@
 
 	.pph-dropdown-container {
 		display: inline-block;
+
+		> a {
+			display: inline-block;
+			padding: 10px 0;
+		}
 
 		.pph-dropdown {
 			font-style: normal;
