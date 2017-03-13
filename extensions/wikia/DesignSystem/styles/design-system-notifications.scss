@@ -44,12 +44,21 @@ $wds-icon-color: $wds-color-light-c5;
 	min-width: 18px * 2 + 320px;
 	width: 100%;
 	white-space: normal;
+  }
 
-	.wds-notification-list {
-	  box-sizing: border-box;
-	  max-height: 420px;
-	  overflow-y: auto;
-	  width: 100%;
+  &__notification-list {
+	box-sizing: border-box;
+	max-height: 420px;
+	overflow-y: auto;
+	width: 100%;
+	padding: 0 0;
+  }
+
+  &__zero-state {
+	padding: 18px;
+	display: none;
+	&.wds-is-visible {
+	  display: block;
 	}
   }
 }

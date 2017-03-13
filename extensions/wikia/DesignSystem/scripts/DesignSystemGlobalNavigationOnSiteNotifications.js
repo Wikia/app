@@ -109,7 +109,8 @@ require(
 			this.$container = $('#notificationContainer');
 			this.$markAllAsReadButton = $('#markAllAsReadButton');
 
-			var avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
+			var isVisibleClass = 'wds-is-visible',
+				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
 			this.registerEvents = function () {
 				this.addDropdownLoadingEvent();
@@ -118,7 +119,7 @@ require(
 			};
 
 			this.addOnScrollEvent = function () {
-				var scrollableElement = $('.wds-notification-list');
+				var scrollableElement = $('.wds-notifications__notification-list');
 				scrollableElement.on('scroll', this.proxy(this.onScroll));
 			};
 
@@ -204,14 +205,18 @@ require(
 				$(this.$container).find('.wds-notification-card__icon-wrapper').click(markAsRead);
 			};
 
+			this.renderZeroState = function () {
+				$('.wds-notifications__zero-state').addClass(isVisibleClass);
+			};
+
 			this.renderUnreadCount = function (count) {
 				this.unreadCount = count;
 
 				if (this.unreadCount > 0) {
-					this.$markAllAsReadButton.addClass('wds-is-visible');
+					this.$markAllAsReadButton.addClass(isVisibleClass);
 					this.$notificationsCount.html(this.unreadCount).parent('.bubbles').addClass('show');
 				} else {
-					this.$markAllAsReadButton.removeClass('wds-is-visible');
+					this.$markAllAsReadButton.removeClass(isVisibleClass);
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			};
@@ -328,7 +333,11 @@ require(
 			this.addNotifications = function (notifications) {
 				var newNotifications = mapToModel(notifications);
 				this.notifications = this.notifications.concat(newNotifications);
-				this.view.renderNotifications(newNotifications);
+				if (this.notifications.length > 0) {
+					this.view.renderNotifications(newNotifications);
+				} else {
+					this.view.renderZeroState();
+				}
 			};
 		}
 

@@ -22,10 +22,12 @@
 				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>
 			</a>
 		</div>
-		<div class="wds-notification-list">
-			<ul class="wds-list wds-has-lines-between" id="notificationContainer">
-				<?//= will be populated by jQuery ?>
-			</ul>
-		</div>
+		<p class="wds-notifications__zero-state">
+			<?= wfMessage( 'notifications-no-notifications-message' )->escaped() ?>
+		</p>
+		<ul class="wds-notifications__notification-list wds-list wds-has-lines-between"
+		    id="notificationContainer">
+			<? //= will be populated by jQuery ?>
+		</ul>
 	</div>
 </div>
