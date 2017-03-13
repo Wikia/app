@@ -1,58 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
-.pph-wiki-header {
-	background-color: $color-buttons;
-	color: $color-button-text;
-	display: flex;
-	margin: -1px -31px 0;
-	position: relative;
-	z-index: 1001;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-
-	.wordmark {
-		height: 65px;
-		margin: 20px 18px 20px 20px;
-	}
-}
-
-.pph-wordmark-text {
-	flex: 1;
-	font-size: 28px;
-	font-weight: 600;
-	line-height: 1;
-	margin-top: 24px;
-
-	a {
-		color: $color-button-text;
-	}
-}
-
-.pph-tally-area {
-	align-items: flex-start;
-	display: flex;
-	font-weight: bold;
-	margin: 20px;
-
-	.pph-tally {
-		text-align: right;
-
-		em {
-			display: block;
-			font-size: 24px;
-			line-height: 1;
-		}
-
-		span {
-			display: block;
-			float: none;
-			font-size: 12px;
-			text-transform: uppercase;
-		}
-	}
-}
-
 .pph-add-new-page {
 	align-items: center;
 	border: 1px solid $color-button-text;
@@ -80,23 +28,54 @@
 	}
 }
 
-@media #{$breakpoint-medium-only} {
-	.pph-wiki-header {
-		margin: -1px -21px 0;
+.pph-tally {
+	text-align: right;
+
+	em {
+		display: block;
+		font-size: 24px;
+		line-height: 1;
+
+		@media #{$breakpoint-below-small-plus} {
+			font-size: 18px;
+		}
+	}
+
+	span {
+		display: block;
+		float: none;
+		font-size: 12px;
+		text-transform: uppercase;
+
+		@media #{$breakpoint-below-small-plus} {
+			font-size: 10px;
+			margin-top: 1px;
+		}
 	}
 }
 
-@media #{$breakpoint-small-plus} {
-	.pph-wiki-header {
-		margin: -1px -11px 0;
-	}
+.pph-tally-area {
+	align-items: flex-start;
+	display: flex;
+	font-weight: bold;
+	margin: 20px;
 }
 
-@media #{$breakpoint-below-small-plus} {
-	.pph-wiki-header {
-		margin: -1px -25px 0;
+.pph-wiki-header {
+	background-color: $color-buttons;
+	color: $color-button-text;
+	display: flex;
+	margin: -1px -31px 0;
+	position: relative;
+	z-index: 1001;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
-		.wordmark {
+	.wordmark {
+		height: 65px;
+		margin: 20px 18px 20px 20px;
+
+		@media #{$breakpoint-below-small-plus} {
 			height: 45px;
 			margin: 20px 18px 50px 20px;
 
@@ -107,19 +86,32 @@
 		}
 	}
 
-	.pph-wordmark-text {
-		font-size: 24px;
-		margin-top: 20px;
+	@media #{$breakpoint-medium-only} {
+		margin: -1px -21px 0;
 	}
 
-	.pph-tally-area .pph-tally {
-		em {
-			font-size: 18px;
-		}
+	@media #{$breakpoint-small-plus} {
+		margin: -1px -11px 0;
+	}
 
-		span {
-			font-size: 10px;
-			margin-top: 1px;
-		}
+	@media #{$breakpoint-below-small-plus} {
+		margin: -1px -25px 0;
+	}
+}
+
+.pph-wordmark-text {
+	flex: 1;
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1;
+	margin-top: 24px;
+
+	a {
+		color: $color-button-text;
+	}
+
+	@media #{$breakpoint-below-small-plus} {
+		font-size: 24px;
+		margin-top: 20px;
 	}
 }
