@@ -1,18 +1,104 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
+.pph-add-new-page {
+	align-items: center;
+	border: 1px solid $color-button-text;
+	color: $color-button-text;
+	display: flex;
+	font-size: 10px;
+	font-weight: bold;
+	margin-left: 18px;
+	padding: 8px 12px;
+	text-transform: uppercase;
+	transition: border-color, color;
+	transition-duration: .2s;
+
+	&:hover {
+		border-color: rgba($color-button-text, .8);
+		color: rgba($color-button-text, .8);
+		text-decoration: none;
+
+		svg {
+			fill: rgba($color-button-text, .8);
+		}
+	}
+
+	svg {
+		fill: $color-button-text;
+		margin-right: 6px;
+		transition: fill .2s;
+	}
+}
+
+.pph-tally {
+	text-align: right;
+
+	em {
+		display: block;
+		font-size: 24px;
+		line-height: 1;
+
+		@media #{$breakpoint-below-small-plus} {
+			font-size: 18px;
+		}
+	}
+
+	span {
+		display: block;
+		float: none;
+		font-size: 12px;
+		text-transform: uppercase;
+
+		@media #{$breakpoint-below-small-plus} {
+			font-size: 10px;
+			margin-top: 1px;
+		}
+	}
+}
+
+.pph-tally-area {
+	align-items: flex-start;
+	display: flex;
+	font-weight: 600;
+	margin: 20px;
+}
 
 .pph-wiki-header {
 	background-color: $color-buttons;
 	color: $color-button-text;
 	display: flex;
-	margin: -1px -31px 0;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	margin: -1px -31px 20px;
 	position: relative;
 	z-index: 1001;
 
 	.wordmark {
 		height: 65px;
 		margin: 20px 18px 20px 20px;
+
+		@media #{$breakpoint-below-small-plus} {
+			height: 45px;
+			margin: 20px 18px 50px 20px;
+
+			img {
+				height: auto;
+				width: 175px;
+			}
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		margin: -1px -21px 20px;
+	}
+
+	@media #{$breakpoint-small-plus} {
+		margin: -1px -11px 20px;
+	}
+
+	@media #{$breakpoint-below-small-plus} {
+		margin: -1px -25px 20px;
 	}
 }
 
@@ -25,83 +111,20 @@
 
 	a {
 		color: $color-button-text;
-	}
-}
-
-.pph-tally-area {
-	align-items: flex-start;
-	display: flex;
-	font-weight: 600;
-	margin: 20px;
-
-	.pph-tally {
-		text-align: right;
-
-		em {
-			display: block;
-			font-size: 24px;
-			line-height: 1;
-		}
-
-		span {
-			display: block;
-			float: none;
-			font-size: 12px;
-			text-transform: uppercase;
-		}
-	}
-}
-
-.pph-add-new-page {
-	align-items: center;
-	border: 1px solid $color-button-text;
-	color: $color-button-text;
-	display: flex;
-	font-size: 10px;
-	font-weight: 600;
-	margin-left: 18px;
-	padding: 8px 12px;
-	text-transform: uppercase;
-
-	&:hover {
 		text-decoration: none;
-	}
 
-	svg {
-		fill: $color-button-text;
-		margin-right: 6px;
-	}
-}
+		&:hover {
+			color: rgba($color-button-text, .8);
+			transition: color .2s;
+		}
 
-@media #{$breakpoint-medium-only} {
-	.pph-wiki-header {
-		margin: -1px -21px 0;
-	}
-}
-
-@media #{$breakpoint-small-only} {
-	.pph-wiki-header {
-		margin: -1px -25px 0;
-
-		.wordmark img {
-			height: auto;
-			width: 175px;
+		&:visited {
+			color: $color-button-text;
 		}
 	}
 
-	.pph-wordmark-text {
+	@media #{$breakpoint-below-small-plus} {
 		font-size: 24px;
-		margin-top: 16px;
-	}
-
-	.pph-tally-area .pph-tally {
-		em {
-			font-size: 18px;
-		}
-
-		span {
-			font-size: 10px;
-			margin-top: 1px;
-		}
+		margin-top: 20px;
 	}
 }

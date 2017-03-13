@@ -4,22 +4,16 @@
 .banner-notifications-wrapper {
 	position: relative;
 	z-index: $zTop;
-}
 
-@media #{$breakpoint-small-only} {
-	.banner-notifications-wrapper {
+	@media #{$breakpoint-small-only} {
 		width: $page-width-small - 2 * $content-border-width;
 	}
-}
 
-@media #{$breakpoint-medium-only} {
-	.banner-notifications-wrapper {
+	@media #{$breakpoint-medium-only} {
 		width: $page-width-medium;
 	}
-}
 
-@media #{$breakpoint-large-up} {
-	.banner-notifications-wrapper {
+	@media #{$breakpoint-large-up} {
 		width: $page-width-large;
 	}
 }
