@@ -64,7 +64,7 @@
 							'wds-icon wds-icon-tiny pph-local-nav-chevron'
 						) ?>
 					</a>
-					<ul class="WikiaMenuElement pph-dropdown">
+					<ul class="pph-dropdown">
 						<?php
 						foreach($dropdown as $key => $item) {
 							// render accesskeys
