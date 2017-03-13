@@ -110,6 +110,7 @@ require(
 			this.$markAllAsReadButton = $('#markAllAsReadButton');
 
 			var isVisibleClass = 'wds-is-visible',
+				almostBottom = 100,
 				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
 			this.registerEvents = function () {
@@ -130,11 +131,10 @@ require(
 			};
 
 			/**
-			 * Has the user scrolled almost to the bottom?
+			 * Has the user  scrolled almost to the bottom?
 			 * @private
 			 */
 			this.hasScrolledToTheBottom = function (element) {
-				var almostBottom = 100;
 				return element[0].scrollHeight - almostBottom <= element.scrollTop() + element.innerHeight();
 			};
 

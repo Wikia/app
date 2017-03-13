@@ -51,11 +51,10 @@ $wds-icon-color: $wds-color-light-c5;
 	max-height: 420px;
 	overflow-y: auto;
 	width: 100%;
-	padding: 0 0;
   }
 
   &__zero-state {
-	padding: 18px;
+	padding: 18px 18px 4px 18px;
 	display: none;
 	&.wds-is-visible {
 	  display: block;
@@ -161,3 +160,63 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	width: auto;
   }
 }
+
+$offset: 187;
+$duration: 1s;
+$spinner-color: $wds-color-link;
+
+.wds-spinner {
+
+  @keyframes rotator {
+	from {
+	  transform: rotate(0);
+	}
+
+	to {
+	  transform: rotate(270deg);
+	}
+  }
+
+  @keyframes dash {
+	0% {
+	  stroke-dashoffset: $offset;
+	}
+
+	50% {
+	  stroke-dashoffset: $offset/4;
+	  transform: rotate(135deg);
+	}
+
+	100% {
+	  stroke-dashoffset: $offset;
+	  transform: rotate(450deg);
+	}
+  }
+
+  animation: rotator $duration linear infinite;
+  left: 50%;
+  margin: -33px 0 0 -33px;
+  position: absolute;
+  top: 50%;
+  transform: translateZ(0);
+
+  &.block {
+	display: block;
+	left: auto;
+	margin: auto;
+	position: relative;
+  }
+
+  &.ember-initializing {
+	height: 75vh;
+  }
+
+  .path {
+	animation: dash $duration ease-in-out infinite;
+	stroke: $spinner-color;
+	stroke-dasharray: $offset;
+	stroke-dashoffset: 0;
+  }
+}
+
+
