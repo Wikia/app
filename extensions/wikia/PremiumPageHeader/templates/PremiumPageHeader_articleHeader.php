@@ -15,12 +15,9 @@
 						<div class="pph-dropdown-container">
 							<a href="#">and <?= $moreCategoriesLength ?> more</a>
 							<ul class="pph-dropdown">
-								<li><a href="#">Category 1</a></li>
-								<li><a href="#">Category 2</a></li>
-								<li><a href="#">Category 3</a></li>
-								<li><a href="#">Category 4</a></li>
-								<li><a href="#">Category 5</a></li>
-								<li><a href="#">Category 6</a></li>
+								<?php foreach($moreCategories as $category): ?>
+									<li><?= $category; ?></li>
+								<?php endforeach; ?>
 							</ul>
 						</div>
 					<?php endif; ?>
