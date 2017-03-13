@@ -3,7 +3,7 @@ require(
 	function ($, window, loader, mustache, log) {
 		'use strict';
 
-		const notificationTypes = {
+		var notificationTypes = {
 			discussionUpvotePost: 'discussion-upvote-post',
 			discussionUpvoteReply: 'discussion-upvote-reply',
 			discussionReply: 'discussion-reply',
@@ -58,11 +58,11 @@ require(
 			};
 
 			this._getReplyText = function (notification) {
-				const key = this._getReplyKey(notification.title, notification.totalUniqueActors);
-				const message = window.mw.message(key).parse();
-				var args = {
-					postTitle: bold(notification.title)
-				};
+				var key = this._getReplyKey(notification.title, notification.totalUniqueActors),
+					message = window.mw.message(key).parse(),
+					args = {
+						postTitle: bold(notification.title)
+					};
 
 				if (notification.totalUniqueActors > 2) {
 					args.mostRecentUser = notification.latestActors[0].name;
@@ -78,20 +78,20 @@ require(
 			};
 
 			this._getReplyKey = function (title, totalUniqueActors) {
-				const user = totalUniqueActors <= 1 ? '' :
+				var user = totalUniqueActors <= 1 ? '' :
 					totalUniqueActors == 2 ? 'two-users-' : 'multiple-users-';
 				return 'notifications-replied-by-' + user + (title ? 'with-title' : 'no-title');
 			};
 
 			this._getPostUpvoteText = function (notification) {
-				const key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				const message = window.mw.message(key).parse();
+				var key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
+				var message = window.mw.message(key).parse();
 				return fillArgs(message, {postTitle: bold(notification.title)});
 			};
 
 			this._getReplyUpvoteText = function (notification) {
-				const key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				const message = window.mw.message(key).parse();
+				var key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
+				var message = window.mw.message(key).parse();
 				return fillArgs(message, {postTitle: bold(notification.title)});
 			};
 
@@ -161,9 +161,9 @@ require(
 				var html = mustache.render(this.template, this._mapToView(notifications));
 				this.$container.append(html);
 
-				const markAsRead = this.proxy(function (e) {
+				var markAsRead = this.proxy(function (e) {
 					try {
-						const id = $(e.target).closest('.wds-notification-card').attr('id');
+						var id = $(e.target).closest('.wds-notification-card').attr('id');
 						this.logic.markAsRead(id);
 					} catch (e) {
 						log('Failed to mark as read ' + e, log.levels.error, logTag);
@@ -205,7 +205,7 @@ require(
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				const container = this.$container.find('[id="' + id + '"]');
+				var container = this.$container.find('[id="' + id + '"]');
 				findUnreadAndClearClass(container);
 			};
 
@@ -220,7 +220,7 @@ require(
 			this.unreadCount = 0;
 
 			this.getLatestEventTime = function () {
-				const latest = this.notifications[0];
+				var latest = this.notifications[0];
 				if (latest) {
 					return latest.when;
 				} else {
@@ -350,7 +350,7 @@ require(
 			};
 
 			this.markAllAsRead = function () {
-				const since = this.model.getLatestEventTime();
+				var since = this.model.getLatestEventTime();
 				if (!since) {
 					log('Marking as read did not find since ' + this.model, log.levels.info, logTag);
 					return;

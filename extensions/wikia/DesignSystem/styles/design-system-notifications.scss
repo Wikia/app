@@ -4,7 +4,6 @@
 // on-site-notifications to be moved to Design System
 
 $notifications-dropdown-content-color: $wds-color-light-c7;
-$notifications-dropdown-border-color: #363b41;
 $wds-icon-color: $wds-color-light-c5;
 
 .wds-hidden-svg {
@@ -58,7 +57,7 @@ $wds-icon-color: $wds-color-light-c5;
   }
 }
 
-$notification-card-text-color: #38424d;
+$notification-card-text-color: $wds-color-dark-blue-gray;
 $notification-card-anchor-color: $notifications-dropdown-content-color;
 
 .wds-notification-card {
