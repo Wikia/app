@@ -11,21 +11,21 @@ require(
 		}, logTag = 'on-site-notifications';
 
 		/**
-		 * Gets timestamp from ISO string date
+		 * Gets Date from ISO string date
 		 * @param {string} date
-		 * @returns {number} - timestamp
+		 * @returns {Date} - date
 		 */
 		function convertToTimestamp(date) {
-			return (new Date(date)).getTime() / 1000;
+			return new Date(date);
 		}
 
 		/**
-		 * Gets ISO string from timestamp
-		 * @param {string} timestamp
+		 * Gets ISO string from Date
+		 * @param {Date} date
 		 * @returns {string} - ISO string
 		 */
-		function convertToIsoString(timestamp) {
-			return new Date(timestamp * 1000).toISOString();
+		function convertToIsoString(date) {
+			return date.toISOString();
 		}
 
 		function getSafely(obj, path) {
@@ -151,7 +151,8 @@ require(
 						showAvatars: notification.totalUniqueActors > 2 && notification.type === notificationTypes.discussionReply,
 						showAvatarOverflow: notification.totalUniqueActors > 5,
 						avatarOverflow: notification.totalUniqueActors - 5,
-						avatars: getAvatars(notification.latestActors)
+						avatars: getAvatars(notification.latestActors),
+						timeAgo: $.timeago(notification.when)
 					}
 				}));
 			};
@@ -221,7 +222,7 @@ require(
 			this.getLatestEventTime = function () {
 				const latest = this.notifications[0];
 				if (latest) {
-					return latest.timestamp;
+					return latest.when;
 				} else {
 					return null;
 				}
@@ -264,7 +265,7 @@ require(
 						title: getSafely(notification, 'refersTo.title'),
 						snippet: getSafely(notification, 'refersTo.snippet'),
 						uri: getSafely(notification, 'refersTo.uri'),
-						timestamp: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
+						when: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
 						communityName: getSafely(notification, 'community.name'),
 						communityId: getSafely(notification, 'community.id'),
 						isUnread: notification.read === false,
