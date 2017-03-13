@@ -103,6 +103,17 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 						[ 'known', 'noclasses' ]
 					),
 				];
+				
+				$this->buttons[] = [
+					'buttonAction' => 'coppa-staticimagereview',
+					'buttonLink' => Linker::makeExternalLink(
+                        			"http://www.wikia.com/image-review/coppa/" . $this->userName,
+                       				 $this->msg( 'coppatool-staticimagereview' )->escaped(),
+                       				 true,
+                        			'',
+                       				[ 'target' => '_blank' ]
+					),
+				];
 			} else {
 				$this->buttons[] = [
 					'buttonAction' => 'phalanx-ip',
