@@ -2,7 +2,7 @@
 	<? foreach ( $data as $item ) : ?>
 		<li class="pph-local-nav-tracking pph-local-nav-item-l1 <? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
 			<a href="<?= $item['href'] ?>"
-			   data-tracking="custom-level-1"><?= $item['textEscaped'] ?></a><?= DesignSystemHelper::renderSvg(
+			   data-tracking="custom-level-1"><?= $item['text'] ?></a><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
@@ -10,14 +10,14 @@
 				<? foreach ( $item['children'] as $childL2 ): ?>
 					<li class="pph-local-nav-tracking pph-local-nav-item-l2 <? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
 						<a href="<?= $childL2['href'] ?>"
-						   data-tracking="custom-level-2"><?= $childL2['textEscaped'] ?></a>
+						   data-tracking="custom-level-2"><?= $childL2['text'] ?></a>
 						<? if ( !empty( $childL2['children'] ) ): ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
 							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
 								<? foreach ( $childL2['children'] as $childL3 ): ?>
 									<li class="pph-local-nav-tracking pph-local-nav-item-l3">
 										<a href="<?= $childL3['href'] ?>"
-										   data-tracking="custom-level-3"><?= $childL3['textEscaped'] ?></a>
+										   data-tracking="custom-level-3"><?= $childL3['text'] ?></a>
 									</li>
 								<? endforeach; ?>
 							</ul>
@@ -43,7 +43,7 @@
 			<? foreach ( $explore['children'] as $child ): ?>
 				<li class="pph-local-nav-tracking pph-local-nav-item-l2">
 					<a href="<?= $child['href'] ?>"
-					   data-tracking="<?= $child['tracking'] ?>"><?= $child['textEscaped'] ?></a>
+					   data-tracking="<?= $child['tracking'] ?>"><?= $child['text'] ?></a>
 				</li>
 			<? endforeach; ?>
 		</ul>
