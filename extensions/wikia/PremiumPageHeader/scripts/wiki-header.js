@@ -35,7 +35,5 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 				label: 'add-new-page'
 			});
 		});
-
-
 	});
 });

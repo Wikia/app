@@ -33,11 +33,11 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			}
 		};
 
-		$('.pph-local-nav-container > a').on('click', function (e) {
+		$('.pph-local-nav-container > a').on('click', function (event) {
 			var $this = $(this);
 			if (!$this.hasClass('pph-click')) {
 				$this.addClass('pph-click');
-				e.preventDefault();
+				event.preventDefault();
 			} else {
 				track($this);
 			}
@@ -50,5 +50,5 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	$(function () {
 		initTracking();
 		initTabletSupport();
-	})
+	});
 });
