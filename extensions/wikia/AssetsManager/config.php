@@ -3229,3 +3229,12 @@ $config['article_related_video_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/article-related-video.js',
 	],
 ];
+
+/* SeoCrossLink */
+$config['seo_crosslink_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/SeoCrossLink/styles/SeoCrossLink.scss',
+	],
+];
