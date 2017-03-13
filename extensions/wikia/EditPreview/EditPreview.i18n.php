@@ -47,7 +47,7 @@ $messages['fr'] = array(
 	'wikia-editor-preview-min-width' => 'Tablette en mode portrait',
 	'wikia-editor-preview-max-width' => 'Bureau grand format',
 	'wikia-editor-preview-type-tooltip' => "Modifier cette option affichera l'article tel qu'il serait affiché sur un navigateur avec un écran petit, un écran large, un appareil mobile ou avec votre affichage actuel.",
-	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
+	'wikia-editor-preview-desc' => "Permet aux utilisateurs d'afficher un aperçu de leurs modifications avant de les publier",
 	'wikia-editor-preview-mobile-width' => 'Mobile',
 	'wikia-editor-preview-best-practices-notice' => "Saviez-vous que plus de 50 % des visiteurs sur Wikia consultent vos articles sur un appareil mobile ? Certains modèles personnalisés risquent de ne pas s'afficher correctement sur de tels appareils.  Pour que l'ensemble de vos visiteurs bénéficient de la meilleure expérience possible, nous vous invitons à suivre ces quelques bonnes pratiques.",
 	'wikia-editor-preview-best-practices-button' => 'Bonnes pratiques',
@@ -92,14 +92,14 @@ $messages['nl'] = array(
 	'wikia-editor-preview-min-width' => 'Tablet Portrait',
 	'wikia-editor-preview-max-width' => 'Desktop XL',
 	'wikia-editor-preview-mobile-width' => 'Mobile',
-	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devices, or your current display.",
+	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devies, or your current display.",
 	'wikia-editor-preview-best-practices-notice' => 'Did you know that over 50% of Wikia visitors are reading your content on mobile? Some custom templates may not properly show on mobile devices. To make sure everything looks great to all visitors, follow our best practices.',
 	'wikia-editor-preview-best-practices-button' => 'Best practices',
 	'wikia-editor-preview-best-practices-button-link' => 'Help:Wikitext_best_practices',
 );
 
 $messages['pl'] = array(
-	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
+	'wikia-editor-preview-desc' => 'Umożliwia użytkownikom przejrzenie ich edycji przed zapisem',
 	'wikia-editor-preview-current-width' => 'Monitor',
 	'wikia-editor-preview-min-width' => 'Tablet w pionie',
 	'wikia-editor-preview-max-width' => 'Monitor XL',
