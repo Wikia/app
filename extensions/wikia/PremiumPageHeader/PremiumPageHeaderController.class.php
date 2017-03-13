@@ -69,7 +69,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'title', $skinVars['title'] );
 
 		$categoryLinks = $this->getContext()->getOutput()->getCategoryLinks();
-		$normalCategoryLinks = $categoryLinks && $categoryLinks['normal'] ?: [];
+		$normalCategoryLinks = $categoryLinks && $categoryLinks['normal'] ? $categoryLinks['normal'] : [];
 
 		$visibleCategoriesLimit = 4;
 		if ( count( $normalCategoryLinks ) > 4 ) {
