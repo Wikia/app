@@ -2,7 +2,7 @@
 	<div class="pph-article-title">
 		<?php if ( count( $visibleCategories ) ): ?>
 			<div class="pph-categories">
-				in:&nbsp;
+				<span class="pph-categories-in">in:</span>
 				<span class="pph-category-links">
 					<?php foreach($visibleCategories as $i => $category): ?>
 						<?php if ($i === $visibleCategoriesLength - 1 && count($moreCategories) === 0): ?>

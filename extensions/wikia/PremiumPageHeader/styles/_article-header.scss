@@ -13,11 +13,11 @@
 
 .pph-article-title {
 	flex: 1;
-	font-weight: 600;
 	margin-right: 10px;
 
 	h1 {
 		font-size: 36px;
+		font-weight: 600;
 		line-height: 1;
 	}
 }
@@ -27,13 +27,23 @@
 	display: flex;
 	font-size: 12px;
 	line-height: 32px;
+
+	.pph-categories-in {
+		padding-right: 4px;
+		font-weight: 600;
+	}
 }
 
 .pph-category-links {
 	color: $color-links;
+	font-style: italic;
 
 	.pph-dropdown-container {
 		display: inline-block;
+
+		.pph-dropdown {
+			font-style: normal;
+		}
 	}
 }
 
