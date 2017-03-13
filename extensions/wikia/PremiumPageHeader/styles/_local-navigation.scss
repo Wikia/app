@@ -160,6 +160,16 @@ $submenu-background-color: mix($color-page, #000, 90%);
 		}
 	}
 
+	.sticked-to-parent {
+		position: relative;
+
+		.pph-local-nav-l3 {
+			border-top-width: 1px;
+			bottom: -13px;
+			top: auto;
+		}
+	}
+
 	&.pph-local-nav-l2 {
 		left: -24px + $menu-item-horizontal-padding;
 		margin-top: $menu-item-vertical-padding;
@@ -174,9 +184,6 @@ $submenu-background-color: mix($color-page, #000, 90%);
 		box-sizing: border-box;
 		left: 100%;
 		min-width: 100%;
-		min-height: -moz-calc(100% + 1px);
-		min-height: -webkit-calc(100% + 1px);
-		min-height: calc(100% + 1px);
 		top: 0;
 
 		li a {
