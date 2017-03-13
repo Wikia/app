@@ -1,15 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.utils.sampler',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.log',
 	'wikia.window'
-], function (adContext, prebid, vastUrlBuilder, geo, instantGlobals, win) {
+], function (adContext, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
+		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
 			oasis: {
@@ -47,11 +51,27 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		return parameters;
 	}
 
-	function fetchPrice(responseXML) {
+	function sendRequest(vast) {
+		var request = new win.XMLHttpRequest();
+
+		request.open('POST', loggerEndpoint, true);
+		request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		request.send('vast=' + encodeURIComponent(vast));
+	}
+
+	function logVast(vastRequest) {
+		log(['logVast', vastRequest], log.levels.debug, logGroup);
+		if (sampler.sample('velesLog', 1, 100)) {
+			sendRequest(vastRequest.response);
+		}
+	}
+
+	function fetchPrice(vastRequest) {
 		var ad,
 			adParameters,
 			adConfigPrice,
-			parameters;
+			parameters,
+			responseXML = vastRequest.responseXML;
 
 		if (!responseXML) {
 			return 0;
@@ -72,6 +92,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			if (parameters.veles) {
 				return parseInt(parameters.veles, 10) / 100;
 			}
+		}
+
+		if (ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
+			logVast(vastRequest);
 		}
 
 		return 0;
@@ -132,7 +156,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var price;
 
 		if (isValidResponse(vastRequest.status)) {
-			price = fetchPrice(vastRequest.responseXML);
+			price = fetchPrice(vastRequest);
 			addBids(bidderRequest, vastRequest.response, price);
 		} else {
 			addEmptyBids(bidderRequest);
