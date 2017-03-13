@@ -5,7 +5,6 @@ require(['wikia.window', 'jquery'], function (window, $) {
 		var $globalNav = $('.wds-global-navigation-wrapper'),
 			$notificationsWrapper = $('.banner-notifications-wrapper');
 
-		$notificationsWrapper.detach();
 		$notificationsWrapper.insertAfter($globalNav);
 
 		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
