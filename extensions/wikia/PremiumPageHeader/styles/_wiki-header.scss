@@ -11,20 +11,23 @@
 	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
+	transition: border-color, color;
+	transition-duration: .2s;
 
 	&:hover {
-		border: 1px solid mix($color-button-text, $color-black, 80);
-		color: mix($color-button-text, $color-black, 80);
+		border-color: rgba($color-button-text, .8);
+		color: rgba($color-button-text, .8);
 		text-decoration: none;
 
 		svg {
-			fill: mix($color-button-text, $color-black, 80);
+			fill: rgba($color-button-text, .8);
 		}
 	}
 
 	svg {
 		fill: $color-button-text;
 		margin-right: 6px;
+		transition: fill .2s;
 	}
 }
 

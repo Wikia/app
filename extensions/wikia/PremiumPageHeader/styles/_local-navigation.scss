@@ -49,6 +49,10 @@ $submenu-background-color: mix($color-page, #000, 90%);
 		position: relative;
 		text-transform: uppercase;
 
+		&:visited {
+			color: $color-button-text;
+		}
+
 		.wds-icon {
 			height: 14px;
 			margin-right: 4px;
@@ -165,6 +169,10 @@ $submenu-background-color: mix($color-page, #000, 90%);
 			transition: color .2s;
 			white-space: nowrap;
 			width: 100%;
+
+			&:visited {
+				color: $color-text;
+			}
 		}
 
 		.pph-local-nav-sub-chevron {
