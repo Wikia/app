@@ -21,6 +21,10 @@ $submenu-background-color: mix($color-page, #000, 90%);
 	}
 }
 
+.pph-local-nav-discuss-text:hover {
+	text-decoration: underline;
+}
+
 .pph-local-nav-item-l1 {
 	cursor: pointer;
 	padding: $menu-item-vertical-padding $menu-item-horizontal-padding;
@@ -143,7 +147,7 @@ $submenu-background-color: mix($color-page, #000, 90%);
 	border: solid $submenu-border-color;
 	border-width: 0 1px 1px;
 	display: none;
-	min-width: $submenu-minimun-width;
+	min-width: 100%;
 	padding: 12px 0 12px 12px;
 	position: absolute;
 
@@ -184,8 +188,8 @@ $submenu-background-color: mix($color-page, #000, 90%);
 	}
 }
 
-.pph-local-nav-discuss-text:hover {
-	text-decoration: underline;
+.pph-local-nav-spread {
+	min-width: $submenu-minimun-width;
 }
 
 .pph-sticked-to-parent {

@@ -7,25 +7,27 @@
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
 			<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
-				<? foreach ( $item['children'] as $i => $childL2 ): ?>
-					<li class="pph-local-nav-tracking pph-local-nav-item-l2
+				<div class="pph-local-nav-spread">
+					<? foreach ( $item['children'] as $i => $childL2 ): ?>
+						<li class="pph-local-nav-tracking pph-local-nav-item-l2
 						<? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>
 						<?php if ( !empty( $childL2['children'] ) && count( $childL2['children'] ) < $i + 1 ): ?> pph-sticked-to-parent<?php endif; ?>">
-						<a href="<?= $childL2['href'] ?>"
-						   data-tracking="custom-level-2"><?= $childL2['text'] ?></a>
-						<? if ( !empty( $childL2['children'] ) ): ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
-							<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
-								<? foreach ( $childL2['children'] as $childL3 ): ?>
-									<li class="pph-local-nav-tracking pph-local-nav-item-l3">
-										<a href="<?= $childL3['href'] ?>"
-										   data-tracking="custom-level-3"><?= $childL3['text'] ?></a>
-									</li>
-								<? endforeach; ?>
-							</ul>
-						<? endif; ?>
-					</li>
-				<? endforeach; ?>
+							<a href="<?= $childL2['href'] ?>"
+							   data-tracking="custom-level-2"><?= $childL2['text'] ?></a>
+							<? if ( !empty( $childL2['children'] ) ): ?>
+								<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
+								<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
+									<? foreach ( $childL2['children'] as $childL3 ): ?>
+										<li class="pph-local-nav-tracking pph-local-nav-item-l3">
+											<a href="<?= $childL3['href'] ?>"
+											   data-tracking="custom-level-3"><?= $childL3['text'] ?></a>
+										</li>
+									<? endforeach; ?>
+								</ul>
+							<? endif; ?>
+						</li>
+					<? endforeach; ?>
+				</div>
 			</ul>
 		</li>
 	<? endforeach; ?>
