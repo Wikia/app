@@ -1,0 +1,1 @@
+<input name="<?= $name; ?>" type="radio" <? if( isset($id) ): ?>id="<?= $id; ?>" <? endif; ?><?= $attributes; ?> value="<?= htmlspecialchars($choiceValue); ?>"<? if ($choiceValue == $value): ?> checked="checked"<? endif ?> />

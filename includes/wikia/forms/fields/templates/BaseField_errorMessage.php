@@ -1,0 +1,1 @@
+<p class="error error-msg"><?=$errorMessage?></p>
