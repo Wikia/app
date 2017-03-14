@@ -24,6 +24,10 @@
 	}
 }
 
+.pph-disabled {
+	opacity: 0.5;
+}
+
 .pph-categories {
 	align-items: flex-start;
 	display: flex;
@@ -204,7 +208,7 @@
 .pph-dropdown-container {
 	position: relative;
 
-	&:hover {
+	&:hover:not(.pph-disabled) {
 		> .pph-dropdown {
 			display: block;
 		}
