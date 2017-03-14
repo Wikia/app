@@ -222,17 +222,23 @@
 .pph-dropdown-container {
 	position: relative;
 
-	&:hover:not(.pph-disabled) {
+	&:hover {
 		> .pph-button {
-			background-color: $color-button-highlight;
+			background-color: $color-buttons;
 		}
 
-		> .pph-dropdown {
-			display: block;
-		}
+		&:not(.pph-disabled) {
+			> .pph-button {
+				background-color: $color-button-highlight;
+			}
 
-		.pph-dropdown-chevron {
-			transform: scale(1, -1);
+			> .pph-dropdown {
+				display: block;
+			}
+
+			.pph-dropdown-chevron {
+				transform: scale(1, -1);
+			}
 		}
 	}
 }
