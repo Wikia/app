@@ -127,6 +127,7 @@
 .pph-local-nav-menu {
 	align-items: flex-end;
 	display: flex;
+	white-space: nowrap;
 
 	li:hover {
 		> .pph-local-nav-sub-menu {
