@@ -30,7 +30,7 @@ require([
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	pageFair,
+	pageFairDetection,
 	taboolaHelper,
 	recoveryHelper,
 	scrollHandler,
@@ -80,7 +80,7 @@ require([
 		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {
-			pageFair.initDetection(context);
+			pageFairDetection.initDetection(context);
 		}
 
 		// Recovery

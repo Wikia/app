@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.adEngine.slot.scrollHandler')
+	require.optional('ext.wikia.adEngine.slot.scrollHandler'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
 ], function (
 	log,
 	adContext,
@@ -25,7 +26,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	sourcePointHelper,
 	slotTweaker,
 	sraHelper,
-	scrollHandler
+	scrollHandler,
+	pageFair
 ) {
 	'use strict';
 
@@ -54,9 +56,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		extra = extra || {};
 		var element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = sourcePointHelper.isBlocking() &&
-				sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
-			shouldPush = !sourcePointHelper.isBlocking() || shouldPushRecoverableAd,
+			isRecoveryEnabled = sourcePointHelper.isSourcePointRecoveryEnabled() || (pageFair && pageFair.isPageFairRecoveryEnabled()),
+			isBlocking = sourcePointHelper.isBlocking() || (pageFair && pageFair.isBlocking()),
+			adIsRecoverable = extra.isPageFairRecoverable || sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
+			shouldPush = !isBlocking || (isBlocking && adIsRecoverable),
 			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
@@ -74,7 +77,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			});
 		}
 
-		setAdditionalTargeting(slotTargetingData, extra);
+		setAdditionalTargeting(slotTargetingData);
 
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
@@ -85,7 +88,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
-		function setAdditionalTargeting(slotTargetingData, extra) {
+		function setAdditionalTargeting(slotTargetingData) {
 			if (scrollHandler) {
 				var count = scrollHandler.getReloadedViewCount(slot.name);
 				if (count !== null) {
@@ -93,8 +96,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				}
 			}
 
-			// set src=rec for SourcePoint or PageFair recovery
-			if (shouldPushRecoverableAd || extra.isPageFairRecoverable) {
+			if (isRecoveryEnabled && isBlocking && adIsRecoverable) {
 				slotTargetingData.src = 'rec';
 			}
 

@@ -111,9 +111,10 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
 		// Taboola

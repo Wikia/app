@@ -1,7 +1,8 @@
 define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.log'
-], function (adContext, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFair',
@@ -25,6 +26,13 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 		return result;
 	}
 
+	function isBlocking() {
+		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.blocking);
+
+		log(['isBlocking', isBlocking], 'debug', logGroup);
+		return isBlocking;
+	}
+
 	function addMarker(slotId) {
 		var slot = document.getElementById(slotId);
 
@@ -32,6 +40,7 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	}
 
 	return {
+		isBlocking: isBlocking,
 		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
 		isSlotRecoverable: isSlotRecoverable,
 		addMarker: addMarker

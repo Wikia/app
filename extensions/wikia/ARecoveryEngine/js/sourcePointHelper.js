@@ -50,9 +50,13 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 		return enabled;
 	}
 
+
+
 	function isBlocking() {
-		log(['isBlocking', !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking)], 'debug', logGroup);
-		return isSourcePointRecoveryEnabled() && !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+		var isBlocking = !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+
+		log(['isBlocking', isBlocking], 'debug', logGroup);
+		return isBlocking;
 	}
 
 	function isSourcePointRecoverable(slotName, recoverableSlots) {
