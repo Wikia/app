@@ -338,6 +338,8 @@ $config['adengine2_porvata_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/floater.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/floaterConfiguration.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/floatingContextFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
