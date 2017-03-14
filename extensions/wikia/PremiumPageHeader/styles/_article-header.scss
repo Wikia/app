@@ -23,6 +23,7 @@
 }
 
 .pph-categories {
+	align-items: flex-start;
 	display: flex;
 	font-size: 12px;
 	padding-bottom: 6px;
@@ -37,7 +38,6 @@
 	color: $color-links;
 	font-style: italic;
 	line-height: 16px;
-	padding-top: 1px;
 
 	.pph-dropdown-container {
 		display: inline-block;
