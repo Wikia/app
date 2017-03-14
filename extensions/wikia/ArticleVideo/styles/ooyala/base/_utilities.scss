@@ -1,0 +1,71 @@
+.oo-clearfix {
+  @include clearfix();
+}
+
+.oo-center-block {
+  @include center-block();
+}
+
+.oo-pull-right {
+  @include pull-right();
+}
+
+.oo-pull-left {
+  @include pull-left();
+}
+
+[hidden], .oo-hidden {
+  display: none !important;
+}
+
+.oo-invisible {
+  visibility: hidden;
+}
+
+.oo-text-truncate {
+  @include text-truncate;
+}
+
+.oo-text-lowercase      { text-transform: lowercase; }
+.oo-text-uppercase      { text-transform: uppercase; }
+.oo-text-capitalize     { text-transform: capitalize; }
+
+//
+// Screenreaders
+//
+
+.oo-sr-only {
+  @include sr-only();
+}
+
+.oo-expand {
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+}
+
+.oo-center-vertical-horizontal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+//convert px to em
+@function em($pixels, $context: $font-size-root) {
+  @return ($pixels / $context) * 1em;
+}
+
+//responsive multiples
+@function xs($x) {
+  @return  $x * $xsmall-multiple;
+}
+
+@function lg($x) {
+  @return  $x * $large-multiple;
+}

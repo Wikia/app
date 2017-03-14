@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.sourcePointRecovery', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.document'
 ], function (
 	adContext,

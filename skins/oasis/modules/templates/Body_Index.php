@@ -92,8 +92,12 @@
 					}
 				?>
 
-				<?php if ( $enableArticleVideo ): ?>
-					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
+				<?php if ( $wg->enableArticleFeaturedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
+				<?php endif; ?>
+
+				<?php if ( $wg->enableArticleRelatedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
@@ -119,7 +123,7 @@
 					<?= $bodytext ?>
 
 				</div>
-				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
+				<?php if ( !(new ARecoveryModule)->isSourcePointRecoveryDisabled() ) { ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>

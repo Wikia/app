@@ -25,6 +25,7 @@ $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+$wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
@@ -44,9 +45,12 @@ $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
 $wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
-$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/builders/WallBuilderException.class.php';
 $wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
 $wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
+
+$wgAutoloadClasses['InappropriateContentException'] = __DIR__ . '/exceptions/InappropriateContentException.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
+$wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
@@ -162,6 +166,10 @@ $wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 // SUS-260: Prevent moving pages within, into or out of Wall namespaces
 $wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
 
+// handle MediaWiki delete flow and comments_index updates
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
+$wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
+
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',
@@ -190,6 +198,8 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-confirm-monobook-*',
 	'wall-posting-message-failed-title',
 	'wall-posting-message-failed-body',
+	'wall-posting-message-failed-filter-title',
+	'wall-posting-message-failed-filter-body',
 	'preview',
 	'savearticle',
 	'back',

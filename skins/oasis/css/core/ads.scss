@@ -11,6 +11,8 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
+@import '../../../../extensions/wikia/ArticleVideo/styles/article-featured-video';
+@import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
@@ -19,6 +21,8 @@ $uap-progress-bar-color: #b7b7b7;
 $uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
+
+$floating-ad-margin: 20px;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -37,20 +41,61 @@ $uap-video-player-button-size: 24px;
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-		> div {
-			float: right;
-		}
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
 		> img {
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
+	}
+
+	&.floating {
+		z-index: $wikia-top-ads-index + 10;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $video-collapse-animation-speed;
+
+			iframe {
+				height: $video-container-width !important;
+				width: $video-container-width !important;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $video-container-width;
+				transition: margin-bottom $video-collapse-animation-speed;
+			}
+		}
+	}
+
+	.floating-close-button {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		cursor: pointer;
+		display: none;
+		height: 20px;
+		left: 10px;
+		position: absolute;
+		top: 10px;
+		width: 20px;
 	}
 }
 
@@ -194,10 +239,6 @@ $uap-video-player-button-size: 24px;
 		top: 0;
 		width: $uap-video-player-button-size;
 	}
-}
-
-#TOP_BUTTON_WIDE {
-	margin-right: 10px;
 }
 
 @media screen and (max-width: 1063px) {
