@@ -1,6 +1,8 @@
 <?php
 
-class WikiaValidatorStringTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorStringTest extends TestCase {
 
 	/* @var $titleStringValidator WikiaValidatorString */
 	private $titleStringValidator;

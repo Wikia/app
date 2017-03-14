@@ -1,7 +1,12 @@
 <?php
-require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentHelper.class.php' );
 
 class CuratedContentHelperTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @param array $data
 	 * @param array $resultExpected

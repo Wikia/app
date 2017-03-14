@@ -81,7 +81,7 @@ class ComponentTest extends WikiaBaseTest {
 			->will( $this->returnValue( $componentType ) );
 		
 		if( !is_null( $expectedException ) ) {
-			$this->setExpectedException( $expectedException );
+			$this->expectException( $expectedException );
 		}
 		
 		$validateTemplateVarsMethod->invoke( $UIComponentMock );

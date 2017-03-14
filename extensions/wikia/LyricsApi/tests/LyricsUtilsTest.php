@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/LyricsApi/LyricsUtils.class.php' );
 
 class LyricsUtilsTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../LyricsApi.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param String $message

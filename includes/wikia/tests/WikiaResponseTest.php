@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaResponseTest extends PHPUnit_Framework_TestCase {
+class WikiaResponseTest extends TestCase {
 
 	const TEST_HEADER_NAME = 'X-WikiaResponseTest';
 	const TEST_HEADER_VALUE1 = 'TestValue1';
@@ -16,7 +18,10 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	protected $object = null;
 
 	protected function setUp() {
-		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
+		$this->object = $this->getMockBuilder( WikiaResponse::class )
+			->setMethods( [ 'sendHeader' ] )
+			->setConstructorArgs( [ 'html' ] )
+			->getMock();
 	}
 
 	public function settingHeadersDataProvider() {

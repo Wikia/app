@@ -1,12 +1,16 @@
 <?php
-include( realpath( dirname(__FILE__) . '/../WikiaHubsServices.setup.php' ) );
 
-class WikiaHubsModuleExploreServiceTest extends PHPUnit_Framework_TestCase {
+class WikiaHubsModuleExploreServiceTest extends WikiaBaseTest {
 	const DEFAULT_LANG = 'en';
 	const DEFAULT_SECTION = 1;
 	const DEFAULT_VERTICAL = 2;
 	
 	protected $mockedLinksGroup = array('links', 'links', 'links');
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../WikiaHubsServices.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider testGetStructuredDataDataProvider

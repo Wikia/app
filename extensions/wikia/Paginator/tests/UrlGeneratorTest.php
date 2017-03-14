@@ -91,7 +91,7 @@ class UrlGeneratorTest extends \WikiaBaseTest {
 	public function testGetUrlForPage( $url, $pageParam, $pagesCount, $pageNumber, $expectedUrl, $exceptionClass = null ) {
 		$urlGenerator = new UrlGenerator( $url, $pageParam, $pagesCount );
 		if ( $exceptionClass ) {
-			$this->setExpectedException( $exceptionClass );
+			$this->expectException( $exceptionClass );
 			$urlGenerator->getUrlForPage( $pageNumber );
 		} else {
 			$this->assertEquals( $expectedUrl, $urlGenerator->getUrlForPage( $pageNumber ) );

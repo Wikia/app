@@ -1,8 +1,5 @@
 <?php
 
-// update namespaces (only required for testing)
-$wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
-
 class testWallNotifications extends WallNotifications {
 	public function addNotificationToData(&$data, $userId, $wikiId, $notificationData) {
 		parent::addNotificationToData($data, $userId, $wikiId, $notificationData);
@@ -20,6 +17,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
+
+		global $wgCanonicalNamespaceNames, $wgExtraNamespaces;
+		$this->mockGlobalVariable( 'wgCanonicalNamespaceNames', $wgCanonicalNamespaceNames + $wgExtraNamespaces );
 	}
 
 	/**
