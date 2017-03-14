@@ -26,7 +26,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				playerParams = window.wgOoyalaParams,
 				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Players(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
