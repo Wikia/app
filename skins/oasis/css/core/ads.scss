@@ -23,6 +23,7 @@ $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
 
 $floating-ad-margin: 20px;
+$floating-ad-index: $wikia-top-ads-index + 10;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -60,7 +61,7 @@ $floating-ad-margin: 20px;
 	}
 
 	&.floating {
-		z-index: $wikia-top-ads-index + 10;
+		z-index: $floating-ad-index;
 
 		.wikia-ad {
 			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
@@ -85,17 +86,6 @@ $floating-ad-margin: 20px;
 				transition: margin-bottom $video-collapse-animation-speed;
 			}
 		}
-	}
-
-	.floating-close-button {
-		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
-		cursor: pointer;
-		display: none;
-		height: 20px;
-		left: 10px;
-		position: absolute;
-		top: 10px;
-		width: 20px;
 	}
 }
 
@@ -583,4 +573,51 @@ body > a > img[src$="noad.gif"] {
 
 #WikiaArticleMsg {
 	display: none;
+}
+
+/** Floating ads **/
+
+/*** Incontent ***/
+#WikiaArticle {
+	&.floating {
+		z-index: initial !important;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			height: $video-container-width !important;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $video-collapse-animation-speed;
+			width: $video-container-width !important;
+			z-index: $floating-ad-index;
+
+			.provider-container {
+				height: $video-container-width !important;
+				width: $video-container-width !important;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $video-container-width;
+				transition: margin-bottom $video-collapse-animation-speed;
+			}
+		}
+	}
+}
+
+.floating-close-button {
+	background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+	cursor: pointer;
+	display: none;
+	height: 20px;
+	left: 10px;
+	position: absolute;
+	top: 10px;
+	width: 20px;
 }
