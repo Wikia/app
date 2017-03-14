@@ -8,7 +8,7 @@ describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', functio
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.porvata.floaterConfiguration'](mocks.win, mocks.doc);
+		return modules['ext.wikia.adEngine.video.player.porvata.floaterConfiguration'](mocks.win);
 	}
 
 	it('floater should be disabled when "enableLeaderboardFloating" configuration is not set', function () {
