@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.log'],
-	function ($, window, loader, mustache, log) {
+	['jquery', 'wikia.window', 'wikia.log', 'ext.wikia.design-system.templating'],
+	function ($, window, log, templating) {
 		'use strict';
 
 		var notificationTypes = {
@@ -101,9 +101,8 @@ require(
 			};
 		}
 
-		function View(logic, template, textFormatter) {
+		function View(logic, textFormatter) {
 			this.logic = logic;
-			this.template = template;
 			this.textFormatter = textFormatter;
 			this.$notificationsCount = $('#onSiteNotificationsCount');
 			this.$container = $('#notificationContainer');
@@ -111,7 +110,8 @@ require(
 
 			var isVisibleClass = 'wds-is-visible',
 				almostBottom = 100,
-				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
+				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
+				template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
 
 			this.registerEvents = function () {
 				this.addDropdownLoadingEvent();
@@ -124,7 +124,7 @@ require(
 				scrollableElement.on('scroll', this.proxy(this.onScroll));
 			};
 
-			this.onScroll = function(e) {
+			this.onScroll = function (e) {
 				if (this.hasScrolledToTheBottom($(e.target))) {
 					this.logic.loadMore();
 				}
@@ -189,20 +189,26 @@ require(
 			};
 
 			this.renderNotifications = function (notifications) {
-				var html = mustache.render(this.template, this._mapToView(notifications));
-				this.$container.append(html);
+				templating.renderByLocation(template, this._mapToView(notifications))
+					.then(this.proxy(function (html) {
+						this.$container.append(html);
+						this._bindMarkAsReadHandlers();
+					}));
+			};
 
-				var markAsRead = this.proxy(function (e) {
-					try {
-						var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
-						this.logic.markAsRead(id);
-					} catch (e) {
-						log('Failed to mark as read ' + e, log.levels.error, logTag);
-					}
-					return false;
-				});
+			this._bindMarkAsReadHandlers = function () {
+				$(this.$container).find('.wds-notification-card__icon-wrapper')
+					.click(this.proxy(this._markAsRead));
+			};
 
-				$(this.$container).find('.wds-notification-card__icon-wrapper').click(markAsRead);
+			this._markAsRead = function (e) {
+				try {
+					var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
+					this.logic.markAsRead(id);
+				} catch (e) {
+					log('Failed to mark as read ' + e, log.levels.error, logTag);
+				}
+				return false;
 			};
 
 			this.renderZeroState = function () {
@@ -321,6 +327,7 @@ require(
 			};
 
 			this.markAllAsRead = function () {
+				this.setUnreadCount(0);
 				this.notifications.forEach(setIsUnreadFalse);
 				this.view.renderAllNotificationsAsRead();
 			};
@@ -339,6 +346,10 @@ require(
 					this.view.renderZeroState();
 				}
 			};
+
+			this.proxy = function (func) {
+				return $.proxy(func, this);
+			}
 		}
 
 		function Logic() {
@@ -376,6 +387,7 @@ require(
 					}
 				}).done(this.proxy(function () {
 					this.model.markAsRead(id);
+					this.updateUnreadCount();
 				}));
 			};
 
@@ -395,7 +407,6 @@ require(
 						withCredentials: true
 					}
 				}).done(this.proxy(function () {
-					this.model.setUnreadCount(0);
 					this.model.markAllAsRead();
 				}));
 			};
@@ -453,9 +464,9 @@ require(
 		}
 
 		var OnSiteNotifications = {
-			init: function (template) {
+			init: function () {
 				this.logic = new Logic();
-				this.view = new View(this.logic, template, new TextFormatter());
+				this.view = new View(this.logic, new TextFormatter());
 				this.logic.model = new Model(this.view);
 
 				this.view.registerEvents();
@@ -463,19 +474,8 @@ require(
 			}
 		};
 
-		function compileMustache() {
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache',
-				}
-			}).done(function (assets) {
-				OnSiteNotifications.init(assets.mustache[0]);
-			});
-		}
-
 		$(function () {
-			compileMustache();
+			OnSiteNotifications.init();
 		});
 	}
 );

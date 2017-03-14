@@ -2220,7 +2220,8 @@ $config['design_system_on_site_notifications_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js'
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemTemplating.js'
 	],
 ];
 

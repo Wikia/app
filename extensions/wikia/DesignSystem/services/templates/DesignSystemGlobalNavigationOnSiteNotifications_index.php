@@ -29,11 +29,6 @@
 		    id="notificationContainer">
 			<? //= will be populated by jQuery ?>
 
-<!--			<svg class='wds-spinner' width='79' viewBox='0 0 79 79' xmlns='http://www.w3.org/2000/svg'>-->
-<!--				<g transform='translate(39.5, 39.5)'>-->
-<!--					<circle class='path stroke-theme-color' fill='none' stroke-width='3' stroke-linecap='round' r='38'></circle>-->
-<!--				</g>-->
-<!--			</svg>-->
 
 		</ul>
 	</div>
