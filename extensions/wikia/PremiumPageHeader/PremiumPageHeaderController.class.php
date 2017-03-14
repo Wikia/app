@@ -246,9 +246,9 @@ class PremiumPageHeaderController extends WikiaController {
 		$language_urls = $this->language_urls;
 
 		$language_urls[] = [
-			"href" => $wgTitle->getFullURL(),
-			"text" => $this->currentLangName,
-			"class" => "interwiki-{$wgContLanguageCode}",
+			'href' => $wgTitle->getFullURL(),
+			'text' => $this->currentLangName,
+			'class' => "interwiki-{$wgContLanguageCode}",
 		];
 
 		$langSortBy = [];
