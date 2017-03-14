@@ -1,7 +1,7 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/mixins/flexbox';
 
-// on-site-notifications to be moved to Design System
+// on-site-notifications to be moved to Design System - IRIS-4081
 
 $notifications-dropdown-content-color: $wds-color-light-c7;
 $wds-icon-color: $wds-color-light-c5;
@@ -69,8 +69,8 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   padding: 12px 0 8px;
   text-align: left;
   .wds-notification-card__outer-body {
+	@include flexbox();
 	cursor: pointer;
-	display: flex;
   }
 
   &__icon-wrapper {
@@ -105,7 +105,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	line-height: 18px;
 	margin: 0;
 	b {
-	  font-weight: bold
+	  font-weight: bold;
 	}
   }
 
@@ -202,5 +202,3 @@ $spinner-color: $wds-color-link;
 	stroke: $spinner-color;
   }
 }
-
-

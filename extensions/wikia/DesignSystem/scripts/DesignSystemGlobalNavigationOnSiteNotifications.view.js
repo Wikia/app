@@ -25,10 +25,6 @@ define('ext.wikia.design-system.on-site-notifications.view',
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
-				//
-				// this.spinner.init().then(this.proxy(function (element) {
-				// 	this.$container.append(element);
-				// }));
 			};
 
 			this.addOnScrollEvent = function () {
@@ -149,8 +145,8 @@ define('ext.wikia.design-system.on-site-notifications.view',
 			}
 
 			function findUnreadAndClearClass($element) {
-				$element.find('.wds-icon.wds-is-unread').each(function (_, e) {
-					removeIsUnreadClass(e);
+				$element.find('.wds-icon.wds-is-unread').each(function (_, element) {
+					removeIsUnreadClass(element);
 				});
 			}
 
