@@ -6,7 +6,7 @@
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
 
-				 --><?php if ($moreCategoriesLength > 0): ?>,
+				 --><?php if ( $moreCategoriesLength > 0 ): ?>,
 						<div class="pph-dropdown-container">
 							<a href="#" class="pph-categories-show-more">and <?= $moreCategoriesLength ?> more</a>
 							<ul class="pph-dropdown">
@@ -24,7 +24,7 @@
 		<h1><?= $title ?></h1>
 	</div>
 	<div class="pph-article-contribution">
-		<div class="pph-languages pph-dropdown-container<?= count( $language_list ) <= 1 ? ' pph-disabled': '' ?>">
+		<div class="pph-languages pph-dropdown-container<?= count( $language_list ) <= 1 ? ' pph-disabled' : '' ?>">
 			<span>
 				<?= $currentLangName ?>
 				<?= DesignSystemHelper::renderSvg(
@@ -32,7 +32,7 @@
 					'wds-icon wds-icon-tiny pph-dropdown-chevron'
 				) ?>
 			</span>
-			<?php if( count( $language_list ) > 1 ): ?>
+			<?php if ( count( $language_list ) > 1 ): ?>
 				<ul class="pph-dropdown">
 					<?php foreach ( $language_list as $val ) : ?>
 						<li>
@@ -56,39 +56,41 @@
 						<?= htmlspecialchars( $action['text'] ) ?>
 					</a>
 				<?php endif; ?>
-				<div class="pph-dropdown-container">
-					<a href="#" class="pph-button pph-button-chevron">
-						<?= DesignSystemHelper::renderSvg(
-							'wds-icons-dropdown-tiny',
-							'wds-icon wds-icon-tiny pph-local-nav-chevron pph-dropdown-chevron'
-						) ?>
-					</a>
-					<ul class="pph-dropdown">
-						<?php
-						foreach ( $dropdown as $key => $item ) {
-							// render accesskeys
-							if ( !empty( $item['accesskey'] ) ) {
-								$accesskey =
-									' accesskey="' . Sanitizer::encodeAttribute( $item['accesskey'] ) .
-									'"';
-							} else {
-								$accesskey = '';
-							}
-							$href = $item['href'] ?? '#';
-							?>
-							<li>
-								<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?>
-								   data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty( $item['title'] ) ? '' : ' title="' . Sanitizer::encodeAttribute( $item['title'] ) . '"'; ?> <?= empty( $item['id'] ) ? '' : ' id="' . Sanitizer::encodeAttribute( $item['id'] ) . '"' ?><?= empty( $item['class'] ) ? '' : ' class="' . Sanitizer::encodeAttribute( $item['class'] ) . '"' ?><?= empty( $item['attr'] ) ? '' : ' ' . $item['attr'] ?>><?= htmlspecialchars( $item['text'] ) ?></a>
-							</li>
-						<?php } ?>
-						<?php if ( !empty( $curatedContentButton ) ) : ?>
-							<li>
-								<a id="<?= $curatedContentButton['id'] ?>"
-								   href="<?= $curatedContentButton['href'] ?>"><?= $curatedContentButton['text'] ?></a>
-							</li>
-						<?php endif; ?>
-					</ul>
-				</div>
+				<?php if ( !empty( $dropdown ) ): ?>
+					<div class="pph-dropdown-container">
+						<a href="#" class="pph-button pph-button-chevron">
+							<?= DesignSystemHelper::renderSvg(
+								'wds-icons-dropdown-tiny',
+								'wds-icon wds-icon-tiny pph-local-nav-chevron pph-dropdown-chevron'
+							) ?>
+						</a>
+						<ul class="pph-dropdown">
+							<?php
+							foreach ( $dropdown as $key => $item ) {
+								// render accesskeys
+								if ( !empty( $item['accesskey'] ) ) {
+									$accesskey =
+										' accesskey="' . Sanitizer::encodeAttribute( $item['accesskey'] ) .
+										'"';
+								} else {
+									$accesskey = '';
+								}
+								$href = $item['href'] ?? '#';
+								?>
+								<li>
+									<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?>
+									   data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty( $item['title'] ) ? '' : ' title="' . Sanitizer::encodeAttribute( $item['title'] ) . '"'; ?> <?= empty( $item['id'] ) ? '' : ' id="' . Sanitizer::encodeAttribute( $item['id'] ) . '"' ?><?= empty( $item['class'] ) ? '' : ' class="' . Sanitizer::encodeAttribute( $item['class'] ) . '"' ?><?= empty( $item['attr'] ) ? '' : ' ' . $item['attr'] ?>><?= htmlspecialchars( $item['text'] ) ?></a>
+								</li>
+							<?php } ?>
+							<?php if ( !empty( $curatedContentButton ) ) : ?>
+								<li>
+									<a id="<?= $curatedContentButton['id'] ?>"
+									   href="<?= $curatedContentButton['href'] ?>"><?= $curatedContentButton['text'] ?></a>
+								</li>
+							<?php endif; ?>
+						</ul>
+					</div>
+				<?php endif; ?>
 			</div>
 			<a href="<?= $commentsLink; ?>" class="pph-button pph-button-secondary">
 				<?= DesignSystemHelper::renderSvg(
