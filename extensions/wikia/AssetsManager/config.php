@@ -2221,6 +2221,9 @@ $config['design_system_on_site_notifications_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.common.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.text-formatter.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemTemplating.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemLoadingSpinner.js'
 	],
