@@ -30,7 +30,7 @@
 		<?php if(!empty($language_list)): ?>
 			<div class="pph-languages pph-dropdown-container">
 				<span>
-					English<!-- English label hard-coded - can we take this label from somewhere? -->
+					<?= $currentLangName ?>
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-dropdown-tiny',
 						'wds-icon wds-icon-tiny pph-dropdown-chevron'

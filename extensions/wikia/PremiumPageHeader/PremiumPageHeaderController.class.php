@@ -220,11 +220,22 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	private function widgetLanguages() {
+		global $wgContLanguageCode, $wgTitle;
+
 		$request_language_urls = $this->request->getVal('request_language_urls');
 		if(!empty($request_language_urls)) {
 			$this->language_urls = $request_language_urls;
 		}
+
+		$this->currentLangName = Language::getLanguageName($wgContLanguageCode);
+
 		$language_urls = $this->language_urls;
+		$language_urls[] = [
+			"href" => $wgTitle->getFullURL(),
+			"text" => $this->currentLangName,
+			"class" => "interwiki-{$wgContLanguageCode}",
+		];
+
 		$langSortBy = array();
 		// only display the interlang links if there are interlanguage links
 		if(!empty($language_urls) && is_array($language_urls)) {
