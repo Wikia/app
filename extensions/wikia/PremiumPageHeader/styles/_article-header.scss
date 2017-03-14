@@ -39,16 +39,30 @@
 	font-style: italic;
 	line-height: 16px;
 
+	a {
+		display: inline-block;
+		padding: 0 0 10px;
+	}
+
 	.pph-dropdown-container {
 		display: inline-block;
 
-		> a {
-			display: inline-block;
-			padding: 0 0 10px 0;
-		}
-
 		.pph-dropdown {
 			font-style: normal;
+		}
+	}
+
+	.pph-more-categories {
+		display: none;
+	}
+
+	&.show-more {
+		.pph-dropdown-container {
+			display: none;
+		}
+
+		.pph-more-categories {
+			display: inline;
 		}
 	}
 }

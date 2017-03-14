@@ -4,22 +4,19 @@
 			<div class="pph-categories">
 				<span class="pph-categories-in">in:</span>
 				<span class="pph-category-links">
-					<?php foreach ( $visibleCategories as $i => $category ): ?>
-						<?php if ( $i === $visibleCategoriesLength - 1 && count( $moreCategories ) === 0 ): ?>
-							<?= $category ?>
-						<?php else: ?>
-							<?= $category ?>,
-						<?php endif; ?>
-					<?php endforeach; ?>
-					<?php if ( $moreCategoriesLength > 0 ): ?>
+					<?= join( ', ', $visibleCategories ); ?><!--
+
+				 --><?php if ($moreCategoriesLength > 0): ?>,
 						<div class="pph-dropdown-container">
-							<a href="#">and <?= $moreCategoriesLength ?> more</a>
+							<a href="#" class="pph-categories-show-more">and <?= $moreCategoriesLength ?> more</a>
 							<ul class="pph-dropdown">
 								<?php foreach ( $moreCategories as $category ): ?>
 									<li><?= $category; ?></li>
 								<?php endforeach; ?>
 							</ul>
-						</div>
+						</div><!--
+
+					 --><span class="pph-more-categories"><?= join( ', ', $moreCategories ); ?></span>
 					<?php endif; ?>
 				</span>
 			</div>

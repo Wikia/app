@@ -30,7 +30,6 @@ class PremiumPageHeaderController extends WikiaController {
 		$visibleCategories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
 		$moreCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 
-		$this->setVal( 'visibleCategoriesLength', count( $visibleCategories ) );
 		$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
 		$this->setVal( 'moreCategories', $moreCategories );
