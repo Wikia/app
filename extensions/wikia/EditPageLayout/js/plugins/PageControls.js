@@ -205,7 +205,7 @@
 			// BugId:2823
 			$(window).trigger('editTitleUpdated', [window.wgEditedTitle]);
 
-			this.titleNode.children('a').attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).attr('title', $.htmlentities(window.wgEditedTitle)).text(window.wgEditedTitle);
+			this.titleNode.children('a').attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).attr('title', $.htmlentities(window.wgEditedTitle)).html(window.wgEditedTitle);
 
 			$('#EditPageHeader').find('.hiddenTitle').show();
 		},
