@@ -161,7 +161,6 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   }
 }
 
-$offset: 187;
 $duration: 1s;
 $spinner-color: $wds-color-link;
 
@@ -173,23 +172,13 @@ $spinner-color: $wds-color-link;
 	}
 
 	to {
-	  transform: rotate(270deg);
+	  transform: rotate(360deg);
 	}
   }
 
   @keyframes dash {
-	0% {
-	  stroke-dashoffset: $offset;
-	}
-
-	50% {
-	  stroke-dashoffset: $offset/4;
-	  transform: rotate(135deg);
-	}
-
-	100% {
-	  stroke-dashoffset: $offset;
-	  transform: rotate(450deg);
+	to {
+	  stroke-dashoffset: 0;
 	}
   }
 
@@ -200,22 +189,17 @@ $spinner-color: $wds-color-link;
   top: 50%;
   transform: translateZ(0);
 
-  &.block {
+  &.wds-block {
 	display: block;
 	left: auto;
 	margin: auto;
 	position: relative;
   }
 
-  &.ember-initializing {
-	height: 75vh;
-  }
-
-  .path {
-	animation: dash $duration ease-in-out infinite;
+  .wds-path {
+	-webkit-backface-visibility: hidden;
+	animation: dash ($duration * 2) linear infinite alternate-reverse;
 	stroke: $spinner-color;
-	stroke-dasharray: $offset;
-	stroke-dashoffset: 0;
   }
 }
 

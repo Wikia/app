@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.log', 'ext.wikia.design-system.templating'],
-	function ($, window, log, templating) {
+	['jquery', 'wikia.window', 'wikia.log', 'ext.wikia.design-system.templating', 'ext.wikia.design-system.loading-spinner'],
+	function ($, window, log, templating, Spinner) {
 		'use strict';
 
 		var notificationTypes = {
@@ -101,12 +101,13 @@ require(
 			};
 		}
 
-		function View(logic, textFormatter) {
+		function View(logic, textFormatter, spinner) {
 			this.logic = logic;
 			this.textFormatter = textFormatter;
 			this.$notificationsCount = $('#onSiteNotificationsCount');
 			this.$container = $('#notificationContainer');
 			this.$markAllAsReadButton = $('#markAllAsReadButton');
+			this.spinner = spinner;
 
 			var isVisibleClass = 'wds-is-visible',
 				almostBottom = 100,
@@ -117,6 +118,12 @@ require(
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
+
+				this.spinner.init().then(this.proxy(function (element) {
+					console.log(element);
+					this.$container.append(element);
+					this.spinner.enable();
+				}));
 			};
 
 			this.addOnScrollEvent = function () {
@@ -466,7 +473,7 @@ require(
 		var OnSiteNotifications = {
 			init: function () {
 				this.logic = new Logic();
-				this.view = new View(this.logic, new TextFormatter());
+				this.view = new View(this.logic, new TextFormatter(), new Spinner(14));
 				this.logic.model = new Model(this.view);
 
 				this.view.registerEvents();

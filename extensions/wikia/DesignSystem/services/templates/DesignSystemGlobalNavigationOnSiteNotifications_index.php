@@ -28,8 +28,6 @@
 		<ul class="wds-notifications__notification-list wds-list wds-has-lines-between"
 		    id="notificationContainer">
 			<? //= will be populated by jQuery ?>
-
-
 		</ul>
 	</div>
 </div>
