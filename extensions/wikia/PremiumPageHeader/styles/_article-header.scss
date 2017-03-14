@@ -223,6 +223,10 @@
 	position: relative;
 
 	&:hover:not(.pph-disabled) {
+		> .pph-button {
+			background-color: $color-button-highlight;
+		}
+
 		> .pph-dropdown {
 			display: block;
 		}
