@@ -1,38 +1,39 @@
 <ul class="pph-local-nav-menu">
 	<? foreach ( $data as $item ) : ?>
-		<li class="pph-local-nav-tracking pph-local-nav-item-l1<? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? endif; ?>">
+		<li class="pph-local-nav-tracking pph-local-nav-item-l1<? if ( !empty( $item['children'] ) ): ?> pph-local-nav-container<? else: ?> pph-local-nav-link<? endif; ?>">
 			<a href="<?= $item['href'] ?>"
-			   data-tracking="custom-level-1"><?= $item['text'] ?></a><?= DesignSystemHelper::renderSvg(
+			   data-tracking="custom-level-1"><?= $item['text'] ?></a><?php if ( !empty( $item['children'] ) ) : ?><?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny pph-local-nav-chevron'
 			) ?>
-			<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
-				<div class="pph-local-nav-spread">
-					<? foreach ( $item['children'] as $i => $childL2 ): ?>
-						<li class="pph-local-nav-tracking pph-local-nav-item-l2
+				<ul class="pph-local-nav-sub-menu pph-local-nav-l2">
+					<div class="pph-local-nav-spread">
+						<? foreach ( $item['children'] as $i => $childL2 ): ?>
+							<li class="pph-local-nav-tracking pph-local-nav-item-l2
 						<? if ( !empty( $childL2['children'] ) ): ?> pph-local-nav-container<? endif; ?>
 						<?php if ( !empty( $childL2['children'] ) && count( $childL2['children'] ) < $i + 1 ): ?> pph-sticked-to-parent<?php endif; ?>">
-							<a href="<?= $childL2['href'] ?>"
-							   data-tracking="custom-level-2"><?= $childL2['text'] ?></a>
-							<? if ( !empty( $childL2['children'] ) ): ?>
-								<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
-								<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
-									<? foreach ( $childL2['children'] as $childL3 ): ?>
-										<li class="pph-local-nav-tracking pph-local-nav-item-l3">
-											<a href="<?= $childL3['href'] ?>"
-											   data-tracking="custom-level-3"><?= $childL3['text'] ?></a>
-										</li>
-									<? endforeach; ?>
-								</ul>
-							<? endif; ?>
-						</li>
-					<? endforeach; ?>
-				</div>
-			</ul>
+								<a href="<?= $childL2['href'] ?>"
+								   data-tracking="custom-level-2"><?= $childL2['text'] ?></a>
+								<? if ( !empty( $childL2['children'] ) ): ?>
+									<?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'pph-local-nav-sub-chevron' ); ?>
+									<ul class="pph-local-nav-sub-menu pph-local-nav-l3">
+										<? foreach ( $childL2['children'] as $childL3 ): ?>
+											<li class="pph-local-nav-tracking pph-local-nav-item-l3">
+												<a href="<?= $childL3['href'] ?>"
+												   data-tracking="custom-level-3"><?= $childL3['text'] ?></a>
+											</li>
+										<? endforeach; ?>
+									</ul>
+								<? endif; ?>
+							</li>
+						<? endforeach; ?>
+					</div>
+				</ul>
+			<?php endif; ?>
 		</li>
 	<? endforeach; ?>
-	<li class="pph-local-nav-item-l1 pph-local-nav-container pph-local-nav-explore">
-		<a href="#">
+	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-container pph-local-nav-explore">
+		<a href="#" data-tracking="explore-menu">
 			<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16"
 				 xmlns="http://www.w3.org/2000/svg">
 				<path fill-rule="evenodd"
@@ -52,7 +53,7 @@
 			<? endforeach; ?>
 		</ul>
 	</li>
-	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-discuss">
+	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-discuss pph-local-nav-link">
 		<a href="<?= $discuss['href'] ?>" data-tracking="discuss">
 			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-reply',

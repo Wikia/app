@@ -15,18 +15,6 @@
 	}
 }
 
-.pph-local-nav-discuss:hover {
-	svg {
-		fill: rgba($color-button-text, .8);
-		transition: fill .2s;
-	}
-
-	.pph-local-nav-discuss-text {
-		color: rgba($color-button-text, .8);
-		transition: color .2s;
-	}
-}
-
 .pph-local-nav-item-l1 {
 	cursor: pointer;
 	padding: $menu-item-vertical-padding $menu-item-horizontal-padding;
@@ -122,6 +110,17 @@
 	li a {
 		font-size: 12px;
 		font-weight: normal;
+	}
+}
+
+.pph-local-nav-link:hover {
+	a {
+		color: rgba($color-button-text, .8);
+		transition: color .2s;
+	}
+	svg {
+		fill: rgba($color-button-text, .8);
+		transition: fill .2s;
 	}
 }
 
