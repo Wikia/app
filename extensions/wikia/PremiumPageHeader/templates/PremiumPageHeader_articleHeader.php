@@ -27,22 +27,22 @@
 		<h1><?= $title ?></h1>
 	</div>
 	<div class="pph-article-contribution">
-		<?php if(!empty($language_list)): ?>
-			<div class="pph-languages pph-dropdown-container">
-				<span>
-					<?= $currentLangName ?>
-					<?= DesignSystemHelper::renderSvg(
-						'wds-icons-dropdown-tiny',
-						'wds-icon wds-icon-tiny pph-dropdown-chevron'
-					) ?>
-				</span>
+		<div class="pph-languages pph-dropdown-container<?= count( $language_list ) <= 1 ? ' pph-disabled': '' ?>">
+			<span>
+				<?= $currentLangName ?>
+				<?= DesignSystemHelper::renderSvg(
+					'wds-icons-dropdown-tiny',
+					'wds-icon wds-icon-tiny pph-dropdown-chevron'
+				) ?>
+			</span>
+			<?php if( count( $language_list ) > 1 ): ?>
 				<ul class="pph-dropdown">
 					<?php foreach ( $language_list as $val ) : ?>
 						<li><a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"><?= htmlspecialchars( $val['name'] ); ?></a></li>
 					<?php endforeach ?>
 				</ul>
-			</div>
-		<?php endif; ?>
+			<?php endif; ?>
+		</div>
 		<div class="pph-contribution-buttons">
 			<div class="pph-button-group">
 				<?php if ( !empty( $action ) ): ?>
