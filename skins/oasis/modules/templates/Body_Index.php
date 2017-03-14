@@ -33,6 +33,13 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+
+		<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
+			<div class="PremiumPageHeader">
+				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
+			</div>
+		<?php endif; ?>
+
 		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
