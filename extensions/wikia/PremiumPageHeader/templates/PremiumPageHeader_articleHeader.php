@@ -4,22 +4,19 @@
 			<div class="pph-categories">
 				<span class="pph-categories-in">in:</span>
 				<span class="pph-category-links">
-					<?php foreach($visibleCategories as $i => $category): ?>
-						<?php if ($i === $visibleCategoriesLength - 1 && count($moreCategories) === 0): ?>
-							<?= $category ?>
-						<?php else: ?>
-							<?= $category ?>,
-						<?php endif; ?>
-					<?php endforeach; ?>
-					<?php if($moreCategoriesLength > 0): ?>
+					<?= join( ', ', $visibleCategories ); ?><!--
+
+				 --><?php if ($moreCategoriesLength > 0): ?>,
 						<div class="pph-dropdown-container">
-							<a href="#">and <?= $moreCategoriesLength ?> more</a>
+							<a href="#" class="pph-categories-show-more">and <?= $moreCategoriesLength ?> more</a>
 							<ul class="pph-dropdown">
-								<?php foreach($moreCategories as $category): ?>
+								<?php foreach ( $moreCategories as $category ): ?>
 									<li><?= $category; ?></li>
 								<?php endforeach; ?>
 							</ul>
-						</div>
+						</div><!--
+
+					 --><span class="pph-more-categories"><?= join( ', ', $moreCategories ); ?></span>
 					<?php endif; ?>
 				</span>
 			</div>
@@ -38,7 +35,9 @@
 			<?php if( count( $language_list ) > 1 ): ?>
 				<ul class="pph-dropdown">
 					<?php foreach ( $language_list as $val ) : ?>
-						<li><a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"><?= htmlspecialchars( $val['name'] ); ?></a></li>
+						<li>
+							<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
+						</li>
 					<?php endforeach ?>
 				</ul>
 			<?php endif; ?>
@@ -46,14 +45,15 @@
 		<div class="pph-contribution-buttons">
 			<div class="pph-button-group">
 				<?php if ( !empty( $action ) ): ?>
-					<a href="<?= empty($action['href']) ? '' : Sanitizer::encodeAttribute( $action['href'] ) ?>" class="pph-button">
+					<a href="<?= empty( $action['href'] ) ? '' : Sanitizer::encodeAttribute( $action['href'] ) ?>"
+					   class="pph-button">
 						<?php if ( $actionImage === MenuButtonController::EDIT_ICON ) { ?>
 							<?= DesignSystemHelper::renderSvg(
 								'wds-icons-pencil',
 								'wds-icon wds-icon-tiny pph-button-icon'
 							) ?>
 						<?php } ?>
-						<?= htmlspecialchars($action['text']) ?>
+						<?= htmlspecialchars( $action['text'] ) ?>
 					</a>
 				<?php endif; ?>
 				<div class="pph-dropdown-container">
@@ -65,7 +65,7 @@
 					</a>
 					<ul class="pph-dropdown">
 						<?php
-						foreach($dropdown as $key => $item) {
+						foreach ( $dropdown as $key => $item ) {
 							// render accesskeys
 							if ( !empty( $item['accesskey'] ) ) {
 								$accesskey =
@@ -74,13 +74,19 @@
 							} else {
 								$accesskey = '';
 							}
-
 							$href = $item['href'] ?? '#';
 							?>
 							<li>
-								<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?> data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty($item['title']) ? '' : ' title="'. Sanitizer::encodeAttribute( $item['title'] ) .'"'; ?> <?= empty($item['id']) ? '' : ' id="'. Sanitizer::encodeAttribute( $item['id'] ) .'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
+								<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?>
+								   data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty( $item['title'] ) ? '' : ' title="' . Sanitizer::encodeAttribute( $item['title'] ) . '"'; ?> <?= empty( $item['id'] ) ? '' : ' id="' . Sanitizer::encodeAttribute( $item['id'] ) . '"' ?><?= empty( $item['class'] ) ? '' : ' class="' . Sanitizer::encodeAttribute( $item['class'] ) . '"' ?><?= empty( $item['attr'] ) ? '' : ' ' . $item['attr'] ?>><?= htmlspecialchars( $item['text'] ) ?></a>
 							</li>
 						<?php } ?>
+						<?php if ( !empty( $curatedContentButton ) ) : ?>
+							<li>
+								<a id="<?= $curatedContentButton['id'] ?>"
+								   href="<?= $curatedContentButton['href'] ?>"><?= $curatedContentButton['text'] ?></a>
+							</li>
+						<?php endif; ?>
 					</ul>
 				</div>
 			</div>
@@ -92,13 +98,13 @@
 				<?= wfMessage( $commentButtonMsg )->text(); ?>
 			</a>
 
-			<? if ( Wikia::isContentNamespace() && $wg->Title->exists() && !$app->checkSkin('oasislight') ): ?>
+			<? if ( Wikia::isContentNamespace() && $wg->Title->exists() && !$app->checkSkin( 'oasislight' ) ): ?>
 				<a id="PremiumPageHeaderShareEntryPoint" href="#" class="pph-button pph-button-secondary">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-share-small',
 						'wds-icon wds-icon-tiny pph-button-icon'
 					) ?>
-					<?= wfMessage( 'page-share-entry-point-label' )->escaped()?>
+					<?= wfMessage( 'page-share-entry-point-label' )->escaped() ?>
 				</a>
 			<?php endif; ?>
 		</div>
