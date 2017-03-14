@@ -101,8 +101,8 @@ require(
 			};
 		}
 
-		function View(logic, textFormatter, spinner) {
-			this.logic = logic;
+		function View(textFormatter, spinner) {
+			this.logic = null;
 			this.textFormatter = textFormatter;
 			this.$notificationsCount = $('#onSiteNotificationsCount');
 			this.$container = $('#notificationContainer');
@@ -114,15 +114,14 @@ require(
 				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
 				template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
 
-			this.registerEvents = function () {
+			this.registerEvents = function (logic) {
+				this.logic = logic;
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
 
 				this.spinner.init().then(this.proxy(function (element) {
-					console.log(element);
 					this.$container.append(element);
-					this.spinner.enable();
 				}));
 			};
 
@@ -151,9 +150,9 @@ require(
 
 			this.addDropdownLoadingEvent = function () {
 				var $dropdown = $('#onSiteNotificationsDropdown');
-				$dropdown.click(function () {
-					logic.loadFirstPage();
-				});
+				$dropdown.click(this.proxy(function () {
+					this.logic.loadFirstPage();
+				}));
 			};
 
 			this._mapToView = function (notifications) {
@@ -359,9 +358,17 @@ require(
 			}
 		}
 
-		function Logic() {
+		function Logic(model) {
 			this.updateInProgress = false;
-			this.model = null;
+			this.model = model;
+
+			this.startProgress = function () {
+				this.updateInProgress = true;
+			};
+
+			this.stopProgress = function () {
+				this.updateInProgress = false;
+			};
 
 			this.shouldLoadFirstPage = function () {
 				return this.updateInProgress !== true && !this.nextPage && this.allPagesLoaded !== true;
@@ -422,7 +429,7 @@ require(
 				if (!this.shouldLoadFirstPage()) {
 					return;
 				}
-				this.updateInProgress = true;
+				this.startProgress();
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
@@ -432,7 +439,7 @@ require(
 					this.model.addNotifications(data.notifications);
 					this.calculatePage(data);
 				})).always(this.proxy(function () {
-					this.updateInProgress = false;
+					this.stopProgress();
 				}));
 			};
 
@@ -440,7 +447,7 @@ require(
 				if (!this.shouldLoadNextPage()) {
 					return;
 				}
-				this.updateInProgress = true;
+				this.startProgress();
 				$.ajax({
 					url: this.getBaseUrl() + this.nextPage,
 					xhrFields: {
@@ -450,7 +457,7 @@ require(
 					this.model.addNotifications(data.notifications);
 					this.calculatePage(data);
 				})).always(this.proxy(function () {
-					this.updateInProgress = false;
+					this.stopProgress();
 				}));
 			};
 
@@ -472,11 +479,11 @@ require(
 
 		var OnSiteNotifications = {
 			init: function () {
-				this.logic = new Logic();
-				this.view = new View(this.logic, new TextFormatter(), new Spinner(14));
-				this.logic.model = new Model(this.view);
+				this.view = new View(new TextFormatter(), new Spinner(14));
+				this.model = new Model(this.view);
+				this.logic = new Logic(this.model);
 
-				this.view.registerEvents();
+				this.view.registerEvents(this.logic);
 				this.logic.updateUnreadCount();
 			}
 		};
