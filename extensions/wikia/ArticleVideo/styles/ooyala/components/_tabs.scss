@@ -1,0 +1,91 @@
+.tabs-menu {
+  white-space: nowrap;
+  list-style: none;
+  padding: 0;
+  width: 815px;
+}
+
+.tabs-menu-item {
+  display: inline-block;
+  float: none;
+  margin-right: 40px;
+}
+
+.tabs-menu-item a {
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  display: block;
+  color: $white;
+  font-family: $font-family-roboto-condensed-bold;
+  font-size: 18px;
+  @include vendor-prefixes (transition, 0.3s);
+}
+
+.tabs-menu-item.is-active a {
+  border-bottom: 2px solid $blue-light;
+}
+
+.tabs-menu-item:not(.is-active) a:hover {
+  color:$blue-light;
+  opacity: 0.7;
+}
+
+.tab-panel {
+  height: 100%;
+  padding: 10px 0;
+}
+
+.tabs-navigation {
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: scroll;
+  padding-bottom: 1000%;
+
+  //override default scrollbar style
+  .scrollarea-content{
+    display: inline-block;
+  }
+
+  //hide horizontal scrollbars
+  .scrollbar-container.horizontal {
+    display:none;
+  }
+
+  .oo-scrollarea-tabs {
+    ul {
+      display: inline-block;
+      padding:0;
+      margin:0 auto;
+      list-style: none;
+      white-space:nowrap;
+      position: relative;
+
+      li {
+        float:none;
+        position:relative;
+        display:inline-block;
+        margin: 0 24px;
+
+        &:first-child {
+          margin-left:0 !important;
+        }
+
+        &:last-child {
+          //margin-right:0 !important;
+        }
+      }
+
+      li.oo-auto-li {
+        top:20px;
+      }
+    }
+  }
+}
+
+.oo-left-tab-button {
+  display: none;
+}
+
+.oo-right-tab-button {
+  display: none;
+}

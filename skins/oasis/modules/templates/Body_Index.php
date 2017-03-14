@@ -92,8 +92,12 @@
 					}
 				?>
 
-				<?php if ( $enableArticleVideo ): ?>
-					<?= $app->renderView( 'ArticleVideo', 'index' ) ?>
+				<?php if ( $wg->enableArticleFeaturedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
+				<?php endif; ?>
+
+				<?php if ( $wg->enableArticleRelatedVideo ): ?>
+					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
 				<?php endif; ?>
 
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
