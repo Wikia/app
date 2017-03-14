@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'wikia.log'
-], function(DOMElementTweaker, log) {
+], function (DOMElementTweaker, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			reload: function () {
 				ima.reload();
 			},
-			removeEventListener: function(eventName, callback) {
+			removeEventListener: function (eventName, callback) {
 				ima.removeEventListener(eventName, callback);
 			},
 			resize: function (newWidth, newHeight) {
