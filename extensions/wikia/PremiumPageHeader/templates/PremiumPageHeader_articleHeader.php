@@ -33,7 +33,7 @@
 					English<!-- English label hard-coded - can we take this label from somewhere? -->
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-dropdown-tiny',
-						'wds-icon wds-icon-tiny'
+						'wds-icon wds-icon-tiny pph-dropdown-chevron'
 					) ?>
 				</span>
 				<ul class="pph-dropdown">
@@ -60,7 +60,7 @@
 					<a href="#" class="pph-button pph-button-chevron">
 						<?= DesignSystemHelper::renderSvg(
 							'wds-icons-dropdown-tiny',
-							'wds-icon wds-icon-tiny pph-local-nav-chevron'
+							'wds-icon wds-icon-tiny pph-local-nav-chevron pph-dropdown-chevron'
 						) ?>
 					</a>
 					<ul class="pph-dropdown">
