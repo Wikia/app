@@ -326,10 +326,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
-		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
-		'//resources/wikia/modules/querystring.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
 ];
 

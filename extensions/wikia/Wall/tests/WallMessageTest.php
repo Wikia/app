@@ -51,7 +51,7 @@ class WallMessageTest extends WikiaBaseTest {
 			->method( 'entriesFromIds' )
 			->with( [ $slaveId ] )
 			->willReturn( [] );
-		$this->mockStaticMethod( CommentsIndex::class, 'singleton', $commentsIndexMock );
+		$this->mockStaticMethod( CommentsIndex::class, 'getInstance', $commentsIndexMock );
 		$this->mockStaticMethodWithCallBack( 'Title', 'newFromId', function( int $id ) use ( $masterData ) {
 			return $masterData[$id] !== null
 				? $this->mockClassWithMethods( 'Title', [ 'exists' => true ] )
