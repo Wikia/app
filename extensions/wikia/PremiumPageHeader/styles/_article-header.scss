@@ -121,22 +121,36 @@
 	text-transform: uppercase;
 
 	&:hover {
+		background-color: $color-button-highlight;
 		text-decoration: none;
 	}
 
 	.pph-button-icon {
 		margin-right: 6px;
 	}
+}
 
-	&.pph-button-secondary {
+.pph-button-chevron {
+	border-left: 1px solid transparentize($color-button-text, 0.5);
+	margin-left: 0;
+}
+
+.pph-button-secondary {
+	background-color: transparent;
+	border: 1px solid $color-buttons;
+	color: $color-buttons;
+
+	&:hover {
 		background-color: transparent;
-		border: 1px solid $color-buttons;
-		color: $color-buttons;
-	}
+		border-color: rgba($color-buttons, .8);
+		color: rgba($color-buttons, .8);
+		transition: border-color, color;
+		transition-duration: .2s;
 
-	&.pph-button-chevron {
-		border-left: 1px solid transparentize($color-button-text, 0.5);
-		margin-left: 0;
+		svg {
+			fill: rgba($color-buttons, .8);
+			transition: fill .2s;
+		}
 	}
 }
 
