@@ -70,7 +70,7 @@
 	display: flex;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	margin: -1px -31px 20px;
+	margin: -1px -31px 8px;
 	position: relative;
 	z-index: 1001;
 
@@ -90,15 +90,18 @@
 	}
 
 	@media #{$breakpoint-medium-only} {
-		margin: -1px -21px 20px;
+		margin-left: -21px;
+		margin-right: -21px;
 	}
 
 	@media #{$breakpoint-small-plus} {
-		margin: -1px -11px 20px;
+		margin-left: -11px;
+		margin-right: -11px;
 	}
 
 	@media #{$breakpoint-below-small-plus} {
-		margin: -1px -25px 20px;
+		margin-left: -25px;
+		margin-right: -25px;
 	}
 }
 

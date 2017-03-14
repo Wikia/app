@@ -3,12 +3,14 @@
 @import 'variables';
 
 .pph-article-header {
+	border-bottom: 1px solid $color-page-border;
 	display: flex;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 	margin: 5px 0 18px;
+	padding-bottom: 12px;
 	position: relative;
 	z-index: 2;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 .pph-article-title {
@@ -26,7 +28,7 @@
 	align-items: flex-start;
 	display: flex;
 	font-size: 12px;
-	padding-bottom: 6px;
+	padding-top: 12px;
 
 	.pph-categories-in {
 		font-weight: 600;
@@ -39,7 +41,7 @@
 	font-style: italic;
 	line-height: 16px;
 
-	a {
+	> a:last-child, .pph-more-categories > a:last-child, .pph-categories-show-more {
 		display: inline-block;
 		padding: 0 0 10px;
 	}
@@ -78,9 +80,8 @@
 	align-items: center;
 	cursor: pointer;
 	display: flex;
-	height: 32px;
 	margin-right: -12px;
-	padding: 0 12px;
+	padding: 9px 12px;
 
 	svg {
 		height: 9px;
