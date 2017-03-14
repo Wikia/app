@@ -1,7 +1,9 @@
-define('ext.wikia.design-system.on-site-notifications.controller',
-	['jquery', 'wikia.window', 'wikia.log',
-		'ext.wikia.design-system.on-site-notifications.common'],
-	function ($, window, log, common) {
+define('ext.wikia.design-system.on-site-notifications.controller', [
+		'jquery',
+		'wikia.window',
+		'wikia.log',
+		'ext.wikia.design-system.on-site-notifications.common'
+	], function ($, window, log, common) {
 		'use strict';
 
 		function Controller(model) {

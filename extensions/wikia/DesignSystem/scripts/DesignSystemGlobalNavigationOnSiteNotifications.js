@@ -1,11 +1,9 @@
 require([
 		'jquery',
-		'wikia.window',
-		'wikia.log',
 		'ext.wikia.design-system.on-site-notifications.model',
 		'ext.wikia.design-system.on-site-notifications.view',
 		'ext.wikia.design-system.on-site-notifications.controller'
-	], function ($, window, log, Model, View, Controller) {
+	], function ($, Model, View, Controller) {
 		'use strict';
 
 		var OnSiteNotifications = {

@@ -1,6 +1,6 @@
-define('ext.wikia.design-system.on-site-notifications.model',
-	['jquery'],
-	function ($) {
+define('ext.wikia.design-system.on-site-notifications.model', [
+	'jquery'
+	], function ($) {
 		'use strict';
 
 		function Model(view) {

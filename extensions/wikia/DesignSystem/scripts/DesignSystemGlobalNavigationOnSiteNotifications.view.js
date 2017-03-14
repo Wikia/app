@@ -1,10 +1,11 @@
-define('ext.wikia.design-system.on-site-notifications.view',
-	['jquery', 'wikia.window',
+define('ext.wikia.design-system.on-site-notifications.view', [
+		'jquery',
+		'wikia.window',
 		'ext.wikia.design-system.templating',
 		'ext.wikia.design-system.loading-spinner',
 		'ext.wikia.design-system.on-site-notifications.text-formatter',
-		'ext.wikia.design-system.on-site-notifications.common'],
-	function ($, window, templating, Spinner, TextFormatter, common) {
+		'ext.wikia.design-system.on-site-notifications.common'
+	], function ($, window, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
 		function View() {

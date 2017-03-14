@@ -1,6 +1,7 @@
-define('ext.wikia.design-system.on-site-notifications.text-formatter',
-	['wikia.window', 'ext.wikia.design-system.on-site-notifications.common'],
-	function (window, c) {
+define('ext.wikia.design-system.on-site-notifications.text-formatter', [
+		'wikia.window',
+		'ext.wikia.design-system.on-site-notifications.common'
+	], function (window, c) {
 		'use strict';
 
 		function TextFormatter() {
