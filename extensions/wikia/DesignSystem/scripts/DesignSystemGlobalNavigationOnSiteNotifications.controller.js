@@ -7,23 +7,14 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 		'use strict';
 
 		function Controller(model) {
-			this.updateInProgress = false;
 			this.model = model;
 
-			this.startProgress = function () {
-				this.updateInProgress = true;
-			};
-
-			this.stopProgress = function () {
-				this.updateInProgress = false;
-			};
-
 			this.shouldLoadFirstPage = function () {
-				return this.updateInProgress !== true && !this.nextPage && this.allPagesLoaded !== true;
+				return this.model.isLoading() !== true && !this.nextPage && this.allPagesLoaded !== true;
 			};
 
 			this.shouldLoadNextPage = function () {
-				return this.updateInProgress !== true && this.nextPage && this.allPagesLoaded !== true;
+				return this.model.isLoading() !== true && this.nextPage && this.allPagesLoaded !== true;
 			};
 
 			/**
@@ -147,7 +138,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				if (!this.shouldLoadFirstPage()) {
 					return;
 				}
-				this.startProgress();
+				this.model.loadingStarted();
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
@@ -157,7 +148,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					this.model.addNotifications(mapToModel(data.notifications));
 					this.calculatePage(data);
 				})).always(this.proxy(function () {
-					this.stopProgress();
+					this.model.loadingStopped();
 				}));
 			};
 
@@ -165,7 +156,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				if (!this.shouldLoadNextPage()) {
 					return;
 				}
-				this.startProgress();
+				this.model.loadingStarted();
 				$.ajax({
 					url: this.getBaseUrl() + this.nextPage,
 					xhrFields: {
@@ -175,7 +166,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					this.model.addNotifications(mapToModel(data.notifications));
 					this.calculatePage(data);
 				})).always(this.proxy(function () {
-					this.stopProgress();
+					this.model.loadingStopped();
 				}));
 			};
 

@@ -21,11 +21,20 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
 				template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
 
-			this.registerEvents = function (controller) {
+			this.registerEvents = function (controller, model) {
 				this.controller = controller;
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
+
+				model.loadingStatusChanged.attach(function (_, isLoading) {
+					if (isLoading === true) {
+						this.$container.append(
+							'<li class="loader">' + this.spinner.html +'</li>');
+					} else {
+						$('.loader').remove();
+					}
+				}.bind(this));
 			};
 
 			this.addOnScrollEvent = function () {

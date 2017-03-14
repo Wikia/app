@@ -12,6 +12,7 @@ define('ext.wikia.design-system.loading-spinner', [
 		this.strokeWidth = strokeWidth || 6;
 		this.spinnerClasses = 'wds-spinner wds-block';
 		this.strokeClasses = 'wds-path';
+		this.html = 'Loading...';
 
 		this.init = function () {
 			return templating.renderByLocation(
@@ -25,9 +26,12 @@ define('ext.wikia.design-system.loading-spinner', [
 					strokeLength: (2 * Math.PI * self.radius)
 				})
 				.then(function (html) {
-					return $(html);
-				});
+					this.html =  html;
+					return html;
+				}.bind(this));
 		};
+
+		this.init();
 	}
 
 	return LoadingSpinner

@@ -1,12 +1,15 @@
 define('ext.wikia.design-system.on-site-notifications.model', [
-	'jquery'
-	], function ($) {
+	'ext.wikia.design-system.event'
+	], function (Event) {
 		'use strict';
 
 		function Model(view) {
 			this.view = view;
 			this.notifications = [];
 			this.unreadCount = 0;
+
+			this.loadingStatusChanged = new Event(this);
+			this._loadingNotifications = false;
 
 			this.getLatestEventTime = function () {
 				var latest = this.notifications[0];
@@ -47,12 +50,23 @@ define('ext.wikia.design-system.on-site-notifications.model', [
 					this.view.renderZeroState();
 				}
 			};
-
-			this.proxy = function (func) {
-				//TODO replace proxy with .bind and remove jquery from dependencies
-				return $.proxy(func, this);
-			}
 		}
+
+		Model.prototype = {
+			loadingStarted: function () {
+				this._loadingNotifications = true;
+				this.loadingStatusChanged.notify(this._loadingNotifications);
+			},
+
+			loadingStopped: function () {
+				this._loadingNotifications = false;
+				this.loadingStatusChanged.notify(this._loadingNotifications);
+			},
+
+			isLoading: function () {
+				return this._loadingNotifications;
+			}
+		};
 
 		return Model
 	}
