@@ -699,7 +699,11 @@ class CategoryViewer extends ContextSource {
 			# to refresh the incorrect category table entry -- which should be
 			# quick due to the small number of entries.
 			$totalcnt = $rescnt;
-			$this->cat->refreshCounts();
+
+			// SUS-1782: Schedule a background task to update the bogus data
+			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+			$task->call( 'refreshCounts', $this->title->getDBkey() );
+			$task->queue();
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
 			return wfMessage( "category-$type-count-limited" )->numParams( $rescnt )->parseAsBlock();
