@@ -143,13 +143,13 @@
 
 	&:hover {
 		background-color: transparent;
-		border-color: rgba($color-buttons, .8);
-		color: rgba($color-buttons, .8);
+		border-color: $color-button-highlight;
+		color: $color-button-highlight;
 		transition: border-color, color;
 		transition-duration: .2s;
 
 		svg {
-			fill: rgba($color-buttons, .8);
+			fill: $color-button-highlight;
 			transition: fill .2s;
 		}
 	}
