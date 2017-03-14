@@ -8,7 +8,7 @@ define('ext.wikia.design-system.on-site-notifications.view',
 		'use strict';
 
 		function View() {
-			this.logic = null;
+			this.controller = null;
 			this.spinner = new Spinner(14);
 			this.textFormatter = new TextFormatter();
 			this.$notificationsCount = $('#onSiteNotificationsCount');
@@ -20,8 +20,8 @@ define('ext.wikia.design-system.on-site-notifications.view',
 				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
 				template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
 
-			this.registerEvents = function (logic) {
-				this.logic = logic;
+			this.registerEvents = function (controller) {
+				this.controller = controller;
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
@@ -34,7 +34,7 @@ define('ext.wikia.design-system.on-site-notifications.view',
 
 			this.onScroll = function (e) {
 				if (this.hasScrolledToTheBottom($(e.target))) {
-					this.logic.loadMore();
+					this.controller.loadMore();
 				}
 			};
 
@@ -47,13 +47,13 @@ define('ext.wikia.design-system.on-site-notifications.view',
 			};
 
 			this.addMarkAllAsReadEvent = function () {
-				this.$markAllAsReadButton.click($.proxy(this.logic.markAllAsRead, this.logic));
+				this.$markAllAsReadButton.click($.proxy(this.controller.markAllAsRead, this.controller));
 			};
 
 			this.addDropdownLoadingEvent = function () {
 				var $dropdown = $('#onSiteNotificationsDropdown');
 				$dropdown.click(this.proxy(function () {
-					this.logic.loadFirstPage();
+					this.controller.loadFirstPage();
 				}));
 			};
 
@@ -113,7 +113,7 @@ define('ext.wikia.design-system.on-site-notifications.view',
 			this._markAsRead = function (e) {
 				try {
 					var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
-					this.logic.markAsRead(id);
+					this.controller.markAsRead(id);
 				} catch (e) {
 					log('Failed to mark as read ' + e, log.levels.error, common.logTag);
 				}
@@ -160,6 +160,7 @@ define('ext.wikia.design-system.on-site-notifications.view',
 			};
 
 			this.proxy = function (func) {
+				//TODO replace proxy with .bind
 				return $.proxy(func, this);
 			}
 		}
