@@ -229,20 +229,21 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		var pushAd = function () {
 			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
 		};
-		spyOn(mocks, 'slotTargetingData');
-		mocks.recoveryHelper.isBlocking = function () {
-			return true;
-		};
 
-		mocks.recoveryHelper.isSourcePointRecoverable = function () {
-			return false;
-		};
+		spyOn(mocks, 'slotTargetingData');
+		spyOn(mocks.recoveryHelper, 'isBlocking');
+		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+		spyOn(mocks.recoveryHelper, 'isSourcePointRecoverable');
+
+		mocks.recoveryHelper.isBlocking.and.returnValue(true);
+		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
+		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(false);
+
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
 
-		mocks.recoveryHelper.isSourcePointRecoverable = function () {
-			return true;
-		};
+		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(true);
+
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
 	});
