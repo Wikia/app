@@ -27,6 +27,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return [];
 				}
 			},
+			pageFair: {
+				isBlocking: noop,
+				isPageFairRecoveryEnabled: noop
+			},
 			recoveryHelper: {
 				recoverSlots: noop,
 				isBlocking: noop,
@@ -82,7 +86,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.slotTargetingHelper,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
-			mocks.sraHelper
+			mocks.sraHelper,
+			null, // scrollHandler,
+			mocks.pageFair
 		);
 	}
 
@@ -246,5 +252,55 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
+	});
+
+	it('Should not set src=rec if SourcePoint is on and adblock is off', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		spyOn(mocks, 'slotTargetingData');
+		spyOn(mocks.recoveryHelper, 'isBlocking');
+		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+		spyOn(mocks.recoveryHelper, 'isSourcePointRecoverable');
+
+		mocks.recoveryHelper.isBlocking.and.returnValue(false);
+		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
+		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).not.toBe('rec');
+	});
+
+	it('Should set src=rec if PageFair is on and adblock is on', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');
+		spyOn(mocks.pageFair, 'isBlocking');
+
+		mocks.pageFair.isBlocking.and.returnValue(true);
+		mocks.pageFair.isPageFairRecoveryEnabled.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('rec');
+	});
+
+	it('Should not set src=rec if PageFair is on and adblock is off', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');
+		spyOn(mocks.pageFair, 'isBlocking');
+		spyOn(mocks.recoveryHelper, 'isBlocking');
+
+		mocks.recoveryHelper.isBlocking.and.returnValue(false);
+		mocks.pageFair.isBlocking.and.returnValue(false);
+		mocks.pageFair.isPageFairRecoveryEnabled.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).not.toBe('rec');
 	});
 });
