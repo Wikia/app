@@ -74,8 +74,7 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					isOutsideOfViewport: function () {
 						var rect = this.elements.viewport.getBoundingClientRect();
 
-						// return rect.top > (win.innerHeight || doc.documentElement.clientHeight) || rect.bottom < floatingThreshold;
-						return rect.bottom < floatingThreshold;
+						return rect.top > (win.innerHeight || doc.documentElement.clientHeight) || rect.bottom < floatingThreshold;
 					},
 					isStill: function () {
 						return this.state === state.never || this.state === state.paused;
