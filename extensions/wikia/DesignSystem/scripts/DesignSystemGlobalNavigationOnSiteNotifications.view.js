@@ -64,16 +64,16 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.onScroll = function (e) {
-				if (this._hasScrolledToTheBottom($(e.target))) {
+				if (this._hasAlmostScrolledToTheBottom($(e.target))) {
 					this.onLoadMore.notify();
 				}
 			};
 
 			/**
-			 * Has the user  scrolled almost to the bottom?
+			 * Has the user scrolled almost to the bottom?
 			 * @private
 			 */
-			this._hasScrolledToTheBottom = function (element) {
+			this._hasAlmostScrolledToTheBottom = function (element) {
 				return element[0].scrollHeight - almostBottom
 					<= element.scrollTop() + element.innerHeight();
 			};
