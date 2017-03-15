@@ -47,6 +47,7 @@
 	color: $color-links;
 	font-style: italic;
 	line-height: 16px;
+	word-break: break-word;
 
 	> a:last-child, .pph-more-categories > a:last-child, .pph-categories-show-more {
 		display: inline-block;
@@ -195,14 +196,14 @@
 		display: flex;
 		justify-content: space-between;
 		padding-right: 24px;
-		overflow: hidden;
-		text-overflow: ellipsis;
 		transition: background-color .2s;
 
 		a {
 			color: $color-text;
 			line-height: 14px;
+			overflow: hidden;
 			padding: 12px 0 12px 12px;
+			text-overflow: ellipsis;
 			transition: color .2s;
 			white-space: nowrap;
 			width: 100%;
