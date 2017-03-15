@@ -9,8 +9,8 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				return text ? window.mw.html.escape(String(text)) : '';
 			}
 
-			function escapeAndBold(text) {
-				return '<b>' + escape(text) + '</b>';
+			function bold(text) {
+				return '<b>' + text + '</b>';
 			}
 
 			function fillArgs(message, args) {
@@ -34,7 +34,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			this._getReplyText = function (notification) {
 				var key = this._getReplyKey(notification.title, notification.totalUniqueActors),
 					message = window.mw.message(key).parse(),
-					args = {postTitle: escapeAndBold(notification.title)};
+					args = {postTitle: bold(escape(notification.title))};
 
 				if (notification.totalUniqueActors > 2) {
 					args.mostRecentUser = escape(notification.latestActors[0].name);
@@ -59,7 +59,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				var key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				var message = window.mw.message(key).parse();
 				return fillArgs(message, {
-					postTitle: escapeAndBold(notification.title),
+					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors - 1)
 				});
 			};
@@ -68,7 +68,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				var key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				var message = window.mw.message(key).parse();
 				return fillArgs(message, {
-					postTitle: escapeAndBold(notification.title),
+					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors - 1)
 				});
 			};

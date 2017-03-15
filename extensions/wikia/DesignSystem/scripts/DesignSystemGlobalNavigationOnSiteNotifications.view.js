@@ -12,8 +12,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 
 		var isVisibleClass = 'wds-is-visible',
 			almostBottom = 100,
-			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
-			template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
+			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
 		function View() {
 			this.onDropDown = new Event(this);
@@ -129,11 +128,10 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderNotifications = function (notifications) {
-				templating.renderByLocation(template, this._mapToView(notifications))
-					.then(function (html) {
-						this._$container.append(html);
-						this._bindMarkAsReadHandlers();
-					}.bind(this));
+				console.log('rendering');
+				var html = templating.renderNotifications(this._mapToView(notifications));
+				this._$container.append(html);
+				this._bindMarkAsReadHandlers();
 			};
 
 			this._bindMarkAsReadHandlers = function () {
