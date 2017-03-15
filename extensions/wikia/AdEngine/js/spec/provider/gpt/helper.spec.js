@@ -34,7 +34,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			recoveryHelper: {
 				recoverSlots: noop,
 				isBlocking: noop,
-				isSourcePointRecoverable: noop,
 				isSourcePointRecoveryEnabled: noop
 			},
 			slotTweaker: {
@@ -197,14 +196,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.recoveryHelper.isSourcePointRecoverable = function () {
-			return false;
-		};
-
 		spyOn(mocks.googleTag, 'push');
 		spyOn(mocks.googleTag, 'flush');
 
-		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {sraEnabled: true});
+		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
+			sraEnabled: true,
+			isSourcePointRecoverable: false
+		});
 
 		expect(mocks.googleTag.push).not.toHaveBeenCalled();
 		expect(mocks.googleTag.flush).not.toHaveBeenCalled();
@@ -215,66 +213,77 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.recoveryHelper.isSourcePointRecoverable = function () {
-			return true;
-		};
-
 		spyOn(mocks.googleTag, 'push');
 		spyOn(mocks.googleTag, 'flush');
 
 		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
 			sraEnabled: true,
-			recoverableSlots: ['TOP_RIGHT_BOXAD']
+			isSourcePointRecoverable: true
 		});
 
 		expect(mocks.googleTag.push).toHaveBeenCalled();
 		expect(mocks.googleTag.flush).toHaveBeenCalled();
 	});
 
-	it('Change src to rec if ad is recoverable', function () {
+	it('Do not change src to rec if ad is not recoverable', function () {
 		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isSourcePointRecoverable: false
+			});
 		};
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
 		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
-		spyOn(mocks.recoveryHelper, 'isSourcePointRecoverable');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(true);
 		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
-		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(false);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
+	});
 
-		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(true);
+	it('Change src to rec if ad is recoverable', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isSourcePointRecoverable: true
+			});
+		};
+
+		spyOn(mocks, 'slotTargetingData');
+		spyOn(mocks.recoveryHelper, 'isBlocking');
+		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+
+		mocks.recoveryHelper.isBlocking.and.returnValue(true);
+		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
 	});
 
-	it('Should not set src=rec if SourcePoint is on and adblock is off', function () {
+	it('Should not set src=rec if SourcePoint is on, isSourcePointRecoverable but adblock is off', function () {
 		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isSourcePointRecoverable: true
+			});
 		};
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
 		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
-		spyOn(mocks.recoveryHelper, 'isSourcePointRecoverable');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(false);
 		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
-		mocks.recoveryHelper.isSourcePointRecoverable.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
 	});
 
-	it('Should set src=rec if PageFair is on and adblock is on', function () {
+	it('Should set src=rec if PageFair is on, adblock is on and isPageFairRecoverable', function () {
 		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isPageFairRecoverable: true
+			});
 		};
 
 		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');
@@ -287,9 +296,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(mocks.slotTargetingData.src).toBe('rec');
 	});
 
-	it('Should not set src=rec if PageFair is on and adblock is off', function () {
+	it('Should not set src=rec if PageFair is on, isPageFairRecoverable but adblock is off', function () {
 		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isPageFairRecoverable: true
+			});
 		};
 
 		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');

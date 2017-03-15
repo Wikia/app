@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.sourcePoint',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'

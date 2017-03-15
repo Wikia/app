@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.sourcePoint',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler'),
@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	AdElement,
 	googleTag,
 	slotTargeting,
-	sourcePointHelper,
+	sourcePoint,
 	slotTweaker,
 	sraHelper,
 	scrollHandler,
@@ -43,30 +43,33 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
-	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
-	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargetingData  - slot targeting details
-	 * @param {Object}   extra              - optional parameters
-	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
-	 * @param {string}   extra.forcedAdType - ad type for callbacks info
-	 * @param {array}    extra.recoverableSlots - GPT recoverable slots
-	 * @param {bool}     extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
+	 * @param {Object}  slot                   - slot (ext.wikia.adEngine.slot.adSlot::create instance)
+	 * @param {string}  slotPath               - slot path
+	 * @param {Object}  slotTargetingData      - slot targeting details
+	 * @param {Object}  extra                  - optional parameters
+	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
+	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
+	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
+	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			recoverableSlots = extra.recoverableSlots || [],
-			isRecoveryEnabled = sourcePointHelper.isSourcePointRecoveryEnabled() || (pageFair && pageFair.isPageFairRecoveryEnabled()),
-			isBlocking = sourcePointHelper.isBlocking() || (pageFair && pageFair.isBlocking()),
-			adIsRecoverable = extra.isPageFairRecoverable || sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots),
+			isRecoveryEnabled = sourcePoint.isSourcePointRecoveryEnabled() || (pageFair && pageFair.isPageFairRecoveryEnabled()),
+			isBlocking = sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()),
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
 			shouldPush = !isBlocking || (isBlocking && adIsRecoverable),
 			uapId = uapContext.getUapId();
 
-		log(['shouldPush',
+		log(['shouldPush - sourcePoint',
 			slot.name,
-			sourcePointHelper.isBlocking(),
-			recoverableSlots,
-			sourcePointHelper.isSourcePointRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+			sourcePoint.isBlocking(),
+			extra.isSourcePointRecoverable], 'debug', logGroup);
+
+		log(['shouldPush - pageFair',
+			slot.name,
+			pageFair.isBlocking(),
+			extra.isPageFairRecoverable], 'debug', logGroup);
 
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 

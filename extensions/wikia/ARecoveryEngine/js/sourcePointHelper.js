@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
+define('ext.wikia.aRecoveryEngine.sourcePoint', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.instantGlobals',
@@ -16,14 +16,23 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	var logGroup = 'ext.wikia.aRecoveryEngine.sourcePoint',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		cb = function (callback) {
 			callback();
 		},
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
-		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
+		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'LEFT_SKYSCRAPER_2',
+			'LEFT_SKYSCRAPER_3',
+			'INCONTENT_BOXAD_1',
+			'BOTTOM_LEADERBOARD',
+			'GPT_FLUSH'
+		];
 
 	function initEventQueues() {
 		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
@@ -50,8 +59,6 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 		return enabled;
 	}
 
-
-
 	function isBlocking() {
 		var isBlocking = !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 
@@ -59,8 +66,11 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 		return isBlocking;
 	}
 
-	function isSourcePointRecoverable(slotName, recoverableSlots) {
-		return isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+	function isSlotRecoverable(slotName) {
+		var result = isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+
+		log(['isSlotRecoverable', result], log.levels.info, logGroup);
+		return result;
 	}
 
 	function track(type) {
@@ -111,7 +121,7 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 		getSafeUri: getSafeUri,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isSourcePointRecoverable: isSourcePointRecoverable,
+		isSlotRecoverable: isSlotRecoverable,
 		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent

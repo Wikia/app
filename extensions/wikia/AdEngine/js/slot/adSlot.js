@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper')
+	require.optional('ext.wikia.aRecoveryEngine.sourcePoint')
 ], function (doc, log, win, recoveryHelper) {
 	'use strict';
 
