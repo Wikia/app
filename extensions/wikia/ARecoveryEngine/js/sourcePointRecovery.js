@@ -5,13 +5,13 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointRecovery', [
 	'wikia.document'
 ], function (
 	adContext,
-	helper,
+	recoveryHelper,
 	doc
 ) {
 	'use strict';
 
 	function addResponseListener(callback) {
-		helper.addOnBlockingCallback(callback);
+		recoveryHelper.addOnBlockingCallback(callback);
 		doc.addEventListener('sp.not_blocking', callback);
 	}
 

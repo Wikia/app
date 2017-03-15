@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
-], function (googleSlots, adSlot, recovery, doc, log, window, pageFair) {
+], function (googleSlots, adSlot, recoveryHelper, doc, log, window, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -62,10 +62,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0],
-			// load GPT when API not ready and recovery is non blocking or recovery is pageFair (never blocking)
-			pageFairRecovery = pageFair && pageFair.isPageFairRecoveryEnabled(),
+			pageFairRecoveryisBlocking = pageFair && pageFair.isBlocking(),
+			// load GPT only when API not ready and recovery is not blocking ads
 			gptCanBeLoaded = !window.googletag.apiReady &&
-				(!recovery.isBlocking() || pageFairRecovery);
+				!recoveryHelper.isBlocking() &&
+				!pageFairRecoveryisBlocking;
 
 		if (gptCanBeLoaded) {
 			gads.async = true;
