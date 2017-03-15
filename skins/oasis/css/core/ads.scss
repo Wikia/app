@@ -71,8 +71,8 @@ $floating-ad-index: $wikia-top-ads-index + 10;
 			transition: margin-bottom $video-collapse-animation-speed;
 
 			iframe {
-				height: $video-container-width !important;
-				width: $video-container-width !important;
+				height: $video-container-width;
+				width: $video-container-width;
 			}
 
 			.floating-close-button {
@@ -580,21 +580,21 @@ body > a > img[src$="noad.gif"] {
 /*** Incontent ***/
 #WikiaArticle {
 	&.floating {
-		z-index: initial !important;
+		z-index: initial;
 
 		.wikia-ad {
 			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
-			height: $video-container-width !important;
+			height: $video-container-width;
 			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;
 			transition: margin-bottom $video-collapse-animation-speed;
-			width: $video-container-width !important;
+			width: $video-container-width;
 			z-index: $floating-ad-index;
 
 			.provider-container {
-				height: $video-container-width !important;
-				width: $video-container-width !important;
+				height: $video-container-width;
+				width: $video-container-width;
 			}
 
 			.floating-close-button {

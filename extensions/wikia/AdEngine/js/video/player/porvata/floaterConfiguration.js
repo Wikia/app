@@ -67,7 +67,6 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 			viewport.style.height = height;
 		}
 
-
 		function configure(floatingContext, params) {
 			var configuration = selectConfigurationUsing(params);
 
