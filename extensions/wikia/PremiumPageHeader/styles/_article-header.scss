@@ -160,6 +160,8 @@
 	border: 1px solid $submenu-border-color;
 	display: none;
 	left: 50%;
+	max-height: 300px;
+	overflow: scroll;
 	padding: 12px 0 12px 12px;
 	position: absolute;
 	top: 100%;
