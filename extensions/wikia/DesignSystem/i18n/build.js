@@ -15,6 +15,53 @@ var fs = require('fs'),
 		},
 		'global-footer-copyright-wikia': {
 			date: '$1'
+		},
+		"notifications-replied-by-multiple-users-with-title": {
+			mostRecentUser: '$1',
+			number: '$2',
+			postTitle: '$3'
+		},
+		"notifications-replied-by-multiple-users-no-title": {
+			mostRecentUser: '$1',
+			number: '$2'
+		},
+		"notifications-replied-by-two-users-with-title": {
+			firstUser: '$1',
+			secondUser: '$2',
+			postTitle: '$3'
+		},
+		"notifications-replied-by-two-users-no-title": {
+			firstUser: '$1',
+			secondUser: '$2'
+		},
+		"notifications-replied-by-with-title": {
+			user: '$1',
+			number: '$2',
+			postTitle: '$3'
+		},
+		"notifications-replied-by-no-title": {
+			user: '$1',
+			number: '$2'
+		},
+		"notifications-post-upvote-single-user-with-title": {
+			postTitle: '$1'
+		},
+		"notifications-post-upvote-multiple-users-with-title": {
+			number: '$1',
+			postTitle: '$2'
+		},
+		"notifications-post-upvote-multiple-users-no-title": {
+			number: '$1'
+		},
+		"notifications-reply-upvote-single-user-with-title": {
+			postTitle: '$1'
+		},
+		"notifications-reply-upvote-multiple-users-with-title": {
+			number: '$1',
+			postTitle: '$2'
+		},
+		"notifications-reply-upvote-multiple-users-no-title": {
+			number: '$1'
 		}
 	};
 
