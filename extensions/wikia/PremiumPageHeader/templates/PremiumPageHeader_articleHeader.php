@@ -11,7 +11,7 @@
 							<a href="#" class="pph-categories-show-more"
 							   data-tracking="categories-more"><?= $moreCategoriesText ?></a>
 							<div class="pph-dropdown">
-								<ul class="pph-dropdown-list">
+								<ul class="pph-dropdown-scrollable">
 									<?php foreach ( $moreCategories as $category ): ?>
 										<li><?= $category; ?></li>
 									<?php endforeach; ?>
@@ -36,14 +36,16 @@
 				) ?>
 			</span>
 			<?php if ( count( $language_list ) > 1 ): ?>
-				<ul class="pph-dropdown">
-					<?php foreach ( $language_list as $key => $val ) : ?>
-						<li>
-							<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"
-							   data-tracking="<?= $key ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
-						</li>
-					<?php endforeach ?>
-				</ul>
+				<div class="pph-dropdown">
+					<ul class="pph-dropdown-scrollable">
+						<?php foreach ( $language_list as $key => $val ) : ?>
+							<li>
+								<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"
+								   data-tracking="<?= $key ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
+							</li>
+						<?php endforeach ?>
+					</ul>
+				</div>
 			<?php endif; ?>
 		</div>
 		<div class="pph-contribution-buttons">
