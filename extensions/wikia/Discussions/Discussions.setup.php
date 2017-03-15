@@ -30,6 +30,22 @@ $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 	$wgAutoloadClasses['SpecialForumRedirectController'] = $dir . 'controllers/SpecialForumRedirectController.class.php';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
+
+	// Make sure we recognize the Forum namespaces so we can redirect them if requested
+	$wgExtensionNamespacesFiles['Discussions'] = $dir . '../Forum/Forum.namespaces.php';
+	wfLoadExtensionNamespaces( 'Forum',
+		[
+			NS_WIKIA_FORUM_BOARD,
+			NS_WIKIA_FORUM_BOARD_THREAD,
+			NS_WIKIA_FORUM_TOPIC_BOARD
+		]
+	);
+
+	$app->registerNamespaceController(
+		NS_WIKIA_FORUM_BOARD,
+		'SpecialForumRedirectController',
+		'redirectBoardToCategory'
+	);
 }
 
 // message files
@@ -46,19 +62,16 @@ $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
 
 $wgHooks['WikiaSkinTopScripts'][] = 'addDiscussionJsVariable';
+$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
 
 /**
- * MW1.19 - ResourceLoaderStartUpModule class adds more variables
  * @param array $vars JS variables to be added at the bottom of the page
- * @param OutputPage $out
+ * @param $scripts
+ *
  * @return bool return true - it's a hook
  */
 function addDiscussionJsVariable(Array &$vars, &$scripts) {
-	wfProfileIn(__METHOD__);
-
 	$vars['wgDiscussionsApiUrl'] = F::app()->wg->DiscussionsApiUrl;
-
-	wfProfileOut(__METHOD__);
 	return true;
 }
 
