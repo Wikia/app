@@ -1,5 +1,6 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/animation';
 
 // on-site-notifications to be moved to Design System - IRIS-4081
 
@@ -28,11 +29,11 @@ $wds-icon-color: $wds-color-light-c5;
   }
   &__mark-all-as-read {
 	color: $wds-color-link;
+	cursor: pointer;
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: bold;
 	padding: 18px;
 	text-transform: uppercase;
-	cursor: pointer;
   }
 
   &__dropdown-content {
@@ -42,8 +43,8 @@ $wds-icon-color: $wds-color-light-c5;
 	color: $notifications-dropdown-content-color;
 	font-size: $wds-typescale-size-minus-1;
 	min-width: 18px * 2 + 320px;
-	width: 100%;
 	white-space: normal;
+	width: 100%;
   }
 
   &__notification-list {
@@ -54,8 +55,8 @@ $wds-icon-color: $wds-color-light-c5;
   }
 
   &__zero-state {
-	padding: 18px 18px 4px 18px;
 	display: none;
+	padding: 18px 18px 4px 18px;
 	&.wds-is-visible {
 	  display: block;
 	}
@@ -81,9 +82,9 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 
 	.wds-icon {
 	  fill: $wds-icon-color;
-	  width: 18px;
 	  height: 18px;
 	  min-width: inherit;
+	  width: 18px;
 	}
 	.wds-is-unread {
 	  fill: $wds-color-link;
@@ -91,9 +92,9 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   }
 
   &__body {
-	@include flexbox();
 	@include flex-direction(column);
 	@include flex-grow(1);
+	@include flexbox();
 	@include justify-content(flex-start);
 	padding-left: 12px;
 	padding-right: 12px;
@@ -134,8 +135,8 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 }
 
 .wds-avatar-stack {
-  @include flexbox();
   @include align-items(center);
+  @include flexbox();
   margin: 8px 18px 6px 40px;
 
   &__avatar {
@@ -151,11 +152,11 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   }
 
   &__overflow {
-	padding-left: 6px;
 	background-color: $wds-color-white;
 	border: 0;
 	color: $wds-color-light-c6;
 	font-size: $wds-typescale-size-minus-2;
+	padding-left: 6px;
 	transform: translate(-60px);
 	width: auto;
   }
@@ -166,23 +167,22 @@ $spinner-color: $wds-color-link;
 
 .wds-spinner {
 
-  @keyframes rotator {
+  @include keyframes(rotator) {
 	from {
 	  transform: rotate(0);
 	}
-
 	to {
 	  transform: rotate(360deg);
 	}
   }
 
-  @keyframes dash {
+  @include keyframes(dash) {
 	to {
 	  stroke-dashoffset: 0;
 	}
   }
 
-  animation: rotator $duration linear infinite;
+  @include animation(rotator $duration linear infinite);
   left: 50%;
   margin: -33px 0 0 -33px;
   position: absolute;
@@ -198,7 +198,7 @@ $spinner-color: $wds-color-link;
 
   .wds-path {
 	-webkit-backface-visibility: hidden;
-	animation: dash ($duration * 2) linear infinite alternate-reverse;
+	@include animation(dash ($duration * 2) linear infinite alternate-reverse);
 	stroke: $spinner-color;
   }
 }
