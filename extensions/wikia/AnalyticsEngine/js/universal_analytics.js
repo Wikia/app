@@ -114,7 +114,7 @@
 		window.ga(
 			'create', 'UA-32129070-2', 'auto',
 			{
-				'sampleRate': 100
+				'sampleRate': 100,
 				'allowLinker': true,
 				'userId': window.wgGAUserIdHash
 			}
