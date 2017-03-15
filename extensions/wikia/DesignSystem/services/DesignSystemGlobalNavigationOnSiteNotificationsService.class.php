@@ -3,10 +3,7 @@
 class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaService {
 
 	public function Index() {
-		$isLoggedIn = $this->isLoggedIn();
-		$this->response->setVal( 'loggedIn', $isLoggedIn );
-
-		if ( $isLoggedIn && $this->areNotificationsEnabled() ) {
+		if ( $this->isLoggedIn() && $this->areNotificationsEnabled() ) {
 			$this->addAssets();
 
 			return true;
