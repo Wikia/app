@@ -252,7 +252,7 @@
 .pph-dropdown-scrollable {
 	max-height: 300px;
 	max-width: 200px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 @media #{$breakpoint-small-only} {
