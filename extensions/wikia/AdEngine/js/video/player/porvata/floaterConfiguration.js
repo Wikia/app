@@ -29,6 +29,12 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 						floatingContext.floatAgain();
 					});
 
+				},
+				onAttach: function (floatingContext) {
+					var elements =floatingContext.elements;
+
+					elements.ad.style.maxHeight = elements.ad.scrollHeight + 'px';
+					elements.viewport.style.removeProperty('height');
 				}
 			},
 			'TOP_LEADERBOARD': {
@@ -47,13 +53,12 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 						callback(this);
 						this.fireEvent('start');
 					}
+				},
+				onAttach: function (floatingContext) {
+					floatingContext.elements.viewport.style.removeProperty('height');
 				}
 			}
 		};
-
-		function onAttach(floatingContext) {
-			floatingContext.elements.viewport.style.removeProperty('height');
-		}
 
 		function onBeforeDetach(floatingContext, configuration) {
 			var viewport = floatingContext.elements.viewport,
@@ -75,7 +80,7 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 			floatingContext.eventHandlers.onBeforeDetach = function (context) {
 				onBeforeDetach(context, configuration);
 			};
-			floatingContext.eventHandlers.onAttach = onAttach;
+			floatingContext.eventHandlers.onAttach = configuration.onAttach;
 			floatingContext.floatLater = configuration.floatLater;
 		}
 
