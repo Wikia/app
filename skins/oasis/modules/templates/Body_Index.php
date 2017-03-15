@@ -20,6 +20,9 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
+<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
+	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+<?php endif; ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
@@ -32,12 +35,13 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 
 		<?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
 			<div class="PremiumPageHeader">
 				<?= $app->renderView( 'PremiumPageHeader', 'wikiHeader' ) ?>
 			</div>
+		<?php else: ?>
+			<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php endif; ?>
 
 		<?php

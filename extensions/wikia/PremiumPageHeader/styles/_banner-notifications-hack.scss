@@ -4,6 +4,7 @@
 .banner-notifications-wrapper {
 	position: relative;
 	z-index: $zTop;
+	top: 0 !important;
 
 	@media #{$breakpoint-small-only} {
 		width: $page-width-small - 2 * $content-border-width;
