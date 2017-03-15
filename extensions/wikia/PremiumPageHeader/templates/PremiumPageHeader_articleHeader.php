@@ -8,12 +8,15 @@
 
 				 --><?php if ( $moreCategoriesLength > 0 ): ?>,
 						<div class="pph-dropdown-container">
-							<a href="#" class="pph-categories-show-more" data-tracking="categories-more"><?= $moreCategoriesText ?></a>
-							<ul class="pph-dropdown">
-								<?php foreach ( $moreCategories as $category ): ?>
-									<li><?= $category; ?></li>
-								<?php endforeach; ?>
-							</ul>
+							<a href="#" class="pph-categories-show-more"
+							   data-tracking="categories-more"><?= $moreCategoriesText ?></a>
+							<div class="pph-dropdown">
+								<ul class="pph-dropdown-list">
+									<?php foreach ( $moreCategories as $category ): ?>
+										<li><?= $category; ?></li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
 						</div><!--
 
 					 --><span class="pph-more-categories"><?= join( ', ', $moreCategories ); ?></span>
