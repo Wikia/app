@@ -37,7 +37,9 @@
                     </li>
                     <li class="wds-notification-card__context-separator">·</li>
                     <li class="wds-notification-card__context-item">
-                        {{communityName}}
+                        {{#ellipsis}}
+                            {{communityName}}
+                        {{/ellipsis}}
                     </li>
                 </ul>
             </div>

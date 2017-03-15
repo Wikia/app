@@ -109,6 +109,16 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					});
 				}
 
+				function ellipsis(text) {
+					return text.length <= 30 ? text : text.substr(0, 30) + '&hellip;'
+				}
+
+				function mustacheEllipsis() {
+					return function (text, render) {
+						return render(ellipsis(text ? String(text).trim() : ''));
+					}
+				}
+
 				return notifications.map(function (notification) {
 					return {
 						icon: getIcon(notification.type),
@@ -123,7 +133,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 						showAvatarOverflow: notification.totalUniqueActors > 5,
 						avatarOverflow: notification.totalUniqueActors - 5,
 						avatars: getAvatars(notification.latestActors),
-						timeAgo: $.timeago(notification.when)
+						timeAgo: $.timeago(notification.when),
+						ellipsis: mustacheEllipsis
 					}
 				}.bind(this));
 			};
