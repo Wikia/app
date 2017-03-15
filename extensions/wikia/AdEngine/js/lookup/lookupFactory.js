@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.lazyqueue',
 	'wikia.log'
 ], function (adContext, adTracker, recoveryHelper, lazyQueue, log) {

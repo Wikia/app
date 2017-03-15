@@ -3,7 +3,7 @@
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',

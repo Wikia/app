@@ -2,7 +2,7 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document',
 	'wikia.location',
 	'wikia.log',

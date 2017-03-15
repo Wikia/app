@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.sourcePoint', [
+define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.instantGlobals',
@@ -16,7 +16,7 @@ define('ext.wikia.aRecoveryEngine.sourcePoint', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.sourcePoint',
+	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		cb = function (callback) {

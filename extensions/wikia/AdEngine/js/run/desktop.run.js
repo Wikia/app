@@ -11,7 +11,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',

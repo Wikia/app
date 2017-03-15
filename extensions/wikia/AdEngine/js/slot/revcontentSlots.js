@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.revcontentSlots', [
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'

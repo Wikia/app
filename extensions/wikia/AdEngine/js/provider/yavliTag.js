@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.yavliTag', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.sourcePoint',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document',
 	'wikia.log'
 ], function (adContext, recoveryHelper, doc, log) {
