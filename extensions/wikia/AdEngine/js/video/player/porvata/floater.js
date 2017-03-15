@@ -140,7 +140,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				listeners.close = createOnCloseListener(floatingContext);
 				elements.closeButton.addEventListener('click', listeners.close);
 
-				elements.ad.appendChild(elements.closeButton);
+				elements.ad.insertBefore(elements.closeButton, elements.ad.firstChild);
 			}
 
 			listeners.scroll = throttle(createOnScrollListener(floatingContext), 100);
