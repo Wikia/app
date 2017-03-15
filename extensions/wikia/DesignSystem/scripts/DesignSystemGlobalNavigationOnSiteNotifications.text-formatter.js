@@ -5,8 +5,12 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 		'use strict';
 
 		function TextFormatter() {
-			function bold(text) {
-				return text ? '<b>' + text + '</b>' : text;
+			function escape(text) {
+				return text ? window.mw.html.escape(String(text)) : '';
+			}
+
+			function escapeAndBold(text) {
+				return '<b>' + escape(text) + '</b>';
 			}
 
 			function fillArgs(message, args) {
@@ -30,18 +34,16 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			this._getReplyText = function (notification) {
 				var key = this._getReplyKey(notification.title, notification.totalUniqueActors),
 					message = window.mw.message(key).parse(),
-					args = {
-						postTitle: bold(notification.title)
-					};
+					args = {postTitle: escapeAndBold(notification.title)};
 
 				if (notification.totalUniqueActors > 2) {
-					args.mostRecentUser = notification.latestActors[0].name;
-					args.number = notification.totalUniqueActors - 1;
+					args.mostRecentUser = escape(notification.latestActors[0].name);
+					args.number = escape(notification.totalUniqueActors - 1);
 				} else if (notification.totalUniqueActors == 2) {
-					args.firstUser = notification.latestActors[0].name;
-					args.secondUser = notification.latestActors[1].name;
+					args.firstUser = escape(notification.latestActors[0].name);
+					args.secondUser = escape(notification.latestActors[1].name);
 				} else {
-					args.user = notification.latestActors[0].name;
+					args.user = escape(notification.latestActors[0].name);
 				}
 
 				return fillArgs(message, args);
@@ -56,13 +58,19 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			this._getPostUpvoteText = function (notification) {
 				var key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				var message = window.mw.message(key).parse();
-				return fillArgs(message, {postTitle: bold(notification.title)});
+				return fillArgs(message, {
+					postTitle: escapeAndBold(notification.title),
+					number: escape(notification.totalUniqueActors - 1)
+				});
 			};
 
 			this._getReplyUpvoteText = function (notification) {
 				var key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
 				var message = window.mw.message(key).parse();
-				return fillArgs(message, {postTitle: bold(notification.title)});
+				return fillArgs(message, {
+					postTitle: escapeAndBold(notification.title),
+					number: escape(notification.totalUniqueActors - 1)
+				});
 			};
 
 			this._getUpvoteKey = function (title, totalUniqueActors) {
