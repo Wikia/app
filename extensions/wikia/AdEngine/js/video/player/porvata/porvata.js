@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			viewportListener = null;
 
 		function isFloatingEnabled(params) {
-			return floater && floater.isEnabled(params.floatingContext);
+			return params.floatingContext && params.floatingContext.isActive();
 		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 						inViewportCallback(false);
 					}
 				});
-				inViewportCallback(true);
 			}
 		}
 
