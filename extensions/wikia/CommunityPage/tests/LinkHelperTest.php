@@ -31,6 +31,8 @@ class LinkHelperTest extends WikiaBaseTest {
 	}
 
 	public function forceLoginLinkTestCases() {
+		require_once  __DIR__ . '/../helpers/LinkHelper.php';
+		
 		return [
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITH_EDIT ],

@@ -1,10 +1,11 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class LyricsUtilsTest extends WikiaBaseTest {
+class LyricsUtilsTest extends TestCase {
 
 	protected function setUp() {
-		$this->setupFile = __DIR__ . '/../LyricsApi.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../LyricsUtils.class.php';
 	}
 
 	/**
@@ -19,6 +20,8 @@ class LyricsUtilsTest extends WikiaBaseTest {
 	}
 
 	public function removeWikitextFromLyricsDataProvider() {
+		require_once __DIR__ . '/../LyricsUtils.class.php';
+
 		return [
 			[
 				'empty string',

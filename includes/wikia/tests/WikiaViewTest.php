@@ -91,7 +91,7 @@ class WikiaViewTest extends TestCase {
 		$this->assertEquals($result, $expectedResult);
 	}
 
-	public function testRenderingFormatsDataProvider() {
+	public function renderingFormatsDataProvider() {
 		$responseValueName = 'result';
 		$responseValueData = array( 1, 2, 3 );
 
@@ -102,7 +102,7 @@ class WikiaViewTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider testRenderingFormatsDataProvider
+	 * @dataProvider renderingFormatsDataProvider
 	 */
 	public function testRenderingFormats($format, $responseValueName, $responseValueData,$expectedResult) {
 		$response = new WikiaResponse( $format );

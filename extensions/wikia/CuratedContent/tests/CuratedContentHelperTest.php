@@ -11,13 +11,13 @@ class CuratedContentHelperTest extends WikiaBaseTest {
 	 * @param array $data
 	 * @param array $resultExpected
 	 *
-	 * @dataProvider testRemoveEmptySectionsDataProvider
+	 * @dataProvider removeEmptySectionsDataProvider
 	 */
 	public function testRemoveEmptySections( $data, $resultExpected ) {
 		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->removeEmptySections( $data ) );
 	}
 
-	public function testRemoveEmptySectionsDataProvider() {
+	public function removeEmptySectionsDataProvider() {
 		return [
 			[
 				[ ],

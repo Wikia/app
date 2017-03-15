@@ -1,35 +1,36 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class InfoboxParamsValidatorTest extends WikiaBaseTest {
+class InfoboxParamsValidatorTest extends TestCase {
+	/** @var \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator $InfoboxParamsValidator */
 	private $InfoboxParamsValidator;
-	private $invalidParamsExpectionName =
-		'Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException';
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../services/Helpers/InfoboxParamsValidator.php';
 
 		$this->InfoboxParamsValidator = new \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
 	}
 
 	/**
 	 * @param array $params
-	 * @dataProvider testInfoboxParamsFailValidationDataProvider
+	 * @dataProvider infoboxParamsFailValidationDataProvider
+	 *
+	 * @expectedException Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException
 	 */
 	public function testInfoboxParamsFailValidation( $params ) {
-		$this->expectException( $this->invalidParamsExpectionName );
 		$this->InfoboxParamsValidator->validateParams( $params );
 	}
 
 	/**
 	 * @param array $params
-	 * @dataProvider testInfoboxParamsPassValidationDataProvider
+	 * @dataProvider infoboxParamsPassValidationDataProvider
 	 */
 	public function testInfoboxParamsPassValidation( $params ) {
 		$this->assertEquals( true, $this->InfoboxParamsValidator->validateParams( $params ) );
 	}
 
-	public function testInfoboxParamsFailValidationDataProvider() {
+	public function infoboxParamsFailValidationDataProvider() {
 		return [
 			[
 				'params' => [
@@ -46,7 +47,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testInfoboxParamsPassValidationDataProvider() {
+	public function infoboxParamsPassValidationDataProvider() {
 		return [
 			[
 				'params' => [ ],
@@ -68,13 +69,13 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 
 	/**
 	 * @param $color
-	 * @dataProvider testPassValidateColorValueDataProvider
+	 * @dataProvider passValidateColorValueDataProvider
 	 */
 	public function testPassValidateColorValue( $color ) {
 		$this->assertTrue( $this->InfoboxParamsValidator->validateColorValue( $color ) );
 	}
 
-	public function testPassValidateColorValueDataProvider() {
+	public function passValidateColorValueDataProvider() {
 		return [
 			[ 'color' => '#aaa' ],
 			[ 'color' => '#abc' ],
@@ -97,13 +98,13 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 
 	/**
 	 * @param array $color
-	 * @dataProvider testFailValidateColorValueDataProvider
+	 * @dataProvider failValidateColorValueDataProvider
 	 */
 	public function testFailValidateColorValue( $color ) {
 		$this->assertFalse( $this->InfoboxParamsValidator->validateColorValue( $color ) );
 	}
 
-	public function testFailValidateColorValueDataProvider() {
+	public function failValidateColorValueDataProvider() {
 		return [
 			[ 'color' => '' ],
 			[ 'color' => 'aaa' ],

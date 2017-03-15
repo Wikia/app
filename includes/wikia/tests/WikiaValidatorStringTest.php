@@ -13,14 +13,14 @@ class WikiaValidatorStringTest extends TestCase {
 
 	/**
 	 * @covers WikiaValidatorString::isValid
-	 * @dataProvider testTitleStringsDataProvider
+	 * @dataProvider titleStringsDataProvider
 	 */
 	public function testTitleStrings( $desc, $title, $expected ) {
 		$result = $this->titleStringValidator->isValid( $title );
 		$this->assertEquals( $expected, $result, $desc );
 	}
 
-	public function testTitleStringsDataProvider() {
+	public function titleStringsDataProvider() {
 		return [
 			[
 				'$desc' => 'Test if a one word article title is valid',

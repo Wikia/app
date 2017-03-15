@@ -1,23 +1,25 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class CuratedContentSpecialPageValidatorTest extends WikiaBaseTest {
+class CuratedContentSpecialPageValidatorTest extends TestCase {
 
 	protected function setUp() {
-		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../CuratedContentSpecialPageValidator.class.php';
 	}
 
 	/**
 	 * @param array $data
 	 * @param array $errorsExpected
+	 * @param string $brokenValidationMessage
 	 *
-	 * @dataProvider testValidationDataProvider
+	 * @dataProvider validationDataProvider
 	 */
 	public function testValidation( $errorsExpected, $data, $brokenValidationMessage ) {
 		$this->assertEquals( $errorsExpected, ( new CuratedContentSpecialPageValidator )->validateData( $data ), $brokenValidationMessage );
 	}
 
-	public function testValidationDataProvider() {
+	public function validationDataProvider() {
 		return [
 			[
 				// Featured all is ok

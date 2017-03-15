@@ -4,18 +4,26 @@
  */
 namespace Wikia\Search\Test\Controller;
 use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEngine, Exception, F;
+use Wikia\Search\Test\BaseTest;
+
 /**
  * Tests WikiaSearchController, currently in global namespace
  */
-class SearchControllerTest extends Wikia\Search\Test\BaseTest {
+class SearchControllerTest extends BaseTest {
 
-	public function setUp() {
+	/** @var \PHPUnit_Framework_MockObject_MockObject|WikiaSearchController $searchController */
+	private $searchController;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject|Wikia\Search\QueryService\Factory $mockFactory */
+	private $mockFactory;
+
+	protected function setUp() {
 		parent::setUp();
-		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
-										->disableOriginalConstructor();
-		$this->mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
-		                          ->setMethods( array( 'get', 'getFromConfig' ) )
-		                          ->getMock();
+		$this->searchController = $this->getMockBuilder( WikiaSearchController::class )
+			->disableOriginalConstructor();
+		$this->mockFactory = $this->getMockBuilder( Wikia\Search\QueryService\Factory::class )
+			->setMethods( [ 'get', 'getFromConfig' ] )
+			->getMock();
 
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $this->mockFactory );
 	}
@@ -1578,9 +1586,9 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.07818 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
-	 * @todo update
+	 * @group Broken
 	 */
-	public function testGetSearchConfigFromRequest() {return;
+	public function testGetSearchConfigFromRequest() {
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
@@ -1790,6 +1798,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.07834 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
+	 * @group Broken
 	 * @todo fix
 	 */
 	public function testGetSearchConfigFromRequestWithJson() {return;

@@ -22,6 +22,7 @@ class WikiaResponseTest extends TestCase {
 			->setMethods( [ 'sendHeader' ] )
 			->setConstructorArgs( [ 'html' ] )
 			->getMock();
+
 	}
 
 	public function settingHeadersDataProvider() {
@@ -134,22 +135,26 @@ class WikiaResponseTest extends TestCase {
 	 * @dataProvider formatDataProvider
 	 */
 	public function testView( $format ) {
-		$this->object->setFormat( $format );
-		$this->object->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
-		$this->object->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
-		if( $format == 'json' ) {
-			$this->object->setException( new WikiaException('TestException') );
-		}
-
-		$this->object->sendHeaders();
+		$response = new WikiaResponse( $format );
+		$response->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
+		$response->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
 
 		ob_start();
-		print $this->object;
+		$response->render();
 		$buffer = ob_get_contents();
 		ob_end_clean();
 
-		if( $format == 'html' ) {
-			$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+		switch ( $format ) {
+			case WikiaResponse::FORMAT_HTML:
+				$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+				break;
+			case WikiaResponse::FORMAT_JSON:
+				$expectedJson = json_encode( [ static::TEST_VAL_NAME => static::TEST_VAL_VALUE ] );
+				$this->assertJsonStringEqualsJsonString( $expectedJson, $buffer );
+				break;
+			case WikiaResponse::FORMAT_INVALID:
+			default:
+				$this->fail( 'Invalid output format given to WikiaResponse' );
 		}
 	}
 
