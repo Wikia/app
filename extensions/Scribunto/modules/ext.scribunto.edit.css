@@ -11,7 +11,7 @@
 /* Preserve line breaks, but wrap too if browser supports it */
 #mw-scribunto-output {
 	white-space: pre;
-	white-space: -moz-pre-wrap;
+	white-space: pre-wrap;
 }
 
 #mw-scribunto-input {
