@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	function create(params) {
 		var state = {
 			autoPlay: false,
+			moatTracking: false,
 			resolvedState: false,
 			splitLayout: false
 		};
@@ -18,6 +19,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = isAutoPlay(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
+			state.moatTracking = Boolean(params.moatTracking);
 		}
 
 		function isAutoPlay(params) {
@@ -27,7 +29,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		return {
-			getParams: function() {
+			getParams: function () {
 				return params;
 			},
 			getVpaidMode: function () {
@@ -41,6 +43,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isSplitLayout: function () {
 				return state.splitLayout;
+			},
+			isMoatTrackingEnabled: function () {
+				return state.moatTracking;
 			}
 		};
 	}
