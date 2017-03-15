@@ -1,11 +1,12 @@
 define('ext.wikia.design-system.on-site-notifications.view', [
 		'jquery',
+		'wikia.log',
 		'wikia.window',
 		'ext.wikia.design-system.templating',
 		'ext.wikia.design-system.loading-spinner',
 		'ext.wikia.design-system.on-site-notifications.text-formatter',
 		'ext.wikia.design-system.on-site-notifications.common'
-	], function ($, window, templating, Spinner, TextFormatter, common) {
+	], function ($, log, window, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
 		function View() {
@@ -30,16 +31,32 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				model.loadingStatusChanged.attach(function (_, isLoading) {
 					if (isLoading === true) {
 						this.$container.append(
-							'<li class="loader">' + this.spinner.html +'</li>');
+							'<li class="loader">' + this.spinner.html + '</li>');
 					} else {
 						$('.loader').remove();
 					}
+				}.bind(this));
+
+				model.notificationsAdded.attach(function (_, data) {
+					if (data.total > 0) {
+						this.renderNotifications(data.list);
+					} else {
+						this.renderZeroState();
+					}
+				}.bind(this));
+
+				model.markedAllAsRead.attach(this.renderAllNotificationsAsRead.bind(this));
+				model.markedAsRead.attach(function (_, uri) {
+					this.renderNotificationAsRead(uri);
+				}.bind(this));
+				model.unreadCountChanged.attach(function (_, count) {
+					this.renderUnreadCount(count);
 				}.bind(this));
 			};
 
 			this.addOnScrollEvent = function () {
 				var scrollableElement = $('.wds-notifications__notification-list');
-				scrollableElement.on('scroll', this.proxy(this.onScroll));
+				scrollableElement.on('scroll', this.onScroll.bind(this));
 			};
 
 			this.onScroll = function (e) {
@@ -57,14 +74,12 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.addMarkAllAsReadEvent = function () {
-				this.$markAllAsReadButton.click($.proxy(this.controller.markAllAsRead, this.controller));
+				this.$markAllAsReadButton.click(this.controller.markAllAsRead.bind(this.controller));
 			};
 
 			this.addDropdownLoadingEvent = function () {
 				var $dropdown = $('#onSiteNotificationsDropdown');
-				$dropdown.click(this.proxy(function () {
-					this.controller.loadFirstPage();
-				}));
+				$dropdown.click(this.controller.loadFirstPage.bind(this.controller));
 			};
 
 			this._mapToView = function (notifications) {
@@ -88,7 +103,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					});
 				}
 
-				return notifications.map(this.proxy(function (notification) {
+				return notifications.map(function (notification) {
 					return {
 						icon: getIcon(notification.type),
 						uri: notification.uri,
@@ -104,20 +119,20 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 						avatars: getAvatars(notification.latestActors),
 						timeAgo: $.timeago(notification.when)
 					}
-				}));
+				}.bind(this));
 			};
 
 			this.renderNotifications = function (notifications) {
 				templating.renderByLocation(template, this._mapToView(notifications))
-					.then(this.proxy(function (html) {
+					.then(function (html) {
 						this.$container.append(html);
 						this._bindMarkAsReadHandlers();
-					}));
+					}.bind(this));
 			};
 
 			this._bindMarkAsReadHandlers = function () {
 				$(this.$container).find('.wds-notification-card__icon-wrapper')
-					.click(this.proxy(this._markAsRead));
+					.click(this._markAsRead.bind(this));
 			};
 
 			this._markAsRead = function (e) {
@@ -169,10 +184,6 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				findUnreadAndClearClass(container);
 			};
 
-			this.proxy = function (func) {
-				//TODO replace proxy with .bind
-				return $.proxy(func, this);
-			}
 		}
 
 		return View

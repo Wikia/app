@@ -1,18 +1,21 @@
 define('ext.wikia.design-system.on-site-notifications.model', [
-	'ext.wikia.design-system.event'
+		'ext.wikia.design-system.event'
 	], function (Event) {
 		'use strict';
 
-		function Model(view) {
-			this.view = view;
-			this.notifications = [];
-			this.unreadCount = 0;
-
+		function Model() {
+			this.markedAllAsRead = new Event(this);
+			this.markedAsRead = new Event(this);
+			this.notificationsAdded = new Event(this);
 			this.loadingStatusChanged = new Event(this);
+			this.unreadCountChanged = new Event(this);
+
 			this._loadingNotifications = false;
+			this._notifications = [];
+			this._unreadCount = 0;
 
 			this.getLatestEventTime = function () {
-				var latest = this.notifications[0];
+				var latest = this._notifications[0];
 				if (latest) {
 					return latest.when;
 				} else {
@@ -20,36 +23,32 @@ define('ext.wikia.design-system.on-site-notifications.model', [
 				}
 			};
 
-			function setIsUnreadFalse(notification) {
+			function _setIsUnreadFalse(notification) {
 				notification.isUnread = false;
 			}
 
 			this.markAsRead = function (id) {
-				this.notifications.filter(function (notification) {
-					return notification.uri === id;
-				}).forEach(setIsUnreadFalse);
-				this.view.renderNotificationAsRead(id);
+				this._notifications.filter(function (notification) {
+					return notification.uri === id && notification.isUnread === true;
+				}).forEach(function(notification) {
+					this._unreadCount = Math.max(this._unreadCount - 1, 0);
+					this._setIsUnreadFalse(notification);
+				}.bind(this));
+				this.markedAsRead.notify(id);
+				this.unreadCountChanged.notify(this._unreadCount);
 			};
 
 			this.markAllAsRead = function () {
 				this.setUnreadCount(0);
-				this.notifications.forEach(setIsUnreadFalse);
-				this.view.renderAllNotificationsAsRead();
+				this._notifications.forEach(_setIsUnreadFalse);
+				this.markedAllAsRead.notify();
 			};
 
 			this.setUnreadCount = function (count) {
-				this.unreadCount = count;
-				this.view.renderUnreadCount(count);
+				this._unreadCount = count;
+				this.unreadCountChanged.notify(count);
 			};
 
-			this.addNotifications = function (notifications) {
-				this.notifications = this.notifications.concat(notifications);
-				if (this.notifications.length > 0) {
-					this.view.renderNotifications(notifications);
-				} else {
-					this.view.renderZeroState();
-				}
-			};
 		}
 
 		Model.prototype = {
@@ -65,6 +64,14 @@ define('ext.wikia.design-system.on-site-notifications.model', [
 
 			isLoading: function () {
 				return this._loadingNotifications;
+			},
+
+			addNotifications: function(notifications) {
+				this._notifications = this._notifications.concat(notifications);
+				this.notificationsAdded.notify({
+					list: notifications,
+					total: this._notifications.length
+				});
 			}
 		};
 

@@ -9,7 +9,7 @@ require([
 		var OnSiteNotifications = {
 			init: function () {
 				this.view = new View();
-				this.model = new Model(this.view);
+				this.model = new Model();
 				this.controller = new Controller(this.model);
 
 				this.view.registerEvents(this.controller, this.model);
