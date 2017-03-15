@@ -163,7 +163,7 @@
 	border: 1px solid $submenu-border-color;
 	display: none;
 	left: 50%;
-	padding: 12px 0 12px 12px;
+	padding: 12px;
 	position: absolute;
 	top: 100%;
 	transform: translateX(-50%);
@@ -196,14 +196,13 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding-right: 24px;
 		transition: background-color .2s;
 
 		a {
 			color: $color-text;
 			line-height: 14px;
 			overflow: hidden;
-			padding: 12px 0 12px 12px;
+			padding: 12px;
 			text-overflow: ellipsis;
 			transition: color .2s;
 			white-space: nowrap;

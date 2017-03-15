@@ -118,6 +118,7 @@
 		color: rgba($color-button-text, .8);
 		transition: color .2s;
 	}
+
 	svg {
 		fill: rgba($color-button-text, .8);
 		transition: fill .2s;
@@ -155,20 +156,19 @@
 	border-width: 0 1px 1px;
 	display: none;
 	min-width: 100%;
-	padding: 12px 0 12px 12px;
+	padding: 12px;
 	position: absolute;
 
 	li {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding-right: 24px;
 		transition: background-color .2s;
 
 		a {
 			color: $color-text;
 			line-height: 14px;
-			padding: 12px 0 12px 12px;
+			padding: 12px;
 			transition: color .2s;
 			white-space: nowrap;
 			width: 100%;
@@ -180,9 +180,12 @@
 
 		.pph-local-nav-sub-chevron {
 			fill: $color-text;
-			margin-bottom: 2px;
-			margin-left: 8px;
+			margin: 0 24px 2px 8px;
 			transition: fill .2s;
+		}
+
+		&.pph-local-nav-container {
+			margin-right: -12px;
 		}
 
 		&:hover {
