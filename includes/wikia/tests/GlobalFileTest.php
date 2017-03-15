@@ -14,7 +14,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	const DEFAULT_CB = 123456789;
 	const TIMESTAMP = '20111213221639';
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		// assume we're in production environment
@@ -123,7 +123,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 * @dataProvider newFromTextDbNameMatchProvider
 	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
@@ -154,7 +154,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertFalse( $file3->exists() );
 	}
 
-	public function testNewFromTextDbNameMatchProvider() {
+	public function newFromTextDbNameMatchProvider() {
 		return [
 			[
 				'row' => (object) [

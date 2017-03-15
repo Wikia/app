@@ -1,6 +1,7 @@
 <?php
 
 class NodeHeroImageSanitizerTest extends WikiaBaseTest {
+	/** @var NodeHeroImageSanitizer $sanitizer */
 	private $sanitizer;
 
 	protected function setUp() {
@@ -13,16 +14,16 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 	/**
 	 * @param $data
 	 * @param $expected
-	 * @dataProvider testSanitizeDataProvider
+	 * @dataProvider sanitizeDataProvider
 	 */
-	function testSanitize( $data, $expected ) {
+	public function testSanitize( $data, $expected ) {
 		$this->assertEquals(
 			$expected,
 			$this->sanitizer->sanitize( $data )
 		);
 	}
 
-	function testSanitizeDataProvider() {
+	public function sanitizeDataProvider() {
 		return [
 			[
 				[ 'title' => [ 'value' => 'Test Title' ] ],

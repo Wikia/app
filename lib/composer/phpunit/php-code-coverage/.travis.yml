@@ -1,20 +1,28 @@
 language: php
 
 php:
-    - 5.3.3
-    - 5.3
-    - 5.4
-    - 5.5
-    - 5.6
+  - 7.0
+  - 7.1
+  - nightly
 
-before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer install --dev --prefer-source
+env:
+  matrix:
+    - DRIVER="xdebug"
+    - DRIVER="phpdbg"
 
-script: vendor/bin/phpunit --configuration ./build/travis-ci.xml
+sudo: false
+
+before_install:
+  - composer self-update
+  - composer clear-cache
+
+install:
+  - travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable
+
+script:
+  - if [[ "$DRIVER" = 'phpdbg' ]]; then phpdbg -qrr vendor/bin/phpunit; fi
+  - if [[ "$DRIVER" = 'xdebug' ]]; then vendor/bin/phpunit; fi
 
 notifications:
   email: false
-  irc:
-    channels:
-      - "irc.freenode.org#phpunit"
-    use_notice: true
+
