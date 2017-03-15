@@ -308,7 +308,7 @@ class PremiumPageHeaderController extends WikiaController {
 			$title = Title::newFromText( $page['title'], NS_SPECIAL );
 			if ( $title && $title->isKnown() ) {
 				return [
-					'text' => $title->getText(),
+					'text' => $title->fixSpecialName()->getText(),
 					'href' => $title->getLocalURL(),
 					'tracking' => $page['tracking']
 				];
