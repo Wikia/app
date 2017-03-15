@@ -195,6 +195,8 @@
 		display: flex;
 		justify-content: space-between;
 		padding-right: 24px;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		transition: background-color .2s;
 
 		a {
@@ -248,6 +250,7 @@
 
 .pph-dropdown-list {
 	max-height: 300px;
+	max-width: 200px;
 	overflow-y: scroll;
 }
 
