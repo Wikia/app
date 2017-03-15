@@ -2,7 +2,7 @@
 	<div class="pph-article-title">
 		<?php if ( count( $visibleCategories ) ): ?>
 			<div class="pph-categories">
-				<span class="pph-categories-in">in:</span>
+				<span class="pph-categories-in"><?= $inCategoriesText ?>:</span>
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
 
