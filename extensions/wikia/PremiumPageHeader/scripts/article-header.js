@@ -7,12 +7,14 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	});
 
 	$(function () {
-		var $articleHeader = $('.pph-article-header'),
-			$articleHeaderCategoryLinks = $articleHeader.find('.pph-category-links');
-
-		$articleHeaderCategoryLinks.find('.pph-categories-show-more').on('click', function (e) {
-			e.preventDefault();
-			$articleHeaderCategoryLinks.toggleClass('show-more');
+		$('.pph-article-header-tracking a, .pph-article-header-tracking .pph-track').on('click', function () {
+			var data = $(this).data('tracking');
+			if (data) {
+				_track({
+					action: tracker.ACTIONS.CLICK,
+					label: data
+				});
+			}
 		});
 	});
 });

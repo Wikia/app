@@ -27,14 +27,16 @@ class PremiumPageHeaderController extends WikiaController {
 		if ( count( $normalCategoryLinks ) > 4 ) {
 			$visibleCategoriesLimit = 3;
 		}
-		$visibleCategories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
-		$moreCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
+		$categories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
+		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories' );
+		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
+		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-more' );
 
-		$this->setVal( 'inCategoriesText', wfMessage('pph-in-categories')->plain() );
+		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->plain() );
 		$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
 		$this->setVal( 'moreCategories', $moreCategories );
-		$this->setVal( 'curatedContentButton', $this->getEditMainPageButton() );
+		$this->setVal( 'curatedContentButton', $this->getEditMainPage() );
 
 		if ( $this->app->getSkinTemplateObj() ) {
 			$this->language_urls = $this->app->getSkinTemplateObj()->data['language_urls'];
@@ -221,7 +223,7 @@ class PremiumPageHeaderController extends WikiaController {
 		return $commentsLink;
 	}
 
-	private function getEditMainPageButton() {
+	private function getEditMainPage() {
 		global $wgEnableCuratedContentExt;
 
 		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHelper::shouldDisplayToolButton() ) {
@@ -295,7 +297,7 @@ class PremiumPageHeaderController extends WikiaController {
 		}
 	}
 
-	private function getExplore() {
+	private function getExplore(): array {
 		$explore = [
 			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity' ],
 			[ 'title' => 'Random', 'tracking' => 'explore-random' ],
@@ -324,7 +326,7 @@ class PremiumPageHeaderController extends WikiaController {
 		];
 	}
 
-	private function getDiscuss() {
+	private function getDiscuss(): array {
 		global $wgEnableDiscussionsNavigation, $wgEnableDiscussions, $wgEnableForumExt;
 
 		$href =
@@ -338,5 +340,17 @@ class PremiumPageHeaderController extends WikiaController {
 			'text' => wfMessage( 'pph-discuss' )->escaped(),
 			'href' => $href
 		];
+	}
+
+	private function extendWithTrackingAttribute( $categories, $prefix ): array {
+		return array_map( function ( $link, $key ) use ( $prefix ) {
+			$domLink = HtmlHelper::createDOMDocumentFromText( $link );
+			$link = $domLink->getElementsByTagName( 'a' );
+			if ( $link->length >= 1 ) {
+				$link->item( 0 )->setAttribute( 'data-tracking', "{$prefix}-{$key}" );
+			}
+
+			return HtmlHelper::getBodyHtml( $domLink );
+		}, $categories, array_keys( $categories ) );
 	}
 }
