@@ -6,12 +6,14 @@ $messages['en'] = [
 	'pph-total-articles' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page|pages}}</span>',
 	'pph-explore' => 'Explore',
 	'pph-discuss' => 'Discuss',
-	'pph-in-categories' => 'in'
+	'pph-in-categories' => 'in',
+	'pph-categories-more' => 'and {{FORMATNUM:$1}} more'
 ];
 
 $messages['qqq'] = [
 	'pph-total-articles' => 'Total number of articles (pages)',
 	'pph-explore' => 'Explore menu header',
 	'pph-discuss' => 'Discussions or Special:Forum menu link',
-	'pph-in-categories' => 'Label displayed before list of categories that given article belongs to'
+	'pph-in-categories' => 'Label displayed before list of categories that given article belongs to',
+	'pph-categories-more' => 'Link to more categories that are hidden by default'
 ];
