@@ -167,6 +167,7 @@
 	position: absolute;
 	top: 100%;
 	transform: translateX(-50%);
+	z-index: 1;
 
 	&:before, &:after {
 		border: solid transparent;
