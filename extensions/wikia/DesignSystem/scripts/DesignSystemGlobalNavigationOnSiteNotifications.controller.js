@@ -7,117 +7,129 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 		'use strict';
 
 		function Controller(model) {
-			this.model = model;
+			this._model = model;
+		}
 
-			this.shouldLoadFirstPage = function () {
-				return this.model.isLoading() !== true && !this.nextPage && this.allPagesLoaded !== true;
-			};
+		/**
+		 * Gets ISO string from Date
+		 * @param {Date} date
+		 * @returns {string} - ISO string
+		 */
+		function convertToIsoString(date) {
+			return date.toISOString();
+		}
 
-			this.shouldLoadNextPage = function () {
-				return this.model.isLoading() !== true && this.nextPage && this.allPagesLoaded !== true;
-			};
+		/**
+		 * Gets Date from ISO string date
+		 * @param {string} date
+		 * @returns {Date} - date
+		 */
+		function convertToTimestamp(date) {
+			return new Date(date);
+		}
 
-			/**
-			 * Gets ISO string from Date
-			 * @param {Date} date
-			 * @returns {string} - ISO string
-			 */
-			function convertToIsoString(date) {
-				return date.toISOString();
-			}
+		function getSafely(obj, path) {
+			return path.split(".").reduce(function (acc, key) {
+				return (typeof acc == "undefined" || acc === null) ? acc : acc[key];
+			}, obj);
+		}
 
-			/**
-			 * Gets Date from ISO string date
-			 * @param {string} date
-			 * @returns {Date} - date
-			 */
-			function convertToTimestamp(date) {
-				return new Date(date);
-			}
-
-			function getSafely(obj, path) {
-				return path.split(".").reduce(function (acc, key) {
-					return (typeof acc == "undefined" || acc === null) ? acc : acc[key];
-				}, obj);
-			}
-
-			function getTypeFromApiData(notification) {
-				if (notification.type === 'upvote-notification') {
-					if (notification.refersTo.type === 'discussion-post') {
-						return common.notificationTypes.discussionUpvoteReply;
-					} else {
-						return common.notificationTypes.discussionUpvotePost;
-					}
-				} else if (notification.type === 'replies-notification') {
-					return common.notificationTypes.discussionReply;
-				} else if (notification.type === 'announcement-notification') {
-					return common.notificationTypes.announcement;
-				}
-			}
-
-			function createActors(actors) {
-				if (!Array.isArray(actors)) {
-					return [];
+		function getTypeFromApiData(notification) {
+			if (notification.type === 'upvote-notification') {
+				if (notification.refersTo.type === 'discussion-post') {
+					return common.notificationTypes.discussionUpvoteReply;
 				} else {
-					return actors.map(function (data) {
-						return {
-							avatarUrl: data.avatarUrl,
-							badgePermission: data.badgePermission,
-							id: data.id,
-							name: data.name
-						};
-					});
+					return common.notificationTypes.discussionUpvotePost;
 				}
+			} else if (notification.type === 'replies-notification') {
+				return common.notificationTypes.discussionReply;
+			} else if (notification.type === 'announcement-notification') {
+				return common.notificationTypes.announcement;
 			}
+		}
 
-			function mapToModel(notifications) {
-				return notifications.map(function (notification) {
+		function createActors(actors) {
+			if (!Array.isArray(actors)) {
+				return [];
+			} else {
+				return actors.map(function (data) {
 					return {
-						title: getSafely(notification, 'refersTo.title'),
-						snippet: getSafely(notification, 'refersTo.snippet'),
-						uri: getSafely(notification, 'refersTo.uri'),
-						when: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
-						communityName: getSafely(notification, 'community.name'),
-						communityId: getSafely(notification, 'community.id'),
-						isUnread: notification.read === false,
-						totalUniqueActors: getSafely(notification, 'events.totalUniqueActors'),
-						latestActors: createActors(getSafely(notification, 'events.latestActors')),
-						type: getTypeFromApiData(notification)
+						avatarUrl: data.avatarUrl,
+						badgePermission: data.badgePermission,
+						id: data.id,
+						name: data.name
 					};
 				});
 			}
+		}
 
-			this.updateUnreadCount = function () {
+		function mapToModel(notifications) {
+			return notifications.map(function (notification) {
+				return {
+					title: getSafely(notification, 'refersTo.title'),
+					snippet: getSafely(notification, 'refersTo.snippet'),
+					uri: getSafely(notification, 'refersTo.uri'),
+					when: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
+					communityName: getSafely(notification, 'community.name'),
+					communityId: getSafely(notification, 'community.id'),
+					isUnread: notification.read === false,
+					totalUniqueActors: getSafely(notification, 'events.totalUniqueActors'),
+					latestActors: createActors(getSafely(notification, 'events.latestActors')),
+					type: getTypeFromApiData(notification)
+				};
+			});
+		}
+
+		Controller.prototype = {
+
+			registerEventHandlers: function (view) {
+				view.onLoadMore.attach(this.loadMore.bind(this));
+				view.onDropDown.attach(this.loadFirstPage.bind(this));
+				view.onMarkAllAsRead.attach(this.markAllAsRead.bind(this));
+				view.onMarkAsRead.attach(function (_, uri) {
+					this.markAsRead(uri);
+				}.bind(this));
+			},
+
+			shouldLoadFirstPage: function () {
+				return this._model.isLoading() !== true && !this.nextPage && this.allPagesLoaded !== true;
+			},
+
+			shouldLoadNextPage: function () {
+				return this._model.isLoading() !== true && this.nextPage && this.allPagesLoaded !== true;
+			},
+
+			updateUnreadCount: function () {
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications/unread-count',
 					xhrFields: {
 						withCredentials: true
 					}
-				}).done(this.proxy(function (data) {
-					this.model.setUnreadCount(data.unreadCount);
-				}));
-			};
+				}).done(function (data) {
+					this._model.setUnreadCount(data.unreadCount);
+				}.bind(this));
+			},
 
-			this.markAsRead = function (id) {
+			markAsRead: function (uri) {
 				$.ajax({
 					type: 'POST',
-					data: JSON.stringify([id]),
+					data: JSON.stringify([uri]),
 					dataType: 'json',
 					contentType: "application/json; charset=UTF-8",
 					url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
 					xhrFields: {
 						withCredentials: true
 					}
-				}).done(this.proxy(function () {
-					this.model.markAsRead(id);
+				}).done(function () {
+					this._model.markAsRead(uri);
 					this.updateUnreadCount();
-				}));
-			};
+				}.bind(this));
+			},
 
-			this.markAllAsRead = function () {
-				var since = this.model.getLatestEventTime();
+			markAllAsRead: function () {
+				var since = this._model.getLatestEventTime();
 				if (!since) {
-					log('Marking as read did not find since ' + this.model, log.levels.info, common.logTag);
+					log('Marking as read did not find since ' + this._model, log.levels.info, common.logTag);
 					return;
 				}
 				$.ajax({
@@ -129,63 +141,54 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					xhrFields: {
 						withCredentials: true
 					}
-				}).done(this.proxy(function () {
-					this.model.markAllAsRead();
-				}));
-			};
+				}).done(this._model.markAllAsRead.bind(this._model));
+			},
 
-			this.loadFirstPage = function () {
+			loadFirstPage: function () {
 				if (!this.shouldLoadFirstPage()) {
 					return;
 				}
-				this.model.loadingStarted();
+				this._model.loadingStarted();
 				$.ajax({
 					url: this.getBaseUrl() + '/notifications',
 					xhrFields: {
 						withCredentials: true
 					}
-				}).done(this.proxy(function (data) {
-					this.model.addNotifications(mapToModel(data.notifications));
-					this.calculatePage(data);
-				})).always(this.proxy(function () {
-					this.model.loadingStopped();
-				}));
-			};
+				}).done(function (data) {
+						this._model.addNotifications(mapToModel(data.notifications));
+						this.calculatePage(data);
+					}.bind(this)
+				).always(this._model.loadingStopped.bind(this._model));
+			},
 
-			this.loadMore = function () {
+			loadMore: function () {
 				if (!this.shouldLoadNextPage()) {
 					return;
 				}
-				this.model.loadingStarted();
+				this._model.loadingStarted();
 				$.ajax({
 					url: this.getBaseUrl() + this.nextPage,
 					xhrFields: {
 						withCredentials: true
 					}
-				}).done(this.proxy(function (data) {
-					this.model.addNotifications(mapToModel(data.notifications));
-					this.calculatePage(data);
-				})).always(this.proxy(function () {
-					this.model.loadingStopped();
-				}));
-			};
+				}).done(function (data) {
+						this._model.addNotifications(mapToModel(data.notifications));
+						this.calculatePage(data);
+					}.bind(this)
+				).always(this._model.loadingStopped.bind(this._model));
+			},
 
-			this.calculatePage = function (data) {
+			calculatePage: function (data) {
 				this.nextPage = getSafely(data, '_links.next');
 				if (!this.nextPage) {
 					this.allPagesLoaded = true;
 				}
-			};
+			},
 
-			this.getBaseUrl = function () {
+			getBaseUrl: function () {
 				return window.mw.config.get('wgOnSiteNotificationsApiUrl');
-			};
-
-			this.proxy = function (func) {
-				//TODO replace proxy with .bind and remove jquery from dependencies
-				return $.proxy(func, this);
 			}
-		}
+		};
 
 		return Controller
 	}

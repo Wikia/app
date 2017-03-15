@@ -2,36 +2,40 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 		'jquery',
 		'wikia.log',
 		'wikia.window',
+		'ext.wikia.design-system.event',
 		'ext.wikia.design-system.templating',
 		'ext.wikia.design-system.loading-spinner',
 		'ext.wikia.design-system.on-site-notifications.text-formatter',
 		'ext.wikia.design-system.on-site-notifications.common'
-	], function ($, log, window, templating, Spinner, TextFormatter, common) {
+	], function ($, log, window, Event, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
+		var isVisibleClass = 'wds-is-visible',
+			almostBottom = 100,
+			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
+			template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
+
 		function View() {
-			this.controller = null;
-			this.spinner = new Spinner(14);
-			this.textFormatter = new TextFormatter();
-			this.$notificationsCount = $('#onSiteNotificationsCount');
-			this.$container = $('#notificationContainer');
-			this.$markAllAsReadButton = $('#markAllAsReadButton');
+			this.onDropDown = new Event(this);
+			this.onLoadMore = new Event(this);
+			this.onMarkAllAsRead = new Event(this);
+			this.onMarkAsRead = new Event(this);
 
-			var isVisibleClass = 'wds-is-visible',
-				almostBottom = 100,
-				avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50',
-				template = 'extensions/wikia/DesignSystem/services/templates/DesignSystemGlobalNavigationOnSiteNotifications.mustache';
+			this._spinner = new Spinner(14);
+			this._textFormatter = new TextFormatter();
+			this._$notificationsCount = $('#onSiteNotificationsCount');
+			this._$container = $('#notificationContainer');
+			this._$markAllAsReadButton = $('#markAllAsReadButton');
 
-			this.registerEvents = function (controller, model) {
-				this.controller = controller;
+			this.registerEventHandlers = function (model) {
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
 
 				model.loadingStatusChanged.attach(function (_, isLoading) {
 					if (isLoading === true) {
-						this.$container.append(
-							'<li class="loader">' + this.spinner.html + '</li>');
+						this._$container.append(
+							'<li class="loader">' + this._spinner.html + '</li>');
 					} else {
 						$('.loader').remove();
 					}
@@ -60,8 +64,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.onScroll = function (e) {
-				if (this.hasScrolledToTheBottom($(e.target))) {
-					this.controller.loadMore();
+				if (this._hasScrolledToTheBottom($(e.target))) {
+					this.onLoadMore.notify();
 				}
 			};
 
@@ -69,17 +73,19 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			 * Has the user  scrolled almost to the bottom?
 			 * @private
 			 */
-			this.hasScrolledToTheBottom = function (element) {
-				return element[0].scrollHeight - almostBottom <= element.scrollTop() + element.innerHeight();
+			this._hasScrolledToTheBottom = function (element) {
+				return element[0].scrollHeight - almostBottom
+					<= element.scrollTop() + element.innerHeight();
 			};
 
 			this.addMarkAllAsReadEvent = function () {
-				this.$markAllAsReadButton.click(this.controller.markAllAsRead.bind(this.controller));
+				this._$markAllAsReadButton.click(
+					this.onMarkAllAsRead.notify.bind(this.onMarkAllAsRead));
 			};
 
 			this.addDropdownLoadingEvent = function () {
 				var $dropdown = $('#onSiteNotificationsDropdown');
-				$dropdown.click(this.controller.loadFirstPage.bind(this.controller));
+				$dropdown.click(this.onDropDown.notify.bind(this.onDropDown));
 			};
 
 			this._mapToView = function (notifications) {
@@ -109,7 +115,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 						uri: notification.uri,
 						showSnippet: !notification.title,
 						snippet: notification.snippet,
-						text: this.textFormatter.getText(notification),
+						text: this._textFormatter.getText(notification),
 						isUnread: notification.isUnread,
 						communityName: notification.communityName,
 						showAvatars: notification.totalUniqueActors > 2
@@ -125,20 +131,20 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			this.renderNotifications = function (notifications) {
 				templating.renderByLocation(template, this._mapToView(notifications))
 					.then(function (html) {
-						this.$container.append(html);
+						this._$container.append(html);
 						this._bindMarkAsReadHandlers();
 					}.bind(this));
 			};
 
 			this._bindMarkAsReadHandlers = function () {
-				$(this.$container).find('.wds-notification-card__icon-wrapper')
+				$(this._$container).find('.wds-notification-card__icon-wrapper')
 					.click(this._markAsRead.bind(this));
 			};
 
 			this._markAsRead = function (e) {
 				try {
 					var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
-					this.controller.markAsRead(id);
+					this.onMarkAsRead.notify(id);
 				} catch (e) {
 					log('Failed to mark as read ' + e, log.levels.error, common.logTag);
 				}
@@ -150,14 +156,12 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderUnreadCount = function (count) {
-				this.unreadCount = count;
-
-				if (this.unreadCount > 0) {
-					this.$markAllAsReadButton.addClass(isVisibleClass);
-					this.$notificationsCount.html(this.unreadCount).parent('.bubbles').addClass('show');
+				if (count > 0) {
+					this._$markAllAsReadButton.addClass(isVisibleClass);
+					this._$notificationsCount.html(count).parent('.bubbles').addClass('show');
 				} else {
-					this.$markAllAsReadButton.removeClass(isVisibleClass);
-					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
+					this._$markAllAsReadButton.removeClass(isVisibleClass);
+					this._$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			};
 
@@ -176,11 +180,11 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			}
 
 			this.renderAllNotificationsAsRead = function () {
-				findUnreadAndClearClass(this.$container);
+				findUnreadAndClearClass(this._$container);
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				var container = this.$container.find('[data-uri="' + id + '"]');
+				var container = this._$container.find('[data-uri="' + id + '"]');
 				findUnreadAndClearClass(container);
 			};
 

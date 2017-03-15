@@ -12,7 +12,8 @@ require([
 				this.model = new Model();
 				this.controller = new Controller(this.model);
 
-				this.view.registerEvents(this.controller, this.model);
+				this.view.registerEventHandlers(this.model);
+				this.controller.registerEventHandlers(this.view);
 				this.controller.updateUnreadCount();
 			}
 		};
