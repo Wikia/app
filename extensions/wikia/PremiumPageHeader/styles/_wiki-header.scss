@@ -77,10 +77,13 @@
 	.wordmark {
 		height: 65px;
 		margin: 20px 18px 20px 20px;
+		text-align: center;
+		width: 250px;
 
 		@media #{$breakpoint-below-small-plus} {
 			height: 45px;
 			margin: 20px 18px 50px 20px;
+			width: 175px;
 
 			img {
 				height: auto;
