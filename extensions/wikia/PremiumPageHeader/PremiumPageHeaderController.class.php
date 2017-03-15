@@ -317,7 +317,7 @@ class PremiumPageHeaderController extends WikiaController {
 		}, $explore );
 
 		return [
-			'text' => wfMessage( 'pph-explore' )->escaped(),
+			'text' => wfMessage( 'pph-explore' )->inContentLanguage()->escaped(),
 			'children' => array_filter( $children, function ( $child ) {
 				return !empty( $child );
 			} )
@@ -335,7 +335,7 @@ class PremiumPageHeaderController extends WikiaController {
 				->getLocalURL();
 
 		return [
-			'text' => wfMessage( 'pph-discuss' )->escaped(),
+			'text' => wfMessage( 'pph-discuss' )->inContentLanguage()->escaped(),
 			'href' => $href
 		];
 	}
