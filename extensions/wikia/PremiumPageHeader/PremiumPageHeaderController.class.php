@@ -30,8 +30,9 @@ class PremiumPageHeaderController extends WikiaController {
 		$visibleCategories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
 		$moreCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 
-		$this->setVal( 'inCategoriesText', wfMessage('pph-in-categories')->plain() );
+		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->plain() );
 		$this->setVal( 'visibleCategories', $visibleCategories );
+		$this->setVal( 'moreCategoriesText', wfMessage( 'pph-categories-more' )->numParams( count( $moreCategories ) )->text() );
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
 		$this->setVal( 'moreCategories', $moreCategories );
 		$this->setVal( 'curatedContentButton', $this->getEditMainPageButton() );

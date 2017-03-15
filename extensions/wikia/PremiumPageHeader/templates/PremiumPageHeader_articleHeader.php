@@ -8,7 +8,7 @@
 
 				 --><?php if ( $moreCategoriesLength > 0 ): ?>,
 						<div class="pph-dropdown-container">
-							<a href="#" class="pph-categories-show-more">and <?= $moreCategoriesLength ?> more</a>
+							<a href="#" class="pph-categories-show-more"><?= $moreCategoriesText ?></a>
 							<ul class="pph-dropdown">
 								<?php foreach ( $moreCategories as $category ): ?>
 									<li><?= $category; ?></li>
