@@ -18,11 +18,13 @@ class PremiumPageHeaderController extends WikiaController {
 		if ( $wgUser->isLoggedIn() ) {
 			$title = Title::newFromText( 'WikiActivity', NS_SPECIAL );
 
-			$this->setVal( 'addNewPageLabel', wfMessage( 'pph-add' )->escaped() );
-			$this->setVal( 'adminToolsWikiActivity', [
-				'href' => $title->getLocalURL(),
-				'title' => wfMessage( 'oasis-activity-header' )->escaped()
-			] );
+			if ( isset( $title ) ) {
+				$this->setVal( 'addNewPageLabel', wfMessage( 'pph-add' )->escaped() );
+				$this->setVal( 'adminToolsWikiActivity', [
+					'href' => $title->getLocalURL(),
+					'title' => wfMessage( 'oasis-activity-header' )->escaped()
+				] );
+			}
 		}
 	}
 
