@@ -42,12 +42,11 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
-	function isEnabled (noExternals, instantGlobals) {
-		var isGeoSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries),
-			isExternalEnabled = !noExternals,
-			isNotDisabledOnWiki = context.opts.pageFairRecovery !== false;
+	function isRecoveryModuleEnabled(wgCountries, contextVariable) {
+		var isGeoSupported = geo.isProperGeo(wgCountries),
+			isNotDisabledOnWiki = contextVariable !== false;
 
-		return Boolean(isExternalEnabled && isNotDisabledOnWiki && isGeoSupported);
+		return !!(isNotDisabledOnWiki && isGeoSupported);
 	}
 
 	function setContext(newContext) {
@@ -88,16 +87,14 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = isEnabled(noExternals, instantGlobals);
+		context.opts.pageFairRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
 
 		// SourcePoint recovery
-		if (
-			!noExternals &&
-			context.opts.sourcePointRecovery !== false &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)
-		) {
-			context.opts.sourcePointRecovery = true;
-		}
+		context.opts.sourcePointRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverSourcePointRecoveryCountries, context.opts.sourcePointRecovery);
 
 		// SourcePoint MMS
 		if (noExternals && context.opts.sourcePointMMS === true) {
