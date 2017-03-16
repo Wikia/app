@@ -14,10 +14,11 @@ $image-width: 430px;
 	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
-	transition: border-color, color;
+	transition: border-color, background-color, color;
 	transition-duration: .2s;
 
 	&:hover {
+		background-color: rgba($color-buttons, .4);
 		border-color: rgba($color-button-text, .8);
 		color: rgba($color-button-text, .8);
 		text-decoration: none;
