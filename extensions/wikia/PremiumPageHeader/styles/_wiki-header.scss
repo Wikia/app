@@ -76,20 +76,24 @@ $image-width: 430px;
 		size: $image-width auto;
 	}
 	color: $color-button-text;
+	display: flex;
 	margin: -1px -31px 20px;
 	position: relative;
 	z-index: 1001;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	.gradient {
+	&::before {
 		background: linear-gradient(to right, rgba($color-buttons, .5), rgba($color-buttons, .5)),
 					linear-gradient(to left, rgba($color-buttons, .0) 200px, rgba($color-buttons, 1) $image-width);
-		display: flex;
+		content: '';
+		display: block;
 		height: 100%;
+		position: absolute;
 		width: 100%;
+		z-index: -1;
 	}
-	
+
 	.wordmark {
 		height: 65px;
 		margin: 20px 18px 20px 20px;
