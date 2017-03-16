@@ -252,11 +252,10 @@ class PremiumPageHeaderController extends WikiaController {
 
 		$langSortBy = [];
 
-		// only display the interlang links if there are interlanguage links
+		// only display the interlang links if available
 		if ( !empty( $language_urls ) && is_array( $language_urls ) ) {
-			$lang_index = [];
 
-			// language order
+			// most important languages order, the rest is applied at the end
 			$langSortBy = [
 				"interwiki-en" => 1,
 				"interwiki-de" => 2,
@@ -269,19 +268,14 @@ class PremiumPageHeaderController extends WikiaController {
 			];
 
 			foreach ( $language_urls as $val ) {
-				if ( !in_array( $val['href'], $lang_index ) ) {
-					if ( !isset( $langSortBy[$val["class"]] ) ) {
-						$langSortBy[$val["class"]] = true;
-					}
-
-					$langSortBy[$val["class"]] = [
-						'href' => $val['href'],
-						'name' => $val['text'],
-						'class' => $val['class'],
-					];
-				}
+				$langSortBy[$val["class"]] = [
+					'href' => $val['href'],
+					'name' => $val['text'],
+					'class' => $val['class'],
+				];
 			}
-			//	ordering the languages
+
+			//	removing most important languages that are not set (wiki not available in given lang)
 			foreach ( $langSortBy as $key => $value ) {
 				if ( !is_array( $value ) ) {
 					unset( $langSortBy[$key] );
