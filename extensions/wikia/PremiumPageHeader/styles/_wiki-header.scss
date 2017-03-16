@@ -95,6 +95,8 @@ $image-width: 430px;
 	}
 
 	.wordmark {
+		// !important to avoid showing bg image from parent when wordmark has opacity
+		background: $color-buttons !important;
 		height: 65px;
 		margin: 20px 18px 20px 20px;
 
