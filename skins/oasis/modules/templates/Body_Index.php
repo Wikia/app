@@ -21,7 +21,9 @@
 
 <?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
 <?php if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
-	<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+	<div class="banner-notifications-placeholder">
+		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
+	</div>
 <?php endif; ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
