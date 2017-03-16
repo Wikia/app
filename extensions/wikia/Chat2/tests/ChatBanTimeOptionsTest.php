@@ -9,7 +9,7 @@ class ChatBanTimeOptionsTest extends WikiaBaseTest {
 
 
 	/**
-	 * @dataProvider testGetDataProvider
+	 * @dataProvider getDataProvider
 	 */
 	public function testGet( $textSource, $expected ) {
 		$messageMock = $this->getMockBuilder( 'Message' )
@@ -29,7 +29,7 @@ class ChatBanTimeOptionsTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, ChatBanTimeOptions::newDefault()->get() );
 	}
 
-	public function testGetDataProvider() {
+	public function getDataProvider() {
 		return [
 			'simple - 2 minutes' => [
 				'2 minutes:2 minutes',
