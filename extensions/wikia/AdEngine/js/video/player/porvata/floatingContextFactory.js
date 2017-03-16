@@ -25,10 +25,12 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 		function create(video, params, eventHandlers) {
 			var configuration = floaterConfiguration.selectConfigurationUsing(params),
 				adContainer = doc.getElementById(configuration.container),
+				container = params.originalContainer || params.container,
 				elements = {
 					adContainer: adContainer,
 					ad: adContainer.querySelector('.wikia-ad'),
-					imageContainer: params.container.parentElement.querySelector('#image'),
+					originalContainer: params.originalContainer,
+					imageContainer: container.parentElement.querySelector('#image'),
 					video: video
 				},
 				floatingContext = {
