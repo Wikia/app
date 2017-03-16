@@ -1,4 +1,4 @@
-<div class="pph-wiki-header" style="background-image: url('http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2013/09/12/101029496--sites-default-files-images-101029496-3176173-1748009911-hp.jp-1.jpg?v=1474281478');">
+<div class="pph-wiki-header" style="background-image: url('<?= $backgroundImageUrl ?>');">
 	<div class="gradient">
 		<?php // fixme it will not work with wikis without wordmark image  ?>
 		<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>

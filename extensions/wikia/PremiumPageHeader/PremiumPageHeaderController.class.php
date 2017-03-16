@@ -10,7 +10,7 @@ class PremiumPageHeaderController extends WikiaController {
 
 		$backgroundImageUrl = ( new SiteAttributeService() )
 				->getApiClient()
-				->getAttribute( $wgCityId, 'heroImage' )
+				->getAttribute( $wgCityId, 'pageHeaderImage' )
 				->getValue() ?? '';
 
 		$this->setVal( 'backgroundImageUrl', $backgroundImageUrl );
