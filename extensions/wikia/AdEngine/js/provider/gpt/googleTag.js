@@ -62,11 +62,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0],
-			pageFairRecoveryisBlocking = pageFair && pageFair.isBlocking(),
+			pageFairDetectedBlocking = pageFair && pageFair.isBlocking(),
 			// load GPT only when API not ready and recovery is not blocking ads
 			gptCanBeLoaded = !window.googletag.apiReady &&
 				!sourcePoint.isBlocking() &&
-				!pageFairRecoveryisBlocking;
+				!pageFairDetectedBlocking;
 
 		if (gptCanBeLoaded) {
 			gads.async = true;
