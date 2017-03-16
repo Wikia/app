@@ -43,6 +43,7 @@ $wds-icon-color: $wds-color-light-c5;
 	color: $notifications-dropdown-content-color;
 	font-size: $wds-typescale-size-minus-1;
 	min-width: 18px * 2 + 320px;
+	max-width: 18px * 2 + 320px;
 	white-space: normal;
 	width: 100%;
   }
