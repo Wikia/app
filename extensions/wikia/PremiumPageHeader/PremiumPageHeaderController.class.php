@@ -3,12 +3,19 @@
 class PremiumPageHeaderController extends WikiaController {
 
 	public function wikiHeader() {
+		global $wgCityId;
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
+		$backgroundImageUrl = ( new SiteAttributeService() )
+				->getApiClient()
+				->getAttribute( $wgCityId, 'heroImage' )
+				->getValue() ?? '';
+
+		$this->setVal( 'backgroundImageUrl', $backgroundImageUrl );
 		$this->setVal( 'wordmarkText', $settings['wordmark-text'] );
-		$this->setVal( 'tallyMsg',
-			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
+		$this->setVal( 'tallyMsg', wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
 		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );
 	}

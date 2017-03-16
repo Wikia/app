@@ -65,15 +65,27 @@
 }
 
 .pph-wiki-header {
-	background-color: $color-buttons;
+	background: {
+		color: $color-buttons;
+		position: 600px 0;
+		repeat: no-repeat;
+		size: cover;
+	}
 	color: $color-button-text;
-	display: flex;
 	margin: -1px -31px 20px;
 	position: relative;
 	z-index: 1001;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
+	.gradient {
+		background: linear-gradient(to right, rgba($color-buttons, .5), rgba($color-buttons, .5)),
+					linear-gradient(to right, rgba($color-buttons, 1) 600px, rgba($color-buttons, .0) 800px);
+		display: flex;
+		height: 100%;
+		width: 100%;
+	}
+	
 	.wordmark {
 		height: 65px;
 		margin: 20px 18px 20px 20px;
