@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
-			videoWidth = 225,
+			videoWidth = 320,
 			wikiFloatingVideoSelector = '.video-container';
 
 		function updateDimensions(element, width, height) {
