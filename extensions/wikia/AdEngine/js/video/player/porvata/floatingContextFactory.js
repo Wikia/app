@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					adContainer: adContainer,
 					ad: ad,
 					originalContainer: params.originalContainer,
-					iframe: video.container.ownerDocument.defaultView.frameElement,
+					iframe: container.ownerDocument.defaultView.frameElement,
 					imageContainer: container.parentElement.querySelector('#image'),
 					providerContainer: ad.querySelector('.provider-container'),
 					video: video
