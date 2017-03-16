@@ -5,13 +5,19 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	var mocks = {
 		resolvedState: {
 			isResolvedState: function () { return false; }
+		},
+		googleIma: {
+			vpaidMode: {
+				ENABLED: 1
+			}
 		}
 	};
 
 	function getSettings(params) {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
-			mocks.resolvedState
+			mocks.resolvedState,
+			mocks.googleIma
 		).create(params);
 	}
 
@@ -75,6 +81,20 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 
 		expect(false).toMatch(videoSettings.isSplitLayout());
+	});
+
+	it('Should enable vpaid ads by default', function () {
+		var videoSettings = getSettings({});
+
+		expect(videoSettings.getVpaidMode()).toEqual(1);
+	});
+
+	it('Should control vpaid ads if it is configured in params', function () {
+		var videoSettings = getSettings({
+			vpaidMode: 0
+		});
+
+		expect(videoSettings.getVpaidMode()).toEqual(0);
 	});
 });
 

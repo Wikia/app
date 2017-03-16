@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
-	'ext.wikia.adEngine.slot.resolvedState'
-], function (resolvedState) {
+	'ext.wikia.adEngine.slot.resolvedState',
+	'ext.wikia.adEngine.video.player.porvata.googleIma'
+], function (resolvedState, googleIma) {
 	'use strict';
 
 	function create(params) {
@@ -30,6 +31,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		return {
 			getParams: function () {
 				return params;
+			},
+			getVpaidMode: function () {
+				return params.vpaidMode !== undefined ? params.vpaidMode : googleIma.vpaidMode.ENABLED;
 			},
 			isAutoPlay: function () {
 				return state.autoPlay;

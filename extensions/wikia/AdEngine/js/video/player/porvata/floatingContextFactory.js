@@ -26,11 +26,13 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 			var configuration = floaterConfiguration.selectConfigurationUsing(params),
 				adContainer = doc.getElementById(configuration.container),
 				ad = adContainer.querySelector('.wikia-ad'),
+				container = params.originalContainer || params.container,
 				elements = {
 					adContainer: adContainer,
 					ad: ad,
+					originalContainer: params.originalContainer,
 					iframe: video.container.ownerDocument.defaultView.frameElement,
-					imageContainer: params.container.parentElement.querySelector('#image'),
+					imageContainer: container.parentElement.querySelector('#image'),
 					providerContainer: ad.querySelector('.provider-container'),
 					video: video
 				},
@@ -64,7 +66,7 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					 *
 					 * @returns {number} - floating ad width
 					 */
-					getHeight: function() {
+					getHeight: function () {
 						return this.getWidth() / this.elements.video.computeVastMediaAspectRatio();
 					},
 					/**
@@ -72,7 +74,7 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					 *
 					 * @returns {number} - floating ad width
 					 */
-					getWidth: function() {
+					getWidth: function () {
 						return elements.ad.offsetWidth;
 					},
 					/**

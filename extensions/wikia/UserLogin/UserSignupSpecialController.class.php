@@ -269,12 +269,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$byemail = $this->wg->request->getBool( 'byemail', false );
-		if ( $byemail ) {
-			$ret = $signupForm->addNewAccountMailPassword();
-		} else {
-			$ret = $signupForm->addNewAccount();
-		}
+		$ret = $signupForm->addNewAccount();
 
 		// pass and ID of created account for FBConnect feature
 		if ( $ret instanceof User ) {

@@ -19,7 +19,8 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 						video = this.elements.video;
 
 					video.addEventListener('wikiaSlotExpanded', function () {
-						var body = video.container.ownerDocument.body;
+						var container = floatingContext.elements.originalContainer || video.container,
+							body = container.ownerDocument.body;
 
 						floatingContext.preferred.width = body.scrollWidth;
 						floatingContext.preferred.height = body.scrollHeight;

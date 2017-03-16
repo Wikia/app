@@ -28,6 +28,15 @@ $floating-ad-video-width: 320px;
 $floating-ad-animation-speed: $video-collapse-animation-speed;
 $floating-ad-featured-video-gap: $video-container-width;
 
+$vpaid-z-index: 10;
+
+@mixin absolute-fill() {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -74,7 +83,7 @@ $floating-ad-featured-video-gap: $video-container-width;
 			right: $floating-ad-margin;
 			transition: margin-bottom $floating-ad-animation-speed;
 
-			iframe {
+			.video-player, iframe {
 				width: $floating-ad-video-width;
 			}
 
@@ -92,6 +101,10 @@ $floating-ad-featured-video-gap: $video-container-width;
 	}
 }
 
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
+}
+
 .wikia-ad {
 	&.slot-animation {
 		@include transition(max-height, 0.8s, ease, 0);
@@ -101,16 +114,35 @@ $floating-ad-featured-video-gap: $video-container-width;
 	&.slot-responsive {
 		width: 100%;
 
-		.provider-container {
-			position: relative;
+		.provider-container iframe {
+			@include absolute-fill();
+		}
+	}
 
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
+	.vpaid-container {
+		@include absolute-fill();
+
+		video, & > div {
+			@include absolute-fill();
+		}
+
+		// Node elements created by IMA library
+		& > div {
+			pointer-events: none;
+
+			video {
+				pointer-events: auto;
 			}
+		}
+
+		&.vpaid-enabled video {
+			 z-index: $vpaid-z-index;
+		 }
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
 		}
 	}
 }
