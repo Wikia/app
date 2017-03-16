@@ -44,13 +44,20 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 					var elements = floatingContext.elements;
 
 					elements.viewport = elements.adContainer;
+					floatingContext.forceDoNotFloat();
 				},
 				calculateViewportHeight: function (viewport) {
 					return win.getComputedStyle(viewport).height;
 				},
 				floatLater: function (callback) {
+					var floatingContext = this,
+						video = this.elements.video;
+
 					if (this.isOutsideOfViewport()) {
-						callback(this);
+						video.addEventListener('loaded', function () {
+							floatingContext.floatAgain();
+							callback(floatingContext);
+						});
 						this.fireEvent('start');
 					}
 				},

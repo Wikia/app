@@ -67,7 +67,6 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					},
 					invokeLater: function (callback) {
 						this.floatLater(callback);
-						// this.fireEvent(events.start);
 					},
 					isFloating: function () {
 						return this.state === state.floating;
