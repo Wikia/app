@@ -32,11 +32,11 @@ require([
 	messageListener,
 	pageFairDetection,
 	taboolaHelper,
-	recoveryHelper,
+	sourcePoint,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
-	sourcePoint,
+	sourcePointDetection,
 	yavliTag,
 	win,
 	loader,
@@ -77,18 +77,18 @@ require([
 
 		slotTweaker.registerMessageListener();
 
-		sourcePoint.initDetection();
+		sourcePointDetection.initDetection();
 
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
 
 		// Recovery
-		recoveryHelper.initEventQueues();
+		sourcePoint.initEventQueues();
 
 		// Taboola
 		if (context.opts.loadTaboolaLibrary) {
-			recoveryHelper.addOnBlockingCallback(function() {
+			sourcePoint.addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
 			});
 		}

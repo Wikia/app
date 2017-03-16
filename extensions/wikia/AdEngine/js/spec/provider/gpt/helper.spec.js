@@ -31,7 +31,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				isBlocking: noop,
 				isEnabled: noop
 			},
-			recoveryHelper: {
+			sourcePoint: {
 				recoverSlots: noop,
 				isBlocking: noop,
 				isEnabled: noop
@@ -83,7 +83,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			AdElement,
 			mocks.googleTag,
 			mocks.slotTargetingHelper,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.slotTweaker,
 			mocks.sraHelper,
 			null, // scrollHandler,
@@ -192,7 +192,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
-		mocks.recoveryHelper.isBlocking = function () {
+		mocks.sourcePoint.isBlocking = function () {
 			return true;
 		};
 
@@ -209,7 +209,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Should push/flush when slot is recoverable', function () {
-		mocks.recoveryHelper.isBlocking = function () {
+		mocks.sourcePoint.isBlocking = function () {
 			return true;
 		};
 
@@ -233,11 +233,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isEnabled');
+		spyOn(mocks.sourcePoint, 'isBlocking');
+		spyOn(mocks.sourcePoint, 'isEnabled');
 
-		mocks.recoveryHelper.isBlocking.and.returnValue(true);
-		mocks.recoveryHelper.isEnabled.and.returnValue(true);
+		mocks.sourcePoint.isBlocking.and.returnValue(true);
+		mocks.sourcePoint.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
@@ -251,11 +251,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isEnabled');
+		spyOn(mocks.sourcePoint, 'isBlocking');
+		spyOn(mocks.sourcePoint, 'isEnabled');
 
-		mocks.recoveryHelper.isBlocking.and.returnValue(true);
-		mocks.recoveryHelper.isEnabled.and.returnValue(true);
+		mocks.sourcePoint.isBlocking.and.returnValue(true);
+		mocks.sourcePoint.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
@@ -269,11 +269,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isEnabled');
+		spyOn(mocks.sourcePoint, 'isBlocking');
+		spyOn(mocks.sourcePoint, 'isEnabled');
 
-		mocks.recoveryHelper.isBlocking.and.returnValue(false);
-		mocks.recoveryHelper.isEnabled.and.returnValue(true);
+		mocks.sourcePoint.isBlocking.and.returnValue(false);
+		mocks.sourcePoint.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
@@ -305,9 +305,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks.pageFair, 'isEnabled');
 		spyOn(mocks.pageFair, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isBlocking');
+		spyOn(mocks.sourcePoint, 'isBlocking');
 
-		mocks.recoveryHelper.isBlocking.and.returnValue(false);
+		mocks.sourcePoint.isBlocking.and.returnValue(false);
 		mocks.pageFair.isBlocking.and.returnValue(false);
 		mocks.pageFair.isEnabled.and.returnValue(true);
 

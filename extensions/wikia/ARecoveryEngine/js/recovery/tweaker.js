@@ -9,7 +9,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 ], function (
 	DOMElementTweaker,
 	slotTweaker,
-	recoveryHelper,
+	sourcePoint,
 	browser,
 	doc,
 	log
@@ -49,7 +49,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	}
 
 	function isTweakable() {
-		return recoveryHelper.isBlocking();
+		return sourcePoint.isBlocking();
 	}
 
 	return {

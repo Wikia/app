@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.window'
-], function (recoveryHelper, win) {
+], function (sourcePoint, win) {
 	'use strict';
 	var slots = {};
 
@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	function getSlot(id) {
 		var slotId = id;
 
-		if (recoveryHelper.isBlocking() && win._sp_.getElementId) {
+		if (sourcePoint.isBlocking() && win._sp_.getElementId) {
 			slotId = win._sp_.getElementId(slotId);
 		}
 

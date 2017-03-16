@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
+], function (adContext, sourcePoint, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
 	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
@@ -113,8 +113,8 @@ define('ext.wikia.adEngine.provider.taboola', [
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
-			recoveryHelper.addOnBlockingCallback(function () {
-				if (recoveryHelper.isEnabled()) {
+			sourcePoint.addOnBlockingCallback(function () {
+				if (sourcePoint.isEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
 				} else {
 					fillInSlot(slot);

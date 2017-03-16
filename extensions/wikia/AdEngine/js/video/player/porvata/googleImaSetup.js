@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (vastUrlBuilder, recoveryHelper, browserDetect, log, win) {
+], function (vastUrlBuilder, sourcePoint, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 
-		return recoveryHelper.getSafeUri(vastUrl);
+		return sourcePoint.getSafeUri(vastUrl);
 	}
 
 	function getOverriddenVast() {

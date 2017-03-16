@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adTracker, recoveryHelper, lazyQueue, log) {
+], function (adContext, adTracker, sourcePoint, lazyQueue, log) {
 	'use strict';
 
 	function create(module) {
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
 
-			recoveryHelper.addOnBlockingCallback(onResponseCallbacks.start);
+			sourcePoint.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
 		function wasCalled() {

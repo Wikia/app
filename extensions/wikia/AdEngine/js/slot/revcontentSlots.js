@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (recoveryHelper, doc, log, win) {
+], function (sourcePoint, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.revcontentSlots',
@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 	function init() {
 		log('init', 'Init Revcontent slots', logGroup);
 
-		recoveryHelper.addOnBlockingCallback(function () {
+		sourcePoint.addOnBlockingCallback(function () {
 			var wikiaArticleFooter = doc.getElementById('WikiaArticleFooter'),
 				wikiaMainContent = doc.getElementById('WikiaMainContent'),
 				wikiaRail = doc.getElementById('WikiaRail');

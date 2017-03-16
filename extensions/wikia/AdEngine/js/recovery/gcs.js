@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	'wikia.window'
 ], function (
 	adTracker,
-	recoveryHelper,
+	sourcePoint,
 	doc,
 	loc,
 	log,
@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	}
 
 	function addRecoveryCallback() {
-		recoveryHelper.addOnBlockingCallback(function () {
+		sourcePoint.addOnBlockingCallback(function () {
 			init();
 		});
 	}

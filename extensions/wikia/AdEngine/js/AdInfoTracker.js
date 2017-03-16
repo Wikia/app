@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adTracker, adContext, lookupServices, recoveryHelper, log, win, mercuryListener) {
+], function (adTracker, adContext, lookupServices, sourcePoint, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function isEnabled() {
-		if (!adContext.getContext().opts.enableAdInfoLog || recoveryHelper.isBlocking()) {
+		if (!adContext.getContext().opts.enableAdInfoLog || sourcePoint.isBlocking()) {
 			return false;
 		}
 		return true;

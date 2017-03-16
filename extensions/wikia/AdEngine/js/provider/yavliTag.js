@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.provider.yavliTag', [
 	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document',
 	'wikia.log'
-], function (adContext, recoveryHelper, doc, log) {
+], function (adContext, sourcePoint, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.yavliTag';
@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.provider.yavliTag', [
 	log('init', 'debug', logGroup);
 
 	function add() {
-		recoveryHelper.addOnBlockingCallback(function () {
+		sourcePoint.addOnBlockingCallback(function () {
 			var context = adContext.getContext(),
 				yavli = doc.createElement('script');
 
