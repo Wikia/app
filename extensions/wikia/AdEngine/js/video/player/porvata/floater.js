@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
-			videoWidth = 320,
 			wikiFloatingVideoSelector = '.video-container';
 
 		function updateDimensions(element, width, height) {
@@ -77,11 +76,15 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		function enableFloating(floatingContext) {
 			var elements = floatingContext.elements,
-				width = videoWidth,
-				height = width;
+				width = 0,
+				height = 0;
 
 			floatingContext.beforeFloat();
 			elements.adContainer.classList.add(activeFloatingCssClass);
+
+			width = elements.ad.offsetWidth;
+			height = width;
+
 			updateDimensions(elements.imageContainer, width, height);
 
 			resizeVideoAndShowCloseButton(floatingContext, width, height);
