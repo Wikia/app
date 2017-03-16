@@ -165,7 +165,7 @@ class AchRankingService {
 
 			if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
 				$badges[] = [
-					'user' => $this->extractNeededUserData( $user ),
+					'user' => $this->getUsernameAndProfileUrl( $user ),
 					'badge' => new AchBadge( $row->badge_type_id, $row->badge_lap, $row->badge_level ),
 					'date' => $row->date
 				];
@@ -180,12 +180,12 @@ class AchRankingService {
 	}
 
 	/**
-	 * Extract only the info we need from the user object.
+	 * Get the user's profileUrl and username.
 	 *
 	 * Previously we were passing the entire user object, but
 	 * that was exposing private user data. See MAIN-9412.
 	 */
-	private function extractNeededUserData( User $user ) : array {
+	private function getUsernameAndProfileUrl( User $user ) : array {
 		return [
 			'profileUrl' => $user->getUserPage()->getLocalURL(),
 			'userName' => $user->getName()
