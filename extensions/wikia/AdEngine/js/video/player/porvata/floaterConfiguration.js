@@ -67,7 +67,9 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 
 					video.addEventListener('loaded', function () {
 						floatingContext.floatAgain();
-						callback(floatingContext);
+						if (floatingContext.isOutsideOfViewport()) {
+							callback(floatingContext);
+						}
 					});
 				},
 				onAttach: function (floatingContext) {
