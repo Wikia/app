@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
 			},
-			computeVastMediaAspectRatio: function() {
+			computeVastMediaAspectRatio: function () {
 				var aspectRatio = width / height,
 					currentAd;
 
@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 					aspectRatio = currentAd.getVastMediaWidth() / currentAd.getVastMediaHeight();
 
 					if (!aspectRatio) {
-						aspectRatio = 1;
+						aspectRatio = 320 / 240;
 					}
 				}
 
