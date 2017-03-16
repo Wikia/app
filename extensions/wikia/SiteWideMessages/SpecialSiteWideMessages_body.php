@@ -1031,7 +1031,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
-			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
+			. " AND msg_date > '".$user->getRegistration()."'"	//fix for ticket #2624
 			. ';'
 			, __METHOD__
 		);
@@ -1138,7 +1138,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
-			. " AND " . MSG_TEXT_DB . ".msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
+			. " AND " . MSG_TEXT_DB . ".msg_date > '".$user->getRegistration()."'"	//fix for ticket #2624
 			. ';'
 			, __METHOD__
 		);

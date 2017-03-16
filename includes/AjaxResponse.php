@@ -164,7 +164,7 @@ class AjaxResponse {
 		}
 
 		$timestamp = wfTimestamp( TS_MW, $timestamp );
-		$lastmod = wfTimestamp( TS_RFC2822, max( $timestamp, $wgUser->mTouched, $wgCacheEpoch ) );
+		$lastmod = wfTimestamp( TS_RFC2822, max( $timestamp, $wgUser->getTouched(), $wgCacheEpoch ) );
 
 		if ( !empty( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) {
 			# IE sends sizes after the date like this:

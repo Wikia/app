@@ -37,7 +37,7 @@ class WikiaApiResetPasswordTime extends ApiBase {
 			return;
 		}
 
-		$user->mNewpassTime = null;
+		$user->setNewpassTime( null );
 		$user->saveSettings();
 
 		$this->getResult()->addValue('resetpasswordtime', 'success', true);

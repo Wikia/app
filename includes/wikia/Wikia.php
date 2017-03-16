@@ -2146,7 +2146,7 @@ class Wikia {
 			$user->setPassword( null );
 			$user->setGlobalFlag( 'disabled', 1);
 			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
-			$user->mToken = null;
+			$user->setToken( null );
 			$user->invalidateEmail();
 			if ( $ajax ) {
 				global $wgRequest;

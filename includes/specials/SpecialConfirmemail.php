@@ -98,7 +98,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 		$out = $this->getOutput();
 		if( $this->getRequest()->wasPosted() && $user->matchEditToken( $this->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
-			if ( strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0) {
+			if ( strtotime($user->getEmailTokenExpires()) - strtotime("+6 days 23 hours") > 0) {
 				return;
 			}
 			$status = $user->sendConfirmationMail();
@@ -123,7 +123,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			if( $user->isEmailConfirmationPending() ) {
 				$out->wrapWikiMsg( "<div class=\"error mw-confirmemail-pending\">\n$1\n</div>", 'confirmemail_pending' );
 				// Wikia change -- only allow one email confirmation attempt per hour
-				if (strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0) return;
+				if (strtotime($user->getEmailTokenExpires()) - strtotime("+6 days 23 hours") > 0) return;
 			}
 			$out->addWikiMsg( 'confirmemail_text' );
 			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl() ) );

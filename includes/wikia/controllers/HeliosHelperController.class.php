@@ -119,7 +119,7 @@ class HelperController extends \WikiaController {
 		$emailsSent = intval( $this->wg->Memc->get( $memcKey ) );
 
 		if ( $user->isEmailConfirmationPending() &&
-			strtotime( $user->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
+			strtotime( $user->getEmailTokenExpires() ) - strtotime( '+6 days' ) > 0 &&
 			$emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
 		) {
 			$this->response->setVal( self::FIELD_MESSAGE, 'confirmation emails limit reached' );

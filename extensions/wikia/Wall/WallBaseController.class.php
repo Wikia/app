@@ -594,7 +594,7 @@ class WallBaseController extends WikiaService {
 		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
 			if ( !empty( $wallOwner ) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
-				!( empty( $user->mAllowUsertalk ) )
+				!( empty( $user->getAllowUsertalk() ) )
 			) {
 				// user is blocked, but this is his wall and he was not blocked
 				// from user talk page

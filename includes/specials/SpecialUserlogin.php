@@ -520,7 +520,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		self::clearCreateaccountToken();
-		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
+		$u->setBirthDate( date( 'Y-m-d', $this->wpUserBirthDay ) );
 
 		if ( ! $this->initUser( $u, false ) ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'externaldberror' )->text() );

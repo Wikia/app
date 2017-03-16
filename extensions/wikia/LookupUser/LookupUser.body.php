@@ -287,10 +287,10 @@ EOT
 		$wgOut->addWikiText( '*' . $email_output );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-realname', $user->getRealName() )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
-		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wg->Lang->timeanddate( $user->mTouched, true ) )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wg->Lang->timeanddate( $user->getTouched(), true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
-		if ( isset( $user->mBirthDate ) ) {
-			$birthDate = $wg->Lang->date( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ) );
+		if ( !empty( $user->getBirthDate() ) ) {
+			$birthDate = $wg->Lang->date( date( 'Y-m-d H:i:s', strtotime( $user->getBirthDate() ) ) );
 		} else {
 			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}
