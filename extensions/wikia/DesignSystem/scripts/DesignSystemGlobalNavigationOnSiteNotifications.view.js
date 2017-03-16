@@ -128,7 +128,6 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderNotifications = function (notifications) {
-				console.log('rendering');
 				var html = templating.renderNotifications(this._mapToView(notifications));
 				this._$container.append(html);
 				this._bindMarkAsReadHandlers();
