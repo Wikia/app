@@ -36,6 +36,17 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
 			},
+			computeVastMediaAspectRatio: function() {
+				var aspectRatio = width / height,
+					currentAd;
+
+				if (ima.getAdsManager()) {
+					currentAd = ima.getAdsManager().getCurrentAd();
+					aspectRatio = currentAd.getVastMediaWidth() / currentAd.getVastMediaHeight();
+				}
+
+				return aspectRatio;
+			},
 			getRemainingTime: function () {
 				return ima.getAdsManager().getRemainingTime();
 			},
