@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
-	function isPageFairRecoveryEnabled (noExternals, instantGlobals) {
+	function isEnabled (noExternals, instantGlobals) {
 		var isGeoSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries),
 			isExternalEnabled = !noExternals,
 			isNotDisabledOnWiki = context.opts.pageFairRecovery !== false;
@@ -88,7 +88,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = isPageFairRecoveryEnabled(noExternals, instantGlobals);
+		context.opts.pageFairRecovery = isEnabled(noExternals, instantGlobals);
 
 		// SourcePoint recovery
 		if (

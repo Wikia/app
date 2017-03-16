@@ -29,12 +29,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			pageFair: {
 				isBlocking: noop,
-				isPageFairRecoveryEnabled: noop
+				isEnabled: noop
 			},
 			recoveryHelper: {
 				recoverSlots: noop,
 				isBlocking: noop,
-				isSourcePointRecoveryEnabled: noop
+				isEnabled: noop
 			},
 			slotTweaker: {
 				show: noop,
@@ -234,10 +234,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+		spyOn(mocks.recoveryHelper, 'isEnabled');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(true);
-		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
+		mocks.recoveryHelper.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
@@ -252,10 +252,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+		spyOn(mocks.recoveryHelper, 'isEnabled');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(true);
-		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
+		mocks.recoveryHelper.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
@@ -270,10 +270,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
-		spyOn(mocks.recoveryHelper, 'isSourcePointRecoveryEnabled');
+		spyOn(mocks.recoveryHelper, 'isEnabled');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(false);
-		mocks.recoveryHelper.isSourcePointRecoveryEnabled.and.returnValue(true);
+		mocks.recoveryHelper.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
@@ -286,11 +286,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			});
 		};
 
-		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');
+		spyOn(mocks.pageFair, 'isEnabled');
 		spyOn(mocks.pageFair, 'isBlocking');
 
 		mocks.pageFair.isBlocking.and.returnValue(true);
-		mocks.pageFair.isPageFairRecoveryEnabled.and.returnValue(true);
+		mocks.pageFair.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
@@ -303,13 +303,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			});
 		};
 
-		spyOn(mocks.pageFair, 'isPageFairRecoveryEnabled');
+		spyOn(mocks.pageFair, 'isEnabled');
 		spyOn(mocks.pageFair, 'isBlocking');
 		spyOn(mocks.recoveryHelper, 'isBlocking');
 
 		mocks.recoveryHelper.isBlocking.and.returnValue(false);
 		mocks.pageFair.isBlocking.and.returnValue(false);
-		mocks.pageFair.isPageFairRecoveryEnabled.and.returnValue(true);
+		mocks.pageFair.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');

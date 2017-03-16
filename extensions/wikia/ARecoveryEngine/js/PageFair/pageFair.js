@@ -12,15 +12,15 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 			'TOP_RIGHT_BOXAD'
 		];
 
-	function isPageFairRecoveryEnabled() {
+	function isEnabled() {
 		var enabled = !!context.opts.pageFairRecovery;
 
-		log(['isPageFairRecoveryEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, 'debug', logGroup]);
 		return enabled;
 	}
 
 	function isSlotRecoverable(slotName) {
-		var result = isPageFairRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+		var result = isEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 
 		log(['isSlotRecoverable', result], log.levels.info, logGroup);
 		return result;
@@ -41,7 +41,7 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 
 	return {
 		isBlocking: isBlocking,
-		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
+		isEnabled: isEnabled,
 		isSlotRecoverable: isSlotRecoverable,
 		addMarker: addMarker
 	};

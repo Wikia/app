@@ -55,7 +55,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			isRecoveryEnabled = sourcePoint.isSourcePointRecoveryEnabled() || (pageFair && pageFair.isPageFairRecoveryEnabled()),
+			isRecoveryEnabled = sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled()),
 			isBlocking = sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()),
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
 			shouldPush = !isBlocking || (isBlocking && adIsRecoverable),

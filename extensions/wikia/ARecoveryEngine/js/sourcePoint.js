@@ -52,10 +52,10 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	 *
 	 * @returns {boolean}
 	 */
-	function isSourcePointRecoveryEnabled() {
+	function isEnabled() {
 		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
 
-		log(['isSourcePointRecoveryEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, 'debug', logGroup]);
 		return enabled;
 	}
 
@@ -67,7 +67,7 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	}
 
 	function isSlotRecoverable(slotName) {
-		var result = isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+		var result = isEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 
 		log(['isSlotRecoverable', result], log.levels.info, logGroup);
 		return result;
@@ -122,7 +122,7 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
 		isSlotRecoverable: isSlotRecoverable,
-		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
+		isEnabled: isEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};
