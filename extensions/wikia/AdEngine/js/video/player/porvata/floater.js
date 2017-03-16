@@ -83,9 +83,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			elements.adContainer.classList.add(activeFloatingCssClass);
 
 			width = elements.ad.offsetWidth;
-			height = width;
+			height = width / elements.video.computeVastMediaAspectRatio();
 
 			updateDimensions(elements.imageContainer, width, height);
+			elements.iframe.style.height = height + 'px';
 
 			resizeVideoAndShowCloseButton(floatingContext, width, height);
 
@@ -98,6 +99,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 			elements.adContainer.classList.remove(activeFloatingCssClass);
 			updateDimensions(elements.imageContainer, preferred.width, preferred.height);
+			elements.iframe.style.removeProperty('height');
 			elements.video.resize(preferred.width, preferred.height);
 
 			floatingContext.pause();
