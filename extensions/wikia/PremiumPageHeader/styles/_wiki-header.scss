@@ -1,14 +1,13 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
-.pph-add-new-page {
+.pph-hollow-button {
 	align-items: center;
 	border: 1px solid $color-button-text;
 	color: $color-button-text;
 	display: flex;
 	font-size: 10px;
 	font-weight: bold;
-	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
 	transition: border-color, color;
@@ -26,8 +25,19 @@
 
 	svg {
 		fill: $color-button-text;
-		margin-right: 6px;
 		transition: fill .2s;
+	}
+
+	+ .pph-hollow-button {
+		border-left: 0;
+	}
+}
+
+.pph-add-new-page {
+	margin-left: 18px;
+
+	svg {
+		margin-right: 6px;
 	}
 }
 

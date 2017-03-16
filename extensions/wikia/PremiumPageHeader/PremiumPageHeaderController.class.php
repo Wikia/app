@@ -3,6 +3,8 @@
 class PremiumPageHeaderController extends WikiaController {
 
 	public function wikiHeader() {
+		global $wgUser;
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -10,7 +12,18 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'tallyMsg',
 			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
+		$this->setVal( 'addNewPageLabel', wfMessage( 'oasis-button-add-new-page' )->escaped() );
 		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );
+
+		if ( $wgUser->isLoggedIn() ) {
+			$title = Title::newFromText( 'WikiActivity', NS_SPECIAL );
+
+			$this->setVal( 'addNewPageLabel', wfMessage( 'pph-add' )->escaped() );
+			$this->setVal( 'adminToolsWikiActivity', [
+				'href' => $title->getLocalURL(),
+				'title' => wfMessage( 'oasis-activity-header' )->escaped()
+			] );
+		}
 	}
 
 	public function navigation() {
