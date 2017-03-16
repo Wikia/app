@@ -25,11 +25,13 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 		function create(video, params, eventHandlers) {
 			var configuration = floaterConfiguration.selectConfigurationUsing(params),
 				adContainer = doc.getElementById(configuration.container),
+				ad = adContainer.querySelector('.wikia-ad'),
 				elements = {
 					adContainer: adContainer,
-					ad: adContainer.querySelector('.wikia-ad'),
+					ad: ad,
 					iframe: video.container.ownerDocument.defaultView.frameElement,
 					imageContainer: params.container.parentElement.querySelector('#image'),
+					providerContainer: ad.querySelector('.provider-container'),
 					video: video
 				},
 				floatingContext = {
@@ -55,6 +57,23 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					},
 					forceDoNotFloat: function () {
 						this.doNotFloat = true;
+					},
+					/**
+					 * In order to get floating ad height - invoke this method only in/after detach event, but before attach event.
+					 * It might return wrong result when vast media does not have proper vast media width and vast media height.
+					 *
+					 * @returns {number} - floating ad width
+					 */
+					getHeight: function() {
+						return this.getWidth() / this.elements.video.computeVastMediaAspectRatio();
+					},
+					/**
+					 * In order to get floating ad width - invoke this method only in/after detach event, but before attach event
+					 *
+					 * @returns {number} - floating ad width
+					 */
+					getWidth: function() {
+						return elements.ad.offsetWidth;
 					},
 					/**
 					 * Checks whether floating is active.

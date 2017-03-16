@@ -25,7 +25,6 @@ $uap-video-player-button-size: 24px;
 $floating-ad-margin: 20px;
 $floating-ad-index: $wikia-top-ads-index + 10;
 $floating-ad-video-width: 320px;
-$floating-ad-video-height: 320px;
 $floating-ad-animation-speed: $video-collapse-animation-speed;
 $floating-ad-featured-video-gap: $video-container-width;
 
@@ -588,7 +587,6 @@ body > a > img[src$="noad.gif"] {
 
 		.wikia-ad {
 			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
-			height: $floating-ad-video-height;
 			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;
@@ -597,7 +595,7 @@ body > a > img[src$="noad.gif"] {
 			z-index: $floating-ad-index;
 
 			.provider-container {
-				height: $floating-ad-video-height;
+				padding-bottom: 0 !important;
 				width: $floating-ad-video-width;
 			}
 
