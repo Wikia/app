@@ -86,9 +86,6 @@ class PremiumPageHeaderController extends WikiaController {
 			}
 		}
 
-		// action button
-		# print_pre($this->content_actions);
-
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
 		if ( isset( $this->content_actions['viewsource'] ) &&
 			!$wgTitle->isProtected() &&
@@ -141,8 +138,6 @@ class PremiumPageHeaderController extends WikiaController {
 				}
 			}
 		}
-
-		# print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
 	}
 
 	/**

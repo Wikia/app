@@ -1,7 +1,7 @@
 require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
 	'use strict';
 
-	var _track = tracker.buildTrackingFunction({
+	var track = tracker.buildTrackingFunction({
 		category: 'premium-page-header',
 		trackingMethod: 'analytics'
 	});
@@ -10,7 +10,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		$('.pph-article-header-tracking a, .pph-article-header-tracking .pph-track').on('click', function () {
 			var data = $(this).data('tracking');
 			if (data) {
-				_track({
+				track({
 					action: tracker.ACTIONS.CLICK,
 					label: data
 				});
