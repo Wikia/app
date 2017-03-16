@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 					elements.viewport = elements.ad.parentElement;
 					floatingContext.forceDoNotFloat();
 				},
-				floatLater: function () {
+				floatLater: function (callback) {
 					var floatingContext = this,
 						video = this.elements.video;
 
@@ -26,6 +26,10 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 						floatingContext.preferred.height = body.scrollHeight;
 						floatingContext.floatAgain();
 						floatingContext.fireEvent('start');
+
+						if (floatingContext.isOutsideOfViewport()) {
+							callback(floatingContext);
+						}
 					});
 
 				},
