@@ -15,7 +15,7 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	function isEnabled() {
 		var enabled = !!context.opts.pageFairRecovery;
 
-		log(['isEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, log.levels.debug, logGroup]);
 		return enabled;
 	}
 
@@ -29,7 +29,7 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	function isBlocking() {
 		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.blocking);
 
-		log(['isBlocking', isBlocking], 'debug', logGroup);
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
 		return isBlocking;
 	}
 

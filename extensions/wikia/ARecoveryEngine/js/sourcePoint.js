@@ -55,14 +55,14 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	function isEnabled() {
 		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
 
-		log(['isEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, log.levels.debug, logGroup]);
 		return enabled;
 	}
 
 	function isBlocking() {
 		var isBlocking = !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 
-		log(['isBlocking', isBlocking], 'debug', logGroup);
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
 		return isBlocking;
 	}
 
