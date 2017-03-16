@@ -1,11 +1,10 @@
 <div class="pph-article-header-tracking pph-article-header">
 	<div class="pph-article-title">
-		<?php if ( count( $visibleCategories ) ): ?>
+		<?php if ( count( $visibleCategories ) > 0 ): ?>
 			<div class="pph-categories">
 				<span class="pph-categories-in pph-track" data-tracking="categories-in"><?= $inCategoriesText ?>:</span>
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
-
 				 --><?php if ( $moreCategoriesLength > 0 ): ?>,
 						<div class="pph-dropdown-container">
 							<a href="#" class="pph-categories-show-more"
@@ -17,9 +16,8 @@
 									<?php endforeach; ?>
 								</ul>
 							</div>
-						</div><!--
-
-					 --><span class="pph-more-categories"><?= join( ', ', $moreCategories ); ?></span>
+						</div>
+						<span class="pph-more-categories"><?= join( ', ', $moreCategories ); ?></span>
 					<?php endif; ?>
 				</span>
 			</div>
