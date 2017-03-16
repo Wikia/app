@@ -25,11 +25,14 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			this._$notificationsCount = $('#onSiteNotificationsCount');
 			this._$container = $('#notificationContainer');
 			this._$markAllAsReadButton = $('#markAllAsReadButton');
+			this._$scrollableElement = $('.wds-notifications__notification-list');
+
 
 			this.registerEventHandlers = function (model) {
 				this.addDropdownLoadingEvent();
 				this.addMarkAllAsReadEvent();
 				this.addOnScrollEvent();
+				this.addOnMouseWheelEvent();
 
 				model.loadingStatusChanged.attach(function (_, isLoading) {
 					if (isLoading === true) {
@@ -58,13 +61,25 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.addOnScrollEvent = function () {
-				var scrollableElement = $('.wds-notifications__notification-list');
-				scrollableElement.on('scroll', this.onScroll.bind(this));
+				this._$scrollableElement.on('scroll', this.onScroll.bind(this));
 			};
 
-			this.onScroll = function (e) {
-				if (this._hasAlmostScrolledToTheBottom($(e.target))) {
+			this.addOnMouseWheelEvent = function () {
+				this._$scrollableElement.on('mousewheel DOMMouseScroll', this.onMouseWheel);
+			};
+
+			this.onScroll = function (event) {
+				if (this._hasAlmostScrolledToTheBottom($(event.target))) {
 					this.onLoadMore.notify();
+				}
+			};
+
+			this.onMouseWheel = function (event) {
+				const delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
+					scrollTop = this.scrollTop;
+				if ((delta < 0 && scrollTop === 0)
+					|| (delta > 0 && this.scrollHeight - this.clientHeight - scrollTop === 0)) {
+					event.preventDefault();
 				}
 			};
 
