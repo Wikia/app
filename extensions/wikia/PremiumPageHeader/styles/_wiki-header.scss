@@ -5,6 +5,7 @@ $image-width: 430px;
 
 .pph-add-new-page {
 	align-items: center;
+	background-color: rgba($color-buttons, .2);
 	border: 1px solid $color-button-text;
 	color: $color-button-text;
 	display: flex;
