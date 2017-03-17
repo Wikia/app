@@ -56,12 +56,12 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	public function wikiHeader() {
-		global $wgSiteName;
+		global $wgSitename;
 
 		//$themeSettings = new ThemeSettings();
 		//$settings = $themeSettings->getSettings();
 
-		$this->setVal( 'wordmarkText', $wgSiteName );
+		$this->setVal( 'wordmarkText', $wgSitename );
 		$this->setVal( 'tallyMsg',
 			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
