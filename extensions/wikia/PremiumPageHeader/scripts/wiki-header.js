@@ -3,7 +3,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 	$(function () {
 		var track = tracker.buildTrackingFunction({
-				category: 'premium-page-header',
+				category: 'page-header-test-group',
 				trackingMethod: 'analytics'
 			}),
 			$wikiHeader = $('.pph-wiki-header');
@@ -33,6 +33,13 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			track({
 				action: tracker.ACTIONS.CLICK,
 				label: 'add-new-page'
+			});
+		});
+
+		$wikiHeader.find('.pph-admin-tools-wiki-activity').on('click', function () {
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'admin-tools-wiki-activity'
 			});
 		});
 	});

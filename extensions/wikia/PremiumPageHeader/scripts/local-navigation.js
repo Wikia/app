@@ -1,8 +1,8 @@
 require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
 	'use strict';
 
-	var _track = tracker.buildTrackingFunction({
-		category: 'premium-page-header',
+	var track = tracker.buildTrackingFunction({
+		category: 'page-header-test-group',
 		trackingMethod: 'analytics'
 	});
 
@@ -23,10 +23,10 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	}
 
 	function initTracking() {
-		var track = function ($element) {
+		var linkTrack = function ($element) {
 			var data = $element.data('tracking');
 			if (data) {
-				_track({
+				track({
 					action: tracker.ACTIONS.CLICK,
 					label: data
 				});
@@ -39,11 +39,11 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 				$this.addClass('pph-click');
 				event.preventDefault();
 			} else {
-				track($this);
+				linkTrack($this);
 			}
 		});
 		$('.pph-local-nav-tracking:not(.pph-local-nav-container) a').on('click', function () {
-			track($(this));
+			linkTrack($(this));
 		});
 	}
 

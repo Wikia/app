@@ -1,7 +1,14 @@
+@import 'article-header';
 @import 'banner-notifications-hack';
-@import 'local-navigation';
 @import 'wiki-header';
+@import 'local-navigation';
 
-.WikiHeader {
+.PremiumPageArticleHeader, .PremiumPageHeader {
+	// TODO: uncomment it
+	//display: none;
+}
+
+// TODO: remove it
+.WikiHeader, .WikiaPageHeader {
 	display: none;
 }
