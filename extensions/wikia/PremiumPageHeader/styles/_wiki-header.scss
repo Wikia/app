@@ -73,7 +73,7 @@ $image-width: 430px;
 		color: $color-buttons;
 		position: right center;
 		repeat: no-repeat;
-		size: $image-width auto;
+		size: auto 100%;
 	}
 	color: $color-button-text;
 	display: flex;
