@@ -289,8 +289,8 @@ class PremiumPageHeaderController extends WikiaController {
 
 	private function getExplore(): array {
 		$explore = [
-			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity' ],
-			[ 'title' => 'Random', 'tracking' => 'explore-random' ],
+			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity', 'key' => 'oasis-button-wiki-activity' ],
+			[ 'title' => 'Random', 'tracking' => 'explore-random', 'key' => 'oasis-button-random-page' ],
 			[ 'title' => 'Community', 'tracking' => 'explore-community' ],
 			[ 'title' => 'Videos', 'tracking' => 'explore-videos' ],
 			[ 'title' => 'Images', 'tracking' => 'explore-images' ]
@@ -300,7 +300,9 @@ class PremiumPageHeaderController extends WikiaController {
 			$title = Title::newFromText( $page['title'], NS_SPECIAL );
 			if ( $title && $title->isKnown() ) {
 				return [
-					'text' => $title->fixSpecialName()->getText(),
+					'text' => isset( $page['key'] )
+						? wfMessage( $page['key'] )->inContentLanguage()->plain()
+						: $title->fixSpecialName()->getText(),
 					'href' => $title->getLocalURL(),
 					'tracking' => $page['tracking']
 				];
