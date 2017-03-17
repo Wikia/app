@@ -25,10 +25,15 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 		function create(video, params, eventHandlers) {
 			var configuration = floaterConfiguration.selectConfigurationUsing(params),
 				adContainer = doc.getElementById(configuration.container),
+				ad = adContainer.querySelector('.wikia-ad'),
+				container = params.originalContainer || params.container,
 				elements = {
 					adContainer: adContainer,
-					ad: adContainer.querySelector('.wikia-ad'),
-					imageContainer: params.container.parentElement.querySelector('#image'),
+					ad: ad,
+					originalContainer: params.originalContainer,
+					iframe: container.ownerDocument.defaultView.frameElement,
+					imageContainer: container.parentElement.querySelector('#image'),
+					providerContainer: ad.querySelector('.provider-container'),
 					video: video
 				},
 				floatingContext = {
@@ -56,6 +61,27 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 						this.doNotFloat = true;
 					},
 					/**
+					 * In order to get floating ad height - invoke this method only in/after detach event, but before attach event,
+					 * because floating ad width is set after before detach event.
+					 * Ideally call this method inside on detach event handler.
+					 * It might return wrong result when vast media does not have proper vast media width and vast media height.
+					 *
+					 * @returns {number} - floating ad width
+					 */
+					getHeight: function () {
+						return this.getWidth() / this.elements.video.computeVastMediaAspectRatio();
+					},
+					/**
+					 * In order to get floating ad width - invoke this method only in/after detach event, but before attach event,
+					 * because floating ad width is set after before detach event.
+					 * Ideally call this method inside on detach event handler.
+					 *
+					 * @returns {number} - floating ad width
+					 */
+					getWidth: function () {
+						return elements.ad.offsetWidth;
+					},
+					/**
 					 * Checks whether floating is active.
 					 *
 					 * @returns {boolean} - true if state is different from stopped - stopped state is set when
@@ -66,7 +92,6 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 					},
 					invokeLater: function (callback) {
 						this.floatLater(callback);
-						// this.fireEvent(events.start);
 					},
 					isFloating: function () {
 						return this.state === state.floating;

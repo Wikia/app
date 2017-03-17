@@ -138,8 +138,7 @@ class ForumController extends WallBaseController {
 		$wallMessage = $this->getWallMessage();
 		if ( !( $wallMessage instanceof WallMessage ) ) {
 			wfProfileOut( __METHOD__ );
-			$this->forward( __CLASS__, 'message_error' );
-			return true;
+			return false;
 		}
 
 		$this->response->setVal( 'id', $wallMessage->getId() );

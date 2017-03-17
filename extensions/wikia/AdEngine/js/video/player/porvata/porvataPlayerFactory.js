@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
+		defaultAspectRatio = 320 / 240,
 		videoPlayerClassName = 'video-player';
 
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
@@ -35,6 +36,23 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			ima: ima,
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
+			},
+			computeVastMediaAspectRatio: function () {
+				var adsManager = ima.getAdsManager(),
+					aspectRatio = width / height,
+					currentAd,
+					vastHeight = 0,
+					vastWidth = 0;
+
+				if (adsManager) {
+					currentAd = adsManager.getCurrentAd();
+					vastHeight = currentAd.getVastMediaHeight();
+					vastWidth = currentAd.getVastMediaWidth();
+
+					aspectRatio = (vastWidth && vastHeight) ? vastWidth / vastHeight : defaultAspectRatio;
+				}
+
+				return aspectRatio;
 			},
 			getRemainingTime: function () {
 				return ima.getAdsManager().getRemainingTime();

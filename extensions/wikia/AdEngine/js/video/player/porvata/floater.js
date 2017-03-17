@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		var activeFloatingCssClass = 'floating',
 			withArticleVideoCssClass = 'with-article-video',
-			videoWidth = 225,
 			wikiFloatingVideoSelector = '.video-container';
 
 		function updateDimensions(element, width, height) {
@@ -77,11 +76,16 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 		function enableFloating(floatingContext) {
 			var elements = floatingContext.elements,
-				width = videoWidth,
-				height = width;
+				width = 0,
+				height = 0;
 
 			floatingContext.beforeFloat();
 			elements.adContainer.classList.add(activeFloatingCssClass);
+
+			// Those values have to be set after setting active floating css class
+			width = floatingContext.getWidth();
+			height = floatingContext.getHeight();
+
 			updateDimensions(elements.imageContainer, width, height);
 
 			resizeVideoAndShowCloseButton(floatingContext, width, height);
@@ -170,7 +174,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function makeFloat(video, params, eventHandlers) {
 			var floatingContext = enableFloatingOn(video, params, eventHandlers);
 
-			floatingContext.invokeLater(enableFloating);
+			floatingContext.invokeLater(function (floatingContext) {
+				showAboveArticleVideo(floatingContext);
+				enableFloating(floatingContext);
+			});
 
 			return floatingContext;
 		}
