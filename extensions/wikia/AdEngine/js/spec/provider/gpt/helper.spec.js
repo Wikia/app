@@ -30,8 +30,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			recoveryHelper: {
 				recoverSlots: noop,
 				isBlocking: noop,
-				isRecoverable: noop,
-				isRecoveryEnabled: noop
+				isSourcePointRecoverable: noop,
+				isSourcePointRecoveryEnabled: noop
 			},
 			slotTweaker: {
 				show: noop,
@@ -191,7 +191,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.recoveryHelper.isRecoverable = function () {
+		mocks.recoveryHelper.isSourcePointRecoverable = function () {
 			return false;
 		};
 
@@ -209,7 +209,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.recoveryHelper.isRecoverable = function () {
+		mocks.recoveryHelper.isSourcePointRecoverable = function () {
 			return true;
 		};
 
@@ -234,13 +234,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.recoveryHelper.isRecoverable = function () {
+		mocks.recoveryHelper.isSourcePointRecoverable = function () {
 			return false;
 		};
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
 
-		mocks.recoveryHelper.isRecoverable = function () {
+		mocks.recoveryHelper.isSourcePointRecoverable = function () {
 			return true;
 		};
 		pushAd();

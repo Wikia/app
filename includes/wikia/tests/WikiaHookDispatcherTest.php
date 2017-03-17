@@ -1,10 +1,12 @@
 <?php
 require_once dirname(__FILE__) . '/_fixtures/TestHookHandler.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaHookDispatcherTest extends PHPUnit_Framework_TestCase {
+class WikiaHookDispatcherTest extends TestCase {
 	private $dispatcher;
 	
 	public function setUp() {
@@ -12,8 +14,10 @@ class WikiaHookDispatcherTest extends PHPUnit_Framework_TestCase {
 		TestHookHandler::$instancesCounter = 0;
 	}
 
+	/**
+	 * @expectedException WikiaException
+	 */
 	public function testCallingNonExistentHookThrowsException() {
-		$this->setExpectedException('WikiaException');
 		$method = 'nonExistentHook'.rand();
 		$this->dispatcher->$method(1, 2, 3);
 	}

@@ -212,6 +212,10 @@ class WikiFeaturesTest extends WikiaBaseTest {
 			$this->assertArrayHasKey($feature['name'], $actual_features);
 		}
 
+		if ( empty( $wg_wiki_features ) || !array_key_exists( 'labs', $wg_wiki_features ) ) {
+			$this->assertEmpty( $actual_features );
+		}
+
 		$this->tearDownGetFeature();
 	}
 

@@ -155,16 +155,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_real_name;
 	}
 
-	public function getPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_password . " \n" );
-		return $this->mRow->user_password;
-	}
-
-	public function getNewPassword() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpassword . " \n" );
-		return $this->mRow->user_newpassword;
-	}
-
 	public function getOptions() {
 		wfDebug( __METHOD__ . ": " . $this->mRow->user_options . " \n" );
 		return $this->mRow->user_options;
@@ -188,11 +178,6 @@ class ExternalUser_Wikia extends ExternalUser {
 	public function getRegistration() {
 		wfDebug( __METHOD__ . ": " . $this->mRow->user_registration . " \n" );
 		return $this->mRow->user_registration;
-	}
-
-	public function getNewpassTime() {
-		wfDebug( __METHOD__ . ": " . $this->mRow->user_newpass_time . " \n" );
-		return $this->mRow->user_newpass_time;
 	}
 
 	public function getEditCount() {
@@ -260,7 +245,6 @@ class ExternalUser_Wikia extends ExternalUser {
                         'user_id' => null,
                         'user_name' => $User->mName,
                         'user_real_name' => $realname,
-                        'user_newpassword' => '',
                         'user_email' => $email,
                         'user_touched' => '',
                         'user_token' => '',
@@ -428,8 +412,6 @@ class ExternalUser_Wikia extends ExternalUser {
 				'`user`',
 				array( /* SET */
 					'user_name' => $this->mUser->mName,
-					'user_newpassword' => $this->mUser->mNewpassword,
-					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
 					'user_real_name' => $this->mUser->mRealName,
 					'user_email' => $this->mUser->mEmail,
 					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),
