@@ -16,9 +16,23 @@ $specialPageAliases['en'] = array(
 );
 
 /**
+ * German
+ */
+$specialPageAliases['de'] = array(
+	'Videos' => array( 'Videos', 'Video' ),
+);
+
+/**
  * Spanish (Español)
  */
 $specialPageAliases['es'] = array(
+	'Videos' => array( 'Vídeos' ),
+);
+
+/**
+ * Portuguese
+ */
+$specialPageAliases['pt'] = array(
 	'Videos' => array( 'Vídeos' ),
 );
 
@@ -41,6 +55,13 @@ $specialPageAliases['it'] = array(
  */
 $specialPageAliases['ko'] = array(
 	'Videos' => array( '새동영상' ),
+);
+
+/**
+ * Japan
+ */
+$specialPageAliases['ja'] = array(
+	'Videos' => array( '動画' ),
 );
 
 /**
