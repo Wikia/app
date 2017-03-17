@@ -42,10 +42,14 @@ $wds-icon-color: $wds-color-light-c5;
 	@include align-items(center);
 	color: $notifications-dropdown-content-color;
 	font-size: $wds-typescale-size-minus-1;
-	min-width: 18px * 2 + 320px;
 	max-width: 18px * 2 + 320px;
+	min-width: 18px * 2 + 320px;
+	overflow-wrap: break-word;
 	white-space: normal;
 	width: 100%;
+	//word-break: break-word is not supported on Firefox, therefore word-wrap and overflow-wrap are used too
+	word-break: break-word;
+	word-wrap: break-word;
   }
 
   &__notification-list {
