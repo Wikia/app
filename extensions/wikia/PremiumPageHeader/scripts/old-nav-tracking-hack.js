@@ -3,34 +3,52 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 	var $oldWikiHeader = $('#WikiHeader'),
 		$oldArticleHeader = $('#WikiaPageHeader'),
-		trackClick = tracker.buildTrackingFunction({
-			action: tracker.ACTIONS.CLICK,
+		track = tracker.buildTrackingFunction({
 			category: 'page-header-control',
 			trackingMethod: 'analytics'
 		});
 
+	function trackClick(label) {
+		track({
+			action: tracker.ACTIONS.CLICK,
+			label: label
+		});
+	}
+
 	$(function () {
+		if ($oldWikiHeader.is(':visible')) {
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'wiki-header'
+			});
+		}
+		if ($oldArticleHeader.is(':visible')) {
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'article-header'
+			});
+		}
 		// wordmark-image
 		$oldWikiHeader.find('.wordmark').on('click', function () {
-			trackClick({label: 'wordmark-image'});
+			trackClick('wordmark-image');
 		});
 		// wordmark-text - n/a
 		// tally
 		$oldArticleHeader.find('.tally').on('click', function () {
-			trackClick({label: 'tally'});
+			trackClick('tally');
 		});
 		// add-new-page
 		$oldArticleHeader.find('.createpage').on('click', function () {
-			trackClick({label: 'add-new-page'});
+			trackClick('add-new-page');
 		});
 		// custom-level-1, explore-menu
 		$oldWikiHeader.find('.nav-item > a').on('click', function () {
 			var $parent = $(this).parent();
 			if ($parent.hasClass('marked')) {
 				if ($parent.find('.subnav-2a').data('canonical')) {
-					trackClick({label: 'explore-menu'});
+					trackClick('explore-menu');
 				} else {
-					trackClick({label: 'custom-level-1'});
+					trackClick('custom-level-1');
 				}
 			}
 		});
@@ -39,25 +57,25 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			var data = $(this).data('canonical'),
 				href = $(this).attr('href');
 			if (data) {
-				trackClick({label: 'explore-' + data.replace('wiki', '')});
+				trackClick('explore-' + data.replace('wiki', ''));
 			} else if (href === '/d' || href.startsWith('/d/')) {
-				trackClick({label: 'discuss'});
+				trackClick('discuss');
 			} else {
-				trackClick({label: 'custom-level-2'});
+				trackClick('custom-level-2');
 			}
 		});
 		// custom-level-3
 		$oldWikiHeader.find('.subnav-3a').on('click', function () {
-			trackClick({label: 'custom-level-3'});
+			trackClick('custom-level-3');
 		});
 		// categories-in
 		$('.special-categories').on('click', function () {
-			trackClick({label: 'categories-in'});
+			trackClick('categories-in');
 		});
 		// categories-<number>
 		$('#articleCategories').find('li.category a').on('click', function () {
 			var index = $('#articleCategories').find('li.category:not(.hidden)').index($(this).closest('.category'));
-			trackClick({label: 'categories-' + index});
+			trackClick('categories-' + index);
 		});
 		// categories-more - n/a
 		// categories-more-<number> - n/a
@@ -65,24 +83,28 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		// interwiki-<lang code> - n/a
 		// edit
 		$oldArticleHeader.find('.wikia-menu-button > a').on('click', function () {
-			trackClick({label: 'edit'});
+			trackClick('edit');
 		});
 		// edit-dropdown
 		$oldArticleHeader.find('.wikia-menu-button .drop').on('click', function () {
-			trackClick({label: 'edit-dropdown'});
+			trackClick('edit-dropdown');
 		});
 		// edit-<action>
 		$oldArticleHeader.find('.wikia-menu-button .WikiaMenuElement a').on('click', function () {
 			var data = $(this).data('id');
-			trackClick({label: 'edit-' + data});
+			trackClick('edit-' + data);
+		});
+		// edit-mobile-page
+		$oldArticleHeader.find('#CuratedContentTool').on('click', function () {
+			trackClick('edit-mobile-page');
 		});
 		// comments
 		$oldArticleHeader.find('a.comments').on('click', function () {
-			trackClick({label: 'comments'});
+			trackClick('comments');
 		});
 		// share
-		$('#ShareEntryPoint').on('click', function () {
-			trackClick({label: 'share'});
+		$oldArticleHeader.find('#ShareEntryPoint').on('click', function () {
+			trackClick('share');
 		});
 	});
 });

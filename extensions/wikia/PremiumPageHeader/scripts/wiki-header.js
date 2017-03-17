@@ -3,7 +3,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 
 	$(function () {
 		var track = tracker.buildTrackingFunction({
-				category: 'premium-page-header',
+				category: 'page-header-test-group',
 				trackingMethod: 'analytics'
 			}),
 			$wikiHeader = $('.pph-wiki-header');

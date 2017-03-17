@@ -3,6 +3,12 @@
 @import 'wiki-header';
 @import 'local-navigation';
 
+.PremiumPageArticleHeader, .PremiumPageHeader {
+	// TODO: uncomment it
+	//display: none;
+}
+
+// TODO: remove it
 .WikiHeader, .WikiaPageHeader {
 	display: none;
 }
