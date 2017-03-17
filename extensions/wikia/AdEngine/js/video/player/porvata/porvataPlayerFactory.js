@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
+		defaultAspectRatio = 320 / 240,
 		videoPlayerClassName = 'video-player';
 
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
@@ -48,11 +49,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 					vastHeight = currentAd.getVastMediaHeight();
 					vastWidth = currentAd.getVastMediaWidth();
 
-					if (vastWidth === 0 || vastHeight === 0) {
-						aspectRatio = 320 / 240;
-					} else {
-						aspectRatio = vastWidth / vastHeight
-					}
+					aspectRatio = (vastWidth && vastHeight) ? vastWidth / vastHeight : defaultAspectRatio;
 				}
 
 				return aspectRatio;
