@@ -79,7 +79,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			return 0;
 		}
 
-		debugger;
 		ad = responseXML.documentElement.querySelector('Ad');
 		if (ad && instantGlobals.wgAdDriverVelesBidderConfig) {
 			if (ad.getAttribute('id')) {
@@ -89,7 +88,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				}
 			}
 
-			debugger;
 			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem];
 			if (adConfigPrice) {
 				adSystem = ad.querySelector('AdSystem');
