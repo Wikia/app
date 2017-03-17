@@ -80,7 +80,13 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		// categories-more - n/a
 		// categories-more-<number> - n/a
 		// interwiki-dropdown - n/a
-		// interwiki-<lang code> - n/a
+		// interwiki-<lang code>
+		$('.WikiaArticleInterlang a').on('click', function () {
+			var data = $(this).data('tracking');
+			if (data) {
+				trackClick(data);
+			}
+		});
 		// edit
 		$oldArticleHeader.find('.wikia-menu-button > a').on('click', function () {
 			trackClick('edit');
