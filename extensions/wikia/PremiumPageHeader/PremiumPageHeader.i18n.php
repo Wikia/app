@@ -19,8 +19,8 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'pph-total-articles' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Seite|Seiten}}</span>',
-	'pph-explore' => 'Entdecke',
-	'pph-discuss' => 'Diskutiere',
+	'pph-explore' => 'Entdecken',
+	'pph-discuss' => 'Diskutieren',
 	'pph-in-categories' => 'in',
 	'pph-categories-more' => 'und {{FORMATNUM:$1}} weiteren',
 );
@@ -75,8 +75,8 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'pph-total-articles' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|статья|статьи|статей}}</span>',
-	'pph-explore' => 'На Сайте',
-	'pph-discuss' => 'Обсудить',
+	'pph-explore' => 'На сайте',
+	'pph-discuss' => 'Общение',
 	'pph-in-categories' => 'Категории',
 	'pph-categories-more' => 'и {{FORMATNUM:$1}} других',
 );
@@ -93,7 +93,7 @@ $messages['zh-hant'] = array(
 	'pph-total-articles' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|個頁面|個頁面}}</span>',
 	'pph-explore' => '探索',
 	'pph-discuss' => '討論',
-	'pph-in-categories' => '位於',
+	'pph-in-categories' => '分類',
 	'pph-categories-more' => '和{{FORMATNUM:$1}}個其他分類',
 );
 
