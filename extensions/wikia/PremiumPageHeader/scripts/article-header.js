@@ -2,7 +2,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
-		category: 'premium-page-header',
+		category: 'page-header-test-group',
 		trackingMethod: 'analytics'
 	});
 
