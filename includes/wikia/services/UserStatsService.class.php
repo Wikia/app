@@ -49,7 +49,7 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 		global $wgMemc;
 
 		if ( !$this->validateUser() ) {
-			return;
+			return false;
 		}
 
 		$stats = $this->getStats( static::READ_LATEST );
@@ -88,6 +88,7 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 		}
 
 		$this->scheduleStatsUpdateTask( $stats );
+		return true;
 	}
 
 	/**
@@ -139,17 +140,6 @@ class UserStatsService extends WikiaModel implements IDBAccessObject {
 			}
 		);
 		return $stats;
-	}
-
-	/**
-	 * Reset edit count of this user - force a recalculation and trigger update
-	 */
-	public function resetEditCount() {
-		$stats = $this->getStats();
-
-		$stats['editcount'] = $this->calculateEditCountWiki();
-
-		$this->scheduleStatsUpdateTask( $stats );
 	}
 
 	public static function purgeOptionsWikiCache( $userId, $wikiId ) {
