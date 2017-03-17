@@ -3,8 +3,8 @@
 class WallThread {
 	const FETCHED_REPLIES_LIMIT = 500;
 
-	private $mThreadId = false;
-	private $mCached = null;
+	protected $mThreadId = false;
+	protected $mCached = null;
 	private $mForceMaster = false;
 
 	// cached data
@@ -128,11 +128,11 @@ class WallThread {
 		$this->initializeReplyData();
 	}
 
-	private function getThreadKey() {
+	public function getThreadKey() {
 		return  wfMemcKey( __CLASS__, '-thread-key-v17-', $this->mThreadId );
 	}
 
-	private function getCache() {
+	protected function getCache() {
 		return F::app()->wg->Memc;
 	}
 
