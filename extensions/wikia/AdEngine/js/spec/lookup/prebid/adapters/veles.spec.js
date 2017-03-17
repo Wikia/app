@@ -219,4 +219,56 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.cpm).toBe(8.32);
 	});
+
+	it('Returs correct price from a title string', function() {
+		var veles = getVeles(),
+			testCases = [
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150xx]',
+					expected: 31.50
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150ic]',
+					expected: 31.50
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150IC]',
+					expected: 31.50
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150LB]',
+					expected: 31.50
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v ve0000xx',
+					expected: 0
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v ve0001xx',
+					expected: 00.01
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150]',
+					expected: null
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150x]',
+					expected: null
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve315x]',
+					expected: null
+				},
+				{
+					title: 'Prebid.js/Veles (VAST) - 640x480v [ve31509xx]',
+					expected: null
+				}
+			];
+
+		testCases.forEach(function (testCase) {
+			var price = veles._getPriceFromTitle(testCase.title);
+
+			expect(price).toBe(testCase.expected);
+		});
+	})
 });

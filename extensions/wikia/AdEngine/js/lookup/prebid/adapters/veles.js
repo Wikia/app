@@ -67,6 +67,19 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
+	function getPriceFromResponse(responseXML) {
+		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
+
+		return lineItemTitle ? getPriceFromTitle(lineItemTitle.textContent) : null;
+	}
+
+	function getPriceFromTitle(title) {
+		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)', 'i'),
+			results = re.exec(title);
+
+		return results && results[1] ? results[1] / 100 : null;
+	}
+
 	function fetchPrice(vastRequest) {
 		var ad,
 			adConfigPrice,
@@ -80,6 +93,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 
 		ad = responseXML.documentElement.querySelector('Ad');
+
+		var price = getPriceFromResponse(responseXML);
+
+
 		if (ad && instantGlobals.wgAdDriverVelesBidderConfig) {
 			if (ad.getAttribute('id')) {
 				adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
@@ -208,6 +225,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		isEnabled: isEnabled,
 		getName: getName,
 		getSlots: getSlots,
-		prepareAdUnit: prepareAdUnit
+		prepareAdUnit: prepareAdUnit,
+		// exposed only for unit testing only
+		_getPriceFromTitle: getPriceFromTitle
 	};
 });
