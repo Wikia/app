@@ -1,4 +1,4 @@
-require(['wikia.window', 'jquery'], function (window, $) {
+require(['wikia.window', 'jquery', 'wikia.abTest'], function (window, $, abTest) {
 	'use strict';
 
 	function moveBannerNotifications() {
@@ -16,7 +16,8 @@ require(['wikia.window', 'jquery'], function (window, $) {
 	}
 
 	$(function () {
-		// TODO: run it only if experiment is active
-		moveBannerNotifications();
+		if (window.wgUserName || abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM')) {
+			moveBannerNotifications();
+		}
 	});
 });
