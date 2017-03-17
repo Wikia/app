@@ -7,6 +7,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	});
 
 	$(function () {
+		//TODO: introduce impression track
 		$('.pph-article-header-tracking a, .pph-article-header-tracking .pph-track').on('click', function () {
 			var data = $(this).data('tracking');
 			if (data) {

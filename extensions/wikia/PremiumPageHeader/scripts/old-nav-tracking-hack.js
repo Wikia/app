@@ -10,6 +10,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 		});
 
 	$(function () {
+		//TODO: introduce impression track
 		// wordmark-image
 		$oldWikiHeader.find('.wordmark').on('click', function () {
 			trackClick({label: 'wordmark-image'});
@@ -76,12 +77,16 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 			var data = $(this).data('id');
 			trackClick({label: 'edit-' + data});
 		});
+		// edit-mobile-page
+		$oldArticleHeader.find('#CuratedContentTool').on('click', function () {
+			trackClick({label: 'edit-mobile-page'});
+		});
 		// comments
 		$oldArticleHeader.find('a.comments').on('click', function () {
 			trackClick({label: 'comments'});
 		});
 		// share
-		$('#ShareEntryPoint').on('click', function () {
+		$oldArticleHeader.find('#ShareEntryPoint').on('click', function () {
 			trackClick({label: 'share'});
 		});
 	});
