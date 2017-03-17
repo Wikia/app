@@ -25,7 +25,7 @@
 		<h1 class="pph-track" data-tracking="article-title"><?= $title ?></h1>
 	</div>
 	<div class="pph-article-contribution">
-		<div class="pph-languages pph-dropdown-container<?= count( $language_list ) <= 1 ? ' pph-disabled' : '' ?>">
+		<div class="pph-languages pph-dropdown-container<?= count( $languageList ) <= 1 ? ' pph-disabled' : '' ?>">
 			<span class="pph-track" data-tracking="interwiki-dropdown">
 				<?= $currentLangName ?>
 				<?= DesignSystemHelper::renderSvg(
@@ -33,10 +33,10 @@
 					'wds-icon wds-icon-tiny pph-dropdown-chevron'
 				) ?>
 			</span>
-			<?php if ( count( $language_list ) > 1 ): ?>
+			<?php if ( count( $languageList ) > 1 ): ?>
 				<div class="pph-dropdown">
 					<ul class="pph-dropdown-scrollable">
-						<?php foreach ( $language_list as $key => $val ) : ?>
+						<?php foreach ( $languageList as $key => $val ) : ?>
 							<li>
 								<a href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"
 								   data-tracking="<?= $key ?>"><?= htmlspecialchars( $val['name'] ); ?></a>

@@ -38,14 +38,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
 		$this->setVal( 'moreCategories', $moreCategories );
 		$this->setVal( 'curatedContentButton', $this->getEditMainPage() );
-
-		if ( $this->app->getSkinTemplateObj() ) {
-			$this->language_urls = $this->app->getSkinTemplateObj()->data['language_urls'];
-		} else {
-			$this->language_urls = [];
-		}
-		$this->language_list = null;
-		$this->widgetLanguages();
+		$this->setVal( 'languageList', $this->getLanguages() );
 	}
 
 	public function navigation() {
@@ -234,59 +227,37 @@ class PremiumPageHeaderController extends WikiaController {
 		return [];
 	}
 
-	private function widgetLanguages() {
+	private function getLanguages() {
 		global $wgContLanguageCode, $wgTitle;
+
+		$language_urls = $this->app->getSkinTemplateObj()
+			? $this->app->getSkinTemplateObj()->data['language_urls']
+			: [];
 
 		$request_language_urls = $this->request->getVal( 'request_language_urls' );
 		if ( !empty( $request_language_urls ) ) {
-			$this->language_urls = $request_language_urls;
+			$language_urls = $request_language_urls;
+		}
+
+		$languages = [];
+		foreach ( $language_urls as $val ) {
+			$languages[$val["class"]] = [
+				'href' => $val['href'],
+				'name' => $val['text'],
+				'class' => $val['class'],
+			];
 		}
 
 		$this->currentLangName = Language::getLanguageName( $wgContLanguageCode );
-
-		$language_urls = $this->language_urls;
-
-		$language_urls[] = [
+		$languages["interwiki-{$wgContLanguageCode}"] = [
 			'href' => $wgTitle->getFullURL(),
-			'text' => $this->currentLangName,
+			'name' => $this->currentLangName,
 			'class' => "interwiki-{$wgContLanguageCode}",
 		];
 
-		$langSortBy = [];
+		ksort( $languages );
 
-		// only display the interlang links if available
-		if ( !empty( $language_urls ) && is_array( $language_urls ) ) {
-
-			// most important languages order, the rest is applied at the end
-			$langSortBy = [
-				"interwiki-en" => 1,
-				"interwiki-de" => 2,
-				"interwiki-es" => 3,
-				"interwiki-ru" => 4,
-				"interwiki-pl" => 5,
-				"interwiki-fr" => 6,
-				"interwiki-it" => 7,
-				"interwiki-pt" => 8
-			];
-
-			foreach ( $language_urls as $val ) {
-				$langSortBy[$val["class"]] = [
-					'href' => $val['href'],
-					'name' => $val['text'],
-					'class' => $val['class'],
-				];
-			}
-
-			//	removing most important languages that are not set (wiki not available in given lang)
-			foreach ( $langSortBy as $key => $value ) {
-				if ( !is_array( $value ) ) {
-					unset( $langSortBy[$key] );
-				}
-			}
-		}
-		if ( !empty( $langSortBy ) ) {
-			$this->language_list = $langSortBy;
-		}
+		return $languages;
 	}
 
 	private function getExplore(): array {
