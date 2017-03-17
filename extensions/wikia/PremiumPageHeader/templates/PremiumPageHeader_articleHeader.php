@@ -5,7 +5,7 @@
 				<span class="pph-categories-in pph-track" data-tracking="categories-in"><?= $inCategoriesText ?>:</span>
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
-				 --><?php if ( $moreCategoriesLength > 0 ): ?>,
+				 --><?php if ( $moreCategoriesLength > 0 ): ?>
 						<div class="pph-dropdown-container">
 							<a href="#" class="pph-categories-show-more"
 							   data-tracking="categories-more"><?= $moreCategoriesText ?></a>

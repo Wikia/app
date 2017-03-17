@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'pph-discuss' => 'Discuss',
 	'pph-add' => 'Add',
 	'pph-in-categories' => 'in',
-	'pph-categories-more' => 'and {{FORMATNUM:$1}} more',
+	'pph-categories-more' => ', and {{FORMATNUM:$1}} more',
 );
 
 $messages['qqq'] = array(
