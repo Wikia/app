@@ -69,6 +69,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					title: getSafely(notification, 'refersTo.title'),
 					snippet: getSafely(notification, 'refersTo.snippet'),
 					uri: getSafely(notification, 'refersTo.uri'),
+					latestEventUri: getSafely(notification, 'events.latestEvent.uri'),
 					when: convertToTimestamp(getSafely(notification, 'events.latestEvent.when')),
 					communityName: getSafely(notification, 'community.name'),
 					communityId: getSafely(notification, 'community.id'),

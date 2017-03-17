@@ -127,6 +127,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					return {
 						icon: getIcon(notification.type),
 						uri: notification.uri,
+						latestEventUri: notification.latestEventUri,
 						showSnippet: !notification.title,
 						snippet: notification.snippet,
 						text: this._textFormatter.getText(notification),
