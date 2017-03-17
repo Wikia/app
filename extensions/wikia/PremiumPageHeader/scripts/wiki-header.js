@@ -35,5 +35,12 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 				label: 'add-new-page'
 			});
 		});
+
+		$wikiHeader.find('.pph-admin-tools-wiki-activity').on('click', function () {
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'admin-tools-wiki-activity'
+			});
+		});
 	});
 });

@@ -1,14 +1,13 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
-.pph-add-new-page {
+.pph-hollow-button {
 	align-items: center;
 	border: 1px solid $color-button-text;
 	color: $color-button-text;
 	display: flex;
 	font-size: 10px;
 	font-weight: bold;
-	margin-left: 18px;
 	padding: 8px 12px;
 	text-transform: uppercase;
 	transition: border-color, color;
@@ -26,8 +25,19 @@
 
 	svg {
 		fill: $color-button-text;
-		margin-right: 6px;
 		transition: fill .2s;
+	}
+
+	+ .pph-hollow-button {
+		border-left: 0;
+	}
+}
+
+.pph-add-new-page {
+	margin-left: 18px;
+
+	svg {
+		margin-right: 6px;
 	}
 }
 
@@ -60,7 +70,7 @@
 .pph-tally-area {
 	align-items: flex-start;
 	display: flex;
-	font-weight: bold;
+	font-weight: 600;
 	margin: 20px;
 }
 
@@ -68,37 +78,43 @@
 	background-color: $color-buttons;
 	color: $color-button-text;
 	display: flex;
-	margin: -1px -31px 20px;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	margin: -1px -31px 8px;
 	position: relative;
 	z-index: 1001;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 
 	.wordmark {
 		height: 65px;
 		margin: 20px 18px 20px 20px;
+		text-align: center;
+		width: 250px;
 
 		@media #{$breakpoint-below-small-plus} {
 			height: 45px;
 			margin: 20px 18px 50px 20px;
+			width: 175px;
 
 			img {
-				width: 175px;
 				height: auto;
+				width: 175px;
 			}
 		}
 	}
 
 	@media #{$breakpoint-medium-only} {
-		margin: -1px -21px 20px;
+		margin-left: -21px;
+		margin-right: -21px;
 	}
 
 	@media #{$breakpoint-small-plus} {
-		margin: -1px -11px 20px;
+		margin-left: -11px;
+		margin-right: -11px;
 	}
 
 	@media #{$breakpoint-below-small-plus} {
-		margin: -1px -25px 20px;
+		margin-left: -25px;
+		margin-right: -25px;
 	}
 }
 
@@ -107,7 +123,9 @@
 	font-size: 28px;
 	font-weight: 600;
 	line-height: 1;
+	margin-bottom: auto;
 	margin-top: 24px;
+	z-index: 1;
 
 	a {
 		color: $color-button-text;

@@ -1,7 +1,8 @@
+@import 'article-header';
 @import 'banner-notifications-hack';
-@import 'local-navigation';
 @import 'wiki-header';
+@import 'local-navigation';
 
-.WikiHeader {
+.WikiHeader, .WikiaPageHeader {
 	display: none;
 }
