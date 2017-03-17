@@ -1,7 +1,13 @@
 <?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-hidden-svg' ) ?>
 <?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small', 'wds-hidden-svg' ) ?>
 
-<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-container">
+<?
+	// wds-global-navigation__notifications-menu wds-dropdown notifications-container bubbles
+	// wds-global-navigation__dropdown-content wds-is-right-aligned
+	// are borrowed from Global Navigation and they're responsible for displaying the icon,
+	// dropdown and bubble with unread notifications count
+?>
+<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-container wds-notifications">
 	<div id="onSiteNotificationsDropdown"
 	     class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle"
 	     title="<?= wfMessage( 'global-navigation-notifications-title' )->escaped() ?>">
@@ -16,7 +22,7 @@
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ) ?>
 	</div>
 	<div
-		class="wds-dropdown__content wds-is-right-aligned wds-global-navigation__dropdown-content wds-notifications__dropdown-content">
+		class="wds-dropdown__content wds-is-right-aligned wds-notifications__dropdown-content">
 		<div id="markAllAsReadButton" class="wds-notifications__mark-all-as-read-button">
 			<a class="wds-notifications__mark-all-as-read">
 				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>

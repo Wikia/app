@@ -14,7 +14,12 @@ $wds-icon-color: $wds-color-light-c5;
   width: 0;
 }
 
+.wds-dropdown.wds-is-active.wds-notifications .wds-dropdown__content {
+  @include flexbox();
+}
+
 .wds-notifications {
+
   &__mark-all-as-read-button {
 	@include justify-content(flex-start);
 	box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
@@ -44,6 +49,7 @@ $wds-icon-color: $wds-color-light-c5;
 	font-size: $wds-typescale-size-minus-1;
 	max-width: 18px * 2 + 320px;
 	min-width: 18px * 2 + 320px;
+	min-height: 80px;
 	white-space: normal;
 	width: 100%;
   }
@@ -63,6 +69,7 @@ $wds-icon-color: $wds-color-light-c5;
 	}
   }
 }
+
 
 $notification-card-text-color: $wds-color-dark-blue-gray;
 $notification-card-anchor-color: $notifications-dropdown-content-color;
