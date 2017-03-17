@@ -3,6 +3,8 @@
 class PremiumPageHeaderController extends WikiaController {
 
 	public function articleHeader() {
+		global $wgRequest, $wgTitle;
+
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		$this->content_actions = $skinVars['content_actions'];
 
@@ -20,10 +22,36 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'displaytitle', $skinVars['displaytitle'] );
 		if ( WikiaPageType::isMainPage() ) {
 			// change page title to just "Home"
-			$this->setVal( 'title', wfMessage( 'oasis-home' )->escaped() );
+			$title = wfMessage( 'oasis-home' )->escaped();
 		} else {
-			$this->setVal( 'title', $skinVars['title'] );
+			$title = $skinVars['title'];
 		}
+
+		$action = $wgRequest->getVal( 'action', 'view' );
+		$isEdit = in_array( $action, [ 'edit', 'submit' ] );
+		$isSectionEdit = is_numeric( $wgRequest->getVal( 'section' ) );
+		$isPreview = $wgRequest->getCheck( 'wpPreview' ) || $wgRequest->getCheck( 'wpLivePreview' );
+		$isShowChanges = $wgRequest->getCheck( 'wpDiff' );
+		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) ); // RT #69931
+		$isHistory = $action == 'history';
+
+		// choose header message
+		$titleMsg = '';
+		if ( $isPreview ) {
+			$titleMsg = 'oasis-page-header-preview';
+		} else if ( $isShowChanges ) {
+			$titleMsg = 'oasis-page-header-changes';
+		} else if ( $isDiff ) {
+			$titleMsg = 'oasis-page-header-diff';
+		} else if ( $isSectionEdit ) {
+			$titleMsg = 'oasis-page-header-editing-section';
+		} else if ( $isHistory ) {
+			$titleMsg = 'oasis-page-header-history';
+		} else if ( $isEdit ) {
+			$titleMsg = 'oasis-page-header-editing';
+		}
+
+		$title = empty( $titleMsg ) ? $title : wfMsg( $titleMsg, htmlspecialchars( $wgTitle->getPrefixedText() ) );
 
 		$categoryLinks = $this->getContext()->getOutput()->getCategoryLinks();
 		$normalCategoryLinks = $categoryLinks['normal'] ?? [];
@@ -37,6 +65,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-more' );
 
+		$this->setVal( 'title', $title );
 		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() );
 		$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->setVal( 'moreCategoriesText', wfMessage( 'pph-categories-more' )->numParams( count( $moreCategories ) )->text() );
