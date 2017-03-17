@@ -32,7 +32,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
 		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-more' );
 
-		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->plain() );
+		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() );
 		$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->setVal( 'moreCategoriesText', wfMessage( 'pph-categories-more' )->numParams( count( $moreCategories ) )->text() );
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
@@ -303,7 +303,7 @@ class PremiumPageHeaderController extends WikiaController {
 			if ( $title && $title->isKnown() ) {
 				return [
 					'text' => isset( $page['key'] )
-						? wfMessage( $page['key'] )->inContentLanguage()->plain()
+						? wfMessage( $page['key'] )->inContentLanguage()->escaped()
 						: $title->fixSpecialName()->getText(),
 					'href' => $title->getLocalURL(),
 					'tracking' => $page['tracking']
