@@ -61,7 +61,9 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 						this.doNotFloat = true;
 					},
 					/**
-					 * In order to get floating ad height - invoke this method only in/after detach event, but before attach event.
+					 * In order to get floating ad height - invoke this method only in/after detach event, but before attach event,
+					 * because floating ad width is set after before detach event.
+					 * Ideally call this method inside on detach event handler.
 					 * It might return wrong result when vast media does not have proper vast media width and vast media height.
 					 *
 					 * @returns {number} - floating ad width
@@ -70,7 +72,9 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 						return this.getWidth() / this.elements.video.computeVastMediaAspectRatio();
 					},
 					/**
-					 * In order to get floating ad width - invoke this method only in/after detach event, but before attach event
+					 * In order to get floating ad width - invoke this method only in/after detach event, but before attach event,
+					 * because floating ad width is set after before detach event.
+					 * Ideally call this method inside on detach event handler.
 					 *
 					 * @returns {number} - floating ad width
 					 */

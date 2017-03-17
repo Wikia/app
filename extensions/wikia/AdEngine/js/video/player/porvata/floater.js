@@ -174,7 +174,10 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function makeFloat(video, params, eventHandlers) {
 			var floatingContext = enableFloatingOn(video, params, eventHandlers);
 
-			floatingContext.invokeLater(enableFloating);
+			floatingContext.invokeLater(function (floatingContext) {
+				showAboveArticleVideo(floatingContext);
+				enableFloating(floatingContext);
+			});
 
 			return floatingContext;
 		}

@@ -627,7 +627,7 @@ body > a > img[src$="noad.gif"] {
 			z-index: $floating-ad-index;
 
 			.provider-container {
-				padding-bottom: 0 !important;
+				padding-bottom: 0 !important; // has to be !important because o inline style
 				width: $floating-ad-video-width;
 			}
 

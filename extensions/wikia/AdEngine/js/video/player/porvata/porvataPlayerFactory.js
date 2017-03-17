@@ -37,15 +37,21 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				ima.addEventListener(eventName, callback);
 			},
 			computeVastMediaAspectRatio: function () {
-				var aspectRatio = width / height,
-					currentAd;
+				var adsManager = ima.getAdsManager(),
+					aspectRatio = width / height,
+					currentAd,
+					vastHeight = 0,
+					vastWidth = 0;
 
-				if (ima.getAdsManager()) {
-					currentAd = ima.getAdsManager().getCurrentAd();
-					aspectRatio = currentAd.getVastMediaWidth() / currentAd.getVastMediaHeight();
+				if (adsManager) {
+					currentAd = adsManager.getCurrentAd();
+					vastHeight = currentAd.getVastMediaHeight();
+					vastWidth = currentAd.getVastMediaWidth();
 
-					if (!aspectRatio) {
+					if (vastWidth === 0 || vastHeight === 0) {
 						aspectRatio = 320 / 240;
+					} else {
+						aspectRatio = vastWidth / vastHeight
 					}
 				}
 
