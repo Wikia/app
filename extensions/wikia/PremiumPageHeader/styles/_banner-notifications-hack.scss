@@ -1,8 +1,9 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/oasis/css/core/layout';
 
-.banner-notifications-wrapper {
+.banner-notifications-placeholder .banner-notifications-wrapper {
 	position: relative;
+	top: 0 !important;
 	z-index: $zTop;
 
 	@media #{$breakpoint-small-only} {
