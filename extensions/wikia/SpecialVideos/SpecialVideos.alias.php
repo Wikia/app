@@ -91,3 +91,10 @@ $specialPageAliases['ru'] = array(
 $specialPageAliases['vi'] = array(
 	'Videos' => array( 'Đoạn_phim' ),
 );
+
+/**
+ * Chinese
+ */
+$specialPageAliases['zh'] = array(
+	'Videos' => array( '视频' ),
+);
