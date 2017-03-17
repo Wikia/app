@@ -219,4 +219,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.cpm).toBe(8.32);
 	});
+
+	it('Should get price from line item even if there is other price source', function () {
+		// TODO
+	});
+
 });
