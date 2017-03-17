@@ -239,6 +239,13 @@ class PremiumPageHeaderController extends WikiaController {
 			$language_urls = $request_language_urls;
 		}
 
+		$this->currentLangName = Language::getLanguageName( $wgContLanguageCode );
+		$language_urls["interwiki-{$wgContLanguageCode}"] = [
+			'href' => $wgTitle->getFullURL(),
+			'text' => $this->currentLangName,
+			'class' => "interwiki-{$wgContLanguageCode}",
+		];
+
 		$languages = [];
 		foreach ( $language_urls as $val ) {
 			$languages[$val["class"]] = [
@@ -247,13 +254,6 @@ class PremiumPageHeaderController extends WikiaController {
 				'class' => $val['class'],
 			];
 		}
-
-		$this->currentLangName = Language::getLanguageName( $wgContLanguageCode );
-		$languages["interwiki-{$wgContLanguageCode}"] = [
-			'href' => $wgTitle->getFullURL(),
-			'name' => $this->currentLangName,
-			'class' => "interwiki-{$wgContLanguageCode}",
-		];
 
 		ksort( $languages );
 
