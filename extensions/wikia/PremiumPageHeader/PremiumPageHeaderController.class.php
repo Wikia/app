@@ -18,7 +18,12 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->commentsLink = $this->getCommentsLink();
 
 		$this->setVal( 'displaytitle', $skinVars['displaytitle'] );
-		$this->setVal( 'title', $skinVars['title'] );
+		if ( WikiaPageType::isMainPage() ) {
+			// change page title to just "Home"
+			$this->setVal( 'title', wfMessage( 'oasis-home' )->escaped() );
+		} else {
+			$this->setVal( 'title', $skinVars['title'] );
+		}
 
 		$categoryLinks = $this->getContext()->getOutput()->getCategoryLinks();
 		$normalCategoryLinks = $categoryLinks['normal'] ?? [];
