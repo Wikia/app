@@ -100,6 +100,7 @@ class PremiumPageHeaderController extends WikiaController {
 
 			if ( isset( $title ) ) {
 				$this->setVal( 'addNewPageLabel', wfMessage( 'pph-add' )->escaped() );
+				$this->setVal( 'addNewPageTitle', wfMessage( 'oasis-button-add-new-page' )->escaped() );
 				$this->setVal( 'adminToolsWikiActivity', [
 					'href' => $title->getLocalURL(),
 					'title' => wfMessage( 'oasis-activity-header' )->escaped()
