@@ -3244,6 +3244,7 @@ $config['premium_page_header_js'] = [
 	'assets' => [
 		'//extensions/wikia/PremiumPageHeader/scripts/banner-notifications-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/local-navigation.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/old-nav-tracking-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/article-header.js',
