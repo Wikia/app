@@ -18,22 +18,7 @@ require(['jquery', 'wikia.ui.factory'], function ($, uiFactory) {
 				size: 'content-size',
 				content: getModalContent(),
 				class: 'styleguide-example-content-size',
-				title: bioToggler[0].dataset.modalTitle,
-				closeText: 'Close',
-				buttons: [
-					{
-						vars: {
-							value: 'Close',
-							classes: 'primary',
-							data: [
-								{
-									key: 'event',
-									value: 'close'
-								}
-							]
-						}
-					}
-				]
+				title: bioToggler[0].dataset.modalTitle
 			}
 		};
 	}

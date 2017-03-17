@@ -1,9 +1,10 @@
 /*global define, google*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
+	'ext.wikia.adEngine.video.player.porvata.moatVideoTracker',
 	'wikia.document',
 	'wikia.log'
-], function(imaSetup, doc, log) {
+], function (imaSetup, moatVideoTracker, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
@@ -18,6 +19,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
+
+			if (videoSettings.isMoatTrackingEnabled()) {
+				moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL);
+			}
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
@@ -56,12 +61,15 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		function playVideo(width, height) {
 			function callback() {
-				log('Video play: prepare player UI', log.levels.debug, logGroup);
+				var roundedWidth = Math.round(width),
+					roundedHeight = Math.round(height);
+
+				log(['Video play: prepare player UI', roundedWidth, roundedHeight], log.levels.debug, logGroup);
 				adsManager.dispatchEvent('wikiaAdPlayTriggered');
 
 				// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 				adDisplayContainer.initialize();
-				adsManager.init(width, height, google.ima.ViewMode.NORMAL);
+				adsManager.init(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
 				adsManager.start();
 				adsLoader.removeEventListener('adsManagerLoaded', callback);
 
@@ -88,10 +96,13 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		}
 
 		function resize(width, height) {
-			if (adsManager) {
-				adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+			var roundedWidth = Math.round(width),
+				roundedHeight = Math.round(height);
 
-				log(['IMA player resized', width, height], log.levels.debug, logGroup);
+			if (adsManager) {
+				adsManager.resize(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
+
+				log(['IMA player resized', roundedWidth, roundedHeight], log.levels.debug, logGroup);
 			}
 		}
 

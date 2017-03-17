@@ -3,6 +3,7 @@
 use Wikia\IndexingPipeline\MySQLMetricEventProducer;
 
 class MySQLMetricEventProducerTest extends WikiaBaseTest {
+	/** @var MySQLMetricEventProducer $eventProducer */
 	private $eventProducer;
 
 	protected function setUp() {
@@ -17,7 +18,7 @@ class MySQLMetricEventProducerTest extends WikiaBaseTest {
 	 * @param array $pageId
 	 * @param $wgCityId
 	 * @param array $expectedOutput
-	 * @dataProvider testPrepareMessageDataProvider
+	 * @dataProvider prepareMessageDataProvider
 	 */
 	public function testPrepareMessage( $pageId, $wgCityId, $expectedOutput ) {
 		$this->mockGlobalVariable('wgCityId', $wgCityId);
@@ -27,7 +28,7 @@ class MySQLMetricEventProducerTest extends WikiaBaseTest {
 		);
 	}
 
-	public function testPrepareMessageDataProvider() {
+	public function prepareMessageDataProvider() {
 		return [
 			[
 				'pageId' => '453',

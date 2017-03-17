@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class UserStatsTest extends PHPUnit_Framework_TestCase {
+class UserStatsTest extends TestCase {
 	const TEST_USER_ID = 1683;
 
 	/** @var UserStats $userStats */

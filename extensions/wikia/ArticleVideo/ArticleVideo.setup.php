@@ -5,4 +5,9 @@ $wgAutoloadClasses['ArticleVideoController'] = __DIR__ . '/ArticleVideoControlle
 
 $wgHooks['BeforePageDisplay'][] = 'ArticleVideoHooks::onBeforePageDisplay';
 $wgHooks['MakeGlobalVariablesScript'][] = 'ArticleVideoHooks::onMakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'ArticleVideoHooks::onSkinAfterBottomScripts';
+
+$wgResourceModules['ext.ArticleVideo'] = [
+	'messages' => [
+		'articlevideo-watch',
+	],
+];
