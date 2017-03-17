@@ -44,12 +44,8 @@ $wds-icon-color: $wds-color-light-c5;
 	font-size: $wds-typescale-size-minus-1;
 	max-width: 18px * 2 + 320px;
 	min-width: 18px * 2 + 320px;
-	overflow-wrap: break-word;
 	white-space: normal;
 	width: 100%;
-	//word-break: break-word is not supported on Firefox, therefore word-wrap and overflow-wrap are used too
-	word-break: break-word;
-	word-wrap: break-word;
   }
 
   &__notification-list {
@@ -74,6 +70,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 .wds-notification-card {
   padding: 12px 0 8px;
   text-align: left;
+
   .wds-notification-card__outer-body {
 	@include flexbox();
 	cursor: pointer;
@@ -101,9 +98,13 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	@include flex-grow(1);
 	@include flexbox();
 	@include justify-content(flex-start);
+	overflow-wrap: break-word;
 	padding-left: 12px;
 	padding-right: 12px;
-	word-break: break-all;
+	//word-break: break-word is not supported on Firefox, therefore word-wrap and overflow-wrap are used too
+	word-break: break-word;
+	word-wrap: break-word;
+
   }
 
   &__text {
