@@ -11,7 +11,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 ], function (adContext, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
-	var bidderName = 'veles',
+	var adxAdSystem = 'AdSense/AdX',
+		bidderName = 'veles',
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
@@ -68,8 +69,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	function fetchPrice(vastRequest) {
 		var ad,
-			adParameters,
 			adConfigPrice,
+			adParameters,
+			adSystem,
 			parameters,
 			responseXML = vastRequest.responseXML;
 
@@ -77,11 +79,23 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			return 0;
 		}
 
+		debugger;
 		ad = responseXML.documentElement.querySelector('Ad');
-		if (ad && ad.getAttribute('id') && instantGlobals.wgAdDriverVelesBidderConfig) {
-			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
+		if (ad && instantGlobals.wgAdDriverVelesBidderConfig) {
+			if (ad.getAttribute('id')) {
+				adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
+				if (adConfigPrice) {
+					return parseInt(adConfigPrice, 10) / 100;
+				}
+			}
+
+			debugger;
+			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem];
 			if (adConfigPrice) {
-				return parseInt(adConfigPrice, 10) / 100;
+				adSystem = ad.querySelector('AdSystem');
+				if (adSystem && adSystem.textContent === adxAdSystem) {
+					return parseInt(adConfigPrice, 10) / 100;
+				}
 			}
 		}
 
