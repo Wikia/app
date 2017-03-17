@@ -4,6 +4,8 @@ require(['wikia.window', 'jquery'], function (window, $) {
 	function moveBannerNotifications() {
 		var $bannerPlaceholder = $('.banner-notifications-placeholder');
 
+		$('.banner-notifications-wrapper').appendTo($bannerPlaceholder);
+
 		window.BannerNotification.prototype.onShow = window.BannerNotification.prototype.show;
 		window.BannerNotification.prototype.show = function () {
 			this.onShow();
@@ -14,7 +16,7 @@ require(['wikia.window', 'jquery'], function (window, $) {
 	}
 
 	$(function () {
-		// FIXME: run it only if experiment is active
+		// TODO: run it only if experiment is active
 		moveBannerNotifications();
 	});
 });
