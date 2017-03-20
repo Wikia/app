@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'specialcontact-desc' => "Wikia's contact [[Special:Contact]] form",
+	'specialcontact-desc' => "Fandom's contact [[Special:Contact]] form",
 	'contact' => 'Contact Fandom',
 	'specialcontact-wikia' => 'Contact Fandom',
 	'specialcontact-pagetitle' => 'Contact Fandom Support Staff',
@@ -340,7 +340,7 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-intro-content-issue' => 'Der Inhalt dieses Wikis wurde von dessen Community erstellt und wird nicht von Fandom, sondern von den [[Spezial:Benutzer/sysop|lokalen Admins]] verwaltet. Falls du Probleme oder Fragen zum Inhalt dieses Wikis hast, wende dich bitte an die zuständigen [[Spezial:Benutzer/sysop|Admins]].
 
 Falls du glaubst, dass der Inhalt gegen unsere [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] verstößt, kannst du dich [[Spezial:Kontakt/general|hier]] direkt an einen Fandom-Mitarbeiter wenden.',
-	'specialcontact-intro-user-conflict' => 'Wikis sind Community Seiten wo wir alle zusammenarbeiten müssen. Manchmal kann es bei der Zusammenarbeit zum Konflikt kommen. Wenn man eine offene und respektvolle Gespräche in der Community führt, dann kann man die Konflikte meist gut lösen. 
+	'specialcontact-intro-user-conflict' => 'Wikis sind Community Seiten wo wir alle zusammenarbeiten müssen. Manchmal kann es bei der Zusammenarbeit zum Konflikt kommen. Wenn man eine offene und respektvolle Gespräche in der Community führt, dann kann man die Konflikte meist gut lösen.
 
 Wenn du Hilfe brauchst, dann schreibe bitte den [[Spezial:Benutzer/sysop|lokalen Admins]] zuerst. Die Admins sind Experten wenn es um ein Thema in der Community geht. Wenn die Admins auch nicht helfen können, oder der Benutzer die Fandom-[http://www.de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] missachtet, dann schreib bitte an einen [[Spezial:Kontakt|Fandom-Mitarbeiter]].
 
@@ -705,33 +705,33 @@ Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Ín
 	'specialcontact-seclink-security' => 'Creo que he encontrado un problema de seguridad',
 	'specialcontact-seclink-dmca-request' => 'Tengo una queja sobre derechos de autor',
 	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
-	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Fandom o en una de las comunidades de Fandom, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Fandom para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]]. 
+	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Fandom o en una de las comunidades de Fandom, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Fandom para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]].
 
-Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial:Contactar|otras formas de contacto]]. 
+Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial:Contactar|otras formas de contacto]].
 
-Al realizar pruebas de seguridad, debes: 
+Al realizar pruebas de seguridad, debes:
 
-* No comprometer la disponibilidad del sitio 
-* No comprometer la seguridad o la privacidad de los datos de otros usuarios 
-* No ser destructivo y no ser disruptivo 
+* No comprometer la disponibilidad del sitio
+* No comprometer la seguridad o la privacidad de los datos de otros usuarios
+* No ser destructivo y no ser disruptivo
 
-Al informar de un problema de seguridad, por favor proporciona todos los detalles del problema, incluyendo: 
-* Pasos completos para reproducir la vulnerabilidad (incluyendo una URL de prueba de concepto si es apropiado) 
-* Indicar si te encuentras conectado o sin conectar cuando el problema ocurre 
-* La información de tu navegador, incluyendo el tipo y versión 
-** Particularmente para XSS o vulnerabilidades que requieren de un navegador específico o un plugin para reproducir 
+Al informar de un problema de seguridad, por favor proporciona todos los detalles del problema, incluyendo:
+* Pasos completos para reproducir la vulnerabilidad (incluyendo una URL de prueba de concepto si es apropiado)
+* Indicar si te encuentras conectado o sin conectar cuando el problema ocurre
+* La información de tu navegador, incluyendo el tipo y versión
+** Particularmente para XSS o vulnerabilidades que requieren de un navegador específico o un plugin para reproducir
 * Una breve descripción del impacto potencial de la vulnerabilidad sobre la seguridad
 
-En respuesta a informes de seguridad usando este formulario, Fandom: 
-* Dará prioridad a la reproducción y la confirmación de cualquier vulnerabilidad divulgada 
-* Determinará un calendario razonable para arreglar cualquier vulnerabilidad confirmada 
+En respuesta a informes de seguridad usando este formulario, Fandom:
+* Dará prioridad a la reproducción y la confirmación de cualquier vulnerabilidad divulgada
+* Determinará un calendario razonable para arreglar cualquier vulnerabilidad confirmada
 * No tomará acciones legales contra cualquier persona que reporte y que cumpla con todas las pautas para el análisis y registro de problemas de seguridad',
 	'specialcontact-label-security-type' => 'Tipo de problema de seguridad, si es conocido',
 	'specialcontact-label-security-link' => 'Enlace donde se encuentra el problema',
 	'specialcontact-label-security-description' => 'Por favor describe el problema de seguridad, incluyendo pasos para reproducir',
-	'specialcontact-default-security-description' => 'Descripción: 
+	'specialcontact-default-security-description' => 'Descripción:
 
-Pasos de reproducción: 
+Pasos de reproducción:
   1.
   2.
   3.
@@ -1029,7 +1029,7 @@ $messages['it'] = array(
 	'specialcontact-sectitle-security' => 'Rapporto sul problema di sicurezza',
 	'specialcontact-intro-security' => "Se hai trovato o credi di aver trovato un problema di sicurezza nel codice di Fandom o in una delle comunità di Fandom, faccelo sapere. Apprezziamo il tuo aiuto nel mantenere Fandom un sito sicuro per tutti riportandolo in [[wikipedia:Responsible disclosure|maniera responsible]].
 
-Se vuoi segnalare un bug generale o un altro tipo di problema, sei pregato di utilizzare uno degli [[Special: Contact|altri moduli di contatto]]. 
+Se vuoi segnalare un bug generale o un altro tipo di problema, sei pregato di utilizzare uno degli [[Special: Contact|altri moduli di contatto]].
 
 Quando si esegue il test di sicurezza, è necessario:
 
@@ -1042,7 +1042,7 @@ Quando segnali un problema di sicurezza, sei pregato di fornire tutti i dettagli
 * La procedura completa per riprodurre la vulnerabilità (compreso un URL di Proof-of-Concept, se appropriato)
 * Indicare se hai eseguito l'accesso o sei disconnesso quando si verifica il problema
 * Informazioni sul tuo browser, tra cui il tipo e la versione
-** In particolare per XSS o vulnerabilità che richiedono un browser specifico o plugin per la riproduzione 
+** In particolare per XSS o vulnerabilità che richiedono un browser specifico o plugin per la riproduzione
 * Una breve descrizione dell'impatto potenziale sulla sicurezza della vulnerabilità riscontrata
 
 In risposta ai report di sicurezza che utilizzano questo modulo, Fandom:
@@ -1072,7 +1072,7 @@ Browser/OS: ',
 	'specialcontact-formtitle' => 'Contatta lo Staff di supporto di Fandom',
 	'specialcontact-intro-adoption' => 'Sei interessato a diventare un amministratore qui? Se sì, verifica prima se gli [[Special:Listusers/sysop|amministratori locali]] sono attivi. Se lo sono, lascia loro un messaggio con la tua richiesta. È inoltre una buona idea parlare con altri utenti della tua richiesta in modo da ottenere il loro supporto. Puoi voler iniziare postando nel forum della tua community.
 
-Se gli amministratori locali non sono attivi, puoi inviare una richiesta per ottenere i diritti di amministrazone. Visita la [[w:it:Project:Richieste di adozione|pagina delle richieste di adozione]] per ulteriori informazioni, tra cui i criteri di adozione. Ricorda di fornire sempre un link alla community che desideri adottare. 
+Se gli amministratori locali non sono attivi, puoi inviare una richiesta per ottenere i diritti di amministrazone. Visita la [[w:it:Project:Richieste di adozione|pagina delle richieste di adozione]] per ulteriori informazioni, tra cui i criteri di adozione. Ricorda di fornire sempre un link alla community che desideri adottare.
 
 Se è presente una comunità di utenti attiva nella wiki che desideri adottare, inizi una discussione lì su chi sarebbero i migliori amministratori e sul motivo per cui desideri diventare uno di loro. Includi un link a questa discussione nella [[w:it:Project:Richieste di adozione|tua richiesta]]. Buona fortuna e buone modifiche!',
 	'specialcontact-intro-bad-ad' => "Ci dispiace sentire che ti sei imbattuto in una cattiva pubblicità su Fandom. Se potessi fornire ulteriori dettagli qui di seguito, li condivideremo con il nostro responsabile per la pubblicità, il quale prenderà in esame l'annuncio e potrà essere in grado di rimuoverlo dal sistema.
@@ -1956,7 +1956,7 @@ Jeżeli chcesz zmienić nazwę wiki, poprawić literówkę albo błąd gramatycz
 
 Jeżeli uważasz, że temat tej wiki nie zainteresuje nikogo innego (np. to twój prywatny projekt), wyślij wniosek o zamknięcie wiki używając poniższego formularza. Pamiętaj, żeby zrobić to z poziomu wiki, którą chcesz zamknąć.
 
-Mamy nadzieję, że spośród tysięcy wiki składający się na Fandom znajdziesz coś dla siebie i zajmiesz się innym pasjonującym projektem. 
+Mamy nadzieję, że spośród tysięcy wiki składający się na Fandom znajdziesz coś dla siebie i zajmiesz się innym pasjonującym projektem.
 
 Miłego edytowania!',
 	'specialcontact-intro-content-issue' => 'Zawartość tej wiki jest tworzona przez jej społeczność i zarządzana przez [[Special:ListAdmins|lokalnych administratorów]], a nie przez Fandom. Jeżeli masz jakieś uwagi odnośnie treści, najlepiej najpierw skontaktować się z [[Special:ListAdmins|administratorami tej wiki]].
@@ -2167,19 +2167,19 @@ Boas edições!',
 Se os administradores locais não estiverem ativos, você solicitar o status administrativo. Por favor, visite [[w:c:comunidade:Categoria:Pedidos_de_Adoção|nossa página de adoção]] para obter mais informações, incluindo os critérios de adoção e a página do pedido. Lembre-se sempre de fornecer um link da comunidade que deseja adotar.
 
 Se há uma comunidade ativa na wiki que deseja adotar, por favor, inicie uma discussão sobre quem seriam os melhores administradores e a razão pela qual você gostaria de se tornar um. Por favor, forneça um link desta discussão na [[w:c:comunidade:Categoria:Pedidos_de_Adoção|adoção de comunidade]]. Boa sorte e boas edições!',
-	'specialcontact-intro-account-issue' => 'Ficamos tristes em ouvir que você está tendo problemas em acessar a sua conta. Algumas coisas que você pode verificar: 
+	'specialcontact-intro-account-issue' => 'Ficamos tristes em ouvir que você está tendo problemas em acessar a sua conta. Algumas coisas que você pode verificar:
 
 *Lembre-se que há diferenciação entre letras maiúsculas e minúsculas
 *O seu navegador está atualizado?
 *Você confirmou o seu endereço de email?
-*Você está tentando logar via Facebook Connect? Se sim, siga estes passos [[Ajuda:Facebook_Connect|aqui]]. 
+*Você está tentando logar via Facebook Connect? Se sim, siga estes passos [[Ajuda:Facebook_Connect|aqui]].
 *Não consegue criar uma conta? Talvez você não seja elegível para ter uma conta nesse momento. Veja [[w:c:pt-br.wikia:Termos_de_Uso#Adesão|os Termos de Uso]] para mais detalhes.
 *Perdeu a sua senha? Você pedir uma nova [[Special:Signup|aqui]]. Lá, você digitará o seu nome do usuário, e clique em "senha nova". Você receberá um email com uma senha temporária. Você pode usar essa senha para iniciar uma nova sessão e escolher uma nova senha.
 
-Se você seguiu todos esses passos e ainda está tendo problemas - por favor, envie-nos um relatório detalhado abaixo. Nós responderemos o mais rápido possível. 
+Se você seguiu todos esses passos e ainda está tendo problemas - por favor, envie-nos um relatório detalhado abaixo. Nós responderemos o mais rápido possível.
 
 Boas edições!',
-	'specialcontact-intro-close-account' => 'Lamentamos que você deseje desativar sua conta. O Fandom tem muitas wikis sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wiki, por favor não hesite em contatar seu [[Especial:Lista_de_utilizadores/sysop|administrador local]] para ajuda e conselhos. 
+	'specialcontact-intro-close-account' => 'Lamentamos que você deseje desativar sua conta. O Fandom tem muitas wikis sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wiki, por favor não hesite em contatar seu [[Especial:Lista_de_utilizadores/sysop|administrador local]] para ajuda e conselhos.
 
 Se você decidiu que deseja desativar sua conta definitivamente, por favor, esteja ciente de que o Fandom não tem a capacidade de remover completamente as contas, mas pode desativá-las. Isto garante que a conta permaneça bloqueada e não possa ser usada. Este processo NÃO é reversível e você terá que criar uma nova conta se desejar juntar-se ao Fandom novamente.
 Entretanto, este processo não remove suas contribuições de uma determinada wiki, já que essas contribuições pertencem à comunidade como um todo.
@@ -2197,7 +2197,7 @@ No entanto, se essa página de conversas não estiver disponível, então o melh
 Se você pensa que ainda precisa discutir sobre este bloqueio com o staff do Fandom, entre em contato conosco [[Especial:Contact/general|aqui]].',
 	'specialcontact-intro-using-fandom' => 'Agora que você é uma parte da comunidade, você pode editar e contribuir em quase todas as páginas do Fandom. Para ajudá-lo, confira nossas [[Ajuda:Começando|páginas de ajuda aqui]]. Elas são um ótimo lugar para aprender as noções básicas de edição, formatação e muito mais.
 
-Se você tiver perguntas sobre esta comunidade específica, [[Especial: ListAdmins|entre em contato com seu administrador local]]. 
+Se você tiver perguntas sobre esta comunidade específica, [[Especial: ListAdmins|entre em contato com seu administrador local]].
 Você também pode fazer perguntas gerais para outros membros da comunidade em nosso [[w:c:comunidade:Especial:Forum|Fórum de ajuda da comunidade]].
 
 Lembre-se, você não tem como quebrar uma comunidade no Fandom, então não tenha medo de começar.
@@ -2304,17 +2304,17 @@ Boas edições!',
 	'specialcontact-seclink-security' => 'Acho que encontrei um problema de segurança',
 	'specialcontact-seclink-dmca-request' => 'Tenho uma queixa sobre direitos autorais',
 	'specialcontact-sectitle-security' => 'Relatório de problema de segurança',
-	'specialcontact-intro-security' => 'Se você encontrou ou acredita ter encontrado um problema de segurança no código do Fandom ou em uma das comunidades do Fandom, por favor nos informe. Nós apreciamos sua ajuda em manter o Fandom seguro para todos através da divulgação [[wikipedia:Responsible disclosure|responsável]]. 
+	'specialcontact-intro-security' => 'Se você encontrou ou acredita ter encontrado um problema de segurança no código do Fandom ou em uma das comunidades do Fandom, por favor nos informe. Nós apreciamos sua ajuda em manter o Fandom seguro para todos através da divulgação [[wikipedia:Responsible disclosure|responsável]].
 
-Se você quiser informar sobre um bug geral ou outro tipo de problema, use um dos [[Especial:Contact|outros formulários para contato]]. 
+Se você quiser informar sobre um bug geral ou outro tipo de problema, use um dos [[Especial:Contact|outros formulários para contato]].
 
-Ao executar testes de segurança, você deve: 
+Ao executar testes de segurança, você deve:
 
-* Não comprometer a disponibilidade do site 
-* Não comprometer a segurança ou a privacidade de dados dos outros usuários 
+* Não comprometer a disponibilidade do site
+* Não comprometer a segurança ou a privacidade de dados dos outros usuários
 * Não ser destrutivo e disruptivo
 
-Quando relatar um problema de segurança, forneça detalhes completos sobre o assunto, incluindo: 
+Quando relatar um problema de segurança, forneça detalhes completos sobre o assunto, incluindo:
 
 * Todas as etapas para reproduzir a vulnerabilidade (incluindo um URL de prova de conceito, se for o caso)
 * Indicação de estar ou não conectado quando o problema ocorre
@@ -2331,10 +2331,10 @@ Em resposta aos relatórios de segurança usando este formulário, o Fandom comp
 	'specialcontact-label-security-description' => 'Por favor, descreva o problema de segurança, incluindo etapas a serem reproduzidas',
 	'specialcontact-default-security-description' => 'Descrição:
 
-Etapas de reprodução: 
- 1. 
- 2. 
- 3. 
+Etapas de reprodução:
+ 1.
+ 2.
+ 3.
 
 Navegador/Sistema operacional: ',
 	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
@@ -2426,7 +2426,7 @@ $messages['ru'] = array(
 	'specialcontact-ccheader' => 'Это копия вашего сообщения, которое было отправлено в службу поддержки Фэндома',
 	'specialcontact-form-header' => 'Связаться с Фэндомом',
 	'specialcontact-formtitle' => 'Связаться со службой поддержки Фэндома',
-	'specialcontact-intro-adoption' => 'Хотите стать администратором этой вики? Для начала проверьте, есть ли здесь активные [[Special:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества. 
+	'specialcontact-intro-adoption' => 'Хотите стать администратором этой вики? Для начала проверьте, есть ли здесь активные [[Special:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества.
 
 Если в сообществе нет активных администраторов, вы можете отправить запрос на получение статуса администратора. Форму запроса и дополнительную информацию о критериях выдачи статуса можно найти на [[w:c:ru.community:Викия:_Запросы_на_статус_администратора/бюрократа|этой странице]]. Не забудьте указать ссылку на сообщество, где вы хотите стать администратором.
 
@@ -2474,7 +2474,7 @@ $messages['ru'] = array(
 Если вам кажется, что в процессе обновления дизайна вики вы столкнулись с багом, отправьте сообщение о баге [[Special:Contact/bug|здесь]].
 
 Счастливого редактирования!',
-	'specialcontact-intro-features' => 'Фэндом предлагает множество расширений, большинство из которых включены по умолчанию на страницах всех сообществ. 
+	'specialcontact-intro-features' => 'Фэндом предлагает множество расширений, большинство из которых включены по умолчанию на страницах всех сообществ.
 
 Если вы являетесь администратором сообщества и считаете, что какое-то расширение вам не нужно, то вы можете обсудить этот вопрос с другими участниками вашей вики и узнать, не хотят ли они его отключить. Получив их согласие, вы можете отключить или снова подключить расширение на странице [[Special:WikiFeatures|Wiki Features]] в [[Special:AdminDashboard|кабинете администратора]]. Если в этом разделе нет нужного вам расширения, [[Special:Contact/general|свяжитесь с нами]] с запросом его подключить.
 
@@ -2781,36 +2781,36 @@ $messages['zh-hans'] = array(
 	'specialcontact-seclink-security' => '我想我找到了一个安全性问题',
 	'specialcontact-seclink-dmca-request' => '我要版权投诉',
 	'specialcontact-sectitle-security' => '安全问题报告',
-	'specialcontact-intro-security' => '如果您在Fandom编程代码中或在Fandom的某一个社区上发现一个安全漏洞，请及时告诉我们。我们非常感谢用户这种[[wikipedia:Responsible disclosure|负责性的态度]]，通过向我们报告问题，一起帮助所有人共同维护Fandom的网络安全。 
+	'specialcontact-intro-security' => '如果您在Fandom编程代码中或在Fandom的某一个社区上发现一个安全漏洞，请及时告诉我们。我们非常感谢用户这种[[wikipedia:Responsible disclosure|负责性的态度]]，通过向我们报告问题，一起帮助所有人共同维护Fandom的网络安全。
 
 如果您报告的是一般性技术故障或其它类型问题，请使用[[Special:Contact|其它联系方式]]。
 
 当执行安全测试时，您必须:
 
-* 确保网站的正常使用 
+* 确保网站的正常使用
 * 确保其他用户数据或个人隐私安全
 * 不做任何破坏和干扰
 
 在报告安全问题时，请提供充分详细的说明包括:
 
-* 完整的漏洞重现步骤 (包括URL地址以便我们进行验证) 
+* 完整的漏洞重现步骤 (包括URL地址以便我们进行验证)
 * 请说明在问题发生时，您是否已经登录或注销账户
-* 您所使用的浏览器信息，包括类型和版本 
+* 您所使用的浏览器信息，包括类型和版本
 * * 尤其是对某些要求使用特别的浏览器或者插件的XSS或安全漏洞进行问题重现的时候
 * 潜在的安全漏洞影响的简短报告
 
-在使用这个表格填写安全报告时，Fandom将: 
-* 优先处理任何已经得到确认的安全漏洞报告 
-* 进行合理的时间安排修补任何已经得到证实的安全漏洞 
+在使用这个表格填写安全报告时，Fandom将:
+* 优先处理任何已经得到确认的安全漏洞报告
+* 进行合理的时间安排修补任何已经得到证实的安全漏洞
 * 对任何符合所有测试和安全问题报告规范的用户进行法律免责',
 	'specialcontact-label-security-type' => '已知的安全问题类型',
 	'specialcontact-label-security-link' => '链接到问题发生之处',
 	'specialcontact-label-security-description' => '请描述安全问题包括步骤重现',
-	'specialcontact-default-security-description' => '描述: 
+	'specialcontact-default-security-description' => '描述:
 
-问题重现步骤: 
+问题重现步骤:
 1.
-2.  
+2.
 3.
 
 浏览器/操作系统:',
@@ -2963,7 +2963,7 @@ Fandom拥有大量不同主题的社区，我们希望您可以通过浏览其�
 
 祝编辑愉快！',
 	'specialcontact-intro-main-foot' => "'''请问我们帮您解决问题了吗？如果没有，请[[Special:contact/general|联系我们]]，告诉我们您遇到的相关问题。您也可以登陆我们的'''[[w:c:zh.community:Help:Index|帮助中心]]'''或者[[w:c:zh.community:博客:博客帖子|社区中心博客]]进行查询，或者去'''[[w:c:zh.community:Special:Forum|社区中心论坛]]'''进行提问。如果您希望得到维基主页管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|维基管理员中心]]（英文）进行查看。",
-	'specialcontact-intro-wiki-name-change' => '如果您是这里的管理员，您可以透过填写下表申请更改您的 [[Help:Title for the wiki|wiki名称]]或[[Help:Domain name|网址]] 。请仔细检查用字拼写以确保正确，因我们不会一直接受多次的更改申请。如果您不是这里的管理员，请在[[Special:ListAdmins|这里]]告知管理员您希望的申请。 
+	'specialcontact-intro-wiki-name-change' => '如果您是这里的管理员，您可以透过填写下表申请更改您的 [[Help:Title for the wiki|wiki名称]]或[[Help:Domain name|网址]] 。请仔细检查用字拼写以确保正确，因我们不会一直接受多次的更改申请。如果您不是这里的管理员，请在[[Special:ListAdmins|这里]]告知管理员您希望的申请。
 
 祝编辑愉快!',
 	'specialcontact-label-account-issue-description' => '请具体描述您所遇到的问题',
@@ -3196,7 +3196,7 @@ Fandom擁有大量不同主題的社區，我們希望您可以通過查閱其�
 
 祝編輯愉快！',
 	'specialcontact-intro-main-foot' => "'''請問我們幫您解決問題了嗎？如果沒有，請[[Special:contact/general|聯繫我們]]，告訴我們您遇到的相關問題。您也可以登陸我們的'''[[w:c:zh.community:Help:Index|幫助中心]]'''或者[[w:c:zh.community:博客:博客帖子|社區中心部落格]]進行查詢，或者去'''[[w:c:zh.community:Special:Forum|社區中心論壇]]'''進行提問。如果您希望得到其他管理員們的幫助或者建議，請訪問[[w:c:community:Admin_Central:Main_Page|管理員中心]]（英文）進行查看。",
-	'specialcontact-intro-wiki-name-change' => '如果您是這裡的管理員，您可以透過填寫下表申請更改您的 [[Help:Title for the wiki|wiki名稱]]或[[Help:Domain name|網址]] 。請仔細檢查用字拼寫以確保正確，因我們不會一直接受多次的更改申請。如果您不是這裡的管理員，請在[[Special:ListAdmins|這裡]]告知管理員您希望的申請。 
+	'specialcontact-intro-wiki-name-change' => '如果您是這裡的管理員，您可以透過填寫下表申請更改您的 [[Help:Title for the wiki|wiki名稱]]或[[Help:Domain name|網址]] 。請仔細檢查用字拼寫以確保正確，因我們不會一直接受多次的更改申請。如果您不是這裡的管理員，請在[[Special:ListAdmins|這裡]]告知管理員您希望的申請。
 
 祝編輯愉快!',
 	'specialcontact-label-account-issue-description' => '請具體描述您所遇到的問題。',
