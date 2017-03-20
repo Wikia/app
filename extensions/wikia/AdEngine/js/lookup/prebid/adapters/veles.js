@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.utils.sampler',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
@@ -8,7 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
+], function (adContext, priceParsingHelper, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var adxAdSystem = 'AdSense/AdX',
@@ -70,14 +71,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function getPriceFromTitle(responseXML) {
 		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
 
-		return lineItemTitle ? getPriceFromString(lineItemTitle.textContent) : 0;
-	}
-
-	function getPriceFromString(title) {
-		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)', 'i'),
-			results = re.exec(title);
-
-		return results && results[1] ? parseInt(results[1], 10) / 100 : 0;
+		return lineItemTitle ? priceParsingHelper.getPriceFromString(lineItemTitle.textContent) : 0;
 	}
 
 	function getPriceFromConfigId(ad) {
@@ -247,8 +241,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		isEnabled: isEnabled,
 		getName: getName,
 		getSlots: getSlots,
-		prepareAdUnit: prepareAdUnit,
-		// exposed only for unit testing only
-		_getPriceFromString: getPriceFromString
+		prepareAdUnit: prepareAdUnit
 	};
 });

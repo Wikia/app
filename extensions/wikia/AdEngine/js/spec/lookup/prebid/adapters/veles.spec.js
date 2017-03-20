@@ -15,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				};
 			}
 		},
+		priceParsingHelper: {
+			getPriceFromString: function() {
+				return 0;
+			}
+		},
 		prebidBid: {
 			createBid: function (code) {
 				return {
@@ -59,6 +64,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
+			mocks.priceParsingHelper,
 			mocks.sampler,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
@@ -219,56 +225,4 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.cpm).toBe(8.32);
 	});
-
-	it('Returs correct price from a title string', function() {
-		var veles = getVeles(),
-			testCases = [
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150xx]',
-					expected: 31.50
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150ic]',
-					expected: 31.50
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150IC]',
-					expected: 31.50
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150LB]',
-					expected: 31.50
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v ve0000xx',
-					expected: 0
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v ve0001xx',
-					expected: 0.01
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150]',
-					expected: 0
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150x]',
-					expected: 0
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve315x]',
-					expected: 0
-				},
-				{
-					title: 'Prebid.js/Veles (VAST) - 640x480v [ve31509xx]',
-					expected: 0
-				}
-			];
-
-		testCases.forEach(function (testCase) {
-			var price = veles._getPriceFromString(testCase.title);
-
-			expect(price).toBe(testCase.expected);
-		});
-	})
 });
