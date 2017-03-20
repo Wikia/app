@@ -25,6 +25,7 @@ $messages['de'] = array(
 	'pph-discuss' => 'Diskutieren',
 	'pph-in-categories' => 'in',
 	'pph-categories-more' => 'und {{FORMATNUM:$1}} weiteren',
+	'pph-add' => 'Hinzufügen',
 );
 
 $messages['es'] = array(
@@ -33,6 +34,7 @@ $messages['es'] = array(
 	'pph-discuss' => 'Discute',
 	'pph-in-categories' => 'en',
 	'pph-categories-more' => 'y {{FORMATNUM:$1}} más',
+	'pph-add' => 'Añadir',
 );
 
 $messages['fr'] = array(
@@ -40,7 +42,8 @@ $messages['fr'] = array(
 	'pph-explore' => 'Explorer',
 	'pph-discuss' => 'Discuter',
 	'pph-in-categories' => 'dans ',
-	'pph-categories-more' => 'et {{FORMATNUM:$1}} autres',
+	'pph-categories-more' => ', et {{FORMATNUM:$1}} autres',
+	'pph-add' => 'Ajouter',
 );
 
 $messages['it'] = array(
@@ -48,7 +51,8 @@ $messages['it'] = array(
 	'pph-explore' => 'Esplora',
 	'pph-discuss' => 'Discuti',
 	'pph-in-categories' => 'in',
-	'pph-categories-more' => 'e altre {{FORMATNUM:$1}}',
+	'pph-categories-more' => '&#32;e altre {{FORMATNUM:$1}}',
+	'pph-add' => 'Aggiungi',
 );
 
 $messages['ja'] = array(
@@ -56,7 +60,8 @@ $messages['ja'] = array(
 	'pph-explore' => 'ページを検索',
 	'pph-discuss' => 'ディスカッション',
 	'pph-in-categories' => '関連',
-	'pph-categories-more' => 'さらに {{FORMATNUM:$1}}ページ',
+	'pph-categories-more' => ', さらに {{FORMATNUM:$1}} ページ',
+	'pph-add' => '追加',
 );
 
 $messages['pl'] = array(
@@ -64,7 +69,8 @@ $messages['pl'] = array(
 	'pph-explore' => 'Eksploruj',
 	'pph-discuss' => 'Dyskutuj',
 	'pph-in-categories' => 'w',
-	'pph-categories-more' => 'oraz {{FORMATNUM:$1}} więcej',
+	'pph-categories-more' => '&#32;oraz {{FORMATNUM:$1}} więcej',
+	'pph-add' => 'Dodaj',
 );
 
 $messages['pt'] = array(
@@ -73,6 +79,7 @@ $messages['pt'] = array(
 	'pph-discuss' => 'Converse',
 	'pph-in-categories' => 'em',
 	'pph-categories-more' => 'e mais {{FORMATNUM:$1}}',
+	'pph-add' => 'Adicionar',
 );
 
 $messages['ru'] = array(
@@ -80,7 +87,8 @@ $messages['ru'] = array(
 	'pph-explore' => 'На сайте',
 	'pph-discuss' => 'Общение',
 	'pph-in-categories' => 'Категории',
-	'pph-categories-more' => 'и {{FORMATNUM:$1}} других',
+	'pph-categories-more' => '&#32;и {{FORMATNUM:$1}} других',
+	'pph-add' => 'Создать статью',
 );
 
 $messages['zh-hans'] = array(
@@ -88,7 +96,8 @@ $messages['zh-hans'] = array(
 	'pph-explore' => '探索',
 	'pph-discuss' => '讨论',
 	'pph-in-categories' => '分类',
-	'pph-categories-more' => '以及{{FORMATNUM:$1}}个其他分类',
+	'pph-categories-more' => '，以及{{FORMATNUM:$1}}个其他分类',
+	'pph-add' => '添加',
 );
 
 $messages['zh-hant'] = array(
@@ -96,5 +105,7 @@ $messages['zh-hant'] = array(
 	'pph-explore' => '探索',
 	'pph-discuss' => '討論',
 	'pph-in-categories' => '分類',
-	'pph-categories-more' => '和{{FORMATNUM:$1}}個其他分類',
+	'pph-categories-more' => '和{{FORMATNUM:$1}} 個其他分類',
+	'pph-add' => '增加',
 );
+
