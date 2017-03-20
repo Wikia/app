@@ -686,8 +686,22 @@ body > a > img[src$="noad.gif"] {
 				}
 
 				.control-bar-items {
-					background-color: red;
+					display: flex;
 					margin: 12px 0;
+
+					.play-pause-button {
+						display: block;
+						height: 17px;
+						width: 17px;
+
+						svg {
+							fill: white;
+
+							&:hover {
+								fill: #00b7df;
+							}
+						}
+					}
 				}
 			}
 		}
