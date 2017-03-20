@@ -21,6 +21,10 @@
 	position: relative;
 	vertical-align: middle;
 
+	@media #{$breakpoint-small-plus} {
+		padding: $menu-item-vertical-padding $menu-item-horizontal-small-padding;
+	}
+
 	&:first-child {
 		margin-left: -$menu-item-horizontal-padding;
 
@@ -28,6 +32,10 @@
 			.pph-local-nav-l2 {
 				left: -20px + $menu-item-horizontal-padding;
 			}
+		}
+
+		@media #{$breakpoint-small-plus} {
+			margin-left: -$menu-item-horizontal-small-padding;
 		}
 	}
 
