@@ -94,7 +94,7 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	public function wikiHeader() {
-		global $wgCityId, $wgSitename, $wgUser;;
+		global $wgCityId, $wgSitename, $wgUser;
 
 
 		$backgroundImageUrl = ( new SiteAttributeService() )
