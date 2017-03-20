@@ -83,14 +83,18 @@ class PremiumPageHeaderController extends WikiaController {
 	}
 
 	public function wikiHeader() {
-		global $wgSitename, $wgUser;
+		global $wgCityId, $wgSitename, $wgUser;;
 
-		//$themeSettings = new ThemeSettings();
-		//$settings = $themeSettings->getSettings();
 
+		$backgroundImageUrl = ( new SiteAttributeService() )
+				->getApiClient()
+				->getAttribute( $wgCityId, 'pageHeaderImage' )
+				->getValue() ?? '';
+
+		$this->setVal( 'backgroundImageUrl', $backgroundImageUrl );
 		$this->setVal( 'wordmarkText', $wgSitename );
-		$this->setVal( 'tallyMsg',
-			wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
+		$this->setVal( 'tallyMsg', wfMessage( 'pph-total-articles', SiteStats::articles() )->parse() );
+
 		$this->setVal( 'addNewPageHref', SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL() );
 		$this->setVal( 'addNewPageLabel', wfMessage( 'oasis-button-add-new-page' )->escaped() );
 		$this->setVal( 'mainPageURL', Title::newMainPage()->getLocalURL() );

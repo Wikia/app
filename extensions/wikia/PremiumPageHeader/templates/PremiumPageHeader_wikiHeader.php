@@ -1,4 +1,4 @@
-<div class="pph-wiki-header">
+<div class="pph-wiki-header" style="background-image: url('<?= $backgroundImageUrl ?>');">
 	<?php // fixme it will not work with wikis without wordmark image  ?>
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	<div class="pph-wordmark-text">

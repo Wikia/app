@@ -1,8 +1,11 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
+$image-width: 430px;
+
 .pph-hollow-button {
 	align-items: center;
+	background-color: rgba($color-buttons, .2);
 	border: 1px solid $color-button-text;
 	color: $color-button-text;
 	display: flex;
@@ -10,10 +13,11 @@
 	font-weight: bold;
 	padding: 8px 12px;
 	text-transform: uppercase;
-	transition: border-color, color;
+	transition: border-color, background-color, color;
 	transition-duration: .2s;
 
 	&:hover {
+		background-color: rgba($color-buttons, .4);
 		border-color: rgba($color-button-text, .8);
 		color: rgba($color-button-text, .8);
 		text-decoration: none;
@@ -75,7 +79,12 @@
 }
 
 .pph-wiki-header {
-	background-color: $color-buttons;
+	background: {
+		color: $color-buttons;
+		position: right center;
+		repeat: no-repeat;
+		size: auto 100%;
+	}
 	color: $color-button-text;
 	display: flex;
 	-moz-osx-font-smoothing: grayscale;
@@ -84,7 +93,20 @@
 	position: relative;
 	z-index: 1001;
 
+	&::before {
+		background: linear-gradient(to right, rgba($color-buttons, .5), rgba($color-buttons, .5)),
+					linear-gradient(to left, rgba($color-buttons, .0) 200px, rgba($color-buttons, 1) $image-width);
+		content: '';
+		display: block;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+	}
+
 	.wordmark {
+		// !important to avoid showing bg image from parent when wordmark has opacity
+		background: $color-buttons !important;
 		height: 65px;
 		margin: 20px 18px 20px 20px;
 		text-align: center;
