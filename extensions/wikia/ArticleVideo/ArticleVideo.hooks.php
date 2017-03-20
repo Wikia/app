@@ -5,9 +5,24 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			\Wikia::addAssetsToOutput( 'article_video_scss' );
-			\Wikia::addAssetsToOutput( 'article_video_js' );
+		$relatedVideo =
+			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		$isFeaturedVideoEmbedded = self::isFeaturedVideoEmbedded( $title );
+		$isRelatedVideoEmbedded = self::isRelatedVideoEmbedded( $relatedVideo );
+
+		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
+			\Wikia::addAssetsToOutput( 'ooyala_scss' );
+			\Wikia::addAssetsToOutput( 'ooyala_js' );
+		}
+
+		if ( $isFeaturedVideoEmbedded ) {
+			\Wikia::addAssetsToOutput( 'article_featured_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_featured_video_js' );
+		}
+
+		if ( $isRelatedVideoEmbedded ) {
+			\Wikia::addAssetsToOutput( 'article_related_video_scss' );
+			\Wikia::addAssetsToOutput( 'article_related_video_js' );
 		}
 
 		return true;
@@ -17,23 +32,48 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->articleVideoFeaturedVideos[$title]['videoId'] ) ) {
-			$vars['wgArticleVideoData'] = [
-				'videoId' => $wg->articleVideoFeaturedVideos[$title]['videoId'],
+		if ( self::isFeaturedVideoEmbedded( $title ) ) {
+			$vars['wgOoyalaParams'] = [
+				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
 			];
+			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
+		}
+
+		$relatedVideo =
+			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
+		if ( self::isRelatedVideoEmbedded( $relatedVideo ) ) {
+			$vars['wgOoyalaParams'] = [
+				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
+				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
+			];
+			$vars['wgRelatedVideoId'] = $relatedVideo['videoId'];
 		}
 
 		return true;
 	}
 
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+	public static function isFeaturedVideoEmbedded( $title ) {
 		$wg = F::app()->wg;
-		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( isset( $wg->articleVideoFeaturedVideos[$title] ) ) {
-			$text .= Html::linkedScript( OoyalaVideoHandler::getOoyalaScriptUrl() );
-		}
-
-		return true;
+		return $wg->enableArticleFeaturedVideo &&
+		       isset( $wg->articleVideoFeaturedVideos[$title] ) &&
+		       self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
 	}
+
+	public static function isRelatedVideoEmbedded( $relatedVideo ) {
+		$wg = F::app()->wg;
+
+		return $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) &&
+		       !empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
+	}
+
+	private static function isFeaturedVideosValid( $featuredVideo ) {
+		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+	}
+
+	private static function isRelatedVideosValid( $relatedVideo ) {
+		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
+	}
+
 }
