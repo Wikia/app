@@ -693,9 +693,30 @@ body > a > img[src$="noad.gif"] {
 						display: block;
 						padding: 0 6px;
 						width: 17px;
+					}
 
-						&:first-child {
-							padding-left: 0;
+					.play-pause-button {
+						padding-left: 0;
+					}
+
+					.sound-control {
+						display: flex;
+
+						.sound-bars-container {
+							display: flex;
+
+							.sound-bar {
+								background-clip:content-box;
+								background-color: white;
+								cursor: pointer;
+								height: 17px;
+								padding-left: 3px;
+								width: 2px;
+
+								&.unlit {
+									background-color: rgba(255, 255, 255, 0.2);
+								}
+							}
 						}
 					}
 
