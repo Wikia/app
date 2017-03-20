@@ -249,19 +249,19 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150]',
-					expected: null
+					expected: 0
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150x]',
-					expected: null
+					expected: 0
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve315x]',
-					expected: null
+					expected: 0
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve31509xx]',
-					expected: null
+					expected: 0
 				}
 			];
 

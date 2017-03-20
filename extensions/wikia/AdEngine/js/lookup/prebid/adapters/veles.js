@@ -70,14 +70,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function getPriceFromTitle(responseXML) {
 		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
 
-		return lineItemTitle ? getPriceFromString(lineItemTitle.textContent) : null;
+		return lineItemTitle ? getPriceFromString(lineItemTitle.textContent) : 0;
 	}
 
 	function getPriceFromString(title) {
 		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)', 'i'),
 			results = re.exec(title);
 
-		return results && results[1] ? parseInt(results[1], 10) / 100 : null;
+		return results && results[1] ? parseInt(results[1], 10) / 100 : 0;
 	}
 
 	function getPriceFromConfigId(ad) {
@@ -104,10 +104,17 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
+	/**
+	 * Process VAST response to get price for this video or 0 if
+	 * response invalid or price data couldn't be find.
+	 *
+	 * @param vastRequest
+	 * @returns {number}
+	 */
 	function fetchPrice(vastRequest) {
 		var ad,
 			parameters,
-			price,
+			price = 0,
 			responseXML = vastRequest.responseXML;
 
 		if (!responseXML) {
