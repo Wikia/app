@@ -80,8 +80,8 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
-	if (ads.context.opts.sourcePointDetection) {
-		if (!window.ads || !window.ads.runtime || !window.ads.runtime.sp || window.ads.runtime.sp.blocking === undefined) {
+	if (window.ads.context.opts.sourcePointDetection) {
+		if (!window.ads.runtime || !window.ads.runtime.sp || window.ads.runtime.sp.blocking === undefined) {
 			document.addEventListener('sp.blocking', function () {
 				setAdBlockEnabledAndLoadQualaroo(true);
 			});
