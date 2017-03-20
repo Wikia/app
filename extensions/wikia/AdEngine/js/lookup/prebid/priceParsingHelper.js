@@ -17,7 +17,18 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)', 'i'),
 			results = re.exec(title);
 
-		return results && results[1] ? parseInt(results[1], 10) / 100 : null;
+		return results && results[1] ? getPriceInDollars(results[1]) : null;
+	}
+
+	/**
+	 * From the string in the form of numbers only that represents
+	 * the amount of cents, return number that represents the amount of $.
+	 *
+	 * @param numberString
+	 * @returns {number}
+	 */
+	function getPriceInDollars(numberString) {
+		return parseInt(numberString, 10) / 100;
 	}
 
 	return {
