@@ -138,22 +138,24 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				return video;
 			}).then(function (video) {
 
-				var interactiveArea = document.createElement('div'),
-					controlBar = document.createElement('div'),
-					controlBarItems = document.createElement('div');
+				if (params.hasUiControls) {
+					var interactiveArea = document.createElement('div'),
+						controlBar = document.createElement('div'),
+						controlBarItems = document.createElement('div');
 
-				interactiveArea.classList.add('interactive-area');
-				controlBar.classList.add('control-bar');
-				controlBarItems.classList.add('control-bar-items');
+					interactiveArea.classList.add('interactive-area');
+					controlBar.classList.add('control-bar');
+					controlBarItems.classList.add('control-bar-items');
 
-				controlBar.appendChild(controlBarItems);
-				interactiveArea.appendChild(controlBar);
-				video.container.appendChild(interactiveArea);
+					controlBar.appendChild(controlBarItems);
+					interactiveArea.appendChild(controlBar);
+					video.container.appendChild(interactiveArea);
 
-				videoInterface.setup(video, uiTemplate.otherLayout, {
-					controlBar: controlBar,
-					controlBarItems: controlBarItems
-				});
+					videoInterface.setup(video, uiTemplate.otherLayout, {
+						controlBar: controlBar,
+						controlBarItems: controlBarItems
+					});
+				}
 
 				return video;
 			});

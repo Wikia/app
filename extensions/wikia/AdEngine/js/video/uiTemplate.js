@@ -34,7 +34,8 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		],
 		otherLayout = [
 			'progressBar',
-			'playPauseButton'
+			'playPauseButton',
+			'soundControl'
 		],
 		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 

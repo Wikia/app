@@ -689,17 +689,22 @@ body > a > img[src$="noad.gif"] {
 					display: flex;
 					margin: 12px 0;
 
-					.play-pause-button {
+					.control-bar-item {
 						display: block;
-						height: 17px;
+						padding: 0 6px;
 						width: 17px;
 
-						svg {
-							fill: white;
+						&:first-child {
+							padding-left: 0;
+						}
+					}
 
-							&:hover {
-								fill: #00b7df;
-							}
+					svg {
+						fill: white;
+						height: 17px;
+
+						&:hover {
+							fill: #00b7df;
 						}
 					}
 				}
