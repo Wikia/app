@@ -1,4 +1,4 @@
-( function ( window ) {
+( function ( window, document ) {
 	'use strict';
 	var _kiq = [],
 		createCookie;
@@ -15,10 +15,20 @@
 		document.cookie = cookieValue;
 	};
 
-	setTimeout(function(){
-		var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
-		s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
-	}, 1);
+	function loadQualaroo () {
+		setTimeout(function(){
+			var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
+			s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
+		}, 1);
+	}
+
+	function setAdBlockEnabledAndLoadQualaroo(enabled) {
+		_kiq.push(['set', {
+			'adBlockedEnabled': enabled
+		}]);
+		loadQualaroo();
+	}
+
 
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
@@ -70,5 +80,17 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
+	if(ads.context.opts.sourcePointDetection) {
+		document.addEventListener('sp.blocking', function () {
+			setAdBlockEnabledAndLoadQualaroo(true);
+		});
+
+		document.addEventListener('sp.not_blocking', function () {
+			setAdBlockEnabledAndLoadQualaroo(false);
+		});
+	} else {
+		loadQualaroo();
+	}
+
 	window._kiq = _kiq;
-})( window );
+})( window, document );
