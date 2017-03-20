@@ -164,13 +164,13 @@ $messages['da'] = array(
 
 $messages['de'] = array(
 	'dump-database' => 'Datenbank-Dumps',
-	'dump-database-info' => 'Datenbank-Dumps können als persönliches Backup (Fandom erstellt automatisch separate Backups aller Wikis) oder für Wartungsbots genutzt werden',
+	'dump-database-info' => 'Datenbank-Dumps können als persönliches Backup (Fandom erstellt automatisch separate Backups aller Wikis) oder für Wartungsbots genutzt werden.',
 	'dump-database-curr-pages' => 'Aktuelle Seiten',
-	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots)',
+	'dump-database-curr-pages-info' => '(Diese Version eignet sich normalerweise am besten für Bots.)',
 	'dump-database-full-pages' => 'Aktuelle Seiten und Versionsgeschichte',
-	'dump-database-full-pages-info' => '(Warnung: Diese Datei könnte sehr groß sein)',
+	'dump-database-full-pages-info' => '(Warnung: Diese Datei könnte sehr groß sein.)',
 	'dump-database-request' => 'Eine Aktualisierung beantragen',
-	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
+	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert.)',
 	'dump-database-request-submit' => 'Anfrage absenden',
 	'dump-database-request-already-submitted' => 'Dump wurde kürzlich (vor weniger als 7 Tagen) angefordert',
 	'dump-database-request-requested' => 'Datenbank-Dump-Anfrage gesendet',
@@ -581,8 +581,8 @@ $messages['roa-tara'] = array(
 
 $messages['ru'] = array(
 	'dump-database' => 'Дампы базы данных',
-	'dump-database-info' => 'Дампы базы данных могут быть использованы в качестве личной резервной копии (Фэндом создаёт отдельные резервные копии для всех вики автоматически) или для обслуживающих ботов',
-	'dump-database-curr-pages' => 'Текущие страницы',
+	'dump-database-info' => 'Дампы базы данных могут быть использованы в качестве личной резервной копии (Фэндом создаёт отдельные резервные копии для всех вики автоматически) или для обслуживающих ботов.',
+	'dump-database-curr-pages' => 'Только текущие страницы',
 	'dump-database-curr-pages-info' => '(Эта версия, как правило, наиболее удобна для бота)',
 	'dump-database-full-pages' => 'Текущие страницы и история',
 	'dump-database-full-pages-info' => '(Предупреждение: этот файл может быть слишком большим)',
@@ -591,7 +591,7 @@ $messages['ru'] = array(
 	'dump-database-request-submit' => 'Отправить запрос',
 	'dump-database-request-already-submitted' => 'Резервная копия была запрошена недавно (менее 7 дней назад)',
 	'dump-database-request-requested' => 'Запрос на дамп базы данных отправлен',
-	'dump-database-info-more' => 'Пожалуйста, <a href="http://ru.community.wikia.com/wiki/Справка:База_данных_вики">см. дополнительные сведения</a>',
+	'dump-database-info-more' => 'Дополнительную справочную информацию можно найти <a href="http://ru.community.wikia.com/wiki/Справка:База_данных_вики">здесь</a>.',
 	'dump-database-last-unknown' => 'Неизвестно',
 	'right-dumpsondemand' => 'Участники могут запросить дампы базы данных на странице {{#special:Statistics}}',
 );
@@ -715,7 +715,7 @@ $messages['zh-hans'] = array(
 
 $messages['zh-hant'] = array(
 	'dump-database' => '資料庫轉存',
-	'dump-database-info' => '資料庫轉存可以作為個人的備份（Fandom會自動產生所有wiki個別的備份），或於維護類機器人。',
+	'dump-database-info' => '資料庫轉存可以作為個人的備份（Fandom會自動產生所有wiki個別的備份），或用於維護類機器人。',
 	'dump-database-curr-pages' => '目前頁面',
 	'dump-database-curr-pages-info' => '（此版本通常最適合機器人使用）',
 	'dump-database-full-pages' => '目前頁面和歷史記錄',
@@ -725,7 +725,7 @@ $messages['zh-hant'] = array(
 	'dump-database-request-submit' => '發送請求',
 	'dump-database-request-already-submitted' => '最近已申請轉存（7天内）',
 	'dump-database-request-requested' => '資料庫轉存的申請已發送',
-	'dump-database-info-more' => '請至<a href="http://zh.community.wikia.com/wiki/Help:Database_download">查看</a>更多的資訊',
+	'dump-database-info-more' => '請<a href="http://zh.community.wikia.com/wiki/Help:Database_download">查看</a>更多的資訊',
 	'dump-database-last-unknown' => '不明',
 	'right-dumpsondemand' => '用戶可透過 Special:Statistics 來申請資料庫轉存',
 );
