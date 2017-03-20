@@ -32,6 +32,10 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'replayOverlay',
 			'closeButton'
 		],
+		otherLayout = [
+			'progressBar',
+			'playPauseButton'
+		],
 		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 
 	function selectTemplate(videoSettings) {
@@ -53,6 +57,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		autoPlayLayout: autoPlayLayout,
 		defaultLayout: defaultLayout,
 		splitLayout: splitLayout,
+		otherLayout: otherLayout,
 		selectTemplate: selectTemplate
 	};
 });
