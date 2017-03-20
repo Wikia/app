@@ -20,9 +20,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function createCloseButton() {
-			var a = doc.createElement('a');
+			var a = doc.createElement('a'),
+				img = doc.createElement('img');
 
 			a.classList.add('floating-close-button');
+			img.src = '/extensions/wikia/ArticleVideo/images/close.svg';
+			a.appendChild(img);
 
 			return a;
 		}
