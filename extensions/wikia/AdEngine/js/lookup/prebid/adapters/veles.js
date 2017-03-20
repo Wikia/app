@@ -67,25 +67,47 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
-	function getPriceFromResponse(responseXML) {
+	function getPriceFromTitle(responseXML) {
 		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
 
-		return lineItemTitle ? getPriceFromTitle(lineItemTitle.textContent) : null;
+		return lineItemTitle ? getPriceFromString(lineItemTitle.textContent) : null;
 	}
 
-	function getPriceFromTitle(title) {
+	function getPriceFromString(title) {
 		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)', 'i'),
 			results = re.exec(title);
 
-		return results && results[1] ? results[1] / 100 : null;
+		return results && results[1] ? parseInt(results[1], 10) / 100 : null;
+	}
+
+	function getPriceFromConfigId(ad) {
+		var adConfigPrice,
+			id = ad.getAttribute('id');
+
+		if (id) {
+			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[id];
+			if (adConfigPrice) {
+				return parseInt(adConfigPrice, 10) / 100;
+			}
+		}
+	}
+
+	function getPriceFromConfigAdSystem(ad) {
+		var adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem],
+			adSystem;
+
+		if (adConfigPrice) {
+			adSystem = ad.querySelector('AdSystem');
+			if (adSystem && adSystem.textContent === adxAdSystem) {
+				return parseInt(adConfigPrice, 10) / 100;
+			}
+		}
 	}
 
 	function fetchPrice(vastRequest) {
 		var ad,
-			adConfigPrice,
-			adParameters,
-			adSystem,
 			parameters,
+			price,
 			responseXML = vastRequest.responseXML;
 
 		if (!responseXML) {
@@ -94,40 +116,31 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 		ad = responseXML.documentElement.querySelector('Ad');
 
-		var price = getPriceFromResponse(responseXML);
+		if (ad) {
+			price = getPriceFromTitle(responseXML);
 
+			if (!price && instantGlobals.wgAdDriverVelesBidderConfig) {
+				price = getPriceFromConfigId(ad);
 
-		if (ad && instantGlobals.wgAdDriverVelesBidderConfig) {
-			if (ad.getAttribute('id')) {
-				adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
-				if (adConfigPrice) {
-					return parseInt(adConfigPrice, 10) / 100;
+				if (!price) {
+					price = getPriceFromConfigAdSystem(ad);
 				}
 			}
 
-			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem];
-			if (adConfigPrice) {
-				adSystem = ad.querySelector('AdSystem');
-				if (adSystem && adSystem.textContent === adxAdSystem) {
-					return parseInt(adConfigPrice, 10) / 100;
-				}
+			if (geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
+				logVast(vastRequest);
 			}
 		}
 
-		adParameters = responseXML.documentElement.querySelector('AdParameters');
-		if (adParameters) {
-			parameters = parseParameters(adParameters);
+		if (!price) {
+			parameters = parseParameters(responseXML.documentElement.querySelector('AdParameters'));
 
 			if (parameters.veles) {
-				return parseInt(parameters.veles, 10) / 100;
+				price = parseInt(parameters.veles, 10) / 100;
 			}
 		}
 
-		if (ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
-			logVast(vastRequest);
-		}
-
-		return 0;
+		return price;
 	}
 
 	function isEnabled() {
@@ -227,6 +240,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit,
 		// exposed only for unit testing only
-		_getPriceFromTitle: getPriceFromTitle
+		_getPriceFromString: getPriceFromString
 	};
 });

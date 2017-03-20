@@ -245,7 +245,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v ve0001xx',
-					expected: 00.01
+					expected: 0.01
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150]',
@@ -266,7 +266,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			];
 
 		testCases.forEach(function (testCase) {
-			var price = veles._getPriceFromTitle(testCase.title);
+			var price = veles._getPriceFromString(testCase.title);
 
 			expect(price).toBe(testCase.expected);
 		});
