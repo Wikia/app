@@ -39,16 +39,26 @@ class PremiumPageHeaderController extends WikiaController {
 		$titleMsg = '';
 		if ( $isPreview ) {
 			$titleMsg = 'oasis-page-header-preview';
-		} else if ( $isShowChanges ) {
-			$titleMsg = 'oasis-page-header-changes';
-		} else if ( $isDiff ) {
-			$titleMsg = 'oasis-page-header-diff';
-		} else if ( $isSectionEdit ) {
-			$titleMsg = 'oasis-page-header-editing-section';
-		} else if ( $isHistory ) {
-			$titleMsg = 'oasis-page-header-history';
-		} else if ( $isEdit ) {
-			$titleMsg = 'oasis-page-header-editing';
+		} else {
+			if ( $isShowChanges ) {
+				$titleMsg = 'oasis-page-header-changes';
+			} else {
+				if ( $isDiff ) {
+					$titleMsg = 'oasis-page-header-diff';
+				} else {
+					if ( $isSectionEdit ) {
+						$titleMsg = 'oasis-page-header-editing-section';
+					} else {
+						if ( $isHistory ) {
+							$titleMsg = 'oasis-page-header-history';
+						} else {
+							if ( $isEdit ) {
+								$titleMsg = 'oasis-page-header-editing';
+							}
+						}
+					}
+				}
+			}
 		}
 
 		$title = empty( $titleMsg ) ? $title : wfMsg( $titleMsg, htmlspecialchars( $wgTitle->getPrefixedText() ) );
@@ -69,6 +79,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() );
 		$this->setVal( 'visibleCategories', $visibleCategories );
 		$this->setVal( 'moreCategoriesText', wfMessage( 'pph-categories-more' )->numParams( count( $moreCategories ) )->text() );
+		$this->setVal( 'moreCategoriesSeparator', wfMessage( 'pph-categories-more-separator' )->text() );
 		$this->setVal( 'moreCategoriesLength', count( $moreCategories ) );
 		$this->setVal( 'moreCategories', $moreCategories );
 		$this->setVal( 'curatedContentButton', $this->getEditMainPage() );

@@ -5,10 +5,10 @@
 				<span class="pph-categories-in pph-track" data-tracking="categories-in"><?= $inCategoriesText ?>:</span>
 				<span class="pph-category-links">
 					<?= join( ', ', $visibleCategories ); ?><!--
-				 --><?php if ( $moreCategoriesLength > 0 ): ?>
-						<div class="pph-dropdown-container">
-							<a href="#" class="pph-categories-show-more"
-							   data-tracking="categories-more"><?= $moreCategoriesText ?></a>
+				 --><?php if ( $moreCategoriesLength > 0 ): ?><!--
+						--><div class="pph-dropdown-container"><?= $moreCategoriesSeparator ?><!--
+						--><a href="#" class="pph-categories-show-more"
+							  data-tracking="categories-more"><?= $moreCategoriesText ?></a>
 							<div class="pph-dropdown">
 								<ul class="pph-dropdown-scrollable">
 									<?php foreach ( $moreCategories as $category ): ?>
