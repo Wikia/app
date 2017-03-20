@@ -157,6 +157,9 @@ class AvatarService extends Service {
 
 	/**
 	 * Render avatar
+	 * @param string $userName
+	 * @param int $avatarSize
+	 * @return string rendered avatar <img /> tag
 	 */
 	static function renderAvatar( $userName, $avatarSize = 20 ) {
 		wfProfileIn( __METHOD__ );
@@ -178,7 +181,7 @@ class AvatarService extends Service {
 			'width' => $avatarSize,
 			'height' => $avatarSize,
 			'class' => 'avatar',
-			'alt' => $userName,
+			'alt' => IP::isIPAddress( $userName ) ? wfMessage( 'oasis-anon-user' )->text() : $userName,
 		) );
 
 		wfProfileOut( __METHOD__ );

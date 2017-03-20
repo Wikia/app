@@ -11,7 +11,7 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import '../../../../extensions/wikia/ArticleVideo/styles/article-video';
+@import '../../../../extensions/wikia/ArticleVideo/styles/article-featured-video';
 @import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
@@ -23,6 +23,20 @@ $uap-video-animation-duration: 0.4s;
 $uap-video-player-button-size: 24px;
 
 $floating-ad-margin: 20px;
+$floating-ad-index: $wikia-top-ads-index + 10;
+$floating-ad-video-width: 320px;
+$floating-ad-animation-speed: $video-collapse-animation-speed;
+$floating-ad-featured-video-gap: $video-container-width;
+
+$vpaid-z-index: 10;
+
+@mixin absolute-fill() {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -44,12 +58,9 @@ $floating-ad-margin: 20px;
 
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-
-		> div {
-			float: right;
-		}
-
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
 
 	.standard-leaderboard {
@@ -63,18 +74,17 @@ $floating-ad-margin: 20px;
 	}
 
 	&.floating {
-		z-index: $wikia-top-ads-index + 10;
+		z-index: $floating-ad-index;
 
 		.wikia-ad {
 			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
 			margin-bottom: 0;
 			position: fixed;
 			right: $floating-ad-margin;
-			transition: margin-bottom $video-collapse-animation-speed;
+			transition: margin-bottom $floating-ad-animation-speed;
 
-			iframe {
-				height: $video-container-width !important;
-				width: $video-container-width !important;
+			.video-player, iframe {
+				width: $floating-ad-video-width;
 			}
 
 			.floating-close-button {
@@ -84,22 +94,15 @@ $floating-ad-margin: 20px;
 
 		&.with-article-video {
 			.wikia-ad {
-				margin-bottom: $video-container-width;
-				transition: margin-bottom $video-collapse-animation-speed;
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
 			}
 		}
 	}
+}
 
-	.floating-close-button {
-		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
-		cursor: pointer;
-		display: none;
-		height: 20px;
-		left: 10px;
-		position: absolute;
-		top: 10px;
-		width: 20px;
-	}
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
 }
 
 .wikia-ad {
@@ -111,16 +114,35 @@ $floating-ad-margin: 20px;
 	&.slot-responsive {
 		width: 100%;
 
-		.provider-container {
-			position: relative;
+		.provider-container iframe {
+			@include absolute-fill();
+		}
+	}
 
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
+	.vpaid-container {
+		@include absolute-fill();
+
+		video, & > div {
+			@include absolute-fill();
+		}
+
+		// Node elements created by IMA library
+		& > div {
+			pointer-events: none;
+
+			video {
+				pointer-events: auto;
 			}
+		}
+
+		&.vpaid-enabled video {
+			 z-index: $vpaid-z-index;
+		 }
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
 		}
 	}
 }
@@ -242,10 +264,6 @@ $floating-ad-margin: 20px;
 		top: 0;
 		width: $uap-video-player-button-size;
 	}
-}
-
-#TOP_BUTTON_WIDE {
-	margin-right: 10px;
 }
 
 @media screen and (max-width: 1063px) {
@@ -590,4 +608,51 @@ body > a > img[src$="noad.gif"] {
 
 #WikiaArticleMsg {
 	display: none;
+}
+
+/** Floating ads **/
+
+/*** Incontent ***/
+#WikiaArticle {
+	&.floating {
+		z-index: initial;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $floating-ad-animation-speed;
+			width: $floating-ad-video-width;
+			z-index: $floating-ad-index;
+
+			.provider-container {
+				padding-bottom: 0 !important; // has to be !important because o inline style
+				width: $floating-ad-video-width;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
+			}
+		}
+	}
+}
+
+.floating-close-button {
+	background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+	cursor: pointer;
+	display: none;
+	height: 20px;
+	left: 10px;
+	position: absolute;
+	top: 10px;
+	width: 20px;
+	z-index: 1;
 }

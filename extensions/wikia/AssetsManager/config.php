@@ -326,10 +326,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
-		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
-		'//resources/wikia/modules/querystring.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
 ];
 
@@ -338,9 +336,13 @@ $config['adengine2_porvata_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/floater.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/floaterConfiguration.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/floatingContextFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleIma.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/googleImaSetup.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/moatVideoTracker.js',
+		'//extensions/wikia/AdEngine/js/video/player/porvata/moatVideoTrackerScript.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js',
@@ -2210,7 +2212,24 @@ $config['design_system_user_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js'
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js',
+	],
+];
+
+$config['design_system_on_site_notifications_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/DesignSystem/scripts/templates.mustache.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.model.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.view.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.controller.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.common.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.text-formatter.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemTemplating.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemLoadingSpinner.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemEvent.js'
 	],
 ];
 
@@ -3028,6 +3047,7 @@ $config['design_system_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss',
+		'//extensions/wikia/DesignSystem/styles/design-system-notifications.scss'
 	],
 ];
 
@@ -3176,16 +3196,15 @@ $config[ 'rwe_page_header_js' ] = [
 	]
 ];
 
-$config['article_video_scss'] = [
+$config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
-		'//extensions/wikia/ArticleVideo/styles/article-video.scss',
 	],
 ];
 
-$config['article_video_js'] = [
+$config['ooyala_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
@@ -3194,6 +3213,37 @@ $config['article_video_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/html5-skin.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
-		'//extensions/wikia/ArticleVideo/scripts/article-video.js',
+	],
+];
+
+$config['article_featured_video_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
+	],
+];
+
+$config['article_featured_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
+	],
+];
+
+$config['article_related_video_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/article-related-video.scss',
+	],
+];
+
+$config['article_related_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/scripts/article-related-video.js',
 	],
 ];

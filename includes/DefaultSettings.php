@@ -1068,17 +1068,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Minimum time, in hours, which must elapse between password reminder
- * emails for a given account. This is to prevent abuse by mail flooding.
- */
-$wgPasswordReminderResendTime = 24;
-
-/**
- * The time, in seconds, when an emailed temporary password expires.
- */
-$wgNewPasswordExpiry = 3600 * 24 * 7;
-
-/**
  * The time, in seconds, when an email confirmation email expires
  */
 $wgUserEmailConfirmationTokenExpiry = 7 * 24 * 60 * 60;
@@ -3130,9 +3119,6 @@ $wgActiveUserDays = 30;
  * @name   User accounts, authentication
  * @{
  */
-
-/** For compatibility with old installations set to false */
-$wgPasswordSalt = true;
 
 /**
  * Specifies the minimal length of a user password. If set to 0, empty pass-

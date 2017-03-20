@@ -54,7 +54,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
 		// Assets including 'wikiamobile' in the name will be included by AssetsManager when showing the mobile skin
 		$this->response->addAsset( 'userlogin_js_wikiamobile' );
@@ -187,9 +186,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage( 'wikiamobile-sendpassword-label' )->escaped() ||
 				$type === 'forgotPassword'
 			) {
-				// send temporary password
-				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
-
 				$this->result = $response->getVal( 'result', '' );
 				$this->msg = $response->getVal( 'msg', '' );
 			} else if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
@@ -595,86 +591,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				throw new MWException( "Unhandled case value" );
 		}
 
-	}
-
-	/**
-	 * @brief sends an email to username's address
-	 * @details
-	 *   if success, send email
-	 *   if no email addy for username, set error and msg
-	 *   if no username, set error and msg
-	 * @requestParam string username
-	 * @responseParam string result [ok/noemail/error/null]
-	 * @responseParam string msg - result message
-	 *
-	 * @throws BadRequestException
-	 */
-	public function mailPassword() {
-		$this->checkWriteRequest();
-
-		$loginForm = new LoginForm( $this->wg->request );
-		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
-			$loginForm->mUsername = $this->wg->request->getText( 'username' );
-		}
-
-		if ( $loginForm->mUsername == '' ) {
-			$this->setErrorResponse( 'userlogin-error-noname' );
-			return;
-		}
-
-		if ( !$this->wg->Auth->allowPasswordChange() ) {
-			$this->setErrorResponse( 'userlogin-error-resetpass_forbidden' );
-			return;
-		}
-
-		if ( $this->wg->User->isBlocked() ) {
-			$this->setErrorResponse( 'userlogin-error-blocked-mailpassword' );
-			return;
-		}
-
-		$user = User::newFromName( $loginForm->mUsername );
-		if ( !$user instanceof User ) {
-			$this->setErrorResponse( 'userlogin-error-noname' );
-			return;
-		}
-
-		if ( $user->getID() == 0 ) {
-			$this->setErrorResponse( 'userlogin-error-nosuchuser' );
-			return;
-		}
-
-		if ( $user->isPasswordReminderThrottled() ) {
-			$throttleTTL = round( $this->wg->PasswordReminderResendTime, 3 );
-			$this->setErrorResponse( 'userlogin-error-throttled-mailpassword', $throttleTTL );
-			return;
-		}
-
-		if ( !empty( array_intersect( $this->wg->AccountAdminGroups, $user->getGroups() ) )
-			|| in_array( $user->getName(), $this->wg->AccountAdmins )
-		) {
-			\Wikia\Logger\WikiaLogger::instance()->warning(
-				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
-			);
-
-			$this->setParsedErrorResponse( 'userlogin-account-admin-error' );
-			return;
-		}
-
-		// / Get a temporary password
-		$userService = new \UserService();
-		$tempPass = $userService->resetPassword( $user );
-
-		$resp = F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
-			'targetUser' => $user,
-			'tempPass' => $tempPass,
-		] );
-
-		$data = $resp->getData();
-		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
-			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
-		} else {
-			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
-		}
 	}
 
 	/**
