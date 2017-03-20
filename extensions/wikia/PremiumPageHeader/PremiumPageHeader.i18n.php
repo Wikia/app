@@ -26,7 +26,7 @@ $messages['de'] = array(
 	'pph-explore' => 'Entdecken',
 	'pph-discuss' => 'Diskutieren',
 	'pph-in-categories' => 'in',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'und {{FORMATNUM:$1}} weiteren',
 	'pph-add' => 'Hinzufügen',
 );
@@ -36,7 +36,7 @@ $messages['es'] = array(
 	'pph-explore' => 'Explora',
 	'pph-discuss' => 'Discute',
 	'pph-in-categories' => 'en',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'y {{FORMATNUM:$1}} más',
 	'pph-add' => 'Añadir',
 );
@@ -56,7 +56,7 @@ $messages['it'] = array(
 	'pph-explore' => 'Esplora',
 	'pph-discuss' => 'Discuti',
 	'pph-in-categories' => 'in',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'e altre {{FORMATNUM:$1}}',
 	'pph-add' => 'Aggiungi',
 );
@@ -76,7 +76,7 @@ $messages['pl'] = array(
 	'pph-explore' => 'Eksploruj',
 	'pph-discuss' => 'Dyskutuj',
 	'pph-in-categories' => 'w',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'oraz {{FORMATNUM:$1}} więcej',
 	'pph-add' => 'Dodaj',
 );
@@ -86,7 +86,7 @@ $messages['pt'] = array(
 	'pph-explore' => 'Explore',
 	'pph-discuss' => 'Converse',
 	'pph-in-categories' => 'em',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'e mais {{FORMATNUM:$1}}',
 	'pph-add' => 'Adicionar',
 );
@@ -96,7 +96,7 @@ $messages['ru'] = array(
 	'pph-explore' => 'На сайте',
 	'pph-discuss' => 'Общение',
 	'pph-in-categories' => 'Категории',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => 'и {{FORMATNUM:$1}} других',
 	'pph-add' => 'Создать статью',
 );
@@ -116,7 +116,7 @@ $messages['zh-hant'] = array(
 	'pph-explore' => '探索',
 	'pph-discuss' => '討論',
 	'pph-in-categories' => '分類',
-	'pph-categories-more-separator' => ' ',
+	'pph-categories-more-separator' => '&nbsp;',
 	'pph-categories-more' => '和{{FORMATNUM:$1}} 個其他分類',
 	'pph-add' => '增加',
 );
