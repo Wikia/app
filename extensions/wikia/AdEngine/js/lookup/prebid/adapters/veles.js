@@ -71,7 +71,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function getPriceFromTitle(responseXML) {
 		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
 
-		return lineItemTitle ? priceParsingHelper.getPriceFromString(lineItemTitle.textContent) : 0;
+		if (lineItemTitle) {
+			return priceParsingHelper.getPriceFromString(lineItemTitle.textContent);
+		}
 	}
 
 	function getPriceFromConfigId(ad) {

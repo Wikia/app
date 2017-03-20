@@ -40,19 +40,19 @@ describe('ext.wikia.adEngine.lookup.prebid.priceGranularityHelper', function () 
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150]',
-					expected: 0
+					expected: null
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve3150x]',
-					expected: 0
+					expected: null
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve315x]',
-					expected: 0
+					expected: null
 				},
 				{
 					title: 'Prebid.js/Veles (VAST) - 640x480v [ve31509xx]',
-					expected: 0
+					expected: null
 				}
 			];
 
