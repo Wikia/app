@@ -24,7 +24,7 @@
 
 	function setAdBlockEnabledAndLoadQualaroo(enabled) {
 		_kiq.push(['set', {
-			'adBlockedEnabled': enabled
+			'adBlockEnabled': enabled
 		}]);
 		loadQualaroo();
 	}
@@ -80,14 +80,18 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
-	if(ads.context.opts.sourcePointDetection) {
-		document.addEventListener('sp.blocking', function () {
-			setAdBlockEnabledAndLoadQualaroo(true);
-		});
+	if (ads.context.opts.sourcePointDetection) {
+		if (!window.ads || !window.ads.runtime || !window.ads.runtime.sp || window.ads.runtime.sp.blocking === undefined) {
+			document.addEventListener('sp.blocking', function () {
+				setAdBlockEnabledAndLoadQualaroo(true);
+			});
 
-		document.addEventListener('sp.not_blocking', function () {
-			setAdBlockEnabledAndLoadQualaroo(false);
-		});
+			document.addEventListener('sp.not_blocking', function () {
+				setAdBlockEnabledAndLoadQualaroo(false);
+			});
+		} else {
+			setAdBlockEnabledAndLoadQualaroo(window.ads.runtime.sp.blocking);
+		}
 	} else {
 		loadQualaroo();
 	}
