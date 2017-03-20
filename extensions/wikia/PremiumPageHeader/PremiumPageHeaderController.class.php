@@ -360,7 +360,7 @@ class PremiumPageHeaderController extends WikiaController {
 		$href =
 			!empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions ) &&
 			empty( $wgEnableForumExt )
-				? '/d'
+				? '/d/f'
 				: Title::newFromText( 'Forum', NS_SPECIAL )
 				->getLocalURL();
 
