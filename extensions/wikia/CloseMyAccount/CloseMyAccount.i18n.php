@@ -27,7 +27,7 @@ Would you like to reactivate your account?',
 	'closemyaccount-reactivate-requested' => 'An email has been sent to the address you had set for your account. Please click the link in the email to reactivate your account.',
 	'closemyaccount-reactivate-error-id' => 'Please login to your account first to request reactivation.',
 	'closemyaccount-reactivate-error-fbconnect' => '{{GENDER:$1|You}} have previously requested that we close your account. If you would like to reactivate your account, please go to the [[Special:CloseMyAccount/reactivate|account reactivation page]] and follow the instructions you will see.',
-	'closemyaccount-reactivate-error-email' => 'No email was set for this account prior to requesting closure so it cannot be reactivated. Please [[Special:Contact|contact Wikia]] if you have any questions.',
+	'closemyaccount-reactivate-error-email' => 'No email was set for this account prior to requesting closure so it cannot be reactivated. Please [[Special:Contact|contact Fandom]] if you have any questions.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Account is not scheduled for closure.',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|You}} appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
 	'closemyaccount-reactivate-error-empty-code' => 'A confirmation code needed to reactivate your account has not been provided. If you have requested your account be reactivated, please click the link in the email sent to you. Otherwise, [[Special:UserLogin|login]] to the account you want to reactivate in order to request a confirmation code.',
@@ -409,7 +409,7 @@ $messages['pt'] = array(
 	'closemyaccount-desc' => 'Permite que os usuários fechem suas próprias contas.',
 	'closemyaccount-intro-text' => 'Lamentamos que {{GENDER:$2|você}} queira desativar sua conta. O Fandom tem muitas comunidades sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui para encontrar o que é certo para você. Se você estiver tendo um problema local com sua comunidade, não hesite em contatar seu [[Especial:Lista_de_utilizadores/sysop|administrador local]] para ajuda e conselhos.
 
-Se você decidiu definitivamente desativar sua conta, por favor, esteja ciente: 
+Se você decidiu definitivamente desativar sua conta, por favor, esteja ciente:
 * O Fandom não tem a capacidade de remover completamente as contas, mas pode desativá-las. Isto garante que a conta continue bloqueada e ninguém poderá usá-la.
 * Este processo NÃO é reversível após $1 {{PLURAL:$1|dia|dias}, então você terá que criar uma nova conta se quiser se juntar ao Fandom novamente.
 * Este processo não removerá suas contribuições de uma determinada comunidade Fandom, pois essas contribuições pertencem à comunidade como um todo.
