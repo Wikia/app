@@ -104,6 +104,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
+	function getPriceFromAdParameters(responseXML) {
+		var parameters = parseParameters(responseXML.documentElement.querySelector('AdParameters'));
+
+		if (parameters.veles) {
+			return parseInt(parameters.veles, 10) / 100;
+		}
+	}
+
 	/**
 	 * Process VAST response to get price for this video or 0 if
 	 * response invalid or price data couldn't be find.
@@ -113,7 +121,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	 */
 	function fetchPrice(vastRequest) {
 		var ad,
-			parameters,
 			price = 0,
 			responseXML = vastRequest.responseXML;
 
@@ -127,24 +134,19 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			price = getPriceFromTitle(responseXML);
 
 			if (!price && instantGlobals.wgAdDriverVelesBidderConfig) {
-				price = getPriceFromConfigId(ad);
+				var priceFromConfig = getPriceFromConfigId(ad);
 
-				if (!price) {
-					price = getPriceFromConfigAdSystem(ad);
-				}
-			}
-
-			if (geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
-				logVast(vastRequest);
+				price = priceFromConfig ? priceFromConfig : getPriceFromConfigAdSystem(ad);
 			}
 		}
 
 		if (!price) {
-			parameters = parseParameters(responseXML.documentElement.querySelector('AdParameters'));
+			price = getPriceFromAdParameters(responseXML);
+		}
 
-			if (parameters.veles) {
-				price = parseInt(parameters.veles, 10) / 100;
-			}
+		// request was invalid - log it to Kibana
+		if (!price && ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
+			logVast(vastRequest);
 		}
 
 		return price;
