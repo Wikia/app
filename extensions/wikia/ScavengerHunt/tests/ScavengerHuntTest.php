@@ -1,5 +1,5 @@
 <?php
-class ScavengerHuntTest extends WikiaBaseTest {
+abstract class ScavengerHuntTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../ScavengerHunt_setup.php';

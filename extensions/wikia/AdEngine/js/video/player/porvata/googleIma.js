@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.log',
 	'wikia.window'
 ], function (scriptLoader, imaPlayerFactory, recoveryHelper, log, win) {
@@ -35,12 +35,18 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 		}
 
 		adsLoader = new win.google.ima.AdsLoader(adDisplayContainer);
+		adsLoader.getSettings().setVpaidMode(videoSettings.getVpaidMode());
 
 		return imaPlayerFactory.create(adDisplayContainer, adsLoader, videoSettings);
 	}
 
 	return {
 		load: load,
-		getPlayer: getPlayer
+		getPlayer: getPlayer,
+		vpaidMode: {
+			DISABLED: 0,
+			ENABLED: 1,
+			INSECURE: 2
+		}
 	};
 });

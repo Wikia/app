@@ -130,7 +130,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
-			vulcanSlots = win.rubiconVulcan.getAllSlots() || [];
+			vulcanSlots = win.rubiconVulcan && win.rubiconVulcan.getAllSlots() || [];
 
 		vulcanSlots.forEach(function (slot) {
 			if (slot.id === slotMapping[slotName]) {
@@ -175,7 +175,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		vulcanSlots.forEach(function (vulcanSlot) {
 			var ad = vulcanSlot.getBestCpm(),
 				placeholderName = vulcanSlot.id,
-				sizeId = vulcanSlot.sizeId,
+				sizeId = placeholder.sizeId,
 				cpm,
 				tier,
 				vastUrl;

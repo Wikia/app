@@ -1,0 +1,207 @@
+//content screen
+.oo-quality-panel {
+  position: relative;
+  top: 46%;
+  left: 50%;
+  @include vendor-prefixes(transform, translate(-50%, -50%));
+  height: $bitrate-horizontal-height;
+  text-align: center;
+
+  //override default scrollbar style
+  .scrollarea-content{
+    display: inline-block;
+  }
+
+  //hide horizontal scrollbars
+  .scrollbar-container.horizontal {
+    display:none;
+  }
+
+  .oo-quality-screen-content {
+    ul {
+      display: inline-block;
+      padding:0;
+      margin:0 auto;
+      list-style: none;
+      white-space:nowrap;
+      position: relative;
+      height: $bitrate-horizontal-height - 10px;
+
+      li {
+        float:none;
+        position:relative;
+        display:inline-block;
+        margin: 0 24px;
+
+        &:first-child {
+          margin-left:0 !important;
+        }
+
+        &:last-child {
+          //margin-right:0 !important;
+        }
+
+        //vid quality btns - full screen
+        a.oo-quality-btn {
+          padding: 10px 8px;
+          background-color: transparent;
+          color: $white;
+          font-size: 1.1em;
+          font-family: $font-family-roboto;
+          line-height:1em;
+          border-radius: 2px;
+          border: 1px solid $gray;
+          outline: none;
+          opacity:1;
+          @include vendor-prefixes(transition, opacity 0.3s ease);
+
+          &:hover {
+            opacity:0.6;
+          }
+
+          &.oo-selected {
+            color: $blue-light;
+            border-color: $blue-light;
+            //border-width: 2px;
+            font-weight: bold;
+          }
+        }
+
+        //auto quality btn - full screen
+        a.oo-quality-auto-btn {
+          background-color: transparent;
+          font-family: $font-family-roboto;
+          line-height:1;
+          outline: none;
+
+          &:hover {
+            .oo-quality-auto-icon, .oo-quality-auto-label {
+              opacity:0.6;
+              @include vendor-prefixes(transition, opacity 0.3s ease);
+            }
+          }
+
+          &.oo-selected {
+            .oo-quality-auto-icon, .oo-quality-auto-label {
+              color: $blue-light;
+              font-weight:bold;
+            }
+          }
+
+          .oo-quality-auto-icon {
+            font-size: 2.1em;
+            font-weight:bold;
+            color: $gray;
+            margin-bottom: 6px;
+            opacity:1;
+          }
+
+          .oo-quality-auto-label {
+            color:$white;
+            font-size: 0.9em;
+            text-transform: capitalize;
+            text-align: center;
+            opacity:1;
+          }
+        }
+      }
+
+      li.oo-auto-li {
+        top:20px;
+      }
+    }
+  }
+}
+
+//popover
+.oo-popover {
+  .oo-quality-popover {
+    margin: 10px 0;
+  }
+
+  .oo-quality-screen-content {
+    max-height: 150px;
+    width:80px;
+    text-align: center;
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      li {
+        display: block;
+        margin: 0 0 6px 0;
+        padding:0;
+
+        //vid quality btns - popover
+        a.oo-quality-btn {
+          background-color: transparent;
+          color: $white;
+          font-size: 0.6em;
+          font-family: $font-family-roboto;
+          line-height:1;
+          outline: none;
+          opacity:1;
+          white-space:nowrap;
+          @include vendor-prefixes(transition, opacity 0.3s ease);
+
+          &:hover {
+            opacity:0.6;
+          }
+
+          &.oo-selected {
+            color: $blue-light;
+            font-weight: bold;
+            font-size:0.6em + em(2px);
+          }
+        }
+
+        // auto btn - popover
+        a.oo-quality-auto-btn {
+          background-color: transparent;
+          font-family: $font-family-roboto;
+          line-height:1;
+          outline: none;
+          white-space:nowrap;
+
+          &:hover {
+            .oo-quality-auto-icon, .oo-quality-auto-label {
+              @include vendor-prefixes(transition, opacity 0.3s ease);
+              opacity:0.6;
+            }
+          }
+
+          &.oo-selected {
+            .oo-quality-auto-icon, .oo-quality-auto-label {
+              color: $blue-light;
+              font-weight:bold;
+            }
+            .oo-quality-auto-icon {
+              font-size: 1em + em(2px);
+            }
+            .oo-quality-auto-label {
+              font-size: 0.5em + em(2px);
+            }
+          }
+
+          .oo-quality-auto-icon {
+            font-size: 1em;
+            font-weight:bold;
+            color: $gray;
+            margin-bottom: 2px;
+            opacity:1;
+          }
+
+          .oo-quality-auto-label {
+            color:$white;
+            font-size: 0.5em;
+            text-transform: capitalize;
+            text-align: center;
+            opacity:1;
+          }
+        }
+      }
+    }
+  }
+}

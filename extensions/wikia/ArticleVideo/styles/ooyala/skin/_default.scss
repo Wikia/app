@@ -1,0 +1,79 @@
+// ---------------------------------------------------------------------------------------
+// When having several skins, this file contains everything related to default skin.
+// Values can be pulled from /html5-skin/config/skin.json
+// ---------------------------------------------------------------------------------------
+
+// mainVideoInnerWrapper
+.oo-player {
+  display: block;
+  position: relative;
+  overflow:hidden;
+  vertical-align: top;
+  background-color: $body-bg !important;
+  padding: 0;
+  width: 100%;
+  height:0;
+  // default aspect ratio 16:9
+  @include set-aspect-ratio(16, 9);
+  @include vendor-prefixes(transition, padding-top 0.5s ease);
+
+  // other video objects
+  & > div,
+  & > embed,
+  & > figure,
+  & > object {
+    @extend .oo-expand;
+  }
+
+  // fullscreen styles
+  &:-moz-full-screen {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    padding:0 !important;
+  }
+
+  &:-webkit-full-screen {
+    width: 100% !important;
+    height: 100% !important;
+    padding:0 !important;
+  }
+
+  &:-ms-fullscreen {
+    width: 100% !important;
+    height: 100% !important;
+    padding:0 !important;
+  }
+
+  // "full window" style, if fullscreen is not supported natively
+  &.oo-fullscreen {
+    position:fixed;
+    overflow: hidden;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+}
+
+// player skin container
+.oo-player-skin {
+  @extend .oo-expand;
+  overflow: hidden;
+  z-index: $zindex-player-skin;
+}
+
+// html5 video
+video {
+  @extend .oo-expand;
+}
+
+.oo-blur {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  filter: blur(3px);
+}
+
+.oo-z-index-auto {
+  z-index:auto !important;
+}

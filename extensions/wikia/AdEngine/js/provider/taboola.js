@@ -3,7 +3,7 @@
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',
@@ -114,7 +114,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
 			recoveryHelper.addOnBlockingCallback(function () {
-				if (recoveryHelper.isRecoveryEnabled()) {
+				if (recoveryHelper.isSourcePointRecoveryEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
 				} else {
 					fillInSlot(slot);
