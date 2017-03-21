@@ -85,9 +85,9 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
-				view.onDropDown.attach(this.loadFirstPage.bind(this));
-				view.onMarkAllAsRead.attach(this.markAllAsRead.bind(this));
-				view.onMarkAsRead.attach(function (_, uri) {
+				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
+				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
+				view.onMarkAsReadClick.attach(function (_, uri) {
 					this.markAsRead(uri);
 				}.bind(this));
 			},

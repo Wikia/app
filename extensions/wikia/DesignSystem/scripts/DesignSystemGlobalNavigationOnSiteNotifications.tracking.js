@@ -9,20 +9,36 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 
 		Tracking.prototype = {
 
-			markAllAsReadClicked: function () {
-				log('clicked - Mark all as read', log.levels.info, common.logTag);
+			notificationImpression: function (uri) {
+				log('impression - notification ' + uri, log.levels.info, common.logTag);
+				console.log('impression - notification ' + uri);
+			},
+
+			notificationClick: function (uri) {
+				log('click - notification ' + uri, log.levels.info, common.logTag);
+				console.log('click - notification ' + uri);
+			},
+
+			markAllAsReadClick: function () {
+				log('click - Mark all as read', log.levels.info, common.logTag);
 				console.log('clicked - Mark all as read');
 			},
 
-			markAsReadClicked: function (uri) {
-				log('clicked - Mark as read ' + uri, log.levels.info, common.logTag);
+			markAsReadClick: function (uri) {
+				log('click - Mark as read ' + uri, log.levels.info, common.logTag);
 				console.log('clicked - Mark as read ' + uri);
 			},
 
 			registerEventHandlers: function (view) {
-				view.onMarkAllAsRead.attach(this.markAllAsReadClicked.bind(this));
-				view.onMarkAsRead.attach(function (_, uri) {
-					this.markAsReadClicked(uri);
+				view.onMarkAllAsReadClick.attach(this.markAllAsReadClick.bind(this));
+				view.onMarkAsReadClick.attach(function (_, uri) {
+					this.markAsReadClick(uri);
+				}.bind(this));
+				view.onNotificationRender.attach(function (_, uri) {
+					this.notificationImpression(uri);
+				}.bind(this));
+				view.onNotificationClick.attach(function (_, uri) {
+					this.notificationClick(uri);
 				}.bind(this));
 			}
 		};
