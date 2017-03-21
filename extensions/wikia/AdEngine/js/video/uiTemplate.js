@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'replayOverlay',
 			'closeButton'
 		],
-		otherLayout = [
+		featureVideo = [
 			'progressBar',
 			'playPauseButton',
 			'soundControl'
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 		autoPlayLayout: autoPlayLayout,
 		defaultLayout: defaultLayout,
 		splitLayout: splitLayout,
-		otherLayout: otherLayout,
+		featureVideo: featureVideo,
 		selectTemplate: selectTemplate
 	};
 });

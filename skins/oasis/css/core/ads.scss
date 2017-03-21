@@ -762,20 +762,20 @@ body > a > img[src$="noad.gif"] {
 }
 
 @keyframes show-then-hide {
-  from {
-    animation-timing-function: $video-control-pause-shadow-animation-function;
-    height: $video-control-panel-item-size;
-    opacity: 1;
-    visibility: visible;
-    width: $video-control-panel-item-size;
-  }
+	from {
+		animation-timing-function: $video-control-pause-shadow-animation-function;
+		height: $video-control-panel-item-size;
+		opacity: 1;
+		visibility: visible;
+		width: $video-control-panel-item-size;
+	}
 
-  to {
-    height: $video-control-panel-item-size-extra-large;
-    opacity: 0;
-    visibility: hidden;
-    width: $video-control-panel-item-size-extra-large;
-  }
+	to {
+		height: $video-control-panel-item-size-extra-large;
+		opacity: 0;
+		visibility: hidden;
+		width: $video-control-panel-item-size-extra-large;
+	}
 }
 
 .pause-shadow {
@@ -797,7 +797,7 @@ body > a > img[src$="noad.gif"] {
 	}
 
 	&.animate {
-      animation: show-then-hide $video-control-pause-shadow-animation-duration;
+		animation: show-then-hide $video-control-pause-shadow-animation-duration;
 
 		svg {
 			height: $video-control-panel-item-size-extra-large;

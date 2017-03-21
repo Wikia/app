@@ -5,10 +5,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
 	'wikia.log',
 	'wikia.viewportObserver',
-	'ext.wikia.adEngine.video.player.ui.videoInterface',
-	'ext.wikia.adEngine.video.player.uiTemplate',
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater'),
-], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, videoInterface, uiTemplate, floater) {
+], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -80,7 +78,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
 						video.play();
 						autoPlayed = true;
-						// Don't resume when video was paused manually
+					// Don't resume when video was paused manually
 					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
 						video.resume();
 					} else if (shouldPause(isVisible)) {
@@ -134,28 +132,6 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 
 				tryEnablingFloating(video, inViewportCallback);
-
-				return video;
-			}).then(function (video) {
-
-				if (params.hasUiControls) {
-					var interactiveArea = document.createElement('div'),
-						controlBar = document.createElement('div'),
-						controlBarItems = document.createElement('div');
-
-					interactiveArea.classList.add('interactive-area');
-					controlBar.classList.add('control-bar');
-					controlBarItems.classList.add('control-bar-items');
-
-					controlBar.appendChild(controlBarItems);
-					interactiveArea.appendChild(controlBar);
-					video.container.appendChild(interactiveArea);
-
-					videoInterface.setup(video, uiTemplate.otherLayout, {
-						controlBar: controlBar,
-						controlBarItems: controlBarItems
-					});
-				}
 
 				return video;
 			});
