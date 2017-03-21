@@ -8,12 +8,12 @@ body {
   padding-bottom: 0;
 }
 
-#app button, .desktop_modal_dialog button, .quill_toolbar_popover button {
+#app button, .desktop-modal-dialog button, .quill-toolbar-popover button {
   height: auto;
   background-image: none;
 }
 
-.quill_toolbar_popover button {
+.quill-toolbar-popover button {
   h2 {
     line-height: 20px !important;
   }
@@ -23,7 +23,7 @@ body {
   display: none;
 }
 
-.cms_article_header {
+.cms-article-header {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -35,7 +35,7 @@ body {
   }
 }
 
-.quill_toolbar {
+.quill-toolbar {
   .dropdown, .controls {
     > button {
       > i {
@@ -63,13 +63,13 @@ body {
   position: fixed !important;
 }
 
-.cms_fixed_header {
+.cms-fixed-header {
   position: fixed;
   top: 55px;
   z-index: 2;
 }
 
-.entity_editor.fixed_toolbar .quill_toolbar {
+.entity-editor.fixed-toolbar .quill-toolbar {
   top: 89px !important;
 }
 
@@ -82,11 +82,11 @@ body {
   }
 }
 
-.related_entities {
+.related-entities {
   display: none;
 }
 
-.table_of_contents {
+.table-of-contents {
   margin-top: 0;
 }
 
@@ -102,7 +102,7 @@ i.fa {
   width: 729px !important;
 }
 
-.table_of_contents {
+.table-of-contents {
   .wds-list {
     margin: 0;
     list-style: none;
