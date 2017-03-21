@@ -109,6 +109,7 @@ define('ext.wikia.adEngine.video.player.porvata.floatingContextFactory', [
 						this.state = state.paused;
 						this.fireEvent(events.attach);
 					},
+					pauseOnClose: params.hasUiControls,
 					state: state.never,
 					stop: function () {
 						this.state = state.stopped;

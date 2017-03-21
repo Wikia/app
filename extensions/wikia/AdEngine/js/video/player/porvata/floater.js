@@ -55,15 +55,18 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function endFloating(floatingContext) {
-			var elements = floatingContext.elements,
+			var video = floatingContext.elements.video,
 				listeners = floatingContext.listeners;
 
 			win.removeEventListener('scroll', listeners.scroll);
 			if (listeners.start) {
-				elements.video.removeEventListener('start', listeners.start);
+				video.removeEventListener('start', listeners.start);
+			}
+			if (listeners.adResumed) {
+				video.removeEventListener('resume', listeners.adResumed);
 			}
 			if (listeners.adCompleted) {
-				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
+				video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
 			}
 			floatingContext.stop();
 		}
@@ -71,7 +74,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function createOnCloseListener(floatingContext) {
 			return function () {
 				disableFloating(floatingContext);
-				endFloating(floatingContext);
+
+				if (floatingContext.pauseOnClose) {
+					floatingContext.stop();
+				} else {
+					endFloating(floatingContext);
+				}
 			};
 		}
 
@@ -156,6 +164,13 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
 			};
 			elements.video.addEventListener('wikiaAdCompleted', listeners.adCompleted);
+
+			if (floatingContext.pauseOnClose) {
+				listeners.adResumed = function () {
+					floatingContext.pause();
+				};
+				elements.video.addEventListener('resume', listeners.adResumed);
+			}
 
 			return floatingContext;
 		}
