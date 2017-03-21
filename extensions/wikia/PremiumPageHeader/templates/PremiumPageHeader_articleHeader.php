@@ -7,7 +7,7 @@
 					<?= join( ', ', $visibleCategories ); ?><!--
 				 --><?php if ( $moreCategoriesLength > 0 ): ?><!--
 						--><div class="pph-dropdown-container"><?= $moreCategoriesSeparator ?><!--
-						--><a href="#" class="pph-categories-show-more"
+						--><a class="pph-categories-show-more"
 							  data-tracking="categories-more"><?= $moreCategoriesText ?></a>
 							<div class="pph-dropdown">
 								<ul class="pph-dropdown-scrollable">
@@ -62,8 +62,7 @@
 				<?php endif; ?>
 				<?php if ( !empty( $dropdown ) ): ?>
 					<div class="pph-dropdown-container">
-						<a href="#" class="pph-button pph-button-chevron"
-						   data-tracking="edit-dropdown">
+						<a class="pph-button pph-button-chevron" data-tracking="edit-dropdown">
 							<?= DesignSystemHelper::renderSvg(
 								'wds-icons-dropdown-tiny',
 								'wds-icon wds-icon-tiny pph-local-nav-chevron pph-dropdown-chevron'
@@ -113,7 +112,7 @@
 			</a>
 
 			<? if ( Wikia::isContentNamespace() && $wg->Title->exists() && !$app->checkSkin( 'oasislight' ) ): ?>
-				<a id="PremiumPageHeaderShareEntryPoint" href="#" class="pph-button pph-button-secondary"
+				<a id="PremiumPageHeaderShareEntryPoint" class="pph-button pph-button-secondary"
 				   data-tracking="share">
 					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-share-small',

@@ -33,7 +33,7 @@
 		</li>
 	<? endforeach; ?>
 	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-container pph-local-nav-explore">
-		<a href="#" data-tracking="explore-menu">
+		<a data-tracking="explore-menu">
 			<svg class="wds-icon wds-icon-small" width="18" height="16" viewBox="0 0 18 16"
 				 xmlns="http://www.w3.org/2000/svg">
 				<path fill-rule="evenodd"

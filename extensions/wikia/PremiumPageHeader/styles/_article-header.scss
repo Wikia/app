@@ -73,6 +73,10 @@
 	}
 }
 
+.pph-categories-show-more {
+	cursor: pointer;
+}
+
 .pph-article-contribution {
 	align-items: flex-end;
 	display: flex;
@@ -117,6 +121,7 @@
 	background-color: $color-buttons;
 	box-sizing: border-box;
 	color: $color-button-text;
+	cursor: pointer;
 	display: flex;
 	font-size: 10px;
 	font-weight: 600;
