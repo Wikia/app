@@ -356,7 +356,7 @@ class PremiumPageHeaderController extends WikiaController {
 	private function getExplore(): array {
 		$explore = [
 			[ 'title' => 'WikiActivity', 'tracking' => 'explore-activity', 'key' => 'oasis-button-wiki-activity' ],
-			[ 'title' => 'Random', 'tracking' => 'explore-random', 'key' => 'oasis-button-random-page' ],
+			[ 'title' => 'Random', 'tracking' => 'explore-random', 'key' => 'randompage' ],
 			[ 'title' => 'Community', 'tracking' => 'explore-community' ],
 			[ 'title' => 'Videos', 'tracking' => 'explore-videos' ],
 			[ 'title' => 'Images', 'tracking' => 'explore-images' ]
