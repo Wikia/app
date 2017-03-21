@@ -3248,3 +3248,32 @@ $config['article_related_video_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/article-related-video.js',
 	],
 ];
+
+$config['premium_page_header_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumPageHeader/styles/index.scss',
+	],
+];
+
+$config['premium_page_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumPageHeader/scripts/banner-notifications-hack.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/local-navigation.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/old-nav-tracking-hack.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/article-header.js',
+	]
+];
+
+$config['premium_page_header_curated_content_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
+	]
+];
