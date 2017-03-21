@@ -127,6 +127,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				return notifications.map(function (notification) {
 					return {
 						icon: getIcon(notification.type),
+						type: notification.type,
 						uri: notification.uri,
 						latestEventUri: notification.latestEventUri,
 						showSnippet: !notification.title,
@@ -154,7 +155,10 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 
 			this._notifyRendered = function (notifications) {
 				notifications.forEach(function (notification) {
-					this.onNotificationRender.notify(notification.uri);
+					this.onNotificationRender.notify({
+						uri: notification.uri,
+						type: notification.type
+					});
 				}.bind(this));
 			};
 
@@ -169,20 +173,23 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._clickNotification = function (e) {
-				this.onNotificationClick.notify(this._findUri(e));
+				this.onNotificationClick.notify(this._findId(e));
 			};
 
-			this._findUri = function (e) {
+			this._findId = function (e) {
 				try {
-					return $(e.target).closest('.wds-notification-card').attr('data-uri');
+					var $element = $(e.target).closest('.wds-notification-card');
+					return {
+						uri: $element.attr('data-uri'),
+						type: $element.attr('data-type')
+					};
 				} catch (e) {
-					log('Failed to mark as read ' + e, log.levels.error, common.logTag);
+					log('Failed to find uri ' + e, log.levels.error, common.logTag);
 				}
 			};
 
 			this._markAsRead = function (e) {
-				var id = this._findUri(e);
-				this.onMarkAsReadClick.notify(id);
+				this.onMarkAsReadClick.notify(this._findId(e));
 				return false;
 			};
 

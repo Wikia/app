@@ -12,7 +12,7 @@ require([
 				this.view = new View();
 				this.model = new Model();
 				this.controller = new Controller(this.model);
-				this.tracking = new Tracking();
+				this.tracking = new Tracking(this.model);
 
 				this.view.registerEventHandlers(this.model);
 				this.controller.registerEventHandlers(this.view);
