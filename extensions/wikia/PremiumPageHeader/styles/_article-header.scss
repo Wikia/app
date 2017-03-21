@@ -141,18 +141,18 @@
 
 .pph-button-secondary {
 	background-color: transparent;
-	border: 1px solid $color-buttons;
-	color: $color-buttons;
+	border: 1px solid rgba($color-text, .7);
+	color: rgba($color-text, .7);
 
 	&:hover {
 		background-color: transparent;
-		border-color: $color-button-highlight;
-		color: $color-button-highlight;
+		border-color: $color-text;
+		color: $color-text;
 		transition: border-color, color;
 		transition-duration: .2s;
 
 		svg {
-			fill: $color-button-highlight;
+			fill: $color-text;
 			transition: fill .2s;
 		}
 	}
