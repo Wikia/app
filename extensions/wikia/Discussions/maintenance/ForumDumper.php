@@ -217,7 +217,90 @@ class ForumDumper {
 			return $wikiText;
 		}
 
-		return $articleComment->getText();
+		$formattedText = $articleComment->getText();
+
+		$formattedText = $this->updateLazyImages( $formattedText );
+
+		return $formattedText;
+	}
+
+	/**
+	 * Matches lazy load image tags and de-lazifies them.  For example, this image tag:
+	 *
+	 *  <img
+	 *     src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"
+	 *     alt="Joker laughing"
+	 *     class="lzy lzyPlcHld "
+	 *     data-image-key="Joker_laughing.gif"
+	 *     data-image-name="Joker laughing.gif"
+	 *     data-src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     width="200"
+	 *     height="154"
+	 *     onload="if(typeof ImgLzy==='object'){ImgLzy.load(this)}"
+	 *  >
+	 *
+	 * would match and update to:
+	 *
+	 *  <img
+	 *     src="http://vignette3.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     alt="Joker laughing"
+	 *     width="200"
+	 *     height="154"
+	 *  >
+	 *
+	 * @param $text
+	 *
+	 * @return mixed
+	 */
+	private function updateLazyImages( $text ) {
+		return preg_replace_callback(
+			"/<img +([^>]+ +data-src=[^>]+)>/",
+			[ self::class, 'updateLazyImageTag' ],
+			$text
+		);
+	}
+
+	public static function updateLazyImageTag( $matches ) {
+		$params = $matches[1];
+		if ( !preg_match_all( "/([^= ]+) *= *\"([^\"]+)\"/", $params, $paramMatches ) ) {
+			return $matches[0];
+		}
+
+		$attributes = $paramMatches[1];
+		$values = $paramMatches[2];
+
+		$tag = "<img";
+		for ( $idx = 0; $idx < count( $attributes ); $idx++ ) {
+			$attr = $attributes[$idx];
+
+			// Remove these attributes (yes 'src', it isn't the value we want)
+			if ( preg_match( "/data-image-(key|name)|onload|src/", $attr ) ) {
+				continue;
+			}
+
+			$value = $values[$idx];
+
+			// Transform data-src to src
+			if ( $attr == 'data-src' ) {
+				$tag .= ' src="' . $value . '"';
+				continue;
+			}
+
+			// Remove the lazy load classes
+			if ( $attr == 'class' ) {
+				$value = trim( preg_replace( "/lzy(PlcHld)?/", "", $value ) );
+				if ( !empty( $value ) ) {
+					$tag .= ' class="' . $value . '"';
+				}
+				continue;
+			}
+
+			// Otherwise add anything else back in
+			$tag .= ' ' . $attr . '="' . $value . '"';
+		}
+		$tag .= '>';
+
+		return $tag;
 	}
 
 	public function getContributorType( $row ) {
