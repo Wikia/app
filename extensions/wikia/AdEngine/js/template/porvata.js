@@ -55,12 +55,14 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
+		var settings = videoSettings.create(params);
+
 		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 			params.originalContainer = params.container;
 			params.container = getVideoContainer(params.slotName);
 		}
 
-		porvata.inject(videoSettings.create(params)).then(function (video) {
+		porvata.inject(settings).then(function (video) {
 			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 				var videoPlayer = params.container.querySelector('.video-player');
 
@@ -86,7 +88,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 			return video;
 		}).then(function (video) {
-			if (params.hasUiControls) {
+			if (settings.hasUiControls()) {
 				var elements = createInteractiveArea();
 
 				video.container.appendChild(elements.interactiveArea);

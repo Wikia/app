@@ -10,7 +10,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			autoPlay: false,
 			moatTracking: false,
 			resolvedState: false,
-			splitLayout: false
+			splitLayout: false,
+			withUiControls: false
 		};
 
 		init();
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			state.autoPlay = isAutoPlay(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
 			state.moatTracking = Boolean(params.moatTracking);
+			state.withUiControls = Boolean(params.hasUiControls);
 		}
 
 		function isAutoPlay(params) {
@@ -34,6 +36,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			getVpaidMode: function () {
 				return params.vpaidMode !== undefined ? params.vpaidMode : googleIma.vpaidMode.ENABLED;
+			},
+			hasUiControls: function() {
+				return state.withUiControls;
 			},
 			isAutoPlay: function () {
 				return state.autoPlay;

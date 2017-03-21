@@ -46,10 +46,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
-			src: params.src,
-			pos: params.slotName,
-			passback: 'porvata'
-		};
+				src: params.src,
+				pos: params.slotName,
+				passback: 'porvata'
+			};
 
 		return googleIma.load()
 			.then(function () {
@@ -63,6 +63,15 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			}).then(function (video) {
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
+
+				function shouldResume(isVisible) {
+					// Don't resume when video was paused manually
+					return isVisible && autoPaused
+						// Do not resume automatically when video has controls
+						&& !videoSettings.hasUiControls()
+						// Do not resume when video floating is active
+						&& !isFloatingEnabled(params);
+				}
 
 				function shouldPause(isVisible) {
 					// force not pausing when outside of viewport
@@ -78,8 +87,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
 						video.play();
 						autoPlayed = true;
-					// Don't resume when video was paused manually
-					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
+					} else if (shouldResume(isVisible)) {
 						video.resume();
 					} else if (shouldPause(isVisible)) {
 						video.pause();
