@@ -20,15 +20,15 @@
 		var ABTestPrefix = 'ABTest_',
 			ABTestProperties = {},
 			isAnyABTestActive = false;
-		
+
 		Wikia.AbTest.getExperiments().forEach(function (experiment) {
-			if(experiment.group) {
+			if (experiment.group) {
 				ABTestProperties[ABTestPrefix + experiment.name] = experiment.group.name;
 				isAnyABTestActive = true;
 			}
 		});
 
-		if(isAnyABTestActive) {
+		if (isAnyABTestActive) {
 			_kiq.push(['set', ABTestProperties]);
 		}
 	};
