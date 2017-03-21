@@ -167,7 +167,9 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 
 			if (floatingContext.pauseOnClose) {
 				listeners.adResumed = function () {
-					floatingContext.pause();
+					if (floatingContext.isStopped()) {
+						floatingContext.pause();
+					}
 				};
 				elements.video.addEventListener('resume', listeners.adResumed);
 			}
