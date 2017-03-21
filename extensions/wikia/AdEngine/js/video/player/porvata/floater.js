@@ -43,9 +43,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				elements.video.addEventListener('start', listeners.start);
 			}
 
-			if (elements.video.isPlaying()) {
-				elements.video.resize(width, height);
-			}
+			elements.video.resize(width, height);
 		}
 
 		function deleteCloseButton(floatingContext) {
