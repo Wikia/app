@@ -16,7 +16,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 	}
 
 	$(function () {
-		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'CONTROL')) {
+		if (abTest.isExperimentActive('PREMIUM_PAGE_HEADER')) {
 			if ($oldWikiHeader.is(':visible')) {
 				track({
 					action: tracker.ACTIONS.IMPRESSION,
