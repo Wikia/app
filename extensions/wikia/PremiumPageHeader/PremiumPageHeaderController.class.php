@@ -14,6 +14,8 @@ class PremiumPageHeaderController extends WikiaController {
 		// dropdown actions
 		$this->dropdown = $this->getDropdownActions();
 
+		$this->applyEditButtonLoginAction();
+
 		// comments/talk button
 		$commentsEnabled = $this->checkArticleComments();
 		$this->commentButtonMsg = $commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
@@ -195,6 +197,35 @@ class PremiumPageHeaderController extends WikiaController {
 				}
 			}
 		}
+	}
+
+	private function applyEditButtonLoginAction() {
+		global $wgTitle, $wgUser;
+
+		$this->actionButtonClass = '';
+
+		// modify edit URL if the action is edit
+		if ( $this->actionName == 'edit' && isset( $this->action['href'] ) /* BugId:12613 */ &&
+		     !$wgTitle->userCan( 'edit' ) && !$wgUser->isBlocked( true, false ) /* CE-18 */ &&
+		     !$wgUser->isLoggedIn() /* VOLDEV-74 */
+		) {
+			$signUpTitle = SpecialPage::getTitleFor( 'SignUp' );
+			$loginUrl = $this->createLoginURL( !empty( $this->dropdown ) ? 'action=edit' : '' );
+			$this->action['href'] = $signUpTitle->getLocalUrl( $loginUrl );
+			$this->actionButtonClass .= ' loginToEditProtectedPage';
+		}
+	}
+
+	/**
+	 * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+	 */
+	private function createLoginURL( $extraReturntoquery = '' ) {
+		/** create login URL **/
+		$returnto = wfGetReturntoParam(null, $extraReturntoquery);
+
+		$signUpHref = $returnto;
+		$signUpHref .= "&type=login";
+		return $signUpHref;
 	}
 
 	/**

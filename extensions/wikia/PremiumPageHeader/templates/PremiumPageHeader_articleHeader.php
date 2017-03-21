@@ -50,7 +50,7 @@
 			<div class="pph-button-group">
 				<?php if ( !empty( $action ) ): ?>
 					<a href="<?= empty( $action['href'] ) ? '' : Sanitizer::encodeAttribute( $action['href'] ) ?>"
-					   class="pph-button" data-tracking="edit">
+					   class="pph-button<?= $actionButtonClass; ?>" data-tracking="edit">
 						<?php if ( $actionImage === MenuButtonController::EDIT_ICON ) { ?>
 							<?= DesignSystemHelper::renderSvg(
 								'wds-icons-pencil',
