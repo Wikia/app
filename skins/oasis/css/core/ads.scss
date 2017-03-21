@@ -35,7 +35,10 @@ $video-control-panel-default-color: white;
 $video-control-panel-active-color: $video-player-blue;
 $video-control-panel-inactive-color: $video-player-volume-bar-off-color;
 $video-control-panel-item-size: 23px;
+$video-control-panel-item-size-extra-large: 86px;
 $video-control-panel-item-size-small: 17px;
+$video-control-pause-shadow-animation-duration: 1s;
+$video-control-pause-shadow-animation-function: ease;
 
 $vpaid-z-index: 10;
 
@@ -754,6 +757,52 @@ body > a > img[src$="noad.gif"] {
 
 		svg {
 			height: $video-control-panel-item-size-small;
+		}
+	}
+}
+
+@keyframes show-then-hide {
+  from {
+    animation-timing-function: $video-control-pause-shadow-animation-function;
+    height: $video-control-panel-item-size;
+    opacity: 1;
+    visibility: visible;
+    width: $video-control-panel-item-size;
+  }
+
+  to {
+    height: $video-control-panel-item-size-extra-large;
+    opacity: 0;
+    visibility: hidden;
+    width: $video-control-panel-item-size-extra-large;
+  }
+}
+
+.pause-shadow {
+	bottom: 0;
+	height: $video-control-panel-item-size;
+	left: 0;
+	margin: auto;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	width: $video-control-panel-item-size;
+
+	svg {
+		fill: $video-control-panel-default-color;
+		height: $video-control-panel-item-size;
+		width: $video-control-panel-item-size;
+	}
+
+	&.animate {
+      animation: show-then-hide $video-control-pause-shadow-animation-duration;
+
+		svg {
+			height: $video-control-panel-item-size-extra-large;
+			transition: all $video-control-pause-shadow-animation-duration $video-control-pause-shadow-animation-function;
+			width: $video-control-panel-item-size-extra-large;
 		}
 	}
 }
