@@ -12,6 +12,7 @@
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
 @import '../../../../extensions/wikia/ArticleVideo/styles/article-featured-video';
+@import '../../../../extensions/wikia/ArticleVideo/styles/video-controls';
 @import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
@@ -27,6 +28,14 @@ $floating-ad-index: $wikia-top-ads-index + 10;
 $floating-ad-video-width: 320px;
 $floating-ad-animation-speed: $video-collapse-animation-speed;
 $floating-ad-featured-video-gap: $video-container-width;
+
+$video-control-bar-padding: 18px;
+$video-control-bar-items-margin: 12px;
+$video-control-panel-default-color: white;
+$video-control-panel-active-color: $video-player-blue;
+$video-control-panel-inactive-color: $video-player-volume-bar-off-color;
+$video-control-panel-item-size: 23px;
+$video-control-panel-item-size-small: 17px;
 
 $vpaid-z-index: 10;
 
@@ -665,7 +674,7 @@ body > a > img[src$="noad.gif"] {
 	width: 100%;
 
 	.control-bar {
-		padding: 0 18px;
+		padding: 0 $video-control-bar-padding;
 
 		.progress-bar {
 			background-color: rgba(175, 175, 175, 0.5);
@@ -677,21 +686,21 @@ body > a > img[src$="noad.gif"] {
 			width: 100%;
 
 			.current-time {
-				background-color: #00b7df;
+				background-color: $video-control-panel-active-color;
 				border-radius: 3px;
 			}
 		}
 
 		.control-bar-items {
 			display: flex;
-			margin: 12px 0;
+			margin: $video-control-bar-items-margin 0;
 		}
 
 		.control-bar-item {
 			cursor: pointer;
 			display: block;
 			padding: 0 6px;
-			width: 17px;
+			width: $video-control-panel-item-size;
 		}
 
 		.play-pause-button {
@@ -708,24 +717,24 @@ body > a > img[src$="noad.gif"] {
 
 		.sound-bar {
 			background-clip:content-box;
-			background-color: white;
+			background-color: $video-control-panel-default-color;
 			cursor: pointer;
-			height: 23px;
+			height: $video-control-panel-item-size;
 			padding-left: 7px;
 			width: 2px;
 
 			&.unlit {
-				background-color: rgba(255, 255, 255, 0.2);
+				background-color: $video-control-panel-inactive-color;
 			}
 		}
 	}
 
 	svg {
 		fill: white;
-		height: 23px;
+		height: $video-control-panel-item-size;
 
 		&:hover {
-			fill: #00b7df;
+			fill: $video-control-panel-active-color;
 		}
 	}
 }
@@ -733,14 +742,18 @@ body > a > img[src$="noad.gif"] {
 .floating {
 	.interactive-area {
 		.control-bar {
+			.control-bar-item {
+				width: $video-control-panel-item-size-small;
+			}
+
 			.sound-bar {
-				height: 17px;
+				height: $video-control-panel-item-size-small;
 				padding-left: 3px;
 			}
 		}
 
 		svg {
-			height: 17px;
+			height: $video-control-panel-item-size-small;
 		}
 	}
 }
