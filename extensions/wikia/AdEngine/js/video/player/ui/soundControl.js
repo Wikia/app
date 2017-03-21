@@ -9,85 +9,112 @@ define('ext.wikia.adEngine.video.player.ui.soundControl', [
 		volumeOff = '<svg width="22" height="14" viewBox="0 0 22 14" xmlns="http://www.w3.org/2000/svg"><path d="M8.45.17L4.664 4.28H1.036C.256 4.28 0 4.74 0 5.175v3.522c0 .436.256.985 1.036.985h3.646l3.785 4.176c.165.092.35.143.533.143a.964.964 0 0 0 .5-.136c.33-.185.5-.526.5-.897V1.013c0-.37-.17-.713-.5-.898-.33-.186-.72-.13-1.05.054zM18.413 7l3.294-3.294a1 1 0 0 0-1.412-1.413L17 5.588l-3.294-3.295a.998.998 0 1 0-1.413 1.413L15.588 7l-3.295 3.295a.998.998 0 1 0 1.413 1.412L17 8.413l3.295 3.294a.996.996 0 0 0 1.412 0 1 1 0 0 0 0-1.412L18.413 7z"/></svg>',
 		numberOfBars = 10;
 
-	// function select(soundBars, index) {
-	// 	return function () {
-	// 		console.info('index ' + index);
-	// 	}
-	// }
+	function lit(soundBars, index) {
+		log('lit ' + index + ' sound bars', log.levels.info, logGroup);
+		soundBars.forEach(function (soundBar, i) {
+			soundBar.classList.toggle('unlit', i > index);
+		});
+	}
 
-	function createSoundControl() {
-		var control = doc.createElement('div'),
-			speaker = doc.createElement('a'),
+	function volumeToSoundBarIndex(video) {
+		return video.getVolume() * 10 - 1;
+	}
+
+	function soundBarIndexToVolume(index) {
+		return (index + 1) / 10;
+	}
+
+	function createOutsideSoundBarHandler(video, soundBars) {
+		return function () {
+			lit(soundBars, volumeToSoundBarIndex(video));
+		}
+	}
+
+	function createOverSoundBarHandler(soundBars, index) {
+		return function () {
+			lit(soundBars, index);
+		}
+	}
+
+	function createClickSoundBarHandler(video, index) {
+		return function () {
+			video.setVolume(soundBarIndexToVolume(index));
+		}
+	}
+
+	function createSoundControlsFor(video) {
+		var i = 0,
+			soundBars = [],
 			soundBarsContainer = doc.createElement('div'),
-			i = 0,
-			soundBars = [];
+			soundControl = doc.createElement('div'),
+			speaker = doc.createElement('a');
 
-		control.classList.add('sound-control');
+		soundControl.classList.add('sound-control');
 		speaker.classList.add('speaker', 'control-bar-item');
 		soundBarsContainer.classList.add('sound-bars-container');
 
-		control.appendChild(speaker);
-		control.appendChild(soundBarsContainer);
-
-		log('volume control is added', log.levels.info, logGroup);
-
-		control.mute = function () {
-			control.classList.add('mute');
-			speaker.innerHTML = volumeOff;
-
-			for (i = 0; i < numberOfBars; i++) {
-				soundBars[i].classList.add('unlit');
-			}
-
-			log('mute', log.levels.info, logGroup);
-		};
-
-		control.unmute = function () {
-			control.classList.remove('mute');
-			speaker.innerHTML = volumeOn;
-
-			for (i = 0; i < numberOfBars; i++) {
-				soundBars[i].classList.remove('unlit');
-			}
-
-			log('unmute', log.levels.info, logGroup);
-		};
+		soundControl.appendChild(speaker);
+		soundControl.appendChild(soundBarsContainer);
 
 		for (i = 0; i < numberOfBars; i++) {
 			soundBars[i] = doc.createElement('a');
-			soundBars[i].classList.add('sound-bar', 'unlit');
-			// soundBars[i].addEventListener('mouseover', select(soundBars, i));
+			soundBars[i].classList.add('sound-bar');
 			soundBarsContainer.appendChild(soundBars[i]);
 		}
 
-		return control;
+		return {
+			speaker: speaker,
+			soundBars: soundBars,
+			soundControl: soundControl,
+			video: video
+		};
 	}
 
-	function updateCurrentState(video, soundControl) {
+	function refresh(controls) {
+		var video = controls.video,
+			soundControl = controls.soundControl,
+			speaker = controls.speaker;
+
 		if (video.isMuted() || video.isMobilePlayerMuted()) {
-			soundControl.mute();
+			soundControl.classList.add('mute');
+			speaker.innerHTML = volumeOff;
 		} else {
-			soundControl.unmute();
+			soundControl.classList.remove('mute');
+			speaker.innerHTML = volumeOn;
 		}
+
+		lit(controls.soundBars, volumeToSoundBarIndex(video));
+		log('change volume', log.levels.info, logGroup);
 	}
 
-	function add(video, params) {
-		var soundControl = createSoundControl();
+	function attachEventListenersFor(controls) {
+		var video = controls.video;
 
 		video.addEventListener('wikiaVolumeChange', function () {
-			updateCurrentState(video, soundControl);
+			refresh(controls);
 		});
 
 		video.addEventListener('wikiaAdStarted', function () {
-			updateCurrentState(video, soundControl);
+			refresh(controls);
 		});
 
-		soundControl.addEventListener('click', function (e) {
+		controls.speaker.addEventListener('click', function (event) {
 			video.volumeToggle();
-			e.preventDefault();
+			event.preventDefault();
 		});
 
-		params.controlBarItems.appendChild(soundControl);
+		controls.soundBars.forEach(function (soundBar, index, soundBars) {
+			soundBar.addEventListener('click', createClickSoundBarHandler(video, index));
+			soundBar.addEventListener('mouseover', createOverSoundBarHandler(soundBars, index));
+			soundBar.addEventListener('mouseout', createOutsideSoundBarHandler(video, soundBars));
+		});
+	}
+
+	function add(video, params) {
+		var controls = createSoundControlsFor(video);
+		attachEventListenersFor(controls);
+
+		params.controlBarItems.appendChild(controls.soundControl);
 	}
 
 	return {
