@@ -2,8 +2,9 @@ require([
 		'jquery',
 		'ext.wikia.design-system.on-site-notifications.model',
 		'ext.wikia.design-system.on-site-notifications.view',
-		'ext.wikia.design-system.on-site-notifications.controller'
-	], function ($, Model, View, Controller) {
+		'ext.wikia.design-system.on-site-notifications.controller',
+		'ext.wikia.design-system.on-site-notifications.tracking'
+	], function ($, Model, View, Controller, Tracking) {
 		'use strict';
 
 		var OnSiteNotifications = {
@@ -11,9 +12,11 @@ require([
 				this.view = new View();
 				this.model = new Model();
 				this.controller = new Controller(this.model);
+				this.tracking = new Tracking();
 
 				this.view.registerEventHandlers(this.model);
 				this.controller.registerEventHandlers(this.view);
+				this.tracking.registerEventHandlers(this.view);
 				this.controller.updateUnreadCount();
 			}
 		};
