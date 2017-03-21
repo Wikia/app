@@ -1,7 +1,8 @@
 ( function ( window, document ) {
 	'use strict';
 	var _kiq = [],
-		createCookie;
+		createCookie,
+		setABTestProperties;
 
 	createCookie = function(cookieName) {
 		var cookieValue = cookieName + '=true;path=/;domain=',
@@ -13,6 +14,23 @@
 			cookieValue += '.wikia.com';
 		}
 		document.cookie = cookieValue;
+	};
+
+	setABTestProperties = function () {
+		var ABTestPrefix = 'ABTest_',
+			ABTestProperties = {},
+			isAnyABTestActive = false;
+
+		Wikia.AbTest.getExperiments().forEach(function (experiment) {
+			if (experiment.group) {
+				ABTestProperties[ABTestPrefix + experiment.name] = experiment.group.name;
+				isAnyABTestActive = true;
+			}
+		});
+
+		if (isAnyABTestActive) {
+			_kiq.push(['set', ABTestProperties]);
+		}
 	};
 
 	function loadQualaroo () {
@@ -95,6 +113,8 @@
 	} else {
 		loadQualaroo();
 	}
+
+	setABTestProperties();
 
 	window._kiq = _kiq;
 })( window, document );
