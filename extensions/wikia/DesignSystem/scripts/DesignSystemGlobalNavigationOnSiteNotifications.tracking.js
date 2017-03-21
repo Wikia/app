@@ -1,13 +1,13 @@
 define('ext.wikia.design-system.on-site-notifications.tracking', [
 		'jquery',
 		'wikia.log',
+		'wikia.tracker',
 		'ext.wikia.design-system.on-site-notifications.common'
-	], function ($, log, common) {
+	], function ($, log, tracker, common) {
 		'use strict';
 
 		function Tracking(model) {
 			this.model = model;
-			this.gaCategory = 'on-site-notifications';
 			this.labels = {
 				'discussion-upvote-reply': 'discussion-upvote-reply',
 				'discussion-upvote-post': 'discussion-upvote-post',
@@ -19,6 +19,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 		}
 
 		Tracking.prototype = {
+
 
 			registerEventHandlers: function (view) {
 				view.onMarkAllAsReadClick.attach(this.markAllAsReadClick.bind(this));
@@ -37,7 +38,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				try {
 					log('impression - notification', log.levels.info, common.logTag);
 					var notification = this.findById(id);
-					this.trackImpression(this.labels[notification.type],
+					this.trackImpression(this.toLabel(notification.type),
 						{value: this.booleanToGa(notification.isUnread)});
 				} catch (e) {
 					log(e, log.levels.error, common.logTag);
@@ -48,7 +49,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				try {
 					log('click - notification', log.levels.info, common.logTag);
 					var notification = this.findById(id);
-					this.trackClick(this.labels[notification.type],
+					this.trackClick(this.toLabel(notification.type),
 						{value: this.booleanToGa(notification.isUnread)}
 					);
 				} catch (e) {
@@ -59,7 +60,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			markAllAsReadClick: function () {
 				try {
 					log('click - Mark all as read', log.levels.info, common.logTag);
-					this.trackClick(this.labels['mark-all-as-read']);
+					this.trackClick(this.toLabel('mark-all-as-read'));
 				} catch (e) {
 					log(e, log.levels.error, common.logTag);
 				}
@@ -68,11 +69,15 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			markAsReadClick: function (id) {
 				try {
 					log('click - Mark as read', log.levels.info, common.logTag);
-					this.trackClick(this.labels['mark-as-read'] + '-' + this.labels[id.type]);
+					this.trackClick(this.toLabel('mark-as-read') + '-' + this.toLabel(id.type));
 				} catch (e) {
 					log(e, log.levels.error, common.logTag);
-					console.log(e);
 				}
+			},
+
+
+			toLabel: function (name) {
+				return this.labels[name] || name;
 			},
 
 			findById: function (id) {
@@ -80,24 +85,20 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			},
 
 			trackImpression: function (type, params) {
-				this.track('impression', type, params);
+				this.track(tracker.ACTIONS.IMPRESSION, type, params);
 			},
 
 			trackClick: function (type, params) {
-				this.track('click', type, params);
+				this.track(tracker.ACTIONS.CLICK, type, params);
 			},
 
 			track: function (action, type, params) {
-				this.doTrack(
+				tracker.track(
 					this.getTrackingContext(
 						type,
 						action,
 						params
 					));
-			},
-
-			doTrack: function (params) {
-				console.log(params);
 			},
 
 			/**
@@ -110,8 +111,9 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			getTrackingContext: function (label, action, params) {
 				return $.extend({
 					action: action,
-					category: this.gaCategory,
-					label: label
+					label: label,
+					category: 'on-site-notifications',
+					trackingMethod: 'internal'
 				}, params);
 			},
 
