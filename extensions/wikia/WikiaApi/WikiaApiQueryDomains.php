@@ -15,7 +15,6 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	 * constructor
 	 */
 	public function __construct($query, $moduleName) {
-		$this->defLimit = 1000;
 		parent :: __construct($query, $moduleName, "wk");
 	}
 
@@ -28,7 +27,8 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	 * main function
 	 */
 	public function execute() {
-		$wikia = null;
+		$wikia = false;
+		$to = false;
 
 		extract( $this->extractRequestParams() );
 
@@ -153,7 +153,6 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"to" => [
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_DFLT => $this->defLimit,
 			],
 			"countonly" => [
 				ApiBase :: PARAM_TYPE => "integer",
