@@ -11,9 +11,32 @@ define('ext.wikia.adEngine.video.player.ui.playPauseButton', [
 		pauseSvg = '<svg width="14" height="16" viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg"><g><rect width="5" height="16" rx="1"/><rect x="9" width="5" height="16" rx="1"/></g></svg>',
 		pauseCssClass = 'paused';
 
+	function pause(elements) {
+		elements.button.classList.add(pauseCssClass);
+		elements.button.innerHTML = playSvg;
+
+		elements.pauseShadow.classList.add(animateCssClass);
+
+		log(['pause', log.levels.debug, logGroup]);
+	}
+
+	function resume(elements) {
+		elements.button.classList.remove(pauseCssClass);
+		elements.button.innerHTML = pauseSvg;
+
+		elements.pauseShadow.classList.remove(animateCssClass);
+
+		log(['resume', log.levels.debug, logGroup]);
+	}
+
 	function add(video, params) {
 		var button = doc.createElement('a'),
-			pauseShadow = doc.createElement('div');
+			pauseShadow = doc.createElement('div'),
+			elements = {
+				button: button,
+				pauseShadow: pauseShadow,
+				video: video
+			};
 
 		button.classList.add('play-pause-button', 'control-bar-item');
 		pauseShadow.classList.add('pause-shadow');
@@ -23,24 +46,18 @@ define('ext.wikia.adEngine.video.player.ui.playPauseButton', [
 
 		button.addEventListener('click', function () {
 			if (video.isPaused()) {
-				button.classList.remove(pauseCssClass);
-				button.innerHTML = pauseSvg;
-
 				video.resume();
-
-				pauseShadow.classList.remove(animateCssClass);
-
-				log(['resume', log.levels.debug, logGroup]);
 			} else {
-				button.classList.add(pauseCssClass);
-				button.innerHTML = playSvg;
-
 				video.pause();
-
-				pauseShadow.classList.add(animateCssClass);
-
-				log(['pause', log.levels.debug, logGroup]);
 			}
+		});
+
+		video.addEventListener('pause', function () {
+			pause(elements);
+		});
+
+		video.addEventListener('resume', function () {
+			resume(elements);
 		});
 
 		params.controlBarItems.appendChild(button);
