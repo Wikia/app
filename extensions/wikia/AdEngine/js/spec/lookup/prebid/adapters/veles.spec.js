@@ -15,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				};
 			}
 		},
+		priceParsingHelper: {
+			getPriceFromString: function() {
+				return 0;
+			}
+		},
 		prebidBid: {
 			createBid: function (code) {
 				return {
@@ -59,6 +64,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
+			mocks.priceParsingHelper,
 			mocks.sampler,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
@@ -78,16 +84,25 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		};
 	}
 
-	function mockSuccessfulResponse() {
-		var ad = document.createElement('Ad'),
-			adParameters = document.createElement('AdParameters'),
-			textNode = document.createTextNode('veles=1554'),
-			vast = document.createElement('VAST');
+	function mockSuccessfulResponse(overrideResponseXMLDocumentElement) {
+		var ad,
+			adParameters,
+			textNode,
+			vast;
 
-		ad.setAttribute('id', '831');
-		adParameters.appendChild(textNode);
-		ad.appendChild(adParameters);
-		vast.appendChild(ad);
+		if (overrideResponseXMLDocumentElement) {
+			vast = overrideResponseXMLDocumentElement;
+		} else {
+			ad = document.createElement('Ad');
+			adParameters = document.createElement('AdParameters');
+			vast = document.createElement('VAST');
+			textNode = document.createTextNode('veles=1554');
+
+			ad.setAttribute('id', '831');
+			adParameters.appendChild(textNode);
+			ad.appendChild(adParameters);
+			vast.appendChild(ad);
+		}
 
 		mocks.win.XMLHttpRequest.prototype.open = noop;
 		mocks.win.XMLHttpRequest.prototype.send = function () {
@@ -218,5 +233,105 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.cpm).toBe(8.32);
+	});
+
+	it('Get correct price based on ad id (from config)', function () {
+		var bid,
+			bidder = getVeles(),
+			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
+			velesAdapter = bidder.create();
+
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig = {
+			'831': 564,
+			'832': 434,
+			'AdSense/AdX': 388
+		};
+		mockSuccessfulResponse();
+		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
+
+		velesAdapter.callBids({
+			bidderCode: 'bar',
+			bids: [
+				bidderRequest
+			]
+		});
+
+		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
+		expect(bid.cpm).toBe(5.64);
+	});
+
+	it('Get correct price based on ad adxAdSystem (from config)', function () {
+		var bid,
+			bidder = getVeles(),
+			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
+			velesAdapter = bidder.create();
+
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig = {
+			'222': 564,
+			'AdSense/AdX': 388
+		};
+
+		// prepare xml response documentElement to mock
+		var ad = document.createElement('Ad'),
+			adSystem = document.createElement('AdSystem'),
+			vast = document.createElement('VAST'),
+			adxAdSystemTextNode = document.createTextNode('AdSense/AdX');
+
+		ad.setAttribute('id', '333');
+		adSystem.appendChild(adxAdSystemTextNode);
+		ad.appendChild(adSystem);
+		vast.appendChild(ad);
+
+		mockSuccessfulResponse(vast);
+		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
+
+		velesAdapter.callBids({
+			bidderCode: 'bar',
+			bids: [
+				bidderRequest
+			]
+		});
+
+		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
+		expect(bid.cpm).toBe(3.88);
+	});
+
+	it('Get correct price based on AdParameters', function () {
+		var bid,
+			bidder = getVeles(),
+			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
+			velesAdapter = bidder.create();
+
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig = {
+			'222': 564
+		};
+
+		// prepare xml response documentElement to mock
+		var ad = document.createElement('Ad'),
+			adParameters = document.createElement('AdParameters'),
+			adSystem = document.createElement('AdSystem'),
+			vast = document.createElement('VAST'),
+			adxAdSystemTextNode = document.createTextNode('AdSense/AdX'),
+			adParametersVelesTextNode = document.createTextNode('veles=1665');
+
+		ad.setAttribute('id', '333');
+		adSystem.appendChild(adxAdSystemTextNode);
+		adParameters.appendChild(adParametersVelesTextNode);
+		ad.appendChild(adSystem);
+		ad.appendChild(adParameters);
+		vast.appendChild(ad);
+
+		mockSuccessfulResponse(vast);
+		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
+
+		velesAdapter.callBids({
+			bidderCode: 'bar',
+			bids: [
+				bidderRequest
+			]
+		});
+
+		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
+		expect(bid.cpm).toBe(16.65);
 	});
 });
