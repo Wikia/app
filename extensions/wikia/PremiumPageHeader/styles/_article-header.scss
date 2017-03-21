@@ -27,10 +27,6 @@
 	}
 }
 
-.pph-disabled {
-	opacity: 0.5;
-}
-
 .pph-categories {
 	align-items: flex-start;
 	display: flex;
@@ -94,6 +90,11 @@
 	svg {
 		height: 9px;
 		width: 9px;
+	}
+
+	&.pph-disabled {
+		opacity: 0.5;
+		cursor: initial;
 	}
 }
 
