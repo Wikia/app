@@ -46,10 +46,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 		tracker.track(params, 'init');
 
 		params.vastTargeting = params.vastTargeting || {
-				src: params.src,
-				pos: params.slotName,
-				passback: 'porvata'
-			};
+			src: params.src,
+			pos: params.slotName,
+			passback: 'porvata'
+		};
 
 		return googleIma.load()
 			.then(function () {

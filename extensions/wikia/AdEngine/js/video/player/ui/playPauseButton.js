@@ -40,7 +40,6 @@ define('ext.wikia.adEngine.video.player.ui.playPauseButton', [
 				pauseShadow.classList.add(animateCssClass);
 
 				log(['pause', log.levels.debug, logGroup]);
-
 			}
 		});
 
