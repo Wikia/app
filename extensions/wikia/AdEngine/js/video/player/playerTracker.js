@@ -55,6 +55,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
 			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
 			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+			trackingData['additional_3'] = vulcan.getCpmFor(params.slotName) || 'no cpm';
 		}
 
 		return trackingData;
