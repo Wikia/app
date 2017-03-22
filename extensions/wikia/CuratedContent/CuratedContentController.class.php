@@ -352,6 +352,8 @@ class CuratedContentController extends WikiaController {
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [ ];
+			$sections = [ ];
+
 			if ( $this->communityDataService->hasData() ) {
 				$curated = $this->communityDataService->getCurated();
 				if ( !empty( $curated ) ) {
@@ -361,7 +363,7 @@ class CuratedContentController extends WikiaController {
 					}, $curated );
 
 					$curated[ 'curated' ] = 'true';
-					$sections[] = $curated;
+					$sections = $curated;
 				}
 
 				$featured = $this->communityDataService->getFeatured();
