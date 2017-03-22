@@ -7,6 +7,9 @@ $video-container-width: 225px;
 $video-collapsed-height: 126px;
 $video-collapse-animation-speed: 0.4s;
 
+$video-details-horizontal-padding: 10px;
+$video-details-vertical-padding: 12px;
+
 $spinner-color: #ccc;
 $spinnerSize: 48;
 
@@ -57,12 +60,12 @@ $spinnerSize: 48;
 		background-color: #000;
 		display: none;
 		font-weight: bold;
-		padding: 10px 12px;
+		padding: $video-details-horizontal-padding $video-details-vertical-padding;
 		-moz-osx-font-smoothing: grayscale;
 		-webkit-font-smoothing: antialiased;
 
 		> div {
-			width: $video-container-width;
+			max-width: $video-container-width - 2 * $video-details-vertical-padding;
 		}
 	}
 
