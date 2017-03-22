@@ -2132,6 +2132,10 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 		}
 
+		if (isset($database) && $table === 'user') {
+			$table = 'user_utf8';
+		}
+
 		$table = "{$prefix}{$table}";
 		if ( $format == 'quoted' && !$this->isQuotedIdentifier( $table ) ) {
 			$table = $this->addIdentifierQuotes( "{$table}" );
