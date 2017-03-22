@@ -3632,8 +3632,21 @@ function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 			wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, requesting $wiki\n", true );
 		}
 	}
+	$connection = wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
+
+	if ($wiki === 'specials') {
+		$connection->query("SET names 'utf8'");
+//		$result = $connection->query("SHOW VARIABLES LIKE '%char%'");
+//		if ($result->result->num_rows > 0) {
+//			while($row = $result->result->fetch_assoc()) {
+//				var_dump($row);
+//			}
+//			die;
+//		}
+	}
+
+	return $connection;
 	// wikia change end
-	return wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
 }
 
 /**

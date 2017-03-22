@@ -128,6 +128,7 @@ class ListusersData {
 
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
+		$cached = null;
 
 		if ( empty($cached) ) {
 			/* db handle */
@@ -190,6 +191,7 @@ class ListusersData {
 			}
 
 			if ( $data['cnt'] > 0 ) {
+				$where["e1.user_id"] = 4729417;
 				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
