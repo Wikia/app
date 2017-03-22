@@ -128,7 +128,7 @@ class ListusersData {
 
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
-		$cached = null;
+		$cached = null; // disable cache
 
 		if ( empty($cached) ) {
 			/* db handle */
@@ -175,6 +175,7 @@ class ListusersData {
 			}
 
 			/* filter: number of edits */
+			$this->mEdits = 0; // disable edits restriction
 			if ( !empty( $this->mEdits ) ) {
 				$where[] = " edits >= ". intval( $this->mEdits );
 			}
@@ -191,7 +192,7 @@ class ListusersData {
 			}
 
 			if ( $data['cnt'] > 0 ) {
-				$where["e1.user_id"] = 4729417;
+				$where["e1.user_id"] = 4729417; // non-ASCII user name: Teleñeco123
 				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */

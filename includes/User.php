@@ -359,7 +359,7 @@ class User implements JsonSerializable {
 			# /Wikia
 		}
 
-		$data = false;
+		$data = false; // disable cache
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
