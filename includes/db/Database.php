@@ -1519,6 +1519,10 @@ abstract class DatabaseBase implements DatabaseType {
 		$options = array(), $join_conds = array() ) {
 		$sql = $this->selectSQLText( $table, $vars, $conds, $fname, $options, $join_conds );
 
+		if (strpos($sql, '`user`')) {
+			$sql = str_replace('`user`', '`user_utf8`', $sql);
+		}
+
 		return $this->query( $sql, $fname );
 	}
 
@@ -2130,10 +2134,6 @@ abstract class DatabaseBase implements DatabaseType {
 			if ( $format == 'quoted' && !$this->isQuotedIdentifier( $database ) ) {
 				$database = $this->addIdentifierQuotes( $database );
 			}
-		}
-
-		if (isset($database) && $table === 'user') {
-			$table = 'user_utf8';
 		}
 
 		$table = "{$prefix}{$table}";

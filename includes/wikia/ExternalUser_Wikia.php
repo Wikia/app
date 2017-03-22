@@ -357,7 +357,7 @@ class ExternalUser_Wikia extends ExternalUser {
 						$need_update = true;
 					}
 				}
-
+$need_update = false;
 				if( $need_update ) {
 					$dbw->update(
 						'user',
