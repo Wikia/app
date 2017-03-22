@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest'], function (window, onScroll, tracker, OoyalaPlayer, abTest) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest', 'wikia.articleVideo.showVideoFeedbackBox'], function (window, onScroll, tracker, OoyalaPlayer, abTest, showVideoFeedbackBox) {
 
 	$(function () {
 		var $video = $('#article-video'),

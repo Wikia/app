@@ -1,4 +1,4 @@
-define('showVideoFeedbackBox', ['wikia.window', 'wikia.tracker'], function (window, tracker) {
+define('wikia.articleVideo.showVideoFeedbackBox', ['wikia.window', 'wikia.tracker'], function (window, tracker) {
 
 	function showVideoFeedbackBox () {
 		var feedback = $('#article-video .video-feedback'),
