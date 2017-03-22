@@ -179,6 +179,14 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+				var videoTitle = player.getTitle(),
+					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
+
+				$videoContainer.find('.video-title').text(videoTitle);
+				$videoContainer.find('.video-time').text(videoTime);
+			});
+
 			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
