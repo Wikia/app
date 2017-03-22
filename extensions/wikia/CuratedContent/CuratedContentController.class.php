@@ -353,24 +353,30 @@ class CuratedContentController extends WikiaController {
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [ ];
 			if ( $this->communityDataService->hasData() ) {
-				// extend images
-				$curated = array_map( function ( $section ) {
-					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
-					return $section;
-				}, $this->communityDataService->getCurated() );
+				$curated = $this->communityDataService->getCurated();
+				if ( !empty( $curated ) ) {
+					$curated = array_map( function ( $section ) {
+						$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
+						return $section;
+					}, $curated );
+
+					$curated[ 'curated' ] = 'true';
+					$sections[] = $curated;
+				}
 
 				$featured = $this->communityDataService->getFeatured();
 				if ( !empty( $featured ) ) {
 					$featured[ 'featured' ] = 'true';
-					$curated[] = $featured;
+					$sections[] = $featured;
 				}
 
 				$optional = $this->communityDataService->getOptional();
 				if ( !empty( $optional ) ) {
-					$curated[] = $optional;
+					$optional[ 'optional' ] = 'true';
+					$sections[] = $optional;
 				}
 
-				$data = $this->extendSections( $curated );
+				$data = $this->extendSections( $sections );
 
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
@@ -604,25 +610,42 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function extendSections( $curatedContent ) {
 		$validator = new CuratedContentValidator();
+		$data = [];
 
-		$data = array_filter( $curatedContent, function ( $section ) {
-			return !empty( $section['items'] );
-		} );
+		foreach ( $curatedContent as $section ) {
+			if ( empty( $section['items'] ) ) {
+				continue;
+			}
 
-		$data = array_map( function ( $section ) use ( $validator ) {
-			$featured = isset( $section['featured'] );
 			$section['node_type'] = 'section';
-			$section['items'] = array_values(
-				array_filter( $section['items'], function ( $item ) use ( $validator, $featured ) {
-					$error = $featured ? $validator->validateFeaturedItem( $item ) :
-						$validator->validateSectionItem( $item );
-					return empty( $error );
-				} )
-			);
 			$section['items'] = $this->extendItemsWithImages( $section['items'] );
 			$section['items'] = $this->extendItemsWithType( $section['items'] );
-			return $section;
-		}, $data );
+
+			if ( isset( $section['featured'] ) ) {
+				$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+					$error = $validator->validateFeaturedItem( $item );
+					return empty( $error );
+				} );
+			} elseif ( isset( $section['optional'] ) ) {
+				$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+					$error = $validator->validateSectionItem( $item );
+					return empty( $error );
+				} );
+			} elseif ( isset( $section['curated'] ) ) {
+				$error = $validator->validateSection( $section );
+
+				if ( !empty( $error ) ) {
+					continue;
+				}
+
+				$section['items'] = array_filter( $section['items'], function ( $item ) use ( $validator ) {
+					$error = $validator->validateSectionItem( $item );
+					return empty( $error );
+				} );
+			}
+
+			$data[] = $section;
+		}
 
 		return $data;
 	}
