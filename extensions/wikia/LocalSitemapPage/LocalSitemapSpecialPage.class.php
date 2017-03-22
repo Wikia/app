@@ -70,5 +70,6 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 		$to = $request->getVal( 'nameto', null );
 
 		$this->showToplevel( NS_MAIN, $from, $to );
+		$this->showToplevel( NS_FILE, $from, $to );
 	}
 }
