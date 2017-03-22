@@ -18,12 +18,11 @@ class LogEventsApiController extends WikiaApiController {
 	private $logPage;
 
 	/**
-	 * @Inject
 	 * @param LogPage $logPage
 	 */
-	public function __construct( LogPage $logPage ) {
+	public function __construct( LogPage $logPage = null ) {
 		parent::__construct();
-		$this->logPage = $logPage;
+		$this->logPage = $logPage ?? new LogPage();
 	}
 
 	/**

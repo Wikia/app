@@ -27,8 +27,6 @@
  * Class to simplify the use of log pages.
  * The logs are now kept in a table which is easier to manage and trim
  * than ever-growing wiki pages.
- *
- * @Injectable(scope="prototype",lazy=true)
  */
 class LogPage {
 	const DELETED_ACTION = 1;
