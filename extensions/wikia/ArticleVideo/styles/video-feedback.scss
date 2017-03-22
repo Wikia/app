@@ -1,7 +1,10 @@
+@import 'video-shared-variables';
+
 .article-video {
 	&.collapsed {
-		.video-feedback.visible {
-			display: none;
+		.video-feedback {
+			top: $video-collapsed-height;
+			right: 0;
 		}
 	}
 
@@ -12,6 +15,7 @@
 		cursor: default;
 		display: none;
 		font-size: 14px;
+		max-width: 240px;
 		padding: 5px 8px;
 		position: absolute;
 		right: 6px;
@@ -24,6 +28,7 @@
 
 		.video-feedback-close {
 			cursor: pointer;
+			flex-shrink: 0;
 			margin-right: 10px;
 		}
 
@@ -32,6 +37,7 @@
 			border-radius: 50%;
 			cursor: pointer;
 			display: flex;
+			flex-shrink: 0;
 			height: 22px;
 			justify-content: center;
 			margin-left: 12px;

@@ -1,10 +1,9 @@
 @import 'skins/shared/color';
 @import 'global-video';
 @import 'video-controls';
+@import 'video-shared-variables';
 
 $video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
-$video-container-width: 300px;
-$video-collapsed-height: 169px;
 $video-collapse-animation-speed: 0.4s;
 
 $video-details-horizontal-padding: 10px;
