@@ -33,7 +33,7 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 	 *
 	 * @param String $inpoint
 	 * @param String $outpoint
-	 * @param int $namespace (ignored)
+	 * @param int $namespace
 	 * @return string
 	 */
 	public function showline( $inpoint, $outpoint, $namespace = NS_MAIN ) {
@@ -48,6 +48,7 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 		$link = '?' . http_build_query( [
 				'namefrom' => $inpoint,
 				'nameto' => $outpoint,
+				'ns' => $namespace
 			] );
 
 		$out = '<div class="local-sitemap-line"><a href="' . htmlspecialchars( $link ) . '"><span>';
@@ -68,8 +69,13 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 
 		$from = $request->getVal( 'namefrom', null );
 		$to = $request->getVal( 'nameto', null );
+		$ns = $request->getInt( 'ns', -1 );
 
-		$this->showToplevel( NS_MAIN, $from, $to );
-		$this->showToplevel( NS_FILE, $from, $to );
+		if ( $ns == -1 || ( $ns != NS_MAIN && $ns != NS_FILE ) ) {
+			$this->showToplevel( NS_MAIN, $from, $to );
+			$this->showToplevel( NS_FILE, $from, $to );
+		} else {
+			$this->showToplevel( $ns, $from, $to );
+		}
 	}
 }
