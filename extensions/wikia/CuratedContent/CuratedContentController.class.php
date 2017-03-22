@@ -605,6 +605,10 @@ class CuratedContentController extends WikiaController {
 	private function extendSections( $curatedContent ) {
 		$validator = new CuratedContentValidator();
 
+		$data = array_filter( $curatedContent, function ( $section ) {
+			return !empty( $section['items'] );
+		} );
+
 		$data = array_map( function ( $section ) use ( $validator ) {
 			$featured = isset( $section['featured'] );
 			$section['node_type'] = 'section';
@@ -618,12 +622,8 @@ class CuratedContentController extends WikiaController {
 			$section['items'] = $this->extendItemsWithImages( $section['items'] );
 			$section['items'] = $this->extendItemsWithType( $section['items'] );
 			return $section;
-		}, $curatedContent );
+		}, $data );
 
-		$data = array_values( array_filter( $data, function ( $section ) use ( $validator ) {
-			$error = isset( $section['featured'] ) ? false : $validator->validateSection( $section );
-			return empty( $error );
-		} ) );
 		return $data;
 	}
 }
