@@ -509,14 +509,12 @@ $wgAutoloadClasses[ "WikiaApiQueryMostAccessPages"  ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryLastEditPages"    ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
 $wgAutoloadClasses[ "WikiaApiQueryTopEditUsers"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryMostVisitedPages" ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryMostVisitedPages.php";
-$wgAutoloadClasses[ "WikiaApiAjaxLogin"             ] = "$IP/extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
 $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
-$wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
@@ -595,12 +593,10 @@ $wgAPIModules[ "insert"            ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "update"            ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "delete"            ] = "ApiDelete";
 $wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
-$wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
 $wgAPIModules[ "licenses"          ] = "ApiLicenses";
-$wgAPIModules[ "resetpasswordtime" ] = 'WikiaApiResetPasswordTime';
 
 $wgUseAjax                = true;
 $wgValidateUserName       = true;
@@ -731,15 +727,6 @@ $wgExternalSharedDB = false;
  * list of wiki ids not to do dumps for
  */
 $wgDumpsDisabledWikis = array();
-
-/**
- * @name wgEnableUploadInfoExt
- *
- * write to dataware information about every upload, it's by default off when
- * you do not use wikia-conf/CommonSettings.php
- */
-$wgEnableUploadInfoExt = false;
-
 
 /**
  * @name wgWikiFactoryTags
@@ -1318,6 +1305,13 @@ $wgAdDriverAolBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAudienceNetworkBidderCountries
+ * List of countries where Facebook Audience Network bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAudienceNetworkBidderCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1568,13 +1562,6 @@ $wgAdDriverTurtleCountries = null;
  */
 $wgAdDriverSourcePointDetectionCountries = null;
 
-
-/**
- * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call PageFair detection scripts
- */
-$wgAdDriverPageFairDetectionCountries = null;
-
 /**
  * @name $wgAdDriverSourcePointDetectionMobileCountries
  * List of countries to call SourcePoint detection scripts on Mercury
@@ -1591,9 +1578,28 @@ $wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
  * @name wgAdDriverEnableSourcePointRecovery
- * Disable SourcePoint Recovery per wiki
+ * Enable SourcePoint Recovery per wiki
  */
 $wgAdDriverEnableSourcePointRecovery = null;
+
+/**
+ * @name $wgAdDriverPageFairDetectionCountries
+ * List of countries to call PageFair detection scripts
+ */
+$wgAdDriverPageFairDetectionCountries = null;
+
+/**
+ * @name $wgAdDriverPageFairRecoveryCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPageFairRecoveryCountries = null;
+
+/**
+ * @name $wgAdDriverEnablePageFairRecovery
+ * Enable PageFair Recovery per wiki
+ */
+$wgAdDriverEnablePageFairRecovery = null;
 
 /**
  * trusted proxy service registry

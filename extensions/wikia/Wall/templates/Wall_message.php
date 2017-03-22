@@ -78,11 +78,7 @@
 			<div class="msg-toolbar">
 				<div class="timestamp">
 					<?php if($isEdited):?>
-						<? if($showSummary): ?>
-							<? echo wfMessage('wall-message-edited-summary', [ '$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl ] )->text(); ?>
-						<? else: ?>
-							<? echo wfMessage('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] )->text(); ?>
-						<? endif; ?>
+						<?= wfMessage('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] )->text(); ?>
 					<?php endif; ?>
 					<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
 						<?php if (!is_null($iso_timestamp)): ?>

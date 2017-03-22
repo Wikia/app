@@ -171,10 +171,9 @@ class WallBaseController extends WikiaService {
 
 		$wallMessage = $this->getWallMessage();
 
-		if ( !( $wallMessage instanceof WallMessage ) ) {
-			$this->forward( 'WallBaseController', 'message_error' );
+		if ( !( $wallMessage instanceof WallMessage ) || !WallMessage::isWallMessage( $wallMessage->getTitle() ) ) {
 			wfProfileOut( __METHOD__ );
-			return true;
+			return false;
 		}
 
 		$head = '';
@@ -605,13 +604,6 @@ class WallBaseController extends WikiaService {
 		} else {
 			$this->response->setVal( 'userBlocked', false );
 		}
-
-	}
-
-	/**
-	 * Renders Wall_message_error.php template
-	 */
-	public function message_error() {
 
 	}
 

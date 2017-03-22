@@ -3,11 +3,12 @@
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (googleSlots, adSlot, recovery, doc, log, window) {
+	'wikia.window',
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
+], function (googleSlots, adSlot, recovery, doc, log, window, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -60,9 +61,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+			node = doc.getElementsByTagName('script')[0],
+			// load GPT when API not ready and recovery is non blocking or recovery is pageFair (never blocking)
+			pageFairRecovery = pageFair && pageFair.isPageFairRecoveryEnabled(),
+			gptCanBeLoaded = !window.googletag.apiReady &&
+				(!recovery.isBlocking() || pageFairRecovery);
 
-		if (!window.googletag.apiReady && !recovery.isBlocking()) {
+		if (gptCanBeLoaded) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
@@ -109,6 +114,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
 				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+
 				slotQueue = [];
 			}
 
@@ -125,12 +131,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			if (sizes) {
-				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId);
-			} else {
-				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
-			}
+			slot = sizes ?
+				window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+				window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+
 			slot.addService(window.googletag.pubads());
+
+			if (pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
+				pageFair.addMarker(slotId);
+			}
+
 			window.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
@@ -199,7 +209,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function updateCorrelator() {
-		push(function() {
+		push(function () {
 			window.googletag.pubads().updateCorrelator();
 		});
 	}

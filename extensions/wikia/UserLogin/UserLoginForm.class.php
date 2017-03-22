@@ -72,29 +72,6 @@ class UserLoginForm extends LoginForm {
 		return $u;
 	}
 
-	// add new accout by proxy
-	public function addNewAccountMailPassword() {
-		$u = $this->addNewAccountInternal();
-		if ( ! $u ) {
-			return false;
-		}
-
-		// add log
-		$userLoginHelper = ( new UserLoginHelper );
-		$userLoginHelper->addNewUserLogEntry( $u, true );
-
-		// mail temporary password
-		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array( 'language' => $u->getGlobalPreference( 'language' ), 'type' => 'account-creation-email' ) );
-		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
-		if ( !$result->isGood() ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
-			return false;
-		} else {
-			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
-			return $u;
-		}
-	}
-
 	// initial validation for username
 	public function initValidationUsername() {
 		// check empty username

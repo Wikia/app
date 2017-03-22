@@ -180,7 +180,7 @@ class MercuryApiController extends WikiaController {
 		$htmlTitle = new WikiaHtmlTitle();
 		$wikiVariables['htmlTitle'] = [
 			'separator' => $htmlTitle->getSeparator(),
-			'parts' => $htmlTitle->getAllParts(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
 		return $wikiVariables;
@@ -324,10 +324,20 @@ class MercuryApiController extends WikiaController {
 				'ns' => $title->getNamespace()
 			];
 
-			if ( $this->isSupportedByMercury( $title ) ) {
-				// Empty category pages are not known but contain article list
+			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
+			$interWikiUrl = InterwikiDispatcher::getInterWikiaURL( $title );
+
+			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list;
 				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
 					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
+
+				// InterwikiDispatcher::getInterWikiaURL does not support other prefixes than InterwikiDispatcher::SUPPORTED_IW_PREFIXES
+				// but other prefixes may be defined in `interwiki` table for given wiki - in such case $title->isKnown()
+				// returns true in previous `if` statement
+				if ( !empty( $title->mInterwiki ) && !InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
+					throw new InvalidParameterApiException( 'title' );
 				}
 
 				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -422,6 +432,13 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
+		}
+
+		// if $interwikiUrl is not empty it means that we should redirect to other wiki (follow interwiki link)
+		if ( !empty( $interWikiUrl ) ) {
+			$data = [
+				'redirectTo' => $interWikiUrl,
+			];
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

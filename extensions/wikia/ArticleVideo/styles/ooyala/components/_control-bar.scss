@@ -1,0 +1,193 @@
+.oo-control-bar {
+  background: $control-bar-bg;
+  @include vendor-prefixes (background, $control-bar-gradient);
+  @include vendor-prefixes (transition, $medium-transition);
+  width: 100%;
+  height: $control-bar-height;
+  position: relative;
+  margin: 0;
+  padding: 0 15px;
+  list-style: none;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: $zindex-control-bar;
+  pointer-events: auto;
+
+  .oo-control-bar-items-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    flex-flow: row nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    white-space: nowrap;
+    margin-top: 10px;
+
+    & > * {
+      line-height: 1 !important;
+    }
+
+    .oo-popover-button-container {
+      position: relative;
+      height:100%;
+      border:0;
+      margin:0;
+      padding:0;
+    }
+
+    .oo-control-bar-item {
+      height: 100%;
+      font-weight: bold;
+      font-size: 23px;
+      text-align: center;
+      padding: 0 12.5px;
+      cursor: pointer;
+      opacity: 1;
+    }
+
+    & > .oo-control-bar-item:first-child {
+      padding-left:0 !important;
+    }
+
+    & > .oo-control-bar-item:last-child {
+      padding-right:0 !important;
+    }
+
+    a.oo-control-bar-item {
+      background-color: transparent;
+      border:0;
+      outline: none;
+    }
+
+    .oo-control-bar-item.oo-selected > span {
+      color:$blue-light !important;
+      color: inherit !important;
+      opacity:1 !important;
+    }
+
+    .oo-control-bar-item.oo-logo {
+      cursor: auto;
+    }
+
+    .oo-control-bar-duration {
+      height: 100%;
+      color: $white;
+      opacity: 1;
+      font-family: $font-family-roboto;
+      font-size: 14px;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+      text-align: left;
+      position: relative;
+      top:-2px;
+
+      .oo-total-time {
+        color: $white;
+
+        &:before {
+          content: " - ";
+          color: $white;
+        }
+      }
+    }
+
+    .oo-control-bar-flex-space {
+      -webkit-flex: 1;
+      flex: 1;
+    }
+
+    .oo-live-indicator {
+      top: -5px;
+      position: relative;
+    }
+
+    .oo-live-circle{
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #E83F3F;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .oo-live-text {
+      font-size: 14px;
+      color: $white;
+      vertical-align: middle;
+    }
+
+    .oo-logo img {
+      position: relative;
+      max-height: 24px;
+      vertical-align: baseline;
+      opacity: 0.9;
+    }
+
+    .oo-live-nonclickable {
+      cursor: default;
+    }
+  }
+}
+
+a.oo-volume-bar {
+  border:0;
+  outline: none;
+}
+
+.oo-volume-bar {
+  margin-bottom: 4px;
+  display: inline-block;
+  background-clip: content-box;
+  position: relative;
+  width: 9px;
+  height: 8px;
+  padding-left: 7px;
+  background-color: rgba($white, 0.6);
+  @include vendor-prefixes (transition, all .18s ease-in-out);
+}
+
+.oo-volume-bar:hover{
+  height: 17px;
+}
+
+.oo-on{
+  background-color: rgba($blue-light, 1.0);
+  height: 17px;
+  padding-bottom: 0px;
+  margin-bottom: 4px;
+}
+
+.oo-volume:hover .oo-volume-bar {
+  background-color: rgba($white, 0.7);
+}
+
+.oo-volume:hover .oo-volume-bar.oo-on {
+  background-color: $blue-light;
+}
+
+.oo-volume-slider {
+  display: inline-block;
+  position: relative;
+  margin-left: 6px;
+  height: 20px;
+  width: $slider-volume-width;
+}
+
+// IE 11 only
+@include apply-to-ie11-only ('.oo-volume-slider') {
+  height: auto;
+}
+
+.oo-interactive-container {
+  .oo-control-bar.oo-control-bar-hidden {
+    height: 0 !important;
+    opacity: 0;
+  }
+}
