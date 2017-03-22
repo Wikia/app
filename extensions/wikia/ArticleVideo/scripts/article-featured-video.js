@@ -180,7 +180,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
-			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+			player.mb.subscribe(OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
 				var videoTitle = player.getTitle(),
 					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
 
@@ -188,11 +188,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				$videoContainer.find('.video-time').text(videoTime);
 			});
 
-			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
+			player.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
 
-				if ( secondsPlayed % 5 === 0 && secondsPlayed !== playTime ) {
+				if (secondsPlayed % 5 === 0 && secondsPlayed !== playTime) {
 					playTime = secondsPlayed;
 					track({
 						action: tracker.ACTIONS.VIEW,
@@ -200,7 +200,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					});
 				}
 
-				if ( percentage % 10 === 0 && percentage !== percentagePlayTime ) {
+				if (percentage % 10 === 0 && percentage !== percentagePlayTime) {
 					percentagePlayTime = percentage;
 					track({
 						action: tracker.ACTIONS.VIEW,
@@ -208,7 +208,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					});
 				}
 
-				if ( secondsPlayed >= 5 && !videoFeedbackShown ) {
+				if (secondsPlayed >= 5 && !videoFeedbackShown) {
 					videoFeedbackShown = true;
 					showVideoFeedbackBox();
 				}
