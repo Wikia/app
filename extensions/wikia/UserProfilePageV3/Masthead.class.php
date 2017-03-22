@@ -711,14 +711,6 @@ class Masthead {
 		$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
 		unlink( $sTmpFile );
 
-		/**
-		 * notify image replication system
-		 */
-		global $wgEnableUploadInfoExt;
-		if ( $wgEnableUploadInfoExt ) {
-			UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
-		}
-
 		wfProfileOut( __METHOD__ );
 
 		return $errorNo;

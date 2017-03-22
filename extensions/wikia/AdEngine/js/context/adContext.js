@@ -42,6 +42,14 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
+	function isPageFairRecoveryEnabled (noExternals, instantGlobals) {
+		var isGeoSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries),
+			isExternalEnabled = !noExternals,
+			isNotDisabledOnWiki = context.opts.pageFairRecovery !== false;
+
+		return Boolean(isExternalEnabled && isNotDisabledOnWiki && isGeoSupported);
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -68,7 +76,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		// PageFair integration
+		// PageFair detection
 		if (!noExternals) {
 			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
 				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
@@ -78,6 +86,9 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
+
+		// PageFair recovery
+		context.opts.pageFairRecovery = isPageFairRecoveryEnabled(noExternals, instantGlobals);
 
 		// SourcePoint recovery
 		if (

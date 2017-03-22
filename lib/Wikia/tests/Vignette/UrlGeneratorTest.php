@@ -2,8 +2,9 @@
 
 use Wikia\Vignette\UrlGenerator;
 use Wikia\Vignette\UrlConfig;
+use PHPUnit\Framework\TestCase;
 
-class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
+class UrlGeneratorTest extends TestCase {
 	public function testUrl() {
 		$config = (new UrlConfig())
 			->setRelativePath('a/ab/SomeFile.jpg')

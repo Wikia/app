@@ -1,0 +1,124 @@
+.oo-discovery-toaster-container-style {
+  @include absolute-center;
+  position:relative;
+  background-color: transparent;
+  height: auto;
+  max-height: 370px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: auto;
+}
+@include apply-to-safari-only ('.oo-discovery-toaster-container-style') {
+  min-height: 270px;
+}
+@include apply-to-ie11-only ('.oo-discovery-toaster-container-style') {
+  position: absolute;
+  height: 100%;
+  left: 50%;
+  top: 62.5%;
+  @include vendor-prefixes(transform, translate(none, -25%));
+}
+
+.oo-flexcontainer {
+  @include flexbox();
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-flex-flow: column wrap;
+  flex-flow: column wrap;
+  -webkit-align-content: center;
+  align-content: center;
+  overflow: visible;
+}
+
+.oo-discovery-image-wrapper-style {
+  position: relative;
+  width: 150px;
+  height: auto;
+  margin: 0 42px 42px 0;
+  flex-shrink: 0;
+
+  &:nth-of-type(even) {
+    margin-bottom: 0;
+  }
+  &:last-child, &:nth-last-child(2):nth-of-type(odd) {
+    margin-right:0
+  }
+
+  .oo-discovery-wrapper {
+    position: relative;
+  }
+}
+
+.oo-image-style {
+  width: auto;
+  height: 84px;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.oo-discovery-content-name {
+  color: $white;
+  font-size: $font-size-base;
+  font-family: $font-family-roboto-condensed;
+  width: 100%;
+  display: inline-block;
+  text-transform: capitalize;
+  @include text-truncate();
+}
+
+.oo-discover-btn {
+  position: absolute;
+  top: 50%;
+  background-color: transparent;
+  height: 10%;
+  width: 25px;
+  color: white;
+}
+
+a.oo-left-button {
+  @extend .oo-discover-btn;
+  left: 0;
+  text-align: right;
+}
+
+a.oo-right-button {
+  @extend .oo-discover-btn;
+  right: 0;
+  text-align: left;
+}
+
+.oo-discovery-count-down-wrapper-style {
+  @include absolute-center;
+  line-height:1;
+}
+
+.oo-discovery-count-down-wrapper-style a.oo-discovery-count-down-icon-style span {
+  @include absolute-center;
+  line-height: 40px;
+  z-index: $zindex-discovery-count-down-icon;
+  color: $white;
+  font-size: 25px;
+  cursor: pointer
+}
+
+.oo-scale-size {
+  max-height: 250px;
+  .oo-discovery-image-wrapper-style {
+    width: 150px * $xsmall-multiple;
+    margin: 0 42px * $xsmall-multiple 30px * $xsmall-multiple 0;
+    &:nth-of-type(even) {
+      margin-bottom: 0;
+    }
+    &:last-child, &:nth-last-child(2):nth-of-type(odd) {
+      margin-right:0
+    }
+    .oo-image-style {
+      height: 84px * $xsmall-multiple;
+    }
+  }
+}

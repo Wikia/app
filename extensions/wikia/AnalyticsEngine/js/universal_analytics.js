@@ -103,7 +103,7 @@
 		window.ga(
 			'create', 'UA-32129070-1', 'auto',
 			{
-				'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+				'sampleRate': 100,
 				'allowLinker': true,
 				'userId': window.wgGAUserIdHash
 
@@ -114,7 +114,7 @@
 		window.ga(
 			'create', 'UA-32129070-2', 'auto',
 			{
-				'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
+				'sampleRate': 100,
 				'allowLinker': true,
 				'userId': window.wgGAUserIdHash
 			}

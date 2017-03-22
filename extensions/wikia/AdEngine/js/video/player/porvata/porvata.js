@@ -15,17 +15,22 @@ define('ext.wikia.adEngine.video.player.porvata', [
 			isFirstPlay = true,
 			autoPlayed = false,
 			autoPaused = false,
-			viewportListener = null,
-			isFloating = null;
+			viewportListener = null;
+
+		function isFloatingEnabled(params) {
+			return params.floatingContext && params.floatingContext.isActive();
+		}
 
 		function tryEnablingFloating(video, inViewportCallback) {
 			if (floater && floater.canFloat(params)) {
-				isFloating = true;
-				floater.makeFloat(video, params, function() {
-					isFloating = false;
-					inViewportCallback(false);
+				params.floatingContext = floater.makeFloat(video, params, {
+					onStart: function() {
+						inViewportCallback(true);
+					},
+					onEnd: function() {
+						inViewportCallback(false);
+					}
 				});
-				inViewportCallback(true);
 			}
 		}
 
@@ -59,16 +64,24 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
 
+				function shouldPause(isVisible) {
+					// force not pausing when outside of viewport
+					return !params.blockOutOfViewportPausing
+						// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
+						&& !isVisible && video.isPlaying()
+						// Do not pause when video floating is active
+						&& !isFloatingEnabled(params);
+				}
+
 				function inViewportCallback(isVisible) {
 					// Play video automatically only for the first time
 					if (isVisible && !autoPlayed && videoSettings.isAutoPlay()) {
 						video.play();
 						autoPlayed = true;
 					// Don't resume when video was paused manually
-					} else if (isVisible && autoPaused && !isFloating) {
+					} else if (isVisible && autoPaused && !isFloatingEnabled(params)) {
 						video.resume();
-					// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-					} else if (!isVisible && video.isPlaying() && !isFloating) {
+					} else if (shouldPause(isVisible)) {
 						video.pause();
 						autoPaused = true;
 					}
