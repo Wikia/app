@@ -32,6 +32,10 @@ class ArticleVideoController extends WikiaController {
 		}
 	}
 
+	public function feedback() {
+
+	}
+
 	public static function getRelatedVideoData( $relatedVideos, $title ) {
 		$wg = F::app()->wg;
 		if ( isset( $wg->articleVideoRelatedVideos ) ) {

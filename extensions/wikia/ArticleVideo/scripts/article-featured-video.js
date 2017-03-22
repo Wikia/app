@@ -19,7 +19,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			collapsedVideoSize = {
 				width: 300,
 				height: 169
-			};
+			},
+			videoFeedbackShown = false;
 
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
@@ -205,6 +206,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 						action: tracker.ACTIONS.VIEW,
 						label: 'featured-video-played-percentage-' + percentagePlayTime
 					});
+				}
+
+				if ( secondsPlayed >= 5 && !videoFeedbackShown ) {
+					videoFeedbackShown = true;
+					showVideoFeedbackBox();
 				}
 			});
 

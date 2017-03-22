@@ -15,6 +15,7 @@
 			<div class="video-label"><?= wfMessage('articlevideo-watch')->escaped() ?><span class="video-time"></span></div>
 			<div class="video-title"></div>
 		</div>
+		<?= $app->renderView( 'ArticleVideo', 'feedback' ) ?>
 	</div>
 </div>
 
