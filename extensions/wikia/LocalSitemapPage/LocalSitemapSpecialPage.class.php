@@ -69,13 +69,13 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 
 		$from = $request->getVal( 'namefrom', null );
 		$to = $request->getVal( 'nameto', null );
-		$ns = $request->getInt( 'ns', -1 );
+		$ns = $request->getVal( 'ns', null );
 
-		if ( $ns == -1 || ( $ns != NS_MAIN && $ns != NS_FILE ) ) {
+		if ( is_null( $ns ) ) {
 			$this->showToplevel( NS_MAIN, $from, $to );
 			$this->showToplevel( NS_FILE, $from, $to );
 		} else {
-			$this->showToplevel( $ns, $from, $to );
+			$this->showToplevel( intval( $ns ), $from, $to );
 		}
 	}
 }
