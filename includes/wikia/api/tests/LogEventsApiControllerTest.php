@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class LogEventsApiControllerTest extends PHPUnit_Framework_TestCase {
+class LogEventsApiControllerTest extends TestCase {
 	/** @var LogEventsApiController $controller */
 	private $controller;
 
@@ -13,10 +14,7 @@ class LogEventsApiControllerTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->logPageMock = $this->getMockBuilder( LogPage::class )
-			->disableOriginalConstructor()
-			->getMock();
-
+		$this->logPageMock = $this->createMock( LogPage::class );
 		$this->controller = new LogEventsApiController( $this->logPageMock );
 
 		// backup global
@@ -102,9 +100,14 @@ class LogEventsApiControllerTest extends PHPUnit_Framework_TestCase {
 	private function getValidRequestMock() {
 		global $wgTheSchwartzSecretToken;
 
+		$request = [
+			'token' => $wgTheSchwartzSecretToken,
+			'type' => 'foobar'
+		];
+
 		/** @var PHPUnit_Framework_MockObject_MockObject|WikiaRequest $requestMock */
 		$requestMock = $this->getMockBuilder( WikiaRequest::class )
-			->setConstructorArgs( [ [ 'token' => $wgTheSchwartzSecretToken ] ] )
+			->setConstructorArgs( [ $request ] )
 			->setMethods( [ 'wasPosted' ] )
 			->getMock();
 
