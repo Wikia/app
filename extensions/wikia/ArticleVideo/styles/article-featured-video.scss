@@ -205,22 +205,6 @@ $spinnerSize: 48;
 
 					.oo-state-screen-info {
 						display: none;
-						bottom: 10px;
-						flex-direction: column;
-						justify-content: center;
-						left: 10px;
-						min-height: 40px;
-
-						.oo-state-screen-title {
-							font-size: 12px;
-							line-height: 14px;
-						}
-
-						.video-duration {
-							font-size: 10px;
-							font-weight: bold;
-							line-height: 14px;
-						}
 					}
 				}
 			}
