@@ -37,6 +37,7 @@ $video-control-panel-inactive-color: $video-player-volume-bar-off-color;
 $video-control-panel-item-size: 23px;
 $video-control-panel-item-size-extra-large: 86px;
 $video-control-panel-item-size-small: 17px;
+$video-control-panel-progress-bar-shadow-color: rgba(175, 175, 175, 0.5);
 $video-control-pause-shadow-animation-duration: 1s;
 $video-control-pause-shadow-animation-function: ease;
 
@@ -680,7 +681,7 @@ body > a > img[src$="noad.gif"] {
 		padding: 0 $video-control-bar-padding;
 
 		.progress-bar {
-			background-color: rgba(175, 175, 175, 0.5);
+			background-color: $video-control-panel-progress-bar-shadow-color;
 			border-radius: 3px;
 			bottom: initial;
 			height: 4.2px;

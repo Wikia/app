@@ -66,20 +66,20 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				function shouldResume(isVisible) {
 					// Don't resume when video was paused manually
-					return isVisible && autoPaused
+					return isVisible && autoPaused &&
 						// Do not resume automatically when video has controls
-						&& !videoSettings.hasUiControls()
+						!videoSettings.hasUiControls() &&
 						// Do not resume when video floating is active
-						&& !isFloatingEnabled(params);
+						!isFloatingEnabled(params);
 				}
 
 				function shouldPause(isVisible) {
 					// force not pausing when outside of viewport
-					return !params.blockOutOfViewportPausing
+					return !params.blockOutOfViewportPausing &&
 						// Pause video once it's out of viewport and set autoPaused to distinguish manual and auto pause
-						&& !isVisible && video.isPlaying()
+						!isVisible && video.isPlaying() &&
 						// Do not pause when video floating is active
-						&& !isFloatingEnabled(params);
+						!isFloatingEnabled(params);
 				}
 
 				function inViewportCallback(isVisible) {
