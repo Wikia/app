@@ -1,22 +1,27 @@
-define('wikia.articleVideo.showVideoFeedbackBox', ['wikia.window', 'wikia.tracker'], function (window, tracker) {
+define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'], function (window, tracker) {
 
-	function showVideoFeedbackBox () {
-		var feedback = $('#article-video .video-feedback'),
-			closeFeedback = feedback.find('.video-feedback-close'),
+	var feedback = $('#article-video .video-feedback'),
+		feedbackVisibleClass = 'visible',
+		track = tracker.buildTrackingFunction({
+			category: 'article-video',
+			trackingMethod: 'analytics'
+		});
+
+	function VideoFeedbackBox() {
+		var closeFeedback = feedback.find('.video-feedback-close'),
 			thumbUp = feedback.find('.video-thumb-up'),
 			thumbDown = feedback.find('.video-thumb-down'),
-			track = tracker.buildTrackingFunction({
-				category: 'article-video',
-				trackingMethod: 'analytics'
-			}),
-			feedbackVisibleClass = 'visible';
+			self = this;
+
+		this.isActive = false;
 
 		closeFeedback.click(function () {
 			track({
 				action: tracker.ACTIONS.CLICK,
 				label: 'featured-video-feedback-closed'
 			});
-			feedback.removeClass(feedbackVisibleClass);
+			self.hide();
+			self.isActive = false;
 		});
 
 		thumbUp.click(function () {
@@ -24,7 +29,7 @@ define('wikia.articleVideo.showVideoFeedbackBox', ['wikia.window', 'wikia.tracke
 				action: tracker.ACTIONS.CLICK,
 				label: 'featured-video-feedback-thumb-up'
 			});
-			feedback.removeClass(feedbackVisibleClass);
+			self.hide();
 		});
 
 		thumbDown.click(function () {
@@ -32,16 +37,30 @@ define('wikia.articleVideo.showVideoFeedbackBox', ['wikia.window', 'wikia.tracke
 				action: tracker.ACTIONS.CLICK,
 				label: 'featured-video-feedback-thumb-down'
 			});
-			feedback.removeClass(feedbackVisibleClass);
+			self.hide();
 		});
+	}
 
-		feedback.addClass(feedbackVisibleClass);
+	VideoFeedbackBox.prototype.hide = function () {
+		if (this.isActive) {
+			feedback.removeClass(feedbackVisibleClass);
+		}
+	};
 
+	VideoFeedbackBox.prototype.show = function () {
+		if (this.isActive) {
+			feedback.addClass(feedbackVisibleClass);
+		}
+	};
+
+	VideoFeedbackBox.prototype.init = function () {
+		this.isActive = true;
+		this.show();
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
 			label: 'featured-video-feedback'
 		});
-	}
+	};
 
-	return showVideoFeedbackBox;
+	return VideoFeedbackBox;
 });

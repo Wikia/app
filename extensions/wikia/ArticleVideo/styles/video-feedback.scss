@@ -1,4 +1,10 @@
 .article-video {
+	&.collapsed {
+		.video-feedback.visible {
+			display: none;
+		}
+	}
+
 	.video-feedback {
 		align-items: center;
 		background-color: rgba(255, 255, 255, 0.9);
