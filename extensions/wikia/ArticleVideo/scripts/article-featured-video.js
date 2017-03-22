@@ -17,8 +17,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				trackingMethod: 'analytics'
 			}),
 			collapsedVideoSize = {
-				width: 225,
-				height: 127
+				width: 300,
+				height: 169
 			};
 
 		function initVideo(onCreate) {
