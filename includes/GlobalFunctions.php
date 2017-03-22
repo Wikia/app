@@ -3634,7 +3634,7 @@ function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	}
 	$connection = wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
 
-	if ($wiki === 'specials' || strpos($wiki, 'wikicities') !== false) {
+	if (strpos($wiki, 'wikicities') !== false) {
 		$connection->query("SET names 'utf8'");
 //		$result = $connection->query("SHOW VARIABLES LIKE '%char%'");
 //		if ($result->result->num_rows > 0) {
