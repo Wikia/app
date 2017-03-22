@@ -140,9 +140,6 @@ module.exports = function (config) {
 			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
 			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
 
-			//Design System
-			'extensions/wikia/DesignSystem/scripts/spec/*.spec.js',
-
 			/*
 			 * VideoPageTool: Homepage Module
 			 */

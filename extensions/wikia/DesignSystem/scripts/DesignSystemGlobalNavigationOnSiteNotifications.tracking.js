@@ -12,14 +12,12 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				'discussion-upvote-reply': 'discussion-upvote-reply',
 				'discussion-upvote-post': 'discussion-upvote-post',
 				'discussion-reply': 'discussion-reply',
-				'mark-all-as-read': 'mark-all-as-read',
-				'mark-as-read': 'mark-as-read',
-				'open-menu': 'open-menu'
+				markAllAsRead: 'mark-all-as-read',
+				markAsRead: 'mark-as-read'
 			};
 		}
 
 		Tracking.prototype = {
-
 
 			registerEventHandlers: function (view) {
 				view.onMarkAllAsReadClick.attach(this.markAllAsReadClick.bind(this));
@@ -60,7 +58,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			markAllAsReadClick: function () {
 				try {
 					log('click - Mark all as read', log.levels.info, common.logTag);
-					this.trackClick(this.toLabel('mark-all-as-read'));
+					this.trackClick(this.labels.markAllAsRead);
 				} catch (e) {
 					log(e, log.levels.error, common.logTag);
 				}
@@ -69,7 +67,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 			markAsReadClick: function (id) {
 				try {
 					log('click - Mark as read', log.levels.info, common.logTag);
-					this.trackClick(this.toLabel('mark-as-read') + '-' + this.toLabel(id.type));
+					this.trackClick(this.labels.markAsRead + '-' + this.toLabel(id.type));
 				} catch (e) {
 					log(e, log.levels.error, common.logTag);
 				}
