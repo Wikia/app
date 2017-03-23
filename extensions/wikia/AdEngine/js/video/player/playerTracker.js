@@ -48,6 +48,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_1': canFloat,
 				'additional_2': floatingState
 			},
+			vulcanCpm,
 			vulcanResponse;
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
@@ -55,7 +56,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
 			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
 			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
-			trackingData['additional_3'] = vulcan.getCpmFor(params.slotName) || 'no cpm';
+
+			vulcanCpm = vulcan.getCpmFor(params.slotName);
+			trackingData['additional_3'] = vulcanCpm === undefined ? 'no cpm' : vulcanCpm;
 		}
 
 		return trackingData;
