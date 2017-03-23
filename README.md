@@ -121,6 +121,8 @@ A higher volume support mailing list can be found at:
 
 Developer discussion takes place at:
 
+
+
 * https://lists.wikimedia.org/mailman/listinfo/wikitech-l
 
 There is also a development and support channel #mediawiki on irc.freenode.net.
