@@ -256,7 +256,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
 			'rpfl_video': '203_tier1600'
 		});
-		expect(vulcan.getCpmFor('INCONTENT_LEADERBOARD')).toEqual(16.2343446);
+		expect(vulcan.getCpmFor('INCONTENT_PLAYER')).toEqual(16.2343446);
 		expect(vulcan.getSlotParams('TOP_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tierUSED'
 		});

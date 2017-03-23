@@ -135,7 +135,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 		if (isNotUsedBy(slotName)) {
 			cpm = 'used';
-		} else if (cpms[placeholderName]) {
+		} else if (cpms[placeholderName] !== undefined) {
 			cpm = cpms[placeholderName];
 		}
 
