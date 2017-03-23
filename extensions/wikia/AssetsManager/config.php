@@ -351,6 +351,14 @@ $config['adengine2_porvata_js'] = [
 	],
 ];
 
+$config['ima_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/video/player/porvata/ima/20170219061519.js',
+	],
+];
+
 $config['adengine2_playwire_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
