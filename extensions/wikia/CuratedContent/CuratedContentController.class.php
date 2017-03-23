@@ -616,7 +616,7 @@ class CuratedContentController extends WikiaController {
 	 * @param array $section curated content single section data
 	 * @return array section extended with node type, image data and items type
 	 */
-	private function extendSectionAndItems( $section ) {
+	private function extendSectionAndItems( array $section ): array {
 		$section['node_type'] = 'section';
 
 		if ( !empty( $section['items'] ) ) {
@@ -631,7 +631,7 @@ class CuratedContentController extends WikiaController {
 	 * @param array $section featured categories section data
 	 * @return array input data (full section return only if valid) with validated items only (featured categories).
 	 */
-	private function validateCuratedSection( $section ) {
+	private function validateCuratedSection( array $section ): array {
 		if ( empty( $section['items'] ) ) {
 			return [];
 		}
@@ -655,7 +655,7 @@ class CuratedContentController extends WikiaController {
 	 * @param array $section featured content section data
 	 * @return array input data but with validated items only (featured content slide).
 	 */
-	private function validateFeaturedSection( $section ) {
+	private function validateFeaturedSection( array $section ): array {
 		if ( empty( $section['items'] ) ) {
 			return [];
 		}
@@ -673,7 +673,7 @@ class CuratedContentController extends WikiaController {
 	 * @param array $section optional categories section data
 	 * @return array input data with validated items only (optional categories).
 	 */
-	private function validateOptionalSection( $section ) {
+	private function validateOptionalSection( array $section ): array {
 		if ( empty( $section['items'] ) ) {
 			return [];
 		}
