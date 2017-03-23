@@ -49,6 +49,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function removeEventListener(eventName, callback) {
 			log(['removeEventListener to AdManager', eventName], log.levels.debug, logGroup);
 
+			if (eventListeners[eventName]) {
+				var listenerId = eventListeners[eventName].indexOf(callback);
+				if (listenerId !== -1) {
+					eventListeners[eventName].splice(listenerId, 1);
+				}
+				return;
+			}
+
 			if (isAdsManagerLoaded) {
 				adsManager.removeEventListener(eventName, callback);
 			} else {
