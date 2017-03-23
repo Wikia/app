@@ -198,7 +198,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'piggyback',
 		'places-enable-category-geolocation',
 		'metadata',
-		'powerdelete',
 		'quicktools',
 		'quickadopt',
 		'restrictsession',
