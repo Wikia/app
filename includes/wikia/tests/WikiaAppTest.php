@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaAppTest extends PHPUnit_Framework_TestCase {
+class WikiaAppTest extends TestCase {
 	/* @var WikiaApp */
 	private $application;
 	/* @var PHPUnit_Framework_MockObject_MockObject */
@@ -13,9 +15,9 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	private $hookDispatcher;
 
 	protected function setUp() {
-		$this->globalRegistry = $this->getMock('WikiaGlobalRegistry');
-		$this->localRegistry = $this->getMock('WikiaLocalRegistry');
-		$this->hookDispatcher = $this->getMock('WikiaHookDispatcher');
+		$this->globalRegistry = $this->createMock( WikiaGlobalRegistry::class );
+		$this->localRegistry = $this->createMock( WikiaLocalRegistry::class );
+		$this->hookDispatcher = $this->createMock( WikiaHookDispatcher::class );
 		$this->application = new WikiaApp($this->globalRegistry, $this->localRegistry, $this->hookDispatcher);
 	}
 
@@ -34,7 +36,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$rebuild = true;
 		$callback = array();
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('append')
 		         ->with($this->equalTo('wgHooks'), $this->equalTo($callback), $this->equalTo($hookName));
@@ -54,7 +56,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$class = 'HookClass';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgAutoloadClasses'), $this->equalTo($path), $this->equalTo($class));
@@ -65,7 +67,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	public function testRegisteringExtensionFunctionProxiesToMediaWikiRegistry() {
 		$function = 'extensionFunction';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('append')
 		         ->with($this->equalTo('wgExtensionFunctions'), $this->equalTo($function));
@@ -77,7 +79,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgExtensionMessagesFiles'), $this->equalTo($path), $this->equalTo($name));
@@ -89,7 +91,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$path = 'filepath';
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgExtensionAliasesFiles'), $this->equalTo($path), $this->equalTo($name));
@@ -101,7 +103,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$name = 'name';
 		$class = 'SpecialPageClass';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo('wgSpecialPages'), $this->equalTo($class), $this->equalTo($name));
@@ -112,7 +114,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 	public function testGettingGlobalProxiesToMediaWikiRegistry() {
 		$name = 'name';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('get')
 		         ->with($this->equalTo($name));
@@ -125,7 +127,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 		$name = 'name';
 		$value = 'value';
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->once())
 		         ->method('set')
 		         ->with($this->equalTo($name), $this->equalTo($value));
@@ -141,7 +143,7 @@ class WikiaAppTest extends PHPUnit_Framework_TestCase {
 					'global3' => 10
 		);
 
-		$registry = $this->getMock('WikiaGlobalRegistry');
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
 		$registry->expects($this->exactly(5))
 	         ->method('get')
 	         ->will($this->onConsecutiveCalls(

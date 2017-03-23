@@ -17,8 +17,8 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				trackingMethod: 'analytics'
 			}),
 			collapsedVideoSize = {
-				width: 225,
-				height: 127
+				width: 300,
+				height: 169
 			};
 
 		function initVideo(onCreate) {
@@ -177,6 +177,14 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-replay'
 				});
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+				var videoTitle = player.getTitle(),
+					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
+
+				$videoContainer.find('.video-title').text(videoTitle);
+				$videoContainer.find('.video-time').text(videoTime);
 			});
 
 			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {

@@ -94,26 +94,30 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testValidatePoiCategoriesData_user_not_logged_in() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
 		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
-
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testValidatePoiCategoriesData_user_blocked() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
 		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_BLOCKED );
-
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when mapId is invalid
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_mapId() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
@@ -121,13 +125,13 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		] );
 		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
 
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
-
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_poiCategoriesToCreate() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
@@ -139,13 +143,13 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 			->method( 'validatePoiCategories' )
 			->will( $this->returnValue( false ) );
 
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
-
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategories method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_poiCategoriesToDelete() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
@@ -156,8 +160,6 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		$poiCategoryControllerMock->expects( $this->once() )
 			->method( 'validatePoiCategoriesToDelete' )
 			->will( $this->returnValue( false ) );
-
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}

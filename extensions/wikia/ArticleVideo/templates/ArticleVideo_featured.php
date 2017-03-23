@@ -11,6 +11,10 @@
 			</svg>
 		</div>
 		<div id="ooyala-article-video" class="ooyala-article-video"></div>
+		<div class="video-details">
+			<div class="video-label"><?= wfMessage('articlevideo-watch')->escaped() ?><span class="video-time"></span></div>
+			<div class="video-title"></div>
+		</div>
 	</div>
 </div>
 

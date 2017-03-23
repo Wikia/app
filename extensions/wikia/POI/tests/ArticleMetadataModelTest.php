@@ -35,7 +35,11 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 	 * @covers ArticleMetadataModel::save
 	 */
 	public function testSave() {
-		$stub = $this->getMock( 'ArticleMetadataModel', [ 'getWikiaProp', 'setWikiaProp', 'extractTitle' ], array( 1 ) );
+		/** @var ArticleMetadataModel|PHPUnit_Framework_MockObject_MockObject $stub */
+		$stub = $this->getMockBuilder( ArticleMetadataModel::class )
+			->setMethods( [ 'getWikiaProp', 'setWikiaProp', 'extractTitle' ] )
+			->setConstructorArgs( [ 1 ] )
+			->getMock();
 
 		$propValue = [
 			'quest_id' => 1,
@@ -44,7 +48,7 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 			'ability_id' => 'aaa'
 		];
 
-		$stub->expects( $this->any() )
+		$stub->expects( $this->once() )
 			->method( 'setWikiaProp' )
 			->with( ArticleMetadataModel::ARTICLE_PROP_NAME, 1, $propValue );
 
