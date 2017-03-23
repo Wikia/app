@@ -16,8 +16,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class CreateWikiChecks {
-
-	const STAFF_LIST = "staffsigs";
 	const BAD_WORDS_MSG = 'creation_blacklist';
 
 	/**
@@ -135,35 +133,6 @@ class CreateWikiChecks {
 
 	public static function checkDomainExists( $sName, $sLang, $type ) {
 		return CreateWikiChecks::domainExists( $sName, $sLang, $type );
-	}
-
-	/**
-	 * get staff member signature for given lang code
-	 */
-	public static function getStaffUserByLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
-
-		$staffSigs = wfMsgForContent( self::STAFF_LIST );
-		$oUser = false;
-		if ( !empty($staffSigs) ) {
-			$lines = explode( "\n", $staffSigs );
-
-			foreach ( $lines as $line ) {
-				if ( strpos( $line, '* ' ) === 0 ) {
-					$sectLangCode = trim( $line, '* ' );
-					continue;
-				}
-				if ( (strpos( $line, '* ' ) == 1) && ($langCode == $sectLangCode) ) {
-					$sUser = trim( $line, '** ' );
-					$oUser = User::newFromName( $sUser );
-					$oUser->load();
-					break;
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $oUser;
 	}
 
 	/**
