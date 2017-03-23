@@ -382,7 +382,6 @@ class CuratedContentController extends WikiaController {
 					$optional[ 'optional' ] = 'true';
 					$optional = $this->extendSectionAndItems( $optional );
 					$optional = $this->validateOptionalSection( $optional );
-					$sections[] = $optional;
 
 					if ( !empty( $optional ) ) {
 						$sections[] = $optional;
