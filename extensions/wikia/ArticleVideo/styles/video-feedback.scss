@@ -25,7 +25,7 @@
 		z-index: 100001;
 		
 		&.visible {
-			display: flex;
+			@include flexbox();
 		}
 
 		.video-feedback-close {
