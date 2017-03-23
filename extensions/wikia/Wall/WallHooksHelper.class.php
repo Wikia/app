@@ -436,7 +436,7 @@ class WallHooksHelper {
 					$userWallTitle = static::getWallTitle();
 
 					if ( $userWallTitle instanceof Title ) {
-						$tabs[$key]['link'] = Xml::element( 'a', [ 'href' => $userWallTitle->getLocalUrl(), 'title' => $userWallTitle->getPrefixedText() ], wfMessage( 'wall-message-wall' )->text() );
+						$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'. $userWallTitle->getPrefixedText() .'">' . wfMessage( 'wall-message-wall' )->escaped() .'</a>';
 						$tabs[$key]['data-id'] = 'wall';
 
 						if ( $namespace === NS_USER_WALL ) {
