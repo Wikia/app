@@ -614,7 +614,7 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @param array $section curated content section data
+	 * @param array $section curated content single section data
 	 * @return array section extended with node type, image data and items type
 	 */
 	private function extendSectionAndItems( $section ) {
@@ -629,8 +629,8 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @param array $section curated section data
-	 * @return array
+	 * @param array $section featured categories section data
+	 * @return array input data (full section return only if valid) with validated items only (featured categories).
 	 */
 	private function validateCuratedSection( $section ) {
 		if ( empty( $section['items'] ) ) {
@@ -653,8 +653,8 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @param array $section featured categories section data
-	 * @return array
+	 * @param array $section featured content section data
+	 * @return array input data but with validated items only (featured content slide).
 	 */
 	private function validateFeaturedSection( $section ) {
 		if ( empty( $section['items'] ) ) {
@@ -672,7 +672,7 @@ class CuratedContentController extends WikiaController {
 
 	/**
 	 * @param array $section optional categories section data
-	 * @return array
+	 * @return array input data with validated items only (optional categories).
 	 */
 	private function validateOptionalSection( $section ) {
 		if ( empty( $section['items'] ) ) {
