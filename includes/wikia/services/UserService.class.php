@@ -66,38 +66,6 @@ class UserService extends Service {
 	}
 
 	/**
-	 * Given a user object, this method will create a temporary password and save it to the
-	 * user's account.  Every time this is called, the reset password throttle is reset, which
-	 * means the method User::isPasswordReminderThrottled will return true for the next
-	 * $wgPasswordReminderResendTime hours
-	 *
-	 * @todo remove after we deprecate temporary passwords
-	 *
-	 * @param User $targetUser
-	 *
-	 * @return String
-	 *
-	 * @throws MWException
-	 */
-	public function resetPassword( User $targetUser ) {
-		$context = RequestContext::getMain();
-		$currentUser = $context->getUser();
-		$currentIp = $context->getRequest()->getIP();
-
-		wfRunHooks( 'User::mailPasswordInternal', [
-			$currentUser,
-			$currentIp,
-			$targetUser,
-		] );
-
-		$tempPass = $targetUser->randomPassword();
-		$targetUser->setNewpassword( $tempPass, $resetThrottle = true );
-		$targetUser->saveSettings();
-
-		return $tempPass;
-	}
-
-	/**
 	 * Generates password reset token and sends it to user via email
 	 *
 	 * @param User   $targetUser

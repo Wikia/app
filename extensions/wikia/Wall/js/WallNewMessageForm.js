@@ -127,9 +127,7 @@
 					this.clearNewMessageTitle();
 				}),
 				//fail callback
-				this.proxy(function () {
-					this.buttons.removeAttr('disabled');
-				}.bind(this))
+				this.buttons.removeAttr.bind(this.buttons, 'disabled')
 			);
 		},
 

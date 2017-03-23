@@ -8,7 +8,7 @@
  */
 
 define('wikia.videohandler.ooyala', [
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),
@@ -165,7 +165,7 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (recoveryHelper.isRecoveryEnabled()) {
+					if (recoveryHelper.isSourcePointRecoveryEnabled()) {
 						recoveryHelper.addOnBlockingCallback(initRecoveredPlayer);
 						recoveryHelper.addOnNotBlockingCallback(initRegularPlayer);
 					} else {

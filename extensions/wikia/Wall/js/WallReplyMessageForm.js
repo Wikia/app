@@ -163,9 +163,8 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 				}
 			}),
 			//fail callback
-			this.proxy(function () {
-				this.enable(reply);
-			}));
+			this.enable.bind(this, reply)
+		);
 	}
 });
 

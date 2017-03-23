@@ -3,14 +3,24 @@
 	'use strict';
 
 	function showErrorModal(data) {
-		var modalContent;
+		var modalTitle = $.msg('wall-posting-message-failed-title'),
+			modalContent = $.msg('wall-posting-message-failed-body'),
+			dataJson;
+
 		try {
-			modalContent = JSON.parse(data.responseText).blockInfo;
+			dataJson = JSON.parse(data.responseText);
 		} catch (e) {
-			modalContent = $.msg('wall-posting-message-failed-body');
+			dataJson = {};
 		}
 
-		$.showModal($.msg('wall-posting-message-failed-title'), modalContent );
+		if (dataJson.reason === 'badcontent') {
+			modalTitle = $.msg('wall-posting-message-failed-filter-title');
+			modalContent = $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo'];
+		} else if (dataJson.blockInfo) {
+			modalContent = dataJson.blockInfo;
+		}
+
+		$.showModal(modalTitle, modalContent );
 	}
 
 	Wall.BackendBridge = $.createClass(Observable, {

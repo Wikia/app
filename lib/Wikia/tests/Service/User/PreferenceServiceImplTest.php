@@ -4,13 +4,13 @@ namespace Wikia\Service\User\Preferences;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\VoidCache;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Service\PersistenceException;
 
-class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
+class PreferenceServiceImplTest extends TestCase {
 	const TEST_WIKI_ID = 123;
 
 	/** @var int */

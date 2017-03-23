@@ -36,12 +36,14 @@ class WallExternalControllerTest extends WikiaBaseTest {
 
 		$context = new DerivativeContext( RequestContext::getMain() );
 		$context->setTitle( Wikia::createTitleFromRequest( $request ) );
+
 		$wallExternalController = new WallExternalController();
 		$wallExternalController->setContext( $context );
 		$wallExternalController->setRequest( $request );
 		$wallExternalController->setResponse( new WikiaResponse( WikiaResponse::FORMAT_JSON, $request ) );
 		$wallExternalController->init();
 		$wallExternalController->postNewMessage();
+
 		$res = $wallExternalController->getResponse();
 
 		$this->assertEquals( WikiaResponse::RESPONSE_CODE_BAD_REQUEST, $res->getCode(), 'WallExternalController::postNewMessage must only work with Wall and Board namespace' );
@@ -62,7 +64,9 @@ class WallExternalControllerTest extends WikiaBaseTest {
 		$userTalk = new Title();
 
 		/** @var PHPUnit_Framework_MockObject_MockObject|Title $titleMock */
-		$titleMock = $this->getMock( Title::class, [ 'equals', 'getSubjectPage' ] );
+		$titleMock = $this->getMockBuilder( Title::class )
+			->setMethods( [ 'equals', 'getSubjectPage' ] )
+			->getMock();
 		$titleMock->expects( $this->exactly( 2 * $maybeAllowedMethodsCount ) )
 			->method( 'equals' )
 			->with( $userTalk )
@@ -72,7 +76,9 @@ class WallExternalControllerTest extends WikiaBaseTest {
 			->willReturnSelf();
 
 		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
-		$userMock = $this->getMock( User::class, [ 'isBlocked', 'getBlock', 'getTalkPage' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'isBlocked', 'getBlock', 'getTalkPage' ] )
+			->getMock();
 		$userMock->expects( $this->exactly( $blockedMethodsCount ) )
 			->method( 'getTalkPage' )
 			->willReturn( $userTalk );
@@ -85,6 +91,7 @@ class WallExternalControllerTest extends WikiaBaseTest {
 
 		$context = new DerivativeContext( RequestContext::getMain() );
 		$context->setTitle( $titleMock );
+
 		$wallExternalController = new WallExternalController();
 		$wallExternalController->setContext( $context );
 
@@ -115,7 +122,9 @@ class WallExternalControllerTest extends WikiaBaseTest {
 
 		$userTalk = new Title();
 		/** @var PHPUnit_Framework_MockObject_MockObject|Title $titleMock */
-		$titleMock = $this->getMock( Title::class, [ 'getTalkPage', 'equals' ] );
+		$titleMock = $this->getMockBuilder( Title::class )
+			->setMethods( [ 'getTalkPage', 'equals' ] )
+			->getMock();
 		$titleMock->expects( $this->exactly( $allowedMethodsCount ) )
 			->method( 'getTalkPage' )
 			->willReturnSelf();
@@ -125,7 +134,9 @@ class WallExternalControllerTest extends WikiaBaseTest {
 			->willReturn( true );
 
 		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
-		$userMock = $this->getMock( User::class, [ 'isBlockedFrom', 'isBlocked', 'getBlock', 'getTalkPage' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'isBlockedFrom', 'isBlocked', 'getBlock', 'getTalkPage' ] )
+			->getMock();
 		$userMock->expects( $this->exactly( $blockedMethodsCount ) )
 			->method( 'getTalkPage' )
 			->willReturn( $userTalk );
@@ -142,6 +153,7 @@ class WallExternalControllerTest extends WikiaBaseTest {
 
 		$context = new DerivativeContext( RequestContext::getMain() );
 		$context->setTitle( $titleMock );
+
 		$wallExternalController = new WallExternalController();
 		$wallExternalController->setContext( $context );
 

@@ -13,83 +13,83 @@ class RemoveImapTagsTests extends WikiaBaseTest {
 	public function testHasImapTag() {
 		$testCases = [
 			[
-				pageContent => "<imap map-id=\"1\"></imap>",
-				expectedResult => true,
-				mapId => 1
+				'pageContent' => "<imap map-id=\"1\"></imap>",
+				'expectedResult' => true,
+				'mapId' => 1
 			],
 			[
-				pageContent => "<imap blah=\"blah\" map-id=\"2\" ></imap>",
-				expectedResult => true,
-				mapId => 2
+				'pageContent' => "<imap blah=\"blah\" map-id=\"2\" ></imap>",
+				'expectedResult' => true,
+				'mapId' => 2
 			],
 			[
-				pageContent => "<imap map-id='3'/>",
-				expectedResult => true,
-				mapId => 3
+				'pageContent' => "<imap map-id='3'/>",
+				'expectedResult' => true,
+				'mapId' => 3
 			],
 			[
-				pageContent => "<imap map-id=\"4\"/>",
-				expectedResult => true,
-				mapId => 4
+				'pageContent' => "<imap map-id=\"4\"/>",
+				'expectedResult' => true,
+				'mapId' => 4
 			],
 			[
-				pageContent => "<imap map-id='5' />",
-				expectedResult => true,
-				mapId => 5
+				'pageContent' => "<imap map-id='5' />",
+				'expectedResult' => true,
+				'mapId' => 5
 			],
 			[
-				pageContent => "<imap map-id='6' blah='blah' />",
-				expectedResult => true,
-				mapId => 6
+				'pageContent' => "<imap map-id='6' blah='blah' />",
+				'expectedResult' => true,
+				'mapId' => 6
 			],
 			[
-				pageContent => "<imap blah='blah' map-id='7' />",
-				expectedResult => true,
-				mapId => 7
+				'pageContent' => "<imap blah='blah' map-id='7' />",
+				'expectedResult' => true,
+				'mapId' => 7
 			],
 			[
-				pageContent => "<imap map-id='8'>",
-				expectedResult => false
+				'pageContent' => "<imap map-id='8'>",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap map-id=\"9\" >",
-				expectedResult => false
+				'pageContent' => "<imap map-id=\"9\" >",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap map-id=\"10\" ></imap >",
-				expectedResult => true,
-				mapId => 10
+				'pageContent' => "<imap map-id=\"10\" ></imap >",
+				'expectedResult' => true,
+				'mapId' => 10
 			],
 			[
-				pageContent => "<imap map-id=\"11\" ></ imap>",
-				expectedResult => true,
-				mapId => 11
+				'pageContent' => "<imap map-id=\"11\" ></ imap>",
+				'expectedResult' => true,
+				'mapId' => 11
 			],
 			[
-				pageContent => "<imap map-id=\"12\" ><imap> ",
-				expectedResult => false
+				'pageContent' => "<imap map-id=\"12\" ><imap> ",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap map-id=\"13\"><imap>",
-				expectedResult => false
+				'pageContent' => "<imap map-id=\"13\"><imap>",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap id=\"14\"></imap>",
-				expectedResult => false
+				'pageContent' => "<imap id=\"14\"></imap>",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap></imap>",
-				expectedResult => false
+				'pageContent' => "<imap></imap>",
+				'expectedResult' => false
 			],
 			[
-				pageContent => "<imap map-id=16/> </imap>",
-				expectedResult => true,
-				mapId => 16
+				'pageContent' => "<imap map-id=16/> </imap>",
+				'expectedResult' => true,
+				'mapId' => 16
 			],
 			[
-				pageContent => "<imap map-id=17 /></imap>",
-				expectedResult => true,
-				mapId => 17
+				'pageContent' => "<imap map-id=17 /></imap>",
+				'expectedResult' => true,
+				'mapId' => 17
 			],
 		];
 
@@ -100,6 +100,7 @@ class RemoveImapTagsTests extends WikiaBaseTest {
 
 			$foundTags = [];
 			$foundTagsMapIds = [];
+			$dummyArticleId = null;
 			$actualResult = $removeImapTags->hasImapTag( $dummyArticleId, $foundTags, $foundTagsMapIds );
 
 			if ($testCase['expectedResult']) {

@@ -167,9 +167,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 				msg.find('.buttonswrapper').show();
 			}),
 			//fail callback
-			this.proxy(function () {
-				buttons.removeAttr('disabled');
-			})
+			buttons.removeAttr.bind(buttons, 'disabled')
 		);
 	},
 

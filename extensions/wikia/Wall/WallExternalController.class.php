@@ -329,8 +329,7 @@ class WallExternalController extends WikiaController {
 		}
 
 		try {
-			$wallMessage =
-				( new WallMessageBuilder() )
+			$wallMessage = ( new WallMessageBuilder() )
 					->setMessageTitle( $titleMeta )
 					->setMessageText( $body )
 					->setMessageAuthor( $this->getContext()->getUser() )
@@ -341,7 +340,14 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -695,8 +701,7 @@ class WallExternalController extends WikiaController {
 		$wallMessage->setMetaTitle( $newtitle );
 
 		try {
-			$text =
-				( new WallEditBuilder() )
+			$text = ( new WallEditBuilder() )
 					->setMessage( $wallMessage )
 					->setMessageText( $newbody )
 					->setEditor( $this->getContext()->getUser() )
@@ -704,7 +709,14 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception ) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -764,8 +776,7 @@ class WallExternalController extends WikiaController {
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
 		try {
-			$reply =
-				( new WallMessageBuilder() )
+			$reply = ( new WallMessageBuilder() )
 					->setMessageAuthor( $this->getContext()->getUser() )
 					->setMessageText( $body )
 					->setParentMessage( $wallMessage )
@@ -774,7 +785,14 @@ class WallExternalController extends WikiaController {
 		} catch ( WallBuilderException $builderException ) {
 			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception ) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
