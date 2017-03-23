@@ -46,7 +46,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
-				'additional_2': floatingState
+				'additional_2': floatingState,
+				'additional_3': 'no vulcan'
 			},
 			vulcanCpm,
 			vulcanResponse;
