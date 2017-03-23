@@ -28,9 +28,19 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 		return slots[slotId];
 	}
 
+	function refreshSlot(slots, updateCorrelator) {
+		slots = slots.isArray() ? slots : [slots];
+		window.googletag.pubads().clear(slots);
+		if (updateCorrelator) {
+			window.googletag.pubads().updateCorrelator();
+		}
+		window.googletag.pubads().refresh(slots);
+	}
+
 	return {
 		addSlot: addSlot,
 		getSlot: getSlot,
+		refreshSlot: refreshSlot,
 		removeSlots: removeSlots
 	};
 });
