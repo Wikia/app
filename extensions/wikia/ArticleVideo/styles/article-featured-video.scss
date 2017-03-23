@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
 @import 'global-video';
 @import 'video-controls';
 @import 'video-shared-variables';
@@ -79,16 +80,16 @@
 	}
 
 	.video-wiki-play-button {
-		align-items: center;
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
 		background-color: $color-buttons;
 		border: 6px solid rgba(0, 0, 0, .32);
 		border-radius: 100%;
 		bottom: 35px;
 		box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.3);
 		box-sizing: border-box;
-		display: flex;
 		height: 80px;
-		justify-content: center;
 		position: absolute;
 		right: 35px;
 		width: 80px;
