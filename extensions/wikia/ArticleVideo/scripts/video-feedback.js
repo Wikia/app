@@ -30,6 +30,7 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 				label: 'featured-video-feedback-thumb-up'
 			});
 			self.hide();
+			self.isActive = false;
 		});
 
 		thumbDown.click(function () {
@@ -38,6 +39,7 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 				label: 'featured-video-feedback-thumb-down'
 			});
 			self.hide();
+			self.isActive = false;
 		});
 	}
 

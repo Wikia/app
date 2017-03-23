@@ -3,15 +3,6 @@
 @import 'video-controls';
 @import 'video-shared-variables';
 
-$video-overlay-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
-$video-collapse-animation-speed: 0.4s;
-
-$video-details-horizontal-padding: 10px;
-$video-details-vertical-padding: 12px;
-
-$spinner-color: #ccc;
-$spinnerSize: 48;
-
 @keyframes spinner {
 	0% {
 		transform: rotate(0deg);
