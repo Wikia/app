@@ -48,12 +48,13 @@ class Optimizely {
 
 		if (
 			!F::app()->checkSkin( [ 'wikiamobile' ] ) &&
-			empty( $wgNoExternals ) &&
-			!empty( $wgEnableOptimizelyDesktop )
+			(
+				!empty( $wgNoExternals ) ||
+				empty( $wgEnableOptimizelyDesktop )
+			)
 		) {
 			return false;
 		}
-
 		return true;
 	}
 
