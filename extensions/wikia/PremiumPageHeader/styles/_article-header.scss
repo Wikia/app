@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
 
@@ -166,6 +167,7 @@
 }
 
 .pph-dropdown {
+	@include transform(translateX(-50%));
 	background: $submenu-background-color;
 	border: 1px solid $submenu-border-color;
 	display: none;
@@ -173,7 +175,6 @@
 	padding: 12px;
 	position: absolute;
 	top: 100%;
-	transform: translateX(-50%);
 	z-index: 1;
 
 	&:before, &:after {
@@ -250,7 +251,7 @@
 			}
 
 			.pph-dropdown-chevron {
-				transform: scale(1, -1);
+				@include transform(scale(1, -1));
 			}
 		}
 	}
