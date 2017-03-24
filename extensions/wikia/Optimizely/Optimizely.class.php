@@ -16,9 +16,9 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
+		global $wgOptimizelyLoadFromOurCDN, $wgWikiaEnvironment;
 
-		if ( !$wgNoExternals ) {
+		if ( static::shouldLoadOptimizely() ) {
 			// load optimizely_blocking_js on wikiamobile
 			if ( F::app()->checkSkin( [ 'wikiamobile' ], $skin ) ) {
 				foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
@@ -30,7 +30,6 @@ class Optimizely {
 			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
 			// by cron for sandbox).
 			if (
-				static::shouldLoadOptimizely() &&
 				$wgOptimizelyLoadFromOurCDN &&
 				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
 			) {
