@@ -7,10 +7,8 @@
  *
  */
 class Optimizely {
-	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
-		global $wgNoExternals, $wgEnableOptimizelyDesktop;
-
-		if ( empty( $wgNoExternals ) && !empty( $wgEnableOptimizelyDesktop ) ) {
+	public static function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		if ( static::shouldLoadOptimizely() ) {
 			$jsAssetGroups[] = 'optimizely_blocking_js';
 		}
 
@@ -31,13 +29,29 @@ class Optimizely {
 			// On devboxes and sandboxes Optimizely script should be laoded from original CDN for the ease of testing
 			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
 			// by cron for sandbox).
-			if ( $wgOptimizelyLoadFromOurCDN &&
+			if (
+				static::shouldLoadOptimizely() &&
+				$wgOptimizelyLoadFromOurCDN &&
 				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
 			) {
 				$scripts .= static::loadFromOurCDN();
 			} else {
 				$scripts .= static::loadOriginal();
 			}
+		}
+
+		return true;
+	}
+
+	public static function shouldLoadOptimizely() {
+		global $wgNoExternals, $wgEnableOptimizelyDesktop;
+
+		if (
+			!F::app()->checkSkin( [ 'wikiamobile' ] ) &&
+			empty( $wgNoExternals ) &&
+			!empty( $wgEnableOptimizelyDesktop )
+		) {
+			return false;
 		}
 
 		return true;
