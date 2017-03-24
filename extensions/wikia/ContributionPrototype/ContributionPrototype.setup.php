@@ -21,7 +21,7 @@ $wgCapitalLinkOverrides = [NS_MAIN => false];
 // have the url form be the value that's passed in the url bar. this is already decoded so we need to re-encode it
 $wgHooks['AfterCheckInitialQueries'][] = function($title, $action, $ret) {
 	if ($ret->getNamespace() === NS_MAIN) {
-		$ret->mUrlForm = rawurlencode($title);
+		$ret->mUrlform = rawurlencode($title);
 	}
 
 	return true;
