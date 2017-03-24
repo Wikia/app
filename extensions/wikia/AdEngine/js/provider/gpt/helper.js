@@ -58,20 +58,25 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			isRecoveryEnabled = sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled()),
 			isBlocking = sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()),
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
-			shouldPush = !isBlocking || (isBlocking && adIsRecoverable),
+			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
+			shouldPush = !isBlocking || adShouldBeRecovered,
 			uapId = uapContext.getUapId();
 
-		log(['shouldPush - sourcePoint',
-			slot.name,
+		log(['sourcePoint - isBlocking, isRecoverable: ',
 			sourcePoint.isBlocking(),
-			extra.isSourcePointRecoverable], 'debug', logGroup);
+			extra.isSourcePointRecoverable], log.levels.debug, logGroup);
 
-		log(['shouldPush - pageFair',
-			slot.name,
+		log(['pageFair - isBlocking, isRecoverable: ',
 			pageFair.isBlocking(),
-			extra.isPageFairRecoverable], 'debug', logGroup);
+			extra.isPageFairRecoverable], log.levels.debug, logGroup);
 
-		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
+		log(['slot name, isBlocking, adIsRecoverable: ',
+			slot.name,
+			isBlocking,
+			adIsRecoverable], log.levels.debug, logGroup);
+
+		// copy value
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
 
 		if (isHiddenOnStart(slot.name)) {
 			slotTweaker.hide(slot.name);
@@ -85,7 +90,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			log(['queueAd', slot.name, element], 'debug', logGroup);
+			log(['queueAd', slot.name, element], log.levels.debug, logGroup);
 			slot.container.appendChild(element.getNode());
 
 			googleTag.addSlot(element);
@@ -99,7 +104,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				}
 			}
 
-			if (isRecoveryEnabled && isBlocking && adIsRecoverable) {
+			if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
 			}
 
@@ -111,13 +116,13 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
+				log(['onAdLoadCallback', slotElementId], log.levels.info, logGroup);
 				adDetect.onAdLoad(slot, gptEvent, iframe, extra.forcedAdType);
 			}, 0);
 		}
 
 		function gptCallback(gptEvent) {
-			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
+			log(['gptCallback', element.getId(), gptEvent], log.levels.info, logGroup);
 			element.updateDataParams(gptEvent);
 			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 			slot.renderEnded(gptEvent);
@@ -129,23 +134,24 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!shouldPush) {
-			log(['Push blocked', slot.name], 'debug', logGroup);
+			log(['Push blocked', slot.name], log.levels.debug, logGroup);
 			slot.collapse();
 			return;
 		}
 
-		log(['pushAd', slot.name], 'info', logGroup);
+		log(['pushAd', slot.name], log.levels.info, logGroup);
 		if (!slotTargetingData.flushOnly) {
 			googleTag.registerCallback(element.getId(), gptCallback);
 			googleTag.push(queueAd);
 		}
 
 		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
-			log('flushing', 'debug', logGroup);
+			log('flushing', log.levels.debug, logGroup);
 			googleTag.flush();
 		}
 
 		if (slotTargetingData.flushOnly) {
+			log(['flushOnly - success', slot.name], log.levels.debug, logGroup);
 			slot.success();
 		}
 	}

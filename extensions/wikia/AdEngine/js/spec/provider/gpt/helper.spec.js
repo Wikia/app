@@ -208,8 +208,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(mocks.googleTag.flush).not.toHaveBeenCalled();
 	});
 
-	it('Should push/flush when slot is recoverable', function () {
+	it('Should push/flush when slot is recoverable, is blocking and recovery is enabled', function () {
 		mocks.sourcePoint.isBlocking = function () {
+			return true;
+		};
+
+		mocks.sourcePoint.isEnabled = function () {
 			return true;
 		};
 
