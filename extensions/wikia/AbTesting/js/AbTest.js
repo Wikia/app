@@ -135,20 +135,19 @@
 	};
 
 	AbTest.loadExternalData = function( data ) {
-		var index, groupData,
-			head = document.getElementsByTagName('head')[0];
+		var index, groupData;
 		log('init', 'Received external configuration');
 		for ( index in data ) {
 			groupData = data[index];
 			if ( groupData.styles ) {
 				var styleTag = document.createElement('style');
 				styleTag.innerHTML = groupData.styles;
-				head.appendChild(styleTag);
+				document.head.appendChild(styleTag);
 			}
 			if ( groupData.scripts ) {
 				var scriptTag = document.createElement('script');
 				scriptTag.innerHTML = groupData.scripts;
-				head.appendChild(scriptTag);
+				document.head.appendChild(scriptTag);
 			}
 		}
 	};
