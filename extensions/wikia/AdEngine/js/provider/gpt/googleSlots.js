@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 		if (updateCorrelator) {
 			win.googletag.pubads().updateCorrelator();
 		}
-		win.googletag.pubads().refresh(slots);
+		window.adslots2.push(slots);
 	}
 
 	return {
