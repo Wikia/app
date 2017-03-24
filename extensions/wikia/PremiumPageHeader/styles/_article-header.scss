@@ -1,10 +1,11 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
 
 .pph-article-header {
+	@include flexbox();
 	border-bottom: 1px solid $color-page-border;
-	display: flex;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	margin: 5px 0 18px;
@@ -14,8 +15,8 @@
 }
 
 .pph-article-title {
-	align-self: flex-end;
-	flex: 1;
+	@include align-items(flex-end);
+	@include flex(1);
 	margin-right: 10px;
 
 	h1 {
@@ -28,8 +29,8 @@
 }
 
 .pph-categories {
-	align-items: flex-start;
-	display: flex;
+	@include align-items(flex-start);
+	@include flexbox();
 	font-size: 12px;
 	padding-top: 12px;
 
@@ -78,16 +79,16 @@
 }
 
 .pph-article-contribution {
-	align-items: flex-end;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+	@include align-items(flex-end);
+	@include flexbox();
+	@include flex-direction(column);
+	@include justify-content(flex-end);
 }
 
 .pph-languages {
-	align-items: center;
+	@include align-items(center);
+	@include flexbox();
 	cursor: pointer;
-	display: flex;
 	margin-right: -12px;
 	padding: 9px 12px;
 
@@ -103,11 +104,11 @@
 }
 
 .pph-contribution-buttons {
-	display: flex;
+	@include flexbox();
 }
 
 .pph-button-group {
-	display: flex;
+	@include flexbox();
 	margin-left: 6px;
 	position: relative;
 
@@ -117,12 +118,12 @@
 }
 
 .pph-button {
-	align-items: center;
+	@include align-items(center);
+	@include flexbox();
 	background-color: $color-buttons;
 	box-sizing: border-box;
 	color: $color-button-text;
 	cursor: pointer;
-	display: flex;
 	font-size: 10px;
 	font-weight: 600;
 	height: 34px;
@@ -199,9 +200,9 @@
 	}
 
 	li {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(space-between);
 		transition: background-color .2s;
 
 		a {
