@@ -89,12 +89,13 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 	function getSlot(slotName) {
 		var adUnit = adUnitBuilder.build(slotName, 'gpt');
-		return googleSlots.getSlot(adUnit);
+		return googleSlots.getSlot('wikia_gpt' + adUnit);
 	}
 
 	function refreshSlot(slotName, updateCorrelator) {
 		slotTweaker.onReady(slotName, function () {
-			googleSlots.refreshSlots(getSlot(slotName), updateCorrelator);
+			var slot = getSlot(slotName);
+			googleSlots.refreshSlots(slot, updateCorrelator);
 		});
 	}
 

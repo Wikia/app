@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, Array */
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.window'
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	}
 
 	function refreshSlots(slots, updateCorrelator) {
-		slots = slots.isArray() ? slots : [slots];
+		slots = Array.isArray(slots) ? slots : [slots];
 		win.googletag.pubads().clear(slots);
 		if (updateCorrelator) {
 			win.googletag.pubads().updateCorrelator();
