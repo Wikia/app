@@ -324,9 +324,14 @@
 		//external AB test scripts are currently not supported by Mercury
 		if ( externalIds.length > 0 && !window.Mercury ) {
 			log('init', 'Loading external configuration');
-			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+
+			var scriptTag = document.createElement('script'),
+				url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+
 			url += externalIds.join(',');
-			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
+
+			scriptTag.src = encodeURI(url);
+			document.head.appendChild(scriptTag);
 		}
 	})( AbTest.experiments );
 
