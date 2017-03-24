@@ -123,6 +123,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		unblockedSlots.forEach(btfBlocker.unblock);
 
 		if (params.loadMedrecFromBTF) {
+			// refresh after uapContext.setUapId
 			refreshSlot('TOP_RIGHT_BOXAD', params.experiment_updateCorrelator);
 		}
 
