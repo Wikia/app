@@ -30,11 +30,11 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 
 	function refreshSlots(slots, updateCorrelator) {
 		slots = slots.isArray() ? slots : [slots];
-		window.googletag.pubads().clear(slots);
+		win.googletag.pubads().clear(slots);
 		if (updateCorrelator) {
-			window.googletag.pubads().updateCorrelator();
+			win.googletag.pubads().updateCorrelator();
 		}
-		window.googletag.pubads().refresh(slots);
+		win.googletag.pubads().refresh(slots);
 	}
 
 	return {
