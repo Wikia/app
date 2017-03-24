@@ -135,19 +135,21 @@
 	};
 
 	AbTest.loadExternalData = function( data ) {
-		var index, groupData, html = '';
+		var index, groupData,
+			head = document.getElementsByTagName('head')[0];
 		log('init', 'Received external configuration');
 		for ( index in data ) {
 			groupData = data[index];
 			if ( groupData.styles ) {
-				html += '<style>'+groupData.styles+'</style>';
+				var styleTag = document.createElement('style');
+				styleTag.innerHTML = groupData.styles;
+				head.appendChild(styleTag);
 			}
 			if ( groupData.scripts ) {
-				html += '<script>'+groupData.scripts+'</script>';
+				var scriptTag = document.createElement('script');
+				scriptTag.innerHTML = groupData.scripts;
+				head.appendChild(scriptTag);
 			}
-		}
-		if ( html != '' ) {
-			document.write(html);
 		}
 	};
 
