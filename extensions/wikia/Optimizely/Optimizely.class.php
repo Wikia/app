@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Optimizely
  *
@@ -7,9 +8,9 @@
  */
 class Optimizely {
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
-		global $wgNoExternals;
+		global $wgNoExternals, $wgEnableOptimizely;
 
-		if ( empty( $wgNoExternals ) ) {
+		if ( empty( $wgNoExternals ) && !empty( $wgEnableOptimizely ) ) {
 			$jsAssetGroups[] = 'optimizely_blocking_js';
 		}
 
@@ -21,7 +22,7 @@ class Optimizely {
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
-			if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
+			if ( F::app()->checkSkin( [ 'wikiamobile' ], $skin ) ) {
 				foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
 					$scripts .= '<script src="' . $script . '"></script>';
 				}
@@ -53,6 +54,6 @@ class Optimizely {
 	protected static function loadOriginal() {
 		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 		// do not async - we need it for UA tracking
-		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '"></script>';
+		return '<script src="' . ( $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl ) . '"></script>';
 	}
 }
