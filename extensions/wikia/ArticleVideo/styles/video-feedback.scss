@@ -3,13 +3,6 @@
 @import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors";
 
 .article-video {
-	&.collapsed {
-		.video-feedback {
-			top: $video-collapsed-height;
-			right: 0;
-		}
-	}
-
 	.video-feedback {
 		@include align-items(center);
 		background-color: rgba(255, 255, 255, 0.9);
@@ -23,7 +16,7 @@
 		right: 6px;
 		top: 6px;
 		z-index: 100001;
-		
+
 		&.visible {
 			@include flexbox();
 		}
@@ -58,5 +51,9 @@
 		.video-thumb-down {
 			background-color: $wds-color-alert;
 		}
+	}
+
+	&.collapsed .video-feedback {
+		display: none;
 	}
 }
