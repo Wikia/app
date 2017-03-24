@@ -3197,6 +3197,7 @@ $config['article_featured_video_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 	],
 ];
 
@@ -3205,6 +3206,7 @@ $config['article_featured_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
 	],
 ];
 
