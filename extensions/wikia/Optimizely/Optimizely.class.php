@@ -8,9 +8,9 @@
  */
 class Optimizely {
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
-		global $wgNoExternals, $wgEnableOptimizely;
+		global $wgNoExternals, $wgEnableOptimizelyDesktop;
 
-		if ( empty( $wgNoExternals ) && !empty( $wgEnableOptimizely ) ) {
+		if ( empty( $wgNoExternals ) && !empty( $wgEnableOptimizelyDesktop ) ) {
 			$jsAssetGroups[] = 'optimizely_blocking_js';
 		}
 
