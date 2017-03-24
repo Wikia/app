@@ -589,11 +589,11 @@ class Wikia {
 	 * @return User -- instance of user object
 	 */
 	static public function staffForLang( $langCode ) {
-		global $wgFounderWelcomeAuthor;
+		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		if ( array_key_exists( $langCode, $wgFounderWelcomeAuthor ) ) {
-			$key = array_rand( $wgFounderWelcomeAuthor[$langCode] );
-			$staffUser = User::newFromName( $wgFounderWelcomeAuthor[$langCode][$key] );
+		if ( array_key_exists( $langCode, $staffMap ) ) {
+			$key = array_rand( $staffMap[$langCode] );
+			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
 		} else {
 			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
 			$staffUser = User::newFromName( 'Fandom' );
