@@ -94,7 +94,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 	function refreshSlot(slotName, updateCorrelator) {
 		slotTweaker.onReady(slotName, function () {
-			googleSlots.refreshSlot(getSlot(slotName), updateCorrelator);
+			googleSlots.refreshSlots(getSlot(slotName), updateCorrelator);
 		});
 	}
 

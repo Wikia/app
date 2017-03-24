@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 		return slots[slotId];
 	}
 
-	function refreshSlot(slots, updateCorrelator) {
+	function refreshSlots(slots, updateCorrelator) {
 		slots = slots.isArray() ? slots : [slots];
 		window.googletag.pubads().clear(slots);
 		if (updateCorrelator) {
@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	return {
 		addSlot: addSlot,
 		getSlot: getSlot,
-		refreshSlot: refreshSlot,
+		refreshSlots: refreshSlots,
 		removeSlots: removeSlots
 	};
 });
