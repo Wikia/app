@@ -144,7 +144,9 @@ class Track {
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
 	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;rand=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
-	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
+	var script = document.createElement('script');
+	script.src = trackUrl;
+	document.head.appendChild(script);
 })();
 </script>
 SCRIPT1;
