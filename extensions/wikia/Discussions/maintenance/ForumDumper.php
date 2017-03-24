@@ -24,7 +24,7 @@ class ForumDumper {
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
 	// doesn't match, assume there is wiki text and parse it.
-	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%" ]/';
+	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%"\' ]/';
 
 	const COLUMNS_PAGE = [
 		"page_id",
@@ -111,6 +111,13 @@ class ForumDumper {
 			->WHERE( 'page_namespace' )->IN( self::FORUM_NAMEPSACES )
 			->ORDER_BY( 'idx' )
 			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
+				// A few of these properties were removed and do not appear on some wikis
+				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
+					if ( !property_exists( $row, $prop ) ) {
+						$row->$prop = 0;
+					}
+				}
+
 				$this->addPage( $row->page_id, [
 						"page_id" => $row->page_id,
 						"namespace" => $row->page_namespace,
@@ -218,8 +225,8 @@ class ForumDumper {
 		}
 
 		$formattedText = $articleComment->getText();
-
 		$formattedText = $this->updateLazyImages( $formattedText );
+		$formattedText = $this->removeACMetadata( $formattedText );
 
 		return $formattedText;
 	}
@@ -253,54 +260,15 @@ class ForumDumper {
 	 * @return mixed
 	 */
 	private function updateLazyImages( $text ) {
-		return preg_replace_callback(
-			"/<img +([^>]+ +data-src=[^>]+)>/",
-			[ self::class, 'updateLazyImageTag' ],
+		return preg_replace(
+			"/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+			"$1",
 			$text
 		);
 	}
 
-	public static function updateLazyImageTag( $matches ) {
-		$params = $matches[1];
-		if ( !preg_match_all( "/([^= ]+) *= *\"([^\"]+)\"/", $params, $paramMatches ) ) {
-			return $matches[0];
-		}
-
-		$attributes = $paramMatches[1];
-		$values = $paramMatches[2];
-
-		$tag = "<img";
-		for ( $idx = 0; $idx < count( $attributes ); $idx++ ) {
-			$attr = $attributes[$idx];
-
-			// Remove these attributes (yes 'src', it isn't the value we want)
-			if ( preg_match( "/data-image-(key|name)|onload|src/", $attr ) ) {
-				continue;
-			}
-
-			$value = $values[$idx];
-
-			// Transform data-src to src
-			if ( $attr == 'data-src' ) {
-				$tag .= ' src="' . $value . '"';
-				continue;
-			}
-
-			// Remove the lazy load classes
-			if ( $attr == 'class' ) {
-				$value = trim( preg_replace( "/lzy(PlcHld)?/", "", $value ) );
-				if ( !empty( $value ) ) {
-					$tag .= ' class="' . $value . '"';
-				}
-				continue;
-			}
-
-			// Otherwise add anything else back in
-			$tag .= ' ' . $attr . '="' . $value . '"';
-		}
-		$tag .= '>';
-
-		return $tag;
+	private function removeACMetadata( $text ) {
+		return preg_replace( "#(<|&lt;)ac_metadata.+/ac_metadata(>|&gt;)#", '', $text );
 	}
 
 	public function getContributorType( $row ) {
