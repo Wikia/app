@@ -1,4 +1,6 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
 @import 'variables';
 
 @if $is-dark-wiki {
@@ -93,8 +95,8 @@
 		}
 
 		.pph-local-nav-chevron {
+			@include transform(scale(1, -1));
 			opacity: 1;
-			transform: scale(1, -1);
 		}
 	}
 }
@@ -134,8 +136,8 @@
 }
 
 .pph-local-nav-menu {
-	align-items: flex-end;
-	display: flex;
+	@include align-items(flex-end);
+	@include flexbox();
 	white-space: nowrap;
 
 	li:hover {
@@ -161,7 +163,7 @@
 }
 
 .pph-local-nav-sub-chevron {
-	transform: rotate(-90deg);
+	@include transform(rotate(-90deg));
 }
 
 .pph-local-nav-sub-menu {
@@ -174,9 +176,9 @@
 	position: absolute;
 
 	li {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(space-between);
 		transition: background-color .2s;
 
 		a {
