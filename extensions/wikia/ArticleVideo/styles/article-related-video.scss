@@ -1,8 +1,7 @@
 @import 'skins/shared/color';
 @import 'global-video';
 @import 'video-controls';
-
-$related-video-width: 280px;
+@import 'video-shared-variables';
 
 .article-related-video {
 	display: none;
