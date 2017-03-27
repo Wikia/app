@@ -137,7 +137,14 @@ class Track {
 		window.beacon_id = result[1];
 	} else {
 		// something went terribly wrong
-		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty" style="position:absolute;top:-1000px" />');
+		document.addEventListener("DOMContentLoaded", function (event) {
+			var image = document.createElement('img');
+			image.src = 'http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty';
+			image.style.position = 'absolute';
+			image.style.top = '-1000px';
+			document.body.appendChild(image);
+		});
+		
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
