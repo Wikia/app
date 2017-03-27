@@ -325,13 +325,19 @@
 		if ( externalIds.length > 0 && !window.Mercury ) {
 			log('init', 'Loading external configuration');
 
-			var scriptTag = document.createElement('script'),
-				url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+			var xhr = new XMLHttpRequest(),
+				url = '/wikia.php?controller=AbTesting&method=externalData&ids=';
 
 			url += externalIds.join(',');
 
-			scriptTag.src = encodeURI(url);
-			document.head.appendChild(scriptTag);
+			xhr.onload = function() {
+				// substring just removes ( and ); from begin and end of response
+				var params = JSON.parse(xhr.responseText.substr(1, xhr.responseText.length - 3));
+				AbTest.loadExternalData( params );
+			};
+
+			xhr.open('GET', url, false);
+			xhr.send();
 		}
 	})( AbTest.experiments );
 
