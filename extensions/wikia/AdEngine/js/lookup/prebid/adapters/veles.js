@@ -14,18 +14,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	var adxAdSystem = 'AdSense/AdX',
 		bidderName = 'veles',
-		config = {
-			oasis: {
-				'outstream-desktop': {
-					sizes: [ 640, 480 ]
-				}
-			},
-			mercury: {
-				'outstream-mobile': {
-					sizes: [ 640, 480 ]
-				}
-			}
-		},
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
@@ -231,7 +219,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: Object.keys(config[skin]),
+				pos: Object.keys(slots[skin]),
 				src: 'gpt',
 				passback: bidderName
 			});
