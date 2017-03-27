@@ -3,11 +3,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, messageListener, adSlot, recoveryHelper, doc, log, win) {
+], function (DOMElementTweaker, messageListener, adSlot, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
