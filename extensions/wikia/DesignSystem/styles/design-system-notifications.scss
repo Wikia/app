@@ -21,23 +21,23 @@ $wds-icon-color: $wds-color-light-c5;
 .wds-notifications {
 
   &__mark-all-as-read-button {
+	@include flexbox();
 	@include justify-content(flex-start);
 	box-shadow: 0 -1px 10px 0 rgba(0, 0, 0, 0.1);
-	display: none;
 	min-height: 44px;
 	padding: 0;
 	width: 100%;
 
-	&.wds-is-visible {
-	  @include flexbox();
+	.wds-notifications__mark-all-as-read {
+	  padding: 18px;
 	}
   }
+
   &__mark-all-as-read {
 	color: $wds-color-link;
 	cursor: pointer;
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: bold;
-	padding: 18px;
 	text-transform: uppercase;
   }
 
@@ -62,14 +62,15 @@ $wds-icon-color: $wds-color-light-c5;
   }
 
   &__zero-state {
-	display: none;
+	display: block;
 	padding: 18px 18px 4px 18px;
-	&.wds-is-visible {
-	  display: block;
-	}
   }
 }
 
+
+.wds-is-hidden {
+  display: none;
+}
 
 $notification-card-text-color: $wds-color-dark-blue-gray;
 $notification-card-anchor-color: $notifications-dropdown-content-color;

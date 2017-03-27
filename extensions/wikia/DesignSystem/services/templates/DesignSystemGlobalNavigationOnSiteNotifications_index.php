@@ -28,7 +28,7 @@
 				<?= wfMessage( 'notifications-mark-all-as-read' )->escaped() ?>
 			</a>
 		</div>
-		<p class="wds-notifications__zero-state">
+		<p class="wds-notifications__zero-state wds-is-hidden">
 			<?= wfMessage( 'notifications-no-notifications-message' )->escaped() ?>
 		</p>
 		<ul class="wds-notifications__notification-list wds-list wds-has-lines-between"

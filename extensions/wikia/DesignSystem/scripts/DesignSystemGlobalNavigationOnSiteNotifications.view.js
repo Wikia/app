@@ -10,7 +10,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 	], function ($, log, window, Event, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
-		var isVisibleClass = 'wds-is-visible',
+		var isHiddenClass = 'wds-is-hidden',
 			almostBottom = 100,
 			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
@@ -194,15 +194,15 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderZeroState = function () {
-				$('.wds-notifications__zero-state').addClass(isVisibleClass);
+				$('.wds-notifications__zero-state').removeClass(isHiddenClass);
 			};
 
 			this.renderUnreadCount = function (count) {
 				if (count > 0) {
-					this._$markAllAsReadButton.addClass(isVisibleClass);
+					this._$markAllAsReadButton.removeClass(isHiddenClass);
 					this._$notificationsCount.html(count).parent('.bubbles').addClass('show');
 				} else {
-					this._$markAllAsReadButton.removeClass(isVisibleClass);
+					this._$markAllAsReadButton.addClass(isHiddenClass);
 					this._$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			};
