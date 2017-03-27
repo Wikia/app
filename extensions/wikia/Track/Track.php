@@ -125,7 +125,7 @@ class Track {
 			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
 
 		} else {
-			$url = Track::getURL( 'view', '', $param );
+			$url = Track::getURL( 'view', '', $param, false );
 
 			$script = <<<SCRIPT1
 <!-- Wikia Beacon Tracking -->
@@ -150,7 +150,7 @@ class Track {
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;rand=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&r=" + escape(document.referrer) : "") + "&rand=" + (new Date).valueOf() + (window.beacon_id ? "&beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&utma=" + utma[1] : "") + (utmb && utmb[1] ? "&utmb=" + utmb[1] : "");
 	var script = document.createElement('script');
 	script.src = trackUrl;
 	document.head.appendChild(script);
