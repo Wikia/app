@@ -75,14 +75,6 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   padding: 12px 0 8px;
   text-align: left;
 
-  &.wds-is-unread {
-	.wds-notification-card__icon-wrapper {
-	  .wds-icon {
-		fill: $wds-color-link;
-	  }
-	}
-  }
-
   .wds-notification-card__outer-body {
 	@include flexbox();
 	cursor: pointer;
@@ -100,6 +92,10 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	  height: 18px;
 	  min-width: inherit;
 	  width: 18px;
+
+	  .wds-is-unread & {
+		fill: $wds-color-link;
+	  }
 	}
   }
 
