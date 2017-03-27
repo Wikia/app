@@ -27,10 +27,6 @@ $wds-icon-color: $wds-color-light-c5;
 	min-height: 44px;
 	padding: 0;
 	width: 100%;
-
-	.wds-notifications__mark-all-as-read {
-	  padding: 18px;
-	}
   }
 
   &__mark-all-as-read {
@@ -38,6 +34,7 @@ $wds-icon-color: $wds-color-light-c5;
 	cursor: pointer;
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: bold;
+	padding: 18px;
 	text-transform: uppercase;
   }
 
@@ -67,7 +64,6 @@ $wds-icon-color: $wds-color-light-c5;
   }
 }
 
-
 .wds-is-hidden {
   display: none;
 }
@@ -79,6 +75,14 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   padding: 12px 0 8px;
   text-align: left;
 
+  &.wds-is-unread {
+	.wds-notification-card__icon-wrapper {
+	  .wds-icon {
+		fill: $wds-color-link;
+	  }
+	}
+  }
+
   .wds-notification-card__outer-body {
 	@include flexbox();
 	cursor: pointer;
@@ -87,17 +91,15 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
   &__icon-wrapper {
 	@include flexbox();
 	cursor: pointer;
-	padding-left: 12px;
+	margin-left: 12px;
 	width: 18px;
+	min-width: 18px;
 
 	.wds-icon {
 	  fill: $wds-icon-color;
 	  height: 18px;
 	  min-width: inherit;
 	  width: 18px;
-	}
-	.wds-is-unread {
-	  fill: $wds-color-link;
 	}
   }
 
@@ -130,7 +132,7 @@ $notification-card-anchor-color: $notifications-dropdown-content-color;
 	font-size: $wds-typescale-size-minus-1;
 	font-style: italic;
 	line-height: 18px;
-	margin-top: 8px;
+	margin: 8px 0 0 0;
   }
 
   &__context-list {

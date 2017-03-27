@@ -207,16 +207,12 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				}
 			};
 
-			/**
-			 * .classRemove does not work on SVG
-			 * @param element
-			 */
 			function removeIsUnreadClass(element) {
-				element.classList.remove('wds-is-unread');
+				element.removeClass('wds-is-unread');
 			}
 
 			function findUnreadAndClearClass($element) {
-				$element.find('.wds-icon.wds-is-unread').each(function (_, element) {
+				$element.find('.wds-notification-card.wds-is-unread').each(function (_, element) {
 					removeIsUnreadClass(element);
 				});
 			}
@@ -226,8 +222,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				var container = this._$container.find('[data-uri="' + id + '"]');
-				findUnreadAndClearClass(container);
+				var element = this._$container.find('[data-uri="' + id + '"]');
+				removeIsUnreadClass(element);
 			};
 
 		}
