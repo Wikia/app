@@ -73,6 +73,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			mocks.log,
