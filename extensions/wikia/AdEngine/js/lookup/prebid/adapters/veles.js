@@ -14,11 +14,28 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 
 	var adxAdSystem = 'AdSense/AdX',
 		bidderName = 'veles',
+		config = {
+			oasis: {
+				'outstream-desktop': {
+					sizes: [ 640, 480 ]
+				}
+			},
+			mercury: {
+				'outstream-mobile': {
+					sizes: [ 640, 480 ]
+				}
+			}
+		},
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
 			oasis: {
+				TOP_LEADERBOARD: {
+					sizes: [
+						[ 640, 480 ]
+					]
+				},
 				INCONTENT_PLAYER: {
 					sizes: [
 						[ 640, 480 ]
@@ -214,7 +231,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
-				pos: Object.keys(slots[skin]),
+				pos: Object.keys(config[skin]),
 				src: 'gpt',
 				passback: bidderName
 			});
