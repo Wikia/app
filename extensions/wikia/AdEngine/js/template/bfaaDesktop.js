@@ -3,10 +3,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
-	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
@@ -19,10 +16,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 ], function (uapContext,
 			 btfBlocker,
 			 googleSlots,
-			 googleTag,
 			 helper,
-			 adSlot,
-			 adUnitBuilder,
 			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
@@ -91,19 +85,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function getSlot(slotName) {
-		var adUnit = adUnitBuilder.build(slotName, 'gpt');
-		return googleSlots.getSlot('wikia_gpt' + adUnit);
-	}
-
-	function refreshSlot(slotName) {
-		var slot = getSlot(slotName);
-		slot.setTargeting('uap', uapContext.getUapId().toString());
-		win.googletag.pubads().refresh([slot]);
-	}
-
 	function show(params) {
-		var videoSettings;
+		var medrecSlotName = 'TOP_RIGHT_BOXAD',
+			videoSettings;
 
 		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
@@ -128,7 +112,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		if (params.loadMedrecFromBTF) {
 			// refresh after uapContext.setUapId
-			refreshSlot('TOP_RIGHT_BOXAD');
+			helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
 		}
 
 		log(['show', params.uap], log.levels.info, logGroup);

@@ -1,8 +1,9 @@
 /*global define, Array */
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.window'
-], function (recoveryHelper, win) {
+], function (adUnitBuilder, recoveryHelper, win) {
 	'use strict';
 	var slots = {};
 
@@ -28,19 +29,15 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 		return slots[slotId];
 	}
 
-	function refreshSlots(slots, updateCorrelator) {
-		slots = Array.isArray(slots) ? slots : [slots];
-		win.googletag.pubads().clear(slots);
-		if (updateCorrelator) {
-			win.googletag.pubads().updateCorrelator();
-		}
-		window.adslots2.push(slots);
+	function getSlotByName(slotName) {
+		var adUnit = adUnitBuilder.build(slotName, 'gpt');
+		return getSlot('wikia_gpt' + adUnit);
 	}
 
 	return {
 		addSlot: addSlot,
 		getSlot: getSlot,
-		refreshSlots: refreshSlots,
+		getSlotByName: getSlotByName,
 		removeSlots: removeSlots
 	};
 });
