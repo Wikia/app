@@ -85,9 +85,9 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
-				view.onDropDown.attach(this.loadFirstPage.bind(this));
-				view.onMarkAllAsRead.attach(this.markAllAsRead.bind(this));
-				view.onMarkAsRead.attach(function (_, uri) {
+				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
+				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
+				view.onMarkAsReadClick.attach(function (_, uri) {
 					this.markAsRead(uri);
 				}.bind(this));
 			},
@@ -111,10 +111,10 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}.bind(this));
 			},
 
-			markAsRead: function (uri) {
+			markAsRead: function (id) {
 				$.ajax({
 					type: 'POST',
-					data: JSON.stringify([uri]),
+					data: JSON.stringify([id.uri]),
 					dataType: 'json',
 					contentType: "application/json; charset=UTF-8",
 					url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
@@ -122,7 +122,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 						withCredentials: true
 					}
 				}).done(function () {
-					this._model.markAsRead(uri);
+					this._model.markAsRead(id.uri);
 					this.updateUnreadCount();
 				}.bind(this));
 			},
