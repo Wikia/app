@@ -19,13 +19,13 @@
 					document.getElementById('WikiaArticle').style.display = 'none';
 					document.getElementById('WikiaArticleMsg').style.display = 'block';
 					window.addEventListener('load', function () {
-						require(['ext.wikia.aRecoveryEngine.recovery.sourcePointHelper'], function (helper) {
+						require(['ext.wikia.aRecoveryEngine.recovery.sourcePoint'], function (helper) {
 							'use strict';
 							helper.track('callback');
 						});
 					});
 				} else {
-					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], 'debug', logGroup);
+					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], log.levels.debug, logGroup);
 				}
 			};
 		}
@@ -37,7 +37,7 @@
 			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
 
 			window.addEventListener('load', function () {
-				require(['ext.wikia.aRecoveryEngine.recovery.sourcePointHelper'], function (helper) {
+				require(['ext.wikia.aRecoveryEngine.recovery.sourcePoint'], function (helper) {
 					helper.verifyContent();
 				});
 			});
