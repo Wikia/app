@@ -140,7 +140,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		var veles = getVeles(),
 			slots = veles.getSlots('oasis');
 
-		expect(Object.keys(slots)).toEqual(['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD']);
+		expect(Object.keys(slots)).toEqual(['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD']);
 	});
 
 	it('Returns mercury slots', function () {
