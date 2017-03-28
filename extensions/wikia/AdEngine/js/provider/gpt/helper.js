@@ -156,6 +156,17 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	function refreshSlot(slot) {
+		log(['Refresh slot', slot.name, slot], log.levels.debug, logGroup);
+		refreshTargetingData(slot);
+		googleTag.refreshSlot(slot);
+	}
+
+	function refreshTargetingData(slot) {
+		slot.setTargeting('uap', uapContext.getUapId().toString());
+		return slot;
+	}
+
 	adContext.addCallback(function () {
 		if (googleTag.isInitialized()) {
 			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
@@ -164,6 +175,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	});
 
 	return {
+		refreshSlot: refreshSlot,
 		pushAd: pushAd
 	};
 });
