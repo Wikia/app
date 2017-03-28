@@ -4,17 +4,25 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
+	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, performanceTracker, pricesTracker, adaptersRegistry, wikiaAdapter, helper, factory, doc, win) {
+], function (
+	adContext,
+	performanceTracker,
+	pricesTracker,
+	adaptersRegistry,
+	helper,
+	settings,
+	factory,
+	doc,
+	win
+) {
 	'use strict';
-
 	var adUnits = [],
 		biddersPerformanceMap = {},
-		autoPriceGranularity = 'auto',
 		prebidLoaded = false;
 
 	function call(skin, onResponse) {
@@ -24,12 +32,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-			if (wikiaAdapter.isEnabled()) {
-				adaptersRegistry.push(wikiaAdapter);
-				win.pbjs.que.push(function () {
-					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-				});
-			}
+			adaptersRegistry.setupCustomAdapters();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
@@ -41,19 +44,15 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		adUnits = helper.setupAdUnits(skin);
 
 		if (adUnits.length > 0) {
+
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
-					win.pbjs.setPriceGranularity(autoPriceGranularity);
+					win.pbjs.bidderSettings = settings.create();
 					win.pbjs.addAdUnits(adUnits);
 				});
 			}
 
-			win.pbjs.que.push(function() {
-
-				//@TODO remove two lines below when https://github.com/prebid/Prebid.js/issues/772 is fixed and prebid is updated
-				win.pbjs._bidsReceived = [];
-				win.pbjs._winningBids = [];
-
+			win.pbjs.que.push(function () {
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});

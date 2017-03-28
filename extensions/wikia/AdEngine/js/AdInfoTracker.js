@@ -3,11 +3,11 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adTracker, adContext, lookupServices, recoveryHelper, log, win, mercuryListener) {
+], function (adTracker, adContext, lookupServices, sourcePoint, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -20,6 +20,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			LEFT_SKYSCRAPER_2: true,
 			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
+			INCONTENT_LEADERBOARD: true,
+			INCONTENT_PLAYER: true,
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,
 			MOBILE_BOTTOM_LEADERBOARD: true,
@@ -72,8 +74,9 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'bidder_3': slotPrices.fastlane || '',
 			'bidder_4': slotPrices.vulcan || '',
 			'bidder_5': slotPrices.fastlane_private || '',
-			'bidder_6': '',
-			'bidder_7': '',
+			'bidder_6': slotPrices.aol || '',
+			'bidder_7': slotPrices.audienceNetwork || '',
+			'bidder_8': slotPrices.veles || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''
@@ -95,7 +98,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function isEnabled() {
-		if (!adContext.getContext().opts.enableAdInfoLog || recoveryHelper.isBlocking()) {
+		if (!adContext.getContext().opts.enableAdInfoLog || sourcePoint.isBlocking()) {
 			return false;
 		}
 		return true;

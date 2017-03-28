@@ -112,8 +112,6 @@ class User implements JsonSerializable {
 		'mId',
 		'mName',
 		'mRealName',
-		'mNewpassword',
-		'mNewpassTime',
 		'mEmail',
 		'mTouched',
 		'mToken',
@@ -131,7 +129,7 @@ class User implements JsonSerializable {
 
 	/** @name Cache variables */
 	//@{
-	var $mId, $mName, $mRealName, $mNewpassword, $mNewpassTime,
+	var $mId, $mName, $mRealName,
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
@@ -1016,8 +1014,6 @@ class User implements JsonSerializable {
 		$this->mId = 0;
 		$this->mName = $name;
 		$this->mRealName = '';
-		$this->mNewpassword = '';
-		$this->mNewpassTime = null;
 		$this->mEmail = '';
 		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
@@ -1168,9 +1164,7 @@ class User implements JsonSerializable {
 			$all = false;
 		}
 
-		if ( isset( $row->user_password ) ) {
-			$this->mNewpassword = $row->user_newpassword;
-			$this->mNewpassTime = wfTimestampOrNull( TS_MW, $row->user_newpass_time );
+		if ( isset( $row->user_email ) ) {
 			$this->mEmail = $row->user_email;
 			if ( isset( $row->user_options ) ) {
 				$this->decodeOptions( $row->user_options );
@@ -1370,6 +1364,19 @@ class User implements JsonSerializable {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Wikia change - SUS-1649: Clear all block-related info from this instance of User class
+	 * This allows us to re-run block check functions with different parameters (e.g. checking for only local blocks)
+	 * @see User::getBlockedStatus()
+	 */
+	public function clearBlockInfo() {
+		$this->mBlock = null;
+		$this->mBlockedby = -1;
+		$this->mBlockreason = '';
+		$this->mHideName = 0;
+		$this->mAllowUsertalk = false;
 	}
 
 	/**
@@ -2101,7 +2108,7 @@ class User implements JsonSerializable {
 			$this->heliosSetNewPassword( $password );
 		}
 
-		$this->clearNewPasswordAndSetToken();
+		$this->setToken();
 
 		if ( $forceLogout ) {
 			self::heliosClient()->forceLogout( $this->getId() );
@@ -2151,16 +2158,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set the password and reset the random token unconditionally.
-	 */
-	private function clearNewPasswordAndSetToken() {
-		$this->setToken();
-
-		$this->mNewpassword = '';
-		$this->mNewpassTime = null;
-	}
-
-	/**
 	 * Get the user's current token.
 	 * @param boolean $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
 	 * @return String Token
@@ -2186,36 +2183,6 @@ class User implements JsonSerializable {
 		} else {
 			$this->mToken = $token;
 		}
-	}
-
-	/**
-	 * Set the password for a password reminder or new account email
-	 *
-	 * @param $str String New password to set
-	 * @param $throttle Bool If true, reset the throttle timestamp to the present
-	 */
-	public function setNewpassword( $str, $throttle = true ) {
-		$this->load();
-
-		$this->mNewpassword = self::crypt( $str );
-		if ( $throttle ) {
-			$this->mNewpassTime = wfTimestampNow();
-		}
-	}
-
-	/**
-	 * Has password reminder email been sent within the last
-	 * $wgPasswordReminderResendTime hours?
-	 * @return Bool
-	 */
-	public function isPasswordReminderThrottled() {
-		global $wgPasswordReminderResendTime;
-		$this->load();
-		if ( !$this->mNewpassTime || !$wgPasswordReminderResendTime ) {
-			return false;
-		}
-		$expiry = wfTimestamp( TS_UNIX, $this->mNewpassTime ) + $wgPasswordReminderResendTime * 3600;
-		return time() < $expiry;
 	}
 
 	/**
@@ -2611,13 +2578,13 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Set a global user attribute.
+	 * Set a global user attribute. You also have to call `saveSettings` for the value to be saved in the DB.
 	 *
 	 * @param string $attribute
 	 * @param string $value
 	 * @see getGlobalAttribute for more documentation about attributes
 	 */
-	public function setGlobalAttribute($attribute, $value) {
+	public function setGlobalAttribute( $attribute, $value ) {
 		if ( $this->isPublicAttribute( $attribute ) ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
@@ -3196,8 +3163,6 @@ class User implements JsonSerializable {
 		$dbw->update( 'user',
 			array( /* SET */
 				'user_name' => $this->mName,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_real_name' => $this->mRealName,
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
@@ -3273,8 +3238,6 @@ class User implements JsonSerializable {
 		$fields = array(
 			'user_id' => $seqVal,
 			'user_name' => $name,
-			'user_newpassword' => $user->mNewpassword,
-			'user_newpass_time' => $dbw->timestampOrNull( $user->mNewpassTime ),
 			'user_email' => $user->mEmail,
 			'user_email_authenticated' => $dbw->timestampOrNull( $user->mEmailAuthenticated ),
 			'user_real_name' => $user->mRealName,
@@ -3313,8 +3276,6 @@ class User implements JsonSerializable {
 			array(
 				'user_id' => $seqVal,
 				'user_name' => $this->mName,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 				'user_real_name' => $this->mRealName,
@@ -3880,6 +3841,12 @@ class User implements JsonSerializable {
 	 * @return String Formatted URL
 	 */
 	protected function getTokenUrl( $page, $token ) {
+		global $wgEnableNewAuthModal;
+
+		if ( $wgEnableNewAuthModal ) {
+			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+		}
+
 		// Hack to bypass localization of 'Special:'
 		$title = Title::makeTitle( NS_MAIN, "Special:$page/$token" );
 		return $title->getCanonicalURL();
@@ -4063,45 +4030,6 @@ class User implements JsonSerializable {
 		}
 		// edit count in user cache too
 		$this->invalidateCache();
-	}
-
-	/**
-	 * Make a new-style password hash
-	 *
-	 * @param $password String Plain-text password
-	 * @param bool|string $salt Optional salt, may be random or the user ID.
-
-	 *                     If unspecified or false, will generate one automatically
-	 * @return String Password hash
-	 * @deprecated use HeliosClient
-	 */
-	public static function crypt( $password, $salt = false ) {
-		global $wgPasswordSalt;
-		// Wikia change - begin
-		// @see PLATFORM-2502 comparing new passwords in PHP code.
-		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
-		WikiaLogger::instance()->debug(
-			'NEW_HASHING crypt called in PHP',
-			[
-				'wgPasswordSalt' => $wgPasswordSalt,
-				'caller' => wfGetCaller(),
-				'exception' => new Exception()
-			]
-		);
-		// Wikia change - end
-		$hash = '';
-		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
-			return $hash;
-		}
-
-		if( $wgPasswordSalt ) {
-			if ( $salt === false ) {
-				$salt = MWCryptRand::generateHex( 8 );
-			}
-			return ':B:' . $salt . ':' . md5( $salt . '-' . md5( $password ) );
-		} else {
-			return ':A:' . md5( $password );
-		}
 	}
 
 	/**

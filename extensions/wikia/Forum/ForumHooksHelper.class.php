@@ -222,29 +222,6 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * Hook: add comments_index table when adding board
-	 * @param Article $article
-	 * @param $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @return bool
-	 */
-	static public function onArticleInsertComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision ) {
-		$title = $article->getTitle();
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
-			$commentsIndex = ( new CommentsIndex );
-			$commentsIndex->createTableCommentsIndex();
-		}
-
-		return true;
-	}
-
-	/**
 	 * clear the caches
 	 * @param WallMessage $mw
 	 * @return bool
@@ -319,7 +296,7 @@ class ForumHooksHelper {
 			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			// cleare board info
-			$commentsIndex = CommentsIndex::newFromId( $comment_id );
+			$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
 			if ( empty( $commentsIndex ) ) {
 				return true;
 			}
@@ -463,57 +440,6 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
-	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
-	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
-	 * comments_index row will fail.
-	 *
-	 * @param WikiPage $page WikiPage object
-	 * @param User $user User object [not used]
-	 * @param string $reason [not used]
-	 * @param int $id [not used]
-	 * @return bool true
-	 *
-	 */
-	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
-		$title = $page->getTitle();
-		if ( $title instanceof Title ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 );
-		}
-
-		return true;
-	}
-
-	/**
-	 * SEO-325 Allow robots to follow topic pages on selected communities
-	 *
-	 * Do that by setting $wgNamespaceRobotPolicies to [ [2002] => 'noindex,follow' ] in WikiFactory
-	 *
-	 * After experiment, if all good we can just hard-code it here:
-	 * if ( $title && $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
-	 *     $specialPolicy = [ 'index' => 'index', 'follow' => 'follow' ];
-	 * }
-	 *
-	 * Long-shot policy: decide in WikiaRobots
-	 *
-	 * @param array $specialPolicy
-	 * @param Title $title
-	 * @return bool
-	 */
-	static public function onArticleRobotPolicy( &$specialPolicy, $title ) {
-		global $wgNamespaceRobotPolicies;
-
-		$nsTopic = NS_WIKIA_FORUM_TOPIC_BOARD;
-
-		if ( $title && $title->getNamespace() === $nsTopic && isset( $wgNamespaceRobotPolicies[$nsTopic] ) ) {
-			$specialPolicy = Article::formatRobotPolicy( $wgNamespaceRobotPolicies[$nsTopic] );
-		}
-
-		return true;
-	}
-
-	/**
 	 * SUS-1196: Invalidate "Forum Activity" rail module cache if thread is deleted via Nuke / Quick Tools
 	 * @param Article|WikiPage|Page $page
 	 * @param User $user
@@ -525,6 +451,21 @@ class ForumHooksHelper {
 		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
 			$wallHistory = new WallHistory();
 			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-260: Prevent moving pages within, into, or out of Forum namespaces
+	 * @param bool $result whether to allow page moves
+	 * @param int $ns namespace number
+	 * @return bool false if this is Forum namespace to prevent page moves, true otherwise to resume hook processing
+	 */
+	public static function onNamespaceIsMovable( bool &$result, int $ns ): bool {
+		if ( in_array( $ns, [ NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ] ) ) {
+			$result = false;
+			return false;
 		}
 
 		return true;

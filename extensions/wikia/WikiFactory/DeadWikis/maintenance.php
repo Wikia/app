@@ -157,6 +157,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 	protected $statsCache = null;
 
+	/**
+	 * @return WikiEvaluationCache
+	 */
 	protected function getStatsCache() {
 		if (empty($this->statsCache)) {
 			$this->statsCache = new WikiEvaluationCache();
@@ -266,8 +269,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$classification = $oracle->check($wiki);
 			if ($classification) {
 				echo "Marking wiki \"{$wiki['dbname']}\" (#{$id}) as \"$classification\"\n";
-			}
-			if ($classification) {
 				$result[$classification][$id] = $wiki;
 			}
 		}
@@ -292,10 +293,15 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"l.city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\"",
 			"(v.city_flags IS NULL OR v.city_flags & " . WikisModel::FLAG_OFFICIAL . " = 0)",
 		);
-		if (!is_null($this->from))
-			$where[] = "l.city_id >= ".intval($this->from);
-		if (!is_null($this->to))
-			$where[] = "l.city_id <= ".intval($this->to);
+		if (empty($this->ids)) {
+			if (!is_null($this->from))
+				$where[] = "l.city_id >= ".intval($this->from);
+			if (!is_null($this->to))
+				$where[] = "l.city_id <= ".intval($this->to);
+		} else {
+			$where['l.city_id'] = $this->ids;
+		}
+
 		$res = $db->select(
 			array(
 				'l' => 'city_list',
@@ -331,7 +337,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 
 	protected function doDisableWiki( $wikiId, $flags, $reason = '' ) {
-		// TOOD: copied from WikiFactory::disableWiki since it's not released yet
+		// TODO: copied from WikiFactory::disableWiki since it's not released yet
 		WikiFactory::setFlags( $wikiId, $flags );
 		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
 		if ($this->debug) {
@@ -353,12 +359,29 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$notDeleted[$id] = $wiki;
 				continue;
 			}
+
+			$isActiveSite = true;
+
+			try {
+				$isActiveSite = $this->isActiveSite($id);
+			} catch ( \Swagger\Client\ApiException $e ) {
+				echo "{od} Failed to get most recent post from site: {$e->getMessage()}\n";
+			}
+
+			if ($isActiveSite) {
+				echo "cancelled (wiki has new discussions posts in the last 60 days)\n";
+				$notDeleted[$id] = $wiki;
+				continue;
+			}
+
 			if ($this->readOnly) {
 				echo "cancelled (read-only mode)\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 				continue;
 			}
+
+
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
 				$this->disableDiscussion( $id );
@@ -382,6 +405,85 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 	}
 
+	// Gets the most recent post from the specified site and returns whether it was made less than 60 days ago
+	private function isActiveSite($siteId)
+	{
+		$response = $this->getMostRecentPostForSite($siteId);
+
+		if ($response['postCount'] == 0) {
+			// no posts
+			return false;
+		}
+
+		// extract post creation date from response
+		$mostRecentPostCreationDate = $response['_embedded']->{'doc:posts'}[0]->{'creationDate'}->{'epochSecond'};
+
+		$sixtyDaysAgo = time() - 60*60*24*60;
+
+		return $mostRecentPostCreationDate > $sixtyDaysAgo;
+	}
+
+	private function getMostRecentPostForSite($siteId) {
+		$apiClient = $this->getSitesApi()->getApiClient();
+
+		$resourcePathTemplate = "/{siteId}/posts";
+		$httpBody = '';
+
+		// header params
+		$headerParams = ['Content-Type' => $apiClient->selectHeaderContentType(array('application/json'))];
+
+		$headerAccept = $apiClient->selectHeaderAccept(array('application/hal+json'));
+		if (!is_null($headerAccept)) {
+			$headerParams['Accept'] = $headerAccept;
+		}
+
+		// path params
+		$resourcePath = str_replace(
+				"{siteId}",
+				$apiClient->getSerializer()->toPathValue($siteId),
+				$resourcePathTemplate
+		);
+
+		// only need most recent post
+		$queryParams = [
+				'limit' => 1
+		];
+
+		// make the API Call
+		try {
+			list($rawResponse, $statusCode, $httpHeader) = $apiClient->callApi(
+					$resourcePath,
+					'GET',
+					$queryParams,
+					$httpBody,
+					$headerParams,
+					'object'
+			);
+			$response = $apiClient->getSerializer()->deserialize($rawResponse, 'object', $httpHeader);
+		} catch (\Swagger\Client\ApiException $e) {
+			throw $this->processApiException($e, $apiClient);
+		}
+
+		return $response;
+	}
+
+	private function processApiException($e, $apiClient) {
+		switch ($e->getCode()) {
+			case 204:
+				$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(), 'object',
+						$e->getResponseHeaders());
+				$e->setResponseObject($data);
+				break;
+			case 403:
+				$data = $apiClient->getSerializer()->deserialize($e->getResponseBody(),
+						'\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
+				$e->setResponseObject($data);
+				break;
+		}
+
+		return $e;
+	}
+
 	/**
 	 * @return SitesApi
 	 */
@@ -397,7 +499,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 	protected function batchProcess( $wikis ) {
 		// evaluate wikis in groups of 100 wikis
+		$batchNum = 1;
 		while ($batch = array_splice($wikis,0,self::BATCH_SIZE)) {
+			echo "\n======== Processing batch ".$batchNum++." ========\n";
 			// fetch data from wikis
 			$ids = array();
 			$batchData = array();
@@ -408,6 +512,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$ids[$wiki['id']] = $wiki['id'];
 			}
 			$evaluated = array();
+			echo "Evaluating...\n";
 			for ( $pass = 0; $pass < 3 && count($ids) > 0; $pass++ ) {
 				$output = '';
 				$status = $this->runEvaluationScript($ids,$output);
@@ -419,17 +524,31 @@ class AutomatedDeadWikisDeletionMaintenance {
 					$evaluated = $evaluated + $evaluatedNow;
 				}
 			}
-
+			if ($this->debug) {
+				print_r($evaluated);
+			}
 			// classify wikis
+			echo "Classifying...\n";
 			$classifications = $this->getOracleClassification($evaluated);
 			// save stats
+			echo "Saving statistics...\n";
 			foreach ($evaluated as $id => $wiki) {
 				$status = '';
-				if (isset($classifications[self::DELETE_NOW][$id])) $status = 'deleteNow';
-				if (isset($classifications[self::DELETE_SOON][$id])) $status = 'deleteSoon';
-				$this->updateWikiStats(array_merge($wiki,array(
-					'status' => $status,
-				)));
+				if (isset($classifications[self::DELETE_NOW][$id])) {
+					$status = 'deleteNow';
+				}
+				if (isset($classifications[self::DELETE_SOON][$id])) {
+					$status = 'deleteSoon';
+				}
+				if (!$this->readOnly) {
+					$this->updateWikiStats(array_merge($wiki, array(
+							'status' => $status,
+					)));
+				}
+			}
+			echo "Disabling wikis...\n";
+			if ($this->debug) {
+				print_r($classifications);
 			}
 			if (isset($classifications[self::DELETE_NOW])) {
 				$this->disableWikis($classifications[self::DELETE_NOW],$this->deleted,$this->toBeDeleted);
@@ -437,6 +556,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if (isset($classifications[self::DELETE_SOON])) {
 				$this->toBeDeleted += $classifications[self::DELETE_SOON];
 			}
+			echo "Done!\n";
 		}
 	}
 
@@ -526,6 +646,28 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 	}
 
+	protected function actionTestDiscussionsActivity() {
+		global $wgCityId;
+		$ids = $this->ids;
+		if ( empty($ids) ) {
+			$ids = array( $wgCityId );
+		}
+		echo "Checking discussions activity:\n";
+
+		foreach ($ids as $id) {
+			$isActiveSite = true;
+
+			try {
+				$isActiveSite = $this->isActiveSite($id);
+			} catch ( \Swagger\Client\ApiException $e ) {
+				echo "{$id} Failed to get most recent post from site: {$e->getMessage()}\n";
+			}
+
+			printf ("%d is %s\n", $id, $isActiveSite ? "active" : "inactive");
+		}
+
+	}
+
 	public function execute() {
 //		var_dump($this->options);
 		switch ($this->action) {
@@ -534,6 +676,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 				break;
 			case 'evaluate':
 				$this->actionEvaluate();
+				break;
+			case 'testDiscussionsActivity':
+				$this->actionTestDiscussionsActivity();
 				break;
 			default:
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);

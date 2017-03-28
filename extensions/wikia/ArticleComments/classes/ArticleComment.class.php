@@ -48,8 +48,10 @@ class ArticleComment {
 
 	protected $minRevIdFromSlave;
 
-	private $isTextLoaded = false;
 	private $isRevisionLoaded = false;
+
+	/** @var ParserOptions $mParserOptions Parser options that can be used for processing this article comment */
+	private $mParserOptions = null;
 
 	/**
 	 * @param Title $title
@@ -215,13 +217,13 @@ class ArticleComment {
 			return false;
 		}
 
-		if ( $this->isTextLoaded ) {
+		// SUS-1557: If raw comment text was already set, don't bother loading it from DB
+		if ( is_string( $this->mRawtext ) ) {
 			return true;
 		}
 
 		$this->setRawText( $this->mLastRevision->getText() );
 
-		$this->isTextLoaded = true;
 		return true;
 	}
 
@@ -374,15 +376,35 @@ class ArticleComment {
 	}
 
 	/**
+	 * Lazy-initialize and cache a ParserOptions instance that can be used to parse this article comment
+	 * @return ParserOptions
+	 */
+	private function getParserOptions(): ParserOptions {
+		if ( !( $this->mParserOptions instanceof ParserOptions ) ) {
+			$this->mParserOptions = ParserOptions::newFromContext( RequestContext::getMain() );
+
+			// VOLDEV-68: Remove broken section edit links
+			$this->mParserOptions->setEditSection( false );
+		}
+
+		return $this->mParserOptions;
+	}
+
+	/**
 	 * Parse the comment content in a lazy fashion: when either getText() or getHeadItems() is called
 	 */
 	private function parseText() {
 		wfProfileIn( __METHOD__ );
-		$this->load();
 
-		// VOLDEV-68: Remove broken section edit links
-		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-		$opts->setEditSection( false );
+		// SUS-1557: only load from DB if raw text was not set manually
+		if ( !is_string( $this->mRawtext ) ) {
+			$this->load();
+		}
+
+		$opts = $this->getParserOptions();
+
+		// SUS-1527: {{Special:RecentChanges}} in message on wall breaks page
+		$opts->setAllowSpecialInclusion( false );
 
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
@@ -411,12 +433,47 @@ class ArticleComment {
 	}
 
 	/**
+	 * SUS-1557: Perform pre-save transformation on comment text
+	 * This is necessary when someone edits Wall/Forum content - we're sending back parsed user-passed text that has not passed through pre-save transformation
+	 */
+	private function transformText() {
+		// We can safely skip if mRawText is not set
+		// In that case it has to be loaded from DB, which means it has already gone through pre-save transofmration
+		if ( !is_string( $this->mRawtext ) ) {
+			return;
+		}
+
+		$parser = ParserPool::get();
+		$parserOptions = $this->getParserOptions();
+		$user = $parserOptions->getUser();
+
+		$this->mRawtext = $parser->preSaveTransform( $this->mRawtext, $this->mTitle, $user, $parserOptions );
+
+		ParserPool::release( $parser );
+	}
+
+	/**
 	 * Return HTML content of parsed comment
 	 *
 	 * @return string
 	 */
 	public function getText() {
 		if ( !is_string( $this->mText ) ) {
+			$this->parseText();
+		}
+
+		return $this->mText;
+	}
+
+	/**
+	 * Return HTML content of parsed comment, and additionally perform pre-save transformations
+	 * This is necessary if raw comment text is not fetched from DB but passed directly from user, since it skips transformation in that case
+	 *
+	 * @return string
+	 */
+	public function getTransformedParsedText(): string {
+		if ( !is_string( $this->mText ) ) {
+			$this->transformText();
 			$this->parseText();
 		}
 
@@ -790,7 +847,7 @@ class ArticleComment {
 	 * @param string $summary
 	 * @param bool $preserveMetadata : hack to fix bug 102384 (prevent metadata override when trying to modify one of metadata keys)
 	 *
-	 * @return array|bool TODO: Document what the array contains.
+	 * @return array|bool False on failure, array on success. First element is Status instance returned by EditPage::internalAttemptSave, second is Article instance.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
@@ -830,7 +887,8 @@ class ArticleComment {
 			if ( $preserveMetadata ) {
 				$this->mMetadata = $metadata;
 			}
-			$retval = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
+
+			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
@@ -839,13 +897,22 @@ class ArticleComment {
 			}
 
 			ArticleCommentList::purgeCache( $purgeTarget );
-			$res = [ $retval, $article ];
+			$res = [ $status, $article ];
 		} else {
 			$res = false;
 		}
 
-		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
-		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		// If the edit was successful, set revision info returned by edit method
+		if ( isset( $status ) && $status->isOK() ) {
+			/** @var Revision $rev */
+			$rev = $status->revision;
+			$this->mLastRevision = $rev;
+			$this->mLastRevId = $rev->getId();
+		} else {
+			// Edit failed, let's work with slave data
+			$this->mLastRevId = $this->mTitle->getLatestRevID();
+			$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+		}
 
 		return $res;
 	}
@@ -987,8 +1054,6 @@ class ArticleComment {
 
 		/** @var Article|WikiPage $article */
 		$article = new Article( $commentTitle, 0 );
-
-		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );

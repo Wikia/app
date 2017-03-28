@@ -214,7 +214,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function hasAuthorProfile( $user ) {
-		return sizeof( preg_grep( "/^fancontributor-/", $user->getGroups() ) ) > 0;
+		return intval( $user->getGlobalAttribute( 'wordpressId', 0 ), 10 ) > 0;
 	}
 
 	private function getLoggedInUserData( $user ) {
@@ -323,10 +323,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'header' => [
 				'type' => 'line-image',
 				// 'image' is deprecated, use 'image-data' instead
-				'image' => 'wds-icons-bell',
+				'image' => 'wds-icons-note',
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-icons-bell',
+					'name' => 'wds-icons-note',
 				],
 				'title' => [
 					'type' => 'translatable-text',

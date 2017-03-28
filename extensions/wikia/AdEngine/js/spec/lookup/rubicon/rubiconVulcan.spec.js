@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			rubiconTargeting: {
@@ -67,18 +67,21 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				}
 			},
 			rubiconTier: {
-				create: function () {
-					return '203_tier1600';
+				create: function (sizeId) {
+					return sizeId + '_tier1600';
 				},
 				parseOpenMarketPrice: function () {
 					return 0;
 				}
 			},
 			slot: {
-				id: 'INCONTENT_LEADERBOARD',
+				id: 'outstream-desktop',
 				getBestCpm: function () {
 					return mocks.vulcanResponse;
-				}
+				},
+				rawResponses: [
+					{}
+				]
 			},
 			targeting: {
 				skin: 'oasis'
@@ -100,16 +103,18 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 							return [mocks.slot];
 						}
 					}
-
-				}
+				},
+				ads: {}
 			}
 		};
+
+	mocks.log.levels = {};
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -138,6 +143,10 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(Object.keys(call).indexOf(param)).not.toEqual(-1);
 	}
 
+	function assertRequestParamValue(call, key, value) {
+		expect(call[key]).toEqual(value);
+	}
+
 	it('Returns module name', function () {
 		var vulcan = getVulcan();
 
@@ -161,8 +170,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		vulcan.call();
 		defineSlotsCalls = mocks.win.rubicontag.video.defineSlot.calls;
 
-		expect(defineSlotsCalls.count()).toEqual(2);
-		expect(defineSlotsCalls.argsFor(0)[0]).toEqual('INCONTENT_LEADERBOARD');
+		expect(defineSlotsCalls.count()).toEqual(1);
+		expect(defineSlotsCalls.argsFor(0)[0]).toEqual('outstream-desktop');
 
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'account_id');
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'site_id');
@@ -178,6 +187,8 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'tg_i.s1');
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'tg_i.s2');
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'tg_i.src');
+
+		assertRequestParamValue(defineSlotsCalls.argsFor(0)[1], 'tg_i.loc', 'outstream');
 	});
 
 	it('Has response and returns proper tier format based on it', function () {
@@ -219,5 +230,31 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		vulcan.call();
 
 		expect(vulcan.getSlotParams('TOP_RIGHT_BOXAD')).toEqual({});
+	});
+
+	it('Returns INCONTENT_LEADERBOARD bid for INCONTENT_PLAYER', function () {
+		var vulcan = getVulcan();
+
+		vulcan.call();
+
+		expect(vulcan.hasResponse()).toBeTruthy();
+		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
+			'rpfl_video': '203_tier1600'
+		});
+	});
+
+	it('Returns USED tier when bid was used by other slot', function () {
+		var vulcan = getVulcan();
+
+		vulcan.call();
+
+		mocks.win.ads.rubiconVulcan.deleteBid('INCONTENT_PLAYER');
+
+		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
+			'rpfl_video': '203_tier1600'
+		});
+		expect(vulcan.getSlotParams('TOP_LEADERBOARD')).toEqual({
+			'rpfl_video': '203_tierUSED'
+		});
 	});
 });

@@ -209,7 +209,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testPrepareListOfPoisDataProvider
+	 * @dataProvider prepareListOfPoisDataProvider
 	 */
 	public function testPrepareListOfPois( $mapDataArray, $expected ) {
 		$mapData = $this->mapDataArrayToObject( $mapDataArray );
@@ -260,7 +260,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 		return $mapDataObj;
 	}
 
-	public function testPrepareListOfPoisDataProvider() {
+	public function prepareListOfPoisDataProvider() {
 		return [
 			[
 				[

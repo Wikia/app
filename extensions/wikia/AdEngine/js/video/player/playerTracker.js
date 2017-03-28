@@ -4,14 +4,21 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
-], function (adContext, pageLevel, adTracker, slotTargeting, geo, log, win, vulcan) {
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'),
+	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
+], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan, floater) {
 	'use strict';
 	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.video.player.playerTracker';
+		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
+		emptyValue = {
+			int: 0,
+			string: '(none)',
+			price: -1
+		};
 
 	function isEnabled() {
 		return !!context.opts.playerTracking;
@@ -19,30 +26,35 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 	function prepareData(params, playerName, eventName, errorCode) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
+			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
+			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
 			trackingData = {
 				'pv_unique_id': win.adEnginePvUID,
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
 				'skin': pageLevelParams.skin,
-				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : '',
+				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,
 				'ad_product': params.adProduct,
-				'position': params.slotName || '',
+				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
-				'ad_error_code': errorCode || '',
-				'line_item_id': params.lineItemId || '',
-				'creative_id': params.creativeId || '',
-				'vulcan_network': '',
-				'vulcan_advertiser': '',
-				'vulcan_price': ''
+				'ad_error_code': errorCode || emptyValue.int,
+				'line_item_id': params.lineItemId || emptyValue.int,
+				'creative_id': params.creativeId || emptyValue.int,
+				'vulcan_network': emptyValue.int,
+				'vulcan_advertiser': emptyValue.int,
+				'vulcan_price': emptyValue.price,
+				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+				'additional_1': canFloat,
+				'additional_2': floatingState
 			},
 			vulcanResponse;
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
 			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vulcan_network'] = vulcanResponse.network || '';
-			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || '';
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || '';
+			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
+			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
+			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
 		}
 
 		return trackingData;
@@ -76,6 +88,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 		log(['track', data], log.levels.debug, logGroup);
 		adTracker.trackDW(data, 'adengplayerinfo');
+
+		return data;
 	}
 
 	return {

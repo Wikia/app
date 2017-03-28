@@ -214,6 +214,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test3' ] ],
 				'categories' => [ 'new' => [ 'test3' ] ]
 			] ),
+
+			array_merge( $defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'hasPortableInfobox' => true ],
+			] ),
 		];
 	}
 
@@ -261,6 +265,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
 			$expectedTargeting['pageIsArticle'] = true;
+		}
+
+		if ( isset( $expectedTargeting['hasPortableInfobox'] ) && $expectedTargeting['hasPortableInfobox'] === true ) {
+			$wikiaMock = $this->getMockBuilder( 'Wikia' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'getProps' ] )
+				->getMock();
+
+			$wikiaMock->expects( $this->any() )
+				->method( 'getProps' )
+				->willReturn( true );
+
+			$this->mockStaticMethod( 'Wikia', 'getProps', $wikiaMock );
 		}
 
 		// Mock globals
@@ -334,7 +351,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'delayBtf' => true,
 				'sourcePointRecovery' => false,
 				'sourcePointMMS' => false,
-				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com'
+				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
+				// if skin name different than oasis, disable PF recovery
+				'pageFairRecovery' => false
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -387,7 +406,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Check for PageFair URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
-
 
 		$expected['providers']['rubiconFastlane'] = true;
 

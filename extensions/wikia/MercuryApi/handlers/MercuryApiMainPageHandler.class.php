@@ -4,22 +4,16 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
-	// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
-	public static function getMainPageData( MercuryApi $mercuryApiModel, $newFormat=false ) {
+	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
 		$mainPageData = [ ];
-		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null, $newFormat );
-		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
+		$curatedContent = self::getCuratedContentData( $mercuryApiModel, null );
+		$trendingArticles = $mercuryApiModel->getTrendingArticlesData();
 		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 		$wikiDescription = self::getWikiDescription();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			if ( $newFormat ) {
-				$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
-			} else {
-				// TODO: remove this else block after release release of XW-2590 (XW-2625)
-				$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
-			}
+			$mainPageData[ 'curatedContent' ]['items'] = $curatedContent['items'];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
@@ -45,46 +39,24 @@ class MercuryApiMainPageHandler {
 		return $mainPageData;
 	}
 
-	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null, $newFormat=false ) {
-		// TODO: remove $newFormat param after release release of XW-2590 (XW-2625)
+	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null ) {
 		$data = [ ];
 		try {
 			$data = WikiaDataAccess::cache(
-				self::curatedContentDataMemcKey( $section . ( $newFormat ? '_new' : '' ) ),
+				self::curatedContentDataMemcKey( $section ),
 				WikiaResponse::CACHE_STANDARD,
-				function () use ( $mercuryApiModel, $section, $newFormat ) {
+				function () use ( $mercuryApiModel, $section ) {
 					$rawData = F::app()->sendRequest(
 						'CuratedContent',
 						'getList',
 						empty( $section ) ? [ ] : [ 'section' => $section ]
 					)->getData();
 
-					return $mercuryApiModel->processCuratedContent( $rawData, $newFormat );
+					return $mercuryApiModel->processCuratedContent( $rawData );
 				}
 			);
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
-		}
-
-		return $data;
-	}
-
-	private static function getTrendingArticlesData( MercuryApi $mercuryApiModel ) {
-		global $wgContentNamespaces;
-
-		$params = [
-			'abstract' => false,
-			'expand' => true,
-			'limit' => 10,
-			'namespaces' => implode( ',', $wgContentNamespaces )
-		];
-		$data = [ ];
-
-		try {
-			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $mercuryApiModel->processTrendingArticlesData( $rawData );
-		} catch ( NotFoundException $ex ) {
-			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;
@@ -127,21 +99,6 @@ class MercuryApiMainPageHandler {
 		return $isMainPage &&
 		!empty( $wgEnableMainPageDataMercuryApi ) &&
 		( new CommunityDataService( $wgCityId ) )->hasData();
-	}
-
-	/**
-	 * @TODO XW-1174 - rethink this
-	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
-	 *
-	 * @param Title $title
-	 * @return array
-	 */
-	public static function getMainPageMockedDetails( Title $title ) {
-		return [
-			'ns' => 0,
-			'title' => $title->getText(),
-			'revision' => []
-		];
 	}
 
 	/**

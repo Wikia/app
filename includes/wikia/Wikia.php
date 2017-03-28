@@ -20,7 +20,6 @@ $wgHooks['UserRights']               [] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
-$wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -94,11 +93,14 @@ class Wikia {
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
+	// one for the extension messages, one for the user messages
+	const GADGETS_INTERFACE_PREFIX = 'gadgets-';
+	const GADGET_INTERFACE_PREFIX = 'gadget-';
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
-	private static $vars = array();
+	private static $vars = [];
 	private static $cachedLinker;
 
 	public static function setVar($key, $value) {
@@ -1219,26 +1221,6 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * ignoreUser
-	 * @author tor
-	 *
-	 * marks a user as ignored for the purposes of stats counting, used to ignore test accounts
-	 * hooked up to AddNewAccount
-	 */
-	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgExternalDatawareDB;
-
-		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-
-				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
-			}
-		}
-
-		return true;
-	}
 	/**
 	 * build user authentication key
 	 * @static
@@ -2421,6 +2403,8 @@ class Wikia {
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGETS_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGET_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed( 'editinterface' );
 		}

@@ -11,13 +11,32 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
+@import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
+@import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
-$uap-progress-bar-color: #666;
-$uap-progress-bar-current-time-color: #b7b7b7;
+$uap-progress-bar-color: #b7b7b7;
+$uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
+$uap-video-player-button-size: 24px;
+
+$floating-ad-margin: 20px;
+$floating-ad-index: $wikia-top-ads-index + 10;
+$floating-ad-video-width: 320px;
+$floating-ad-animation-speed: $video-collapse-animation-speed;
+$floating-ad-featured-video-gap: $video-container-width;
+
+$vpaid-z-index: 10;
+
+@mixin absolute-fill() {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -36,21 +55,54 @@ $uap-video-animation-duration: 0.4s;
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-		> div {
-			float: right;
-		}
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
 		> img {
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
+
+	&.floating {
+		z-index: $floating-ad-index;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $floating-ad-animation-speed;
+
+			.video-player, iframe {
+				width: $floating-ad-video-width;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
+			}
+		}
+	}
+}
+
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
 }
 
 .wikia-ad {
@@ -62,16 +114,35 @@ $uap-video-animation-duration: 0.4s;
 	&.slot-responsive {
 		width: 100%;
 
-		.provider-container {
-			position: relative;
+		.provider-container iframe {
+			@include absolute-fill();
+		}
+	}
 
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
+	.vpaid-container {
+		@include absolute-fill();
+
+		video, & > div {
+			@include absolute-fill();
+		}
+
+		// Node elements created by IMA library
+		& > div {
+			pointer-events: none;
+
+			video {
+				pointer-events: auto;
 			}
+		}
+
+		&.vpaid-enabled video {
+			 z-index: $vpaid-z-index;
+		 }
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
 		}
 	}
 }
@@ -118,63 +189,29 @@ $uap-video-animation-duration: 0.4s;
 	right: 10px;
 
 	.speaker {
-		background-color: #fff;
-		border-radius: 50%;
+		&.mute {
+			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg');
+		}
+
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
 		display: inline-block;
-		height: 30px;
-		opacity: 0.5;
+		height: $uap-video-player-button-size;
 		overflow: hidden;
 		position: relative;
-		width: 30px;
-
-		span {
-			background: #000;
-			display: block;
-			height: 8px;
-			margin: 11px 0 0 2px;
-			width: 8px;
-
-			&:after {
-				border-color: transparent #000 transparent transparent;
-				border-style: solid;
-				border-width: 10px 14px 10px 15px;
-				content: '';
-				height: 0;
-				left: -13px;
-				position: absolute;
-				top: 5px;
-				width: 0;
-			}
-
-			&:before {
-				border-color: #000;
-				border-radius: 0 50px 0 0;
-				border-style: double;
-				border-width: 7px 7px 0 0;
-				content: '';
-				height: 5px;
-				left: 18px;
-				position: absolute;
-				top: 9px;
-				transform: rotate(45deg);
-				transition: all 0.2s ease-out;
-				width: 5px;
-			}
-		}
-
-		&:hover {
-			span:before {
-				transform: scale(.8) translate(-3px, 0) rotate(42deg);
-			}
-		}
-
-		&.mute {
-			span:before {
-				opacity: 0;
-				transform: scale(.5) translate(-15px, 0) rotate(36deg);
-			}
-		}
+		width: $uap-video-player-button-size;
 	}
+}
+
+.bfab-template {
+	position: relative;
+}
+
+.wikia-ad .replay-overlay {
+	background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
 }
 
 .video-player {
@@ -218,19 +255,15 @@ $uap-video-animation-duration: 0.4s;
 	}
 
 	.close-ad {
-		background-image: url('/skins/oasis/images/player/collapse_light.svg');
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
 		cursor: pointer;
-		height: 30px;
+		height: $uap-video-player-button-size;
 		margin: 10px 10px 30px 30px;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: 30px;
+		width: $uap-video-player-button-size;
 	}
-}
-
-#TOP_BUTTON_WIDE {
-	margin-right: 10px;
 }
 
 @media screen and (max-width: 1063px) {
@@ -575,4 +608,51 @@ body > a > img[src$="noad.gif"] {
 
 #WikiaArticleMsg {
 	display: none;
+}
+
+/** Floating ads **/
+
+/*** Incontent ***/
+#WikiaArticle {
+	&.floating {
+		z-index: initial;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $floating-ad-animation-speed;
+			width: $floating-ad-video-width;
+			z-index: $floating-ad-index;
+
+			.provider-container {
+				padding-bottom: 0 !important; // has to be !important because o inline style
+				width: $floating-ad-video-width;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
+			}
+		}
+	}
+}
+
+.floating-close-button {
+	background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+	cursor: pointer;
+	display: none;
+	height: 20px;
+	left: 10px;
+	position: absolute;
+	top: 10px;
+	width: 20px;
+	z-index: 1;
 }

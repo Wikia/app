@@ -2,49 +2,79 @@
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'wikia.log'
-], function(DOMElementTweaker, log) {
+], function (DOMElementTweaker, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
+		defaultAspectRatio = 320 / 240,
 		videoPlayerClassName = 'video-player';
 
-	function prepareVideoAdContainer(videoAdContainer, params) {
+	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
 		DOMElementTweaker.hide(videoAdContainer);
 		videoAdContainer.classList.add(videoPlayerClassName);
 		videoAdContainer.style.position = 'relative';
 
-		if (params.autoPlay) {
+		if (videoSettings.isAutoPlay()) {
 			videoAdContainer.classList.add(autoPlayClassName);
 		}
 
 		return videoAdContainer;
 	}
 
-	function create(params, ima) {
-		var width = params.width,
+	function create(videoSettings, ima) {
+		var params = videoSettings.getParams(),
+			width = params.width,
 			height = params.height,
 			mobileVideoAd = params.container.querySelector('video'),
-			videoAdContainer = params.container.querySelector('div');
+			videoAdContainer = params.container.querySelector('div'),
+			destroyCallbacks = [];
 
 		log(['create porvata player'], log.levels.debug, logGroup);
 
 		return {
-			container: prepareVideoAdContainer(videoAdContainer, params),
+			container: prepareVideoAdContainer(videoAdContainer, videoSettings),
 			ima: ima,
 			addEventListener: function (eventName, callback) {
 				ima.addEventListener(eventName, callback);
 			},
+			computeVastMediaAspectRatio: function () {
+				var adsManager = ima.getAdsManager(),
+					aspectRatio = width / height,
+					currentAd,
+					vastHeight = 0,
+					vastWidth = 0;
+
+				if (adsManager) {
+					currentAd = adsManager.getCurrentAd();
+					vastHeight = currentAd.getVastMediaHeight();
+					vastWidth = currentAd.getVastMediaWidth();
+
+					aspectRatio = (vastWidth && vastHeight) ? vastWidth / vastHeight : defaultAspectRatio;
+				}
+
+				return aspectRatio;
+			},
 			getRemainingTime: function () {
 				return ima.getAdsManager().getRemainingTime();
 			},
+			isFloating: function () {
+				return Boolean(params.floatingContext && params.floatingContext.isFloating());
+			},
 			isMuted: function () {
 				return ima.getAdsManager().getVolume() === 0;
+			},
+			isMobilePlayerMuted: function () {
+				var mobileVideoAd = this.container.querySelector('video');
+				return mobileVideoAd && mobileVideoAd.autoplay && mobileVideoAd.muted;
 			},
 			isPaused: function () {
 				return ima.getStatus() === 'paused';
 			},
 			isPlaying: function () {
 				return ima.getStatus() === 'playing';
+			},
+			isCompleted: function () {
+				return ima.getStatus() === 'completed';
 			},
 			pause: function () {
 				ima.getAdsManager().pause();
@@ -64,6 +94,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			reload: function () {
 				ima.reload();
 			},
+			removeEventListener: function (eventName, callback) {
+				ima.removeEventListener(eventName, callback);
+			},
 			resize: function (newWidth, newHeight) {
 				width = newWidth;
 				height = newHeight;
@@ -73,15 +106,45 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resume: function () {
 				ima.getAdsManager().resume();
 			},
-			setVolume: function (volume) {
-				if (mobileVideoAd) {
-					mobileVideoAd.muted = volume === 0;
+			mute: function () {
+				return this.setVolume(0);
+			},
+			unmute: function () {
+				return this.setVolume(0.75);
+			},
+			volumeToggle: function () {
+				if (this.isMuted()) {
+					this.unmute();
+				} else {
+					this.mute();
 				}
-				return ima.getAdsManager().setVolume(volume);
+			},
+			setVolume: function (volume) {
+				this.updateVideoDOMElement(volume);
+				ima.getAdsManager().setVolume(volume);
+
+				// This is hack for Safari, because it can't dispatch original IMA event (volumeChange)
+				ima.getAdsManager().dispatchEvent('wikiaVolumeChange');
 			},
 			stop: function () {
 				ima.getAdsManager().dispatchEvent('wikiaAdStop');
 				ima.getAdsManager().stop();
+			},
+			updateVideoDOMElement: function (volume) {
+				if (mobileVideoAd) {
+					mobileVideoAd.muted = volume === 0;
+				}
+			},
+			addOnDestroyCallback: function (callback) {
+				destroyCallbacks.push(callback);
+			},
+			destroy: function () {
+				var callback = destroyCallbacks.pop();
+
+				while (callback) {
+					callback(this);
+					callback = destroyCallbacks.pop();
+				}
 			}
 		};
 	}

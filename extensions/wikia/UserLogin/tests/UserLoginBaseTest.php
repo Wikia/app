@@ -177,11 +177,14 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	 * mocks all wfMessage output methods plain, text, parse, escaped and inLanguage
 	 *
 	 * @param $retVal String value to be returned when one of wfMessage output methods will be invoked
-	 * @return $msgClassMock Mock of Message class
+	 * @return PHPUnit_Framework_MockObject_MockObject|Message $msgClassMock Mock of Message class
 	 */
 	protected function getMessageMock( $retVal = '' ) {
 
-		$msgClassMock = $this->getMock( 'Message', array( 'plain', 'parse', 'escaped', 'inLanguage' ), array( 'keyname' ) );
+		$msgClassMock = $this->getMockBuilder( Message::class )
+			->setMethods( [ 'plain', 'parse', 'escaped', 'inLanguage', 'text' ] )
+			->setConstructorArgs( [ 'keyname' ] )
+			->getMock();
 
 		$msgClassMock->expects( $this->any() )
 			->method( 'plain' )

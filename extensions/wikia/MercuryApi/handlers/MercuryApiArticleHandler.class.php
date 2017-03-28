@@ -5,15 +5,12 @@ class MercuryApiArticleHandler {
 	const NUMBER_CONTRIBUTORS = 5;
 
 	/**
-	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
 	 *
 	 * @return array
 	 */
-	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
-		$data['details'] = self::getArticleDetails( $article );
-		$data['article'] = self::getArticleJson( $request, $article );
+	public static function getArticleData( MercuryApi $mercuryApiModel, Article $article ) {
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);

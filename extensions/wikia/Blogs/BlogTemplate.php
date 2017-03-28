@@ -315,8 +315,12 @@ class BlogTemplateClass {
 	 * @return bool
 	 */
 	public static function setParserHook( $parser ) {
-		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'parseTagForParser' ) );
+		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'renderBlog' ) );
 		return true;
+	}
+
+	public static function renderBlog( $input, $params, $parser, $frame = null ) {
+		return static::parseTagForParser($input, $params, $parser, $frame, false );
 	}
 
 	/**

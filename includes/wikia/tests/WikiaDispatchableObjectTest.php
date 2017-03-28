@@ -136,7 +136,7 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$dispatchableObjectMock->wg->User = $userMock;
 
 		if ( $exceptionExpected ) {
-			$this->setExpectedException( 'BadRequestException' );
+			$this->expectException( BadRequestException::class );
 		}
 
 		$dispatchableObjectMock->checkWriteRequest();

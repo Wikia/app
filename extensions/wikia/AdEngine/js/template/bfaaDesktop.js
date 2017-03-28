@@ -2,8 +2,12 @@
 define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.helper',
+	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
+	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
@@ -11,8 +15,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
 ], function (uapContext,
 			 btfBlocker,
+			 googleSlots,
+			 helper,
+			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
+			 VideoSettings,
 			 doc,
 			 log,
 			 throttle,
@@ -43,7 +51,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function runOnReady(iframe, params) {
+	function runOnReady(iframe, params, videoSettings) {
 		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
 		nav.style.top = '';
@@ -73,11 +81,14 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (uapVideo.isEnabled(params)) {
-			uapVideo.loadVideoAd(params);
+			uapVideo.loadVideoAd(videoSettings);
 		}
 	}
 
 	function show(params) {
+		var medrecSlotName = 'TOP_RIGHT_BOXAD',
+			videoSettings;
+
 		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
@@ -88,13 +99,22 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
 
+		videoSettings = VideoSettings.create(params);
+		resolvedState.setImage(videoSettings);
+
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			runOnReady(iframe, params);
+			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
+
+			if (params.loadMedrecFromBTF) {
+				// refresh after uapContext.setUapId
+				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+			}
 		});
 
 		unblockedSlots.forEach(btfBlocker.unblock);
+
 		log(['show', params.uap], log.levels.info, logGroup);
 	}
 

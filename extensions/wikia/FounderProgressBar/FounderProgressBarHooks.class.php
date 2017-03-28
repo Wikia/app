@@ -37,10 +37,6 @@ class FounderProgressBarHooks {
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BLOGPOST_ADD']));
 			}
-			// if topten list
-			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOPTENLIST_ADD']));
-			}
 
 			// edit profile page X
 			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {

@@ -171,12 +171,6 @@ module.exports = function (config) {
 			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js',
 
-			// ImageLazyLoad
-			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
-			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
-
 			// Thumbnails
 			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
@@ -225,6 +219,10 @@ module.exports = function (config) {
 			// Flow Tracking
 			'extensions/wikia/FlowTracking/scripts/createPageTracking.js',
 			'extensions/wikia/FlowTracking/scripts/spec/createPageTracking.spec.js',
+
+			// Article Video
+			'extensions/wikia/ArticleVideo/scripts/*.js',
+			'extensions/wikia/ArticleVideo/scripts/spec/*.spec.js',
 		]
 	});
 };

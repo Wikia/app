@@ -69,6 +69,9 @@ class DeadWikisStatsUpdaterMaintenance {
 		}
 	}
 
+	/**
+	 * @return WikiEvaluationCache
+	 */
 	protected function getCache() {
 		if (empty($this->cache)) {
 			$this->cache = new WikiEvaluationCache();

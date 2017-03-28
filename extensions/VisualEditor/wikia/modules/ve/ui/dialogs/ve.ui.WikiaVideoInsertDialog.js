@@ -53,25 +53,35 @@ ve.ui.WikiaVideoInsertDialog.prototype.addVideoMainPage = function () {
 
 	if ( mw.user.anonymous() ) {
 		var loginButtonConfig = {
-			$: this.$,
-			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
-			flags: ['primary']
-		};
-
-		this.logInButton = new OO.ui.ButtonWidget( loginButtonConfig );
+				$: this.$,
+				label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
+				flags: ['primary']
+			},
+			registerButtonConfig = {
+				$: this.$,
+				classes: [ 've-ui-wikiaRegisterButton' ],
+				label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-register-button' ),
+				flags: ['primary']
+			},
+			logInButton = new OO.ui.ButtonWidget( loginButtonConfig ),
+			registerButton = new OO.ui.ButtonWidget( registerButtonConfig );
 
 		this.$logInLabel = this.$( '<span>' )
 			.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-video-log-in-notice' ) );
 
-		this.logInButton.on( 'click', function () {
-			this.onLogInClick();
+		logInButton.on( 'click', function () {
+			this.onLogInButtonClicked();
+		}.bind( this ) );
+
+		registerButton.on( 'click', function () {
+			this.onRegisterButtonClicked();
 		}.bind( this ) );
 
 		this.$videoIcon = this.$( '<span>' )
 			.addClass( 'oo-ui-icon-video' );
 
 		this.$videoMainPage
-			.append( this.$videoIcon, this.$logInLabel, this.logInButton.$element )
+			.append( this.$videoIcon, this.$logInLabel, logInButton.$element, registerButton.$element )
 			.addClass( 've-ui-wikiaVideoInsertDialogLogIn' );
 	}
 

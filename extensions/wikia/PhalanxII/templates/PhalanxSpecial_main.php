@@ -45,7 +45,7 @@
 							</label>
 
 							<label for="wpPhalanxFormatExact">
-								<input type="checkbox" name="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
+								<input type="checkbox" name="wpPhalanxFormatExact" value="1" checked="checked" />
 								<?= wfMessage( 'phalanx-format-exact' )->escaped() ?>
 							</label>
 						</div>

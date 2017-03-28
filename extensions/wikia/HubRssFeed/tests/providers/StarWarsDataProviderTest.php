@@ -1,12 +1,19 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-include_once dirname( __FILE__ ) . '/../../' . "providers/StarWarsDataProvider.class.php";
+class StarWarsDataProviderTest extends TestCase {
 
-class StarWarsDataProviderTest extends WikiaBaseTest {
+	protected function setUp() {
+		parent::setUp();
+		require_once __DIR__ . '/../../' . "providers/StarWarsDataProvider.class.php";
+	}
 
 	/**
 	 * @covers StarWarsDataProvider::canBeTitle
-	 * @dataProvider testCanBeTitle_Provider
+	 * @dataProvider canBeTitleDataProvider
+	 *
+	 * @param string $text
+	 * @param string $expectedResult
 	 */
 	public function testCanBeTitle( $text, $expectedResult ) {
 		$dataProvider = new StarWarsDataProvider();
@@ -16,7 +23,10 @@ class StarWarsDataProviderTest extends WikiaBaseTest {
 
 	/**
 	 * @covers StarWarsDataProvider::cleanDescription
-	 * @dataProvider testCleanDescription_Provider
+	 * @dataProvider cleanDescriptionDataProvider
+	 *
+	 * @param string $description
+	 * @param bool $cleanedDescription
 	 */
 	public function testCleanDescription( $description, $cleanedDescription ) {
 		$dataProvider = new StarWarsDataProvider();
@@ -24,7 +34,7 @@ class StarWarsDataProviderTest extends WikiaBaseTest {
 		$this->assertEquals( $cleanedDescription, $cleanDescription( $description ) );
 	}
 
-	public function testCanBeTitle_Provider() {
+	public function canBeTitleDataProvider() {
 		return [
 			[ 'Hello World', true ],
 			[ 'hello world', false ],
@@ -36,7 +46,7 @@ class StarWarsDataProviderTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testCleanDescription_Provider() {
+	public function cleanDescriptionDataProvider() {
 		return [
 			[
 				'In celebration of Star Wars Day, Lucasfilm releases the first full-length trailer for the upcoming animated series Star Wars Rebels. Watch it here…',

@@ -16,7 +16,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 				build: noop
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				getSafeUri: function (url) {
 					return url;
 				}
@@ -27,6 +27,9 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 						AdsRequest: noop,
 						AdsRenderingSettings: noop
 					}
+				},
+				location: {
+					href: ''
 				}
 			}
 		};
@@ -34,7 +37,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 	function getModule(vastUrlBuilder) {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaSetup'](
 			vastUrlBuilder,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.win
@@ -100,5 +103,13 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 		});
 
 		expect(settings.loadVideoTimeout).toBe(10000);
+	});
+
+	it('createRequest with adsResponse if passed', function () {
+		var request = imaSetup.createRequest({
+				vastResponse: '<foo xml/>'
+			});
+
+		expect(request.adsResponse).toBe('<foo xml/>');
 	});
 });

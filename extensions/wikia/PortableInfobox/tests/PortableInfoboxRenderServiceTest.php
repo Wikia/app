@@ -53,6 +53,171 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $result );
 	}
 
+
+	/**
+	 * @param $data
+	 * @param $expected
+	 *
+	 * @dataProvider filterImagesDataProvider
+	 */
+	public function testFilterImages( $data, $expected ) {
+		$method = ( new ReflectionClass( 'PortableInfoboxRenderService' ) )->getMethod( 'filterImageData' );
+		$method->setAccessible( true );
+
+		$renderService = new PortableInfoboxRenderService();
+
+		$this->assertEquals( $expected, $method->invokeArgs( $renderService, [ $data ] ) );
+	}
+
+	public function filterImagesDataProvider() {
+		return [
+			[
+				'data' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => 'caption1',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => 'caption2',
+						'isVideo' => false,
+					],
+				],
+				'expected' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => 'caption1',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => 'caption2',
+						'isVideo' => false,
+					],
+				]
+			],
+			[
+				'data' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => '',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => 'caption2',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name3',
+						'key' => 'key3',
+						'alt' => 'alt3',
+						'caption' => 'caption3',
+						'isVideo' => false,
+					],
+				],
+				'expected' => [
+					1 => [
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => 'caption2',
+						'isVideo' => false,
+					],
+					2 => [
+						'url' => 'some.url.com',
+						'name' => 'name3',
+						'key' => 'key3',
+						'alt' => 'alt3',
+						'caption' => 'caption3',
+						'isVideo' => false,
+					]
+				]
+			],
+			[
+				'data' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => 'caption1',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => '',
+						'isVideo' => false,
+					],
+				],
+				'expected' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => 'caption1',
+						'isVideo' => false,
+					],
+				],
+			],
+			[
+				'data' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => '',
+						'isVideo' => false,
+					],
+					[
+						'url' => 'some.url.com',
+						'name' => 'name2',
+						'key' => 'key2',
+						'alt' => 'alt2',
+						'caption' => '',
+						'isVideo' => false,
+					],
+				],
+				'expected' => [
+					[
+						'url' => 'some.url.com',
+						'name' => 'name1',
+						'key' => 'key1',
+						'alt' => 'alt1',
+						'caption' => '',
+						'isVideo' => false,
+					],
+				]
+			],
+		];
+	}
+
 	/**
 	 * @param $input
 	 * @param $expectedOutput
@@ -60,7 +225,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $mockParams
 	 * @param $accentColor
 	 * @param $accentColorText
-	 * @dataProvider testRenderInfoboxDataProvider
+	 * @dataProvider renderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams, $accentColor, $accentColorText ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
@@ -73,7 +238,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
 
-	public function testRenderInfoboxDataProvider() {
+	public function renderInfoboxDataProvider() {
 		return [
 			[
 				'input' => [ ],

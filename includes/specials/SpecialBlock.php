@@ -305,6 +305,8 @@ class SpecialBlock extends FormSpecialPage {
 	 * Add header elements like block log entries, etc.
 	 */
 	protected function preText(){
+		$this->getOutput()->addModules( 'mediawiki.special.block' );
+
 		$text = $this->msg( 'blockiptext' )->parse();
 
 		$otherBlockMessages = array();

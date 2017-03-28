@@ -9,10 +9,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.adEngine.slot.scrollHandler')
+	require.optional('ext.wikia.adEngine.slot.scrollHandler'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
 ], function (
 	log,
 	adContext,
@@ -22,10 +23,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	AdElement,
 	googleTag,
 	slotTargeting,
-	recoveryHelper,
+	sourcePoint,
 	slotTweaker,
 	sraHelper,
-	scrollHandler
+	scrollHandler,
+	pageFair
 ) {
 	'use strict';
 
@@ -41,29 +43,40 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
-	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
-	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargetingData  - slot targeting details
-	 * @param {Object}   extra              - optional parameters
-	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
-	 * @param {string}   extra.forcedAdType - ad type for callbacks info
+	 * @param {Object}  slot                   - slot (ext.wikia.adEngine.slot.adSlot::create instance)
+	 * @param {string}  slotPath               - slot path
+	 * @param {Object}  slotTargetingData      - slot targeting details
+	 * @param {Object}  extra                  - optional parameters
+	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
+	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
+	 * @param {array}   extra.isSourcePointRecoverable - true if currently processed slot is recovered by SP
+	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
-				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
-			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			isRecoveryEnabled = sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled()),
+			isBlocking = sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()),
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
+			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
+			shouldPush = !isBlocking || adShouldBeRecovered,
 			uapId = uapContext.getUapId();
 
-		log(['shouldPush',
-			slot.name,
-			recoveryHelper.isBlocking(),
-			recoverableSlots,
-			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+		log(['sourcePoint - isBlocking, isRecoverable: ',
+			sourcePoint.isBlocking(),
+			extra.isSourcePointRecoverable], log.levels.debug, logGroup);
 
-		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
+		log(['pageFair - isBlocking, isRecoverable: ',
+			pageFair && pageFair.isBlocking(),
+			extra.isPageFairRecoverable], log.levels.debug, logGroup);
+
+		log(['slot name, isBlocking, adIsRecoverable: ',
+			slot.name,
+			isBlocking,
+			adIsRecoverable], log.levels.debug, logGroup);
+
+		// copy value
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
 
 		if (isHiddenOnStart(slot.name)) {
 			slotTweaker.hide(slot.name);
@@ -77,7 +90,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			log(['queueAd', slot.name, element], 'debug', logGroup);
+			log(['queueAd', slot.name, element], log.levels.debug, logGroup);
 			slot.container.appendChild(element.getNode());
 
 			googleTag.addSlot(element);
@@ -91,7 +104,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				}
 			}
 
-			if (shouldPushRecoverableAd) {
+			if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
 			}
 
@@ -103,13 +116,13 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
+				log(['onAdLoadCallback', slotElementId], log.levels.info, logGroup);
 				adDetect.onAdLoad(slot, gptEvent, iframe, extra.forcedAdType);
 			}, 0);
 		}
 
 		function gptCallback(gptEvent) {
-			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
+			log(['gptCallback', element.getId(), gptEvent], log.levels.info, logGroup);
 			element.updateDataParams(gptEvent);
 			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 			slot.renderEnded(gptEvent);
@@ -121,25 +134,37 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!shouldPush) {
-			log(['Push blocked', slot.name], 'debug', logGroup);
+			log(['Push blocked', slot.name], log.levels.debug, logGroup);
 			slot.collapse();
 			return;
 		}
 
-		log(['pushAd', slot.name], 'info', logGroup);
+		log(['pushAd', slot.name], log.levels.info, logGroup);
 		if (!slotTargetingData.flushOnly) {
 			googleTag.registerCallback(element.getId(), gptCallback);
 			googleTag.push(queueAd);
 		}
 
 		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
-			log('flushing', 'debug', logGroup);
+			log('flushing', log.levels.debug, logGroup);
 			googleTag.flush();
 		}
 
 		if (slotTargetingData.flushOnly) {
+			log(['flushOnly - success', slot.name], log.levels.debug, logGroup);
 			slot.success();
 		}
+	}
+
+	function refreshSlot(slot) {
+		log(['Refresh slot', slot.name, slot], log.levels.debug, logGroup);
+		refreshTargetingData(slot);
+		googleTag.refreshSlot(slot);
+	}
+
+	function refreshTargetingData(slot) {
+		slot.setTargeting('uap', uapContext.getUapId().toString());
+		return slot;
 	}
 
 	adContext.addCallback(function () {
@@ -150,6 +175,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	});
 
 	return {
+		refreshSlot: refreshSlot,
 		pushAd: pushAd
 	};
 });

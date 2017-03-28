@@ -42,6 +42,13 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
+	function isRecoveryModuleEnabled(wgCountries, contextVariable) {
+		var isGeoSupported = geo.isProperGeo(wgCountries),
+			isNotDisabledOnWiki = contextVariable !== false;
+
+		return !!(isNotDisabledOnWiki && isGeoSupported);
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -68,25 +75,26 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		// PageFair integration
+		// PageFair detection
 		if (!noExternals) {
 			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
 				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
-				canBeSampled = sampler.sample(1, 10);
+				canBeSampled = sampler.sample('pageFairDetection',  1, 10);
 
 			if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
 				context.opts.pageFairDetection = true;
 			}
 		}
 
+		// PageFair recovery
+		context.opts.pageFairRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
+
 		// SourcePoint recovery
-		if (
-			!noExternals &&
-			context.opts.sourcePointRecovery !== false &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)
-		) {
-			context.opts.sourcePointRecovery = true;
-		}
+		context.opts.sourcePointRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverSourcePointRecoveryCountries, context.opts.sourcePointRecovery);
 
 		// SourcePoint MMS
 		if (noExternals && context.opts.sourcePointMMS === true) {
@@ -100,9 +108,10 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
 		// Taboola

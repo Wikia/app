@@ -4,14 +4,14 @@
 class ARecoveryModuleTest extends WikiaBaseTest {
 	const BOOTSTRAP_CODE = 'BOOTSTRAP_CODE';
 
-	public function getUser($isLoggedIn ) {
+	public function getUser( $isLoggedIn ) {
 		$stubs = $this->getMockBuilder( User::class )->getMock();
 		$stubs->method( 'isLoggedIn' )
 			->willReturn( $isLoggedIn );
 		return $stubs;
 	}
 
-	public function getData() {
+	public function getDataSP() {
 		// User is logged in, SPRecoveryEnabled, SPMMSEnabled, isDisabled (expected value)
 		return [
 			// User is not logged in
@@ -19,45 +19,59 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 			[false, false, true, false],
 			[false, true, false, false],
 			[false, true, true, false],
+			[false, null, null, false],
+			[false, false, null, false],
 
 			// User is logged in
-			[true, true, true, true],
-			[true, false, false, true],
+			[true, true, false, true],
+			[true, false, false, true]
 		];
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getDataSP
 	 *
-	 * @param $userLoggedIn boolean - current user is loggedIn
-	 * @param $recoveryEnabled boolean - $wgAdDriverEnableSourcePointRecovery
-	 * @param $MMSEnabled boolean - $wgAdDriverEnableSourcePointMMS
-	 * @param $expected boolean - is recovery disabled
+	 * @param $isLoggedIn boolean
+	 * @param $wgAdDriverEnableSourcePointRecovery
+	 * @param $wgAdDriverEnableSourcePointMMS
+	 * @param $expected boolean - is SourcePoint recovery disabled
 	 */
-	public function testRecoveryDisabled($userLoggedIn, $recoveryEnabled, $MMSEnabled, $expected ) {
-		$this->mockGlobalVariable( 'wgUser', $this->getUser( $userLoggedIn ) );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $recoveryEnabled );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $MMSEnabled );
+	public function testSourcePointRecoveryDisabled( $isLoggedIn, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isLoggedIn ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $wgAdDriverEnableSourcePointRecovery );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
 
-		$this->assertEquals( $expected, ARecoveryModule::isDisabled() );
+		$this->assertEquals( $expected, (new ARecoveryModule())->isSourcePointRecoveryDisabled() );
+	}
+
+	public function getDataPF() {
+		// User is logged in, $wgAdDriverEnablePageFairRecovery, isOasis, isDisabled (expected value)
+		return [
+			// User is not logged in
+			[false, false, true, true],
+			[false, true, true, false],
+			[false, null, true, false],
+			[false, false, false, true],
+
+			// User is logged in
+			[true, true, true, true],
+			[true, false, true, true],
+		];
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getDataPF
 	 *
-	 * @param $userLoggedIn
-	 * @param $recoveryEnabled
-	 * @param $MMSEnabled
-	 * @param $isDisabled
+	 * @param $isLoggedIn boolean
+	 * @param $wgAdDriverEnablePageFairRecovery
+	 * @param $isOasis
+	 * @param $expected boolean - is PageFair recovery disabled
 	 */
-	public function testSourcePointCode($userLoggedIn, $recoveryEnabled, $MMSEnabled, $isDisabled ) {
-		$this->mockGlobalVariable( 'wgUser', $this->getUser( $userLoggedIn ) );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $recoveryEnabled );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $MMSEnabled );
+	public function testPageFairRecoveryDisabled( $isLoggedIn, $wgAdDriverEnablePageFairRecovery, $isOasis, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isLoggedIn ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnablePageFairRecovery', $wgAdDriverEnablePageFairRecovery );
+		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
 
-		$this->mockStaticMethod(WikiaApp::class, 'sendRequest', self::BOOTSTRAP_CODE);
-
-		$expectedValue = $isDisabled ? ARecoveryModule::DISABLED_MESSAGE : self::BOOTSTRAP_CODE;
-		$this->assertEquals( $expectedValue , ARecoveryModule::getSourcePointBootstrapCode() );
+		$this->assertEquals( $expected, (new ARecoveryModule())->isPageFairRecoveryDisabled() );
 	}
 }
