@@ -2,7 +2,7 @@
 
 class PlaybuzzTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'playbuzz';
-	const PLAYBUZZ_SCRIPT_SRC = '//cdn.playbuzz.com/widget/feed.js';
+	const PLAYBUZZ_SCRIPT_SRC = 'http://cdn.playbuzz.com/widget/feed.js';
 	const DATA_ITEM_ATTR = 'data-item';
 
 
@@ -16,8 +16,8 @@ class PlaybuzzTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'playbuzz-tag-could-not-render' )->escaped() . '</strong>';
 		}
 
-		return Html::element( 'script', [ 'src' => self::PLAYBUZZ_SCRIPT_SRC ] )
-			. Html::element( 'div', [ 'class' => 'pb_feed', 'data-item' => $args[self::DATA_ITEM_ATTR], 'data-version' => '2' ] );
+		$script = JSSnippets::addToStack(self::PLAYBUZZ_SCRIPT_SRC);
+		return $script . Html::element( 'div', [ 'class' => 'pb_feed', 'data-item' => $args[self::DATA_ITEM_ATTR], 'data-version' => '2' ] );
 	}
 
 	private function validateArgs( $args ) {
