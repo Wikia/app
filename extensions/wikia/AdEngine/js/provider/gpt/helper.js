@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			extra.isSourcePointRecoverable], log.levels.debug, logGroup);
 
 		log(['pageFair - isBlocking, isRecoverable: ',
-			pageFair.isBlocking(),
+			pageFair && pageFair.isBlocking(),
 			extra.isPageFairRecoverable], log.levels.debug, logGroup);
 
 		log(['slot name, isBlocking, adIsRecoverable: ',
