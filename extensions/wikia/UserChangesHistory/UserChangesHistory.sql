@@ -14,19 +14,3 @@ CREATE TABLE `user_login_history_summary` (
   `ulh_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `user_history` (
-  `user_id` int(5) unsigned NOT NULL,
-  `user_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_real_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_password` tinyblob NOT NULL,
-  `user_newpassword` tinyblob NOT NULL,
-  `user_email` tinytext NOT NULL,
-  `user_options` blob NOT NULL,
-  `user_touched` varchar(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_token` varchar(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `uh_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  KEY `user_name` (`user_name`(10)),
-  KEY `idx_user_history_timestamp` (`uh_timestamp`),
-  KEY `idx_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

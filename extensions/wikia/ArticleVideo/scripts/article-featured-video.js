@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest'], function (window, onScroll, tracker, OoyalaPlayer, abTest) {
+require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest', 'wikia.articleVideo.videoFeedbackBox'], function (window, onScroll, tracker, OoyalaPlayer, abTest, VideoFeedbackBox) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -17,9 +17,10 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				trackingMethod: 'analytics'
 			}),
 			collapsedVideoSize = {
-				width: 225,
-				height: 127
-			};
+				width: 300,
+				height: 169
+			},
+			videoFeedbackBox;
 
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
@@ -146,6 +147,9 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
 				collapsingDisabled = false;
+				if (videoFeedbackBox) {
+					videoFeedbackBox.show();
+				}
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-play'
@@ -160,30 +164,41 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			});
 
 			player.mb.subscribe(OO.EVENTS.PAUSED, 'featured-video', function () {
+				if (videoFeedbackBox) {
+					videoFeedbackBox.hide();
+				}
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-paused'
 				});
 			});
 
-			player.mb.subscribe(OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
+			player.mb.subscribe(window.OO.EVENTS.SIZE_CHANGED, 'featured-video', function (eventName, width) {
 				if (width === collapsedVideoSize.width) {
 					updateOoyalaSize();
 				}
 			});
 
-			player.mb.subscribe(OO.EVENTS.REPLAY, 'featured-video', function () {
+			player.mb.subscribe(window.OO.EVENTS.REPLAY, 'featured-video', function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'featured-video-replay'
 				});
 			});
 
-			player.mb.subscribe( OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function(eventName, time, totalTime) {
+			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-title-update', function () {
+				var videoTitle = player.getTitle(),
+					videoTime = ooyalaVideoController.getFormattedDuration(player.getDuration());
+
+				$videoContainer.find('.video-title').text(videoTitle);
+				$videoContainer.find('.video-time').text(videoTime);
+			});
+
+			player.mb.subscribe(window.OO.EVENTS.PLAYHEAD_TIME_CHANGED, 'featured-video', function (eventName, time, totalTime) {
 				var secondsPlayed = Math.floor(time),
 					percentage = Math.round(time / totalTime * 100);
 
-				if ( secondsPlayed % 5 === 0 && secondsPlayed !== playTime ) {
+				if (secondsPlayed % 5 === 0 && secondsPlayed !== playTime) {
 					playTime = secondsPlayed;
 					track({
 						action: tracker.ACTIONS.VIEW,
@@ -191,12 +206,17 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					});
 				}
 
-				if ( percentage % 10 === 0 && percentage !== percentagePlayTime ) {
+				if (percentage % 10 === 0 && percentage !== percentagePlayTime) {
 					percentagePlayTime = percentage;
 					track({
 						action: tracker.ACTIONS.VIEW,
 						label: 'featured-video-played-percentage-' + percentagePlayTime
 					});
+				}
+
+				if (secondsPlayed >= 5 && !videoFeedbackBox && player.getState() === window.OO.STATE.PLAYING) {
+					videoFeedbackBox = new VideoFeedbackBox();
+					videoFeedbackBox.init();
 				}
 			});
 

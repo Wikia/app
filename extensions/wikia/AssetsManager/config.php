@@ -112,7 +112,8 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointHelper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
@@ -243,7 +244,8 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointHelper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -265,7 +267,8 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointHelper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -348,6 +351,14 @@ $config['adengine2_porvata_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/vastLogger.js'
+	],
+];
+
+$config['ima_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/video/player/porvata/ima/20170219061519.js',
 	],
 ];
 
@@ -961,7 +972,8 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		// Recovery
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointHelper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -1064,7 +1076,8 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
 
 		// RecoveryEngine
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointHelper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
 	],
 ];
 
@@ -2222,12 +2235,13 @@ $config['design_system_on_site_notifications_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/templates.mustache.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.common.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.model.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.view.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.controller.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.common.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.text-formatter.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationOnSiteNotifications.tracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemTemplating.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemLoadingSpinner.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemEvent.js'
@@ -3102,21 +3116,6 @@ $config['flow_tracking_create_page_js'] = [
 	],
 ];
 
-/* Page header experiments */
-$config['page_header_experiments_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/PageHeaderExperiments/js/localSearchSuggestions.js'
-	]
-];
-
-$config['page_header_experiments_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/PageHeaderExperiments/styles/localSearchSuggestions.scss'
-	]
-];
-
 /* StoriesLinkTag */
 $config['storieslink_tag_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -3179,24 +3178,6 @@ $config['oasislight_bottom_js'] = [
 	],
 ];
 
-$config[ 'rwe_page_header_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/RWEPageHeader/styles/index.scss'
-	]
-];
-
-$config[ 'rwe_page_header_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/RWEPageHeader/scripts/rwe-page-header.js',
-		'//extensions/wikia/RWEPageHeader/scripts/search.js',
-		'//extensions/wikia/RWEPageHeader/scripts/searchSuggestions.js'
-	]
-];
-
 $config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -3222,6 +3203,7 @@ $config['article_featured_video_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 	],
 ];
 
@@ -3230,6 +3212,7 @@ $config['article_featured_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
+		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
 	],
 ];
 

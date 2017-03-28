@@ -1,4 +1,8 @@
 /*global define*/
+/**
+ * TODO: please remove this file and all its dependencies in config.php after cache invalidation
+ * see: https://wikia-inc.atlassian.net/browse/ADEN-4866
+ */
 define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
@@ -16,14 +20,23 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		cb = function (callback) {
 			callback();
 		},
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
-		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
+		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'LEFT_SKYSCRAPER_2',
+			'LEFT_SKYSCRAPER_3',
+			'INCONTENT_BOXAD_1',
+			'BOTTOM_LEADERBOARD',
+			'GPT_FLUSH'
+		];
 
 	function initEventQueues() {
 		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
@@ -43,20 +56,25 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 	 *
 	 * @returns {boolean}
 	 */
-	function isSourcePointRecoveryEnabled() {
+	function isEnabled() {
 		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
 
-		log(['isSourcePointRecoveryEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, log.levels.debug, logGroup]);
 		return enabled;
 	}
 
 	function isBlocking() {
-		log(['isBlocking', !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking)], 'debug', logGroup);
-		return isSourcePointRecoveryEnabled() && !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+		var isBlocking = !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
+
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
+		return isBlocking;
 	}
 
-	function isSourcePointRecoverable(slotName, recoverableSlots) {
-		return isSourcePointRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+	function isSlotRecoverable(slotName) {
+		var result = isEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+
+		log(['isSlotRecoverable', result], log.levels.info, logGroup);
+		return result;
 	}
 
 	function track(type) {
@@ -107,8 +125,8 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePointHelper', [
 		getSafeUri: getSafeUri,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isSourcePointRecoverable: isSourcePointRecoverable,
-		isSourcePointRecoveryEnabled: isSourcePointRecoveryEnabled,
+		isSlotRecoverable: isSlotRecoverable,
+		isEnabled: isEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};

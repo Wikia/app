@@ -54,7 +54,7 @@
   "global-navigation-fandom-overview-link-vertical-games": "游戏",
   "global-navigation-fandom-overview-link-vertical-movies": "电影",
   "global-navigation-fandom-overview-link-vertical-tv": "电视",
-  "global-navigation-notifications-title": "通知",
+  "global-navigation-notifications-title": "提醒",
   "global-navigation-messages-title": "消息",
   "global-navigation-search-cancel": "取消",
   "global-navigation-search-placeholder-fandom": "查询文章和社区...",
@@ -75,7 +75,7 @@
   "global-navigation-wikis-explore": "探索维基",
   "global-navigation-wikis-fandom-university": "Fandom课堂",
   "global-navigation-wikis-header": "维基",
-  "notifications-no-notifications-message": "没有通知。",
+  "notifications-no-notifications-message": "没有提醒。",
   "notifications-mark-all-as-read": "全部标记为已读",
   "notifications-replied-by-multiple-users-with-title": "__mostRecentUser__和__number__个其他用户<b>回复了</b>__postTitle__",
   "notifications-replied-by-multiple-users-no-title": "__mostRecentUser__和__number__个其他用户<b>回复了</b>你所关注的一条讨论",
@@ -91,5 +91,5 @@
   "notifications-reply-upvote-single-user-no-title": "1个用户<b>赞了</b>你的回复",
   "notifications-reply-upvote-multiple-users-with-title": "__number__个用户<b>赞了</b>你对__postTitle__的回复",
   "notifications-reply-upvote-multiple-users-no-title": "__number__个用户<b>赞了</b>你的回复",
-  "notifications-notifications": "通知"
+  "notifications-notifications": "提醒"
 }
