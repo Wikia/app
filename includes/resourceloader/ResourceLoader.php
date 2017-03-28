@@ -715,8 +715,13 @@ class ResourceLoader {
 	 * @param Exception $e to be shown to the user
 	 * @return string sanitized text that can be returned to the user
 	 */
-	protected function formatException( $e ) {
+	protected function formatException( Exception $e ): string {
 		global $wgShowExceptionDetails;
+
+		// SUS-1899: Ensure we log exceptions thrown in ResourceLoader
+		\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage(), [
+			'exception' => $e
+		] );
 
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
