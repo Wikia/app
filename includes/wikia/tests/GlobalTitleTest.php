@@ -4,7 +4,7 @@
  * @group GlobalTitle
  */
 class GlobalTitleTest extends WikiaBaseTest {
-	function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$this->disableMemCache();
@@ -69,7 +69,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testUrlsSpacesProvider
+	 * @dataProvider urlsSpacesProvider
 	 */
 	function testUrlsSpaces( $environment, $title, $namespace, $city_id, $expectedUrl ) {
 		$this->mockEnvironment( $environment );
@@ -133,7 +133,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertEquals( GlobalTitle::stripArticlePath( $path, $articlePath ), $expResult );
 	}
 
-	public function testUrlsSpacesProvider() {
+	public function urlsSpacesProvider() {
 		return [
 			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],

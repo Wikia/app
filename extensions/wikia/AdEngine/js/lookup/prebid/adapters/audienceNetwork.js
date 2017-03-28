@@ -18,21 +18,18 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 					],
 					placementId: '963689110376230_1245837502161388'
 				},
-				// TODO: commented out as a part of partial rollout together with setting
-				// TODO wgAdDriverAudienceNetworkBidderCountries = ['XX']
-				// TODO https://wikia-inc.atlassian.net/browse/ADEN-4767
-				// MOBILE_IN_CONTENT: {
-				// 	sizes: [
-				// 		[300, 250]
-				// 	],
-				// 	placementId: '963689110376230_1245838625494609'
-				// },
-				// MOBILE_PREFOOTER: {
-				// 	sizes: [
-				// 		[300, 250]
-				// 	],
-				// 	placementId: '963689110376230_1245839585494513'
-				// }
+				MOBILE_IN_CONTENT: {
+					sizes: [
+						[300, 250]
+					],
+					placementId: '963689110376230_1245838625494609'
+				},
+				MOBILE_PREFOOTER: {
+					sizes: [
+						[300, 250]
+					],
+					placementId: '963689110376230_1245839585494513'
+				}
 			}
 		};
 

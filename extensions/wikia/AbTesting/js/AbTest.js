@@ -63,6 +63,10 @@
 		return ret;
 	})( beacon );
 
+	AbTest.isExperimentActive = function( expName ) {
+		return expName in AbTest.experiments;
+	};
+
 	// Returns active group name for the given experiment
 	AbTest.getGroup = function( expName ) {
 		var exp = getExperiment(expName,'getGroup'),

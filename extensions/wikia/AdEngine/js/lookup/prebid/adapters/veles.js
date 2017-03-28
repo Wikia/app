@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.lookup.prebid.priceParsingHelper',
 	'ext.wikia.adEngine.utils.sampler',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
@@ -8,10 +9,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
+], function (adContext, priceParsingHelper, sampler, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
-	var bidderName = 'veles',
+	var adxAdSystem = 'AdSense/AdX',
+		bidderName = 'veles',
 		loggerEndpoint = '/wikia.php?controller=AdEngine2Api&method=postVelesInfo',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		slots = {
@@ -40,7 +42,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	function parseParameters(adParameters) {
 		var parameters = {};
 
-		if (adParameters.childNodes.length && adParameters.childNodes[0].nodeValue) {
+		if (adParameters && adParameters.childNodes && adParameters.childNodes.length && adParameters.childNodes[0].nodeValue) {
 			adParameters.childNodes[0].nodeValue.split(',').forEach(function (pair) {
 				var data = pair.split('=');
 
@@ -66,11 +68,56 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
+	function getPriceFromTitle(responseXML) {
+		var lineItemTitle = responseXML.documentElement.querySelector('AdTitle');
+
+		if (lineItemTitle) {
+			return priceParsingHelper.getPriceFromString(lineItemTitle.textContent);
+		}
+	}
+
+	function getPriceFromConfigId(ad) {
+		var adConfigPrice,
+			id = ad.getAttribute('id');
+
+		if (id) {
+			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[id];
+			if (adConfigPrice) {
+				return parseInt(adConfigPrice, 10) / 100;
+			}
+		}
+	}
+
+	function getPriceFromConfigAdSystem(ad) {
+		var adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem],
+			adSystem;
+
+		if (adConfigPrice) {
+			adSystem = ad.querySelector('AdSystem');
+			if (adSystem && adSystem.textContent === adxAdSystem) {
+				return parseInt(adConfigPrice, 10) / 100;
+			}
+		}
+	}
+
+	function getPriceFromAdParameters(responseXML) {
+		var parameters = parseParameters(responseXML.documentElement.querySelector('AdParameters'));
+
+		if (parameters.veles) {
+			return parseInt(parameters.veles, 10) / 100;
+		}
+	}
+
+	/**
+	 * Process VAST response to get price for this video or 0 if
+	 * response invalid or price data couldn't be find.
+	 *
+	 * @param vastRequest
+	 * @returns {number}
+	 */
 	function fetchPrice(vastRequest) {
 		var ad,
-			adParameters,
-			adConfigPrice,
-			parameters,
+			price = 0,
 			responseXML = vastRequest.responseXML;
 
 		if (!responseXML) {
@@ -78,27 +125,27 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 
 		ad = responseXML.documentElement.querySelector('Ad');
-		if (ad && ad.getAttribute('id') && instantGlobals.wgAdDriverVelesBidderConfig) {
-			adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[ad.getAttribute('id')];
-			if (adConfigPrice) {
-				return parseInt(adConfigPrice, 10) / 100;
+
+		if (ad) {
+			price = getPriceFromTitle(responseXML);
+
+			if (!price && instantGlobals.wgAdDriverVelesBidderConfig) {
+				var priceFromConfig = getPriceFromConfigId(ad);
+
+				price = priceFromConfig ? priceFromConfig : getPriceFromConfigAdSystem(ad);
 			}
 		}
 
-		adParameters = responseXML.documentElement.querySelector('AdParameters');
-		if (adParameters) {
-			parameters = parseParameters(adParameters);
-
-			if (parameters.veles) {
-				return parseInt(parameters.veles, 10) / 100;
-			}
+		if (!price) {
+			price = getPriceFromAdParameters(responseXML);
 		}
 
-		if (ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
+		// request was invalid - log it to Kibana
+		if (!price && ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
 			logVast(vastRequest);
 		}
 
-		return 0;
+		return price;
 	}
 
 	function isEnabled() {
