@@ -35,7 +35,7 @@
  *
  * @file
  */
-
+tideways_enable( TIDEWAYS_FLAGS_NO_BUILTINS );
 # Bail on old versions of PHP.  Pretty much every other file in the codebase
 # has structures (try/catch, foo()->bar(), etc etc) which throw parse errors in
 # PHP 4. Setup.php and ObjectCache.php have structures invalid in PHP 5.0 and
@@ -56,3 +56,5 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();
+
+echo '<script>'.json_encode( tideways_disable() ).'</script>';
