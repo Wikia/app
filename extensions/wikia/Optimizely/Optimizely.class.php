@@ -19,13 +19,6 @@ class Optimizely {
 		global $wgOptimizelyLoadFromOurCDN, $wgWikiaEnvironment;
 
 		if ( static::shouldLoadOptimizely() ) {
-			// load optimizely_blocking_js on wikiamobile
-			if ( F::app()->checkSkin( [ 'wikiamobile' ], $skin ) ) {
-				foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
-					$scripts .= '<script src="' . $script . '"></script>';
-				}
-			}
-
 			// On devboxes and sandboxes Optimizely script should be laoded from original CDN for the ease of testing
 			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
 			// by cron for sandbox).
@@ -43,18 +36,9 @@ class Optimizely {
 	}
 
 	public static function shouldLoadOptimizely() {
-		global $wgNoExternals, $wgEnableOptimizelyDesktop;
+		global $wgNoExternals;
 
-		if (
-			!F::app()->checkSkin( [ 'wikiamobile' ] ) &&
-			(
-				!empty( $wgNoExternals ) ||
-				empty( $wgEnableOptimizelyDesktop )
-			)
-		) {
-			return false;
-		}
-		return true;
+		return empty( $wgNoExternals );
 	}
 
 	protected static function loadFromOurCDN() {
