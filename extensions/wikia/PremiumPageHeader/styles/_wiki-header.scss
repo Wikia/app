@@ -1,14 +1,15 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 $image-width: 430px;
 
 .pph-hollow-button {
-	align-items: center;
+	@include align-items(center);
+	@include flexbox();
 	background-color: rgba($color-buttons, .2);
 	border: 1px solid $color-button-text;
 	color: $color-button-text;
-	display: flex;
 	font-size: 10px;
 	font-weight: bold;
 	padding: 8px 12px;
@@ -72,13 +73,14 @@ $image-width: 430px;
 }
 
 .pph-tally-area {
-	align-items: flex-start;
-	display: flex;
+	@include align-items(flex-start);
+	@include flexbox();
 	font-weight: 600;
 	margin: 20px;
 }
 
 .pph-wiki-header {
+	@include flexbox();
 	background: {
 		color: $color-buttons;
 		position: right center;
@@ -86,7 +88,6 @@ $image-width: 430px;
 		size: auto 100%;
 	}
 	color: $color-button-text;
-	display: flex;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	margin: -1px -31px 8px;
@@ -141,7 +142,7 @@ $image-width: 430px;
 }
 
 .pph-wordmark-text {
-	flex: 1;
+	@include flex(1);
 	font-size: 28px;
 	font-weight: 600;
 	line-height: 1;
