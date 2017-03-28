@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
 	'wikia.window'
-], function (adUnitBuilder, recoveryHelper, win) {
+], function (adUnitBuilder, sourcePoint, win) {
 	'use strict';
 	var slots = {};
 
