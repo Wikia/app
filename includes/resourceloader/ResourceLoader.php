@@ -719,7 +719,7 @@ class ResourceLoader {
 		global $wgShowExceptionDetails;
 
 		// SUS-1899: Ensure we log exceptions thrown in ResourceLoader
-		\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage(), [
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 			'exception' => $e
 		] );
 
