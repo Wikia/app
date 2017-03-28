@@ -194,6 +194,15 @@ class ForumDumper {
 		$title = $articleComment->getMetadata( 'title', '' );
 		$parsedText = $this->getParsedText( $articleComment );
 
+		if ( empty( $parsedText ) ) {
+			// If there's nothing to parse, use rawText as the default
+			$parsedText = $rawText;
+		} else {
+			// If there is parsed text, use the tag stripped version as rawText so it can
+			// be the plaintext version (otherwise its full of wikitext)
+			$rawText = strip_tags( $parsedText );
+		}
+
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
 			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
@@ -221,7 +230,7 @@ class ForumDumper {
 
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
-			return $wikiText;
+			return "";
 		}
 
 		$formattedText = $articleComment->getText();
