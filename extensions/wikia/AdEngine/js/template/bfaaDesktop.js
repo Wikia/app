@@ -106,14 +106,14 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
+
+			if (params.loadMedrecFromBTF) {
+				// refresh after uapContext.setUapId
+				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+			}
 		});
 
 		unblockedSlots.forEach(btfBlocker.unblock);
-
-		if (params.loadMedrecFromBTF) {
-			// refresh after uapContext.setUapId
-			helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
-		}
 
 		log(['show', params.uap], log.levels.info, logGroup);
 	}
