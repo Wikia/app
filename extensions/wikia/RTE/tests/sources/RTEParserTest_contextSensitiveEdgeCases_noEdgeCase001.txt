@@ -1,0 +1,6 @@
+{| class="wikitable sortable"
+! This is
+| a valid table
+|}
+
+And this content is valid.

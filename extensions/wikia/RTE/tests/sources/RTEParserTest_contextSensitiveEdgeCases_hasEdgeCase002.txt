@@ -1,0 +1,5 @@
+<div class="edge-case">{|
+| so is
+| this table
+|}
+</div>

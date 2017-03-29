@@ -1,0 +1,3 @@
+<div class="edge-case">*this list
+*is an edge case
+</div>
