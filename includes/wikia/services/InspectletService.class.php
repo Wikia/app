@@ -5,23 +5,8 @@
  * This service provides interface to add Inspectlet integrations to parts of the product
  */
 class InspectletService extends WikiaService {
-	const MAIN_PAGE = 'MainPage';
-	const HARRY_POTTER_ARTICLES = 'HarryPotterArticles';
 
-	private static $applicationIds = [
-		/**
-		 * @see https://wikia-inc.atlassian.net/browse/WW-437
-		 *
-		 * In inspectlet targeting is set to Main pages on:
-		 * - marvel.wikia.com
-		 * - harrypotter.wikia.com
-		 * - arrow.wikia.com
-		 * - westworld.wikia.com
-		 * - titanfall.wikia.com
-		 * - overwatch.wikia.com
-		 */
-		self::MAIN_PAGE => 1469642463,
-	];
+	private static $applicationIds = [];
 
 	private $inspectletExperimentId;
 
