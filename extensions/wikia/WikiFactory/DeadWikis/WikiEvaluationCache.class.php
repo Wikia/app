@@ -11,11 +11,7 @@ class WikiEvaluationCache {
 
 	protected $slaveDb = null;
 	protected $masterDb = null;
-	
-	public function __construct() {
-		
-	}
-	
+
 	protected function getSlaveDb() {
 		return $this->getMasterDb();
 		/* // database noreptemp isn't replicated to slaves
@@ -34,8 +30,15 @@ class WikiEvaluationCache {
 		}
 		return $this->masterDb;
 	}
-	
-	protected function insertUpdateSql( $db, $tableName, $keys, $data ) {
+
+	/**
+	 * @param DatabaseMysqli $db
+	 * @param $tableName
+	 * @param $keys
+	 * @param $data
+	 * @return string
+	 */
+	protected function getInsertUpdateSql($db, $tableName, $keys, $data ) {
 		$tableName = $db->tableName($tableName);
 		$tableKeys = array_merge(array_keys($keys),array_keys($data));
 		$tableKeys = $db->makeList($tableKeys,LIST_NAMES);
@@ -45,7 +48,8 @@ class WikiEvaluationCache {
 		return sprintf("INSERT INTO %s (%s) VALUES (%s) ON DUPLICATE KEY UPDATE %s;",
 			$tableName, $tableKeys, $tableValues, $tableUpdate );
 	}
-	
+
+	# TODO: not used
 	public function get( $id ) {
 		$db = $this->getSlaveDb();
 		return $db->selectRow( 
@@ -73,7 +77,11 @@ class WikiEvaluationCache {
 		$db->freeResult($set);
 		return $data;
 	}
-	
+
+	/**
+	 * @param array $data
+	 * @return bool
+	 */
 	public function update( $data ) {
 		$id = intval($data['city_id']);
 		if ($id <= 0) {
@@ -85,8 +93,8 @@ class WikiEvaluationCache {
 			'city_id' => $id,
 		);
 		$db = $this->getMasterDb();
-		$sql = $this->insertUpdateSql($db, self::TABLE_NAME, $keys, $data);
-		$db->query($sql);
+		$sql = $this->getInsertUpdateSql($db, self::TABLE_NAME, $keys, $data);
+		$db->query($sql, __METHOD__);
 		return $db->affectedRows() > 0;
 	}
 	
