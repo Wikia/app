@@ -157,6 +157,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 	protected $statsCache = null;
 
+	/**
+	 * @return WikiEvaluationCache
+	 */
 	protected function getStatsCache() {
 		if (empty($this->statsCache)) {
 			$this->statsCache = new WikiEvaluationCache();

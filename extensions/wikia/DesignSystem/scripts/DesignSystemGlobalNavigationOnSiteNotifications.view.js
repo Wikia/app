@@ -10,15 +10,17 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 	], function ($, log, window, Event, templating, Spinner, TextFormatter, common) {
 		'use strict';
 
-		var isVisibleClass = 'wds-is-visible',
+		var isHiddenClass = 'wds-is-hidden',
 			almostBottom = 100,
 			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
 		function View() {
-			this.onDropDown = new Event(this);
 			this.onLoadMore = new Event(this);
-			this.onMarkAllAsRead = new Event(this);
-			this.onMarkAsRead = new Event(this);
+			this.onDropDownClick = new Event(this);
+			this.onMarkAllAsReadClick = new Event(this);
+			this.onMarkAsReadClick = new Event(this);
+			this.onNotificationClick = new Event(this);
+			this.onNotificationRender = new Event(this);
 
 			this._spinner = new Spinner(14);
 			this._textFormatter = new TextFormatter();
@@ -26,7 +28,6 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			this._$container = $('#notificationContainer');
 			this._$markAllAsReadButton = $('#markAllAsReadButton');
 			this._$scrollableElement = $('.wds-notifications__notification-list');
-
 
 			this.registerEventHandlers = function (model) {
 				this.addDropdownLoadingEvent();
@@ -37,9 +38,9 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				model.loadingStatusChanged.attach(function (_, isLoading) {
 					if (isLoading === true) {
 						this._$container.append(
-							'<li class="loader">' + this._spinner.html + '</li>');
+							'<li id="on-site-notifications-loader">' + this._spinner.html + '</li>');
 					} else {
-						$('.loader').remove();
+						$('#on-site-notifications-loader').remove();
 					}
 				}.bind(this));
 
@@ -94,12 +95,12 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 
 			this.addMarkAllAsReadEvent = function () {
 				this._$markAllAsReadButton.click(
-					this.onMarkAllAsRead.notify.bind(this.onMarkAllAsRead));
+					this.onMarkAllAsReadClick.notify.bind(this.onMarkAllAsReadClick));
 			};
 
 			this.addDropdownLoadingEvent = function () {
 				var $dropdown = $('#onSiteNotificationsDropdown');
-				$dropdown.click(this.onDropDown.notify.bind(this.onDropDown));
+				$dropdown.click(this.onDropDownClick.notify.bind(this.onDropDownClick));
 			};
 
 			this._mapToView = function (notifications) {
@@ -126,6 +127,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				return notifications.map(function (notification) {
 					return {
 						icon: getIcon(notification.type),
+						type: notification.type,
 						uri: notification.uri,
 						latestEventUri: notification.latestEventUri,
 						showSnippet: !notification.title,
@@ -147,6 +149,17 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				var html = templating.renderNotifications(this._mapToView(notifications));
 				this._$container.append(html);
 				this._bindMarkAsReadHandlers();
+				this._bindNotificationClickedHandlers();
+				this._notifyRendered(notifications);
+			};
+
+			this._notifyRendered = function (notifications) {
+				notifications.forEach(function (notification) {
+					this.onNotificationRender.notify({
+						uri: notification.uri,
+						type: notification.type
+					});
+				}.bind(this));
 			};
 
 			this._bindMarkAsReadHandlers = function () {
@@ -154,40 +167,52 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					.click(this._markAsRead.bind(this));
 			};
 
-			this._markAsRead = function (e) {
+			this._bindNotificationClickedHandlers = function () {
+				$(this._$container).find('.wds-notification-card__outer-body')
+					.click(this._clickNotification.bind(this));
+			};
+
+			this._clickNotification = function (e) {
+				this.onNotificationClick.notify(this._findId(e));
+			};
+
+			this._findId = function (e) {
 				try {
-					var id = $(e.target).closest('.wds-notification-card').attr('data-uri');
-					this.onMarkAsRead.notify(id);
+					var $element = $(e.target).closest('.wds-notification-card');
+					return {
+						uri: $element.attr('data-uri'),
+						type: $element.attr('data-type')
+					};
 				} catch (e) {
-					log('Failed to mark as read ' + e, log.levels.error, common.logTag);
+					log('Failed to find uri ' + e, log.levels.error, common.logTag);
 				}
+			};
+
+			this._markAsRead = function (e) {
+				this.onMarkAsReadClick.notify(this._findId(e));
 				return false;
 			};
 
 			this.renderZeroState = function () {
-				$('.wds-notifications__zero-state').addClass(isVisibleClass);
+				$('.wds-notifications__zero-state').removeClass(isHiddenClass);
 			};
 
 			this.renderUnreadCount = function (count) {
 				if (count > 0) {
-					this._$markAllAsReadButton.addClass(isVisibleClass);
+					this._$markAllAsReadButton.removeClass(isHiddenClass);
 					this._$notificationsCount.html(count).parent('.bubbles').addClass('show');
 				} else {
-					this._$markAllAsReadButton.removeClass(isVisibleClass);
+					this._$markAllAsReadButton.addClass(isHiddenClass);
 					this._$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 			};
 
-			/**
-			 * .classRemove does not work on SVG
-			 * @param element
-			 */
 			function removeIsUnreadClass(element) {
-				element.classList.remove('wds-is-unread');
+				element.removeClass('wds-is-unread');
 			}
 
 			function findUnreadAndClearClass($element) {
-				$element.find('.wds-icon.wds-is-unread').each(function (_, element) {
+				$element.find('.wds-notification-card.wds-is-unread').each(function (_, element) {
 					removeIsUnreadClass(element);
 				});
 			}
@@ -197,8 +222,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.renderNotificationAsRead = function (id) {
-				var container = this._$container.find('[data-uri="' + id + '"]');
-				findUnreadAndClearClass(container);
+				var element = this._$container.find('[data-uri="' + id + '"]');
+				removeIsUnreadClass(element);
 			};
 
 		}
