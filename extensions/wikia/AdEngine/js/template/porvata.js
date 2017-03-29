@@ -5,9 +5,38 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (DOMElementTweaker, porvata, googleIma, videoSettings, doc, mercuryListener) {
+], function (DOMElementTweaker, porvata, googleIma, videoSettings, doc, win, mercuryListener) {
 	'use strict';
+
+	function hideOtherBidsForVeles(params) {
+		if (params.adProduct === 'veles' && params.slotName === 'TOP_LEADERBOARD' && win.pbjs) {
+			var bidsReceived = win.pbjs._bidsReceived;
+
+			bidsReceived.filter(function (bid) {
+				return bid.adId === params.hbAdId;
+			}).forEach(function (usedBid) {
+				bidsReceived = bidsReceived.filter(function (bid) {
+					var result = true;
+
+					if (bid.bidderRequestId === usedBid.bidderRequestId && bid.bidder === params.adProduct) {
+						if (bid.adUnitCode === params.slotName) {
+							result = true;
+						} else {
+							result = false;
+						}
+					} else {
+						result = true;
+					}
+
+					return result;
+				});
+			});
+
+			win.pbjs._bidsReceived = bidsReceived;
+		}
+	}
 
 	function getVideoContainer(slotName) {
 		var container = doc.createElement('div'),
@@ -38,6 +67,8 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.originalContainer = params.container;
 			params.container = getVideoContainer(params.slotName);
 		}
+
+		hideOtherBidsForVeles(params);
 
 		porvata.inject(videoSettings.create(params)).then(function (video) {
 			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
