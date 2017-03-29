@@ -1,5 +1,5 @@
-<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-hidden-svg' ) ?>
-<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small', 'wds-hidden-svg' ) ?>
+<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-is-hidden' ) ?>
+<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small', 'wds-is-hidden' ) ?>
 
 <?
 	// wds-global-navigation__notifications-menu wds-dropdown notifications-container bubbles
