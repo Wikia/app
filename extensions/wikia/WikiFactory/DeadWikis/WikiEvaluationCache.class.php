@@ -49,35 +49,6 @@ class WikiEvaluationCache {
 			$tableName, $tableKeys, $tableValues, $tableUpdate );
 	}
 
-	# TODO: not used
-	public function get( $id ) {
-		$db = $this->getSlaveDb();
-		return $db->selectRow( 
-			self::TABLE_NAME, 
-			'*', 
-			array(
-				'city_id' => intval($id)
-			),
-			__METHOD__
-		);
-	}
-	
-	public function find( $conds, $fields = '*' ) {
-		$db = $this->getSlaveDb();
-		$set = $db->select(
-			self::TABLE_NAME,
-			$fields,
-			$conds,
-			__METHOD__
-		);
-		$data = array();
-		while ($row = $set->fetchRow()) {
-			$data[] = $row;
-		}
-		$db->freeResult($set);
-		return $data;
-	}
-
 	/**
 	 * @param array $data
 	 * @return bool
