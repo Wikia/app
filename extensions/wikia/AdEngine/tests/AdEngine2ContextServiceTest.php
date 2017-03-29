@@ -415,4 +415,66 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$this->assertEquals( $expected, $result );
 	}
+
+	/**
+	 * @param $expected
+	 * @param $wgEnableArticleFeaturedVideo
+	 * @param $wgArticleVideoFeaturedVideos
+	 * @param $message
+	 *
+	 * @dataProvider featuredVideoDataProvider
+	 */
+	public function testFeaturedVideoInContext( $expected, $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos, $message ) {
+		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
+		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getPrefixedDBkey' ] )
+			->getMock();
+		$titleMock->method( 'getPrefixedDBkey' )
+			->willReturn( 'test' );
+
+
+		$adContextService = new AdEngine2ContextService();
+		$result = $adContextService->getContext( $titleMock, 'test' );
+
+		$this->assertEquals(
+			$expected,
+			isset( $result['targeting']['hasFeaturedVideo'] ) && $result['targeting']['hasFeaturedVideo'],
+			$message
+		);
+	}
+
+	public function featuredVideoDataProvider() {
+		return [
+			// hasFeaturedVideo result, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
+			[ false, false, [], 'hasFeaturedVideo is set when extension disabled' ],
+			[ false, true, [], 'hasFeaturedVideo is set when no data available' ],
+			[ false, true, [ 'test' => [] ], 'hasFeaturedVideo is set when data missing' ],
+			[ true, true, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+			]
+			], 'hasFeaturedVideo is not set when correct data available' ],
+			[ false, true, [
+				'wrong_article_name' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], 'hasFeaturedVideo is set when data missing for title' ],
+			[ false, false, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
+		];
+	}
 }
