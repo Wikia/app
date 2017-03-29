@@ -21,7 +21,6 @@ class InspectletService extends WikiaService {
 		 * - overwatch.wikia.com
 		 */
 		self::MAIN_PAGE => 1469642463,
-		self::HARRY_POTTER_ARTICLES => 904885521
 	];
 
 	private $inspectletExperimentId;
