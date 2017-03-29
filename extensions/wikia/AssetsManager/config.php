@@ -3061,8 +3061,7 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/styles/design-system.scss',
-		'//extensions/wikia/DesignSystem/styles/design-system-notifications.scss'
+		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],
 ];
 
