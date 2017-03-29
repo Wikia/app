@@ -155,18 +155,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $result;
 	}
 
-	protected $statsCache = null;
-
-	/**
-	 * @return WikiEvaluationCache
-	 */
-	protected function getStatsCache() {
-		if (empty($this->statsCache)) {
-			$this->statsCache = new WikiEvaluationCache();
-		}
-		return $this->statsCache;
-	}
-
 	protected function ts( $ts ) {
 		if ($ts == 0) {
 			return '1970-01-01 00:00:01';
@@ -174,29 +162,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			return wfTimestamp( TS_DB, $ts );
 		}
 	}
-
-	protected function updateWikiStats( $wiki ) {
-		$data = $wiki;
-
-		$data['city_id'] = $data['id'];
-		$data['city_public'] = $data['public'];
-		$data['created'] = $this->ts($data['created']);
-		$data['lastedited'] = $this->ts($data['lastedited']);
-
-		$catData = WikiFactory::getCategory($data['id']);
-		$data['city_cat_name'] = $catData ? $catData->cat_name : '';
-
-		unset($data['public']);
-		unset($data['id']);
-		unset($data['url']);
-
-		$this->getStatsCache()->update($data);
-	}
-
-	protected function deleteWikiStats( $id ) {
-		$this->getStatsCache()->delete($id);
-	}
-
 
 	protected $oracle = null;
 
@@ -388,7 +353,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
 				$this->disableDiscussion( $id );
-				$this->deleteWikiStats($id);
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 			} else {
@@ -542,11 +506,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 				}
 				if (isset($classifications[self::DELETE_SOON][$id])) {
 					$status = 'deleteSoon';
-				}
-				if (!$this->readOnly) {
-					$this->updateWikiStats(array_merge($wiki, array(
-							'status' => $status,
-					)));
 				}
 			}
 			echo "Disabling wikis...\n";
