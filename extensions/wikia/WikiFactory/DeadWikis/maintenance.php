@@ -677,6 +677,5 @@ class AutomatedDeadWikisDeletionMaintenance {
  */
 $wgAutoloadClasses['WikiEvaluationDataSource'] = dirname(__FILE__). "/WikiEvaluationDataSource.class.php";
 $wgAutoloadClasses['WikiEvaluationOracle'] = dirname(__FILE__). "/WikiEvaluationOracle.class.php";
-$wgAutoloadClasses['WikiEvaluationCache'] = dirname(__FILE__). "/WikiEvaluationCache.class.php";
 $maintenance = new AutomatedDeadWikisDeletionMaintenance( $options );
 $maintenance->execute();
