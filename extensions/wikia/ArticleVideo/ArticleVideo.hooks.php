@@ -7,7 +7,7 @@ class ArticleVideoHooks {
 
 		$relatedVideo =
 			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		$isFeaturedVideoEmbedded = self::isFeaturedVideoEmbedded( $title );
+		$isFeaturedVideoEmbedded = ArticleVideoContext::isFeaturedVideoEmbedded( $title );
 		$isRelatedVideoEmbedded = self::isRelatedVideoEmbedded( $relatedVideo );
 
 		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
@@ -32,7 +32,7 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		if ( self::isFeaturedVideoEmbedded( $title ) ) {
+		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $title ) ) {
 			$vars['wgOoyalaParams'] = [
 				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
 				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
@@ -53,23 +53,11 @@ class ArticleVideoHooks {
 		return true;
 	}
 
-	public static function isFeaturedVideoEmbedded( $title ) {
-		$wg = F::app()->wg;
-
-		return $wg->enableArticleFeaturedVideo &&
-		       isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-		       self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
-	}
-
 	public static function isRelatedVideoEmbedded( $relatedVideo ) {
 		$wg = F::app()->wg;
 
 		return $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) &&
-		       !empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
-	}
-
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+			!empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
 	}
 
 	private static function isRelatedVideosValid( $relatedVideo ) {
