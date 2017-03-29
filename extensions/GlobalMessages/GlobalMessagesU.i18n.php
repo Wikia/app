@@ -90,6 +90,7 @@ See the [[Special:NewFiles|gallery of new files]] for a more visual overview.',
 	'uploadfromurl-queued' => 'Your upload has been queued.',
 	'uploaddisabledtext' => 'Unfortunately photo uploading is temporarily disabled while we work on our servers. Sorry for this inconvenience and please try again in a few hours.',
 	'uploadscripted' => 'This file contains HTML or script code that may be erroneously interpreted by a web browser.',
+	'upload-scripted-dtd' => 'Cannot upload SVG files that contain a non-standard DTD declaration.',
 	'uploadscriptednamespace' => 'This SVG file contains an illegal namespace \'$1\'',
 	'uploadinvalidxml' => 'The XML in the uploaded file could not be parsed.',
 	'uploadvirus' => 'The file may contain a virus! Details: $1',
@@ -368,6 +369,7 @@ See also:
 $1 is the value in KB/MB/GB',
 	'upload-description' => 'Caption above a section of the [[Special:Upload]] page',
 	'upload-options' => 'Caption above a section of the [[Special:Upload]] page',
+	'upload-scripted-dtd' => 'Used as an error message when uploading an svg file that contains a DTD declaration where the system identifier of the DTD is for something other than the standard SVG DTDS, or it is a SYSTEM DTD, or the public identifier does not start with -//W3C//. Note that errors related to the internal dtd subset do not use this error message.',
 	'upload-proto-error-text' => '"Remote upload" is explained on [http://en.wikipedia.org/wiki/Uploading_and_downloading#Remote_upload Wikipedia].',
 	'upload-file-error' => 'Unused on core [http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/specials/SpecialUpload.php?r1=53161&r2=53282].
 
@@ -7249,7 +7251,7 @@ Es folgt ein Auszug aus dem Lösch- und Verschiebungs-Logbuch dieser Datei.',
 
 Mit diesem Formular kannst du Dateien hochladen. Mögliche Dateiformate sind für Bilder \'\'jpg, jpeg, png, gif, svg\'\' und für Ton- bzw. Videodateien \'\'ogg\'\'.
 
-Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'. 
+Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'.
 
 === Kurzanleitung ([[w:c:hilfe:Hilfe:Hochladen|ausführliche Anleitung]]) ===
 
@@ -7271,10 +7273,10 @@ Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hil
 &#125;&#125;</nowiki></pre>
 | width="80%" |
 * \'\'\'Beschreibung:\'\'\' Was ist dargestellt, worum handelt es sich?
-* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden? 
+* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden?
 * \'\'\'Autor:\'\'\' Wer ist der Urheber (Fotograf/Zeichner)? (ggf. mit 3 Tilden <nowiki>~~~</nowiki> signieren)
-* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\') 
-* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung. 
+* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\')
+* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung.
 * \'\'\'Sonstiges:\'\'\' Feld für Anmerkungen (kann frei- oder weggelassen werden)
 |}
 
@@ -16668,7 +16670,7 @@ $messages['kaa'] = [
 	'unexpected' => 'Ku\'tilmegen ma\'nis: "$1" = "$2".',
 	'userlogin' => 'Kiriw / akkaunt jaratıw',
 	'userlogout' => 'Shıg\'ıw',
-	'userexists' => 'Kiritken paydalanıwshı atı ba\'nt. 
+	'userexists' => 'Kiritken paydalanıwshı atı ba\'nt.
 İltimas, basqa at saylan\'.',
 	'userpage-userdoesnotexist' => '"<nowiki>$1</nowiki>" paydalanıwshı akkauntı registratsiya qılınbag\'an. Bul betti jaratqın\'ız yamasa o\'zgertkin\'iz kelse tekserip ko\'rin\'.',
 	'updated' => '(Jan\'alang\'an)',
@@ -36071,7 +36073,7 @@ Totes les hores són les del servidor (UTC).',
 	'unusedtemplatestext' => 'Esta pàgina mostra les pàgines en l\'espai de noms de plantilles, que no estan incloses en cap atra pàgina. Enecorda\'t de comprovar les pàgines que hi enllacen abans d\'esborrar-les.',
 	'unusedtemplateswlh' => 'atres enllaços',
 	'userstats' => 'Estadístiques d\'usuari',
-	'userstatstext' => 'Hi ha \'\'\'$1\'\'\' usuaris registrats, dels quals 
+	'userstatstext' => 'Hi ha \'\'\'$1\'\'\' usuaris registrats, dels quals
 {{PLURAL:$2|un (el \'\'\'$4%\'\'\') n\'és $5|\'\'\'$2\'\'\' (el \'\'\'$4%\'\'\') en són $5}}.',
 	'uncategorizedpages' => 'Pàgines sense categoria',
 	'uncategorizedcategories' => 'Categories sense categoria',
