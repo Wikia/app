@@ -27,6 +27,12 @@ class RTE {
 	private static $title;
 
 	/**
+	 * An edge case with RTE stack for cases where
+	 * line-initial HTML tags interfere with wikitext that must be line-initial
+	 */
+	const CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG = 'CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG';
+
+	/**
 	 * Perform "reverse" parsing of HTML to wikitext when saving / doing preview from wysiwyg mode
 	 *
 	 * @param EditPage $form

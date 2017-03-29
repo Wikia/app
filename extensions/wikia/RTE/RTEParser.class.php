@@ -31,23 +31,28 @@ class RTEParser extends Parser {
 		$this->mShowToc = false;
 	}
 
-	/*
+	/**
 	 * Find empty lines in wikitext and mark following element
+	 * @param string $oLine
+	 * @param string $output
 	 */
 	function doBlockLevelsLineStart(&$oLine, &$output) {
 		wfProfileIn(__METHOD__);
 
 		RTE::log(__METHOD__, $oLine);
 
-		$this->checkForContextSensitiveEdgeCases( $oLine );
 		// check if previous line was empty
 		if ($this->lastLineWasEmpty) {
 			// increase empty lines counter
 			$this->emptyLinesBefore++;
 		}
+		
+		if ( empty( rtrim( $oLine ) ) ) {
+			return;
+		}
 
 		// current line is not empty and we have empty lines before
-		if ( ($oLine != '') && ($this->emptyLinesBefore > 0) ) {
+		if ( $this->emptyLinesBefore > 0 ) {
 			// add special comment with empty lines counter
 			$output .= RTEReverseParser::addEmptyLinesBeforeComment($this->emptyLinesBefore);
 		}
@@ -59,10 +64,15 @@ class RTEParser extends Parser {
 		}
 		wfProfileOut(__METHOD__ . '::shortRow');
 
-		// mark wasHTML elements starting the line of wikitext
-		wfProfileIn(__METHOD__ . '::lineStart');
-		$oLine = preg_replace('/^<([^>]+data-rte-washtml="1")/', '<$1 data-rte-line-start="true"', $oLine);
-		wfProfileOut(__METHOD__ . '::lineStart');
+		// SUS-1904: Only check for edge cases and line start HTML elements if the line starts with an HTML tag
+		if ( $oLine[0] === '<' ) {
+			$this->checkForContextSensitiveEdgeCases( $oLine );
+
+			// mark wasHTML elements starting the line of wikitext
+			wfProfileIn( __METHOD__ . '::lineStart' );
+			$oLine = preg_replace( '/^<([^>]+data-rte-washtml="1")/', '<$1 data-rte-line-start="true"', $oLine );
+			wfProfileOut( __METHOD__ . '::lineStart' );
+		}
 
 		// store parser output before this line of wikitext is parsed
 		$this->lastOutput = $output;
@@ -84,10 +94,8 @@ class RTEParser extends Parser {
 				'=',
 		);
 
-		foreach ( $tokens as $token ) {
-			if ( preg_match( '/^<[^>]+>' . $token . '/is', $line ) ) {
-				RTE::$edgeCases[] = 'CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG';
-			}
+		if ( preg_match( '/^<[^>]+>(' . implode( '|', $tokens ) . ')/is', $line ) ) {
+			RTE::$edgeCases[] = RTE::CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG;
 		}
 	}
 
