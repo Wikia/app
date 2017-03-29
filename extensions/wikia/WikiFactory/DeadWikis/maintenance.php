@@ -200,6 +200,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 
 	protected $oracle = null;
 
+	/**
+	 * @return WikiEvaluationOracle
+	 */
 	protected function getOracle() {
 		if (empty($this->oracle)) {
 			$this->oracle = new WikiEvaluationOracle(self::$conditions);
@@ -636,8 +639,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$response .= " contentpages=" . (int)$dataSource->getContentPagesCount();
 				$response .= " pvlastmonth=" . (int)$dataSource->getPageViews( '-30 days' );
 				$response .= " pvlastmonthm5=" . (int)$dataSource->getPageViews( '-25 days' );
-                                $response .= " pvlast3month=" . (int)$dataSource->getPageViews( '-90 days' );
-                                $response .= " pvlast3monthm5=" . (int)$dataSource->getPageViews( '-85 days' );
+				$response .= " pvlast3month=" . (int)$dataSource->getPageViews( '-90 days' );
+				$response .= " pvlast3monthm5=" . (int)$dataSource->getPageViews( '-85 days' );
 				$response .= "\n";
 				echo $response;
 			} catch (Exception $e) {
