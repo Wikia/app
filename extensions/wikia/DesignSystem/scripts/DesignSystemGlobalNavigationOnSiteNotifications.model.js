@@ -16,6 +16,13 @@ define('ext.wikia.design-system.on-site-notifications.model', [
 		}
 
 		Model.prototype = {
+			findById: function (id) {
+				return this._notifications.find(function (notification) {
+					return notification.uri === id.uri
+					&& notification.type === id.type
+				});
+			},
+
 			loadingStarted: function () {
 				this._loadingNotifications = true;
 				this.loadingStatusChanged.notify(this._loadingNotifications);

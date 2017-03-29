@@ -1,28 +1,36 @@
 define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.log'
-], function (adContext, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFair',
 		context = adContext.getContext(),
-		recoverableSlots = {
-			'TOP_LEADERBOARD': true,
-			'TOP_RIGHT_BOXAD': true
-		};
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD'
+		];
 
-	function isPageFairRecoveryEnabled() {
+	function isEnabled() {
 		var enabled = !!context.opts.pageFairRecovery;
 
-		log(['isPageFairRecoveryEnabled', enabled, 'debug', logGroup]);
+		log(['isEnabled', enabled, log.levels.debug, logGroup]);
 		return enabled;
 	}
 
 	function isSlotRecoverable(slotName) {
-		var result = isPageFairRecoveryEnabled() && !!recoverableSlots[slotName];
+		var result = isEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 
 		log(['isSlotRecoverable', result], log.levels.info, logGroup);
 		return result;
+	}
+
+	function isBlocking() {
+		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.blocking);
+
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
+		return isBlocking;
 	}
 
 	function addMarker(slotId) {
@@ -32,7 +40,8 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 	}
 
 	return {
-		isPageFairRecoveryEnabled: isPageFairRecoveryEnabled,
+		isBlocking: isBlocking,
+		isEnabled: isEnabled,
 		isSlotRecoverable: isSlotRecoverable,
 		addMarker: addMarker
 	};
