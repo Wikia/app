@@ -9,12 +9,12 @@ class PlaybuzzTagController extends WikiaController {
 	const DATA_SHARES_ATTR = 'data-shares';
 	const DATA_GAME_INFO_ATTR = 'data-game-info';
 
-	private $helper;
+	private $wikiaTagBuilderHelper;
 
 	public function __construct() {
 		parent::__construct();
 
-		$this->helper = new WikiaIFrameTagBuilderHelper();
+		$this->wikiaTagBuilderHelper = new WikiaTagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -44,7 +44,7 @@ class PlaybuzzTagController extends WikiaController {
 			self::DATA_SHARES_ATTR => $args[self::DATA_SHARES_ATTR] ?? 'false'
 		];
 
-		if ( $this->helper->isMobileSkin() ) {
+		if ( $this->wikiaTagBuilderHelper->isMobileSkin() ) {
 			$attributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
 		}
 
