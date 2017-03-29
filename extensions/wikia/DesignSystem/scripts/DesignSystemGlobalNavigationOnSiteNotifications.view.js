@@ -76,7 +76,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.onMouseWheel = function (event) {
-				const delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
+				var delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
 					scrollTop = this.scrollTop;
 				if ((delta < 0 && scrollTop === 0)
 					|| (delta > 0 && this.scrollHeight - this.clientHeight - scrollTop === 0)) {
