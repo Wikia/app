@@ -4,7 +4,7 @@
  * Class InspectletService
  * This service provides interface to add Inspectlet integrations to parts of the product
  *
- * NOTE! This is service is disabled! If you want to use it load it in `DefaultSettings.php` file.
+ * NOTE! This service is disabled! If you want to use it, load it in `DefaultSettings.php` file.
  */
 class InspectletService extends WikiaService {
 
