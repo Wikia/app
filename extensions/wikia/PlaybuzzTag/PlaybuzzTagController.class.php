@@ -8,6 +8,7 @@ class PlaybuzzTagController extends WikiaController {
 	const DATA_COMMENTS_ATTR = 'data-comments';
 	const DATA_SHARES_ATTR = 'data-shares';
 	const DATA_GAME_INFO_ATTR = 'data-game-info';
+	const DATA_RECOMMEND_ATTR = 'data-recommend';
 
 	private $wikiaTagBuilderHelper;
 
@@ -41,7 +42,8 @@ class PlaybuzzTagController extends WikiaController {
 			self::DATA_ITEM_ATTR => $args[self::DATA_ITEM_ATTR] ?? 'false',
 			self::DATA_COMMENTS_ATTR => $args[self::DATA_COMMENTS_ATTR] ?? 'false',
 			self::DATA_GAME_INFO_ATTR => $args[self::DATA_GAME_INFO_ATTR] ?? 'false',
-			self::DATA_SHARES_ATTR => $args[self::DATA_SHARES_ATTR] ?? 'false'
+			self::DATA_SHARES_ATTR => $args[self::DATA_SHARES_ATTR] ?? 'false',
+			self::DATA_RECOMMEND_ATTR => $args[self::DATA_RECOMMEND_ATTR] ?? 'false'
 		];
 
 		if ( $this->wikiaTagBuilderHelper->isMobileSkin() ) {
