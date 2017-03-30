@@ -74,38 +74,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		};
 	}
 
-	function mockSuccessfulResponse(overrideResponseXMLDocumentElement) {
-		var ad,
-			adParameters,
-			textNode,
-			vast;
-
-		if (overrideResponseXMLDocumentElement) {
-			vast = overrideResponseXMLDocumentElement;
-		} else {
-			ad = document.createElement('Ad');
-			adParameters = document.createElement('AdParameters');
-			vast = document.createElement('VAST');
-			textNode = document.createTextNode('veles=1554');
-
-			ad.setAttribute('id', '831');
-			adParameters.appendChild(textNode);
-			ad.appendChild(adParameters);
-			vast.appendChild(ad);
-		}
-
-		mocks.win.XMLHttpRequest.prototype.open = noop;
-		mocks.win.XMLHttpRequest.prototype.send = function () {
-			this.readyState = 4;
-			this.status = 200;
-			this.response = '<VAST><Ad id="831"><AdParameters><![CDATA[veles=1554]]></AdParameters></Ad></VAST>';
-			this.responseXML = {
-				documentElement: vast
-			};
-			this.onreadystatechange();
-		};
-	}
-
 	it('Is disabled when geo does not match', function () {
 		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
 		var veles = getVeles();

@@ -6,15 +6,17 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.log',
 	'wikia.window'
-], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, geo, instantGlobals, win) {
+], function (adContext, priceParsingHelper, prebid, vastUrlBuilder, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var bidderName = 'veles',
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 		allowedSlots = {
 			IC: ['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT'],
 			LB: ['TOP_LEADERBOARD'],
-			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT'],
+			XX: ['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD', 'MOBILE_IN_CONTENT']
 		},
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
@@ -45,11 +47,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries);
+		var isVelesEnabled = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries);
+		log(['isEnabled', isVelesEnabled], log.levels.debug, logGroup);
+		return isVelesEnabled;
 	}
 
 	function prepareAdUnit(slotName, config) {
-		return {
+		var adUnit = {
 			code: slotName,
 			sizes: config.sizes,
 			bids: [
@@ -58,6 +62,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 				}
 			]
 		};
+
+		log(['prepareAdUnit', adUnit], log.levels.debug, logGroup);
+		return adUnit;
 	}
 
 	function getSlots(skin) {
@@ -69,6 +76,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function addEmptyBids(bidderRequest) {
+		log(['addEmptyBids', bidderRequest], log.levels.debug, logGroup);
+
 		bidderRequest.bids.forEach(function (bid) {
 			var bidResponse = prebid.get().createBid(2);
 
@@ -78,6 +87,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function addBids(bidderRequest, vastResponse, velesParams) {
+		log(['addBids', bidderRequest, vastResponse, velesParams], log.levels.debug, logGroup);
+
 		bidderRequest.bids.forEach(function (bid) {
 			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				var bidResponse = prebid.get().createBid(1);
@@ -127,6 +138,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 		request.open('GET', vastUrl, true);
 		request.send();
+
+		log(['requestVast', vastUrl], log.levels.debug, logGroup);
 	}
 
 	function create() {
