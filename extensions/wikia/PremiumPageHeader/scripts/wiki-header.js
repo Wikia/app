@@ -2,12 +2,19 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 	'use strict';
 
 	$(function () {
-		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM')) {
+		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM') || window.wgUserName) {
 			var track = tracker.buildTrackingFunction({
 					category: 'page-header-test-group',
 					trackingMethod: 'analytics'
 				}),
 				$wikiHeader = $('.pph-wiki-header');
+
+			if ($('.PremiumPageHeader').is(':visible')) {
+				track({
+					action: tracker.ACTIONS.IMPRESSION,
+					label: 'wiki-header'
+				});
+			}
 
 			$wikiHeader.find('.wordmark').on('click', function () {
 				track({

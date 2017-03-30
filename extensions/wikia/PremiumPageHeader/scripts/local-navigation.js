@@ -53,7 +53,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 	}
 
 	$(function () {
-		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM')) {
+		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM') || window.wgUserName) {
 			initTracking();
 		}
 		initTabletSupport();
