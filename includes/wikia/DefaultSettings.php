@@ -745,7 +745,6 @@ $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
-$wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
