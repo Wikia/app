@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			isAdsManagerLoaded = true;
 
 			if (videoSettings.isMoatTrackingEnabled()) {
-				moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL);
+				moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL, params.src, params.slotName);
 			}
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
