@@ -107,7 +107,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function isValidResponse(status) {
-		return status !== 0 && status < 400;
+		var result = status !== 0 && status < 400;
+
+		log(['isValidResponse', result], log.levels.debug, logGroup);
+		return result;
 	}
 
 	function onVastResponse(vastRequest, bidderRequest) {

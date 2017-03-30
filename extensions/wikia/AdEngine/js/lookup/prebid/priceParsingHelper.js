@@ -71,6 +71,8 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 			position = defaults.position;
 		}
 
+		log(['extractPositionFrom', position], log.levels.debug, logGroup);
+
 		return position;
 	}
 
@@ -112,6 +114,8 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		if (id && instantGlobals.wgAdDriverVelesBidderConfig[id]) {
 			result = parse(instantGlobals.wgAdDriverVelesBidderConfig[id]);
 		}
+
+		log(['analyzeConfigFor', id, result], log.levels.debug, logGroup);
 
 		return result;
 	}
