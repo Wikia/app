@@ -1,20 +1,17 @@
 require(['jquery', 'wikia.tracker', 'wikia.abTest'], function ($, tracker, abTest) {
 
-	var controlTrack = tracker.buildTrackingFunction({
-			category: 'page-header-control',
-			trackingMethod: 'analytics'
-		}),
-		testGroupTrack = tracker.buildTrackingFunction({
-			category: 'page-header-test-group',
-			trackingMethod: 'analytics'
-		}),
-		track;
+	var trackingCategory;
 
-	if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'CONTROL')) {
-		track = controlTrack;
-	} else if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM')) {
-		track = testGroupTrack;
+	if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'CONTROL') && !window.wgUserName) {
+		trackingCategory = 'page-header-control';
+	} else if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM') || window.wgUserName) {
+		trackingCategory = 'page-header-test-group';
 	}
+
+	var track = tracker.buildTrackingFunction({
+		category: trackingCategory,
+		trackingMethod: 'analytics'
+	});
 
 	function trackClick(label) {
 		track({
