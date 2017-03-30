@@ -3245,6 +3245,7 @@ $config['premium_page_header_js'] = [
 		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/article-header.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/bottom-categories-interlang-hack.js',
 	]
 ];
 
