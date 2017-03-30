@@ -45,6 +45,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			wgAdDriverVelesBidderCountries: ['PL'],
 			wgAdDriverVelesBidderConfig: {}
 		},
+		log: noop,
 		geo: {
 			isProperGeo: noop
 		},
@@ -52,6 +53,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			XMLHttpRequest: noop
 		}
 	};
+
+	mocks.log.levels = {};
 
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
@@ -61,6 +64,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			mocks.vastUrlBuilder,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.log,
 			mocks.win
 		);
 	}
