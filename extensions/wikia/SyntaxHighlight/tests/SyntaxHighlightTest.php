@@ -1,10 +1,9 @@
 <?php
-use PHPUnit\Framework\TestCase;
 
 /**
  * @group Integration
  */
-class SyntaxHighlightTest extends TestCase {
+class SyntaxHighlightTest extends WikiaBaseTest {
 	/** @var Parser $parser */
 	private $parser;
 
@@ -15,8 +14,8 @@ class SyntaxHighlightTest extends TestCase {
 	private $title;
 
 	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../SyntaxHighlight.setup.php';
 		parent::setUp();
-		require_once __DIR__ . '/../SyntaxHighlight.setup.php';
 
 		$this->title = new Title();
 		$this->opts = new ParserOptions();
