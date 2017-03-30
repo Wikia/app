@@ -55,7 +55,7 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	function isEnabled() {
 		var enabled = !!context.opts.sourcePointRecovery && !context.opts.pageFairRecovery;
 
-		log(['isEnabled', enabled, log.levels.debug, logGroup]);
+		log(['isEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
 	}
 
