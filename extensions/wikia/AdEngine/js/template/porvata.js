@@ -3,11 +3,13 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
+	'ext.wikia.adEngine.video.player.uiTemplate',
+	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (DOMElementTweaker, porvata, googleIma, videoSettings, doc, win, mercuryListener) {
+], function (DOMElementTweaker, porvata, googleIma, uiTemplate, videoInterface, videoSettings, doc, win, mercuryListener) {
 	'use strict';
 
 	function hideOtherBidsForVeles(params) {
@@ -35,8 +37,27 @@ define('ext.wikia.adEngine.template.porvata', [
 			});
 
 			win.pbjs._bidsReceived = bidsReceived;
-		}
-	}
+    }
+  }
+
+	function createInteractiveArea() {
+		var controlBar = document.createElement('div'),
+			controlBarItems = document.createElement('div'),
+			interactiveArea = document.createElement('div');
+
+		controlBar.classList.add('control-bar');
+		controlBarItems.classList.add('control-bar-items');
+		interactiveArea.classList.add('interactive-area');
+
+		controlBar.appendChild(controlBarItems);
+		interactiveArea.appendChild(controlBar);
+
+		return {
+			controlBar: controlBar,
+			controlBarItems: controlBarItems,
+			interactiveArea: interactiveArea
+    }
+  }
 
 	function getVideoContainer(slotName) {
 		var container = doc.createElement('div'),
@@ -63,14 +84,16 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
 	function show(params) {
+		var settings = videoSettings.create(params);
+
 		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 			params.originalContainer = params.container;
 			params.container = getVideoContainer(params.slotName);
 		}
 
 		hideOtherBidsForVeles(params);
-
-		porvata.inject(videoSettings.create(params)).then(function (video) {
+    
+		porvata.inject(settings).then(function (video) {
 			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 				var videoPlayer = params.container.querySelector('.video-player');
 
@@ -95,6 +118,14 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			return video;
+		}).then(function (video) {
+			if (settings.hasUiControls()) {
+				var elements = createInteractiveArea();
+
+				video.container.appendChild(elements.interactiveArea);
+
+				videoInterface.setup(video, uiTemplate.featureVideo, elements);
+			}
 		});
 	}
 

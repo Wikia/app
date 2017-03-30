@@ -57,6 +57,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			getRemainingTime: function () {
 				return ima.getAdsManager().getRemainingTime();
 			},
+			getVolume: function() {
+				return ima.getAdsManager().getVolume();
+			},
 			isFloating: function () {
 				return Boolean(params.floatingContext && params.floatingContext.isFloating());
 			},
