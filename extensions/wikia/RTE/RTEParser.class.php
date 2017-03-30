@@ -20,6 +20,12 @@ class RTEParser extends Parser {
 	private static $lastWikitext = null;
 
 	/**
+	 * @var string $contextSensitiveEdgeCaseRegex Regex for matching context sensitive edge cases
+	 * @see RTE::CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG
+	 */
+	private $contextSensitiveEdgeCaseRegex;
+
+	/**
 	 * Clear Parser state
 	 *
 	 * @private
@@ -84,15 +90,19 @@ class RTEParser extends Parser {
 	 * @param string $line
 	 */
 	public function checkForContextSensitiveEdgeCases( $line ) {
-        // these are already escaped for regex
-		$tokens = array(
+		if ( !isset( $this->contextSensitiveEdgeCaseRegex ) ) {
+			// these are already escaped for regex
+			$tokens = [
 				'\*',
 				'{\|',
 				'# ',
 				'=',
-		);
+			];
 
-		if ( preg_match( '/^<[^>]+>(' . implode( '|', $tokens ) . ')/is', $line ) ) {
+			$this->contextSensitiveEdgeCaseRegex = '/^<[^>]+>(' . implode( '|', $tokens ) . ')/is';
+		}
+
+		if ( preg_match( $this->contextSensitiveEdgeCaseRegex, $line ) ) {
 			RTE::$edgeCases[] = RTE::CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG;
 		}
 	}
