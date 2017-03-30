@@ -2,10 +2,35 @@
 describe('ext.wikia.adEngine.lookup.prebid.priceGranularityHelper', function () {
 	'use strict';
 
-	var priceParsingHelper;
+	function noop() {
+	}
 
+	var priceParsingHelper,
+		mocks = {
+			sampler: {
+				sample: function () {
+					return false;
+				}
+			},
+			geo: {
+				isProperGeo: noop
+			},
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['PL'],
+				wgAdDriverVelesBidderConfig: {}
+			},
+			log: noop
+		};
+
+	mocks.log.levels = {};
+
+	//sampler, geo, instantGlobals, log
 	function getPriceParsingHelper() {
-		return modules['ext.wikia.adEngine.lookup.prebid.priceParsingHelper']();
+		return modules['ext.wikia.adEngine.lookup.prebid.priceParsingHelper'](
+			mocks.sampler,
+			mocks.geo,
+			mocks.instantGlobals,
+			mocks.log);
 	}
 
 	beforeEach(function () {
@@ -61,5 +86,5 @@ describe('ext.wikia.adEngine.lookup.prebid.priceGranularityHelper', function () 
 
 			expect(price).toBe(testCase.expected);
 		});
-	})
+	});
 });
