@@ -9,6 +9,13 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 				}),
 				$wikiHeader = $('.pph-wiki-header');
 
+			if ($('.PremiumPageHeader').is(':visible')) {
+				track({
+					action: tracker.ACTIONS.IMPRESSION,
+					label: 'wiki-header'
+				});
+			}
+
 			$wikiHeader.find('.wordmark').on('click', function () {
 				track({
 					action: tracker.ACTIONS.CLICK,

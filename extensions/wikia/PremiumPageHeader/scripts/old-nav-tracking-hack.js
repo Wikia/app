@@ -23,12 +23,6 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 					label: 'wiki-header'
 				});
 			}
-			if ($oldArticleHeader.is(':visible')) {
-				track({
-					action: tracker.ACTIONS.IMPRESSION,
-					label: 'article-header'
-				});
-			}
 			// wordmark-image
 			$oldWikiHeader.find('.wordmark').on('click', function () {
 				trackClick('wordmark-image');
