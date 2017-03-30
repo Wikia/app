@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaMaps/models/WikiaMaps.class.php' );
 
 class WikiaMapsTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../WikiaMaps.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider getHttpRequestOptionsDataProvider

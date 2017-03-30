@@ -1,5 +1,8 @@
 <?php
-class WikiaValidatorImageSizeTest extends PHPUnit_Framework_TestCase {
+
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorImageSizeTest extends TestCase {
 
 	/**
 	 * @param $options
@@ -9,7 +12,7 @@ class WikiaValidatorImageSizeTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider imagesDataProvider
 	 */
 	public function testIsValid($options, $image, $expectedResult) {
-		$fileMock = $this->getMock('WikiaLocalFile', array('getWidth', 'getHeight', 'getMimeType'), array(), '', false);
+		$fileMock = $this->createMock( WikiaLocalFile::class );
 		$fileMock->expects($this->once())
 			->method('getWidth')
 			->will($this->returnValue($image['width']));

@@ -102,11 +102,13 @@ define('ooyala-player', function () {
 	OoyalaHTML5Player.prototype.hideControls = function () {
 		$('.oo-control-bar').css('opacity', '0');
 		$('.oo-action-icon').css('display', 'none');
+		$('.oo-state-screen-info').css('display', 'none');
 	};
 
 	OoyalaHTML5Player.prototype.showControls = function () {
 		$('.oo-control-bar').css('opacity', '');
 		$('.oo-action-icon').css('display', '');
+		$('.oo-state-screen-info').css('display', '');
 	};
 
 	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay) {

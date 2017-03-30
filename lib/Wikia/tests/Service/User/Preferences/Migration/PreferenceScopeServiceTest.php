@@ -2,9 +2,9 @@
 
 namespace Wikia\Service\User\Preferences\Migration;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PreferenceScopeServiceTest extends PHPUnit_Framework_TestCase {
+class PreferenceScopeServiceTest extends TestCase {
 
 	public function testGlobalLiterals() {
 		$service = new PreferenceScopeService( ['literals' => ['language']], [] );

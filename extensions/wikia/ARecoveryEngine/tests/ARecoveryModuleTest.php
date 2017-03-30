@@ -11,7 +11,7 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		return $stubs;
 	}
 
-	public function getData() {
+	public function getDataSP() {
 		// User is logged in, SPRecoveryEnabled, SPMMSEnabled, isDisabled (expected value)
 		return [
 			// User is not logged in
@@ -24,12 +24,12 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 
 			// User is logged in
 			[true, true, false, true],
-			[true, false, false, true],
+			[true, false, false, true]
 		];
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getDataSP
 	 *
 	 * @param $isLoggedIn boolean
 	 * @param $wgAdDriverEnableSourcePointRecovery
@@ -42,5 +42,36 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
 
 		$this->assertEquals( $expected, (new ARecoveryModule())->isSourcePointRecoveryDisabled() );
+	}
+
+	public function getDataPF() {
+		// User is logged in, $wgAdDriverEnablePageFairRecovery, isOasis, isDisabled (expected value)
+		return [
+			// User is not logged in
+			[false, false, true, true],
+			[false, true, true, false],
+			[false, null, true, false],
+			[false, false, false, true],
+
+			// User is logged in
+			[true, true, true, true],
+			[true, false, true, true],
+		];
+	}
+
+	/**
+	 * @dataProvider getDataPF
+	 *
+	 * @param $isLoggedIn boolean
+	 * @param $wgAdDriverEnablePageFairRecovery
+	 * @param $isOasis
+	 * @param $expected boolean - is PageFair recovery disabled
+	 */
+	public function testPageFairRecoveryDisabled( $isLoggedIn, $wgAdDriverEnablePageFairRecovery, $isOasis, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isLoggedIn ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnablePageFairRecovery', $wgAdDriverEnablePageFairRecovery );
+		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
+
+		$this->assertEquals( $expected, (new ARecoveryModule())->isPageFairRecoveryDisabled() );
 	}
 }
