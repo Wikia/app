@@ -69,25 +69,7 @@ require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (w
 			$oldWikiHeader.find('.subnav-3a').on('click', function () {
 				trackClick('custom-level-3');
 			});
-			// categories-in
-			$('.special-categories').on('click', function () {
-				trackClick('categories-in');
-			});
-			// categories-<number>
-			$('#articleCategories').find('li.category a').on('click', function () {
-				var index = $('#articleCategories').find('li.category:not(.hidden)').index($(this).closest('.category'));
-				trackClick('categories-' + index);
-			});
-			// categories-more - n/a
-			// categories-more-<number> - n/a
-			// interwiki-dropdown - n/a
-			// interwiki-<lang code>
-			$('.WikiaArticleInterlang a').on('click', function () {
-				var data = $(this).data('tracking');
-				if (data) {
-					trackClick(data);
-				}
-			});
+
 			// edit
 			$oldArticleHeader.find('.wikia-menu-button > a').on('click', function () {
 				trackClick('edit');
