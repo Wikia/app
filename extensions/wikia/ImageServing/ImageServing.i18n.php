@@ -45,13 +45,15 @@ $messages['cs'] = array(
 );
 
 $messages['de'] = array(
-	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
+	'imageserving-desc' => 'Wählt Bilder von einer Liste bestimmter Seiten nach visuellen Kriterien aus',
 	'mostlinkedfilesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
+	'right-imageservingtest' => 'Ermöglicht den Zugriff auf Spezial:ImageServingTest',
 );
 
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto específico de páginas basadas en necesidades visuales',
 	'mostlinkedfilesincontent' => 'Archivos más enlazados en los espacios de nombre de contenido',
+	'right-imageservingtest' => 'Permite acceso a Special:ImageServingTest',
 );
 
 $messages['fi'] = array(
@@ -61,6 +63,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 	'mostlinkedfilesincontent' => 'Fichiers les plus référencés dans les espaces de nom de contenu',
+	'right-imageservingtest' => 'Permet d’accéder à Special:ImageServingTest',
 );
 
 $messages['gl'] = array(
@@ -82,11 +85,13 @@ $messages['ia'] = array(
 $messages['it'] = array(
 	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
 	'mostlinkedfilesincontent' => 'File più richiamati in pagine di contenuto',
+	'right-imageservingtest' => "Permette l'accesso a Special:ImageServingTest",
 );
 
 $messages['ja'] = array(
-	'imageserving-desc' => '視覚的な要件に基づいてページの指定された配列から画像を選択します。',
+	'imageserving-desc' => '視覚的な要件に基づいて、ページの指定された配列から画像を選択します。',
 	'mostlinkedfilesincontent' => 'コンテンツでよく利用されているファイル',
+	'right-imageservingtest' => '特別:画像提供テスト にアクセスできます。',
 );
 
 $messages['ko'] = array(
@@ -113,6 +118,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een opgegeven verzameling pagina's gebaseerd op visuele eisen",
 	'mostlinkedfilesincontent' => 'Most linked-to files in content namespaces',
+	'right-imageservingtest' => 'Allows access to Special:ImageServingTest',
 );
 
 $messages['oc'] = array(
@@ -122,6 +128,7 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'imageserving-desc' => 'Wybiera obrazy z określonej grupy stron na bazie preferencji wizualnych.',
 	'mostlinkedfilesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
+	'right-imageservingtest' => 'Udostępnia [[{{#special:ImageServingTest}}|Specjalna:ImageServingTest]]',
 );
 
 $messages['pms'] = array(
@@ -131,6 +138,7 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
 	'mostlinkedfilesincontent' => 'Arquivos mais vinculados em páginas de conteúdo',
+	'right-imageservingtest' => 'Permite o acesso a Especial:ImageServingTest',
 );
 
 $messages['pt-br'] = array(
@@ -144,6 +152,7 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'imageserving-desc' => 'Выбирает изображения из указанного ряда страниц на основе заданных визуальных критериев',
 	'mostlinkedfilesincontent' => 'Самые используемые файлы в пространствах имён с содержанием',
+	'right-imageservingtest' => 'Предоставляет доступ к Special:ImageServingTest',
 );
 
 $messages['sv'] = array(
@@ -174,11 +183,13 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'imageserving-desc' => '基于图像要求在特定的页面中选取图片',
-	'mostlinkedfilesincontent' => '内容空间链接最多的文件',
+	'mostlinkedfilesincontent' => '在内容空间中链接最多的文件',
+	'right-imageservingtest' => '允许访问Special:ImageServingTest',
 );
 
 $messages['zh-hant'] = array(
 	'imageserving-desc' => '基於圖像要求在特定的頁面中選取圖片',
-	'mostlinkedfilesincontent' => '內容空間連結最多的文檔',
+	'mostlinkedfilesincontent' => '各內容空間中連結最多的檔案',
+	'right-imageservingtest' => '允許進入Special:ImageServingTest',
 );
 
