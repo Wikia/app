@@ -75,9 +75,6 @@ class RTEParser extends Parser {
 			wfProfileOut( __METHOD__ . '::lineStart' );
 		}
 
-		// store parser output before this line of wikitext is parsed
-		$this->lastOutput = $output;
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -142,6 +139,11 @@ class RTEParser extends Parser {
 			if (preg_match('/<\/div/iS', $t)) {
 				$this->inDivStack--;
 			}
+		}
+
+		// store parser output before this line of wikitext is parsed
+		if ( $this->inDivStack > 0 && $this->lastLineWasEmpty ) {
+			$this->lastOutput = $t;
 		}
 
 		wfProfileOut(__METHOD__);
