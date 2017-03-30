@@ -354,6 +354,7 @@ $config['adengine2_porvata_js'] = [
 	],
 ];
 
+// TODO: remove 2 weeks after ADEN-4922 is released
 $config['ima_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -3061,8 +3062,7 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/styles/design-system.scss',
-		'//extensions/wikia/DesignSystem/styles/design-system-notifications.scss'
+		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],
 ];
 

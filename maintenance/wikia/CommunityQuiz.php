@@ -2,8 +2,6 @@
 /**
  * Michał Roszka (Mix) <michal@wikia-inc.com>
  * 
- * A script populating the noreptemp.spamwikis table with the current data.
- * 
  * Usage:
  * 
  * SERVER_ID=177 php CommunityQuiz.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php

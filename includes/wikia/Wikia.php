@@ -1145,13 +1145,10 @@ class Wikia {
 	/**
 	 * get properties for page
 	 * FIXME: maybe it should be cached?
-	 * @static
-	 * @access public
-	 * @param page_id
-	 * @param oneProp if you just want one property, this will return the value only, not an array
-	 * @return Array
+	 * @param $page_id int
+	 * @param $oneProp string if you just want one property, this will return the value only, not an array
+	 * @return mixed
 	 */
-
 	static public function getProps( $page_id, $oneProp = null ) {
 		wfProfileIn( __METHOD__ );
 		$return = array();
@@ -1174,7 +1171,7 @@ class Wikia {
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$return[ $row->pp_propname ] = $row->pp_value;
-			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
+			wfDebug( __METHOD__ . " id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}\n" );
 		}
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );

@@ -11,7 +11,7 @@ class ARecoveryModule {
 	public function isPageFairRecoveryDisabled() {
 		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		return $wgUser->isLoggedIn() || $wgAdDriverEnablePageFairRecovery === false;
+		return $wgUser->isLoggedIn() || !F::app()->checkSkin( [ 'oasis' ] ) || $wgAdDriverEnablePageFairRecovery === false;
 	}
 
 	/**

@@ -289,7 +289,7 @@ class AvatarService extends Service {
 		global $wgBlogAvatarPath;
 
 		$url = $relativePath;
-		if ( strpos( $relativePath, 'http://' ) === false ) {
+		if ( !preg_match( '/^https?:\/\//', $relativePath ) ) {
 			$bucket = VignetteRequest::parseBucket( $wgBlogAvatarPath );
 			$relativePath = ltrim( $relativePath, '/' );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );

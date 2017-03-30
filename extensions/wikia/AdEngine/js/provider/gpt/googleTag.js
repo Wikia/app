@@ -152,6 +152,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		return slot;
 	}
 
+	function refreshSlot(slot) {
+		window.googletag.pubads().refresh([slot]);
+	}
+
 	function registerCallback(id, callback) {
 		log(['registerCallback', id], log.levels.info, logGroup);
 		registeredCallbacks[id] = callback;
@@ -223,6 +227,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		isInitialized: isInitialized,
 		onAdLoad: onAdLoad,
 		push: push,
+		refreshSlot: refreshSlot,
 		registerCallback: registerCallback,
 		setPageLevelParams: setPageLevelParams,
 		updateCorrelator: updateCorrelator
