@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		if (params.adProduct === 'veles' && params.slotName === 'TOP_LEADERBOARD' && win.pbjs) {
 			var bidsReceived = win.pbjs._bidsReceived;
 
-			log(['hideOtherBidsForVeles', bidsReceived], log.levels.debug, logGroup);
+			log(['hideOtherBidsForVeles', params, bidsReceived], log.levels.debug, logGroup);
 
 			bidsReceived.filter(function (bid) {
 				return bid.adId === params.hbAdId;
