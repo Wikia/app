@@ -749,7 +749,6 @@ $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
-$wgWikiaMailerDB = 'wikia_mailer';
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
