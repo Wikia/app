@@ -95,22 +95,14 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @covers       QuestDetailsSolrHelper::parseCoordinates
+	 * @expectedException Exception
+	 * @expectedExceptionMessage Invalid format of string with coordinates: invalid
 	 */
 	public function testParseCoordinatesInvalidString() {
 		$solrHelper = new QuestDetailsSolrHelper();
 
 		$parseCoordinates = self::getFn( $solrHelper, 'parseCoordinates' );
-
-		$exceptionBeenThrown = false;
-		try {
-			$parseCoordinates( 'invalid' );
-		} catch ( Exception $e ) {
-			$exceptionBeenThrown = true;
-		}
-
-		if ( !$exceptionBeenThrown ) {
-			$this->fail( 'Whet parsing invalid coordinates - exception must be thrown' );
-		}
+		$parseCoordinates( 'invalid' );
 	}
 
 	public function testShouldReturnCorrectResponseFormat() {

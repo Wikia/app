@@ -1,14 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
-	'ext.wikia.adEngine.slot.resolvedState'
-], function (resolvedState) {
+	'ext.wikia.adEngine.slot.resolvedState',
+	'ext.wikia.adEngine.video.player.porvata.googleIma'
+], function (resolvedState, googleIma) {
 	'use strict';
 
 	function create(params) {
 		var state = {
 			autoPlay: false,
+			moatTracking: false,
 			resolvedState: false,
-			splitLayout: false
+			splitLayout: false,
+			withUiControls: false
 		};
 
 		init();
@@ -17,6 +20,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = isAutoPlay(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
+			state.moatTracking = Boolean(params.moatTracking);
+			state.withUiControls = Boolean(params.hasUiControls);
 		}
 
 		function isAutoPlay(params) {
@@ -26,8 +31,14 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		return {
-			getParams: function() {
+			getParams: function () {
 				return params;
+			},
+			getVpaidMode: function () {
+				return params.vpaidMode !== undefined ? params.vpaidMode : googleIma.vpaidMode.ENABLED;
+			},
+			hasUiControls: function() {
+				return state.withUiControls;
 			},
 			isAutoPlay: function () {
 				return state.autoPlay;
@@ -37,6 +48,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isSplitLayout: function () {
 				return state.splitLayout;
+			},
+			isMoatTrackingEnabled: function () {
+				return state.moatTracking;
 			}
 		};
 	}

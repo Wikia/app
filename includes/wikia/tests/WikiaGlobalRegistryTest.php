@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaGlobalRegistryTest extends PHPUnit_Framework_TestCase {
+class WikiaGlobalRegistryTest extends TestCase {
 	const VALID_KEY   = 'registryTestKey';
 	const OTHER_VALID_KEY = 'otherRegistryTestKey';
 	const INVALID_NULL_KEY = null;
@@ -100,23 +102,31 @@ class WikiaGlobalRegistryTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse(isset($GLOBALS[self::OTHER_VALID_KEY]));
 	}
 
+	/**
+	 * @expectedException WikiaException
+	 */
 	public function testSettingDataUsingInvalidKeyThrowsException() {
-		$this->setExpectedException('WikiaException');
 		$this->registry->set(self::INVALID_NULL_KEY, rand());
 	}
 
+	/**
+	 * @expectedException WikiaException
+	 */
 	public function testRemovingDataUsingInvalidKeyThrowsException() {
-		$this->setExpectedException('WikiaException');
 		$this->registry->remove(self::INVALID_NUMERIC_KEY);
 	}
 
+	/**
+	 * @expectedException WikiaException
+	 */
 	public function testGettingDataUsingInvalidKeyThrowsException() {
-		$this->setExpectedException('WikiaException');
 		$this->registry->get(self::INVALID_NULL_KEY, rand());
 	}
 
+	/**
+	 * @expectedException WikiaException
+	 */
 	public function testCheckingDataUsingInvalidKeyThrowsException() {
-		$this->setExpectedException('WikiaException');
 		$this->registry->has(self::INVALID_NUMERIC_KEY);
 	}
 

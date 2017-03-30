@@ -46,17 +46,20 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 			[ 'language', null, false, 'en' ]
 		];
 
-		$mockUser = $this->getMock( 'User', [ 'getEmail', 'getGlobalPreference', 'isBlocked', 'isEmailConfirmed' ] );
-		$mockUser->expects( $this->any() )
+		$mockUser = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getEmail', 'getGlobalPreference', 'isBlocked', 'isEmailConfirmed' ] )
+			->getMock();
+
+		$mockUser->expects( $this->once() )
 			->method( 'getEmail' )
 			->will( $this->returnValue( 'some.email@example.com' ) );
 		$mockUser->expects( $this->any() )
 			->method( 'getGlobalPreference' )
 			->will($this->returnValueMap( $returnValueMap ) );
-		$mockUser->expects( $this->any() )
+		$mockUser->expects( $this->once() )
 			->method( 'isBlocked' )
 			->will( $this->returnValue( false ) );
-		$mockUser->expects( $this->any() )
+		$mockUser->expects( $this->once() )
 			->method( 'isEmailConfirmed' )
 			->will( $this->returnValue( true ) );
 
@@ -64,8 +67,11 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 	}
 
 	private function mockTitle() {
-		$mockedTitle = $this->getMock( '\Title', [ 'getPrefixedText', 'getText', 'exists' ] );
-		$mockedTitle->expects( $this->any() )
+		$mockedTitle = $this->getMockBuilder( Title::class )
+			->setMethods( [ 'getPrefixedText', 'getText', 'exists' ] )
+			->getMock();
+
+		$mockedTitle->expects( $this->once() )
 			->method( 'exists' )
 			->will( $this->returnValue( true ) );
 
@@ -73,15 +79,22 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 	}
 
 	private function mockInternalRequest() {
-		$this->wikiaRequestMock = $this->getMock( '\WikiaRequest', [ 'isInternal' ], [], '', false );
-		$this->wikiaRequestMock->expects( $this->any() )
+		$this->wikiaRequestMock = $this->getMockBuilder( WikiaRequest::class )
+			->setMethods( [ 'isInternal' ] )
+			->setConstructorArgs( [ [] ] )
+			->getMock();
+
+		$this->wikiaRequestMock->expects( $this->once() )
 			->method( 'isInternal' )
 			->willReturn( true );
 	}
 
 	private function mockMemcache( $emailsSent ) {
-		$mock_cache = $this->getMock( 'stdClass', [ 'get', 'set', 'delete' ] );
-		$mock_cache->expects( $this->any() )
+		$mock_cache = $this->getMockBuilder( stdClass::class )
+			->setMethods( [ 'get', 'set', 'delete' ] )
+			->getMock();
+
+		$mock_cache->expects( $this->once() )
 			->method('get')
 			->will( $this->returnValue( $emailsSent ) );
 
