@@ -48,6 +48,7 @@ class RTEParser extends Parser {
 		}
 		
 		if ( empty( rtrim( $oLine ) ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
