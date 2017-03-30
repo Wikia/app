@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Wikia ',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 	'multitasks-link-back-label' => 'here',

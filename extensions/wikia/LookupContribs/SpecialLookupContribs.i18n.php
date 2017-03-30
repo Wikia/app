@@ -8,7 +8,7 @@ $messages['en'] = [
 	'lookupcontribstitle' => 'Lookup Contribs',
 	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
 	'lookupcontribsfinalcontributions' => 'Final contributions for $1',
-	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple Wikias.
+	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple wikis.
 For displaying the list, give username below.',
 	'lookupcontribusernotspecify' => 'You haven\'t specified a user yet',
 	'lookupcontribsselectuser' => 'Select user:',
