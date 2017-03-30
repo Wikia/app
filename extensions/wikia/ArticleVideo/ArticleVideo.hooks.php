@@ -5,10 +5,8 @@ class ArticleVideoHooks {
 		$wg = F::app()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		$relatedVideo =
-			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
 		$isFeaturedVideoEmbedded = ArticleVideoContext::isFeaturedVideoEmbedded( $title );
-		$isRelatedVideoEmbedded = self::isRelatedVideoEmbedded( $relatedVideo );
+		$isRelatedVideoEmbedded = ArticleVideoContext::isRelatedVideoEmbedded( $title );
 
 		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );
@@ -40,9 +38,8 @@ class ArticleVideoHooks {
 			$vars['wgFeaturedVideoId'] = $wg->articleVideoFeaturedVideos[$title]['videoId'];
 		}
 
-		$relatedVideo =
-			ArticleVideoController::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		if ( self::isRelatedVideoEmbedded( $relatedVideo ) ) {
+		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
+		if ( !empty( $relatedVideo ) ) {
 			$vars['wgOoyalaParams'] = [
 				'ooyalaPCode' => $wg->ooyalaApiConfig['pcode'],
 				'ooyalaPlayerBrandingId' => $wg->ooyalaApiConfig['playerBrandingId'],
@@ -52,16 +49,4 @@ class ArticleVideoHooks {
 
 		return true;
 	}
-
-	public static function isRelatedVideoEmbedded( $relatedVideo ) {
-		$wg = F::app()->wg;
-
-		return $wg->enableArticleRelatedVideo && isset( $wg->articleVideoRelatedVideos ) &&
-			!empty( $relatedVideo ) && self::isRelatedVideosValid( $relatedVideo );
-	}
-
-	private static function isRelatedVideosValid( $relatedVideo ) {
-		return isset( $relatedVideo['articles'], $relatedVideo['videoId'] );
-	}
-
 }

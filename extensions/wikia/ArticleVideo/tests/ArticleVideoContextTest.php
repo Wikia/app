@@ -24,7 +24,7 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $result, $message );
 	}
 
-	//expected, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
+	// expected, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
 	public function featuredVideoProvider() {
 		return [
 			[ false, false, null, 'Featured video set when extension is disabled' ],
@@ -43,6 +43,68 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 				'videoId' => 'alsdkflkasjdkfjaslkdfjl',
 				'thumbnailUrl' => 'http://img.com/test.jpg'
 			] ], 'Featured video not set when data is correct' ],
+		];
+	}
+
+	/**
+	 * @dataProvider relatedVideoProvider
+	 * @param $expected
+	 * @param $wgEnableArticleRelatedVideo
+	 * @param $wgArticleVideoRelatedVideos
+	 * @param $message
+	 */
+	public function testGetRelatedVideo(
+		$expected,
+		$wgEnableArticleRelatedVideo,
+		$wgArticleVideoRelatedVideos,
+		$message
+	) {
+		$this->mockGlobalVariable( 'wgEnableArticleRelatedVideo', $wgEnableArticleRelatedVideo );
+		$this->mockGlobalVariable( 'wgArticleVideoRelatedVideos', $wgArticleVideoRelatedVideos );
+
+		$result = ArticleVideoContext::getRelatedVideoData( 'test' );
+
+		$this->assertEquals( $expected, $result, $message );
+	}
+
+	// expected, wgEnableArticleRelatedVideo, wgArticleVideoRelatedVideos, message
+	public function relatedVideoProvider() {
+		return [
+			[ [], false, null, 'Related video set when extension is disabled' ],
+			[ [], true, null, 'Related video set when no data available' ],
+			[ [], true, [ 'asdf' => [] ], 'Related video set when wrong data provided' ],
+			[ [
+				'articles' => [
+					0 => 'Newton_Scamander',
+					1 => 'test',
+					2 => 'List_of_spells',
+					3 => 'Harry_Potter_and_the_Chamber_of_Secrets_(film)',
+					4 => 'Malfoy_Manor',
+				],
+				'videoId' => 'JsNTB4OTE6kFhAUbLF1CkYcA5SYDN5Vc',
+			], true, [ 0 => [
+				'articles' => [
+					0 => 'Newton_Scamander',
+					1 => 'test',
+					2 => 'List_of_spells',
+					3 => 'Harry_Potter_and_the_Chamber_of_Secrets_(film)',
+					4 => 'Malfoy_Manor',
+				],
+				'videoId' => 'JsNTB4OTE6kFhAUbLF1CkYcA5SYDN5Vc',
+			],
+			], 'Related video not set when correct data provided' ],
+			[ [], true, [ 0 => [
+				'articles' => [
+					0 => 'test',
+				]
+			],
+			], 'Related video set when video data missing' ],
+			[ [], true, [ 0 => [
+				'articles' => [
+					0 => 'different_article',
+				]
+			],
+			], 'Related video set when article missing' ],
 		];
 	}
 }
