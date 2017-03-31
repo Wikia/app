@@ -18,15 +18,15 @@ define('ext.wikia.adEngine.template.porvata', [
 	videoInterface,
 	videoSettings,
 	doc,
-	win,
 	log,
+	win,
 	mercuryListener
 ) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.template.porvata';
 
 	function hideOtherBidsForVeles(params) {
-		if (params.adProduct === 'veles' && params.slotName === 'TOP_LEADERBOARD' && win.pbjs) {
+		if (params.adProduct === 'veles' && win.pbjs) {
 			var bidsReceived = win.pbjs._bidsReceived;
 
 			log(['hideOtherBidsForVeles', params, bidsReceived], log.levels.debug, logGroup);
@@ -102,6 +102,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	 */
 	function show(params) {
 		var settings = videoSettings.create(params);
+
+		log(['show', params], log.levels.debug, logGroup);
 
 		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 			params.originalContainer = params.container;
