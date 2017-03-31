@@ -3185,6 +3185,7 @@ $config['ooyala_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
+		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
 	],
 ];
 
