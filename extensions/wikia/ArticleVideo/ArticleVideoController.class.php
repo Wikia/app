@@ -5,7 +5,7 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		$enableArticleFeaturedVideo = ArticleVideoHooks::isFeaturedVideoEmbedded( $title );
+		$enableArticleFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded( $title );
 
 		if ( $enableArticleFeaturedVideo ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
@@ -22,28 +22,12 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		$relatedVideo = self::getRelatedVideoData( $wg->articleVideoRelatedVideos, $title );
-		$enableArticleRelatedVideo = ArticleVideoHooks::isRelatedVideoEmbedded( $relatedVideo );
+		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
 
-		if ( $enableArticleRelatedVideo ) {
+		if ( !empty( $relatedVideo ) ) {
 			$this->setVal( 'relatedVideo', $relatedVideo );
 		} else {
 			$this->skipRendering();
 		}
-	}
-
-	public static function getRelatedVideoData( $relatedVideos, $title ) {
-		$wg = F::app()->wg;
-		if ( isset( $wg->articleVideoRelatedVideos ) ) {
-			foreach ( $relatedVideos as $videoData ) {
-				if ( isset( $videoData['articles'] ) &&
-				     in_array( $title, $videoData['articles'] )
-				) {
-					return $videoData;
-				}
-			}
-		}
-
-		return null;
 	}
 }

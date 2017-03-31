@@ -70,7 +70,8 @@ class AdEngine2ContextService {
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
-					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) )
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => !empty( $wg->EnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
