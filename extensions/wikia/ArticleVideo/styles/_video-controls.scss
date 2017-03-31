@@ -11,17 +11,6 @@
  *
  */
 
-/**
- * Using SVG data encodings as background images is probably the simplest method to switch out the default ooyala
- * icons. Whenever you override a control the font should change to transparent to keep the correct
- * spacing but not show the original icon. But there needs to be a different uri for any color that will need to be used.
- *
- * It might make sense to create an svg sprite but I am not even sure if there would be any savings by doing that and it would
- * be harder to maintain.
- * Ticket for replacing these icons is created XW-2897
- * @type {String}
- */
-
 .oo-player-container {
 	.oo-scrubber-bar-container {
 		// Adjustment for smaller height on controlbar
