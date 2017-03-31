@@ -62,9 +62,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 	}
 
 	function logVast(vastRequest) {
-		log(['logVast', vastRequest], log.levels.debug, logGroup);
 		if (sampler.sample('velesLog', 1, 100)) {
+			log(['Veles VAST logged', vastRequest], log.levels.debug, logGroup);
 			sendRequest(vastRequest.response);
+		} else {
+			log(['Veles VAST not logged (ignored by sampling)', vastRequest], log.levels.debug, logGroup);
 		}
 	}
 
