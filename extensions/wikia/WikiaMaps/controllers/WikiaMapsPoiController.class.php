@@ -264,7 +264,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	 */
 	private function getSanitizedData() {
 		$poiData = [
-			'name' => htmlspecialchars( $this->getData( 'name' ) ),
+			'name' => Sanitizer::encodeAttribute( $this->getData( 'name' ) ),
 			'poi_category_id' => $this->getData( 'poiCategoryId' ),
 			'lat' => $this->getData( 'lat' ),
 			'lon' => $this->getData( 'lon' )
@@ -283,7 +283,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 
 		$description = $this->getData( 'description' );
 		if ( !empty( $description ) ) {
-			$poiData[ 'description' ] = htmlspecialchars( $description );
+			$poiData[ 'description' ] = Sanitizer::encodeAttribute( $description );
 		}
 
 		$this->appendLinkIfValidData($poiData);
@@ -306,8 +306,8 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$link = ( !empty( $linkTitle ) && !$this->isValidArticleTitle() ) ? $linkTitle : $link;
 		$link = WikiaSanitizer::prepUrl( $link );
 
-		$poiData[ 'link_title' ] = htmlspecialchars( $linkTitle );
-		$poiData[ 'link' ] = htmlspecialchars( $link );
+		$poiData[ 'link_title' ] = Sanitizer::encodeAttribute( $linkTitle );
+		$poiData[ 'link' ] = Sanitizer::encodeAttribute( $link );
 	}
 
 	/**
@@ -323,7 +323,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$photo = ( !empty( $photo ) && $isValidArticle ) ? $photo : '';
 		$photo = ( !$isValidArticle || empty( $poiData[ 'link' ] ) ) ? '' : $photo;
 
-		$poiData[ 'photo' ] = htmlspecialchars( $photo );
+		$poiData[ 'photo' ] = Sanitizer::encodeAttribute( $photo );
 	}
 
 	/**
