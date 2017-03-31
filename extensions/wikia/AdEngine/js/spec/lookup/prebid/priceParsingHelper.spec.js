@@ -77,31 +77,35 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		);
 	}
 
-	function prepareXML(adId) {
-		var ad = document.createElement('Ad');
-		var adParameters = document.createElement('AdParameters');
-		var vast = document.createElement('VAST');
-
-		ad.setAttribute('id', adId);
-		adParameters.appendChild(document.createTextNode('veles=1554'));
-		ad.appendChild(adParameters);
-		vast.appendChild(ad);
-
-		return ad;
-	}
-
-	function mockVastResponse(adId) {
+	function getResponseObject(ad) {
 		return {
 			readyState: 4,
 			status: 200,
 			responseXML: {
 				documentElement: {
 					querySelector: function () {
-						return prepareXML(adId);
+						return ad;
 					}
 				}
 			}
 		};
+	}
+
+	function mockAdXVastResponse() {
+		var ad = document.createElement('Ad');
+		ad.setAttribute('id', '333');
+		ad.appendChild(document.createElement('AdSystem'))
+			.appendChild(document.createTextNode('AdSense/AdX'));
+
+		return getResponseObject(ad);
+	}
+
+	function mockVastResponse(adId) {
+		var ad = document.createElement('Ad');
+		ad.setAttribute('id', adId);
+		ad.appendChild(document.createElement('AdParameters'));
+
+		return getResponseObject(ad);
 	}
 
 	beforeEach(function () {
@@ -128,6 +132,12 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 			expect(testCase.expected)
 				.toEqual(getParsingHelper().analyze(mockVastResponse(adId)).price);
 		});
+	});
+
+	it('Should should parse price form AdX config', function () {
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
+		expect(11.23)
+			.toEqual(getParsingHelper().analyze(mockAdXVastResponse()).price);
 	});
 
 });
