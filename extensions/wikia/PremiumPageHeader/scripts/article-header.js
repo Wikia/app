@@ -1,4 +1,4 @@
-require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracker) {
+require(['wikia.window', 'jquery', 'wikia.tracker', 'wikia.abTest'], function (window, $, tracker, abTest) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -7,26 +7,16 @@ require(['wikia.window', 'jquery', 'wikia.tracker'], function (window, $, tracke
 	});
 
 	$(function () {
-		if ($('.PremiumPageHeader').is(':visible')) {
-			track({
-				action: tracker.ACTIONS.IMPRESSION,
-				label: 'wiki-header'
+		if (abTest.inGroup('PREMIUM_PAGE_HEADER', 'PREMIUM') || window.wgUserName) {
+			$('.pph-article-header-tracking a, .pph-article-header-tracking .pph-track').on('click', function () {
+				var data = $(this).data('tracking');
+				if (data) {
+					track({
+						action: tracker.ACTIONS.CLICK,
+						label: data
+					});
+				}
 			});
 		}
-		if ($('.PremiumPageArticleHeader').is(':visible')) {
-			track({
-				action: tracker.ACTIONS.IMPRESSION,
-				label: 'article-header'
-			});
-		}
-		$('.pph-article-header-tracking a, .pph-article-header-tracking .pph-track').on('click', function () {
-			var data = $(this).data('tracking');
-			if (data) {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: data
-				});
-			}
-		});
 	});
 });
