@@ -21,12 +21,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		slots = {
 			// Order of slots is important - first slot name in group will be used to create ad unit
 			oasis: {
-				TOP_LEADERBOARD: {
+				INCONTENT_PLAYER: {
 					sizes: [
 						[640, 480]
 					]
 				},
-				INCONTENT_PLAYER: {
+				TOP_LEADERBOARD: {
 					sizes: [
 						[640, 480]
 					]
