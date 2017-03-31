@@ -133,7 +133,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'geocode',
 		'nuke',
 		'refreshspecial',
-		'spamregex',
 		'tboverride', 	// Implies tboverride-account
 		'tboverride-account', 	// For account creation
 		'torunblocked',
