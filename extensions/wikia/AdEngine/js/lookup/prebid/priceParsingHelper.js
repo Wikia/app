@@ -135,8 +135,8 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		return result;
 	}
 
-	// request was invalid - log it to Kibana
-	function logRequestIfInvalid(result, vastRequest) {
+	// response was invalid - log it to Kibana
+	function logInvalidResponse(result, vastRequest) {
 		var ad = vastRequest.responseXML.documentElement.querySelector('Ad');
 
 		if (!result.valid && ad && geo.isProperGeo(instantGlobals.wgAdDriverVelesVastLoggerCountries)) {
@@ -173,7 +173,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 
 		if (vastRequest.responseXML) {
 			result = analyzeResponse(vastRequest.responseXML);
-			logRequestIfInvalid(result, vastRequest);
+			logInvalidResponse(result, vastRequest);
 		}
 
 		return result;
