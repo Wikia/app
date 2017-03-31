@@ -11,10 +11,7 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 	 * @dataProvider featuredVideoProvider
 	 */
 	public function testIsFeaturedVideoEnabled(
-		$expected,
-		$wgEnableArticleFeaturedVideo,
-		$wgArticleVideoFeaturedVideos,
-		$message
+		$expected, $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos, $message
 	) {
 		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
 		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
@@ -54,10 +51,7 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 	 * @param $message
 	 */
 	public function testGetRelatedVideo(
-		$expected,
-		$wgEnableArticleRelatedVideo,
-		$wgArticleVideoRelatedVideos,
-		$message
+		$expected, $wgEnableArticleRelatedVideo, $wgArticleVideoRelatedVideos, $message
 	) {
 		$this->mockGlobalVariable( 'wgEnableArticleRelatedVideo', $wgEnableArticleRelatedVideo );
 		$this->mockGlobalVariable( 'wgArticleVideoRelatedVideos', $wgArticleVideoRelatedVideos );
