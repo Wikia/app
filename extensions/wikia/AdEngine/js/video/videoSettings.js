@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.slot.resolvedState',
-	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'wikia.window'
-], function (resolvedState, googleIma, win) {
+], function (resolvedState, win) {
 	'use strict';
 
 	function create(params) {
