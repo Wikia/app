@@ -4,6 +4,7 @@ if(admixMode === '3') {
 	$(function () {
 		var ad2 = $('.prototype3-ad2');
 		var recirc = $('.prototype3-recirc');
+		var recircOffsetTop = recirc.offset().top;
 
 		function resetInlineStyles() {
 			recirc.css({
@@ -51,8 +52,6 @@ if(admixMode === '3') {
 		}
 
 		$(window).scroll(function () {
-			var recircOffsetTop = recirc.offset().top;
-			
 			var point1 = recircOffsetTop - 60;
 			var point2 = recircOffsetTop + 700 - 60;
 			var point3 = recircOffsetTop + 1400 - 60;
