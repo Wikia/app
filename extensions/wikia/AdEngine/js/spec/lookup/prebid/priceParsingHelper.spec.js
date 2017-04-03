@@ -134,7 +134,7 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		});
 	});
 
-	it('Should should parse price form AdX config', function () {
+	it('Should parse price form AdX config', function () {
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
 
 		expect(getParsingHelper().analyze(mockAdXVastResponse()).price)
