@@ -10,7 +10,7 @@ if(admixMode === '2') {
 		function resetInlineStyles() {
 			recirc.css({
 				position: '',
-				top: ''
+				bottom: ''
 			});
 		}
 

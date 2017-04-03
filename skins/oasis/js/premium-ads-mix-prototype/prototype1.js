@@ -11,12 +11,12 @@ if(admixMode === '1') {
 		function resetInlineStyles() {
 			recirc.css({
 				position: '',
-				top: ''
+				bottom: ''
 			});
 			ad3.css({
 				display: '',
 				position: '',
-				top: ''
+				bottom: ''
 			});
 		}
 
@@ -54,7 +54,7 @@ if(admixMode === '1') {
 		function apply5() {
 			recirc.css({
 				position: 'absolute',
-				bottom: (20 + 250 + 20) +'px'
+				bottom: (20 + 250 + 20 + $('#WikiaFooter').height()) +'px'
 			});
 			recirc.removeClass('fixed');
 			ad3.css({
