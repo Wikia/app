@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			if (isAdsManagerLoaded) {
 				adsManager.addEventListener(eventName, callback);
 			} else {
-				adsLoader.addEventListener('adsManagerLoaded', function () {
+				adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, function () {
 					adsManager.addEventListener(eventName, callback);
 				});
 			}
@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			if (isAdsManagerLoaded) {
 				adsManager.removeEventListener(eventName, callback);
 			} else {
-				adsLoader.addEventListener('adsManagerLoaded', function () {
+				adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, function () {
 					adsManager.removeEventListener(eventName, callback);
 				});
 			}
@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				adDisplayContainer.initialize();
 				adsManager.init(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
 				adsManager.start();
-				adsLoader.removeEventListener('adsManagerLoaded', callback);
+				adsLoader.removeEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback);
 
 				log('Video play: started', log.levels.debug, logGroup);
 			}
@@ -143,7 +143,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
-		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
+		adsLoader.addEventListener(
+			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+			adsManagerLoadedCallback,
+			false
+		);
+		
 		adsLoader.requestAds(imaSetup.createRequest(params));
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);
