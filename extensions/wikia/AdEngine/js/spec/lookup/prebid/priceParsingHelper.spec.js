@@ -91,9 +91,9 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		};
 	}
 
-	function mockAdXVastResponse() {
+	function mockAdXVastResponse(adId) {
 		var ad = document.createElement('Ad');
-		ad.setAttribute('id', '333');
+		ad.setAttribute('id', adId);
 		ad.appendChild(document.createElement('AdSystem'))
 			.appendChild(document.createTextNode('AdSense/AdX'));
 
@@ -139,6 +139,14 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 
 		expect(getParsingHelper().analyze(mockAdXVastResponse()).price)
 			.toEqual(11.23);
+	});
+
+	it('Should get price from id if exists, before AdX', function () {
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig['666'] = 've6677LB';
+
+		expect(getParsingHelper().analyze(mockAdXVastResponse('666')).price)
+			.toEqual(66.77);
 	});
 
 });
