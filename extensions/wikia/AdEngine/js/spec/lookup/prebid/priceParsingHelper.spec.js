@@ -115,13 +115,13 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 	it('Should parse price from wgVariables config', function () {
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig = {'1234567': 've3150XX'};
 
-		expect(31.50)
-			.toEqual(getParsingHelper().analyze(mockVastResponse('1234567')).price);
+		expect(getParsingHelper().analyze(mockVastResponse('1234567')).price)
+			.toEqual(31.50);
 	});
 
 	it('Should return 0 for non-existing price in config', function () {
-		expect(0)
-			.toEqual(getParsingHelper().analyze(mockVastResponse('not_exisiting_price')).price);
+		expect(getParsingHelper().analyze(mockVastResponse('not_exisiting_price')).price)
+			.toEqual(0);
 	});
 
 	testCases.forEach(function (testCase) {
@@ -129,15 +129,16 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		it('Should parse price ' + testCase.expected + ' from wgVariables config: ' + testCase.configPrice, function () {
 			mocks.instantGlobals.wgAdDriverVelesBidderConfig[adId] = testCase.configPrice;
 
-			expect(testCase.expected)
-				.toEqual(getParsingHelper().analyze(mockVastResponse(adId)).price);
+			expect(getParsingHelper().analyze(mockVastResponse(adId)).price)
+				.toEqual(testCase.expected);
 		});
 	});
 
 	it('Should should parse price form AdX config', function () {
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
-		expect(11.23)
-			.toEqual(getParsingHelper().analyze(mockAdXVastResponse()).price);
+
+		expect(getParsingHelper().analyze(mockAdXVastResponse()).price)
+			.toEqual(11.23);
 	});
 
 });
