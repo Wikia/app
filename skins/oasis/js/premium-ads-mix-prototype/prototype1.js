@@ -60,7 +60,7 @@ if(admixMode === '1') {
 			ad3.css({
 				display: 'block',
 				position: 'absolute',
-				bottom: '20px'
+				bottom: (20 + $('#WikiaFooter').height()) + 'px'
 			});
 			ad3.removeClass('fixed');
 		}

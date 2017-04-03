@@ -44,7 +44,7 @@ if(admixMode === '3') {
 		function apply5() {
 			recirc.css({
 				position: 'absolute',
-				bottom: '20px'
+				bottom: (20 + $('#WikiaFooter').height()) + 'px'
 			});
 			recirc.removeClass('hidden');
 			recirc.removeClass('fixed');
