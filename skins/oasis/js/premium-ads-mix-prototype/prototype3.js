@@ -55,7 +55,7 @@ if(admixMode === '3') {
 			var point1 = recircOffsetTop - 60;
 			var point2 = recircOffsetTop + 700 - 60;
 			var point3 = recircOffsetTop + 1400 - 60;
-			var point4 = $('.WikiaPageContentWrapper').height() - (383);
+			var point4 = $('.WikiaPageContentWrapper').height() - 383 - $('#WikiaFooter').height();
 
 			var scrollTop = $(this).scrollTop();
 

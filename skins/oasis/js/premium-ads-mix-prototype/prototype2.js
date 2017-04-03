@@ -52,7 +52,7 @@ if(admixMode === '2') {
 			var point1 = ad1OffsetTop - 60;
 			var point2 = ad1OffsetTop + 250 - 60;
 			var point3 = recircOffsetTop - 60;
-			var point4 = $('.WikiaPageContentWrapper').height() - (383);
+			var point4 = $('.WikiaPageContentWrapper').height() - 383 - $('#WikiaFooter').height();
 
 			var scrollTop = $(this).scrollTop();
 
