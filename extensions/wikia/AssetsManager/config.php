@@ -577,9 +577,6 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/shared/scripts/onScroll.js',
 
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
-		'//skins/oasis/js/premium-ads-mix-prototype/prototype1.js',
-		'//skins/oasis/js/premium-ads-mix-prototype/prototype2.js',
-		'//skins/oasis/js/premium-ads-mix-prototype/prototype3.js',
 	],
 ];
 
@@ -591,6 +588,10 @@ $config['oasis_anon_js'] = [
 	'assets' => [
 		'#group_user_login_js_anon',
 		'//skins/oasis/js/LatestActivity.js',
+
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype1.js',
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype2.js',
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype3.js',
 	],
 ];
 
