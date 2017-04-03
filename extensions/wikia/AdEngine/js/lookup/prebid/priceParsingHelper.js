@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 	 * @returns {VelesParams}
 	 */
 	function parse(input) {
-		var re = new RegExp('ve(\[0-9]{4})(xx|ic|lb)?', 'i'),
+		var re = new RegExp('ve([0-9]{4})(xx|ic|lb)', 'i'),
 			regexpResult,
 			price,
 			result = invalidResult;
