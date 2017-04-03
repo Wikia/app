@@ -2,15 +2,21 @@
 describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 	'use strict';
 
-	var noop = function () {},
+	var adId = '1',
+		result,
+		noop = function () {},
 		mocks = {
-		sampler: {},
-		geo: {isProperGeo: function () {return false;}},
-		instantGlobals: {
-			wgAdDriverVelesBidderConfig: {}
-		},
-		log: noop
-	};
+			sampler: {},
+			geo: {
+				isProperGeo: function () {
+					return false;
+				}
+			},
+			instantGlobals: {
+				wgAdDriverVelesBidderConfig: {}
+			},
+			log: noop
+		};
 
 	mocks.log.levels = {
 		debug: 1
@@ -22,62 +28,74 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 		{
 			configPrice: 've3150xx',
 			expectedPrice: 31.50,
-			expectedPosition: 'XX'
+			expectedPosition: 'XX',
+			isValid: true
 		},
 		{
 			configPrice: 've3150ic',
 			expectedPrice: 31.50,
-			expectedPosition: 'IC'
+			expectedPosition: 'IC',
+			isValid: true
 		},
 		{
 			configPrice: 've3150IC',
 			expectedPrice: 31.50,
-			expectedPosition: 'IC'
+			expectedPosition: 'IC',
+			isValid: true
 		},
 		{
 			configPrice: 've3150LB',
 			expectedPrice: 31.50,
-			expectedPosition: 'LB'
+			expectedPosition: 'LB',
+			isValid: true
 		},
 		{
 			configPrice: 've0315LB',
 			expectedPrice: 3.15,
-			expectedPosition: 'LB'
+			expectedPosition: 'LB',
+			isValid: true
 		},
 		{
 			configPrice: 've0031LB',
 			expectedPrice: 0.31,
-			expectedPosition: 'LB'
+			expectedPosition: 'LB',
+			isValid: true
 		},
 		{
 			configPrice: 've0000xx',
 			expectedPrice: DEFAULT_PRICE,
-			expectedPosition: DEFAULT_POS
+			expectedPosition: DEFAULT_POS,
+			isValid: false
 		},
 		{
 			configPrice: 've0001xx',
 			expectedPrice: 0.01,
-			expectedPosition: 'XX'
+			expectedPosition: 'XX',
+			isValid: true
 		},
 		{
 			configPrice: 've3150',
 			expectedPrice: DEFAULT_PRICE,
-			expectedPosition: DEFAULT_POS
+			expectedPosition: DEFAULT_POS,
+			isValid: false
 		},
 		{
 			configPrice: 've3150x',
 			expectedPrice: DEFAULT_PRICE,
-			expectedPosition: DEFAULT_POS
+			expectedPosition: DEFAULT_POS,
+			isValid: false
 		},
 		{
 			configPrice: 've315x',
 			expectedPrice: DEFAULT_PRICE,
-			expectedPosition: DEFAULT_POS
+			expectedPosition: DEFAULT_POS,
+			isValid: false
 		},
 		{
 			configPrice: 've31509xx',
 			expectedPrice: DEFAULT_PRICE,
-			expectedPosition: DEFAULT_POS
+			expectedPosition: DEFAULT_POS,
+			isValid: false
 		}
 	];
 
@@ -138,29 +156,33 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 	});
 
 	testCases.forEach(function (testCase) {
-		var adId = '1';
 		it('Should parse price ' + testCase.expectedPrice + ' from wgVariables config: ' + testCase.configPrice, function () {
 			mocks.instantGlobals.wgAdDriverVelesBidderConfig[adId] = testCase.configPrice;
 
-			var result = getParsingHelper().analyze(mockVastResponse(adId));
+			result = getParsingHelper().analyze(mockVastResponse(adId));
 			expect(result.price).toEqual(testCase.expectedPrice);
 			expect(result.position).toEqual(testCase.expectedPosition);
+			expect(result.valid).toEqual(testCase.isValid);
 		});
 	});
 
 	it('Should parse price form AdX config', function () {
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
 
-		expect(getParsingHelper().analyze(mockAdXVastResponse()).price)
-			.toEqual(11.23);
+		result = getParsingHelper().analyze(mockAdXVastResponse());
+		expect(result.price).toEqual(11.23);
+		expect(result.position).toEqual('LB');
+		expect(result.valid).toEqual(true);
 	});
 
 	it('Should get price from id if exists, before AdX', function () {
-		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123LB';
+		mocks.instantGlobals.wgAdDriverVelesBidderConfig['AdSense/AdX'] = 've1123XX';
 		mocks.instantGlobals.wgAdDriverVelesBidderConfig['666'] = 've6677LB';
 
-		expect(getParsingHelper().analyze(mockAdXVastResponse('666')).price)
-			.toEqual(66.77);
+		result = getParsingHelper().analyze(mockAdXVastResponse('666'));
+		expect(result.price).toEqual(66.77);
+		expect(result.position).toEqual('LB');
+		expect(result.valid).toEqual(true);
 	});
 
 });
