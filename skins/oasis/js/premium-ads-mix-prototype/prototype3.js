@@ -38,7 +38,7 @@ if(admixMode === '3') {
 
 		function apply4(offset) {
 			resetInlineStyles();
-			if(Math.floor(offset/1500) % 2 === 0) {
+			if(Math.floor(offset/3000) % 2 === 0) {
 				if(!recirc.hasClass('fixed')) {
 					if(ad2.attr('src') === adSrc) {
 						ad2.attr('src', adSrc2);
@@ -59,7 +59,7 @@ if(admixMode === '3') {
 		function apply5() {
 			recirc.css({
 				position: 'absolute',
-				bottom: (20 + $('#WikiaFooter').height()) + 'px'
+				bottom: (20 + $('#WikiaFooter').height() + 320) + 'px'
 			});
 			recirc.removeClass('hidden');
 			recirc.removeClass('fixed');
@@ -68,9 +68,9 @@ if(admixMode === '3') {
 
 		$(window).scroll(function () {
 			var point1 = recircOffsetTop - 60;
-			var point2 = recircOffsetTop + 1500 - 60;
-			var point3 = recircOffsetTop + 3000 - 60;
-			var point4 = $('.WikiaPageContentWrapper').height() - 383 - $('#WikiaFooter').height();
+			var point2 = recircOffsetTop + 3000 - 60;
+			var point3 = recircOffsetTop + 6000 - 60;
+			var point4 = $('.WikiaPageContentWrapper').height() - (383+250) - $('#WikiaFooter').height();
 
 			var scrollTop = $(this).scrollTop();
 

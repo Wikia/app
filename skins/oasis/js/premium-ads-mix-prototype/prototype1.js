@@ -49,8 +49,8 @@ if(admixMode === '1') {
 			resetInlineStyles();
 			recirc.addClass('fixed');
 			console.log(offset);
-			console.log(offset / 1500);
-			if(Math.floor(offset / 1500) % 2 === 0) {
+			console.log(offset / 3000);
+			if(Math.floor(offset / 3000) % 2 === 0) {
 				ad3.addClass('fixed');
 				ad2.addClass('hidden');
 			} else {
@@ -77,7 +77,7 @@ if(admixMode === '1') {
 		$(window).scroll(function () {
 			var point1 = recircOffsetTop - 60;
 			var point2 = ad2OffsetTop - 20 - recirc.height() - 60;
-			var point3 = ad2OffsetTop - 20 - recirc.height() - 60 + 1500;
+			var point3 = ad2OffsetTop - 20 - recirc.height() - 60 + 3000;
 			var point4 = $('.WikiaPageContentWrapper').height() - (250 + 383) - $('#WikiaFooter').height();
 
 			var scrollTop = $(this).scrollTop();

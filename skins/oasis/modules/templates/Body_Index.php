@@ -34,6 +34,12 @@
 
 <?= $beforeWikiaPageHtml ?>
 
+<?php if($adMixPrototype === '1' || $adMixPrototype === '3'): ?>
+	<div style="position: relative; z-index: 1; text-align: center; margin-bottom: 20px;">
+		<img class="prototype-billboard" src="/skins/oasis/images/premium-ads-mix-prototype/billboard.png">
+	</div>
+<?php endif; ?>
+
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
@@ -190,6 +196,12 @@
 			echo $app->renderView( 'AdminDashboard', 'Rail' );
 		}
 		?>
+
+		<?php if($adMixPrototype === '3'): ?>
+			<div style="position: relative; z-index: 1; text-align: center;">
+				<img class="prototype-billboard" src="/skins/oasis/images/premium-ads-mix-prototype/billboard.png">
+			</div>
+		<?php endif; ?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 	</div>
