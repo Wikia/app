@@ -3,9 +3,7 @@ var admixMode = location.search.split('admix=')[1];
 if(admixMode === '2') {
 	$(function () {
 		var recirc = $('.prototype2-recirc');
-		var recircOffsetTop = recirc.offset().top;
 		var ad1 = $('.prototype2-ad1');
-		var ad1OffsetTop = ad1.offset().top;
 
 		function resetInlineStyles() {
 			recirc.css({
@@ -49,6 +47,9 @@ if(admixMode === '2') {
 		}
 
 		$(window).scroll(function () {
+			var recircOffsetTop = recirc.offset().top;
+			var ad1OffsetTop = ad1.offset().top;
+
 			var point1 = ad1OffsetTop - 60;
 			var point2 = ad1OffsetTop + 250 - 60;
 			var point3 = recircOffsetTop - 60;
