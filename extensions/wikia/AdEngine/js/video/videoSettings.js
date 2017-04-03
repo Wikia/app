@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.slot.resolvedState',
-	'ext.wikia.adEngine.video.player.porvata.googleIma'
-], function (resolvedState, googleIma) {
+	'ext.wikia.adEngine.video.player.porvata.googleIma',
+	'wikia.window'
+], function (resolvedState, googleIma, win) {
 	'use strict';
 
 	function create(params) {
@@ -34,8 +35,14 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			getParams: function () {
 				return params;
 			},
+			/**
+			 * Returns VPAID mode from IMA:
+			 * https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
+			 * @returns {integer} VpaidMode.ENABLED|VpaidMode.DISABLED|VpaidMode.INSECURE
+			 */
 			getVpaidMode: function () {
-				return params.vpaidMode !== undefined ? params.vpaidMode : googleIma.vpaidMode.ENABLED;
+				return params.vpaidMode !== undefined ?
+					params.vpaidMode : win.google.ima.ImaSdkSettings.VpaidMode.ENABLED;
 			},
 			hasUiControls: function() {
 				return state.withUiControls;

@@ -2,7 +2,6 @@
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
-	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
@@ -13,7 +12,6 @@ define('ext.wikia.adEngine.template.porvata', [
 ], function (
 	DOMElementTweaker,
 	porvata,
-	googleIma,
 	uiTemplate,
 	videoInterface,
 	videoSettings,
@@ -99,22 +97,26 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {object} params.height - Player height
 	 * @param {string} [params.onReady] - Callback executed once player is ready
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
+	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 */
 	function show(params) {
 		var settings = videoSettings.create(params);
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
-			params.originalContainer = params.container;
-			params.container = getVideoContainer(params.slotName);
-		}
-
 		hideOtherBidsForVeles(params);
 
 		porvata.inject(settings).then(function (video) {
-			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
-				var videoPlayer = params.container.querySelector('.video-player');
+			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
+				videoPlayer;
+
+			if (params.vpaidMode === imaVpaidMode.INSECURE) {
+				params.originalContainer = params.container;
+				params.container = getVideoContainer(params.slotName);
+			}
+
+			if (params.vpaidMode === imaVpaidMode.INSECURE) {
+				videoPlayer = params.container.querySelector('.video-player');
 
 				video.addEventListener('loaded', function () {
 					var ad = video.ima.getAdsManager().getCurrentAd();
