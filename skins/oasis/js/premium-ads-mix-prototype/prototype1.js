@@ -14,7 +14,7 @@ if(admixMode === '1') {
 				bottom: ''
 			});
 			ad3.css({
-				display: '',
+				opacity: '',
 				position: '',
 				bottom: ''
 			});
@@ -58,7 +58,7 @@ if(admixMode === '1') {
 			});
 			recirc.removeClass('fixed');
 			ad3.css({
-				display: 'block',
+				opacity: '1',
 				position: 'absolute',
 				bottom: (20 + $('#WikiaFooter').height()) + 'px'
 			});

@@ -23,21 +23,25 @@
 }
 
 .prototype1-ad2 {
+	transition: opacity 1s;
+
 	&.fixed {
 		position: fixed;
 		top: 463px;
 	}
 
 	&.hidden {
-		display: none;
+		opacity: 0;
 	}
 }
 
 .prototype1-ad3 {
-	display: none;
+	transition: opacity 1s;
+	opacity: 0;
+	position: fixed;
+
 	&.fixed {
-		display: block;
-		position: fixed;
+		opacity: 1;
 		top: 463px;
 	}
 }
@@ -60,7 +64,7 @@
 }
 
 .prototype2-rwa {
-	marign-top: 20px;
+	margin-top: 20px;
 }
 
 .prototype2-recirc-placeholder {
@@ -83,21 +87,25 @@
 }
 
 .prototype3-recirc {
+	transition: opacity 1s;
+	opacity: 1;
+
 	&.fixed {
 		position: fixed;
 		top: 60px;
 	}
 
 	&.hidden {
-		display: none;
+		opacity: 0;
 	}
 }
 
 .prototype3-ad2 {
-	display: none;
+	transition: opacity 1s;
+	opacity: 0;
 
 	&.fixed {
-		display: block;
+		opacity: 1;
 		position: fixed;
 		top: 60px;
 	}
