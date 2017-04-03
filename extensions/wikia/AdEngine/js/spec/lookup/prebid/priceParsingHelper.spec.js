@@ -17,54 +17,67 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 	};
 
 	var DEFAULT_PRICE = 0,
+		DEFAULT_POS = 'IC',
 		testCases = [
 		{
 			configPrice: 've3150xx',
-			expected: 31.50
+			expectedPrice: 31.50,
+			expectedPosition: 'XX'
 		},
 		{
 			configPrice: 've3150ic',
-			expected: 31.50
+			expectedPrice: 31.50,
+			expectedPosition: 'IC'
 		},
 		{
 			configPrice: 've3150IC',
-			expected: 31.50
+			expectedPrice: 31.50,
+			expectedPosition: 'IC'
 		},
 		{
 			configPrice: 've3150LB',
-			expected: 31.50
+			expectedPrice: 31.50,
+			expectedPosition: 'LB'
 		},
 		{
 			configPrice: 've0315LB',
-			expected: 3.15
+			expectedPrice: 3.15,
+			expectedPosition: 'LB'
 		},
 		{
 			configPrice: 've0031LB',
-			expected: 0.31
+			expectedPrice: 0.31,
+			expectedPosition: 'LB'
 		},
 		{
 			configPrice: 've0000xx',
-			expected: 0
+			expectedPrice: DEFAULT_PRICE,
+			expectedPosition: DEFAULT_POS
 		},
 		{
 			configPrice: 've0001xx',
-			expected: 0.01
+			expectedPrice: 0.01,
+			expectedPosition: 'XX'
 		},
 		{
 			configPrice: 've3150',
-			expected: DEFAULT_PRICE
+			expectedPrice: DEFAULT_PRICE,
+			expectedPosition: DEFAULT_POS
 		},
 		{
 			configPrice: 've3150x',
-			expected: DEFAULT_PRICE
+			expectedPrice: DEFAULT_PRICE,
+			expectedPosition: DEFAULT_POS
 		},
 		{
 			configPrice: 've315x',
-			expected: DEFAULT_PRICE
+			expectedPrice: DEFAULT_PRICE,
+			expectedPosition: DEFAULT_POS
 		},
 		{
 			configPrice: 've31509xx',
-			expected: DEFAULT_PRICE
+			expectedPrice: DEFAULT_PRICE,
+			expectedPosition: DEFAULT_POS
 		}
 	];
 
@@ -126,11 +139,12 @@ describe('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', function () {
 
 	testCases.forEach(function (testCase) {
 		var adId = '1';
-		it('Should parse price ' + testCase.expected + ' from wgVariables config: ' + testCase.configPrice, function () {
+		it('Should parse price ' + testCase.expectedPrice + ' from wgVariables config: ' + testCase.configPrice, function () {
 			mocks.instantGlobals.wgAdDriverVelesBidderConfig[adId] = testCase.configPrice;
 
-			expect(getParsingHelper().analyze(mockVastResponse(adId)).price)
-				.toEqual(testCase.expected);
+			var result = getParsingHelper().analyze(mockVastResponse(adId));
+			expect(result.price).toEqual(testCase.expectedPrice);
+			expect(result.position).toEqual(testCase.expectedPosition);
 		});
 	});
 
