@@ -44,6 +44,10 @@
 		opacity: 1;
 		top: 463px;
 	}
+
+	&.hidden {
+		opacity: 0;
+	}
 }
 
 .prototype2-ad1 {

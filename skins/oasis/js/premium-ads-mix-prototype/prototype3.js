@@ -5,6 +5,8 @@ if(admixMode === '3') {
 		var ad2 = $('.prototype3-ad2');
 		var recirc = $('.prototype3-recirc');
 		var recircOffsetTop = recirc.offset().top;
+		var adSrc = '/skins/oasis/images/premium-ads-mix-prototype/ad2.png';
+		var adSrc2 = '/skins/oasis/images/premium-ads-mix-prototype/ad3.png';
 
 		function resetInlineStyles() {
 			recirc.css({
@@ -34,11 +36,24 @@ if(admixMode === '3') {
 			ad2.addClass('fixed');
 		}
 
-		function apply4() {
+		function apply4(offset) {
 			resetInlineStyles();
-			recirc.removeClass('hidden');
-			recirc.addClass('fixed');
-			ad2.removeClass('fixed');
+			if(Math.floor(offset/1500) % 2 === 0) {
+				if(!recirc.hasClass('fixed')) {
+					if(ad2.attr('src') === adSrc) {
+						ad2.attr('src', adSrc2);
+					} else {
+						ad2.attr('src', adSrc);
+					}
+				}
+				recirc.removeClass('hidden');
+				recirc.addClass('fixed');
+				ad2.removeClass('fixed');
+			} else {
+				recirc.addClass('hidden');
+				recirc.removeClass('fixed');
+				ad2.addClass('fixed');
+			}
 		}
 
 		function apply5() {
@@ -53,8 +68,8 @@ if(admixMode === '3') {
 
 		$(window).scroll(function () {
 			var point1 = recircOffsetTop - 60;
-			var point2 = recircOffsetTop + 700 - 60;
-			var point3 = recircOffsetTop + 1400 - 60;
+			var point2 = recircOffsetTop + 1500 - 60;
+			var point3 = recircOffsetTop + 3000 - 60;
 			var point4 = $('.WikiaPageContentWrapper').height() - 383 - $('#WikiaFooter').height();
 
 			var scrollTop = $(this).scrollTop();
@@ -66,7 +81,7 @@ if(admixMode === '3') {
 			} else if(scrollTop > point2 && scrollTop < point3) {
 				apply3();
 			} else if(scrollTop > point3 && scrollTop < point4) {
-				apply4();
+				apply4(scrollTop - point3);
 			} else if(scrollTop > point4) {
 				apply5();
 			}
