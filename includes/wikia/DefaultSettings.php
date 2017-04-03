@@ -351,7 +351,6 @@ $wgAutoloadClasses['PortableInfoboxBuilderService'] = $IP . '/extensions/wikia/P
 $wgAutoloadClasses['PortableInfoboxBuilderHelper'] = $IP . '/extensions/wikia/PortableInfoboxBuilder/services/PortableInfoboxBuilderHelper.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
-$wgAutoloadClasses['InspectletService'] = $IP . '/includes/wikia/services/InspectletService.class.php';
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 
 // services hooks
@@ -745,11 +744,9 @@ $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
-$wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
-$wgWikiaMailerDB = 'wikia_mailer';
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 

@@ -354,6 +354,7 @@ $config['adengine2_porvata_js'] = [
 	],
 ];
 
+// TODO: remove 2 weeks after ADEN-4922 is released
 $config['ima_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -378,10 +379,12 @@ $config['adengine2_video_ui_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/video/player/ui/closeButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/playPauseButton.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
-		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/soundControl.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/toggleVideo.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/videoInterface.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/volumeControl.js',
 		'//extensions/wikia/AdEngine/js/video/uiTemplate.js'
@@ -3061,8 +3064,7 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/styles/design-system.scss',
-		'//extensions/wikia/DesignSystem/styles/design-system-notifications.scss'
+		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],
 ];
 
@@ -3183,6 +3185,7 @@ $config['ooyala_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
+		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
 	],
 ];
 
@@ -3250,6 +3253,7 @@ $config['premium_page_header_js'] = [
 		'//extensions/wikia/PremiumPageHeader/scripts/share-entry-point-hack.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/wiki-header.js',
 		'//extensions/wikia/PremiumPageHeader/scripts/article-header.js',
+		'//extensions/wikia/PremiumPageHeader/scripts/bottom-categories-interlang-hack.js',
 	]
 ];
 
