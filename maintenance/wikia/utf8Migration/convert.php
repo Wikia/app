@@ -2,7 +2,7 @@
 
 /**
  * Script converts local mediawiki database
- * to use UTF-8 character set (with collation utf8_bin)
+ * to use UTF-8 character set (with collation utf8mb4_bin)
  *
  * By default script outputs SQL which needs to be executed to stdout.
  * You can use --force to actually run these queries immediately.
@@ -61,9 +61,9 @@ class Utf8DbConvert {
 	protected function processDatabases() {
 		$databases = $this->walker->getDatabases();
 		foreach ($databases as $database) {
-			if ($database->DEFAULT_COLLATION_NAME !== 'utf8_bin') {
-				$this->script->database($database->SCHEMA_NAME)->add("DEFAULT CHARACTER SET utf8 COLLATE utf8_bin");
-//				$sqlList[] = "ALTER DATABASE `{$database->SCHEMA_NAME}` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;";
+			if ($database->DEFAULT_COLLATION_NAME !== 'utf8mb4_bin') {
+				$this->script->database($database->SCHEMA_NAME)->add("DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin");
+//				$sqlList[] = "ALTER DATABASE `{$database->SCHEMA_NAME}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;";
 			}
 		}
 	}
@@ -71,9 +71,9 @@ class Utf8DbConvert {
 	protected function processTables() {
 		$tables = $this->walker->getTables(true);
 		foreach ($tables as $table) {
-			if ($table->TABLE_COLLATION !== 'utf8_bin') {
-				$this->script->table($table->TABLE_NAME)->add("DEFAULT CHARACTER SET utf8 COLLATE utf8_bin");
-//				$sqlList[] = "ALTER TABLE `{$table->TABLE_NAME}` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;";
+			if ($table->TABLE_COLLATION !== 'utf8mb4_bin') {
+				$this->script->table($table->TABLE_NAME)->add("DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin");
+//				$sqlList[] = "ALTER TABLE `{$table->TABLE_NAME}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;";
 			}
 		}
 	}
@@ -115,7 +115,7 @@ class Utf8DbConvert {
 	protected function processFields() {
 		$fields = $this->walker->getFields();
 		foreach ($fields as $field) {
-			if (!is_null($field->COLLATION_NAME) && $field->COLLATION_NAME !== 'utf8_bin') {
+			if (!is_null($field->COLLATION_NAME) && $field->COLLATION_NAME !== 'utf8mb4_bin') {
 				if (!$this->force) {
 					$tableDump = $this->dumpTable($field->TABLE_NAME);
 					if ($tableDump) {
@@ -132,12 +132,12 @@ class Utf8DbConvert {
 				$transColumnType = $this->getIntermediateFieldType( $field->COLUMN_TYPE, $baseType );
 				if ($transColumnType) {
 					$this->script->table($field->TABLE_NAME)->add("MODIFY {$field->COLUMN_NAME} {$transColumnType} $rest");
-					$this->script->table($field->TABLE_NAME)->add("MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest}",1);
+					$this->script->table($field->TABLE_NAME)->add("MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest}",1);
 //					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$transColumnType} $rest;";
-//					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest};";
+//					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest};";
 				} else if ($baseType == 'enum') {
-					$this->script->table($field->TABLE_NAME)->add("MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest}");
-//					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8 COLLATE utf8_bin {$rest};";
+					$this->script->table($field->TABLE_NAME)->add("MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest}");
+//					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest};";
 				} else {
 					$this->script->table($field->TABLE_NAME)->comment("--{$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n");
 //					$sqlList[] = "--{$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n";
