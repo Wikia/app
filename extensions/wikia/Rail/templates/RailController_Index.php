@@ -60,8 +60,10 @@
 					 src="http://ktatala.wikia-dev.pl/skins/oasis/images/premium-ads-mix-prototype/ad1.png">
 				<img class="prototype3-rwa"
 					 src="http://ktatala.wikia-dev.pl/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
-				<img class="prototype3-recirc"
-					 src="http://ktatala.wikia-dev.pl/skins/oasis/images/premium-ads-mix-prototype/Recirc.png">
+				<div class="prototype3-recirc-placeholder">
+					<img class="prototype3-recirc"
+						 src="http://ktatala.wikia-dev.pl/skins/oasis/images/premium-ads-mix-prototype/Recirc.png">
+				</div>
 				<img class="prototype3-ad2"
 					 src="http://ktatala.wikia-dev.pl/skins/oasis/images/premium-ads-mix-prototype/ad2.png">
 			<?php endif; ?>

@@ -1,6 +1,11 @@
+.prototype1-rwa {
+	margin-top: 20px;
+}
+
 .prototype1-recirc-placeholder {
 	width: 300px;
 	height: 383px;
+	margin-top: 20px;
 }
 
 .prototype1-recirc {
@@ -14,12 +19,13 @@
 	width: 300px;
 	height: 500px;
 	padding-top: 250px;
+	margin-top: 20px;
 }
 
 .prototype1-ad2 {
 	&.fixed {
 		position: fixed;
-		top: 443px;
+		top: 463px;
 	}
 
 	&.hidden {
@@ -32,7 +38,7 @@
 	&.fixed {
 		display: block;
 		position: fixed;
-		top: 443px;
+		top: 463px;
 	}
 }
 
@@ -50,6 +56,15 @@
 .prototype2-ad1-placeholder {
 	width: 300px;
 	height: 500px;
+	padding-bottom: 20px;
+}
+
+.prototype2-rwa {
+	marign-top: 20px;
+}
+
+.prototype2-recirc-placeholder {
+	margin-top: 20px;
 }
 
 .prototype2-recirc {
@@ -57,6 +72,14 @@
 		position: fixed;
 		top: 60px;
 	}
+}
+
+.prototype3-rwa {
+	margin-top: 20px;
+}
+
+.prototype3-recirc-placeholder {
+	margin-top: 20px;
 }
 
 .prototype3-recirc {
