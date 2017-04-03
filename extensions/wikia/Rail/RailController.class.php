@@ -19,6 +19,8 @@ class RailController extends WikiaController {
 		$this->isAside = $this->wg->RailInAside;
 		$this->loadLazyRail = $railModules > $this->railModuleList;
 
+		$this->adMixPrototype = $_GET['admix'] ?? null;
+
 		wfProfileOut(__METHOD__);
 	}
 

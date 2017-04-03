@@ -577,6 +577,9 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/shared/scripts/onScroll.js',
 
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype1.js',
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype2.js',
+		'//skins/oasis/js/premium-ads-mix-prototype/prototype3.js',
 	],
 ];
 
