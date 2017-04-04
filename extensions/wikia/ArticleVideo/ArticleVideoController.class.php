@@ -5,8 +5,7 @@ class ArticleVideoController extends WikiaController {
 		$wg = $this->getApp()->wg;
 		$title = $wg->Title->getPrefixedDBkey();
 
-		$enableArticleFeaturedVideo =
-			ArticleVideoContext::isFeaturedVideoEmbedded( $title );
+		$enableArticleFeaturedVideo = ArticleVideoContext::isFeaturedVideoEmbedded( $title );
 
 		if ( $enableArticleFeaturedVideo ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
