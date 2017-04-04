@@ -8,7 +8,7 @@
  *
  * @author Władysław Bodzek
  */
-class SqlCommand {
+class SqlCommandUtil {
 	protected $command = '';
 	protected $arguments = [];
 	protected $comments = [];
@@ -42,14 +42,14 @@ class SqlCommand {
 	}
 }
 
-class SqlScript {
+class SqlScriptUtil {
 	const MODE_DEFAULT = 0;
 	const MODE_QUICK = 1;
 	protected $commands = [];
 
 	protected function get( $id, $command ) {
 		if ( !isset( $this->commands[$id] ) ) {
-			$this->commands[$id] = new SqlCommand( $command );
+			$this->commands[$id] = new SqlCommandUtil( $command );
 		}
 		return $this->commands[$id];
 	}
@@ -76,7 +76,7 @@ class SqlScript {
 		return $sql;
 	}
 
-	public function getSqlFromCommand( SqlCommand $commandObj, $flags = self::MODE_DEFAULT ) {
+	public function getSqlFromCommand( SqlCommandUtil $commandObj, $flags = self::MODE_DEFAULT ) {
 		$sql = [];
 
 		$command = $commandObj->getCommand();
@@ -92,7 +92,6 @@ class SqlScript {
 			}
 			ksort( $a );
 			foreach ( $a as $priority => $list ) {
-				//				var_dump("-------",$arguments,$priority,$list);
 				$sql[] = "{$command}\n  " . implode( ",\n  ", $list ) . ";\n";
 			}
 		} else {
@@ -106,7 +105,7 @@ class SqlScript {
 
 }
 
-class SqlParser {
+class ConvertionSqlParser {
 	protected $db = null;
 	protected $charsets = null;
 
@@ -176,16 +175,16 @@ class SqlParser {
 				$field->EXTRA .= "auto_increment";
 			}
 			$field->IS_NULLABLE = !empty( $matches['notnull'] ) ? 'NO' : 'YES';
-			$field->COLUMN_DEFAULT = isset( $matches['defaultv'] ) ? $matches['defaultv'] : null;
+			$field->COLUMN_DEFAULT = isset( $matches['defaultv'] ) && $matches['defaultv'] !== '' ? $matches['defaultv'] : null;
 			$field->COLUMN_DEFAULT_EXPR = !empty( $matches['default'] ) ? $matches['default'] : null;
 			if ( !$this->isTextualType( $matches['type'] ) ) {
 				$field->COLLATION_NAME = null;
 			} else {
-				$collation = $this->getCollation( @$matches['charset'], @$matches['collation'], $field->COLLATION_NAME );
-				$field->COLLATION_NAME = isset( $collation ) ? $collation : null;
+				$collation = $this->getCollation( @$matches['charset'], @$matches['collation'], $field->COLLATION_NAME ?? null );
+				$field->COLLATION_NAME = isset( $collation ) && $collation !== '' ? $collation : null;
 			}
-			$field->COLUMN_COMMENT = isset( $matches['comment'] ) ? $matches['comment'] : null;
-			$field->COLUMN_ONUPDATE_EXPR = isset( $matches['onupdate'] ) ? $matches['onupdate'] : null;
+			$field->COLUMN_COMMENT = isset( $matches['comment'] ) && $matches['comment'] !== '' ? $matches['comment'] : null;
+			$field->COLUMN_ONUPDATE_EXPR = isset( $matches['onupdate'] ) && $matches['onupdate'] !== '' ? $matches['onupdate'] : null;
 		}
 		return $field;
 	}
@@ -251,7 +250,7 @@ class SqlParser {
 	}
 }
 
-class DatabaseWalker_UsingShow {
+class ConvertionDatabaseWalker {
 	protected $connection = null;
 	protected $name = '';
 	protected $tableList = false;
@@ -260,7 +259,7 @@ class DatabaseWalker_UsingShow {
 
 	public function __construct( $connection ) {
 		$this->connection = $connection;
-		$this->parser = new SqlParser( $this->connection );
+		$this->parser = new ConvertionSqlParser( $this->connection );
 		$this->name = $this->connection->getDBname();
 	}
 
