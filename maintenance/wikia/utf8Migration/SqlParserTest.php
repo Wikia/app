@@ -50,6 +50,34 @@ class SqlParserTest extends WikiaBaseTest {
 					'COLUMN_ONUPDATE_EXPR' => null
 				]
 			],
+			[
+				'  `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL',
+				[
+					'COLUMN_NAME' => 'page_title',
+					'COLUMN_TYPE' => 'varchar(255)',
+					'EXTRA' => '',
+					'IS_NULLABLE' => 'NO',
+					'COLUMN_DEFAULT' => null,
+					'COLUMN_DEFAULT_EXPR' => null,
+					'COLLATION_NAME' => 'latin1_bin',
+					'COLUMN_COMMENT' => null,
+					'COLUMN_ONUPDATE_EXPR' => null
+				]
+			],
+			[
+				'  `math_html` text',
+				[
+					'COLUMN_NAME' => 'math_html',
+					'COLUMN_TYPE' => 'text',
+					'EXTRA' => '',
+					'IS_NULLABLE' => 'YES',
+					'COLUMN_DEFAULT' => null,
+					'COLUMN_DEFAULT_EXPR' => null,
+					'COLLATION_NAME' => null,
+					'COLUMN_COMMENT' => null,
+					'COLUMN_ONUPDATE_EXPR' => null
+				]
+			]
 		];
 	}
 
@@ -70,7 +98,7 @@ class SqlParserTest extends WikiaBaseTest {
 	}
 
 	public function sqlTablesProvider() {
-		$createSql = 'CREATE TABLE `ach_custom_badges` (
+		$badgesTable = 'CREATE TABLE `ach_custom_badges` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `cat` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `data` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -82,9 +110,9 @@ class SqlParserTest extends WikiaBaseTest {
 
 		return [
 			[
-				$createSql,
+				$badgesTable,
 				[
-					'sql' => $createSql,
+					'sql' => $badgesTable,
 					'table' => (object)[
 						'TABLE_NAME' => 'ach_custom_badges',
 						'ENGINE' => 'InnoDB',
