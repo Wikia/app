@@ -149,12 +149,15 @@ class VignetteRequest {
 
 		$isVignetteUrl = false;
 
+		$urlHost = parse_url( $url, PHP_URL_HOST );
+		$vignetteHost = parse_url( $wgVignetteUrl, PHP_URL_HOST );
+
 		if ( strpos( $wgVignetteUrl, '<SHARD>' ) === false ) {
-			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) === 0;
+			$isVignetteUrl = $urlHost === $vignetteHost;
 		} else {
 			for ( $i = 1; $i <= $wgImagesServers; ++$i ) {
-				$candidate = str_replace( '<SHARD>', $i, $wgVignetteUrl );
-				if ( strpos( $url, $candidate ) === 0 ) {
+				$candidate = str_replace( '<SHARD>', $i, $vignetteHost );
+				if ( $urlHost === $candidate ) {
 					$isVignetteUrl = true;
 					break;
 				}
