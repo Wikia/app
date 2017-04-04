@@ -7,9 +7,55 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.document',
+	'wikia.log',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (DOMElementTweaker, porvata, googleIma, uiTemplate, videoInterface, videoSettings, doc, mercuryListener) {
+], function (
+	DOMElementTweaker,
+	porvata,
+	googleIma,
+	uiTemplate,
+	videoInterface,
+	videoSettings,
+	doc,
+	log,
+	win,
+	mercuryListener
+) {
 	'use strict';
+	var logGroup = 'ext.wikia.adEngine.template.porvata';
+
+	function hideOtherBidsForVeles(params) {
+		if (params.adProduct === 'veles' && win.pbjs) {
+			var bidsReceived = win.pbjs._bidsReceived;
+
+			log(['hideOtherBidsForVeles', params, bidsReceived], log.levels.debug, logGroup);
+
+			bidsReceived.filter(function (bid) {
+				return bid.adId === params.hbAdId;
+			}).forEach(function (usedBid) {
+				bidsReceived = bidsReceived.filter(function (bid) {
+					var result = true;
+
+					if (bid.bidderRequestId === usedBid.bidderRequestId && bid.bidder === params.adProduct) {
+						if (bid.adUnitCode === params.slotName) {
+							result = true;
+						} else {
+							result = false;
+						}
+					} else {
+						result = true;
+					}
+
+					return result;
+				});
+			});
+
+			log(['hideOtherBidsForVeles', bidsReceived], log.levels.debug, logGroup);
+
+			win.pbjs._bidsReceived = bidsReceived;
+		}
+	}
 
 	function createInteractiveArea() {
 		var controlBar = document.createElement('div'),
@@ -27,7 +73,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			controlBar: controlBar,
 			controlBarItems: controlBarItems,
 			interactiveArea: interactiveArea
-		}
+		};
 	}
 
 	function getVideoContainer(slotName) {
@@ -57,10 +103,14 @@ define('ext.wikia.adEngine.template.porvata', [
 	function show(params) {
 		var settings = videoSettings.create(params);
 
+		log(['show', params], log.levels.debug, logGroup);
+
 		if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
 			params.originalContainer = params.container;
 			params.container = getVideoContainer(params.slotName);
 		}
+
+		hideOtherBidsForVeles(params);
 
 		porvata.inject(settings).then(function (video) {
 			if (params.vpaidMode === googleIma.vpaidMode.INSECURE) {
