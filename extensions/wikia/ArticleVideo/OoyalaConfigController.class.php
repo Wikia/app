@@ -21,7 +21,7 @@ class OoyalaConfigController extends WikiaController {
 					'url' => '//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/loader_svg.svg',
 				],
 			],
-			'accentColor' => '#448aff',
+			'accentColor' => '#00b7e0',
 		],
 		'localization' => [
 			'defaultLanguage' => 'en',
@@ -160,7 +160,7 @@ class OoyalaConfigController extends WikiaController {
 				'backgroundColor' => 'rgba(175,175,175,0.5)',
 				'bufferedColor' => 'rgba(175,175,175,0.7)',
 				'playedColor' => '',
-				'scrubberHandleColor' => 'rgba(67,137,255,1)',
+				'scrubberHandleColor' => '#00b7e0',
 				'scrubberHandleBorderColor' => 'rgba(255,255,255,1)',
 				'thumbnailPreview' => true,
 			],

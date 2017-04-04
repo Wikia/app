@@ -57,11 +57,11 @@
 
 		.oo-control-bar-items-wrapper {
 			// Adjustment for smaller height on controlbar
-			margin-top: 12px;
+			margin-top: 11px;
 
 			.oo-control-bar-item {
 				// Reduce original horizontal spacing of icons
-				padding: 0 3px;
+				padding: 0 6px;
 
 				// On selected don't show the icon behind the background image
 				&.oo-selected > .fandom-video-gear-icon {
@@ -109,5 +109,14 @@
 		}
 
 
+	}
+
+	.oo-volume-bar {
+		padding-left: 6px;
+	}
+
+	// That overrides ooyala icons font. It prevents downloading the font.
+	.oo-icon-svg {
+		font-family: $wds-font-family !important;
 	}
 }
