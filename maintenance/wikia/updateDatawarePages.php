@@ -105,7 +105,6 @@ class UpdateDatawarePages extends Maintenance {
 			'pages',
 			[
 				'page_id',
-				'page_status',
 				'page_latest',
 				'page_title',
 				'page_namespace',
@@ -204,7 +203,6 @@ class UpdateDatawarePages extends Maintenance {
 				'page_id' => $localPage->page_id,
 				'page_namespace' => $localPage->page_namespace,
 				'page_title' => $localPage->page_title,
-				'page_status' => 0,
 				'page_is_content' => $localPage->page_is_content,
 				'page_is_redirect' => $localPage->page_is_redirect,
 				'page_latest' => $localPage->page_latest,

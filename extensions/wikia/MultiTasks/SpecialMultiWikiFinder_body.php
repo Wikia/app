@@ -124,7 +124,6 @@ class MultiwikifinderPage {
 				array(
 					'page_title'		=> mb_strtolower($this->mPageTitle),
 					'page_namespace' 	=> $this->mPageNS,
-					'page_status'		=> 0
 				),
 				__METHOD__,
 				array(
