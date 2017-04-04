@@ -380,26 +380,30 @@ class DataProvider {
 	}
 
 	/**
-	 * Return array of newly changed articles
-	 * Author: Inez Korczynski (inez at wikia.com)
+	 * Return array of recently changed articles
+	 *
+	 * @author Inez Korczynski (inez at wikia.com)
+	 * @Author macbre
 	 * @return array
 	 */
-	final public static function GetNewlyChangedArticles($limit = 7) {
+	final public static function GetNewlyChangedArticles() {
 		wfProfileIn(__METHOD__);
-		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
+		global $wgMemc;
+
+		$limit = 7;
 
 		$memckey = wfMemcKey("NewlyChanged", $limit);
 		$results = $wgMemc->get($memckey);
 
 		if (!is_array($results)) {
-			$dbr = wfGetDB(DB_SLAVE, 'blobs', $wgExternalDatawareDB);
-			$res = $dbr->select(
-				'pages',
-				array('page_namespace, page_title'),
-				array(
-					'page_wikia_id' => $wgCityId,
-					'page_namespace' => 0
-				),
+			$dbr = wfGetDB(DB_SLAVE);
+
+			$page_ids = $dbr->selectFieldValues(
+				'page',
+				'page_id',
+				[
+					'page_namespace' => NS_MAIN
+				],
 				__METHOD__,
 				array(
 					'ORDER BY' => 'page_latest desc',
@@ -407,17 +411,15 @@ class DataProvider {
 				)
 			);
 
-			$results = array();
-			while ($row = $dbr->fetchObject($res)) {
-				$title = Title::makeTitleSafe($row->page_namespace, $row->page_title);
-
-				if (is_object($title)) {
-					$article['url'] = $title->getLocalUrl();
-					$article['text'] = $title->getPrefixedText();
-					$results[] = $article;
-				}
-			}
-			$dbr->freeResult($res);
+			$results = array_map(
+				function(Title $title) {
+					return [
+						'url' => $title->getLocalURL(),
+						'text' => $title->getPrefixedText(),
+					];
+				},
+				Title::newFromIDs($page_ids)
+			);
 
 			self::removeAdultPages($results);
 
