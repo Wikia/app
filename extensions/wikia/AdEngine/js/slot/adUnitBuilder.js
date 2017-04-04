@@ -19,6 +19,28 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 		].join('/');
 	}
 
+	function findSlotGroup(map, slotName) {
+		var result = Object.keys(map).filter(function (name) {
+			return map[name].indexOf(slotName) !== -1;
+		});
+
+		return result.length === 1 ? result[0] : null;
+	}
+
+	function getGroup(slotName) {
+		var map = {
+			'LB': ['TOP_LEADERBOARD', 'BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD'],
+			'MR': ['TOP_RIGHT_BOXAD'],
+			'SKY': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
+			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
+			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2', 'EXIT_STITIAL_BOXAD_1'],
+			'HiVi': ['INCONTENT_BOXAD_1']
+		}, result;
+
+		result = findSlotGroup(map, slotName);
+		return result ? result : 'OTHER';
+	}
+
 	function getDevice(params) {
 		var result = 'unknown';
 
@@ -32,15 +54,21 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 	}
 
 	function buildNew(src, slotName, passback) {
-		var params = page.getPageLevelParams(),
+		var adUnitElements,
+			params = page.getPageLevelParams(),
 			device = getDevice(params),
 			skin = params.skin,
 			pageType = params.s2,
 			wikiName = params.s1,
 			vertical = params.s0v;
 
-		return ['', dfpId, src + '.' + slotName, device, skin + '-' + pageType, wikiName + '-' + vertical, passback]
-			.join('/');
+		adUnitElements = ['', dfpId, src + '.' + getGroup(slotName), slotName, device, skin + '-' + pageType, wikiName + '-' + vertical];
+
+		if (passback) {
+			adUnitElements.push(passback);
+		}
+
+		return adUnitElements.join('/');
 	}
 
 	return {
