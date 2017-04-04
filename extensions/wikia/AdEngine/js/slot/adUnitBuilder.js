@@ -22,14 +22,10 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 	function getDevice(params) {
 		var result = 'unknown';
 
-		switch (params.skin) {
-			case 'oasis':
-				result = browserDetect.isMobile() ? 'tablet' : 'desktop';
-			break;
-			case 'mercury':
-			case 'mobile-wiki':
-				result = 'smartphone';
-				break;
+		if (params.skin === 'oasis') {
+			result = browserDetect.isMobile() ? 'tablet' : 'desktop';
+		} else if (params.skin === 'mercury' || params.skin === 'mobile-wiki') {
+			result = 'smartphone';
 		}
 
 		return result;
@@ -43,7 +39,8 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 			wikiName = params.s1,
 			vertical = params.s0v;
 
-		return '/' + dfpId + '/' + src + '.' + slotName + '/' + device + '/' + skin + '-' + pageType + '/' + wikiName + '-' + vertical + '/' + passback;
+		return ['', dfpId, src + '.' + slotName, device, skin + '-' + pageType, wikiName + '-' + vertical, passback]
+			.join('/');
 	}
 
 	return {
