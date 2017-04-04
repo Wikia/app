@@ -387,16 +387,11 @@ class DataProvider {
 	 * @return array
 	 */
 	final public static function GetNewlyChangedArticles() {
-		wfProfileIn(__METHOD__);
-		global $wgMemc;
+		$fname = __METHOD__;
 
-		$limit = 7;
-
-		$memckey = wfMemcKey("NewlyChanged", $limit);
-		$results = $wgMemc->get($memckey);
-
-		if (!is_array($results)) {
+		return WikiaDataAccess::cache(wfMemcKey($fname), 60 * 10, function() use ($fname) {
 			$dbr = wfGetDB(DB_SLAVE);
+			$limit = 7;
 
 			$page_ids = $dbr->selectFieldValues(
 				'page',
@@ -404,7 +399,7 @@ class DataProvider {
 				[
 					'page_namespace' => NS_MAIN
 				],
-				__METHOD__,
+				$fname,
 				array(
 					'ORDER BY' => 'page_latest desc',
 					'LIMIT' => $limit * 2
@@ -423,12 +418,8 @@ class DataProvider {
 
 			self::removeAdultPages($results);
 
-			$results = array_slice($results, 0, $limit);
-			$wgMemc->set($memckey, $results, 60 * 10);
-		}
-
-		wfProfileOut(__METHOD__);
-		return $results;
+			return array_slice($results, 0, $limit);
+		});
 	}
 
 	/**
