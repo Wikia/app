@@ -100,20 +100,21 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 */
 	function show(params) {
-		var settings = videoSettings.create(params);
+		var settings = videoSettings.create(params),
+			imaVpaidModeInsecure = 2;
 
 		log(['show', params], log.levels.debug, logGroup);
+
+		if (params.vpaidMode === imaVpaidModeInsecure) {
+			params.originalContainer = params.container;
+			params.container = getVideoContainer(params.slotName);
+		}
 
 		hideOtherBidsForVeles(params);
 
 		porvata.inject(settings).then(function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
 				videoPlayer;
-
-			if (params.vpaidMode === imaVpaidMode.INSECURE) {
-				params.originalContainer = params.container;
-				params.container = getVideoContainer(params.slotName);
-			}
 
 			if (params.vpaidMode === imaVpaidMode.INSECURE) {
 				videoPlayer = params.container.querySelector('.video-player');
