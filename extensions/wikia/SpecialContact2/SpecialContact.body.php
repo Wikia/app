@@ -81,7 +81,7 @@ class ContactForm extends SpecialPage {
 		// Disable user JS
 		$out->disallowUserJs();
 
-		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
+		if ( $par === 'close-account' ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
 		}
@@ -409,8 +409,6 @@ class ContactForm extends SpecialPage {
 
 		$secDat = array();
 
-		$closeMyAccountSupported = $this->isCloseMyAccountSupported();
-
 		foreach ( $SpecialContactSecMap as $section ) {
 			if( empty($section['headerMsg']) ) {
 				continue;
@@ -441,7 +439,7 @@ class ContactForm extends SpecialPage {
 					$msg = $info;
 				}
 
-				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
+				if ( $sub === 'close-account' ) {
 					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
 				} elseif ( $sub === 'dmca-request' ) {
 					$title = GlobalTitle::newFromText( 'DMCARequest', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID );
@@ -762,16 +760,3 @@ class ContactForm extends SpecialPage {
 		return true;
 	}
 
-	/**
-	 * Check if the CloseMyAccount extension is enabled and supported in the
-	 * current language.
-	 *
-	 * @return boolean True if CloseMyAccount is enabled and supported in the
-	 *                 current language, false otherwise
-	 */
-	private function isCloseMyAccountSupported() {
-		global $wgContLang, $wgEnableCloseMyAccountExt, $wgSupportedCloseMyAccountLang;
-		return !empty( $wgEnableCloseMyAccountExt )
-				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
-	}
-}
