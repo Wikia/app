@@ -6,8 +6,7 @@ class ArticleVideoController extends WikiaController {
 		$title = $wg->Title->getPrefixedDBkey();
 
 		$enableArticleFeaturedVideo =
-			ArticleVideoContext::isFeaturedVideoEmbedded( $title ) &&
-			$this->isArticlePage(); // Prevents to show video on ?action=history etc.
+			ArticleVideoContext::isFeaturedVideoEmbedded( $title );
 
 		if ( $enableArticleFeaturedVideo ) {
 			$wg->Out->addModules( 'ext.ArticleVideo' );
@@ -31,9 +30,5 @@ class ArticleVideoController extends WikiaController {
 		} else {
 			$this->skipRendering();
 		}
-	}
-
-	private function isArticlePage() {
-		return $this->getApp()->wg->Request->getVal( 'action', 'view' ) === 'view';
 	}
 }
