@@ -3,8 +3,8 @@ if(getAdMix() === '3') {
 		var ad2 = $('.prototype3-ad2');
 		var recirc = $('.prototype3-recirc');
 		var recircOffsetTop = recirc.offset().top;
-		var adSrc = '/skins/oasis/images/premium-ads-mix-prototype/ad2.png';
-		var adSrc2 = '/skins/oasis/images/premium-ads-mix-prototype/ad3.png';
+		var adSrc = '/skins/oasis/images/premium-ads-mix-prototype/image2.png';
+		var adSrc2 = '/skins/oasis/images/premium-ads-mix-prototype/image3.png';
 
 		function resetInlineStyles() {
 			recirc.css({

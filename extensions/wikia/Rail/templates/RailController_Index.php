@@ -27,7 +27,7 @@
 
 			<?php if ( $adMixPrototype === '1' ): ?>
 				<img class="prototype1-ad1"
-					 src="/skins/oasis/images/premium-ads-mix-prototype/ad1.png">
+					 src="/skins/oasis/images/premium-ads-mix-prototype/image1.png">
 				<img class="prototype1-rwa"
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
 				<div class="prototype1-recirc-placeholder">
@@ -36,16 +36,16 @@
 				</div>
 				<div class="prototype1-ad2-placeholder">
 					<img class="prototype1-ad2"
-						 src="/skins/oasis/images/premium-ads-mix-prototype/ad3.png">
+						 src="/skins/oasis/images/premium-ads-mix-prototype/image3.png">
 				</div>
 				<img class="prototype1-ad3"
-					 src="/skins/oasis/images/premium-ads-mix-prototype/ad2.png">
+					 src="/skins/oasis/images/premium-ads-mix-prototype/image2.png">
 			<?php endif; ?>
 
 			<?php if ( $adMixPrototype === '2' ): ?>
 				<div class="prototype2-ad1-placeholder">
 					<img class="prototype2-ad1"
-						 src="/skins/oasis/images/premium-ads-mix-prototype/ad1.png">
+						 src="/skins/oasis/images/premium-ads-mix-prototype/image1.png">
 				</div>
 				<img class="prototype2-rwa"
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
@@ -57,7 +57,7 @@
 
 			<?php if ( $adMixPrototype === '3' ): ?>
 				<img class="prototype3-ad1"
-					 src="/skins/oasis/images/premium-ads-mix-prototype/ad1.png">
+					 src="/skins/oasis/images/premium-ads-mix-prototype/image1.png">
 				<img class="prototype3-rwa"
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
 				<div class="prototype3-recirc-placeholder">
@@ -65,7 +65,7 @@
 						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc2.png">
 				</div>
 				<img class="prototype3-ad2"
-					 src="/skins/oasis/images/premium-ads-mix-prototype/ad2.png">
+					 src="/skins/oasis/images/premium-ads-mix-prototype/image2.png">
 			<?php endif; ?>
 
 		</div>
