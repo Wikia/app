@@ -1,6 +1,4 @@
-var admixMode = location.search.split('admix=')[1];
-
-if(admixMode === '3') {
+if(getAdMix() === '3') {
 	$(function () {
 		var ad2 = $('.prototype3-ad2');
 		var recirc = $('.prototype3-recirc');

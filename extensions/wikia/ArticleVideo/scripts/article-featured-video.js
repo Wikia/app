@@ -48,11 +48,11 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 			});
 			$videoThumbnail.css('height', videoHeight);
 			$ooyalaVideo.css('height', videoHeight);
-			setTimeout(function () {
+			window.requestAnimationFrame(function () {
 				if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
 					$video.addClass('collapsed');
 				}
-			}, 0);
+			});
 		}
 
 		function uncollapseVideo() {

@@ -1,6 +1,4 @@
-var admixMode = location.search.split('admix=')[1];
-
-if(admixMode === '1') {
+if(getAdMix() === '1') {
 	$(function () {
 		var recirc = $('.prototype1-recirc');
 		var recircOffsetTop = recirc.offset().top;
