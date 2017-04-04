@@ -218,35 +218,17 @@ class OoyalaConfigController extends WikiaController {
 			],
 		],
 		'icons' => [
-			'play' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'h',
-				'fontStyleClass' => 'oo-icon oo-icon-play-slick',
+			'play' => [// svg set in skin()
 			],
-			'pause' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'g',
-				'fontStyleClass' => 'oo-icon oo-icon-pause-slick',
+			'pause' => [// svg set in skin()
 			],
-			'volume' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'b',
-				'fontStyleClass' => 'oo-icon oo-icon-volume-on-ooyala-defualt',
+			'volume' => [// svg set in skin()
 			],
-			'volumeOff' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'p',
-				'fontStyleClass' => 'oo-icon oo-icon-volume-mute-ooyala-defualt',
+			'volumeOff' => [// svg set in skin()
 			],
-			'expand' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'i',
-				'fontStyleClass' => 'oo-icon oo-icon-system-fullscreen',
+			'expand' => [// svg set in skin()
 			],
-			'compress' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'j',
-				'fontStyleClass' => 'oo-icon oo-icon-system-minimizescreen',
+			'compress' => [// svg set in skin()
 			],
 			'ellipsis' => [
 				'fontFamilyName' => 'ooyala-slick-type',
@@ -258,10 +240,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'c',
 				'fontStyleClass' => 'oo-icon oo-icon-system-replay',
 			],
-			'share' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'c',
-				'fontStyleClass' => 'oo-icon oo-icon-share',
+			'share' => [// svg set in skin()
 			],
 			'cc' => [
 				'fontFamilyName' => 'ooyala-slick-type',
@@ -333,13 +312,20 @@ class OoyalaConfigController extends WikiaController {
 
 	public function skin() {
 		$config = self::CONFIG;
-		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg('wds-icons-play-triangle-small');
-		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg('wds-icons-pause-small');
-		$config['icons']['volume']['svg'] = DesignSystemHelper::renderSvg('wds-icons-volume-small');
-		$config['icons']['volumeOff']['svg'] = DesignSystemHelper::renderSvg('wds-icons-volume-off-small');
-		$config['icons']['expand']['svg'] = DesignSystemHelper::renderSvg('wds-icons-fullscreen-small');
-		$config['icons']['compress']['svg'] = DesignSystemHelper::renderSvg('wds-icons-fullscreen-off-small');
-		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg('wds-icons-share-small');
+		$config['icons']['play']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
+		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
+		$config['icons']['volume']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-volume-small' );
+		$config['icons']['volumeOff']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-volume-off-small' );
+		$config['icons']['expand']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
+		$config['icons']['compress']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
+		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-share-small' );
 		$this->getResponse()->setData( $config );
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->getResponse()->setCacheValidity( WikiaResponse::CACHE_LONG );
 	}
 }
