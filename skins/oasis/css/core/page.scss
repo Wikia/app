@@ -283,18 +283,41 @@
 
 #WikiaRecentActivity {
 	border: none;
+	padding: 20px 0;
 
 	.latest-activity-module-header {
-		@include flexbox();
-		@include flex-direction(row);
-
 		border-bottom: solid 1px;
-		height: 28px;
+		height: 30px;
 		margin-bottom: 16px;
+	}
+
+	.activity-icon {
+		margin-right: 6px;
 	}
 
 	.latest-activity-items {
 		padding-left: 6px;
+	}
+
+	.latest-activity-item {
+		padding: 10px 0;
+	}
+
+	.page-title {
+		color: $color-links;
+		font-size: 14px;
+		line-height: 16px;
+		margin-bottom: 2px;
+	}
+
+	.edited-by {
+		a {
+			color: $color-text;
+		}
+
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 14px;
 	}
 }
 
