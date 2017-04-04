@@ -617,7 +617,7 @@ class EditAccount extends SpecialPage {
 		$baseUrl = !empty( $wgDevelEnvironment ) ?
 			'http://preview.fandom.wikia.com' :
 			'http://fandom.wikia.com';
-		$url = $baseUrl . '/ajax/create_user/';
+		$url = $baseUrl . '/api/create_user/';
 
 		$fields = [
 			'wp_login' => $this->mUser->getName(),
