@@ -752,4 +752,4 @@ class ContactForm extends SpecialPage {
 		}
 		return true;
 	}
-
+}
