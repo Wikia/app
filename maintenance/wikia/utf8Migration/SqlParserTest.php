@@ -23,7 +23,7 @@ class SqlParserTest extends WikiaBaseTest {
 	public function sqlColumnLinesDataProvider() {
 		return [
 			[
-				'  `cat` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL',
+				'  `cat` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,',
 				[
 					'COLUMN_NAME' => 'cat',
 					'COLUMN_TYPE' => 'varchar(255)',
@@ -37,7 +37,7 @@ class SqlParserTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'  `data` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+				'  `data` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,',
 				[
 					'COLUMN_NAME' => 'data',
 					'COLUMN_TYPE' => 'text',
@@ -51,7 +51,7 @@ class SqlParserTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'  `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL',
+				'  `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,',
 				[
 					'COLUMN_NAME' => 'page_title',
 					'COLUMN_TYPE' => 'varchar(255)',
@@ -65,7 +65,7 @@ class SqlParserTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'  `math_html` text',
+				'  `math_html` text,',
 				[
 					'COLUMN_NAME' => 'math_html',
 					'COLUMN_TYPE' => 'text',

@@ -156,7 +156,7 @@ class ConvertionSqlParser {
 			"on update (?<onupdate>'(?<onupdatev>[^']*)'|(?<onupdatee>null|current_timestamp))",
 		];
 		$pattern = "/^\s+`(?<name>[^`]+)`\s(?<type>[^\s]+)"
-			. "(\s+(" . implode( "|", $options ) . "))*,?\$/i";
+			. "(\s+(" . implode( "|", $options ) . "))*,?\$/iU";
 		if ( preg_match( $pattern, $line, $matches ) ) {
 			$field = new stdclass;
 			foreach ( $defaults as $k => $v ) {
