@@ -62,13 +62,13 @@ if(admixMode === '1') {
 		function apply5() {
 			recirc.css({
 				position: 'absolute',
-				bottom: (20 + 250 + 20 + $('#WikiaFooter').height()) +'px'
+				bottom: (20 + 250 + 20 + $('#WikiaFooter').outerHeight() + 30) +'px'
 			});
 			recirc.removeClass('fixed');
 			ad3.css({
 				opacity: '1',
 				position: 'absolute',
-				bottom: (20 + $('#WikiaFooter').height()) + 'px'
+				bottom: (20 + $('#WikiaFooter').outerHeight() + 30) + 'px'
 			});
 			ad3.removeClass('fixed');
 			ad2.css('display', 'none');
@@ -78,7 +78,7 @@ if(admixMode === '1') {
 			var point1 = recircOffsetTop - 60;
 			var point2 = ad2OffsetTop - 20 - recirc.height() - 60;
 			var point3 = ad2OffsetTop - 20 - recirc.height() - 60 + 3000;
-			var point4 = $('.WikiaPageContentWrapper').height() - (250 + 383) - $('#WikiaFooter').height();
+			var point4 = $('.WikiaPageContentWrapper').offset().top + $('.WikiaPageContentWrapper').height() - (250 + 359 + 60 + 20 + 20) - ($('#WikiaFooter').outerHeight() + 30);
 
 			var scrollTop = $(this).scrollTop();
 

@@ -32,7 +32,7 @@
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
 				<div class="prototype1-recirc-placeholder">
 					<img class="prototype1-recirc"
-						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc.png">
+						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc2.png">
 				</div>
 				<div class="prototype1-ad2-placeholder">
 					<img class="prototype1-ad2"
@@ -51,7 +51,7 @@
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
 				<div class="prototype2-recirc-placeholder">
 					<img class="prototype2-recirc"
-						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc.png">
+						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc2.png">
 				</div>
 			<?php endif; ?>
 
@@ -62,7 +62,7 @@
 					 src="/skins/oasis/images/premium-ads-mix-prototype/RWA.png">
 				<div class="prototype3-recirc-placeholder">
 					<img class="prototype3-recirc"
-						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc.png">
+						 src="/skins/oasis/images/premium-ads-mix-prototype/Recirc2.png">
 				</div>
 				<img class="prototype3-ad2"
 					 src="/skins/oasis/images/premium-ads-mix-prototype/ad2.png">
