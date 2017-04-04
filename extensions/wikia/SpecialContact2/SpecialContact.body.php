@@ -32,13 +32,6 @@ class ContactForm extends SpecialPage {
 			'subject' => "Account issue: %s",
 		),
 
-		'close-account' => array(
-			'format' => "User requested account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s?wpAction=closeaccount",
-			'vars' => array( 'wpUserName', 'wpUrlencUserName' ),
-			'subject' => 'Disable account: %s',
-			'markuser' => 'requested-closure',
-		),
-
 		'rename-account' => array(
 			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
 			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUrlencUserName', 'wpUrlencUserNameNew' ),
