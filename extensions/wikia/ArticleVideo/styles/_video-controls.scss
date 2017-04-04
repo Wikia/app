@@ -77,67 +77,37 @@
 					// Make all icon bars the same height
 					height: $video-player-volume-bar-height;
 					background-color: $video-player-volume-bar-off-color;
+					margin-bottom: 1px;
 				}
 			}
 
 			.oo-control-bar-duration {
 				font-weight: bold;
 				font-family: $wds-font-family;
+				top: 0;
 			}
 		}
 
 		// For all default icons (new icons stay transparent) make the hover state the default video blue color
-		.oo-icon:not(.fandom-video-icon) {
+		.oo-icon:hover {
+			color: $video-player-blue !important;
+		}
+
+		.oo-icon-svg {
+			filter: none !important;
+
+			svg {
+				fill: #fff;
+				filter: none !important;
+			}
+
 			&:hover {
-				color: $video-player-blue !important;
+				svg {
+					fill: $video-player-blue !important;
+				}
 			}
 		}
 
-		// Make new icon font color transparent to keep spacing consistent
-		.fandom-video-icon {
-			// Added inline with JS need to override
-			color: transparent !important;
-		}
 
-		// See block comment above by the data uris for all fandom-video-<name>-icon classes
-		.fandom-video-share-icon {
-			background: no-repeat center url($share-icon-uri);
-
-			&:hover {
-				background-image: url($share-icon-uri-hover);
-			}
-		}
-
-		.fandom-video-volume-icon {
-			background: no-repeat center url($volume-icon-uri);
-
-			&:hover {
-				background-image: url($volume-icon-uri-hover);
-			}
-		}
-
-		.fandom-video-volume-off-icon {
-			background: no-repeat center url($volume-off-icon-uri);
-
-			&:hover {
-				background-image: url($volume-off-icon-uri-hover);
-			}
-		}
-
-		.fandom-video-gear-icon {
-			background: no-repeat center url($gear-icon-uri);
-
-			&:hover {
-				background-image: url($gear-icon-uri-hover);
-			}
-		}
-
-		.fandom-video-full-screen-icon {
-			background: no-repeat center url($full-screen-icon-uri);
-
-			&:hover {
-				background-image: url($full-screen-icon-uri-hover);
-			}
-		}
 	}
 }
