@@ -114,3 +114,29 @@
 		top: 60px;
 	}
 }
+
+// enable PremiuemPageHeader
+body.pph-experiment.user-logged .PremiumPageHeader {
+	display: block;
+}
+body.pph-experiment.user-logged.ns-0 .PremiumPageArticleHeader {
+	display: block;
+}
+body.pph-experiment.user-logged .WikiHeader {
+	display: none;
+}
+body.pph-experiment.user-logged.ns-0 .WikiaPageHeader {
+	display: none;
+}
+body.pph-experiment.user-anon .PremiumPageHeader {
+	display: block;
+}
+body.pph-experiment.user-anon.ns-0 .PremiumPageArticleHeader {
+	display: block;
+}
+body.pph-experiment.user-anon .WikiHeader {
+	display: none;
+}
+body.pph-experiment.user-anon.ns-0 .WikiaPageHeader {
+	display: none;
+}
