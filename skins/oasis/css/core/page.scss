@@ -281,6 +281,23 @@
 	}
 }
 
+#WikiaRecentActivity {
+	border: none;
+
+	.latest-activity-module-header {
+		@include flexbox();
+		@include flex-direction(row);
+
+		border-bottom: solid 1px;
+		height: 28px;
+		margin-bottom: 16px;
+	}
+
+	.latest-activity-items {
+		padding-left: 6px;
+	}
+}
+
 .WikiaImageModule {
 	h1 {
 		display: none;

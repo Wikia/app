@@ -1,9 +1,10 @@
-<section class="WikiaActivityModule module" id="WikiaRecentActivity">
-	<!--TODO: activity icon-->
-	<h2 class="activity-heading"><?= $moduleHeader ?></h2>
+<section class="module" id="WikiaRecentActivity">
+	<div class="latest-activity-module-header">
+		<?= $activityIcon ?><h2><?= $moduleHeader ?></h2>
+	</div>
 
 	<? if(!empty($changeList)): ?>
-		<ul>
+		<ul class="latest-activity-items">
 		<? foreach ($changeList as $item): ?>
 			<li>
 				<em><a href="<?= $item['page_url'] ?>"><?= $item['page_title'] ?></a></em>
@@ -12,6 +13,4 @@
 		<? endforeach; ?>
 		</ul>
 	<? endif; ?>
-
-	<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
 </section>

@@ -54,7 +54,8 @@ class LatestActivityController extends WikiaController {
 		}
 
 		$this->setVal( 'changeList', $changeList );
-		$this->setVal( 'moduleHeader', wfMsg( 'oasis-activity-header' ) );
+		$this->setVal( 'moduleHeader', wfMessage( 'oasis-activity-header' )->escaped() );
+		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'activity-icon' ) );
 
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity( 600 );
