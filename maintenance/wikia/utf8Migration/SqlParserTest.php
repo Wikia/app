@@ -3,7 +3,7 @@
 class SqlParserTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/convertionUtils.php';
+		$this->setupFile = dirname( __FILE__ ) . '/UTF8ConvertionUtils.php';
 		parent::setUp();
 	}
 
