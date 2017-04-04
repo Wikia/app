@@ -142,7 +142,7 @@ class Utf8md4DbConvert {
 						$this->script->table( $field->TABLE_NAME )->add( "MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest}" );
 						//					$sqlList[] = "ALTER TABLE `{$field->TABLE_NAME}` MODIFY {$field->COLUMN_NAME} {$field->COLUMN_TYPE} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin {$rest};";
 					} else {
-						$this->script->table( $field->TABLE_NAME )->comment( "--{$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n" );
+						$this->script->table( $field->TABLE_NAME )->comment( "-- WARNING! {$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n" );
 						//					$sqlList[] = "--{$field->TABLE_NAME}.{$field->COLUMN_NAME} -- could not find intermediate type for {$field->COLUMN_TYPE}\n";
 					}
 				}
