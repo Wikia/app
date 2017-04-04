@@ -1,16 +1,21 @@
 describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 	'use strict';
 
-	var mocks = {
-		page: {
-			getPageLevelParams: function() {
-				return {};
+	var noop = function () {},
+		mocks = {
+			page: {
+				getPageLevelParams: noop
+			},
+			browserDetect: {
+				isMobile: noop
 			}
-		}
-	};
+		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.adUnitBuilder'](mocks.page);
+		return modules['ext.wikia.adEngine.slot.adUnitBuilder'](
+			mocks.page,
+			mocks.browserDetect
+		);
 	}
 
 	function mockPageParams(params) {
@@ -35,10 +40,24 @@ describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 			's0v': 'gaming',
 			's1': '_godofwar',
 			's2': 'home',
-			'skin': 'mercury',
+			'skin': 'mercury'
 		});
 
 		expect(getModule().buildNew('mobile_remnant', 'MOBILE_PREFOOTER', 'Evolve'))
 			.toEqual('/5441/mobile_remnant.MOBILE_PREFOOTER/smartphone/mercury-home/_godofwar-gaming/Evolve');
+	});
+
+	it('Should build new ad unit with correct tablet recognition', function () {
+		mockPageParams({
+			's0v': 'gaming',
+			's1': '_godofwar',
+			's2': 'home',
+			'skin': 'oasis'
+		});
+
+		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+
+		expect(getModule().buildNew('mobile_remnant', 'MOBILE_PREFOOTER', 'Evolve'))
+			.toEqual('/5441/mobile_remnant.MOBILE_PREFOOTER/tablet/oasis-home/_godofwar-gaming/Evolve');
 	});
 });

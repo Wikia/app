@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.adUnitBuilder', [
 	'ext.wikia.adEngine.adLogicPageParams',
-], function (page) {
+	'wikia.browserDetect'
+], function (page, browserDetect) {
 	'use strict';
 
 	var dfpId = '5441';
@@ -23,7 +24,7 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 
 		switch (params.skin) {
 			case 'oasis':
-				result = 'desktop'; // TODO: recognize desktop
+				result = browserDetect.isMobile() ? 'tablet' : 'desktop';
 			break;
 			case 'mercury':
 			case 'mobile-wiki':
