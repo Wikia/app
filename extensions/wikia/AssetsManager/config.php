@@ -246,6 +246,7 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -269,6 +270,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.old.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -918,6 +920,7 @@ $config['mobile_base_ads_js'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		// Modules
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
