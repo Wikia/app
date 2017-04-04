@@ -14,7 +14,7 @@ class ArticleVideoContext {
 		return $wg->enableArticleFeaturedVideo &&
 			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
 			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
-			self::isArticlePage(); // Prevents to show video on ?action=history etc.;
+			!WikiaPageType::isActionPage(); // Prevents to show video on ?action=history etc.;
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
@@ -56,10 +56,5 @@ class ArticleVideoContext {
 	 */
 	public static function isRelatedVideoEmbedded( $title ) {
 		return !empty( static::getRelatedVideoData( $title ) );
-	}
-
-
-	private static function isArticlePage() {
-		return F::app()->wg->Request->getVal( 'action', 'view' ) === 'view';
 	}
 }
