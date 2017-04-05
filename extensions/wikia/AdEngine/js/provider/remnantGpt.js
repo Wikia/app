@@ -2,14 +2,17 @@
 define('ext.wikia.adEngine.provider.remnantGpt', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker'
-], function (uapContext, factory, slotTweaker) {
+], function (uapContext, factory, adUnitBuilder, slotTweaker) {
 	'use strict';
+
+	var src = 'remnant';
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.remnantGpt',
 		'RemnantGpt',
-		'remnant',
+		src,
 		{
 			BOTTOM_LEADERBOARD: {size: '728x90', loc: 'footer'},
 			EXIT_STITIAL_BOXAD_1: {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
@@ -35,6 +38,9 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
+			},
+			buildAdUnit: function (slotName, passback) {
+				return adUnitBuilder.buildNew(src, slotName, passback);
 			}
 		}
 	);

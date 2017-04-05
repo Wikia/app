@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
 	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
 	 * @param {function} [extra.beforeHop]      - function to call before calling hop
+	 * @param {function} [extra.buildAdUnit]    - function to build ad unit
 	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
@@ -64,7 +65,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot.name], 'debug', logGroup);
 
-			var slotPath = adUnitBuilder.build(slot.name, src),
+			var slotPath = extra.buildAdUnit ? extra.buildAdUnit(slot.name) : adUnitBuilder.build(slot.name, src),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
 
 			addHook(slot, 'success', extra.beforeSuccess);
