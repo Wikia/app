@@ -400,10 +400,10 @@ class DataProvider {
 					'page_namespace' => NS_MAIN
 				],
 				$fname,
-				array(
+				[
 					'ORDER BY' => 'page_latest desc',
 					'LIMIT' => $limit * 2
-				)
+				]
 			);
 
 			$results = array_map(
