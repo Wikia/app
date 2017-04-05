@@ -1,18 +1,28 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
-	'ext.wikia.adEngine.provider.factory.wikiaGpt'
-], function (factory) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slot.adUnitBuilder'
+], function (adContext, factory, adUnitBuilder) {
 	'use strict';
+
+	var src = 'mobile_remnant';
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.remnantGptMobile',
 		'RemnantGptMobile',
-		'mobile_remnant',
+		src,
 		{
 			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480,2x2'},
 			MOBILE_BOTTOM_LEADERBOARD:  {size: '320x480,2x2'},
 			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480'},
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
-		}
-	);
+		},
+		{
+			buildAdUnit: function (slotName, passback) {
+				return adContext.getContext().opts.enableRemnantNewAdUnit ?
+					adUnitBuilder.buildNew(src, slotName, passback) : adUnitBuilder.build(slotName, src);
+			}
+
+	});
 });
