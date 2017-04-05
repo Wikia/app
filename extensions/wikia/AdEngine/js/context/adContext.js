@@ -151,6 +151,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
+		context.opts.enableRemnantNewAdUnit = false; // TODO load from wgCountry instant global
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact &&
