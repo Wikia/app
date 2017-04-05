@@ -727,7 +727,7 @@ jQuery(function ($) {
 			label: 'chat-join'
 		}, trackWithEventData);
 
-		/** recent-wiki-activity **/
+		/** forum activity module and forum related threads module **/
 		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (event) {
 			var label,
 				el = $(event.target);
@@ -743,6 +743,23 @@ jQuery(function ($) {
 				label = 'activity-username';
 			} else if (el.closest('em').length > 0) {
 				label = 'activity-title';
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: event,
+					category: 'recent-wiki-activity', // TODO: should these modules have this category?
+					label: label
+				});
+			}
+		});
+
+		$wikiaRail.find('#WikiaRecentActivity').on('mousedown', 'a', function (event) {
+			var label = event.target.getAttribute('data-tracking');
+
+			// Primary mouse button only
+			if (event.which !== 1) {
+				return;
 			}
 
 			if (label !== undefined) {
