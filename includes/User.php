@@ -3509,6 +3509,8 @@ class User implements JsonSerializable {
 		if ( $this->isAnon() && session_status() !== PHP_SESSION_ACTIVE /* Wikia change (SUS-20) */ ) {
 			return EDIT_TOKEN_SUFFIX;
 		} else {
+			global $wgDBName;
+
 			$token = $request->getSessionData( 'wsEditToken' );
 			if ( $token === null ) {
 				$token = MWCryptRand::generateHex( 32 );
@@ -3517,6 +3519,11 @@ class User implements JsonSerializable {
 			if( is_array( $salt ) ) {
 				$salt = implode( '|', $salt );
 			}
+
+			// Wikia change: make edit token per-wiki
+			$salt .= $wgDBName;
+			// Wikia change end
+
 			return md5( $token . $salt ) . EDIT_TOKEN_SUFFIX;
 		}
 	}
