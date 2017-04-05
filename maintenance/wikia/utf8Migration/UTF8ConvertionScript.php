@@ -21,7 +21,7 @@ $optionsWithArgs = [
 
 
 require_once( "commandLine.inc" );
-require_once "convertionUtils.php";
+require_once "UTF8ConvertionUtils.php";
 
 
 class Utf8md4DbConvert {
