@@ -920,7 +920,6 @@ $config['mobile_base_ads_js'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		// Modules
-		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
