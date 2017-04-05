@@ -306,7 +306,6 @@
 		color: $color-links;
 		font-size: 14px;
 		margin-bottom: 2px;
-
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -316,7 +315,7 @@
 		color: rgba($color-text, .75);
 		font-size: 12px;
 		font-weight: bold;
-		max-height:16px;
+		max-height: 16px;
 
 		.edit-info-user {
 			color: rgba($color-text, .75);
