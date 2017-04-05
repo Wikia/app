@@ -43,7 +43,7 @@
 	position: relative;
 	width: $width-outside;
 	z-index: 3;
-	>h1:first-child {
+	> h1:first-child {
 		display: none;
 	}
 	.WikiaPageBackground {
@@ -110,9 +110,10 @@
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .WikiaPage.WikiaGrid #WikiaArticleBottomAd {
-    clear: both;
-    margin: 0;
+	clear: both;
+	margin: 0;
 }
+
 /* end temp transistion code */
 
 .WikiaRail {
@@ -284,7 +285,7 @@
 	padding: 20px 0;
 
 	.activity-module-header {
-		border-bottom: $color-page-border solid 1px;
+		border-bottom: 1px solid $color-page-border;
 		height: 30px;
 		margin-bottom: 8px;
 	}
@@ -360,7 +361,7 @@
 }
 
 .wikiaThrobber {
-	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgCdnStylePath */
 	height: 100%;
 	left: 0;
 	opacity: .75;
