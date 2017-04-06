@@ -17,4 +17,8 @@
 			<? endforeach; ?>
 		</ul>
 	<? endif; ?>
+
+	<? if ( $renderCommunityEntryPoint ): ?>
+		<?= F::app()->renderView( 'CommunityPageEntryPoint', 'Index' ) ?>
+	<? endif; ?>
 </section>
