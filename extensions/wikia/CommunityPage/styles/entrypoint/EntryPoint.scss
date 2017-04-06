@@ -3,14 +3,19 @@
 @import '../components/variables';
 
 .community-page-entry-point-module {
-	@include flexbox();
-	@include flex-direction(row);
-	@include justify-content(space-between);
-
 	border-top: 1px solid $color-page-border;
 	margin-top: 25px;
 
-	.community-page-entry-point-description {
+	.content {
+		@include flexbox();
+		@include flex-direction(row);
+		@include justify-content(space-between);
+		@include align-items(flex-start);
+
+		margin-top: 26px;
+	}
+
+	.description {
 		font-size: 14px;
 		line-height: 18px;
 		max-width: 176px;
