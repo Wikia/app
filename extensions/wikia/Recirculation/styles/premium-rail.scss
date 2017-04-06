@@ -1,0 +1,54 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/flexbox';
+
+.WikiaRail .premium-recirculation-rail {
+	border: 0;
+	padding: 0;
+
+	h2 {
+		@include flexbox();
+		@include align-items(center);
+		border-bottom: 1px solid $color-page-border;
+		line-height: 32px;
+		margin-bottom: 18px;
+
+		svg {
+			fill: rgba($color-text, .75);
+			margin-right: 7px;
+		}
+	}
+
+	.recirculation-sponsored-footer {
+		font-size: 12px;
+		letter-spacing: 0;
+		opacity: 0.5;
+	}
+
+	.item {
+		margin-bottom: 12px;
+	}
+
+	.image-thumbnail {
+		@include flex(0 0 94px);
+		margin-bottom: 0;
+		max-height: 166px;
+		max-width: 268px;
+		overflow: hidden;
+
+	}
+
+	.content {
+		font-size: 12px;
+		margin-left: 12px;
+	}
+
+	a {
+		@include flexbox();
+		color: $color-text;
+
+		&:hover {
+			color: $color-links;
+		}
+	}
+}

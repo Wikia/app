@@ -150,6 +150,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
+		'//extensions/wikia/Recirculation/js/views/premiumRail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',

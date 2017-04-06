@@ -1,0 +1,35 @@
+<section class="module recirculation-unit premium-recirculation-rail">
+	<h2>
+		<svg width="20" height="19" viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M8.503 13.814a.738.738 0 0 1-.218.548l-.677.573-6.151-5.702V6.995l6.764 6.271c.105.1.282.302.282.548zm9.368-6.655v2.075l-7.653 7.284a.568.568 0 0 1-.412.172.61.61 0 0 1-.43-.172l-.7-.625 9.195-8.734zm-5.83 3.697l-2.12 1.99L3.2 6.54a1.621 1.621 0 0 1 0-2.384l2.121-1.992 6.72 6.307c.7.657.7 1.727 0 2.385zm-1.25-5.494L13 3.288c.338-.318.79-.493 1.27-.493s.93.176 1.27.494l2.281 2.141-3.48 3.266-1.27-1.192-2.282-2.142zm8.496-.33l-5-4.773-.103-.098-.103.098-4.364 4.136L5.816.714 5.811.709 5.807.706 5.32.319l-.102-.08-.095.087-5.08 4.697-.043.04V9.8l.043.04 9.522 8.934.103.097.104-.097 9.514-8.934.042-.04V5.071l-.041-.04z"
+				fill-rule="evenodd"/>
+		</svg>
+		{{title}}
+	</h2>
+	<ul class="thumbnails">
+		{{#items}}
+			<li class="item item-{{source}}{{#isVideo}} is-video{{/isVideo}}"
+				data-flag="{{flag}}"
+				data-index="{{index}}"
+				data-source="{{source}}"
+				{{#id}} data-id="{{id}}" {{/id}}
+				{{#meta}} data-meta="{{meta}}" {{/meta}}
+			>
+				<a href="{{url}}">
+					<div class="image image-thumbnail placeholder-thumbnail fluid small">
+						{{#thumbnail}}
+							<img src="{{thumbnail}}" alt="{{title}}" itemprop="thumbnail">
+						{{/thumbnail}}
+					</div>
+					<div class="content">
+						<div class="title" title="{{title}}">{{title}}</div>
+						<div class="recirculation-sponsored-footer">
+							Sponsored by xaxa{{presented_by}}
+						</div>
+					</div>
+				</a>
+			</li>
+		{{/items}}
+	</ul>
+</section>
