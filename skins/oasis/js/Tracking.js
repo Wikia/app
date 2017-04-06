@@ -727,8 +727,9 @@ jQuery(function ($) {
 			label: 'chat-join'
 		}, trackWithEventData);
 
-		/** forum activity module and forum related threads module **/
-		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (event) {
+		// TODO: refactor while working on https://wikia-inc.atlassian.net/browse/XW-3202
+		/** forum-activity-module **/
+		$wikiaRail.find('#ForumActivityModule').on('mousedown', 'a', function (event) {
 			var label,
 				el = $(event.target);
 
@@ -748,12 +749,41 @@ jQuery(function ($) {
 			if (label !== undefined) {
 				track({
 					browserEvent: event,
-					category: 'recent-wiki-activity', // TODO: should these modules have this category?
+					category: 'forum-activity-module',
 					label: label
 				});
 			}
 		});
 
+		// TODO: refactor while working on https://wikia-inc.atlassian.net/browse/XW-3202
+		/** related-threads-module **/
+		$wikiaRail.find('#ForumRelatedThreadsModule').on('mousedown', 'a', function (event) {
+			var label,
+				el = $(event.target);
+
+			// Primary mouse button only
+			if (event.which !== 1) {
+				return;
+			}
+
+			if (el.hasClass('more')) {
+				label = 'activity-more';
+			} else if (el.closest('.edited-by').length > 0) {
+				label = 'activity-username';
+			} else if (el.closest('em').length > 0) {
+				label = 'activity-title';
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: event,
+					category: 'related-threads-module',
+					label: label
+				});
+			}
+		});
+
+		/** recent-wiki-activity-module **/
 		$wikiaRail.find('#WikiaRecentActivity').on('mousedown', 'a', function (event) {
 			var label = event.target.getAttribute('data-tracking');
 
@@ -765,7 +795,7 @@ jQuery(function ($) {
 			if (label !== undefined) {
 				track({
 					browserEvent: event,
-					category: 'recent-wiki-activity',
+					category: 'recent-wiki-activity-module',
 					label: label
 				});
 			}
