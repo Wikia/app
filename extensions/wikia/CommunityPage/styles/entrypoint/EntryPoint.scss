@@ -5,6 +5,19 @@
 .community-page-entry-point-module {
 	border-top: 1px solid $color-page-border;
 	margin-top: 25px;
+	position: relative;
+
+	.avatars {
+		@include flexbox();
+		@include flex-direction(row);
+		@include justify-content(center);
+		@include align-items(flex-start);
+
+		height: 32px;
+		left: 88px;
+		position: absolute;
+		top: -16px;
+	}
 
 	.content {
 		@include flexbox();
