@@ -26,6 +26,9 @@ class Migrate extends Maintenance {
 
 		$dumperPath = $this->getOption( 'dumper-path', '' );
 		$migrationPath = $this->getOption( 'files-path', "/tmp/{$dbname}" );
+		if ( !is_dir( $migrationPath ) ) {
+			mkdir( $migrationPath, 0777, true );
+		}
 		$backupDir = "backup";
 		$backupPath = "{$migrationPath}/{$backupDir}";
 
