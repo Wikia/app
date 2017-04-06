@@ -6,9 +6,15 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
-		googleIma: {
-			vpaidMode: {
-				ENABLED: 1
+		win: {
+			google: {
+				ima: {
+					ImaSdkSettings: {
+						VpaidMode: {
+							ENABLED: 1
+						}
+					}
+				}
 			}
 		}
 	};
@@ -17,7 +23,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
 			mocks.resolvedState,
-			mocks.googleIma
+			mocks.win
 		).create(params);
 	}
 
