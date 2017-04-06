@@ -48,6 +48,23 @@ class WikiFeaturesTest extends WikiaBaseTest {
 					->will($this->returnValue( $token ) );
 
 		$this->mockGlobalVariable( 'wgUser', $mockUser );
+
+		// Have a consistent state for unit tests
+		$this->mockGlobalVariable( 'wgWikiFeatures', [
+			'normal' => [
+				'wgEnableAjaxPollExt',
+				'wgEnableBlogArticles',
+				'wgEnableArticleCommentsExt',
+				'wgEnableCategoryExhibitionExt',
+				'wgEnableWallExt',
+				'wgEnablePortableInfoboxEuropaTheme',
+			],
+			'labs' => [
+				'wgEnableMediaGalleryExt',
+				'wgEnableChat',
+				'wgEnableAchievementsExt',
+			],
+		] );
 	}
 
 	protected function tearDownToggleFeature() {
