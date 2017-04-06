@@ -145,14 +145,13 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				});
 			});
 
-			// TODO - do we want to track it only for autplay? only once or each time?
 			player.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
-				if(volume > 0) {
-					var time = Math.floor(player.getPlayheadTime());
+				if (volume > 0) {
 					track({
 						action: tracker.ACTIONS.CLICK,
-						label: 'featured-video-unmuted-' + time
+						label: 'featured-video-unmuted'
 					});
+					player.mb.unsubscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video');
 				}
 			});
 
