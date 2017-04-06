@@ -123,6 +123,7 @@ class MercuryApi {
 		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'cacheBuster' => (int) $wgCacheBuster,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
