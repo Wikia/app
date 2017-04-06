@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			if (isAdsManagerLoaded) {
 				adsManager.addEventListener(eventName, callback);
 			} else {
-				adsLoader.addEventListener('adsManagerLoaded', function () {
+				adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, function () {
 					adsManager.addEventListener(eventName, callback);
 				});
 			}
@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			if (isAdsManagerLoaded) {
 				adsManager.removeEventListener(eventName, callback);
 			} else {
-				adsLoader.addEventListener('adsManagerLoaded', function () {
+				adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, function () {
 					adsManager.removeEventListener(eventName, callback);
 				});
 			}
@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				adDisplayContainer.initialize();
 				adsManager.init(roundedWidth, roundedHeight, google.ima.ViewMode.NORMAL);
 				adsManager.start();
-				adsLoader.removeEventListener('adsManagerLoaded', callback);
+				adsLoader.removeEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback);
 
 				log('Video play: started', log.levels.debug, logGroup);
 			}
@@ -97,7 +97,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				// When adsManager is not loaded yet video can't start without click on mobile
 				// Muted auto play is workaround to run video on adsManagerLoaded event
 				setAutoPlay(true);
-				adsLoader.addEventListener('adsManagerLoaded', callback, false);
+				adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
 				log(['Video play: waiting for full load of adsManager'], log.levels.debug, logGroup);
 			}
 		}
@@ -143,16 +143,21 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
-		adsLoader.addEventListener('adsManagerLoaded', adsManagerLoadedCallback, false);
+		adsLoader.addEventListener(
+			google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+			adsManagerLoadedCallback,
+			false
+		);
+
 		adsLoader.requestAds(imaSetup.createRequest(params));
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);
 		}
 
-		addEventListener('resume', setStatus('playing'));
-		addEventListener('start', setStatus('playing'));
-		addEventListener('pause', setStatus('paused'));
-		addEventListener('complete', setStatus('completed'));
+		addEventListener(google.ima.AdEvent.Type.RESUMED, setStatus('playing'));
+		addEventListener(google.ima.AdEvent.Type.STARTED, setStatus('playing'));
+		addEventListener(google.ima.AdEvent.Type.PAUSED, setStatus('paused'));
+		addEventListener(google.ima.AdEvent.Type.COMPLETE, setStatus('completed'));
 
 		return {
 			addEventListener: addEventListener,
