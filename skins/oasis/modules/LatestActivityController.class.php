@@ -34,8 +34,10 @@ class LatestActivityController extends WikiaController {
 		if ( empty( $changeList ) && !empty( $feedData ) && is_array( $feedData['results'] ) ) {
 			foreach ( $feedData['results'] as $change ) {
 				$item = [];
-				$item['time_ago'] = wfTimeFormatAgoOnlyRecent( $change['timestamp'] ); // TODO: format the timestamp on front-end to allow longer caching in memcache?
-				$item['user_name'] = User::isIP( $change['username'] ) ? wfMessage( 'oasis-anon-user' )->escaped() : $change['username'];
+				$item['time_ago'] = wfTimeFormatAgoOnlyRecent( $change['timestamp'] );
+				$item['user_name'] = User::isIP( $change['username'] )
+					? wfMessage( 'oasis-anon-user' )->escaped()
+					: htmlspecialchars( $change['username'] );
 
 				$item['user_profile_url'] = AvatarService::getUrl( $change['username'] );
 				$item['page_title'] = $change['title'];
