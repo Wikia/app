@@ -29,16 +29,16 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 
 	function getGroup(slotName) {
 		var map = {
-			'LB': ['TOP_LEADERBOARD'],
+			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 			'MR': ['TOP_RIGHT_BOXAD'],
 			'SKY': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
 			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
-			'HiVi': ['INCONTENT_BOXAD_1']
+			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
 		}, result;
 
 		result = findSlotGroup(map, slotName);
-		// OTHER: 'BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD', 'EXIT_STITIAL_BOXAD_1'
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD', 'EXIT_STITIAL_BOXAD_1'
 		return result ? result : 'OTHER';
 	}
 
