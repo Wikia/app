@@ -1,12 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adSlotTracker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adContext, btfBlocker, gptHelper, adUnitBuilder, log, lookups) {
+], function (adContext, adSlotTracker, btfBlocker, gptHelper, adUnitBuilder, log, lookups) {
 	'use strict';
 
 	function overrideSizes(slotMap) {
@@ -62,10 +63,15 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			});
 		}
 
+		function getAdUnit(slot) {
+			return extra.buildAdUnit ? extra.buildAdUnit(slot.name, adSlotTracker.getPassback(slot.name))
+				: adUnitBuilder.build(slot.name, src);
+		}
+
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot.name], 'debug', logGroup);
 
-			var slotPath = extra.buildAdUnit ? extra.buildAdUnit(slot.name) : adUnitBuilder.build(slot.name, src),
+			var slotPath = getAdUnit(slot),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
 
 			addHook(slot, 'success', extra.beforeSuccess);

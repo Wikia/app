@@ -51,6 +51,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
+			mocks.adSlotTracker,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,

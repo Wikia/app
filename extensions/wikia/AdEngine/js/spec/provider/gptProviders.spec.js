@@ -16,6 +16,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
+		adSlotTracker: {
+			getPassback: function () {
+				return null;
+			}
+		},
 		adUnitBuilder: {
 			build: function (slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
@@ -61,6 +66,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
+			mocks.adSlotTracker,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
@@ -84,8 +90,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.uapContext,
 					getFactory(),
 					mocks.adUnitBuilder,
-					mocks.slotTweaker,
-					mocks.adUnitBuilder
+					mocks.slotTweaker
 				);
 			case 'directGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
