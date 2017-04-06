@@ -63,25 +63,6 @@ CREATE TABLE /*_*/user (
   -- Optional 'real name' to be displayed in credit listings
   user_real_name varchar(255) binary NOT NULL default '',
 
-  -- Password hashes, see User::crypt() and User::comparePasswords()
-  -- in User.php for the algorithm
-  user_password tinyblob NOT NULL,
-
-  -- When using 'mail me a new password', a random
-  -- password is generated and the hash stored here.
-  -- The previous password is left in place until
-  -- someone actually logs in with the new password,
-  -- at which point the hash is moved to user_password
-  -- and the old password is invalidated.
-  user_newpassword tinyblob NOT NULL,
-
-  -- Timestamp of the last time when a new password was
-  -- sent, for throttling and expiring purposes
-  -- Emailed passwords will expire $wgNewPasswordExpiry
-  -- (a week) after being set. If user_newpass_time is NULL
-  -- (eg. created by mail) it doesn't expire.
-  user_newpass_time binary(14),
-
   -- Note: email should be restricted, not public info.
   -- Same with passwords.
   user_email tinytext NOT NULL,
