@@ -34,7 +34,7 @@ class LatestActivityController extends WikiaController {
 		if ( empty( $changeList ) && !empty( $feedData ) && is_array( $feedData['results'] ) ) {
 			foreach ( $feedData['results'] as $change ) {
 				$item = [];
-				$item['time_ago'] = wfTimeFormatAgoOnlyRecent( $change['timestamp'] );
+				$item['time_ago'] = wfTimeFormatAgo( $change['timestamp'] );
 				$item['user_name'] = User::isIP( $change['username'] )
 					? wfMessage( 'oasis-anon-user' )->escaped()
 					: htmlspecialchars( $change['username'] );
