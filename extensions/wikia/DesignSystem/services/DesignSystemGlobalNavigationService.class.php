@@ -54,6 +54,7 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 				break;
 			case 'global-navigation-user-sign-out':
 				$classNames = 'wds-global-navigation__dropdown-link';
+				$model['redirect'] = wfGetCurrentUrl( true );
 		}
 
 		$this->setVal( 'model', $model );
