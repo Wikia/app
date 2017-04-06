@@ -20,12 +20,12 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 				width: 300,
 				height: 169
 			},
-			videoFeedbackBox,
-			autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay;
+			videoFeedbackBox;
 
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
-				playerParams = window.wgOoyalaParams;
+				playerParams = window.wgOoyalaParams,
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay;
 
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
