@@ -61,6 +61,7 @@
 
 	a {
 		@include flexbox();
+		@include align-items(flex-start);
 		color: $color-text;
 
 		&:hover {
