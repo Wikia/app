@@ -38,11 +38,6 @@
 
 	.image-thumbnail {
 		@include flex(0 0 94px);
-		margin-bottom: 0;
-		max-height: 166px;
-		max-width: 268px;
-		overflow: hidden;
-
 	}
 
 	.content {
