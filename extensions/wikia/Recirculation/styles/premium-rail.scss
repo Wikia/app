@@ -24,11 +24,11 @@
 	}
 
 	.recirculation-sponsored-footer {
-		font-size: 10px;
+		font-size: 12px;
 		font-style: italic;
 		letter-spacing: 0;
 		opacity: 0.5;
-		padding-top: 0;
+		padding-top: 3px;
 		text-transform: none;
 	}
 
@@ -41,6 +41,12 @@
 			right: 6px;
 			width: 20px;
 		}
+
+		&:nth-child(2n+1) {
+			.recirculation-sponsored-footer {
+				display: none;
+			}
+		}
 	}
 
 	.image-thumbnail {
@@ -50,6 +56,7 @@
 	.content {
 		font-size: 12px;
 		margin-left: 12px;
+		margin-top: 3px;
 	}
 
 	a {
