@@ -22,9 +22,11 @@
 					</div>
 					<div class="content">
 						<div class="title" title="{{title}}">{{title}}</div>
-						<div class="recirculation-sponsored-footer">
-							Sponsored by xaxa{{presented_by}}
-						</div>
+						{{#presented_by}}
+							<div class="recirculation-sponsored-footer">
+								Sponsored by {{presented_by}}
+							</div>
+						{{/presented_by}}
 					</div>
 				</a>
 			</li>
