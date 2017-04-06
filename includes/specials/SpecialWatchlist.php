@@ -91,9 +91,11 @@ class SpecialWatchlist extends SpecialPage {
 			return;
 		}
 
-		if( ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) && $request->getVal( 'reset' ) &&
-			$request->wasPosted() )
-		{
+		if ( ( $wgEnotifWatchlist || $wgShowUpdatedMarker )
+			&& $request->getVal( 'reset' )
+			&& $request->wasPosted()
+			&& $user->matchEditToken( $request->getVal( 'token' ) )
+		) {
 			$user->clearAllNotifications();
 			$output->redirect( $this->getTitle()->getFullUrl() );
 			return;
@@ -254,6 +256,7 @@ class SpecialWatchlist extends SpecialPage {
 						'id' => 'mw-watchlist-resetbutton' ) ) .
 					$this->msg( 'wlheader-showupdated' )->parse() . ' ' .
 					Xml::submitButton( $this->msg( 'enotif_reset' )->text(), array( 'name' => 'dummy' ) ) .
+					Html::hidden( 'token', $user->getEditToken() ) .
 					Html::hidden( 'reset', 'all' ) .
 					Xml::closeElement( 'form' );
 		}
