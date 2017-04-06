@@ -1,5 +1,5 @@
 <?php if ( $showModule ) { ?>
-	<section class="module WikiaActivityModule ForumActivityModule">
+	<section class="module WikiaActivityModule ForumActivityModule" id="ForumRelatedThreadsModule">
 		<h2><?= wfMessage( 'forum-related-module-heading' )->escaped() ?></h2>
 		<ul>
 			<?php foreach ( $messages as $message ) { ?>

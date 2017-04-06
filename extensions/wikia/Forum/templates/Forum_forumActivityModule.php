@@ -1,4 +1,4 @@
-<section class="module WikiaActivityModule ForumActivityModule">
+<section class="module WikiaActivityModule ForumActivityModule" id="ForumActivityModule">
 	<h2><?= wfMessage( 'forum-activity-module-heading' )->escaped() ?></h2>
 	<ul>
 		<?php foreach ( $posts as $value ): ?>
