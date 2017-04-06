@@ -48,6 +48,9 @@ class Migrate extends Maintenance {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Migration failed', $errors );
 			throw new Exception( 'Failed with errors: ' . implode( ",", $errors ) );
 		}
+		if ( !$restoreOnly ) {
+			$this->cleanup( $dbname, $migrationPath, $backupPath );
+		}
 		$this->output( "...done\n" );
 	}
 
@@ -111,6 +114,11 @@ class Migrate extends Maintenance {
 		}
 
 		return $errors;
+	}
+
+	protected function cleanup( $dbname, $path ) {
+		$time = time();
+		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" backup" );
 	}
 
 	/** COMMANDS METHODS */
