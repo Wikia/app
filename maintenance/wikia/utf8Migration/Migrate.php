@@ -26,7 +26,8 @@ class Migrate extends Maintenance {
 
 		$dumperPath = $this->getOption( 'dumper-path', '' );
 		$migrationPath = $this->getOption( 'files-path', "/tmp/{$dbname}" );
-		$backupPath = "{$migrationPath}/backup";
+		$backupDir = "backup";
+		$backupPath = "{$migrationPath}/{$backupDir}";
 
 		$restoreOnly = $this->getOption( 'restore', false );
 
@@ -49,7 +50,7 @@ class Migrate extends Maintenance {
 			throw new Exception( 'Failed with errors: ' . implode( ",", $errors ) );
 		}
 		if ( !$restoreOnly ) {
-			$this->cleanup( $dbname, $migrationPath, $backupPath );
+			$this->cleanup( $dbname, $migrationPath, $backupDir );
 		}
 		$this->output( "...done\n" );
 	}
@@ -116,9 +117,9 @@ class Migrate extends Maintenance {
 		return $errors;
 	}
 
-	protected function cleanup( $dbname, $path ) {
+	protected function cleanup( $dbname, $path, $dir ) {
 		$time = time();
-		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" backup" );
+		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" {$dir}" );
 	}
 
 	/** COMMANDS METHODS */
