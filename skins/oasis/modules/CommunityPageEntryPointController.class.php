@@ -10,7 +10,7 @@ class CommunityPageEntryPointController extends WikiaController {
 
 		if ( is_array( $topContributors ) ) {
 			$avatars = array_map( function( $user ) {
-				return AvatarService::getAvatarUrl( $user['userId'] );
+				return AvatarService::getAvatarUrl( User::newFromId( $user['userId'] ), 30 );
 			}, array_slice( $topContributors, 0, 5) );
 		}
 
