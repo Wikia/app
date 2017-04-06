@@ -20,4 +20,15 @@
 		line-height: 18px;
 		max-width: 176px;
 	}
+
+	.wds-button {
+		border-color: $color-links;
+		color: $color-links;
+	}
+
+	.wds-button.wds-is-secondary:hover {
+		border-color: rgba($color-links, .75);
+		color: rgba($color-links, .75);
+		text-decoration: none;
+	}
 }
