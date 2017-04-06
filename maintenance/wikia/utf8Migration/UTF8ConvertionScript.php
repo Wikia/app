@@ -28,6 +28,7 @@ class Utf8md4DbConvert {
 
 	protected $force = false;
 	protected $quick = false;
+	protected $silent = false;
 
 	public function __construct( $options ) {
 		// load command line options
@@ -36,6 +37,7 @@ class Utf8md4DbConvert {
 		global $wgDBname;
 		$this->force = isset( $options['force'] );
 		$this->quick = isset( $options['quick'] );
+		$this->silent = isset( $options['silent'] );
 		$this->databaseName = isset( $options['database'] ) ? $options['database'] : $wgDBname;
 
 		$this->db = wfGetDb( DB_SLAVE, [], $this->databaseName );
@@ -51,8 +53,10 @@ class Utf8md4DbConvert {
 	protected function query( $sql ) {
 		$t = microtime( true );
 		$timestamp = gmdate( 'Y-m-d H:i:s.', (int)$t ) . sprintf( "%06d", ( $t - floor( $t ) ) * 1000000 );
-		echo "-- $timestamp\n";
-		echo $sql . "\n";
+		if ( !$this->silent ) {
+			echo "-- $timestamp\n";
+			echo $sql . "\n";
+		}
 		if ( $this->force ) {
 			$this->getDb()->query( $sql );
 		}
