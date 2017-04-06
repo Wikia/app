@@ -107,5 +107,14 @@ describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 
 		expect(getModule().buildNew('mobile_remnant', 'NOT_SUPPORTED'))
 			.toEqual('/5441/mobile_remnant.OTHER/NOT_SUPPORTED/tablet/oasis-home/_godofwar-gaming');
+
+		expect(getModule().buildNew('mobile_remnant', 'BOTTOM_LEADERBOARD'))
+			.toEqual('/5441/mobile_remnant.OTHER/BOTTOM_LEADERBOARD/tablet/oasis-home/_godofwar-gaming');
+
+		expect(getModule().buildNew('mobile_remnant', 'INCONTENT_LEADERBOARD'))
+			.toEqual('/5441/mobile_remnant.OTHER/INCONTENT_LEADERBOARD/tablet/oasis-home/_godofwar-gaming');
+
+		expect(getModule().buildNew('mobile_remnant', 'EXIT_STITIAL_BOXAD_1'))
+			.toEqual('/5441/mobile_remnant.OTHER/EXIT_STITIAL_BOXAD_1/tablet/oasis-home/_godofwar-gaming');
 	});
 });
