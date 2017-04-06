@@ -117,12 +117,12 @@ class Migrate extends Maintenance {
 		return $errors;
 	}
 
+	/** COMMANDS METHODS */
 	protected function cleanup( $dbname, $path, $dir ) {
 		$time = time();
 		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" {$dir}" );
 	}
 
-	/** COMMANDS METHODS */
 	protected function getEncodings( $db, $dbname ) {
 		return $db->query( "SELECT DEFAULT_CHARACTER_SET_NAME AS charset, DEFAULT_COLLATION_NAME as collation FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{$dbname}'", __METHOD__ )
 			->fetchObject();
