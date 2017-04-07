@@ -32,7 +32,7 @@
 		@include flexbox();
 		@include flex-direction(row);
 		@include justify-content(space-between);
-		@include align-items(flex-start);
+		@include align-items(center);
 
 		margin-top: 26px;
 	}
@@ -43,6 +43,8 @@
 		font-size: 14px;
 		line-height: 18px;
 		margin-right: 18px;
+		word-break: break-word;
+		word-wrap: break-word;
 	}
 
 	.wds-button {
