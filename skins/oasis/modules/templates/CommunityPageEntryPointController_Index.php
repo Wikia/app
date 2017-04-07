@@ -8,6 +8,8 @@
 	</div>
 	<div class="content">
 		<div class="description"><?= wfMessage( 'communitypage-help-us-grow' )->parse() ?></div>
-		<a href="<?= SpecialPage::getTitleFor( 'Community' )->getLocalURL(); ?>" class="wds-is-secondary wds-button wds-is-squished"><?= wfMessage( 'communitypage-entry-button' )->escaped() ?></a>
+		<a href="<?= SpecialPage::getTitleFor( 'Community' )->getLocalURL(); ?>" class="entry-button wds-is-secondary wds-button wds-is-squished">
+			<?= wfMessage( 'communitypage-entry-button' )->escaped() ?>
+		</a>
 	</div>
 </section>
