@@ -9,14 +9,18 @@
 
 	.avatars {
 		@include flexbox();
-		@include flex-direction(row);
 		@include justify-content(center);
-		@include align-items(flex-start);
 
 		height: 32px;
+		margin: 0;
 		position: absolute;
 		top: -16px;
 		width: 100%;
+	}
+
+	.wds-avatar-stack {
+		margin: 0;
+		max-width: 100px;
 	}
 
 	.wds-avatar {

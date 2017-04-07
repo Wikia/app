@@ -1,10 +1,12 @@
 <section class="community-page-entry-point-module">
 	<div class="avatars">
-		<? foreach( $avatars as $index => $avatar ): ?>
-			<a href="<?= $avatar['userProfileUrl'] ?>">
-				<img class="wds-avatar" style="left:<?= ($index * -10) + ( count( $avatars ) - 1 ) * 5 ?>px; z-index: <?= 5 - $index ?>" src="<?= $avatar['avatarUrl'] ?>" />
-			</a>
-		<? endforeach; ?>
+		<div class="wds-avatar-stack">
+			<? foreach( $avatars as $index => $avatar ): ?>
+				<a href="<?= $avatar['userProfileUrl'] ?>" class="wds-avatar-stack__avatar">
+					<img class="wds-avatar" src="<?= $avatar['avatarUrl'] ?>" />
+				</a>
+			<? endforeach; ?>
+		</div>
 	</div>
 	<div class="content">
 		<div class="description"><?= wfMessage( 'communitypage-help-us-grow' )->parse() ?></div>
