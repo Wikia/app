@@ -28,7 +28,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	// exists to verify that feedback from labs is for a known feature.
 	public static $feedbackAreaIDs = array (
 		'wgEnableAjaxPollExt' => 280,
-		'wgEnableAchievementsExt' => 247,
 		'wgEnableBlogArticles' => 281,
 		'wgEnableArticleCommentsExt' => 200,
 		'wgEnableCategoryExhibitionExt' => 201,
@@ -41,7 +40,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',
-		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
 	);
 

@@ -300,19 +300,6 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `photo_gallery_feeds`
---
-
-DROP TABLE IF EXISTS `photo_gallery_feeds`;
-CREATE TABLE `photo_gallery_feeds` (
-  `url` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `data` blob NOT NULL,
-  PRIMARY KEY (`url`),
-  KEY `timestamp` (`timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `portability_dashboard`
 --
 

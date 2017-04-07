@@ -13,7 +13,8 @@ class ArticleVideoContext {
 
 		return $wg->enableArticleFeaturedVideo &&
 			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] );
+			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
+			!WikiaPageType::isActionPage(); // Prevents to show video on ?action=history etc.;
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
