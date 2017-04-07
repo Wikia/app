@@ -106,8 +106,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = 'rec';
 			}
 
+			if (adShouldBeRecovered && sourcePoint.isEnabled()) {
+				slotTargetingData.provider = 'sp';
+			}
+
 			if (adShouldBeRecovered && pageFair && pageFair.isEnabled()) {
-				slotTargetingData.rec = 'pagefair';
+				slotTargetingData.provider = 'pf';
 			}
 
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
