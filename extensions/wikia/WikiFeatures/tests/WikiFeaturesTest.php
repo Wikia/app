@@ -173,20 +173,25 @@ class WikiFeaturesTest extends WikiaBaseTest {
 	}
 
 	public function getFeatureNormalDataProvider() {
-		$wiki_features3 = array(
+		$labs_features = array(
 			'labs' => array('wgEnableChat'),
 		);
-		$exp4 = array (
+		$normal_features = array(
+			'normal' => array('wgEnableChat')
+		);
+
+		$normal_and_labs = array_merge($labs_features, $normal_features);
+
+		$expected_normal_features = array (
 			array ('name' => 'wgEnableChat', 'enabled' => true, 'imageExtension' => '.png' ),
 		);
-		$wiki_features5 = $wiki_features3;
 
 		return array(
 			array(null, array()),				// invalid wgWikiFeatures - null
 			array(array(), array()),			// invalid wgWikiFeatures - array()
-			array($wiki_features3, array()),	// invalid wgWikiFeatures - key does not exist
-
-			array($wiki_features5, $exp4),		// return only normal
+			array($labs_features, array()),     // invalid wgWikiFeatures - key does not exist
+			array($normal_features, $expected_normal_features),     // return normal
+			array($normal_and_labs, $expected_normal_features),		// return only normal
 		);
 	}
 
