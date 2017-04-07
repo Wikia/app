@@ -12,8 +12,8 @@ class CommunityPageEntryPointController extends WikiaController {
 			$avatars = array_map( function( $user ) {
 				$user = User::newFromId( $user['userId'] );
 				return [
-					'avatarUrl' => AvatarService::getAvatarUrl( $user, 30 ),
-					'userProfileUrl' => AvatarService::getUrl( $user )
+					'avatarUrl' => AvatarService::getAvatarUrl( $user->getName(), 30 ),
+					'userProfileUrl' => AvatarService::getUrl( $user->getName() )
 				];
 			}, array_slice( $topContributors, 0, 5) );
 		}
