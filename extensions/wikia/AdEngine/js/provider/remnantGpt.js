@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker'
-], function (adContext, uapContext, factory, adUnitBuilder, slotTweaker) {
+], function (adContext, uapContext, factory, adUnitBuilder, megaAdUnitBuilder, slotTweaker) {
 	'use strict';
 
 	var src = 'remnant';
@@ -41,8 +42,8 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 				}
 			},
 			buildAdUnit: function (slotName, passback) {
-				return adContext.getContext().opts.enableRemnantNewAdUnit ?
-					adUnitBuilder.buildNew(src, slotName, passback) : adUnitBuilder.build(slotName, src);
+				var builder = adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
+				return builder.build(src, slotName, passback);
 			}
 		}
 	);

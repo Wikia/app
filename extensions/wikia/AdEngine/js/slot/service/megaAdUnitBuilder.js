@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(src, slotName, passback) {
+	function build(slotName, src, passback) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),

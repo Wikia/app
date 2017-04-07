@@ -19,8 +19,8 @@ describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.adUnitBuilder'](
-			mocks.page,
-			mocks.browserDetect);
+			mocks.page
+		);
 	}
 
 	function mockPageParams(params) {
