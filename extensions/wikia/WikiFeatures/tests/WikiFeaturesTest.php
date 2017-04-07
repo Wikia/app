@@ -62,7 +62,6 @@ class WikiFeaturesTest extends WikiaBaseTest {
 			'labs' => [
 				'wgEnableMediaGalleryExt',
 				'wgEnableChat',
-				'wgEnableAchievementsExt',
 			],
 		] );
 	}
@@ -154,21 +153,8 @@ class WikiFeaturesTest extends WikiaBaseTest {
 			[ false, true, '1234', [ 'feature' => null, 'enabled' => null, 'token' => '1234' ], 'error', 'wikifeatures-error-permission' ],								// permission denied
 			[ true, true, '1234', [ 'feature' => null, 'enabled' => null, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],							// missing params - not pass $feature and $enabled
 			[ true, true, '1234', [ 'feature' => null, 'enabled' => 0, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],							// missing params - not pass $feature
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => null, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],	// missing params - not pass $enabled
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievements', 'enabled' => 'true', 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],		// invalid params - $feature not found
 			[ true, true, '1234', [ 'feature' => 'wgEnableWikiaLabsExt', 'enabled' => 'true', 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],		// invalid params - $feature not allowed
 			[ true, true, '1234', [ 'feature' => 123, 'enabled' => 0, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],								// invalid params - $feature is integer
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 1, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],		// invalid params - $enabled > 1
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => -3, 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],		// invalid params - $enabled is negative
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'test', 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],	// invalid params - $enabled is string
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => '0', 'token' => '1234' ], 'error', 'wikifeatures-error-invalid-parameter' ],		// invalid params - $enabled is string
-
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'true', 'token' => '1234' ], 'ok', null ],	// enable feature
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'false', 'token' => '1234' ], 'ok', null ],	// disable feature
-
-			[ true, true, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'false', 'token' => '4321' ], 'error', 'sessionfailure' ],
-			[ true, false, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'false', 'token' => '4321' ], 'error', 'sessionfailure' ],
-			[ true, false, '1234', [ 'feature' => 'wgEnableAchievementsExt', 'enabled' => 'false', 'token' => '1234' ], 'error', 'sessionfailure' ],
 		];
 	}
 
@@ -190,21 +176,16 @@ class WikiFeaturesTest extends WikiaBaseTest {
 		$wiki_features3 = array(
 			'labs' => array('wgEnableChat'),
 		);
-		$wiki_features4 = array(
-			'normal' => array('wgEnableAchievementsExt','wgEnableChat')
-		);
 		$exp4 = array (
-			array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'imageExtension' => '.png' ),
 			array ('name' => 'wgEnableChat', 'enabled' => true, 'imageExtension' => '.png' ),
 		);
-		$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
+		$wiki_features5 = $wiki_features3;
 
 		return array(
 			array(null, array()),				// invalid wgWikiFeatures - null
 			array(array(), array()),			// invalid wgWikiFeatures - array()
 			array($wiki_features3, array()),	// invalid wgWikiFeatures - key does not exist
 
-			array($wiki_features4, $exp4),
 			array($wiki_features5, $exp4),		// return only normal
 		);
 	}
@@ -237,9 +218,6 @@ class WikiFeaturesTest extends WikiaBaseTest {
 	}
 
 	public function getFeatureLabsDataProvider() {
-		$wiki_features3 = array(
-			'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
-		);
 		$wiki_features4 = array(
 			'labs' => array('wgEnableChat'),
 		);
@@ -247,7 +225,7 @@ class WikiFeaturesTest extends WikiaBaseTest {
 			array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500, 'imageExtension' => '.png' ),
 		);
 		$cache_value4 = '500';
-		$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
+		$wiki_features5 = $wiki_features4;
 		$cache_value5 = 500;
 
 		$release_date6 = array('wgEnableChat' => 'abc');
@@ -266,7 +244,6 @@ class WikiFeaturesTest extends WikiaBaseTest {
 		return array(
 			array(null, array()),				// invalid wgWikiFeatures - null
 			array(array(), array()),			// invalid wgWikiFeatures - array()
-			array($wiki_features3, array()),	// invalid wgWikiFeatures - key does not exist
 
 			array($wiki_features4, $exp4, $cache_value4),
 			array($wiki_features5, $exp4, $cache_value5),		// return only labs
