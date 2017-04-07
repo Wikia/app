@@ -2,7 +2,7 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adInfoTracker',
-	'ext.wikia.adEngine.adSlotTracker',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -20,7 +20,7 @@ require([
 ], function (
 	adContext,
 	adInfoTracker,
-	adSlotTracker,
+	slotStateMonitor,
 	amazon,
 	oxBidder,
 	prebid,
@@ -70,7 +70,7 @@ require([
 		}
 
 		adInfoTracker.run();
-		adSlotTracker.run();
+		slotStateMonitor.run();
 		slotTweaker.registerMessageListener();
 	});
 

@@ -28,6 +28,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		lookups: {
 			extendSlotTargeting: noop
 		},
+		passbackHandler: noop(),
 		beforeSuccess: noop,
 		beforeCollapse: noop,
 		window: {},
@@ -51,10 +52,10 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adSlotTracker,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
+			mocks.passbackHandler,
 			mocks.log,
 			mocks.lookups
 		);

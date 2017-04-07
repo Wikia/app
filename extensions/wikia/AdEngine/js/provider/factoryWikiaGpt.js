@@ -1,13 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adSlotTracker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adContext, adSlotTracker, btfBlocker, gptHelper, adUnitBuilder, log, lookups) {
+], function (adContext, btfBlocker, gptHelper, adUnitBuilder, passbackHandler, log, lookups) {
 	'use strict';
 
 	function overrideSizes(slotMap) {
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			return extra.buildAdUnit ? extra.buildAdUnit(slot.name, adSlotTracker.getPassback(slot.name))
+			return extra.buildAdUnit ? extra.buildAdUnit(slot.name, passbackHandler.get(slot.name))
 				: adUnitBuilder.build(slot.name, src);
 		}
 

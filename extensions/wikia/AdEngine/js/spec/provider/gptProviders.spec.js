@@ -16,8 +16,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		adSlotTracker: {
-			getPassback: function () {
+		passbackHandler: {
+			get: function () {
 				return null;
 			}
 		},
@@ -66,10 +66,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adSlotTracker,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
+			mocks.passbackHandler,
 			mocks.log,
 			mocks.lookups
 		);

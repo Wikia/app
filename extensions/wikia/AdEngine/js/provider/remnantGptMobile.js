@@ -24,5 +24,5 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 					adUnitBuilder.buildNew(src, slotName, passback) : adUnitBuilder.build(slotName, src);
 			}
 
-	});
+		});
 });
