@@ -4,7 +4,7 @@ class LatestActivityController extends WikiaController {
 	const MAX_ELEMENTS = 4;
 
 	public function executeIndex() {
-		global $wgLang, $wgContentNamespaces, $wgMemc;
+		global $wgLang, $wgContentNamespaces, $wgMemc, $wgEnableCommunityPageExt;
 
 		$mKey = wfMemcKey( 'mOasisLatestActivity' );
 		$feedData = $wgMemc->get( $mKey );
@@ -56,6 +56,7 @@ class LatestActivityController extends WikiaController {
 		$this->setVal( 'changeList', $changeList );
 		$this->setVal( 'moduleHeader', wfMessage( 'oasis-activity-header' )->escaped() );
 		$this->setVal( 'activityIcon', DesignSystemHelper::renderSvg( 'wds-icons-activity-small', 'activity-icon' ) );
+		$this->setVal( 'renderCommunityEntryPoint', !empty( $wgEnableCommunityPageExt ) );
 
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity( 600 );

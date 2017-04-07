@@ -784,7 +784,7 @@ jQuery(function ($) {
 		});
 
 		/** recent-wiki-activity-module **/
-		$wikiaRail.find('#WikiaRecentActivity').on('mousedown', 'a', function (event) {
+		$wikiaRail.find('#WikiaRecentActivity .page-title-link, #WikiaRecentActivity .edit-info-user').on('mousedown', function (event) {
 			var label = event.target.getAttribute('data-tracking');
 
 			// Primary mouse button only
@@ -792,7 +792,7 @@ jQuery(function ($) {
 				return;
 			}
 
-			if (label !== undefined) {
+			if (label) {
 				track({
 					browserEvent: event,
 					category: 'recent-wiki-activity-module',

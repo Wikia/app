@@ -1,4 +1,4 @@
-<section class="module" id="WikiaRecentActivity">
+<section class="module activity-module" id="WikiaRecentActivity">
 
 	<h2 class="activity-module-header"><?= $activityIcon ?><?= $moduleHeader ?></h2>
 
@@ -7,7 +7,7 @@
 			<? foreach ( $changeList as $item ): ?>
 				<li class="activity-item">
 					<div class="page-title">
-						<a href="<?= $item['page_url'] ?>" data-tracking="activity-title" ><?= $item['page_title'] ?></a>
+						<a href="<?= $item['page_url'] ?>" class="page-title-link" data-tracking="activity-title" ><?= $item['page_title'] ?></a>
 					</div>
 					<div class="edit-info">
 						<a class="edit-info-user" data-tracking="activity-username" href="<?= $item['user_profile_url'] ?>">
@@ -20,5 +20,9 @@
 				</li>
 			<? endforeach; ?>
 		</ul>
+	<? endif; ?>
+
+	<? if ( $renderCommunityEntryPoint ): ?>
+		<?= F::app()->renderView( 'CommunityPageEntryPoint', 'Index' ) ?>
 	<? endif; ?>
 </section>
