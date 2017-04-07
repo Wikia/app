@@ -105,6 +105,20 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/tablet/oasis-home/_godofwar-gaming');
 	});
 
+	it('Should build new ad unit without device if its special page', function () {
+		mockPageParams({
+			's0v': 'gaming',
+			's1': '_godofwar',
+			's2': 'special',
+			'skin': 'oasis'
+		});
+
+		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+
+		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/unknown-specialpage/oasis-special/_godofwar-gaming');
+	});
+
 	testCases.forEach(function (testCase) {
 		it('Should build new ad unit without correct pos group', function () {
 			mockPageParams(DEFAULT_PAGE_PARAMS);

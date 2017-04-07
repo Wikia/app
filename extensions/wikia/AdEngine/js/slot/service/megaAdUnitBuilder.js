@@ -33,6 +33,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	function getDevice(params) {
 		var result = 'unknown';
 
+		if (params.s2 === 'special') {
+			return 'unknown-specialpage';
+		}
+
 		if (params.skin === 'oasis') {
 			result = browserDetect.isMobile() ? 'tablet' : 'desktop';
 		} else if (params.skin === 'mercury' || params.skin === 'mobile-wiki') {
