@@ -38,7 +38,7 @@ class Migrate extends Maintenance {
 			$backupErrors = $this->backup( $backupPath, $dumperPath, $db, $dbOptions );
 			$errors = array_merge( $errors, $backupErrors );
 			if ( empty( $backupErrors ) ) {
-				$migrationErrors = $this->migrate( $migrationPath, $dbOptions );
+				$migrationErrors = $this->migrate( $migrationPath, $db, $dbOptions );
 				$errors = array_merge( $errors, $migrationErrors );
 			}
 		}
@@ -47,13 +47,13 @@ class Migrate extends Maintenance {
 			$restoreErrors = $this->restore( $backupPath, $dumperPath, $dbOptions );
 			$errors = array_merge( $errors, $restoreErrors );
 		}
+		if ( !$restoreOnly ) {
+			$this->cleanup( $dbname, $migrationPath, $backupDir );
+		}
 
 		if ( !empty( $errors ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Migration failed', $errors );
 			throw new Exception( 'Failed with errors: ' . implode( ",", $errors ) );
-		}
-		if ( !$restoreOnly ) {
-			$this->cleanup( $dbname, $migrationPath, $backupDir );
 		}
 		$this->output( "...done\n" );
 	}
@@ -80,22 +80,32 @@ class Migrate extends Maintenance {
 		return $errors;
 	}
 
-	protected function migrate( $backupPath, $options ) {
+	protected function migrate( $backupPath, $db, $options ) {
 		list( $host, $user, $password, $dbname ) = $options;
 		$convertionScriptPath = "{$backupPath}/_convert.{$dbname}.sql";
 		$errors = [];
 
-		$this->output( "...migration starting\n" );
-		$migrationFileOutput = $this->createMigrationFile( $dbname, $convertionScriptPath );
-		if ( !empty( $migrationFileOutput ) ) {
-			$this->output( "...ERROR! migration file creation failed\n" );
-			$errors[] = $migrationFileOutput;
+		$output = $this->fixMath( $db, $dbname );
+		if ( !empty( $output ) ) {
+			$this->output( "...ERROR! math table fix failed\n" );
+			$errors[] = $output;
 		}
 
-		$output = $this->runMigration( $host, $user, $password, $dbname, $convertionScriptPath );
-		if ( !empty( $output ) && strpos( $output, 'Warning' ) !== 0 ) {
-			$this->output( "...ERROR! migration failed\n" );
-			$errors[] = $output;
+		if ( empty( $errors ) ) {
+			$this->output( "...migration starting\n" );
+			$migrationFileOutput = $this->createMigrationFile( $dbname, $convertionScriptPath );
+			if ( !empty( $migrationFileOutput ) ) {
+				$this->output( "...ERROR! migration file creation failed\n" );
+				$errors[] = $migrationFileOutput;
+			}
+		}
+
+		if ( empty( $errors ) ) {
+			$output = $this->runMigration( $host, $user, $password, $dbname, $convertionScriptPath );
+			if ( !empty( $output ) && strpos( $output, 'Warning' ) !== 0 ) {
+				$this->output( "...ERROR! migration failed\n" );
+				$errors[] = $output;
+			}
 		}
 
 		return $errors;
@@ -121,11 +131,28 @@ class Migrate extends Maintenance {
 	}
 
 	/** COMMANDS METHODS */
+
+	/** @param DatabaseMysqli $db DatabaseMysqli */
+	protected function fixMath( $db, $dbname ) {
+		$result = $db->query( "SELECT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{$dbname}' AND TABLE_NAME = 'math'" );
+
+		if ( $result->numRows() == 1 ) {
+			try {
+				$db->query( 'ALTER TABLE math MODIFY math_inputhash varbinary(16) NOT NULL DEFAULT \'\', MODIFY math_outputhash varbinary(16) NOT NULL DEFAULT \'\'' );
+			} catch ( Exception $e ) {
+				return $e->getMessage();
+			}
+		}
+		return '';
+	}
+
 	protected function cleanup( $dbname, $path, $dir ) {
 		$time = time();
+		//TODO: send it to storage-s1 :D
 		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" {$dir}" );
 	}
 
+	/** @param DatabaseMysqli $db DatabaseMysqli */
 	protected function getEncodings( $db, $dbname ) {
 		return $db->query( "SELECT DEFAULT_CHARACTER_SET_NAME AS charset, DEFAULT_COLLATION_NAME as collation FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{$dbname}'", __METHOD__ )
 			->fetchObject();
