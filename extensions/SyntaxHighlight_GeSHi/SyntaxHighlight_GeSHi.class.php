@@ -76,8 +76,8 @@ class SyntaxHighlight_GeSHi {
 			}
 		}
 		// Starting line number
-		if( isset( $args['start'] ) ) {
-			$geshi->start_line_numbers_at( $args['start'] );
+		if ( isset( $args['start'] ) && ctype_digit( $args['start'] ) ) {
+			$geshi->start_line_numbers_at( (int)$args['start'] );
 		}
 		$geshi->set_header_type( $enclose );
 		// Strict mode
