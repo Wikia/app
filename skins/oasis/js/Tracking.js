@@ -792,7 +792,7 @@ jQuery(function ($) {
 				return;
 			}
 
-			if (label !== undefined) {
+			if (label) {
 				track({
 					browserEvent: event,
 					category: 'recent-wiki-activity-module',
