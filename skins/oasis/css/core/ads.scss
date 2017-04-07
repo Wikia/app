@@ -41,6 +41,7 @@ $video-control-pause-shadow-animation-duration: 1s;
 $video-control-pause-shadow-animation-function: ease;
 
 $vpaid-z-index: 10;
+$video-interactive-area-z-index: $vpaid-z-index + 1;
 
 @mixin absolute-fill() {
 	height: 100%;
@@ -134,7 +135,7 @@ $vpaid-z-index: 10;
 	.vpaid-container {
 		@include absolute-fill();
 
-		video, & > div {
+		video, &.vpaid-enabled > div {
 			@include absolute-fill();
 		}
 
@@ -679,6 +680,7 @@ body > a > img[src$="noad.gif"] {
 	left: 0;
 	position: absolute;
 	width: 100%;
+	z-index: $video-interactive-area-z-index;
 
 	.control-bar {
 		padding: 0 $video-control-bar-padding;
@@ -793,6 +795,7 @@ body > a > img[src$="noad.gif"] {
 	top: 0;
 	visibility: hidden;
 	width: $video-control-panel-item-size;
+	z-index: $video-interactive-area-z-index;
 
 	svg {
 		fill: $video-control-panel-default-color;

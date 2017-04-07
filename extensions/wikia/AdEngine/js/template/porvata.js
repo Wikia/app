@@ -129,7 +129,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				});
 
 				video.addEventListener('allAdsCompleted', function () {
-					DOMElementTweaker.hide(videoPlayer);
+					DOMElementTweaker.hide(params.container);
 				});
 			}
 

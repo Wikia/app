@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
 		DOMElementTweaker.hide(videoAdContainer);
 		videoAdContainer.classList.add(videoPlayerClassName);
-		videoAdContainer.style.position = 'relative';
+		// Remove inline style added by IMA library
+		videoAdContainer.style.position = '';
 
 		if (videoSettings.isAutoPlay()) {
 			videoAdContainer.classList.add(autoPlayClassName);
