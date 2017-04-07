@@ -36,56 +36,6 @@ require([
 	 */
 	'use strict';
 
-	w.recircExperiment = [
-		{
-			id: "LI_rail",
-			placement: 'premiumRail',
-			premium: true,
-			helper: 'liftigniter',
-			options: {
-				max: 5,
-				widget: 'wikia-rail',
-				source: 'fandom',
-				opts: {
-					resultType:'cross-domain',
-					domainType:'fandom.wikia.com'
-				}
-			}
-		},
-		{
-			id: "LI_impactFooter",
-			placement: 'impactFooter',
-			helper: 'liftigniter',
-			options: {
-				max: 9,
-				widget: 'wikia-impactfooter',
-				source: 'fandom',
-				opts: {
-					resultType:'cross-domain',
-					domainType:'fandom.wikia.com'
-				}
-			}
-		},
-		{
-			id: "LI_footer",
-			placement: 'footer',
-			helper: 'liftigniter',
-			options: {
-				max: 3,
-				widget: 'wikia-footer-wiki-rec',
-				source: 'wiki',
-				title: "Discover New Wikis",
-				width: 332,
-				height: 187,
-				flush: true,
-				opts: {
-					resultType:'subdomain',
-					domainType:'fandom.wikia.com'
-				}
-			}
-		}
-	];
-
 	var recircExperiment = w.recircExperiment || false,
 		experimentName = 'RECIRCULATION_MIX',
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
