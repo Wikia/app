@@ -138,7 +138,7 @@
 			background: $color-module-background;
 			border: 1px solid $color-page-border;
 		}
-		margin-bottom: 10px;
+		margin-bottom: 30px;
 		padding: 20px 15px 15px;
 		position: relative;
 		word-wrap: break-word;
@@ -282,7 +282,7 @@
 #WikiaRecentActivity {
 	background-color: transparent;
 	border: none;
-	padding: 20px 0;
+	padding: 0;
 
 	.activity-module-header {
 		border-bottom: 1px solid $color-page-border;
