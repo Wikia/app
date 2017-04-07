@@ -293,9 +293,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks.pageFair, 'isEnabled');
-		spyOn(mocks.pageFair, 'isBlocking');
 
-		mocks.pageFair.isBlocking.and.returnValue(true);
 		mocks.pageFair.isEnabled.and.returnValue(true);
 
 		pushAd();

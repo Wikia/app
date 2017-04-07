@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		extra = extra || {};
 		var element,
 			isRecoveryEnabled = sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled()),
-			isBlocking = sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()),
+			isBlocking = sourcePoint.isBlocking(),
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
@@ -66,9 +66,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			sourcePoint.isBlocking(),
 			extra.isSourcePointRecoverable], log.levels.debug, logGroup);
 
-		log(['pageFair - isBlocking, isRecoverable: ',
-			pageFair && pageFair.isBlocking(),
-			extra.isPageFairRecoverable], log.levels.debug, logGroup);
+		log(['pageFair - isRecoverable: ', extra.isPageFairRecoverable], log.levels.debug, logGroup);
 
 		log(['slot name, isBlocking, adIsRecoverable: ',
 			slot.name,
