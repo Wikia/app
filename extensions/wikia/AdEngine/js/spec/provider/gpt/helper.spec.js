@@ -298,6 +298,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
+		expect(mocks.slotTargetingData.rec).toBe('pagefair');
 	});
 
 	it('Should not set src=rec if PageFair is on, isPageFairRecoverable but adblock is off', function () {
