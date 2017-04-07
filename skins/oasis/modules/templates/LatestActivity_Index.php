@@ -1,4 +1,4 @@
-<section class="module" id="WikiaRecentActivity">
+<section class="module activity-module" id="WikiaRecentActivity">
 
 	<h2 class="activity-module-header"><?= $activityIcon ?><?= $moduleHeader ?></h2>
 
