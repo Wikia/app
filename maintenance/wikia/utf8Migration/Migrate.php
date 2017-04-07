@@ -25,7 +25,7 @@ class Migrate extends Maintenance {
 		];
 
 		$dumperPath = $this->getOption( 'dumper-path', '' );
-		$migrationPath = $this->getOption( 'files-path', "/tmp/{$dbname}" );
+		$migrationPath = $this->getOption( 'files-path', "/tmp/{$dbname}_utf8" );
 		if ( !is_dir( $migrationPath ) ) {
 			mkdir( $migrationPath, 0777, true );
 		}
@@ -108,6 +108,10 @@ class Migrate extends Maintenance {
 			}
 		}
 
+		if ( empty( $errors ) ) {
+			unlink( $convertionScriptPath );
+		}
+
 		return $errors;
 	}
 
@@ -121,13 +125,35 @@ class Migrate extends Maintenance {
 			$this->output( "...{$restoreOutput}\n" );
 			$errors[] = "{$dbname} data restoration failed!";
 			$errors[] = $restoreOutput;
-			$this->output( '...ERROR! database restore failed!' );
+			$this->output( "...ERROR! database restore failed!\n" );
 		}
 		if ( empty( $errors ) ) {
 			$this->output( "...backup restored successfully\n" );
 		}
 
 		return $errors;
+	}
+
+	protected function cleanup( $dbname, $path, $dir ) {
+		$time = time();
+		$tarFile = "{$path}/{$dbname}.{$time}.tar.gz";
+		$remotePath = "storage-s1:/tmp/migration_backup";
+		$this->output( "...gzip backup file\n" );
+		$output = exec( "tar -zcf {$tarFile} --directory=\"{$path}\" {$dir} 2>&1" );
+		$this->output( "...done! {$tarFile}\n" );
+		if ( empty ( $output ) ) {
+			$this->output( "...sending it to space\n" );
+			$sendOutput = exec( "scp {$tarFile} {$remotePath} 2>&1" );
+		}
+
+		if ( empty ( $sendOutput ) ) {
+			array_walk( glob( "{$path}/{$dir}/*" ), function ( $filePath ) {
+				unlink( $filePath );
+			} );
+			rmdir( "{$path}/{$dir}" );
+			unlink( $tarFile );
+			rmdir( $path );
+		}
 	}
 
 	/** COMMANDS METHODS */
@@ -144,12 +170,6 @@ class Migrate extends Maintenance {
 			}
 		}
 		return '';
-	}
-
-	protected function cleanup( $dbname, $path, $dir ) {
-		$time = time();
-		//TODO: send it to storage-s1 :D
-		return exec( "tar -zcf {$path}/{$dbname}.{$time}.tar.gz --directory=\"{$path}\" {$dir}" );
 	}
 
 	/** @param DatabaseMysqli $db DatabaseMysqli */
