@@ -591,7 +591,12 @@ class Wikia {
 	static public function staffForLang( $langCode ) {
 		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		if ( array_key_exists( $langCode, $staffMap ) ) {
+		if (
+			is_array( $staffMap ) &&
+			array_key_exists( $langCode, $staffMap ) &&
+			is_array( $staffMap[$langCode] ) &&
+		    !empty( $staffMap[$langCode] )
+		) {
 			$key = array_rand( $staffMap[$langCode] );
 			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
 		} else {
