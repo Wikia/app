@@ -326,7 +326,9 @@
 }
 
 .WikiaRail .ForumActivityModule {
-
+	.wds-avatar {
+		border-color: $color-page-border;
+	}
 }
 
 .ForumPolicies {

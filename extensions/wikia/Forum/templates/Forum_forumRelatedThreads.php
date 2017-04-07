@@ -6,7 +6,9 @@
 			<li class="activity-item">
 				<?php $messageLast = empty( $message['reply'] ) ? $message['message'] : $message['reply']; ?>
 
-				<?= AvatarService::renderAvatar( $messageLast->getUser()->getName(), 20 ); ?>
+				<a href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
+					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" />
+				</a>
 
 				<div class="page-title">
 					<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>">
