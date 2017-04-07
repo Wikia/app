@@ -38,9 +38,11 @@
 	}
 
 	.description {
+		@include flex(1);
+
 		font-size: 14px;
 		line-height: 18px;
-		max-width: 176px;
+		margin-right: 18px;
 	}
 
 	.wds-button {
