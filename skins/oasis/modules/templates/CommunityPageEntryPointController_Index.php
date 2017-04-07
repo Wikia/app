@@ -2,7 +2,7 @@
 	<div class="avatars">
 		<? foreach( $avatars as $index => $avatar ): ?>
 			<a href="<?= $avatar['userProfileUrl'] ?>">
-				<img class="wds-avatar" style="position: absolute; left:<?= $index * 20 ?>px; z-index: <?= 5 - $index ?>" src="<?= $avatar['avatarUrl'] ?>" />
+				<img class="wds-avatar" style="left:<?= ($index * -10) + ( count( $avatars ) - 1 ) * 5 ?>px; z-index: <?= 5 - $index ?>" src="<?= $avatar['avatarUrl'] ?>" />
 			</a>
 		<? endforeach; ?>
 	</div>
