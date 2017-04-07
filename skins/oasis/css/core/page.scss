@@ -236,49 +236,6 @@
 	}
 }
 
-.WikiaActivityModule {
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-	li {
-		font-size: 12px;
-		padding: 6px 3px 6px 30px;
-		position: relative;
-
-		&:first-child {
-			border: 0;
-		}
-
-		em {
-			font-size: 14px;
-			line-height: 17px;
-		}
-	}
-	.sprite {
-		position: absolute;
-		left: 3px;
-		top: 8px;
-	}
-	.edited-by {
-		font-size: 11px;
-		margin-top: 2px;
-		a {
-			color: $color-links;
-			font-size: 11px;
-		}
-	}
-	a {
-		font-weight: normal;
-	}
-	.page-title {
-		font-size: 14px;
-	}
-	.more {
-		font-weight: bold;
-	}
-}
-
 .WikiaRail .activity-module {
 	background-color: transparent;
 	border: none;
