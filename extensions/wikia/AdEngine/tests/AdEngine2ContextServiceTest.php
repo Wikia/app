@@ -403,7 +403,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
 		unset($result['opts']['pageFairDetectionUrl']);
 
-		// Check for PageFair URL
+		// Check for Prebid.js URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
 
