@@ -593,9 +593,8 @@ class Wikia {
 
 		if (
 			is_array( $staffMap ) &&
-			array_key_exists( $langCode, $staffMap ) &&
-			is_array( $staffMap[$langCode] ) &&
-			!empty( $staffMap[$langCode] )
+			!empty( $staffMap[$langCode] ) &&
+			is_array( $staffMap[$langCode] )
 		) {
 			$key = array_rand( $staffMap[$langCode] );
 			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
