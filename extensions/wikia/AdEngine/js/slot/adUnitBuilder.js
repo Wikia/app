@@ -19,6 +19,6 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 	}
 
 	return {
-		build: build,
+		build: build
 	};
 });
