@@ -326,6 +326,12 @@
 }
 
 .WikiaRail .ForumActivityModule {
+	.activity-info {
+		display: inline-block;
+		margin-left: 5px;
+		max-width: 240px;
+	}
+
 	.wds-avatar {
 		border-color: $color-page-border;
 	}

@@ -10,14 +10,17 @@
 					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" />
 				</a>
 
-				<div class="page-title">
-					<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>">
-						<?= htmlspecialchars( $message['message']->getMetaTitle() ); ?>
-					</a>
-				</div>
-				<div class="edit-info">
-					<a class="edit-info-user" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>"><?= htmlspecialchars( $messageLast->getUser()->getName() ) ?></a>
-					<span class="edit-info-time"> • <?= wfTimeFormatAgo( $messageLast->getCreateTime() ) ?></span>
+				<div class="activity-info">
+					<div class="page-title">
+						<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>">
+							<?= htmlspecialchars( $message['message']->getMetaTitle() ); ?>
+						</a>
+					</div>
+					<div class="edit-info">
+						<a class="edit-info-user" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
+							<?= User::isIp( $messageLast->getUser()->getName() ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $messageLast->getUser()->getName() ) ?></a>
+						<span class="edit-info-time"> • <?= wfTimeFormatAgo( $messageLast->getCreateTime() ) ?></span>
+					</div>
 				</div>
 			</li>
 			<?php } ?>
