@@ -25,7 +25,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
 				playerParams = window.wgOoyalaParams,
-				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY');
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay;
 
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
 		}
@@ -143,6 +143,16 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
 				});
+			});
+
+			player.mb.subscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video', function (eventName, volume) {
+				if (volume > 0) {
+					track({
+						action: tracker.ACTIONS.CLICK,
+						label: 'featured-video-unmuted'
+					});
+					player.mb.unsubscribe(OO.EVENTS.VOLUME_CHANGED, 'featured-video');
+				}
 			});
 
 			player.mb.subscribe(OO.EVENTS.PLAY, 'featured-video', function () {
