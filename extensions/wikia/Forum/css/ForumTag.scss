@@ -1,17 +1,35 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
 
-// Note: a lot of this is borrowed from .WikiaRail .module
+// Note: a lot of this is borrowed from .WikiaRail .activity-module
 // Shared Monobook and Oasis styling
 .mw-content-ltr .forum-activity-module {
 	margin: 0 auto 10px;
 	position: relative;
 	width: 300px;
+	word-wrap: break-word;
 
 	ul {
 		list-style: none;
 		margin-left: 0;
+	}
+
+	.activity-avatar {
+		display: inline-block;
+		height: 30px;
+		width: 30px;
+	}
+
+	.activity-item {
+		@include flexbox();
+	}
+
+	.activity-info {
+		display: inline-block;
+		margin-left: 7px;
+		max-width: 240px;
 	}
 
 	.activity-module-header {
@@ -20,29 +38,44 @@
 		margin-bottom: 8px;
 	}
 
+	.edit-info {
+		color: rgba($color-text, .75);
+		font-size: 12px;
+		line-height: 16px;
+		max-height: 16px;
+
+		.edit-info-user {
+			color: rgba($color-text, .75);
+			display: inline-block;
+			max-width: 150px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.edit-info-time {
+			vertical-align: top;
+		}
+	}
+
 	.page-title {
 		color: $color-links;
 		font-size: 14px;
-		margin-bottom: 2px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.wds-avatar {
+		height: 30px;
+		width: 30px;
+		border-color: $color-page-border;
 	}
 }
 
 // Oasis-specific styling
 .WikiaArticle .forum-activity-module {
 	@include clearfix;
-
-	.activity-info {
-		display: inline-block;
-		margin-left: 5px;
-		max-width: 240px;
-	}
-
-	.wds-avatar {
-		border-color: $color-page-border;
-	}
 }
 
 // use full width on main pages using grid

@@ -6,7 +6,7 @@
 			<li class="activity-item">
 				<?php $messageLast = empty( $message['reply'] ) ? $message['message'] : $message['reply']; ?>
 
-				<a href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
+				<a class="activity-avatar" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
 					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" />
 				</a>
 
