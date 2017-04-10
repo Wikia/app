@@ -238,7 +238,7 @@
 
 .WikiaRail .activity-module {
 	background-color: transparent;
-	border: none;
+	border: 0;
 	padding: 0;
 
 	.activity-module-header {
@@ -272,7 +272,6 @@
 	.edit-info {
 		color: rgba($color-text, .75);
 		font-size: 12px;
-		font-weight: bold;
 		max-height: 16px;
 
 		.edit-info-user {
