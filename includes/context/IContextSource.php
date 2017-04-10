@@ -103,8 +103,9 @@ interface IContextSource {
 	/**
 	 * Get a Message object with context set
 	 *
+	 * @param mixed $args,...
 	 * @return Message object
 	 */
-	public function msg();
+	public function msg( ...$args );
 }
 

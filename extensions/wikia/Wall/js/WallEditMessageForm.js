@@ -167,16 +167,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 				msg.find('.buttonswrapper').show();
 			}),
 			//fail callback
-			this.proxy(function (data) {
-				var dataJson = JSON.parse(data.responseText);
-				buttons.removeAttr('disabled');
-
-				if (dataJson['reason'] == "badcontent") {
-					$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo']);
-				} else {
-					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
-				}
-			})
+			buttons.removeAttr.bind(buttons, 'disabled')
 		);
 	},
 

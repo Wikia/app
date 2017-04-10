@@ -2,6 +2,27 @@
 (function ($, mw) {
 	'use strict';
 
+	function showErrorModal(data) {
+		var modalTitle = $.msg('wall-posting-message-failed-title'),
+			modalContent = $.msg('wall-posting-message-failed-body'),
+			dataJson;
+
+		try {
+			dataJson = JSON.parse(data.responseText);
+		} catch (e) {
+			dataJson = {};
+		}
+
+		if (dataJson.reason === 'badcontent') {
+			modalTitle = $.msg('wall-posting-message-failed-filter-title');
+			modalContent = $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo'];
+		} else if (dataJson.blockInfo) {
+			modalContent = dataJson.blockInfo;
+		}
+
+		$.showModal(modalTitle, modalContent );
+	}
+
 	Wall.BackendBridge = $.createClass(Observable, {
 		pageController: 'WallExternalController',
 		bucky: window.Bucky('Wall.BackendBridge'),
@@ -48,8 +69,8 @@
 					body: body,
 					messagetitle: title,
 					notifyeveryone: notifyEveryone,
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					relatedTopics: relatedTopics,
 					token: mw.user.tokens.get('editToken')
@@ -62,6 +83,8 @@
 				}
 				this.fire('newPosted', newmsg);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -81,8 +104,8 @@
 					body: body,
 					parent: parent,
 
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					quotedFrom: quotedFrom || '',
 					token: mw.user.tokens.get('editToken')
@@ -96,6 +119,8 @@
 
 				this.fire('postReply', newMessage);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -164,8 +189,8 @@
 					newtitle: title,
 					newbody: body,
 					isreply: isreply,
-					pagetitle: page.title,
-					pagenamespace: page.namespace,
+					title: page.title,
+					namespace: page.namespace,
 					convertToFormat: convertToFormat,
 					token: mw.user.tokens.get('editToken')
 				}
@@ -175,6 +200,8 @@
 				}
 				this.fire('editSaved', data);
 			})).fail(this.proxy(function (data) {
+				showErrorModal(data);
+
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
 				}
@@ -229,7 +256,7 @@
 					this.fire('notifyEveryoneSaved', data);
 					this.bucky.timer.stop('notifyEveryone');
 				})
-			});
+			}).fail(showErrorModal);
 		},
 
 		updateTopics: function (msgid, relatedTopics, callback) {
@@ -251,6 +278,84 @@
 					}
 					this.bucky.timer.stop('updateTopics');
 				})
+			}).fail(showErrorModal);
+		},
+
+		undoRemoveOrAdminDelete: function (id, callback) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'undoAction',
+				type: 'POST',
+				data: {
+					msgid: id,
+					title: page.title,
+					namespace: page.namespace
+				},
+				callback: callback
+			}).fail(showErrorModal);
+		},
+
+		restoreMessage: function (id, formdata) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'restoreMessage',
+				type: 'POST',
+				data: {
+					msgid: id,
+					formdata: formdata
+				},
+				callback: window.location.reload
+			}).fail(showErrorModal);
+		},
+
+		deleteMessage: function (id, mode, msg, formdata, modal, callback) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'deleteMessage',
+				type: 'POST',
+				format: 'json',
+				data: {
+					mode: mode,
+					msgid: id,
+					username: this.username,
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: callback
+			}).fail(function (json) {
+				if (modal) {
+					modal.trigger('close');
+				}
+				showErrorModal(json);
+			});
+		},
+
+		changeThreadStatus: function (id, newState, formdata, modal) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'changeThreadStatus',
+				format: 'json',
+				type: 'POST',
+				data: {
+					msgid: id,
+					newState: newState,
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (json) {
+					if (json.status) {
+						if (typeof window.UserLoginAjaxForm === 'function') {
+							window.UserLoginAjaxForm.prototype.reloadPage();
+						} else {
+							window.location.reload();
+						}
+					}
+				})
+			}).fail(function (json) {
+				if (modal) {
+					modal.trigger('close');
+				}
+				showErrorModal(json);
 			});
 		}
 	});

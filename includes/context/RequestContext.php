@@ -382,10 +382,10 @@ class RequestContext implements IContextSource {
 	 * Get a Message object with context set
 	 * Parameters are the same as wfMessage()
 	 *
+	 * @param mixed $args,... same as wfMessage()
 	 * @return Message object
 	 */
-	public function msg() {
-		$args = func_get_args();
+	public function msg( ...$args ) {
 		return call_user_func_array( 'wfMessage', $args )->setContext( $this );
 	}
 

@@ -81,7 +81,7 @@ class WallHooksHelper {
 			$app->wg->SuppressPageHeader = true;
 
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
-			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
+			$isDeleted = $wallMessage->isAdminDelete();
 			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
 				&& $app->wg->Request->getVal( 'show' ) == '1' );
 
@@ -660,7 +660,7 @@ class WallHooksHelper {
 		$title = $article->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
-			return $wallMessage->canDelete( $user );
+			return !$user->isBlocked() && $wallMessage->canDelete( $user );
 		}
 		return true;
 	}

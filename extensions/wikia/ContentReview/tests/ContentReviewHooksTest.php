@@ -55,7 +55,7 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	 * @dataProvider addingImportJSScriptsProvider
 	 */
 	public function testAddingImportJSScripts( $jsEnabled, $importScripts, $bottomScriptsResult ) {
-		$skinMock = $this->getMock( 'Skin' );
+		$skinMock = $this->getMockForAbstractClass( Skin::class );
 		$this->mockGlobalVariable( 'wgUseSiteJs', $jsEnabled );
 		$importJSMock = $this->getMock( 'Wikia\ContentReview\ImportJS', [ 'getImportScripts' ] );
 

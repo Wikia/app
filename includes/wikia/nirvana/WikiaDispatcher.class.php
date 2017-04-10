@@ -214,8 +214,8 @@ class WikiaDispatcher {
 					$result = $controller->$method( $params );
 				}
 
-				if($result === false) {
-				   // skip template rendering when false returned
+				if ( $result === false && $response->getFormat() !== WikiaResponse::FORMAT_JSON ) {
+				   // skip template rendering when false returned and we are not outputting json
 				   $controller->skipRendering();
 				}
 

@@ -158,11 +158,11 @@ abstract class ContextSource implements IContextSource {
 	 * Get a Message object with context set
 	 * Parameters are the same as wfMessage()
 	 *
+	 * @param mixed $args,... same as wfMessage()
 	 * @since 1.18
 	 * @return Message object
 	 */
-	public function msg( /* $args */ ) {
-		$args = func_get_args();
+	public function msg( ...$args ) {
 		return call_user_func_array( array( $this->getContext(), 'msg' ), $args );
 	}
 	

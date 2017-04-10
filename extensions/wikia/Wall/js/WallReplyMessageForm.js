@@ -163,17 +163,8 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 				}
 			}),
 			//fail callback
-			this.proxy(function (data) {
-				var dataJson = JSON.parse(data.responseText);
-
-				this.enable(reply);
-
-				if (dataJson['reason'] == "badcontent") {
-					$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo']);
-				} else {
-					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
-				}
-			}));
+			this.enable.bind(this, reply)
+		);
 	}
 });
 

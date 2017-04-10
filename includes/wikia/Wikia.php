@@ -1928,10 +1928,10 @@ class Wikia {
 	 * global during ajax requests. It uses title URL param to keep backward compatibility.
 	 *
 	 * @static
-	 * @param WebRequest $request
+	 * @param \Wikia\Interfaces\IRequest $request
 	 * @return Title
 	 */
-	public static function createTitleFromRequest( $request ) {
+	public static function createTitleFromRequest( \Wikia\Interfaces\IRequest $request ) {
 		if ( $request->getVal('title','') === '' ) {
 			$title = Title::newMainPage();
 		} else {
