@@ -14,14 +14,15 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			status = '',
 			videoMock = doc.createElement('video'),
 			adsManager,
-			mobileVideoAd = params.container.querySelector('video');
+			mobileVideoAd = params.container.querySelector('video'),
+			eventListeners = {};
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
 
 			if (videoSettings.isMoatTrackingEnabled()) {
-				moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL);
+				moatVideoTracker.init(adsManager, params.container, google.ima.ViewMode.NORMAL, params.src, params.slotName);
 			}
 
 			log('AdsManager loaded', log.levels.debug, logGroup);
@@ -29,6 +30,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		function addEventListener(eventName, callback) {
 			log(['addEventListener to AdManager', eventName], log.levels.debug, logGroup);
+
+			if (eventName.indexOf('wikia') !== -1) {
+				eventListeners[eventName] = eventListeners[eventName] || [];
+				eventListeners[eventName].push(callback);
+				return;
+			}
 
 			if (isAdsManagerLoaded) {
 				adsManager.addEventListener(eventName, callback);
@@ -41,6 +48,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 		function removeEventListener(eventName, callback) {
 			log(['removeEventListener to AdManager', eventName], log.levels.debug, logGroup);
+
+			if (eventListeners[eventName]) {
+				var listenerId = eventListeners[eventName].indexOf(callback);
+				if (listenerId !== -1) {
+					eventListeners[eventName].splice(listenerId, 1);
+				}
+				return;
+			}
 
 			if (isAdsManagerLoaded) {
 				adsManager.removeEventListener(eventName, callback);
@@ -65,7 +80,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 					roundedHeight = Math.round(height);
 
 				log(['Video play: prepare player UI', roundedWidth, roundedHeight], log.levels.debug, logGroup);
-				adsManager.dispatchEvent('wikiaAdPlayTriggered');
+				dispatchEvent('wikiaAdPlayTriggered');
 
 				// https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdDisplayContainer.initialize
 				adDisplayContainer.initialize();
@@ -107,7 +122,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		}
 
 		function dispatchEvent(eventName) {
-			adsManager.dispatchEvent(eventName);
+			if (eventListeners[eventName] && eventListeners[eventName].length > 0) {
+				eventListeners[eventName].forEach(function (callback) {
+					callback({});
+				});
+			}
 		}
 
 		function setStatus(newStatus) {
