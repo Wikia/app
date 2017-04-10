@@ -60,7 +60,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				var message = window.mw.message(key).parse();
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
-					number: escape(notification.totalUniqueActors - 1)
+					number: escape(notification.totalUniqueActors)
 				});
 			};
 
@@ -69,7 +69,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				var message = window.mw.message(key).parse();
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
-					number: escape(notification.totalUniqueActors - 1)
+					number: escape(notification.totalUniqueActors)
 				});
 			};
 

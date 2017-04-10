@@ -6,9 +6,15 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
-		googleIma: {
-			vpaidMode: {
-				ENABLED: 1
+		win: {
+			google: {
+				ima: {
+					ImaSdkSettings: {
+						VpaidMode: {
+							ENABLED: 1
+						}
+					}
+				}
 			}
 		}
 	};
@@ -17,7 +23,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
 			mocks.resolvedState,
-			mocks.googleIma
+			mocks.win
 		).create(params);
 	}
 
@@ -95,6 +101,20 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 
 		expect(videoSettings.getVpaidMode()).toEqual(0);
+	});
+
+	it('Should not show ui controls by default', function () {
+		var videoSettings = getSettings({});
+
+		expect(videoSettings.hasUiControls()).toBeFalsy();
+	});
+
+	it('Should not ui controls when configured in params', function () {
+		var videoSettings = getSettings({
+			hasUiControls: true
+		});
+
+		expect(videoSettings.hasUiControls()).toBeTruthy();
 	});
 });
 

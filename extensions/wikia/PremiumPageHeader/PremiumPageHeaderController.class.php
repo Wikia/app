@@ -73,9 +73,9 @@ class PremiumPageHeaderController extends WikiaController {
 			$visibleCategoriesLimit = 3;
 		}
 		$categories = array_slice( $normalCategoryLinks, 0, $visibleCategoriesLimit );
-		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories' );
+		$visibleCategories = $this->extendWithTrackingAttribute( $categories, 'categories-top' );
 		$extendedCategories = array_slice( $normalCategoryLinks, $visibleCategoriesLimit );
-		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-more' );
+		$moreCategories = $this->extendWithTrackingAttribute( $extendedCategories, 'categories-top-more' );
 
 		$this->setVal( 'title', $title );
 		$this->setVal( 'inCategoriesText', wfMessage( 'pph-in-categories' )->escaped() );

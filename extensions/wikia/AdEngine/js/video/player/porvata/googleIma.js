@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.log',
 	'wikia.window'
-], function (scriptLoader, imaPlayerFactory, recoveryHelper, log, win) {
+], function (scriptLoader, imaPlayerFactory, sourcePoint, log, win) {
 	'use strict';
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.player.porvata.googleIma';
@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 			});
 		}
 
-		return scriptLoader.loadScript(recoveryHelper.getSafeUri(imaLibraryUrl));
+		return scriptLoader.loadScript(sourcePoint.getSafeUri(imaLibraryUrl));
 	}
 
 	function getPlayer(videoSettings) {
@@ -42,11 +42,6 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 
 	return {
 		load: load,
-		getPlayer: getPlayer,
-		vpaidMode: {
-			DISABLED: 0,
-			ENABLED: 1,
-			INSECURE: 2
-		}
+		getPlayer: getPlayer
 	};
 });

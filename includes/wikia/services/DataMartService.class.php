@@ -803,22 +803,6 @@ class DataMartService extends Service {
 		return $articlePageViews;
 	}
 
-	public static function getWAM200Wikis() {
-		$db = DataMartService::getDB();
-
-		$wikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-			->FROM( 'dimension_top_wikis' )
-			->ORDER_BY( 'rank' )
-			->LIMIT( 200 )
-			->runLoop( $db, function( &$wikis, $row ) {
-				$wikis[] = intval( $row->wiki_id );
-			} );
-
-		return $wikis;
-	}
-
 	/**
 	 * Returns an array of IDs of wikias ordered by WAM rank.
 	 * The default limit is 200. If 0 is provided - no limit is used.
