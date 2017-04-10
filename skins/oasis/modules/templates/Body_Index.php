@@ -137,7 +137,7 @@
 					<?= $bodytext ?>
 
 				</div>
-				<?php if ( !(new ARecoveryModule)->isSourcePointRecoveryDisabled() ) { ?>
+				<?php if ( (new ARecoveryModule)->isSourcePointRecoveryEnabled() ) { ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>

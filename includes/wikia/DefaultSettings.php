@@ -1587,7 +1587,7 @@ $wgAdDriverPageFairDetectionCountries = null;
 
 /**
  * @name $wgAdDriverPageFairRecoveryCountries
- * List of countries to call ads through SourcePoint
+ * List of countries to call ads through PageFair
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPageFairRecoveryCountries = null;
