@@ -45,10 +45,11 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 @mixin absolute-fill() {
 	height: 100%;
-	left: 0;
+	left: 50%;
 	position: absolute;
 	width: 100%;
 	top: 0;
+	transform: translate(-50%, 0);
 }
 
 /** Hide invisible slots and 1x1 iframes **/
