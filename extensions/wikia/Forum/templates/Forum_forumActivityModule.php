@@ -1,4 +1,4 @@
-<section class="module activity-module ForumActivityModule" id="ForumActivityModule">
+<section class="module activity-module forum-activity-module" id="ForumActivityModule">
 	<h2 class="activity-module-header"><?= wfMessage( 'forum-activity-module-heading' )->escaped() ?></h2>
 	<ul class="activity-items">
 		<?php foreach ( $posts as $value ): ?>

@@ -1,5 +1,5 @@
 <?php if ( $showModule ) { ?>
-	<section class="module activity-module ForumActivityModule" id="ForumRelatedThreadsModule">
+	<section class="module activity-module forum-activity-module" id="ForumRelatedThreadsModule">
 		<h2 class="activity-module-header"><?= wfMessage( 'forum-related-module-heading' )->escaped() ?></h2>
 		<ul class="activity-items">
 			<?php foreach ( $messages as $message ) { ?>
