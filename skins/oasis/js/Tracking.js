@@ -727,57 +727,37 @@ jQuery(function ($) {
 			label: 'chat-join'
 		}, trackWithEventData);
 
-		// TODO: refactor while working on https://wikia-inc.atlassian.net/browse/XW-3202
-		/** forum-activity-module **/
-		$wikiaRail.find('#ForumActivityModule').on('mousedown', 'a', function (event) {
-			var label,
-				el = $(event.target);
+		/** related-threads-module **/
+		$wikiaRail.find('#ForumRelatedThreadsModule').on('mousedown', 'a', function (event) {
+			var label = event.target.getAttribute('data-tracking');
 
 			// Primary mouse button only
 			if (event.which !== 1) {
 				return;
 			}
 
-			if (el.hasClass('more')) {
-				label = 'activity-more';
-			} else if (el.closest('.edited-by').length > 0) {
-				label = 'activity-username';
-			} else if (el.closest('em').length > 0) {
-				label = 'activity-title';
-			}
-
-			if (label !== undefined) {
+			if (label) {
 				track({
 					browserEvent: event,
-					category: 'forum-activity-module',
+					category: 'related-threads-module',
 					label: label
 				});
 			}
 		});
 
-		// TODO: refactor while working on https://wikia-inc.atlassian.net/browse/XW-3202
-		/** related-threads-module **/
-		$wikiaRail.find('#ForumRelatedThreadsModule').on('mousedown', 'a', function (event) {
-			var label,
-				el = $(event.target);
+		/** forum-activity-module **/
+		$wikiaRail.find('#ForumActivityModule').on('mousedown', 'a', function (event) {
+			var label = event.target.getAttribute('data-tracking');
 
 			// Primary mouse button only
 			if (event.which !== 1) {
 				return;
 			}
 
-			if (el.hasClass('more')) {
-				label = 'activity-more';
-			} else if (el.closest('.edited-by').length > 0) {
-				label = 'activity-username';
-			} else if (el.closest('em').length > 0) {
-				label = 'activity-title';
-			}
-
-			if (label !== undefined) {
+			if (label) {
 				track({
 					browserEvent: event,
-					category: 'related-threads-module',
+					category: 'forum-activity-module',
 					label: label
 				});
 			}

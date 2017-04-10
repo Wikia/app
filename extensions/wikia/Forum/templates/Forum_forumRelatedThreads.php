@@ -7,18 +7,19 @@
 				<?php $messageLast = empty( $message['reply'] ) ? $message['message'] : $message['reply']; ?>
 
 				<a class="activity-avatar" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
-					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" />
+					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" data-tracking="activity-avatar" />
 				</a>
 
 				<div class="activity-info">
 					<div class="page-title">
-						<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>">
+						<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>" data-tracking="activity-title">
 							<?= htmlspecialchars( $message['message']->getMetaTitle() ); ?>
 						</a>
 					</div>
 					<div class="edit-info">
-						<a class="edit-info-user" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
-							<?= User::isIp( $messageLast->getUser()->getName() ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $messageLast->getUser()->getName() ) ?></a>
+						<a class="edit-info-user" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>" data-tracking="activity-username">
+							<?= User::isIp( $messageLast->getUser()->getName() ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $messageLast->getUser()->getName() ) ?>
+						</a>
 						<span class="edit-info-time"> • <?= wfTimeFormatAgo( $messageLast->getCreateTime() ) ?></span>
 					</div>
 				</div>
