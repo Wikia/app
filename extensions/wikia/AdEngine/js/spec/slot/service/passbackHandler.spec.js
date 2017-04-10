@@ -17,7 +17,7 @@ describe('ext.wikia.adEngine.slot.service.passbackHandler', function () {
 		return modules['ext.wikia.adEngine.slot.service.passbackHandler'](mocks.stateMonitor);
 	}
 
-	it('Should return correct hast hop adInfo', function () {
+	it('Should return correct last hop adInfo', function () {
 		spyOn(mocks.stateMonitor, 'getSlotStatuses').and.returnValue([
 			{adInfo: {source: 'A' }},
 			{adInfo: {source: 'B' }},
@@ -33,7 +33,7 @@ describe('ext.wikia.adEngine.slot.service.passbackHandler', function () {
 		expect(getModule().get('SLOT_NAME')).toEqual(null);
 	});
 
-	it('Should return "unknown" for empty adInfo', function () {
+	it('Should return "unknown" for missing adInfo', function () {
 		spyOn(mocks.stateMonitor, 'getSlotStatuses').and.returnValue([
 			{}
 		]);
