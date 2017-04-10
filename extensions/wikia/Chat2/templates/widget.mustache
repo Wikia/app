@@ -5,36 +5,30 @@
 		{{#hasUsers}} chat-room-active{{/hasUsers}}
 		{{^hasUsers}} chat-room-empty{{/hasUsers}}">
 		<h2 class="chat-headline">
-			<span class="chat-live" data-msg-id="chat-live2"> </span>
-			<span class="chat-total">{{usersCount}}</span>
+			<span class="chat-live" data-msg-id="chat-live2"></span>
 		</h2>
-		<p class="chat-name">{{siteName}}</p>
-		<div class="chat-join">
-			<button
-				type="button"
-				{{^userName}}class="loginToChat" {{/userName}}
-				onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}')">
-				<span class="icon">{{{buttonIcon}}}</span>
-				{{buttonText}}
-			</button>
-		</div>
-		<div class="chat-whos-here">
-			<span class="arrow-left"><img src="{{blankImgUrl}}" /></span>
-			<span class="arrow-right"><img src="{{blankImgUrl}}" /></span>
-			<div class="carousel-container">
-				<div>
-					<ul class="carousel chatCarousel">
-						{{>widgetUserElement}}
-					</ul>
-					{{#myAvatarUrl}}
-						<img src="{{myAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
-					{{/myAvatarUrl}}
+		<div class="chat-details">
+			<div class="avatars">
+				<div class="wds-avatar-stack">
+					{{#viewedUsersInfo}}
+						<a href="{{userProfileUrl}}" class="wds-avatar-stack__avatar" title="{{username}}">
+							<img class="wds-avatar" src="{{avatarUrl}}" />
+						</a>
+					{{/viewedUsersInfo}}
 				</div>
+				{{#moreUsersCount}}
+					<a href="#" onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}'); return false;" class="more-users-count">
+						+{{moreUsersCount}}
+					</a>
+				{{/moreUsersCount}}
 			</div>
+			<a href="#" class="wds-is-secondary wds-button wds-is-squished" onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}'); return false;">
+				{{buttonText}}
+			</a>
 		</div>
 	</div>
 	{{#guidelinesText}}
-		<span class="more">{{{guidelinesText}}}</span>
+		<div class="more">{{{guidelinesText}}}</div>
 	{{/guidelinesText}}
 </section>
 {{#fromParserTag}}
