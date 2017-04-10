@@ -3,8 +3,10 @@
 	<ul class="activity-items">
 		<?php foreach ( $posts as $value ): ?>
 		<li class="activity-item">
+			<?php $username = User::isIP( $value['display_username'] ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $value['display_username'] ); ?>
+
 			<a class="activity-avatar" href="<?= $value['user']->getUserPage()->getFullUrl() ?>">
-				<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $value['user']->getName(), 30 ) ?>" data-tracking="activity-avatar" />
+				<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $value['user']->getName(), 30 ) ?>" data-tracking="activity-avatar" title="<?= $username ?>" />
 			</a>
 
 			<div class="activity-info">
@@ -14,7 +16,7 @@
 
 				<div class="edit-info"><!--
 					--><a class="edit-info-user" href="<?= $value['user']->getUserPage()->getFullUrl() ?>" data-tracking="activity-username">
-						<?= User::isIP( $value['display_username'] ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $value['display_username'] ) ?>
+						<?= $username ?>
 					</a><span class="edit-info-time"> • <?= wfTimeFormatAgo( $value['event_iso'] ) ?></span><!--
 				--></div>
 			</div>
