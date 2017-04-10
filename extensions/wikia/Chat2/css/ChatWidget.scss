@@ -27,12 +27,12 @@ body.skin-oasis .ChatMonobookWidget {
 	}
 }
 
-.WikiaRail .ChatModule, .ChatModule {
+.WikiaRail .ChatModule, .ChatModule.ChatWidget {
 	background-color: transparent;
 	border: 0;
 	padding: 0;
 
-	.wds-button {
+	.wds-button.wds-is-secondary {
 		border-color: $color-links;
 		color: $color-links;
 		margin-left: 6px;
@@ -65,7 +65,7 @@ body.skin-oasis .ChatMonobookWidget {
 
 			.wds-avatar-stack {
 				margin: 0;
-				max-width: 100px;
+				max-width: 120px;
 
 				a {
 					height: 32px;
@@ -73,7 +73,13 @@ body.skin-oasis .ChatMonobookWidget {
 			}
 
 			.more-users-count {
+				font-weight: bold;
 				margin-left: 6px;
+
+				&:hover {
+					color: rgba($color-links, .75);
+					text-decoration: none;
+				}
 			}
 		}
 	}
@@ -87,7 +93,7 @@ body.skin-oasis .ChatMonobookWidget {
 
 
 	h2.chat-headline {
-		border-bottom: 1px solid #aab8c6;
+		border-bottom: 1px solid $color-page-border;
 		height: 30px;
 		margin-bottom: 8px;
 	}
@@ -109,7 +115,7 @@ body.skin-oasis .ChatMonobookWidget {
 	@include clearfix;
 	margin: 0 auto 10px;
 	position: relative;
-	width: 284px;
+	width: 300px;
 	word-wrap: break-word;
 
 	// use full width on main pages using grid (BugId:51408 and DAR-2321)
@@ -123,10 +129,15 @@ body.skin-oasis .ChatMonobookWidget {
 		margin: 0 0 8px;
 		font-size: 18px;
 		font-weight: bold;
+		padding-left: 2px;
 	}
 
 	.more {
 		line-height: 16px;
+	}
+
+	.more-users-count {
+		font-size: 12px;
 	}
 }
 
