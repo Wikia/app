@@ -8,7 +8,7 @@ $messages['en'] = [
 	'lookupcontribstitle' => 'Lookup Contribs',
 	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
 	'lookupcontribsfinalcontributions' => 'Final contributions for $1',
-	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple Wikias.
+	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple wikis.
 For displaying the list, give username below.',
 	'lookupcontribusernotspecify' => 'You haven\'t specified a user yet',
 	'lookupcontribsselectuser' => 'Select user:',
@@ -46,7 +46,7 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribs' => 'contribs',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'diff',
-	'right-lookupcontribs' => 'View user edits across all Wikia',
+	'right-lookupcontribs' => 'View user edits across all of Fandom',
 	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
 	'lookupcontribscontent' => 'content',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',

@@ -35,6 +35,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 		adsRequest.adTagUrl = buildVastUrl(params);
 		adsRequest.linearAdSlotWidth = params.width;
 		adsRequest.linearAdSlotHeight = params.height;
+		adsRequest.nonLinearAdSlotWidth = params.width;
+		adsRequest.nonLinearAdSlotHeight = params.height;
 
 		log(['ads request created', adsRequest], log.levels.debug, logGroup);
 
