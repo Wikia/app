@@ -10,15 +10,15 @@
 			</a>
 
 			<div class="activity-info">
-				<div class="page-title"><!--
-					--><a href="<?= $value['wall_message']->getMessagePageUrl( true ); ?>" title="<?= Sanitizer::encodeAttribute( $value['metatitle'] ); ?>" data-tracking="activity-title"><?= htmlspecialchars( $value['metatitle'] ); ?></a><!--
-				--></div>
+				<div class="page-title">
+					<a href="<?= $value['wall_message']->getMessagePageUrl( true ); ?>" title="<?= Sanitizer::encodeAttribute( $value['metatitle'] ); ?>" data-tracking="activity-title"><?= htmlspecialchars( $value['metatitle'] ); ?></a>
+				</div>
 
-				<div class="edit-info"><!--
-					--><a class="edit-info-user" href="<?= $value['user']->getUserPage()->getFullUrl() ?>" data-tracking="activity-username">
+				<div class="edit-info">
+					<a class="edit-info-user" href="<?= $value['user']->getUserPage()->getFullUrl() ?>" data-tracking="activity-username">
 						<?= $username ?>
-					</a><span class="edit-info-time"> • <?= wfTimeFormatAgo( $value['event_iso'] ) ?></span><!--
-				--></div>
+					</a><span class="edit-info-time"> • <?= wfTimeFormatAgo( $value['event_iso'] ) ?></span>
+				</div>
 			</div>
 		</li>
 		<?php endforeach; ?>
