@@ -83,7 +83,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			'skin': 'mercury'
 		});
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant', 'Evolve'))
+		expect(getModule().build('mobile_remnant', 'MOBILE_PREFOOTER', 'Evolve'))
 			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/smartphone/mercury-home/_godofwar-gaming/Evolve');
 	});
 
@@ -92,7 +92,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant', 'test_passback'))
+		expect(getModule().build('mobile_remnant', 'MOBILE_PREFOOTER', 'test_passback'))
 			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/tablet/oasis-home/_godofwar-gaming/test_passback');
 	});
 
@@ -101,7 +101,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+		expect(getModule().build('mobile_remnant', 'MOBILE_PREFOOTER'))
 			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/tablet/oasis-home/_godofwar-gaming');
 	});
 
@@ -115,7 +115,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
+		expect(getModule().build('mobile_remnant', 'MOBILE_PREFOOTER'))
 			.toEqual('/5441/mobile_remnant.PF/MOBILE_PREFOOTER/unknown-specialpage/oasis-special/_godofwar-gaming');
 	});
 
@@ -125,7 +125,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 			spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
-			expect(getModule().build(testCase.slotName, 'mobile_remnant'))
+			expect(getModule().build('mobile_remnant', testCase.slotName))
 				.toEqual(testCase.adUnit);
 		});
 	});
