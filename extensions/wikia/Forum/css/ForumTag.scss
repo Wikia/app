@@ -11,13 +11,6 @@
 	width: 300px;
 	word-wrap: break-word;
 
-	h2 {
-		margin: 0 0 8px;
-		font-size: 18px;
-		font-weight: bold;
-		padding-left: 2px;
-	}
-
 	ul {
 		list-style: none;
 		margin-left: 0;
@@ -31,7 +24,7 @@
 
 	.activity-item {
 		@include flexbox();
-		padding: 7px 0;
+		padding: 6px 0;
 	}
 
 	.activity-info {
@@ -42,8 +35,11 @@
 
 	.activity-module-header {
 		border-bottom: 1px solid $color-page-border;
+		font-size: 18px;
+		font-weight: bold;
+		padding-left: 2px;
 		height: 30px;
-		margin-bottom: 8px;
+		margin: 0 0 8px;
 	}
 
 	.edit-info {
