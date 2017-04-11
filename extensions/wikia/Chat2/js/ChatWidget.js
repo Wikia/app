@@ -11,11 +11,7 @@ var ChatWidget = {
 
 	init: function () {
 		if (!ChatWidget.bindComplete) {
-			$('body').on('click', '.WikiaChatLink', function (event) {
-				event.preventDefault();
-				event.stopPropagation();
-				ChatWidget.onClickChatButton(this.href);
-			});
+			$('body').on('click', '.WikiaChatLink, .ChatModule .start-a-chat-button, .ChatModule .more-users-count', this.openChat);
 			ChatWidget.bindComplete = true;
 		}
 
@@ -27,6 +23,12 @@ var ChatWidget = {
 				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
+	},
+
+	openChat: function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		ChatWidget.onClickChatButton(this.href);
 	},
 
 	/**

@@ -14,6 +14,7 @@ class ChatWidget {
 	const CHAT_USER_LIST_CACHE_TTL = 60;
 	const RIGHT_RAIL_MODULE_CLASS = 'module';
 	const PARSER_TAG_CLASS = 'ChatWidget';
+	const CHAT_AVATARS_LIMIT = 5;
 
 	/**
 	 * TTL for chat user info, this should not change too often so it's one hour
@@ -45,30 +46,38 @@ class ChatWidget {
 		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
 		$joinChatMessage = wfMessage( 'chat-join-the-chat' );
 		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
+		$viewedUsersInfo = array_slice( $usersInfo, 0, self::CHAT_AVATARS_LIMIT );
 		$usersCount = count( $usersInfo );
-		$myAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+		$myAvatarUrl =
+			AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+		if ( empty( $viewedUsersInfo ) ) {
+			$viewedUsersInfo = [
+				[
+					'username' => $wgUser->getName(),
+					'userProfileUrl' => $wgUser->getUserPage()->getLinkURL(),
+					'avatarUrl' => $myAvatarUrl,
+				],
+			];
+		}
 		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
 
 		$vars = [
 			'blankImgUrl' => $wgBlankImgUrl,
-			'buttonText' => wfMessage($buttonMessage)->text(),
+			'buttonText' => wfMessage( $buttonMessage )->text(),
 			'buttonIcon' => DesignSystemHelper::renderSvg( 'wds-icons-reply-tiny' ),
 			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
 			'joinChatText' => $joinChatMessage->exists() ? $joinChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
-			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
+			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS
+				: self::RIGHT_RAIL_MODULE_CLASS,
 			'siteName' => $wgSitename,
 			'userName' => $wgUser->isLoggedIn() ? $wgUser->getName() : null,
-			'users' => $usersInfo,
+			'viewedUsersInfo' => $viewedUsersInfo,
 			'hasUsers' => $usersCount > 0,
-			'usersCount' => $usersCount,
+			'moreUsersCount' => $usersCount - self::CHAT_AVATARS_LIMIT > 0 ? $usersCount - self::CHAT_AVATARS_LIMIT : null,
 		];
-
-		if ( $usersCount == 0 && $wgUser->isLoggedIn() ) {
-			$vars['myAvatarUrl'] = $myAvatarUrl;
-		}
 
 		return $vars;
 	}
