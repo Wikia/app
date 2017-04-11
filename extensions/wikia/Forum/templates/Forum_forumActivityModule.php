@@ -11,7 +11,7 @@
 
 			<div class="activity-info">
 				<div class="page-title"><!--
-					--><a href="<?= $value['wall_message']->getMessagePageUrl( true ); ?>" title="<?= htmlspecialchars( $value['metatitle'] ); ?>" data-tracking="activity-title"><?= htmlspecialchars( $value['metatitle'] ); ?></a><!--
+					--><a href="<?= $value['wall_message']->getMessagePageUrl( true ); ?>" title="<?= Sanitizer::encodeAttribute( $value['metatitle'] ); ?>" data-tracking="activity-title"><?= htmlspecialchars( $value['metatitle'] ); ?></a><!--
 				--></div>
 
 				<div class="edit-info"><!--
