@@ -24,6 +24,7 @@
 
 	.activity-item {
 		@include flexbox();
+		@include align-items(center);
 		padding: 6px 0;
 	}
 
