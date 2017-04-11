@@ -123,9 +123,9 @@ class Hooks {
 	 * @throws \MWException
 	 */
 	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
-		global $wgUseSiteJs;
+		global $wgOut, $wgUseSiteJs;
 
-		if ( !empty( $wgUseSiteJs ) ) {
+		if ( !empty( $wgUseSiteJs ) && $wgOut->isUserJsAllowed() ) {
 			$bottomScripts .= ( new ImportJS() )->getImportScripts();
 		}
 
