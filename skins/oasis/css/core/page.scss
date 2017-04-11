@@ -262,7 +262,7 @@
 
 	.page-title {
 		color: $color-links;
-		font-size: 14px;
+		font-size: $wds-typescale-size-minus-1;
 		margin-bottom: 2px;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -271,7 +271,7 @@
 
 	.edit-info {
 		color: rgba($color-text, .75);
-		font-size: 12px;
+		font-size: $wds-typescale-size-minus-2;
 		max-height: 16px;
 
 		.edit-info-user {

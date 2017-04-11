@@ -2,6 +2,7 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/flexbox";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 // Note: a lot of this is borrowed from .WikiaRail .activity-module
 // Shared Monobook and Oasis styling
@@ -36,7 +37,7 @@
 
 	.activity-module-header {
 		border-bottom: 1px solid $color-page-border;
-		font-size: 18px;
+		font-size: $wds-typescale-size-plus-1;
 		font-weight: bold;
 		padding-left: 2px;
 		height: 30px;
@@ -45,7 +46,7 @@
 
 	.edit-info {
 		color: rgba($color-text, .75);
-		font-size: 12px;
+		font-size: $wds-typescale-size-minus-2;
 		line-height: 16px;
 		max-height: 16px;
 
@@ -65,7 +66,7 @@
 
 	.page-title {
 		color: $color-links;
-		font-size: 14px;
+		font-size: $wds-typescale-size-minus-1;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
