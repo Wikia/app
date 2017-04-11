@@ -10,7 +10,7 @@
 	@for $i from 1 to 6 {
 		.wds-avatar-stack__avatar:nth-child(#{$i}) {
 			position: relative;
-			transform: translate(($i - 1) * - 15px);
+			transform: translate(($i - 1) * - 10px);
 			z-index: 5 - $i;
 		}
 	}
@@ -21,7 +21,7 @@
 		color: $wds-color-light-c6;
 		font-size: $wds-typescale-size-minus-2;
 		padding-left: 6px;
-		transform: translate(-60px);
+		transform: translate(-40px);
 		width: auto;
 	}
 }
