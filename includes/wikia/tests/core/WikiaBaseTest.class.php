@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
@@ -19,7 +20,7 @@ use \Wikia\Util\GlobalStateWrapper;
  *    parent::setUp();
  * }
  */
-abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+abstract class WikiaBaseTest extends TestCase {
 	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
@@ -115,6 +116,45 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
 				$this->getAnnotations());
 		}
+	}
+
+	/**
+	 * Ugly hack
+	 *
+	 * @deprecated use getMockBuilder() or createMock() instead
+	 * @param $originalClassName
+	 * @param array $methods
+	 * @param array $arguments
+	 * @param string $mockClassName
+	 * @param bool $callOriginalConstructor
+	 * @param bool $callOriginalClone
+	 * @param bool $callAutoload
+	 * @param bool $cloneArguments
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getMock( $originalClassName, $methods = [], array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $cloneArguments = true ) {
+		$mockBuilder = $this->getMockBuilder( $originalClassName )
+			->setMethods( $methods )
+			->setConstructorArgs( $arguments )
+			->setMockClassName( $mockClassName );
+
+		if ( !$callOriginalConstructor ) {
+			$mockBuilder = $mockBuilder->disableOriginalConstructor();
+		}
+
+		if ( !$callOriginalClone ) {
+			$mockBuilder = $mockBuilder->disableOriginalClone();
+		}
+
+		if ( !$callAutoload ) {
+			$mockBuilder = $mockBuilder->disableAutoload();
+		}
+
+		if ( !$cloneArguments ) {
+			$mockBuilder = $mockBuilder->disableArgumentCloning();
+		}
+
+		return $mockBuilder->getMock();
 	}
 
 	/**

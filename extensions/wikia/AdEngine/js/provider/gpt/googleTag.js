@@ -3,12 +3,12 @@
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
-], function (googleSlots, adSlot, recovery, doc, log, window, pageFair) {
+], function (googleSlots, adSlot, sourcePoint, doc, log, window, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -27,16 +27,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	function dispatchEvent(event) {
 		var id;
 
-		log(['dispatchEvent', event], 'info', logGroup);
+		log(['dispatchEvent', event], log.levels.info, logGroup);
 		for (id in registeredCallbacks) {
 			if (registeredCallbacks.hasOwnProperty(id) && isSlotRegistered(event.slot, id)) {
-				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
+				log(['dispatchEvent', event, id, 'Launching registered callback'], log.levels.debug, logGroup);
 				registeredCallbacks[id](event);
 				return;
 			}
 		}
 
-		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
+		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], log.levels.error, logGroup);
 	}
 
 	function push(callback) {
@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function enableServices() {
-		log(['enableServices', 'push'], 'info', logGroup);
+		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
 			window.googletag.pubads().collapseEmptyDivs();
 			window.googletag.pubads().enableSingleRequest();
@@ -53,25 +53,26 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			window.googletag.enableServices();
 
-			log(['enableServices', 'push', 'done'], 'debug', logGroup);
+			log(['enableServices', 'push', 'done'], log.levels.debug, logGroup);
 		});
 	}
 
 	function init() {
-		log('init', 'debug', logGroup);
+		log('init', log.levels.debug, logGroup);
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0],
-			// load GPT when API not ready and recovery is non blocking or recovery is pageFair (never blocking)
-			pageFairRecovery = pageFair && pageFair.isPageFairRecoveryEnabled(),
+			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled(),
+			// load GPT when API not loaded yet, ads are not blocked(SP detection) or recovery is PageFair
+			// as it needs gpt to work
 			gptCanBeLoaded = !window.googletag.apiReady &&
-				(!recovery.isBlocking() || pageFairRecovery);
+				(!sourcePoint.isBlocking() || pageFairRecoveryEnabled);
 
 		if (gptCanBeLoaded) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-			log('Appending GPT script to head', 'debug', logGroup);
+			log('Appending GPT script to head', log.levels.debug, logGroup);
 			node.parentNode.insertBefore(gads, node);
 		}
 
@@ -80,7 +81,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function isInitialized() {
-		log(['isInitialized', initialized], 'debug', logGroup);
+		log(['isInitialized', initialized], log.levels.debug, logGroup);
 		return initialized;
 	}
 
@@ -94,7 +95,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				if (pageLevelParams.hasOwnProperty(name)) {
 					value = pageLevelParams[name];
 					if (value) {
-						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], 'debug', logGroup);
+						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], log.levels.debug, logGroup);
 						window.googletag.pubads().setTargeting(name, value);
 					}
 				}
@@ -104,21 +105,21 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function flush() {
 		if (!isInitialized()) {
-			log(['flush', 'done', 'No slots to flush'], 'info', logGroup);
+			log(['flush', 'done', 'No slots to flush'], log.levels.info, logGroup);
 			return;
 		}
 
 		push(function () {
-			log(['flush', 'start'], 'info', logGroup);
+			log(['flush', 'start'], log.levels.info, logGroup);
 
-			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
+			log(['flush', 'refresh', slotQueue], log.levels.debug, logGroup);
 			if (slotQueue.length) {
 				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 
 				slotQueue = [];
 			}
 
-			log(['flush', 'done'], 'info', logGroup);
+			log(['flush', 'done'], log.levels.info, logGroup);
 		});
 	}
 
@@ -127,7 +128,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
-		log(['addSlot', adElement], 'debug', logGroup);
+		log(['addSlot', adElement], log.levels.debug, logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
@@ -151,13 +152,17 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		return slot;
 	}
 
+	function refreshSlot(slot) {
+		window.googletag.pubads().refresh([slot]);
+	}
+
 	function registerCallback(id, callback) {
-		log(['registerCallback', id], 'info', logGroup);
+		log(['registerCallback', id], log.levels.info, logGroup);
 		registeredCallbacks[id] = callback;
 	}
 
 	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
-		log(['onAdLoad', slotName], 'info', logGroup);
+		log(['onAdLoad', slotName], log.levels.info, logGroup);
 		var iframe = adSlot.getIframe(slotName);
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
@@ -183,7 +188,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				// google returns array
 				// - in our case it has always one element and this element is the one we are interested in
 				if (!slotsPositionTargeting.length) {
-					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], 'error', logGroup);
+					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], log.levels.error, logGroup);
 				} else {
 					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
 						slotsToDestroy.push(slot);
@@ -194,17 +199,17 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		if (slotsToDestroy.length) {
 			push(function () {
-				log(['destroySlots', slotsNames, slotsToDestroy], 'debug', logGroup);
+				log(['destroySlots', slotsNames, slotsToDestroy], log.levels.debug, logGroup);
 				success = window.googletag.destroySlots(slotsToDestroy);
 
 				if (!success) {
-					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], 'error', logGroup);
+					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], log.levels.error, logGroup);
 				}
 
 				googleSlots.removeSlots(slotsToDestroy);
 			});
 		} else {
-			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], 'debug', logGroup);
+			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], log.levels.debug, logGroup);
 		}
 	}
 
@@ -222,6 +227,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		isInitialized: isInitialized,
 		onAdLoad: onAdLoad,
 		push: push,
+		refreshSlot: refreshSlot,
 		registerCallback: registerCallback,
 		setPageLevelParams: setPageLevelParams,
 		updateCorrelator: updateCorrelator

@@ -1,6 +1,8 @@
 <?php
 
-class WikiaValidatorStringTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorStringTest extends TestCase {
 
 	/* @var $titleStringValidator WikiaValidatorString */
 	private $titleStringValidator;
@@ -11,14 +13,14 @@ class WikiaValidatorStringTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers WikiaValidatorString::isValid
-	 * @dataProvider testTitleStringsDataProvider
+	 * @dataProvider titleStringsDataProvider
 	 */
 	public function testTitleStrings( $desc, $title, $expected ) {
 		$result = $this->titleStringValidator->isValid( $title );
 		$this->assertEquals( $expected, $result, $desc );
 	}
 
-	public function testTitleStringsDataProvider() {
+	public function titleStringsDataProvider() {
 		return [
 			[
 				'$desc' => 'Test if a one word article title is valid',

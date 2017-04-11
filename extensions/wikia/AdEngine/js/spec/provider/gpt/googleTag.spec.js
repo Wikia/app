@@ -91,6 +91,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	beforeEach(function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.googleSlots,
