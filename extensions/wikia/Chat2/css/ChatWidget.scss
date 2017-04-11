@@ -28,7 +28,7 @@ body.skin-oasis .ChatMonobookWidget {
 	}
 }
 
-.WikiaRail .ChatModule, .ChatModule.ChatWidget {
+.WikiaRail .chat-module, .chat-module.ChatWidget {
 
 	.chat-contents {
 		position: relative;
@@ -109,7 +109,7 @@ body.skin-oasis .ChatMonobookWidget {
 	}
 
 	h2.chat-headline {
-		margin: 0 0 8px;
+		margin: 0 0 14px;
 		font-size: $wds-typescale-size-plus-1;
 		font-weight: bold;
 		padding-left: 2px;
@@ -121,6 +121,18 @@ body.skin-oasis .ChatMonobookWidget {
 
 	.more-users-count {
 		font-size: $wds-typescale-size-minus-2;
+	}
+
+	.wds-button.wds-is-secondary {
+		border-color: $color-links;
+		color: $color-links;
+		margin-left: 12px;
+
+		&:hover {
+			border-color: rgba($color-links, .75);
+			color: rgba($color-links, .75);
+			text-decoration: none;
+		}
 	}
 }
 

@@ -222,7 +222,7 @@
 			font-size: $wds-typescale-size-plus-1;
 			font-weight: bold;
 			height: 30px;
-			margin-bottom: 8px;
+			margin-bottom: 14px;
 			padding-left: 2px;
 
 			&.has-icon {
@@ -276,6 +276,10 @@
 
 	.activity-item {
 		padding: 6px 0;
+
+		&:first-child {
+			padding-top: 0;
+		}
 	}
 
 	.page-title {
