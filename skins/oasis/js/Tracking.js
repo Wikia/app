@@ -722,7 +722,7 @@ jQuery(function ($) {
 	function initRailTracking() {
 		/** chat-module **/
 
-		$wikiaRail.find('.ChatModule').on('mousedown', '.chat-join', {
+		$wikiaRail.find('.chat-module').on('mousedown', '.start-a-chat-button', {
 			category: 'chat-module',
 			label: 'chat-join'
 		}, trackWithEventData);

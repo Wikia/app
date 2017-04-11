@@ -11,12 +11,12 @@ var ChatWidget = {
 
 	init: function () {
 		if (!ChatWidget.bindComplete) {
-			$('body').on('click', '.WikiaChatLink, .ChatModule .start-a-chat-button, .ChatModule .more-users-count', this.openChat);
+			$('body').on('click', '.WikiaChatLink, .chat-module .start-a-chat-button, .chat-module .more-users-count', this.openChat);
 			ChatWidget.bindComplete = true;
 		}
 
 		// make sure we start processing after ChatModule templates is loaded
-		if ($('.ChatModule').length) {
+		if ($('.chat-module').length) {
 			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
