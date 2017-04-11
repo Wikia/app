@@ -4,6 +4,7 @@
 @import "skins/shared/mixins/clearfix";
 @import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 .full-screen-page {
 	&,
@@ -212,6 +213,41 @@
 			border-top-color: $color-text;
 		}
 	}
+
+	.rail-module {
+		margin-bottom: 30px;
+
+		h2 {
+			border-bottom: 1px solid $color-page-border;
+			font-size: $wds-typescale-size-plus-1;
+			font-weight: bold;
+			height: 30px;
+			margin-bottom: 8px;
+			padding-left: 2px;
+
+			&.has-icon {
+				@include flexbox();
+				@include align-items(center);
+
+				svg {
+					fill: rgba($color-text, .75);
+					margin-right: 7px;
+				}
+			}
+		}
+
+		.wds-button.wds-is-secondary {
+			border-color: $color-links;
+			color: $color-links;
+			margin-left: 12px;
+
+			&:hover {
+				border-color: rgba($color-links, .75);
+				color: rgba($color-links, .75);
+				text-decoration: none;
+			}
+		}
+	}
 }
 
 .tally {
@@ -237,24 +273,6 @@
 }
 
 .WikiaRail .activity-module {
-	background-color: transparent;
-	border: 0;
-	padding: 0;
-
-	.activity-module-header {
-		border-bottom: 1px solid $color-page-border;
-		height: 30px;
-		margin-bottom: 8px;
-	}
-
-	.activity-icon {
-		fill: rgba($color-text, .75);
-		margin-right: 6px;
-	}
-
-	.activity-items {
-		padding: 0 6px;
-	}
 
 	.activity-item {
 		padding: 6px 0;

@@ -12,7 +12,7 @@ class ChatWidget {
 	 * user leaves chat. That's why this cache time is pretty short
 	 */
 	const CHAT_USER_LIST_CACHE_TTL = 60;
-	const RIGHT_RAIL_MODULE_CLASS = 'module';
+	const RIGHT_RAIL_MODULE_CLASS = 'rail-module';
 	const PARSER_TAG_CLASS = 'ChatWidget';
 	const CHAT_AVATARS_LIMIT = 5;
 
