@@ -65,8 +65,7 @@
 	.page-title {
 		color: $color-links;
 		font-size: $wds-typescale-size-minus-1;
-		max-height: 16px;
-		margin-bottom: 2px;
+		line-height: normal;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
