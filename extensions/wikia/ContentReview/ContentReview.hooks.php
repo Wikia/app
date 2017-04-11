@@ -117,15 +117,15 @@ class Hooks {
 	/**
 	 * Add script to load safe imports
 	 *
-	 * @param $skin
+	 * @param \Skin $skin
 	 * @param String $bottomScripts
 	 * @return bool
 	 * @throws \MWException
 	 */
 	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
-		global $wgOut, $wgUseSiteJs;
+		global $wgUseSiteJs;
 
-		if ( !empty( $wgUseSiteJs ) && $wgOut->isUserJsAllowed() ) {
+		if ( !empty( $wgUseSiteJs ) && $skin->getOutput()->isUserJsAllowed() ) {
 			$bottomScripts .= ( new ImportJS() )->getImportScripts();
 		}
 
