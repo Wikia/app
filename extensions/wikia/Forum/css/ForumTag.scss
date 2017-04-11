@@ -19,8 +19,6 @@
 
 	.activity-avatar {
 		display: inline-block;
-		height: 30px;
-		width: 30px;
 	}
 
 	.activity-item {
@@ -31,7 +29,7 @@
 
 	.activity-info {
 		display: inline-block;
-		margin-left: 10px;
+		margin-left: 7px;
 		max-width: 240px;
 	}
 
@@ -73,8 +71,6 @@
 	}
 
 	.wds-avatar {
-		height: 30px;
-		width: 30px;
 		border-color: $color-page-border;
 	}
 }
