@@ -14,6 +14,7 @@ class ChatWidget {
 	const CHAT_USER_LIST_CACHE_TTL = 60;
 	const RIGHT_RAIL_MODULE_CLASS = 'module';
 	const PARSER_TAG_CLASS = 'ChatWidget';
+	const CHAT_AVATARS_LIMIT = 5;
 
 	/**
 	 * TTL for chat user info, this should not change too often so it's one hour
@@ -45,7 +46,7 @@ class ChatWidget {
 		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
 		$joinChatMessage = wfMessage( 'chat-join-the-chat' );
 		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
-		$viewedUsersInfo = array_slice( $usersInfo, 0, 5 );
+		$viewedUsersInfo = array_slice( $usersInfo, 0, self::CHAT_AVATARS_LIMIT );
 		$usersCount = count( $usersInfo );
 		$myAvatarUrl =
 			AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
@@ -75,7 +76,7 @@ class ChatWidget {
 			'userName' => $wgUser->isLoggedIn() ? $wgUser->getName() : null,
 			'viewedUsersInfo' => $viewedUsersInfo,
 			'hasUsers' => $usersCount > 0,
-			'moreUsersCount' => $usersCount - 5 > 0 ? $usersCount - 5 : null,
+			'moreUsersCount' => $usersCount - self::CHAT_AVATARS_LIMIT > 0 ? $usersCount - self::CHAT_AVATARS_LIMIT : null,
 		];
 
 		return $vars;

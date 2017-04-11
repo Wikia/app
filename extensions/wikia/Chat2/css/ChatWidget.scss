@@ -102,6 +102,12 @@ body.skin-oasis .ChatMonobookWidget {
 		top: 0;
 		right: 0;
 	}
+
+	html[lang^='zh'] & .wds-is-squished {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
+	}
 }
 
 // Note: a lot of this is borrowed from .WikiaRail .module
@@ -132,12 +138,6 @@ body.skin-oasis .ChatMonobookWidget {
 
 	.more-users-count {
 		font-size: $wds-typescale-size-minus-2;
-	}
-
-	html[lang^='zh'] & .wds-is-squished {
-		font-size: 12px;
-		font-weight: 400;
-		padding: 9px 12px 8px;
 	}
 }
 
