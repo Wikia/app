@@ -14,6 +14,7 @@ spl_autoload_register(function($class) {
 
 $wgActions['view'] = ContributionPrototype\CPViewAction::class;
 $wgActions['edit'] = ContributionPrototype\CPEditAction::class;
+$wgActions['history'] = ContributionPrototype\CPHistoryAction::class;
 
 // titles in the name mainspace shouldn't be force capitalized
 $wgCapitalLinkOverrides = [NS_MAIN => false];
