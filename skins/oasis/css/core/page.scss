@@ -236,49 +236,6 @@
 	}
 }
 
-.WikiaActivityModule {
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-	li {
-		font-size: 12px;
-		padding: 6px 3px 6px 30px;
-		position: relative;
-
-		&:first-child {
-			border: 0;
-		}
-
-		em {
-			font-size: 14px;
-			line-height: 17px;
-		}
-	}
-	.sprite {
-		position: absolute;
-		left: 3px;
-		top: 8px;
-	}
-	.edited-by {
-		font-size: 11px;
-		margin-top: 2px;
-		a {
-			color: $color-links;
-			font-size: 11px;
-		}
-	}
-	a {
-		font-weight: normal;
-	}
-	.page-title {
-		font-size: 14px;
-	}
-	.more {
-		font-weight: bold;
-	}
-}
-
 .WikiaRail .activity-module {
 	background-color: transparent;
 	border: 0;
@@ -300,12 +257,12 @@
 	}
 
 	.activity-item {
-		padding: 7px 0;
+		padding: 6px 0;
 	}
 
 	.page-title {
 		color: $color-links;
-		font-size: 14px;
+		font-size: $wds-typescale-size-minus-1;
 		margin-bottom: 2px;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -314,7 +271,7 @@
 
 	.edit-info {
 		color: rgba($color-text, .75);
-		font-size: 12px;
+		font-size: $wds-typescale-size-minus-2;
 		max-height: 16px;
 
 		.edit-info-user {
