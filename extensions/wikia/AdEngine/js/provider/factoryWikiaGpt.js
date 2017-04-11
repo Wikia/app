@@ -64,10 +64,11 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			var passback = passbackHandler.get(slot.name),
-				providerAdUnitBuilder = extra.adUnitBuilder || adUnitBuilder;
+			if (extra.adUnitBuilder) {
+				extra.adUnitBuilder.build(slot.name, src, passbackHandler.get(slot.name));
+			}
 
-			return providerAdUnitBuilder.build(slot.name, src, passback);
+			return adUnitBuilder.build(slot.name, src);
 		}
 
 		function fillInSlot(slot) {

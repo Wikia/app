@@ -28,6 +28,11 @@ define('ext.wikia.adEngine.slot.service.stateMonitor',  [
 
 	function getSlotStatuses(slotName, statusType) {
 		var result = slotHistoryMap[slotName];
+
+		if (!result) {
+			return [];
+		}
+
 		return statusType ? filterByStatus(result, statusType) : result;
 	}
 
