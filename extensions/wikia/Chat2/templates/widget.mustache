@@ -17,12 +17,12 @@
 					{{/viewedUsersInfo}}
 				</div>
 				{{#moreUsersCount}}
-					<a href="#" onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}'); return false;" class="more-users-count">
+					<a href="{{linkToSpecialChat}}" class="more-users-count">
 						+{{moreUsersCount}}
 					</a>
 				{{/moreUsersCount}}
 			</div>
-			<a href="#" class="wds-is-secondary wds-button wds-is-squished" onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}'); return false;">
+			<a href="{{linkToSpecialChat}}" class="wds-is-secondary wds-button wds-is-squished start-a-chat-button">
 				{{buttonText}}
 			</a>
 		</div>
