@@ -1584,7 +1584,7 @@ $wgAdDriverSourcePointRecoveryCountries = null;
  * @name wgAdDriverEnableSourcePointRecovery
  * Enable SourcePoint Recovery per wiki
  */
-$wgAdDriverEnableSourcePointRecovery = null;
+$wgAdDriverEnableSourcePointRecovery = true;
 
 /**
  * @name $wgAdDriverPageFairDetectionCountries
@@ -1603,7 +1603,7 @@ $wgAdDriverPageFairRecoveryCountries = null;
  * @name $wgAdDriverEnablePageFairRecovery
  * Enable PageFair Recovery per wiki
  */
-$wgAdDriverEnablePageFairRecovery = null;
+$wgAdDriverEnablePageFairRecovery = true;
 
 /**
  * trusted proxy service registry
