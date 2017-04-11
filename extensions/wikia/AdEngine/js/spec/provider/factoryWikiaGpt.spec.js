@@ -28,7 +28,11 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		lookups: {
 			extendSlotTargeting: noop
 		},
-		passbackHandler: noop(),
+		passbackHandler: {
+			get: function () {
+				return 'foo';
+			}
+		},
 		beforeSuccess: noop,
 		beforeCollapse: noop,
 		window: {},

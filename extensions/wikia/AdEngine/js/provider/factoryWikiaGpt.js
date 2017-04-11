@@ -31,10 +31,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {string} src          - src to set in slot targeting
 	 * @param {Object} slotMap      - slot map (slot name => targeting)
 	 * @param {Object} [extra]      - optional extra params
+	 * @param {function} [extra.adUnitBuilder]  - provider's ad unit builder object
 	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
 	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
 	 * @param {function} [extra.beforeHop]      - function to call before calling hop
-	 * @param {function} [extra.buildAdUnit]    - function to build ad unit
 	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
@@ -64,8 +64,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			return extra.buildAdUnit ? extra.buildAdUnit(slot.name, passbackHandler.get(slot.name))
-				: adUnitBuilder.build(slot.name, src);
+			var passback = passbackHandler.get(slot.name),
+				providerAdUnitBuilder = extra.adUnitBuilder || adUnitBuilder;
+
+			return providerAdUnitBuilder.build(slot.name, src, passback);
 		}
 
 		function fillInSlot(slot) {

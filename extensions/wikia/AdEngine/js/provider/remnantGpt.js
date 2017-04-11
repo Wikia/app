@@ -9,12 +9,10 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 ], function (adContext, uapContext, factory, adUnitBuilder, megaAdUnitBuilder, slotTweaker) {
 	'use strict';
 
-	var src = 'remnant';
-
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.remnantGpt',
 		'RemnantGpt',
-		src,
+		'remnant',
 		{
 			BOTTOM_LEADERBOARD: {size: '728x90', loc: 'footer'},
 			EXIT_STITIAL_BOXAD_1: {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
@@ -41,10 +39,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			buildAdUnit: function (slotName, passback) {
-				var builder = adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
-				return builder.build(src, slotName, passback);
-			}
+			adUnitBuilder: adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder
 		}
 	);
 });
