@@ -1,17 +1,17 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.sourcePointRecovery', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.document'
 ], function (
 	adContext,
-	helper,
+	sourcePoint,
 	doc
 ) {
 	'use strict';
 
 	function addResponseListener(callback) {
-		helper.addOnBlockingCallback(callback);
+		sourcePoint.addOnBlockingCallback(callback);
 		doc.addEventListener('sp.not_blocking', callback);
 	}
 

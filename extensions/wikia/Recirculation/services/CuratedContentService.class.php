@@ -3,7 +3,7 @@
 class CuratedContentService {
 	static protected $instance = null;
 
-	const API_BASE = 'http://fandom.wikia.com/ajax/recirculation_units/';
+	const API_BASE = 'http://fandom.wikia.com/api/recirculation_units/';
 
 	const MCACHE_VER = '1.0';
 	const MCACHE_TIME = 900; // 15 minutes

@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/CuratedContent/maintenance/GameGuideToCuratedContentHelper.php' );
 
 class GameGuideToCuratedContentMigrationTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../maintenance/GameGuideToCuratedContentHelper.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param String $message

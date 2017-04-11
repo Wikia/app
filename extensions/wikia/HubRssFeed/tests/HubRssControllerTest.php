@@ -80,7 +80,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->getMock();
 
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
-			->setMethods( ['getParams'] )
+			->setMethods( [ 'getVal' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
