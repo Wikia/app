@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\AuthResult;
 use Wikia\Service\User\Auth\CookieHelper;
 
 class Piggyback extends SpecialPage {
@@ -12,12 +11,23 @@ class Piggyback extends SpecialPage {
 		global $wgRequest;
 		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->mAction = $wgRequest->getVal( 'action' );
-
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser;
+		global $wgRequest, $wgOut, $wgUser, $wgEnableMercuryPiggyback;
+
+		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
+
+		if ( !empty( $par ) ) {
+			$wgRequest->setVal( 'target', $par );
+		}
+
+		if ( $wgEnableMercuryPiggyback ) {
+			$this->redirectToMercuryPiggyback( $wgOut, $wgRequest->getVal( 'target' ) );
+
+			return;
+		}
 
 		if ( !$wgUser->isAllowed( 'piggyback' ) ) {
 			throw new PermissionsError( 'piggyback' );
@@ -31,10 +41,6 @@ class Piggyback extends SpecialPage {
 			return;
 		}
 
-		if ( !empty( $par ) ) {
-			$wgRequest->setVal( 'target', $par );
-		}
-
 		$this->setHeaders();
 		$LoginForm = new PBLoginForm( $wgRequest );
 		if ( $this->mAction == 'submitlogin' && $wgRequest->wasPosted() ) {
@@ -43,10 +49,27 @@ class Piggyback extends SpecialPage {
 			$LoginForm->setDefaultTargetValue( $wgRequest->getVal( 'target' ) );
 		}
 
-		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
 
 		$LoginForm->render();
 	}
+
+	private function redirectToMercuryPiggyback( OutputPage $out, $target ) {
+		$redirectUrl = '/piggyback';
+		if ( !empty( $target ) ) {
+			$redirectUrl .= sprintf( "?target=%s", $target );
+		}
+		$out->redirect( $redirectUrl );
+		$this->clearBodyAndSetMaxCache( $out );
+	}
+
+	/**
+	 * @param OutputPage $out
+	 */
+	public function clearBodyAndSetMaxCache( OutputPage $out ) {
+		$out->setArticleBodyOnly( true );
+		$out->setSquidMaxage( WikiaResponse::CACHE_LONG );
+	}
+
 }
 
 class PBHooks {
