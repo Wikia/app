@@ -36,3 +36,28 @@ $wgHooks['TestCanonicalRedirect'][] = function($request, $title, $output) {
 
 	return true;
 };
+
+$wgHooks['MakeGlobalVariablesScript'][] = function(&$vars, OutputPage $outputPage) {
+	$title = $outputPage->getTitle();
+	if ($title->getNamespace() === NS_MAIN) {
+		if (preg_match('/(.*)\/(edit|view|history)$/', $title->getText(), $matches)) {
+			$title = Title::newFromText($matches[1]);
+
+			$vars = array_merge($vars, [
+					'wgPageName' => $title->getPrefixedDBkey(),
+					'wgTitle' => $title->getText(),
+					'wgArticleId' => $title->getArticleID(),
+			]);
+
+			foreach ( $title->getRestrictionTypes() as $type ) {
+				$vars['wgRestriction' . ucfirst( $type )] = $title->getRestrictions( $type );
+			}
+
+			if ( $title->isMainPage() ) {
+				$vars['wgIsMainPage'] = true;
+			}
+		}
+	}
+
+	return true;
+};
