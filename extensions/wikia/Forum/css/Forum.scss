@@ -333,7 +333,7 @@
 	.activity-info {
 		display: inline-block;
 		margin-left: 5px;
-		max-width: 240px;
+		width: calc(100% - 45px);
 	}
 
 	.wds-avatar {
