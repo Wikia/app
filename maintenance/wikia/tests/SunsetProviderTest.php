@@ -39,7 +39,10 @@ class SunsetProviderTest extends WikiaBaseTest {
 
 		$sunsetProvider = new SunsetProvider();
 		$sunsetProvider->loadParamsAndArgs( SunsetProvider::class, [ 'provider' => $providerName, 'dry-run' => $isDryRun ] );
+
+		ob_start();
 		$sunsetProvider->execute();
+		ob_get_clean();
 	}
 
 	/**
