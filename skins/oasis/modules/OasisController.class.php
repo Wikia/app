@@ -66,6 +66,9 @@ class OasisController extends WikiaController {
 		$this->ivw3 = null;
 		$this->krux = null;
 		$this->netzathleten = null;
+		$this->recoveryHeadBootstrapCode = null;
+		$this->recoveryTopBodyBootstrapCode = null;
+		$this->recoveryBottomBodyBootstrapCode = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -186,12 +189,6 @@ class OasisController extends WikiaController {
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
-			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
-		}
-
-		// this Inspectet script is loaded only on english Harry Potter Wiki (id=509)
-		if ( $this->app->wg->CityId === '509' && WikiaPageType::isArticlePage() ) {
-			$wgOut->addScript( ( new InspectletService( InspectletService::HARRY_POTTER_ARTICLES ) )->getInspectletCode() );
 		}
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');

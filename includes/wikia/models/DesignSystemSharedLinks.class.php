@@ -235,7 +235,7 @@ class DesignSystemSharedLinks {
 			'contact' => 'http://fandom.wikia.com/contact?uselang=ru',
 			'terms-of-use' => 'http://ru.wikia.com/wiki/%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F',
 			'privacy-policy' => 'http://ru.wikia.com/wiki/%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C',
-			'community-central' => 'http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F',
+			'community-central' => 'http://ru.community.wikia.com/',
 			'support' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ru',
 			'wam' => 'http://www.wikia.com/WAM?langCode=ru',
