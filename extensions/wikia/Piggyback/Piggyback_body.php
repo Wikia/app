@@ -17,7 +17,6 @@ class Piggyback extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser, $wgEnableMercuryPiggyback;
 
-
 		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
 
 		if ( !empty( $par ) ) {
