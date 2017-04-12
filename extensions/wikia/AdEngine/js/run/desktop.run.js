@@ -5,6 +5,7 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -26,6 +27,7 @@ require([
 	adEngineRunner,
 	adInfoTracker,
 	pageLevelParams,
+	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -69,7 +71,8 @@ require([
 		}
 
 		adInfoTracker.run();
-		
+		slotStateMonitor.run();
+
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
