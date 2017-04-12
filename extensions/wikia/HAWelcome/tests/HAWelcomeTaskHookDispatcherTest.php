@@ -278,7 +278,10 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		/** @var MemcachedPhpBagOStuff|PHPUnit_Framework_MockObject_MockObject $memcacheClient */
-		$memcacheClient = $this->getMock( MemcachedPhpBagOStuff::class, ['set'] );
+		$memcacheClient = $this->getMockBuilder( MemcachedPhpBagOStuff::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'set' ] )
+			->getMock();
 
 		$memcacheClient->expects( $this->once() )
 			->method( 'set' )
@@ -334,7 +337,10 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( 1 ) );
 
 		/** @var MemcachedPhpBagOStuff|PHPUnit_Framework_MockObject_MockObject $memcacheClient */
-		$memcacheClient = $this->getMock( MemcachedPhpBagOStuff::class, ['set'] );
+		$memcacheClient = $this->getMockBuilder( MemcachedPhpBagOStuff::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'set' ] )
+			->getMock();
 
 		$memcacheClient->expects( $this->once() )
 			->method( 'set' )
