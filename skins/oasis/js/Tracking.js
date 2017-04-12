@@ -764,7 +764,7 @@ jQuery(function ($) {
 		});
 
 		/** recent-wiki-activity-module **/
-		$wikiaRail.find('#WikiaRecentActivity .page-title-link, #WikiaRecentActivity .edit-info-user').on('mousedown', function (event) {
+		$wikiaRail.find('#wikia-recent-activity .page-title-link, #wikia-recent-activity .edit-info-user').on('mousedown', function (event) {
 			var label = event.target.getAttribute('data-tracking');
 
 			// Primary mouse button only
