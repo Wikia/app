@@ -17,13 +17,20 @@ class ForumTest extends WikiaBaseTest {
 		$wikiaPropsReturn = [ 1 => 4, 2 => 7, 3 => 6, 5 => 2 ];
 		$expectedBoardsTitle = [ 1, 2, 3 ];
 
-		$titleBatchMock = $this->getMock( 'TitleBatch', [ ], [ ], '', false );
+		$titleBatchMock = $this->getMockBuilder( TitleBatch::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$titleBatchMock->expects( $this->any() )
+			->method( 'getArticleIds' )
+			->willReturn( [] );
 
 		$titleBatchMock->expects( $this->any() )
 			->method( 'getById' )
 			->will( $this->returnCallback(
 				function ( $pageId ) use ( $titlesFromNamespace ) {
-					return $titlesFromNamespace[ $pageId ];
+					return isset( $titlesFromNamespace[ $pageId ] )
+						? $titlesFromNamespace[ $pageId ] : null;
 				} ) );
 
 		$titleBatchMock->expects( $this->once() )
