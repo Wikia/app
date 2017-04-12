@@ -17,14 +17,16 @@ class Piggyback extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser, $wgEnableMercuryPiggyback;
 
+
 		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
 
 		if ( !empty( $par ) ) {
-			$wgRequest->setVal( 'target', $par );
+			$this->getRequest()->setVal( 'target', $par );
 		}
 
 		if ( $wgEnableMercuryPiggyback ) {
-			$this->redirectToMercuryPiggyback( $wgOut, $wgRequest->getVal( 'target' ) );
+			$this->redirectToMercuryPiggyback( $this->getOutput(),
+				$this->getRequest()->getVal( 'target' ) );
 
 			return;
 		}
