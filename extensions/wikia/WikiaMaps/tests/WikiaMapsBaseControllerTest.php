@@ -91,7 +91,6 @@ class WikiaMapsBaseControllerTest extends WikiaBaseTest {
 			->willReturn( $userNameMock );
 
 		$mapsBaseControllerMock = $this->getMockBuilder('WikiaMapsBaseController')
-			->disableOriginalConstructor()
 			->setMethods( [ 'getModel' ] )
 			->getMock();
 
@@ -99,7 +98,7 @@ class WikiaMapsBaseControllerTest extends WikiaBaseTest {
 			->method( 'getModel' )
 			->willReturn( $mapsModelMock );
 
-		$mapsBaseControllerMock->wg->User = $userMock;
+		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		$this->assertEquals( $mapsBaseControllerMock->isUserMapCreator( $mapIdMock ), $expected, $testDescription );
 	}
