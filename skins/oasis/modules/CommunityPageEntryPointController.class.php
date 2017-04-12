@@ -15,7 +15,8 @@ class CommunityPageEntryPointController extends WikiaController {
 				return [
 					'avatarUrl' => AvatarService::getAvatarUrl( $user->getName(), 30 ),
 					'userProfileUrl' => AvatarService::getUrl( $user->getName() ),
-					'username' => $user->getName(),
+					'username' => User::isIp( $user->getName() )
+						? wfMessage( 'oasis-anon-user' )->escaped() : $user->getName(),
 				];
 			}, array_slice( $topContributors, 0, 5) );
 		}
