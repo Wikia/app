@@ -11,22 +11,24 @@ var ChatWidget = {
 
 	init: function () {
 		if (!ChatWidget.bindComplete) {
-			$('body').on('click', '.WikiaChatLink', function (event) {
-				event.preventDefault();
-				event.stopPropagation();
-				ChatWidget.onClickChatButton(this.href);
-			});
+			$('body').on('click', '.WikiaChatLink, .chat-module .start-a-chat-button, .chat-module .more-users-count', this.openChat);
 			ChatWidget.bindComplete = true;
 		}
 
 		// make sure we start processing after ChatModule templates is loaded
-		if ($('.ChatModule').length) {
+		if ($('.chat-module').length) {
 			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
 				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
+	},
+
+	openChat: function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		ChatWidget.onClickChatButton(this.href);
 	},
 
 	/**
