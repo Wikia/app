@@ -8,7 +8,7 @@
 	<div class="<?= $classNames ?> wds-sign-out"
 	     id="<?= Sanitizer::encodeAttribute( $model['title']['key'] ); ?>">
 		<?/* Logout is a POST, so we render a button inside a form here */?>
-		<form method="POST" action="/signout">
+		<form method="POST" action="<?= Sanitizer::encodeAttribute( $href ); ?>">
 			<input type="hidden" name="redirect"
 			       value="<?= Sanitizer::encodeAttribute( $model['redirect'] ); ?>">
 			<button type="submit" class="wds-sign-out__button">
