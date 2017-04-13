@@ -18,9 +18,15 @@ class SyntaxHighlight_GeSHi {
 	 * @param string $text
 	 * @param array $args
 	 * @param Parser $parser
+	 * @param PPFrame $frame
 	 * @return string
 	 */
-	public static function parserHook( $text, $args = array(), $parser ) {
+	public static function parserHook( $text, $args = array(), $parser, $frame ) {
+		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
+		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
+			return SyntaxHighlightHooks::onRenderSyntaxHighlightTag( $text, $args, $parser, $frame );
+		}
+
 		global $wgSyntaxHighlightDefaultLang, $wgUseSiteCss, $wgUseTidy;
 		wfProfileIn( __METHOD__ );
 		self::initialise();
@@ -241,6 +247,11 @@ class SyntaxHighlight_GeSHi {
 	 * @return bool
 	 */
 	public static function viewHook( $text, $title, $output ) {
+		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
+		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
+			return SyntaxHighlightHooks::onShowRawCssJs( $text, $title, $output );
+		}
+
 		global $wgUseSiteCss;
 		// Determine the language
 		$matches = array();

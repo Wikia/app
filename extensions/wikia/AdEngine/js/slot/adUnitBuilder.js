@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.adUnitBuilder', [
-	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adLogicPageParams'
 ], function (page) {
 	'use strict';
 
