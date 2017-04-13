@@ -21,7 +21,7 @@ define('ext.wikia.recirculation.views.premiumRail', [
 					$html = options.before($html);
 				}
 
-				$('#RECIRCULATION_RAIL').html($html);
+				$('#recirculation-rail').html($html);
 				curated.setupTracking($html);
 
 				return $html;
@@ -36,12 +36,12 @@ define('ext.wikia.recirculation.views.premiumRail', [
 		};
 	}
 
-	function setupTracking(experimentName) {
+	function setupTracking() {
 		return function ($html) {
-			tracker.trackVerboseImpression(experimentName, 'rail');
+			tracker.trackImpression('rail');
 
 			$html.on('mousedown', 'a', function () {
-				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
+				tracker.trackClick(utils.buildLabel(this, 'rail'));
 			});
 
 			return $html;
