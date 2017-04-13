@@ -583,54 +583,23 @@ class Wikia {
 	 * @access public
 	 * @static
 	 *
-	 * @param String $lang  -- language code
+	 * @param String $langCode  -- language code
 	 *
 	 * @return User -- instance of user object
 	 */
 	static public function staffForLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
+		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
-
-		$staffUser = false;
-		if( !empty( $staffSigs ) ) {
-			$lines = explode("\n", $staffSigs);
-
-			$data = array();
-			$sectLangCode = '';
-			foreach ( $lines as $line ) {
-				if( strpos( $line, '* ' ) === 0 ) {
-					//language line
-					$sectLangCode = trim( $line, '* ' );
-					continue;
-				}
-				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
-					//user line
-					$user = trim( $line, '** ' );
-					$data[$sectLangCode][] = $user;
-				}
-			}
-
-			//did we get any names for our target language?
-			if( !empty( $data[$langCode] ) ) {
-				//pick one
-				$key = array_rand($data[$langCode]);
-
-				//use it
-				$staffUser = User::newFromName( $data[$langCode][$key] );
-				$staffUser->load();
-			}
+		if ( !empty( $staffMap[$langCode] ) && is_array( $staffMap[$langCode] ) ) {
+			$key = array_rand( $staffMap[$langCode] );
+			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
+		} else {
+			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
+			$staffUser = User::newFromName( 'Fandom' );
 		}
 
-		/**
-		 * fallback to Wikia
-		 */
-		if( ! $staffUser ) {
-			$staffUser = User::newFromName( 'Wikia' );
-			$staffUser->load();
-		}
+		$staffUser->load();
 
-		wfProfileOut( __METHOD__ );
 		return $staffUser;
 	}
 

@@ -118,23 +118,35 @@ define('ext.wikia.adEngine.adEngine', [
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.show(slotName);
-						eventDispatcher.dispatch('adengine.slot.status', {slot: slot, status: 'success'});
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot, 
+							status: 'success', 
+							adInfo: adInfo
+						});
 						tracker.track('success', adInfo);
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(slotName);
-						eventDispatcher.dispatch('adengine.slot.status', {slot: slot, status: 'collapse'});
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot, 
+							status: 'collapse', 
+							adInfo: adInfo
+						});
 						tracker.track('collapse', adInfo);
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(container.id);
-						eventDispatcher.dispatch('adengine.slot.status', {slot: slot, status: 'hop'});
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot,
+							status: 'hop',
+							adInfo: adInfo
+						});
 						tracker.track('hop', adInfo);
 						nextProvider();
 					},
-					renderEnded: function() {
+					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], 'debug', logGroup);
 					}
 				});
