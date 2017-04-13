@@ -62,25 +62,13 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 				break;
 			case 'global-navigation-user-sign-out':
 				$classNames = 'wds-global-navigation__dropdown-link';
-				$model['redirect'] = $this->getCurrentUrl();
+				$model['redirect'] =
+					( new UserLoginHelper() )->getCurrentUrlOrMainPageIfOnUserLogout();
 		}
 
 		$this->setVal( 'model', $model );
 		$this->setVal( 'classNames', $classNames );
 		$this->setVal( 'href', $href );
-	}
-
-	private function getCurrentUrl() {
-		try {
-			return $this->getContext()->getTitle()->getFullURL();
-		}
-		catch ( \Exception $e ) {
-			// wfGetCurrentUrl does not play nicely with subdomains, that's why it's only a fallback
-			$this->logger->error( 'Failed to get the URL from title, fallback to wfGetCurrentUrl',
-				$e );
-
-			return wfGetCurrentUrl( true );
-		}
 	}
 
 	public function search() {
