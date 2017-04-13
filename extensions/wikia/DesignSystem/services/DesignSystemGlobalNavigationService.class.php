@@ -2,13 +2,6 @@
 
 class DesignSystemGlobalNavigationService extends WikiaService {
 
-	private $logger;
-
-	public function __construct() {
-		parent::__construct();
-		$this->logger = \Wikia\Logger\WikiaLogger::instance();
-	}
-
 	public function index() {
 		$this->setVal( 'model', $this->getData() );
 	}
