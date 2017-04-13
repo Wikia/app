@@ -2,8 +2,8 @@
  * Module keeps list of shortcut keys and provides interface to add new ones or find existing ones.
  * It also initiates bind between key combination and function that handles it
  */
-define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTracking', 'wikia.window'],
-	function (Mousetrap, mw, PageActions, tracker, win) {
+define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTracking'],
+	function (Mousetrap, mw, PageActions, tracker) {
 	'use strict';
 
 	var all = {},
@@ -40,8 +40,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTra
 				add(id, key);
 			});
 		});
-
-		win.wgGlobalShortcutsLoaded = true;
 	}
 
 	init();
