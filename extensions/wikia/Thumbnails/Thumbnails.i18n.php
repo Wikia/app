@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'thumbnails-extension-description' => 'Image and video thumbnails on Wikia',
-	'thumbnails-added-by' => 'By $1 $2',
+	'thumbnails-added-by' => 'By $1 • $2',
 ];
 
 $messages['qqq'] = [

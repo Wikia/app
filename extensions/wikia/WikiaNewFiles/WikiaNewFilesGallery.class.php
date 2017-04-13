@@ -49,7 +49,7 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 			}
 
 			$caption = wfMessage( 'wikianewfiles-uploadby' )->rawParams( $ul )->params( $ut )->escaped();
-			$caption .= "<br />\n<i>$timeago</i><br />\n";
+			$caption .= " • <i>$timeago</i><br />\n";
 
 			if ( count( $links ) ) {
 				$caption .= wfMessage( 'wikianewfiles-postedin' )->escaped() . "&nbsp;" . $links[0];
