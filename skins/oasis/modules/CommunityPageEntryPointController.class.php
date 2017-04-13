@@ -11,9 +11,12 @@ class CommunityPageEntryPointController extends WikiaController {
 		if ( is_array( $topContributors ) ) {
 			$avatars = array_map( function( $user ) {
 				$user = User::newFromId( $user['userId'] );
+
 				return [
 					'avatarUrl' => AvatarService::getAvatarUrl( $user->getName(), 30 ),
-					'userProfileUrl' => AvatarService::getUrl( $user->getName() )
+					'userProfileUrl' => AvatarService::getUrl( $user->getName() ),
+					'username' => User::isIp( $user->getName() )
+						? wfMessage( 'oasis-anon-user' )->escaped() : $user->getName(),
 				];
 			}, array_slice( $topContributors, 0, 5) );
 		}
