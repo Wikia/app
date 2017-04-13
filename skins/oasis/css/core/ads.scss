@@ -134,7 +134,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 	.video-overlay {
 		@include absolute-fill();
-		pointer-events: none;
 	}
 
 	.video-display-wrapper {
@@ -142,15 +141,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		height: 100%;
 		position: relative;
 		width: 100%;
-
-		// Node elements created by IMA library
-		& > div {
-			pointer-events: none;
-
-			video {
-				pointer-events: auto;
-			}
-		}
 
 		video, &.vpaid-enabled > div {
 			@include absolute-fill();
