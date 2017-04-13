@@ -76,12 +76,17 @@ define('ext.wikia.adEngine.template.porvata', [
 
 	function getVideoContainer(slotName) {
 		var container = doc.createElement('div'),
+			displayWrapper = doc.createElement('div'),
 			providerContainer = doc.querySelector('#' + slotName + ' > .provider-container');
 
-		container.classList.add('vpaid-container');
+		container.classList.add('video-overlay');
+		displayWrapper.classList.add('video-display-wrapper');
+
+		container.appendChild(displayWrapper);
+
 		providerContainer.appendChild(container);
 
-		return container;
+		return displayWrapper;
 	}
 
 	function isVpaid(contentType) {

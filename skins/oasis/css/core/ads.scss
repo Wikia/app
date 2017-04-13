@@ -45,11 +45,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 @mixin absolute-fill() {
 	height: 100%;
-	left: 50%;
+	left: 0;
 	position: absolute;
 	width: 100%;
 	top: 0;
-	transform: translate(-50%, 0);
 }
 
 /** Hide invisible slots and 1x1 iframes **/
@@ -133,12 +132,16 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		}
 	}
 
-	.vpaid-container {
+	.video-overlay {
 		@include absolute-fill();
+		pointer-events: none;
+	}
 
-		video, &.vpaid-enabled > div {
-			@include absolute-fill();
-		}
+	.video-display-wrapper {
+		background: #000;
+		height: 100%;
+		position: relative;
+		width: 100%;
 
 		// Node elements created by IMA library
 		& > div {
@@ -149,9 +152,13 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			}
 		}
 
+		video, &.vpaid-enabled > div {
+			@include absolute-fill();
+		}
+
 		&.vpaid-enabled video {
-			 z-index: $vpaid-z-index;
-		 }
+			z-index: $vpaid-z-index;
+		}
 
 		.video-player {
 			background: #000;
@@ -669,7 +676,7 @@ body > a > img[src$="noad.gif"] {
 	left: 0;
 	position: absolute;
 	top: 0;
-	z-index: 1;
+	z-index: $video-interactive-area-z-index;
 
 	img {
 		padding: 7px;
