@@ -3,7 +3,7 @@
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',
@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
+], function (adContext, sourcePoint, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
 	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
@@ -101,7 +101,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	function fillInAfterRecoveredSlotCollapse(slot, recoverdSlotId) {
 		log(['fillInAfterRecoveredSlotCollapse - set listener', slot.name], 'debug', logGroup);
 		window.addEventListener('adengine.slot.status', function (e) {
-			if (e.detail.slotName === recoverdSlotId && e.detail.status === 'collapse') {
+			if (e.detail.slot.name === recoverdSlotId && e.detail.status === 'collapse') {
 				log(['fillInAfterRecoveredSlotCollapse::fter event', slot.name], 'debug', logGroup);
 				fillInSlot(slot);
 			}
@@ -113,8 +113,8 @@ define('ext.wikia.adEngine.provider.taboola', [
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
-			recoveryHelper.addOnBlockingCallback(function () {
-				if (recoveryHelper.isRecoveryEnabled()) {
+			sourcePoint.addOnBlockingCallback(function () {
+				if (sourcePoint.isEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
 				} else {
 					fillInSlot(slot);

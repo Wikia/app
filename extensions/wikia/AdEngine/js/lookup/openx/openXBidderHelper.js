@@ -17,13 +17,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 				TOP_LEADERBOARD: {
 					sizes: ['728x90', '970x250']
 				},
-				HOME_TOP_LEADERBOARD: {
-					sizes: ['728x90', '970x250']
-				},
 				TOP_RIGHT_BOXAD: {
-					sizes: ['300x250', '300x600']
-				},
-				HOME_TOP_RIGHT_BOXAD: {
 					sizes: ['300x250', '300x600']
 				},
 				LEFT_SKYSCRAPER_2: {
@@ -53,7 +47,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 					sizes: ['300x250', '320x50']
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: ['300x250', '320x50']
+					sizes: ['320x50']
 				}
 			}
 		};

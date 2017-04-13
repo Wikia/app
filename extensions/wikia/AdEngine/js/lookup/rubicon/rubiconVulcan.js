@@ -2,159 +2,194 @@
 define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
-	'ext.wikia.adEngine.utils.math',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTier',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (factory, rubiconTargeting, math, doc, log, win) {
+], function (factory, rubiconTargeting, rubiconTier, doc, log, win) {
 	'use strict';
 
 	var accountId = 7450,
-		incontentAdSettings = {
-			siteId: 55412,
-			size: [640, 480],
-			sizeId: 203,
-			targeting: {
-				loc: 'hivi'
-			},
-			zoneId: 260296
-		},
+		bidder,
 		config = {
 			oasis: {
-				INCONTENT_LEADERBOARD: incontentAdSettings,
-				TOP_LEADERBOARD: {
-					siteId: 55412,
-					size: [640, 480],
-					sizeId: 203,
-					targeting: {
-						loc: 'top'
-					},
-					zoneId: 519058
-				}
+				placeholderName: 'outstream-desktop',
+				siteId: 55412,
+				size: [640, 480],
+				sizeId: 203,
+				targeting: {
+					loc: 'outstream'
+				},
+				zoneId: 519058
 			},
 			mercury: {
-				MOBILE_IN_CONTENT: incontentAdSettings
+				placeholderName: 'outstream-mobile',
+				siteId: 55412,
+				size: [640, 480],
+				sizeId: 203,
+				targeting: {
+					loc: 'outstream'
+				},
+				zoneId: 563110
 			}
 		},
-		cpmBuckets = [
-			{
-				maxValue: 4,
-				bucket: 1
-			},
-			{
-				maxValue: 99,
-				bucket: 5
-			},
-			{
-				maxValue: 499,
-				bucket: 10
-			},
-			{
-				maxValue: 1999,
-				bucket: 50
-			}
-		],
 		libraryUrl = '//ads.aws.rubiconproject.com/video/vulcan.min.js',
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
+		placeholder = {},
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
-		slots = {},
+		slotMapping = {
+			'INCONTENT_LEADERBOARD': 'outstream-desktop',
+			'INCONTENT_PLAYER': 'outstream-desktop',
+			'TOP_LEADERBOARD': 'outstream-desktop',
+			'MOBILE_IN_CONTENT': 'outstream-mobile'
+		},
+		usedResponses = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
 
-	function setupTargeting(slotName, slot, skin) {
-		var targeting = rubiconTargeting.getTargeting(slotName, skin, 'vulcan');
+	function setupTargeting(skin) {
+		var targeting = rubiconTargeting.getTargeting(placeholder.placeholderName, skin, 'vulcan');
 
 		Object.keys(targeting).forEach(function (key) {
-			slot.targeting[key] = targeting[key];
+			placeholder.targeting[key] = targeting[key];
 		});
 	}
 
-	function defineSingleSlot(slotName, slot) {
-		var slotDefinition = {
+	function defineSingleSlot() {
+		var vulcanSlotDefinition = {
 				'account_id': accountId,
-				'site_id': slot.siteId,
-				'size_id': slot.sizeId,
-				'zone_id': slot.zoneId,
-				'width': slot.size[0],
-				'height': slot.size[1],
+				'site_id': placeholder.siteId,
+				'size_id': placeholder.sizeId,
+				'zone_id': placeholder.zoneId,
+				'width': placeholder.size[0],
+				'height': placeholder.size[1],
 				'rand': Math.round(1000000000 * Math.random())
 			};
 
-		Object.keys(slot.targeting).forEach(function (key) {
-			slotDefinition['tg_i.' + key] = slot.targeting[key];
+		Object.keys(placeholder.targeting).forEach(function (key) {
+			vulcanSlotDefinition['tg_i.' + key] = placeholder.targeting[key];
 		});
 
-		log(['defineSlot', slotName, slotDefinition], 'debug', logGroup);
-		win.rubiconVulcan.defineSlot(slotName, slotDefinition);
+		log(['defineSlot', placeholder.placeholderName, vulcanSlotDefinition], log.levels.debug, logGroup);
+		win.rubiconVulcan.defineSlot(placeholder.placeholderName, vulcanSlotDefinition);
 	}
 
 	function defineSlots(skin, onResponse) {
-		Object.keys(slots).forEach(function (slotName) {
-			setupTargeting(slotName, slots[slotName], skin);
-			defineSingleSlot(slotName, slots[slotName]);
-		});
+		setupTargeting(skin);
+		defineSingleSlot();
 
 		win.rubiconVulcan.run(onResponse);
 	}
 
-	function getTier(slotName, cpm) {
-		var index = 0,
-			sizeId = slots[slotName].sizeId,
-			tier = 2000;
+	function createTier(value) {
+		return placeholder.sizeId + '_tier' + value;
+	}
 
-		while (cpmBuckets[index] && cpm > cpmBuckets[index].maxValue) {
-			index += 1;
-		}
-		if (cpmBuckets[index]) {
-			tier = math.getBucket(cpm, cpmBuckets[index].bucket);
-		}
-		tier = parseInt(tier, 10);
+	function isNotUsedBy(slotName) {
+		var placeholderName = slotMapping[slotName];
 
-		return sizeId + '_tier' + math.leftPad(tier, 4);
+		return usedResponses[placeholderName] && usedResponses[placeholderName] !== slotName;
 	}
 
 	function getSlotParams(slotName) {
-		var parameters = {};
+		var isUsed = isNotUsedBy(slotName),
+			parameters = {},
+			placeholderName = slotMapping[slotName];
 
-		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
+		if (isUsed) {
+			parameters[rubiconVideoTierKey] = createTier('USED');
+		} else {
+			parameters[rubiconVideoTierKey] = createTier('NONE');
+		}
 
-		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
-		if (priceMap[slotName]) {
-			parameters[rubiconVideoTierKey] = priceMap[slotName];
+		log(['getSlotParams', slotName, placeholderName, parameters], log.levels.debug, logGroup);
+		if (!isUsed && priceMap[placeholderName]) {
+			parameters[rubiconVideoTierKey] = priceMap[placeholderName];
 		}
 
 		return parameters;
 	}
 
-	function encodeParamsForTracking(params) {
-		if (!params[rubiconVideoTierKey]) {
-			return;
+	function getBestSlotPrice(slotName) {
+		var cpm,
+			placeholderName = slotMapping[slotName],
+			price;
+
+		if (isNotUsedBy(slotName)) {
+			price = 'used';
+		} else if (priceMap[placeholderName]) {
+			cpm = rubiconTier.parseOpenMarketPrice(priceMap[placeholderName]) / 100;
+			price = cpm.toFixed(2).toString();
 		}
 
-		return params[rubiconVideoTierKey];
+		return {
+			vulcan: price
+		};
+	}
+
+	function getSingleResponse(slotName) {
+		var bestResponse = {},
+			vulcanSlots = win.rubiconVulcan && win.rubiconVulcan.getAllSlots() || [];
+
+		vulcanSlots.forEach(function (slot) {
+			if (slot.id === slotMapping[slotName]) {
+				bestResponse = slot.getBestCpm();
+			}
+		});
+
+		return bestResponse || {};
+	}
+
+	function deleteBid(slotName) {
+		var placeholderName = slotMapping[slotName];
+
+		usedResponses[placeholderName] = slotName;
+		log(['deleteBid', slotName, placeholderName], log.levels.debug, logGroup);
+	}
+
+	function hasResponse(slotName) {
+		if (!win.rubiconVulcan) {
+			return false;
+		}
+
+		var placeholderName = slotMapping[slotName],
+			vulcanResponse = win.rubiconVulcan.slots && win.rubiconVulcan.slots[placeholderName];
+
+		if (vulcanResponse && vulcanResponse.rawResponses) {
+			return vulcanResponse.rawResponses.length > 0;
+		}
+
+		return false;
+	}
+
+	function encodeParamsForTracking(params, slotName) {
+		if (params[rubiconVideoTierKey] && hasResponse(slotName)) {
+			return params[rubiconVideoTierKey];
+		}
 	}
 
 	function calculatePrices() {
-		var allSlots = win.rubiconVulcan.getAllSlots();
+		var vulcanSlots = win.rubiconVulcan.getAllSlots();
 
-		allSlots.forEach(function (slot) {
-			var ad = slot.getBestCpm(),
-				slotName = slot.id,
+		vulcanSlots.forEach(function (vulcanSlot) {
+			var ad = vulcanSlot.getBestCpm(),
+				placeholderName = vulcanSlot.id,
+				sizeId = placeholder.sizeId,
 				cpm,
 				tier,
 				vastUrl;
 
-			log(['onResponse', slotName, ad.status, ad], 'debug', logGroup);
+			log(['onResponse', placeholderName, ad.status, ad], log.levels.debug, logGroup);
 			if (ad.status === 'ok' && ad.type === 'vast') {
 				cpm = ad[vulcanCpmKey] || 0;
-				tier = getTier(slotName, cpm * 100);
+				tier = rubiconTier.create(sizeId, cpm * 100);
 				vastUrl = ad[vulcanUrlKey];
 
-				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
-				priceMap[slotName] = tier;
+				log(['VAST ad', placeholderName, cpm, tier, vastUrl], log.levels.debug, logGroup);
+				priceMap[placeholderName] = tier;
 			} else {
-				priceMap[slotName] = slots[slotName].sizeId + '_tier0000';
+				priceMap[placeholderName] = createTier('0000');
 			}
 		});
 	}
@@ -166,9 +201,14 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		script.type = 'text/javascript';
 		script.src = libraryUrl;
 
-		slots = config[skin];
+		placeholder = config[skin];
 		script.addEventListener('load', function () {
+			// TODO ADEN-4637 Remove win.rubiconVulcan reference
 			win.rubiconVulcan = win.rubicontag.video;
+			win.ads.rubiconVulcan = {
+				getSingleResponse: getSingleResponse,
+				deleteBid: deleteBid
+			};
 			defineSlots(skin, onResponse);
 		});
 
@@ -180,17 +220,22 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		return slotMapping[slotName];
 	}
 
-	return factory.create({
+	bidder = factory.create({
 		logGroup: logGroup,
 		name: 'rubicon_vulcan',
 		call: call,
 		calculatePrices: calculatePrices,
+		getBestSlotPrice: getBestSlotPrice,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
 		getSlotParams: getSlotParams
 	});
+
+	bidder.getSingleResponse = getSingleResponse;
+
+	return bidder;
 });

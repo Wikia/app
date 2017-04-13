@@ -142,18 +142,22 @@ class EditForumInput implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = array();
-        if (strlen($this->container['name']) > 20) {
+        if (!is_null($this->container['name']) && (strlen($this->container['name']) > 20)) {
             $invalid_properties[] = "invalid value for 'name', the character length must be smaller than or equal to 20.";
         }
-        if (strlen($this->container['name']) < 1) {
+
+        if (!is_null($this->container['name']) && (strlen($this->container['name']) < 1)) {
             $invalid_properties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
         }
-        if (strlen($this->container['description']) > 512) {
+
+        if (!is_null($this->container['description']) && (strlen($this->container['description']) > 512)) {
             $invalid_properties[] = "invalid value for 'description', the character length must be smaller than or equal to 512.";
         }
-        if (strlen($this->container['description']) < 0) {
+
+        if (!is_null($this->container['description']) && (strlen($this->container['description']) < 0)) {
             $invalid_properties[] = "invalid value for 'description', the character length must be bigger than or equal to 0.";
         }
+
         return $invalid_properties;
     }
 
@@ -292,3 +296,5 @@ class EditForumInput implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

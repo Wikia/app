@@ -18,12 +18,11 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
+			$sourcePointDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.sp.detection' );
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $sourcePointDetectionKey ], 'scripts' );
 
-			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
-			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
-
+			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
+			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
 			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -35,8 +34,8 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
+			$yavliKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.yavli' );
+			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $yavliKey ], 'scripts' );
 
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
@@ -70,7 +69,9 @@ class AdEngine2ContextService {
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
-					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
+					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => !empty( $wg->EnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
@@ -91,12 +92,22 @@ class AdEngine2ContextService {
 			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
 			 */
 			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
+			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
+			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
+
+			/**
+			* $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+			* $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
+			* $wgAdDriverEnablePageFairRecovery === null; // don't care - depend on $wgAdDriverPageFairRecoveryCountries
+			*/
+			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnablePageFairRecovery : false;
+
 			return $context;
 		} );
 	}
 
 	private function getMappedVerticalName( $oldWikiVertical, $newWikiVertical ) {
-		if ($oldWikiVertical === 'Wikia') {
+		if ( $oldWikiVertical === 'Wikia' ) {
 			return 'wikia';
 		}
 
@@ -112,34 +123,38 @@ class AdEngine2ContextService {
 		];
 
 		$newVerticalName = strtolower( $newWikiVertical );
-		if ( !empty( $mapping[$newVerticalName] ) ) {
+		if ( !empty($mapping[$newVerticalName]) ) {
 			return $mapping[$newVerticalName];
 		}
 
 		return 'error';
 	}
 
-	private function getNewWikiCategories(WikiFactoryHub $wikiFactoryHub, $cityId) {
+	private function getNewWikiCategories( WikiFactoryHub $wikiFactoryHub, $cityId ) {
 		$oldWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, false );
 		$newWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, true );
 
-		if( is_array($oldWikiCategories) && is_array($newWikiCategories) ) {
-			$wikiCategories = array_merge($oldWikiCategories, $newWikiCategories);
-		} else if ( is_array($oldWikiCategories) ) {
-			$wikiCategories = $oldWikiCategories;
-		} else if ( is_array($newWikiCategories) ) {
-			$wikiCategories = $newWikiCategories;
+		if ( is_array( $oldWikiCategories ) && is_array( $newWikiCategories ) ) {
+			$wikiCategories = array_merge( $oldWikiCategories, $newWikiCategories );
 		} else {
-			$wikiCategories = [];
+			if ( is_array( $oldWikiCategories ) ) {
+				$wikiCategories = $oldWikiCategories;
+			} else {
+				if ( is_array( $newWikiCategories ) ) {
+					$wikiCategories = $newWikiCategories;
+				} else {
+					$wikiCategories = [ ];
+				}
+			}
 		}
 
-		return array_unique($wikiCategories);
+		return array_unique( $wikiCategories );
 	}
 
 	private function filterOutEmptyItems( $input ) {
-		$output = [];
+		$output = [ ];
 		foreach ( $input as $varName => $varValue ) {
-			if ( (bool) $varValue === true ) {
+			if ( (bool)$varValue === true ) {
 				$output[$varName] = $varValue;
 			}
 		}

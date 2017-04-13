@@ -1,7 +1,11 @@
 <? if ( $isAside ): ?>
 	<aside>
 <? endif; ?>
-	<div id="WikiaRailWrapper" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
+	<div
+      id="WikiaRailWrapper"
+      class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>"
+      <?= $isEditPage ? 'style="display: none;"' : '' ?>
+  >
 		<div id="WikiaRail">
 
 			<?php

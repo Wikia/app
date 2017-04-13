@@ -6,11 +6,14 @@ use Wikia\Service\User\Auth\CookieHelper;
 
 class Piggyback extends SpecialPage {
 	var $mAction;
+	private $logger;
 
 	function __construct() {
 		global $wgRequest;
 		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->mAction = $wgRequest->getVal( 'action' );
+
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
@@ -39,6 +42,8 @@ class Piggyback extends SpecialPage {
 		} else {
 			$LoginForm->setDefaultTargetValue( $wgRequest->getVal( 'target' ) );
 		}
+
+		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
 
 		$LoginForm->render();
 	}
@@ -115,7 +120,7 @@ class PBLoginForm extends LoginForm {
 
 		$authResult = $cu->checkPassword( $this->mPassword );
 		if ( !$authResult->success() &&
-			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+			!$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
 		) {
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );

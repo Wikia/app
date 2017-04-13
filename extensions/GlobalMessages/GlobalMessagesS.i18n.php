@@ -278,60 +278,6 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'share_it' => 'Share it:',
 	'see_more' => 'See more...',
 	'specialpages-group-wikia' => 'Fandom pages',
-	'staffsigs' => '* de
-** ForestFairy
-* en
-** Sannse
-** DaNASCAT
-** Brandon Rhea
-** Rappy 4187
-** Ducksoup
-** Mira Laime
-** BertH
-* es
-** Luchofigo85
-** Vpinas
-* fr
-** Hypsoline
-* it
-** Leviathan_89
-** Cresh.
-* ja
-** Kuro0222
-* ko
-** Miri-Nae
-* nl
-** Yatalu
-** Flightmare
-* pl
-** Nanaki
-** Vuh
-* pt
-** Macherie ana
-* pt-br
-** Macherie ana
-* ru
-** vlazovskiy
-* vi
-** KhangND
-*zh
-**Cal-Boy
-*zh-hans
-**Cal-Boy
-*zh-tw
-**Ffaarr
-*zh-hk
-**Ffaarr
-*zh-hant
-**Ffaarr
-* ?
-** Sannse
-** DaNASCAT
-** Brandon Rhea
-** Rappy 4187
-** Ducksoup
-** Mira Laime
-** BertH',
 	'seeeditcount' => 'See edit count',
 	'shared-Globalnavigation' => '*http://gameshub.wikia.com/wiki/Games_Hub|Video Games|video-games-vertical-color
 

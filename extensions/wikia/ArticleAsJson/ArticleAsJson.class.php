@@ -45,8 +45,8 @@ class ArticleAsJson extends WikiaService {
 					'height' => $scaledSize['height'],
 					'width' => $scaledSize['width'],
 					'title' => $media['title'],
-					'link' => $media['link'],
-					'caption' => $media['caption']
+					'href' => $media['href'],
+					'caption' => $media['caption'] ?? ''
 				]
 			)
 		);
@@ -64,8 +64,9 @@ class ArticleAsJson extends WikiaService {
 					'url' => $media['url'],
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption'],
-					'link' => $media['link'],
+					'caption' => $media['caption'] ?? '',
+					'href' => $media['href'],
+					'isLinkedByUser' => $media['isLinkedByUser'],
 					/**
 					 * data-ref has to be set for now because it's read in
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
@@ -125,7 +126,7 @@ class ArticleAsJson extends WikiaService {
 				array_filter(
 					$media,
 					function ( $item ) {
-						return isset( $item['link'] );
+						return $item['isLinkedByUser'];
 					}
 				)
 			) ) {
@@ -152,8 +153,16 @@ class ArticleAsJson extends WikiaService {
 			'user' => $details['userName']
 		];
 
-		if ( is_string( $link ) && $link !== '' ) {
+		// Only images are allowed to be linked by user
+		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
+			// TODO remove after XW-2653 is released
 			$media['link'] = $link;
+			$media['href'] = $link;
+			$media['isLinkedByUser'] = true;
+		} else {
+			// There is no easy way to link directly to a video, so we link to its file page
+			$media['href'] = $media['type'] === 'video' ? $media['fileUrl'] : $media['url'];
+			$media['isLinkedByUser'] = false;
 		}
 
 		if ( !empty( $details['width'] ) ) {
@@ -297,7 +306,8 @@ class ArticleAsJson extends WikiaService {
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON :
 				self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
-			$media = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
+			$caption = $frameParams['caption'] ?? null;
+			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
 			self::$media[] = $media;
 
 			self::addUserObj( $details );

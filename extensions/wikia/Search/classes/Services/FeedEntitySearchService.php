@@ -12,7 +12,7 @@ class FeedEntitySearchService extends EntitySearchService {
 		parent::__construct( $client );
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();
@@ -35,7 +35,7 @@ class FeedEntitySearchService extends EntitySearchService {
 
 	public function setUrls( $data ) {
 		foreach ( $data as $item ) {
-			$this->urls[ ] = '"' . $item . '"';
+			$this->urls[] = '"' . $item . '"';
 		}
 	}
 
@@ -68,31 +68,32 @@ class FeedEntitySearchService extends EntitySearchService {
 			$query .= ' +host:(' . implode( ' | ', $this->hosts ) . ') ';
 		}
 
-		$query .=
-			( isset( $q ) ? ' AND +(article_quality_i:[' . $q . ' TO *])' : '' )
-			. ( isset( $l ) ? ' AND +(lang:' . $l . ')' : '' )
-			. ( isset( $wids ) ? ' AND +wid:( ' . implode( ' | ', $wids ) . ')' : '' )
-			. ( isset( $hubs ) ? ' AND +hub:( ' . implode( ' | ', $hubs ) . ')' : '' );
+		$query .= ( isset( $q ) ? ' AND +(article_quality_i:[' . $q . ' TO *])' : '' ) .
+			( isset( $l ) ? ' AND +(lang:' . $l . ')' : '' ) .
+			( isset( $wids ) ? ' AND +wid:( ' . implode( ' | ', $wids ) . ')' : '' ) .
+			( isset( $hubs ) ? ' AND +hub:( ' . implode( ' | ', $hubs ) . ')' : '' );
+
 		return $query;
 	}
 
 	protected function consumeResponse( $response ) {
-		$items = [ ];
+		$items = [];
 		foreach ( $response as $res ) {
-			$items[ ] = [
-				'id' => $res[ 'id' ],
-				'pageid' => $res[ 'pageid' ],
-				'page_id' => $res[ 'pageid' ],
-				'url' => $res[ 'url' ],
-				'title' => $res[ 'title_en' ],
-				'timestamp' => strtotime( $res[ 'created' ] ),
-				'host' => $res[ 'host' ],
-				'wid' => $res[ 'wid' ],
-				'wikia_id' => $res[ 'wid' ],
-				'wikititle' => $res[ 'wikititle_en' ],
-				'ns' => $res[ 'ns' ]
+			$items[] = [
+				'id' => $res['id'],
+				'pageid' => $res['pageid'],
+				'page_id' => $res['pageid'],
+				'url' => $res['url'],
+				'title' => $res['title_en'],
+				'timestamp' => strtotime( $res['created'] ),
+				'host' => $res['host'],
+				'wid' => $res['wid'],
+				'wikia_id' => $res['wid'],
+				'wikititle' => $res['wikititle_en'],
+				'ns' => $res['ns']
 			];
 		}
+
 		return $items;
 	}
 }

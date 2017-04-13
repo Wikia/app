@@ -214,6 +214,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test3' ] ],
 				'categories' => [ 'new' => [ 'test3' ] ]
 			] ),
+
+			array_merge( $defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'hasPortableInfobox' => true ],
+			] ),
 		];
 	}
 
@@ -261,6 +265,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
 			$expectedTargeting['pageIsArticle'] = true;
+		}
+
+		if ( isset( $expectedTargeting['hasPortableInfobox'] ) && $expectedTargeting['hasPortableInfobox'] === true ) {
+			$wikiaMock = $this->getMockBuilder( 'Wikia' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'getProps' ] )
+				->getMock();
+
+			$wikiaMock->expects( $this->any() )
+				->method( 'getProps' )
+				->willReturn( true );
+
+			$this->mockStaticMethod( 'Wikia', 'getProps', $wikiaMock );
 		}
 
 		// Mock globals
@@ -332,7 +349,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointRecovery' => false
+				'sourcePointRecovery' => false,
+				'sourcePointMMS' => false,
+				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
+				// if skin name different than oasis, disable PF recovery
+				'pageFairRecovery' => false
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -382,10 +403,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
 		unset($result['opts']['pageFairDetectionUrl']);
 
-		// Check for PageFair URL
+		// Check for Prebid.js URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
-
 
 		$expected['providers']['rubiconFastlane'] = true;
 
@@ -394,5 +414,67 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		unset($result['opts']['yavliUrl']);
 
 		$this->assertEquals( $expected, $result );
+	}
+
+	/**
+	 * @param $expected
+	 * @param $wgEnableArticleFeaturedVideo
+	 * @param $wgArticleVideoFeaturedVideos
+	 * @param $message
+	 *
+	 * @dataProvider featuredVideoDataProvider
+	 */
+	public function testFeaturedVideoInContext( $expected, $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos, $message ) {
+		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
+		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getPrefixedDBkey' ] )
+			->getMock();
+		$titleMock->method( 'getPrefixedDBkey' )
+			->willReturn( 'test' );
+
+
+		$adContextService = new AdEngine2ContextService();
+		$result = $adContextService->getContext( $titleMock, 'test' );
+
+		$this->assertEquals(
+			$expected,
+			isset( $result['targeting']['hasFeaturedVideo'] ) && $result['targeting']['hasFeaturedVideo'],
+			$message
+		);
+	}
+
+	public function featuredVideoDataProvider() {
+		return [
+			// hasFeaturedVideo result, wgEnableArticleFeaturedVideo, wgArticleVideoFeaturedVideos, message
+			[ false, false, [], 'hasFeaturedVideo is set when extension disabled' ],
+			[ false, true, [], 'hasFeaturedVideo is set when no data available' ],
+			[ false, true, [ 'test' => [] ], 'hasFeaturedVideo is set when data missing' ],
+			[ true, true, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+			]
+			], 'hasFeaturedVideo is not set when correct data available' ],
+			[ false, true, [
+				'wrong_article_name' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], 'hasFeaturedVideo is set when data missing for title' ],
+			[ false, false, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
+		];
 	}
 }

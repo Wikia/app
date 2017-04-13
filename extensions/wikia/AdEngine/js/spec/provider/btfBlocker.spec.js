@@ -17,14 +17,10 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		methodCalledInsideFillInSlot: noop,
-		recoveryHelper: {
-			isBlocking: function () {
-				return false;
-			}
-		},
 		win: {}
 	};
 
+	mocks.log.levels = {debug: ''};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
@@ -33,7 +29,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.recoveryHelper,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win

@@ -68,7 +68,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		// get type ID -> type mapping
-		$types = Phalanx::getAllTypeNames();
+		$types = Phalanx::getSupportedTypeNames();
 		$ret = $model->match( $types[$typeId] );
 
 		// pass matching block details
@@ -84,7 +84,8 @@ class PhalanxHooks extends WikiaObject {
 	/**
 	 * Add/edit Phalanx block
 	 *
-	 * @param $data Array contains block information, possible keys: id, author_id, text, type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * @param array $data contains block information, possible keys: id, author_id, text, 
+	 * type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
 	 * @return int id block or false if error
 	 *
 	 * @author moli
@@ -157,18 +158,16 @@ class PhalanxHooks extends WikiaObject {
 			$bulkdata = explode( "\n", $multitext );
 			if ( count( $bulkdata ) > 0 ) {
 				$result = array( 'success' => array(), 'failed' => 0 );
+				$targets = [];
 				foreach ( $bulkdata as $bulkrow ) {
 					$bulkrow = trim( $bulkrow );
-					$phalanx['id'] = null;
-					$phalanx['text'] = $bulkrow;
-
-					$data['id'] = $phalanx->save();
-					if ( $data['id'] ) {
-						$result[ 'success' ][] = $data['id'];
-					} else {
-						$result[ 'failed' ]++;
+					if ( $bulkrow !== '' ) {
+						$targets[] = $bulkrow;
 					}
 				}
+
+				// SUS-1207: Insert Phalanx bulk filters in single write operation
+				$result['success'] = $phalanx->insertBulkFilter( $targets );
 			} else {
 				$result = false;
 			}

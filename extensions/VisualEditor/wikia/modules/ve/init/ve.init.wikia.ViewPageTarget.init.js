@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global require, veTrack, Wikia */
+/*global veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -395,13 +395,6 @@
 
 	if ( init.isAvailable ) {
 		$( function () {
-			if (mw.config.get('wgEnableVisualEditorTourExperiment')) {
-				mw.hook('ve.activationComplete').add(function initTour() {
-					require(['VisualEditorTourExperimentInit'], function (veTourInit) {
-						veTourInit.init();
-					});
-				});
-			}
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();

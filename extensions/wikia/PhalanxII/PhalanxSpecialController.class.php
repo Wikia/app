@@ -58,7 +58,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
-			return;
+			return false;
 		}
 
 		// creating / editing a block
@@ -89,7 +89,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		/* set pager */
+		// set pager
 		$pager = new PhalanxPager();
 		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
@@ -106,7 +106,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		// VSTF should not be allowed to block emails in Phalanx
 		$showEmailBlock = $this->wg->User->isAllowed( 'phalanxemailblock' );
-		$blockTypes  = Phalanx::getAllTypeNames();
+		$blockTypes  = Phalanx::getSupportedTypeNames();
 
 		$typeSections = [
 			'page-edition' => [
@@ -239,7 +239,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'expire'     => $expire
 		];
 
-		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
+		// SUS-1207: call handler directly, don't use hook dispatcher for single handler
+		if ( !PhalanxHooks::onEditPhalanxBlock( $data ) ) {
 			$ret = self::RESULT_ERROR;
 		} else {
 			$ret = $isBlockUpdate ? self::RESULT_BLOCK_UPDATED : self::RESULT_BLOCK_ADDED;
@@ -264,7 +265,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$listing = '';
 		$noMatches = true;
 
-		foreach ( Phalanx::getAllTypeNames() as $blockType ) {
+		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
 			$res = $service->match( $blockType, $blockText );
 
 			if ( empty( $res ) ) {
@@ -330,7 +331,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		// delete a block
-		if ( !wfRunHooks( "DeletePhalanxBlock", array( $id ) ) ) {
+		// SUS-1207: call handler directly, don't use hook dispatcher for single handler
+		if ( !PhalanxHooks::onDeletePhalanxBlock( $id ) ) {
 			$result = false;
 		} else {
 			$result = true;
@@ -383,7 +385,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$block = $this->request->getVal( 'block' );
 
 		if ( $token == $this->getToken() ) {
-			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
+			foreach ( Phalanx::getSupportedTypeNames() as $type => $typeName ) {
 				$blocks = $this->service->match( $type, $block );
 				if ( !empty( $blocks ) ) {
 					$result[$type] = $blocks;

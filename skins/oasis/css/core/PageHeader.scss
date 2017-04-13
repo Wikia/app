@@ -100,12 +100,10 @@
 		}
 	}
 
-	.mainpage-add-page {
-		border-right: 1px solid $color-page-border;
+	.wikia-button.createpage {
+		clear: both;
 		float: right;
-		line-height: 20px;
-		margin-top: 2px;
-		padding: 0 10px;
+		margin-top: 4px;
 	}
 }
 
@@ -242,6 +240,13 @@
 		h1 {
 			margin: 0 10px 0 0;
 		}
+	}
+
+	.header-share-entry-point-icon {
+		height: 14px;
+		min-width: 14px;
+		vertical-align: middle;
+		width: 14px;
 	}
 }
 

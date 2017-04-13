@@ -13,7 +13,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -38,18 +38,28 @@ class SeriesEntitySearchService extends EntitySearchService {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ')' );
 		}
 
-		$dismax->setQueryFields( implode( ' ', [
-			'title_em^8',
-			'titleStrict',
-			$this->withLang( 'title', $slang ),
-			$this->withLang( 'redirect_titles_mv', $slang ),
-		] ) );
-		$dismax->setPhraseFields( implode( ' ', [
-			'title_em^8',
-			'titleStrict^8',
-			$this->withLang( 'title', $slang ) . '^2',
-			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
-		] ) );
+		$dismax->setQueryFields(
+			implode(
+				' ',
+				[
+					'title_em^8',
+					'titleStrict',
+					$this->withLang( 'title', $slang ),
+					$this->withLang( 'redirect_titles_mv', $slang ),
+				]
+			)
+		);
+		$dismax->setPhraseFields(
+			implode(
+				' ',
+				[
+					'title_em^8',
+					'titleStrict^8',
+					$this->withLang( 'title', $slang ) . '^2',
+					$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+				]
+			)
+		);
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
 		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
@@ -59,29 +69,33 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	protected function consumeResponse( $response ) {
 		foreach ( $response as $item ) {
-			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
+			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
 				return [
-					'wikiId' => $item[ 'wid' ],
-					'articleId' => $item[ 'pageid' ],
-					'title' => $item[ 'title_' . $this->getLang() ],
-					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
-					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'wikiId' => $item['wid'],
+					'articleId' => $item['pageid'],
+					'title' => $item['title_' . $this->getLang()],
+					'url' => $this->replaceHostUrl( $item['url'] ),
+					'quality' => $item['article_quality_i'],
+					'contentUrl' => $this->replaceHostUrl(
+						'http://' . $item['host'] . '/' . self::API_URL . $item['pageid']
+					),
 				];
 			}
 		}
+
 		return null;
 	}
 
 	protected function createQuery( $query ) {
-		$options = [ ];
+		$options = [];
 		if ( $this->getQuality() !== null ) {
-			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
-			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
+			$options[] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
+
 		return '+("' . $query . '")' . $options;
 	}
 

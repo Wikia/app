@@ -410,25 +410,7 @@
 	}
 
 	//diff page
-	td.diff-context {
-		background-color: $color-diff-context;
-		color: $color-diff-text;
-	}
-
-	td.diff-deletedline,
-	td.diff-addedline {
-		color: $color-diff-text;
-	}
-
-	.diffchange-inline {
-		color: $color-diffchange-text;
-	}
-
-	table.diff, td.diff-otitle, td.diff-ntitle {
-		background-color: $color-page;
-	}
-
-  	// BugId:9262
+	// BugId:9262
 	.diff-article-content body.mainpage & {
 		margin-right: 0;
 	}

@@ -1,22 +1,52 @@
-( function ( window ) {
+( function ( window, document ) {
 	'use strict';
 	var _kiq = [],
-		createCookie;
+		createCookie,
+		setABTestProperties;
 
 	createCookie = function(cookieName) {
-		var cookieValue = cookieName + '=true;path=/;domain=';
-		if (window.location.host.indexOf('wikia-dev')) {
-			cookieValue += '.wikia-dev.com';
+		var cookieValue = cookieName + '=true;path=/;domain=',
+			hostName = window.location.host,
+			devDomainIndex = hostName.indexOf('wikia-dev');
+		if (devDomainIndex > -1) {
+			cookieValue += '.' + hostName.substr(devDomainIndex);
 		} else {
 			cookieValue += '.wikia.com';
 		}
 		document.cookie = cookieValue;
 	};
 
-	setTimeout(function(){
-		var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
-		s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
-	}, 1);
+	setABTestProperties = function () {
+		var ABTestPrefix = 'ABTest_',
+			ABTestProperties = {},
+			isAnyABTestActive = false;
+
+		Wikia.AbTest.getExperiments().forEach(function (experiment) {
+			if (experiment.group) {
+				ABTestProperties[ABTestPrefix + experiment.name] = experiment.group.name;
+				isAnyABTestActive = true;
+			}
+		});
+
+		if (isAnyABTestActive) {
+			_kiq.push(['set', ABTestProperties]);
+		}
+	};
+
+	function loadQualaroo () {
+		setTimeout(function(){
+			var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
+			s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
+		}, 1);
+	}
+
+	function setAdBlockEnabledAndLoadQualaroo(enabled) {
+		_kiq.push(['set', {
+			'adBlockEnabled': enabled
+		}]);
+		loadQualaroo();
+	}
+
 
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
@@ -68,5 +98,23 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
+	if (window.ads.context.opts.sourcePointDetection) {
+		if (!window.ads.runtime || !window.ads.runtime.sp || window.ads.runtime.sp.blocking === undefined) {
+			document.addEventListener('sp.blocking', function () {
+				setAdBlockEnabledAndLoadQualaroo(true);
+			});
+
+			document.addEventListener('sp.not_blocking', function () {
+				setAdBlockEnabledAndLoadQualaroo(false);
+			});
+		} else {
+			setAdBlockEnabledAndLoadQualaroo(window.ads.runtime.sp.blocking);
+		}
+	} else {
+		loadQualaroo();
+	}
+
+	setABTestProperties();
+
 	window._kiq = _kiq;
-})( window );
+})( window, document );

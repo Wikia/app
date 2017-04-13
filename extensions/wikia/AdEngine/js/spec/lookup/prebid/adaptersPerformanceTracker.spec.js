@@ -12,7 +12,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			prebid: {
 				get: function () {
 					return mocks.pbjs;
-				}
+				},
+				validResponseStatusCode: 1,
+				errorResponseStatusCode: 2
 			},
 			timeBuckets: {
 				getTimeBucket: function () {
@@ -92,7 +94,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctIndexExchangeBid: {
 				bidder: 'indexExchange',
-				pbMg: '1.00',
+				cpm: '1.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -102,7 +104,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			correctAppNexusBid: {
 				bidder: 'appnexus',
-				pbMg: '0.00',
+				cpm: '0.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -113,7 +115,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			completeAppNexusBid: {
 				bidder: 'appnexus',
 				complete: true,
-				pbMg: '5.00',
+				cpm: '5.00',
 				getStatusCode: function () {
 					return 1;
 				},
@@ -129,20 +131,32 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			pbjs: {
 				getBidResponses: noop
+			},
+			adaptersRegistry: {
+				getAdapters: noop
+			},
+			priceGranularityHelper: {
+				transformPriceFromCpm: function(cpm) {
+					return cpm;
+				}
 			}
 		},
 		module,
-		getBidResponsesSpy;
+		getBidResponsesSpy,
+		getAdaptersSpy;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
+			mocks.adaptersRegistry,
+			mocks.priceGranularityHelper,
 			mocks.timeBuckets,
 			mocks.prebid
 		);
 	}
 
 	beforeEach(function () {
+		getAdaptersSpy = spyOn(mocks.adaptersRegistry, 'getAdapters');
 		module = getModule();
 		getBidResponsesSpy = spyOn(mocks.pbjs, 'getBidResponses');
 	});
@@ -209,7 +223,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			message: 'disabled adapters are not added'
 		}].forEach(function (testCase) {
-			var result = module.setupPerformanceMap(testCase.skin, testCase.adapters);
+			getAdaptersSpy.and.returnValue(testCase.adapters);
+			var result = module.setupPerformanceMap(testCase.skin);
 
 			expect(result).toEqual(testCase.expected, testCase.message);
 		});

@@ -36,13 +36,17 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			wikiTag: $.msg('recirculation-impact-footer-wiki-tag')
 		};
 
-		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
-			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
-			adjustFeatureItem($html);
-			renderDiscussionHeaderImage($html);
+		return utils.prepareFooter()
+			.then(function() {
+				return utils.renderTemplate('client/impactFooter.mustache', renderData)
+			})
+			.then(function($html) {
+				$('#recirculation-impactFooter-container').html($html).find('.discussion-timestamp').timeago();
+				adjustFeatureItem($html);
+				renderDiscussionHeaderImage($html);
 
-			return $html;
-		});
+				return $html;
+			});
 	}
 
 	function adjustFeatureItem($html) {
@@ -91,7 +95,11 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 	function servicesUrl() {
 		if (mw.config.get('wgDevelEnvironment')) {
-			return 'https://services.wikia-dev.com';
+			if (mw.config.get('wgWikiaDatacenter') === 'poz') {
+				return 'https://services.wikia-dev.pl';
+			}
+
+			return 'https://services.wikia-dev.us';
 		}
 
 		return 'https://services.wikia.com';

@@ -2,7 +2,11 @@
 @import 'skins/shared/mixins/transform';
 
 .WikiaRail .recirculation-rail {
-	.rail-item {
+	.recirculation-sponsored-footer {
+		font-size: 12px !important;
+	}
+
+	.item {
 		margin-bottom: 15px;
 	}
 

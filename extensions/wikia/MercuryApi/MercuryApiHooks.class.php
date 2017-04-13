@@ -59,6 +59,22 @@ class MercuryApiHooks {
 	}
 
 	/**
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @return bool
+	 */
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes ) {
+		$categories = $categoryInserts + $categoryDeletes;
+
+		foreach ( array_keys( $categories ) as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+			MercuryApiCategoryCacheHelper::setTouched( $categoryTitle->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
 	 * @desc Purge the contributors data to guarantee that it will be refreshed next time it is required
 	 *
 	 * @param WikiPage $wikiPage
@@ -110,7 +126,7 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			$sectionLabel = $section['label'];
+			$sectionLabel = $section['label'] ?? "";
 
 			if ( empty( $sectionLabel ) || !empty( $section['featured'] ) ) {
 				continue;

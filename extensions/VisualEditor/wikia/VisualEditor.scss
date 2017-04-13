@@ -6,6 +6,9 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 
+// WDS Variables
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
+
 // VE Imports
 @import "modules/ve/ui/styles/color";
 @import "modules/ve/ui/styles/ve.ui.Dialog";
@@ -15,6 +18,7 @@
 @import "modules/ve/ui/styles/ve.ui.Toolbar";
 @import "modules/ve/ui/styles/ve.ui.ToolGroup";
 @import "modules/ve/ui/styles/ve.ui.Widget";
+@import "modules/ve/ui/styles/ve.ui.WikiaChimera";
 @import "modules/ve/ui/styles/ve.ui.WikiaFocusWidget";
 @import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
@@ -27,4 +31,5 @@
 @import "modules/ve/ui/styles/ve.ui.WikiaInfoboxBuilderDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaTransclusionDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaInsertInfoboxEmptyStateWidget";
-
+@import "modules/ve/ui/styles/ve.ui.WikiaLicenseWidget";
+@import "modules/ve/ui/styles/ve.ui.WikiaAnonWarningWidget";

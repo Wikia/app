@@ -67,7 +67,8 @@ var Places = Places || (function(){
 			lon: lon,
 			width: $('#WikiaArticle img').eq(0).width(),
 			align: $('#WikiaArticle figure').eq(0).css('float'),
-			articleId: window.wgArticleId
+			articleId: mw.config.get('wgArticleId'),
+			token: mw.user.tokens.get('editToken')
 		};
 
 		// TODO: add progress indicator

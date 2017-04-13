@@ -178,3 +178,22 @@ body.skin-oasis {
 		@include background-max;
 	}
 }
+
+body.skin-oasis.uap-skin {
+	$uap-color: mix(white, $color-body, 15%);
+	@if (luminance($color-body) > 0.3) {
+		$uap-color: mix(black, $color-body, 10%);
+	}
+	background: {
+		color: $uap-color;
+		image: none;
+	}
+
+	.background-image-gradient {
+		display: none;
+	}
+
+	&::before, &::after {
+		content: none;
+	}
+}

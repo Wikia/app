@@ -1,32 +1,33 @@
 <?php
 
 class ARecoveryModule {
-
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether PageFair recovery is enabled (on current wiki)
+	 *
+	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
 	 *
 	 * @return bool
 	 */
-	public static function isDisabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
+	public function isPageFairRecoveryEnabled() {
+		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
-			return false;
-		}
-
-		return $wgAdDriverEnableSourcePointRecovery === false;
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnablePageFairRecovery === true;
 	}
-	
-	public static function getSourcePointBootstrapCode() {
-		if ( static::isDisabled() ) {
-			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
-		}
-		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
-	}
-	
 
-	public static function isLockEnabled() {
-		$user = F::app()->wg->User;
-		return !self::isDisabled() && ( $user && !$user->isLoggedIn() );
+	/**
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+	 *
+	 * @return bool
+	 */
+	public function isSourcePointRecoveryEnabled() {
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+
+		return $wgUser->isAnon() && (
+			$wgAdDriverEnableSourcePointRecovery === true || $wgAdDriverEnableSourcePointMMS === true
+		);
 	}
 }

@@ -1,0 +1,6 @@
+@mixin global-nav-chevron {
+	border: 4px solid transparent;
+	border-top-color: rgb(101, 110, 120);
+	content: ' ';
+	display: inline-block;
+}

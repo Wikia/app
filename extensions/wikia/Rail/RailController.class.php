@@ -13,6 +13,7 @@ class RailController extends WikiaController {
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
 
+		$this->isEditPage = isset($params['isEditPage']) ? $params['isEditPage'] : false;
 		$this->railModuleList = $this->filterModules($railModules, self::FILTER_NON_LAZY_MODULES);
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;

@@ -3,14 +3,16 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -23,18 +25,20 @@ require([
 ], function (
 	adContext,
 	adEngineRunner,
+	adInfoTracker,
 	pageLevelParams,
+	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	pageFair,
+	pageFairDetection,
 	taboolaHelper,
-	recoveryHelper,
+	sourcePoint,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
-	sourcePoint,
+	sourcePointDetection,
 	yavliTag,
 	win,
 	loader,
@@ -66,23 +70,28 @@ require([
 			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
 		}
 
+		adInfoTracker.run();
+		slotStateMonitor.run();
+
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		sourcePoint.initDetection();
+		slotTweaker.registerMessageListener();
+
+		sourcePointDetection.initDetection();
 
 		if (context.opts.pageFairDetection) {
-			pageFair.initDetection(context);
+			pageFairDetection.initDetection(context);
 		}
 
 		// Recovery
-		recoveryHelper.initEventQueues();
+		sourcePoint.initEventQueues();
 
 		// Taboola
 		if (context.opts.loadTaboolaLibrary) {
-			recoveryHelper.addOnBlockingCallback(function() {
+			sourcePoint.addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
 			});
 		}

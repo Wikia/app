@@ -28,7 +28,19 @@ class DesignSystemSharedLinks {
 	public function getHref( $name, $lang ) {
 		$lang = $this->getLangWithFallback( $lang );
 
-		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+
+		return WikiFactory::getLocalEnvURL( $href );
+	}
+
+	/**
+	 * @param $lang string two letter language code
+	 * @return array list of social urls for given language. In case of no url is defined for given language, english urls are returned.
+	 */
+	public function getSocialHrefs( $lang ) {
+		$lang = $this->getLangWithFallback( $lang );
+
+		return $this->socialHrefs[ $lang ] ?? $this->socialHrefs[ 'en' ];
 	}
 
 	private function getLangWithFallback( $lang ) {
@@ -69,11 +81,6 @@ class DesignSystemSharedLinks {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => null,
-			'social-facebook' => 'https://www.facebook.com/getfandom',
-			'social-twitter' => 'https://twitter.com/getfandom',
-			'social-reddit' => 'https://www.reddit.com/r/wikia',
-			'social-youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
-			'social-instagram' => 'https://www.instagram.com/getfandom/',
 			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Fandom+powered+by+Wikia',
 			'fandom-logo' => 'http://fandom.wikia.com',
@@ -82,7 +89,9 @@ class DesignSystemSharedLinks {
 			'tv' => 'http://fandom.wikia.com/tv',
 			'fandom-university' => 'http://community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
+			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
+			'user-author-profile' => 'http://fandom.wikia.com/u/',
 			'wikia-org-logo' => 'https://www.wikia.org',
 		],
 		'de' => [
@@ -226,7 +235,7 @@ class DesignSystemSharedLinks {
 			'contact' => 'http://fandom.wikia.com/contact?uselang=ru',
 			'terms-of-use' => 'http://ru.wikia.com/wiki/%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F',
 			'privacy-policy' => 'http://ru.wikia.com/wiki/%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C',
-			'community-central' => 'http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F',
+			'community-central' => 'http://ru.community.wikia.com/',
 			'support' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ru',
 			'wam' => 'http://www.wikia.com/WAM?langCode=ru',
@@ -295,6 +304,56 @@ class DesignSystemSharedLinks {
 			'support' => 'http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:%EB%AC%B8%EC%9D%98',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ko',
 			'help' => 'http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:%EB%AC%B8%EC%9D%98',
+		],
+	];
+
+	private $socialHrefs = [
+		'en' => [
+			'facebook' => 'https://www.facebook.com/getfandom',
+			'twitter' => 'https://twitter.com/getfandom',
+			'youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
+			'instagram' => 'https://www.instagram.com/getfandom/',
+			'linkedin' => 'https://www.linkedin.com/company/157252',
+		],
+		'de' => [
+			'facebook' => 'https://www.facebook.com/de.fandom',
+			'twitter' => 'https://twitter.com/fandom_deutsch',
+			'instagram' => 'https://www.instagram.com/de_fandom',
+		],
+		'es' => [
+			'facebook' => 'https://www.facebook.com/Fandom.espanol/',
+			'twitter' => 'https://twitter.com/es_fandom',
+		],
+		'fr' => [
+			'facebook' => 'https://www.facebook.com/fandom.fr',
+			'twitter' => 'https://twitter.com/fandom_fr',
+		],
+		'it' => [
+			'facebook' => 'https://www.facebook.com/fandom.italy',
+			'twitter' => 'https://twitter.com/fandom_italy',
+		],
+		'ja' => [
+			'facebook' => 'https://www.facebook.com/FandomJP',
+			'twitter' => 'https://twitter.com/FandomJP',
+		],
+		'pl' => [
+			'facebook' => 'https://www.facebook.com/pl.fandom',
+			'twitter' => 'https://twitter.com/pl_fandom',
+		],
+		'pt-br' => [
+			'facebook' => 'https://www.facebook.com/getfandom.br',
+			'twitter' => 'https://twitter.com/getfandom_br',
+		],
+		'ru' => [
+			'facebook' => 'https://www.facebook.com/ru.fandom',
+			'twitter' => 'https://twitter.com/ru_fandom',
+			'vkontakte' => 'https://vk.com/ru_fandom',
+		],
+		'zh-hans' => [
+			'facebook' => 'https://www.facebook.com/fandom.zh',
+		],
+		'zh-hant' => [
+			'facebook' => 'https://www.facebook.com/fandom.zh',
 		],
 	];
 }

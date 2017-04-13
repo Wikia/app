@@ -2,23 +2,27 @@
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
-	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
-	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
-	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
+	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
+	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
+], function (
+	adContext,
+	performanceTracker,
+	pricesTracker,
+	adaptersRegistry,
+	helper,
+	settings,
+	factory,
+	doc,
+	win
+) {
 	'use strict';
-
-	var adapters = [
-			appnexus,
-			index
-		],
-		adUnits = [],
+	var adUnits = [],
 		biddersPerformanceMap = {},
-		autoPriceGranularity = 'auto',
 		prebidLoaded = false;
 
 	function call(skin, onResponse) {
@@ -28,12 +32,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
 
-			if (wikiaAdapter.isEnabled()) {
-				adapters.push(wikiaAdapter);
-				win.pbjs.que.push(function () {
-					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-				});
-			}
+			adaptersRegistry.setupCustomAdapters();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
@@ -41,18 +40,19 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			node.parentNode.insertBefore(prebid, node);
 		}
 
-		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
-		adUnits = helper.setupAdUnits(adapters, skin);
+		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
+		adUnits = helper.setupAdUnits(skin);
 
 		if (adUnits.length > 0) {
+
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
-					win.pbjs.setPriceGranularity(autoPriceGranularity);
+					win.pbjs.bidderSettings = settings.create();
 					win.pbjs.addAdUnits(adUnits);
 				});
 			}
 
-			win.pbjs.que.push(function() {
+			win.pbjs.que.push(function () {
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});
@@ -63,22 +63,26 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function calculatePrices() {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 	}
 
 	function trackAdaptersOnLookupEnd() {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
+			performanceTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
 		});
 	}
 
 	function trackAdaptersSlotState(providerName, slotName) {
-		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
+			performanceTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
 		});
 	}
 
@@ -98,6 +102,10 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		return params || {};
 	}
 
+	function getBestSlotPrice(slotName) {
+		return pricesTracker.getSlotBestPrice(slotName);
+	}
+
 	return factory.create({
 		logGroup: 'ext.wikia.adEngine.lookup.prebid',
 		name: 'prebid',
@@ -105,6 +113,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		calculatePrices: calculatePrices,
 		isSlotSupported: isSlotSupported,
 		getSlotParams: getSlotParams,
+		getBestSlotPrice: getBestSlotPrice,
 		trackAdaptersOnLookupEnd: trackAdaptersOnLookupEnd,
 		trackAdaptersSlotState: trackAdaptersSlotState
 	});

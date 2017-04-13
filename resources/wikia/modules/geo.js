@@ -5,7 +5,7 @@
 (function (context) {
 	'use strict';
 
-	function geo(cookies) {
+	function geo(cookies, querystring) {
 		var cookieName = 'Geo',
 			earth = 'XX',
 			geoData = false,
@@ -19,6 +19,11 @@
 		 * @return {Object} The geo data stored in the user's cookie
 		 */
 		function getGeoData() {
+			var forcedCountry;
+			querystring = querystring || context.Wikia.Querystring;
+
+			forcedCountry = querystring().getVal('forcecountry', '');
+
 			if (geoData === false) {
 				var jsonData = decodeURIComponent(cookies.get(cookieName));
 
@@ -27,6 +32,10 @@
 					geoData = JSON.parse(jsonData) || {};
 				} catch (e) {
 					geoData = {};
+				}
+
+				if (forcedCountry) {
+					geoData.country = decodeURIComponent(forcedCountry);
 				}
 			}
 
@@ -41,8 +50,7 @@
 		 * @return {String} The country code
 		 */
 		function getCountryCode() {
-			var data = getGeoData();
-			return data.country;
+			return getGeoData().country;
 		}
 
 		/**
@@ -164,11 +172,11 @@
 	//TODO: Can we remove the double alias in window.Geo and Wikia.geo
 	//and just stick to one?
 	if (context.Wikia) {
-		context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
+		context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies, context.Wikia.Querystring);
 	}
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('wikia.geo', ['wikia.cookies'], geo);
+		context.define('wikia.geo', ['wikia.cookies', 'wikia.querystring'], geo);
 	}
 }(this));

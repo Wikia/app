@@ -1383,9 +1383,7 @@ class Parser {
 				$this->getConverterLanguage()->markNoConversion($url), true, 'free',
 				$this->getExternalLinkAttribs( $url ) );
 			# Register it in the output object...
-			# Replace unnecessary URL escape codes with their equivalent characters
-			$pasteurized = self::replaceUnusualEscapes( $url );
-			$this->mOutput->addExternalLink( $pasteurized );
+			$this->mOutput->addExternalLink( $url );
 		}
 		wfProfileOut( __METHOD__ );
 		return $text . $trail;
@@ -1688,10 +1686,7 @@ class Parser {
 				$this->getExternalLinkAttribs( $url ) ) . $dtrail . $trail;
 
 			# Register link in the output object.
-			# Replace unnecessary URL escape codes with the referenced character
-			# This prevents spammers from hiding links from the filters
-			$pasteurized = self::replaceUnusualEscapes( $url );
-			$this->mOutput->addExternalLink( $pasteurized );
+			$this->mOutput->addExternalLink( $url );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -4177,7 +4172,7 @@ class Parser {
 				wfRunHooks( 'ParserTagHooksBeforeInvoke', [ $name, $marker, $content, $attributes, $this, $frame ] );
 
 				$output = call_user_func_array( $this->mTagHooks[$name],
-					array( $content, $attributes, $this, $frame ) );
+					array( $content, $attributes, $this, $frame, $marker ) );
 			} elseif ( isset( $this->mFunctionTagHooks[$name] ) ) {
 				list( $callback, $flags ) = $this->mFunctionTagHooks[$name];
 				if ( !is_callable( $callback ) ) {
@@ -5252,7 +5247,7 @@ class Parser {
 	 * @param array $params
 	 * @return string HTML
 	 */
-	function renderImageGallery( $text, $params ) {
+	function renderImageGallery( $text, $params, $marker ) {
 		$ig = new ImageGallery();
 
 		/* Wikia change begin - @author: Macbre */
@@ -5291,6 +5286,7 @@ class Parser {
 		/* Wikia change begin */
 		/* Allow extensions to use their own "parser" for <gallery> tag content */
 		if ( !wfRunHooks( 'BeforeParserrenderImageGallery', array( &$this, &$ig ) ) ) {
+			wfRunHooks( 'AfterParserParseImageGallery', [ $marker, $ig ] );
 			return $ig->toHTML();
 		}
 		/* Wikia change end */

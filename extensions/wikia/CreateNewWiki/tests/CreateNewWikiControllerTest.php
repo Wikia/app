@@ -86,7 +86,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$response = new WikiaResponse( 'json', $requestMock );
 
 		if ( !empty( $testData['expectedException'] ) ) {
-			$this->setExpectedException( $testData['expectedException'] );
+			$this->expectException( $testData['expectedException'] );
 		}
 
 		$createNewWikiController = new CreateNewWikiController();

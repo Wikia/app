@@ -2,6 +2,7 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/reset";
 @import "skins/shared/styles/sprite";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 //colors variables
 $main-bgcolor: #ffffff;
@@ -39,7 +40,7 @@ $darkGray-c5: #333333;
 
 body {
 	color: $gray-c4;
-	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 14px;
 	font-weight: light;
 	overflow-y: scroll; // otherwise we will have jump effect durring slidedown

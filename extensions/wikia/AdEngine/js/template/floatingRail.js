@@ -2,12 +2,11 @@
 define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
-	'ext.wikia.adEngine.adHelper',
 	'jquery',
 	'wikia.log',
-	'wikia.document',
+	'wikia.throttle',
 	'wikia.window'
-], function (adContext, math, adHelper, $, log, doc, win) {
+], function (adContext, math, $, log, throttle, win) {
 	'use strict';
 
 	var $medrec = $('#TOP_RIGHT_BOXAD'),
@@ -31,7 +30,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		startPosition,
 		stopPosition,
 
-		update = adHelper.throttle(function () {
+		update = throttle(function () {
 			startPosition = parseInt($railWrapper.offset().top, 10) - globalNavHeight - margin;
 			stopPosition = startPosition + floatingSpace;
 			scrollTop = $win.scrollTop();

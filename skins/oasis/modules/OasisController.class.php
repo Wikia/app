@@ -55,6 +55,7 @@ class OasisController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
+		$this->gfc = null;
 		$this->nielsen = null;
 		$this->openXBidder = null;
 		$this->prebid = null;
@@ -62,11 +63,12 @@ class OasisController extends WikiaController {
 		$this->rubiconVulcan = null;
 		$this->sourcePoint = null;
 		$this->dynamicYield = null;
-		$this->ivw2 = null;
 		$this->ivw3 = null;
 		$this->krux = null;
-		$this->ubisoft = null;
 		$this->netzathleten = null;
+		$this->recoveryHeadBootstrapCode = null;
+		$this->recoveryTopBodyBootstrapCode = null;
+		$this->recoveryBottomBodyBootstrapCode = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -187,7 +189,6 @@ class OasisController extends WikiaController {
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
-			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
 		}
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
@@ -255,18 +256,20 @@ class OasisController extends WikiaController {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
+			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->recoveryHeadBootstrapCode = ARecoveryBootstrapCode::getHeadBootstrapCode();
+			$this->recoveryTopBodyBootstrapCode = ARecoveryBootstrapCode::getTopBodyBootstrapCode();
+			$this->recoveryBottomBodyBootstrapCode = ARecoveryBootstrapCode::getBottomBodyBootstrapCode();
 		}
 
 		wfProfileOut(__METHOD__);

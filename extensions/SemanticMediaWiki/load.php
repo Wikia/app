@@ -74,6 +74,20 @@ class SemanticMediaWiki {
 		// Load default settings
 		require_once __DIR__ . '/DefaultSettings.php';
 
+		// Wikia change - begin
+		// SUS-1232: allow SemanticMediaWiki config variables to be customized via WikiFactory
+
+		/* @var $smwDefaults Array */
+
+		foreach( $smwDefaults as $variableName => $variableDefaultValue ) {
+			if ( !array_key_exists( $variableName, $GLOBALS ) ) {
+				// variable was not set via WikiFactory, so we can safely use a default comming from SMW's DefaultSettings.php (i.e. $smwDefaults)
+				$GLOBALS[ $variableName ] = $variableDefaultValue;
+			}
+		}
+
+		// Wikia change - end
+
 		// Because of MW 1.19 we need to register message files here
 		$GLOBALS['wgMessagesDirs']['SemanticMediaWiki'] = $GLOBALS['smwgIP'] . 'i18n';
 		$GLOBALS['wgExtensionMessagesFiles']['SemanticMediaWiki'] = $GLOBALS['smwgIP'] . 'languages/SMW_Messages.php';

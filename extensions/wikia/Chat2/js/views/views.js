@@ -209,10 +209,9 @@ var UserView = Backbone.View.extend({
 	},
 
 	render: function(){
-		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
+		var model = this.model.toJSON(),
+			groups = this.model.get('groups');
 
-		var model = this.model.toJSON();
-		$().log(model, model.name);
 		if(model['since']) {
 			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
 		}
@@ -224,18 +223,17 @@ var UserView = Backbone.View.extend({
 		$(this.el).attr('id', this.liId());
 		$(this.el).attr('data-user', this.model.get('name'));
 
-		// If this is a chat moderator, add the chat-mod class so that kick-ban links don't show up, etc.
-		if(this.model.get('isModerator') === true){
-			$(this.el).addClass('chat-mod');
+		// Check user groups so that kick-ban links don't show up, etc. & user gets a proper badge
+		if(groups.indexOf("chatmoderator") !== -1){
+			$(this.el).addClass('chatmoderator');
 		}
 
-		if(this.model.get('isStaff') === true){
+		if(groups.indexOf("staff") !== -1){
 			$(this.el).addClass('staff');
 		}
 
-
 		// If the user is away, add a certain class to them, if not, remove the away class.
-		if(this.model.get('statusState') == STATUS_STATE_AWAY){
+		if(this.model.get('statusState') === STATUS_STATE_AWAY){
 			$(this.el).addClass('away');
 		} else {
 			$(this.el).removeClass('away');
@@ -412,8 +410,6 @@ var NodeChatDiscussion = Backbone.View.extend({
 });
 //TODO: rename it to frame NodeChatFrame ?
 var NodeChatUsers = Backbone.View.extend({
-	actionTemplate: _.template( $('#user-action-template').html() ),
-	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
@@ -428,9 +424,11 @@ var NodeChatUsers = Backbone.View.extend({
 
 		this.delegateEventsToTrigger(this.triggerEvents, function(e) {
     		e.preventDefault();
+    		// handle click on opened dropdown menu
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
-    		if(!(name.length > 0)) {
-    			name = $(e.target).closest('li').find('.username').first().text();
+    		if (!name) {
+    			// handle click on right rail user item
+    			name = $(e.target).closest('li.User').data('user');
     		}
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
 		});
@@ -541,10 +539,13 @@ var NodeChatUsers = Backbone.View.extend({
 		var location,
 			$element = $(element),
 			offset = $element.offset(),
-			menu = $('#UserStatsMenu').html($(element).find('.UserStatsMenu').html()),
+			menu = $('#UserStatsMenu').html($element.find('.UserStatsMenu').html()),
 			menuActions = menu.find('.actions'),
-			username = menu.find('.username').text(),
+			username = $element.data('user'),
 			ul = $('<ul>');
+
+		// SUS-1695: add username to menu
+		menu.find('.username').data('name', username);
 
 		// position menu
 		menu.css('right', $('#Rail').outerWidth()).css('top', offset.top);
@@ -553,7 +554,9 @@ var NodeChatUsers = Backbone.View.extend({
 		if (actions.regular && actions.regular.length) {
 			var regularActions = ul.clone().addClass('regular-actions');
 			for (var i in actions.regular) {
-				var action = actions.regular[i];
+				var action = actions.regular[i],
+					template = _.template( $('#user-action-'+action+'-template').html() );
+
 				if (action == 'profile') {
 					action = /Message_Wall/.test(window.wgChatPathToProfilePage) ? 'message-wall' : 'talk-page';
 					location = window.wgChatPathToProfilePage.replace('$1', username);
@@ -566,7 +569,7 @@ var NodeChatUsers = Backbone.View.extend({
 				}
 
 				regularActions.append(
-					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
+					template({
 						actionUrl: location,
 						actionName: action,
 						actionDesc: mw.message('chat-user-menu-' + action).escaped()
@@ -581,9 +584,10 @@ var NodeChatUsers = Backbone.View.extend({
 		if (actions.admin && actions.admin.length) {
 			var adminActions = ul.clone().addClass('admin-actions');
 			for (var i in actions.admin) {
-				var action = actions.admin[i];
+				var action = actions.admin[i],
+					template = _.template( $('#user-action-'+action+'-template').html() );
 				adminActions.append(
-					this.actionTemplateNoUrl({
+					template({
 						actionName: action,
 						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
@@ -600,7 +604,9 @@ var NodeChatUsers = Backbone.View.extend({
 		}
 
 		// Add chat-mod class if necessary
-		$element.hasClass('chat-mod') ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
+		$element.hasClass('chatmoderator') ?
+			menu.addClass('chatmoderator') :
+			menu.removeClass('chatmoderator');
 
 		menu.show();
 
@@ -618,7 +624,7 @@ var NodeChatUsers = Backbone.View.extend({
 			event.preventDefault();
 			var target = $(event.currentTarget),
 				menu = target.closest('.UserStatsMenu'),
-				username = menu.find('.username').text(),
+				username = menu.find('.username').data('name'),
 				location = '';
 
 			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {

@@ -1,5 +1,5 @@
 <? if ( is_array( $comment ) ) :?>
-<li id="comm-<?=$commentId?>" class="comment SpeechBubble <?=$rowClass?>" data-user="<?=$comment['username']?>">
+<li id="comm-<?=$commentId?>" class="comment SpeechBubble <?=$rowClass?><?= $comment['isStaff'] ? ' staff' : '' ?>" data-user="<?= Sanitizer::encodeAttribute( $comment['username'] ); ?>">
 	<div class="speech-bubble-avatar">
 		<a href="<?= $comment['userurl'] ?>">
 			<?= $comment['avatar'] ?>
@@ -7,7 +7,7 @@
 	</div>
 	<blockquote class="speech-bubble-message">
 		<div class="WikiaArticle article-comm-text" id="comm-text-<?= $comment['id'] ?>">
-		<?= $comment['text'] ?>
+		<?= $commentContent ?>
 		</div>
 
 		<div class="edited-by">

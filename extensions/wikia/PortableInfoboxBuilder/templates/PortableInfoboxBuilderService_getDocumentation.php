@@ -1,9 +1,9 @@
 <noinclude>
-<?= wfMessage('portable-infobox-builder-documentation-example-usage')->escaped(); ?>
+<?= wfMessage('portable-infobox-builder-documentation-example-usage')->inContentLanguage()->escaped(); ?>
 <pre>
 {{<?= $title ?><?php foreach($sources as $source): ?>
 
-|<?= $source ?>=<?= wfMessage('portable-infobox-builder-documentation-example-param')->escaped(); ?><?php endforeach; ?>
+|<?= $source ?>=<?= wfMessage('portable-infobox-builder-documentation-example-param')->inContentLanguage()->escaped(); ?><?php endforeach; ?>
 
 }}
 </pre>

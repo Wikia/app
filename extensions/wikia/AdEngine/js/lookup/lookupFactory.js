@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adTracker, helper, lazyQueue, log) {
+], function (adContext, adTracker, sourcePoint, lazyQueue, log) {
 	'use strict';
 
 	function create(module) {
@@ -38,6 +38,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function call() {
 			log('call', 'debug', module.logGroup);
 
+			response = false;
+
 			if (!Object.keys) {
 				log(['call', 'Module is not supported in IE8', module.name], 'debug', module.logGroup);
 				return;
@@ -50,7 +52,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
 
-			helper.addOnBlockingCallback(onResponseCallbacks.start);
+			sourcePoint.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
 		function wasCalled() {
@@ -72,7 +74,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			if (module.name === 'prebid') {
 				module.trackAdaptersSlotState(providerName, slotName, params);
 			} else {
-				encodedParams = module.encodeParamsForTracking(params);
+				encodedParams = module.encodeParamsForTracking(params, slotName);
 				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
 				category = module.name + '/' + eventName + '/' + providerName;
 
@@ -91,6 +93,14 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
+		function getBestSlotPrice(slotName) {
+			if (module.getBestSlotPrice) {
+				return module.getBestSlotPrice(slotName);
+			}
+
+			return {};
+		}
+
 		function getName() {
 			return module.name;
 		}
@@ -101,6 +111,10 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return response;
 		}
 
+		function isSlotSupported(slotName) {
+			return module.isSlotSupported(slotName);
+		}
+
 		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
 			callback();
 		});
@@ -108,9 +122,11 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		return {
 			addResponseListener: addResponseListener,
 			call: call,
+			getBestSlotPrice: getBestSlotPrice,
 			getName: getName,
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
+			isSlotSupported: isSlotSupported,
 			trackState: trackState,
 			wasCalled: wasCalled
 		};

@@ -39,6 +39,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderComscore();
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
+			case 'GoogleFundingChoices':
+				return new AnalyticsProviderGoogleFundingChoices();
 			case 'GoogleUA':
 				return new AnalyticsProviderGoogleUA();
 			case 'Krux':
@@ -57,12 +59,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderRubiconVulcan();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
-			case 'IVW2':
-				return new AnalyticsProviderIVW2();
 			case 'IVW3':
 				return new AnalyticsProviderIVW3();
-			case 'Ubisoft':
-				return new AnalyticsProviderUbisoft();
 			case 'NetzAthleten':
 				return new AnalyticsProviderNetzAthleten();
 		}

@@ -8,7 +8,7 @@
  */
 
 class SEOTweaksHooksHelper {
-	const DELETED_PAGES_STATUS_CODE = 410;
+	const NOT_FOUND_STATUS_CODE = 404;
 
 	/**
 	 * List of hosts associated with external sharing services
@@ -29,41 +29,6 @@ class SEOTweaksHooksHelper {
 	}
 
 	/**
-	 * set appropriate status code for deleted pages
-	 *
-	 * @author ADi
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param Title $title
-	 * @param Article $article
-	 * @return bool
-	 */
-	static public function onAfterInitialize( &$title, &$article, &$output ) {
-		if( !$title->exists() && $title->isDeleted() ) {
-			$setDeletedStatusCode = true;
-			// handle special cases
-			switch( $title->getNamespace() ) {
-				case NS_CATEGORY:
-					// skip non-empty categories
-					if ( Category::newFromTitle($title)->getPageCount() > 0 ) {
-						$setDeletedStatusCode = false;
-					}
-					break;
-				case NS_FILE:
-					// skip existing file with deleted description
-					$file = wfFindFile( $title );
-					if ( $file && $file->exists() ) {
-						$setDeletedStatusCode = false;
-					}
-					break;
-			}
-			if ( $setDeletedStatusCode ) {
-				$output->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * change title tag for Video Page and Image Page
 	 * @author Jacek Jursza
 	 * @param ImagePage $imgPage
@@ -71,29 +36,36 @@ class SEOTweaksHooksHelper {
 	 * @return bool
 	 */
 	static function onImagePageAfterImageLinks( $imgPage, $html ) {
-		$file = $imgPage->getDisplayedFile(); /* @var $file LocalRepo */
+		$file = $imgPage->getDisplayedFile(); /* @var $file WikiaLocalFile */
 		$title = $imgPage->getTitle();  /* @var $title Title */
-		$newTitle = '';
 
 		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin('monobook') ) {
-
-			if ( (new WikiaFileHelper)->isFileTypeVideo( $file ) ) {
-
-				$newTitle = wfMsg('seotweaks-video') . ' - ' . $title->getBaseText();
-			} else {
-
-				// It's not Video so lets check if it is Image
-				if ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
-
-					$newTitle = wfMsg('seotweaks-image') . ' - ' . $title->getBaseText();
-				}
-			}
+			$newTitle = self::getTitleForFilePage( $title, $file );
 
 			if ( !empty( $newTitle ) ) {
 				F::app()->wg->Out->setPageTitle( $newTitle );
 			}
 		}
+
 		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param File $file
+	 *
+	 * @return null|string
+	 */
+	public static function getTitleForFilePage( Title $title, File $file ) {
+		$newTitle = null;
+
+		if ( ( new WikiaFileHelper )->isFileTypeVideo( $file ) ) {
+			$newTitle = wfMessage( 'seotweaks-video' )->escaped() . ' - ' . $title->getBaseText();
+		} elseif ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
+			$newTitle = wfMessage( 'seotweaks-image' )->escaped() . ' - ' . $title->getBaseText();
+		}
+
+		return $newTitle;
 	}
 
 	/**
@@ -150,6 +122,31 @@ class SEOTweaksHooksHelper {
 				$outputDone = true;
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * Hook: set status code to 404 for category pages without pages or media
+	 * @param CategoryPage $categoryPage
+	 * @return bool
+	 */
+	public static function onCategoryPageView( &$categoryPage ) {
+		$title = $categoryPage->getTitle();
+		if ( $title->getNamespace() === NS_CATEGORY ) {
+			$app = F::app();
+			$cacheKey = wfMemcKey( 'category_has_members', sha1( $title->getDBkey() ) );
+			$hasMembers = $app->wg->Memc->get( $cacheKey );
+			if ( !is_numeric( $hasMembers ) ) {
+				$category = Category::newFromTitle( $title );
+				$hasMembers = empty( $category->getPageCount() ) ? 0 : 1;
+				$app->wg->Memc->set( $cacheKey, $hasMembers, WikiaResponse::CACHE_VERY_SHORT );
+			}
+
+			if ( $hasMembers < 1 ) {
+				$categoryPage->getContext()->getOutput()->setStatusCode( self::NOT_FOUND_STATUS_CODE );
+			}
+		}
+
 		return true;
 	}
 
