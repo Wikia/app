@@ -205,7 +205,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				} else {
 					this._$markAllAsReadButton.addClass(isHiddenClass);
 					this._$notificationsCount.empty()
-						.addClass('wds-is-isHiddenClass');
+						.addClass(isHiddenClass);
 				}
 			};
 
