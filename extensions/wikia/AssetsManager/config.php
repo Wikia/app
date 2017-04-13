@@ -88,6 +88,8 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
+		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
+		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfaaDesktop.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
@@ -241,9 +243,11 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -262,10 +266,12 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
 ];
@@ -965,6 +971,9 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
+		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',

@@ -151,6 +151,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
+		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact &&
