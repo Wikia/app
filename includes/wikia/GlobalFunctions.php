@@ -927,8 +927,8 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// Under 24 hrs: to the hour (4 hours ago)
 		$res = wfMsgExt( 'wikia-hours-ago', array( 'parsemag' ), floor( $ago / 3600 ) );
 	}
-	else if ( $ago < 30 * 86400 ) {
-		// Under 30 days: to the day (5 days ago)
+	else if ( $ago < 7 * 86400 ) {
+		// Under 7 days: to the day (5 days ago)
 		$res = wfMsgExt( 'wikia-days-ago', array( 'parsemag' ), floor( $ago / 86400 ) );
 	}
 	else if ( $ago < 365 * 86400 ) {
