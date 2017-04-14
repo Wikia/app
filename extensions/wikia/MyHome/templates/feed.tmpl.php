@@ -10,7 +10,11 @@
 		<?php } else { ?>
 			<span class="title"><?php print htmlspecialchars($row['title']) ?></span>
 <?php } ?>
-			<cite><?php print FeedRenderer::getActionLabel($row); ?><?php print ActivityFeedRenderer::formatTimestamp($row['timestamp']); ?><?php print FeedRenderer::getDiffLink($row); ?></cite>
+			<?php
+				$timestamp = ActivityFeedRenderer::formatTimestamp( $row['timestamp'] );
+				$timestamp = $timestamp ? ' • ' . $timestamp : '';
+			?>
+			<cite><?php print $timestamp; ?><?php print FeedRenderer::getActionLabel($row); ?><?php print FeedRenderer::getDiffLink($row); ?></cite>
 			<table><?php print FeedRenderer::getDetails($row) ?></table>
 			<?php
 				global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;

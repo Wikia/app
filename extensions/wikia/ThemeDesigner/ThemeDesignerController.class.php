@@ -38,13 +38,7 @@ class ThemeDesignerController extends WikiaController {
 
 		// format time (for edits older than 30 days - show timestamp)
 		foreach($themeHistory as &$entry) {
-			$diff = time() - strtotime( $entry['timestamp'] );
-
-			if($diff < 30 * 86400) {
-				$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
-			} else {
-				$entry['timeago'] = $wgLang->date($entry['timestamp']);
-			}
+			$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
 		}
 		$this->themeHistory = $themeHistory;
 
