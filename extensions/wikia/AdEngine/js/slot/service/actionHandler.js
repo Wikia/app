@@ -2,8 +2,9 @@
 define('ext.wikia.adEngine.slot.service.actionHandler',  [
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'wikia.log'
-], function (messageListener, slotTweaker, log) {
+], function (messageListener, slotTweaker, viewabilityHandler, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.service.actionHandler';
@@ -28,6 +29,9 @@ define('ext.wikia.adEngine.slot.service.actionHandler',  [
 				break;
 			case 'make-responsive':
 				slotTweaker.makeResponsive(data.slotName, data.aspectRatio);
+				break;
+			case 'refresh-on-view':
+				viewabilityHandler.refreshOnView(data.slotName);
 				break;
 			default:
 				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
