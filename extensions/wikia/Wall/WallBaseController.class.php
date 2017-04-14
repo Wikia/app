@@ -246,6 +246,7 @@ class WallBaseController extends WikiaService {
 		}
 
 		$this->response->setVal( 'id', $wallMessage->getId() );
+		$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $wallMessage->getCreatTime( TS_MW ) ) );
 
 		if ( $wallMessage->isEdited() ) {
 			if ( time() - $wallMessage->getEditTime( TS_UNIX ) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP ) {
@@ -253,7 +254,6 @@ class WallBaseController extends WikiaService {
 			} else {
 				$this->response->setVal( 'iso_timestamp', null );
 			}
-			$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $wallMessage->getEditTime( TS_MW ) ) );
 			$this->response->setVal( 'showEditedTS', true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );
@@ -274,7 +274,6 @@ class WallBaseController extends WikiaService {
 			} else {
 				$this->response->setVal( 'iso_timestamp', null );
 			}
-			$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $wallMessage->getCreatTime( TS_MW ) ) );
 			$this->response->setVal( 'isEdited', false );
 		}
 
