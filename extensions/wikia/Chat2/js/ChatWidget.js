@@ -89,13 +89,6 @@ var ChatWidget = {
 			}),
 			$chatModule = $('.chat-module');
 
-		console.log('widgetUserElementTemplate', ChatWidget.widgetUserElementTemplate);
-		console.log('data', {
-			users: users,
-			blankImageUrl: window.wgBlankImageUrl
-		});
-		console.log('chat', output);
-
 		$chatModule.find('.chat-contents.chat-room-empty').each(function () {
 			$(this).eq(0)
 				.removeClass('chat-room-empty')
