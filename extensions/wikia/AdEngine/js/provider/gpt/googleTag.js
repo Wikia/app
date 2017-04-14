@@ -20,7 +20,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	window.googletag = window.googletag || {};
 	window.googletag.cmd = window.googletag.cmd || [];
 
-	// TODO: check recovery
 	function dispatchEvent(event, methodName) {
 		var slot,
 			slotName = adSlot.getShortSlotName(event.slot.getName());
