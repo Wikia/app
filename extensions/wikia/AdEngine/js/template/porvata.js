@@ -83,7 +83,6 @@ define('ext.wikia.adEngine.template.porvata', [
 		displayWrapper.classList.add('video-display-wrapper');
 
 		container.appendChild(displayWrapper);
-
 		providerContainer.appendChild(container);
 
 		return displayWrapper;
