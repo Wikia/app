@@ -150,7 +150,7 @@ var ChatWidget = {
 	 * @param $t chat module element
 	 */
 	processModuleTemplate: function ($t) {
-		ChatWidget.initPopover($t.find('.wds-avatar-stack'));
+		ChatWidget.initPopover($t);
 
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
@@ -176,15 +176,14 @@ var ChatWidget = {
 			trigger: 'manual',
 			placement: 'bottom',
 			content: function () {
-				var userStatsMenu = $(this).find('.UserStatsMenu');
-
+				var userStatsMenu = $el.find('.UserStatsMenu').eq($(this).index());
 				return userStatsMenu.clone().wrap('<div>').parent().html();
 			}
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
 			// this will remove all elements that has popover class, ticket created to fix it SUS-1993
 			$('.popover').remove();
-			$(this).find('.UserStatsMenu img[data-src]').each(function () {
+			$el.find('.UserStatsMenu img[data-src]').each(function () {
 				var image = $(this);
 				image.attr('src', image.attr('data-src')).removeAttr('data-src');
 			});
