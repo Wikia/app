@@ -3,21 +3,25 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.slot.adSlot',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adDecoratorLegacyParamFormat,
-			 eventDispatcher,
-			 adSlot,
-			 slotTracker,
-			 slotTweaker,
-			 registerHooks,
-			 doc,
-			 lazyQueue,
-			 log) {
+], function (
+	adDecoratorLegacyParamFormat,
+	eventDispatcher,
+	adSlot,
+	slotRegistry,
+	slotTracker,
+	slotTweaker,
+	registerHooks,
+	doc,
+	lazyQueue,
+	log
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -157,6 +161,7 @@ define('ext.wikia.adEngine.adEngine', [
 				});
 			}
 
+			slotRegistry.add(slot, provider.name);
 			initializeProviderOnce(provider);
 
 			provider.fillInSlotQueue.push([slot]);
@@ -198,6 +203,7 @@ define('ext.wikia.adEngine.adEngine', [
 				} while (provider);
 			}
 
+			slotRegistry.reset(slotName);
 			cleanProviderContainers(slotName);
 			nextProvider();
 		}
