@@ -11,8 +11,8 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
 	'wikia.instantGlobals',
@@ -29,8 +29,8 @@ require([
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	slotTweaker,
 	scrollHandler,
+	actionHandler,
 	yavliTag,
 	geo,
 	instantGlobals,
@@ -71,7 +71,7 @@ require([
 
 		adInfoTracker.run();
 		slotStateMonitor.run();
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 	});
 
 	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {

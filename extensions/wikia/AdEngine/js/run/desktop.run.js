@@ -14,12 +14,12 @@ require([
 	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
-	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
@@ -36,12 +36,12 @@ require([
 	taboolaHelper,
 	sourcePoint,
 	scrollHandler,
+	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
 	yavliTag,
 	win,
-	loader,
 	gcs,
 	floatingRail
 ) {
@@ -78,7 +78,7 @@ require([
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 
 		sourcePointDetection.initDetection();
 
