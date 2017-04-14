@@ -84,7 +84,7 @@ var ChatWidget = {
 	 */
 	updateUsersList: function(users) {
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
-				users: users,
+				viewedUsersInfo: users,
 				blankImageUrl: window.wgBlankImageUrl
 			}),
 			$chatModule = $('.chat-module');
