@@ -19,9 +19,8 @@ require([
 	 *    {
 	 *  		id: 'unique identifier - only used if you want to use data across multiple views',
 	 *  		viewModule: 'name of the view',
-	 *  		helper: 'name of the helper',
 	 *  		options: {
-	 *  			any options to pass to the helper
+	 *  			any options to pass to the liftigniter helper
 	 *  		}
 	 *  	}
 	 *  ];
@@ -31,7 +30,7 @@ require([
 
 	var recircModules = [
 			{
-				id: "LI_rail",
+				id: 'LI_rail',
 				viewModule: 'ext.wikia.recirculation.views.premiumRail',
 				options: {
 					max: 5,
@@ -44,7 +43,7 @@ require([
 				}
 			},
 			{
-				id: "LI_impactFooter",
+				id: 'LI_impactFooter',
 				viewModule: 'ext.wikia.recirculation.views.impactFooter',
 				options: {
 					max: 9,
@@ -57,13 +56,13 @@ require([
 				}
 			},
 			{
-				id: "LI_footer",
+				id: 'LI_footer',
 				viewModule: 'ext.wikia.recirculation.views.footer',
 				options: {
 					max: 3,
 					widget: 'wikia-footer-wiki-rec',
 					source: 'wiki',
-					title: "Discover New Wikis",
+					title: 'Discover New Wikis',
 					width: 332,
 					height: 187,
 					flush: true,
@@ -75,8 +74,10 @@ require([
 			}
 		],
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
-		views = {}, // Each view holds an array of promises used to gather data for that view
-		completed = [], // An array of promises to keep track of which views have completed rendering
+		// Each view holds an array of promises used to gather data for that view
+		views = {},
+		// An array of promises to keep track of which views have completed rendering
+		completed = [],
 		liftigniterHelpers = {};
 
 	if (w.wgContentLanguage !== 'en') {
