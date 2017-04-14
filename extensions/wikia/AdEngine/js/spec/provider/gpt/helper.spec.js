@@ -88,7 +88,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.sourcePoint,
 			mocks.slotTweaker,
 			mocks.sraHelper,
-			null, // scrollHandler,
 			mocks.pageFair
 		);
 	}

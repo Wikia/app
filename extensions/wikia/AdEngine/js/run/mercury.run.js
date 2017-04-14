@@ -11,7 +11,6 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
@@ -29,7 +28,6 @@ require([
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	scrollHandler,
 	actionHandler,
 	yavliTag,
 	geo,
@@ -39,7 +37,6 @@ require([
 	'use strict';
 
 	messageListener.init();
-	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
