@@ -48,6 +48,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			window.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
 				dispatchEvent(event, 'renderEnded');
 			});
+			window.googletag.pubads().addEventListener('impressionViewable', function (event) {
+				dispatchEvent(event, 'viewed');
+			});
 
 			window.googletag.enableServices();
 

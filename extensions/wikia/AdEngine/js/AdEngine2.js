@@ -103,7 +103,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 	function createSlot(queuedSlot, container, callbacks) {
 		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
-		registerHooks(slot, ['success', 'collapse', 'hop', 'renderEnded']);
+		registerHooks(slot, ['success', 'collapse', 'hop', 'renderEnded', 'viewed']);
 		slot.post('success', queuedSlot.onSuccess);
 
 		return slot;
@@ -152,6 +152,10 @@ define('ext.wikia.adEngine.adEngine', [
 					},
 					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], 'debug', logGroup);
+					},
+					viewed: function () {
+						log(['viewed', provider.name, slotName], 'debug', logGroup);
+						console.info('VIEWED');
 					}
 				});
 

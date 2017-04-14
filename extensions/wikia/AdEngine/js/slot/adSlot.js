@@ -25,7 +25,8 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			collapse: registerHook('collapse'),
 			hop: registerHook('hop'),
 			renderEnded: registerHook('renderEnded'),
-			success: registerHook('success')
+			success: registerHook('success'),
+			viewed: registerHook('viewed')
 		};
 	}
 
