@@ -89,7 +89,7 @@ var ChatWidget = {
 			}),
 			$chatModule = $('.chat-module');
 
-
+		console.log('chat', output);
 
 		$chatModule.find('.chat-contents.chat-room-empty').each(function () {
 			$(this).eq(0)
