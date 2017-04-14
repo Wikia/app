@@ -22,6 +22,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		return {
 			name: name,
 			container: container,
+			isViewed: false,
 			collapse: registerHook('collapse'),
 			hop: registerHook('hop'),
 			renderEnded: registerHook('renderEnded'),

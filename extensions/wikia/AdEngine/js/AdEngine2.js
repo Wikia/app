@@ -123,8 +123,8 @@ define('ext.wikia.adEngine.adEngine', [
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.show(slotName);
 						eventDispatcher.dispatch('adengine.slot.status', {
-							slot: slot, 
-							status: 'success', 
+							slot: slot,
+							status: 'success',
 							adInfo: adInfo
 						});
 						tracker.track('success', adInfo);
@@ -155,9 +155,12 @@ define('ext.wikia.adEngine.adEngine', [
 					},
 					viewed: function () {
 						log(['viewed', provider.name, slotName], 'debug', logGroup);
-						console.info('VIEWED');
 					}
 				});
+
+			slot.post('viewed', function () {
+				slot.isViewed = true;
+			});
 
 			if (slotTweaker.isTopLeaderboard(slotName)) {
 				slot.pre('collapse', function () {
