@@ -3,7 +3,7 @@
 			<div class="deleteorremove-infobox" >
 			<table class="deleteorremove-container"><tr><td width="100%">
 			<div class="deleteorremove-bubble tail">
-				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['user']->getName(), 20 ) ?></div>
+				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['username'], 20 ) ?></div>
 				<div class="message">
 					<? if( $isreply ): ?>
 						<?= wfMessage( 'wall-message-' . $statusInfo['status'] . '-reply-because', [ $statusInfo['user_displayname_linked'] ] )->text(); ?><br />
@@ -27,13 +27,13 @@
 	<? if ( $showArchiveInfo ): ?>
 		<div class="deleteorremove-infobox">
 			<div class="deleteorremove-bubble">
-				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['user']->getName(), 20 ) ?></div>
+				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['username'], 20 ) ?></div>
 				<div class="message">
 					<? if ( isset( $statusInfo['reason'] ) && mb_strlen( $statusInfo['reason'] ) ): ?>
 						<?= wfMessage( 'wall-message-closed-by-because', [ $statusInfo['user_displayname_linked'] ] )->text(); ?><br>
 						<div class="reason"><?= Linker::formatComment( $statusInfo['reason'] ); ?></div>
 					<? else: ?>
-						<?= wfMessage( 'wall-message-closed-by', [ $statusInfo['user']->getName(), $statusInfo['user']->getUserPage() ] )->parse(); ?><br>
+						<?= wfMessage( 'wall-message-closed-by', [ $statusInfo['username'], $statusInfo['user_page'] ] )->parse(); ?><br>
 					<? endif; ?>
 					<div class="timestamp"><span><?= $statusInfo['fmttime']; ?></span></div>
 				</div>
