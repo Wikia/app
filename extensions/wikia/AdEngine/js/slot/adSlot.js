@@ -3,8 +3,8 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePoint')
-], function (doc, log, win, sourcePoint) {
+	require.optional('ext.wikia.aRecoveryEngine.adBlockDetection')
+], function (doc, log, win, adBlockDetection) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		var cssSelector = '#' + slotName + ' > .provider-container:not(.hidden) div[id*="_container_"] > iframe',
 			iframe = doc.querySelector(cssSelector);
 
-		if (!iframe && sourcePoint && sourcePoint.isBlocking()) {
+		if (!iframe && adBlockDetection && adBlockDetection.isBlocking()) {
 			iframe = getRecoveredIframe(slotName);
 		}
 
@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	}
 
 	function getProviderContainer(slotName) {
-		var isRecovering = sourcePoint.isBlocking(),
+		var isRecovering = adBlockDetection.isBlocking(),
 			providerContainer,
 			slotContainer = doc.getElementById(slotName);
 

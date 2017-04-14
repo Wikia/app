@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.yavliTag', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log'
-], function (adContext, sourcePoint, doc, log) {
+], function (adContext, adBlockDetection, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.yavliTag';
@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.provider.yavliTag', [
 	log('init', 'debug', logGroup);
 
 	function add() {
-		sourcePoint.addOnBlockingCallback(function () {
+		adBlockDetection.addOnBlockingCallback(function () {
 			var context = adContext.getContext(),
 				yavli = doc.createElement('script');
 

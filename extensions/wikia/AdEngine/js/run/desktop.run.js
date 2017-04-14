@@ -12,12 +12,12 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
 	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
@@ -34,12 +34,12 @@ require([
 	messageListener,
 	pageFairDetection,
 	taboolaHelper,
-	sourcePoint,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
 	yavliTag,
+	adBlockDetection,
 	win,
 	loader,
 	gcs,
@@ -86,12 +86,12 @@ require([
 			pageFairDetection.initDetection(context);
 		}
 
-		// Recovery
-		sourcePoint.initEventQueues();
+		// Recovery & detection
+		adBlockDetection.initEventQueues();
 
 		// Taboola
 		if (context.opts.loadTaboolaLibrary) {
-			sourcePoint.addOnBlockingCallback(function() {
+			adBlockDetection.addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
 			});
 		}

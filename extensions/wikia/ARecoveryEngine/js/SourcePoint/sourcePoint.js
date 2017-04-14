@@ -19,11 +19,11 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
-		cb = function (callback) {
-			callback();
-		},
-		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
-		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		//cb = function (callback) {
+		//	callback();
+		//},
+		//onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		//onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb),
 		recoverableSlots = [
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
@@ -33,19 +33,6 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 			'BOTTOM_LEADERBOARD',
 			'GPT_FLUSH'
 		];
-
-	function initEventQueues() {
-		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
-		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
-	}
-
-	function addOnBlockingCallback(callback) {
-		onBlockingEventsQueue.push(callback);
-	}
-
-	function addOnNotBlockingCallback(callback) {
-		onNotBlockingEventsQueue.push(callback);
-	}
 
 	/**
 	 * SourcePoint can be enabled only if PF recovery is disabled
@@ -87,7 +74,7 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 			if (instantGlobals.wgARecoveryEngineCustomLog) {
 				try {
 					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.open('GET', customLogEndpoint+type, true);
+					xmlHttp.open('GET', customLogEndpoint + type, true);
 					xmlHttp.send();
 				} catch (e) {
 					log(['track', e], 'error', logGroup);
@@ -100,26 +87,15 @@ define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	function verifyContent() {
 		var wikiaArticle = doc.getElementById('WikiaArticle'),
 			display = wikiaArticle.currentStyle ?
-						wikiaArticle.currentStyle.display : getComputedStyle(wikiaArticle, null).display;
+				wikiaArticle.currentStyle.display :
+				getComputedStyle(wikiaArticle, null).display;
 
 		if (display === 'none') {
 			track('css-display-none');
 		}
 	}
 
-	function getSafeUri(url) {
-		if (isBlocking()) {
-			url = win._sp_.getSafeUri(url);
-		}
-
-		return url;
-	}
-
 	return {
-		addOnBlockingCallback: addOnBlockingCallback,
-		addOnNotBlockingCallback: addOnNotBlockingCallback,
-		getSafeUri: getSafeUri,
-		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
 		isSlotRecoverable: isSlotRecoverable,
 		isEnabled: isEnabled,

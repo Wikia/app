@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'wikia.window'
 ], function (
 	adContext,
-	sourcePoint,
+	adBlockDetection,
 	slotFinder,
 	$,
 	log,
@@ -115,8 +115,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					win.adslots2.push({
 						slotName: slotName,
 						onSuccess: function () {
-							if (sourcePoint.isEnabled()) {
-								sourcePoint.addOnBlockingCallback(replaceAdSlot);
+							if (adBlockDetection.isEnabled()) {
+								adBlockDetection.addOnBlockingCallback(replaceAdSlot);
 							}
 
 							win.addEventListener('scroll', update);

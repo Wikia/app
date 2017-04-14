@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.revcontentSlots', [
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (sourcePoint, doc, log, win) {
+], function (adBlockDetection, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.revcontentSlots',
@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 	function init() {
 		log('init', 'Init Revcontent slots', logGroup);
 
-		sourcePoint.addOnBlockingCallback(function () {
+		adBlockDetection.addOnBlockingCallback(function () {
 			var wikiaArticleFooter = doc.getElementById('WikiaArticleFooter'),
 				wikiaMainContent = doc.getElementById('WikiaMainContent'),
 				wikiaRail = doc.getElementById('WikiaRail');

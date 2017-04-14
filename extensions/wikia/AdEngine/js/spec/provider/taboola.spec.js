@@ -158,7 +158,7 @@ describe('Taboola ', function () {
 		taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE');
 		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_ARTICLE'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).not.toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).not.toHaveBeenCalled();
 		expect(mocks.slotTweaker.show).toHaveBeenCalled();
 	});
 
@@ -173,7 +173,7 @@ describe('Taboola ', function () {
 		taboola.canHandleSlot('NATIVE_TABOOLA_RAIL');
 		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_RAIL'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).toHaveBeenCalled();
 	});
 
 	it('Fills in TOP_LEADERBOARD_AB recovery slot using recovery helper', function () {
@@ -187,6 +187,6 @@ describe('Taboola ', function () {
 		taboola.canHandleSlot('TOP_LEADERBOARD_AB');
 		taboola.fillInSlot(createSlot('TOP_LEADERBOARD_AB'));
 
-		expect(mocks.sourcePoint.addOnBlockingCallback).toHaveBeenCalled();
+		expect(mocks.adBlockDetection.addOnBlockingCallback).toHaveBeenCalled();
 	});
 });

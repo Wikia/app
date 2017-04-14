@@ -3,12 +3,12 @@
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
-], function (googleSlots, adSlot, sourcePoint, doc, log, window, pageFair) {
+], function (googleSlots, adSlot, adBlockDetection, doc, log, window, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -65,8 +65,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled(),
 			// load GPT when API not loaded yet, ads are not blocked(SP detection) or recovery is PageFair
 			// as it needs gpt to work
-			gptCanBeLoaded = !window.googletag.apiReady &&
-				(!sourcePoint.isBlocking() || pageFairRecoveryEnabled);
+			gptCanBeLoaded = !window.googletag.apiReady; // &&
+				//(!sourcePoint.isBlocking() || pageFairRecoveryEnabled);
 
 		if (gptCanBeLoaded) {
 			gads.async = true;

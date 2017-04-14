@@ -2,14 +2,14 @@
 define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
 ], function (
 	DOMElementTweaker,
 	slotTweaker,
-	sourcePoint,
+	adBlockDetection,
 	browser,
 	doc,
 	log
@@ -49,7 +49,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	}
 
 	function isTweakable() {
-		return sourcePoint.isBlocking();
+		return adBlockDetection.isBlocking();
 	}
 
 	return {
