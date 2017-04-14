@@ -150,7 +150,7 @@ var ChatWidget = {
 	 * @param $t chat module element
 	 */
 	processModuleTemplate: function ($t) {
-		ChatWidget.initCarousel($t.find('.chat-whos-here'));
+		ChatWidget.initCarousel($t.find('.wds-avatar-stack'));
 
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
@@ -165,13 +165,6 @@ var ChatWidget = {
 	 */
 	initCarousel: function ($el) {
 		var popoverTimeout = 0;
-
-		$el.find('.carousel-container').carousel({
-			nextClass: 'arrow-right',
-			prevClass: 'arrow-left',
-			// differ number of users on chat according to it's width
-			itemsShown: ChatWidget.isWideChat ? 6 : 5
-		});
 
 		function setPopoverTimeout(elem) {
 			popoverTimeout = setTimeout(function () {
