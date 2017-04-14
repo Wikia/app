@@ -1,4 +1,4 @@
-<section class="community-page-entry-point-module">
+<section class="community-page-rail-module">
 	<div class="avatars">
 		<div class="wds-avatar-stack">
 			<? foreach( $avatars as $index => $avatar ): ?>
