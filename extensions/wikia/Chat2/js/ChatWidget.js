@@ -84,22 +84,22 @@ var ChatWidget = {
 	 */
 	updateUsersList: function(users) {
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
-			users: users,
-			blankImageUrl: window.wgBlankImageUrl
-		});
+				users: users,
+				blankImageUrl: window.wgBlankImageUrl
+			}),
+			$chatModule = $('.chat-module');
 
-		$('.chat-contents.chat-room-empty').each(function () {
+
+
+		$chatModule.find('.chat-contents.chat-room-empty').each(function () {
 			$(this).eq(0)
 				.removeClass('chat-room-empty')
 				.addClass('chat-room-active');
 		});
 
-		$('.chatCarousel').each(function () {
+		$chatModule.find('.wds-avatar-stack').each(function () {
 			$(this).get(0).innerHTML = output;
 		});
-
-		// update number of users
-		$('.chat-total').innerHTML = users.length;
 	},
 
 	initializeChatModules: function () {

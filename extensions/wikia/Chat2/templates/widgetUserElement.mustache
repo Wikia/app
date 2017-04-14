@@ -1,12 +1,20 @@
-{{#users}}
-<li class="chatter">
-	<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
+{{#viewedUsersInfo}}
+	<a href="{{userProfileUrl}}"
+	   class="wds-avatar-stack__avatar{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
+	   title="{{username}}"{{/hasUsers}}>
+		<img class="wds-avatar" src="{{avatarUrl}}"/>
+	</a>
+{{/viewedUsersInfo}}
+{{! We need to render popover content outside <a> element as it contains other anchor elements }}
+{{#viewedUsersInfo}}
 	<div class="UserStatsMenu">
 		<div class="info">
-			<img data-src="{{avatarUrl}}" src="{{blankImgUrl}}" class="avatar" width="24" height="24" />
+			<img data-src="{{avatarUrl}}" src="{{blankImgUrl}}" class="avatar" width="24"
+				 height="24"/>
 			<ul>
 				<li class="username" data-user-prop="username">{{username}}</li>
-				<li data-msg-param="{{editCount}}" class="edits" data-msg-id="chat-edit-count"> </li>
+				<li data-msg-param="{{editCount}}" class="edits"
+					data-msg-id="chat-edit-count"> </li>
 				<li data-msg-param="{{since}}" class="since" data-msg-id="chat-member-since"> </li>
 			</ul>
 		</div>
@@ -27,5 +35,4 @@
 			</ul>
 		</div>
 	</div>
-</li>
-{{/users}}
+{{/viewedUsersInfo}}
