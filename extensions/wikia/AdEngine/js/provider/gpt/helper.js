@@ -131,7 +131,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['gptCallback', element.getId(), gptEvent], log.levels.info, logGroup);
 			element.updateDataParams(gptEvent);
 			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
-			slot.renderEnded(gptEvent);
 		}
 
 		if (!googleTag.isInitialized()) {
@@ -147,7 +146,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		log(['pushAd', slot.name, slotTargetingData], log.levels.info, logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleTag.registerCallback(element.getId(), gptCallback);
+			slot.pre('renderEnded', gptCallback);
 			googleTag.push(queueAd);
 		}
 

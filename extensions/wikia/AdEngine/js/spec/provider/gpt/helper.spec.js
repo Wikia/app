@@ -6,7 +6,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	}
 
 	var AdElement,
-		callbacks = [],
+		callbacks = {},
 		mocks = {
 			log: noop,
 			context: {
@@ -99,8 +99,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			container: mocks.slotElement,
 			success: noop,
 			collapse: noop,
-			pre: noop,
-			renderEnded: noop
+			pre: function (methodName, callback) {
+				callbacks[methodName] = [];
+				callbacks[methodName].push(callback);
+			}
 		};
 	}
 
@@ -119,7 +121,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		AdElement.prototype.updateDataParams = noop;
 
-		callbacks = [];
+		callbacks = {};
 
 		mocks.context = {
 			opts: {},
@@ -190,7 +192,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	it('Register slot callback on push', function () {
 		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {});
 
-		expect(callbacks.length).toEqual(1);
+		expect(callbacks.renderEnded.length).toEqual(1);
 	});
 
 	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
