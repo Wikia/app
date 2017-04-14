@@ -24,6 +24,7 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 			callback();
 		},
 		context = adContext.getContext(),
+		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		logGroup = 'ext.wikia.aRecoveryEngine.adBlockDetection',
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
 		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
@@ -85,6 +86,41 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		return enabled;
 	}
 
+	function track(type) {
+		if (win._sp_ && !win._sp_.trackingSent) {
+			if (Wikia && Wikia.Tracker) {
+				Wikia.Tracker.track({
+					eventName: 'ads.recovery',
+					category: 'ads-recovery-blocked',
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					label: type,
+					trackingMethod: 'analytics'
+				});
+			}
+			if (instantGlobals.wgARecoveryEngineCustomLog) {
+				try {
+					var xmlHttp = new XMLHttpRequest();
+					xmlHttp.open('GET', customLogEndpoint + type, true);
+					xmlHttp.send();
+				} catch (e) {
+					log(['track', e], log.levels.error, logGroup);
+				}
+			}
+			win._sp_.trackingSent = true;
+		}
+	}
+
+	function verifyContent() {
+		var wikiaArticle = doc.getElementById('WikiaArticle'),
+			display = wikiaArticle.currentStyle ?
+				wikiaArticle.currentStyle.display :
+				getComputedStyle(wikiaArticle, null).display;
+
+		if (display === 'none') {
+			track('css-display-none');
+		}
+	}
+
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
 		addOnNotBlockingCallback: addOnNotBlockingCallback,
@@ -94,6 +130,8 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		isEnabled: isEnabled,
 		getName: getName,
 		getSafeUri: getSafeUri,
+		track: track,
+		verifyContent: verifyContent,
 		wasCalled: isRecoveryEnabled
 	};
 });
