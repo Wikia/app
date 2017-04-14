@@ -150,7 +150,7 @@ var ChatWidget = {
 	 * @param $t chat module element
 	 */
 	processModuleTemplate: function ($t) {
-		ChatWidget.initCarousel($t.find('.wds-avatar-stack'));
+		ChatWidget.initPopover($t.find('.wds-avatar-stack'));
 
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
@@ -163,7 +163,7 @@ var ChatWidget = {
 	 * change the user list into the carousel
 	 * @param $el chat who is here element
 	 */
-	initCarousel: function ($el) {
+	initPopover: function ($el) {
 		var popoverTimeout = 0;
 
 		function setPopoverTimeout(elem) {
@@ -182,7 +182,12 @@ var ChatWidget = {
 			}
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
+			// this will remove all elements that has popover class, ticket created to fix it SUS-1993
 			$('.popover').remove();
+			$(this).find('.UserStatsMenu img[data-src]').each(function () {
+				var image = $(this);
+				image.attr('src', image.attr('data-src')).removeAttr('data-src');
+			});
 			$(this).popover('show');
 
 		}).on('mouseleave', function () {
