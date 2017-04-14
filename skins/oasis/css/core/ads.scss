@@ -41,7 +41,6 @@ $video-control-pause-shadow-animation-duration: 1s;
 $video-control-pause-shadow-animation-function: ease;
 
 $vpaid-z-index: 10;
-$video-interactive-area-z-index: $vpaid-z-index + 1;
 
 @mixin absolute-fill() {
 	height: 100%;
@@ -132,23 +131,25 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		}
 	}
 
-	.video-overlay {
+	.vpaid-container {
 		@include absolute-fill();
-	}
 
-	.video-display-wrapper {
-		background: #000;
-		height: 100%;
-		position: relative;
-		width: 100%;
-
-		video, &.vpaid-enabled > div {
+		video, & > div {
 			@include absolute-fill();
 		}
 
-		&.vpaid-enabled video {
-			z-index: $vpaid-z-index;
+		// Node elements created by IMA library
+		& > div {
+			pointer-events: none;
+
+			video {
+				pointer-events: auto;
+			}
 		}
+
+		&.vpaid-enabled video {
+			 z-index: $vpaid-z-index;
+		 }
 
 		.video-player {
 			background: #000;
@@ -670,7 +671,7 @@ body > a > img[src$="noad.gif"] {
 	left: 0;
 	position: absolute;
 	top: 0;
-	z-index: $video-interactive-area-z-index;
+	z-index: 1;
 
 	img {
 		padding: 7px;
@@ -682,7 +683,6 @@ body > a > img[src$="noad.gif"] {
 	left: 0;
 	position: absolute;
 	width: 100%;
-	z-index: $video-interactive-area-z-index;
 
 	.control-bar {
 		padding: 0 $video-control-bar-padding;
@@ -797,7 +797,6 @@ body > a > img[src$="noad.gif"] {
 	top: 0;
 	visibility: hidden;
 	width: $video-control-panel-item-size;
-	z-index: $video-interactive-area-z-index;
 
 	svg {
 		fill: $video-control-panel-default-color;
