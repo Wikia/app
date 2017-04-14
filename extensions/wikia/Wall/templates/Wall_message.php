@@ -56,7 +56,7 @@
 				<?php if( !empty($isStaff) ): ?>
 					<span class="stafflogo"></span>
 				<?php endif; ?>
-				<span class="subtle edittime" title="<?= $iso_timestamp ?>">• <?= $fmt_timestamp ?></span>
+				<span class="subtle createtime" title="<?= $iso_timestamp ?>"><?= $fmt_timestamp ?></span>
 			</div>
 
 			<?php if($quote_of): ?>

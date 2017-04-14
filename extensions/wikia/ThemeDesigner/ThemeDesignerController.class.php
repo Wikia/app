@@ -35,11 +35,11 @@ class ThemeDesignerController extends WikiaController {
 
 		// recent versions
 		$themeHistory = array_reverse($themeSettings->getHistory());
+		$themeHistory = array_map( function( $entry ) {
+			$entry['timeago'] = wfTimeFormatAgo( $entry['timestamp'] );
+			return $entry;
+		}, $themeHistory );
 
-		// format time (for edits older than 30 days - show timestamp)
-		foreach($themeHistory as &$entry) {
-			$entry['timeago'] = wfTimeFormatAgo($entry['timestamp']);
-		}
 		$this->themeHistory = $themeHistory;
 
 		// URL user should be redirected to when settings are saved
