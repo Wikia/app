@@ -170,7 +170,15 @@ function renderXML( $input, $argv, $parser )
 				{
 					// SWC 20061113 - Broke the accessing into two lines so that it parses
 					$tempArray = $item[strtoupper($field)];
-					$currValue = implode("", $tempArray[0]);
+					
+					// LYR-230 sometimes tempArray[0] isn't an array, apparently - SWC 20150301
+					if(empty($tempArray[0])){
+						$currentValue = "";
+					} else if(is_array($tempArray[0])){
+						$currValue = implode("", $tempArray[0]);
+					} else {
+						$currValue = $tempArray[0];
+					}
 					$text = str_replace( "{{{{$field}}}}", $currValue, $text );
 				}
 			}
