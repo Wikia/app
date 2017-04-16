@@ -40,6 +40,7 @@ $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 # User hooks
 $wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
 $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
+$wgHooks['ComposeCommonBodyMail'][] = 'Wikia::onComposeCommonBodyMail';
 
 # Swift file backend
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
@@ -2326,6 +2327,33 @@ class Wikia {
 	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
 		// purge only the first thumbnail
 		$urls = array_slice($urls, 0, 1);
+
+		return true;
+	}
+
+	// Hook to add Diff contents to email
+	// TODO: add a user preference?
+
+	public static function onComposeCommonBodyMail( $title, &$keys, &$body, $editor, &$bodyHTML, &$postTransformKeys ) {
+		global $IP;
+
+		$revId = $title->getLatestRevID();
+		$oldRevId = $keys['$OLDID'];
+		$differenceEngineObj = new DifferenceEngine( $title, $oldRevId, $revId );
+
+		$diffHTML =
+			'<style media="screen" type="text/css">' .
+			file_get_contents( $IP . '/extensions/Notificator/diff-in-mail.css' ) .
+			'</style>'.
+			'<table class="diff">'.
+				'<col class="diff-marker" />'.
+				'<col class="diff-content" />'.
+				'<col class="diff-marker" />'.
+				'<col class="diff-content" />'.
+				$differenceEngineObj->getDiffBody() .
+			'</table>';
+
+		$keys['$DIFFHTML'] = $diffHTML;
 
 		return true;
 	}
