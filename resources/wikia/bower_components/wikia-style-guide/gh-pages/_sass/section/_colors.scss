@@ -1,0 +1,50 @@
+.color {
+    padding-bottom: 20px;
+
+    .name {
+        text-transform: uppercase;
+        margin: 10px 0;
+    }
+
+    .description {
+        font-size: 14px;
+        padding-top: 20px;
+    }
+}
+
+.swatch {
+    background: black;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+
+    // Marketing Colors
+    &.mordor { background: black; }
+    &.dk { background: $color-blue-dark; }
+    &.cool-blue { background: $color-blue-light; }
+    &.winterfell { background: $color-blue-gray; }
+    &.walter-white {
+        background: $color-white;
+        border: 1px solid $color-blue-gray
+    }
+
+    // Hub Colors
+    &.comics { background: $color-hub-comics; }
+    &.games { background: $color-hub-games; }
+    &.books { background: $color-hub-books; }
+    &.movies { background: $color-hub-movies; }
+    &.lifestyle { background: $color-hub-lifestyle; }
+    &.music { background: $color-hub-music; }
+    &.tv { background: $color-hub-tv; }
+
+    // Default Colors
+    &.blue-dark { background: $color-blue-dark; }
+    &.blue-light { background: $color-blue-light; }
+    &.gray-dark { background: $color-gray-dark; }
+    &.medium-gray { background: $color-blue-gray-dark; }
+    &.blue-gray { background: $color-blue-gray; }
+    &.blue-gray-light { background: $color-blue-gray-light; }
+    &.gray { background: $color-gray-light; }
+}
+
+

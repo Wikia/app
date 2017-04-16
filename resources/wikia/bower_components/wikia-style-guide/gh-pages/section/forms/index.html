@@ -1,0 +1,185 @@
+---
+layout: default
+---
+<h1>Forms &amp; Dropdowns</h1>
+<p>
+	Wikia forms for everyday use. You can have them just for $1. Buy now and you will get one radio button for free.
+</p>
+
+<h4 class="section-header">Text input and text area</h4>
+<p>
+	<strong>Text inputs</strong> span a wide variety of types. They may contain persistent text elements (such as % or USD) where appropriate.
+</p>
+<div class="row">
+	<div class="large-5 column">
+		<input type="text" placeholder="Muppets, Iron Man, Moon">
+		<input type="search" placeholder="Search for cool things">
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;input type="text" placeholder="Muppets, Iron Man, Moon"&gt;
+&lt;input type="search" placeholder="Search for cool things"&gt;
+</code></pre>
+
+<hr class="break">
+
+<p>
+	<strong>Text areas</strong> are large inputs where users can type and view larger blocks of text. They can also have buttons attached at the bottom.
+</p>
+<div class="row">
+	<div class="large-5 column">
+		<textarea placeholder="You can write here"></textarea>
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;textarea placeholder="You can write here"&gt;&lt;/textarea&gt;
+</code></pre>
+
+<h4 class="section-header">Form states</h4>
+<div class="row">
+	<div class="large-5 column">
+		<strong>Focus</strong>
+		<input type="text" placeholder="You can type here">
+	</div>
+</div>
+
+<p>
+	There is currently no special style for focussed input elements.
+</p>
+
+<hr class="break">
+<div class="row">
+	<div class="large-5 column">
+		<strong>Error/Warning</strong>
+		<input type="text" class="error">
+		<small class="error">I think something is wrong.</small>
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;input type="text" class="error"&gt;
+&lt;small class="error"&gt;I think something is wrong.&lt;/small&gt;
+</code></pre>
+
+
+<h4 class="section-header">Checkbox button fields</h4>
+<p>
+	Checkboxes allow the user to choose between several options. One or more options may be selected.
+</p>
+<div class="row">
+	<label class="large-4 column"><input type="checkbox"> Unchecked checkbox</label>
+	<label class="large-4 column"><input type="checkbox" checked> Checked checkbox</label>
+	<label class="large-4 column"><input type="checkbox" checked disabled> Disabled checkbox</label>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;label&gt;&lt;input type="checkbox"&gt; Unchecked checkbox&lt;/label&gt;
+&lt;label&gt;&lt;input type="checkbox" checked&gt; Checked checkbox&lt;/label&gt;
+&lt;label&gt;&lt;input type="checkbox" checked disabled&gt; Disabled checkbox&lt;/label&gt;
+</code></pre>
+
+<h4 class="section-header">Radio buttons fields</h4>
+<p>
+	Radio buttons allow the user to choose only one of several options, and are used in place of <code>select</code> elements when showing all of the options is important, such as on a poll.
+</p>
+<div class="row">
+	<label class="large-4 column"><input type="radio"> Unchecked radio button</label>
+	<label class="large-4 column"><input type="radio" checked> Checked radio button</label>
+	<label class="large-4 column"><input type="radio" checked disabled> Disabled radio button</label>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;label&gt;&lt;input type="radio"&gt; Unchecked radio button&lt;/label&gt;
+&lt;label&gt;&lt;input type="radio" checked&gt; Checked radio button&lt;/label&gt;
+&lt;label&gt;&lt;input type="radio" checked disabled&gt; Disabled radio button&lt;/label&gt;
+</code></pre>
+
+<h4 class="section-header">Dropdown</h4>
+<p>
+	Picklists allow the user to select a value from a list of options. They can either restrict the user to one option or allow the user to pick multiple options.
+</p>
+<div class="row">
+	<div class="large-3 column">
+		Primary
+		<select>
+			<option>Menu 1</option>
+			<option>Menu 2</option>
+			<option>Menu 3</option>
+			<option>Menu 4</option>
+		</select>
+	</div>
+	<div class="large-3 column large-offset-1 end">
+		Secondary
+		<select class="secondary">
+			<option>Menu 1</option>
+			<option>Menu 2</option>
+			<option>Menu 3</option>
+			<option>Menu 4</option>
+		</select>
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;select&gt;
+  &lt;option&gt;Menu 1&lt;/option&gt;
+  &lt;option&gt;Menu 2&lt;/option&gt;
+  ...
+&lt;/select&gt;
+
+&lt;select class="secondary"&gt;
+  &lt;option&gt;Menu 1&lt;/option&gt;
+  &lt;option&gt;Menu 2&lt;/option&gt;
+  ...
+&lt;/select&gt;
+</code></pre>
+
+<h4 class="section-header">Icon dropdown</h4>
+<p>
+	<strong>Icon dropdown</strong>
+</p>
+<div class="icon-dropdown">
+	<img class="dropdown-icon" data-dropdown="icon-drop" src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_avatar.svg" alt="">
+	<ul id="icon-drop" class="f-dropdown">
+		<li><a>Menu 1</a></li>
+		<li><a>Menu 2</a></li>
+		<li><a>Menu 3</a></li>
+		<li><a>Menu 4</a></li>
+	</ul>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;img class="dropdown-icon" src=".../icons/icon_avatar.svg"&gt;
+&lt;ul class="f-dropdown"&gt;
+  &lt;li&gt;&lt;a&gt;Menu 1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;Menu 2&lt;/a&gt;&lt;/li&gt;
+  ...
+&lt;/ul&gt;
+</code></pre>
+
+<h4 class="section-header">Left side navigation</h4>
+<p>
+	<strong>Left side navigation</strong> is a special case of an icon button. Behavior and interaction are the same.
+</p>
+<div class="icon-navigation clearfix">
+	<img class="dropdown-icon" data-dropdown="icon-nav" src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_menu.svg" alt="">
+	<ul id="icon-nav" class="f-dropdown nav">
+		<li><a>History</a></li>
+		<li><a>Personality</a></li>
+		<li><a>Powers &amp; Abilities</a></li>
+		<li><a>Paraphernalia</a></li>
+		<li><a>Notes</a></li>
+		<li><a>Trivia</a></li>
+		<li><a>Links</a></li>
+	</ul>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;img class="dropdown-icon" src=".../icons/icon_menu.svg"&gt;
+&lt;ul class="f-dropdown nav"&gt;
+  &lt;li&gt;&lt;a&gt;History&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;Personality&lt;/a&gt;&lt;/li&gt;
+  ...
+&lt;/ul&gt;
+</code></pre>

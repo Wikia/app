@@ -1,0 +1,20 @@
+{
+  "name": "wikia-style-guide",
+  "version": "0.0.0",
+  "homepage": "http://wikia.github.io/style-guide",
+  "authors": [
+    "Kenneth Kouot <kenneth@wikia-inc.com>"
+  ],
+  "description": "Front-end style guide based on Zurb's Foundation",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
