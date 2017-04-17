@@ -5,6 +5,7 @@ namespace ContributionPrototype;
 use Http;
 use MWHttpRequest;
 use OutputPage;
+use Title;
 use Wikia;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Gateway\UrlProvider;
@@ -45,8 +46,9 @@ class CPArticleRenderer {
 	 * @param string $title
 	 * @param OutputPage $output
 	 */
-	public function render($title, OutputPage $output, $action='view') {
-		$content = $this->getArticleContent($title, $action);
+	public function render(Title $title, OutputPage $output, $action='view') {
+		$output->setPageTitle($title->getPrefixedText());
+		$content = $this->getArticleContent($title->getPartialURL(), $action);
 		
 		if ($content === false) {
 			// TODO: what do we want to show here?
