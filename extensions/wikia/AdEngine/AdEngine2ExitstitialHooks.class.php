@@ -115,7 +115,7 @@ class AdEngine2ExitstitialHooks {
 		}
 
 		$wikiDomains = WikiFactory::getDomains( $wgCityId );
-		if ( $wikiDomains !== false ) {
+		if ( is_array($wikiDomains) ) {
 			$whiteList = array_merge( $wikiDomains, $whiteList );
 		}
 
