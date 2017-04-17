@@ -57,11 +57,9 @@ trait TitleTrait {
 		];
 
 		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
-			$namespaces = $dbr->makeList( $wgContentNamespaces );
-
-			$plConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$tlConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$ilConds[] = 'page_namespace IN (' . $namespaces . ')';
+			$plConds['page_namespace'] = $wgContentNamespaces;
+			$tlConds['page_namespace'] = $wgContentNamespaces;
+			$ilConds['page_namespace'] = $wgContentNamespaces;
 		} elseif ( is_int( $wgContentNamespaces ) ) {
 			$plConds['page_namespace'] = $wgContentNamespaces;
 			$tlConds['page_namespace'] = $wgContentNamespaces;
