@@ -111,7 +111,8 @@ class LegacyRedirectsApi
      * @param int $site_id The id of the site (required)
      * @param int $board_id Legacy Forum board ID (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Model\LegacyRedirectResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Discussion\Models\LegacyRedirectResponse, HTTP status code,
+     * HTTP response headers (array of strings)
      */
     public function getForumRedirectWithHttpInfo($site_id, $board_id)
     {
@@ -176,15 +177,17 @@ class LegacyRedirectsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Model\LegacyRedirectResponse',
+                '\Swagger\Client\Discussion\Models\LegacyRedirectResponse',
                 '/{siteId}/redirect/board/{boardId}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\LegacyRedirectResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\LegacyRedirectResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\LegacyRedirectResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(),
+	                    '\Swagger\Client\Discussion\Models\LegacyRedirectResponse',
+	                    $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 404:
@@ -221,7 +224,8 @@ class LegacyRedirectsApi
      * @param int $site_id The id of the site (required)
      * @param int $thread_id Legacy Forum thread ID (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @return array of \Swagger\Client\Model\LegacyRedirectResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Discussion\Models\LegacyRedirectResponse, HTTP status code,
+     * HTTP response headers (array of strings)
      */
     public function getThreadRedirectWithHttpInfo($site_id, $thread_id)
     {
@@ -286,15 +290,17 @@ class LegacyRedirectsApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Model\LegacyRedirectResponse',
+                '\Swagger\Client\Discussion\Models\LegacyRedirectResponse',
                 '/{siteId}/redirect/thread/{threadId}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\LegacyRedirectResponse', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Discussion\Models\LegacyRedirectResponse', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\LegacyRedirectResponse', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(),
+	                    '\Swagger\Client\Discussion\Models\LegacyRedirectResponse',
+	                    $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 404:

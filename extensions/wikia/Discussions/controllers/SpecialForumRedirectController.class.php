@@ -53,7 +53,6 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 		$boardId = $this->getBoardId();
 		$categoryUrl = $this->legacyRedirect->getBoardRedirect( $boardId );
 
-		gmark("Redirect board $boardId to $categoryUrl");
 		$this->response->redirect( $categoryUrl );
 	}
 
@@ -74,7 +73,6 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 		$legacyRedirect = new LegacyRedirect( F::App()->wg->CityId );
 		$postUrl = $legacyRedirect->getThreadRedirect( $threadId );
 
-		gmark("Redirect thread $threadId to $postUrl");
 		F::app()->wg->Out->redirect( $postUrl );
 	}
 
