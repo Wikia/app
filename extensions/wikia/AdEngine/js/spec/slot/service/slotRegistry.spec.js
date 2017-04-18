@@ -2,10 +2,17 @@
 describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 	'use strict';
 
-	var registry;
+	var mocks = {
+			mercuryListener: {
+				onEveryPageChange: function () {}
+			}
+		},
+		registry;
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.service.slotRegistry']();
+		return modules['ext.wikia.adEngine.slot.service.slotRegistry'](
+			mocks.mercuryListener
+		);
 	}
 
 	beforeEach(function () {
@@ -69,7 +76,7 @@ describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 		expect(registry.get('TOP_LEADERBOARD', 'direct')).toBe(null);
 	});
 
-	it('Starting a slot queue increment refreshed view count', function () {
+	it('Starting a slot queue increments refreshed view count', function () {
 		var directSlot = {
 				id: 1,
 				name: 'TOP_LEADERBOARD'

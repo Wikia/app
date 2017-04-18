@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.service.slotRegistry',  [], function () {
+define('ext.wikia.adEngine.slot.service.slotRegistry',  [
+	'ext.wikia.adEngine.mobile.mercuryListener'
+], function (mercuryListener) {
 	'use strict';
 
 	var slots = {},
@@ -60,6 +62,11 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [], function () {
 	function reset(slotName) {
 		slots[slotName] = [];
 	}
+
+	mercuryListener.onEveryPageChange(function () {
+		slots = {};
+		slotQueueCount = {};
+	});
 
 	return {
 		add: add,
