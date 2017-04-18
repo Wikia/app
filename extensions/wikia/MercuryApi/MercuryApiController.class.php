@@ -382,6 +382,11 @@ class MercuryApiController extends WikiaController {
 					if ( !empty( $articleData['content'] ) ) {
 						$data['article'] = $articleData;
 
+						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
+						if ( !empty( $featuredVideo ) ) {
+							$data['article']['media'][] = $featuredVideo;
+						}
+
 						if ( !$title->isContentPage() ) {
 							// Remove the namespace prefix from display title
 							$displayTitle = Title::newFromText( $displayTitle )->getText();
