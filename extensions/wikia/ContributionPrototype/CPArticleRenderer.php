@@ -28,22 +28,27 @@ class CPArticleRenderer {
 	/** @var UrlProvider */
 	private $urlProvider;
 
+	/** @var bool */
+	private $premiumHeaderEnabled;
+
 	/**
 	 * CPArticleRenderer constructor.
 	 * @param string $publicHost
 	 * @param int $wikiId
 	 * @param string $dbName
 	 * @param UrlProvider $urlProvider
+	 * @param bool $premiumHeaderEnabled
 	 */
-	public function __construct($publicHost, $wikiId, $dbName, $urlProvider) {
+	public function __construct($publicHost, $wikiId, $dbName, $urlProvider, $premiumHeaderEnabled) {
 		$this->publicHost = $publicHost;
 		$this->wikiId = $wikiId;
 		$this->dbName = $dbName;
 		$this->urlProvider = $urlProvider;
+		$this->premiumHeaderEnabled = $premiumHeaderEnabled;
 	}
 
 	/**
-	 * @param string $title
+	 * @param Title $title
 	 * @param OutputPage $output
 	 */
 	public function render(Title $title, OutputPage $output, $action='view') {
@@ -98,6 +103,7 @@ class CPArticleRenderer {
 					'followRedirects'=> true,
 					'headers' => [
 						'X-Wikia-Community' => $this->dbName,
+						'X-Wikia-PremiumHeader' => $this->premiumHeaderEnabled
 					]
 				]
 		);
