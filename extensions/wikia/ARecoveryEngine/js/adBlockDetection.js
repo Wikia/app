@@ -63,26 +63,22 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	}
 
 	function isBlocking() {
-		return isDetectionEnabled() && sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking());
+		return isDetectionEnabled() &&
+			(sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()));
 	}
 
-	/**
-	 * If recovery is not enabled, we don't need to wait for adBlockDetection results
-	 * and we can immediately assume that the module wasCalled.
-	 *
-	 * @returns {boolean}
-	 */
 	function isRecoveryEnabled() {
 		var context = adContext.getContext(),
 			enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
 
-		log(['isEnabled', enabled], log.levels.debug, logGroup);
+		log(['isRecoveryEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
 	}
 
 	function isDetectionEnabled() {
 		var context = adContext.getContext();
 
+		log(['isDetectionEnabled', context.opts.sourcePointDetection], log.levels.debug, logGroup);
 		return context.opts.sourcePointDetection;
 	}
 
