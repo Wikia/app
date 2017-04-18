@@ -1,19 +1,9 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.document',
-	'wikia.instantGlobals',
-	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (
-	adContext,
-	doc,
-	instantGlobals,
-	lazyQueue,
-	log,
-	win
-) {
+], function (adContext, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePoint',

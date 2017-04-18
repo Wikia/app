@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
-], function (googleSlots, adSlot, adBlockDetection, doc, log, window, pageFair) {
+], function (googleSlots, adSlot, adBlockDetection, doc, log, win, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -17,8 +17,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		pageLevelParams,
 		initialized = false;
 
-	window.googletag = window.googletag || {};
-	window.googletag.cmd = window.googletag.cmd || [];
+	win.googletag = win.googletag || {};
+	win.googletag.cmd = win.googletag.cmd || [];
 
 	function isSlotRegistered(slot, id) {
 		return registeredCallbacks[id] && slot && slot === googleSlots.getSlot(id);
@@ -40,18 +40,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function push(callback) {
-		window.googletag.cmd.push(callback);
+		win.googletag.cmd.push(callback);
 	}
 
 	function enableServices() {
 		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
-			window.googletag.pubads().collapseEmptyDivs();
-			window.googletag.pubads().enableSingleRequest();
-			window.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
-			window.googletag.pubads().addEventListener('slotRenderEnded', dispatchEvent);
+			win.googletag.pubads().collapseEmptyDivs();
+			win.googletag.pubads().enableSingleRequest();
+			win.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			win.googletag.pubads().addEventListener('slotRenderEnded', dispatchEvent);
 
-			window.googletag.enableServices();
+			win.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], log.levels.debug, logGroup);
 		});
@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var userIsBlockingAds = adBlockDetection.isBlocking(),
 			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled();
 
-		if (window.googletag.apiReady) {
+		if (win.googletag.apiReady) {
 			return false;
 		}
 
@@ -108,7 +108,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 					value = pageLevelParams[name];
 					if (value) {
 						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], log.levels.debug, logGroup);
-						window.googletag.pubads().setTargeting(name, value);
+						win.googletag.pubads().setTargeting(name, value);
 					}
 				}
 			}
@@ -126,7 +126,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['flush', 'refresh', slotQueue], log.levels.debug, logGroup);
 			if (slotQueue.length) {
-				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+				win.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 
 				slotQueue = [];
 			}
@@ -145,12 +145,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
 			slot = sizes ?
-				window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
-				window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
-			slot.addService(window.googletag.pubads());
+			slot.addService(win.googletag.pubads());
 
-			window.googletag.display(slotId);
+			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
 
@@ -161,7 +161,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function refreshSlot(slot) {
-		window.googletag.pubads().refresh([slot]);
+		win.googletag.pubads().refresh([slot]);
 	}
 
 	function registerCallback(id, callback) {
@@ -185,7 +185,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			return;
 		}
 
-		allSlots = window.googletag.pubads().getSlots();
+		allSlots = win.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;
@@ -208,7 +208,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (slotsToDestroy.length) {
 			push(function () {
 				log(['destroySlots', slotsNames, slotsToDestroy], log.levels.debug, logGroup);
-				success = window.googletag.destroySlots(slotsToDestroy);
+				success = win.googletag.destroySlots(slotsToDestroy);
 
 				if (!success) {
 					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], log.levels.error, logGroup);
@@ -223,7 +223,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function updateCorrelator() {
 		push(function () {
-			window.googletag.pubads().updateCorrelator();
+			win.googletag.pubads().updateCorrelator();
 		});
 	}
 
