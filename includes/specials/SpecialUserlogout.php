@@ -38,8 +38,6 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgUser;        /* wikia change */
 
-		$this->logger->info( 'IRIS-4228 Logout has been called' );
-
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
@@ -51,6 +49,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ),
 				wfMessage( 'loginerror' ) );
 		}
+
+		$this->logger->info( 'IRIS-4228 Logout has been called' );
 
 		$this->setHeaders();
 		$this->outputHeader();
