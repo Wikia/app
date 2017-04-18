@@ -65,16 +65,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotName = slot.name,
 			uapId = uapContext.getUapId();
 
-		log(['sourcePoint - isBlocking, isRecoverable: ',
-			sourcePoint.isBlocking(),
-			extra.isSourcePointRecoverable], log.levels.debug, logGroup);
-
-		log(['pageFair - isRecoverable: ', extra.isPageFairRecoverable], log.levels.debug, logGroup);
-
-		log(['slot name, isBlocking, adIsRecoverable: ',
-			slotName,
-			isBlocking,
-			adIsRecoverable], log.levels.debug, logGroup);
+		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
+			isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
 
 		// copy value
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
