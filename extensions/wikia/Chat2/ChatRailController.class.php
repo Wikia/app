@@ -44,8 +44,8 @@ class ChatRailController extends WikiaController {
 		$viewedUsersInfo = ChatWidget::getViewedUsersInfo( $usersInfo );
 		$usersCount = count( $usersInfo );
 
-		$this->users = $viewedUsersInfo;
-		$this->hasUsers = $usersCount > 0;
+		$this->setVal( 'users', $viewedUsersInfo );
+		$this->setVal( 'hasUsers', $usersCount > 0 );
 		Chat::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
 			'chatters' => count( $this->users ),
 		] );
