@@ -30,6 +30,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 					bestPrices[bidderCode] = 'NOT_INVOLVED';
 				}
 
+				if (bid.used) {
+					bestPrices[bidderCode] = 'USED';
+				}
+
 				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 			}
 		});

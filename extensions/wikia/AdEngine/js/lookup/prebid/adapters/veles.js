@@ -160,11 +160,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 	}
 
+	function markBidsAsUsed(adId) {
+		win.pbjs._bidsReceived.forEach(function (bid) {
+			if (bid.bidderCode === bidderName && bid.adId !== adId) {
+				bid.cpm = 0.00;
+				bid.used = true;
+			}
+		});
+	}
+
 	return {
 		create: create,
 		isEnabled: isEnabled,
 		getName: getName,
 		getSlots: getSlots,
+		markBidsAsUsed: markBidsAsUsed,
 		prepareAdUnit: prepareAdUnit
 	};
 });
