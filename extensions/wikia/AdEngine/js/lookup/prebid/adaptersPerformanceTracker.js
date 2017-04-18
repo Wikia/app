@@ -87,7 +87,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		return [
 			bid.getSize(),
 			priceGranularityHelper.transformPriceFromCpm(bid.cpm),
-			bucket].join(';');
+			bucket
+		].join(';');
 	}
 
 
@@ -96,5 +97,5 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });
