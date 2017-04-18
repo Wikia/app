@@ -22,17 +22,17 @@ define('ext.wikia.adEngine.slot.service.viewabilityHandler',  [
 		}, delay);
 	}
 
-	function refreshOnView(slotName) {
+	function refreshOnView(slotName, delay) {
 		var slot = slotRegistry.get(slotName);
 
 		log(['refresh on view', slotName, slot], log.levels.debug, logGroup);
 
 		if (slot) {
 			if (slot.isViewed) {
-				refreshSlot(slot.name);
+				refreshSlot(slot.name, delay);
 			} else {
 				slot.post('viewed', function () {
-					refreshSlot(slot.name);
+					refreshSlot(slot.name, delay);
 				});
 			}
 		}
