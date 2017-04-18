@@ -85,11 +85,13 @@ class NavigationModel extends WikiaModel {
 
 		// Purging mcache set by invocation of NavigationModel::getTree() by NavigationModel::getLocalNavigationTree();
 		WikiaDataAccess::cachePurge(
-			$this->getTreeMemcKey( self::TYPE_MESSAGE, self::WIKI_LOCAL_MESSAGE, implode( [
+			$this->getTreeMemcKey(
+				self::TYPE_MESSAGE,
+				self::WIKI_LOCAL_MESSAGE,
 				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
-			], '-' ) )
+			)
 		);
 	}
 
