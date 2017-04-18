@@ -29,7 +29,10 @@ describe('ext.wikia.adEngine.slot.service.viewabilityHandler', function () {
 				}
 			},
 			win: {
-				adslots2: []
+				adslots2: [],
+				setTimeout: function (callback) {
+					callback();
+				}
 			}
 		};
 

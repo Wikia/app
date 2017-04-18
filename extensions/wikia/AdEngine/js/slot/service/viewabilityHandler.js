@@ -9,13 +9,17 @@ define('ext.wikia.adEngine.slot.service.viewabilityHandler',  [
 
 	var logGroup = 'ext.wikia.adEngine.slot.service.viewabilityHandler';
 
-	function refreshSlot(slotName) {
-		googleTag.destroySlots([slotName]);
-		if (win.adslots2) {
-			win.adslots2.push([slotName]);
-		} else {
-			win.Mercury.Modules.Ads.getInstance().pushSlotToQueue(slotName);
-		}
+	function refreshSlot(slotName, delay) {
+		delay = delay !== undefined ? delay : 1000;
+
+		win.setTimeout(function () {
+			googleTag.destroySlots([slotName]);
+			if (win.adslots2) {
+				win.adslots2.push([slotName]);
+			} else {
+				win.Mercury.Modules.Ads.getInstance().pushSlotToQueue(slotName);
+			}
+		}, delay);
 	}
 
 	function refreshOnView(slotName) {

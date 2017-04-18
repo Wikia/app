@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.slot.service.actionHandler',  [
 				slotTweaker.makeResponsive(data.slotName, data.aspectRatio);
 				break;
 			case 'refresh-on-view':
-				viewabilityHandler.refreshOnView(data.slotName);
+				viewabilityHandler.refreshOnView(data.slotName, data.delay);
 				break;
 			default:
 				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
