@@ -100,10 +100,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
+			if (velesParams.valid && allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;
 				bidResponse.cpm = velesParams.price;
-			} else {
+			} else if (velesParams.valid) {
 				bidResponse.notInvolved = true;
 			}
 
