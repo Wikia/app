@@ -57,8 +57,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			isRecoveryEnabled = sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled()),
 			isBlocking = adBlockDetection.isBlocking(),
+			isRecoveryEnabled = adBlockDetection.isEnabled(),
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
@@ -88,12 +88,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		setAdditionalTargeting(slotTargetingData);
 
-
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
 		// add adonis marker needed for PF recovery
 		// basing on extra.isPageFairRecoverable param set in factoryWikiaGpt
-		if (adBlockDetection.isBlocking() && extra.isPageFairRecoverable) {
+		if (isRecoveryEnabled && isBlocking && extra.isPageFairRecoverable) {
 			pageFair.addMarker(element.node);
 		}
 

@@ -63,7 +63,7 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	}
 
 	function isBlocking() {
-		return sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking());
+		return isDetectionEnabled() && sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking());
 	}
 
 	/**
@@ -72,12 +72,22 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	 *
 	 * @returns {bool}
 	 */
-	function isEnabled() {
+	function isRecoveryEnabled() {
 		var context = adContext.getContext(),
 			enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
 
 		log(['isEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
+	}
+
+	function isDetectionEnabled() {
+		var context = adContext.getContext();
+
+		return context.opts.sourcePointDetection;
+	}
+
+	function isEnabled() {
+		return isDetectionEnabled() && isRecoveryEnabled();
 	}
 
 	function track(type) {
