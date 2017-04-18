@@ -68,6 +68,8 @@ class WallThread {
 		if ( empty( $this->data->threadReplyIds ) ) {
 			$this->data->threadReplyIds = [ ];
 		}
+		
+		$something = '';
 
 		$replyMessages = WallMessage::newFromIds( $this->data->threadReplyIds );
 
@@ -215,6 +217,7 @@ class WallThread {
 			);
 			return $row;
 		} );
+		$test = "";
 
 		// get last post info
 		$revision = Revision::newFromId( $data->rev_id );
