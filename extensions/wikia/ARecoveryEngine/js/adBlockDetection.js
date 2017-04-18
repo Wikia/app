@@ -70,7 +70,7 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	 * If recovery is not enabled, we don't need to wait for adBlockDetection results
 	 * and we can immediately assume that the module wasCalled.
 	 *
-	 * @returns {bool}
+	 * @returns {boolean}
 	 */
 	function isRecoveryEnabled() {
 		var context = adContext.getContext(),
