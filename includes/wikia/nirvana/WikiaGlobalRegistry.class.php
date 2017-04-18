@@ -31,6 +31,7 @@
  * @property Parser Parser
  * @property int CityId
  * @property string ExternalDatawareDB
+ * @property string[] LogTypes
  */
 class WikiaGlobalRegistry extends WikiaRegistry {
 	/* mapping for MW 1.19+ compatibility, new code should use RequestContext instances to access those globals */
