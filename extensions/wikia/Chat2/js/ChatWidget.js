@@ -41,12 +41,13 @@ var ChatWidget = {
 			ChatWidget.loadWidgetUserElementTemplate()
 		).then(function(usersData, templateData) {
 			if (usersData[1] === 'success' && templateData[1] === 'success') {
-				var users = usersData[0].users;
+				var users = usersData[0].users,
+					hasUsers = usersData[0].hasUsers;
 
 				ChatWidget.widgetUserElementTemplate = templateData[0].mustache[0];
 
 				if (users.length) {
-					ChatWidget.updateUsersList(users);
+					ChatWidget.updateUsersList(users, hasUsers);
 				}
 
 				// cache result
@@ -82,18 +83,21 @@ var ChatWidget = {
 	 *
 	 * @param users array of users on chat
 	 */
-	updateUsersList: function(users) {
+	updateUsersList: function(users, hasUsers) {
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
 				viewedUsersInfo: users,
+				hasUsers: hasUsers,
 				blankImageUrl: window.wgBlankImageUrl
 			}),
 			$chatModule = $('.chat-module');
 
-		$chatModule.find('.chat-contents.chat-room-empty').each(function () {
-			$(this).eq(0)
-				.removeClass('chat-room-empty')
-				.addClass('chat-room-active');
-		});
+		if(hasUsers) {
+			$chatModule.find('.chat-contents.chat-room-empty').each(function () {
+				$(this).eq(0)
+					.removeClass('chat-room-empty')
+					.addClass('chat-room-active');
+			});
+		}
 
 		$chatModule.find('.wds-avatar-stack').each(function () {
 			$(this).get(0).innerHTML = output;
