@@ -3,15 +3,15 @@ describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 	'use strict';
 
 	var mocks = {
-			mercuryListener: {
-				onEveryPageChange: function () {}
+			adContext: {
+				addCallback: function () {}
 			}
 		},
 		registry;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.slotRegistry'](
-			mocks.mercuryListener
+			mocks.adContext
 		);
 	}
 
