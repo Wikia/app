@@ -18,7 +18,7 @@ class CPViewAction extends FormlessAction {
 	public function show() {
 		switch ($this->page->getTitle()->getNamespace()) {
 			case NS_MAIN:
-				Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
+				Utils::getRenderer()->render($this->page->getTitle(), $this->getOutput());
 				break;
 			default:
 				$this->fallback();
