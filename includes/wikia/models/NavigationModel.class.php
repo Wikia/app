@@ -180,19 +180,6 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	public function getOnTheWikiNavigationTree( $variableName, $refreshCache = false ) {
-		return $this->getTree(
-			NavigationModel::TYPE_VARIABLE,
-			$variableName,
-			[
-				1,
-				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
-				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
-			],
-			$refreshCache
-		);
-	}
-
 	private function getTreeMemcKey( /* args */ ) {
 		return $this->getMemcKey( implode( '-', func_get_args() + [ self::MEMC_VERSION ] ) );
 	}
