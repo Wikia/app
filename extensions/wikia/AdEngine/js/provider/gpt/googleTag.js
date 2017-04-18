@@ -57,18 +57,30 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
+	/**
+	 * Load GPT if not loaded only.
+	 * Don't load GPT if ads are blocked unless pageFair recovery is enabled.
+	 *
+	 * @returns {boolean}
+	 */
+	function canGptBeLoaded() {
+		var userIsBlockingAds = adBlockDetection.isBlocking(),
+			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled();
+
+		if (window.googletag.apiReady) {
+			return false;
+		}
+
+		return !userIsBlockingAds || pageFairRecoveryEnabled;
+	}
+
 	function init() {
 		log('init', log.levels.debug, logGroup);
 
 		var gads = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0],
-			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled(),
-			// load GPT when API not loaded yet, ads are not blocked(SP detection) or recovery is PageFair
-			// as it needs gpt to work
-			gptCanBeLoaded = !window.googletag.apiReady; // &&
-				//(!sourcePoint.isBlocking() || pageFairRecoveryEnabled);
+			node = doc.getElementsByTagName('script')[0];
 
-		if (gptCanBeLoaded) {
+		if (canGptBeLoaded()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
@@ -137,10 +149,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
 			slot.addService(window.googletag.pubads());
-
-			if (pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
-				pageFair.addMarker(slotId);
-			}
 
 			window.googletag.display(slotId);
 			googleSlots.addSlot(slot);

@@ -23,7 +23,6 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	var cb = function (callback) {
 			callback();
 		},
-		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		logGroup = 'ext.wikia.aRecoveryEngine.adBlockDetection',
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
@@ -47,24 +46,12 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	 * @param callback
 	 */
 	function addResponseListener(callback) {
-		sourcePoint.addOnBlockingCallback(callback);
-		sourcePoint.addOnNotBlockingCallback(callback);
-
-		//in the future maybe add here pagefair - it sometimes can be faster that sp
+		addOnBlockingCallback(callback);
+		addOnNotBlockingCallback(callback);
 	}
 
 	function getName() {
 		return 'adBlockDetection';
-	}
-
-	/**
-	 * If recovery is not enabled, we don't need to wait for adBlockDetection results
-	 * and we can immediately assume that the module wasCalled.
-	 *
-	 * @returns {bool}
-	 */
-	function isRecoveryEnabled() {
-		return sourcePoint.isEnabled() || (pageFair && pageFair.isEnabled());
 	}
 
 	function getSafeUri(url) {
@@ -79,8 +66,15 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		return sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking());
 	}
 
+	/**
+	 * If recovery is not enabled, we don't need to wait for adBlockDetection results
+	 * and we can immediately assume that the module wasCalled.
+	 *
+	 * @returns {bool}
+	 */
 	function isEnabled() {
-		var enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
+		var context = adContext.getContext(),
+			enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
 
 		log(['isEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
@@ -132,6 +126,6 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		getSafeUri: getSafeUri,
 		track: track,
 		verifyContent: verifyContent,
-		wasCalled: isRecoveryEnabled
+		wasCalled: isEnabled
 	};
 });

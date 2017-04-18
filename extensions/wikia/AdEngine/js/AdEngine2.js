@@ -164,7 +164,6 @@ define('ext.wikia.adEngine.adEngine', [
 
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
-			// o tutej!
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
