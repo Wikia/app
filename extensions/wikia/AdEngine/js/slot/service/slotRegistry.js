@@ -2,10 +2,20 @@
 define('ext.wikia.adEngine.slot.service.slotRegistry',  [], function () {
 	'use strict';
 
-	var slots = {};
+	var slots = {},
+		slotQueueCount = {};
+
+	function incrementSlotQueueCount(slotName) {
+		slotQueueCount[slotName] = slotQueueCount[slotName] || 0;
+
+		if (slots[slotName].length === 0) {
+			slotQueueCount[slotName] += 1;
+		}
+	}
 
 	function add(slot, providerName) {
 		slots[slot.name] = slots[slot.name] || [];
+		incrementSlotQueueCount(slot.name);
 
 		slots[slot.name].push({
 			providerName: providerName,
@@ -43,6 +53,10 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [], function () {
 		return null;
 	}
 
+	function getRefreshCount(slotName) {
+		return slotQueueCount[slotName] || 0;
+	}
+
 	function reset(slotName) {
 		slots[slotName] = [];
 	}
@@ -50,6 +64,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [], function () {
 	return {
 		add: add,
 		get: get,
+		getRefreshCount: getRefreshCount,
 		reset: reset
 	};
 });

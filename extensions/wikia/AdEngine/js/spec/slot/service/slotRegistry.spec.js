@@ -68,4 +68,25 @@ describe('ext.wikia.adEngine.slot.service.slotRegistry', function () {
 		expect(registry.get('TOP_LEADERBOARD')).toBe(null);
 		expect(registry.get('TOP_LEADERBOARD', 'direct')).toBe(null);
 	});
+
+	it('Starting a slot queue increment refreshed view count', function () {
+		var directSlot = {
+				id: 1,
+				name: 'TOP_LEADERBOARD'
+			},
+			remnantSlot = {
+				id: 2,
+				name: 'TOP_LEADERBOARD'
+			};
+
+		registry.add(directSlot, 'direct');
+		registry.add(remnantSlot, 'remnant');
+		expect(registry.getRefreshCount('TOP_LEADERBOARD')).toBe(1);
+
+		registry.reset('TOP_LEADERBOARD');
+		expect(registry.getRefreshCount('TOP_LEADERBOARD')).toBe(1);
+
+		registry.add(directSlot, 'direct');
+		expect(registry.getRefreshCount('TOP_LEADERBOARD')).toBe(2);
+	});
 });
