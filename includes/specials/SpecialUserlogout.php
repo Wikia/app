@@ -28,12 +28,17 @@
  */
 class SpecialUserlogout extends UnlistedSpecialPage {
 
+	private $logger;
+
 	function __construct() {
 		parent::__construct( 'Userlogout' );
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
 		global $wgUser;        /* wikia change */
+
+		$this->logger->info( 'IRIS-4228 Logout has been called' );
 
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
