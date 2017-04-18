@@ -798,9 +798,9 @@ $messages['el'] = array(
 
 $messages['es'] = array(
 	'chat' => 'Chat',
-	'chat-desc' => '[[{{#Special:Chat}}|Chat en directo]]',
+	'chat-desc' => '[[Special:Chat|Chat en directo]]',
 	'chat-no-login' => 'Debes iniciar sesión para chatear.',
-	'chat-no-login-text' => '[[{{#Special:UserLogin| Inicia sesión]] y luego abre el chat.',
+	'chat-no-login-text' => '[[Special:UserLogin|Inicia sesión]] y luego abre el chat.',
 	'chat-welcome-message' => 'Bienvenido al chat de $1',
 	'chat-user-joined' => '$1 ha entrado al chat.',
 	'chat-read-only' => 'El chat no está disponible mientras el wiki se encuentre en modo de lectura.',
