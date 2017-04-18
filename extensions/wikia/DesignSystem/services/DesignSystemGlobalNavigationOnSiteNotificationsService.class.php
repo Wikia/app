@@ -3,7 +3,7 @@
 class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaService {
 
 	public function Index() {
-		if ( $this->isLoggedIn() && $this->areNotificationsEnabled() ) {
+		if ( $this->isLoggedIn() ) {
 			$this->addAssets();
 
 			return true;
@@ -16,12 +16,6 @@ class DesignSystemGlobalNavigationOnSiteNotificationsService extends WikiaServic
 		global $wgUser;
 
 		return $wgUser->isLoggedIn();
-	}
-
-	private function areNotificationsEnabled() {
-		global $wgEnableOnSiteNotifications;
-
-		return !empty( $wgEnableOnSiteNotifications );
 	}
 
 	private function addAssets() {

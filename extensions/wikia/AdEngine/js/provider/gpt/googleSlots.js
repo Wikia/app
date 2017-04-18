@@ -1,7 +1,7 @@
 /*global define, Array */
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'wikia.window'
 ], function (adUnitBuilder, sourcePoint, win) {
 	'use strict';

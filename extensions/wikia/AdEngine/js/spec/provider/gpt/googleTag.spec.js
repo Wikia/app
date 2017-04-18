@@ -39,7 +39,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				setTargeting: noop,
 				getSlots: noop
 			},
-			sourcePointHelper: {
+			sourcePoint: {
 				isBlocking: function () {
 					return false;
 				}
@@ -97,7 +97,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.googleSlots,
 			mocks.adSlot,
-			mocks.sourcePointHelper,
+			mocks.sourcePoint,
 			document,
 			mocks.log,
 			mocks.window
