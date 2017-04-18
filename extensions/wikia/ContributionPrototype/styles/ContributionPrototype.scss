@@ -23,18 +23,6 @@ body {
   display: none;
 }
 
-.cms-article-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-
-  h2 {
-    flex-grow: 1;
-    border-bottom: none;
-    font-size: 1rem;
-  }
-}
-
 .quill-toolbar {
   .dropdown, .controls {
     > button {
@@ -61,16 +49,6 @@ body {
 
 .wds-global-navigation {
   position: fixed !important;
-}
-
-.cms-fixed-header {
-  position: fixed;
-  top: 55px;
-  z-index: 2;
-}
-
-.entity-editor.fixed-toolbar .quill-toolbar {
-  top: 89px !important;
 }
 
 #WikiHeader .buttons {
