@@ -61,6 +61,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
 			'kv_pos': slotParams.pos || '',
+			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',
 			'kv_skin': pageParams.skin || '',

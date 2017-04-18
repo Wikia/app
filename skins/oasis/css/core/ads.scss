@@ -282,6 +282,10 @@ $vpaid-z-index: 10;
 	}
 }
 
+#TOP_BUTTON_WIDE {
+        margin-right: 10px;
+}
+
 @media screen and (max-width: 1063px) {
 	#TOP_BUTTON_WIDE {
 		display: none;

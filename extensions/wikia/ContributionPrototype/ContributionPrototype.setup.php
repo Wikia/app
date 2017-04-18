@@ -61,3 +61,11 @@ $wgHooks['MakeGlobalVariablesScript'][] = function(&$vars, OutputPage $outputPag
 
 	return true;
 };
+
+$wgHooks['GetLocalURL'][] = function(Title $title, &$url) {
+	if ($title->getNamespace() === NS_MAIN) {
+		$url = str_replace(urldecode($title->getPrefixedDBkey()), rawurlencode($title->getText()), $url);
+	}
+
+	return true;
+};
