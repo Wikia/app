@@ -33,10 +33,10 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 		return isBlocking;
 	}
 
-	function addMarker(slotId) {
-		var slot = document.getElementById(slotId);
-
-		slot.setAttribute('adonis-marker', '');
+	function addMarker(slotElement) {
+		if (slotElement) {
+			slotElement.setAttribute('adonis-marker', '');
+		}
 	}
 
 	return {

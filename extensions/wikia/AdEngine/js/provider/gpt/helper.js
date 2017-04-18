@@ -91,9 +91,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
-		// add adonis marker
-		if (adBlockDetection.isBlocking() && pageFair && pageFair.isSlotRecoverable(slotName)) {
-			pageFair.addMarker(slotName);
+		// add adonis marker needed for PF recovery
+		// basing on extra.isPageFairRecoverable param set in factoryWikiaGpt
+		if (adBlockDetection.isBlocking() && extra.isPageFairRecoverable) {
+			pageFair.addMarker(element.node);
 		}
 
 		function queueAd() {
