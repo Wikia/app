@@ -7,7 +7,11 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 
 	var mocks = {
 		document: {
-			createElement: noop
+			createElement: function () {
+				return {
+					setAttribute: noop
+				};
+			}
 		},
 		adsLoaderMock: {
 			addEventListener: noop,
@@ -23,6 +27,9 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 			}
 		},
 		log: noop,
+		moatVideoTracker: {
+			init: noop()
+		},
 		videoSettings: {
 			getParams: function() {
 				return {
@@ -42,6 +49,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](
 			mocks.imaSetup,
+			mocks.moatVideoTracker,
 			mocks.document,
 			mocks.log
 		);

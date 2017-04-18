@@ -1,25 +1,42 @@
 describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 	'use strict';
 
-	var mocks = {
-		page: {
-			getPageLevelParams: function() {
-				return {
-					s0: 'life',
-					s1: '_project43',
-					s2: 'article'
-				};
+	var DEFAULT_PAGE_PARAMS = {
+			's0v': 'gaming',
+			's1': '_godofwar',
+			's2': 'home',
+			'skin': 'oasis'
+		},
+		noop = function () {},
+		mocks = {
+			page: {
+				getPageLevelParams: noop
+			},
+			browserDetect: {
+				isMobile: noop
 			}
-		}
-	};
+		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.adUnitBuilder'](mocks.page);
+		return modules['ext.wikia.adEngine.slot.adUnitBuilder'](
+			mocks.page
+		);
+	}
+
+	function mockPageParams(params) {
+		spyOn(mocks.page, 'getPageLevelParams');
+		mocks.page.getPageLevelParams.and.returnValue(params);
 	}
 
 	it('Build ad unit', function () {
-		var vastUrl = getModule().build('TOP_LEADERBOARD', 'playwire');
+		mockPageParams({
+			s0: 'life',
+			s1: '_project43',
+			s2: 'article',
+			skin: 'desktop'
+		});
 
-		expect(vastUrl).toEqual('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
+		expect(getModule().build('TOP_LEADERBOARD', 'playwire'))
+			.toEqual('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
 	});
 });

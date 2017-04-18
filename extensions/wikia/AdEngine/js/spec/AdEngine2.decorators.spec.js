@@ -36,6 +36,10 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		eventDispatcher: {},
 		fillInSlot: noop,
 		log: noop,
+		slotRegistry: {
+			add: noop,
+			reset: noop
+		},
 		slotTweaker: {
 			show: noop,
 			hide: noop
@@ -48,6 +52,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			mocks.adDecoratorLegacyParamFormat,
 			mocks.eventDispatcher,
 			mocks.adSlot,
+			mocks.slotRegistry,
 			mocks.slotTracker,
 			mocks.slotTweaker,
 			mocks.hooks,

@@ -19,12 +19,12 @@ define('ext.wikia.recirculation.views.footer', [
 			});
 	}
 
-	function setupTracking(experimentName) {
+	function setupTracking() {
 		return function($html) {
-			tracker.trackVerboseImpression(experimentName, 'footer');
+			tracker.trackImpression('footer');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'footer'));
+				tracker.trackClick(utils.buildLabel(this, 'footer'));
 			});
 		};
 	}

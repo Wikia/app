@@ -41,7 +41,6 @@
     "showTitle": true,
     "showDescription": false,
     "titleFont": {
-      "color": "white"
     },
     "descriptionFont": {
       "color": "white"

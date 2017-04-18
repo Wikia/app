@@ -104,7 +104,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'userrights-interwiki',
 		'writeapi',
 		'canremovemap',
-		'wikiawidget',
 		'wikifactory',
 		'wikifactorymetrics',
 		'dumpsondemand',

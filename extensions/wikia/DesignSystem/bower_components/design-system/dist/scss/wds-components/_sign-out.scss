@@ -1,0 +1,30 @@
+.wds-sign-out {
+	&__button {
+		background: transparent;
+		border: none;
+		color: inherit;
+		cursor: pointer;
+		font: inherit;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+		text-transform: none;
+		width: auto;
+
+		.wds-is-linked & {
+			// wds-is-linked does this to <a>
+			display: block;
+			padding: 11px 0;
+			width: 100%;
+		}
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: inherit;
+		}
+	}
+}

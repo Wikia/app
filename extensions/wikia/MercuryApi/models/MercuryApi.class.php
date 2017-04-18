@@ -118,10 +118,12 @@ class MercuryApi {
 	public function getWikiVariables() {
 		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
-		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
+		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
+		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
+			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'cacheBuster' => (int) $wgCacheBuster,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,

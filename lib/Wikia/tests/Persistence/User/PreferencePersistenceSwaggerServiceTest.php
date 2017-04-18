@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
+use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\ReverseLookupApi;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
@@ -14,7 +15,7 @@ use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
-class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCase {
+class PreferencePersistenceSwaggerServiceTest extends TestCase {
 
 	protected $userId = 1;
 

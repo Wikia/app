@@ -41,7 +41,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testRenderInfoboxDataProvider
+	 * @dataProvider renderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
 		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgArticleAsJson' => $mockParams['isMercury'] ?? true ] );
@@ -57,7 +57,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
 
-	public function testRenderInfoboxDataProvider() {
+	public function renderInfoboxDataProvider() {
 		return [
 			[
 				'input' => [ ],

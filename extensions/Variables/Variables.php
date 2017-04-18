@@ -231,9 +231,7 @@ class ExtVariables {
 		 */
 		$text = Sanitizer::removeHTMLtags(
 				$text,
-				array( &$parser, 'attributeStripCallback' ),
-				false,
-				array_keys( $parser->mTransparentTagHooks )
+				[ &$parser, 'attributeStripCallback' ]
 		);
 		return true;
 	}
