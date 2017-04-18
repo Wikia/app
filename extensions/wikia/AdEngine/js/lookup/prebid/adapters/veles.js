@@ -103,6 +103,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;
 				bidResponse.cpm = velesParams.price;
+			} else {
+				bidResponse.notInvolved = true;
 			}
 
 			prebid.get().addBidResponse(bid.placementCode, bidResponse);
