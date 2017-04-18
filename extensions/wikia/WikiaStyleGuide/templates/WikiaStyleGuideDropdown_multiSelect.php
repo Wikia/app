@@ -14,7 +14,15 @@
 			<? foreach($options as $option): ?>
 				<? $isSelected = in_array($option['value'], $selected); ?>
 				<li class="dropdown-item<?= $isSelected ? ' selected' : '' ?>">
-					<label><input type="checkbox" name="namespace[]" value="<?= Sanitizer::encodeAttribute( $option['value'] ) ?>"<?= $isSelected ? ' checked' : '' ?>><?= htmlspecialchars( $option['label'] ) ?></label>
+					<label>
+						<input
+							type="checkbox"
+							name="<?= Sanitizer::encodeAttribute( $name ); ?>[]"
+							value="<?= Sanitizer::encodeAttribute(	$option['value'] ) ?>"
+							<?= $isSelected ? ' checked' : '' ?>
+						>
+						<?= htmlspecialchars( $option['label'] ); ?>
+					</label>
 				</li>
 			<? endforeach; ?>
 		</ul>
