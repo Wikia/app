@@ -4,8 +4,12 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 
 	const DISCUSSIONS_LINK = '/d/f';
 
+	private $legacyRedirect;
+
 	public function __construct() {
 		parent::__construct( 'Forum', '', false );
+
+		$this->legacyRedirect = new LegacyRedirect( F::App()->wg->CityId );
 	}
 
 	public function index() {
@@ -47,7 +51,7 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 */
 	public function redirectBoardToCategory() {
 		$boardId = $this->getBoardId();
-		$categoryUrl = $this->getDiscussionCategoryUrl( $boardId );
+		$categoryUrl = $this->legacyRedirect->getBoardRedirect( $boardId );
 
 		gmark("Redirect board $boardId to $categoryUrl");
 		$this->response->redirect( $categoryUrl );
@@ -66,7 +70,9 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 */
 	public static function redirectThreadToPost( Title $thread ) {
 		$threadId = $thread->getArticleID();
-		$postUrl = self::getDiscussionPostDetailUrl( $threadId );
+
+		$legacyRedirect = new LegacyRedirect( F::App()->wg->CityId );
+		$postUrl = $legacyRedirect->getThreadRedirect( $threadId );
 
 		gmark("Redirect thread $threadId to $postUrl");
 		F::app()->wg->Out->redirect( $postUrl );
@@ -74,16 +80,6 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 
 	private function getDiscussionUrl() {
 		return self::DISCUSSIONS_LINK;
-	}
-
-	private function getDiscussionCategoryUrl( $boardId ) {
-		// TODO Implement fetching of discussions category URL from board ID.
-		return "";
-	}
-
-	private static function getDiscussionPostDetailUrl( $threadId ) {
-		// TODO Implement fetching of discussions post detail URL from Forum thread ID
-		return "";
 	}
 
 	private function getBoardId() {
