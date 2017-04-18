@@ -10,11 +10,7 @@
 		<div class="chat-details">
 			<div class="avatars">
 				<div class="wds-avatar-stack">
-					{{#viewedUsersInfo}}
-						<a href="{{userProfileUrl}}" class="wds-avatar-stack__avatar" title="{{username}}">
-							<img class="wds-avatar" src="{{avatarUrl}}" />
-						</a>
-					{{/viewedUsersInfo}}
+					{{> widgetUserElement}}
 				</div>
 				{{#moreUsersCount}}
 					<a href="{{linkToSpecialChat}}" class="more-users-count">

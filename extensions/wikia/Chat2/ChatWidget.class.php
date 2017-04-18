@@ -32,6 +32,24 @@ class ChatWidget {
 		return true;
 	}
 
+	public static function getViewedUsersInfo($usersInfo) {
+		global $wgUser;
+
+		if(!empty($usersInfo)) {
+			return array_slice( $usersInfo, 0, self::CHAT_AVATARS_LIMIT );
+		}
+		$myAvatarUrl =
+			AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+		return [
+			[
+				'username' => User::isIp( $wgUser->getName() )
+					? wfMessage( 'oasis-anon-user' )->escaped() : $wgUser->getName(),
+				'userProfileUrl' => $wgUser->getUserPage()->getLinkURL(),
+				'avatarUrl' => $myAvatarUrl,
+			],
+		];
+	}
+
 	/**
 	 * Return an array of variables needed to render chat entry point mustache template
 	 *
@@ -46,20 +64,8 @@ class ChatWidget {
 		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
 		$joinChatMessage = wfMessage( 'chat-join-the-chat' );
 		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
-		$viewedUsersInfo = array_slice( $usersInfo, 0, self::CHAT_AVATARS_LIMIT );
+		$viewedUsersInfo = self::getViewedUsersInfo( $usersInfo );
 		$usersCount = count( $usersInfo );
-		$myAvatarUrl =
-			AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
-		if ( empty( $viewedUsersInfo ) ) {
-			$viewedUsersInfo = [
-				[
-					'username' => User::isIp( $wgUser->getName() )
-						? wfMessage( 'oasis-anon-user' )->escaped() : $wgUser->getName(),
-					'userProfileUrl' => $wgUser->getUserPage()->getLinkURL(),
-					'avatarUrl' => $myAvatarUrl,
-				],
-			];
-		}
 		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
 
 		$vars = [
