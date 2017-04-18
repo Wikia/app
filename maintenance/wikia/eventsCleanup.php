@@ -84,15 +84,16 @@ class EventsCleanup extends Maintenance {
 	}
 
 	public function execute() {
-		// get all closed wikis
-		$WF_db = WikiFactory::db( DB_SLAVE );
+		// get all closed wikis from archive.city_list (PLATFORM-1849)
+		global $wgExternalArchiveDB;
+		$WF_db = wfGetDB( DB_SLAVE, [], $wgExternalArchiveDB );
 
 		$closedBefore = wfTimestamp( TS_MW, strtotime( '-3 months' ) );
 		$closedWikis = $WF_db->selectFieldValues(
 			'city_list',
 			'city_id',
 			[
-				'city_public' => WikiFactory::CLOSE_ACTION,
+				'city_public' => WikiFactory::HIDE_ACTION,
 				sprintf( 'city_lastdump_timestamp < "%s"', $closedBefore )
 			],
 			__METHOD__
