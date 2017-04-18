@@ -392,6 +392,9 @@ class ForumHooksHelper {
 
 		$html = F::app()->renderView( 'Forum', 'forumActivityModule' );
 
+		// remove newlines so parser does not try to wrap lines into paragraphs
+		$html = str_replace( "\n", "", $html );
+
 		wfProfileOut( __METHOD__ );
 		return $html;
 	}

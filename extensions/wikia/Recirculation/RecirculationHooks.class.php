@@ -25,7 +25,7 @@ class RecirculationHooks {
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'RECIRCULATION_RAIL'] );
+		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
 
 		wfProfileOut( __METHOD__ );
 
