@@ -90,19 +90,22 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		log(['addBids', bidderRequest, vastResponse, velesParams], log.levels.debug, logGroup);
 
 		bidderRequest.bids.forEach(function (bid) {
+			var bidResponse = prebid.get().createBid(1);
+
+			bidResponse.ad = '';
+			bidResponse.bidderCode = bidderRequest.bidderCode;
+			bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
+			bidResponse.cpm = 0.00;
+			bidResponse.mediaType = 'video';
+			bidResponse.width = bid.sizes[0][0];
+			bidResponse.height = bid.sizes[0][1];
+
 			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
-				var bidResponse = prebid.get().createBid(1);
-
 				bidResponse.ad = vastResponse;
-				bidResponse.bidderCode = bidderRequest.bidderCode;
-				bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
 				bidResponse.cpm = velesParams.price;
-				bidResponse.mediaType = 'video';
-				bidResponse.width = bid.sizes[0][0];
-				bidResponse.height = bid.sizes[0][1];
-
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
 			}
+
+			prebid.get().addBidResponse(bid.placementCode, bidResponse);
 		});
 	}
 
