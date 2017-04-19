@@ -11,6 +11,12 @@ $wgExtensionCredits['antispam'][] = array(
 	'descriptionmsg' => 'antispoof-desc',
 );
 
+$test = '';
+if(true){
+	if(false)
+	  {return false;}
+}
+
 /**
  * Set this to false to disable the active checks;
  * items will be logged but invalid or conflicting
