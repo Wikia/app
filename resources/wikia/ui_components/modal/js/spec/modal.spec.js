@@ -38,7 +38,9 @@ describe('Modal module', function () {
 			render: function () {}
 		};
 
-	jQuery.msg = function () {};
+	jQuery.msg = $.msg = function (key) {
+		return key;
+	};
 	jQuery.isArray = function () {};
 	jQuery.extend = window.jQuery.extend;
 	jQuery.proxy = function () {};

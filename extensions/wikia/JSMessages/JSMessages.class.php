@@ -4,21 +4,43 @@
  * Use JSMessages::registerPackage() to register messages package to be used in JS.
  *
  * Require messages to be accessible via JS using JSMessages::enqueuePackage() method.
+ * SUS-623: use ResourceLoader instead
  */
 
 class JSMessages {
 
-	// flags: add messages inline (in <head> section) or external (using "faked" JS script)
+	/**
+	 * @var int INLINE unused - reserved for backwards compatibility
+	 */
 	const INLINE = 1;
+	/**
+	 * @var int EXTERNAL unused - reserved for backwards compatibility
+	 */
 	const EXTERNAL = 2;
 
-	// queue of messages packages to emit as JS script and inline
-	static private $queue = array( 'inline' => array(), 'external' => array() );
+	/**
+	 * @var string RL_MODULE_PREFIX ResourceLoader module prefix used for packages
+	 */
+	const RL_MODULE_PREFIX = 'ext.jsmessages.';
 
-	// list of registered message packages
-	static private $packages = array();
+	/**
+	 * @var string RL_MESSAGES Array key used in ResourceLoader config arrays for the list of messages
+	 */
+	const RL_MESSAGES = 'messages';
 
-	// cache for all message keys
+	/**
+	 * @var array $queue List of ResourceLoader module names that will be added to the output
+	 */
+	static private $queue = [];
+
+	/**
+	 * @var array $packages List of registered message packages (ResourceLoader modules)
+	 */
+	static private $packages = [];
+
+	/**
+	 * @var array|null $allMessageKeys Cache for all message keys
+	 */
 	static private $allMessageKeys = null;
 
 
@@ -37,85 +59,34 @@ class JSMessages {
 	 *
 	 * This will NOT load this package, you must also use enqueuePackage() method
 	 *
+	 * @deprecated SUS-623: use ResourceLoader instead
 	 * @param string $packageName - name of the package
 	 * @param array $messages - list of messages in the package
 	 */
-	static public function registerPackage($packageName, $messages) {
-		self::log(__METHOD__, $packageName);
-		self::$packages[$packageName] = $messages;
+	static public function registerPackage( $packageName, $messages ) {
+		self::log( __METHOD__, $packageName );
+		self::$packages[self::RL_MODULE_PREFIX . $packageName] = $messages;
 	}
 
 	/**
-	 * Add a package to be available in JS
+	 * Queue a package to be added to output
+	 * Packages added to queue this way will be added via BeforePageDisplay hook handler
 	 *
+	 * @deprecated SUS-623: use ResourceLoader instead
 	 * @param string $package - package name
-	 * @param int $mode - how to emit messages (inline / external)
+	 * @param int $mode unused - reserved for backwards compatibility
 	 */
-	static public function enqueuePackage($package, $mode) {
-		wfProfileIn(__METHOD__);
-
-		// add to proper queue
-		$queueName = ($mode == self::INLINE) ? 'inline' : 'external';
-		self::$queue[$queueName][] = $package;
-
-		self::log(__METHOD__ , "{$package} (added to '{$queueName}' queue)");
-		wfProfileOut(__METHOD__);
-	}
-
-	/*
-	 * Returns a package as a JS tag
-	 *
-	 * @param array $packages - list packages names
-	 *
-	 * @return string A string containing the package as an inline-able tag to use in templates
-	 */
-	static public function printPackages( Array $packages ) {
-		wfProfileIn(__METHOD__);
-
-		$pkgs = implode(',', $packages);
-		$ret = '<script>' . F::app()->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
-
-		wfProfileOut(__METHOD__);
-
-		return $ret;
+	static public function enqueuePackage( $package, $mode ) {
+		self::$queue[] = self::RL_MODULE_PREFIX . $package;
 	}
 
 	/**
-	 * Return list of messages matching given pattern
-	 *
-	 * Example: 'feature-foo-*'
-	 *
-	 * @param string $pattern - pattern to match against ALL messages in the system
-	 * @return array - key/value list of matching messages
+	 * Delete all packages from the list and queue, and delete the list of message keys from in-object cache
+	 * Used by JSMessagesTest
 	 */
-	static private function resolveMessagesPattern($pattern) {
-		$fname = __METHOD__ . "::$pattern";
-		wfProfileIn($fname);
-
-		self::log(__METHOD__, $pattern);
-
-		$pattern = substr($pattern, 0, -1);
-		$patternLen = strlen($pattern);
-
-		// get list of all messages loaded by MW
-		$lang = wfGetLangObj(false /* $langCode */);
-		$langCode = $lang->getCode();
-
-		if($lang instanceof StubUserLang) {
-			$lang = $lang->_newObject();
-		}
-		$messageKeys = self::getAllMessageKeys( $lang );
-
-		$ret = array();
-		foreach( $messageKeys as $msg ) {
-			if (substr($msg, 0, $patternLen) === $pattern) {
-				$ret[$msg] = wfmsgExt($msg, array('language' => $langCode));
-			}
-		}
-
-
-		wfProfileOut($fname);
-		return $ret;
+	static public function flushData() {
+		self::$queue = self::$packages = [];
+		self::$allMessageKeys = null;
 	}
 
 	/**
@@ -124,107 +95,50 @@ class JSMessages {
 	 * @param Language $lang - Language object to get all messages from
 	 * @return array - list of all message keys
 	 */
-	static private function getAllMessageKeys(Language $lang) {
-		wfProfileIn(__METHOD__);
+	static private function getAllMessageKeys( Language $lang ) {
+		wfProfileIn( __METHOD__ );
 
-		if (is_null(self::$allMessageKeys)) {
-			wfProfileIn(__METHOD__ . '::miss');
+		if ( is_null( self::$allMessageKeys ) ) {
+			wfProfileIn( __METHOD__ . '::miss' );
 			$messageKeys = $lang->getAllMessageKeys();
 			self::$allMessageKeys = $messageKeys['messages'];
 
 			$langCode = $lang->getCode();
 
 			// append legacy data
-			if (isset(Language::$dataCache->legacyData[$langCode]['messages'])) {
+			if ( isset( Language::$dataCache->legacyData[$langCode]['messages'] ) ) {
 				self::$allMessageKeys = array_unique(
-					array_keys( Language::$dataCache->legacyData[$langCode]['messages']),
+					array_keys( Language::$dataCache->legacyData[$langCode]['messages'] ),
 					self::$allMessageKeys
 				);
 			}
 
-			wfProfileOut(__METHOD__ . '::miss');
+			wfProfileOut( __METHOD__ . '::miss' );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return self::$allMessageKeys;
-	}
-
-	/**
-	 * Get messages for a given package as key => value structure
-	 *
-	 * Resolve messages list (entries matching "feature-*" pattern)
-	 *
-	 * @param string $name - name of the messages package
-	 * @param boolean $allowWildcards - can packages with wildcard be added?
-	 * @return array - key/value array of messages
-	 */
-	static private function getPackage($name, $allowWildcards = true) {
-		wfProfileIn(__METHOD__);
-		$ret = null;
-
-		if (isset(self::$packages[$name])) {
-			self::log(__METHOD__, $name);
-
-			// get messages
-			$messages = self::$packages[$name];
-			$ret = array();
-
-			foreach($messages as $message) {
-				// pattern to match messages (e.g. "feature-*")
-				if (substr($message, -1) == '*') {
-					// BugId:18482
-					if ($allowWildcards) {
-						$msgs = self::resolveMessagesPattern($message);
-
-						if (!empty($msgs)) {
-							$ret = array_merge($ret, $msgs);
-						}
-					}
-					else {
-						Wikia::logBacktrace(__METHOD__);
-						wfProfileOut(__METHOD__);
-						trigger_error("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode", E_USER_ERROR);
-						return;
-					}
-				}
-				// single message
-				else {
-					//@todo - this removes the {{PLURAL prefix, so plurals won't work in JS
-					//on the other hand we cannot simply set $transform to true, as we want the wiki links to be parsed
-					$msg = wfMsgGetKey($message, true /* $useDB */);
-
-					// check for not existing message
-					if ($msg == htmlspecialchars("<{$message}>")) {
-						$msg = false;
-					}
-
-					$ret[ $message ] = $msg;
-				}
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $ret;
 	}
 
 	/**
 	 * Get messages from given packages
 	 *
-	 * Packages with widlcard matching can only be queued in EXTERNAL mode. Doing so in INLINE mode will cause
-	 * PHP fatal error (BugId:18482)
-	 *
+	 * @deprecated SUS-623: use ResourceLoader instead
 	 * @param array $packages - list packages names
-	 * @param boolean $allowWildcards - can packages with wildcard be added?
+	 * @param boolean $allowWildcards unused - reserved for backwards compatibility
 	 * @return array - key/value array of messages
 	 */
-	static public function getPackages($packages, $allowWildcards = true) {
-		$messages = array();
+	static public function getPackages( $packages, $allowWildcards = true ) {
+		$wg = F::app()->wg;
 
-		foreach($packages as $packageName) {
-			$packageMessages = self::getPackage($packageName, $allowWildcards);
-
-			if (is_array($packageMessages)) {
-				$messages = array_merge($messages, $packageMessages);
+		$loader = $wg->Out->getResourceLoader();
+		$messages = [];
+		foreach ( $packages as $packageName ) {
+			if ( $loader->getModuleInfo( self::RL_MODULE_PREFIX . $packageName ) ) {
+				$messageNames = $loader->getModule( self::RL_MODULE_PREFIX . $packageName )->getMessages();
+				foreach ( $messageNames as $msg ) {
+					$messages[$msg] = wfMessage( $msg )->inLanguage( $wg->Lang )->plain();
+				}
 			}
 		}
 
@@ -232,83 +146,90 @@ class JSMessages {
 	}
 
 	/**
-	 * Emit messages from the queue as:
-	 *   - JS object in <head> section of the page (INLINE mode)
-	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
+	 * Given a message name, or a message name pattern ending in a wildcard (*), get a list of all matching message names
+	 *
+	 * @param string $pattern message name, or message name pattern ending with a *
+	 * @return array list of matching message names
 	 */
-	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
-		wfProfileIn(__METHOD__);
-		self::log(__METHOD__, 'preparing list of inline messages...');
-
-		// get items to be rendered as a variable in <head> section
-		$packages = self::$queue['inline'];
-
-		if (!empty($packages)) {
-			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
+	static private function getMatchingMessagesForPattern( $pattern ) {
+		// If the input does not end with a wildcard, return only the message name
+		if ( substr( $pattern, -1 ) != '*' ) {
+			return [ $pattern ];
 		}
 
-		self::log(__METHOD__, 'preparing list of external packages...');
+		$pattern = substr( $pattern, 0, -1 );
+		$patternLen = strlen( $pattern );
 
-		$url = self::getExternalPackagesUrl();
-
-		if ($url != "") {
-			// request a script
-			F::app()->wg->Out->addScript(Html::linkedScript($url));
+		$messages = self::getAllMessageKeys( Language::factory( F::app()->wg->Lang->getCode() ) );
+		$matching = [];
+		foreach( $messages as $msg ) {
+			if (substr( $msg, 0, $patternLen ) === $pattern) {
+				$matching[] = $msg;
+			}
 		}
 
-		wfProfileOut(__METHOD__);
+		return $matching;
+	}
+
+	/**
+	 * Expand wildcards in the message list of a given package.
+	 *
+	 * @param array $keys list of message keys, including wildcards
+	 * @return array list of message keys with all wildcards expanded
+	 */
+	static private function expandWildcards( $keys ) {
+		$list = [];
+		if ( is_array( $keys ) ) {
+			// Expand any wildcards, otherwise just push the message onto the list
+			foreach ( $keys as $message ) {
+				$list = array_merge( $list, self::getMatchingMessagesForPattern( $message ) );
+			}
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Hook: ResourceLoaderRegisterModules
+	 * Registers JSMessage packages as ResourceLoader modules, prefixed with 'ext.jsmessages' to minimize potential conflicts
+	 * If a module with the same name already exists, the messages are appended to the existing module.
+	 *
+	 * @param ResourceLoader $resourceLoader
+	 * @return bool true to continue hook processing
+	 */
+	static public function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
+		foreach ( self::$packages as $packageName => $messageKeys ) {
+			$module = [
+				self::RL_MESSAGES => self::expandWildcards( $messageKeys ),
+			];
+
+			// Avoid duplicate registrations
+			if ( !( $resourceLoader->getModuleInfo( $packageName ) ) ) {
+				$resourceLoader->register( $packageName, $module );
+			}
+		}
+
 		return true;
 	}
 
 	/**
-	 * Add wgJSMessagesCB global variable to startup ResourceLoader module
+	 * Hook: BeforePageDisplay
+	 * Adds all queued modules to the output along with the cachebuster global variable
 	 *
-	 * @param array $vars JS global variables
-	 * @return bool true
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool true to continue hook processing
 	 */
-	static public function onResourceLoaderGetConfigVars(Array &$vars) {
-		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
+	static public function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		// OutputPage::addModules is used so that these resources
+		// can be loaded in the same HTTP request as other extension modules
+		$out->addModules(
+			array_merge(
+				[ 'mediawiki.jqueryMsg' ], // required for {{PLURAL:}}, {{GENDER:}} etc
+				self::$queue
+			)
+		);
+		$out->addJsConfigVars( 'wgJSMessagesCB', JSMessagesHelper::getMessagesCacheBuster() );
 		return true;
-	}
-
-	/**
-	 * Return the URL of the ajax-call to load all of the JS messages packages (enqueued as "external")
-	 *
-	 * If there are no packages to load, returns an empty-string.
-	 *
-	 * @return string - URL to "dynamic" JS file with messages
-	 */
-	static public function getExternalPackagesUrl() {
-		wfProfileIn( __METHOD__ );
-
-		$wg = F::app()->wg;
-
-		// get items to be loaded via JS file
-		$packages = self::$queue['external'];
-		$url = '';
-
-		if (!empty($packages)) {
-			$packages = array_unique($packages);
-			sort($packages);
-
-			// /wikia.php?controller=HelloWorld&method=index&format=html
-			$url = wfAppendQuery($wg->ScriptPath . '/wikia.php', array(
-				'controller' => 'JSMessages',
-				'method' => 'getMessages',
-				'format' => 'html',
-
-				// params for controller
-				'packages' => implode(',', $packages),
-
-				// cache separately for different languages
-				'uselang' => $wg->Lang->getCode(),
-
-				// cache buster
-				'cb' => JSMessagesHelper::getMessagesCacheBuster(),
-			));
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $url;
 	}
 }

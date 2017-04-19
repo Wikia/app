@@ -28,6 +28,7 @@ module.exports = function (config) {
 			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
+			'resources/mediawiki/mediawiki.js',
 			'extensions/wikia/JSMessages/js/JSMessages.js',
 			'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
 
