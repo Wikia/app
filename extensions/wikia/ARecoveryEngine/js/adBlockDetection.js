@@ -1,13 +1,13 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.pageFair')
 ], function (
 	adContext,
 	sourcePoint,

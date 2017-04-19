@@ -1,12 +1,12 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
+define('ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.window'
 ], function (adContext, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	var logGroup = 'ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint',
 		context = adContext.getContext(),
 		recoverableSlots = [
 			'TOP_LEADERBOARD',

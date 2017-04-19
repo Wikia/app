@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
+	'ext.wikia.aRecoveryEngine.sourcePoint.slotFinder',
 	'jquery',
 	'wikia.log',
 	'wikia.throttle',
