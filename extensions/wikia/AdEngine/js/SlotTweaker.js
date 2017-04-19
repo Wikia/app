@@ -1,13 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
-	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, messageListener, adSlot, recoveryHelper, doc, log, win) {
+], function (DOMElementTweaker, adSlot, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -175,36 +173,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		slot.style.maxHeight = slot.scrollHeight + 'px';
 	}
 
-	function messageCallback(data) {
-		if (!data.slotName) {
-			return log('messageCallback: missing slot name', log.levels.debug, logGroup);
-		}
-
-		switch (data.action) {
-			case 'expand':
-				expand(data.slotName);
-				break;
-			case 'collapse':
-				collapse(data.slotName);
-				break;
-			case 'hide':
-				hide(data.slotName);
-				break;
-			case 'show':
-				show(data.slotName);
-				break;
-			case 'make-responsive':
-				makeResponsive(data.slotName, data.aspectRatio);
-				break;
-			default:
-				log(['messageCallback: unknown action', data.action], log.levels.debug, logGroup);
-		}
-	}
-
-	function registerMessageListener() {
-		messageListener.register({dataKey: 'action', infinite: true}, messageCallback);
-	}
-
 	/**
 	 * Triggers repaint to hide empty slot placeholders in Chrome
 	 * This is a temporary workaround
@@ -225,12 +193,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 		addDefaultHeight: addDefaultHeight,
 		adjustIframeByContentSize: adjustIframeByContentSize,
 		adjustLeaderboardSize: adjustLeaderboardSize,
+		collapse: collapse,
+		expand: expand,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
 		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
-		registerMessageListener: registerMessageListener,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,

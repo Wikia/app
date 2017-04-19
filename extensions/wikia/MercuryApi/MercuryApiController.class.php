@@ -52,35 +52,15 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigation() {
-		global $wgLang;
-
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
 		if ( !isset( $navData['navigation']['wiki'] ) ) {
-			$localNavigation = [ ];
+			$localNavigation = [];
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
-
-		$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes();
-
-		// Add link to explore wikia only for EN language
-		if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
-			$navigationNodes['exploreDropdown'][] = [
-				'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
-				'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
-				'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
-				'trackingLabel' => 'explore-wikia'
-			];
-		}
-
-		return [
-			'hubsLinks' => $navigationNodes['hubs'],
-			'exploreWikia' => $navigationNodes['exploreWikia'],
-			'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
-			'localNav' => $localNavigation,
-			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
-		];
+    
+		return $localNavigation;
 	}
 
 	/**
@@ -163,7 +143,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables['navigation2016'] = $navigation;
+		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
@@ -200,7 +180,7 @@ class MercuryApiController extends WikiaController {
 		$htmlTitle = new WikiaHtmlTitle();
 		$wikiVariables['htmlTitle'] = [
 			'separator' => $htmlTitle->getSeparator(),
-			'parts' => $htmlTitle->getAllParts(),
+			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
 		return $wikiVariables;
@@ -233,8 +213,9 @@ class MercuryApiController extends WikiaController {
 		// Title parameter is empty for URLs like /main/edit, /d etc. (all pages outside /wiki/ space)
 		try {
 			$title = $this->getTitleFromRequest();
+			$articleId = $title->getArticleId();
 
-			$article = Article::newFromID( $title->getArticleId() );
+			$article = Article::newFromID( $articleId );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
 				$title = $this->handleRedirect( $title, $article, [ ] )[0];
@@ -244,6 +225,7 @@ class MercuryApiController extends WikiaController {
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
 			$dimensions[14] = !empty( $adContext['opts']['showAds'] ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
+			$dimensions[21] = (string)$articleId;
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
 			// In case of exception - don't set the dimensions
@@ -258,6 +240,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[2] = $wgLanguageCode;
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+		$dimensions[8] = WikiaPageType::getPageType();
 		$dimensions[9] = $wgCityId;
 		$dimensions[13] = AdTargeting::getEsrbRating();
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
@@ -265,6 +248,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[28] = !empty($adContext['targeting']['hasPortableInfobox']) ? 'yes' : 'no';
 
 		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -340,10 +324,20 @@ class MercuryApiController extends WikiaController {
 				'ns' => $title->getNamespace()
 			];
 
-			if ( $this->isSupportedByMercury( $title ) ) {
-				// Empty category pages are not known but contain article list
+			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
+			$interWikiUrl = InterwikiDispatcher::getInterWikiaURL( $title );
+
+			if ( empty( $interWikiUrl ) && $this->isSupportedByMercury( $title ) ) {
+				// Empty category pages are not known but contain article list;
 				if ( !$title->isKnown() && $title->getNamespace() !== NS_CATEGORY ) {
 					throw new NotFoundApiException( 'Page doesn\'t exist' );
+				}
+
+				// InterwikiDispatcher::getInterWikiaURL does not support other prefixes than InterwikiDispatcher::SUPPORTED_IW_PREFIXES
+				// but other prefixes may be defined in `interwiki` table for given wiki - in such case $title->isKnown()
+				// returns true in previous `if` statement
+				if ( !empty( $title->mInterwiki ) && !InterwikiDispatcher::isSupportedPrefix( $title->mInterwiki ) ) {
+					throw new InvalidParameterApiException( 'title' );
 				}
 
 				// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -438,6 +432,13 @@ class MercuryApiController extends WikiaController {
 					'details' => $exception->getDetails()
 				]
 			);
+		}
+
+		// if $interwikiUrl is not empty it means that we should redirect to other wiki (follow interwiki link)
+		if ( !empty( $interWikiUrl ) ) {
+			$data = [
+				'redirectTo' => $interWikiUrl,
+			];
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

@@ -95,7 +95,11 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 	function servicesUrl() {
 		if (mw.config.get('wgDevelEnvironment')) {
-			return 'https://services.wikia-dev.com';
+			if (mw.config.get('wgWikiaDatacenter') === 'poz') {
+				return 'https://services.wikia-dev.pl';
+			}
+
+			return 'https://services.wikia-dev.us';
 		}
 
 		return 'https://services.wikia.com';
@@ -143,19 +147,19 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return parser.protocol + '//' + parser.hostname + '/d/f';
 	}
 
-	function setupTracking(experimentName) {
+	function setupTracking() {
 		return function($html) {
-			tracker.trackVerboseImpression(experimentName, 'impact-footer');
+			tracker.trackImpression('impact-footer');
 
 			$html.on('mousedown', '.track-items', function() {
-				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer'));
+				tracker.trackClick(utils.buildLabel(this, 'impact-footer'));
 			});
 
 			if ($html.find('.discussion-module').length) {
-				tracker.trackVerboseImpression(experimentName, 'impact-footer-discussions');
+				tracker.trackImpression('impact-footer-discussions');
 
 				$html.on('mousedown', '.track-discussions', function() {
-					tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer-discussions'));
+					tracker.trackClick(utils.buildLabel(this, 'impact-footer-discussions'));
 				});
 			}
 		};

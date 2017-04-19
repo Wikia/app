@@ -15,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				};
 			}
 		},
+		priceParsingHelper: {
+			getPriceFromString: function() {
+				return 0;
+			}
+		},
 		prebidBid: {
 			createBid: function (code) {
 				return {
@@ -37,8 +42,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			}
 		},
 		instantGlobals: {
-			wgAdDriverVelesBidderCountries: ['PL']
+			wgAdDriverVelesBidderCountries: ['PL'],
+			wgAdDriverVelesBidderConfig: {}
 		},
+		log: noop,
 		geo: {
 			isProperGeo: noop
 		},
@@ -47,13 +54,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		}
 	};
 
+	mocks.log.levels = {};
+
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
+			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.log,
 			mocks.win
 		);
 	}
@@ -63,26 +74,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		mocks.win.XMLHttpRequest.prototype.send = function () {
 			this.readyState = 4;
 			this.status = 404;
-			this.onreadystatechange();
-		};
-	}
-
-	function mockSuccessfulResponse() {
-		var adParameters = document.createElement('AdParameters'),
-			textNode = document.createTextNode('veles=1554'),
-			vast = document.createElement('VAST');
-
-		adParameters.appendChild(textNode);
-		vast.appendChild(adParameters);
-
-		mocks.win.XMLHttpRequest.prototype.open = noop;
-		mocks.win.XMLHttpRequest.prototype.send = function () {
-			this.readyState = 4;
-			this.status = 200;
-			this.response = '<VAST><AdParameters><![CDATA[veles=1554]]></AdParameters></VAST>';
-			this.responseXML = {
-				documentElement: vast
-			};
 			this.onreadystatechange();
 		};
 	}
@@ -111,7 +102,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		var veles = getVeles(),
 			slots = veles.getSlots('oasis');
 
-		expect(Object.keys(slots)).toEqual(['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD']);
+		expect(Object.keys(slots).sort()).toEqual(['TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD'].sort());
 	});
 
 	it('Returns mercury slots', function () {
@@ -157,28 +148,5 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
 		expect(bid.code).toBe(2);
-	});
-
-	it('Adds bids with proper values on successful response', function () {
-		var bid,
-			bidder = getVeles(),
-			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
-			velesAdapter = bidder.create();
-
-		mockSuccessfulResponse();
-		bidderRequest.placementCode = 'foo123';
-		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
-
-		velesAdapter.callBids({
-			bidderCode: 'bar',
-			bids: [
-				bidderRequest
-			]
-		});
-
-		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
-		expect(bid.ad).toBe('<VAST><AdParameters><![CDATA[veles=1554]]></AdParameters></VAST>');
-		expect(bid.code).toBe(1);
-		expect(bid.cpm).toBe(15.54);
 	});
 });

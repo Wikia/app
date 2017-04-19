@@ -1458,10 +1458,11 @@ class WikiPage extends Page implements IDBAccessObject {
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
 
 				// wikia changes begin
-				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
-				// wikia changes end
+				if ( !Hooks::run( 'ArticleDoEdit', [ $dbw, $this->mTitle, $revision ] ) ) {
+					$status->fatal( 'unknownerror' );
 
-				if ( !$ok ) {
+					$dbw->rollback( __METHOD__ );
+				} elseif ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
 

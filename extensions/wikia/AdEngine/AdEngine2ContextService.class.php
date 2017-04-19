@@ -70,6 +70,8 @@ class AdEngine2ContextService {
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => !empty( $wg->EnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
@@ -90,9 +92,15 @@ class AdEngine2ContextService {
 			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
 			 */
 			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
-
 			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
 			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
+
+			/**
+			* $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+			* $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
+			* $wgAdDriverEnablePageFairRecovery === null; // don't care - depend on $wgAdDriverPageFairRecoveryCountries
+			*/
+			$context['opts']['pageFairRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnablePageFairRecovery : false;
 
 			return $context;
 		} );

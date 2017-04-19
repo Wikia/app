@@ -138,8 +138,7 @@ class ForumController extends WallBaseController {
 		$wallMessage = $this->getWallMessage();
 		if ( !( $wallMessage instanceof WallMessage ) ) {
 			wfProfileOut( __METHOD__ );
-			$this->forward( __CLASS__, 'message_error' );
-			return true;
+			return false;
 		}
 
 		$this->response->setVal( 'id', $wallMessage->getId() );
@@ -307,7 +306,7 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumActivityModule() {
-		$wallHistory = new WallHistory( $this->app->wg->CityId );
+		$wallHistory = new WallHistory();
 		$out = $wallHistory->getLastPosts( NS_WIKIA_FORUM_BOARD );
 		$this->response->setVal( 'posts', $out );
 	}

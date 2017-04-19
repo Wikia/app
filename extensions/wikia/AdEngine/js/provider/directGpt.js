@@ -4,8 +4,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (uapContext, factory, slotTweaker, openXHelper) {
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePoint')
+], function (uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
 	'use strict';
 
 	return factory.createProvider(
@@ -13,7 +15,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		'DirectGpt',
 		'gpt',
 		{
-			BOTTOM_LEADERBOARD:         {size: '728x90,970x250,1024x416', loc: 'footer'},
+			BOTTOM_LEADERBOARD:         {size: '728x90', loc: 'footer'},
 			EXIT_STITIAL_BOXAD_1:       {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
@@ -49,16 +51,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			beforeHop: function(slotName) {
 				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
+			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
+			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: true,
-			recoverableSlots: [
-				'TOP_LEADERBOARD',
-				'TOP_RIGHT_BOXAD',
-				'LEFT_SKYSCRAPER_2',
-				'LEFT_SKYSCRAPER_3',
-				'INCONTENT_BOXAD_1',
-				'BOTTOM_LEADERBOARD',
-				'GPT_FLUSH'
-			],
 			atfSlots: [
 				'INVISIBLE_SKIN',
 				'TOP_LEADERBOARD',

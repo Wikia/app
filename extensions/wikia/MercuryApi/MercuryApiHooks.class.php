@@ -126,7 +126,7 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			$sectionLabel = $section['label'];
+			$sectionLabel = $section['label'] ?? "";
 
 			if ( empty( $sectionLabel ) || !empty( $section['featured'] ) ) {
 				continue;

@@ -35,7 +35,9 @@ class FacebookMapModelTest extends WikiaBaseTest {
 	 */
 	public function testCreateBadID( $wikiaUserId, $facebookUserId ) {
 		/** @var PHPUnit_Framework_MockObject_MockObject|FacebookMapModel $mockMap */
-		$mockMap = $this->getMock( 'FacebookMapModel', [ 'saveToDatabase' ] );
+		$mockMap = $this->getMockBuilder( FacebookMapModel::class )
+			->setMethods( [ 'saveToDatabase', 'saveToCache' ] )
+			->getMock();
 		$mockMap->expects( $this->never() )
 			->method( 'saveToDatabase' );
 		$mockMap->expects( $this->never() )

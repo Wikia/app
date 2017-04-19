@@ -617,19 +617,21 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	public function getNewAuthUrl( $page = '/join' ) {
-		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
-			$requestUrl = Title::newMainPage()->getLocalURL();
-		}
-		else {
-			$requestUrl = $this->app->wg->request->getRequestURL();
-		}
-
+		$requestUrl = $this->getCurrentUrlOrMainPageIfOnUserLogout();
 		parse_str( parse_url( $page, PHP_URL_QUERY ), $queryParams );
 
 		return wfAppendQuery( $page, 'redirect='
-			. urlencode ( wfExpandUrl ( $requestUrl ) )
+			. urlencode ( $requestUrl )
 			. ( !isset( $queryParams['uselang'] ) ? $this->getUselangParam() : '' )
 		);
+	}
+
+	public function getCurrentUrlOrMainPageIfOnUserLogout() {
+		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
+			return wfExpandUrl( Title::newMainPage()->getLocalURL() );
+		} else {
+			return wfExpandUrl( $this->app->wg->request->getRequestURL() );
+		}
 	}
 
 	/**

@@ -68,9 +68,11 @@ class WikiaHtmlTitle {
 			if ( $part instanceof Message ) {
 				return $part->inContentLanguage()->text();
 			}
+
 			if ( is_string( $part ) ) {
 				return $part;
 			}
+
 			return null;
 		}, $parts );
 

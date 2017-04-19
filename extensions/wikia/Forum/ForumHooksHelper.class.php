@@ -296,7 +296,7 @@ class ForumHooksHelper {
 			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			// cleare board info
-			$commentsIndex = CommentsIndex::newFromId( $comment_id );
+			$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
 			if ( empty( $commentsIndex ) ) {
 				return true;
 			}
@@ -392,6 +392,9 @@ class ForumHooksHelper {
 
 		$html = F::app()->renderView( 'Forum', 'forumActivityModule' );
 
+		// remove newlines so parser does not try to wrap lines into paragraphs
+		$html = str_replace( "\n", "", $html );
+
 		wfProfileOut( __METHOD__ );
 		return $html;
 	}
@@ -434,29 +437,6 @@ class ForumHooksHelper {
 	static public function onWallMessageGetWallOwnerName( $title, &$wallOwnerName ) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$wallOwnerName = $title->getText();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
-	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
-	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
-	 * comments_index row will fail.
-	 *
-	 * @param WikiPage $page WikiPage object
-	 * @param User $user User object [not used]
-	 * @param string $reason [not used]
-	 * @param int $id [not used]
-	 * @return bool true
-	 *
-	 */
-	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
-		$title = $page->getTitle();
-		if ( $title instanceof Title ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 );
 		}
 
 		return true;

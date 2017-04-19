@@ -254,32 +254,6 @@
 					'mockExpTimes' => 1,
 					'mockExpValues' => null,
 				),
-				'addNewAccountMailPassword' => array(
-					'mockExpTimes' => 0,
-					'mockExpValues' => null,
-				),
-			);
-
-			// pass byemail -- call addNewAccountMailPassword()
-			$reqParams15 = array(
-				'userloginext01' => self::TEST_DNE_USER,
-				'userloginext02' => 'testPassword',
-				'email' => self::TEST_EMAIL,
-				'birthyear' => 1999,
-				'birthmonth' => 11,
-				'birthday' => 22,
-				'byemail' => 1,
-			);
-			$mockUserLoginForm15 = array(
-				'load' => null,
-				'addNewAccount' => array(
-					'mockExpTimes' => 0,
-					'mockExpValues' => null,
-				),
-				'addNewAccountMailPassword' => array(
-					'mockExpTimes' => 1,
-					'mockExpValues' => null,
-				),
 			);
 
 			// error - not empty fake username
@@ -323,8 +297,6 @@
 				array( $reqParams13, $mockUserParams3, $mockUserLoginForm1, 'error', $expMsg13, $expErrParam9 ),
 				'not pass byemail -- call addNewAccount() ONCE' =>
 				array( $reqParams14, $mockUserParams3, $mockUserLoginForm14, 'ok', '', '' ),
-				'pass byemail -- call addNewAccountMailPassword() ONCE' =>
-				array( $reqParams15, $mockUserParams3, $mockUserLoginForm15, 'ok', '', '' ),
 				'error - not empty fake username' =>
 				array( $reqParams16, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 				'error - not empty fake password' =>
