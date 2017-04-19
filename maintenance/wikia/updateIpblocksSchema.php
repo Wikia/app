@@ -9,16 +9,9 @@ require_once __DIR__ . '/../Maintenance.php';
  * @see https://wikia-inc.atlassian.net/browse/SUS-1563
  */
 class UpdateIpblocksSchema extends Maintenance {
-
-	/** @var string $wiki */
-	private $wiki;
-
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'really-do-changes', 'Actually delete duplicate rows and update schema.' );
-
-		global $wgCityId, $wgDBname;
-		$this->wiki = "$wgCityId/$wgDBname";
 	}
 
 	public function execute() {
@@ -77,9 +70,9 @@ class UpdateIpblocksSchema extends Maintenance {
 
 		$allIdsCount = count( $allIds );
 		if ( $allIdsCount > 0 ) {
-			$this->output( "{$this->wiki}: $allIdsCount block IDs to be deleted.\n" );
+			$this->output( "$allIdsCount block IDs to be deleted.\n" );
 		} else {
-			$this->output( "{$this->wiki}: nothing to do" );
+			$this->output( "nothing to do" );
 		}
 
 		return [ $allIds, $allIdsCount ];
@@ -95,7 +88,7 @@ class UpdateIpblocksSchema extends Maintenance {
 		$dbw = $this->getDB( DB_MASTER );
 		$dbw->delete( [ 'ipblocks' ], [ 'ipb_id' => $blockIds ], __METHOD__ );
 
-		$this->output( "{$this->wiki}: Received {$count} IDs to delete, deleted {$dbw->affectedRows()} rows.\n" );
+		$this->output( "Received {$count} IDs to delete, deleted {$dbw->affectedRows()} rows.\n" );
 
 		wfWaitForSlaves();
 	}
@@ -112,9 +105,9 @@ class UpdateIpblocksSchema extends Maintenance {
 		wfWaitForSlaves();
 
 		if ( $res ) {
-			$this->output( "{$this->wiki}: Successfully updated ipblocks table schema.\n" );
+			$this->output( "Successfully updated ipblocks table schema.\n" );
 		} else {
-			$this->error( "{$this->wiki}: Failed to update ipblocks table schema!\n" );
+			$this->error( "ailed to update ipblocks table schema!\n" );
 		}
 	}
 }
