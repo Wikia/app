@@ -14,7 +14,7 @@
 	}
 
 	.item {
-		margin: 0 6px 14px;
+		margin: 0 6px 16px;
 
 		&.is-video .image-thumbnail::after {
 			bottom: 12px;
@@ -30,7 +30,8 @@
 
 	.content {
 		font-size: 14px;
-		margin-top: 4px;
+		line-height: 1.25;
+		margin-top: 6px;
 	}
 
 	a {
