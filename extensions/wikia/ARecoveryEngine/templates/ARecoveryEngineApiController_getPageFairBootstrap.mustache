@@ -1,13 +1,10 @@
 <!-- Begin PageFair recovery -->
 <script type="text/javascript">
-	require([
-		"ext.wikia.adEngine.adContext"
-	], function (adContext) {
-		var context = adContext.getContext();
-
-		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
-			{{{code}}}
-		}
-	});
+	if (!window.wgUserName &&
+			window.ads &&
+			window.ads.context &&
+			window.ads.context.opts.pageFairRecovery === true) {
+		{{{code}}}
+	}
 </script>
 <!-- End PageFair recovery-->
