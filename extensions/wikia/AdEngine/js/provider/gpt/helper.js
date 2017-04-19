@@ -13,7 +13,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.adEngine.slot.scrollHandler'),
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
 ], function (
 	log,
@@ -28,7 +27,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	slotTweaker,
 	sraHelper,
-	scrollHandler,
 	pageFair
 ) {
 	'use strict';
@@ -96,13 +94,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
-			if (scrollHandler) {
-				var count = scrollHandler.getReloadedViewCount(slotName);
-				if (count !== null) {
-					slotTargetingData.rv = count.toString();
-				}
-			}
-
 			if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
 			}
@@ -132,7 +123,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['gptCallback', element.getId(), gptEvent], log.levels.info, logGroup);
 			element.updateDataParams(gptEvent);
 			googleTag.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
-			slot.renderEnded(gptEvent);
 		}
 
 		if (!googleTag.isInitialized()) {
@@ -148,7 +138,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		log(['pushAd', slotName, slotTargetingData], log.levels.info, logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleTag.registerCallback(element.getId(), gptCallback);
+			slot.pre('renderEnded', gptCallback);
 			googleTag.push(queueAd);
 		}
 

@@ -13,10 +13,8 @@
 	<div id="onSiteNotificationsDropdown"
 	     class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle"
 	     title="<?= wfMessage( 'global-navigation-notifications-title' )->escaped() ?>">
-		<div class="bubbles">
-			<div id="onSiteNotificationsCount"
-			     class="wds-global-navigation__notifications-menu-counter">
-			</div>
+		<div id="onSiteNotificationsCount" class="wds-notifications__unread-mark wds-is-hidden">
+			<? //= will be populated by jQuery ?>
 		</div>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-bell', 'wds-icon wds-icon-small',
 			wfMessage( 'global-navigation-notifications-title' )->escaped() ) ?>

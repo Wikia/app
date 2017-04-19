@@ -12,14 +12,13 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.provider.yavliTag',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
-	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
@@ -34,21 +33,19 @@ require([
 	messageListener,
 	pageFairDetection,
 	taboolaHelper,
-	scrollHandler,
+	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
 	yavliTag,
 	adBlockDetection,
 	win,
-	loader,
 	gcs,
 	floatingRail
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		skin = 'oasis';
+	var context = adContext.getContext();
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -74,11 +71,10 @@ require([
 		slotStateMonitor.run();
 
 		// Ads
-		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		slotTweaker.registerMessageListener();
+		actionHandler.registerMessageListener();
 
 		sourcePointDetection.initDetection();
 

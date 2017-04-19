@@ -8,17 +8,25 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
+	function getVideoElement() {
+		var videoElement = doc.createElement('video');
+
+		videoElement.setAttribute('preload', 'none');
+
+		return videoElement;
+	}
+
 	function create(adDisplayContainer, adsLoader, videoSettings) {
 		var params = videoSettings.getParams(),
 			isAdsManagerLoaded = false,
 			status = '',
-			videoMock = doc.createElement('video'),
+			videoElement = getVideoElement(),
 			adsManager,
 			mobileVideoAd = params.container.querySelector('video'),
 			eventListeners = {};
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
-			adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, imaSetup.getRenderingSettings(params));
+			adsManager = adsManagerLoadedEvent.getAdsManager(videoElement, imaSetup.getRenderingSettings(params));
 			isAdsManagerLoaded = true;
 
 			if (videoSettings.isMoatTrackingEnabled()) {

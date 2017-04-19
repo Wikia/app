@@ -1,6 +1,7 @@
 <?php
 
 class DesignSystemGlobalNavigationService extends WikiaService {
+
 	public function index() {
 		$this->setVal( 'model', $this->getData() );
 	}
@@ -54,6 +55,8 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 				break;
 			case 'global-navigation-user-sign-out':
 				$classNames = 'wds-global-navigation__dropdown-link';
+				$model['redirect'] =
+					( new UserLoginHelper() )->getCurrentUrlOrMainPageIfOnUserLogout();
 		}
 
 		$this->setVal( 'model', $model );
