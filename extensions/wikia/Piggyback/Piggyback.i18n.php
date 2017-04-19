@@ -39,7 +39,6 @@ $messages['es'] = [
 	'piggyback' => 'Personificar',
 ];
 
-
 $messages['fr'] = [
 	'piggyback' => 'Accès superposé',
 ];
