@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
@@ -25,6 +26,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTargeting,
 	sourcePoint,
 	adBlockDetection,
+	adBlockRecovery,
 	slotTweaker,
 	sraHelper,
 	pageFair
@@ -56,7 +58,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		extra = extra || {};
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
-			isRecoveryEnabled = adBlockDetection.isEnabled(),
+			isRecoveryEnabled = adBlockRecovery.isEnabled(),
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isSourcePointRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,

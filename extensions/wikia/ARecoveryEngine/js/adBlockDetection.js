@@ -23,7 +23,6 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	var cb = function (callback) {
 			callback();
 		},
-		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		logGroup = 'ext.wikia.aRecoveryEngine.adBlockDetection',
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
 		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
@@ -41,38 +40,9 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		onNotBlockingEventsQueue.push(callback);
 	}
 
-	/**
-	 * Mark module as responded not matter if adblock is blocking
-	 * @param callback
-	 */
-	function addResponseListener(callback) {
-		addOnBlockingCallback(callback);
-		addOnNotBlockingCallback(callback);
-	}
-
-	function getName() {
-		return 'adBlockDetection';
-	}
-
-	function getSafeUri(url) {
-		if (isBlocking()) {
-			url = win._sp_.getSafeUri(url);
-		}
-
-		return url;
-	}
-
 	function isBlocking() {
 		return isDetectionEnabled() &&
 			(sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()));
-	}
-
-	function isRecoveryEnabled() {
-		var context = adContext.getContext(),
-			enabled = context.opts.sourcePointRecovery || context.opts.pageFairRecovery;
-
-		log(['isRecoveryEnabled', enabled], log.levels.debug, logGroup);
-		return enabled;
 	}
 
 	function isDetectionEnabled() {
@@ -82,56 +52,11 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		return context.opts.sourcePointDetection;
 	}
 
-	function isEnabled() {
-		return isDetectionEnabled() && isRecoveryEnabled();
-	}
-
-	function track(type) {
-		if (win._sp_ && !win._sp_.trackingSent) {
-			if (Wikia && Wikia.Tracker) {
-				Wikia.Tracker.track({
-					eventName: 'ads.recovery',
-					category: 'ads-recovery-blocked',
-					action: Wikia.Tracker.ACTIONS.IMPRESSION,
-					label: type,
-					trackingMethod: 'analytics'
-				});
-			}
-			if (instantGlobals.wgARecoveryEngineCustomLog) {
-				try {
-					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.open('GET', customLogEndpoint + type, true);
-					xmlHttp.send();
-				} catch (e) {
-					log(['track', e], log.levels.error, logGroup);
-				}
-			}
-			win._sp_.trackingSent = true;
-		}
-	}
-
-	function verifyContent() {
-		var wikiaArticle = doc.getElementById('WikiaArticle'),
-			display = wikiaArticle.currentStyle ?
-				wikiaArticle.currentStyle.display :
-				getComputedStyle(wikiaArticle, null).display;
-
-		if (display === 'none') {
-			track('css-display-none');
-		}
-	}
-
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
 		addOnNotBlockingCallback: addOnNotBlockingCallback,
-		addResponseListener: addResponseListener,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isEnabled: isEnabled,
-		getName: getName,
-		getSafeUri: getSafeUri,
-		track: track,
-		verifyContent: verifyContent,
-		wasCalled: isEnabled
+		isEnabled: isDetectionEnabled
 	};
 });

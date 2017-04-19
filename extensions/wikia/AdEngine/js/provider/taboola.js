@@ -4,6 +4,7 @@
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, adBlockDetection, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
+], function (adContext, adBlockDetection, adBlockRecovery, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
 	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
@@ -114,7 +115,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
 			adBlockDetection.addOnBlockingCallback(function () {
-				if (adBlockDetection.isEnabled()) {
+				if (adBlockRecovery.isEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
 				} else {
 					fillInSlot(slot);
