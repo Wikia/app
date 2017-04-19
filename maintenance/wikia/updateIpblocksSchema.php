@@ -99,7 +99,7 @@ class UpdateIpblocksSchema extends Maintenance {
 	 * We're removing existing constraint `ipb_address` and introducing a stricter one which requires non-autoblock targets to be unique
 	 */
 	private function updateTableSchema() {
-		$sql = "ALTER TABLE ipblocks DROP INDEX `ipb_address` ADD UNIQUE KEY `ipb_address_unique` (`ipb_address`(255),`ipb_user`,`ipb_auto`);";
+		$sql = "ALTER TABLE ipblocks DROP INDEX `ipb_address`, ADD UNIQUE KEY `ipb_address_unique` (`ipb_address`(255),`ipb_user`,`ipb_auto`);";
 
 		$res = $this->getDB( DB_MASTER )->query( $sql, __METHOD__ );
 		wfWaitForSlaves();
