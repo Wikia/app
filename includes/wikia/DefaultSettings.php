@@ -1322,13 +1322,6 @@ $wgAdDriverIndexExchangeBidderCountries = null;
 $wgAdDriverOverridePrefootersCountries = null;
 
 /**
- * @name $wgAdDriverYavliCountries
- * Enables Yavli in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverYavliCountries = null;
-
-/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.

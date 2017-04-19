@@ -409,10 +409,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$expected['providers']['rubiconFastlane'] = true;
 
-		// Check Yavli URL format
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
-		unset($result['opts']['yavliUrl']);
-
 		$this->assertEquals( $expected, $result );
 	}
 

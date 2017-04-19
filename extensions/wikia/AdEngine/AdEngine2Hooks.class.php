@@ -75,7 +75,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVelesBidderCountries';
 		$vars[] = 'wgAdDriverVelesBidderConfig';
 		$vars[] = 'wgAdDriverVelesVastLoggerCountries';
-		$vars[] = 'wgAdDriverYavliCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgPorvataVastLoggerConfig';
