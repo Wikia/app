@@ -16,6 +16,9 @@ describe('Taboola ', function () {
 			adBlockDetection: {
 				addOnBlockingCallback: noop
 			},
+			adBlockRecovery: {
+				isEnabled: noop
+			},
 			slotTweaker: {
 				show: noop
 			},
@@ -55,6 +58,7 @@ describe('Taboola ', function () {
 		return modules['ext.wikia.adEngine.provider.taboola'](
 			mocks.adContext,
 			mocks.adBlockDetection,
+			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.taboolaHelper,
 			mocks.geo,

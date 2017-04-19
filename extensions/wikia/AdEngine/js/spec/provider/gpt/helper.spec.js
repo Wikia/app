@@ -22,7 +22,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			adBlockDetection: {
-				isBlocking: noop,
+				isBlocking: noop
+			},
+			adBlockRecovery: {
 				isEnabled: noop
 			},
 			adDetect: {},
@@ -90,6 +92,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.slotTargetingHelper,
 			mocks.sourcePoint,
 			mocks.adBlockDetection,
+			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.sraHelper,
 			mocks.pageFair
@@ -202,7 +205,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		mocks.adBlockDetection.isBlocking = function () {
 			return true;
 		};
-		mocks.adBlockDetection.isEnabled = function () {
+		mocks.adBlockRecovery.isEnabled = function () {
 			return true;
 		};
 
@@ -223,7 +226,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			return true;
 		};
 
-		mocks.adBlockDetection.isEnabled = function () {
+		mocks.adBlockRecovery.isEnabled = function () {
 			return true;
 		};
 
@@ -248,10 +251,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockDetection, 'isEnabled');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
 		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-		mocks.adBlockDetection.isEnabled.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
@@ -266,10 +269,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockDetection, 'isEnabled');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
 		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-		mocks.adBlockDetection.isEnabled.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
@@ -284,10 +287,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockDetection, 'isEnabled');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
-		mocks.adBlockDetection.isEnabled.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
