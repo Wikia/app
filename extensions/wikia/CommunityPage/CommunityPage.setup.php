@@ -22,7 +22,6 @@ $wgAutoloadClasses['LinkHelper'] = __DIR__ . '/helpers/LinkHelper.php';
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
-$wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
 $wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';

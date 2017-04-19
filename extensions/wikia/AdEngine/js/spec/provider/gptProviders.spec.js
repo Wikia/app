@@ -36,6 +36,11 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		lookups: {
 			extendSlotTargeting: noop
 		},
+		slotRegistry: {
+			getRefreshCount: function () {
+				return 3;
+			}
+		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
 			removeTopButtonIfNeeded: noop,
@@ -70,6 +75,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
 			mocks.passbackHandler,
+			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
 		);

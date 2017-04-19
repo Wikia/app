@@ -26,7 +26,7 @@ class CPHistoryAction extends FormlessAction {
 	public function show() {
 		switch ($this->page->getTitle()->getNamespace()) {
 			case NS_MAIN:
-				Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput(), 'history');
+				Utils::getRenderer()->render($this->page->getTitle(), $this->getOutput(), 'history');
 				break;
 			default:
 				$this->fallback();

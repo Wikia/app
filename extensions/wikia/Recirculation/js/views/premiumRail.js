@@ -1,4 +1,4 @@
-define('ext.wikia.recirculation.views.rail', [
+define('ext.wikia.recirculation.views.premiumRail', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
@@ -14,14 +14,14 @@ define('ext.wikia.recirculation.views.rail', [
 		var curated = new CuratedHelper();
 
 		return curated.injectContent(data)
-			.then(renderTemplate('client/rail.mustache'))
+			.then(renderTemplate('client/premiumRail.mustache'))
 			.then(utils.waitForRail)
 			.then(function ($html) {
 				if (options.before) {
 					$html = options.before($html);
 				}
 
-				$('#RECIRCULATION_RAIL').html($html);
+				$('#recirculation-rail').html($html);
 				curated.setupTracking($html);
 
 				return $html;
@@ -36,12 +36,12 @@ define('ext.wikia.recirculation.views.rail', [
 		};
 	}
 
-	function setupTracking(experimentName) {
+	function setupTracking() {
 		return function ($html) {
-			tracker.trackVerboseImpression(experimentName, 'rail');
+			tracker.trackImpression('rail');
 
 			$html.on('mousedown', 'a', function () {
-				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
+				tracker.trackClick(utils.buildLabel(this, 'rail'));
 			});
 
 			return $html;

@@ -722,33 +722,60 @@ jQuery(function ($) {
 	function initRailTracking() {
 		/** chat-module **/
 
-		$wikiaRail.find('.ChatModule').on('mousedown', '.chat-join', {
+		$wikiaRail.find('.chat-module').on('mousedown', '.start-a-chat-button', {
 			category: 'chat-module',
 			label: 'chat-join'
 		}, trackWithEventData);
 
-		/** recent-wiki-activity **/
-		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (event) {
-			var label,
-				el = $(event.target);
+		/** related-threads-module **/
+		$wikiaRail.find('#ForumRelatedThreadsModule').on('mousedown', 'a', function (event) {
+			var label = event.target.getAttribute('data-tracking');
 
 			// Primary mouse button only
 			if (event.which !== 1) {
 				return;
 			}
 
-			if (el.hasClass('more')) {
-				label = 'activity-more';
-			} else if (el.closest('.edited-by').length > 0) {
-				label = 'activity-username';
-			} else if (el.closest('em').length > 0) {
-				label = 'activity-title';
-			}
-
-			if (label !== undefined) {
+			if (label) {
 				track({
 					browserEvent: event,
-					category: 'recent-wiki-activity',
+					category: 'related-threads-module',
+					label: label
+				});
+			}
+		});
+
+		/** forum-activity-module **/
+		$wikiaRail.find('#ForumActivityModule').on('mousedown', 'a', function (event) {
+			var label = event.target.getAttribute('data-tracking');
+
+			// Primary mouse button only
+			if (event.which !== 1) {
+				return;
+			}
+
+			if (label) {
+				track({
+					browserEvent: event,
+					category: 'forum-activity-module',
+					label: label
+				});
+			}
+		});
+
+		/** recent-wiki-activity-module **/
+		$wikiaRail.find('#wikia-recent-activity .page-title-link, #wikia-recent-activity .edit-info-user').on('mousedown', function (event) {
+			var label = event.target.getAttribute('data-tracking');
+
+			// Primary mouse button only
+			if (event.which !== 1) {
+				return;
+			}
+
+			if (label) {
+				track({
+					browserEvent: event,
+					category: 'recent-wiki-activity-module',
 					label: label
 				});
 			}
