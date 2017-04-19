@@ -2,6 +2,8 @@
 
 class CommunityPageSpecialHooks {
 	const FIRST_EDIT_COOKIE_KEY = 'community-page-first-time';
+	// ID of the Communty Page in inspectlet app: https://www.inspectlet.com/dashboard
+	const INSPECTLET_EXPERIMENT_ID = 676892673;
 
 	/**
 	 * Cache key invalidation when an article is edited
@@ -80,6 +82,9 @@ class CommunityPageSpecialHooks {
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
 		}
+
+		// add inspectlet tracking
+		(new Inspectlet)->addExperiment(self::INSPECTLET_EXPERIMENT_ID);
 
 		return true;
 	}
