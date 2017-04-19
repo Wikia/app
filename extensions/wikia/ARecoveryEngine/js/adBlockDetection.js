@@ -5,18 +5,14 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
-	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.pageFair')
+	'wikia.log'
 ], function (
 	adContext,
 	sourcePoint,
 	doc,
 	instantGlobals,
 	lazyQueue,
-	log,
-	win,
-	pageFair
+	log
 ) {
 	'use strict';
 
@@ -41,14 +37,13 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	}
 
 	function isBlocking() {
-		return isDetectionEnabled() &&
-			(sourcePoint.isBlocking() || (pageFair && pageFair.isBlocking()));
+		return isEnabled() && sourcePoint.isBlocking();
 	}
 
-	function isDetectionEnabled() {
+	function isEnabled() {
 		var context = adContext.getContext();
 
-		log(['isDetectionEnabled', context.opts.sourcePointDetection], log.levels.debug, logGroup);
+		log(['isEnabled', context.opts.sourcePointDetection], log.levels.debug, logGroup);
 		return context.opts.sourcePointDetection;
 	}
 
@@ -57,6 +52,6 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		addOnNotBlockingCallback: addOnNotBlockingCallback,
 		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
-		isEnabled: isDetectionEnabled
+		isEnabled: isEnabled
 	};
 });

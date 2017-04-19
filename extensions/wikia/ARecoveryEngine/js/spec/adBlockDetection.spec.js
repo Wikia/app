@@ -21,10 +21,6 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 			lazyQueue: {
 				makeQueue: noop
 			},
-			pageFair: {
-				isBlocking: noop,
-				isEnabled: noop
-			},
 			sourcePoint: {
 				isBlocking: noop,
 				isEnabled: noop
@@ -41,19 +37,9 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 			null,
 			mocks.lazyQueue,
 			mocks.log,
-			null,
-			mocks.pageFair
+			null
 		);
 	}
-
-	it('isBlocking is true when sourcePointDetection is enabled and PF is blocking', function () {
-		spyOn(mocks.pageFair, 'isBlocking');
-
-		mocks.context.opts.sourcePointDetection = true;
-		mocks.pageFair.isBlocking.and.returnValue(true);
-
-		expect(getModule().isBlocking()).toBeTruthy();
-	});
 
 	it('isBlocking is true when sourcePointDetection is enabled and SP is blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
@@ -64,23 +50,20 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 		expect(getModule().isBlocking()).toBeTruthy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is enabled, SP is not blocking and PF is not blocking', function () {
+	it('isBlocking is false when sourcePointDetection is enabled, SP is not blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
-		spyOn(mocks.pageFair, 'isBlocking');
 
 		mocks.context.opts.sourcePointDetection = true;
-		mocks.pageFair.isBlocking.and.returnValue(false);
 		mocks.sourcePoint.isBlocking.and.returnValue(false);
 
 		expect(getModule().isBlocking()).toBeFalsy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is disabled and PF is blocking', function () {
+	it('isBlocking is false when sourcePointDetection is disabled, SP is  blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
-		spyOn(mocks.pageFair, 'isBlocking');
 
 		mocks.context.opts.sourcePointDetection = false;
-		mocks.pageFair.isBlocking.and.returnValue(true);
+		mocks.sourcePoint.isBlocking.and.returnValue(true);
 
 		expect(getModule().isBlocking()).toBeFalsy();
 	});
