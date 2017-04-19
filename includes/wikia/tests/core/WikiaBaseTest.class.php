@@ -497,10 +497,14 @@ abstract class WikiaBaseTest extends TestCase {
 	 */
 	public function __retrieveMessageMock( $key ) {
 		if ( array_key_exists( $key, $this->mockedMessages ) ) {
+			var_dump([__METHOD__, $key, 'mocked']);
+
 			/** @var $mock PHPUnit_Framework_MockObject_MockObject Mock */
 			$mock = $this->mockedMessages[$key];
 			return $mock->get();
 		}
+
+		var_dump([__METHOD__, $key, 'orig']);
 
 		return $this->callOriginalMethod( MessageCache::singleton(), 'get', func_get_args() );
 	}

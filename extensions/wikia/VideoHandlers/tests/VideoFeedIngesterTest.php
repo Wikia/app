@@ -51,6 +51,11 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 	 * @dataProvider baseFeedIngesterDataProvider
 	 */
 	public function testBodyStringPreparedProperly( $videoData ) {
+		$this->mockMessage( 'videohandler-description', 'Description' );
+		$this->mockMessage( 'videohandler-category', 'Videos' );
+
+		var_dump( __METHOD__, wfMessage('foo-bar'), wfMessage('videohandler-description'), wfMessage( 'videohandler-category'));
+
 		$feedIngester = new IgnFeedIngester();
 		$feedIngester->setVideoData( $videoData );
 		$feedIngester->setMetaData();
@@ -59,7 +64,7 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 		$expected = "[[Category:IGN]][[Category:IGN entertainment]][[Category:Entertainment]][[Category:Videos]]\n";
 		$expected .= "==Description==\n";
 		$expected .= "First trailer for the evolving sandbox of SkySaga, where players explore and shape the world around them.";
-		$this->assertEquals( $body, $expected );
+		$this->assertEquals( $expected, $body );
 	}
 
 	/**
