@@ -37,7 +37,7 @@ $messages['fi'] = array(
 );
 
 $messages['fr'] = array(
-	'wikia-in-your-lang-description' => "Affiche un bandeau si un wikia est disponible dans la langue définie par l'utilisateur. La vérification se base sur un cookie de géolocalisation et la langue du navigateur.",
+	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
 	'wikia-in-your-lang-available' => '$1 est aussi disponible en français. Visitez-le ! [$2 $3]',
 	'wikia-in-your-lang-article-available' => 'Cette page est également disponible en français. Allez y jeter un œil ! [$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '$1 est aussi disponible en français. Visitez-le ! [$2 $3]',
@@ -109,15 +109,15 @@ $messages['zh'] = array(
 
 $messages['zh-hans'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1还有英文社区。点击这里进行查看！[$2 $3]',
+	'wikia-in-your-lang-available' => '$1还有中文社区。点击这里进行查看！[$2 $3]',
 	'wikia-in-your-lang-article-available' => '如需查看此页面中文版，请点击这里！[$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '如需查看$1中文版，请点击这里！[$2 $3]',
 );
 
 $messages['zh-hant'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1還有英文社區。點擊這裡進行查看！[$2 $3]',
-	'wikia-in-your-lang-article-available' => '如需查看此頁面中文版，請點擊這裡！ [$2 $3]',
+	'wikia-in-your-lang-available' => '$1還有中文社區。點擊這裡進行查看！[$2 $3]',
+	'wikia-in-your-lang-article-available' => '此頁面有中文版本，請點擊這裡查看！ [$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '如需查看$1中文版，請點擊這裡！ [$2 $3]',
 );
 
