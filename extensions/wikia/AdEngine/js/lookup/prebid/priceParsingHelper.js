@@ -123,7 +123,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 		var adConfigPrice = instantGlobals.wgAdDriverVelesBidderConfig[adxAdSystem],
 			result = invalidResult;
 
-		if (adSystem === adxAdSystem) {
+		if (adConfigPrice && adSystem === adxAdSystem) {
 			result = parse(adConfigPrice);
 		}
 
