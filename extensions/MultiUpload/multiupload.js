@@ -264,12 +264,12 @@ function fillDestFilename( id ) {
 	// URLs are less likely to have a useful extension, so don't include them in the
 	// extension check.
 	current = id.replace( /[^0-9]/g, '' );
-	if( wgFileExtensions && id != 'wpUploadFileURL' ) {
+	if( wgFileExtensions && id !== 'wpUploadFileURL' ) {
 		var found = false;
-		if( fname.lastIndexOf( '.' ) != -1 ) {
-			var ext = fname.substr( fname.lastIndexOf( '.' ) + 1 );
-			for( var i = 0; i < wgFileExtensions.length; i++ ) {
-				if( wgFileExtensions[i].toLowerCase() == ext.toLowerCase() ) {
+		if ( fname.lastIndexOf('.') !== -1 ) {
+			var ext = fname.substr( fname.lastIndexOf('.') + 1 ).toLowerCase();
+			for (var wgfi in wgFileExtensions) {
+				if ( wgFileExtensions[wgfi].toLowerCase() === ext ) {
 					found = true;
 					break;
 				}
