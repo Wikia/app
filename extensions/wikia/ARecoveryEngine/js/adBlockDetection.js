@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',

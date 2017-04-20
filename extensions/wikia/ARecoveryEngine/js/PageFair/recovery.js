@@ -1,11 +1,11 @@
-define('ext.wikia.aRecoveryEngine.pageFair.pageFair', [
+define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.window'
 ], function (adContext, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.pageFair.pageFair',
+	var logGroup = 'ext.wikia.aRecoveryEngine.pageFair.recovery',
 		context = adContext.getContext(),
 		recoverableSlots = [
 			'TOP_LEADERBOARD',

@@ -5,8 +5,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.pageFair'),
-	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
+	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
 ], function (uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
 	'use strict';
 

@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.pageFair')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, pageFair) {
 	'use strict';
 

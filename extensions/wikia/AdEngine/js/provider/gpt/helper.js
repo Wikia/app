@@ -9,12 +9,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.sourcePoint.sourcePoint',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.pageFair')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	log,
 	adContext,

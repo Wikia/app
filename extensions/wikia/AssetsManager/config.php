@@ -118,10 +118,10 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
-		'//extensions/wikia/ARecoveryEngine/js/PageFair/pageFair.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
@@ -236,7 +236,7 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -263,7 +263,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -979,7 +979,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -1084,7 +1084,7 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
-		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 	],
 ];
 
