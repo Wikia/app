@@ -113,10 +113,11 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		global $wgOut, $wgUser, $wgOasisThemeSettings,
 		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
+		$request = $this->getContext()->getRequest();
 
 		//Add Smart banner for Wikia dedicated App
 		//Or fallback to My Wikia App
@@ -126,16 +127,18 @@ class OasisController extends WikiaController {
 			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
 		) {
 			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			// SUS-1808: Encode this URL for IE 11 and below
+			$requestUrl = Sanitizer::encodeAttribute( $request->getFullRequestURL() );
 			$wgOut->addHeadItem(
 				'Wikia App Smart Banner',
-				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $requestUrl )
 			);
 		} else {
 			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
 		}
 
 		/* set the grid if passed in, otherwise, respect the default */
-		$grid = $wgRequest->getVal('wikiagrid', '');
+		$grid = $request->getVal('wikiagrid', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
@@ -158,7 +161,7 @@ class OasisController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
-		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		$wikiWelcome = $request->getVal('wiki-welcome');
 
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
@@ -252,7 +255,7 @@ class OasisController extends WikiaController {
 		$this->loadJs();
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
+		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
