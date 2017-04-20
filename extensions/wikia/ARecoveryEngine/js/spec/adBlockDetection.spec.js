@@ -41,7 +41,7 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 		);
 	}
 
-	it('isBlocking is true when sourcePointDetection is enabled and SP is blocking', function () {
+	it('isBlocking is true when sourcePointDetection is enabled and SP detects blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
 
 		mocks.context.opts.sourcePointDetection = true;
@@ -50,7 +50,7 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 		expect(getModule().isBlocking()).toBeTruthy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is enabled, SP is not blocking', function () {
+	it('isBlocking is false when sourcePointDetection is enabled, SP does not detect blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
 
 		mocks.context.opts.sourcePointDetection = true;
@@ -59,7 +59,7 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 		expect(getModule().isBlocking()).toBeFalsy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is disabled, SP is  blocking', function () {
+	it('isBlocking is false when sourcePointDetection is disabled, SP detects blocking', function () {
 		spyOn(mocks.sourcePoint, 'isBlocking');
 
 		mocks.context.opts.sourcePointDetection = false;
