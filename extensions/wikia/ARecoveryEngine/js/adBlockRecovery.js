@@ -61,15 +61,20 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 				});
 			}
 			if (instantGlobals.wgARecoveryEngineCustomLog) {
-				try {
-					var xmlHttp = new XMLHttpRequest();
-					xmlHttp.open('GET', customLogEndpoint + type, true);
-					xmlHttp.send();
-				} catch (e) {
-					log(['track', e], log.levels.error, logGroup);
-				}
+				sendCustomLog(type);
 			}
 			win._sp_.trackingSent = true;
+		}
+	}
+
+	function sendCustomLog(type) {
+		var xmlHttp = new XMLHttpRequest();
+
+		try {
+			xmlHttp.open('GET', customLogEndpoint + type, true);
+			xmlHttp.send();
+		} catch (e) {
+			log(['track', e], log.levels.error, logGroup);
 		}
 	}
 
