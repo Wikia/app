@@ -19,7 +19,7 @@ class CommunityPageSpecialHelpModel {
 
 	private function getHelpPageLink( $messageKey ){
 		return Title::newFromText(
-			wfMessage( $messageKey )->inContentLanguage()->plain(), NS_HELP
+			wfMessage( $messageKey )->plain(), NS_HELP
 		)->getLocalURL();
 	}
 
