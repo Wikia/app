@@ -33,7 +33,7 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 	}
 
 	function getSafeUri(url) {
-		if (isBlocking()) {
+		if (adBlockDetection.isBlocking()) {
 			url = win._sp_.getSafeUri(url);
 		}
 
