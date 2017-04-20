@@ -24,14 +24,14 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 		};
 
 	function getContentType(player) {
-		if (!player) {
-			return;
-		}
+		var ad;
 
-		var ad = player.ima.getAdsManager().getCurrentAd();
+		if (player) {
+			ad = player.ima.getAdsManager().getCurrentAd();
 
-		if (ad) {
-			return ad.getContentType();
+			if (ad) {
+				return ad.getContentType();
+			}
 		}
 	}
 
