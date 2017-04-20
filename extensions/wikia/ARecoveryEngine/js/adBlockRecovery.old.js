@@ -1,5 +1,9 @@
-/*global define, Wikia*/
-define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
+/*global define*/
+/**
+ * This is a fallback file kept until cache invalidates.
+ * To be removed in the scope of https://wikia-inc.atlassian.net/browse/ADEN-5065
+ */
+define('ext.wikia.aRecoveryEngine.recovery.sourcePoint', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
