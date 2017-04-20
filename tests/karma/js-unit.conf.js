@@ -102,6 +102,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/template/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
 			'extensions/wikia/AdEngine/js/video/**/*.js',
+			'extensions/wikia/AdEngine/js/wrappers/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
