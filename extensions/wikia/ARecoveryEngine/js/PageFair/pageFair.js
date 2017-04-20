@@ -34,9 +34,7 @@ define('ext.wikia.aRecoveryEngine.pageFair.pageFair', [
 	}
 
 	function addMarker(slotElement) {
-		if (slotElement) {
-			slotElement.setAttribute('adonis-marker', '');
-		}
+		slotElement.setAttribute('adonis-marker', '');
 	}
 
 	return {
