@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
@@ -18,40 +19,15 @@ define('ext.wikia.adEngine.template.porvata', [
 	doc,
 	log,
 	win,
+	veles,
 	mercuryListener
 ) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.template.porvata';
 
 	function hideOtherBidsForVeles(params) {
-		if (params.adProduct === 'veles' && win.pbjs) {
-			var bidsReceived = win.pbjs._bidsReceived;
-
-			log(['hideOtherBidsForVeles', params, bidsReceived], log.levels.debug, logGroup);
-
-			bidsReceived.filter(function (bid) {
-				return bid.adId === params.hbAdId;
-			}).forEach(function (usedBid) {
-				bidsReceived = bidsReceived.filter(function (bid) {
-					var result = true;
-
-					if (bid.bidderRequestId === usedBid.bidderRequestId && bid.bidder === params.adProduct) {
-						if (bid.adUnitCode === params.slotName) {
-							result = true;
-						} else {
-							result = false;
-						}
-					} else {
-						result = true;
-					}
-
-					return result;
-				});
-			});
-
-			log(['hideOtherBidsForVeles', bidsReceived], log.levels.debug, logGroup);
-
-			win.pbjs._bidsReceived = bidsReceived;
+		if (params.adProduct === 'veles' && veles && veles.isEnabled()) {
+			veles.markBidsAsUsed(params.hbAdId);
 		}
 	}
 
