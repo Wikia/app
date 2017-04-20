@@ -28,9 +28,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 
 				if (bid.notInvolved) {
 					bestPrices[bidderCode] = 'NOT_INVOLVED';
-				}
-
-				if (bid.used) {
+				} else if (bid.used) {
 					bestPrices[bidderCode] = 'USED';
 				}
 
