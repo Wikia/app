@@ -34,9 +34,6 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.yavli' );
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $yavliKey ], 'scripts' );
-
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -47,7 +44,6 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'yavliUrl' => $yavliUrl,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),

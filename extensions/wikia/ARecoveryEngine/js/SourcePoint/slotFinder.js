@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.slotFinder', [
+define('ext.wikia.aRecoveryEngine.sourcePoint.slotFinder', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.document',
 	'wikia.window'
