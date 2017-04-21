@@ -86,11 +86,6 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
-		// PageFair recovery
-		context.opts.pageFairRecovery = noExternals ?
-			false :
-			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
-
 		// SourcePoint recovery
 		context.opts.sourcePointRecovery = noExternals ?
 			false :
@@ -104,6 +99,11 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.opts.sourcePointMMS || context.opts.sourcePointRecovery) {
 			context.opts.sourcePointBootstrap = true;
 		}
+
+		// PageFair recovery
+		context.opts.pageFairRecovery = noExternals || context.opts.sourcePointMMS ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {

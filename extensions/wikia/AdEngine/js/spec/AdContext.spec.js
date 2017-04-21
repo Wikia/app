@@ -493,6 +493,66 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
 	});
 
+	function mockGeo(geo) {
+		spyOn(mocks.geo, 'isProperGeo');
+
+		mocks.geo.isProperGeo.and.callFake(function (countries) {
+			return countries ? countries.indexOf(geo) !== -1 || countries.indexOf('XX') : false;
+		});
+	}
+
+	it('Should enable PF recovery when detection and recovery are enabled', function () {
+		mockGeo('PL');
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['PL']
+		};
+
+		expect(getModule().getContext().opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should disable PF recovery when its disabled per wiki', function () {
+		mockGeo('PL');
+
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						pageFairRecovery: false
+					}
+				}
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['PL']
+		};
+
+		expect(getModule().getContext().opts.pageFairRecovery).toBeFalsy();
+	});
+
+	it('Should disable PF recovery when SP MMS is enabled', function () {
+		mockGeo('PL');
+
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						pageFairRecovery: true,
+						sourcePointMMS: true
+					}
+				}
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['PL']
+		};
+
+		expect(getModule().getContext().opts.pageFairRecovery).toBeFalsy();
+		expect(getModule().getContext().opts.sourcePointMMS).toBeTruthy();
+	});
+
 	it('enables detection when instantGlobals.wgAdDriverSourcePointDetectionMobileCountries', function () {
 		mocks.win = {
 			ads: {
