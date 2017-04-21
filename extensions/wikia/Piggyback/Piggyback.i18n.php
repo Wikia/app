@@ -5,6 +5,9 @@ $messages = [];
 $messages['en'] = [
 	'piggyback' => 'Piggyback',
 	'right-piggyback' => 'Allows access to Special:Piggyback',
+	'piggyback-desc' => 'Allows logging on as another user',
+	'log-name-piggyback' => 'Piggyback log',
+	'log-description-piggyback' => 'This log is a record of account piggybacks.'
 ];
 
 $messages['qqq'] = [

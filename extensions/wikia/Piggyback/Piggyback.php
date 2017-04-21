@@ -8,8 +8,6 @@ EOT;
 	exit( 1 );
 }
 
-
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Piggyback',
 	'author' => 'Tomasz Odrobny',

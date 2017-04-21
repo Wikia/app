@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\CookieHelper;
-
 class Piggyback extends SpecialPage {
 
 	private $logger;
@@ -35,7 +32,7 @@ class Piggyback extends SpecialPage {
 	/**
 	 * @param OutputPage $out
 	 */
-	public function clearBodyAndSetMaxCache( OutputPage $out ) {
+	private function clearBodyAndSetMaxCache( OutputPage $out ) {
 		$out->setArticleBodyOnly( true );
 		$out->setSquidMaxage( WikiaResponse::CACHE_LONG );
 	}
