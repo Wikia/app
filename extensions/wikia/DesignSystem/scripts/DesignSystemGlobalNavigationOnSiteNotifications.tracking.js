@@ -129,7 +129,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				return $.extend({
 					action: action,
 					label: label,
-					category: 'on-site-notifications-desktop',
+					category: 'on-site-notifications',
 					trackingMethod: 'internal'
 				}, params);
 			},
