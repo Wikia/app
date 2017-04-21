@@ -302,6 +302,14 @@ class ArticleAsJson extends WikiaService {
 
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 
+			if ( $details['exists'] === false ) {
+				// Skip media when it doesn't exist
+
+				$res = '';
+
+				return false;
+			}
+
 			//information for mobile skins how they should display small icons
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON :
 				self::MEDIA_CONTEXT_ARTICLE_IMAGE;
