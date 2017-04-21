@@ -137,7 +137,6 @@ class OoyalaConfigController extends WikiaController {
 				],
 			],
 			'autoHide' => true,
-			'height' => 50,
 			'logo' => [
 				'imageResource' => [
 					'url' => '//player.ooyala.com/static/v4/stable/4.6.9/skin-plugin/assets/images/ooyala-logo.svg',
