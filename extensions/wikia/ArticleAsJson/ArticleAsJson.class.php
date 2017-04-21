@@ -230,6 +230,10 @@ class ArticleAsJson extends WikiaService {
 				);
 				$details['context'] = self::MEDIA_CONTEXT_GALLERY_IMAGE;
 
+				if ( $details['exists'] === false ) {
+					continue;
+				}
+
 				$caption = $image['caption'];
 
 				if ( !empty( $caption ) ) {
