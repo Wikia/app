@@ -171,20 +171,20 @@ define( 'wikia.ui.factory', [
 			loader({
 				type: loader.CSS,
 				resources: cssAssets
+			}).then(function () {
+				function resolveDeferred() {
+					deferred.resolve.apply( null, components );
+				}
+
+				if ( jsAssets.length > 0 ) {
+					loader({
+						type: loader.JS,
+						resources: jsAssets
+					}).done( resolveDeferred );
+				} else {
+					resolveDeferred();
+				}
 			});
-
-			function resolveDeferred() {
-				deferred.resolve.apply( null, components );
-			}
-
-			if ( jsAssets.length > 0 ) {
-				loader({
-					type: loader.JS,
-					resources: jsAssets
-				}).done( resolveDeferred );
-			} else {
-				resolveDeferred();
-			}
 
 		}).fail(function( data ) {
 			if ( data.error ) {
