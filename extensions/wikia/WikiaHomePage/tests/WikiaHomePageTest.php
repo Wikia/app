@@ -100,7 +100,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 
 	/**
-	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.053 ms
 	 */
 	public function testGetList() {
@@ -239,9 +239,7 @@ TXT;
 	}
 
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.05252 ms
-	 * @dataProvider getProcessedWikisImgSizesDataProvider
+	 * @group Broken
 	 */
 	public function testGetProcessedWikisImgSizes($slotName, $width, $height) {
 		$whh = new WikiaHomePageHelper();

@@ -18,7 +18,7 @@ class WikiaHubsApiControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 	/**
-	 * @dataProvider getModuleDataV3ExceptionsProvider
+	 * @group Broken
 	 */
 	public function testGetModuleDataV3Exceptions($requestParams, $exceptionDetailsMsg, $isValidCityId) {
 		$requestGetIntMap = array(
