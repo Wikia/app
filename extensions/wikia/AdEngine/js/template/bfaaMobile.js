@@ -64,12 +64,21 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				.then(function (video) {
 					video.addEventListener('loaded', function () {
 						onResize(params.videoAspectRatio);
+
+						hideLearnMore();
 					});
 
 					video.addEventListener('allAdsCompleted', function () {
 						onResize(params.aspectRatio);
 					});
 				});
+		}
+	}
+
+	function hideLearnMore() {
+		var imaIframe = doc.querySelector('.video-ima-container iframe');
+		if (imaIframe) {
+			imaIframe.style['z-index'] = -1;
 		}
 	}
 
