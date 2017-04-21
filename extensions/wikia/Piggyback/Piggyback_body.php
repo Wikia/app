@@ -3,38 +3,25 @@
 class Piggyback extends SpecialPage {
 
 	private $logger;
+	private $redirectHelper;
 
 	function __construct() {
 		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
+		$this->redirectHelper = new AuthPageRedirectHelper( $this->getOutput() );
 	}
 
 	function execute( $par ) {
 		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
+		$this->redirectHelper->redirectToPiggyback( $this->getTarget() );
+	}
 
+	private function getTarget() {
 		if ( !empty( $par ) ) {
-			$this->getRequest()->setVal( 'target', $par );
+			return $par;
+		} else {
+			return $this->getRequest()->getVal( 'target' );
 		}
-
-		$this->redirectToMercuryPiggyback( $this->getOutput(),
-			$this->getRequest()->getVal( 'target' ) );
-	}
-
-	private function redirectToMercuryPiggyback( OutputPage $out, $target ) {
-		$redirectUrl = '/piggyback';
-		if ( !empty( $target ) ) {
-			$redirectUrl .= sprintf( "?target=%s", $target );
-		}
-		$out->redirect( $redirectUrl );
-		$this->clearBodyAndSetMaxCache( $out );
-	}
-
-	/**
-	 * @param OutputPage $out
-	 */
-	private function clearBodyAndSetMaxCache( OutputPage $out ) {
-		$out->setArticleBodyOnly( true );
-		$out->setSquidMaxage( WikiaResponse::CACHE_LONG );
 	}
 
 }
