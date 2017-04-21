@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, JSON*/
 define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
@@ -30,19 +30,24 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		};
 
 	function shouldHandleSlot(slot) {
-		if (!enabledSlots[slot.name] ||
-			!slot.container.firstChild ||
-			!slot.container.firstChild.dataset.gptPageParams) {
-			return false;
-		}
-		return true;
+		var dataGptDiv = slot.container.firstChild;
+
+		return (
+			enabledSlots[slot.name] &&
+			dataGptDiv &&
+			dataGptDiv.dataset.gptPageParams &&
+			dataGptDiv.dataset.gptSlotParams &&
+			dataGptDiv.dataset.gptCreativeSize
+		);
 	}
 
 	function prepareData(slot, status) {
 		if (!shouldHandleSlot(slot)) {
 			return;
 		}
-		log(['prepareData', slot, status], 'debug', logGroup);
+
+		log(['prepareData', slot, status], log.levels.debug, logGroup);
+
 		var data,
 			slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams),
@@ -94,7 +99,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function logSlotInfo(data) {
-		log(['logSlotInfo', data], 'debug', logGroup);
+		log(['logSlotInfo', data], log.levels.debug, logGroup);
 		adTracker.trackDW(data, 'adengadinfo');
 	}
 
@@ -118,10 +123,10 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		}
 
 		if (isEnabled()) {
-			log('run', 'debug', logGroup);
+			log('run', log.levels.debug, logGroup);
 
 			win.addEventListener('adengine.slot.status', function (e) {
-				log(['adengine.slot.status', e], 'debug', logGroup);
+				log(['adengine.slot.status', e], log.levels.debug, logGroup);
 				var data = prepareData(e.detail.slot, e.detail.status);
 				if (data) {
 					logSlotInfo(data);
