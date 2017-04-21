@@ -49,16 +49,14 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		}
 
 		$this->logger->info( 'IRIS-4228 Logout has been called' );
-		if ( F::app()->wg->DevelEnvironment ) {
-			// IRIS-3871 If this is a development environment perform standard logging out
-			// in other case ignore logging out and redirect to the desired URL
-			$this->performLogout();
-		}
-		// redirection
-		$out = $this->getOutput();
-		$out->redirect( $this->getRedirectUrl() );
-
-		return;
+//		if ( F::app()->wg->DevelEnvironment ) {
+//			// IRIS-3871 If this is a development environment perform standard logging out
+//			// in other case ignore logging out and redirect to the desired URL
+//			$this->performLogout();
+//		}
+		$this->getOutput()->setArticleBodyOnly( true );
+		var_dump($this->getRedirectUrl());
+//		$this->getOutput()->redirect( $this->getRedirectUrl() );
 	}
 
 	public function performLogout() {
@@ -95,7 +93,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	 */
 	public function getRedirectUrl( ) {
 		$referer = $this->getRequest()->getHeader( 'REFERER' );
-		if ( isset( $referer ) ) {
+		if ( !empty( $referer ) ) {
 			$parsedReferer = parse_url( $referer );
 			if ( strpos( $parsedReferer['path'], '/d' ) === 0 ) {
 				return $this->getHostname( $parsedReferer ) . '/d';
