@@ -11,7 +11,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
 
-
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
 
@@ -115,6 +114,42 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function loginForm() {
+		// process login
+		if ( $this->wg->request->wasPosted() ) {
+			$action = $this->request->getVal( 'action', null );
+			if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
+				// change password
+				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
+				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
+				$params = [
+					'username' => $this->username,
+					'password' => $this->password,
+					'newpassword' => $this->wg->request->getVal( 'newpassword' ),
+					'retype' => $this->wg->request->getVal( 'retype' ),
+					'editToken' => $this->editToken,
+					'loginToken' => $this->loginToken,
+					'cancel' => $this->wg->request->getVal( 'cancel', false ),
+					'returnto' => $this->returnto
+				];
+				$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
+
+				$this->result = $response->getVal( 'result', '' );
+				$this->msg = $response->getVal( 'msg', null );
+
+				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
+				return true;
+			}
+
+			if ( $this->result === 'closurerequested' ) {
+				$response =
+					$this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+				$redirectUrl = $response->getVal( 'redirectUrl' );
+				$this->wg->Out->redirect( $redirectUrl );
+
+				return true;
+			}
+		}
+
 		$this->redirectToMercury();
 	}
 
