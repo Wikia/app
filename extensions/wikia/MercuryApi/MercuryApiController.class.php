@@ -384,7 +384,7 @@ class MercuryApiController extends WikiaController {
 
 						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
 						if ( !empty( $featuredVideo ) ) {
-							$data['article']['media'][] = $featuredVideo;
+							$data['article']['featuredVideo'] = $featuredVideo;
 						}
 
 						if ( !$title->isContentPage() ) {
