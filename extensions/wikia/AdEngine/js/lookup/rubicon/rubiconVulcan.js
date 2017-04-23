@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 				zoneId: 563110
 			}
 		},
+		cpms = {},
 		libraryUrl = '//ads.aws.rubiconproject.com/video/vulcan.min.js',
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		placeholder = {},
@@ -128,6 +129,19 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		};
 	}
 
+	function getCpmFor(slotName) {
+		var cpm,
+			placeholderName = slotMapping[slotName];
+
+		if (isNotUsedBy(slotName)) {
+			cpm = 'used';
+		} else if (cpms[placeholderName] !== undefined) {
+			cpm = cpms[placeholderName];
+		}
+
+		return cpm;
+	}
+
 	function getSingleResponse(slotName) {
 		var bestResponse = {},
 			vulcanSlots = win.rubiconVulcan && win.rubiconVulcan.getAllSlots() || [];
@@ -188,8 +202,10 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 				log(['VAST ad', placeholderName, cpm, tier, vastUrl], log.levels.debug, logGroup);
 				priceMap[placeholderName] = tier;
+				cpms[placeholderName] = cpm;
 			} else {
 				priceMap[placeholderName] = createTier('0000');
+				cpms[placeholderName] = 0;
 			}
 		});
 	}
@@ -236,6 +252,7 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	});
 
 	bidder.getSingleResponse = getSingleResponse;
+	bidder.getCpmFor = getCpmFor;
 
 	return bidder;
 });

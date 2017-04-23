@@ -51,6 +51,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return {
 						vulcan: '0.90'
 					};
+				},
+				getCpmFor: function() {
+					return 90;
 				}
 			},
 			slotTargeting: {
@@ -187,6 +190,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 
 		expect(getTrackedValue('vast_id')).toEqual('7872:5381');
 		expect(getTrackedValue('vulcan_price')).toEqual('0.90');
+		expect(getTrackedValue('additional_3')).toEqual(90);
 	});
 
 	it('Track data with wsi when src is available', function () {

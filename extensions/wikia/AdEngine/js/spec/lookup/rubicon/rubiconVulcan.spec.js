@@ -200,6 +200,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tier1600'
 		});
+		expect(vulcan.getCpmFor('INCONTENT_LEADERBOARD')).toEqual(16.2343446);
 	});
 
 	it('Returns tier0000 when there is no ad', function () {
@@ -211,6 +212,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tier0000'
 		});
+		expect(vulcan.getCpmFor('INCONTENT_LEADERBOARD')).toEqual(0);
 	});
 
 	it('Returns tierNONE when there is no response', function () {
@@ -222,6 +224,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tierNONE'
 		});
+		expect(vulcan.getCpmFor('INCONTENT_LEADERBOARD')).toBeUndefined();
 	});
 
 	it('Returns empty params for not supported slot', function () {
@@ -253,8 +256,10 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_PLAYER')).toEqual({
 			'rpfl_video': '203_tier1600'
 		});
+		expect(vulcan.getCpmFor('INCONTENT_PLAYER')).toEqual(16.2343446);
 		expect(vulcan.getSlotParams('TOP_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tierUSED'
 		});
+		expect(vulcan.getCpmFor('TOP_LEADERBOARD')).toEqual('used');
 	});
 });

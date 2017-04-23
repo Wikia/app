@@ -47,8 +47,10 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'vulcan_price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
-				'additional_2': floatingState
+				'additional_2': floatingState,
+				'additional_3': 'no vulcan'
 			},
+			vulcanCpm,
 			vulcanResponse;
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
@@ -58,6 +60,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				vulcanResponse.advertiser || emptyValue.string
 			].join(':');
 			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+
+			vulcanCpm = vulcan.getCpmFor(params.slotName);
+			trackingData['additional_3'] = vulcanCpm === undefined ? 'no cpm' : vulcanCpm;
 		}
 
 		if (params.adProduct === 'veles') {
