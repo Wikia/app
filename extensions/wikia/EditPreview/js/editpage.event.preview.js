@@ -136,7 +136,12 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		}
 
 		if (skin === 'wikiamobile') {
-			var previewFrame = new helper.IFrameForm(qs(window.wgEditPreviewMercuryUrl).addCb());
+			// FastBoot doesn't support POST requests so we need to handle it as GET,
+			// that's why we need additional query parameter.
+			// https://github.com/Wikia/mobile-wiki/commit/80383e88672e86c29d2cc685dab18366c517ad42#diff-6394e3f85f2e18792789ae183c07179cR26
+			var previewFrame = new helper.IFrameForm(
+				qs(window.wgEditPreviewMercuryUrl).addCb().setVal('_method', 'GET')
+			);
 
 			// add hidden parameter fields to be able to send POST
 			previewFrame.addParameter('title', window.wgEditedTitle);
