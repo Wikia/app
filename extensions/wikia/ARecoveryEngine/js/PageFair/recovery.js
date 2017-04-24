@@ -1,11 +1,11 @@
-define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
+define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.window'
 ], function (adContext, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.pageFair',
+	var logGroup = 'ext.wikia.aRecoveryEngine.pageFair.recovery',
 		context = adContext.getContext(),
 		recoverableSlots = [
 			'TOP_LEADERBOARD',
@@ -33,10 +33,8 @@ define('ext.wikia.aRecoveryEngine.recovery.pageFair', [
 		return isBlocking;
 	}
 
-	function addMarker(slotId) {
-		var slot = document.getElementById(slotId);
-
-		slot.setAttribute('adonis-marker', '');
+	function addMarker(slotElement) {
+		slotElement.setAttribute('adonis-marker', '');
 	}
 
 	return {

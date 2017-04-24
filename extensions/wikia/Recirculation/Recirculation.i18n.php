@@ -47,6 +47,7 @@ $messages['de'] = array(
 	'recirculation-discussions-upvotes' => 'Abstimmungen',
 	'recirculation-discussions-replies' => 'Antworten',
 	'recirculation-discussions-posts' => 'Beiträge',
+	'recirculation-incontent-title' => 'Top-Links',
 );
 
 $messages['es'] = array(
@@ -55,7 +56,7 @@ $messages['es'] = array(
 	'recirculation-impact-footer-featured-fandom-subtitle' => 'en: Fandom',
 	'recirculation-impact-footer-trending-tag' => 'En Tendencia',
 	'recirculation-impact-footer-wiki-tag' => 'Wiki',
-	'recirculation-fandom-title' => 'Artículos de Fandom en Tendencia',
+	'recirculation-fandom-title' => 'Artículos de Fandom',
 	'recirculation-fandom-subtitle' => 'También Recomendado',
 	'recirculation-discussion-title' => 'Discusiones Top',
 	'recirculation-discussion-link-text' => 'Ver todas las Discusiones',
@@ -63,6 +64,7 @@ $messages['es'] = array(
 	'recirculation-discussions-upvotes' => 'votos',
 	'recirculation-discussions-replies' => 'respuestas',
 	'recirculation-discussions-posts' => 'Discusiones',
+	'recirculation-incontent-title' => 'Enlaces Top',
 );
 
 $messages['fr'] = array(
@@ -70,8 +72,8 @@ $messages['fr'] = array(
 	'recirculation-impact-footer-title' => 'Fil des fans',
 	'recirculation-impact-footer-featured-fandom-subtitle' => 'dans : Fandom',
 	'recirculation-impact-footer-trending-tag' => 'Tendance',
-	'recirculation-impact-footer-wiki-tag' => 'Wikia',
-	'recirculation-fandom-title' => 'Articles de fandom tendance',
+	'recirculation-impact-footer-wiki-tag' => 'Wiki',
+	'recirculation-fandom-title' => 'Articles de Fandom tendance',
 	'recirculation-fandom-subtitle' => 'Également recommandé',
 	'recirculation-discussion-title' => 'Discussions les plus populaires',
 	'recirculation-discussion-link-text' => 'Voir toutes les discussions',
@@ -79,36 +81,39 @@ $messages['fr'] = array(
 	'recirculation-discussions-upvotes' => 'votes',
 	'recirculation-discussions-replies' => 'réponses',
 	'recirculation-discussions-posts' => 'Publications',
+	'recirculation-incontent-title' => 'Liens les plus populaires',
 );
 
 $messages['it'] = array(
-	'recirculation-desc' => 'Gestisce contenuti di ricircolo',
-	'recirculation-impact-footer-title' => 'Alimentazione ventola',
+	'recirculation-desc' => 'Gestisce la ricircolazione dei contenuti',
+	'recirculation-impact-footer-title' => 'Fan Feed',
 	'recirculation-impact-footer-featured-fandom-subtitle' => 'in: Fandom',
-	'recirculation-impact-footer-trending-tag' => 'In Trend',
+	'recirculation-impact-footer-trending-tag' => 'In tendenza',
 	'recirculation-impact-footer-wiki-tag' => 'Wiki',
-	'recirculation-fandom-title' => 'Articoli Trend Fandom',
-	'recirculation-fandom-subtitle' => 'Consigliato anche',
-	'recirculation-discussion-title' => 'Le principali discussioni',
+	'recirculation-fandom-title' => 'Articoli in tendenza di Fandom',
+	'recirculation-fandom-subtitle' => 'Consigliati anche',
+	'recirculation-incontent-title' => 'Link in primo piano',
+	'recirculation-discussion-title' => 'Discussioni in primo piano',
 	'recirculation-discussion-link-text' => 'Visualizza tutte le discussioni',
-	'recirculation-discussions-new' => 'Avvia una nuova discussione',
+	'recirculation-discussions-new' => 'Inizia una nuova discussione',
 	'recirculation-discussions-upvotes' => 'voti',
 	'recirculation-discussions-replies' => 'risposte',
 	'recirculation-discussions-posts' => 'Post',
 );
 
 $messages['ja'] = array(
-	'recirculation-desc' => '再利用コンテンツの対応',
+	'recirculation-desc' => 'コンテンツの再利用について',
 	'recirculation-impact-footer-title' => 'ファン・フィード',
-	'recirculation-impact-footer-featured-fandom-subtitle' => 'こちらのファンダム内タイトル:',
-	'recirculation-impact-footer-trending-tag' => '人気',
-	'recirculation-impact-footer-wiki-tag' => 'ウィキ',
-	'recirculation-fandom-title' => '人気のファンダム記事',
+	'recirculation-impact-footer-featured-fandom-subtitle' => 'このFandom内のタイトル:',
+	'recirculation-impact-footer-trending-tag' => 'トレンド',
+	'recirculation-impact-footer-wiki-tag' => 'Wiki',
+	'recirculation-fandom-title' => '人気のFandom記事',
 	'recirculation-fandom-subtitle' => 'こちらもおすすめ',
-	'recirculation-discussion-title' => 'おすすめのトーク',
-	'recirculation-discussion-link-text' => 'トークをすべて表示',
-	'recirculation-discussions-new' => '新しいトークを開始',
-	'recirculation-discussions-upvotes' => '賛成票',
+	'recirculation-incontent-title' => 'おすすめのリンク',
+	'recirculation-discussion-title' => 'おすすめのディスカッション',
+	'recirculation-discussion-link-text' => 'すべてのディスカッションを表示',
+	'recirculation-discussions-new' => '新しいディスカッションを開始',
+	'recirculation-discussions-upvotes' => 'イイね！',
 	'recirculation-discussions-replies' => '返信',
 	'recirculation-discussions-posts' => '投稿',
 );
@@ -127,6 +132,7 @@ $messages['nl'] = array(
 	'recirculation-discussions-upvotes' => 'upvotes',
 	'recirculation-discussions-replies' => 'replies',
 	'recirculation-discussions-posts' => 'Posts',
+	'recirculation-incontent-title' => 'Top Links',
 );
 
 $messages['pl'] = array(
@@ -135,7 +141,7 @@ $messages['pl'] = array(
 	'recirculation-impact-footer-featured-fandom-subtitle' => 'w: Fandom',
 	'recirculation-impact-footer-trending-tag' => 'Popularne',
 	'recirculation-impact-footer-wiki-tag' => 'Wiki',
-	'recirculation-fandom-title' => 'Najpopularniejsze artykuły ze strony Fandom',
+	'recirculation-fandom-title' => 'Popularne artykuły z Fandomu',
 	'recirculation-fandom-subtitle' => 'Również polecane',
 	'recirculation-discussion-title' => 'Najpopularniejsze dyskusje',
 	'recirculation-discussion-link-text' => 'Pokaż wszystkie dyskusje',
@@ -143,6 +149,7 @@ $messages['pl'] = array(
 	'recirculation-discussions-upvotes' => 'głosów',
 	'recirculation-discussions-replies' => 'odpowiedzi',
 	'recirculation-discussions-posts' => 'Postów',
+	'recirculation-incontent-title' => 'Polecane linki',
 );
 
 $messages['pt'] = array(
@@ -159,6 +166,7 @@ $messages['pt'] = array(
 	'recirculation-discussions-upvotes' => 'votos',
 	'recirculation-discussions-replies' => 'respostas',
 	'recirculation-discussions-posts' => 'Mensagens',
+	'recirculation-incontent-title' => 'Links populares',
 );
 
 $messages['ru'] = array(
@@ -175,6 +183,7 @@ $messages['ru'] = array(
 	'recirculation-discussions-upvotes' => 'голос(а/ов)',
 	'recirculation-discussions-replies' => 'ответ(а/ов)',
 	'recirculation-discussions-posts' => 'сообщение(я/й)',
+	'recirculation-incontent-title' => 'Близкие по теме статьи',
 );
 
 $messages['zh-hans'] = array(
@@ -191,6 +200,7 @@ $messages['zh-hans'] = array(
 	'recirculation-discussions-upvotes' => '个赞',
 	'recirculation-discussions-replies' => '个回复',
 	'recirculation-discussions-posts' => '个帖子',
+	'recirculation-incontent-title' => '热门推荐',
 );
 
 $messages['zh-hant'] = array(
@@ -207,4 +217,6 @@ $messages['zh-hant'] = array(
 	'recirculation-discussions-upvotes' => '個讚',
 	'recirculation-discussions-replies' => '個回復',
 	'recirculation-discussions-posts' => '篇文章',
+	'recirculation-incontent-title' => '精選',
 );
+

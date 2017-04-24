@@ -43,12 +43,11 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			$emailParams = [
 				'wikiId' => $cityID,
 				'pageViews' => $founderEmailObj->getPageViews( $cityID ),
-				'pageEdits' => $founderEmailObj->getDailyEdits( $cityID ),
-				'newUsers' => $founderEmailObj->getNewUsers( $cityID )
+				'pageEdits' => $founderEmailObj->getDailyEdits( $cityID )
 			];
 
 			// Only send email if there is some kind of activity to report
-			if ( $emailParams['pageViews'] == 0 && $emailParams['newUsers'] == 0 && $emailParams['userEdits'] == 0 ) {
+			if ( $emailParams['pageViews'] == 0 && $emailParams['userEdits'] == 0 ) {
 				continue;
 			}
 
