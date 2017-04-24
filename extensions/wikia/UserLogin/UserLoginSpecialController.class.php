@@ -169,42 +169,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
 	}
 
-	public function dropdown() {
-		return '';
-	}
-
-	public function providers() {
-		$this->response->setVal( 'requestType', $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		$this->tabindex = $this->request->getVal( 'tabindex', null );
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
-	}
-
-	public function providersTop() {
-		$this->response->setVal( 'requestType', $this->request->getVal( 'requestType', '' ) );
-
-		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
-			$this->skipRendering();
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileProviders' );
-		}
-	}
-
 	public function modal() {
-		$this->response->setVal( 'loginToken', UserLoginHelper::getLoginToken() );
-		$this->response->setVal( 'signupUrl',
-			Title::newFromText( 'UserSignup', NS_SPECIAL )->getFullUrl() );
+		$this->redirectToMercury();
 	}
 
 	/**
