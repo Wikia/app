@@ -327,15 +327,18 @@ class MercuryApi {
 			return '';
 		}
 
+		$htmlTitle = $displayTitle;
+
 		if ( class_exists( 'SEOTweaksHooksHelper' ) && $title->inNamespace( NS_FILE ) ) {
 			/*
 			 * Only run this code if SEOTweaks extension is enabled.
 			 * We don't use $wg variable because there are multiple switches enabling this extension
 			 */
 			$file = WikiaFileHelper::getFileFromTitle( $title );
-			$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
-		} else {
-			$htmlTitle = $displayTitle;
+
+			if ( !empty( $file ) ) {
+				$htmlTitle = SEOTweaksHooksHelper::getTitleForFilePage( $title, $file );
+			}
 		}
 
 		if ( empty( $htmlTitle ) ) {
