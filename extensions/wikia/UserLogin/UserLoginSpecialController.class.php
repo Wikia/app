@@ -138,7 +138,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->overrideTemplate( 'WikiaMobileIndex' );
 				}
 
-				return;
+				return true;
 			}
 
 			if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
