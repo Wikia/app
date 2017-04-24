@@ -75,8 +75,6 @@ class AdEngine2ContextService {
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'exitstitial' => $wg->EnableOutboundScreenExt,
-					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider

@@ -70,8 +70,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			adUnit: '/5441/mobile_remnant.OTHER/INCONTENT_LEADERBOARD/tablet/oasis-home/_godofwar-gaming'
 		},
 		{
-			slotName: 'EXIT_STITIAL_BOXAD_1',
-			adUnit: '/5441/mobile_remnant.OTHER/EXIT_STITIAL_BOXAD_1/tablet/oasis-home/_godofwar-gaming'
+			slotName: 'BOTTOM_LEADERBOARD',
+			adUnit: '/5441/mobile_remnant.OTHER/BOTTOM_LEADERBOARD/tablet/oasis-home/_godofwar-gaming'
 		}
 	];
 

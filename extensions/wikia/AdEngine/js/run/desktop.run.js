@@ -106,8 +106,7 @@ require([
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial')
+	'wikia.window'
 ], function (
 	adContext,
 	slotsContext,
@@ -117,8 +116,7 @@ require([
 	skyScraper3,
 	slotTweaker,
 	doc,
-	win,
-	exitstitial
+	win
 ) {
 	'use strict';
 
@@ -141,10 +139,6 @@ require([
 					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
 				}
 			});
-		}
-
-		if (exitstitial) {
-			exitstitial.init();
 		}
 	}
 
