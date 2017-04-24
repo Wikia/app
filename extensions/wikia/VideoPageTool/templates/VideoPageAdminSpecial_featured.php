@@ -43,19 +43,28 @@
 			</div>
 
 			<div class="input-group border">
-				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
+				<label for="display-title-<?= $x ?>">
+					<?= wfMessage( 'videopagetool-label-display-title' )->escaped() ?>
+				</label>
 				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= htmlspecialchars( $video[ 'displayTitle' ] ) ?>">
 			</div>
 
 			<div class="input-group">
-				<label for="description-<?= $x ?>"><?= wfMessage( 'videopagetool-label-video-description' )->text() ?></label>
+				<label for="description-<?= $x ?>">
+					<?= wfMessage( 'videopagetool-label-video-description' )->escaped() ?>
+				</label>
 				<textarea
 					maxlength="<?= $descriptionMaxLength ?>"
 					class="description"
 					id="description-<?= $x ?>"
-					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->text() ?>"
+					placeholder="<?= wfMessage( 'videopagetool-placeholder-video-description' )->escaped() ?>"
 					name="description[]"><?= $video[ 'description' ] ?></textarea>
-				<p class="hint"><?= wfMessage( 'videopagetool-hint-description-maxlength', $descriptionMaxLength )->plain() ?></p>
+				<p class="hint">
+					<?= wfMessage( 'videopagetool-hint-description-maxlength' )
+						->numParams( $descriptionMaxLength )
+						->escaped();
+					?>
+				</p>
 			</div>
 
 			<button type="button" class="secondary navigation nav-up">
@@ -72,8 +81,8 @@
 	<input type="hidden" value="<?= $language ?>" name="language">
 
 	<div class="submits">
-		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->text() ?></button>
-		<button type="button" class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->text() ?></button>
+		<button type="submit"><?= wfMessage( 'videopagetool-button-save' )->escaped() ?></button>
+		<button type="button" class="secondary reset"><?= wfMessage( 'videopagetool-button-clear' )->escaped() ?></button>
 	</div>
 
 </form>
