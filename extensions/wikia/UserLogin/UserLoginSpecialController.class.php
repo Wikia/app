@@ -63,7 +63,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
-		$this->redirectToMercury();
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( __CLASS__, 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'loginForm' );
+		}
 	}
 
 	private function redirectToMercury() {
