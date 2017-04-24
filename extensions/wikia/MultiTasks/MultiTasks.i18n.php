@@ -1232,9 +1232,9 @@ $messages['fr'] = array(
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki trouvé|wikis trouvés}}',
 	'multiwikifinder-redirect' => 'redirection',
 	'action-multiwikifinder' => 'rechercher un titre spécifique sur Fandom',
-	'right-multidelete' => 'Delete many pages on a single wiki, or one page across many wikis',
-	'right-multiwikifinder' => 'Find pages on many wikis',
-	'right-multiwikiedit' => 'Edit a page on many wikis at once',
+	'right-multidelete' => 'Supprimer plusieurs pages sur un wiki spécifique ou une page dans plusieurs wikis',
+	'right-multiwikifinder' => 'Trouver des pages sur plusieurs wikis',
+	'right-multiwikiedit' => 'Modifier une page sur plusieurs wikis à la fois',
 );
 
 $messages['fy'] = array(
