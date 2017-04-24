@@ -55,7 +55,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function isMonobookOrUncyclo() {
-		$skin = $this->wg->User->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		return ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
 	}
 
@@ -70,7 +70,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function redirectToMercury() {
+	private function redirectToAuthPages() {
 		$out = $this->getOutput();
 		$out->redirect( $this->getRedirectUrl() );
 		$this->clearBodyAndSetMaxCache( $out );
@@ -114,7 +114,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Shown for both Special:UserLogin and Special:UserSignup when visited logged in.
 	 */
 	public function loggedIn() {
-		$this->redirectToMercury();
+		$this->redirectToAuthPages();
 	}
 
 	public function loginForm() {
@@ -180,11 +180,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->redirectToMercury();
+		$this->redirectToAuthPages();
 	}
 
 	public function getUnconfirmedUserRedirectUrl() {
-		$this->redirectToMercury();
+		$this->redirectToAuthPages();
 	}
 
 	public function getCloseAccountRedirectUrl() {
@@ -193,7 +193,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function modal() {
-		$this->redirectToMercury();
+		$this->redirectToAuthPages();
 	}
 
 	/**
@@ -214,7 +214,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function login() {
-		$this->redirectToMercury();
+		$this->redirectToAuthPages();
 	}
 
 	/**
