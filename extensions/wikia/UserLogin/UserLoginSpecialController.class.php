@@ -25,20 +25,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
-		$this->formPostAction = $loginTitle->getLocalUrl();
-
-		$skin = $this->wg->User->getSkin();
-		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
 		$this->userLoginHelper = new UserLoginHelper();
 	}
 
 	private function initializeTemplate() {
 		// Load Facebook JS if extension is enabled and skin supports it
-		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
+		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo() ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 		}
-
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// Assets including 'wikiamobile' in the name will be included by AssetsManager when showing the mobile skin
@@ -60,6 +54,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
+	private function isMonobookOrUncyclo() {
+		$skin = $this->wg->User->getSkin();
+		return ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
+	}
+
 	/**
 	 * Route the view based on logged in status
 	 */
@@ -67,7 +66,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->redirectToMercury();
 	}
 
-	private function redirectToMercury () {
+	private function redirectToMercury() {
 		$out = $this->getOutput();
 		$out->redirect( $this->getRedirectUrl() );
 		$this->clearBodyAndSetMaxCache( $out );
@@ -85,8 +84,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	private function getRedirectUrl() {
-		$redirectUrl = $this->getAuthenticationResource()
-		               . '?redirect=' . $this->userLoginHelper->getRedirectUrl();
+		$redirectUrl =
+			$this->getAuthenticationResource() . '?redirect=' .
+			$this->userLoginHelper->getRedirectUrl();
 		$contentLangCode = $this->app->wg->ContLang->getCode();
 		if ( $contentLangCode !== 'en' ) {
 			$redirectUrl .= '&uselang=' . $contentLangCode;
@@ -114,19 +114,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function loginForm() {
-		// params
-		$username = $this->request->getVal( 'username', '' );
-		$password = $this->request->getVal( 'password', '' );
-		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
-		$loginToken = UserLoginHelper::getLoginToken();
-		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
-		$this->returntoquery = $returnToQuery;
-
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
+
 			$action = $this->request->getVal( 'action', null );
 			if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
 				// change password
+				$username = $this->request->getVal( 'username', '' );
+				$password = $this->request->getVal( 'password', '' );
+				$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
 				$editToken = $this->wg->request->getVal( 'editToken', '' );
 				$loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = [
@@ -137,14 +133,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					'editToken' => $editToken,
 					'loginToken' => $loginToken,
 					'cancel' => $this->wg->request->getVal( 'cancel', false ),
-					'returnto' => $this->returnto
+					'returnto' => $returnTo,
 				];
-				$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
+
+				$response =
+					$this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
 
 				$this->result = $response->getVal( 'result', '' );
 				$this->msg = $response->getVal( 'msg', null );
 
 				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
+
 				return true;
 			}
 
@@ -166,78 +165,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getCloseAccountRedirectUrl() {
-		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
+		$this->redirectUrl =
+			SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
 	}
 
-	/**
-	 * Renders html version that will be inserted into ajax based login interaction.
-	 * On GET, template partial for an ajax element will render
-	 */
 	public function dropdown() {
-		$query = $this->app->wg->Request->getValues();
-
-		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
-		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
-
-		$requestParams = $this->getRequest()->getParams();
-		if ( !empty( $requestParams['registerLink'] ) ) {
-			$this->response->setVal( 'registerLink',  $requestParams['registerLink'] );
-		}
-
-		if ( !empty( $requestParams['template'] ) ) {
-			$this->overrideTemplate( $requestParams['template'] );
-		}
-	}
-
-	public function getReturnToFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		// If there's already a returnto here, use it.
-		if ( isset( $query['returnto'] ) ) {
-			return $query['returnto'];
-		}
-
-		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnTo = $query['title'];
-		} else {
-			$returnTo = $this->getMainPagePartialUrl();
-		}
-
-		return $returnTo;
-	}
-
-	private function getMainPagePartialUrl() {
-		return Title::newMainPage()->getPartialURL();
-	}
-
-	private function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
-	}
-
-	private function getReturnToQueryFromQuery( $query ) {
-		if ( !is_array( $query ) ) {
-			return '';
-		}
-
-		if ( isset( $query['returnto'] ) ) {
-			// If we're already got a 'returnto' value, make sure to pair it with the 'returntoquery' or
-			// default to blank if there isn't one.
-			return array_key_exists( 'returntoquery', $query ) ? $query['returntoquery'] : '';
-		} elseif ( $this->request->wasPosted() ) {
-			// Don't use any query parameters if this was a POST and we couldn't find
-			// a returntoquery param
-			return '';
-		}
-
-		// Ignore the title parameter as it would either be used by the returnto or blacklisted
-		unset( $query['title'] );
-		return wfArrayToCGI( $query );
+		return '';
 	}
 
 	public function providers() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
+		$this->response->setVal( 'requestType', $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
@@ -252,7 +189,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function providersTop() {
-		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
+		$this->response->setVal( 'requestType', $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
@@ -266,7 +203,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	public function modal() {
 		$this->response->setVal( 'loginToken', UserLoginHelper::getLoginToken() );
-		$this->response->setVal( 'signupUrl', Title::newFromText( 'UserSignup', NS_SPECIAL )->getFullUrl() );
+		$this->response->setVal( 'signupUrl',
+			Title::newFromText( 'UserSignup', NS_SPECIAL )->getFullUrl() );
 	}
 
 	/**
@@ -296,8 +234,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function checkWriteRequest() {
 		if ( !$this->request->isInternal() ) {
-			if (!$this->request->wasPosted() || !Wikia\Security\Utils::matchToken(UserLoginHelper::getLoginToken(), $this->wg->request->getVal('token'))) {
-				throw new BadRequestException('Request must be POSTed and provide a valid login token.');
+			if ( !$this->request->wasPosted() ||
+			     !Wikia\Security\Utils::matchToken( UserLoginHelper::getLoginToken(),
+				     $this->wg->request->getVal( 'token' ) )
+			) {
+				throw new BadRequestException( 'Request must be POSTed and provide a valid login token.' );
 			}
 		}
 	}
@@ -344,29 +285,33 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			if ( !$this->wg->Auth->allowPasswordChange() ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'resetpass_forbidden' )->escaped();
+
 				return;
 			}
 
 			if ( $this->request->getVal( 'cancel', false ) ) {
 				$this->userLoginHelper->doRedirect();
+
 				return;
 			}
 
 			if ( $this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) ) ) {
 
-				if ( $this->wg->User->isAnon()
-					&& $loginToken !== UserLoginHelper::getLoginToken()
+				if ( $this->wg->User->isAnon() &&
+				     $loginToken !== UserLoginHelper::getLoginToken()
 				) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'sessionfailure' )->escaped();
+
 					return;
 				}
 
-				$user =  User::newFromName( $username );
+				$user = User::newFromName( $username );
 
 				if ( !$user || $user->isAnon() ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+
 					return;
 				}
 
@@ -374,6 +319,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'badretype' )->escaped();
 					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'badretype' ] );
+
 					return;
 				}
 
@@ -382,6 +328,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
 					wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'wrongpassword' ] );
+
 					return;
 				}
 
@@ -389,6 +336,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $valid !== true ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( $valid, $this->wg->MinimalPasswordLength )->text();
+
 					return;
 				}
 
@@ -405,7 +353,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$result = $response->getVal( 'result', '' );
 
 				if ( $result === 'closurerequested' ) {
-					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+					$response =
+						$this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
 					$redirectUrl = $response->getVal( 'redirectUrl' );
 					$this->wg->Out->redirect( $redirectUrl );
 				} else {
