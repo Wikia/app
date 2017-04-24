@@ -8,13 +8,28 @@
  */
 
 class VideoPageAdminSpecialController extends WikiaSpecialPageController {
+	const EXTERNALLY_ACCESSIBLE_METHODS = [
+		'index',
+		'publish',
+		'getCalendarInfo',
+		'getVideosByCategory',
+		'getFeaturedVideoData',
+	    'getImageData'
+	];
 
 	public function __construct() {
 		parent::__construct( 'VideoPageAdmin', '', false );
 	}
 
+	/**
+	 * SUS-1999: Limit methods accessible via wikia.php AJAX endpoint to a whitelist
+	 * @throws ForbiddenException if a non-whitelisted method is requested externally
+	 */
 	public function init() {
-
+		$method = $this->request->getVal( 'method' );
+		if ( !in_array( $method, static::EXTERNALLY_ACCESSIBLE_METHODS ) && !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
 	}
 
 	/**
@@ -239,6 +254,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function publish() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$time = $this->getVal( 'date', time() );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
@@ -300,6 +317,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function getCalendarInfo() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -428,6 +447,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array video
 	 */
 	public function getFeaturedVideoData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -475,6 +496,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
 	public function getImageData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -514,6 +537,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string seeMoreLabel
 	 */
 	public function getVideosByCategory() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$categoryName = $this->getVal( 'categoryName', '' );
 
 		if ( empty( $categoryName ) ) {
@@ -530,6 +555,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
+
 
 		$this->result = 'ok';
 		$this->msg = '';
