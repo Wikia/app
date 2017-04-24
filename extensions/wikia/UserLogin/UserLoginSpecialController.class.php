@@ -122,6 +122,25 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ( $this->wg->request->wasPosted() ) {
 
 			$action = $this->request->getVal( 'action', null );
+
+			if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+				$recoverParam = 'recover=1';
+				$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
+				$this->response->setVal( 'recoverLink', SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL( $recoverParam ) );
+				$this->response->setVal( 'recoverPassword', $recover );
+				if ( $recover ) {
+					// we use different AssetsManager packages for recover and login, so make sure the page URL is different to avoid Varnish clashes
+					$this->formPostAction .= "?{$recoverParam}";
+				}
+				if ( !empty( $action ) && ( $action === wfMessage( 'resetpass_submit' )->escaped()  || $this->result == 'resetpass' ) ) {
+					$this->overrideTemplate( 'WikiaMobileChangePassword' );
+				} else {
+					$this->overrideTemplate( 'WikiaMobileIndex' );
+				}
+
+				return;
+			}
+
 			if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
 				// change password
 				$username = $this->request->getVal( 'username', '' );
