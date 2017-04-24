@@ -1,12 +1,10 @@
 /*global define, JSON*/
 define('ext.wikia.adEngine.adInfoTrackerHelper',  [
-	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adContext, lookupServices, adBlockDetection, log, win) {
+], function (lookupServices, adBlockDetection, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
