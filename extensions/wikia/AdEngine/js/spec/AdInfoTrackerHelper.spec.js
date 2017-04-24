@@ -27,7 +27,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 	mocks.log.levels = {};
 
-	function getTopLeaderboardSlotWithContainer(gptPageParams) {
+	function getTopLeaderboardSlotWithPageParams(gptPageParams) {
 		var container = document.createElement('div'),
 			firstChild = document.createElement('div'),
 			slot = document.createElement('div');
@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeTruthy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeTruthy();
 	});
 
 	it('shouldHandleSlot be false if slot is not enabled, has gptPageParams and user does not block ads', function () {
@@ -62,7 +62,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeFalsy();
 	});
 
 	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams div and user does not block ads', function () {
@@ -89,7 +89,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(), enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(), enabledSlots)).toBeFalsy();
 	});
 
 	it('shouldHandleSlot be false if slot is enabled, has gptPageParams and user blocks ads', function () {
@@ -101,12 +101,12 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(true);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeFalsy();
 	});
 
 	it('prepareData correctly parses gptPageParams', function () {
 		var data,
-			slot = getTopLeaderboardSlotWithContainer(fakeJSONString);
+			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
 		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
 		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
@@ -129,7 +129,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 	it('prepareData correctly fallback if gptPageParams are not filled', function () {
 		var data,
-			slot = getTopLeaderboardSlotWithContainer(JSON.stringify({
+			slot = getTopLeaderboardSlotWithPageParams(JSON.stringify({
 				pv: 33,
 				geo: 'pl',
 				s0: 's0',
