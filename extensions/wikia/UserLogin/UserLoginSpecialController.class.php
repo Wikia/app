@@ -114,20 +114,28 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function loginForm() {
+		// params
+		$username = $this->request->getVal( 'username', '' );
+		$password = $this->request->getVal( 'password', '' );
+		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
+		$loginToken = UserLoginHelper::getLoginToken();
+		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
+		$this->returntoquery = $returnToQuery;
+
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
 			$action = $this->request->getVal( 'action', null );
 			if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
 				// change password
-				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
-				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
+				$editToken = $this->wg->request->getVal( 'editToken', '' );
+				$loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = [
-					'username' => $this->username,
-					'password' => $this->password,
+					'username' => $username,
+					'password' => $password,
 					'newpassword' => $this->wg->request->getVal( 'newpassword' ),
 					'retype' => $this->wg->request->getVal( 'retype' ),
-					'editToken' => $this->editToken,
-					'loginToken' => $this->loginToken,
+					'editToken' => $editToken,
+					'loginToken' => $loginToken,
 					'cancel' => $this->wg->request->getVal( 'cancel', false ),
 					'returnto' => $this->returnto
 				];
