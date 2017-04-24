@@ -4,13 +4,17 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 	function noop() {}
 
 	var mocks = {
-		lookupServices: {},
+		lookupServices: {
+			getSlotPrices: function() {
+				return {};
+			}
+		},
 		adBlockDetection: {
 			isBlocking: noop
 		},
 		window: {},
 		log: noop
-	};
+	}, fakeJSONString = JSON.stringify({foo: 1});
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
@@ -23,12 +27,14 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 	mocks.log.levels = {};
 
-	function getTopLeaderboardSlotWithContainer() {
+	function getTopLeaderboardSlotWithContainer(gptPageParams) {
 		var container = document.createElement('div'),
 			firstChild = document.createElement('div'),
 			slot = document.createElement('div');
 
-		firstChild.dataset.gptPageParams = '{foo: 1}';
+		if (gptPageParams) {
+			firstChild.dataset.gptPageParams = gptPageParams;
+		}
 		container.appendChild(firstChild);
 		slot.container = container;
 		slot.name = 'TOP_LEADERBOARD';
@@ -36,7 +42,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		return slot;
 	}
 
-	it('shouldHandleSlot is true if slot is enabled, has gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be true if slot is enabled, has gptPageParams and user does not block ads', function () {
 		var enabledSlots = {
 				TOP_LEADERBOARD: true,
 				TOP_RIGHT_BOXAD: true
@@ -45,10 +51,10 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(), enabledSlots)).toBeTruthy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeTruthy();
 	});
 
-	it('shouldHandleSlot is false if slot is not enabled, has gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is not enabled, has gptPageParams and user does not block ads', function () {
 		var enabledSlots = {
 			TOP_RIGHT_BOXAD: true
 		};
@@ -56,10 +62,10 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(), enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeFalsy();
 	});
 
-	it('shouldHandleSlot is false if slot is enabled, has no gptPageParams div and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams div and user does not block ads', function () {
 		var enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true
@@ -74,24 +80,19 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(getModule().shouldHandleSlot(slot, enabledSlots)).toBeFalsy();
 	});
 
-	it('shouldHandleSlot is false if slot is enabled, has no gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams and user does not block ads', function () {
 		var enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true
-		}, slot = document.createElement('div'),
-			firstChild = document.createElement('div');
-
-		slot.container = document.createElement('div');
-		slot.container.appendChild(firstChild);
-		slot.name = 'TOP_LEADERBOARD';
+		};
 
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
-		expect(getModule().shouldHandleSlot(slot, enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(), enabledSlots)).toBeFalsy();
 	});
 
-	it('shouldHandleSlot is false if slot is enabled, has gptPageParams and user blocks ads', function () {
+	it('shouldHandleSlot be false if slot is enabled, has gptPageParams and user blocks ads', function () {
 		var enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true
@@ -100,6 +101,65 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		mocks.adBlockDetection.isBlocking.and.returnValue(true);
 
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(), enabledSlots)).toBeFalsy();
+		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithContainer(fakeJSONString), enabledSlots)).toBeFalsy();
+	});
+
+	it('prepareData correctly parses gptPageParams', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithContainer(fakeJSONString);
+
+		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.pv).toBe('');
+		expect(data.country).toBe('');
+		expect(data.kv_s0).toBe('');
+		expect(data.kv_s1).toBe('');
+		expect(data.kv_s2).toBe('');
+		expect(data.kv_s0v).toBe('');
+		expect(data.kv_lang).toBe('');
+		expect(data.kv_skin).toBe('');
+		expect(data.kv_esrb).toBe('');
+		expect(data.kv_ref).toBe('');
+		expect(data.kv_top).toBe('');
+		expect(data.kv_ah).toBe('');
+	});
+
+	it('prepareData correctly fallback if gptPageParams are not filled', function () {
+		var data,
+			slot = getTopLeaderboardSlotWithContainer(JSON.stringify({
+				pv: 33,
+				geo: 'pl',
+				s0: 's0',
+				s1: 's1',
+				s2: 's2',
+				s0v: 's0v',
+				lang: 'pl',
+				skin: 'oasis',
+				esrb: 'esrb',
+				ref: 'ref',
+				top: 'top',
+				ah: 'ah'
+			}));
+
+		slot.container.firstChild.dataset.gptSlotParams = fakeJSONString;
+		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
+
+		data = getModule().prepareData(slot);
+
+		expect(data.pv).toBe(33);
+		expect(data.country).toBe('pl');
+		expect(data.kv_s0).toBe('s0');
+		expect(data.kv_s1).toBe('s1');
+		expect(data.kv_s2).toBe('s2');
+		expect(data.kv_s0v).toBe('s0v');
+		expect(data.kv_lang).toBe('pl');
+		expect(data.kv_skin).toBe('oasis');
+		expect(data.kv_esrb).toBe('esrb');
+		expect(data.kv_ref).toBe('ref');
+		expect(data.kv_top).toBe('top');
+		expect(data.kv_ah).toBe('ah');
 	});
 });
