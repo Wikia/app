@@ -36,8 +36,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			enabledSlots[slot.name] &&
 			dataGptDiv &&
 			dataGptDiv.dataset.gptPageParams &&
-			dataGptDiv.dataset.gptSlotParams &&
-			dataGptDiv.dataset.gptCreativeSize
+			!adBlockDetection.isBlocking()
 		);
 	}
 
@@ -100,14 +99,12 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 
 	function logSlotInfo(data) {
 		log(['logSlotInfo', data], log.levels.debug, logGroup);
+
 		adTracker.trackDW(data, 'adengadinfo');
 	}
 
 	function isEnabled() {
-		if (!adContext.getContext().opts.enableAdInfoLog || adBlockDetection.isBlocking()) {
-			return false;
-		}
-		return true;
+		return adContext.getContext().opts.enableAdInfoLog;
 	}
 
 	function setAdEnginePvUID() {
@@ -126,8 +123,9 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			log('run', log.levels.debug, logGroup);
 
 			win.addEventListener('adengine.slot.status', function (e) {
-				log(['adengine.slot.status', e], log.levels.debug, logGroup);
 				var data = prepareData(e.detail.slot, e.detail.status);
+
+				log(['adengine.slot.status', e], log.levels.debug, logGroup);
 				if (data) {
 					logSlotInfo(data);
 				}
