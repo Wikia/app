@@ -99,6 +99,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			bidResponse.mediaType = 'video';
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
+			bidResponse.vastId = velesParams.vastId;
 
 			if (velesParams.valid && allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;

@@ -1,22 +1,22 @@
 /*global define*/
-define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
+define('ext.wikia.aRecoveryEngine.tweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log'
 ], function (
 	DOMElementTweaker,
 	slotTweaker,
-	sourcePoint,
+	adBlockDetection,
 	browser,
 	doc,
 	log
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.tweaker';
+	var logGroup = 'ext.wikia.aRecoveryEngine.tweaker';
 
 	function isNotSupportedBrowser() {
 		return browser.isIE() || browser.isEdge();
@@ -49,7 +49,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 	}
 
 	function isTweakable() {
-		return sourcePoint.isBlocking();
+		return adBlockDetection.isBlocking();
 	}
 
 	return {

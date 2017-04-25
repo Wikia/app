@@ -1322,13 +1322,6 @@ $wgAdDriverIndexExchangeBidderCountries = null;
 $wgAdDriverOverridePrefootersCountries = null;
 
 /**
- * @name $wgAdDriverYavliCountries
- * Enables Yavli in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverYavliCountries = null;
-
-/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1390,19 +1383,6 @@ $wgAdDriverEvolve2Countries = null;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverUseRevcontent
- * Whether to enable Revcontent or not
- */
-$wgAdDriverUseRevcontent = true;
-
-/**
- * @name $wgAdDriverRevcontentCountries
- * List of countries with enabled Revcontent.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRevcontentCountries = null;
 
 /**
  * @name $wgAdDriverTaboolaConfig

@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoSettings',
+	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -16,6 +17,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	uiTemplate,
 	videoInterface,
 	videoSettings,
+	prebid,
 	doc,
 	log,
 	win,
@@ -25,8 +27,12 @@ define('ext.wikia.adEngine.template.porvata', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.template.porvata';
 
-	function hideOtherBidsForVeles(params) {
-		if (params.adProduct === 'veles' && veles && veles.isEnabled()) {
+	function loadVeles(params) {
+		var bid = prebid.getBidByAdId(params.hbAdId);
+
+		if (bid) {
+			params.bid = bid;
+			params.vastResponse = params.vastResponse || bid.ad;
 			veles.markBidsAsUsed(params.hbAdId);
 		}
 	}
@@ -90,7 +96,9 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.container = getVideoContainer(params.slotName);
 		}
 
-		hideOtherBidsForVeles(params);
+		if (params.adProduct === 'veles') {
+			loadVeles(params);
+		}
 
 		porvata.inject(settings).then(function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
