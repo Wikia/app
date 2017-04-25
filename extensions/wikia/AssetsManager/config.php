@@ -204,14 +204,6 @@ $config['adengine2_interactive_maps_js'] = [
 	],
 ];
 
-$config['adengine2_oasis_exitstitial_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/slot/exitstitial.js',
-	],
-];
-
 // TODO
 // release n+1 Change group name in AdEngine2Hooks (use adengine2_top_js)
 // release n+2 Remove adengine2_tracking_js group

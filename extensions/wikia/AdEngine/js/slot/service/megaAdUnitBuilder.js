@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		}, result;
 
 		result = findSlotGroup(map, slotName);
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD', 'EXIT_STITIAL_BOXAD_1'
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD'
 		return result ? result : 'OTHER';
 	}
 
