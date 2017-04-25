@@ -50,6 +50,9 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function redirectBoardToCategory() {
+		// No template for this, we're only interested in setting the redirect.
+		$this->skipRendering();
+
 		$boardId = $this->getBoardId();
 		$categoryUrl = $this->legacyRedirect->getBoardRedirect( $boardId );
 
@@ -86,20 +89,34 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 
 	/**
 	 * @param Article $article
+	 *
+	 * @return bool
+	 */
+	public static function onBeforePageHistory( &$article ) {
+		self::redirectPage( $article );
+		return true;
+	}
+
+	/**
+	 * @param Article $article
 	 * @param bool $outputDone
 	 * @param bool $useParserCache
 	 *
 	 * @return bool
 	 */
 	public static function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+		self::redirectPage( $article );
+		return true;
+	}
+
+	private static function redirectPage( &$article ) {
 		$mainTitle = self::getMainTitle( $article );
 		if ( empty( $mainTitle ) ) {
-			return true;
+			return;
 		}
 
 		// Redirect to discussions
 		self::redirectThreadToPost( $mainTitle );
-		return true;
 	}
 
 	/**

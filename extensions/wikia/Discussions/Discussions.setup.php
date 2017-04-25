@@ -30,6 +30,8 @@ $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 // is enabled and Forums are disabled.
 if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 	$wgAutoloadClasses['SpecialForumRedirectController'] = $dir . 'controllers/SpecialForumRedirectController.class.php';
+	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
+	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
 
 	// Make sure we recognize the Forum namespaces so we can redirect them if requested
@@ -63,7 +65,6 @@ $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
 
 $wgHooks['WikiaSkinTopScripts'][] = 'addDiscussionJsVariable';
-$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
 
 /**
  * @param array $vars JS variables to be added at the bottom of the page
