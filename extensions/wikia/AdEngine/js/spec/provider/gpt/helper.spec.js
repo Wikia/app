@@ -21,6 +21,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return mocks.context;
 				}
 			},
+			adBlockDetection: {
+				isBlocking: noop
+			},
+			adBlockRecovery: {
+				isEnabled: noop
+			},
 			adDetect: {},
 			adLogicPageParams: {
 				getPageLevelParams: function () {
@@ -28,12 +34,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			pageFair: {
-				isBlocking: noop,
-				isEnabled: noop
+				isEnabled: noop,
+				addMarker: noop
 			},
 			sourcePoint: {
 				recoverSlots: noop,
-				isBlocking: noop,
 				isEnabled: noop
 			},
 			slotTweaker: {
@@ -86,6 +91,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.googleTag,
 			mocks.slotTargetingHelper,
 			mocks.sourcePoint,
+			mocks.adBlockDetection,
+			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.sraHelper,
 			mocks.pageFair
@@ -195,7 +202,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
-		mocks.sourcePoint.isBlocking = function () {
+		mocks.adBlockDetection.isBlocking = function () {
+			return true;
+		};
+		mocks.adBlockRecovery.isEnabled = function () {
 			return true;
 		};
 
@@ -212,11 +222,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Should push/flush when slot is recoverable, is blocking and recovery is enabled', function () {
-		mocks.sourcePoint.isBlocking = function () {
+		mocks.adBlockDetection.isBlocking = function () {
 			return true;
 		};
 
-		mocks.sourcePoint.isEnabled = function () {
+		mocks.adBlockRecovery.isEnabled = function () {
 			return true;
 		};
 
@@ -240,11 +250,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.sourcePoint, 'isBlocking');
-		spyOn(mocks.sourcePoint, 'isEnabled');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
-		mocks.sourcePoint.isBlocking.and.returnValue(true);
-		mocks.sourcePoint.isEnabled.and.returnValue(true);
+		mocks.adBlockDetection.isBlocking.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
@@ -258,11 +268,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.sourcePoint, 'isBlocking');
-		spyOn(mocks.sourcePoint, 'isEnabled');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
-		mocks.sourcePoint.isBlocking.and.returnValue(true);
-		mocks.sourcePoint.isEnabled.and.returnValue(true);
+		mocks.adBlockDetection.isBlocking.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
@@ -276,11 +286,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.sourcePoint, 'isBlocking');
-		spyOn(mocks.sourcePoint, 'isEnabled');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
 
-		mocks.sourcePoint.isBlocking.and.returnValue(false);
-		mocks.sourcePoint.isEnabled.and.returnValue(true);
+		mocks.adBlockDetection.isBlocking.and.returnValue(false);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
@@ -311,11 +321,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		};
 
 		spyOn(mocks.pageFair, 'isEnabled');
-		spyOn(mocks.pageFair, 'isBlocking');
-		spyOn(mocks.sourcePoint, 'isBlocking');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
 
-		mocks.sourcePoint.isBlocking.and.returnValue(false);
-		mocks.pageFair.isBlocking.and.returnValue(false);
+		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 		mocks.pageFair.isEnabled.and.returnValue(true);
 
 		pushAd();

@@ -3,11 +3,11 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adTracker, adContext, lookupServices, sourcePoint, log, win, mercuryListener) {
+], function (adTracker, adContext, lookupServices, adBlockDetection, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
@@ -61,6 +61,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
 			'kv_pos': slotParams.pos || '',
+			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',
 			'kv_skin': pageParams.skin || '',
@@ -98,7 +99,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	}
 
 	function isEnabled() {
-		if (!adContext.getContext().opts.enableAdInfoLog || sourcePoint.isBlocking()) {
+		if (!adContext.getContext().opts.enableAdInfoLog || adBlockDetection.isBlocking()) {
 			return false;
 		}
 		return true;

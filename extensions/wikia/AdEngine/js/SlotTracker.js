@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.slotTracker', [
 			interestingEvents: 0
 		},
 		slotTypes = {
-			EXIT_STITIAL_BOXAD_1:   'medrec',
 			INCONTENT_BOXAD_1:      'medrec',
 			INCONTENT_LEADERBOARD:  'incontent',
 			INVISIBLE_SKIN:         'pixel',

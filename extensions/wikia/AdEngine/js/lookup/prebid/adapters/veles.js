@@ -90,19 +90,25 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		log(['addBids', bidderRequest, vastResponse, velesParams], log.levels.debug, logGroup);
 
 		bidderRequest.bids.forEach(function (bid) {
-			if (allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
-				var bidResponse = prebid.get().createBid(1);
+			var bidResponse = prebid.get().createBid(1);
 
+			bidResponse.ad = '';
+			bidResponse.bidderCode = bidderRequest.bidderCode;
+			bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
+			bidResponse.cpm = 0.00;
+			bidResponse.mediaType = 'video';
+			bidResponse.width = bid.sizes[0][0];
+			bidResponse.height = bid.sizes[0][1];
+			bidResponse.vastId = velesParams.vastId;
+
+			if (velesParams.valid && allowedSlots[velesParams.position].indexOf(bid.placementCode) > -1 ) {
 				bidResponse.ad = vastResponse;
-				bidResponse.bidderCode = bidderRequest.bidderCode;
-				bidResponse.bidderRequestId = bidderRequest.bidderRequestId;
 				bidResponse.cpm = velesParams.price;
-				bidResponse.mediaType = 'video';
-				bidResponse.width = bid.sizes[0][0];
-				bidResponse.height = bid.sizes[0][1];
-
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			} else if (velesParams.valid) {
+				bidResponse.notInvolved = true;
 			}
+
+			prebid.get().addBidResponse(bid.placementCode, bidResponse);
 		});
 	}
 
@@ -155,11 +161,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		};
 	}
 
+	function markBidsAsUsed(adId) {
+		win.pbjs._bidsReceived.forEach(function (bid) {
+			if (bid.bidderCode === bidderName && bid.adId !== adId) {
+				bid.cpm = 0.00;
+				bid.used = true;
+			}
+		});
+	}
+
 	return {
 		create: create,
 		isEnabled: isEnabled,
 		getName: getName,
 		getSlots: getSlots,
+		markBidsAsUsed: markBidsAsUsed,
 		prepareAdUnit: prepareAdUnit
 	};
 });

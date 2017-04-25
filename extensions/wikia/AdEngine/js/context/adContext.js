@@ -187,14 +187,6 @@ define('ext.wikia.adEngine.adContext', [
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
 
-		context.opts.yavli = !!(
-			!noExternals &&
-			geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries) &&
-			isPageType('article')
-		);
-
-		context.providers.revcontent = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverRevcontentCountries);
-
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
