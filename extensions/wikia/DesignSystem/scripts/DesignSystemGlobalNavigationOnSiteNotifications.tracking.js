@@ -33,7 +33,7 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				}.bind(this));
 				view.onDropDownClick.attach(function (_, event) {
 					// when drop down is closed the parent does not have wds-is-active
-					const active = $(event.currentTarget).parent('.wds-is-active');
+					var active = $(event.currentTarget).parent('.wds-is-active');
 					if (active.length === 0) {
 						this.menuOpen();
 					}
