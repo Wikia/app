@@ -286,7 +286,7 @@ class PremiumPageHeaderController extends WikiaController {
 
 		if ( $this->checkArticleComments() ) {
 			// link to article comments section
-			if ( $wgTitle != $wgTitle || $isHistory ) {
+			if ( $isHistory ) {
 				$commentsLink = $wgTitle->getLocalUrl() . '#WikiaArticleComments';
 			} else {
 				// fix for redirected articles
