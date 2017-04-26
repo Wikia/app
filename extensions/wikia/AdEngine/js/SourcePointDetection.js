@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			log('sp.not_blocking', 'info', logGroup);
 		});
 
-		if (!context.opts.sourcePointRecovery && !context.opts.sourcePointMMS) {
+		if (!context.opts.sourcePointBootstrap) {
 			loadLibrary(context);
 		}
 	}

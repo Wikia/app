@@ -41,7 +41,7 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $wgAdDriverEnableSourcePointRecovery );
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
 
-		$this->assertEquals( $expected, (new ARecoveryModule())->isSourcePointRecoveryEnabled() );
+		$this->assertEquals( $expected, ARecoveryModule::isSourcePointRecoveryEnabled() );
 	}
 
 	public function getDataPF() {
@@ -72,6 +72,6 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnablePageFairRecovery', $wgAdDriverEnablePageFairRecovery );
 		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
 
-		$this->assertEquals( $expected, (new ARecoveryModule())->isPageFairRecoveryEnabled() );
+		$this->assertEquals( $expected, ARecoveryModule::isPageFairRecoveryEnabled() );
 	}
 }

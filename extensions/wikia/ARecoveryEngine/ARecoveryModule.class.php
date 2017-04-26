@@ -4,12 +4,9 @@ class ARecoveryModule {
 	/**
 	 * Checks whether PageFair recovery is enabled (on current wiki)
 	 *
-	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
-	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
-	 *
 	 * @return bool
 	 */
-	public function isPageFairRecoveryEnabled() {
+	public static function isPageFairRecoveryEnabled() {
 		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
 		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnablePageFairRecovery === true;
@@ -18,16 +15,31 @@ class ARecoveryModule {
 	/**
 	 * Checks whether SourcePoint recovery is enabled (on current wiki)
 	 *
-	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
-	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+	 * @return bool
+	 */
+	public static function isSourcePointRecoveryEnabled() {
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
+
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnableSourcePointRecovery;
+	}
+
+	/**
+	 * Checks whether SourcePoint MMS is enabled (on current wiki)
 	 *
 	 * @return bool
 	 */
-	public function isSourcePointRecoveryEnabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+	public static function isSourcePointMessagingEnabled() {
+		global $wgUser, $wgAdDriverEnableSourcePointMMS;
 
-		return $wgUser->isAnon() && (
-			$wgAdDriverEnableSourcePointRecovery === true || $wgAdDriverEnableSourcePointMMS === true
-		);
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnableSourcePointMMS;
+	}
+
+	/**
+	 * Checks whether should load SourcePoint bootstrap
+	 *
+	 * @return bool
+	 */
+	public static function shouldLoadSourcePointBootstrap() {
+		return self::isSourcePointRecoveryEnabled() || self::isSourcePointRecoveryEnabled();
 	}
 }
