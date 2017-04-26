@@ -98,7 +98,7 @@ class CPArticleRenderer {
 				'GET',
 				"{$internalHost}/{$path}",
 				[
-                    'userAgent' => $_SERVER['HTTP_USER_AGENT'],
+					'userAgent' => $_SERVER['HTTP_USER_AGENT'],
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,
