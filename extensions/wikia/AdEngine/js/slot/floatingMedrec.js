@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.aRecoveryEngine.sourcePoint.slotFinder',
 	'jquery',
 	'wikia.log',
@@ -10,6 +11,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 ], function (
 	adContext,
 	adBlockDetection,
+	adBlockRecovery,
 	slotFinder,
 	$,
 	log,
@@ -115,7 +117,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					win.adslots2.push({
 						slotName: slotName,
 						onSuccess: function () {
-							if (adBlockDetection.isEnabled()) {
+							if (adBlockRecovery.isEnabled()) {
 								adBlockDetection.addOnBlockingCallback(replaceAdSlot);
 							}
 
