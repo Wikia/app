@@ -166,13 +166,12 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					// FIXME MAIN-10297
-					// if (adBlockDetection.isEnabled()) {
-					// 	adBlockDetection.addOnBlockingCallback(initRecoveredPlayer);
-					// 	adBlockDetection.addOnNotBlockingCallback(initRegularPlayer);
-					// } else {
+					if (adBlockDetection.isEnabled()) {
+						adBlockDetection.addOnBlockingCallback(initRecoveredPlayer);
+						adBlockDetection.addOnNotBlockingCallback(initRegularPlayer);
+					} else {
 						initRegularPlayer();
-					// }
+					}
 				});
 			});
 		});
