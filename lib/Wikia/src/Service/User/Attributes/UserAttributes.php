@@ -29,7 +29,7 @@ class UserAttributes {
 	/** @var string[string] */
 	private $defaultAttributes;
 
-	const CACHE_TTL = 300; // 5 minute
+	const CACHE_TTL = 120; // 2 minutes
 
 	/**
 	 * @Inject({
