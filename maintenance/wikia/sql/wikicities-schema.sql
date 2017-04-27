@@ -122,6 +122,7 @@ CREATE TABLE `city_list` (
   `city_cluster` varchar(255) DEFAULT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
+  `city_founding_ip_bin` varbinary(10),
   `city_vertical` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`city_id`),
   UNIQUE KEY `urlidx` (`city_url`),
