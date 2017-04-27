@@ -16,7 +16,6 @@ class SpecialChat extends UnlistedSpecialPage {
 				Chat::info( __METHOD__ . ': Method called - success' );
 				Wikia::setVar( 'OasisEntryControllerName', 'Chat' );
 				$wgOut->addModules( 'ext.Chat2' );
-				Chat::logChatWindowOpenedEvent();
 			} else {
 				Chat::info( __METHOD__ . ': Method called - banned' );
 				$wgOut->showErrorPage( 'chat-you-are-banned', 'chat-you-are-banned-text' );

@@ -11,6 +11,12 @@ class ChatController extends WikiaController {
 
 		Chat::info( __METHOD__ . ': Method called' );
 
+		// SUS-934: Abort early if someone is trying to connect directly without permission
+		if ( !Chat::canChat( $this->wg->User ) ) {
+			// skip rendering
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -87,6 +93,9 @@ class ChatController extends WikiaController {
 				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL( $themeSettings['wordmark-image-url'] );
 			}
 		}
+
+		// SUS-934: Log the connection data (IP address) here to catch custom clients
+		Chat::logChatWindowOpenedEvent();
 
 		Chat::purgeChattersCache();
 
