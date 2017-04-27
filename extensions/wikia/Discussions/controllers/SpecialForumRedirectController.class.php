@@ -115,6 +115,11 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// Ignore non-forum board threads.  This allows MessageWall to display properly
+		if ( !$mainTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			return;
+		}
+
 		// Redirect to discussions
 		self::redirectThreadToPost( $mainTitle );
 	}
