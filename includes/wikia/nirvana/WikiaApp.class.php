@@ -84,10 +84,7 @@ class WikiaApp {
 	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 
-	public function __construct(WikiaGlobalRegistry $globalRegistry = null,
-	                            WikiaLocalRegistry $localRegistry = null,
-	                            WikiaHookDispatcher $hookDispatcher = null,
-	                            WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -392,27 +389,28 @@ class WikiaApp {
 	}
 
 	/**
-	 * If the namespace is registered using registerNamespaceController $className, $methodName
-	 * will be executed instead of regular article path.  The title is passed as a request
-	 * attribute, e.g.:
+	 * registerNamespaceControler
+	 * if the namespace is registered using registerNamespaceControler
+	 * $className, $methodName will be exexuted instead of regular article path
 	 *
-	 *      $app->renderView( $className, $methodName, [ 'title' => $wgTitle ] )
+	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )
 	 *
 	 * @param integer $namespace
 	 * @param string $className
 	 * @param string $methodName
-	 *
+	 * @param string $exists - Controler will be only executed if wgTitle exists
 	 * @deprecated
 	 */
 
-	public function registerNamespaceController( $namespace, $className, $methodName ) {
+	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
 		if(empty($this->namespaceRegistry)) {
 			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
 		}
 
 		$this->namespaceRegistry[$namespace] =  array(
 			'className' => $className,
-			'methodName' => $methodName
+			'methodName' => $methodName,
+		  	'exists' => $exists
 		);
 	}
 
@@ -435,7 +433,7 @@ class WikiaApp {
 	 *
 	 * onArticleViewHeader
 	 *
-	 * This is a hook which serves the needs of registerNamespaceController
+	 * This is a hook which serves the needs of registerNamespaceControler
 	 *
 	 * @param Article $article
 	 * @param bool $outputDone
@@ -443,18 +441,12 @@ class WikiaApp {
 	 * @return bool
 	 */
 
-	public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();
-		if ( !empty( $this->namespaceRegistry[$namespace] ) && $title->exists() ) {
-			$this->wg->Out->addHTML(
-				$this->renderView(
-					$this->namespaceRegistry[$namespace]['className'],
-					$this->namespaceRegistry[$namespace]['methodName'],
-					[ 'title' => $article->getTitle() ]
-				)
-			);
+		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
+			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));
 			$outputDone = true;
 		}
 
@@ -574,13 +566,10 @@ class WikiaApp {
 
 	/**
 	 * set global variable (alias: WikiaGlobalRegistry::set(var, value, key))
-	 *
 	 * @param string $globalVarName variable name
 	 * @param mixed $value value
 	 * @param string $key key (optional)
-	 *
-	 * @return WikiaGlobalRegistry
-	 *
+	 * @return WikiaApp
 	 * @deprecated
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
@@ -614,13 +603,12 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param bool $internal
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendRequest( $controllerName = null, $methodName = null, $params = array(),
-	                             $internal = true, $exceptionMode = null ) {
+	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true,
+								 $exceptionMode = null ) {
 		wfProfileIn(__METHOD__);
 		$values = array();
 
