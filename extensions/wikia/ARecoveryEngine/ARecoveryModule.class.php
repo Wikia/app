@@ -40,6 +40,6 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function shouldLoadSourcePointBootstrap() {
-		return self::isSourcePointRecoveryEnabled() || self::isSourcePointRecoveryEnabled();
+		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
 	}
 }
