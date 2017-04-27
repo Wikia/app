@@ -191,7 +191,8 @@ class LegacyRedirectsApi
                     $e->setResponseObject($data);
                     break;
                 case 404:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\HalProblem', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(),
+	                    '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -304,7 +305,8 @@ class LegacyRedirectsApi
                     $e->setResponseObject($data);
                     break;
                 case 404:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\HalProblem', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(),
+	                    '\Swagger\Client\Discussion\Models\HalProblem', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

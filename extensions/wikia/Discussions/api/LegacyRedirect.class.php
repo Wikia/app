@@ -1,6 +1,5 @@
 <?php
 
-use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\LegacyRedirectsApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
@@ -33,8 +32,8 @@ class LegacyRedirect {
 		try {
 			$response = $this->legacyRedirectApi->getForumRedirect( $this->siteId, $boardId );
 			return $response->getPath();
-		} catch ( ApiException $e ) {
-			$this->logAndThrowError( $e );
+		} catch ( \Exception $e ) {
+			$this->logError( $e );
 		}
 
 		return '';
@@ -50,8 +49,8 @@ class LegacyRedirect {
 		try {
 			$response = $this->legacyRedirectApi->getThreadRedirect( $this->siteId, $threadId );
 			return $response->getPath();
-		} catch ( ApiException $e ) {
-			$this->logAndThrowError( $e );
+		} catch ( \Exception $e ) {
+			$this->logError( $e );
 		}
 
 		return '';
@@ -67,7 +66,7 @@ class LegacyRedirect {
 		return $api;
 	}
 
-	private function logAndThrowError( Exception $e ) {
+	private function logError( Exception $e ) {
 		$this->logger->error(
 			'DISCUSSIONS Retrieving legacy Forum redirect caused an error',
 			[
@@ -75,6 +74,5 @@ class LegacyRedirect {
 				'error' => $e->getMessage()
 			]
 		);
-		throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
 	}
 }

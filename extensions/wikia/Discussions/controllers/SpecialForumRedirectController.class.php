@@ -54,9 +54,14 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 		$this->skipRendering();
 
 		$boardId = $this->getBoardId();
-		$categoryUrl = $this->legacyRedirect->getBoardRedirect( $boardId );
+		$redirectUrl = $this->legacyRedirect->getBoardRedirect( $boardId );
 
-		$this->response->redirect( $categoryUrl );
+		if ( empty( $redirectUrl ) ) {
+			// If there's any problem, just redirect to main discussion page
+			$redirectUrl = self::DISCUSSIONS_LINK;
+		}
+
+		$this->response->redirect( $redirectUrl );
 	}
 
 	/**
@@ -74,9 +79,14 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 		$threadId = $thread->getArticleID();
 
 		$legacyRedirect = new LegacyRedirect( F::App()->wg->CityId );
-		$postUrl = $legacyRedirect->getThreadRedirect( $threadId );
+		$redirectUrl = $legacyRedirect->getThreadRedirect( $threadId );
 
-		F::app()->wg->Out->redirect( $postUrl );
+		if ( empty( $redirectUrl ) ) {
+			// If there's any problem, just redirect to main discussion page
+			$redirectUrl = self::DISCUSSIONS_LINK;
+		}
+
+		F::app()->wg->Out->redirect( $redirectUrl );
 	}
 
 	private function getDiscussionUrl() {
