@@ -19,6 +19,9 @@
  *     require_once("$IP/extensions/wikia/SiteWideMessages/SpecialSiteWideMessages.php");
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\UserGroups\UserGroupList;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named SiteWideMessages.\n";
 	exit( 1 ) ;
@@ -46,8 +49,12 @@ class SiteWideMessages extends SpecialPage {
 
 	static $hasMessages = false;
 
+	/** @var UserGroupList */
+	private $userGroupList;
+
 	function  __construct() {
 		parent::__construct('SiteWideMessages' /*class*/, 'messagetool' /*restriction*/);
+		$this->userGroupList = Injector::getInjector()->get(UserGroupList::class);
 	}
 
 	function execute($subpage) {
@@ -127,10 +134,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['clusterNames'] = $clusterList;
 
 		//fetching group list
-		global $wgGroupPermissions;
-		$groupList = $wgGroupPermissions;
-		unset($groupList['*']);
-		$formData['groupNames'] = array_keys($groupList);
+		$formData['groupNames'] = array_keys($this->userGroupList->getGroups());
 
 		/**
 		 * Fetch types of power users to generate checkboxes

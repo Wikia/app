@@ -93,6 +93,29 @@ CREATE TABLE `groups` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+drop table if exists `groups`;
+
+create table `groups` (
+  `id` int(10) unsigned not null auto_increment,
+  `name` varchar(255) not null,
+  primary key (`id`),
+  key (`name`)
+) Engine=InnoDB default charset=latin1;
+
+drop table if exists `user_groups`;
+
+create table `user_groups` (
+  `user_id` int(10) unsigned not null,
+  `group_id` int(10) unsigned not null,
+  `wiki_id` int(10) unsigned not null default '0',
+  primary key (`user_id`, `group_id`, `wiki_id`),
+  key (`user_id`),
+  key (`group_id`),
+  key (`wiki_id`),
+  key `group_wikis` (`group_id`, `wiki_id`),
+  foreign key(`group_id`) references `groups`(`id`) on delete cascade
+) Engine=InnoDB default charset=latin1;
+
 --
 -- Table structure for table `jobs_dirty`
 --

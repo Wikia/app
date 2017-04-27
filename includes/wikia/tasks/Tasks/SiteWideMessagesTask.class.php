@@ -9,8 +9,14 @@ namespace Wikia\Tasks\Tasks;
 
 
 use FluentSql\StaticSQL;
+use Wikia\DependencyInjection\Injector;
+use Wikia\UserGroups\UserGroupStorage;
 
 class SiteWideMessagesTask extends BaseTask {
+
+	/** @var UserGroupStorage */
+	private $userGroupStorage;
+
 	public function getAdminExecuteableMethods() {
 		return [];
 	}
@@ -25,6 +31,8 @@ class SiteWideMessagesTask extends BaseTask {
 		if (!defined('MSG_STATUS_UNSEEN')) {
 			define('MSG_STATUS_UNSEEN', '0');
 		}
+
+		$this->userGroupStorage = Injector::getInjector()->get(UserGroupStorage::class);
 	}
 
 	public function send($args) {
@@ -131,7 +139,7 @@ class SiteWideMessagesTask extends BaseTask {
 	}
 
 	/**
-	 * sends a message to specified group of users
+	 * sends a message to all users in a group across all wikis
 	 *
 	 * @access private
 	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
@@ -141,21 +149,22 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToGroup($params) {
-		global $wgExternalSharedDB;
+		$result = true;
+		$this->info(
+				'getting list of users that belong to a specific group on all wikis',
+				[
+					'group' => $params['groupName'],
+				]);
 
-		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$this->info('get list of all active wikis');
+		$userList = $this->userGroupStorage->findUsersWithGroup($params['groupName']);
+		$sqlValues = $this->toSqlValues($userList, $params['messageId']);
 
-		$wikisDB = (new \WikiaSQL())
-			->SELECT('city_id', 'city_dbname')
-			->FROM('city_list')
-			->WHERE('city_public')->EQUAL_TO(1)
-				->AND_('city_useshared')->EQUAL_TO(1)
-			->runLoop($DB, function(&$result, $row) {
-				$result[$row->city_id] = $row->city_dbname;
-			});
-
-		$result = $this->sendMessageHelperToGroup($wikisDB, $params);
+		if (count($sqlValues)) {
+			$this->info('add records about new message to users', [
+					'users' => count($sqlValues),
+			]);
+			$result = $this->sendMessageHelperToUsers($sqlValues);
+		}
 
 		return $result;
 	}
@@ -843,26 +852,14 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return bool
 	 */
 	private function sendMessageHelperToGroup(&$wikisDB, &$params) {
-		global $wgSpecialsDB;
-
 		$result = true;
 		$this->info('get list of users that belong to specific group on specific wikis', [
 			'wikis' => count($wikisDB),
 			'group' => $params['groupName'],
 		]);
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
-		$sqlValues = (new \WikiaSQL())
-			->SELECT('user_id', 'wiki_id')
-			->FROM('events_local_users')
-			->WHERE('wiki_id')->IN(array_keys($wikisDB))
-				->AND_(StaticSQL::RAW(
-					'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
-				))
-			->GROUP_BY('wiki_id', 'user_id')
-			->runLoop($dbr, function(&$sqlValues, $row) USE ($params) {
-				$sqlValues []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
-			});
+		$userList = $this->userGroupStorage->findUsersWithLocalGroup($params['groupName'], $wikisDB);
+		$sqlValues = $this->toSqlValues($userList, $params['messageId']);
 
 		if (count($sqlValues)) {
 			$this->info('add records about new message to users', [
@@ -957,5 +954,15 @@ class SiteWideMessagesTask extends BaseTask {
 		return $sql->runLoop($db, function(&$results, $row) {
 			$results[$row->city_id] = $row->city_dbname;
 		});
+	}
+
+	private function toSqlValues($userList, $messageId) {
+		$sqlValues = [];
+
+		foreach ($userList as list($userId, $wikiId)) {
+			$sqlValues[] = [$wikiId, $userId, $messageId, MSG_STATUS_UNSEEN];
+		}
+
+		return $sqlValues;
 	}
 }

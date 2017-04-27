@@ -10,6 +10,7 @@ use Wikia\Service\User\Auth\AuthModule;
 use Wikia\Service\User\Permissions\PermissionsModule;
 use Wikia\Service\User\Preferences\Migration\PreferenceMigrationModule;
 use Wikia\Service\User\Preferences\PreferenceModule;
+use Wikia\UserGroups\UserGroupsModule;
 
 class InjectorInitializer {
 	public static function init(CacheProvider $cacheProvider = null) {
@@ -23,6 +24,7 @@ class InjectorInitializer {
 				->addModule(new AuthModule())
 				->addModule(new ConsulUrlProviderModule())
 				->addModule(new ApiProviderModule())
+				->addModule(new UserGroupsModule())
 				->build());
 	}
 }
