@@ -12,8 +12,8 @@ class CheckSVGs extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->addDescription( "Check old svgs to see if they are still valid" );
-		$this->addOption( 'until', 'Date to stop checking', false, true );
+		$this->addDescription( 'Check old svgs to see if they are still valid' );
+		$this->addOption( 'until', 'Optional timestamp to stop checking', false, true );
 		$this->addOption( 'max-size', 'Max size to check (in bytes)', false, true );
 		$this->setBatchSize( 500 );
 	}
@@ -25,7 +25,7 @@ class CheckSVGs extends Maintenance {
 	private function getDBConnection() {
 		$db = wfGetDB( DB_SLAVE );
 		if ( !$db ) {
-			$this->error( "Could not get db" );
+			$this->error( 'Could not get db' );
 			exit( 1 );
 		}
 
@@ -69,7 +69,7 @@ class CheckSVGs extends Maintenance {
 					continue;
 				}
 
-				$tmpFile = tempnam( wfTempDir(), 'img' ) . ".svg";
+				$tmpFile = tempnam( wfTempDir(), 'img' ) . '.svg';
 				file_put_contents( $tmpFile, $fileContents );
 				$res = $this->isFileInvalid( $tmpFile );
 				unlink( $tmpFile );
@@ -88,16 +88,18 @@ class CheckSVGs extends Maintenance {
 	}
 
 	private function getCandidates() {
+		// 1. Get SVG images
 		$conds = [
 			'img_size < ' . ( (int)$this->getOption( 'max-size', 1024 * 1024 * 10 ) ),
 			'img_major_mime' => 'image',
 			'img_minor_mime' => 'svg+xml',
 			'img_media_type' => 'DRAWING',
 		];
+		// In case of batch calls, pick up where we finished (we sort by img_name)
 		if ( $this->lastFileName ) {
 			$conds[] = 'img_name > ' . $this->db->addQuotes( $this->lastFileName );
 		}
-
+		// If 'until' timestamp was specified, scan only files older than that
 		$until = $this->getOption( 'until' );
 		if ( $until ) {
 			$conds[] =
@@ -140,5 +142,5 @@ class SVGVerifier extends UploadBase {
 	}
 }
 
-$maintClass = "CheckSVGs";
+$maintClass = 'CheckSVGs';
 require_once RUN_MAINTENANCE_IF_MAIN;
