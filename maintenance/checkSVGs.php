@@ -8,7 +8,7 @@ require_once( __DIR__ . '/../includes/upload/UploadBase.php' );
 
 class CheckSVGs extends Maintenance {
 	private $lastFileName;
-	private $upload;
+	private $verifier;
 
 	public function __construct() {
 		parent::__construct();
@@ -26,18 +26,19 @@ class CheckSVGs extends Maintenance {
 		$db = wfGetDB( DB_SLAVE );
 		if ( !$db ) {
 			$this->error( "Could not get db" );
-			exit(1);
+			exit( 1 );
 		}
+
 		return $db;
 	}
 
 	public function execute() {
 		global $wgDBname, $wgCityId;
 
-		$this->output("Checking SVG images from a wiki ".WikiFactory::DBtoUrl( $wgDBname )." (cityId ${wgCityId})\n");
+		$this->output( "Checking SVG images from a wiki " . WikiFactory::DBtoUrl( $wgDBname ) . " (cityId ${wgCityId})\n" );
 
 		$this->db = $this->getDBConnection();
-		$this->upload = new UploadDummy;
+		$this->verifier = new SVGVerifier;
 		$total = 0;
 		$bad = 0;
 		$errors = 0;
@@ -46,52 +47,52 @@ class CheckSVGs extends Maintenance {
 		$fileBackend = $repo->getBackend();
 
 		while ( $candidates = $this->getCandidates() ) {
-			foreach( $candidates as $candidate ) {
+			foreach ( $candidates as $candidate ) {
 				$total++;
 				$file = $repo->newFileFromRow( $candidate );
 
-				// debugging info
+				// Put file title and image url in the logs for easier investigation of suspicious files.
 				$globalTitle = GlobalTitle::newFromText( $file->getTitle()->getText(), $file->getTitle()->getNamespace(), $wgCityId );
 				$details = $globalTitle->getFullURL() . " (" . $file->getUrl() . ")";
 
 				$path = $file->getPath();
-				if (!$path) {
-					$this->output("\tError while getting path for ${details}\n");
+				if ( !$path ) {
+					$this->output( "\tError while getting path for ${details}\n" );
 					$errors++;
 					continue;
 				}
 
-				$fileContents = $fileBackend->getFileContents( array( 'src' => $path ) );
-				if (!$fileContents) {
-					$this->output("\tError while getting contents of ${details}\n");
+				$fileContents = $fileBackend->getFileContents( [ 'src' => $path ] );
+				if ( !$fileContents ) {
+					$this->output( "\tError while getting contents of ${details}\n" );
 					$errors++;
 					continue;
 				}
 
-				$tmpFile = tempnam( wfTempDir(), 'img' );
-				file_put_contents($tmpFile, $fileContents);
-				$res = $this->checkFile( $tmpFile );
-				unlink($tmpFile);
-				if ( $res !== true ) {
+				$tmpFile = tempnam( wfTempDir(), 'img' ) . ".svg";
+				file_put_contents( $tmpFile, $fileContents );
+				$res = $this->isFileInvalid( $tmpFile );
+				unlink( $tmpFile );
+				if ( $res !== false ) {
 					$bad++;
-					$this->output("\tValidation error '${res}' while checking ${details}\n");
+					$this->output( "\tValidation error " . json_encode( $res ) . " while checking ${details}\n" );
 				}
 			}
-			$this->output("Done batch ${total} - at: " . $candidates[count($candidates)-1]->img_name . "\n");
+			$this->output( "Done batch ${total} - at: " . $candidates[ count( $candidates ) - 1 ]->img_name . "\n" );
 		}
-		$this->output("Complete: ${total} total; ${bad} bad, ${errors} errors\n");
+		$this->output( "Complete: ${total} total; ${bad} bad, ${errors} errors\n" );
 	}
 
-	private function checkFile( $file ) {
-		return $this->upload->checkFile( $file );
+	private function isFileInvalid( $file ) {
+		return $this->verifier->containsScripts( $file );
 	}
 
 	private function getCandidates() {
 		$conds = [
-			'img_size < ' . ( (int)$this->getOption( 'max-size', 1024*1024*10 ) ),
+			'img_size < ' . ( (int)$this->getOption( 'max-size', 1024 * 1024 * 10 ) ),
 			'img_major_mime' => 'image',
 			'img_minor_mime' => 'svg+xml',
-			'img_media_type' => 'DRAWING'
+			'img_media_type' => 'DRAWING',
 		];
 		if ( $this->lastFileName ) {
 			$conds[] = 'img_name > ' . $this->db->addQuotes( $this->lastFileName );
@@ -110,7 +111,7 @@ class CheckSVGs extends Maintenance {
 			__METHOD__,
 			[
 				'ORDER BY' => 'img_name asc',
-				'LIMIT' => $this->mBatchSize
+				'LIMIT'    => $this->mBatchSize,
 
 			]
 		);
@@ -120,34 +121,22 @@ class CheckSVGs extends Maintenance {
 			$actualResults[] = $row;
 			$this->lastFileName = $row->img_name;
 		}
+
 		return $actualResults;
 	}
 }
 
-class UploadDummy extends UploadBase {
-	public function initializeFromRequest( &$request ) {}
+class SVGVerifier extends UploadBase {
+	public function initializeFromRequest( &$request ) {
+	}
 
 	/**
-	 * @param String Full contents of svg file
+	 * @param String Full path to svg file
 	 *
-	 * @return true if ok, or string for error code
+	 * @return mixed false of the file is verified (does not contain scripts), array otherwise.
 	 */
-	public function checkFile( $file ) {
-		$this->mSVGNSError = false;
-		$check = new XmlTypeCheck(
-			$file,
-			[ $this, 'checkSvgScriptCallback' ],
-			[ 'processing_instruction_handler' => 'UploadBase::checkSvgPICallback' ]
-		);
-		if ( $check->wellFormed !== true ) {
-			return 'uploadinvalidxml';
-		} elseif ( $check->filterMatch ) {	// validation error
-			if ( $this->mSVGNSError ) {
-				return $this->mSVGNSError;
-			}
-			return $check->filterMatchType;
-		}
-		return true;
+	public function containsScripts( $file ) {
+		return $this->detectScriptInSvg( $file );
 	}
 }
 
