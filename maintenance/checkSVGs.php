@@ -3,7 +3,7 @@
  * Maintenance script to check if old SVG uploads still pass filters.
  */
 
-require_once __DIR__ . "/Maintenance.php";
+require_once( __DIR__ . "/Maintenance.php" );
 require_once( __DIR__ . '/../includes/upload/UploadBase.php' );
 
 class CheckSVGs extends Maintenance {
