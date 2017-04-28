@@ -158,8 +158,8 @@ define('ext.wikia.adEngine.adEngine', [
 						slot.container.setAttribute('data-slot-result', 'loading');
 					},
 					viewed: function () {
-						slot.container.setAttribute('data-slot-viewed', 'true');
 						log(['viewed', provider.name, slotName], 'debug', logGroup);
+						slot.container.setAttribute('data-slot-viewed', 'true');
 					}
 				});
 
