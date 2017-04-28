@@ -47,8 +47,8 @@ class Starters {
 		'tr' => 'aastarter4',
 		'vi' => 'vistarter287',
 		'zh' => 'zhstarter',
-	    'zh-hk' => 'aastarterzhtw',
-	    'zh-tw' => 'aastarterzhtw'
+		'zh-hk' => 'aastarterzhtw',
+		'zh-tw' => 'aastarterzhtw'
 	];
 
 	/**
