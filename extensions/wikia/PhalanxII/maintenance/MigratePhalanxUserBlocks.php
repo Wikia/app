@@ -59,7 +59,6 @@ class MigratePhalanxUserBlocks extends Maintenance {
 				'p_exact' => 1,
 				'p_regex' => 0,
 				'p_expire IS NULL',
-				'p_ip_hex IS NULL',
 				'p_timestamp < ' . $dbr->addQuotes( date( 'YmdHis', strtotime( '-3 months' ) ) ),
 				'p_id > ' . $dbr->addQuotes( $this->curBlockId ),
 			],
