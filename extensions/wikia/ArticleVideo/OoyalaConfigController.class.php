@@ -311,18 +311,17 @@ class OoyalaConfigController extends WikiaController {
 
 	public function skin() {
 		$config = self::CONFIG;
-		$config['icons']['play']['svg'] =
-			DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
+		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
 		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
-		$config['icons']['volume']['svg'] =
-			DesignSystemHelper::renderSvg( 'wds-icons-volume-small' );
-		$config['icons']['volumeOff']['svg'] =
-			DesignSystemHelper::renderSvg( 'wds-icons-volume-off-small' );
-		$config['icons']['expand']['svg'] =
-			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
-		$config['icons']['compress']['svg'] =
-			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
+		$config['icons']['volume']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-volume-small' );
+		$config['icons']['volumeOff']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-volume-off-small' );
+		$config['icons']['expand']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
+		$config['icons']['compress']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
 		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-share-small' );
+		$config['icons']['shareTwitter']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-twitter' );
+		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
+		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
+		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
 
 		if ( $this->getVal( 'isMobile' ) ) {
 			$config['controlBar']['volumeControl']['sliderVisible'] = false;
