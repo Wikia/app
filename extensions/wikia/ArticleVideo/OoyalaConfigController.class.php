@@ -323,6 +323,11 @@ class OoyalaConfigController extends WikiaController {
 		$config['icons']['compress']['svg'] =
 			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
 		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-share-small' );
+
+		if ( $this->getVal( 'isMobile' ) ) {
+			$config['controlBar']['volumeControl']['sliderVisible'] = false;
+		}
+
 		$this->getResponse()->setData( $config );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->getResponse()->setCacheValidity( WikiaResponse::CACHE_LONG );
