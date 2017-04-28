@@ -63,30 +63,6 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test that if a duplicate video is found on Wikia, we reuse the old name.
-	 * @dataProvider baseFeedIngesterDataProvider
-	 */
-	public function testIfDuplicateFoundOnWikiaUseOldName( $videoData ) {
-
-		$mockFeedIngester = $this->getMock( 'IgnFeedIngester', ['checkVideoExistsOnWikia'] );
-
-		$oldName = "Old Name Please Reuse";
-		$mockFeedIngester->expects( $this->any() )
-			->method( 'checkVideoExistsOnWikia' )
-			->will( $this->returnCallback( function ( $mockFeedIngester, $oldName ) use ( $mockFeedIngester, $oldName ) {
-				// checkVideoExistsOnWikia will set the member variable $oldName on the feed ingester if a
-				// duplciate is found and reupload is on.
-				$mockFeedIngester->oldName = $oldName;
-			} ) );
-
-		$mockFeedIngester->setVideoData( $videoData );
-		$mockFeedIngester->checkIsDuplicateVideo( $videoData );
-		$mockFeedIngester->setMetaData( $videoData );
-
-		$this->assertEquals( $oldName, $mockFeedIngester->metaData['destinationTitle'] );
-	}
-
-	/**
 	 * Data provider which can be used with either the TestVideoFeedIngester or IgnFeedIngester class.
 	 * @return array
 	 */

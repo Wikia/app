@@ -3,19 +3,17 @@
 namespace Wikia\CreateNewWiki\Tasks;
 
 class SetupWikiCitiesTest extends \WikiaBaseTest {
-
+	/** @var TaskContext|\PHPUnit_Framework_MockObject_MockObject $taskContextMock */
 	private $taskContextMock;
 
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock( '\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setCityId', 'getSharedDBW' ] );
-		$this->mockClass( 'TaskContext', $this->taskContextMock );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
+		$this->taskContextMock = $this->getMockBuilder(TaskContext::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'setCityId', 'getSharedDBW' ] )
+			->getMock();
 	}
 
 	/**
