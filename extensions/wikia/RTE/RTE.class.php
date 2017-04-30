@@ -689,7 +689,7 @@ HTML
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
 		// do not continue if user didn't turn on wysiwyg in preferences
-		if ( ( $options['editor'] === '1' && empty( $useEditor ) )
+		if ( ( isset( $options['editor'] ) && $options['editor'] === '1' && empty( $useEditor ) )
 				|| ( $useEditor === 'source' || $useEditor === 'mediawiki' )
 		) {
 			wfProfileOut(__METHOD__);
