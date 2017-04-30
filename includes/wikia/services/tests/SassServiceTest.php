@@ -25,7 +25,7 @@ header {
 	}
 }
 CSS;
-		$sass = SassService::newFromString( $css );
+		$sass = SassService::newFromString( $css, 0, '' );
 		$sass->setSassVariables( self::$sassVariables );
 
 		$result = $sass->getCss( false ); # no cache
