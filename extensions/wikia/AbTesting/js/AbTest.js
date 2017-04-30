@@ -135,19 +135,20 @@
 	};
 
 	AbTest.loadExternalData = function( data ) {
-		var index, groupData, html = '';
+		var index, groupData;
 		log('init', 'Received external configuration');
 		for ( index in data ) {
 			groupData = data[index];
 			if ( groupData.styles ) {
-				html += '<style>'+groupData.styles+'</style>';
+				var styleTag = document.createElement('style');
+				styleTag.innerHTML = groupData.styles;
+				document.head.appendChild(styleTag);
 			}
 			if ( groupData.scripts ) {
-				html += '<script>'+groupData.scripts+'</script>';
+				var scriptTag = document.createElement('script');
+				scriptTag.innerHTML = groupData.scripts;
+				document.head.appendChild(scriptTag);
 			}
-		}
-		if ( html != '' ) {
-			document.write(html);
 		}
 	};
 
@@ -323,9 +324,20 @@
 		//external AB test scripts are currently not supported by Mercury
 		if ( externalIds.length > 0 && !window.Mercury ) {
 			log('init', 'Loading external configuration');
-			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+
+			var xhr = new XMLHttpRequest(),
+				url = '/wikia.php?controller=AbTesting&method=externalData&ids=';
+
 			url += externalIds.join(',');
-			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
+
+			xhr.onload = function() {
+				// substring just removes ( and ); from begin and end of response
+				var params = JSON.parse(xhr.responseText.substr(1, xhr.responseText.length - 3));
+				AbTest.loadExternalData( params );
+			};
+
+			xhr.open('GET', url, false);
+			xhr.send();
 		}
 	})( AbTest.experiments );
 
