@@ -119,8 +119,6 @@ class UpdateSpecialPages extends Maintenance {
 							$this->output( $minutes . 'm ' );
 						}
 						$this->output( sprintf( "%.2fs\n", $seconds ) );
-
-						wfRunHooks( 'AfterUpdateSpecialPages', [ $queryPage ] );
 					}
 
 					# Commit the results
@@ -138,6 +136,9 @@ class UpdateSpecialPages extends Maintenance {
 					}
 					# Wait for the slave to catch up
 					wfWaitForSlaves();
+
+					// SUS-832: Run post-transaction hook once the DB transactions are finished
+					\Hooks::run( 'AfterUpdateSpecialPages', [ $queryPage ] );
 				} else {
 					$this->output( "cheap, skipped\n" );
 				}

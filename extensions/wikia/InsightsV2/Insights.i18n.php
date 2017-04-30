@@ -5,6 +5,8 @@ $messages = [];
 $messages['en'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
+	'insightsupdate' => 'Update Insights data',
+	'insights-update-desc' => 'This page allows you to clean up invalid data from Insights and schedule an update',
 	'right-insights' => 'Allows viewing the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights.',
@@ -68,11 +70,14 @@ $messages['en'] = [
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
 	'insights-error' => 'Something went wrong. Please try again.',
+	'insights-update-task-added' => 'Insights update and cleanup tasks successfully scheduled',
 ];
 
 $messages['qqq'] = [
 	'insights' => 'Name of the insights page',
 	'insights-desc' => 'Insights description shown on Special:Version',
+	'insightsupdate' => 'Title for Special:InsightsUpdate',
+	'insights-update-desc' => 'A short description of Special:InsightsUpdate functionality shown on the page',
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
 	'insights-list-no-items' => 'A message that is shown for types that are actionable when there are no items to work on left on a list',
@@ -132,6 +137,7 @@ $messages['qqq'] = [
 	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
 	'insights-error' => 'Information for user that something went wrong and ask to try again.',
+	'insights-update-task-added' => 'Confirmation message shown once the update task has been successfully scheduled',
 ];
 
 $messages['de'] = [
