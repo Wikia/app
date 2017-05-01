@@ -28,7 +28,7 @@ CSS;
 		$sass = SassService::newFromString( $css, 0, '' );
 		$sass->setSassVariables( self::$sassVariables );
 
-		$result = $sass->getCss( false ); # no cache
+		$result = $sass->getCss( false /* disable cache */ );
 
 		$this->assertContains( 'header div {', $result, 'CSS selector is properly compiled' );
 		$this->assertContains( 'color: #112233;', $result, 'Color variable is properly passed' );
