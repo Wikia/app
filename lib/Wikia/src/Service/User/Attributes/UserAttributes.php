@@ -24,8 +24,6 @@ class UserAttributes {
 	/** @var string[string] */
 	private $defaultAttributes;
 
-	const CACHE_TTL = 120; // 2 minutes
-
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
