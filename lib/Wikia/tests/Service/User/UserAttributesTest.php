@@ -5,7 +5,6 @@ namespace Wikia\Service\User\Attributes;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikia\Domain\User\Attribute;
-use Doctrine\Common\Cache\CacheProvider;
 
 class UserAttributeTest extends TestCase {
 	/** @var int */
@@ -16,9 +15,6 @@ class UserAttributeTest extends TestCase {
 
 	/** @var PHPUnit_Framework_MockObject_MockObject */
 	protected $service;
-
-	/** @var PHPUnit_Framework_MockObject_MockObject */
-	protected $cache;
 
 	/** @var  Attribute */
 	protected $attribute1;
@@ -43,11 +39,6 @@ class UserAttributeTest extends TestCase {
 			->setMethods( [ 'set', 'get', 'delete' ] )
 			->disableOriginalConstructor()
 			->getMock();
-		$this->cache = $this->getMockBuilder( CacheProvider::class )
-			->setMethods( ['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'] )
-			->disableOriginalConstructor()
-			->getMock();
-		$this->cache->method('doFetch')->willReturn(false);
 		$this->attribute1 = new Attribute( 'nickName', 'Lebowski' );
 		$this->attribute2 = new Attribute( 'gender', 'female' );
 		$this->savedAttributesForUser = [ $this->attribute1, $this->attribute2 ];
@@ -61,7 +52,7 @@ class UserAttributeTest extends TestCase {
 
 	public function testGetAttributes() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service, $this->cache, [] );
+		$attributes = new UserAttributes( $this->service, [] );
 
 		$this->assertEquals( $this->attribute1->getValue(),
 			$attributes->getAttribute( $this->userId, $this->attribute1->getName() ) );
@@ -74,7 +65,7 @@ class UserAttributeTest extends TestCase {
 
 	public function testGetAttributesWithDefaultParameter() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service, $this->cache, [] );
+		$attributes = new UserAttributes( $this->service, [] );
 
 		$this->assertEquals( 'someDefaultValue',
 			$attributes->getAttribute( $this->userId, 'attrWithNoValue', 'someDefaultValue' ) );
@@ -85,14 +76,14 @@ class UserAttributeTest extends TestCase {
 
 	public function testGetAttributesWithGlobalDefaultSet() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service, $this->cache, $this->defaultAttributes );
+		$attributes = new UserAttributes( $this->service, $this->defaultAttributes );
 
 		$this->assertEquals( $this->defaultAttribute1->getValue(),
 			$attributes->getAttribute( $this->userId, $this->defaultAttribute1->getName() ) );
 	}
 
 	public function testSetAttribute() {
-		$userAttributes = new UserAttributes( $this->service, $this->cache, [] );
+		$userAttributes = new UserAttributes( $this->service, [] );
 		$userAttributes->setAttribute( $this->userId, new Attribute( 'newAttr', 'foo' ) );
 		$this->assertEquals( 'foo', $userAttributes->getAttribute( $this->userId, 'newAttr' ) );
 		$userAttributes->setAttribute( $this->userId, new Attribute( 'anotherNewAttr', null ) );
@@ -107,7 +98,7 @@ class UserAttributeTest extends TestCase {
 		$this->service->expects( $this->exactly( 2 ) )
 			->method( 'set' );
 
-		$userAttributes = new UserAttributes( $this->service, $this->cache, $this->defaultAttributes );
+		$userAttributes = new UserAttributes( $this->service, $this->defaultAttributes );
 
 		// Should be deleted during save b/c it's a default attribute with a default value
 		$userAttributes->setAttribute( $this->userId,  $this->defaultAttribute1 );
@@ -128,7 +119,7 @@ class UserAttributeTest extends TestCase {
 			->with( $this->userId, $this->attribute1 );
 
 
-		$userAttributes = new UserAttributes( $this->service, $this->cache, [] );
+		$userAttributes = new UserAttributes( $this->service, [] );
 
 		$this->assertEquals( $this->attribute1->getValue(),
 			$userAttributes->getAttribute( $this->userId, $this->attribute1->getName() ) );
@@ -144,7 +135,7 @@ class UserAttributeTest extends TestCase {
 			->method( 'delete' )
 			->with( $this->userId, $attrNullValue );
 
-		$userAttributes = new UserAttributes( $this->service, $this->cache, [] );
+		$userAttributes = new UserAttributes( $this->service, [] );
 		$userAttributes->setAttribute( $this->userId, $attrNullValue );
 		$userAttributes->save( $this->userId );
 	}
