@@ -119,19 +119,36 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 		return true;
 	}
 
-	private static function redirectPage( &$article ) {
-		$mainTitle = self::getMainTitle( $article );
-		if ( empty( $mainTitle ) ) {
-			return;
-		}
-
-		// Ignore non-forum board threads.  This allows MessageWall to display properly
-		if ( !$mainTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+	private static function redirectPage( Article $article ) {
+		$title = self::getRedirectableForumTitle( $article );
+		if ( empty( $title ) ) {
 			return;
 		}
 
 		// Redirect to discussions
-		self::redirectThreadToPost( $mainTitle );
+		self::redirectThreadToPost( $title );
+	}
+
+	/**
+	 * Given an Article, return the actual title of a Forum thread if it exists.  If this isn't
+	 * a Forum thread or doesn't have a valid title, return null.
+	 *
+	 * @param Article $article
+	 *
+	 * @return null|Title
+	 */
+	public static function getRedirectableForumTitle( Article $article ) {
+		$mainTitle = self::getMainTitle( $article );
+		if ( empty( $mainTitle ) ) {
+			return null;
+		}
+
+		// Ignore non-forum board threads.  This allows MessageWall to display properly
+		if ( !$mainTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			return null;
+		}
+
+		return $mainTitle;
 	}
 
 	/**
