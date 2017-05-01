@@ -19,8 +19,7 @@ class SearchControllerTest extends BaseTest {
 
 	protected function setUp() {
 		parent::setUp();
-		$this->searchController = $this->getMockBuilder( WikiaSearchController::class )
-			->disableOriginalConstructor();
+		$this->searchController = $this->getMockBuilder( WikiaSearchController::class );
 		$this->mockFactory = $this->getMockBuilder( Wikia\Search\QueryService\Factory::class )
 			->setMethods( [ 'get', 'getFromConfig' ] )
 			->getMock();

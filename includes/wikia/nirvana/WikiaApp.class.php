@@ -78,16 +78,13 @@ class WikiaApp {
 
 	/**
 	 * constructor
-	 * @param WikiaGlobalRegistry $globalRegistry
-	 * @param WikiaLocalRegistry $localRegistry
+	 * @param WikiaRegistry $globalRegistry
+	 * @param WikiaRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 
-	public function __construct(WikiaGlobalRegistry $globalRegistry = null,
-	                            WikiaLocalRegistry $localRegistry = null,
-	                            WikiaHookDispatcher $hookDispatcher = null,
-	                            WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct(WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -112,10 +109,7 @@ class WikiaApp {
 		$this->wg = $globalRegistry;
 		$this->wf = $functionWrapper;
 
-		// register ajax dispatcher
-		if(is_object($this->wg)) {
-			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
-		} else {
+		if ( !is_object( $this->wg ) ) {
 			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
 			error_log( __METHOD__ . ': WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
 			$message = "";
@@ -783,13 +777,6 @@ class WikiaApp {
 		}
 
 		return self::$viewCache["P_". $controllerName . $method . $key];
-	}
-
-	/**
-	 * @todo: take a look here, consider removing
-	 */
-	public static function ajax() {
-		return F::app()->sendRequest( null, null, null, false );
 	}
 
 	/**
