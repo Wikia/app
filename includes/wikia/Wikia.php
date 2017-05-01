@@ -336,20 +336,19 @@ class Wikia {
 		$parts = explode(".", trim($name));
 		if( is_array( $parts ) && count( $parts ) <= 2 ) {
 			$allowLang = true;
-			switch( $type ) {
-				case "answers":
-					$domains = self::getAnswersDomains();
-					if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-						$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
-						$allowLang = false;
-					} else {
-						$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
-					}
-					break;
 
-				default:
-					$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			if ( $type === 'answers' ) {
+				$domains = self::getAnswersDomains();
+				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
+					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
+					$allowLang = false;
+				} else {
+					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
+				}
+			} else {
+				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
 			}
+
 			if ( $language && $language != "en" && $allowLang ) {
 				$name = $language.".".$name;
 			}
