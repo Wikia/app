@@ -74,7 +74,7 @@ class UserAttributes {
 		/** @var Attribute $attribute */
 		foreach ( $this->attributeService->get( $userId ) as $attribute ) {
 			$attributes[$attribute->getName()] = $attribute->getValue();
-		};
+		}
 		$this->logAttributeServiceRequest( $userId );
 
 		$this->attributes[$userId] = $attributes;
