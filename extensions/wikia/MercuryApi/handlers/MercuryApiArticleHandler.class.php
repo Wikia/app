@@ -95,13 +95,13 @@ class MercuryApiArticleHandler {
 		)->getData();
 	}
 
-	public static function getFeaturedVideoDetails( Title $article ): array {
+	public static function getFeaturedVideoDetails( Title $title ): array {
 		global $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos;
 
-		$title = $article->getPrefixedDBkey();
+		$prefixedDBkey = $title->getPrefixedDBkey();
 
-		if ( !empty( $wgEnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title ) ) {
-			$featuredVideo = $wgArticleVideoFeaturedVideos[$title];
+		if ( !empty( $wgEnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $prefixedDBkey ) ) {
+			$featuredVideo = $wgArticleVideoFeaturedVideos[$prefixedDBkey];
 
 			return [
 				'type' => 'video',
