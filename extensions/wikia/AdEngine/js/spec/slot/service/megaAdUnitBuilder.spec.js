@@ -1,3 +1,4 @@
+/*global describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	'use strict';
 
@@ -15,7 +16,71 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			browserDetect: {
 				isMobile: noop
 			}
-		};
+		},
+		testCases = [
+			{
+				slotName: 'TOP_RIGHT_BOXAD',
+				adUnit: '/5441/wka2.MR/top_right_boxad/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'MOBILE_PREFOOTER',
+				adUnit: '/5441/wka2.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'TOP_LEADERBOARD',
+				adUnit: '/5441/wka2.LB/top_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'LEFT_SKYSCRAPER_2',
+				adUnit: '/5441/wka2.SKY/left_skyscraper_2/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'INVISIBLE_HIGH_IMPACT_2',
+				adUnit: '/5441/wka2.PX/invisible_high_impact_2/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'INVISIBLE_SKIN',
+				adUnit: '/5441/wka2.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'INVISIBLE_SKIN',
+				adUnit: '/5441/wka2.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'NOT_SUPPORTED',
+				adUnit: '/5441/wka2.OTHER/not_supported/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'BOTTOM_LEADERBOARD',
+				adUnit: '/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'INCONTENT_LEADERBOARD',
+				adUnit: '/5441/wka2.OTHER/incontent_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'BOTTOM_LEADERBOARD',
+				adUnit: '/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
+			}
+		],
+		testCasesForValidation = [
+			{
+				adUnit: '/5441/wka2.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming',
+				valid: true
+			},
+			{
+				adUnit: '/5441/wka1.MR/top_right_boxad/tablet/oasis-home/_godofwar-gaming',
+				valid: true
+			},
+			{
+				adUnit: 'TOP_RIGHT_BOXAD',
+				valid: false
+			},
+			{
+				adUnit: '/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD',
+				valid: false
+			}
+		];
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.megaAdUnitBuilder'](
@@ -27,53 +92,6 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		spyOn(mocks.page, 'getPageLevelParams');
 		mocks.page.getPageLevelParams.and.returnValue(params);
 	}
-
-	var testCases = [
-		{
-			slotName: 'TOP_RIGHT_BOXAD',
-			adUnit: '/5441/wka2.MR/top_right_boxad/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'MOBILE_PREFOOTER',
-			adUnit: '/5441/wka2.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'TOP_LEADERBOARD',
-			adUnit: '/5441/wka2.LB/top_leaderboard/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'LEFT_SKYSCRAPER_2',
-			adUnit: '/5441/wka2.SKY/left_skyscraper_2/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'INVISIBLE_HIGH_IMPACT_2',
-			adUnit: '/5441/wka2.PX/invisible_high_impact_2/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'INVISIBLE_SKIN',
-			adUnit: '/5441/wka2.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'INVISIBLE_SKIN',
-			adUnit: '/5441/wka2.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'NOT_SUPPORTED',
-			adUnit: '/5441/wka2.OTHER/not_supported/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'BOTTOM_LEADERBOARD',
-			adUnit: '/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'INCONTENT_LEADERBOARD',
-			adUnit: '/5441/wka2.OTHER/incontent_leaderboard/tablet/oasis-home/_godofwar-gaming'
-		},
-		{
-			slotName: 'BOTTOM_LEADERBOARD',
-			adUnit: '/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'
-		}
-	];
 
 	it('Should build new ad unit', function () {
 		mockPageParams({
@@ -126,6 +144,20 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			.toEqual('/5441/wka2.PF/mobile_prefooter/unknown-specialpage/oasis-special/_lego-life');
 	});
 
+	it('Should extract slot name from ad unit', function () {
+		expect(getModule().getShortSlotName('/5441/wka2.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'))
+			.toBe('BOTTOM_LEADERBOARD');
+	});
+
+	it('Should keep slotName untouched if passed ad unit is not valid', function () {
+		expect(getModule().getShortSlotName('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD'))
+			.toBe('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
+	});
+
+	it('Should keep slotName untouched if passed slotName is not an ad unit', function () {
+		expect(getModule().getShortSlotName('TOP_LEADERBOARD')).toBe('TOP_LEADERBOARD');
+	});
+
 	testCases.forEach(function (testCase) {
 		it('Should build new ad unit without correct pos group', function () {
 			mockPageParams(DEFAULT_PAGE_PARAMS);
@@ -134,6 +166,12 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 			expect(getModule().build(testCase.slotName, 'mobile_remnant'))
 				.toEqual(testCase.adUnit);
+		});
+	});
+
+	testCasesForValidation.forEach(function (testCase) {
+		it('Should validate given ad unit', function () {
+			expect(getModule().isValid(testCase.adUnit)).toBe(testCase.valid);
 		});
 	});
 });
