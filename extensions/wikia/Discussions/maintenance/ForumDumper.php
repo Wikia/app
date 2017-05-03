@@ -84,6 +84,13 @@ class ForumDumper {
 	private $votes = [];
 
 	public function addPage( $id, $data ) {
+		// There are cases when the page appears twice; one marked as deleted in comments_index
+		// and one where its not marked deleted in comments_index.  This might represent a move.
+		// If this is the case, prefer the un-deleted version.
+		if ( !empty( $this->pages[$id] ) && $data["deleted_ind"] == 1 ) {
+			return;
+		}
+
 		$this->pages[$id] = $data;
 	}
 
