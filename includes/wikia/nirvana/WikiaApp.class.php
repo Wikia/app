@@ -441,7 +441,7 @@ class WikiaApp {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();
-		if ( !empty( $this->namespaceRegistry[$namespace] ) &&  $title->exists() ) {
+		if ( !empty( $this->namespaceRegistry[$namespace] ) ) {
 			$this->wg->Out->addHTML(
 				$this->renderView(
 					$this->namespaceRegistry[$namespace]['className'],
