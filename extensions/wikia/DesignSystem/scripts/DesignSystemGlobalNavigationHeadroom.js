@@ -3,7 +3,8 @@ $(function() {
 
 	if (window.wgUserName) {
 		require(['headroom'], function(Headroom) {
-			var globalNavigation = $('#globalNavigation'),
+			var numberOfOpenDropwns = 0,
+				globalNavigation = $('#globalNavigation'),
 				globalNavigationHeight = globalNavigation.outerHeight(true),
 				headroomConfig = {
 					offset: globalNavigationHeight,
@@ -13,7 +14,7 @@ $(function() {
 					},
 					onUnpin: function() {
 						if (
-							globalNavigation.hasClass('wds-dropdown-is-open') ||
+							numberOfOpenDropwns > 0 ||
 							globalNavigation.hasClass('wds-search-is-active')
 						) {
 							// don't allow to unpin global nav when dropdown is open or search is active
@@ -39,6 +40,12 @@ $(function() {
 						}
 					});
 				});
+
+			globalNavigation.on('wdsDropdownOpen', function () {
+				numberOfOpenDropwns++;
+			}).on('wdsDropdownClose', function () {
+				numberOfOpenDropwns--;
+			});
 
 			headroom.init();
 

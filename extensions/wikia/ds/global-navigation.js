@@ -14809,21 +14809,114 @@
 				});
 			}
 		}, {
-			key: 'linkBranded',
-			value: function linkBranded(model) {
-				var classes = ['wds-global-navigation__link'];
+			key: 'links',
+			value: function links(model, type) {
+				var _this3 = this;
 
-				classes.push('wds-is-' + model.brand);
-
+				if (model.header) {
+					return this.dropdown(model, type);
+				} else {
+					return model.links.map(function (link) {
+						return _this3.link(link);
+					});
+				}
+			}
+		}, {
+			key: 'link',
+			value: function link(model) {
 				return skate.h(
 					'a',
-					{ 'class': classes.join(' ') },
+					{ 'class': 'wds-global-navigation__link' },
 					this.i18n(model.title.key)
 				);
 			}
 		}, {
-			key: 'globalNavOnclick',
-			value: function globalNavOnclick(event) {
+			key: 'linkBranded',
+			value: function linkBranded(model) {
+				var classNames = ['wds-global-navigation__link'];
+
+				classNames.push('wds-is-' + model.brand);
+
+				return skate.h(
+					'a',
+					{ 'class': classNames.join(' ') },
+					this.i18n(model.title.key)
+				);
+			}
+		}, {
+			key: 'dropdownToggleTitle',
+			value: function dropdownToggleTitle(model) {
+				if (model.header.type === 'avatar') {
+					return model.header.username.value;
+				}
+			}
+		}, {
+			key: 'dropdownToggleHeader',
+			value: function dropdownToggleHeader(model) {
+				if (model.header.type === 'avatar') {
+					return skate.h('img', { 'class': 'wds-avatar', src: model.header.url, alt: model.header.username.value });
+				} else {
+					return skate.h(
+						'span',
+						null,
+						this.i18n(model.header.title.key)
+					);
+				}
+			}
+
+			// TODO support rightAligned
+
+		}, {
+			key: 'dropdown',
+			value: function dropdown(model, type) {
+				var _this4 = this;
+
+				var rightAligned = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+				var classNames = ['wds-global-navigation__wikis-menu', 'wds-dropdown', 'wds-global-navigation__' + type],
+					links = model.links.map(function (link) {
+						if (link.type === 'link-authentication') {
+							// TODO
+						} else {
+							return skate.h(
+								'li',
+								null,
+								skate.h(
+									'a',
+									{ 'class': 'wds-global-navigation__dropdown-link' },
+									_this4.i18n(link.title.key)
+								)
+							);
+						}
+					});
+
+				return skate.h(
+					'div',
+					{ 'class': classNames.join(' ') },
+					skate.h(
+						'div',
+						{ 'class': 'wds-global-navigation__dropdown-toggle wds-dropdown__toggle', title: this.dropdownToggleTitle(model) },
+						this.dropdownToggleHeader(model),
+						skate.h(
+							'svg',
+							{ 'class': 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron', width: '12', height: '12', viewBox: '0 0 12 12', xmlns: 'http://www.w3.org/2000/svg' },
+							skate.h('path', { d: 'M1 3h10L6 9z' })
+						)
+					),
+					skate.h(
+						'div',
+						{ 'class': 'wds-global-navigation__dropdown-content wds-dropdown__content' },
+						skate.h(
+							'ul',
+							{ 'class': 'wds-is-linked wds-list' },
+							links
+						)
+					)
+				);
+			}
+		}, {
+			key: 'onClick',
+			value: function onClick(event) {
 				var $eventTarget = $(event.target),
 					$clickedToggle = $eventTarget.closest('.wds-dropdown__toggle'),
 					$clickedDropdown = $eventTarget.closest('.wds-dropdown');
@@ -14832,11 +14925,18 @@
 					$clickedDropdown.toggleClass('wds-is-active');
 
 					if ($clickedDropdown.hasClass('wds-is-active')) {
-						$clickedDropdown.trigger('wds-dropdown-open');
+						skate.emit(this, 'wdsDropdownOpen');
+					} else {
+						skate.emit(this, 'wdsDropdownClose');
 					}
 				}
 
-				$(this).find('.wds-dropdown.wds-is-active').not($clickedDropdown).removeClass('wds-is-active').trigger('wds-dropdown-close');
+				var openDropdowns = $(this).find('.wds-dropdown.wds-is-active').not($clickedDropdown);
+
+				openDropdowns.removeClass('wds-is-active');
+				openDropdowns.each(function () {
+					skate.emit(this, 'wdsDropdownClose');
+				});
 
 				$(this).find('.wds-global-navigation').toggleClass('wds-dropdown-is-open', Boolean($clickedDropdown.hasClass('wds-is-active')));
 			}
@@ -14845,7 +14945,7 @@
 			value: function renderCallback() {
 				return skate.h(
 					'div',
-					{ 'class': 'wds-global-navigation', onClick: this.globalNavOnclick },
+					{ 'class': 'wds-global-navigation', onClick: this.onClick },
 					this.style(),
 					skate.h(
 						'div',
@@ -14855,59 +14955,7 @@
 							'div',
 							{ 'class': 'wds-global-navigation__links-and-search' },
 							this.fandomOverviewLinks(),
-							skate.h(
-								'div',
-								{ 'class': 'wds-global-navigation__wikis-menu wds-dropdown' },
-								skate.h(
-									'div',
-									{ 'class': 'wds-global-navigation__dropdown-toggle wds-dropdown__toggle' },
-									skate.h(
-										'span',
-										null,
-										'Wikis'
-									),
-									skate.h(
-										'svg',
-										{ 'class': 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron', width: '12', height: '12', viewBox: '0 0 12 12', xmlns: 'http://www.w3.org/2000/svg' },
-										skate.h('path', { d: 'M1 3h10L6 9z' })
-									)
-								),
-								skate.h(
-									'div',
-									{ 'class': 'wds-global-navigation__dropdown-content wds-dropdown__content' },
-									skate.h(
-										'ul',
-										{ 'class': 'wds-is-linked wds-list' },
-										skate.h(
-											'li',
-											null,
-											skate.h(
-												'a',
-												{ 'class': 'wds-global-navigation__dropdown-link' },
-												'Explore Wikis'
-											)
-										),
-										skate.h(
-											'li',
-											null,
-											skate.h(
-												'a',
-												{ 'class': 'wds-global-navigation__dropdown-link' },
-												'Community Central'
-											)
-										),
-										skate.h(
-											'li',
-											null,
-											skate.h(
-												'a',
-												{ 'class': 'wds-global-navigation__dropdown-link' },
-												'Fandom University'
-											)
-										)
-									)
-								)
-							),
+							this.links(this.model.wikis, 'wikis-menu'),
 							skate.h(
 								'form',
 								{ 'class': 'wds-global-navigation__search' },
