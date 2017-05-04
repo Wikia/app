@@ -34,7 +34,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
-<?= $recoveryHeadBootstrapCode ?>	
+<?= $recoveryHeadBootstrapCode ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
@@ -56,7 +56,19 @@
 <? endif ?>
 
 <?= $headItems ?>
-
+	<script>
+		(function() {
+			if ('import' in document.createElement('link')) {
+				// platform is good!
+			} else {
+				// polyfill the platform!
+				var e = document.createElement('script');
+				e.src = 'https://cdn.rawgit.com/webcomponents/webcomponentsjs/390737cf/webcomponents-hi.js';
+				document.head.appendChild(e);
+			}
+		})();
+	</script>
+	<link rel="import" href="/extensions/wikia/ds/global-navigation.html">
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
 <?= $recoveryTopBodyBootstrapCode ?>
