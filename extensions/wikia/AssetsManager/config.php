@@ -1181,8 +1181,8 @@ $config['monobook_js'] = [
 		'//resources/wikia/libraries/yui/tabview/tabview.js',
 		'//resources/wikia/libraries/yui/extra/tools-min.js',
 
-//		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
-//		'//skins/common/ajax.js',
+		//		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
+		//		'//skins/common/ajax.js',
 
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
@@ -1490,7 +1490,7 @@ $config['wall_history_js'] = [
 $config['forum_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-//		'#group_wall_js',
+		//		'#group_wall_js',
 		'//extensions/wikia/Forum/js/Forum.js',
 		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
 		'//extensions/wikia/Forum/js/ForumSortingBar.js',
@@ -1510,10 +1510,10 @@ $config['forum_mini_editor_js'] = [
 	'assets' => [
 		'#group_wall_mini_editor_js',
 		'//extensions/wikia/MiniEditor/js/Forum/Forum.Setup.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.Animations.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.EditMessageForm.js',
+		//		'//extensions/wikia/MiniEditor/js/Forum/Forum.Animations.js',
+		//		'//extensions/wikia/MiniEditor/js/Forum/Forum.EditMessageForm.js',
 		'//extensions/wikia/MiniEditor/js/Forum/Forum.NewMessageForm.js',
-//		'//extensions/wikia/MiniEditor/js/Forum/Forum.ReplyMessageForm.js'
+		//		'//extensions/wikia/MiniEditor/js/Forum/Forum.ReplyMessageForm.js'
 	],
 ];
 
@@ -3260,5 +3260,13 @@ $config['premium_page_header_curated_content_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
+	]
+];
+
+$config['episodes_nav_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/EpisodesNav/styles/index.scss'
 	]
 ];
