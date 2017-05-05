@@ -15135,7 +15135,7 @@
 							this.links(this.model.wikis, 'wikis-menu'),
 							skate.h(
 								'form',
-								{ 'class': 'wds-global-navigation__search' },
+								{ 'class': 'wds-global-navigation__search', action: this.model.search.module.results.url },
 								skate.h(
 									'div',
 									{ 'class': 'wds-global-navigation__search-input-wrapper wds-dropdown ' },
