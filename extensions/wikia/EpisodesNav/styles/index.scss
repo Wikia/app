@@ -31,7 +31,11 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 
 .similar {
 	padding: 10px 5px;
-	max-width: 150px;
+	width: 150px;
+}
+
+.similar-image {
+	height: 250px;
 }
 
 .similar-link {
