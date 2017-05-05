@@ -32,6 +32,7 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 .similar {
 	padding: 10px 5px;
 	width: 150px;
+	text-align: center;
 }
 
 .similar-image {
@@ -57,6 +58,7 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 	bottom: 0;
 	padding: 10px;
 	overflow: hidden;
+	text-align: left;
 }
 
 .scroll {
