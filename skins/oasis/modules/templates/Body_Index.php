@@ -19,7 +19,7 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<global-navigation id="globalNavigation" class="global-navigation" model='<?= json_encode( $app->sendRequest( 'DesignSystemApi', 'getNavigation', [
+<global-navigation id="globalNavigation" class="global-navigation-component" model='<?= json_encode( $app->sendRequest( 'DesignSystemApi', 'getNavigation', [
 'id' => $wg->CityId,
 'product' => 'wikis',
 'lang' => $wg->Lang->getCode()
