@@ -2316,7 +2316,7 @@
 						 let promise = new Promise(function(resolve, reject) {
 	      // on success
 	      resolve(value);
-
+	  
 	      // on failure
 	      reject(reason);
 	    });
@@ -2338,13 +2338,13 @@
 						 function getJSON(url) {
 	      return new Promise(function(resolve, reject){
 	        let xhr = new XMLHttpRequest();
-
+	  
 	        xhr.open('GET', url);
 	        xhr.onreadystatechange = handler;
 	        xhr.responseType = 'json';
 	        xhr.setRequestHeader('Accept', 'application/json');
 	        xhr.send();
-
+	  
 	        function handler() {
 	          if (this.readyState === this.DONE) {
 	            if (this.status === 200) {
@@ -2373,7 +2373,7 @@
 						 ]).then(function(values){
 	      values[0] // => postsJSON
 	      values[1] // => commentsJSON
-
+	  
 	      return values;
 	    });
 						 ```
@@ -2548,11 +2548,11 @@
 							 ```js
 
 							 function foundBooks(books) {
-
+	    
 	      }
 
 							 function failure(reason) {
-
+	    
 	      }
 
 							 findAuthor(function(author, err){
@@ -14800,7 +14800,7 @@
 			value: function fandomOverviewLinks() {
 				var _this2 = this;
 
-				if (!this.model.fandom_overview.links) {
+				if (!this.model.fandom_overview || !this.model.fandom_overview.links) {
 					return;
 				}
 
@@ -14822,12 +14822,108 @@
 				}
 			}
 		}, {
+			key: 'userMenu',
+			value: function userMenu(model) {
+				if (model.user) {
+					return this.userMenuLoggedIn(model.user);
+				} else if (model.anon) {
+					return this.userMenuAnon(model.anon);
+				}
+			}
+		}, {
+			key: 'userMenuAnon',
+			value: function userMenuAnon(model) {
+				var _this4 = this;
+
+				// TODO make this.dropdown() generic enough to use here
+				var toggleHeaderSvg = skate.h(
+					'svg',
+					{ xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', 'class': 'wds-icon wds-icon-small wds-icon', id: 'wds-icons-user' },
+					skate.h('path', { d: 'M12 14c3.309 0 6-2.691 6-6V6c0-3.309-2.691-6-6-6S6 2.691 6 6v2c0 3.309 2.691 6 6 6zm5 2H7c-3.86 0-7 3.14-7 7a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1c0-3.86-3.14-7-7-7z', 'fill-rule': 'evenodd' })
+				);
+				var toggleHeaderSpan = skate.h(
+					'span',
+					{ 'class': 'wds-global-navigation__account-menu-caption' },
+					this.i18n(model.header.title.key)
+				);
+				var links = model.links.map(function (link) {
+					return _this4.linkAuthentication(link);
+				});
+
+				return skate.h(
+					'div',
+					{ 'class': 'wds-dropdown wds-global-navigation__account-menu' },
+					skate.h(
+						'div',
+						{ 'class': 'wds-global-navigation__dropdown-toggle wds-dropdown__toggle' },
+						toggleHeaderSvg,
+						toggleHeaderSpan,
+						skate.h(
+							'svg',
+							{ 'class': 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron', width: '12', height: '12', viewBox: '0 0 12 12', xmlns: 'http://www.w3.org/2000/svg' },
+							skate.h('path', { d: 'M1 3h10L6 9z' })
+						)
+					),
+					skate.h(
+						'div',
+						{ 'class': 'wds-global-navigation__dropdown-content wds-dropdown__content wds-is-right-aligned' },
+						skate.h(
+							'ul',
+							{ 'class': 'wds-list wds-has-lines-between' },
+							links
+						)
+					)
+				);
+			}
+		}, {
+			key: 'userMenuLoggedIn',
+			value: function userMenuLoggedIn(model) {
+				return this.links(model, 'user-menu', true);
+			}
+		}, {
 			key: 'link',
 			value: function link(model) {
 				return skate.h(
 					'a',
 					{ 'class': 'wds-global-navigation__link' },
 					this.i18n(model.title.key)
+				);
+			}
+		}, {
+			key: 'linkAuthentication',
+			value: function linkAuthentication(model) {
+				var classMap = {
+					'global-navigation-anon-sign-in': 'wds-button wds-is-full-width',
+					'global-navigation-anon-register': 'wds-button wds-is-full-width wds-is-secondary',
+					'global-navigation-user-sign-out': 'wds-global-navigation__dropdown-link'
+				};
+				var classNames = classMap[model.title.key];
+				var subtitle = model.subtitle ? skate.h(
+					'div',
+					{ 'class': 'wds-global-navigation__account-menu-dropdown-caption' },
+					this.i18n(model.subtitle.key)
+				) : '';
+				var link = void 0;
+
+				if (model.title.key === 'global-navigation-user-sign-out') {
+					link = skate.h(
+						'div',
+						{ 'class': classNames },
+						'TODO: signout'
+					);
+				} else {
+					link = skate.h(
+						'a',
+						{ href: model.href, rel: 'nofollow', id: model.title.key, 'class': classNames },
+						this.i18n(model.title.key)
+					);
+				}
+
+				return skate.h(
+					'div',
+					null,
+					subtitle,
+					link
 				);
 			}
 		}, {
@@ -14844,39 +14940,18 @@
 				);
 			}
 		}, {
-			key: 'dropdownToggleTitle',
-			value: function dropdownToggleTitle(model) {
-				if (model.header.type === 'avatar') {
-					return model.header.username.value;
-				}
-			}
-		}, {
-			key: 'dropdownToggleHeader',
-			value: function dropdownToggleHeader(model) {
-				if (model.header.type === 'avatar') {
-					return skate.h('img', { 'class': 'wds-avatar', src: model.header.url, alt: model.header.username.value });
-				} else {
-					return skate.h(
-						'span',
-						null,
-						this.i18n(model.header.title.key)
-					);
-				}
-			}
-
-			// TODO support rightAligned
-
-		}, {
 			key: 'dropdown',
 			value: function dropdown(model, type) {
-				var _this4 = this;
+				var _this5 = this;
 
-				var rightAligned = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-				var classNames = ['wds-global-navigation__wikis-menu', 'wds-dropdown', 'wds-global-navigation__' + type],
+				var classNames = ['wds-dropdown', 'wds-global-navigation__' + type],
 					links = model.links.map(function (link) {
 						if (link.type === 'link-authentication') {
-							// TODO
+							return skate.h(
+								'li',
+								null,
+								_this5.linkAuthentication(link)
+							);
 						} else {
 							return skate.h(
 								'li',
@@ -14884,7 +14959,7 @@
 								skate.h(
 									'a',
 									{ 'class': 'wds-global-navigation__dropdown-link' },
-									_this4.i18n(link.title.key)
+									_this5.i18n(link.title.key)
 								)
 							);
 						}
@@ -14915,6 +14990,76 @@
 				);
 			}
 		}, {
+			key: 'dropdownToggleTitle',
+			value: function dropdownToggleTitle(model) {
+				if (model.header.type === 'avatar') {
+					return model.header.username.value;
+				}
+			}
+		}, {
+			key: 'dropdownToggleHeader',
+			value: function dropdownToggleHeader(model) {
+				if (model.header.type === 'avatar') {
+					return skate.h('img', { 'class': 'wds-avatar', src: model.header.url, alt: model.header.username.value });
+				} else {
+					return skate.h(
+						'span',
+						null,
+						this.i18n(model.header.title.key)
+					);
+				}
+			}
+		}, {
+			key: 'activateSearch',
+			value: function activateSearch() {
+				var $globalNav = $(this.root),
+					activeSearchClass = 'wds-search-is-active',
+					$searchInput = $(this.searchInput);
+				if (!$globalNav.hasClass(activeSearchClass)) {
+					$globalNav.addClass(activeSearchClass);
+					$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
+
+					/**
+					 * [bug fix]: On Firefox click is not triggered when placeholder text is changed
+					 * that is why we have to do it manually
+					 */
+					$(this).click();
+				}
+			}
+		}, {
+			key: 'deactivateSearch',
+			value: function deactivateSearch() {
+				var $globalNav = $(this.root),
+					$searchInput = $(this.searchInput),
+					$searchSubmit = $(this.searchSubmit),
+					placeholderText = $searchInput.attr('placeholder'),
+					activeSearchClass = 'wds-search-is-active';
+				$searchSubmit.prop('disabled', true);
+				$globalNav.removeClass(activeSearchClass);
+				$searchInput.attr('placeholder', placeholderText).val('');
+			}
+		}, {
+			key: 'searchKeydown',
+			value: function searchKeydown(event) {
+				// Escape key
+				if (event.which === 27) {
+					this.blur();
+					this.deactivateSearch();
+				}
+			}
+		}, {
+			key: 'searchOnInput',
+			value: function searchOnInput() {
+				var $searchSubmit = $(this.searchSubmit);
+				var textLength = this.searchInput.value.length;
+
+				if (textLength > 0 && $searchSubmit.prop('disabled')) {
+					$searchSubmit.prop('disabled', false);
+				} else if (textLength === 0) {
+					$searchSubmit.prop('disabled', true);
+				}
+			}
+		}, {
 			key: 'onClick',
 			value: function onClick(event) {
 				var $eventTarget = $(event.target),
@@ -14925,27 +15070,57 @@
 					$clickedDropdown.toggleClass('wds-is-active');
 
 					if ($clickedDropdown.hasClass('wds-is-active')) {
-						skate.emit(this, 'wdsDropdownOpen');
+						skate.emit($eventTarget.get(0), 'wdsDropdownOpen');
 					} else {
-						skate.emit(this, 'wdsDropdownClose');
+						skate.emit($eventTarget.get(0), 'wdsDropdownClose');
 					}
 				}
 
-				var openDropdowns = $(this).find('.wds-dropdown.wds-is-active').not($clickedDropdown);
+				this.closeDropdowns($(this.root).find('.wds-dropdown.wds-is-active').not($clickedDropdown));
 
+				this.isDropdownOpen = $clickedDropdown.hasClass('wds-is-active');
+			}
+		}, {
+			key: 'updatedCallback',
+			value: function updatedCallback(previousProps) {
+				// The 'previousProps' will be undefined if it is the initial render.
+				if (!previousProps) {
+					return true;
+				}
+
+				if (!this.isDropdownOpen) {
+					this.closeDropdowns($(this.root).find('.wds-dropdown.wds-is-active'));
+				}
+			}
+		}, {
+			key: 'closeDropdowns',
+			value: function closeDropdowns(openDropdowns) {
 				openDropdowns.removeClass('wds-is-active');
 				openDropdowns.each(function () {
 					skate.emit(this, 'wdsDropdownClose');
 				});
+			}
+		}, {
+			key: 'renderedCallback',
+			value: function renderedCallback() {
+				if ($(this.searchInput).is(':focus')) {
+					this.activateSearch();
+				}
 
-				$(this).find('.wds-global-navigation').toggleClass('wds-dropdown-is-open', Boolean($clickedDropdown.hasClass('wds-is-active')));
+				if ($(this.searchInput).val().length === 0) {
+					$(this.searchSubmit).prop('disabled', true);
+				}
 			}
 		}, {
 			key: 'renderCallback',
 			value: function renderCallback() {
+				var _this6 = this;
+
 				return skate.h(
 					'div',
-					{ 'class': 'wds-global-navigation', onClick: this.onClick },
+					{ 'class': 'wds-global-navigation', onClick: this.onClick.bind(this), ref: function ref(element) {
+						_this6.root = element;
+					} },
 					this.style(),
 					skate.h(
 						'div',
@@ -14975,11 +15150,13 @@
 												skate.h('path', { d: 'M3.848 10.763a6.915 6.915 0 0 1 6.915-6.915 6.915 6.915 0 0 1 6.915 6.915 6.915 6.915 0 0 1-6.915 6.915 6.915 6.915 0 0 1-6.915-6.915zm-1.729 0a8.643 8.643 0 0 0 8.644 8.644 8.643 8.643 0 0 0 8.644-8.644 8.643 8.643 0 0 0-8.644-8.644 8.643 8.643 0 0 0-8.644 8.644z' })
 											)
 										),
-										skate.h('input', { type: 'search', name: 'query', placeholder: 'Search', autocomplete: 'off', 'class': 'wds-global-navigation__search-input' })
+										skate.h('input', { type: 'search', name: 'query', placeholder: 'Search', autocomplete: 'off', 'class': 'wds-global-navigation__search-input', ref: function ref(el) {
+											_this6.searchInput = el;
+										}, onFocus: this.activateSearch.bind(this), onKeydown: this.searchKeydown.bind(this), onInput: this.searchOnInput.bind(this) })
 									),
 									skate.h(
 										'button',
-										{ 'class': 'wds-button wds-is-text wds-global-navigation__search-close', type: 'reset', 'data-ember-action': '690' },
+										{ 'class': 'wds-button wds-is-text wds-global-navigation__search-close', type: 'reset', 'data-ember-action': '690', onClick: this.deactivateSearch.bind(this) },
 										skate.h(
 											'svg',
 											{ 'class': 'wds-icon wds-icon-small wds-global-navigation__search-close-icon', width: '24', height: '24', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg' },
@@ -14993,7 +15170,9 @@
 									),
 									skate.h(
 										'button',
-										{ 'class': 'wds-button wds-global-navigation__search-submit', type: 'button', disabled: true },
+										{ 'class': 'wds-button wds-global-navigation__search-submit', type: 'button', disabled: true, ref: function ref(el) {
+											_this6.searchSubmit = el;
+										} },
 										skate.h(
 											'svg',
 											{ 'class': 'wds-icon wds-icon-small wds-global-navigation__search-submit-icon', width: '24', height: '24', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg' },
@@ -15003,60 +15182,7 @@
 								)
 							)
 						),
-						skate.h(
-							'div',
-							{ 'class': 'wds-global-navigation__account-menu wds-dropdown' },
-							skate.h(
-								'div',
-								{ 'class': 'wds-global-navigation__dropdown-toggle wds-dropdown__toggle' },
-								skate.h(
-									'svg',
-									{ 'class': 'wds-icon wds-icon-small', width: '24', height: '24', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg' },
-									skate.h('path', { d: 'M12 14c3.309 0 6-2.691 6-6V6c0-3.309-2.691-6-6-6S6 2.691 6 6v2c0 3.309 2.691 6 6 6zm5 2H7c-3.86 0-7 3.14-7 7a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1c0-3.86-3.14-7-7-7z', 'fill-rule': 'evenodd' })
-								),
-								skate.h(
-									'span',
-									{ 'class': 'wds-global-navigation__account-menu-caption' },
-									'My Account'
-								),
-								skate.h(
-									'svg',
-									{ 'class': 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron', width: '12', height: '12', viewBox: '0 0 12 12', xmlns: 'http://www.w3.org/2000/svg' },
-									skate.h('path', { d: 'M1 3h10L6 9z' })
-								)
-							),
-							skate.h(
-								'div',
-								{ 'class': 'wds-global-navigation__dropdown-content wds-dropdown__content wds-is-right-aligned' },
-								skate.h(
-									'ul',
-									{ 'class': 'wds-has-lines-between wds-list' },
-									skate.h(
-										'li',
-										null,
-										skate.h(
-											'a',
-											{ rel: 'nofollow', href: '', 'class': 'wds-button wds-is-full-width' },
-											'Sign In'
-										)
-									),
-									skate.h(
-										'li',
-										null,
-										skate.h(
-											'div',
-											{ 'class': 'wds-global-navigation__account-menu-dropdown-caption' },
-											'Don\'t have an account?'
-										),
-										skate.h(
-											'a',
-											{ rel: 'nofollow', href: '', 'class': 'wds-button wds-is-full-width wds-is-secondary' },
-											'Register'
-										)
-									)
-								)
-							)
-						),
+						this.userMenu(this.model),
 						skate.h(
 							'div',
 							{ 'class': 'wds-global-navigation__start-a-wiki' },
@@ -15090,7 +15216,8 @@
 						serialize: function serialize(value) {
 							return JSON.stringify(value);
 						}
-					}
+					},
+					isDropdownOpen: skate.prop.boolean({ attribute: true })
 				};
 			}
 		}]);
