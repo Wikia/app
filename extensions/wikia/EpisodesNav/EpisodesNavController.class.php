@@ -46,7 +46,9 @@ class EpisodesNavController extends WikiaController {
 
 			/** @var Title $infoboxTitle */
 			$infoboxTitle = reset( $infoboxes );
-			$usedIn = $infoboxTitle->getTemplateLinksTo();
+			$usedIn = array_filter( $infoboxTitle->getTemplateLinksTo(), function ( $title ) {
+				return $title->inNamespace( NS_MAIN );
+			} );
 
 			$data = array_map( function ( $title ) {
 				return [
@@ -55,6 +57,10 @@ class EpisodesNavController extends WikiaController {
 					'image' => $this->getImageForArticle( $title->getArticleID() )
 				];
 			}, $usedIn );
+
+			$data = array_filter( $data, function ( $item ) {
+				return !empty( $item['image'] );
+			} );
 
 			$this->setVal( 'articles', $data );
 		} else {
