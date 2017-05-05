@@ -50,7 +50,7 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 }
 
 .scroll {
-	background-color: #ccc;
+	background-color: $color-buttons;
 	width: 30px;
 	height: 30px;
 	position: absolute;
@@ -65,8 +65,9 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 }
 
 .scroll-icon-left {
-	height: 100%;
 	@include transform(rotate(90deg));
+	fill: $color-button-text;
+	height: 100%;
 }
 
 .scroll-right {
@@ -74,8 +75,9 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 }
 
 .scroll-icon-right {
-	height: 100%;
 	@include transform(rotate(-90deg));
+	fill: $color-button-text;
+	height: 100%;
 }
 
 .scroll-disabled {
