@@ -1,11 +1,21 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/transform';
 
+$background-color-mix: 10%;
+$black: #000;
+$white: #fff;
+
+$background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
+@if $is-dark-wiki {
+	$background-color: mix(mix($color-buttons, $white, $background-color-mix * 5), $color-page, $background-color-mix);
+}
+
 .similars-block {
 	overflow: hidden;
-	margin: 0 -20px;
+	margin: 0 -21px;
+	margin-top: -8px;
 	height: 300px;
-	background-color: #eee;
+	background-color: $background-color;
 	position: relative;
 	margin-bottom: 10px;
 }
