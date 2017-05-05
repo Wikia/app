@@ -84,6 +84,11 @@ $global-navigation-z-index: 5000101;
 			color: $wds-color-link;
 		}
 	}
+
+	// overrride dropdown styles
+	&__search-input-wrapper.wds-dropdown {
+		display: flex;
+	}
 }
 
 .wds-global-footer {
