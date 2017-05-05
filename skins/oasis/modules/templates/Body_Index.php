@@ -67,13 +67,14 @@
 			<?= $app->renderView( 'AdminDashboard', 'Chrome' ) ?>
 		<? endif; ?>
 
+		<?php echo $app->renderView( 'EpisodesNav', 'similar' ); ?>
+
 		<? if ( !empty( $wg->EnablePremiumPageHeader ) ) : ?>
 			<div class="PremiumPageArticleHeader">
 				<?= $app->renderView( 'PremiumPageHeader', 'articleHeader' ) ?>
 			</div>
 		<? endif; ?>
 
-		<?php echo $app->renderView( 'EpisodesNav', 'similar' ); ?>
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php

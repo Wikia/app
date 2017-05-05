@@ -35,7 +35,7 @@ class EpisodesNavController extends WikiaController {
 
 	public function similar() {
 		$title = $this->getContext()->getTitle();
-		if ( !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) ) {
+		if ( !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) && $title->inNamespace( NS_MAIN ) ) {
 
 			$templates = $title->getTemplateLinksFrom();
 
