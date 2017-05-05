@@ -44,7 +44,7 @@ class ChatWidget {
 			[
 				'username' => User::isIp( $wgUser->getName() )
 					? wfMessage( 'oasis-anon-user' )->escaped() : $wgUser->getName(),
-				'userProfileUrl' => $wgUser->getUserPage()->getLinkURL(),
+				'profileUrl' => $wgUser->getUserPage()->getLinkURL(),
 				'avatarUrl' => $myAvatarUrl,
 			],
 		];
