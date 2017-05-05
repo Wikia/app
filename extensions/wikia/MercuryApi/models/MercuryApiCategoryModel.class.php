@@ -24,7 +24,7 @@ class MercuryApiCategoryModel {
 					$titleText = $memberTitle->getText();
 					$firstLetter = mb_substr( $titleText, 0, 1, 'utf-8' );
 
-					if ( empty( $firstLetter ) ) {
+					if ( !mb_check_encoding( $firstLetter, 'utf-8' ) ) {
 						\Wikia\Logger\WikiaLogger::instance()->error(
 							'Category member title has broken UTF-8 character',
 							[
