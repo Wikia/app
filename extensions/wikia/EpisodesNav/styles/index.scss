@@ -14,7 +14,7 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 	overflow: hidden;
 	margin: 0 -21px;
 	margin-top: -8px;
-	height: 300px;
+	height: 270px;
 	background-color: $background-color;
 	position: relative;
 	margin-bottom: 10px;
@@ -26,27 +26,33 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 	position: absolute;
 	left: 0;
 	transition: left .2s linear;
+	padding: 0 5px;
 }
 
 .similar {
-	padding: 10px;
+	padding: 10px 5px;
 	max-width: 150px;
 }
 
 .similar-link {
-	display: flex;
-	flex-direction: column;
+	//display: flex;
+	//flex-direction: column;
+	position: relative;
 }
 
 .similar-title {
 	font-size: 14px;
+	color: $white;
 }
 
 .similar-title-block {
-	white-space: nowrap;
+	position: absolute;
+	height: 50px;
+	width: 130px;
+	background-color: rgba(0,0,0,.7);
+	bottom: 0;
+	padding: 10px;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	margin-bottom: 2px;
 }
 
 .scroll {
@@ -55,7 +61,7 @@ $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $
 	height: 30px;
 	position: absolute;
 	text-align: center;
-	top: 140px;
+	top: 120px;
 	z-index: 1;
 	cursor: pointer;
 }

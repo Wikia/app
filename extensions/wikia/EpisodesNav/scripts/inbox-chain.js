@@ -2,6 +2,7 @@ require(['jquery'], function ($) {
 	'use strict';
 
 	var $similars = $('.similars'),
+		$similarsBlock = $('.similars-block'),
 		$rightBox = $('.scroll-right'),
 		$leftBox = $('.scroll-left');
 
@@ -28,6 +29,10 @@ require(['jquery'], function ($) {
 	}
 
 	$(function () {
+		if ($similars.width() > $similarsBlock.width()) {
+			$rightBox.removeClass('scroll-disabled');
+		}
+
 		$('.scroll-left').on('click', function () {
 			scroll(1);
 		});

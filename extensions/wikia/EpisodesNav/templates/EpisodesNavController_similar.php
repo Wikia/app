@@ -12,5 +12,5 @@
 			</div>
 		<?php endforeach; ?>
 	</div>
-	<div class="scroll scroll-right"><?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'scroll-icon-right' ) ?></div>
+	<div class="scroll scroll-right scroll-disabled"><?= DesignSystemHelper::renderSvg( 'wds-icons-menu-control-tiny', 'scroll-icon-right' ) ?></div>
 </div>

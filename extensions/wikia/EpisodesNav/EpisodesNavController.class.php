@@ -62,7 +62,11 @@ class EpisodesNavController extends WikiaController {
 				return !empty( $item['image'] );
 			} );
 
-			$this->setVal( 'articles', $data );
+			if ( count( $data ) > 1 ) {
+				$this->setVal( 'articles', $data );
+			} else {
+				$this->skipRendering();
+			}
 		} else {
 			$this->skipRendering();
 		}
