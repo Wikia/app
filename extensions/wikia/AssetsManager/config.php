@@ -3270,3 +3270,11 @@ $config['episodes_nav_scss'] = [
 		'//extensions/wikia/EpisodesNav/styles/index.scss'
 	]
 ];
+
+$config['episodes_nav_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/EpisodesNav/scripts/inbox-chain.js'
+	]
+];

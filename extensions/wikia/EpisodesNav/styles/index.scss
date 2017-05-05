@@ -1,8 +1,73 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/transform';
+
+.similars-block {
+	overflow: hidden;
+	margin: 0 -20px;
+	height: 300px;
+	background-color: #eee;
+	position: relative;
+	margin-bottom: 10px;
+}
+
 .similars {
 	display: flex;
-	overflow: hidden;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	transition: left .2s linear;
+}
 
-	.similar {
-		padding: 10px;
-	}
+.similar {
+	padding: 10px;
+	max-width: 150px;
+}
+
+.similar-link {
+	display: flex;
+	flex-direction: column;
+}
+
+.similar-title {
+	font-size: 14px;
+}
+
+.similar-title-block {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-bottom: 2px;
+}
+
+.scroll {
+	background-color: #ccc;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	text-align: center;
+	top: 140px;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.scroll-left {
+	left: 12px;
+}
+
+.scroll-icon-left {
+	height: 100%;
+	@include transform(rotate(90deg));
+}
+
+.scroll-right {
+	right: 12px;
+}
+
+.scroll-icon-right {
+	height: 100%;
+	@include transform(rotate(-90deg));
+}
+
+.scroll-disabled {
+	display: none;
 }

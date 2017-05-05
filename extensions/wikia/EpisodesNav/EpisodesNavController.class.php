@@ -63,7 +63,7 @@ class EpisodesNavController extends WikiaController {
 	}
 
 	private function getImageForArticle( $id ) {
-		$image = ( new ImageServing( [ $id ], 150, [ 'w' => 3, 'h' => 4 ] ) )->getImages( 1 );
+		$image = ( new ImageServing( [ $id ], 150, 250 ) )->getImages( 1 );
 		if ( isset( $image[$id] ) ) {
 			return $image[$id][0]['url'];
 		}
