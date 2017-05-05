@@ -2316,7 +2316,7 @@
 						 let promise = new Promise(function(resolve, reject) {
 	      // on success
 	      resolve(value);
-	  
+
 	      // on failure
 	      reject(reason);
 	    });
@@ -2338,13 +2338,13 @@
 						 function getJSON(url) {
 	      return new Promise(function(resolve, reject){
 	        let xhr = new XMLHttpRequest();
-	  
+
 	        xhr.open('GET', url);
 	        xhr.onreadystatechange = handler;
 	        xhr.responseType = 'json';
 	        xhr.setRequestHeader('Accept', 'application/json');
 	        xhr.send();
-	  
+
 	        function handler() {
 	          if (this.readyState === this.DONE) {
 	            if (this.status === 200) {
@@ -2373,7 +2373,7 @@
 						 ]).then(function(values){
 	      values[0] // => postsJSON
 	      values[1] // => commentsJSON
-	  
+
 	      return values;
 	    });
 						 ```
@@ -2548,11 +2548,11 @@
 							 ```js
 
 							 function foundBooks(books) {
-	    
+
 	      }
 
 							 function failure(reason) {
-	    
+
 	      }
 
 							 findAuthor(function(author, err){
@@ -15018,6 +15018,7 @@
 				if (!$globalNav.hasClass(activeSearchClass)) {
 					$globalNav.addClass(activeSearchClass);
 					$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
+					this.isSearchActive = true;
 
 					/**
 					 * [bug fix]: On Firefox click is not triggered when placeholder text is changed
@@ -15037,6 +15038,7 @@
 				$searchSubmit.prop('disabled', true);
 				$globalNav.removeClass(activeSearchClass);
 				$searchInput.attr('placeholder', placeholderText).val('');
+				this.isSearchActive = false;
 			}
 		}, {
 			key: 'searchKeydown',
@@ -15217,7 +15219,8 @@
 							return JSON.stringify(value);
 						}
 					},
-					isDropdownOpen: skate.prop.boolean({ attribute: true })
+					isDropdownOpen: skate.prop.boolean({ attribute: true }),
+					isSearchActive: skate.prop.boolean({ attribute: true })
 				};
 			}
 		}]);

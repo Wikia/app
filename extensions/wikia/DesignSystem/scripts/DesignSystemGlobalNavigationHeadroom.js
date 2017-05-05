@@ -14,7 +14,7 @@ $(function() {
 					onUnpin: function() {
 						if (
 							globalNavigation.attr('is-dropdown-open') === '' ||
-							globalNavigation.hasClass('wds-search-is-active')
+							globalNavigation.attr('is-search-active') === ''
 						) {
 							// don't allow to unpin global nav when dropdown is open or search is active
 							$(this.elem).addClass(this.classes.pinned).removeClass(this.classes.unpinned);
