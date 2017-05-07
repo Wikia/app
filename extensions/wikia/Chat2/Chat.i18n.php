@@ -93,6 +93,7 @@ $messages['en'] = array(
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 	'chat-status-away' => 'Away',
+	'chat-user-throttled' => 'You are sending messages too fast, please wait $1 {{PLURAL:$1|second|seconds}} before continuing',
 );
 
 $messages['qqq'] = array(
@@ -163,6 +164,7 @@ Parameters:
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
+	'chat-user-throttled' => 'Error message shown to user as message form placeholder text if they exceeded the rate limit',
 );
 
 $messages['af'] = array(
