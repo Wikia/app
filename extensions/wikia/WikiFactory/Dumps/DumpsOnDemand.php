@@ -26,7 +26,7 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgLang, $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgHTTPProxy;
+		global $wgDBname, $wgRequest, $wgTitle, $wgUser, $wgCityId;
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -34,12 +34,7 @@ class DumpsOnDemand {
 		 * get last dump request timestamp
 		 */
 		$wiki = WikiFactory::getWikiByID( $wgCityId );
-		if( strtotime(wfTimestampNow()) - strtotime($wiki->city_lastdump_timestamp)  > 7*24*60*60 ) {
-			$tmpl->set( "available", true );
-		}
-		else {
-			$tmpl->set( "available", false );
-		}
+		$available = strtotime( wfTimestampNow() ) - strtotime( $wiki->city_lastdump_timestamp )  > 7 * 24 * 60 * 60;
 
 		$tmpl->set( "title", $wgTitle );
 		$tmpl->set( "isAnon", $wgUser->isAnon() );
@@ -70,14 +65,16 @@ class DumpsOnDemand {
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
 		$tmpl->set( 'editToken', $wgUser->getEditToken());
 
-		if( $wgRequest->wasPosted() && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
+		if ( $wgRequest->wasPosted() && $available && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
-			$tmpl->set( "available", false );
+			$available = false;
 		}
 
-		$text .= $tmpl->render( "dod" );
+		$tmpl->set( 'available', $available );
+
+		$text .= $tmpl->render( 'dod' );
 
 		return true;
 	}
