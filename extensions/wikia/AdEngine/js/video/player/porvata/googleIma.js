@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.log',
 	'wikia.window'
 ], function (scriptLoader, imaPlayerFactory, adBlockRecovery, log, win) {

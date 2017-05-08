@@ -9,7 +9,7 @@
 
 define('wikia.videohandler.ooyala', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),
@@ -166,7 +166,7 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (adBlockRecovery.isSourcePointEnabled()) {
+					if (adBlockRecovery.isEnabled()) {
 						adBlockDetection.addOnBlockingCallback(initRecoveredPlayer);
 						adBlockDetection.addOnNotBlockingCallback(initRegularPlayer);
 					} else {
