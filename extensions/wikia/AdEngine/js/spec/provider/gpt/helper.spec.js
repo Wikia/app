@@ -12,6 +12,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			context: {
 				opts: {},
 				targeting: {
+					hasFeaturedVideo: false,
 					skin: 'oasis'
 				}
 			},
@@ -328,5 +329,35 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
+	});
+
+	it('Set src=premium if article hasFeaturedVideo', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		mocks.context.targeting.hasFeaturedVideo = true;
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('premium');
+	});
+
+	it('Don\'t change src to rec if on the page is premium video - we don\'t want to recover ads in that case', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isSourcePointRecoverable: true
+			});
+		};
+
+		spyOn(mocks, 'slotTargetingData');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
+
+		mocks.context.targeting.hasFeaturedVideo = true;
+		mocks.adBlockDetection.isBlocking.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('premium');
 	});
 });
