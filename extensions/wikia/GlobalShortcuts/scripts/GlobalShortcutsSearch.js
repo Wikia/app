@@ -53,12 +53,15 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.loader', 'wikia.nirvana', 'wikia.t
 		 * One of sub-tasks for getting modal shown
 		 */
 		function processInstance(modalInstance) {
-			/* Show the modal */
-			modalInstance.show();
-			throbber.uncover();
+			var $searchField = $('#global_shortcuts_search_field');
 
-			suggestions = new GlobalShortcutsSuggestions($('#global_shortcuts_search_field'), function () {
+			suggestions = new GlobalShortcutsSuggestions($searchField, function () {
 				modalInstance.trigger('close');
+			}).done(function() {
+				/* Show the modal */
+				modalInstance.show();
+				throbber.uncover();
+				$searchField.focus();
 			});
 		}
 

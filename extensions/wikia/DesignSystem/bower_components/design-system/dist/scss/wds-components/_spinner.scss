@@ -1,0 +1,54 @@
+.wds-spinner {
+	$duration: 0.5s;
+	$spinner-color: $wds-color-link;
+	$z-side-nav-overlay: $z-8;
+
+	@keyframes rotator {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes dash {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	animation: rotator $duration linear infinite;
+	left: 50%;
+	margin: -33px 0 0 -33px;
+	position: absolute;
+	top: 50%;
+	transform: translateZ(0);
+
+	&__block {
+		display: block;
+		left: auto;
+		margin: auto;
+		position: relative;
+	}
+
+	&__stroke {
+		-webkit-backface-visibility: hidden;
+		animation: dash ($duration * 2.5) linear infinite alternate-reverse;
+		stroke: $spinner-color;
+	}
+
+	&__overlay {
+		background: rgba($wds-color-white, .5);
+		bottom: 0;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: $z-side-nav-overlay;
+	}
+
+	&__screen-initializing {
+		height: 75vh;
+	}
+}

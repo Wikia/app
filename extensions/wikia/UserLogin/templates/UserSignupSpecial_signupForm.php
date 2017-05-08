@@ -12,7 +12,6 @@
  * @var string $createAccountButtonLabel
  * @var string $returnto
  * @var string $msg
- * @var array $avatars
  * @var array $popularWikis
  */
 
@@ -146,11 +145,6 @@ if ( !empty( $byemail ) ) {
 		<div class="marketing">
 			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->escaped() ?></h2>
 			<div class="benefit">
-				<ul class="avatars">
-					<? foreach ( $avatars as $avatar ) { ?>
-					<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
-					<? } ?>
-				</ul>
 				<h3><?= wfMessage( 'usersignup-marketing-community-heading' )->escaped() ?></h3>
 				<p><?= wfMessage( 'usersignup-marketing-community' )->escaped() ?></p>
 			</div>

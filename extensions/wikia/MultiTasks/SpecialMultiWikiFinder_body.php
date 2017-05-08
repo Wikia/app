@@ -122,9 +122,8 @@ class MultiwikifinderPage {
 				'pages',
 				array( 'page_latest, page_wikia_id, page_id, page_is_redirect' ),
 				array(
-					'page_title_lower'	=> mb_strtolower($this->mPageTitle),
+					'page_title'		=> mb_strtolower($this->mPageTitle),
 					'page_namespace' 	=> $this->mPageNS,
-					'page_status'		=> 0
 				),
 				__METHOD__,
 				array(

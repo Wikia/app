@@ -1114,7 +1114,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\MediaWikiService::getFileForPageId
 	 */
 	public function testGetFileForPageId() {
-		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
+		$service = $this->service->setMethods( [ 'getTitleFromPageId', 'getTitleStringFromPageId' ] )->getMock();
 		$mockFile = $this->getMockBuilder( '\File' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();

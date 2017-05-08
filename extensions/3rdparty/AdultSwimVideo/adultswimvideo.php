@@ -28,7 +28,10 @@ function wfExampleParserASvideo_Render( $parser, $param1 = '', $param2 = '' ) {
 	# The parser function itself
 	# The input parameters are wikitext with templates expanded
 	# The output should be wikitext too
-	$output='<object width="330" height="281" type="application/x-shockwave-flash" data="http://www.adultswim.com/video/vplayer/index.html"><param name="allowFullScreen" value="true" /><param name="movie" value="http://www.adultswim.com/video/vplayer/index.html"/><param name="FlashVars" value="id='.$param1.'" /><embed src="http://www.adultswim.com/video/vplayer/index.html" type="application/x-shockwave-flash" FlashVars="id='.$param1.'" allowFullScreen="true" width="330" height="281"></embed></object>';
+	if ( preg_match( '/[^\w]/', $param1 ) ) {
+		return '';
+	}
+	$output='<object width="330" height="281" type="application/x-shockwave-flash" data="http://www.adultswim.com/video/vplayer/index.html"><param name="allowFullScreen" value="true" /><param name="movie" value="http://www.adultswim.com/video/vplayer/index.html"/><param name="FlashVars" value="id='. Sanitizer::encodeAttribute( $param1 ) .'" /><embed src="http://www.adultswim.com/video/vplayer/index.html" type="application/x-shockwave-flash" FlashVars="id='. Sanitizer::encodeAttribute( $param1 ) .'" allowFullScreen="true" width="330" height="281"></embed></object>';
 
 	#$output=$wgOut->addHTML($output);
 	return array($output, 'noparse' => true, 'isHTML' => true);

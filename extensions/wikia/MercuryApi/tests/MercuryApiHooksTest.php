@@ -2,7 +2,7 @@
 
 class MercuryApiHooksTest  extends WikiaBaseTest {
 
-	public function setUp() {
+	protected function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/MercuryApi/MercuryApi.setup.php";
 		parent::setUp();
@@ -33,9 +33,5 @@ class MercuryApiHooksTest  extends WikiaBaseTest {
 
 		$this->mockGlobalVariable('Memc', $memc);
 		$this->assertTrue( MercuryApiHooks::onArticleSaveComplete( $wikiPage, $user ) );
-	}
-
-	public function testOnArticleRollbackComplete() {
-
 	}
 }

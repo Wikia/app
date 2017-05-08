@@ -68,7 +68,7 @@
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
 						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->text(); ?>
 						</a>
 					<?php else: ?>
 						<br/>
@@ -152,8 +152,8 @@
 				</ul>
 			<? endif; ?>
 		</div>
-		<div>
-			<ul class="details">
+		<div class="details">
+			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
 					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
 				<? else: ?>
@@ -184,6 +184,18 @@
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
 					<? endif; ?>
+				<? endif; ?>
+				<? if ( !empty( $user['bio'] ) ): ?>
+					<li class="bio" id="bio-content">
+						<?= wfMessage( 'user-identity-bio' )
+							->rawParams( preg_replace( "/(?:\r\n|\r|\n)/", "<br />", $user['bio'] ) )
+							->parse(); ?>
+					</li>
+					<div class="bio-toggle" id="bio-toggler" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">
+						<span>
+							[<?= wfMessage( 'user-identity-bio-show-more' )->escaped(); ?>]
+						</span>
+					</div>
 				<? endif; ?>
 			</ul>
 		</div>

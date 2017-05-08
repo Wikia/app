@@ -15,7 +15,7 @@ class WikiaMapsUploadImageFromFile extends UploadFromFile {
 	 * @param String $uploadType
 	 * @return array
 	 */
-	public function verifyUpload( $uploadType ) {
+	public function verifyUpload( $uploadType = '' ) {
 		$details = $this->getUploadDetails();
 
 		// MOB-1886: check file type (just by extension)
