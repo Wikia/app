@@ -325,6 +325,10 @@ class FounderActiveController extends EmailController {
 			'rctoponly' => 1,
 		] );
 
+
+		var_dump($data);
+		die;
+
 		if ( !empty( $data['query']['recentchanges'] ) ) {
 			return $data['query']['recentchanges'];
 		}

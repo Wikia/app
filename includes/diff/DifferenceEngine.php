@@ -579,6 +579,7 @@ class DifferenceEngine extends ContextSource {
 	 */
 	function showDiff( $otitle, $ntitle, $notice = '' ) {
 		$diff = $this->getDiff( $otitle, $ntitle, $notice );
+		// print($diff);die;
 		if ( $diff === false ) {
 			$this->getOutput()->addWikiMsg( 'missing-article', "<nowiki>(fixme, bug)</nowiki>", '' );
 			return false;
@@ -606,6 +607,8 @@ class DifferenceEngine extends ContextSource {
 	 */
 	function getDiff( $otitle, $ntitle, $notice = '' ) {
 		$body = $this->getDiffBody();
+
+		// print($body);die;
 		if ( $body === false ) {
 			return false;
 		} else {
@@ -667,6 +670,8 @@ class DifferenceEngine extends ContextSource {
 			return false;
 		}
 
+		//var_dump($this);die;
+
 		$difftext = $this->generateDiffBody( $this->mOldtext, $this->mNewtext );
 
 		// Save to cache for 7 days
@@ -715,6 +720,9 @@ class DifferenceEngine extends ContextSource {
 
 		wfProfileIn( __METHOD__ );
 
+//		print ($otext);die;
+//		print ($ntext);die;
+
 		$otext = str_replace( "\r\n", "\n", $otext );
 		$ntext = str_replace( "\r\n", "\n", $ntext );
 
@@ -735,9 +743,12 @@ class DifferenceEngine extends ContextSource {
 			# This one does the escaping and segmenting itself
 			wfProfileIn( 'wikidiff2_do_diff' );
 			$text = wikidiff2_do_diff( $otext, $ntext, 2 );
-			$text .= $this->debug( 'wikidiff2' );
+
+			print ($text);die;
+			//$text .= $this->debug( 'wikidiff2' );
 			wfProfileOut( 'wikidiff2_do_diff' );
 			wfProfileOut( __METHOD__ );
+
 			return $text;
 		}
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
@@ -775,6 +786,8 @@ class DifferenceEngine extends ContextSource {
 			unlink( $tempName1 );
 			unlink( $tempName2 );
 			wfProfileOut( __METHOD__ );
+
+			//print ($difftext);die;
 			return $difftext;
 		}
 
@@ -790,6 +803,8 @@ class DifferenceEngine extends ContextSource {
 		$formatter = new TableDiffFormatter();
 		$difftext = $wgContLang->unsegmentForDiff( $formatter->format( $diffs ) ) .
 		wfProfileOut( __METHOD__ );
+
+		//print ($difftext);die;
 		return $difftext;
 	}
 
