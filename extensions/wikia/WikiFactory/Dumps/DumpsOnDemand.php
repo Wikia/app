@@ -70,13 +70,14 @@ class DumpsOnDemand {
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
 		$tmpl->set( 'editToken', $wgUser->getEditToken());
 
-		$text .= $tmpl->render( "dod" );
-
 		if( $wgRequest->wasPosted() && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
+			$tmpl->set( "available", false );
 		}
+
+		$text .= $tmpl->render( "dod" );
 
 		return true;
 	}
