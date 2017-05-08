@@ -42,12 +42,11 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
-	function isPageFairRecoveryEnabled (noExternals, instantGlobals) {
-		var isGeoSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries),
-			isExternalEnabled = !noExternals,
-			isNotDisabledOnWiki = context.opts.pageFairRecovery !== false;
+	function isRecoveryModuleEnabled(wgCountries, contextVariable) {
+		var isGeoSupported = geo.isProperGeo(wgCountries),
+			isNotDisabledOnWiki = contextVariable !== false;
 
-		return Boolean(isExternalEnabled && isNotDisabledOnWiki && isGeoSupported);
+		return !!(isNotDisabledOnWiki && isGeoSupported);
 	}
 
 	function setContext(newContext) {
@@ -88,16 +87,14 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = isPageFairRecoveryEnabled(noExternals, instantGlobals);
+		context.opts.pageFairRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
 
 		// SourcePoint recovery
-		if (
-			!noExternals &&
-			context.opts.sourcePointRecovery !== false &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)
-		) {
-			context.opts.sourcePointRecovery = true;
-		}
+		context.opts.sourcePointRecovery = noExternals ?
+			false :
+			isRecoveryModuleEnabled(instantGlobals.wgAdDriverSourcePointRecoveryCountries, context.opts.sourcePointRecovery);
 
 		// SourcePoint MMS
 		if (noExternals && context.opts.sourcePointMMS === true) {
@@ -111,9 +108,10 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
 		// Taboola
@@ -153,6 +151,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
+		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 				context.slots.invisibleHighImpact &&
@@ -161,10 +161,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.incontentLeaderboardAsOutOfPage =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
-
-		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
-		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
-			isUrlParamSet('scrollhandler');
 
 		// AdInfo warehouse logging
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
@@ -190,14 +186,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		// OpenX for remnant slot enabled
 		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
-
-		context.opts.yavli = !!(
-			!noExternals &&
-			geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries) &&
-			isPageType('article')
-		);
-
-		context.providers.revcontent = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverRevcontentCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

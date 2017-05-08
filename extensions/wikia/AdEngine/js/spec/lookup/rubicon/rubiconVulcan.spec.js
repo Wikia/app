@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			rubiconTargeting: {
@@ -114,7 +114,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);

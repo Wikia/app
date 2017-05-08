@@ -1,6 +1,6 @@
 define('ooyala-player', function () {
 
-	var baseJSONSkinUrl = '/extensions/wikia/ArticleVideo/scripts/ooyala/skin.json?v=2';
+	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion;
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
 	var playIcon = '<svg width="22" height="30" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg"><path d="M21.573 15.818l-20 14c-.17.12-.372.18-.573.18-.158 0-.316-.037-.462-.112C.208 29.714 0 29.372 0 29V1C0 .625.207.283.538.11c.33-.17.73-.146 1.035.068l20 14c.268.187.427.493.427.82 0 .325-.16.63-.427.818z"/></svg>';
 
@@ -102,11 +102,13 @@ define('ooyala-player', function () {
 	OoyalaHTML5Player.prototype.hideControls = function () {
 		$('.oo-control-bar').css('opacity', '0');
 		$('.oo-action-icon').css('display', 'none');
+		$('.oo-state-screen-info').css('display', 'none');
 	};
 
 	OoyalaHTML5Player.prototype.showControls = function () {
 		$('.oo-control-bar').css('opacity', '');
 		$('.oo-action-icon').css('display', '');
+		$('.oo-state-screen-info').css('display', '');
 	};
 
 	OoyalaHTML5Player.initHTML5Player = function (videoElementId, playerParams, videoId, onCreate, autoplay) {

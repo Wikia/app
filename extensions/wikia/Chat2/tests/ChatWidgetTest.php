@@ -8,7 +8,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetTemplateNameDataProvider
+	 * @dataProvider getTemplateNameDataProvider
 	 */
 	public function testGetTemplateName( $isOasis, $expected ) {
 		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
@@ -18,7 +18,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $templateName );
 	}
 
-	public function testGetTemplateNameDataProvider() {
+	public function getTemplateNameDataProvider() {
 		return [
 			[
 				'isOasis' => true,
@@ -32,7 +32,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGeTemplateVarsDataProvider
+	 * @dataProvider getTemplateVarsDataProvider
 	 */
 	public function testGetTemplateVars( $fromParserTag, $wgEnableWallExt, $isLoggedIn, $chatUsersInfo, $expected ) {
 		// User class mock
@@ -102,7 +102,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $vars );
 	}
 
-	public function testGeTemplateVarsDataProvider() {
+	public function getTemplateVarsDataProvider() {
 		return [
 			'user from parser tag with message wall' => [
 				'fromParserTag' => true,
@@ -121,8 +121,8 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
 				]
 			],
@@ -137,14 +137,14 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
-					'sectionClassName' => 'module',
+					'sectionClassName' => 'rail-module',
 					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
 				]
 			],
@@ -159,14 +159,14 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
-					'sectionClassName' => 'module',
+					'sectionClassName' => 'rail-module',
 					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
-					'users' => [ 'User1', 'User2' ],
-					'usersCount' => 2,
+					'viewedUsersInfo' => [ 'User1', 'User2' ],
+					'moreUsersCount' => null,
 					'hasUsers' => true,
 				]
 			],
@@ -187,8 +187,14 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
 				]
 			],
@@ -209,8 +215,14 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
 				]
 			],
@@ -231,9 +243,14 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => 'testUsername',
-					'myAvatarUrl' => 'www.image.com',
-					'users' => [ ],
-					'usersCount' => 0,
+					'viewedUsersInfo' => [
+						[
+							'username' => 'testUsername',
+							'profileUrl' => '/wiki/User:testUsername',
+							'avatarUrl' => 'www.image.com',
+						],
+					],
+					'moreUsersCount' => null,
 					'hasUsers' => false,
 				]
 			]

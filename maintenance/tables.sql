@@ -269,6 +269,9 @@ CREATE INDEX /*i*/page_random ON /*_*/page (page_random);
 CREATE INDEX /*i*/page_len ON /*_*/page (page_len);
 CREATE INDEX /*i*/page_redirect_namespace_len ON /*_*/page (page_is_redirect, page_namespace, page_len);
 
+-- SUS-1928
+CREATE INDEX /*i*/page_ns_latest_idx ON /*_*/page (page_namespace, page_latest);
+
 --
 -- Every edit of a page creates also a revision row.
 -- This stores metadata about the revision, and a reference

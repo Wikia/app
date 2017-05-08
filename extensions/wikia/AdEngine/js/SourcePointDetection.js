@@ -71,6 +71,10 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		win.ads.runtime = win.ads.runtime || {};
 		win.ads.runtime.sp = win.ads.runtime.sp || {};
 
+		win._sp_ = win._sp_ || {};
+		win._sp_.config = win._sp_.config || {};
+		win._sp_.config.account_id = win._sp_.config.account_id || 106;
+
 		doc.addEventListener('sp.blocking', function () {
 			win.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');

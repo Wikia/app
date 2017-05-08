@@ -34,9 +34,6 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.yavli' );
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $yavliKey ], 'scripts' );
-
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -47,7 +44,6 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'yavliUrl' => $yavliUrl,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
@@ -70,7 +66,8 @@ class AdEngine2ContextService {
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
-					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) )
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => !empty( $wg->EnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
@@ -78,8 +75,6 @@ class AdEngine2ContextService {
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'exitstitial' => $wg->EnableOutboundScreenExt,
-					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider

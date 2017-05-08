@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @coversDefaultClass \NamespaceOne
  * @coversDefaultClass \AnotherDefault\Name\Space\Does\Not\Work
  */
 class CoverageTwoDefaultClassAnnotations
 {
-
     /**
      * @covers Foo\CoveredClass::<public>
      */

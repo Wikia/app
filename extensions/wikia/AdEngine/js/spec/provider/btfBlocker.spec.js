@@ -17,11 +17,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		methodCalledInsideFillInSlot: noop,
-		recoveryHelper: {
-			isBlocking: function () {
-				return false;
-			}
-		},
 		win: {}
 	};
 
@@ -34,7 +29,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.recoveryHelper,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win

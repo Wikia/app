@@ -121,9 +121,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		// fb#38260 -- removed uselang
-		$this->avatars = $this->userLoginHelper->getRandomAvatars();
-
 		// template params
 		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
 		$this->createAccountButtonLabel = wfMessage( 'createaccount' )->escaped();
@@ -269,12 +266,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$byemail = $this->wg->request->getBool( 'byemail', false );
-		if ( $byemail ) {
-			$ret = $signupForm->addNewAccountMailPassword();
-		} else {
-			$ret = $signupForm->addNewAccount();
-		}
+		$ret = $signupForm->addNewAccount();
 
 		// pass and ID of created account for FBConnect feature
 		if ( $ret instanceof User ) {

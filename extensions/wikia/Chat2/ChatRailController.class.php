@@ -37,8 +37,15 @@ class ChatRailController extends WikiaController {
 	}
 
 	public function executeGetUsers() {
+		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
-		$this->users = ChatWidget::getUsersInfo();
+		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
+		$viewedUsersInfo = ChatWidget::getViewedUsersInfo( $usersInfo );
+		$usersCount = count( $usersInfo );
+
+		$this->setVal( 'users', $viewedUsersInfo );
+		$this->setVal( 'hasUsers', $usersCount > 0 );
 		Chat::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
 			'chatters' => count( $this->users ),
 		] );
