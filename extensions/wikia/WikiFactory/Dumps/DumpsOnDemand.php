@@ -68,7 +68,7 @@ class DumpsOnDemand {
 		if ( $wgRequest->wasPosted() && $available && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
-			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
+			$text = Wikia::successbox( wfMessage( 'dump-database-request-requested' )->text() ) . $text;
 			$available = false;
 		}
 
@@ -115,9 +115,9 @@ class DumpsOnDemand {
 	 * @access public
 	 */
 	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
+		global $wgCityId, $wgUser;
 
 			if ( is_null( $iCityId ) ) {
-				global $wgCityId;
 				$iCityId = $wgCityId;
 			}
 
@@ -127,8 +127,6 @@ class DumpsOnDemand {
 				trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
 				return null;
 			}
-
-			global $wgUser;
 
 			$aData = array(
 				'dump_wiki_id'	  => $iCityId,
