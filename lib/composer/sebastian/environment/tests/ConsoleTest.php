@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Environment package.
+ * This file is part of sebastian/environment.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
@@ -8,11 +8,16 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace SebastianBergmann\Environment;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConsoleTest extends PHPUnit_Framework_TestCase
+/**
+ * @covers \SebastianBergmann\Environment\Console
+ */
+class ConsoleTest extends TestCase
 {
     /**
      * @var \SebastianBergmann\Environment\Console
@@ -25,7 +30,8 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Console::isInteractive
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanDetectIfStdoutIsInteractiveByDefault()
     {
@@ -33,7 +39,8 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Console::isInteractive
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanDetectIfFileDescriptorIsInteractive()
     {
@@ -41,9 +48,8 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Console::hasColorSupport
-     *
-     * @uses   \SebastianBergmann\Environment\Console::isInteractive
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanDetectColorSupport()
     {
@@ -51,9 +57,8 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \SebastianBergmann\Environment\Console::getNumberOfColumns
-     *
-     * @uses   \SebastianBergmann\Environment\Console::isInteractive
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
      */
     public function testCanDetectNumberOfColumns()
     {
