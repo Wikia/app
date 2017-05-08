@@ -1,4 +1,4 @@
-/*global document, describe, expect, it, modules, spyOn*/
+/*global describe, expect, it, modules, spyOn*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	'use strict';
 
@@ -13,6 +13,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 						skin: 'oasis'
 					}
 				};
+			}
+		},
+		priceParsingHelper: {
+			getPriceFromString: function () {
+				return 0;
 			}
 		},
 		prebidBid: {
@@ -31,11 +36,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 				return mocks.prebidBid;
 			}
 		},
-		sampler: {
-			sample: function () {
-				return false;
-			}
-		},
 		vastUrlBuilder: {
 			build: function () {
 				return '//foo.vast';
@@ -45,12 +45,30 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 			wgAdDriverVelesBidderCountries: ['PL'],
 			wgAdDriverVelesBidderConfig: {}
 		},
+		log: noop,
 		geo: {
 			isProperGeo: noop
 		},
-		log: noop,
 		win: {
-			XMLHttpRequest: noop
+			XMLHttpRequest: noop,
+			pbjs: {
+				_bidsReceived: [{
+					bidderCode: 'veles',
+					adId: 123
+				}, {
+					bidderCode: 'veles',
+					adId: 456
+				}, {
+					bidderCode: 'veles',
+					adId: 789
+				}, {
+					bidderCode: 'wikia',
+					adId: 123
+				}, {
+					bidderCode: 'wikia',
+					adId: 456
+				}]
+			}
 		}
 	};
 
@@ -59,7 +77,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	function getVeles() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.veles'](
 			mocks.adContext,
-			mocks.sampler,
+			mocks.priceParsingHelper,
 			mocks.prebid,
 			mocks.vastUrlBuilder,
 			mocks.geo,
@@ -74,29 +92,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		mocks.win.XMLHttpRequest.prototype.send = function () {
 			this.readyState = 4;
 			this.status = 404;
-			this.onreadystatechange();
-		};
-	}
-
-	function mockSuccessfulResponse() {
-		var ad = document.createElement('Ad'),
-			adParameters = document.createElement('AdParameters'),
-			textNode = document.createTextNode('veles=1554'),
-			vast = document.createElement('VAST');
-
-		ad.setAttribute('id', '831');
-		adParameters.appendChild(textNode);
-		ad.appendChild(adParameters);
-		vast.appendChild(ad);
-
-		mocks.win.XMLHttpRequest.prototype.open = noop;
-		mocks.win.XMLHttpRequest.prototype.send = function () {
-			this.readyState = 4;
-			this.status = 200;
-			this.response = '<VAST><Ad id="831"><AdParameters><![CDATA[veles=1554]]></AdParameters></Ad></VAST>';
-			this.responseXML = {
-				documentElement: vast
-			};
 			this.onreadystatechange();
 		};
 	}
@@ -125,7 +120,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		var veles = getVeles(),
 			slots = veles.getSlots('oasis');
 
-		expect(Object.keys(slots)).toEqual(['INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD']);
+		expect(Object.keys(slots).sort()).toEqual([
+			'TOP_LEADERBOARD', 'INCONTENT_PLAYER', 'INCONTENT_LEADERBOARD'
+		].sort());
 	});
 
 	it('Returns mercury slots', function () {
@@ -137,12 +134,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	it('Returns prepared ad unit object', function () {
 		var veles = getVeles(),
-			adUnit = veles.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]});
+			adUnit = veles.prepareAdUnit('INCONTENT_PLAYER', { sizes: [[640,480]]});
 
 		expect(adUnit).toEqual({
 			code: 'INCONTENT_PLAYER',
 			sizes: [
-				[ 640, 480 ]
+				[640, 480]
 			],
 			bids: [
 				{
@@ -155,7 +152,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 	it('Adds empty bids on failed response', function () {
 		var bid,
 			bidder = getVeles(),
-			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
+			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [[640, 480]]}),
 			velesAdapter = bidder.create();
 
 		mockFailedResponse();
@@ -173,50 +170,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 		expect(bid.code).toBe(2);
 	});
 
-	it('Adds bids with proper values on successful response', function () {
-		var bid,
-			bidder = getVeles(),
-			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
-			velesAdapter = bidder.create();
+	it('Marks Veles bids as used except given ad', function () {
+		var bidder = getVeles();
 
-		mockSuccessfulResponse();
-		bidderRequest.placementCode = 'foo123';
-		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
+		bidder.markBidsAsUsed(456);
 
-		velesAdapter.callBids({
-			bidderCode: 'bar',
-			bids: [
-				bidderRequest
-			]
-		});
-
-		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
-		expect(bid.ad).toBe('<VAST><Ad id="831"><AdParameters><![CDATA[veles=1554]]></AdParameters></Ad></VAST>');
-		expect(bid.code).toBe(1);
-		expect(bid.cpm).toBe(15.54);
-	});
-
-	it('Adds bids with price from config on successful response', function () {
-		var bid,
-			bidder = getVeles(),
-			bidderRequest = bidder.prepareAdUnit('INCONTENT_PLAYER', { sizes: [ [ 640, 480 ] ]}),
-			velesAdapter = bidder.create();
-
-		mocks.instantGlobals.wgAdDriverVelesBidderConfig = {
-			'831': 832
-		};
-		mockSuccessfulResponse();
-		bidderRequest.placementCode = 'foo123';
-		spyOn(mocks.prebidBid, 'addBidResponse').and.callThrough();
-
-		velesAdapter.callBids({
-			bidderCode: 'bar',
-			bids: [
-				bidderRequest
-			]
-		});
-
-		bid = mocks.prebidBid.addBidResponse.calls.mostRecent().args[1];
-		expect(bid.cpm).toBe(8.32);
+		expect(mocks.win.pbjs._bidsReceived[0].cpm).toBe(0.00);
+		expect(mocks.win.pbjs._bidsReceived[0].used).toBe(true);
+		expect(mocks.win.pbjs._bidsReceived[2].cpm).toBe(0.00);
+		expect(mocks.win.pbjs._bidsReceived[2].used).toBe(true);
 	});
 });

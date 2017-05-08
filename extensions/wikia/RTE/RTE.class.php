@@ -168,6 +168,11 @@ class RTE {
 			// get edgecase type and add it to JS variables
 			$edgeCaseType = Xml::encodeJsVar(self::getEdgeCaseType());
 			$out->addInlineScript("var RTEEdgeCase = {$edgeCaseType}");
+
+			// SUS-1909: Log the type of edge case that was found
+			\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.01, 'SUS-1909: RTE edge case', [
+				'edgeCaseType' => static::getEdgeCaseType()
+			] );
 		}
 
 		// parse wikitext using RTEParser (only for wysiwyg mode)

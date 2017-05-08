@@ -8,11 +8,11 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointCSDelivery());
 	}
 
-	public function getSourcePointMessaging() {
+	public function getspmsg() {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointMessage());
 	}
 
-	public function getSourcePointMMSClient() {
+	public function getspmmsc() {
 		$this->loadScript(new ResourceLoaderAdEngineSourcePointMMSClient());
 	}
 

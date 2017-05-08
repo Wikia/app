@@ -381,6 +381,12 @@ class MercuryApiController extends WikiaController {
 				} else {
 					if ( !empty( $articleData['content'] ) ) {
 						$data['article'] = $articleData;
+						$data['article']['hasPortableInfobox'] = !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) );
+
+						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
+						if ( !empty( $featuredVideo ) ) {
+							$data['article']['featuredVideo'] = $featuredVideo;
+						}
 
 						if ( !$title->isContentPage() ) {
 							// Remove the namespace prefix from display title

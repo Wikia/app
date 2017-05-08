@@ -46,6 +46,8 @@ class DesignSystemHelper {
 				$xml->addAttribute( 'alt', $alt );
 			}
 
+			$xml->addAttribute( 'id', $name );
+
 			return $xml->asXML();
 
 		} else {

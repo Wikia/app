@@ -95,6 +95,31 @@ class MercuryApiArticleHandler {
 		)->getData();
 	}
 
+	public static function getFeaturedVideoDetails( Title $title ): array {
+		global $wgEnableArticleFeaturedVideo, $wgArticleVideoFeaturedVideos;
+
+		$prefixedDBkey = $title->getPrefixedDBkey();
+
+		if ( !empty( $wgEnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $prefixedDBkey ) ) {
+			$featuredVideo = $wgArticleVideoFeaturedVideos[$prefixedDBkey];
+
+			return [
+				'type' => 'video',
+				'context' => 'featured-video',
+				'url' => $featuredVideo['thumbnailUrl'],
+				'provider' => 'ooyala-v4',
+				'embed' => [
+					'provider' => 'ooyala-v4',
+					'jsParams' => [
+						'videoId' => $featuredVideo['videoId'],
+					]
+				]
+			];
+		}
+
+		return [];
+	}
+
 	/**
 	 * @desc returns top contributors user details
 	 *
