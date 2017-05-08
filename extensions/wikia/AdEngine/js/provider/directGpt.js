@@ -1,19 +1,24 @@
 /*global define, require*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
-], function (uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
+], function (adContext, uapContext, factory, slotTweaker, openXHelper, pageFair, sourcePoint) {
 	'use strict';
+
+	function getSrc() {
+		return adContext.getContext().targeting.hasFeaturedVideo ? 'premium' : 'gpt';
+	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
 		'DirectGpt',
-		'gpt',
+		getSrc(),
 		{
 			BOTTOM_LEADERBOARD:         {size: '728x90', loc: 'footer'},
 			GPT_FLUSH:                  {flushOnly: true},
