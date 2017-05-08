@@ -46,6 +46,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTrackerHelper.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
@@ -79,7 +80,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
-		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
@@ -116,11 +116,13 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
-		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
-		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/PageFair/pageFair.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/slotFinder.js',
+		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
+		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
@@ -188,15 +190,6 @@ $config['adengine2_taboola_js'] = [
 	],
 ];
 
-$config['adengine2_revcontent_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/provider/revcontent.js',
-		'//extensions/wikia/AdEngine/js/slot/revcontentSlots.js',
-	],
-];
-
 $config['adengine2_gcs_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -209,14 +202,6 @@ $config['adengine2_interactive_maps_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdSlotInteractiveMaps.js',
-	],
-];
-
-$config['adengine2_oasis_exitstitial_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/slot/exitstitial.js',
 	],
 ];
 
@@ -241,7 +226,10 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -265,7 +253,10 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -927,6 +918,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/AdInfoTrackerHelper.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
@@ -978,7 +970,10 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		// Recovery
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -1019,7 +1014,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
-		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
@@ -1081,7 +1075,10 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
 
 		// RecoveryEngine
-		'//extensions/wikia/ARecoveryEngine/js/sourcePoint.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
+		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.old.js',
+		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 	],
 ];
 

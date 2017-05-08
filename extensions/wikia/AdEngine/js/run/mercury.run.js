@@ -12,7 +12,6 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
@@ -29,7 +28,6 @@ require([
 	messageListener,
 	mercuryListener,
 	actionHandler,
-	yavliTag,
 	geo,
 	instantGlobals,
 	win
@@ -60,10 +58,6 @@ require([
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
 			rubiconVulcan.call();
-		}
-
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
 		}
 
 		adInfoTracker.run();

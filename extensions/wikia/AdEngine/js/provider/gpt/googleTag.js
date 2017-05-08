@@ -4,12 +4,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.pageFair')
-], function (googleSlots, adSlot, slotRegistry, sourcePoint, doc, log, window, pageFair) {
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+], function (googleSlots, adSlot, slotRegistry, adBlockDetection, doc, log, win, pageFair) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -17,8 +17,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		pageLevelParams,
 		initialized = false;
 
-	window.googletag = window.googletag || {};
-	window.googletag.cmd = window.googletag.cmd || [];
+	win.googletag = win.googletag || {};
+	win.googletag.cmd = win.googletag.cmd || [];
 
 	function dispatchEvent(event, methodName) {
 		var slot,
@@ -35,40 +35,52 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function push(callback) {
-		window.googletag.cmd.push(callback);
+		win.googletag.cmd.push(callback);
 	}
 
 	function enableServices() {
 		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
-			window.googletag.pubads().collapseEmptyDivs();
-			window.googletag.pubads().enableSingleRequest();
-			window.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
-			window.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+			win.googletag.pubads().collapseEmptyDivs();
+			win.googletag.pubads().enableSingleRequest();
+			win.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			win.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
 				dispatchEvent(event, 'renderEnded');
 			});
-			window.googletag.pubads().addEventListener('impressionViewable', function (event) {
+			win.googletag.pubads().addEventListener('impressionViewable', function (event) {
 				dispatchEvent(event, 'viewed');
 			});
 
-			window.googletag.enableServices();
+			win.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], log.levels.debug, logGroup);
 		});
+	}
+
+	/**
+	 * Load GPT if not loaded only.
+	 * Don't load GPT if ads are blocked unless pageFair recovery is enabled.
+	 *
+	 * @returns {boolean}
+	 */
+	function canGptBeLoaded() {
+		var userIsBlockingAds = adBlockDetection.isBlocking(),
+			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled();
+
+		if (win.googletag.apiReady) {
+			return false;
+		}
+
+		return !userIsBlockingAds || pageFairRecoveryEnabled;
 	}
 
 	function init() {
 		log('init', log.levels.debug, logGroup);
 
 		var gads = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0],
-			pageFairRecoveryEnabled = pageFair && pageFair.isEnabled(),
-			// load GPT when API not loaded yet, ads are not blocked(SP detection) or recovery is PageFair
-			// as it needs gpt to work
-			gptCanBeLoaded = !window.googletag.apiReady &&
-				(!sourcePoint.isBlocking() || pageFairRecoveryEnabled);
+			node = doc.getElementsByTagName('script')[0];
 
-		if (gptCanBeLoaded) {
+		if (canGptBeLoaded()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
@@ -96,7 +108,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 					value = pageLevelParams[name];
 					if (value) {
 						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], log.levels.debug, logGroup);
-						window.googletag.pubads().setTargeting(name, value);
+						win.googletag.pubads().setTargeting(name, value);
 					}
 				}
 			}
@@ -114,7 +126,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['flush', 'refresh', slotQueue], log.levels.debug, logGroup);
 			if (slotQueue.length) {
-				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+				win.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 
 				slotQueue = [];
 			}
@@ -133,16 +145,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
 			slot = sizes ?
-				window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
-				window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
-			slot.addService(window.googletag.pubads());
+			slot.addService(win.googletag.pubads());
 
-			if (pageFair && pageFair.isSlotRecoverable(adElement.getSlotName())) {
-				pageFair.addMarker(slotId);
-			}
-
-			window.googletag.display(slotId);
+			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
 
@@ -153,7 +161,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function refreshSlot(slot) {
-		window.googletag.pubads().refresh([slot]);
+		win.googletag.pubads().refresh([slot]);
 	}
 
 	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
@@ -172,7 +180,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			return;
 		}
 
-		allSlots = window.googletag.pubads().getSlots();
+		allSlots = win.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;
@@ -195,7 +203,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (slotsToDestroy.length) {
 			push(function () {
 				log(['destroySlots', slotsNames, slotsToDestroy], log.levels.debug, logGroup);
-				success = window.googletag.destroySlots(slotsToDestroy);
+				success = win.googletag.destroySlots(slotsToDestroy);
 
 				if (!success) {
 					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], log.levels.error, logGroup);
@@ -210,7 +218,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function updateCorrelator() {
 		push(function () {
-			window.googletag.pubads().updateCorrelator();
+			win.googletag.pubads().updateCorrelator();
 		});
 	}
 

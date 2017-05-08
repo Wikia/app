@@ -91,8 +91,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitial' => true ]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
@@ -100,8 +99,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitialRedirectDelay' => true ]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
@@ -408,10 +406,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		unset($result['opts']['prebidBidderUrl']);
 
 		$expected['providers']['rubiconFastlane'] = true;
-
-		// Check Yavli URL format
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
-		unset($result['opts']['yavliUrl']);
 
 		$this->assertEquals( $expected, $result );
 	}
