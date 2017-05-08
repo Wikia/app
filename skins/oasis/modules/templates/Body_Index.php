@@ -19,11 +19,13 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
+<div class="wds-global-navigation-wrapper">
 <global-navigation id="globalNavigation" class="global-navigation-component" model='<?= json_encode( $app->sendRequest( 'DesignSystemApi', 'getNavigation', [
 'id' => $wg->CityId,
 'product' => 'wikis',
 'lang' => $wg->Lang->getCode()
 ] )->getData() ) ?>'></global-navigation>
+</div>
 <? if ( !empty( $wg->EnablePremiumPageHeader ) && empty( $wg->SuppressWikiHeader ) ): ?>
 	<div class="banner-notifications-placeholder">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
