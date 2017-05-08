@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 		return !!context.opts.playerTracking;
 	}
 
-	function prepareData(params, playerName, eventName, errorCode) {
+	function prepareData(params, playerName, eventName, errorCode, contentType) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
 			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
+				'content_type': contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
 				'vulcan_network': emptyValue.int,
@@ -52,9 +53,15 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 
 		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
 			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
-			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
+			trackingData['vast_id'] = [
+				vulcanResponse.network || emptyValue.string,
+				vulcanResponse.advertiser || emptyValue.string
+			].join(':');
 			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+		}
+
+		if (params.adProduct === 'veles') {
+			trackingData['vast_id'] = (params.bid && params.bid.vastId) || emptyValue.string;
 		}
 
 		return trackingData;
@@ -71,8 +78,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	 * @param {string} playerName
 	 * @param {string} eventName
 	 * @param {int} [errorCode]
+	 * @param {string} contentType
 	 */
-	function track(params, playerName, eventName, errorCode) {
+	function track(params, playerName, eventName, errorCode, contentType) {
 		// Possibility to turn off tracking from single creative/player instance
 		if (!isEnabled() || params.trackingDisabled) {
 			log(['track', 'Tracking disabled', params], log.levels.debug, logGroup);
@@ -84,7 +92,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			return;
 		}
 
-		var data = prepareData(params, playerName, eventName, errorCode);
+		var data = prepareData(params, playerName, eventName, errorCode, contentType);
 
 		log(['track', data], log.levels.debug, logGroup);
 		adTracker.trackDW(data, 'adengplayerinfo');

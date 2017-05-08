@@ -2,6 +2,8 @@
 define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
@@ -10,9 +12,11 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
+	require.optional('ext.wikia.aRecoveryEngine.tweaker')
 ], function (uapContext,
 			 btfBlocker,
+			 googleSlots,
+			 helper,
 			 resolvedState,
 			 slotTweaker,
 			 uapVideo,
@@ -81,14 +85,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function refreshMedrecSlot() {
-		var slotName = 'TOP_RIGHT_BOXAD';
-		slotTweaker.hide(slotName);
-		win.adslots2.push(slotName);
-	}
-
 	function show(params) {
-		var videoSettings;
+		var medrecSlotName = 'TOP_RIGHT_BOXAD',
+			videoSettings;
 
 		slotContainer = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
@@ -100,10 +99,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		wrapper.style.opacity = '0';
 		uapContext.setUapId(params.uap);
 
-		if (params.loadMedrecFromBTF) {
-			refreshMedrecSlot();
-		}
-
 		videoSettings = VideoSettings.create(params);
 		resolvedState.setImage(videoSettings);
 
@@ -111,9 +106,15 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
+
+			if (params.loadMedrecFromBTF) {
+				// refresh after uapContext.setUapId
+				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+			}
 		});
 
 		unblockedSlots.forEach(btfBlocker.unblock);
+
 		log(['show', params.uap], log.levels.info, logGroup);
 	}
 

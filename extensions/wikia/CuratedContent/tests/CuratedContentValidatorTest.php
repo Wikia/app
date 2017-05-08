@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.class.php' );
 
 class CuratedContentValidatorTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param array $item

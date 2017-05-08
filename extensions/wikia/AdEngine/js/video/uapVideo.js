@@ -42,6 +42,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(videoSettings)
 			.then(function (video) {
+				video.container.style.position = 'relative';
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
 						video.destroy();

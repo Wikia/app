@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.template.bfab', [
 	'ext.wikia.adEngine.video.videoSettings',
 	'wikia.log',
 	'wikia.document',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
+	require.optional('ext.wikia.aRecoveryEngine.tweaker')
 ], function (resolvedState, slotTweaker, uapVideo, VideoSettings, log, doc, recoveryTweaker) {
 	'use strict';
 

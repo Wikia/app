@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
+class PortableInfoboxParserTagControllerTest extends TestCase {
 
 	/** @var Parser */
 	protected $parser;
@@ -9,8 +10,9 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	protected $controller;
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../controllers/PortableInfoboxParserTagController.class.php';
+
 		$this->parser = $this->setUpParser();
 		$this->controller = new PortableInfoboxParserTagController();
 	}
@@ -116,7 +118,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetLayoutDataProvider
+	 * @dataProvider getLayoutDataProvider
 	 */
 	public function testGetLayout( $layout, $expectedOutput, $text, $message ) {
 		$marker = $this->controller->renderInfobox( $text, $layout, $this->parser,
@@ -129,7 +131,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		), $message );
 	}
 
-	public function testGetLayoutDataProvider() {
+	public function getLayoutDataProvider() {
 		return [
 			[
 				'layout' => [ 'layout' => 'stacked' ],
@@ -171,7 +173,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetColorDataProvider
+	 * @dataProvider getColorDataProvider
 	 */
 	public function testGetColor( $params, $expectedOutput, $text, $templateInvocation, $message ) {
 		$marker = $this->controller->renderInfobox( $text, $params, $this->parser,
@@ -181,7 +183,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$this->assertEquals($this->normalizeHTML($expectedOutput), $this->normalizeHTML($output), $message);
 	}
 
-	public function testGetColorDataProvider() {
+	public function getColorDataProvider() {
 		return [
 			[
 				'params' => [ 'accent-color-default' => '#fff' ],

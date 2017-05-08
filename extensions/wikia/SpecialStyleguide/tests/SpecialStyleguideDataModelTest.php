@@ -62,19 +62,22 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.02869 ms
-	 * @dataProvider testGetSectionDataProvider
+	 * @dataProvider getSectionDataProvider
+	 *
+	 * @param array $sectionNamesArray
+	 * @param array $expectedResults
 	 */
 	public function testGetSectionData( $sectionNamesArray, $expectedResults ) {
-		$modelMock = $this->getMock( 'SpecialStyleguideDataModel', ['getSectionData']);
-		$modelMock->expects( $this->once() )
-			->method( 'getSectionData' )
-			->will( $this->returnValue( $this->mockedSectionData ) );
+		$model = new SpecialStyleguideDataModel();
 
-		/** @var SpecialStyleguideDataModel $modelMock */
-		$this->assertEquals( $expectedResults, $modelMock->getPartOfSectionData( $sectionNamesArray ) );
+		$sectionData = new ReflectionProperty( SpecialStyleguideDataModel::class, 'sectionData' );
+		$sectionData->setAccessible( true );
+		$sectionData->setValue( $model, $this->mockedSectionData );
+
+		$this->assertEquals( $expectedResults, $model->getPartOfSectionData( $sectionNamesArray ) );
 	}
 	
-	public function testGetSectionDataProvider() {
+	public function getSectionDataProvider() {
 		return [
 			[
 				'sectionNamesArray' => [],

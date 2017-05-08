@@ -128,7 +128,7 @@ class ArticleMetadataModel {
 	}
 
 	public function addFingerprint( $name ) {
-		if ( !in_array($this->metadata[ self::FINGERPRINTS ], $name) ) {
+		if ( !in_array( $name, $this->metadata[ self::FINGERPRINTS ] ) ) {
 			$this->metadata[ self::FINGERPRINTS ][] = $name;
 		}
 	}

@@ -8,14 +8,15 @@
  */
 
 define('wikia.videohandler.ooyala', [
-	'ext.wikia.aRecoveryEngine.recovery.sourcePointHelper',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function (recoveryHelper, $, win, adContext, dartVideoHelper, loader, log) {
+], function (adBlockDetection, adBlockRecovery, $, win, adContext, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -128,9 +129,9 @@ define('wikia.videohandler.ooyala', [
 					this.originalCbList.unshift(cb);
 				}
 			};
-			ima3LibUrl = recoveryHelper.getSafeUri(ima3LibUrl);
+			ima3LibUrl = adBlockRecovery.getSafeUri(ima3LibUrl);
 
-			createParams.vast.tagUrl = recoveryHelper.getSafeUri(createParams.vast.tagUrl);
+			createParams.vast.tagUrl = adBlockRecovery.getSafeUri(createParams.vast.tagUrl);
 
 			loadJs(ima3LibUrl).done(function () {
 				log('Recovered ima3 lib is loaded', log.levels.info, logGroup);
@@ -165,12 +166,13 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (recoveryHelper.isSourcePointRecoveryEnabled()) {
-						recoveryHelper.addOnBlockingCallback(initRecoveredPlayer);
-						recoveryHelper.addOnNotBlockingCallback(initRegularPlayer);
-					} else {
+					// FIXME MAIN-10297
+					// if (adBlockDetection.isEnabled()) {
+					// 	adBlockDetection.addOnBlockingCallback(initRecoveredPlayer);
+					// 	adBlockDetection.addOnNotBlockingCallback(initRegularPlayer);
+					// } else {
 						initRegularPlayer();
-					}
+					// }
 				});
 			});
 		});

@@ -2,7 +2,7 @@
 
 use Wikia\Util\Assert;
 
-class AssertTest extends PHPUnit_Framework_TestCase {
+class AssertTest extends \PHPUnit\Framework\TestCase {
 	public function testTrue() {
 		$this->assertTrue( Assert::true( 1 == 1 ) );
 		$this->assertTrue( Assert::true( 2 < 10 ) );

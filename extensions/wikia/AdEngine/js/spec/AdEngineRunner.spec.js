@@ -34,6 +34,8 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	function getRunner(bidders) {
 		bidders = bidders || {};
 		return modules['ext.wikia.adEngine.adEngineRunner'](

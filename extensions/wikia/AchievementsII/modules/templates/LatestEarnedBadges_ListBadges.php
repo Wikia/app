@@ -18,8 +18,8 @@ foreach ($badges as $item) {
 
 	if ($displayMode == 'LatestBadges') {
 		$info = wfMsg('achievements-recent-info',
-			$item['user']->getUserPage()->getLocalURL(),
-			$item['user']->getName(),
+			$item['user']['profileUrl'],
+			$item['user']['userName'],
 			$badge_name,
 			$item['badge']->getGiveFor(),
 			wfTimeFormatAgo($item['date'])
