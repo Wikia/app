@@ -1,7 +1,7 @@
 <?php
 /**
  * Simple hook for displaying additional information in Special:Statistics
- * 
+ *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  */
@@ -13,10 +13,10 @@ class DumpsOnDemand {
 	const BASEURL = "http://dumps.wikia.net";
 	const DEFAULT_COMPRESSION_FORMAT = '7zip';
 
-    /**
-     * From this moment on we use Amazon S3 storage for the dumps.
-     * All earlier dumps are gone and all data referring to them should be considered invalid.
-     */
+	/**
+	 * From this moment on we use Amazon S3 storage for the dumps.
+	 * All earlier dumps are gone and all data referring to them should be considered invalid.
+	 */
 	const S3_MIGRATION = '20131002154415';
 
 	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
@@ -68,10 +68,11 @@ class DumpsOnDemand {
 
 		$bIsAllowed = $wgUser->isAllowed( 'dumpsondemand' ) && !in_array( $wgUser->getName(), $aDumpRequestBlacklist );
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
+		$tmpl->set( 'editToken', $wgUser->getEditToken());
 
 		$text .= $tmpl->render( "dod" );
 
-		if( $wgRequest->wasPosted() && $bIsAllowed ) {
+		if( $wgRequest->wasPosted() && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
@@ -100,7 +101,7 @@ class DumpsOnDemand {
 			$file
 		);
 	}
-        
+
 	/**
 	 * @static
 	 * @access public
@@ -116,45 +117,46 @@ class DumpsOnDemand {
 	 * @access public
 	 */
 	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
-            
-            if ( is_null( $iCityId ) ) {
-                global $wgCityId;
-                $iCityId = $wgCityId;
-            }
-            
-            $oWiki = WikiFactory::getWikiByID( $iCityId );
-            
-            if ( !is_object( $oWiki ) ) {
-                trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
-                return null;
-            }
-            
-            global $wgUser;
-            
-            $aData = array(
-                'dump_wiki_id'      => $iCityId,
-                'dump_wiki_dbname'  => $oWiki->city_dbname,
-                'dump_wiki_url'     => $oWiki->city_url,
-                'dump_user_name'    => $wgUser->getName(),
-                'dump_requested'    => wfTimestampNow()
-            );
-            
-            if ( $bHidden ) {
-                $aData['dump_hidden'] = 'Y';
-            }
-            
-            if ( $bClose ) {
-                $aData['dump_closed'] = 'Y';
-            }
-            
-            $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-            $oDB->insert( 'dumps', $aData, __METHOD__ );
-            $oDB->update(
-                    'city_list',
-                    array( 'city_lastdump_timestamp' => wfTimestampNow() ),
-                    array( 'city_id' => $iCityId ),
-                    __METHOD__
-            );
+
+			if ( is_null( $iCityId ) ) {
+				global $wgCityId;
+				$iCityId = $wgCityId;
+			}
+
+			$oWiki = WikiFactory::getWikiByID( $iCityId );
+
+			if ( !is_object( $oWiki ) ) {
+				trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
+				return null;
+			}
+
+			global $wgUser;
+
+			$aData = array(
+				'dump_wiki_id'	  => $iCityId,
+				'dump_wiki_dbname'  => $oWiki->city_dbname,
+				'dump_wiki_url'	 => $oWiki->city_url,
+				'dump_user_name'	=> $wgUser->getName(),
+				'dump_requested'	=> wfTimestampNow()
+			);
+
+			if ( $bHidden ) {
+				$aData['dump_hidden'] = 'Y';
+			}
+
+			if ( $bClose ) {
+				$aData['dump_closed'] = 'Y';
+			}
+
+			$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+			$oDB->insert( 'dumps', $aData, __METHOD__ );
+			$oDB->update(
+					'city_list',
+					array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+					array( 'city_id' => $iCityId ),
+					__METHOD__
+			);
+			WikiFactory::clearCache( $iCityId );
 	}
 
 	static public function getPath( $sName ) {
@@ -182,8 +184,8 @@ class DumpsOnDemand {
 	 * Puts the specified file to Amazon S3 storage
 	 *
 	 * if $bPublic, the file will be available for all users
-     * if $sMimeType is set then the specified mime tipe is set, otherwise
-     *      let AmazonS3 decide on mime type.
+	 * if $sMimeType is set then the specified mime tipe is set, otherwise
+	 *      let AmazonS3 decide on mime type.
 	 */
 	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
 		$time = wfTime();
