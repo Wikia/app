@@ -6,13 +6,14 @@ class ChatHooks {
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
 	public static function onGetRailModuleList( &$modules ) {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
-		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
-
-		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[$pos] = [ 'ChatRail', 'placeholder', null ];
+		if ( $wgUser->isLoggedIn() ) {
+			// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
+			// Above spotlights, below everything else. BugzId: 4597.
+			$modules[1286] = [ 'ChatRail', 'placeholder', null ];
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -136,7 +137,7 @@ class ChatHooks {
 				}
 			}
 		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
-			$ipLinks = [ ];
+			$ipLinks = [];
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
 				// Need to make the link manually for this as Linker's normaliseSpecialPage

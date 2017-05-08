@@ -115,7 +115,7 @@ define( 'wikia.videoBootstrap', [
 				action: action,
 				category: 'video-player-stats',
 				label: this.provider,
-				trackingMethod: 'internal',
+				trackingMethod: 'analytics', // send to both GA and our internal tracker
 				value: 0
 			}, {
 				title: this.title,

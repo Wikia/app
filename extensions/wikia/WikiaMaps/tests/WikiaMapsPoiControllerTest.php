@@ -11,6 +11,9 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testEditPoi_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
@@ -19,12 +22,14 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			->method( 'getData' )
 			->willReturn( 'Mocked Data.' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->editPoi();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testEditPoi_throws_permission_error_when_blocked() {
 		$userMock = $this->getUserMock( self::USER_TYPE_BLOCKED );
 
@@ -33,12 +38,14 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			->method( 'getData' )
 			->willReturn( 'Mocked Data.' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->editPoi();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testDeletePoi_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
@@ -48,12 +55,14 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			->with( 'poiId' )
 			->willReturn( 1 );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->deletePoi();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testDeletePoi_throws_permission_error_when_blocked() {
 		$userMock = $this->getUserMock( self::USER_TYPE_BLOCKED );
 
@@ -63,77 +72,9 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			->with( 'poiId' )
 			->willReturn( 1 );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->deletePoi();
-	}
-	
-	/**
-	 * @dataProvider isValidUrlDataProvider
-	 */
-	public function testIsValidUrl( $description, $urlMock, $isValidCalledTimes, $isValidMock, $expected ) {
-		$poiControllerMock = $this->getMockBuilder( 'WikiaMapsPoiController' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getData' ] )
-			->getMock();
-
-		$poiControllerMock->expects( $this->once() )
-			->method( 'getData' )
-			->with( 'articleTitleOrExternalUrl' )
-			->willReturn( $urlMock );
-
-		$wikiaValidatorUrlMock = $this->getMockBuilder( 'WikiaValidatorUrl' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'isValid' ] )
-			->getMock();
-
-		$wikiaValidatorUrlMock->expects( $this->$isValidCalledTimes() )
-			->method( 'isValid' )
-			->willReturn( $isValidMock );
-
-		/** @var WikiaMapsPoiController $poiControllerMock */
-		$this->assertEquals( $poiControllerMock->isValidUrl( $wikiaValidatorUrlMock ), $expected, $description );
-	}
-
-	public function isValidUrlDataProvider() {
-		return [
-			[
-				'empty BUT valid URL',
-				'urlMock' => '',
-				'isValidCalledTimes' => 'never',
-				'isValidMock' => false,
-				'expected' => true,
-			],
-			[
-				'not empty, valid URL',
-				'urlMock' => 'http://www.wikia.com',
-				'isValidCalledTimes' => 'once',
-				'isValidMock' => true,
-				'expected' => true,
-			],
-			[
-				'not empty, valid URL - HTML5 URL encoded',
-				'urlMock' => 'http://www.wikia.com/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F',
-				'isValidCalledTimes' => 'once',
-				'isValidMock' => true,
-				'expected' => true,
-			],
-			[
-				'not empty, valid URL with UTF8 characters',
-				'urlMock' => 'http://www.wikia.com/Служебная',
-				'isValidCalledTimes' => 'once',
-				'isValidMock' => true,
-				'expected' => true,
-			],
-			[
-				'not empty and invalid URL',
-				'urlMock' => 'This is not an URL',
-				'isValidCalledTimes' => 'once',
-				'isValidMock' => false,
-				'expected' => false,
-			]
-		];
 	}
 
 	/**
@@ -321,7 +262,10 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			]
 		];
 	}
-	
+
+	/**
+	 * @return PHPUnit_Framework_MockObject_MockObject|WikiaMapsPoiController
+	 */
 	private function getWikiaMapsPoiControllerMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
@@ -342,7 +286,9 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			->method( 'isValidArticleTitle' )
 			->willReturn( true );
 
-		$controllerMock->request = $requestMock;
+		$controllerMock->setRequest( $requestMock );
+		$controllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
+		$controllerMock->getApp()->wg->IntMapProtectedMaps = [];
 
 		return $controllerMock;
 	}

@@ -27,7 +27,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		}
 
 		if ( $params['expectedException'] ) {
-			$this->setExpectedException( $params['expectedException'] );
+			$this->expectException( $params['expectedException'] );
 		}
 
 		/* Run tested function */
@@ -62,7 +62,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				->willReturn( $isAllowed );
 		}
 
-		$this->setExpectedException( $exception );
+		$this->expectException( $exception );
 
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 		$this->contentReviewApiControllerMock->setRequest( $requestMock );
@@ -87,7 +87,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	 */
 	public function testEnableTestMode( array $inputData, $expected, $message ) {
 		if ( $expected !== 'success' ) {
-			$this->setExpectedException( $expected );
+			$this->expectException( $expected );
 		}
 
 		/**
@@ -128,7 +128,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		 * Set exception if expected
 		 */
 		if ( $inputData['exception'] ) {
-			$this->setExpectedException( $expected );
+			$this->expectException( $expected );
 		}
 
 		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'], [ 'getInt' ] );

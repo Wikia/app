@@ -1,8 +1,9 @@
 <?php
 
-class Issue498Test extends PHPUnit_Framework_TestCase
-{
+use PHPUnit\Framework\TestCase;
 
+class Issue498Test extends TestCase
+{
     /**
      * @test
      * @dataProvider shouldBeTrueDataProvider
@@ -12,7 +13,6 @@ class Issue498Test extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(true);
     }
-
 
     /**
      * @test
@@ -28,19 +28,19 @@ class Issue498Test extends PHPUnit_Framework_TestCase
     {
 
         //throw new Exception("Can't create the data");
-        return array(
-            array(true),
-            array(false)
-        );
+        return [
+            [true],
+            [false]
+        ];
     }
 
     public function shouldBeFalseDataProvider()
     {
-
         throw new Exception("Can't create the data");
-        return array(
-            array(true),
-            array(false)
-        );
+
+        return [
+            [true],
+            [false]
+        ];
     }
 }

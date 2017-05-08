@@ -247,7 +247,7 @@ class Masthead {
 				// avatars selected from "samples" are stored as full URLs (BAC-1105)
 				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
 				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
-				if ( strpos( $url, 'http://' ) === false ) {
+				if ( !preg_match( '/^https?:\/\//', $url ) ) {
 					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
 				}
 			} else {
@@ -710,14 +710,6 @@ class Masthead {
 		$oLogPage = new LogPage( AVATAR_LOG_NAME );
 		$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
 		unlink( $sTmpFile );
-
-		/**
-		 * notify image replication system
-		 */
-		global $wgEnableUploadInfoExt;
-		if ( $wgEnableUploadInfoExt ) {
-			UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
-		}
 
 		wfProfileOut( __METHOD__ );
 

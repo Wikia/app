@@ -7056,7 +7056,7 @@ $messages['de'] = array(
 	'visualeditor-languageinspector-widget-label-language' => 'Sprache',
 	'visualeditor-linkinspector-open' => 'Öffnen',
 	'visualeditor-linkinspector-title' => 'Link',
-	'visualeditor-listbutton-bullet-tooltip' => 'Aufzählungszeichen',
+	'visualeditor-listbutton-bullet-tooltip' => 'Ungeordnete Liste',
 	'visualeditor-listbutton-number-tooltip' => 'Nummerierte Liste',
 	'visualeditor-mediasizewidget-button-originaldimensions' => 'Vollständige Größe',
 	'visualeditor-mediasizewidget-label-custom' => 'Benutzerdefiniert',
@@ -7187,7 +7187,7 @@ $messages['de'] = array(
 	'visualeditor-dialog-meta-languages-label' => 'Sprachen',
 	'visualeditor-dialog-meta-languages-link-label' => 'Verlinkte Seite',
 	'visualeditor-dialog-meta-languages-name-label' => 'Sprache',
-	'visualeditor-dialog-meta-languages-readonlynote' => 'Dies ist eine Liste der Seiten in anderen Sprachen, die auf diese Seite verlinkt sind. Sie können derzeit nur im Quelltextmodus oder auf Wikidata bearbeitet werden.',
+	'visualeditor-dialog-meta-languages-readonlynote' => 'Dies ist eine Liste der Seiten in anderen Sprachen, die auf diese Seite verlinkt sind. Sie können derzeit nur im Quelltextmodus bearbeitet werden.',
 	'visualeditor-dialog-meta-languages-section' => 'Sprachen',
 	'visualeditor-dialog-meta-settings-displaytitle' => 'Anzeigetitel',
 	'visualeditor-dialog-meta-settings-displaytitle-enable' => 'Anzeigetitel aktivieren',
@@ -14879,6 +14879,7 @@ Folytatod?',
 	'visualeditor-help-label' => 'Felhasználói útmutató elolvasása',
 	'visualeditor-help-title' => 'Útmutató a szerkesztő használatához',
 );
+<<<<<<< HEAD
 
 $messages['hu-formal'] = array(
 	'visualeditor-beta-warning' => 'A VisualEditor „béta” állapotban van. Találkozhat szoftveres hibákkal, és az oldal néhány részét nem biztos, hogy fogja tudni szerkeszteni. A forráskódnézetre való  váltáshoz - ha nem akarja elveszíteni az eddigi változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-tool}}” lehetőséget.',
@@ -14895,6 +14896,24 @@ $messages['hu-formal'] = array(
 	'visualeditor-wikitext-warning' => 'Most a VisualEditorral szerkeszt - a [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiszöveg]] itt nem működik. A forráskód nézetre való váltáshoz - ha nem akarja elveszíteni a változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-title}}” lehetőséget.',
 );
 
+=======
+
+$messages['hu-formal'] = array(
+	'visualeditor-beta-warning' => 'A VisualEditor „béta” állapotban van. Találkozhat szoftveres hibákkal, és az oldal néhány részét nem biztos, hogy fogja tudni szerkeszteni. A forráskódnézetre való  váltáshoz - ha nem akarja elveszíteni az eddigi változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-tool}}” lehetőséget.',
+	'visualeditor-dialog-beta-welcome-title' => '{{GENDER:$1|Üdvözlöm}} a VisualEditorban',
+	'visualeditor-dialog-transclusion-no-template-description' => 'Éppen a(z) "$1" sablont {{GENDER:$3|adja hozzá}} ehhez a laphoz. Még nincs leírása, de a <a $2>leírólapja</a> további információkkal szolgálhat.',
+	'visualeditor-editconflict' => 'A módosítások nem menthetők egy szerkesztésütközés miatt. Szeretné kézileg megoldani a problémát?',
+	'visualeditor-loadwarning' => 'Hiba a kiszolgálóról való letöltés közben: $1. Megpróbálja újra?',
+	'visualeditor-loadwarning-token' => 'Hiba a kiszolgálóról való szerkesztőtoken-letöltés közben: $1. Megpróbálja újra?',
+	'visualeditor-savedialog-identify-anon' => 'Szeretné az oldalt inkább egy névtelen felhasználóval elmenteni? Az IP címe látható lesz a laptörténetben.',
+	'visualeditor-savedialog-identify-user' => 'Bejelentkezett, mint [[User:$1|$1]]. A szerkesztése ehhez a felhasználóhoz fog tartozni, ha elmenti.',
+	'visualeditor-savedialog-warning-dirty' => 'A változások megsérülhettek, kérem ellenőrizze.',
+	'visualeditor-timeout' => 'Úgy tűnik, hogy a szerkesztő jelenleg nem elérhető. Szeretne helyette forráskód módban szerkeszteni?',
+	'visualeditor-viewpage-savewarning-title' => 'Biztos benne?',
+	'visualeditor-wikitext-warning' => 'Most a VisualEditorral szerkeszt - a [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiszöveg]] itt nem működik. A forráskód nézetre való váltáshoz - ha nem akarja elveszíteni a változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-title}}” lehetőséget.',
+);
+
+>>>>>>> dev
 $messages['hy'] = array(
 	'ooui-outline-control-move-down' => 'Իջեցնել կետը',
 	'ooui-outline-control-move-up' => 'Բարձրացնել կետը',
@@ -16665,7 +16684,7 @@ $messages['it'] = array(
 	'visualeditor-dialog-command-help-title' => 'Scorciatoie da tastiera',
 	'visualeditor-dialog-error' => 'Qualcosa è andato storto…',
 	'visualeditor-dialog-error-dismiss' => 'Indietro',
-	'visualeditor-dialog-language-auto-direction' => 'Automatico',
+	'visualeditor-dialog-language-auto-direction' => 'Auto',
 	'visualeditor-dialog-language-search-title' => 'Seleziona lingua',
 	'visualeditor-formatdropdown-format-heading-label' => 'Intestazione (1-6)',
 	'visualeditor-formatdropdown-format-heading1' => 'Titolo 1',
@@ -16977,11 +16996,19 @@ Vuoi continuare?",
 	'tag-visualeditor-needcheck-description' => 'Modifica eseguita utilizzando il [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] dove il sistema ha rilevato possibili modifiche non volute nel wikitext.',
 	'tag-visualeditor-switched' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: commutato]]',
 	'tag-visualeditor-switched-description' => "L'utente ha iniziato a modificare utilizzando VisualEditor, poi è passato all'editor di wikitext.",
+<<<<<<< HEAD
 	'visualeditor-feedback-link' => 'Project:VisualEditor/Commenti',
 	'visualeditor-feedback-tool' => 'Lascia il tuo feedback',
 	'visualeditor-help-label' => 'Leggi la guida utente',
 	'visualeditor-help-title' => "Guida per l'utilizzo dell'editor",
 	'visualeditor-wikitext-warning-link' => 'Aiuto:Wikitext',
+=======
+	'visualeditor-feedback-link' => 'Project:VisualEditor/Feedback',
+	'visualeditor-feedback-tool' => 'Lascia il tuo feedback',
+	'visualeditor-help-label' => 'Leggi la guida utente',
+	'visualeditor-help-title' => "Guida per l'utilizzo dell'editor",
+	'visualeditor-wikitext-warning-link' => 'mediawikiwiki:Special:MyLanguage/Help:Formatting',
+>>>>>>> dev
 	'visualeditor-content-select-all' => 'Seleziona tutto',
 	'visualeditor-dimensionswidget-px' => 'px',
 	'visualeditor-dimensionswidget-times' => '×',
@@ -17607,6 +17634,7 @@ $messages['ja'] = array(
 	'visualeditor-wikitext-warning-link' => 'mediawikiwiki:Special:MyLanguage/Help:Formatting',
 	'visualeditor-help-link' => 'mw:Special:MyLanguage/Help:VisualEditor/User guide',
 );
+<<<<<<< HEAD
 
 $messages['jbo'] = array(
 	'visualeditor-ca-editsource' => 'stika lo krasi',
@@ -17614,6 +17642,15 @@ $messages['jbo'] = array(
 	'visualeditor-cite-tool-name-news' => 'loi nuzba',
 );
 
+=======
+
+$messages['jbo'] = array(
+	'visualeditor-ca-editsource' => 'stika lo krasi',
+	'visualeditor-ca-editsource-section' => 'stika lo krasi',
+	'visualeditor-cite-tool-name-news' => 'loi nuzba',
+);
+
+>>>>>>> dev
 $messages['jv'] = array(
 	'ooui-outline-control-move-down' => 'Pindhahaken butir mangandhap',
 	'visualeditor' => 'PanyuntingVisual',
@@ -19504,6 +19541,7 @@ $messages['kri'] = array(
 	'visualeditor-dialog-media-position-right' => 'Raiht',
 	'visualeditor-dialog-media-position-section' => 'Positio',
 );
+<<<<<<< HEAD
 
 $messages['ksh'] = array(
 	'visualeditor' => 'Sigge beldlesch beärbeide',
@@ -19549,6 +19587,53 @@ $messages['ksh'] = array(
 	'visualeditor-feedback-tool' => 'Jivv_en Röckmäldong',
 );
 
+=======
+
+$messages['ksh'] = array(
+	'visualeditor' => 'Sigge beldlesch beärbeide',
+	'visualeditor-annotationbutton-bold-tooltip' => 'Fätte Schreff',
+	'visualeditor-annotationbutton-italic-tooltip' => 'Scheive Schreff',
+	'visualeditor-annotationbutton-link-tooltip' => 'ene Lengk',
+	'visualeditor-clearbutton-tooltip' => 'Fomaateeronge fottnämme',
+	'visualeditor-formatdropdown-format-heading1' => 'Övverschreff 1',
+	'visualeditor-formatdropdown-format-heading2' => 'Övverschreff 2',
+	'visualeditor-formatdropdown-format-heading3' => 'Övverschreff 3',
+	'visualeditor-formatdropdown-format-heading4' => 'Övverschreff 4',
+	'visualeditor-formatdropdown-format-heading5' => 'Övverschreff 5',
+	'visualeditor-formatdropdown-format-heading6' => 'Övverschreff 6',
+	'visualeditor-formatdropdown-format-paragraph' => 'Afschnett',
+	'visualeditor-formatdropdown-format-preformatted' => 'De Fommateerong es ald doh',
+	'visualeditor-formatdropdown-title' => 'De Fommateerong ändere',
+	'visualeditor-historybutton-redo-tooltip' => 'Donn dat norr_ens',
+	'visualeditor-historybutton-undo-tooltip' => 'Donn de läzde Änderong zeröck nämme',
+	'visualeditor-indentationbutton-indent-tooltip' => 'Mieh enjeröck',
+	'visualeditor-indentationbutton-outdent-tooltip' => 'Winnijer enjeröck',
+	'visualeditor-inspector-close-tooltip' => 'Zohmaache',
+	'visualeditor-inspector-remove-tooltip' => 'Fottnämme',
+	'visualeditor-linkinspector-title' => 'Lengk ändere',
+	'visualeditor-listbutton-bullet-tooltip' => 'Leß met Pungkte',
+	'visualeditor-listbutton-number-tooltip' => 'En Leß met Nommere',
+	'visualeditor-ca-editsource' => 'der Quälltäx ändere',
+	'visualeditor-ca-ve-create' => 'Sigge beldlesch beärbeide',
+	'visualeditor-ca-ve-edit' => 'Sigge beldlesch beärbeide',
+	'visualeditor-desc' => 'Määd_et müjjelesch, em MedijaWikki Sigge beldlesch ze beärbeide.',
+	'visualeditor-dialog-meta-languages-name-label' => 'Schprohch',
+	'visualeditor-editsummary' => 'Donn beschriive, wat De jeändert häs.',
+	'visualeditor-linkinspector-suggest-external-link' => 'Ene Wäblengk',
+	'visualeditor-linkinspector-suggest-new-page' => 'En neue Sigg',
+	'visualeditor-loadwarning' => 'Ene Fähler es opjetrodde beim Daate Laade vum däm ẞööver: <i lang="en">$1</i>.',
+	'visualeditor-savedialog-label-create' => 'De Sigg aanlääje',
+	'visualeditor-savedialog-label-report' => 'E Probleem mälde',
+	'visualeditor-savedialog-label-restore' => 'Donn di Sigg zeröck holle',
+	'visualeditor-savedialog-label-review-good' => 'Sühd jood uß för mesch',
+	'visualeditor-savedialog-label-save' => 'De Sigg faßhallde',
+	'visualeditor-savedialog-title-save' => 'Donn Ding Änderonge faßhallde',
+	'visualeditor-saveerror' => 'Ene Fähler es opjetrodde beim Daate Faßhallde op däm ẞööver: <i lang="en">$1</i>.',
+	'visualeditor-viewpage-savewarning' => 'Wells De verhaftesch retuur jonn op et beldlesch Beärbeide, der ohne eeds_ens di Sigg met Dinge Änderonge em Wiki faßzehallde?',
+	'visualeditor-feedback-tool' => 'Jivv_en Röckmäldong',
+);
+
+>>>>>>> dev
 $messages['ku-latn'] = array(
 	'visualeditor-dialog-meta-categories-data-label' => 'Kategorî',
 	'visualeditor-dialog-meta-categories-section' => 'Kategorî',
@@ -26422,7 +26507,11 @@ $messages['pt'] = array(
 	'visualeditor-annotationbutton-code-tooltip' => 'Código de computador',
 	'visualeditor-annotationbutton-italic-tooltip' => 'Itálico',
 	'visualeditor-annotationbutton-language-tooltip' => 'Idioma',
+<<<<<<< HEAD
 	'visualeditor-annotationbutton-link-tooltip' => 'Ligação',
+=======
+	'visualeditor-annotationbutton-link-tooltip' => 'Link',
+>>>>>>> dev
 	'visualeditor-annotationbutton-strikethrough-tooltip' => 'Riscado',
 	'visualeditor-annotationbutton-subscript-tooltip' => 'Subscrito',
 	'visualeditor-annotationbutton-superscript-tooltip' => 'Sobrescrito',
@@ -26472,7 +26561,11 @@ $messages['pt'] = array(
 	'visualeditor-languageinspector-widget-label-langcode' => 'Código do idioma',
 	'visualeditor-languageinspector-widget-label-language' => 'Idioma',
 	'visualeditor-linkinspector-open' => 'Abrir',
+<<<<<<< HEAD
 	'visualeditor-linkinspector-title' => 'Hiperligação',
+=======
+	'visualeditor-linkinspector-title' => 'Link',
+>>>>>>> dev
 	'visualeditor-listbutton-bullet-tooltip' => 'Lista com marcadores',
 	'visualeditor-listbutton-number-tooltip' => 'Lista numerada',
 	'visualeditor-mediasizewidget-button-originaldimensions' => 'Tamanho original',
@@ -28530,7 +28623,11 @@ $messages['ru'] = array(
 	'visualeditor-linknodeinspector-title' => 'Простая ссылка',
 	'visualeditor-loadwarning' => 'Ошибка при загрузке данных с сервера: $1. Попробовать снова?',
 	'visualeditor-loadwarning-token' => 'Ошибка при загрузке токена для редактирования с сервера: $1. Попробовать снова?',
+<<<<<<< HEAD
 	'visualeditor-mainnamespacepagelink' => 'Project:Основное пространство',
+=======
+	'visualeditor-mainnamespacepagelink' => 'Project:Main namespace',
+>>>>>>> dev
 	'visualeditor-media-input-placeholder' => 'Поиск медиафайлов',
 	'visualeditor-meta-tool' => 'Параметры',
 	'visualeditor-mwalienextensioninspector-title' => 'Расширение MediaWiki',
@@ -28586,7 +28683,7 @@ $messages['ru'] = array(
 	'visualeditor-timeout' => 'Похоже, что этот редактор в настоящее время недоступен. Вы хотели бы вместо этого перейти к редактированию в режиме исходного кода?',
 	'visualeditor-toolbar-cite-label' => 'Включить источник',
 	'visualeditor-toolbar-savedialog' => 'Записать страницу',
-	'visualeditor-usernamespacepagelink' => 'Project:Личное пространство',
+	'visualeditor-usernamespacepagelink' => 'Project:User namespace',
 	'visualeditor-version-label' => 'Версия',
 	'visualeditor-viewpage-savewarning' => 'Вы уверены, что хотите вернуться в режим просмотра, не сохраняя изменения?',
 	'visualeditor-viewpage-savewarning-discard' => 'Отменить правки',
@@ -28601,7 +28698,11 @@ $messages['ru'] = array(
 	'tag-visualeditor-needcheck-description' => 'Правка с помощью [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуального редактора]], в которой система обнаружила возможную непреднамеренно изменённую вики-разметку.',
 	'tag-visualeditor-switched' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор: переключён]]',
 	'tag-visualeditor-switched-description' => 'Участник начал редактировать с помощью Визуального редактора, а затем переключился в редактор викитекста.',
+<<<<<<< HEAD
 	'visualeditor-feedback-link' => 'Project:Визуальный редактор/Отзывы',
+=======
+	'visualeditor-feedback-link' => 'Project:VisualEditor/Feedback',
+>>>>>>> dev
 	'visualeditor-feedback-tool' => 'Оставить отзыв',
 	'visualeditor-help-label' => 'Прочтите руководство по использованию',
 	'visualeditor-help-title' => 'Руководство по использованию редактора',
@@ -35266,7 +35367,7 @@ $messages['zh-hans'] = array(
 	'visualeditor-dialog-meta-languages-label' => '语言',
 	'visualeditor-dialog-meta-languages-link-label' => '链接的页面',
 	'visualeditor-dialog-meta-languages-name-label' => '语言',
-	'visualeditor-dialog-meta-languages-readonlynote' => '这是链接至该页面的其他语言页面的列表。目前只能在源代码模式或维基数据编辑。',
+	'visualeditor-dialog-meta-languages-readonlynote' => '这是链接至该页面的其他语言页面的列表。目前只能在源代码模式编辑。',
 	'visualeditor-dialog-meta-languages-section' => '语言',
 	'visualeditor-dialog-meta-settings-displaytitle' => '显示标题',
 	'visualeditor-dialog-meta-settings-displaytitle-enable' => '启用显示标题',
@@ -35340,7 +35441,7 @@ $messages['zh-hans'] = array(
 	'visualeditor-dialog-transclusion-title' => '嵌入',
 	'visualeditor-dialogbutton-media-tooltip' => '媒体文件',
 	'visualeditor-dialogbutton-meta-tooltip' => '页面设置',
-	'visualeditor-dialogbutton-reference-tooltip' => '基本',
+	'visualeditor-dialogbutton-reference-tooltip' => '参考资料',
 	'visualeditor-dialogbutton-referenceslist-tooltip' => '参考资料列表',
 	'visualeditor-dialogbutton-template-tooltip' => '模板',
 	'visualeditor-dialogbutton-transclusion-tooltip' => '嵌入',
@@ -35402,7 +35503,7 @@ $messages['zh-hans'] = array(
 	'visualeditor-referenceslist-missingref' => '该参考资料定义在模板或其他生成块中，目前只能在源代码模式下编辑。',
 	'visualeditor-savedialog-error-badtoken' => '由于会话失效，我们无法处理您的编辑。',
 	'visualeditor-savedialog-identify-anon' => '您想要以匿名用户身份保存该页面吗？您的IP地址将被记录在该页面的编辑历史记录中。',
-	'visualeditor-savedialog-identify-user' => '您现在正以[[User:$1|$1]]的身份登录。如果您保存该编辑，该编辑将与您的账户关联。',
+	'visualeditor-savedialog-identify-user' => '您现在正以[[User:$1|$1]]的身份登录。如果您保存该编辑，该编辑将与您的帐户关联。',
 	'visualeditor-savedialog-label-create' => '创建页面',
 	'visualeditor-savedialog-label-error' => '出错',
 	'visualeditor-savedialog-label-report' => '报告问题',
@@ -35707,7 +35808,7 @@ $messages['zh-hant'] = array(
 	'visualeditor-desc' => 'MediaWiki 的視效編輯器',
 	'visualeditor-descriptionpagelink' => 'Help:視效編輯器',
 	'visualeditor-dialog-beta-welcome-action-continue' => '繼續',
-	'visualeditor-dialog-beta-welcome-content' => '這是我們新推出的編輯器，可使編輯工作變得更加容易。目仍在測試階段，仍無法編輯部分的頁面內容可能發生一些需要修正的問題。我們建議您在儲存前重新檢查一下您所做出的修訂，並歡迎您回報使用 VisualEditor 時的問題 (請點選 "{{int:visualeditor-help-tool}}" 按鈕以回饋問題)。 您可以隨時點選 "$1" 頁籤切換回 WikiText 編輯器，您所做的變更會被保留。',
+	'visualeditor-dialog-beta-welcome-content' => '這是我們新推出的編輯器，可使編輯工作變得更加容易。目仍在測試階段，仍無法編輯部分的頁面內容可能發生一些需要修正的問題。我們建議您在儲存前重新檢查一下您所做出的修訂，並歡迎您回報使用 VisualEditor 時的問題 (請點選 "{{int:visualeditor-help-tool}}" 按鈕以回饋問題)。 您可以隨時點選 "$1" 標籤切換回 WikiText 編輯器，您所做的變更會被保留。',
 	'visualeditor-dialog-beta-welcome-title' => '{{GENDER:$1|歡迎}}使用 VisualEditor',
 	'visualeditor-dialog-media-alttext-section' => '替代文字',
 	'visualeditor-dialog-media-change-image' => '選擇其他圖片',
@@ -35739,7 +35840,7 @@ $messages['zh-hant'] = array(
 	'visualeditor-dialog-meta-categories-category' => '分類',
 	'visualeditor-dialog-meta-categories-data-label' => '分類',
 	'visualeditor-dialog-meta-categories-defaultsort-help' => '您可以透過設定替代的索引名稱來覆蓋在分類中顯示此頁面的排序方式。 這經常用於要依姓氏排序，但名字會顯示在前面的頁面。',
-	'visualeditor-dialog-meta-categories-defaultsort-label' => '此頁面預設的方式排序為',
+	'visualeditor-dialog-meta-categories-defaultsort-label' => '此頁面預設的排序方式為',
 	'visualeditor-dialog-meta-categories-hidden' => '此分類已設定不顯示於使用的頁面。',
 	'visualeditor-dialog-meta-categories-input-hiddencategorieslabel' => '隱藏分類',
 	'visualeditor-dialog-meta-categories-input-matchingcategorieslabel' => '符合的分類',
@@ -35754,11 +35855,16 @@ $messages['zh-hant'] = array(
 	'visualeditor-dialog-meta-languages-label' => '語言',
 	'visualeditor-dialog-meta-languages-link-label' => '已連結的頁面',
 	'visualeditor-dialog-meta-languages-name-label' => '語言',
-	'visualeditor-dialog-meta-languages-readonlynote' => '此為連結至本頁的其他語言頁面清單，目前只能透過原始碼模式或者使用維基數據編輯。',
+	'visualeditor-dialog-meta-languages-readonlynote' => '此為連結至本頁的其他語言頁面清單，目前只能透過原始碼模式編輯。',
 	'visualeditor-dialog-meta-languages-section' => '語言',
 	'visualeditor-dialog-meta-settings-displaytitle' => '顯示標題',
+<<<<<<< HEAD
 	'visualeditor-dialog-meta-settings-displaytitle-enable' => '啟用顯示標題',
 	'visualeditor-dialog-meta-settings-displaytitle-help' => '您可以透過設定其他的標籤內容來覆蓋此頁面顯示的標題。',
+=======
+	'visualeditor-dialog-meta-settings-displaytitle-enable' => '啟用顯示其他標題',
+	'visualeditor-dialog-meta-settings-displaytitle-help' => '您可以設定其他的名稱來取代此頁面顯示的標題。',
+>>>>>>> dev
 	'visualeditor-dialog-meta-settings-hiddencat-help' => '您可以避免此分類在內容頁面底部的分類清單中出現。這對於編輯者感興趣，但讀者不感興趣的分類很有用，例如需要圖片的頁面等。',
 	'visualeditor-dialog-meta-settings-hiddencat-label' => '隱藏分類',
 	'visualeditor-dialog-meta-settings-index-default' => '預設',
@@ -35775,16 +35881,24 @@ $messages['zh-hant'] = array(
 	'visualeditor-dialog-meta-settings-nocontentconvert-help' => '您可以避免此頁面內容被自動轉換成其他語言文字。',
 	'visualeditor-dialog-meta-settings-nocontentconvert-label' => '不對內容進行語言變體的轉換',
 	'visualeditor-dialog-meta-settings-noeditsection-help' => '在某些特殊情況下，您可以停止顯示章節旁的編輯連結。',
+<<<<<<< HEAD
 	'visualeditor-dialog-meta-settings-noeditsection-label' => '停用頁面標題旁的編輯連結。',
 	'visualeditor-dialog-meta-settings-nogallery-help' => '在不適合以圖片冊顯示的情況下，您可以避免此分類以圖片冊的方式顯示檔案成員',
 	'visualeditor-dialog-meta-settings-nogallery-label' => '停用圖片冊',
 	'visualeditor-dialog-meta-settings-notitleconvert-help' => '您可以避免此頁面標題被自動轉換成其他語言文字。',
 	'visualeditor-dialog-meta-settings-notitleconvert-label' => '不對內容進行語言變體的轉換',
+=======
+	'visualeditor-dialog-meta-settings-noeditsection-label' => '停用頁面段落標題旁的編輯連結。',
+	'visualeditor-dialog-meta-settings-nogallery-help' => '在不適合以圖片冊顯示的情況下，您可以避免此分類以圖片冊的方式顯示檔案成員',
+	'visualeditor-dialog-meta-settings-nogallery-label' => '停用圖片冊',
+	'visualeditor-dialog-meta-settings-notitleconvert-help' => '您可以避免此頁面標題被自動轉換成其他語言文字。',
+	'visualeditor-dialog-meta-settings-notitleconvert-label' => '不對標題進行語言變體的轉換',
+>>>>>>> dev
 	'visualeditor-dialog-meta-settings-redirect-help' => '您可以設定此頁面為重定向頁面，會將讀者自動切換至在此 wiki 的其他頁面。 這個設定對於拼寫錯誤與同義名稱或概念時非常有用。 若您這樣設定，讀者將不會看到此頁的內容。',
 	'visualeditor-dialog-meta-settings-redirect-label' => '重新導向此頁面至',
 	'visualeditor-dialog-meta-settings-redirect-placeholder' => '重新導向的目標頁面',
-	'visualeditor-dialog-meta-settings-redirect-statichelp' => '當重新導向的目標被移動時，您可以避免此重新導向頁面被自動更新，這項設定在非常特殊的情況下才會需要使用。',
-	'visualeditor-dialog-meta-settings-redirect-staticlabel' => '目標頁面移動時，防止同時更新此重新導向頁面。',
+	'visualeditor-dialog-meta-settings-redirect-statichelp' => '當重新導向的目標頁被移動時，您可以避免此重定向頁面被自動更新，這項設定在非常特殊的情況下才會需要使用。',
+	'visualeditor-dialog-meta-settings-redirect-staticlabel' => '目標頁面移動時，防止同時更新此重定向頁面。',
 	'visualeditor-dialog-meta-settings-section' => '頁面設定',
 	'visualeditor-dialog-meta-settings-toc-default' => '如果需要',
 	'visualeditor-dialog-meta-settings-toc-disable' => '從不',
@@ -35792,15 +35906,15 @@ $messages['zh-hant'] = array(
 	'visualeditor-dialog-meta-settings-toc-help' => '當少於三個標題時，您仍可強制在頁首顯示目錄，或者強制不要顯示目錄。 在預設的情況下頁面若超過三個標題會顯示目錄。',
 	'visualeditor-dialog-meta-settings-toc-label' => '顯示目錄',
 	'visualeditor-dialog-meta-title' => '選項',
-	'visualeditor-dialog-reference-editing-reused' => '此頁面已使用此參考文獻 $1 {{PLURAL:$1|次}}。',
+	'visualeditor-dialog-reference-editing-reused' => '此頁面已使用此參考資料 $1 {{PLURAL:$1|次}}。',
 	'visualeditor-dialog-reference-options-group-label' => '使用此群組',
-	'visualeditor-dialog-reference-options-group-placeholder' => '一般參考文獻',
+	'visualeditor-dialog-reference-options-group-placeholder' => '一般參考資料',
 	'visualeditor-dialog-reference-options-name-label' => '以此名稱再使用',
 	'visualeditor-dialog-reference-options-section' => '選項',
-	'visualeditor-dialog-reference-title' => '參考文獻',
-	'visualeditor-dialog-reference-useexisting-label' => '使用現有的參考文獻',
+	'visualeditor-dialog-reference-title' => '參考資料',
+	'visualeditor-dialog-reference-useexisting-label' => '使用現有的參考資料',
 	'visualeditor-dialog-reference-useexisting-tool' => '重複使用',
-	'visualeditor-dialog-referenceslist-title' => '參考文獻清單',
+	'visualeditor-dialog-referenceslist-title' => '參考文獻列表',
 	'visualeditor-dialog-template-title' => '模板',
 	'visualeditor-dialog-transclusion-add-content' => '加入內容',
 	'visualeditor-dialog-transclusion-add-param' => '加入更多資訊',
@@ -35828,8 +35942,8 @@ $messages['zh-hant'] = array(
 	'visualeditor-dialog-transclusion-title' => '嵌入頁面',
 	'visualeditor-dialogbutton-media-tooltip' => '媒體',
 	'visualeditor-dialogbutton-meta-tooltip' => '頁面設定',
-	'visualeditor-dialogbutton-reference-tooltip' => '基本',
-	'visualeditor-dialogbutton-referenceslist-tooltip' => '參考文獻清單',
+	'visualeditor-dialogbutton-reference-tooltip' => '參考資料',
+	'visualeditor-dialogbutton-referenceslist-tooltip' => '參考資料列表',
 	'visualeditor-dialogbutton-template-tooltip' => '模板',
 	'visualeditor-dialogbutton-transclusion-tooltip' => '嵌入頁面',
 	'visualeditor-diff-nochanges' => '您無法檢視差異，因為此頁面目前沒有變更任何的內容。',
@@ -35877,17 +35991,28 @@ $messages['zh-hant'] = array(
 	'visualeditor-parameter-search-no-unused' => '沒有未使用的參數',
 	'visualeditor-parameter-search-unknown' => '不明的參數',
 	'visualeditor-preference-betatempdisable' => '在視效編輯器測試期間暫時停用。',
+<<<<<<< HEAD
 	'visualeditor-preference-core-description' => '開啟視效編輯器，目前尚未支援對話頁面及其他命名空間。',
+=======
+	'visualeditor-preference-core-description' => '開啟視效編輯器，目前在對話頁面及一些其他命名空間尚無法使用。',
+>>>>>>> dev
 	'visualeditor-preference-core-label' => '視效編輯器',
 	'visualeditor-preference-enable' => '開啟視效編輯器，將可於以下{{PLURAL:$2|命名空間}} 使用：$1',
 	'visualeditor-preference-language-description' => '新增尚未正式發佈的實驗性語言工具到視效編輯器進行測試。 使用實驗性質工具，請永遠記得在儲存之後重新檢視您所做的變更是否正常。',
 	'visualeditor-preference-language-label' => '視效編輯器語言工具',
 	'visualeditor-preference-mwalienextension-description' => '新增尚未正式發佈的實驗性編輯擴充標籤工具到視效編輯器 (可修改圖庫、原始碼區塊)。 使用實驗性質工具，請永遠記得在儲存之後重新檢視您所做的變更是否正常。',
 	'visualeditor-preference-mwalienextension-label' => '視效編輯器擴充標籤編輯',
+<<<<<<< HEAD
 	'visualeditor-reference-input-placeholder' => '您想引用什麼參考文獻？',
 	'visualeditor-referenceslist-isempty' => '此頁面中無群組為 "$1" 的參考文獻可加入引用清單。',
 	'visualeditor-referenceslist-isempty-default' => '此頁面目前無任何參考文獻可加入引用清單。',
 	'visualeditor-referenceslist-missingref' => '此參考文獻已定義於模板或其他自動產生的區塊上，目前只能使用原始碼模式來編輯。',
+=======
+	'visualeditor-reference-input-placeholder' => '您想引用什麼參考資料？',
+	'visualeditor-referenceslist-isempty' => '此頁面中無群組為 "$1" 的參考資料可加入引用列表。',
+	'visualeditor-referenceslist-isempty-default' => '此頁面目前無任何參考資料可加入引用列表。',
+	'visualeditor-referenceslist-missingref' => '此參考資料已定義於模板或其他自動產生的區塊上，目前只能使用原始碼模式來編輯。',
+>>>>>>> dev
 	'visualeditor-savedialog-error-badtoken' => '工作階段失效，我們無法處理您的編輯。',
 	'visualeditor-savedialog-identify-anon' => '您是否要以匿名使用者的身份來儲存頁面？ 您的 IP 位址將記錄於本頁面的編輯歷史中。',
 	'visualeditor-savedialog-identify-user' => '您目前以 [[User:$1|$1]] 的身份登入。 若您儲存本次的編輯，修訂歷史記錄將會記錄此帳號。',
@@ -35918,10 +36043,10 @@ $messages['zh-hant'] = array(
 	'visualeditor-viewpage-savewarning-discard' => '放棄編輯',
 	'visualeditor-viewpage-savewarning-keep' => '繼續編輯',
 	'visualeditor-viewpage-savewarning-title' => '您確定嗎？',
-	'visualeditor-wikitext-warning' => '您正在使用 VisualEditor - 此編輯器目前不支援 [[{{MediaWiki:visualeditor-wikitext-warning-link}}|WikiText]]。 若要保留您現有的資料並切換回原始碼編輯器，請點選 "{{int:visualeditor-toolbar-savedialog}}" 旁的下拉式選單，並選擇 "{{int:visualeditor-mweditmodesource-title}}"。',
+	'visualeditor-wikitext-warning' => '您正在使用 VisualEditor - 此編輯器目前不支援 [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wiki文本]]。 若要保留您現有的資料並切換回原始碼編輯器，請點選 "{{int:visualeditor-toolbar-savedialog}}" 旁的下拉式選單，並選擇 "{{int:visualeditor-mweditmodesource-title}}"。',
 	'visualeditor-wikitext-warning-title' => '偵測到 Wiki 標記語言',
 	'visualeditor-dialog-media-insert-title' => '插入媒體',
-	'tag-visualeditor' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|視效編輯器]]',
+	'tag-visualeditor' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]',
 	'tag-visualeditor-description' => '使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 完成的編輯',
 	'tag-visualeditor-needcheck' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: 需要檢查]]',
 	'tag-visualeditor-needcheck-description' => '使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 完成的編輯。系統偵測到 WikiText 可能發生預期外的變更。',
@@ -36026,7 +36151,11 @@ $messages['zh-hant'] = array(
 	'apihelp-visualeditor-param-format' => '',
 	'apihelp-visualeditor-param-pst' => '在發送至Parsoid前預保存轉換的wiki文本（paction=parsefragment）。',
 	'apihelp-visualeditoredit-param-cachekey' => '使用之前的serializeforcache請求與此密碼產生的結果。 覆蓋$1html。',
+<<<<<<< HEAD
 	'apihelp-visualeditoredit-param-needcheck' => '在保存時，請將此設置為編輯該修訂版本時的時間戳。用於檢測編輯衝突。',
+=======
+	'apihelp-visualeditoredit-param-needcheck' => '在保存時，請將此設置為編輯該修訂版本時的時間標記。用於檢測編輯衝突。',
+>>>>>>> dev
 	'apihelp-visualeditoredit-param-watch' => '',
 	'apihelp-visualeditoredit-param-wikitext' => '',
 	'visualeditor-preference-core-discussion-link' => '//mediawiki.org/wiki/Special:MyLanguage/Talk:VisualEditor/Beta_Features/General',

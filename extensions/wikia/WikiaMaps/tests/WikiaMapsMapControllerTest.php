@@ -7,6 +7,9 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @expectedException BadRequestApiException
+	 */
 	public function testCreateMap_throws_bad_request_api_exception() {
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 		$controllerMock->expects( $this->any() )
@@ -21,12 +24,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'BadRequestApiException' );
 		$controllerMock->createMap();
 	}
 
+	/**
+	 * @expectedException InvalidParameterApiException
+	 */
 	public function testCreateMap_throws_invalid_parameter_api_exception() {
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 
@@ -34,12 +39,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'InvalidParameterApiException' );
 		$controllerMock->createMap();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testCreateMap_throws_permission_exception_when_anon() {
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 
@@ -53,12 +60,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->method( 'isBlocked' );
 
 		$this->mockGetDataForUserTests( $controllerMock );
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->createMap();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testCreateMap_throws_permission_exception_when_blocked() {
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 
@@ -73,12 +82,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->willReturn( true );
 
 		$this->mockGetDataForUserTests( $controllerMock );
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->createMap();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testUpdateMapDeletionStatus_anon() {
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
@@ -97,12 +108,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->expects( $this->never() )
 			->method( 'getModel' );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->updateMapDeletionStatus();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testUpdateMapDeletionStatus_blocked() {
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
@@ -138,12 +151,14 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->expects( $this->never() )
 			->method( 'isUserMapCreator' );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		$controllerMock->updateMapDeletionStatus();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testUpdateMapDeletionStatus_no_rights() {
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
@@ -179,9 +194,8 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 			->method( 'isUserMapCreator' )
 			->willReturn( false );
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
+		$controllerMock->getApp()->wg->User = $userMock;
 
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
 		/** @var WikiaMapsMapController $controllerMock */
 		$controllerMock->updateMapDeletionStatus();
 	}
@@ -197,7 +211,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 
 	private function getUserMock() {
 		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'isLoggedIn', 'getName', 'isBlocked' ] )
+			->setMethods( [ 'isLoggedIn', 'getName', 'isBlocked', 'isAllowed' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -207,11 +221,10 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 	private function getWikiaMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaMapsMapController' )
 			->setMethods( [ 'getData', 'getModel', 'canUserDelete', 'isUserMapCreator' ] )
-			->disableOriginalConstructor()
 			->getMock();
 
 		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
+		$controllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
 
 		return $controllerMock;
 	}

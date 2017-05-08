@@ -82,7 +82,7 @@ if ( !empty( $wikia ) ) {
 	$dbr = wfGetDB(DB_SLAVE, 'cron', $wgExternalDatawareDB);
 	echo "read all Wikis \n";
 	$where = ( $wikia ) ? array('page_wikia_id' => $wikia ) : array();
-	$where['page_title_lower'] = mb_strtolower( $title );
+	$where['page_title'] = mb_strtolower( $title );
 	$data = $dbr->select(
 		array('pages'),
 		array('page_wikia_id'),

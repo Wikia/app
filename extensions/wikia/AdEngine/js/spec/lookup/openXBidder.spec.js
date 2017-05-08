@@ -86,7 +86,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			log: noop,
-			recoveryHelper: {
+			sourcePoint: {
 				addOnBlockingCallback: noop
 			},
 			tiers: [],
@@ -113,7 +113,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);
