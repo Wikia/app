@@ -166,7 +166,7 @@ define('wikia.videohandler.ooyala', [
 				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
-					if (adBlockRecovery.isEnabled()) {
+					if (adBlockRecovery.isSourcePointEnabled()) {
 						adBlockDetection.addOnBlockingCallback(initRecoveredPlayer);
 						adBlockDetection.addOnNotBlockingCallback(initRegularPlayer);
 					} else {
