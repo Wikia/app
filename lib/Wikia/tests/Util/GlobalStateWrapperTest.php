@@ -1,8 +1,9 @@
 <?php
 
 use Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
-class GlobalStateWrapperTest extends PHPUnit_Framework_TestCase {
+class GlobalStateWrapperTest extends TestCase {
 
 	private $scalarValue = "a-scalar-value";
 	private $arrayValue = array( 'foo' => 'bar' );

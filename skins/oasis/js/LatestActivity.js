@@ -1,7 +1,7 @@
 var LatestActivity = {
 	wikiaRecentActivityContainer: null,
 	init: function() {
-		this.wikiaRecentActivityContainer = $('#WikiaRecentActivity');
+		this.wikiaRecentActivityContainer = $('#wikia-recent-activity');
 		if( this.wikiaRecentActivityContainer.exists() ) {
 			this.lazyLoadContent();
 		}

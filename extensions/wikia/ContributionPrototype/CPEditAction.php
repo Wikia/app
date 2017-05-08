@@ -2,6 +2,7 @@
 
 namespace ContributionPrototype;
 
+use EditAction;
 use FormlessAction;
 
 class CPEditAction extends FormlessAction {
@@ -15,6 +16,18 @@ class CPEditAction extends FormlessAction {
 	}
 
 	public function show() {
-		Utils::getRenderer()->render($this->page->getTitle()->getPartialURL(), $this->getOutput(), 'edit');
+		switch ($this->page->getTitle()->getNamespace()) {
+			case NS_MAIN:
+				Utils::getRenderer()->render($this->page->getTitle(), $this->getOutput(), 'edit');
+				break;
+			default:
+				$this->fallback();
+				break;
+		}
+	}
+
+	private function fallback() {
+		$action = new EditAction($this->page, $this->context);
+		$action->show();
 	}
 }

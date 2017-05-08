@@ -3,15 +3,16 @@
 class ARecoveryModule {
 	/**
 	 * Checks whether PageFair recovery is enabled (on current wiki)
+	 *
 	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
 	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
-	 * $wgAdDriverEnablePageFairRecovery === null; // will depend on $wgAdDriverPageFairRecoveryCountries
+	 *
 	 * @return bool
 	 */
-	public function isPageFairRecoveryDisabled() {
+	public function isPageFairRecoveryEnabled() {
 		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		return $wgUser->isLoggedIn() || $wgAdDriverEnablePageFairRecovery === false;
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnablePageFairRecovery === true;
 	}
 
 	/**
@@ -19,15 +20,14 @@ class ARecoveryModule {
 	 *
 	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
 	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
-	 * $wgAdDriverEnableSourcePointRecovery === null; // will depend on $wgAdDriverSourcePointRecoveryCountries
 	 *
 	 * @return bool
 	 */
-	public function isSourcePointRecoveryDisabled() {
+	public function isSourcePointRecoveryEnabled() {
 		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
 
-		return $wgUser->isLoggedIn() || (
-			$wgAdDriverEnableSourcePointRecovery === false && $wgAdDriverEnableSourcePointMMS === false
+		return $wgUser->isAnon() && (
+			$wgAdDriverEnableSourcePointRecovery === true || $wgAdDriverEnableSourcePointMMS === true
 		);
 	}
 }

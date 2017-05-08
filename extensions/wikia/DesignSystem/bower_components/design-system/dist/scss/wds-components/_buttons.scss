@@ -18,11 +18,14 @@
 	}
 
 	$active-color: darken($wds-color-link, 20%);
+	$button-padding-horizontal: 18px;
+	$button-squished-padding-horizontal: 12px;
 	$line-height: 1.3em;
 
 	@include button-background-color($wds-color-link);
 
-	border: 1px solid;
+	border-style: solid;
+	border-width: 1px;
 	color: $wds-color-white;
 	cursor: pointer;
 	display: inline-block;
@@ -31,7 +34,7 @@
 	letter-spacing: .15px;
 	line-height: $line-height;
 	outline: none;
-	padding: 16px 18px 15px;
+	padding: 16px $button-padding-horizontal 15px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -62,7 +65,7 @@
 
 	&.wds-is-squished {
 		font-size: $wds-typescale-size-minus-3;
-		padding: 10px 12px 9px;
+		padding: 10px $button-squished-padding-horizontal 9px;
 	}
 
 	&.wds-is-stretched {
@@ -97,11 +100,38 @@
 		}
 	}
 
+	&.wds-has-icon {
+		padding-left: $button-padding-horizontal + $wds-icon-small-size + 6px;
+		position: relative;
+
+		&.wds-is-squished {
+			padding-left: $button-squished-padding-horizontal + $wds-icon-tiny-size + 6px;
+
+			.wds-icon {
+				height: $wds-icon-tiny-size;
+				left: $button-squished-padding-horizontal;
+				margin-top: -$wds-icon-tiny-size / 2;
+				width: $wds-icon-tiny-size;
+			}
+		}
+
+		.wds-icon {
+			height: $wds-icon-small-size;
+			left: $button-padding-horizontal;
+			margin-top: -$wds-icon-small-size / 2;
+			pointer-events: none;
+			position: absolute;
+			top: 50%;
+			width: $wds-icon-small-size;
+		}
+	}
+
 	$social-colors: (
 		facebook: $wds-color-social-facebook,
 		googleplus: $wds-color-social-googleplus,
 		line: $wds-color-social-line,
 		linkedin: $wds-color-social-linkedin,
+		instagram: $wds-color-social-instagram,
 		meneame: $wds-color-social-meneame,
 		nk: $wds-color-social-nk,
 		odnoklassniki: $wds-color-social-odnoklassniki,
@@ -110,7 +140,8 @@
 		twitter: $wds-color-social-twitter,
 		vkontakte: $wds-color-social-vkontakte,
 		wykop: $wds-color-social-wykop,
-		weibo: $wds-color-social-weibo
+		weibo: $wds-color-social-weibo,
+		youtube: $wds-color-social-youtube
 	);
 
 	@each $social-name, $social-color in $social-colors {

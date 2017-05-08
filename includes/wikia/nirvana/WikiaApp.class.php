@@ -78,13 +78,13 @@ class WikiaApp {
 
 	/**
 	 * constructor
-	 * @param WikiaGlobalRegistry $globalRegistry
-	 * @param WikiaLocalRegistry $localRegistry
+	 * @param WikiaRegistry $globalRegistry
+	 * @param WikiaRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 
-	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct(WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -109,10 +109,7 @@ class WikiaApp {
 		$this->wg = $globalRegistry;
 		$this->wf = $functionWrapper;
 
-		// register ajax dispatcher
-		if(is_object($this->wg)) {
-			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
-		} else {
+		if ( !is_object( $this->wg ) ) {
 			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
 			error_log( __METHOD__ . ': WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
 			$message = "";
@@ -389,28 +386,27 @@ class WikiaApp {
 	}
 
 	/**
-	 * registerNamespaceControler
-	 * if the namespace is registered using registerNamespaceControler
-	 * $className, $methodName will be exexuted instead of regular article path
+	 * If the namespace is registered using registerNamespaceController $className, $methodName
+	 * will be executed instead of regular article path.  The title is passed as a request
+	 * attribute, e.g.:
 	 *
-	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )
+	 *     $app->renderView( $className, $methodName, [ 'title' => $wgTitle ] )
 	 *
 	 * @param integer $namespace
 	 * @param string $className
 	 * @param string $methodName
-	 * @param string $exists - Controler will be only executed if wgTitle exists
+	 *
 	 * @deprecated
 	 */
 
-	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
+	public function registerNamespaceController( $namespace, $className, $methodName ) {
 		if(empty($this->namespaceRegistry)) {
 			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
 		}
 
 		$this->namespaceRegistry[$namespace] =  array(
 			'className' => $className,
-			'methodName' => $methodName,
-		  	'exists' => $exists
+			'methodName' => $methodName
 		);
 	}
 
@@ -433,7 +429,7 @@ class WikiaApp {
 	 *
 	 * onArticleViewHeader
 	 *
-	 * This is a hook which serves the needs of registerNamespaceControler
+	 * This is a hook which serves the needs of registerNamespaceController
 	 *
 	 * @param Article $article
 	 * @param bool $outputDone
@@ -441,12 +437,18 @@ class WikiaApp {
 	 * @return bool
 	 */
 
-	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+	public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();
-		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
-			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));
+		if ( !empty( $this->namespaceRegistry[$namespace] ) ) {
+			$this->wg->Out->addHTML(
+				$this->renderView(
+					$this->namespaceRegistry[$namespace]['className'],
+					$this->namespaceRegistry[$namespace]['methodName'],
+					[ 'title' => $article->getTitle() ]
+				)
+			);
 			$outputDone = true;
 		}
 
@@ -566,10 +568,13 @@ class WikiaApp {
 
 	/**
 	 * set global variable (alias: WikiaGlobalRegistry::set(var, value, key))
+	 *
 	 * @param string $globalVarName variable name
 	 * @param mixed $value value
 	 * @param string $key key (optional)
-	 * @return WikiaApp
+	 *
+	 * @return WikiaGlobalRegistry
+	 *
 	 * @deprecated
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
@@ -603,12 +608,13 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
+	 * @param bool $internal
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true,
-								 $exceptionMode = null ) {
+	public function sendRequest( $controllerName = null, $methodName = null, $params = array(),
+	                             $internal = true, $exceptionMode = null ) {
 		wfProfileIn(__METHOD__);
 		$values = array();
 
@@ -771,13 +777,6 @@ class WikiaApp {
 		}
 
 		return self::$viewCache["P_". $controllerName . $method . $key];
-	}
-
-	/**
-	 * @todo: take a look here, consider removing
-	 */
-	public static function ajax() {
-		return F::app()->sendRequest( null, null, null, false );
 	}
 
 	/**
