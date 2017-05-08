@@ -3196,6 +3196,7 @@ $config['ooyala_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/html5-skin.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala/youtube.js',
 		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js',
+		'//extensions/wikia/ArticleVideo/scripts/ooyala/google_ima.js',
 	],
 ];
 

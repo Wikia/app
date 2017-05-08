@@ -1,4 +1,13 @@
-require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wikia.abTest', 'wikia.articleVideo.videoFeedbackBox'], function (window, onScroll, tracker, OoyalaPlayer, abTest, VideoFeedbackBox) {
+require([
+	'wikia.window',
+	'wikia.onScroll',
+	'wikia.tracker',
+	'ooyala-player',
+	'wikia.abTest',
+	'wikia.articleVideo.videoFeedbackBox',
+	require.optional('ext.wikia.adEngine.adContext'),
+	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
+], function (window, onScroll, tracker, OoyalaPlayer, abTest, VideoFeedbackBox, adContext, vastUrlBuilder) {
 
 	$(function () {
 		var $video = $('#article-video'),
@@ -25,9 +34,24 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		function initVideo(onCreate) {
 			var ooyalaVideoId = window.wgFeaturedVideoId,
 				playerParams = window.wgOoyalaParams,
-				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay;
+				autoplay = abTest.inGroup('FEATURED_VIDEO_AUTOPLAY', 'AUTOPLAY') && window.OO.allowAutoPlay,
+				vastUrl;
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, playerParams, ooyalaVideoId, onCreate, autoplay);
+			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
+				vastUrl = vastUrlBuilder.build(640/480, {
+					pos: 'FEATURED_VIDEO',
+					src: 'premium'
+				});
+			}
+
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
+				ooyalaVideoElementId,
+				playerParams,
+				ooyalaVideoId,
+				onCreate,
+				autoplay,
+				vastUrl
+			);
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
