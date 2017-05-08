@@ -14,8 +14,10 @@ class WikisApiController extends WikiaApiController {
 	const PARAMETER_KEYWORD = 'string';
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_WIKI_IDS = 'ids';
-	const CACHE_1_DAY = 86400;//1 day
-	const CACHE_1_WEEK = 604800;//1 day
+	/** 1 day cache time */
+	const CACHE_1_DAY = 86400;
+	/** 1 week cache time */
+	const CACHE_1_WEEK = 604800;
 	const MEMC_NAME = 'SharedWikiApiData:';
 	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
