@@ -72,7 +72,21 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return adUnitElements.join('/');
 	}
 
+	function isValid(adUnit) {
+		return adUnit.indexOf('wka1.') !== -1 || adUnit.indexOf('wka2.') !== -1;
+	}
+
+	function getShortSlotName(adUnit) {
+		return adUnit.replace(/^.*\/(wka1|wka2)\.[\w]+\/([^\/]*)\/.*$/, function () {
+			if (arguments[2]) {
+				return arguments[2].toUpperCase();
+			}
+		});
+	}
+
 	return {
-		build: build
+		build: build,
+		getShortSlotName: getShortSlotName,
+		isValid: isValid
 	};
 });
