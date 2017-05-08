@@ -122,6 +122,15 @@
 		}
 	}
 
+	.attribution-container {
+		padding: 0 6px;
+
+		.attribution-avatar {
+			height: 20px;
+			width: 20px;
+		}
+	}
+
 	&.ready-to-play {
 		.spinner {
 			display: none;

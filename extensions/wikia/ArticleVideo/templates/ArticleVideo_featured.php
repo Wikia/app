@@ -19,5 +19,16 @@
 		</div>
 		<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
 	</div>
+
+	<? if ( isset( $videoDetails['username'], $videoDetails['userUrl'], $videoDetails['userAvatarUrl'] ) ): ?>
+		<div class="attribution-container">
+			<img class="attribution-avatar" src="<?= Sanitizer::encodeAttribute( $videoDetails['userAvatarUrl'] ) ?>"/>
+			<a class="attribution-username" href="<?= Sanitizer::encodeAttribute( $videoDetails['userUrl'] ) ?>">
+				<?= wfMessage( 'articlevideo-attribution-from' )->escaped() ?>
+				<?= Sanitizer::encodeAttribute( $videoDetails['username'] ) ?>
+				<?//= DesignSystemHelper::renderSvg( 'wds-icons-out-arrow' ) ?> // TODO: update DS version
+			</a>
+		</div>
+	<?endif;?>
 </div>
 
