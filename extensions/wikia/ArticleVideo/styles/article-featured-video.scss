@@ -131,7 +131,7 @@
 		}
 	}
 
-	&.collapsed-ready {
+	&.is-collapsed-ready {
 		.video-container {
 			left: auto;
 			position: fixed;
@@ -143,7 +143,7 @@
 		}
 	}
 
-	&.collapsed {
+	&.is-collapsed {
 		.video-container {
 			bottom: 45px !important;
 			left: auto;
