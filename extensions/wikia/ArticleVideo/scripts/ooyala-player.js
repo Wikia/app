@@ -49,6 +49,14 @@ define('ooyala-player', function () {
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
 		});
+
+		messageBus.subscribe(window.OO.EVENTS.BITRATE_CHANGED, 'bitrate', function (eventName, stream) {
+			console.log(eventName, stream);
+		});
+
+		messageBus.subscribe(window.OO.EVENTS.BITRATE_INFO_AVAILABLE, 'bitrate', function (eventName, stream) {
+			console.log(eventName, stream);
+		});
 	};
 
 	/**
