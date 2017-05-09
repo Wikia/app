@@ -3205,6 +3205,7 @@ $config['article_featured_video_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/article-featured-video.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss',
 	],
 ];
 
