@@ -214,6 +214,12 @@ class OoyalaConfigController extends WikiaController {
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
+				8 => [
+					'name' => 'quality',
+					'location' => 'controlBar',
+					'whenDoesNotFit' => 'keep',
+					'minWidth' => 45,
+				],
 			],
 		],
 		'icons' => [
