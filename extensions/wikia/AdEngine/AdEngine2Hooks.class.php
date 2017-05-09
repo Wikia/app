@@ -68,6 +68,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconVulcanCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
+		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTaboolaConfig';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverVelesBidderCountries';

@@ -1464,6 +1464,14 @@ $wgSitewideDisableKrux = false;
 $wgAdDriverKikimoraTrackingCountries = [];
 
 /**
+ * @name $wgAdDriverSrcPremiumCountries
+ * Enables setting src=premium param for all ad slots on page, when premium video
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSrcPremiumCountries = [];
+
+/**
  * @name $wgAdDriverMEGACountries
  * Enables new way of building adUnits (currently limited for remnant).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

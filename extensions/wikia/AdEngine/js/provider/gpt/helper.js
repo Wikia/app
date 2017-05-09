@@ -1,7 +1,6 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
-	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.context.uapContext',
@@ -13,10 +12,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.geo',
+	'wikia.instantGlobals',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
-	log,
 	adContext,
 	adLogicPageParams,
 	uapContext,
@@ -28,6 +29,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	geo,
+	instantGlobals,
+	log,
 	sraHelper,
 	pageFair
 ) {
@@ -95,8 +99,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
+		function shouldSetSrcPremium() {
+			return adContext.getContext().targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
+		}
+
 		function setAdditionalTargeting(slotTargetingData) {
-			if (adContext.getContext().targeting.hasFeaturedVideo) {
+			if (shouldSetSrcPremium()) {
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
