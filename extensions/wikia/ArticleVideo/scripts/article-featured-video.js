@@ -136,7 +136,7 @@ require(['wikia.window', 'wikia.onScroll', 'wikia.tracker', 'ooyala-player', 'wi
 		}
 
 		function initAttributionTracking() {
-			$('.attribution-container a').click(function () {
+			$('.featured-video-wrapper .attribution-container a').click(function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'attribution'
