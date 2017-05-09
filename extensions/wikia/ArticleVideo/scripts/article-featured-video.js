@@ -160,7 +160,7 @@ require([
 		}
 
 		function initAttributionTracking() {
-			$('.featured-video-wrapper .attribution-container a').click(function () {
+			$('.featured-video__attribution-container a').click(function () {
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'attribution'
