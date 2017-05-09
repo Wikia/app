@@ -53,8 +53,8 @@ Failed asserting that two strings are identical.
 --- Expected
 +++ Actual
 @@ @@
--foo
-+bar
+-'foo'
++'bar'
 
 %s:%d
 
@@ -81,9 +81,9 @@ Failed asserting that two strings are equal.
 --- Expected
 +++ Actual
 @@ @@
- 'foo
--bar
-+baz
+ 'foo\n
+-bar\n
++baz\n
  '
 
 %s:%d
