@@ -9,11 +9,12 @@
 *
 */
 
-var sf = ( function ( $, undefined ) {
+window.sf = ( function ( $, undefined ) {
 	'use strict';
 	/**
 	 *
-	 * Declares methods and properties that are available through the sf namespace
+	 * Declares methods and properties that are available through the sf
+	 * namespace.
 	 *
 	 * @class sf
 	 * @alternateClassName semanticforms
@@ -22,7 +23,7 @@ var sf = ( function ( $, undefined ) {
 	return {
 
 	};
-} )( jQuery );
+}( jQuery ) );
 
-//Assinging namespace
+// Assigning namespace.
 window.sf = window.semanticforms = sf;

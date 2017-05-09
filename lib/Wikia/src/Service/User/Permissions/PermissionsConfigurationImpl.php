@@ -36,8 +36,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'vanguard',
 		'voldev',
 		'vstf',
-		'wikiastars',
-		'wikifactory',
 	];
 
 	private $implicitGroups = [
@@ -45,7 +43,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'user',
 		'autoconfirmed',
 		'poweruser',
-		'restricted-login-auto'
+		'restricted-login-auto',
 	];
 
 	private $permissions = [
@@ -106,7 +104,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'userrights-interwiki',
 		'writeapi',
 		'canremovemap',
-		'wikiawidget',
 		'wikifactory',
 		'wikifactorymetrics',
 		'dumpsondemand',
@@ -195,7 +192,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'multidelete',
 		'multiwikiedit',
 		'multiwikifinder',
-		'njordeditmode',
 		'phalanxexempt',
 		'phalanx',
 		'phalanxemailblock',
@@ -226,10 +222,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'templatedraft',
 		'textregex',
 		'themedesigner',
-		'toplists-create-edit-list',
-		'toplists-create-item',
-		'toplists-edit-item',
-		'toplists-delete-item',
 		'usermanagement',
 		'removeavatar',
 		'renameuser',
@@ -241,7 +233,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'smwallowaskpage',
 		'council',
 		'authenticated',
-		'displaywikiastarslabel',
 		'editinterfacetrusted',
 		'deleteinterfacetrusted',
 		'voldev',
@@ -252,7 +243,10 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'editrestrictedfields',
 		'viewedittab',
 		'createclass',
-		'first-edit-dialog-exempt'
+		'first-edit-dialog-exempt',
+		'hideblockername',
+		'clearuserprofile',
+		'smw-patternedit',
 	];
 
 	public function __construct() {
@@ -405,8 +399,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
@@ -450,7 +444,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			[ 'chatmoderator', 'threadmoderator' ] ) );
 
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
+			array_merge( [ 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
 			array_merge( [ 'restricted-login', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 

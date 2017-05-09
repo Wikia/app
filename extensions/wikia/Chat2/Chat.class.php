@@ -118,7 +118,8 @@ class Chat {
 				$action = self::BAN_CHANGE;
 			}
 
-			$timeLabel = self::getTimeLabel( $time );
+			$options = array_flip( ChatBanTimeOptions::newDefault()->get() );
+			$timeLabel = $options[ $time ];
 			$endOn = time() + $time;
 
 			$subjectChatUser->ban( $adminUser->getId(), $endOn, $reason );
@@ -139,10 +140,12 @@ class Chat {
 		Chat::addLogEntry(
 			$subjectUser,
 			$adminUser,
-			[ $adminUser->getId(), $subjectUser->getId(), $timeLabel, $endOn ],
+			[ $adminUser->getId(), $subjectUser->getId(), $timeLabel, $endOn, $time ],
 			'ban' . $action,
 			$reason
 		);
+
+		Wikia::purgeSurrogateKey( ChatBanListSpecialController::getAxShowUsersSurrogateKey() );
 
 		return true;
 	}
@@ -155,7 +158,7 @@ class Chat {
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( $subjectUserName, $dir = self::PRIVATE_BLOCK_ADD, $requestingUser ) {
+	public static function blockPrivate( $subjectUserName, $requestingUser, $dir = self::PRIVATE_BLOCK_ADD ) {
 		self::info( __METHOD__ . ': Method called', [
 			'subjectUserName' => $subjectUserName,
 			'dir' => $dir,
@@ -305,55 +308,6 @@ class Chat {
 	}
 
 	/**
-	 * Logs to chatlog table that a user opened chat room
-	 *
-	 * Using chatlog table is temporary. It'll be last till event_type_description table will be done.
-	 * Now we have:
-	 * mysql> select * from event_type_details ;
-	 * +------------------------+------------+
-	 * | event_type_detail_text | event_type |
-	 * +------------------------+------------+
-	 * | EDIT_CATEGORY          |          1 |
-	 * | CREATEPAGE_CATEGORY    |          2 |
-	 * | DELETE_CATEGORY        |          3 |
-	 * | UNDELETE_CATEGORY      |          4 |
-	 * | UPLOAD_CATEGORY        |          5 |
-	 * +------------------------+------------+
-	 *
-	 * That's why I put as default 6 as a event_type value.
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public static function logChatWindowOpenedEvent() {
-		$wg = F::app()->wg;
-
-		self::addConnectionLogEntry();
-
-		if ( $wg->DevelEnvironment ) {
-			return;
-		}
-
-		$dbw = wfGetDB( DB_MASTER, [ ], $wg->StatsDB );
-
-		$wikiId = intval( $wg->CityId );
-		$userId = intval( $wg->User->GetId() );
-		if ( $wikiId > 0 && $userId > 0 ) {
-			$eventRow = [
-				'wiki_id' => $wg->CityId,
-				'user_id' => $wg->User->GetId(),
-				'event_type' => 6
-			];
-
-			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-				$dbw->insert( 'chatlog', $eventRow, __METHOD__ );
-			}
-		} else {
-			wfDebugLog( 'chat', 'User did open a chat room but it was not logged in chatlog' );
-		}
-
-	}
-
-	/**
 	 * Add a rights log entry for an action.
 	 * Partially copied from SpecialUserrights.php
 	 *
@@ -471,16 +425,12 @@ class Chat {
 			] );
 		}
 
-		if ( $subjectUser->isAnon() ) {
-			return false;
-		}
-
-		if ( $subjectUser->isBlocked() ) {
-			return false;
-		}
-
 		$chatUser = new ChatUser( $subjectUser );
-		if ( $chatUser->isBanned() ) {
+
+		if ( $chatUser->isBanned() ||
+			 $subjectUser->isBlocked() ||
+			 $subjectUser->isAnon()
+		) {
 			return false;
 		}
 

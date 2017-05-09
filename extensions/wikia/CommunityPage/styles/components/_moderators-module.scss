@@ -1,0 +1,57 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'variables';
+
+.community-page-moderators-module {
+	.avatar-container {
+		display: inline-block;
+		margin-right: $content-spacing-xxsmall;
+		vertical-align: middle;
+	}
+
+	.community-page-moderators-module-section {
+		margin-top: $content-spacing-small;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+
+		.top-moderators {
+			margin-left: 0;
+		}
+	}
+
+	.community-page-moderators-list-item {
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding-top: $content-spacing-small;
+
+		&:first-of-type {
+			padding: 0;
+		}
+
+		.avatar-container {
+			@include flex($avatar-flex);
+		}
+
+		.badge-container {
+			@include avatar-badge($avatar-small-badge-top, $avatar-small-badge-left);
+		}
+
+		.community-page-moderator-rank {
+			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
+		}
+
+		.community-page-moderator-details {
+			max-width: 174px;
+			overflow-wrap: break-word;
+			padding-top: $content-spacing-xxsmall;
+			vertical-align: middle;
+		}
+	}
+
+	.community-page-zero {
+		margin: $content-spacing-small 0;
+	}
+}

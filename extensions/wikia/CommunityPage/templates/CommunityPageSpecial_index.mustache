@@ -2,15 +2,16 @@
 
 <div class="CommunityPageContainer">
 	<div class="CommunityPageMainContent">
+		{{>callToActionModule}}
 		{{>communityTodoListModule}}
-		{{#insightsModules.modules}}
-			{{>insightsModule}}
-		{{/insightsModules.modules}}
 	</div>
-	<div class="WikiaRail">
+	<div class="community-page-rail">
+		{{>adminsModule}}
+		{{>moderatorsModule}}
+		{{#contributorsModuleEnabled}}
+			{{>contributorsModule}}
+		{{/contributorsModuleEnabled}}
+		{{>recentlyJoinedModule}}
 		{{>helpModule}}
-		{{>contributorsModule}}
-		{{>communityPolicyModule}}
-		{{>recentActivityModule}}
 	</div>
 </div>

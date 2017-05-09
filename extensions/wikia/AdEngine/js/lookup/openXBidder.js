@@ -1,99 +1,33 @@
 /*global define*/
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.openXBidder', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.openx.openXBidderHelper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adSlot, adLogicZoneParams, doc, log, win) {
+], function (factory, adSlot, openXHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
 		priceTimeout = 't',
-		config = {
-			oasis: {
-				TOP_LEADERBOARD: {
-					sizes: ['728x90', '970x250']
-				},
-				TOP_RIGHT_BOXAD: {
-					sizes: ['300x250', '300x600']
-				},
-				LEFT_SKYSCRAPER_2: {
-					sizes: ['160x600', '300x600']
-				},
-				LEFT_SKYSCRAPER_3: {
-					sizes: ['160x600', '300x600']
-				},
-				INCONTENT_BOXAD_1: {
-					sizes: ['300x250', '300x600', '160x600']
-				},
-				PREFOOTER_LEFT_BOXAD: {
-					sizes: ['300x250']
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					sizes: ['300x250']
-				}
-			},
-			mercury: {
-				MOBILE_IN_CONTENT: {
-					sizes: ['300x250', '320x50']
-				},
-				MOBILE_PREFOOTER: {
-					sizes: ['300x250', '320x50']
-				},
-				MOBILE_TOP_LEADERBOARD: {
-					sizes: ['300x250', '320x50']
-				}
-			}
-		},
-		priceMap = {},
-		slots = [];
-
-	function configureHomePageSlots() {
-		var slotName;
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-				slots['HOME_' + slotName] = slots[slotName];
-				delete slots[slotName];
-			}
-		}
-		slots.PREFOOTER_MIDDLE_BOXAD = {sizes: ['300x250']};
-	}
-
-	function getSlots(skin) {
-		var context = adContext.getContext(),
-			pageType = context.targeting.pageType;
-
-		slots = config[skin];
-		if (skin === 'oasis' && pageType === 'home') {
-			configureHomePageSlots();
-		}
-
-		return slots;
-	}
+		priceMap = {};
 
 	function getAds() {
 		var ads = [],
 			sizes,
 			slotName,
-			slotPath = [
-				'/5441',
-				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getName(),
-				'',
-				adLogicZoneParams.getPageType()
-			].join('/');
+			slots = openXHelper.getSlots(),
+			pagePath = openXHelper.getPagePath();
 
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				sizes = slots[slotName].sizes;
 				ads.push([
-					slotPath,
+					pagePath,
 					sizes,
-					'wikia_gpt' + slotPath + '/gpt/' + slotName
+					openXHelper.getSlotPath(slotName, 'gpt')
 				]);
 			}
 		}
@@ -157,7 +91,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		slots = getSlots(skin);
+		openXHelper.setupSlots(skin);
 		win.OX_dfp_ads = getAds();
 
 		win.OX_dfp_options = {
@@ -181,18 +115,14 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		return prices;
 	}
 
-	function isSlotSupported(slotName) {
-		return slots[slotName];
-	}
-
 	return factory.create({
 		logGroup: logGroup,
 		name: 'ox_bidder',
 		call: call,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,
-		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
-		getSlotParams: getSlotParams
+		getSlotParams: getSlotParams,
+		isSlotSupported: openXHelper.isSlotSupported
 	});
 });

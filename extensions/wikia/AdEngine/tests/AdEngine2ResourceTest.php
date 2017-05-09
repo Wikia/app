@@ -40,6 +40,7 @@ class AdEngine2ResourceTest extends WikiaBaseTest {
 
 	private function getKeysForExtension($name) {
 		return [
+			AdEngine2Resource::getKey($name, new \DateTime('-2 day')),
 			AdEngine2Resource::getKey($name, new \DateTime('yesterday')),
 			AdEngine2Resource::getKey($name, new \DateTime('now')),
 			AdEngine2Resource::getKey($name, new \DateTime('tomorrow'))

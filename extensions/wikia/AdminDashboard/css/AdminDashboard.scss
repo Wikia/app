@@ -313,17 +313,6 @@ $color-highlight-column: rgba($color-page, 0);
 	h2 {
 		margin-top: 0;
 	}
-	&.AdminDashboardArticleHeader {
-		border-top: 0;
-		font-size: 12px;
-		font-style: italic;
-		margin: 0 -12px 7px -5px;
-		// temp transition code until grid is fully rolled out, remove and integrate after transition
-		.WikiaGrid & {
-			margin: 0 -10px 7px -10px;
-		}
-		// end temp transistion code
-	}
 }
 
 .AdminDashboardStub {
@@ -361,18 +350,6 @@ $color-highlight-column: rgba($color-page, 0);
 		width: $admin-dashboard-content-width;
 	}
 
-	&.AdminDashboardChromedArticle {
-		@include box-shadow(0, 0, 0, $color-body);
-		border-bottom: 0;
-		border-right: 0;
-		float: none;
-		padding: 0 12px 0 5px;
-		@if ( $responsive-or-breakpoints-layout-enabled ) {
-			width: auto;
-		} @else {
-			width: $width-outside - 18px;
-		}
-	}
 	fieldset {
 		border: solid 1px $color-links;
 	}
@@ -386,12 +363,6 @@ $color-highlight-column: rgba($color-page, 0);
 
 
 .WikiaGrid {
-	.AdminDashboardChromedArticle {
-		border-right: 0;
-		margin: 0 10px;
-		width: $width-outside - 20px;
-	}
-
 	.WikiaMainContent.grid-6 {
 		margin-left: 0;
 		width: inherit;
@@ -543,9 +514,5 @@ $color-highlight-column: rgba($color-page, 0);
 
 	.AdminDashboardGeneralHeader.AdminDashboardArticleHeader {
 		margin: 0 -10px 10px -10px;
-	}
-
-	.WikiaArticle.AdminDashboardChromedArticle {
-		padding: 0 10px;
 	}
 }

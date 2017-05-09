@@ -101,7 +101,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		position: relative;
 
 		&:hover {
-			#userIdentityBoxEdit {
+			.user-identity-box-edit {
 				display: block;
 			}
 		}
@@ -148,6 +148,18 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				margin: 0 1px 0 6px;
 			}
 		}
+		.bio {
+			max-height: 100px;
+			overflow: hidden;
+		}
+
+		.bio-toggle {
+			display: none;
+			margin-top: 10px;
+			span {
+				cursor: pointer;
+			}
+		}
 	}
 
 	.masthead-info-lower {
@@ -167,12 +179,44 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	.tally {
-		margin-bottom: 25px;
+		padding-bottom: 10px;
+
 		em {
 			margin-right: 5px;
 		}
+
+		.discussion-label {
+			padding: 5px 0;
+		}
+
+		&:last-of-type {
+			margin-bottom: 25px;
+		}
 	}
 
+	.discussion-details {
+		border-top: 1px solid $color-page-border;
+		padding-top: 10px;
+
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+	
+	.contributions-details {
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+	
 	.links {
 		@include clearfix;
 		li {
@@ -254,18 +298,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			padding-bottom: 10px;
 		}
 
-		#userIdentityBoxEdit {
+		.user-identity-box-edit {
 			display: block;
 		}
 	}
 }
 
-#userIdentityBoxEdit {
+.user-identity-box-edit {
+	cursor: pointer;
 	display: none;
 	margin-top: 10px;
 	position: absolute;
 	right: 10px;
-	img {
+	list-style: none;
+	svg {
 		position: relative;
 		top: 2px;
 	}

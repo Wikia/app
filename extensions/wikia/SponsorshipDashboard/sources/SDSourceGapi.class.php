@@ -439,7 +439,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		$aData[ self::SD_PARAMS_REP_URL ] = $this->url;
 		$aData[ self::SD_PARAMS_REP_FORCE_ACCOUNT ] = $this->account;
 		$aData[ self::SD_PARAMS_REP_SERIE_NAME ] = $this->serieName;
-		$aData[ self::SD_PARAMS_GAPI_METRICS_NAMES ] = Wikia\Util\Serialize::safeSerialize( $this->GAPImetricNames );
+		$aData[ self::SD_PARAMS_GAPI_METRICS_NAMES ] = serialize( $this->GAPImetricNames );
 
 		return $aData;
 	}
@@ -493,7 +493,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 		// Metric's names from DB
 		if ( isset( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ] ) ) {
-			$tmpMetricNames = Wikia\Util\Serialize::safeUnserialize( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ] );
+			$tmpMetricNames = unserialize( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ], [ 'allowed_classes' => false ] );
 			if ( is_array( $tmpMetricNames ) ){
 				foreach( $tmpMetricNames as $key => $val){
 					$this->setMetricName( $key, $val );

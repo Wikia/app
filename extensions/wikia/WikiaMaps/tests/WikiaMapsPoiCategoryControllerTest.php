@@ -94,70 +94,77 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testValidatePoiCategoriesData_user_not_logged_in() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
-
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
+		$poiCategoryControllerMock->getApp()->wg->User = $this->getUserMock(
+			self::USER_TYPE_LOGGED_OUT );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
+	/**
+	 * @expectedException WikiaMapsPermissionException
+	 */
 	public function testValidatePoiCategoriesData_user_blocked() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_BLOCKED );
-
-		$this->setExpectedException( 'WikiaMapsPermissionException' );
+		$poiCategoryControllerMock->getApp()->wg->User = $this->getUserMock(
+			self::USER_TYPE_BLOCKED );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when mapId is invalid
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_mapId() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 'invalidOne' ]
 		] );
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
-
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
+		$poiCategoryControllerMock->getApp()->wg->User = $this->getUserMock(
+			self::USER_TYPE_LOGGED_IN );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_poiCategoriesToCreate() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 1 ] //valid mapId
 		], [ 'validatePoiCategories' ] );
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
+		$poiCategoryControllerMock->getApp()->wg->User = $this->getUserMock(
+			self::USER_TYPE_LOGGED_IN );
 
 		$poiCategoryControllerMock->expects( $this->once() )
 			->method( 'validatePoiCategories' )
 			->will( $this->returnValue( false ) );
-
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategories method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
+	 * @expectedException InvalidParameterApiException
+	 * @expectedExceptionMessage Bad request
 	 */
 	public function testValidatePoiCategoriesData_invalid_poiCategoriesToDelete() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 1 ] //valid mapId
 		], [ 'validatePoiCategoriesToDelete' ] );
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
+		$poiCategoryControllerMock->getApp()->wg->User = $this->getUserMock(
+			self::USER_TYPE_LOGGED_IN );
 
 		$poiCategoryControllerMock->expects( $this->once() )
 			->method( 'validatePoiCategoriesToDelete' )
 			->will( $this->returnValue( false ) );
-
-		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
@@ -269,11 +276,9 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 	 * @return PHPUnit_Framework_MockObject_MockObject|WikiaMapsPoiCategoryController
 	 */
 	private function getPoiCategoryControllerMock( $params = [], $additionalMethodsToMock = [] ) {
-		$poiCategoryControllerMock = $this->getMock(
-			'WikiaMapsPoiCategoryController',
-			array_merge( [ 'getData' ], $additionalMethodsToMock ),
-			[], '', false
-		);
+		$poiCategoryControllerMock = $this->getMockBuilder( 'WikiaMapsPoiCategoryController' )
+			->setMethods( array_merge( [ 'getData' ], $additionalMethodsToMock ) )
+			->getMock();
 
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
@@ -281,7 +286,7 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 			->getMock();
 		$poiCategoryControllerMock->request = $requestMock;
 
-		$poiCategoryControllerMock->wg->User = $this->getUserMock();
+		$poiCategoryControllerMock->setApp( new WikiaApp( new WikiaLocalRegistry() ) );
 
 		$poiCategoryControllerMock->expects( $this->any() )
 			->method( 'getData' )

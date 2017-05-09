@@ -106,7 +106,7 @@
 		 * @param {string} url - url for the page we want to load in the modal
 		 * @param {string} origin - used for tracking the source of force login modal
 		 * @param {function} onAuthSuccess - callback function to be called after login
-		 * @param {function} forceLogin - the window is opened from regular login button - not force login
+		 * @param {boolean} forceLogin - the window is opened from regular login button - not force login
 		 */
 		load: function (params) {
 			var trackParams = {
@@ -128,8 +128,12 @@
 				if (params.forceLogin) {
 					trackParams.category = 'force-login-modal';
 
-					// for now we have only signin-page loaded in auth pop-up window
-					trackParams.label = 'signin-page-from-' + params.origin;
+					// for now we have only register-page loaded in auth pop-up window
+					trackParams.label = 'register-page-from-' + params.origin;
+				}
+
+				if (!params.url) {
+					params.url = '/register?redirect=' + encodeURIComponent(window.location.href);
 				}
 
 				initPostMessageListener(params.onAuthSuccess);

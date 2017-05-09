@@ -188,9 +188,12 @@ class CommunityDataService extends WikiaService {
 			}
 
 			//figure out what type of section it is
-			if ( $section[ self::FEATURED_SECTION ] ) {
+			if ( isset( $section[ self::FEATURED_SECTION ] ) && $section[ self::FEATURED_SECTION ] ) {
 				$result[ self::FEATURED_SECTION ] = $extended;
-			} elseif ( $section[ self::COMMUNITY_DATA_SECTION ] == 'true' ) {
+			} elseif (
+				isset( $section[ self::COMMUNITY_DATA_SECTION ] ) &&
+				$section[ self::COMMUNITY_DATA_SECTION ] == 'true'
+			) {
 				$result[ self::COMMUNITY_DATA_SECTION ] = [
 					'description' => $section[ 'description' ],
 					'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0

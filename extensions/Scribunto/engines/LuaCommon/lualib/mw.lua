@@ -408,6 +408,11 @@ local function newFrame( frameId )
 			)
 	end
 
+	function frame:getTitle()
+		checkSelf( self, 'getTitle' )
+		return php.getFrameTitle( frameId )
+	end
+
 	-- For backwards compat
 	function frame:argumentPairs()
 		checkSelf( self, 'argumentPairs' )

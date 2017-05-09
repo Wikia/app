@@ -186,7 +186,7 @@ class WikiFactoryLoader {
 	 * @todo change new Database to LoadBalancer factory
 	 *
 	 * @param int $type
-	 * @return Database    database handler
+	 * @return DatabaseBase database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
@@ -431,7 +431,17 @@ class WikiFactoryLoader {
 				$url[ "path" ] = "/{$path}" . $url[ "path" ];
 			}
 
-			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $url[ "path" ] );
+			// Special treatment for paragon.wiki
+			// For URLs starting with upper-case letter (/Something) redirect to /wiki/Something
+			$wikiPrefix = '';
+			if ( $host == 'paragon.wikia.com' ) {
+				$firstLetter = substr( $url['path'], 1, 1 );
+				if ( is_string( $firstLetter ) && ctype_upper( $firstLetter ) ) {
+					$wikiPrefix = '/wiki';
+				}
+			}
+
+			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $wikiPrefix . $url[ "path" ] );
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
@@ -685,13 +695,13 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					$headers = Wikia::getAllHeaders();
-					if (array_key_exists('X-Original-Host', $headers) &&
-					    !empty($headers['X-Original-Host'])) {
+					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-						$tValue = 'http://'.$headers['X-Original-Host'];
-						$wgConf->localVHosts = array_merge($wgConf->localVHosts,
-										   array( $headers['X-Original-Host'] ));
+
+						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+						$tValue = 'http://'.$stagingServer;
+						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 				}
 

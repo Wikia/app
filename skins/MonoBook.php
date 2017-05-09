@@ -187,7 +187,17 @@ if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHt
 ?>
 	</div>
 <?php }
-
+		/* Wikia change begin - @author: sactage */
+		// WW-93: Add ComScore tag for uncyclopedia-like wikis
+		global $wgCityId;
+		if ( WikiFactory::getWikiByID( $wgCityId )->city_umbrella == 'uncyclo' ) { ?>
+			<div id="uncyc-branding" class="branding vertical-comedy">
+				<a class="wikia-logo">
+					<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D">
+					<span><?php echo wfMessage( 'vertical-comedy' )->text(); ?></span>
+				</a>
+			</div>
+<?php } /* Wikia change end */
 		// Generate additional footer links
 		$footerlinks = array(
 			'lastmod', 'viewcount', 'numberofwatchingusers',

@@ -1,5 +1,5 @@
 /* global Wall:true, UserLoginAjaxForm, UserLoginModal, Observable */
-(function (window, $) {
+(function (window, $, mw) {
 	'use strict';
 
 	Wall.MessageForm = $.createClass(Observable, {
@@ -87,15 +87,18 @@
 
 		loginBeforeSubmit: function (action) {
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				window.wikiaAuthModal.load({
-					forceLogin: true,
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'wall-and-forum',
-					onAuthSuccess: function () {
-						action(false);
-						return true;
-					}
-				});
+				if (!Wall.isMonobook) {
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'wall-and-forum',
+						onAuthSuccess: function () {
+							action(false);
+							return true;
+						}
+					});
+				} else {
+					Wall.showMonobookLoginPopup();
+				}
 			} else {
 				action(true);
 				return true;
@@ -116,4 +119,4 @@
 		}
 	});
 
-})(window, jQuery);
+})(window, jQuery, mediaWiki);

@@ -38,9 +38,17 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal) {
-			$this->getOutput()->redirect( '/register?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		if ( $this->app->wg->EnableNewAuthModal ) {
+			$newSignupPageUrl = '/register?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newSignupPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newSignupPageUrl );
 		}
 
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
@@ -112,9 +120,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->byemail = $this->request->getBool( 'byemail', false );
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
-
-		// fb#38260 -- removed uselang
-		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 
 		// template params
 		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
@@ -195,8 +200,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
 			}
 
-			wfRunHooks( 'UserSignupAfterSignupBeforeRedirect', [ &$redirectUrl ] );
-
 			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
 		} else {
@@ -263,12 +266,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$byemail = $this->wg->request->getBool( 'byemail', false );
-		if ( $byemail ) {
-			$ret = $signupForm->addNewAccountMailPassword();
-		} else {
-			$ret = $signupForm->addNewAccount();
-		}
+		$ret = $signupForm->addNewAccount();
 
 		// pass and ID of created account for FBConnect feature
 		if ( $ret instanceof User ) {

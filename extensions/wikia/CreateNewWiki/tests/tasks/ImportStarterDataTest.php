@@ -10,7 +10,10 @@ class ImportStarterDataTest extends \WikiaBaseTest {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock( '\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setStarterDB' ] );
+		$this->taskContextMock = $this->getMockBuilder( TaskContext::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'setStarterDB' ] )
+			->getMock();
 		$this->mockClass( 'TaskContext', $this->taskContextMock );
 	}
 
@@ -82,7 +85,7 @@ class ImportStarterDataTest extends \WikiaBaseTest {
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskHelper', 'waitForSlaves', null );
-		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Starters', 'getStarterByLanguage', null );
+		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Starters', 'getStarterByLanguageAndVertical', null );
 
 		$result = $importStarterDataTask->run();
 

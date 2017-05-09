@@ -34,11 +34,11 @@ abstract class WatchedPageController extends EmailController {
 
 		$this->assertValidParams();
 
-		$this->currentRevId = $this->getVal('currentRevId');
+		$this->currentRevId = $this->getVal( 'currentRevId' );
 		if ( empty( $this->currentRevId ) ) {
 			$this->currentRevId = $this->title->getLatestRevID( \Title::GAID_FOR_UPDATE );
 		}
-		$this->previousRevId = $this->getVal('previousRevId');
+		$this->previousRevId = $this->getVal( 'previousRevId' );
 		if ( empty( $this->previousRevId ) ) {
 			$this->previousRevId = $this->title->getPreviousRevisionID( $this->currentRevId, \Title::GAID_FOR_UPDATE );
 		}
@@ -67,7 +67,7 @@ abstract class WatchedPageController extends EmailController {
 	protected function getFooterMessages() {
 		$footerMessages = [
 			$this->getMessage( 'emailext-unfollow-text',
-				$this->title->getCanonicalUrl( 'action=unwatch' ),
+				$this->title->getCanonicalURL( 'action=unwatch' ),
 				$this->title->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
@@ -347,7 +347,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 * @param $title
 	 * @return String
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return parent::getAllChangesText( $this->newTitle );
 	}
 }
@@ -372,7 +372,7 @@ class WatchedPageRestoredController extends WatchedPageController {
 	 * @return String
 	 */
 	protected function getButtonLink() {
-		return $this->title->getFullUrl();
+		return $this->title->getFullURL();
 	}
 
 	/**

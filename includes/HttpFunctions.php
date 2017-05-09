@@ -87,6 +87,7 @@ class Http {
 
 			$params = [
 				'statusCode' => $req->getStatus(),
+				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,
@@ -1081,6 +1082,7 @@ class ExternalHttp {
 	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', array $options = array() ) {
+		$options['timeout'] = $timeout;
 		return self::request( 'GET', $url, $options );
 	}
 

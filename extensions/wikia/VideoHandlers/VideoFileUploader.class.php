@@ -66,8 +66,10 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
+		$request = new FauxRequest( $data, true );
+
 		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
+		$upload->initializeFromRequest( $request );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
@@ -181,6 +183,11 @@ class VideoFileUploader {
 		);
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
+
+		// SUS-1195: make sure the file cache is up to date shortly after the video upload
+		if ( $result->isOK() ) {
+			$file->saveToCache();
+		}
 
 		return $result;
 	}

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Adam-Yourist"
+		]
+	},
+	"templates": "Лераш",
+	"sf_createform_template": "Ло:",
+	"sf_createclass_create": "Хьакхолла",
+	"sf_formedit_createtitle": "Хьакхоллар $1: $2",
+	"sf_formedit_createtitlenotarget": "Хьакхолла $1"
+}

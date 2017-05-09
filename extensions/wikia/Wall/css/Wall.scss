@@ -25,6 +25,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+
+	/* overrides /resources/jquery/jquery.makeCollapsible.css */
+	li .mw-collapsible-toggle {
+		float: right;
+	}
+
 	&.Board {
 		.deleteorremove-infobox {
 			margin-left: 75px;
@@ -113,13 +119,14 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
-			background: url("/extensions/wikia/StaffSig/images/WikiaStaff.png"); /* $wgCdnStylePath */
+			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgCdnStylePath */
+			background-size: 100% 100%;
 			bottom: -1px;
 			display: inline-block;
-			height: 12px;
+			height: 0.9em;
 			margin: 0;
 			padding: 0;
-			width: 41px;
+			width: 5em;
 			position: relative;
 		}
 	}
@@ -330,6 +337,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 19px;
 				left: -204px;
 				line-height: 19px;
+				max-width: 200px;
 				position: absolute;
 				text-align: center;
 				top: 4px;

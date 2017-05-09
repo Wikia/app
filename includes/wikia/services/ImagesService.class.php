@@ -462,4 +462,29 @@ class ImagesService extends Service {
 			'errors' => $errors,
 		);
 	}
+
+	/**
+	 * Check if given title is a local image
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isLocalImage( Title $title ) {
+		$allowedTypes = [
+			MEDIATYPE_BITMAP,
+			MEDIATYPE_DRAWING,
+		];
+
+		$localFile = RepoGroup::singleton()->getLocalRepo()->newFile( $title );
+
+		if ( $title->inNamespaces( NS_IMAGE, NS_FILE )
+			&& in_array( $localFile->getMediaType(), $allowedTypes )
+			&& !$title->isRedirect()
+			&& $localFile instanceof LocalFile
+			&& $localFile->exists()
+		) {
+			return true;
+		}
+		return false;
+	}
 }

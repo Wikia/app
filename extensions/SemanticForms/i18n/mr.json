@@ -3,9 +3,11 @@
 		"authors": [
 			"Kaustubh",
 			"Mahitgar",
-			"V.narsikar"
+			"V.narsikar",
+			"अभय नातू"
 		]
 	},
+	"semanticforms-desc": "विकि पाने तयार करण्यास असलेली रुपे",
 	"createproperty": "एक गुणधर्म तयार करा",
 	"sf_createproperty_allowedvalsinput": "जर तुम्ही या रकान्यात फक्त काहीच किंमती भरू इच्छित असाल, तर त्यांची यादी बनवा, स्वल्पविरामाने किंमतींमध्ये फरक दाखवा (जर एखाद्या किंमतीतच स्वल्पविराम येत असेल, तर त्या जागी \"\\,\" लिहा):",
 	"sf_createproperty_propname": "नाव:",
@@ -80,7 +82,7 @@
 	"sf_viewform": "अर्ज पहा",
 	"sf_editsource": "स्रोत संपादित करा",
 	"sf_formedit_edittitle": "संपादित करा $1: $2",
-	"sf_formedit_formwarning": "इशारा: हे पान <a href=\"$1\">अस्तित्वात आहे</a>, पण ते पान ह्या अर्जाचा वापर करीत नाही.",
+	"sf_formedit_formwarning": "इशारा: हे पान <a href=\"$1\">पूर्वीच अस्तित्वात आहे</a>, पण ते पान या अर्जाचा वापर करीत नाही.",
 	"sf_formedit_remove": "काढा",
 	"sf_formedit_addanother": "दुसरे वाढवा",
 	"sf_formedit_none": "काहीही नाही",
@@ -92,6 +94,7 @@
 	"sf_bad_email_error": "बरोबल इ-मेल पत्ता असणे आवश्यक आहे",
 	"sf_bad_number_error": "योग्य संख्या असणे आवश्यक आहे",
 	"sf_bad_date_error": "योग्य दिनांक असणे आवश्यक आहे",
+	"sf_pipe_error": "\"|\" (पाईप-चिन्ह) फक्त {{...}} किंवा [[...]] यांत वापरता येते.",
 	"sf_property_isproperty": "हा $1 प्रकारचा गुणधर्म आहे.",
 	"sf_property_allowedvals": "या गुणधर्माच्या योग्य किंमती पुढीलप्रमाणे आहेत:",
 	"sf_template_docu": "हा '$1' साचा आहे.\nहा खालीलप्रमाणे वापरला पाहिजे:",

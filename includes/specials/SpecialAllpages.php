@@ -63,19 +63,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$out = $this->getOutput();
 
 		$this->setHeaders();
-
-		/* Wikia change begin - @author: rychu */
-		// SEO-6: Remove the nofollow attribute from Special:AllPages
-		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgEnableLocalSitemap;
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			if ( $this->getUser() && !$this->getUser()->isLoggedIn() ) {
-				$out->setRobotPolicy( 'noindex,follow' );
-				$out->mSquidMaxage = WikiaResponse::CACHE_VERY_SHORT;
-			}
-		}
-		/* Wikia change end */
-
 		$this->outputHeader();
 		$out->allowClickjacking();
 
@@ -296,20 +283,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$special = $this->getTitle();
 		$link = htmlspecialchars( $special->getLocalUrl( $queryparams . 'from=' . urlencode($inpoint) . '&to=' . urlencode($outpoint) ) );
 
-		/* Wikia change begin - @author: rychu */
-		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgEnableLocalSitemap;
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$out = '<div><a href="' . $link . '"><span>';
-			$out .= $this->msg( 'alphaindexline' )->rawParams(
-				'</span>' . $inpointf . '<span>',
-				'</span>' . $outpointf . '<span>'
-			)->escaped();
-			$out .= '</span></a></div>';
-			return $out;
-		}
-		/* Wikia change end */
-
 		$out = $this->msg( 'alphaindexline' )->rawParams(
 			"<a href=\"$link\">$inpointf</a></td><td>",
 			"</td><td><a href=\"$link\">$outpointf</a>"
@@ -364,6 +337,11 @@ class SpecialAllpages extends IncludableSpecialPage {
 			if( $res->numRows() > 0 ) {
 				$out = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-chunk' ) );
 				while( ( $n < $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
+					/** Wikia change begin, @see LocalSitemapSpecialPage */
+					if ( $s->page_is_redirect && isset( $this->skipRedirects ) && $this->including() ) {
+						continue;
+					}
+					/* Wikia change end */
 					$t = Title::newFromRow( $s );
 					if( $t ) {
 						$link = ( $s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
@@ -452,10 +430,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$prevLink = Linker::linkKnown(
 					$self,
 					$this->msg( 'prevpage', $pt )->escaped(),
-					/* Wikia change begin - @author: rychu */
-					// SEO-256: Use Special:Allpages as local sitemaps
-					array( 'rel' => 'nofollow' ),
-					/* Wikia change end */
+					array(),
 					$query
 				);
 				$out2 = $this->getLanguage()->pipeList( array( $out2, $prevLink ) );
@@ -472,10 +447,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$nextLink = Linker::linkKnown(
 					$self,
 					$this->msg( 'nextpage', $t->getText() )->escaped(),
-					/* Wikia change begin - @author: rychu */
-					// SEO-256: Use Special:Allpages as local sitemaps
-					array( 'rel' => 'nofollow' ),
-					/* Wikia change end */
+					array(),
 					$query
 				);
 				$out2 = $this->getLanguage()->pipeList( array( $out2, $nextLink ) );

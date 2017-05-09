@@ -37,6 +37,9 @@
 		makeLightbox: function (params) {
 			var trackingObj, clickSource, trackingTitle;
 
+			// Clear the statically-added blackout
+			$('.lightbox-beforejs-blackout').remove();
+
 			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
 			$(window).trigger('lightboxOpened');
 
@@ -1108,7 +1111,6 @@
 				} else {
 					window.wikiaAuthModal.load({
 						forceLogin: true,
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 						origin: 'image-lightbox',
 						onAuthSuccess: function () {
 							doShareEmail(addresses);

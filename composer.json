@@ -3,6 +3,14 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/fluent-sql-php"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/Maps"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/SemanticMediaWiki"
     }
   ],
   "config": {
@@ -13,7 +21,7 @@
     "wikia/fluent-sql-php": "1.0.*",
     "videlalvaro/php-amqplib": "2.2.*",
     "monolog/monolog": "^1.18",
-    "phpunit/phpunit": "4.1.*",
+    "phpunit/phpunit": "^6.1",
     "facebook/php-sdk-v4": "4.0.*",
     "cssjanus/cssjanus": "1.1.*",
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
@@ -22,6 +30,11 @@
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
     "sensiolabs/consul-php-sdk": "^1.0",
-    "wikia/phpflickr": "^3.1"
+    "wikia/phpflickr": "^3.1",
+    "param-processor/param-processor": "~1.2",
+    "data-values/geo": "~1.0",
+    "mediawiki/maps": "3.5.1",
+    "mediawiki/semantic-media-wiki": "2.4.2.3"
   }
 }
+

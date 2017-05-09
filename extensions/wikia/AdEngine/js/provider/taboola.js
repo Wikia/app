@@ -3,7 +3,8 @@
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',
@@ -11,7 +12,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
+], function (adContext, adBlockDetection, adBlockRecovery, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
 	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
@@ -98,12 +99,27 @@ define('ext.wikia.adEngine.provider.taboola', [
 		slot.success();
 	}
 
+	function fillInAfterRecoveredSlotCollapse(slot, recoverdSlotId) {
+		log(['fillInAfterRecoveredSlotCollapse - set listener', slot.name], 'debug', logGroup);
+		window.addEventListener('adengine.slot.status', function (e) {
+			if (e.detail.slot.name === recoverdSlotId && e.detail.status === 'collapse') {
+				log(['fillInAfterRecoveredSlotCollapse::fter event', slot.name], 'debug', logGroup);
+				fillInSlot(slot);
+			}
+		});
+	}
+
 	function fillInSlotByConfig(slot) {
 		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
-			recoveryHelper.addOnBlockingCallback(function () {
-				fillInSlot(slot);
+			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
+			adBlockDetection.addOnBlockingCallback(function () {
+				if (adBlockRecovery.isEnabled()) {
+					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
+				} else {
+					fillInSlot(slot);
+				}
 			});
 		}
 	}

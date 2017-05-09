@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kobazulo",
+			"පසිඳු කාවින්ද",
+			"Subi"
+		]
+	},
+	"maps_map": "Mapa",
+	"maps-copycoords-prompt": "CTRL+C, ENTER",
+	"maps-others": "Bestelakoak",
+	"maps-ns-layer": "Geruza",
+	"maps-layer-property": "Propietatea",
+	"maps-layer-value": "Balioa",
+	"maps-layer-errors": "Erroreak",
+	"maps-abb-north": "I",
+	"maps-abb-east": "E",
+	"maps-abb-south": "H",
+	"maps-abb-west": "M",
+	"maps-latitude": "Latitudea:",
+	"maps-longitude": "Longitudea:",
+	"maps_coordinates_missing": "Ez dago koordenaturik maparentzat.",
+	"maps-osm-par-photos": "Erakutsi argazkiak",
+	"specialpages-group-maps": "Mapak",
+	"mapeditor-none-text": "Bat ere ez",
+	"mapeditor-done-button": "Egina",
+	"mapeditor-remove-button": "Kendu",
+	"mapeditor-import-button2": "Inportatu",
+	"mapeditor-clear-button": "Garbitu mapa",
+	"mapeditor-form-field-title": "Izenburua",
+	"mapeditor-form-field-text": "Testua",
+	"mapeditor-form-field-group": "Taldea",
+	"mapeditor-form-field-image": "Irudi"
+}

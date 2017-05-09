@@ -63,10 +63,11 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		global $wgEnableNCFDialog;
 		$user = $out->getUser();
 
-		if ( $user->isAnon() &&
-			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
+		if ( !empty( $wgEnableNCFDialog ) &&
+			$user->isAnon() &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'action' ) !== 'submit'
@@ -78,22 +79,6 @@ class CommunityPageSpecialHooks {
 		if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Add community page entry point to article page right rail module
-	 *
-	 * @param array $railModuleList
-	 * @return bool
-	 */
-	public static function onGetRailModuleList( array &$railModuleList ) {
-		global $wgTitle;
-
-		if ( $wgTitle->inNamespace( NS_MAIN ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
-			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
 		}
 
 		return true;
@@ -141,5 +126,17 @@ class CommunityPageSpecialHooks {
 
 	private static function isAdmin( $userId ) {
 		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
+	}
+
+	/**
+	 * Add wgCommunityPageDisableTopContributors global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	public static function onResourceLoaderGetConfigVars(Array &$vars) {
+		global $wgCommunityPageDisableTopContributors;
+		$vars['wgCommunityPageDisableTopContributors'] = $wgCommunityPageDisableTopContributors;
+		return true;
 	}
 }

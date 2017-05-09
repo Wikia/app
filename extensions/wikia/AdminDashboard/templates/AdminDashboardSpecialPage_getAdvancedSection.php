@@ -8,17 +8,17 @@
 <section>
 <header class="AdminDashboardGeneralHeader">
 	<h2 class="mw-specialpagesgroup">
-		<?= wfMsgNoTrans( "specialpages-group-$group" ) ?>
+		<?= wfMessage( "specialpages-group-$group" )->escaped(); ?>
 	</h2>
 </header>
-<table style='width: 100%;' class='mw-specialpages-table'>
+<table style="width: 100%;" class="mw-specialpages-table">
 	<tr>
-		<td width='30%' valign='top'>
+		<td width="30%" valign="top">
 			<ul>
 <?
 		foreach( $sortedPages as $desc => $specialpage ) {
 			list( $title, $restricted ) = $specialpage;
-			$link = $sk->linkKnown( $title , htmlspecialchars( $desc ), array('data-tracking' => 'advanced/'.str_replace(" ", "", $title->getText()) ));
+			$link = Linker::linkKnown( $title , htmlspecialchars( $desc ), [ 'data-tracking' => 'advanced/'.str_replace(" ", "", $title->getText()) ] );
 ?>
 				<li><?= $link ?></li>
 <?
@@ -28,8 +28,8 @@
 ?>
 			</ul>
 		</td>
-		<td width='10%'></td>
-		<td width='30%' valign='top'>
+		<td width="10%"></td>
+		<td width="30%" valign="top">
 			<ul>
 <?
 			}
@@ -37,7 +37,7 @@
 ?>
 			</ul>
 		</td>
-		<td width='30%' valign='top'></td>
+		<td width="30%" valign="top"></td>
 	</tr>
 </table>
 </section>

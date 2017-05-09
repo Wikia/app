@@ -51,6 +51,8 @@ class ContributeMenuController extends WikiaController {
 			$dropdownItems[ 'wikinavedit' ] = $this->getEditNavItem();
 		}
 
+		wfRunHooks( 'ContributeMenuAfterDropdownItems', [ &$dropdownItems ]);
+
 		$this->response->setVal( 'dropdownItems', $dropdownItems );
 	}
 

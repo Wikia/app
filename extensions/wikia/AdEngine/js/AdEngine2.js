@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
-	'ext.wikia.adEngine.eventDispatcher',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.slot.adSlot',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.hooks',
@@ -13,6 +14,7 @@ define('ext.wikia.adEngine.adEngine', [
 	adDecoratorLegacyParamFormat,
 	eventDispatcher,
 	adSlot,
+	slotRegistry,
 	slotTracker,
 	slotTweaker,
 	registerHooks,
@@ -64,6 +66,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 		if (!providerContainer && adContainer) {
 			providerContainer = doc.createElement('div');
+			providerContainer.classList.add('provider-container');
 			providerContainer.id = providerContainerId;
 			adContainer.appendChild(providerContainer);
 		}
@@ -100,7 +103,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 	function createSlot(queuedSlot, container, callbacks) {
 		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
-		registerHooks(slot, ['success', 'collapse', 'hop']);
+		registerHooks(slot, ['success', 'collapse', 'hop', 'renderEnded', 'viewed']);
 		slot.post('success', queuedSlot.onSuccess);
 
 		return slot;
@@ -119,24 +122,58 @@ define('ext.wikia.adEngine.adEngine', [
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.show(slotName);
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot,
+							status: 'success',
+							adInfo: adInfo
+						});
 						tracker.track('success', adInfo);
+						slot.container.setAttribute('data-slot-result', 'success');
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(slotName);
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot,
+							status: 'collapse',
+							adInfo: adInfo
+						});
 						tracker.track('collapse', adInfo);
+						slot.container.setAttribute('data-slot-result', 'collapse');
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(container.id);
+						eventDispatcher.dispatch('adengine.slot.status', {
+							slot: slot,
+							status: 'hop',
+							adInfo: adInfo
+						});
 						tracker.track('hop', adInfo);
+						slot.container.setAttribute('data-slot-result', 'hop');
 						nextProvider();
+					},
+					renderEnded: function () {
+						log(['renderEnded', provider.name, slotName], 'debug', logGroup);
+						slot.container.setAttribute('data-slot-result', 'loading');
+					},
+					viewed: function () {
+						log(['viewed', provider.name, slotName], 'debug', logGroup);
+						slot.container.setAttribute('data-slot-viewed', 'true');
 					}
 				});
 
-			// Notify people there's the slot handled
-			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
+			slot.post('viewed', function () {
+				slot.isViewed = true;
+			});
 
+			if (slotTweaker.isTopLeaderboard(slotName)) {
+				slot.pre('collapse', function () {
+					slotTweaker.hide('TOP_BUTTON_WIDE');
+				});
+			}
+
+			slotRegistry.add(slot, provider.name);
 			initializeProviderOnce(provider);
 
 			provider.fillInSlotQueue.push([slot]);
@@ -178,6 +215,7 @@ define('ext.wikia.adEngine.adEngine', [
 				} while (provider);
 			}
 
+			slotRegistry.reset(slotName);
 			cleanProviderContainers(slotName);
 			nextProvider();
 		}
@@ -190,7 +228,7 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots (' + adslots.length + ')'], 'debug', logGroup);
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);

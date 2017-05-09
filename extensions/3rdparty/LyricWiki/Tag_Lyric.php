@@ -92,7 +92,7 @@ DOC
 	return true;
 }
 
-function renderLyricTag($input, $argv, $parser)
+function renderLyricTag( $input, array $argv, Parser $parser, PPFrame $frame )
 {
 	wfProfileIn( __METHOD__ );
 
@@ -108,7 +108,7 @@ function renderLyricTag($input, $argv, $parser)
 	}
 
 	#parse embedded wikitext
-	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	$transform = $parser->recursiveTagParse( $transform, $frame );
 
 	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();

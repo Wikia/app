@@ -1,4 +1,4 @@
-<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) ?>
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">

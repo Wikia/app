@@ -39,16 +39,16 @@
 		this.circles = [];
 
 
-        /**
-         * All rectangles on the map
-         */
-        this.rectangles = [];
+		/**
+		 * All rectangles on the map
+		 */
+		this.rectangles = [];
 
 
-        /**
-         * All image overlays on the map
-         */
-        this.imageoverlays = [];
+		/**
+		 * All image overlays on the map
+		 */
+		this.imageoverlays = [];
 
 
 		var getBounds = function() {
@@ -207,7 +207,61 @@
 			// If there are any non-Google KML/KMZ layers, load the geoxml library and use it to add these layers.
 			if (options.kml.length != 0) {
 				mw.loader.using('ext.maps.gm3.geoxml', function () {
-					var geoXml = new geoXML3.parser({ map:_this.map, zoom:options.kmlrezoom });
+
+					function addToCopyCoords(doc){
+						if(options.copycoords){
+							for(var i = 0; i < doc.length; i++){
+								addCopyCoordsOnRightClick([
+									doc[i].gpolygons,
+									doc[i].gpolylines,
+									doc[i].ggroundoverlays
+									]);
+							}
+						}
+					}
+
+
+					var geoXml = new geoXML3.parser({
+						map:_this.map,
+						zoom:options.kmlrezoom,
+						failedParse:function(){
+							alert(mediaWiki.msg('maps-kml-parsing-failed'));
+						}
+					});
+					geoXml.options.afterParse = function(docs){
+						//add toggle functionality
+						var toggleDiv = document.createElement('div');
+						toggleDiv.style.backgroundColor = 'white';
+						toggleDiv.style.marginTop = '5px';
+						toggleDiv.style.padding = '5px';
+						toggleDiv.style.border = '1px solid grey';
+						for(var i = docs.length-1; i >= 0; i--){
+							(function(doc){
+								var label = document.createElement('label');
+								label.style.display = 'block';
+								var text = document.createTextNode(doc.baseUrl.substring(doc.baseDir.length));
+								var checkbox = document.createElement('input');
+								checkbox.setAttribute('type','checkbox');
+								checkbox.style.verticalAlign = '-0.2em';
+								checkbox.checked = true;
+								checkbox.onclick = function(){
+									if(this.checked){
+										geoXml.showDocument(doc);
+									}else{
+										geoXml.hideDocument(doc);
+									}
+								};
+								label.appendChild(checkbox);
+								label.appendChild(text);
+
+								toggleDiv.appendChild(label);
+
+								console.log(toggleDiv);
+							})(docs[i]);
+						}
+						_this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleDiv);
+					};
+
 					geoXml.parse(options.kml);
 				});
 			}
@@ -342,22 +396,22 @@
 			});
 		};
 
-        this.addImageOverlay = function(properties){
-            var imageBounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(properties.sw.lat,properties.sw.lon),
-                new google.maps.LatLng(properties.ne.lat,properties.ne.lon)
-            );
+		this.addImageOverlay = function(properties){
+			var imageBounds = new google.maps.LatLngBounds(
+				new google.maps.LatLng(properties.sw.lat,properties.sw.lon),
+				new google.maps.LatLng(properties.ne.lat,properties.ne.lon)
+			);
 
-            var image = new google.maps.GroundOverlay(properties.image,imageBounds);
-            image.setMap(this.map);
+			var image = new google.maps.GroundOverlay(properties.image,imageBounds);
+			image.setMap(this.map);
 
-            this.imageoverlays.push(image);
+			this.imageoverlays.push(image);
 
-            //add click event
-            google.maps.event.addListener(image, "click", function (event) {
-                openBubbleOrLink.call(this, properties, event, image);
-            });
-        };
+			//add click event
+			google.maps.event.addListener(image, "click", function (event) {
+				openBubbleOrLink.call(this, properties, event, image);
+			});
+		};
 
 
 		this.removePolygon = function (polygon) {
@@ -380,15 +434,19 @@
 			this.polygon = [];
 		};
 
-		this.setup = function () {
-			var showEarth = $.inArray('earth', options.types) !== -1;
-
-			// If there are any non-Google KML/KMZ layers, load the geoxml library and use it to add these layers.
-			if (showEarth) {
-				this.removeEarthType();
-				showEarth = mw.config.get('egGoogleJsApiKey') !== '';
+		//Rezoom's the map to show all visible markers.
+		this.reZoom = function(){
+			var bounds = new google.maps.LatLngBounds();
+			for(var x = 0; x < this.markers.length; x++){
+				var marker = this.markers[x];
+				if (marker.getVisible() === true) {
+					bounds.extend(marker.getPosition());
+				}
 			}
+			this.map.fitBounds(bounds);
+		}
 
+		this.initializeMap = function () {
 			var mapOptions = {
 				disableDefaultUI:true,
 				mapTypeId:options.type == 'earth' ? google.maps.MapTypeId.SATELLITE : eval('google.maps.MapTypeId.' + options.type)
@@ -403,7 +461,7 @@
 
 			for (i in options.types) {
 				if (typeof( options.types[i] ) !== 'function') {
-					options.types[i] = eval('google.maps.MapTypeId.' + options.types[i]);
+					options.types[i] = eval('google.maps.MapTypeId.' + options.types[i].toUpperCase() );
 				}
 			}
 
@@ -433,6 +491,12 @@
 			}
 
 			var map = new google.maps.Map(this.get(0), mapOptions);
+
+			google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+				_this.addOverlays();
+			});
+
+
 			this.map = map;
 
 			if (options.poi === false) {
@@ -492,72 +556,6 @@
 
 			map.setCenter(centre);
 
-			if (showEarth) {
-				$.getScript(
-					'https://www.google.com/jsapi?key=' + mw.config.get('egGoogleJsApiKey'),
-					function (data, textStatus) {
-						google.load('earth', '1', { callback:function () {
-							mw.loader.using('ext.maps.gm3.earth', function () {
-								if (google.earth.isSupported()) {
-									var ge = new GoogleEarth(map);
-									var setTilt = function () {
-
-										if (ge.getInstance() !== undefined) {
-
-											var center = map.getCenter();
-											var lookAt = ge.instance_.createLookAt('');
-											var range = Math.pow(2, GoogleEarth.MAX_EARTH_ZOOM_ - map.getZoom());
-											lookAt.setRange(range);
-											lookAt.setLatitude(center.lat());
-											lookAt.setLongitude(center.lng());
-											lookAt.setHeading(0);
-											lookAt.setAltitude(0);
-
-											// Teleport to the pre-tilt view immediately.
-											ge.instance_.getOptions().setFlyToSpeed(5);
-											ge.instance_.getView().setAbstractView(lookAt);
-											lookAt.setTilt(options.tilt);
-											// Fly to the tilt at regular speed in 200ms
-											ge.instance_.getOptions().setFlyToSpeed(0.75);
-											window.setTimeout(function () {
-												ge.instance_.getView().setAbstractView(lookAt);
-											}, 200);
-											// Set the flyto speed back to default after the animation starts.
-											window.setTimeout(function () {
-												ge.instance_.getOptions().setFlyToSpeed(1);
-											}, 250);
-
-										}
-										else {
-											setTimeout(function () {
-												setTilt();
-											}, 100);
-										}
-									};
-
-									if (options.type == 'earth') {
-										map.setMapTypeId(GoogleEarth.MAP_TYPE_ID);
-										setTilt();
-									}
-									else {
-										google.maps.event.addListenerOnce(map, 'maptypeid_changed', function () {
-											setTilt();
-										});
-									}
-								}
-
-								_this.addOverlays();
-							});
-						} });
-					}
-				);
-			}
-			else {
-				google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-					_this.addOverlays();
-				});
-			}
-
 			setTimeout(
 				function() {
 					if ( options.autoinfowindows ) {
@@ -613,28 +611,6 @@
 			}
 
 			/**
-			 * used in display_line functionality
-			 * allows the copy to clipboard of coordinates
-			 */
-			if (options.copycoords) {
-				function addRightClickListener(object) {
-					google.maps.event.addListener(object, 'rightclick', function (event) {
-						prompt(mediaWiki.msg('maps-copycoords-prompt'), event.latLng.lat() + ',' + event.latLng.lng());
-					});
-				}
-
-				for (var x = 0; x < this.markers.length; x++) {
-					addRightClickListener(this.markers[x]);
-				}
-
-				for (var x = 0; x < this.lines.length; x++) {
-					addRightClickListener(this.lines[x]);
-				}
-
-				addRightClickListener(this.map);
-			}
-
-			/**
 			 * Allows grouping of markers.
 			 */
 			if ( options.markercluster ) {
@@ -648,6 +624,8 @@
 				);
 			}
 
+
+
 			if (options.searchmarkers) {
 				var searchBoxValue = mediaWiki.msg('maps-searchmarkers-text');
 				var searchBox = $('<input type="text" value="' + searchBoxValue + '" />');
@@ -657,34 +635,55 @@
 				searchBox.appendTo(searchContainer);
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(searchContainer);
 
+				//prevents markers and other map objects to be placed beneath searchfield
+				google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
+					map.panBy(0,-30);
+				});
+
+
 				searchBox.on('keyup',function (e) {
 					for (var i = 0; i < _this.markers.length; i++) {
-							var haystack = '';
-							var marker = _this.markers[i];
-							if (options.searchmarkers == 'title') {
-								haystack = marker.title;
-							} else if (options.searchmarkers == 'all') {
-								haystack = marker.title + marker.text;
-							}
+						var haystack = '';
+						var marker = _this.markers[i];
+						if (options.searchmarkers == 'title') {
+							haystack = marker.title;
+						} else if (options.searchmarkers == 'all') {
+							haystack = marker.title + marker.text;
+						}
 
-							marker.setVisible(haystack.toLowerCase().indexOf(e.target.value.toLowerCase()) != -1);
-						}
-					}).on('focusin', function () {
-						if ($(this).val() === searchBoxValue) {
-							$(this).val('');
-						}
-					}).on('focusout', function () {
-						if ($(this).val() === '') {
-							$(this).val(searchBoxValue);
-						}
-					});
+						var visible = haystack.toLowerCase().indexOf(e.target.value.toLowerCase()) != -1;
+						marker.setVisible(visible);
+					}
+					_this.reZoom();
+				}).on('focusin',function () {
+					if ($(this).val() === searchBoxValue) {
+						$(this).val('');
+					}
+				}).on('focusout', function () {
+					if ($(this).val() === '') {
+						$(this).val(searchBoxValue);
+					}
+				});
 			}
 
-            if(options.imageoverlays){
-                for (var i = 0; i < options.imageoverlays.length; i++) {
-                    this.addImageOverlay(options.imageoverlays[i]);
-                }
-            }
+			if(options.imageoverlays){
+				for (var i = 0; i < options.imageoverlays.length; i++) {
+					this.addImageOverlay(options.imageoverlays[i]);
+				}
+			}
+
+			if (options.copycoords) {
+
+				addCopyCoordsOnRightClick([
+					this.lines,
+					this.circles,
+					this.polygons,
+					this.markers,
+					this.rectangles,
+					this.imageoverlays,
+					this.map
+				]);
+			}
 
 			if (options.wmsoverlay) {
 				var wmsOptions = {
@@ -700,11 +699,13 @@
 						var baseURL = options.wmsoverlay.wmsServerUrl;
 						//The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings
 						var layers = options.wmsoverlay.wmsLayerName;
+
+						var style = options.wmsoverlay.wmsStyleName;
 						//With the 1.3.0 version the coordinates are read in LatLon, as opposed to LonLat in previous versions
 						var bbox = ulw.lat() + "," + ulw.lng() + "," + lrw.lat() + "," + lrw.lng();
 						//Establish the baseURL.  Several elements, including &EXCEPTIONS=INIMAGE and &Service are unique to openLayers addresses.
 						var url = baseURL + "version=1.3.0&EXCEPTIONS=INIMAGE&Service=WMS" +
-							"&request=GetMap&Styles=default&format=image%2Fjpeg&CRS=EPSG:4326" +
+							"&request=GetMap&Styles=" + encodeURI(style) + "&format=image%2Fjpeg&CRS=EPSG:4326" +
 							"&width=256&height=256" + "&Layers=" + layers + "&BBOX=" + bbox;
 						return url;
 					},
@@ -728,7 +729,97 @@
 				map.mapTypes.set('OpenLayers', openlayersWMS);
 				map.setMapTypeId('OpenLayers');
 			}
+
+			//Add custom controls
+			// - Fullscreen
+			if(options.enablefullscreen){
+				this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(new FullscreenControl(this.map));
+			}
 		};
+
+		this.setup = function () {
+
+			var showEarth = $.inArray('earth', options.types) !== -1 || options.type == 'earth';
+
+			// If there are any non-Google KML/KMZ layers, load the geoxml library and use it to add these layers.
+			if (showEarth) {
+				this.removeEarthType();
+				$.getScript(
+					'https://www.google.com/jsapi',
+					function (data, textStatus) {
+						google.load('earth', '1', { callback:function () {
+							mw.loader.using('ext.maps.gm3.earth', function () {
+								_this.initializeMap();
+								if (google.earth.isSupported()) {
+									_this.ge = new GoogleEarth(_this.map);
+								}
+							});
+						} });
+					}
+				);
+			}else{
+				this.initializeMap();
+			}
+
+
+		};
+
+		function FullscreenControl(map) {
+
+			var controlDiv = document.createElement('div');
+			controlDiv.style.padding = '5px';
+			controlDiv.index = 1;
+
+			var controlUI = document.createElement('div');
+			controlUI.style.backgroundColor = 'white';
+			controlUI.style.borderStyle = 'solid';
+			controlUI.style.borderColor = 'rgba(0, 0, 0, 0.14902)';
+			controlUI.style.borderWidth = '1px';
+			controlUI.style.borderRadius = '2px';
+			controlUI.style.cursor = 'pointer';
+			controlUI.style.textAlign = 'center';
+			controlUI.style.boxShadow = 'rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px';
+			controlUI.style.backgroundClip = 'padding-box';
+			controlUI.title = mediaWiki.msg('maps-fullscreen-button-tooltip');
+			controlDiv.appendChild(controlUI);
+
+			var controlText = document.createElement('div');
+			controlText.style.fontFamily = 'Roboto, Arial, sans-serif';
+			controlText.style.fontSize = '11px';
+			controlText.style.fontWeight = '400';
+			controlText.style.color = 'rgb(86, 86, 86)';
+			controlText.style.padding = '1px 6px';
+			controlText.innerHTML = mediaWiki.msg('maps-fullscreen-button');
+			controlUI.appendChild(controlText);
+
+			google.maps.event.addDomListener(controlUI, 'click', function() {
+				var mapDiv = $(map.getDiv());
+				if(mapDiv.data('preFullscreenCss') != null){
+					mapDiv.css(mapDiv.data('preFullscreenCss'));
+					mapDiv.removeData('preFullscreenCss');
+				}else{
+					var fullscreenCss = {
+						position:'fixed',
+						top: 0,
+						left:0,
+						width:'100%',
+						height:'100%',
+						zIndex:10000
+					};
+					var oldState = {};
+					for(var cssProp in fullscreenCss){
+						oldState[cssProp] = mapDiv.css(cssProp);
+					}
+					mapDiv.data('preFullscreenCss',oldState);
+					mapDiv.css(fullscreenCss);
+				}
+
+				google.maps.event.trigger(map, "resize");
+			});
+
+			return controlDiv;
+		}
+
 
 		function openBubbleOrLink(properties, event, obj) {
 			if (properties.link) {
@@ -759,6 +850,18 @@
 			}
 			else {
 				this.openWindow.open( this.map );
+			}
+		}
+
+		function addCopyCoordsOnRightClick(object) {
+			if(object instanceof Array){
+				for (var x = 0; x < object.length; x++) {
+					addCopyCoordsOnRightClick(object[x]);
+				}
+			}else{
+				google.maps.event.addListener(object, 'rightclick', function (event) {
+					prompt(mediaWiki.msg('maps-copycoords-prompt'), event.latLng.lat() + ',' + event.latLng.lng());
+				});
 			}
 		}
 

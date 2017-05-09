@@ -12,6 +12,9 @@ class ChatRailController extends WikiaController {
 			$this->setVal( $name, $value );
 		}
 
+		// SUS-749: Add required MW messages to output
+		$this->wg->Out->addModuleMessages( 'ext.Chat2.ChatWidget' );
+
 		// As most the markup for this is the same as for the chat parser tag, we're reusing the tag template
 		$this->response->getView()->setTemplatePath( __DIR__ . '/templates/widget.mustache' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -34,8 +37,15 @@ class ChatRailController extends WikiaController {
 	}
 
 	public function executeGetUsers() {
+		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
-		$this->users = ChatWidget::getUsersInfo();
+		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
+		$viewedUsersInfo = ChatWidget::getViewedUsersInfo( $usersInfo );
+		$usersCount = count( $usersInfo );
+
+		$this->setVal( 'users', $viewedUsersInfo );
+		$this->setVal( 'hasUsers', $usersCount > 0 );
 		Chat::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
 			'chatters' => count( $this->users ),
 		] );

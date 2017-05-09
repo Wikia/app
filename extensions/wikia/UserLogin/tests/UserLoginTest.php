@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Service\User\Auth\AuthResult;
+
 require_once __DIR__ . '/UserLoginBaseTest.php';
 
 /**
@@ -108,6 +110,7 @@ class UserLoginTest extends UserLoginBaseTest {
 
 	public function loginDataProvider() {
 		$testUserName = 'testUser';
+		$passwordSuccess = AuthResult::create( true )->build();
 
 		// submit request
 		// no username
@@ -202,8 +205,7 @@ class UserLoginTest extends UserLoginBaseTest {
 		$mockUserParams118 = array(
 			'load' => null,
 			'loadFromDatabase' => null,
-			'checkPassword' => true,
-			'checkTemporaryPassword' => false,
+			'checkPassword' => $passwordSuccess,
 			'params' => array(
 				'mId' => self::TEST_USERID,
 				'mName' => self::TEST_USERNAME,
@@ -277,140 +279,6 @@ class UserLoginTest extends UserLoginBaseTest {
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.49809 ms
-	 * @dataProvider mailPasswordDataProvider
-	 *
-	 * @param $requestParams
-	 * @param $mockWgUserParams
-	 * @param $mockAuthParams
-	 * @param $mockUserParams
-	 * @param $expResult
-	 * @param $expMsg
-	 */
-	public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $expResult, $expMsg ) {
-		// setup
-		$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
-		$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
-		$this->setUpMockObject( 'User', $mockUserParams, true );
-		$this->setUpMock();
-		$this->setUpRequest( $requestParams );
-
-		// test
-		$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
-
-		$responseData = $response->getVal( 'result' );
-		$this->assertEquals( $expResult, $responseData, 'result' );
-
-		$responseData = $response->getVal( 'msg' );
-		$this->assertEquals( $expMsg, $responseData, 'msg' );
-	}
-
-	public function mailPasswordDataProvider() {
-		$testUserId = self::TEST_USERID;
-
-		// empty username
-		$reqParams1 = [ 'username' => '', 'action' => 'mailpassword' ];
-		$mockWgUserParams1 = null;		// not mock $wgUser
-		$mockAuthParams1 = null;		// not mock $wgAuth
-		$mockUserParams1 = null;		// not mock User Object
-		$expMsg1 = wfMessage( 'userlogin-error-noname' )->escaped();
-
-		// not allow user to change password
-		$reqParams2 = [ 'username' => 'WikiaUser', 'action' => 'mailpassword', 'lang' => 'en' ];
-		$mockAuthParams2 = [ 'allowPasswordChange' => false ];
-		$expMsg2 = wfMessage( 'userlogin-error-resetpass_forbidden' )->escaped();
-
-		// user is blocked
-		$mockWgUserParams3 = [ 'isBlocked' => true ];
-		$mockAuthParams3 = [ 'allowPasswordChange' => true ];
-		$expMsg3 = wfMessage( 'userlogin-error-blocked-mailpassword' )->escaped();
-
-		// user not found
-		$mockWgUserParams4 = [
-			'isBlocked' => false,
-		];
-		$mockUserParams4 = false;
-		$expMsg4 = wfMessage( 'userlogin-error-noname' )->escaped();
-
-		// User - invalid user (user id = 0)
-		$mockUserParams5 = [
-			'load' => null,
-			'loadFromDatabase' => null,
-			'getId' => 0
-		];
-		$expMsg5 = wfMessage( 'userlogin-error-nosuchuser', $reqParams2['username'] )->escaped();
-
-		// User - password reminder throttled
-		$mockUserParams6 = [
-			'load' => null,
-			'loadFromDatabase' => null,
-			'getId' => $testUserId,
-			'isPasswordReminderThrottled' => true
-		];
-		$expMsg6 = wfMessage( 'userlogin-error-throttled-mailpassword', round( F::app()->wg->PasswordReminderResendTime, 3 ) )->escaped();
-
-		// User - mail error
-		$mockUserParams7 = [
-			'load' => null,
-			'loadFromDatabase' => null,
-			'getId' => $testUserId,
-			'isPasswordReminderThrottled' => false,
-			'params' => [
-				'mName' => 'WikiaUser',
-				'mEmail' => self::TEST_EMAIL,
-			],
-			'mockValueMap' => [
-				'getOption' => [
-					[ UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ],
-					[ 'language', null, false, 'en' ]
-				]
-			]
-		];
-
-		// User - email sent
-		$expMsg8 = wfMessage( 'userlogin-password-email-sent', $reqParams2['username'] )->escaped();
-
-		// User - mail error
-		$mockUserParams9 = [
-			'load' => null,
-			'loadFromDatabase' => null,
-			'getId' => $testUserId,
-			'isPasswordReminderThrottled' => false,
-			'params' => [
-				'mName' => 'WikiaUser',
-				'mEmail' => self::TEST_EMAIL,
-			],
-			'mockValueMap' => [
-				'getOption' => [
-					[ UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ],
-					[ 'language', null, false, 'en' ]
-				]
-			]
-		];
-
-		return [
-			// #1 error - empty username
-			[ $reqParams1, $mockWgUserParams1, $mockAuthParams1, $mockUserParams1, 'error', $expMsg1 ],
-			// #2 error - not allow user to change password
-			[ $reqParams2, $mockWgUserParams1, $mockAuthParams2, $mockUserParams1, 'error', $expMsg2 ],
-			// #3 error - user is blocked
-			[ $reqParams2, $mockWgUserParams3, $mockAuthParams3, $mockUserParams1, 'error', $expMsg3 ],
-			// #4 error - user not found
-			[ $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams4, 'error', $expMsg4 ],
-			// #5 error - User - invalid user (user id = 0)
-			[ $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams5, 'error', $expMsg5 ],
-			// #6 error - User - password reminder throttled
-			[ $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams6, 'error', $expMsg6 ],
-			// #7 Removed
-			// #8 success - User - email sent
-			[ $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams7, 'ok', $expMsg8 ],
-			// #9 success - Temp User - email sent
-			[ $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockUserParams9, 'ok', $expMsg8 ],
-		];
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.55212 ms
 	 * @dataProvider changePasswordDataProvider
 	 */
@@ -441,6 +309,8 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	public function changePasswordDataProvider() {
+		$passwordSuccess = AuthResult::create( true )->build();
+
 		// 1 do nothing -- GET
 		$params1 = array(
 			'username' => 'WikiaUser',
@@ -512,38 +382,11 @@ class UserLoginTest extends UserLoginBaseTest {
 		);
 		$expMsg9 = wfMessage( 'badretype' )->escaped();
 
-		// 10 error --  not match temporary password (checkTemporaryPassword = false)
 		$params10 = array(
 			'username' => 'WikiaUser',
 			'newpassword' => 'testPasword',
 			'retype' => 'testPasword',
 			'loginToken' => self::LOGIN_TOKEN,
-		);
-		$mockUserParams10 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => false,
-			'checkPassword' => true,
-		);
-		$expMsg10 = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-
-		// 11 error -- not correct password (checkPassword = false)
-		$mockUserParams11 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => false,
-		);
-
-		// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
-		$mockUserParams1011 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => false,
-			'checkPassword' => false,
 		);
 
 		// 12 error -- not valid new password (passwordtooshort)
@@ -551,8 +394,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'passwordtooshort',
 		);
 		$expMsg12 = wfMsgExt( 'passwordtooshort', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -562,8 +404,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'password-name-match',
 		);
 		$expMsg13 = wfMsgExt( 'password-name-match', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -573,8 +414,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'securepasswords-invalid',
 		);
 		$expMsg14 = wfMsgExt( 'securepasswords-invalid', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -584,8 +424,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => true,
 			'setPassword' => null,
 			'setCookies' => null,
@@ -624,12 +463,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			array( $params1, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams8, $mockHelperParams1, 'error', $expMsg7 ),
 			// 9 error -- retype != newpassword
 			array( $params9, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams9, $mockHelperParams1, 'error', $expMsg9 ),
-			// 10 error --  not match temporary password (checkTemporaryPassword = false)
-			// array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams10, $mockHelperParams1, 'error', $expMsg10 ),
-			// 11 error -- not correct password (checkPassword = false)
-			// array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams11, $mockHelperParams1, 'error', $expMsg10 ),
-			// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
-			array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams1011, $mockHelperParams1, 'error', $expMsg10 ),
 			// 12 error -- not valid new password (passwordtooshort)
 			array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams12, $mockHelperParams1, 'error', $expMsg12 ),
 			// 13 error -- not valid new password (password-name-match)

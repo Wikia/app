@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
@@ -19,13 +20,13 @@ use \Wikia\Util\GlobalStateWrapper;
  *    parent::setUp();
  * }
  */
-abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+abstract class WikiaBaseTest extends TestCase {
 	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
 		'Title' => [ 'newFromDBkey', 'newFromText', 'newFromURL', 'newFromID', 'newFromRow' ],
-		'User' => [ 'newFromName', 'newFromId', 'newFromSession', 'newFromRow' ],
+		'User' => [ 'newFromName', 'newFromId', 'newFromToken', 'newFromRow' ],
 	];
 
 
@@ -92,7 +93,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ( $this->mockProxy !== null ) {
 			throw new Exception("Previous test did not execute tearDown()");
 		}
-		$this->mockProxy = version_compare( PHP_VERSION, '7.0.0.', '<' ) ? new WikiaMockProxy() : new WikiaMockProxyUopz();
+		$this->mockProxy = new WikiaMockProxy();
 		$this->mockProxy->enable();
 	}
 
@@ -115,6 +116,45 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
 				$this->getAnnotations());
 		}
+	}
+
+	/**
+	 * Ugly hack
+	 *
+	 * @deprecated use getMockBuilder() or createMock() instead
+	 * @param $originalClassName
+	 * @param array $methods
+	 * @param array $arguments
+	 * @param string $mockClassName
+	 * @param bool $callOriginalConstructor
+	 * @param bool $callOriginalClone
+	 * @param bool $callAutoload
+	 * @param bool $cloneArguments
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getMock( $originalClassName, $methods = [], array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $cloneArguments = true ) {
+		$mockBuilder = $this->getMockBuilder( $originalClassName )
+			->setMethods( $methods )
+			->setConstructorArgs( $arguments )
+			->setMockClassName( $mockClassName );
+
+		if ( !$callOriginalConstructor ) {
+			$mockBuilder = $mockBuilder->disableOriginalConstructor();
+		}
+
+		if ( !$callOriginalClone ) {
+			$mockBuilder = $mockBuilder->disableOriginalClone();
+		}
+
+		if ( !$callAutoload ) {
+			$mockBuilder = $mockBuilder->disableAutoload();
+		}
+
+		if ( !$cloneArguments ) {
+			$mockBuilder = $mockBuilder->disableArgumentCloning();
+		}
+
+		return $mockBuilder->getMock();
 	}
 
 	/**
@@ -532,10 +572,22 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
+	protected function mockStagingEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia-staging.com' );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STAGING );
+	}
+
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
+	}
+
+	protected function mockStableEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STABLE );
 	}
 
 	protected function mockSandboxEnv() {
@@ -550,11 +602,13 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockProdEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia.com' );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 	}
 
 	protected function mockDevEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->mockGlobalVariable( 'wgDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )
 			->method( 'getExternalHostName' )
@@ -569,6 +623,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			case WIKIA_ENV_PREVIEW:
 				$this->mockPreviewEnv();
 				break;
+			case WIKIA_ENV_STAGING:
+				$this->mockStagingEnv();
+				break;
 			case WIKIA_ENV_VERIFY:
 				$this->mockVerifyEnv();
 				break;
@@ -577,6 +634,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				break;
 			case WIKIA_ENV_DEV:
 				$this->mockDevEnv();
+				break;
+			case WIKIA_ENV_STABLE:
+				$this->mockStableEnv();
 				break;
 		}
 	}

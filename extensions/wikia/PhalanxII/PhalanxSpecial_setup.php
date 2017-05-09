@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	)
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
 $classes = array(

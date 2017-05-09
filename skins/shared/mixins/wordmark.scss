@@ -1,5 +1,6 @@
 @mixin wordmark {
 	font-weight: bold;
+	line-height: normal;
 	width: 250px;
 	&.small {
 		font-size: 25px;

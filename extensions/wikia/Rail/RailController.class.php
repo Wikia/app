@@ -13,6 +13,7 @@ class RailController extends WikiaController {
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
 
+		$this->isEditPage = isset($params['isEditPage']) ? $params['isEditPage'] : false;
 		$this->railModuleList = $this->filterModules($railModules, self::FILTER_NON_LAZY_MODULES);
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
@@ -88,6 +89,14 @@ class RailController extends WikiaController {
 				$excludeScss = (array) $this->getRequest()->getVal('excludeScss', []);
 				$sassFilePath = (array) $assetManager->getSassFilePath($sassFiles);
 				$includeScss = array_diff($sassFilePath, $excludeScss);
+
+				// SUS-771: Log any duplicate CSS that rail modules try to load but are already loaded by Oasis skin
+				$duplicateScss = array_intersect( $sassFilePath, $excludeScss );
+				if ( count( $duplicateScss ) ) {
+					Wikia\Logger\WikiaLogger::instance()->info( 'SUS-771', [
+						'styles' => json_encode( $duplicateScss )
+					] );
+				}
 
 				if (!empty($includeScss)) {
 					$this->css[] = $assetManager->getSassesUrl($includeScss);

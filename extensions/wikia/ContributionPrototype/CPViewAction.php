@@ -2,9 +2,8 @@
 
 namespace ContributionPrototype;
 
+use ViewAction;
 use FormlessAction;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Gateway\UrlProvider;
 
 class CPViewAction extends FormlessAction {
 
@@ -17,24 +16,18 @@ class CPViewAction extends FormlessAction {
 	}
 
 	public function show() {
-		/** @var CPArticleRenderer $renderer */
-		$renderer = $this->getRenderer();
-		$renderer->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
+		switch ($this->page->getTitle()->getNamespace()) {
+			case NS_MAIN:
+				Utils::getRenderer()->render($this->page->getTitle(), $this->getOutput());
+				break;
+			default:
+				$this->fallback();
+				break;
+		}
 	}
 
-	/**
-	 * @return CPArticleRenderer
-	 */
-	private function getRenderer() {
-		global $wgContributionPrototypeExternalHost, $wgCityId, $wgDBname;
-
-		/** @var UrlProvider $urlProvider */
-		$urlProvider = Injector::getInjector()->get(UrlProvider::class);
-
-		return new CPArticleRenderer(
-				$wgContributionPrototypeExternalHost,
-				$wgCityId,
-				$wgDBname,
-				$urlProvider);
+	private function fallback() {
+		$action = new ViewAction($this->page, $this->context);
+		$action->show();
 	}
 }

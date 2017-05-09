@@ -8,6 +8,7 @@
 @import "skins/shared/mixins/transform";
 
 $animationSpeed: 200ms;
+$wikia-bar-wrapper-height: 25px;
 
 #WikiaNotifications {
 	z-index: $zTop;
@@ -24,7 +25,7 @@ $animationSpeed: 200ms;
 
 .WikiaBarWrapper {
 	bottom: 0;
-	height: 25px;
+	height: $wikia-bar-wrapper-height;
 	padding: 0;
 	position: fixed;
 	width: 100%;
@@ -165,15 +166,15 @@ $animationSpeed: 200ms;
 	}
 }
 
-body.nowikiabar {
-	padding-bottom: 0;
-	margin-bottom: 17px;
-	&.editor {
-		margin-bottom: 0;
+body {
+	&.nowikiabar {
+		padding-bottom: 0;
+	}
+
+	&.wikia-bar-visible {
+		padding-bottom: 25px;
 	}
 }
-
-
 
 .WikiaBarWrapper .wikia-bar {
 	margin: auto;

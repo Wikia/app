@@ -61,20 +61,15 @@ if( !function_exists( 'mb_strrpos' ) ) {
 
 
 // Support for Wietse Venema's taint feature
-if ( !function_exists( 'istainted' ) ) {
+if ( !function_exists( 'is_tainted' ) ) {
 	/** @codeCoverageIgnore */
-	function istainted( $var ) {
-		return 0;
+	function is_tainted( $var ) {
+		return false;
 	}
 	/** @codeCoverageIgnore */
 	function taint( $var, $level = 0 ) {}
 	/** @codeCoverageIgnore */
 	function untaint( $var, $level = 0 ) {}
-	define( 'TC_HTML', 1 );
-	define( 'TC_SHELL', 1 );
-	define( 'TC_MYSQL', 1 );
-	define( 'TC_PCRE', 1 );
-	define( 'TC_SELF', 1 );
 }
 
 /** Wikia change begin - backport hash_equals from MW 1.24 **/
@@ -297,7 +292,7 @@ function wfObjectToArray( $objOrArray, $recursive = true ) {
 function wfArrayMap( $function, $input ) {
 	$ret = array_map( $function, $input );
 	foreach ( $ret as $key => $value ) {
-		$taint = istainted( $input[$key] );
+		$taint = is_tainted( $input[$key] );
 		if ( $taint ) {
 			taint( $ret[$key], $taint );
 		}
@@ -1801,7 +1796,7 @@ function wfDebugBacktrace( $limit = 0 ) {
 	}
 
 	if ( $limit && version_compare( PHP_VERSION, '5.4.0', '>=' ) ) {
-		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit ), 1 );
+		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit + 1 ), 1 );
 	} else {
 		return array_slice( debug_backtrace(), 1 );
 	}
@@ -1866,7 +1861,7 @@ function wfBacktrace( $forceCommandLineMode = false ) {
  * @return Bool|string
  */
 function wfGetCaller( $level = 2 ) {
-	$backtrace = wfDebugBacktrace( $level );
+	$backtrace = wfDebugBacktrace( $level + 1 );
 	if ( isset( $backtrace[$level] ) ) {
 		return wfFormatStackFrame( $backtrace[$level] );
 	} else {
@@ -3439,6 +3434,15 @@ function wfFixSessionID() {
  */
 function wfResetSessionID() {
 	global $wgCookieSecure;
+
+	// Wikia change - start
+	// leave early if PHP session is not active - PLATFORM-2364
+	if ( session_status() != PHP_SESSION_ACTIVE ) {
+		wfDebug( __METHOD__ . ": PHP session is not active, leaving early\n" );
+		return;
+	}
+	// Wikia change - end
+
 	$oldSessionId = session_id();
 	$cookieParams = session_get_cookie_params();
 	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
@@ -3616,7 +3620,7 @@ function wfSplitWikiID( $wiki ) {
  *
  * @return DatabaseMysqli
  */
-function &wfGetDB( $db, $groups = array(), $wiki = false ) {
+function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {

@@ -24,10 +24,14 @@ class CreateTables extends Task {
 			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-page_vote.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql",
+
 			//article comments list use by wall/forum
-			"{$IP}/extensions/wikia/ArticleComments/patch-create-comments_index.sql",
-			//wall history table
+			"{$IP}/extensions/wikia/Wall/sql/patch-create-comments_index.sql",
+
+			//wall tables (SUS-1556)
 			"{$IP}/extensions/wikia/Wall/sql/wall_history_local.sql",
+			"{$IP}/extensions/wikia/Wall/sql/wall_related_pages.sql",
+
 			"{$IP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 			"{$IP}/maintenance/wikia/wikia_user_properties.sql",
 		];

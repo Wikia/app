@@ -516,6 +516,7 @@ class PageArchive {
 
 		$ret->seek( $rev_count - 1 ); // move to last
 		$row = $ret->fetchObject(); // get newest archived rev
+		$oldPageId = (int)$row->ar_page_id; // pass this to ArticleUndelete hook
 		$ret->seek( 0 ); // move back
 
 		if( $makepage ) {
@@ -621,7 +622,7 @@ class PageArchive {
 			$article->doEditUpdates( $revision, $user, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
 		}
 
-		wfRunHooks( 'ArticleUndelete', array( &$this->title, $created, $comment ) );
+		wfRunHooks( 'ArticleUndelete', array( &$this->title, $created, $comment, $oldPageId ) );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
@@ -1126,18 +1127,22 @@ class SpecialUndelete extends SpecialPage {
 		if( $haveRevisions ) {
 			$batch = new LinkBatch();
 			foreach ( $revisions as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->ar_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->ar_user_text ) );
+				$username = User::getUsername( $row->ar_user, $row->ar_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $username ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $username ) );
 			}
 			$batch->execute();
 			$revisions->seek( 0 );
 		}
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
+			/* Wikia change begin */
 			foreach ( $files as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
+				$userName = User::getUsername( $row->fa_user, $row->fa_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
+			/* Wikia change end */
 			$batch->execute();
 			$files->seek( 0 );
 		}
@@ -1238,7 +1243,6 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
-
 		return true;
 	}
 

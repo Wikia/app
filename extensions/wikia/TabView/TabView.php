@@ -18,7 +18,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'TabView',
 	'author' => array('Inez Korczynski', 'Maciej Brencz'),
 	'description' => 'Gives an easy way of combining pages into one page with a tab for each sub-page.',
-	'url' => 'http://help.wikia.com/wiki/Tabview',
+	'url' => 'http://community.wikia.com/wiki/Help:Tab_view',
 );
 
 $wgHooks['ParserFirstCallInit'][] = 'wfSetupTabView';

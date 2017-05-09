@@ -4,6 +4,7 @@ Semantic Forms is an extension to MediaWiki that allows for the
 creation and usage of forms to add and edit semantic data. It can
 work in conjuction with two other extensions that both handle the
 storage of data: Semantic MediaWiki and Cargo.
+
 For much more information on Semantic Forms, see the extension
 homepage at
 http://www.mediawiki.org/wiki/Extension:Semantic_Forms
@@ -31,40 +32,46 @@ Jatin Mehta as part of the 2014 Google Summer of Code.
 
 Important code contributions were also made by Christoph Burgmer,
 Cindy Cicalese, Daniel Friesen, Daniel Hansch, Eugene Mednikov,
-Harold Solbrig, lmārs Poikāns, Jayson Harshbarger, Jeffrey Stuckman,
+Harold Solbrig, Ilmārs Poikāns, Jayson Harshbarger, Jeffrey Stuckman,
 Joel Natividad, Jeroen De Dauw, Joel Natividad, Louis Gerbarg, LY Meng,
- Mathias Lidal, Matt Williamson, MWJames, Niklas Laxstrom, Nils
-Opperman, Patrick Nagel, Remco de Boer, Sebastian Richter, Sergey
-Chernyshev, Siebrand Mazeland, Simon Heimler, Solitarius, Vedmaka,
-wheresmytab and others.
+Mathias Lidal, Matt Williamson, MWJames, Niklas Laxstrom, Nils
+Opperman, Paladox, Patrick Nagel, Peter Grassberger, Remco de Boer,
+Sebastian Richter, Sergey Chernyshev, Siebrand Mazeland, Simon Heimler,
+Solitarius, Vedmaka, wheresmytab and others.
 
 Language translations were provided by many people; see the files in
 the /i18n and /languages directories for the full listings.
 
 == Contact ==
 
-Most comments, questions and suggestions should be sent to the Semantic
-MediaWiki mailing list:
+Comments, questions and suggestions can be sent to either the MediaWiki
+or the Semantic MediaWiki mailing lists:
 
+ https://lists.wikimedia.org/mailman/listinfo/mediawiki-l
  https://lists.sourceforge.net/lists/listinfo/semediawiki-user
 
 If possible, please add "[SF]" at the beginning of the subject line, to
 clarify the subject matter.
 
-Bug reports should be submitted at the MediaWiki Bugzilla site:
+Bug reports should be submitted at the Wikimedia Phabricator site:
 
- https://bugzilla.wikimedia.org/
+ https://phabricator.wikimedia.org/maniphest/task/create/
 
 == Credits to other projects ==
 
-* Semantic Forms includes the FancyBox JavaScript library by
-Janis Skarnelis (http://fancybox.net). FancyBox is distributed
+Semantic Forms includes the following JavaScript libraries:
+
+* FancyBox (http://fancybox.net) by Janis Skarnelis, distributed
 under both the MIT and GPL licenses.
 
-* Semantic Forms also includes the Dynatree JavaScript library by
-Martin Wendt (https://code.google.com/p/dynatree/). Dynatree is also
+* Dynatree (https://github.com/mar10/dynatree) by Martin Wendt,
 distributed under both the MIT and GPL licenses.
 
-* Semantic Forms also includes the Select2 JavaScript library by Igor
-Vaynberg (https://github.com/ivaynberg/select2). Select2 is
-distributed under both the Apache and GPL licenses.
+* jsGrid (http://js-grid.com) by Artem Tabalin, distributed under
+the MIT license.
+
+* Select2 (https://select2.github.io) by Igor Vaynberg, distributed
+under both the Apache and GPL licenses.
+
+Semantic Forms also makes extensive use of the jQuery and jQuery UI
+JavaScript libraries, included within MediaWiki.

@@ -43,17 +43,25 @@ class WallMessageTest extends WikiaBaseTest {
 			$notExistingId => null
 		];
 
-		$mockDb = $this->getDatabaseMock([ 'select', 'selectRow' ] );
+		$commentsIndexMock = $this->getMockBuilder( CommentsIndex::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'entriesFromIds' ] )
+			->getMock();
+		$commentsIndexMock->expects( $this->once() )
+			->method( 'entriesFromIds' )
+			->with( [ $slaveId ] )
+			->willReturn( [] );
+		$this->mockStaticMethod( CommentsIndex::class, 'getInstance', $commentsIndexMock );
+		$this->mockStaticMethodWithCallBack( 'Title', 'newFromId', function( int $id ) use ( $masterData ) {
+			return $masterData[$id] !== null
+				? $this->mockClassWithMethods( 'Title', [ 'exists' => true ] )
+				: null;
+		} );
+
+		$mockDb = $this->getDatabaseMock([ 'select' ] );
 		$mockDb->expects( $this->exactly( 1 ) )
 			->method( 'select' )
 			->will( $this->returnValue( [ $this->getSlaveTitleRow() ] ) );
-
-		$mockDb->expects( $this->exactly( 2 ) )
-			->method( "selectRow" )
-			->will( $this->returnCallback(
-				function ( $table, $vars, $conds ) use ( $masterData ) {
-					return $masterData[ $conds[ 'page_id' ] ];
-				} ) );
 
 		$this->mockGlobalFunction( 'wfGetDb', $mockDb );
 

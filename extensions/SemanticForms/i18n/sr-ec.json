@@ -5,7 +5,8 @@
 			"Sasa Stefanovic",
 			"Жељко Тодоровић",
 			"Михајло Анђелковић",
-			"Milicevic01"
+			"Milicevic01",
+			"Сербијана"
 		]
 	},
 	"specialpages-group-sf_group": "Семантички обрасци",
@@ -28,7 +29,7 @@
 	"sf_createtemplate_aggregation": "Агрегација",
 	"sf_createtemplate_aggregationlabel": "Наслов листе:",
 	"sf_createtemplate_outputformat": "Излазни формат:",
-	"sf_createtemplate_standardformat": "Стандард",
+	"sf_createtemplate_standardformat": "Табела",
 	"sf_createtemplate_addfield": "Додај поље",
 	"sf_createtemplate_deletefield": "Обриши",
 	"forms": "Форме",
@@ -68,5 +69,8 @@
 	"uploadwindow": "Прозор за слање",
 	"sf_deletionlog": "Историја брисања",
 	"sf_form_freetextlabel": "Слободан текст",
-	"sf-select2-selection-too-big": "Ово поље не може да садржи више од {{PLURAL:$1|$1 вредности}}."
+	"sf-select2-selection-too-big": "Ово поље не може да садржи више од {{PLURAL:$1|$1 вредности}}.",
+	"sf-datepicker-dateformatlong": "d MM yy",
+	"sf-datepicker-dateformatshort": "dd.mm.yy",
+	"sf-datepicker-firstdayofweek": "1"
 }

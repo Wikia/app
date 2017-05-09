@@ -345,9 +345,20 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function executeBuildAndPostWallMessage( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage ) {
-		$wallMessage = WallMessage::buildNewMessageAndPost(
-			$welcomeMessage, $recipientName, $defaultWelcomeUser, $textMessage, false, array(), false, false
-		);
+		try {
+			$wallTitle = Title::newFromText( $recipientName, NS_USER_WALL );
+			$wallMessage =
+				( new WallMessageBuilder() )
+					->setMessageTitle( $textMessage )
+					->setMessageText( $welcomeMessage )
+					->setMessageAuthor( $defaultWelcomeUser )
+					->setNotify( false )
+					->setParentPageTitle( $wallTitle )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			$this->error( $builderException->getMessage(), $builderException->getContext() );
+			$wallMessage = false;
+		}
 
 		return $wallMessage;
 	}

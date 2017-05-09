@@ -8,11 +8,21 @@
 		</td>
 		<td class="widest border">
 			<div class="message">
-				<p>
-					{{userNameMessage}}
-				</p>
+				{{{userNameMessage}}}
 			</div>
 		</td>
 	</tr>
-	{{> contentFooterMessages}}
 </table>
+<div class="username-layout-links">
+	{{#links}}
+		<div>
+			<a href="{{url}}">{{label}}</a>
+		</div>
+	{{/links}}
+</div>
+{{#contentFooterMessages}}
+	<p>{{{.}}}</p>
+{{/contentFooterMessages}}
+<p class="signature">
+	{{signature}}
+</p>

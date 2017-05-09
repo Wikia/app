@@ -151,37 +151,49 @@ class WikiaMockProxy {
 
 	protected function updateState( $type, $id, $state ) {
 		$parts = explode('|',$id);
+
 		switch ($type) {
 			case self::STATIC_METHOD:
 			case self::DYNAMIC_METHOD:
 				$className = $parts[1];
 				$methodName = $parts[2];
-				$savedName = self::SAVED_PREFIX . $methodName;
 				if ( $state ) { // enable
-					is_callable( "{$className}::{$methodName}" );
-					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::STATIC_METHOD ? RUNKIT_ACC_STATIC : 0);
-					runkit_method_rename( $className, $methodName, $savedName);  // save the original method
-					runkit_method_add($className, $methodName, '', $this->getExecuteCallCode($type,$id, $type === self::DYNAMIC_METHOD), $flags );
-				} else { // diable
-					runkit_method_remove($className, $methodName);  // remove the redefined instance
-					runkit_method_rename($className, $savedName, $methodName); // restore the original
+					is_callable( "{$className}::{$methodName}" ); // make sure the class is loaded (via autoloader)
+					uopz_set_return($className, $methodName, function() use ($type, $id) {
+						return WikiaMockProxy::$instance->execute($type,$id,func_get_args(), $type === WikiaMockProxy::DYNAMIC_METHOD);
+					}, true /* execute closure */);
+				} else { // disable
+					uopz_unset_return($className, $methodName);
 				}
 				break;
 			case self::GLOBAL_FUNCTION:
 				$functionName = $parts[1];
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
-				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
 				if ( $state ) { // enable
-					$tempName = "WikiaMockProxyTempFuncName"; // workaround for namespaces functions
-					runkit_function_rename($functionName, $savedName);
-					runkit_function_add($tempName, '', $this->getExecuteCallCode($type,$id));
-					runkit_function_rename($tempName,$functionName);
+					uopz_set_return($functionName, function() use ($functionName) {
+						try {
+							return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
+						}
+						catch (Exception $e) {
+							echo sprintf("\n%s: %s [%s]!!!\n", get_class($e), $e->getMessage(), $functionName);
+							return null;
+						}
+					}, true);
 				} else { // disable
-					runkit_function_remove($functionName);  // remove the redefined instance
-					runkit_function_rename($savedName, $functionName); // restore the original
+					uopz_unset_return($functionName);
 				}
 				break;
+			case self::CLASS_CONSTRUCTOR:
+				$className = $parts[1];
+				$newClass = self::$instance->execute($type,$id,array());
+
+				if ( $state ) { // enable
+					uopz_set_mock($className, $newClass);
+				}
+				else { //disable
+					uopz_unset_mock($className);
+				}
 		}
 	}
 
@@ -261,11 +273,6 @@ class WikiaMockProxy {
 		self::$instance = $this;
 		$this->enabled = true;
 
-		# TODO: remove when PHP7 migration is completed (PLATFORM-2138)
-		if (function_exists(('set_new_overload'))) {
-			set_new_overload('WikiaMockProxy::overload');
-		}
-
 		foreach ($this->mocks as $list1) {
 			foreach ($list1 as $type => $mock) {
 				$this->notify($mock[self::PROP_ACTION]);
@@ -283,11 +290,6 @@ class WikiaMockProxy {
 
 		// disable this instance
 		$this->enabled = false;
-
-		# TODO: remove when PHP7 migration is completed (PLATFORM-2138)
-		if (function_exists(('unset_new_overload'))) {
-			unset_new_overload();
-		}
 
 		foreach ($this->mocks as $list1) {
 			foreach ($list1 as $type => $mock) {

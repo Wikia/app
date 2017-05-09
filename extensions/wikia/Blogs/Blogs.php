@@ -97,8 +97,6 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
  */
 $wgHooks[ 'AlternateEdit' ][] = 'BlogArticle::alternateEditHook';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
-$wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
-$wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
 $wgHooks[ 'onSkinTemplateNavigation' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
@@ -114,6 +112,9 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageS
 
 // Checking that user is permitted to delete blog articles
 $wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermissionErrors';
+
+// SUS-260: Prevent moving pages into or out of Forum namespaces
+$wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
 
 /**
  * load other parts

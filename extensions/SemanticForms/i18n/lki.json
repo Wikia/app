@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lakzon"
+		]
+	},
+	"sf_createtemplate_categorylabel": "تعیین رده به‌وسیله الگو (دلخواه):",
+	"sf_createtemplate_displaylabel": "نمایش برچسب:",
+	"sf_createform_formlabel": "برچسب فرم:",
+	"sf-createcategory-with-name": "ایجاد موضوع: $1",
+	"sf_category_desc": "یەوە ڕِزگ $1 هەس",
+	"sf_blank_namespace": "اصلی(سەر)"
+}

@@ -23,7 +23,6 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], null, '&a=2&b=3&c=1'],
 			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSON, '&a=2&b=3&c=1&format=json'],
 			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSONP, '&a=2&b=3&c=1&format=jsonp'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_RAW, '&a=2&b=3&c=1&format=raw'],
 		];
 	}
 
@@ -137,7 +136,7 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$dispatchableObjectMock->wg->User = $userMock;
 
 		if ( $exceptionExpected ) {
-			$this->setExpectedException( 'BadRequestException' );
+			$this->expectException( BadRequestException::class );
 		}
 
 		$dispatchableObjectMock->checkWriteRequest();

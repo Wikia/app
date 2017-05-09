@@ -1,11 +1,56 @@
 <?php
 
+/**
+ * @group WikiaTest
+ */
 class WikiaTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/includes/wikia/Wikia.php";
 		parent::setUp();
+	}
+
+	/**
+	 * @param LocalFile $fileMock
+	 * @param string $expectedUrl
+	 * @param string $expectedSize
+	 *
+	 * @dataProvider getWikiLogoMetadataDataProvider
+	 */
+	public function testGetWikiLogoMetadata( $fileMockData, $expectedUrl, $expectedSize ) {
+		$fileMock = $this->mockClassWithMethods( 'stdClass', $fileMockData );
+
+		$this->mockGlobalFunction( 'wfLocalFile', $fileMock );
+		$this->mockGlobalVariable( 'wgResourceBasePath', 'http://wikia.net/__cb123' );
+
+		$logoData = Wikia::getWikiLogoMetadata();
+
+		$this->assertEquals( $expectedUrl, $logoData['url'] );
+		$this->assertEquals( $expectedSize, $logoData['size'] );
+	}
+
+	public function getWikiLogoMetadataDataProvider() {
+		return [
+			[
+				'fileMockData' => [
+					'exists' => false,
+				],
+				// see wgResourceBasePath mock above
+				'expectedUrl' => 'http://wikia.net/__cb123/skins/common/images/wiki.png',
+				'expectedSize' => '155x155',
+			],
+			[
+				'fileMockData' => [
+					'exists' => true,
+					'getUrl' => '/foo.png',
+					'getWidth' => 42,
+					'getHeight' => 32,
+				],
+				'expectedUrl' => '/foo.png',
+				'expectedSize' => '42x32',
+			],
+		];
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseHeaders() {

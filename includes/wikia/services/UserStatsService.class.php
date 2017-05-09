@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
@@ -174,7 +172,7 @@ class UserStatsService extends WikiaModel {
 
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
-			[ 'ar_user_text' => User::newFromId( $this->userId )->getName() ],
+			[ 'ar_user' => $this->userId ],
 			__METHOD__
 		);
 
@@ -222,7 +220,7 @@ class UserStatsService extends WikiaModel {
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
 			[
-				'ar_user_text' => User::newFromId( $this->userId )->getName(),
+				'ar_user' => $this->userId,
 				'ar_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))'
 			],
 			__METHOD__
@@ -233,7 +231,7 @@ class UserStatsService extends WikiaModel {
 	}
 
 	/**
-	 * Load user options localized per wiki from DB
+	 * Load user stats localized per wiki from DB
 	 * (wikia_user_properties table)
 	 * @since Nov 2013
 	 * @author Kamil Koterba
@@ -266,26 +264,37 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param String $optionName name of wiki specific user option
-	 * @param String $optionValue option value to be set
-	 * @return $optionVal string|null
+	 * @param String $statName name of wiki specific user stat
+	 * @param String $statVal stat value to be set
+	 * @return boolean
 	 */
 	private function setUserStat( $statName, $statVal ) {
-		if ( !$this->validateUser() ) {
+		if ( !$this->validateUser() || wfReadOnly() ) {
 			return false;
 		}
 
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
-		$dbw->replace(
-			'wikia_user_properties',
-			[],
-			[
-				'wup_user' => $this->userId,
-				'wup_property' => $statName,
-				'wup_value' => $statVal
-			],
-			__METHOD__
-		);
+		try {
+			$dbw->replace(
+				'wikia_user_properties',
+				[],
+				[
+					'wup_user' => $this->userId,
+					'wup_property' => $statName,
+					'wup_value' => $statVal
+				],
+				__METHOD__
+			);
+		} catch ( DBQueryError $dbQueryError ) {
+			// SUS-1221: Some of these REPLACE queries are failing
+			// If this happens let's log exception details to try to identify root cause
+			Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - UserStatsService::setUserStat failed', [
+				'exception' => $dbQueryError,
+				'userId' => $this->userId,
+				'statName' => $statName,
+				'statValue' => $statVal
+			] );
+		}
 		return $dbw->affectedRows() === 1;
 	}
 
@@ -294,7 +303,6 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
 	private function initFirstContributionTimestamp() {

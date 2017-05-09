@@ -325,9 +325,17 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		if ( !empty( $wgEnableWallExt ) ) {
-			$wallMessage = \WallMessage::buildNewMessageAndPost( $talkBody, $this->founder->getName(), $wgUser, $wallTitle,
-				false, array(), true, false );
-			if ( $wallMessage === false ) {
+			try {
+				$wallPage = $this->founder->getTalkPage();
+
+				( new \WallMessageBuilder() )
+					->setMessageAuthor( $wgUser )
+					->setMessageTitle( $wallTitle )
+					->setMessageText( $talkBody )
+					->setParentPageTitle( $wallPage )
+					->build();
+			} catch ( \WallBuilderException $builderException ) {
+				$this->error( $builderException->getMessage(), $builderException->getContext() );
 				return false;
 			}
 
@@ -448,6 +456,10 @@ class CreateNewWikiTask extends BaseTask {
 						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
 							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
+								// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
+								if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
+									$scribeProducer->setIsImageForReview( false );
+								}
 								$scribeProducer->sendLog();
 							}
 						}

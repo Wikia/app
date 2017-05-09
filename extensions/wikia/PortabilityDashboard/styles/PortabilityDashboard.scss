@@ -1,9 +1,9 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Search/css/WikiaSearch';
 
 $cell-padding: 10px;
-$filter-pill-border-width: 1px;
-$filter-pill-radius: 2px;
 $filter-pill-padding: 5px;
+$url-input-width: 200px;
 
 .mw-special-PortabilityDashboard {
 	.portability-dashboard-language-filter {
@@ -39,5 +39,22 @@ $filter-pill-padding: 5px;
 
 	.tooltip-icon-wrapper {
 		display: inline;
+	}
+
+	.portability-dashboard-noresults {
+		text-align: center;
+	}
+
+	.WikiaSearch {
+		margin-bottom: 25px;
+	}
+
+	.Search {
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 18px;
+
+		.WikiaSearch .grid-1.alpha {
+			width: $url-input-width;
+		}
 	}
 }

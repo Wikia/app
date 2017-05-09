@@ -27,7 +27,7 @@ class AssetsManagerSassesBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	// no need to compress concatenated content once more
-	public function getContent() {
+	public function getContent( $processingTimeStart = null ) {
 		return trim($this->mContent);
 	}
 }

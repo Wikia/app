@@ -147,10 +147,10 @@ class MagpieRSS {
         $el = $element = strtolower($element);
         $attrs = array_change_key_case($attrs, CASE_LOWER);
 
-        // check for a namespace, and split if found
+        // check for a namespace, and explode if found
         $ns = false;
         if ( strpos( $element, ':' ) ) {
-            list($ns, $el) = split( ':', $element, 2);
+            list($ns, $el) = explode( ':', $element, 2);
         }
         if ( $ns and $ns != 'rdf' ) {
             $this->current_namespace = $ns;

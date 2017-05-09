@@ -31,34 +31,61 @@ class SFCheckboxInput extends SFFormInput {
 		if ( array_key_exists( 'class', $other_args ) ) {
 			$className .= ' ' . $other_args['class'];
 		}
-		$input_id = "input_$sfgFieldNum";
-		$disabled_text = ( $is_disabled ) ? 'disabled' : '';
+		$inputID = "input_$sfgFieldNum";
 		if ( array_key_exists( 'show on select', $other_args ) ) {
 			$className .= ' sfShowIfCheckedCheckbox';
-			$div_id = key( $other_args['show on select'] );
-			$sfgShowOnSelect[$input_id] = $div_id;
+			foreach ( $other_args['show on select'] as $div_id => $options ) {
+				// We don't actually use "$options" for
+				// anything, because it's just a checkbox.
+				if ( array_key_exists( $inputID, $sfgShowOnSelect ) ) {
+					$sfgShowOnSelect[$inputID][] = $div_id;
+				} else {
+					$sfgShowOnSelect[$inputID] = array( $div_id );
+				}
+			}
 		}
 
 		// Can show up here either as an array or a string, depending on
 		// whether it came from user input or a wiki page
 		if ( is_array( $cur_value ) ) {
-			$checked_str = ( array_key_exists( 'value', $cur_value ) && $cur_value['value'] == 'on' ) ? ' checked="checked"' : '';
+			$isChecked = array_key_exists( 'value', $cur_value ) && $cur_value['value'] == 'on';
 		} else {
 			// Default to false - no need to check if it matches
 			// a 'false' word.
-			$vlc = strtolower( trim( $cur_value ) );
+			$lowercaseCurValue = strtolower( trim( $cur_value ) );
 
-			if ( in_array( $vlc, explode( ',', wfMessage( 'smw_true_words' )->inContentLanguage()->text() ), true ) ) {
-				$checked_str = ' checked="checked"';
-			} else {
-				$checked_str = '';
+			$possibleYesMessages = array(
+				strtolower( wfMessage( 'htmlform-yes' )->inContentLanguage()->text() ),
+				// Add in '1', and some hardcoded English.
+				'1', 'yes', 'true'
+			);
+
+			// Add values from Semantic MediaWiki, if it's installed.
+			if ( wfMessage( 'smw_true_words' )->exists() ) {
+				$smwTrueWords = explode( ',', wfMessage( 'smw_true_words' )->inContentLanguage()->text() );
+				foreach ( $smwTrueWords as $smwTrueWord ) {
+					$possibleYesMessages[] = strtolower( trim( $smwTrueWord ) );
+				}
 			}
+			$isChecked = in_array( $lowercaseCurValue, $possibleYesMessages );
 		}
-		$text = <<<END
-	<input name="{$input_name}[is_checkbox]" type="hidden" value="true" />
-	<input id="$input_id" name="{$input_name}[value]" type="checkbox" class="$className" tabindex="$sfgTabIndex" $checked_str $disabled_text/>
-
-END;
+		$text = "\t" . Html::hidden( $input_name . '[is_checkbox]', 'true' ) . "\n";
+		$checkboxAttrs = array(
+			'id' => $inputID,
+			'class' => $className,
+			'tabindex' => $sfgTabIndex
+		);
+		if ( $is_disabled ) {
+			$checkboxAttrs['disabled'] = true;
+		}
+		if ( method_exists( 'Html', 'check' ) ) {
+			// MW 1.24+
+			$text .= "\t" . Html::check( "{$input_name}[value]",
+				$isChecked, $checkboxAttrs );
+		} else {
+			$text .= "\t" . Xml::check( "{$input_name}[value]",
+				$isChecked, $checkboxAttrs );
+		}
 		return $text;
 	}
 

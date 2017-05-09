@@ -3,8 +3,6 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
-use Wikia\Logger\WikiaLogger;
-
 class CategoryViewer extends ContextSource {
 	var $limit, $from, $until,
 		$articles, $articles_start_char,
@@ -93,8 +91,8 @@ class CategoryViewer extends ContextSource {
 			$this->getPagesSection() .
 			$this->getImageSection() .
 		# <Wikia>
-			$this->getOtherSection(); 
-		# </Wikia>	
+			$this->getOtherSection();
+		# </Wikia>
 
 		if ( $r == '' ) {
 			// If there is no category content to display, only
@@ -320,7 +318,7 @@ class CategoryViewer extends ContextSource {
 					$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
 				}
 
-				if ( ++$count > $this->limit 
+				if ( ++$count > $this->limit
 					/* Wikia change begin - @author: Federico "Lox" Lucignano */
 					/* allow getting all the items in a category */
 					&& is_integer( $this->limit )
@@ -357,7 +355,7 @@ class CategoryViewer extends ContextSource {
 		/* Category Galleries hook */
 		wfRunHooks('CategoryPage::getCategoryTop',array($this,&$r));
 		/* Wikia change end */
-				
+
 		$r .= $this->getCategoryBottom();
 		return $r === ''
 			? $r
@@ -449,19 +447,6 @@ class CategoryViewer extends ContextSource {
 	}
 	/* </Wikia> */
 
-	/* <Wikia> */
-	/**
-	* Get paging links using private function getSectionPagingLinks
-	*
-	* @param $type String same like in getSectionPagingLinks function
-	* @return String: HTML output, possibly empty if there are no other pages
-	*/
-	public function getSectionPagingLinksExt( $type ) {
-		$paginationLinks = $this->getSectionPagingLinks( $type );
-		return $paginationLinks;
-	}
-	/* </Wikia> */
-	
 	/**
 	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
 	 * of the output.
@@ -721,7 +706,7 @@ class CategoryViewer extends ContextSource {
 		}
 		return wfMessage( "category-$type-count" )->numParams( $rescnt, $totalcnt )->parseAsBlock();
 	}
-	
+
 	/**
 	 * getter for private $cat variable, used in Hooks
 	 *

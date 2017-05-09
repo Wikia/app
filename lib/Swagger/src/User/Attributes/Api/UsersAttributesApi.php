@@ -245,11 +245,12 @@ class UsersAttributesApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/hal+json; 
+        charset=UTF-8'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
   
         
         

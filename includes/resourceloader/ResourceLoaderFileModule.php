@@ -693,7 +693,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	const FILE_TYPE_REGULAR = 'regular';
 	const FILE_TYPE_SASS = 'sass';
 
-	protected function getFileType( $fileName ) {
+	protected static function getFileType( $fileName ) {
 		$extension = strrchr($fileName,'.');
 		switch ($extension) {
 			case '.scss':
@@ -719,7 +719,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		}
 	}
 
-	protected function getFileModificationTime( $fileName ) {
+	protected static function getFileModificationTime( $fileName ) {
 		switch (self::getFileType($fileName)) {
 			case self::FILE_TYPE_REGULAR:
 				return filemtime($fileName);

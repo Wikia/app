@@ -92,21 +92,6 @@ class LoginForm extends SpecialPage {
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
-
-		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
-			// The line below duplicates what WebRequest::__construct() does. The reason for that
-			// is that raw and unprocessed data are required here for debugging purposes. This will
-			// provided the information whether the original user input is somehow malformed
-			// before it is passed to hashing methods.
-			$aData = $_POST + $_GET;
-			if ( isset( $aData['wpPassword'] ) ) {
-				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ . '-raw' );
-			}
-			unset( $aData );
-			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ . '-getText' );
-		}
-
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReason = $request->getText( 'wpReason' );
@@ -200,47 +185,11 @@ class LoginForm extends SpecialPage {
 		} elseif( $this->mPosted ) {
 			if( $this->mCreateaccount ) {
 				return $this->addNewAccount();
-			} elseif ( $this->mCreateaccountMail ) {
-				return $this->addNewAccountMailPassword();
-			} elseif ( $this->mMailmypassword ) {
-				return $this->mailPassword();
 			} elseif ( ( 'submitlogin' == $this->mAction ) || $this->mLoginattempt ) {
 				return $this->processLogin();
 			}
 		}
 		$this->mainLoginForm( '' );
-	}
-
-	/**
-	 * @private
-	 */
-	function addNewAccountMailPassword() {
-		if ( $this->mEmail == '' ) {
-			$this->mainLoginForm( $this->msg( 'noemailcreate' )->escaped() );
-			return;
-		}
-		$u = $this->addNewAccountInternal();
-		if ( $u == null ) {
-			return;
-		}
-
-		// Wipe the initial password and mail a temporary one
-		$u->setPassword( null );
-		$u->saveSettings();
-		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
-
-		wfRunHooks( 'AddNewAccount', array( $u, true ) );
-		$u->addNewUserLogEntry( true, $this->mReason );
-
-		$out = $this->getOutput();
-		$out->setPageTitle( $this->msg( 'accmailtitle' ) );
-
-		if( !$result->isGood() ) {
-			$this->mainLoginForm( $this->msg( 'mailerror', $result->getWikiText() )->text() );
-		} else {
-			$out->addWikiMsg( 'accmailtext', $u->getName(), $u->getEmail() );
-			$out->returnToMain( false );
-		}
 	}
 
 	/**
@@ -665,32 +614,6 @@ class LoginForm extends SpecialPage {
 			return self::SUCCESS;
 		}
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-
-		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
-			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
-		}
-
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType
-		&& is_object( $this->mExtUser )
-		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
-			# The external user and local user have the same name and
-			# password, so we assume they're the same.
-			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
-		}
-
-		// Wikia change - begin - author: @wladek
-		if ( $wgExternalAuthType
-			&& is_object( $this->mExtUser )
-			&& $this->mExtUser->getLastAuthenticationError() )
-		{
-			$this->mAbortLoginErrorMsg = $this->mExtUser->getLastAuthenticationError();
-			return self::ABORTED;
-		}
-		// Wikia change - end
-
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
 		$u = User::newFromName( $this->mUsername );
@@ -716,20 +639,17 @@ class LoginForm extends SpecialPage {
 
 		global $wgBlockDisablesLogin;
 		$abortedMessageKey = null;
-		if ( !$u->checkPassword( $this->mPassword, $abortedMessageKey ) ) {
+		$authResult = $u->checkPassword( $this->mPassword, $abortedMessageKey );
+		if ( !$authResult->success() ) {
 			if ( $abortedMessageKey ) {
 				$this->mAbortLoginErrorMsg = $abortedMessageKey;
 				return self::ABORTED;
 			}
-			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// At this point we just return an appropriate code/ indicating
-				// that the UI should show a password reset form; bot inter-
-				// faces etc will probably just fail cleanly here.
-				$retval = self::RESET_PASS;
-			} else {
-				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
-			}
-		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $u->getName(), $this->mPassword ) ) {
+			$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
+		} elseif ( $authResult->isResetPasswordAuth() ) {
+			// At this point we just return an appropriate code/ indicating
+			// that the UI should show a password reset form; bot inter-
+			// faces etc will probably just fail cleanly here.
 			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
@@ -739,7 +659,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		if ( !in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
-			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval ] );
+			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval, $authResult ] );
 		}
 
 		switch ($retval) {
@@ -989,156 +909,6 @@ class LoginForm extends SpecialPage {
 		$reset->setContext( $this->getContext() );
 		$reset->execute( null );
 	}
-
-	/**
-	 * @private
-	 */
-	function mailPassword() {
-		global $wgAuth;
-
-		$out = $this->getOutput();
-		if ( wfReadOnly() ) {
-			$out->readOnlyPage();
-			return false;
-		}
-
-		if( !$wgAuth->allowPasswordChange() ) {
-			$this->mainLoginForm( $this->msg( 'resetpass_forbidden' )->text() );
-			return;
-		}
-
-		$user = $this->getUser();
-		# Check against blocked IPs so blocked users can't flood admins
-		# with password resets
-		if( $user->isBlocked() ) {
-			$this->mainLoginForm( $this->msg( 'blocked-mailpassword' )->text() );
-			return;
-		}
-
-		# Check for hooks
-		$error = null;
-		if ( ! wfRunHooks( 'UserLoginMailPassword', array( $this->mUsername, &$error ) ) ) {
-			$this->mainLoginForm( $error );
-			return;
-		}
-
-		# If the user doesn't have a login token yet, set one.
-		if ( !self::getLoginToken() ) {
-			self::setLoginToken();
-			$this->mainLoginForm( $this->msg( 'sessionfailure' )->text() );
-			return;
-		}
-
-		# If the user didn't pass a login token, tell them we need one
-		if ( !$this->mToken ) {
-			$this->mainLoginForm( $this->msg( 'sessionfailure' )->text() );
-			return;
-		}
-
-		# Check against the rate limiter
-		if( $user->pingLimiter( 'mailpassword' ) ) {
-			$out->rateLimited();
-			return;
-		}
-
-		if ( $this->mUsername == '' ) {
-			$this->mainLoginForm( $this->msg( 'noname' )->text() );
-			return;
-		}
-		$u = User::newFromName( $this->mUsername );
-		if( !$u instanceof User ) {
-			$this->mainLoginForm( $this->msg( 'noname' )->text() );
-			return;
-		}
-		if ( 0 == $u->getID() ) {
-			$this->mainLoginForm( wfMsgWikiHtml( 'nosuchuser', htmlspecialchars( $u->getName() ) ) );
-			return;
-		}
-
-		# Validate the login token
-		if ( $this->mToken !== self::getLoginToken() ) {
-			$this->mainLoginForm( $this->msg( 'sessionfailure' )->text() );
-			return;
-		}
-
-		# Check against password throttle
-		if ( $u->isPasswordReminderThrottled() ) {
-			global $wgPasswordReminderResendTime;
-			# Round the time in hours to 3 d.p., in case someone is specifying
-			# minutes or seconds.
-			$this->mainLoginForm( $this->msg( 'throttled-mailpassword', round( $wgPasswordReminderResendTime, 3 ) )->text() );
-			return;
-		}
-
-		$result = $this->mailPasswordInternal( $u, true, 'passwordremindertitle', 'passwordremindertext' );
-		if( WikiError::isError( $result ) ) {
-			$this->mainLoginForm( $this->msg( 'mailerror', $result->getMessage() )->text() );
-		} else {
-			$this->mainLoginForm( $this->msg( 'passwordsent', $u->getName() )->text(), 'success' );
-			self::clearLoginToken();
-		}
-	}
-
-
-	/**
-	 * @param $u User object
-	 * @param $throttle Boolean
-	 * @param $emailTitle String: message name of email title
-	 * @param $emailText String: message name of email text
-	 * @param $emailTextTemplate String: template of email text
-	 * @return Mixed: true on success, WikiError on failure
-	 * @private
-	 * @return Status object
-	 */
-	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext', $emailTextTemplate = '' ) {
-		global $wgServer, $wgScript, $wgNewPasswordExpiry, $wgNoReplyAddress, $wgEnableRichEmails;
-
-		if ( $u->getEmail() == '' ) {
-			return Status::newFatal( 'noemail', $u->getName() );
-		}
-		$ip = $this->getRequest()->getIP();
-		if( !$ip ) {
-			return Status::newFatal( 'badipaddress' );
-		}
-
-		$currentUser = $this->getUser();
-		wfRunHooks( 'User::mailPasswordInternal', array( &$currentUser, &$ip, &$u ) );
-
-		$np = $u->randomPassword();
-		$u->setNewpassword( $np, $throttle );
-		$u->saveSettings();
-
-		/* Wikia change begin - @author: Uberfuzzy */
-		/* use noReply address (if available) */
-		$nr = null;
-		if( !empty($wgNoReplyAddress) ) {
-			$nr = new MailAddress($wgNoReplyAddress, 'No Reply');
-		}
-		/* Wikia change begin - @author: Marooned */
-		/* HTML e-mails functionality */
-		$userLanguage = $u->getGlobalPreference( 'language' );
-		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
-		if (empty($wgEnableRichEmails)) {
-			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
-				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
-			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
-		} else {
-			$wantHTML = $u->isAnon() || $u->getGlobalPreference('htmlemails');
-			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getGlobalPreference('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
-			if ( !empty($emailTextTemplate) && $wantHTML ) {
-				$emailParams = array(
-					'$USERNAME' => $u->getName(),
-					'$NEWPASSWORD' => $np,
-				);
-				$mHTML = strtr($emailTextTemplate, $emailParams);
-			}
-			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null,
-				$nr, 'TemporaryPassword', $mHTML, $priority );
-		}
-
-		return $result;
-	}
-
 
 	/**
 	 * Run any hooks registered for logins, then HTTP redirect to

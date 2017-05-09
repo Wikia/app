@@ -16,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class MultiLookupAjax {
 	function __construct() { /* not used */ }
 
-	function axData() {
+	public static function axData() {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang, $wgDevelEnvironment;
 
 		wfProfileIn( __METHOD__ );

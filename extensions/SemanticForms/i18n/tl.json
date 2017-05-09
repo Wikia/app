@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"AnakngAraw",
-			"Sky Harbor"
+			"Sky Harbor",
+			"Leeheonjin"
 		]
 	},
 	"semanticforms-desc": "Mga pormularyo para sa paggawa ng mga dagdag at pagbabago sa dato hinggil sa kahulugan ng salita (semantiko)",
@@ -62,7 +63,6 @@
 	"sf_forminputs_values": "Ang pangkat ng mga halaga para sa lahok na ito, pinaghihiwalay-hiwalay ng mga kuwit",
 	"sf_forminputs_list": "Markahan ang lahok na ito bilang naghahawak ng isang listahan ng mga halaga",
 	"sf_forminputs_delimiter": "Ang panghangga na nasa pagitan ng mga halaga ng kahanayan, kung ang lahok na ito ay humahawak ng isang listahan ng mga ito",
-	"sf_forminputs_remoteautocompletion": "Gamitin ang kusang pagkukumpleto",
 	"sf_forminputs_existingvaluesonly": "Pahintulutan lamang ang mga halagang nasa loob na ng lista",
 	"sf_forminputs_showonselect": "Mga elemento ng pahina na ipapakita lamang kung napili na ang partikular na mga halaga (halimbawa: \"value1=>div1;value2=>div2\")",
 	"sf_forminputs_listboxsize": "Ang taas ng kahong listahan na ito, na nasa loob ng mga hilera",
@@ -153,6 +153,7 @@
 	"sf_bad_email_error": "dapat na mayroong isang tanggap na anyo/pormat ng adres ng e-liham",
 	"sf_bad_number_error": "dapat na isang tanggap na bilang",
 	"sf_bad_date_error": "dapat na isang tanggap na petsa",
+	"sf_pipe_error": "Hindi pinapayagan ang \"|\", maliban kung nasa loob ng {{...}} o [[...]]",
 	"uploadwindow": "Dungawan ng pagkarga",
 	"sf_deletionlog": "Talaan ng pagbubura",
 	"sf-preview-header": "Paunang patingin sa pormularyo",
@@ -176,5 +177,30 @@
 	"right-createclass": "Lumikha ng bagong mga klaseng semantiko",
 	"action-createclass": "lumikha ng bagong mga klaseng semantiko",
 	"action-editrestrictedfields": "baguhin ang mga kahanayan ng ipinagbabawal na pormularyo",
-	"action-viewedittab": "tingnan ang panglaylay na \"Baguhin\" para sa mga pahinang mababago sa pamamagitan ng pormularyo"
+	"action-viewedittab": "tingnan ang panglaylay na \"Baguhin\" para sa mga pahinang mababago sa pamamagitan ng pormularyo",
+	"sf-datepicker-close": "Isara",
+	"sf-datepicker-prev": "Nakaraan",
+	"sf-datepicker-next": "Susunod",
+	"sf-datepicker-today": "Ngayon",
+	"sf-datepicker-dateformatlong": "a BB tt",
+	"sf-datepicker-dateformatshort": "aa/bb/tt",
+	"sf-datepicker-firstdayofweek": "0",
+	"sf-datepicker-dateformat": "Ang bagting ng kaanyuan ng petsa. Tingnan ang [https://www.mediawiki.org/w/index.php?title=Extension:Semantic_Forms_Inputs&fromsection=Date_picker#Parameters dokumentasyong nasa Internet] para sa mas marami pang impormasyon.",
+	"sf-datepicker-weekstart": "Ang unang araw ng linggo (0 - Linggo, 1 - Lunes, ...).",
+	"sf-datepicker-firstdate": "Ang unang petsa na mapipili (na nasa anyong tttt/bb/aa).",
+	"sf-datepicker-lastdate": "Ang huling petsa na mapipili (na nasa anyong tttt/bb/aa).",
+	"sf-datepicker-disabledaysofweek": "Isang listahan ng mga araw na hindi maaaring piliin (halimbawa na ang Sabado't Linggo\" 6, 0).",
+	"sf-datepicker-highlightdaysofweek": "Isang listahan ng mga araw na lilitaw na maliwanag (halimbawa na ang Sabado't Linggo: 6, 0).",
+	"sf-datepicker-disabledates": "Isang listahan ng hindi pinagaganang mga petsa/mga nasasakalawang petsa na pinaghihiwalay ng kuwit (mga petsa na nasa anyong tttt/bb/aa, mga saklaw na nasa anyong tttt/bb/aa-tttt/bb/aa).",
+	"sf-datepicker-highlightdates": "Isang listahan ng hindi pinagaganang mga petsa/mga nasasakalawang petsa na lilitaw na maliwanag (mga petsa na nasa anyong tttt/bb/aa, mga saklaw na nasa anyong tttt/bb/aa-tttt/bb/aa).",
+	"sf-datepicker-showweeknumbers": "Dapat bang ipakita ang mga bilang ng linggo na nasa kaliwa ng linggo?",
+	"sf-datepicker-enableinputfield": "Dapat ba na ang tagagamit ay tuwirang makakagawa ng pagpupuno sa hanay ng pagpapasok o sa pamamagitan lamang ng pampili ng petsa?",
+	"sf-datepicker-showresetbutton": "Dapat bang ipakita ang isang pindutan ng muling pagtatakda? Ito lamang ang paraan para sa tagagamit upang mabura ang hanay ng pagpapasok kung hindi ito pinagagana para sa tuwirang pagpapasok.",
+	"sf-regexp-wrongformat": "Maling anyo.",
+	"sf-regexp-regexp": "Ang karaniwang pagsasaad na dapat tugmain ng lahok upang maging katanggap-tanggap. Dapat itong ibigay na kasama ang mga sakyod! Likas na nakatakda sa \"/.*/\", iyong anumang halaga.",
+	"sf-regexp-basetype": "Ang uri ng saligang gagamitin. Maaaring maging anumang uri ng pagpapasok na lumilikha ng isang elemento ng pormularyo ng html ng lahok na uri o pinili (iyong teksto, kahong listahan, pampili ng petsa) o iba pang karaniwang pagsasaad. Likas na nakatakda sa \"teksto\".",
+	"sf-regexp-baseprefix": "Unlapi para sa mga parametro ng uri ng saligan.",
+	"sf-regexp-orchar": "Ang panitik na O na gagamitin sa loob ng karaniwang pagsasaad sa halip na |. Likas na nakatakda sa \"!\"",
+	"sf-regexp-inverse": "Kung nakatakda, ang lahok ay HINDI dapat tumugma sa karaniwang pagsasaad upang maging katanggap-tanggap. Iyong nakabaligtad ang karaniwang pagsasaad.",
+	"sf-regexp-message": "Ang ipapakitang mensahe ng kamalian kung nabigo ang pagtutugma. Likas na nakatakda sa \"Maling kaanyuan!\" (o katumbas sa loob ng pangkasalukuyang lugar)"
 }

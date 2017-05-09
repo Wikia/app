@@ -7,7 +7,7 @@ class WallHistoryController extends WallController {
 		parent::__construct();
 	}
 
-	public function index() {
+	public function index( $wallMessagesPerPage = null ) {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$title = $this->getContext()->getTitle();
 
@@ -235,6 +235,15 @@ class WallHistoryController extends WallController {
 
 				if ( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle( $title );
+					if ( !$rev ) {
+						\Wikia\Logger\WikiaLogger::instance()->info(
+							"Revision history empty element",
+							[
+								'title' => $title,
+							]
+						);
+						break;
+					}
 					// mech: fixing 20617 - revision_id is available only for new entries
 					$query = [
 						'diff' => 'prev',

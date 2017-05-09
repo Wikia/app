@@ -33,17 +33,16 @@ class SearchSuggestionsApiController extends WikiaApiController {
 			$request->setVal('format', 'array');
 
 			$linkSuggestions = LinkSuggest::getLinkSuggest( $request );
+			$searchSuggestions = [];
 
-			if ( !empty( $linkSuggestions ) ) {
-
-				foreach( $linkSuggestions as $suggestion ){
-					$searchSuggestions[]['title'] = $suggestion;
-				}
-				$this->response->setVal( 'items', $searchSuggestions );
-
-			} else {
-				throw new NotFoundApiException();
+			if ( !is_array( $linkSuggestions ) ) {
+				$linkSuggestions = [];
 			}
+
+			foreach( $linkSuggestions as $suggestion ){
+				$searchSuggestions[]['title'] = $suggestion;
+			}
+			$this->response->setVal( 'items', $searchSuggestions );
 
 			$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 		} else {

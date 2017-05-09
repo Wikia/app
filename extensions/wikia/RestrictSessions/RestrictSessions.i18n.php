@@ -1,24 +1,17 @@
 <?php
+/** Internationalization file for /extensions/wikia/RestrictSessions/RestrictSessions extension. */
+$messages = [];
 
-/**
- * Internationalisation for RestrictSessions extension
- *
- * @file
- * @ingroup Extensions
- */
-
-$messages = array();
-
-/** English
- * @author Daniel Grunwell (grunny)
- */
-$messages['en'] = array(
+$messages['en'] = [
 	'restrictsessions-desc' => 'Enforce more secure sessions for staff members.',
-);
+	'right-restrictsession' => 'Have enforced secure sessions',
+];
 
-/**
- * @author Daniel Grunwell (grunny)
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'restrictsessions-desc' => '{{desc}}',
-);
+];
+
+$messages['fr'] = [
+	'restrictsessions-desc' => 'Rend les sessions encore plus sécurisées pour les membres du staff',
+];
+

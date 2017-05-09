@@ -8,6 +8,9 @@ describe('Evolve2 Provider targeting', function () {
 			adContext: {
 				addCallback: noop
 			},
+			eventDispatcher: {
+				dispatch: noop
+			},
 			gptHelper: {
 				pushAd: noop
 			},
@@ -22,7 +25,8 @@ describe('Evolve2 Provider targeting', function () {
 				getVertical: function () {
 					return mocks.vertical;
 				}
-			}
+			},
+			openXHelper: {}
 		};
 
 	function getEvolve2Provider() {
@@ -31,7 +35,9 @@ describe('Evolve2 Provider targeting', function () {
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
-			mocks.log
+			mocks.eventDispatcher,
+			mocks.log,
+			mocks.openXHelper
 		);
 	}
 
@@ -149,13 +155,6 @@ describe('Evolve2 Provider targeting', function () {
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
-	});
-
-	it('Should increment pos tageting value for the same size slots', function () {
-		evolve2.fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
-		evolve2.fillInSlot(createSlot('HOME_TOP_RIGHT_BOXAD'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');
 	});
 
 	it('Should start 160x600 with b pos and then increment', function () {

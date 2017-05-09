@@ -1,5 +1,5 @@
 <?php
-
+/** Internationalization file for /extensions/wikia/MediaGallery/MediaGallery extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -32,6 +32,7 @@ $messages['fr'] = [
 	'mediagallery-show-more' => 'Afficher plus',
 	'mediagallery-show-less' => 'Afficher moins',
 	'mediagallery-add-image-button' => 'Ajouter une image',
+	'mediagallery-desc' => '&nbsp;',
 ];
 
 $messages['it'] = [
@@ -78,6 +79,37 @@ $messages['ru'] = [
 
 $messages['zh'] = [
 	'mediagallery-show-more' => '显示更多',
-	'mediagallery-show-less' => '更少',
+	'mediagallery-show-less' => '收起',
 	'mediagallery-add-image-button' => '添加图片',
 ];
+
+$messages['vi'] = [
+	'mediagallery-add-image-button' => 'Thêm hình ảnh',
+	'mediagallery-show-less' => 'Hiện ít hơn',
+	'mediagallery-show-more' => 'Hiển thị thêm',
+];
+
+$messages['zh-hans'] = [
+	'mediagallery-add-image-button' => '添加图片',
+	'mediagallery-show-less' => '收起',
+	'mediagallery-show-more' => '显示更多',
+];
+
+$messages['zh-hant'] = [
+	'mediagallery-add-image-button' => '增加圖片',
+	'mediagallery-show-less' => '收起',
+	'mediagallery-show-more' => '顯示更多',
+];
+
+$messages['zh-hk'] = [
+	'mediagallery-add-image-button' => '增加圖片',
+	'mediagallery-show-less' => '收起',
+	'mediagallery-show-more' => '顯示更多',
+];
+
+$messages['zh-tw'] = [
+	'mediagallery-add-image-button' => '增加圖片',
+	'mediagallery-show-less' => '收起',
+	'mediagallery-show-more' => '顯示更多',
+];
+

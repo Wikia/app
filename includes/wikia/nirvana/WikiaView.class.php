@@ -10,6 +10,7 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+use Wikia\Logger\WikiaLogger;
 use Wikia\Tracer\WikiaTracer;
 
 class WikiaView {
@@ -281,16 +282,6 @@ class WikiaView {
 		}
 	}
 
-	protected function renderRaw() {
-		wfProfileIn(__METHOD__);
-		if ($this->response->hasException()) {
-			wfProfileOut(__METHOD__);
-			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
-		}
-		wfProfileOut(__METHOD__);
-		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
-	}
-
 	protected function renderHtml() {
 		wfProfileIn(__METHOD__);
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
@@ -360,7 +351,15 @@ class WikiaView {
 			$output = $this->response->getData();
 		}
 
-		return json_encode( $output );
+		$json = json_encode( $output, JSON_PARTIAL_OUTPUT_ON_ERROR );
+
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			WikiaLogger::instance()->error( 'Partial JSON output rendered because of json_encode error', [
+				'error_msg' => json_last_error_msg()
+			] );
+		}
+
+		return $json;
 	}
 
 	protected function renderJsonp() {
@@ -371,9 +370,10 @@ class WikiaView {
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
 	protected function renderInvalid() {
-		$output = $this->response->getData();
-		$output += array( 'exception' => array( 'message' => "Invalid Format, defaulting to JSON", 'code' => WikiaResponse::RESPONSE_CODE_ERROR ) );
-		return json_encode ( $output );
+		WikiaLogger::instance()->warning( 'Invalid response type passed to WikiaView' );
+		$output = [ 'exception' => [ 'message' => 'Invalid Response Format', 'code' => WikiaResponse::RESPONSE_CODE_BAD_REQUEST ] ];
+
+		return json_encode( $output );
 	}
 
 }

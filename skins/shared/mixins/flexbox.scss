@@ -117,3 +117,9 @@
 	-ms-align-self: $value;
 	 align-self: $value;
 }
+
+@mixin order($value) {
+	-webkit-order: $value;
+	-ms-flex-order: $value;
+	order: $value;
+}

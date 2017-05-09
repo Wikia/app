@@ -16,7 +16,6 @@ function ActivityFeedTag_setup(Parser $parser) {
 }
 
 function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
-	global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';
@@ -24,17 +23,35 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	wfProfileIn(__METHOD__);
 
 	$parameters = ActivityFeedHelper::parseParameters($attributes);
-
 	$tagid = str_replace('.', '_', uniqid('activitytag_', true));	//jQuery might have a problem with . in ID
+	$parameters['tagid'] = $tagid;
+
+	$content = ActivityFeedHelper::getList( $parameters );
+	$attributes = getAttributes( $parameters );
+
+	wfProfileOut( __METHOD__ );
+
+	return Html::rawElement( 'div', $attributes, $content ) . getSnippets( $parameters );
+}
+
+function getAttributes( $parameters ) {
+	$attribs = [
+		'id' => $parameters['tagid']
+	];
+
+	if ( !empty( $parameters['style'] ) ) {
+		$attribs['style'] = $parameters['style'];
+	}
+
+	return $attribs;
+}
+
+function getSnippets( &$parameters ) {
+	global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+
 	$jsParams = "size={$parameters['maxElements']}";
 	if (!empty($parameters['includeNamespaces'])) $jsParams .= "&ns={$parameters['includeNamespaces']}";
 	if (!empty($parameters['flags'])) $jsParams .= '&flags=' . implode('|', $parameters['flags']);
-	$parameters['tagid'] = $tagid;
-
-	$feedHTML = ActivityFeedHelper::getList($parameters);
-
-	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
-	$timestamp = wfTimestampNow();
 
 	$snippetsDependencies = array('/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css');
 
@@ -42,17 +59,15 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 		array_push($snippetsDependencies, '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
 	}
 
-	$snippets = JSSnippets::addToStack(
+	return JSSnippets::addToStack(
 		$snippetsDependencies,
 		null,
 		'ActivityFeedTag.initActivityTag',
 		array(
-			'tagid' => $tagid,
+			'tagid' => $parameters['tagid'],
 			'jsParams' => $jsParams,
-			'timestamp' => $timestamp
+			'timestamp' => wfTimestampNow()
 		)
 	);
 
-	wfProfileOut(__METHOD__);
-	return "<div$style>$feedHTML</div>$snippets";
 }

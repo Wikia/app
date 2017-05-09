@@ -1,13 +1,40 @@
-<!-- s:<?= __FILE__ ?> -->
+<?php
+/**
+ * @var $status
+ * @var $statusMsg
+ * @var $statusMsg2
+ * @var $user
+ * @var $userEmail
+ * @var $userRealName
+ * @var $userEncoded
+ * @var $user_hsc
+ * @var $userId
+ * @var $userReg
+ * @var $isUnsub
+ * @var $isDisabled
+ * @var $isAdopter
+ * @var $isFanContributor
+ * @var $returnURL
+ * @var $logLink
+ * @var $userStatus
+ * @var $emailStatus
+ * @var $disabled
+ * @var $changeEmailRequested
+ * @var $editToken
+ * @var $mailLogLink
+ * @var $isClosureRequested
+ */
+?>
+
 <small><a href="<?php print $returnURL; ?>">Return</a>
-	<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
-	<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
-<?php if (!is_null($status)) { ?>
-<fieldset>
-	<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>
-	<?php echo $status ? Wikia::successmsg($statusMsg) : Wikia::errormsg($statusMsg) ?>
-	<?php if( !empty($statusMsg2) ){ echo Wikia::errormsg($statusMsg2); } ?>
-</fieldset>
+<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
+<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
+<?php if ( !is_null( $status ) ) { ?>
+	<fieldset>
+		<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>
+		<?php echo $status ? Wikia::successmsg( $statusMsg ) : Wikia::errormsg( $statusMsg ) ?>
+		<?php if ( !empty( $statusMsg2 ) ) { echo Wikia::errormsg( $statusMsg2 ); } ?>
+	</fieldset>
 <?php } ?>
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-account', $user )->escaped(); ?></legend>
@@ -63,6 +90,33 @@
 	</form>
 
 </fieldset>
+
+<fieldset>
+	<legend><?= wfMessage( 'editaccount-frame-fan-contributor', $user )-> escaped(); ?></legend>
+	<?php if ( $isFanContributor ) : ?>
+		<p><?= wfMessage( 'editaccount-fan-contributor-exists' )->escaped(); ?></p>
+	<?php else: ?>
+		<p><?= wfMessage( 'editaccount-usage-fan-contributor' )-> escaped(); ?></p>
+		<form method="post" action="">
+			<input type="submit" value="<?= wfMessage( 'editaccount-submit-fan-contributor' )->escaped(); ?>" <?= $disabled; ?> />
+			<input type="hidden" name="wpAction" value="fan-contributor" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+			<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+		</form>
+	<?php endif; ?>
+</fieldset>
+
+<fieldset>
+	<legend><?= wfMessage( 'editaccount-frame-logout', $user )->escaped(); ?></legend>
+	<p><?= wfMessage( 'editaccount-usage-logout' )->escaped(); ?></p>
+	<form method="post" action="">
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-logout' )->escaped(); ?>" <?= $disabled; ?> />
+		<input type="hidden" name="wpAction" value="logout" />
+		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+	</form>
+</fieldset>
+
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-close', $user )->escaped(); ?></legend>
 <?php if ( $isClosureRequested ) { ?>

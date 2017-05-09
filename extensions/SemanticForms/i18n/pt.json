@@ -12,7 +12,7 @@
 			"Vitorvicentevalente"
 		]
 	},
-	"semanticforms-desc": "Formulários para adicionar e editar dados semânticos",
+	"semanticforms-desc": "Formulários para criar e editar páginas wiki",
 	"specialpages-group-sf_group": "Formulários Semânticos",
 	"createproperty": "Criar uma propriedade",
 	"sf_createproperty_linktoform": "Esta propriedade irá ligar às páginas que usem o formulário:",
@@ -67,7 +67,6 @@
 	"sf_forminputs_values": "O conjunto de valores desta entrada, separados por vírgulas",
 	"sf_forminputs_list": "Marcar que esta entrada detém uma lista de valores",
 	"sf_forminputs_delimiter": "O delimitador entre os valores do campo, se esta entrada contém uma lista de valores",
-	"sf_forminputs_remoteautocompletion": "Usar o preenchimento automático remoto",
 	"sf_forminputs_existingvaluesonly": "Só permitir valores que já existam na lista",
 	"sf_forminputs_showonselect": "Elementos da página que só serão apresentados se certos valores forem selecionados (exemplo: \"valor1=>div1;valor2=>div2\")",
 	"sf_forminputs_listboxsize": "A altura desta caixa de listagem, em linhas",
@@ -176,9 +175,15 @@
 	"sf_blank_namespace": "Principal",
 	"right-viewedittab": "Ver o separador \"{{int:edit}}\" para páginas editáveis por formulário",
 	"right-editrestrictedfields": "Editar os campos restritos dos formulários",
+	"tooltip-ca-formedit": "Editar esta página com um formulário",
 	"sf-select2-no-matches": "Sem correspondências",
 	"sf-select2-searching": "A pesquisar...",
 	"sf-select2-input-too-short": "Insira $1 ou mais caracteres",
 	"sf-select2-selection-too-big": "Este campo não pode conter mais do que {{PLURAL:$1|$1 valor|$1 valores}}.",
-	"sf-adminlinks-datastructure": "Estrutura de dados"
+	"sf-adminlinks-datastructure": "Estrutura de dados",
+	"sf-datepicker-close": "Fechar",
+	"sf-datepicker-prev": "Anterior",
+	"sf-datepicker-next": "Seguinte",
+	"sf-datepicker-today": "Hoje",
+	"sf-regexp-wrongformat": "Formato incorreto."
 }

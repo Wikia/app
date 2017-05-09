@@ -15,7 +15,7 @@ class RecirculationHooks {
 
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
-		if ( !self::isCorrectPageType() ) {
+		if ( !static::isCorrectPageType() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -25,7 +25,7 @@ class RecirculationHooks {
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'RECIRCULATION_RAIL'] );
+		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -35,6 +35,7 @@ class RecirculationHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
+		self::addMainPageMetadata( $out );
 		return true;
 	}
 
@@ -46,19 +47,14 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgWikiaEnvironment, $wgNoExternals, $wgRecirculationTestGroup;
+		global $wgNoExternals;
 
-		// We only want to track this on production
-		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) && !empty( $wgRecirculationTestGroup ) ) {
-			$jsAssets[] = 'recirculation_trackers_js';
+		if ( empty( $wgNoExternals ) ) {
+			$jsAssets[] = 'recirculation_liftigniter_tracker';
 		}
 
-		if ( self::isCorrectPageType() ) {
+		if ( static::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
-
-			if ( self::canShowDiscussions() ) {
-				$jsAssets[] = 'recirculation_discussions_js';
-			}
 		}
 
 		return true;
@@ -75,9 +71,9 @@ class RecirculationHooks {
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
 		if ( $wg->Title->exists()
-			&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-			&& $wg->request->getVal( 'action', 'view' ) === 'view'
-			&& $wg->request->getVal( 'diff' ) === null
+				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
+				&& $wg->request->getVal( 'action', 'view' ) === 'view'
+				&& $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
 		} else {
@@ -85,12 +81,36 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions() {
-		$wg = F::app()->wg;
-		if ( !empty( $wg->EnableDiscussions ) && !empty( $wg->EnableRecirculationDiscussions ) ) {
+	static public function canShowDiscussions( $cityId ) {
+		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
+
+		if ( !empty( $discussionsAlias ) ) {
+			$cityId = $discussionsAlias;
+		}
+
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
+		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+
+		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
 			return true;
 		} else {
 			return false;
-		}		
+		}
+	}
+
+	private static function addMainPageMetadata( OutputPage $outputPage ) {
+		if ( F::app()->wg->Title->isMainPage() ) {
+			$promoDetails = WikiaDataAccess::cache(
+					wfMemcKey( "site-attribute-liftigniterMetadata" ),
+					3600, // one hour cache
+					function() {
+						global $wgCityId;
+						return ( new SiteAttributeService() )->getAttribute( $wgCityId, "liftigniterMetadata" );
+					} );
+
+			if ( $promoDetails !== null ) {
+				$outputPage->addScript( "<script id=\"liftigniter-metadata\" type=\"application/json\">${promoDetails}</script>" );
+			}
+		}
 	}
 }

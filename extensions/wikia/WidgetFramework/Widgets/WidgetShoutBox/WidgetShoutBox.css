@@ -1,9 +1,0 @@
-.WidgetShoutBox h5 {font-weight: bold !important; margin: 3px 0 !important}
-.WidgetShoutBoxChat form input {font-size: 0.9em; margin: 6px 0 2px 0}
-.WidgetShoutBoxChat form input[type="text"] {width: 95%; padding: 2px; border: solid 1px #666666; }
-.WidgetShoutBoxChat form input[type="submit"] {width: auto; cursor: pointer; float: right; }
-body.ltr .widgetShoutBox ul li {padding-left: 60px; text-indent: -60px}
-.WidgetShoutBoxChat ul li p {display: inline}
-.WidgetShoutBoxChat ul li .shoutBoxMsg a {text-decoration: underline}
-body.rtl .WidgetShoutBox ul {direction: ltr; text-align: right}
-.WidgetShoutBox dd {max-height: none}

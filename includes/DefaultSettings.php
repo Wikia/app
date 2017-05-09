@@ -1068,17 +1068,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Minimum time, in hours, which must elapse between password reminder
- * emails for a given account. This is to prevent abuse by mail flooding.
- */
-$wgPasswordReminderResendTime = 24;
-
-/**
- * The time, in seconds, when an emailed temporary password expires.
- */
-$wgNewPasswordExpiry = 3600 * 24 * 7;
-
-/**
  * The time, in seconds, when an email confirmation email expires
  */
 $wgUserEmailConfirmationTokenExpiry = 7 * 24 * 60 * 60;
@@ -1126,6 +1115,11 @@ $wgEmailAuthentication = true;
  * Allow users to enable email notification ("enotif") on watchlist changes.
  */
 $wgEnotifWatchlist = false;
+
+/**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
 
 /**
  * Allow users to enable email notification ("enotif") when someone edits their
@@ -2236,24 +2230,6 @@ $wgAllowMicrodataAttributes = false;
 $wgCleanupPresentationalAttributes = true;
 
 /**
- * Should we try to make our HTML output well-formed XML?  If set to false,
- * output will be a few bytes shorter, and the HTML will arguably be more
- * readable.  If set to true, life will be much easier for the authors of
- * screen-scraping bots, and the HTML will arguably be more readable.
- *
- * Setting this to false may omit quotation marks on some attributes, omit
- * slashes from some self-closing tags, omit some ending tags, etc., where
- * permitted by HTML5.  Setting it to true will not guarantee that all pages
- * will be well-formed, although non-well-formed pages should be rare and it's
- * a bug if you find one.  Conversely, setting it to false doesn't mean that
- * all XML-y constructs will be omitted, just that they might be.
- *
- * Because of compatibility with screen-scraping bots, and because it's
- * controversial, this is currently left to true by default.
- */
-$wgWellFormedXml = true;
-
-/**
  * Permit other namespaces in addition to the w3.org default.
  * Use the prefix for the key and the namespace for the value. For
  * example:
@@ -3143,9 +3119,6 @@ $wgActiveUserDays = 30;
  * @name   User accounts, authentication
  * @{
  */
-
-/** For compatibility with old installations set to false */
-$wgPasswordSalt = true;
 
 /**
  * Specifies the minimal length of a user password. If set to 0, empty pass-
@@ -5373,8 +5346,13 @@ $wgShellLocale = 'en_US.utf8';
 
 /**
  * Timeout for HTTP requests done internally
+ *
+ * Let's use different values when running a maintenance script (that includes Wikia Tasks)
+ * and when serving HTTP request
+ *
+ * @see PLATFORM-2385
  */
-$wgHTTPTimeout = 25;
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 
 /**
  * Timeout for Asynchronous (background) HTTP requests
@@ -5404,7 +5382,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 50;
+$wgUpdateRowsPerJob = 500;
 
 /**
  * Number of rows to update per query

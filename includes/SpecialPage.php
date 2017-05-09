@@ -582,6 +582,18 @@ class SpecialPage {
 	}
 
 	/**
+	 * Wikia change
+	 * SUS-288: Helper function to determine if the current user is blocked
+	 * @throws UserBlockedError
+	 */
+	public function checkIfUserIsBlocked() {
+		$user = $this->getUser();
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->mBlock );
+		}
+	}
+
+	/**
 	 * Sets headers - this should be called from the execute() method of all derived classes!
 	 */
 	function setHeaders() {

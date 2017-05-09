@@ -1,18 +1,55 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transition';
 @import 'layout';
 @import 'responsive-variables';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
+@import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
+@import '../../../../extensions/wikia/WikiaBar/css/WikiaBar';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
+
+$uap-progress-bar-color: #b7b7b7;
+$uap-progress-bar-current-time-color: #666;
+$uap-video-animation-duration: 0.4s;
+$uap-video-player-button-size: 24px;
+
+$floating-ad-margin: 20px;
+$floating-ad-index: $wikia-top-ads-index + 10;
+$floating-ad-video-width: 320px;
+$floating-ad-animation-speed: $video-collapse-animation-speed;
+$floating-ad-featured-video-gap: $video-container-width;
+
+$video-control-bar-padding: 18px;
+$video-control-bar-items-margin: 12px;
+$video-control-panel-default-color: white;
+$video-control-panel-active-color: $video-player-blue;
+$video-control-panel-inactive-color: $video-player-volume-bar-off-color;
+$video-control-panel-item-size: 23px;
+$video-control-panel-item-size-extra-large: 86px;
+$video-control-panel-item-size-small: 17px;
+$video-control-panel-progress-bar-shadow-color: rgba(175, 175, 175, 0.5);
+$video-control-pause-shadow-animation-duration: 1s;
+$video-control-pause-shadow-animation-function: ease;
+
+$vpaid-z-index: 10;
+$video-interactive-area-z-index: $vpaid-z-index + 1;
+
+@mixin absolute-fill() {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	top: 0;
+}
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -31,84 +68,237 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-		>div {
-			float: right;
-		}
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
-		>img {
-			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
-		}
-	}
-}
-
-.bfaa-template {
-	.WikiaTopAds {
-		margin-top: 0;
-		padding: 0 0 $global-navigation-height 0;
-		width: 100%;
-
-		&.bfaa-pinned-nav {
-			padding: 0;
+		> img {
+			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
 
-	.WikiaTopAdsInner {
-		width: 100%;
-	}
+	&.floating {
+		z-index: $floating-ad-index;
 
-	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-		max-width: none;
-		width: 100%;
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $floating-ad-animation-speed;
 
-		> div {
-			position: relative;
+			.video-player, iframe {
+				width: $floating-ad-video-width;
+			}
 
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
+			.floating-close-button {
+				display: block;
+			}
+		}
+
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
 			}
 		}
 	}
 }
 
-.bfab-template > div{
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
 	position: relative;
-	width: 100%;
+}
 
-	iframe {
+.wikia-ad {
+	&.slot-animation {
+		@include transition(max-height, 0.8s, ease, 0);
+		overflow: hidden;
+	}
+
+	&.slot-responsive {
+		width: 100%;
+
+		.provider-container iframe {
+			@include absolute-fill();
+		}
+	}
+
+	.video-overlay {
+		@include absolute-fill();
+	}
+
+	.video-display-wrapper {
+		background: #000;
 		height: 100%;
+		position: relative;
+		width: 100%;
+
+		video, &.vpaid-enabled > div {
+			@include absolute-fill();
+		}
+
+		&.vpaid-enabled video {
+			z-index: $vpaid-z-index;
+		}
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
+		}
+	}
+}
+
+.bfaa-template {
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
+
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	.WikiaTopAdsInner {
+		width: 100%;
+	}
+
+	#TOP_LEADERBOARD {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
+		max-width: none;
+		overflow: hidden;
+		width: 100%;
+
+		video {
+			height: auto;
+			width: 100%;
+		}
+	}
+
+	#WikiaPage {
+		margin-top: 20px;
+	}
+}
+
+.bfaa-template .ima-mute-div, .bfab-template .ima-mute-div {
+	/* remove Firefox's dotted outline on buttons and links */
+	:focus {outline:none;}
+	::-moz-focus-inner {border:0;}
+
+	bottom: 18px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+
+	.speaker {
+		&.mute {
+			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg');
+		}
+
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
+		display: inline-block;
+		height: $uap-video-player-button-size;
+		overflow: hidden;
+		position: relative;
+		width: $uap-video-player-button-size;
+	}
+}
+
+.bfab-template {
+	position: relative;
+}
+
+.wikia-ad .replay-overlay {
+	background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+
+.video-player {
+	position: relative;
+
+	&#{&}-left, &#{&}-right {
+		z-index: $wikia-top-ads-index;
+	}
+
+	&#{&}-right {
+		right: 0;
+	}
+
+	video {
+		left: 0;
+	}
+
+	.progress-bar {
+		background: $uap-progress-bar-color;
+		bottom: 0;
+		height: 8px;
 		left: 0;
 		position: absolute;
 		width: 100%;
+	}
+
+	.current-time {
+		@include transition(width, 1s, linear, 0);
+		background: $uap-progress-bar-current-time-color;
+		height: 100%;
+		max-width: 100%;
+		width: 0;
+	}
+
+	.pause-overlay {
+		cursor: pointer;
+		height: 100%;
+		position: absolute;
 		top: 0;
+		width: 100%;
+	}
+
+	.close-ad {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
+		cursor: pointer;
+		height: $uap-video-player-button-size;
+		margin: 10px 10px 30px 30px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: $uap-video-player-button-size;
 	}
 }
 
 #TOP_BUTTON_WIDE {
-	margin-right: 10px;
+        margin-right: 10px;
 }
 
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-	>div {
+@media screen and (max-width: 1063px) {
+	#TOP_BUTTON_WIDE {
+		display: none;
+	}
+}
+
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #TOP_LEADERBOARD {
+	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
-	>div[id^=Liftium_] {
-		text-align: center;
-	}
 }
 
-#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
@@ -161,30 +351,36 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #INCONTENT_LEADERBOARD {
 	text-align: center;
-	>div {
+	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 #INCONTENT_WRAPPER {
-  text-align: center;
+	font-size: 0;
+	line-height: 0;
+	text-align: center;
 }
 
 #INCONTENT_LEADERBOARD {
-  display: inline-block;
+	display: inline-block;
 }
 
 #INCONTENT_LEADERBOARD:before {
-  color: $color-text;
-  content: attr(data-label);
-  display: block;
-  font-size: 0.625rem;
-  line-height: 0.75rem;
-  padding-bottom: 6px;
-  padding-top: 6px;
-  text-align: left;
-  text-transform: uppercase;
+	color: $color-text;
+	content: attr(data-label);
+	display: block;
+	font-size: 0.625rem;
+	line-height: 0.75rem;
+	padding-bottom: 6px;
+	padding-top: 6px;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+#INCONTENT_LEADERBOARD.hide-label:before {
+	display: none;
 }
 
 #LEFT_SKYSCRAPER_2 {
@@ -206,6 +402,9 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #BOTTOM_LEADERBOARD {
+	@include transition(height, $uap-video-animation-duration, ease, 0);
+	background: $color-black;
+
 	overflow: hidden;
 	margin: 0 0 23px 0;
 	text-align: center;
@@ -221,20 +420,14 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	display: none;
 }
 
-#HOME_TOP_RIGHT_BOXAD {
-	margin-bottom: 10px;
-	position: relative;
-	width: 300px;
-	z-index: 100;
-}
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
 		padding: 15px;
 	}
 }
+
 /* end transistion temp code */
 
 #TOP_BOXAD {
@@ -243,13 +436,13 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+#TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
-}
 
-#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 #PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
@@ -317,7 +510,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
-body >a >img[src$="noad.gif"] {
+body > a > img[src$="noad.gif"] {
 	position: absolute;
 	z-index: 0;
 }
@@ -382,20 +575,6 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#REVCONTENT_ABOVE_ARTICLE, #REVCONTENT_RIGHT_RAIL, #REVCONTENT_BELOW_ARTICLE {
-	.row-item h3 {
-		color: $color-page-opposite;
-	}
-
-	.rc-headline {
-		color: darken($color-page-opposite, 20%) !important;
-	}
-
-	.rc-provider, .rc-branding-label {
-		color: $color-alternate-text;
-	}
-}
-
 .wikia-ad-interactive-map {
 	height: 50px;
 	position: absolute;
@@ -432,95 +611,193 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-// Recovered message
-.recovered-message {
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-	padding-top: 10px;
+#WikiaArticleMsg {
+	display: none;
+}
 
-	.message {
-		background: #fff;
-		color: #000;
-		padding: 10px 12px;
-		border: 2px solid #000;
-		font-size: 1.1em;
-		line-height: 1.4em;
-		position: relative;
+/** Floating ads **/
 
-		h3 {
-			font-size: 1.2em;
-			font-weight: bold;
+/*** Incontent ***/
+#WikiaArticle {
+	&.floating {
+		z-index: initial;
+
+		.wikia-ad {
+			bottom: $wikia-bar-wrapper-height + $floating-ad-margin;
+			margin-bottom: 0;
+			position: fixed;
+			right: $floating-ad-margin;
+			transition: margin-bottom $floating-ad-animation-speed;
+			width: $floating-ad-video-width;
+			z-index: $floating-ad-index;
+
+			.provider-container {
+				padding-bottom: 0 !important; // has to be !important because o inline style
+				width: $floating-ad-video-width;
+			}
+
+			.floating-close-button {
+				display: block;
+			}
 		}
 
-		.action-accept {
-			color: #000;
+		&.with-article-video {
+			.wikia-ad {
+				margin-bottom: $floating-ad-featured-video-gap;
+				transition: margin-bottom $floating-ad-animation-speed;
+			}
+		}
+	}
+}
+
+.floating-close-button {
+	cursor: pointer;
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 0;
+	z-index: $video-interactive-area-z-index;
+
+	img {
+		padding: 7px;
+	}
+}
+
+.interactive-area {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	z-index: $video-interactive-area-z-index;
+
+	.control-bar {
+		padding: 0 $video-control-bar-padding;
+
+		.progress-bar {
+			background-color: $video-control-panel-progress-bar-shadow-color;
+			border-radius: 3px;
+			bottom: initial;
+			height: 4.2px;
+			left: initial;
+			position: static;
+			width: 100%;
+
+			.current-time {
+				background-color: $video-control-panel-active-color;
+				border-radius: 3px;
+			}
+		}
+
+		.control-bar-items {
+			display: flex;
+			margin: $video-control-bar-items-margin 0;
+		}
+
+		.control-bar-item {
 			cursor: pointer;
-			font-weight: bold;
-
-			&:hover {
-				text-decoration: underline;
-			}
+			display: block;
+			padding: 0 6px;
+			width: $video-control-panel-item-size;
 		}
 
-		.dialog-pointer {
-			width: 15px;
-			height: 15px;
-			border-top: 2px solid #000;
-			border-left: 2px solid #000;
-			position: absolute;
-			background: #fff;
-			top: -10px;
-			left: 110px;
-			@include transform-rotate(45deg);
+		.play-pause-button {
+			padding-left: 0;
 		}
 
-		.close-button {
-			width: 13px;
-			height: 13px;
-			background: url(/skins/oasis/images/icon_close.png) 1px 0 no-repeat #aaa; /* $wgCdnStylePath */
-			background-size: 12px 12px;
-			position: absolute;
-			top: 0;
-			right: 0;
+		.sound-control {
+			display: flex;
+		}
+
+		.sound-bars-container {
+			display: flex;
+		}
+
+		.sound-bar {
+			background-clip:content-box;
+			background-color: $video-control-panel-default-color;
 			cursor: pointer;
+			height: $video-control-panel-item-size;
+			padding-left: 7px;
+			width: 2px;
 
-			&:hover {
-				background-color: #444;
+			&.unlit {
+				background-color: $video-control-panel-inactive-color;
 			}
 		}
 	}
 
-	.icon {
-		width: 140px;
-		height: 100px;
-		margin: 0 auto -5px auto;
-		cursor: pointer;
-		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
+	svg {
+		fill: white;
+		height: $video-control-panel-item-size;
+
+		&:hover {
+			fill: $video-control-panel-active-color;
+		}
 	}
+}
 
-	&.recovered-message-right-rail {
-		width: 300px;
-	}
+.floating {
+	.interactive-area {
+		.control-bar {
+			.control-bar-item {
+				width: $video-control-panel-item-size-small;
+			}
 
-	&.recovered-message-top {
-		width: 600px;
-
-		.message {
-			max-width: 425px;
-			display: inline-block;
-
-			.dialog-pointer {
-				top: 60px;
-				left: auto;
-				right: -10px;
-				@include transform-rotate(135deg);
+			.sound-bar {
+				height: $video-control-panel-item-size-small;
+				padding-left: 3px;
 			}
 		}
 
-		.icon {
-			margin: 0;
-			float: right;
+		svg {
+			height: $video-control-panel-item-size-small;
+		}
+	}
+}
+
+@keyframes show-then-hide {
+	from {
+		animation-timing-function: $video-control-pause-shadow-animation-function;
+		height: $video-control-panel-item-size;
+		opacity: 1;
+		visibility: visible;
+		width: $video-control-panel-item-size;
+	}
+
+	to {
+		height: $video-control-panel-item-size-extra-large;
+		opacity: 0;
+		visibility: hidden;
+		width: $video-control-panel-item-size-extra-large;
+	}
+}
+
+.pause-shadow {
+	bottom: 0;
+	height: $video-control-panel-item-size;
+	left: 0;
+	margin: auto;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	width: $video-control-panel-item-size;
+	z-index: $video-interactive-area-z-index;
+
+	svg {
+		fill: $video-control-panel-default-color;
+		height: $video-control-panel-item-size;
+		width: $video-control-panel-item-size;
+	}
+
+	&.animate {
+		animation: show-then-hide $video-control-pause-shadow-animation-duration;
+
+		svg {
+			height: $video-control-panel-item-size-extra-large;
+			transition: all $video-control-pause-shadow-animation-duration $video-control-pause-shadow-animation-function;
+			width: $video-control-panel-item-size-extra-large;
 		}
 	}
 }

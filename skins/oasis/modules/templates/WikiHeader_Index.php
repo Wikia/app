@@ -8,12 +8,21 @@
 	</nav>
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
-			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+      <? if ($useAddPageButton) { ?>
+        <button id="add-page" class="wds-button wds-is-squished wds-is-secondary">
+          <svg class="wds-icon wds-icon-tiny">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-plus" />
+          </svg>
+          <span>Add Page</span>
+        </button>
+      <? } else { ?>
+				<?= $app->renderView('ContributeMenu', 'Index'); ?>
+      <? } ?>
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">
-		<?= Wikia::specialPageLink( 'Watchlist', 'watchlist', array( 'accesskey' => 'l' ) ) ?>
-		<?= Wikia::specialPageLink( 'Random', 'randompage', array( 'accesskey' => 'x' ) ) ?>
-		<?= Wikia::specialPageLink( 'RecentChanges', 'recentchanges', array( 'accesskey' => 'r' ) ) ?>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['watchlist'] ); ?>" accesskey="l"><?= wfMessage( 'watchlist' )->escaped(); ?></a>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['random'] ); ?>" accesskey="x"><?= wfMessage( 'randompage' )->escaped(); ?></a>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['recentchanges'] ); ?>" accesskey="r"><?= wfMessage( 'recentchanges' )->escaped(); ?></a>
 	</div>
 </header>

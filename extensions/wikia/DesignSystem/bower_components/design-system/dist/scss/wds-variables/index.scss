@@ -1,0 +1,10 @@
+// Base variables
+@import 'breakpoints';
+@import 'colors';
+@import 'icons';
+@import 'typography';
+@import 'z-index-scale';
+
+// Component variables
+$wds-global-navigation-height: 55px;
+$wds-button-transition-duration: 300ms;

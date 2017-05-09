@@ -233,6 +233,7 @@ class MWException extends Exception {
 
 		if ( !headers_sent() ) {
 			header( 'HTTP/1.0 500 Internal Server Error' );
+			header( "X-MediaWiki-Exception: 1" ); // Wikia change - @author macbre (BAC-1199)
 			header( 'Content-type: text/html; charset=UTF-8' );
 			/* Don't cache error pages!  They cause no end of trouble... */
 			header( 'Cache-control: none' );
@@ -449,10 +450,15 @@ class ThrottledError extends ErrorPageError {
  */
 class UserBlockedError extends ErrorPageError {
 	public function __construct( Block $block ){
-		global $wgLang, $wgRequest;
+		global $wgLang, $wgRequest, $wgUser;
 
 		$blocker = $block->getBlocker();
-		if ( $blocker instanceof User ) { // local user
+		// Wikia change - begin
+		// SUS-288: Hide blocker's username if the block was made by staff/VSTF
+		if ( $block->shouldHideBlockerName() ) {
+			$link = $block->getGroupNameForHiddenBlocker();
+			// Wikia change - end
+		} elseif ( $blocker instanceof User ) { // local user
 			$blockerUserpage = $block->getBlocker()->getUserPage();
 			$link = "[[{$blockerUserpage->getPrefixedText()}|{$blockerUserpage->getText()}]]";
 		} else { // foreign user
@@ -556,7 +562,15 @@ class MWExceptionHandler {
 
 		$cmdLine = MWException::isCommandLine();
 
+		# Wikia change - begin
+		# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
+		Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+			'exception' => $e,
+		] );
+		# Wikia change - end
+
 		if ( $e instanceof MWException ) {
+
 			try {
 				// Try and show the exception prettily, with the normal skin infrastructure
 				$e->report();
@@ -596,13 +610,6 @@ class MWExceptionHandler {
 			} else {
 				self::escapeEchoAndDie( $message );
 			}
-
-			# Wikia change - begin
-			# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected non-MediaWiki exception encountered', [
-				'exception' => $e,
-			] );
-			# Wikia change - end
 		}
 	}
 
@@ -631,10 +638,13 @@ class MWExceptionHandler {
 		# @author macbre
 		# don't emit anything to the client in production mode
 		header('HTTP/1.0 500 Internal Error');
+		header( "X-MediaWiki-Exception: 1" ); // Wikia change - @author macbre (BAC-1199)
 
 		global $wgDevelEnvironment;
 		if (empty($wgDevelEnvironment)) {
-			Wikia::log(__METHOD__, false, $message);
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => new Exception( $message )
+			] );
 			die(1);
 		}
 		# Wikia change - end

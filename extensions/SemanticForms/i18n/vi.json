@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Minh Nguyen",
-			"Vinhtantran"
+			"Vinhtantran",
+			"Nguyên Lê"
 		]
 	},
 	"semanticforms-desc": "Mẫu để thêm và sửa đổi dữ liệu ngữ nghĩa",
@@ -115,5 +116,10 @@
 	"sf_category_desc": "Đây là thể loại $1.",
 	"sf_blank_namespace": "Chính",
 	"right-viewedittab": "Xem thẻ “{{int:edit}}” tại các trang có thể sửa đổi dùng biểu mẫu",
-	"right-editrestrictedfields": "Sửa đổi các trường biểu mẫu hạn chế"
+	"right-editrestrictedfields": "Sửa đổi các trường biểu mẫu hạn chế",
+	"sf-datepicker-close": "Đóng",
+	"sf-datepicker-prev": "Trước",
+	"sf-datepicker-next": "Sau",
+	"sf-datepicker-today": "Hôm nay",
+	"sf-regexp-wrongformat": "Định dạng sai."
 }

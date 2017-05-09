@@ -29,17 +29,19 @@ class DatabaseBaseTester extends DatabaseBase {
 
 }
 
-class DatabaseBaseTest extends PHPUnit_Framework_TestCase {
+class DatabaseBaseTest extends \PHPUnit\Framework\TestCase {
 
 	public function testLogSql() {
-		$wikiaLoggerMock = $this->getMock( '\Wikia\Logger\WikiaLogger', ['info'], [], '', false );
+		$wikiaLoggerMock = $this->createMock( \Wikia\Logger\WikiaLogger::class );
 
 		$wikiaLoggerMock->expects( $this->once() )
 			->method( 'info' )
 			->will( $this->returnValue( true ) );
 
 		$return = 'a value';
-		$databaseBaseTesterMock = $this->getMock( 'DatabaseBaseTester', ['doQuery', 'getWikiaLogger', 'resultObject'], [], '', false );
+		$databaseBaseTesterMock = $this->getMockBuilder( DatabaseBaseTester::class )
+			->setMethods( [ 'doQuery', 'getWikiaLogger', 'resultObject' ] )
+			->getMock();
 		$databaseBaseTesterMock->expects( $this->once() )
 			->method( 'doQuery' )
 			->will( $this->returnValue( $return ) );

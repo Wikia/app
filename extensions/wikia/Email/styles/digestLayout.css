@@ -1,27 +1,24 @@
-.bold {
+.digest-layout-container {
+	text-align: center;
+}
+
+.digest-layout-details {
+	margin: 0 auto;
+	max-width: 375px;
+	width: 100%;
+}
+
+.digest-layout-container td {
+	text-align: center;
+}
+
+.digest-details-icon, .signature-icon {
+	height: 40px;
+	margin: 20px 5px 10px;
+	width: 40px;
+}
+
+.digest-details-header {
 	font-weight: bold;
-}
-
-.content-footer-messages p:not(:first-child) {
-	margin: 0;
-}
-
-.detailsIcon {
-	margin-right: 20px;
-}
-
-.detailsTable {
-	margin-bottom: 40px;
-}
-
-.detailsTable p {
-	margin: 0;
-}
-
-.detailsTable td {
-	vertical-align: top;
-}
-
-td div.content-footer-messages {
-	padding-top: 30px;
+	margin-bottom: 0;
 }

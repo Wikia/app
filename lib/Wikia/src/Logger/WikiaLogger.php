@@ -91,7 +91,15 @@ class WikiaLogger implements LoggerInterface {
 			exit(1);
 		}
 
-		return true;
+		/**
+		 * It is important to remember that the standard PHP error handler is completely bypassed
+		 * for the error types specified by error_typesunless the callback function returns FALSE
+		 *
+		 * Return false will make it possible for XDebug to display an orange box with an error on devboxes
+		 *
+		 * @see PLATFORM-2377
+		 */
+		return false;
 	}
 
 	/**
@@ -110,6 +118,12 @@ class WikiaLogger implements LoggerInterface {
 					$this->onError($error['type'], $error['message'], $error['file'], $error['line'], null, true);
 					break;
 			}
+		}
+	}
+
+	public function debugSampled($sampling, $message, Array $context=[]) {
+		if ( ( new \Wikia\Util\Statistics\BernoulliTrial($sampling) )->shouldSample() ) {
+			return $this->debug($message, $context);
 		}
 	}
 

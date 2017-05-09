@@ -157,11 +157,6 @@ body.skin-oasis {
 				display: none;
 			}
 		}
-
-		.WikiaTopAds, .WikiaPage {
-			// (3) ... and both TopAds and WikiaPage will lay on top of them.
-			z-index: 2;
-		}
 	}
 
 	@media #{$breakpoint-small-only} {
@@ -181,5 +176,24 @@ body.skin-oasis {
 
 	@media screen and (min-width: $breakpoint-upper) {
 		@include background-max;
+	}
+}
+
+body.skin-oasis.uap-skin {
+	$uap-color: mix(white, $color-body, 15%);
+	@if (luminance($color-body) > 0.3) {
+		$uap-color: mix(black, $color-body, 10%);
+	}
+	background: {
+		color: $uap-color;
+		image: none;
+	}
+
+	.background-image-gradient {
+		display: none;
+	}
+
+	&::before, &::after {
+		content: none;
 	}
 }

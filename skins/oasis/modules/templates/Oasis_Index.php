@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?= $lang ?>" dir="<?= $dir ?>">
+<html lang="<?= $lang ?>" dir="<?= $dir ?>" class="<?= implode(' ', array_map( 'Sanitizer::escapeClass', $htmlClasses )) ?>">
 <head>
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
@@ -35,6 +35,7 @@
 
 <?= $topScripts ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $recoveryHeadBootstrapCode ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -54,14 +55,11 @@
 	<?= $jsFiles ?>
 <? endif ?>
 
-<? if ( $displayAdminDashboard ): ?>
-	<!--[if IE]><script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/excanvas/excanvas.js"></script><![endif]-->
-<? endif ?>
-
 <?= $headItems ?>
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
@@ -71,10 +69,15 @@
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $prebid ?>
+<?= $rubiconVulcan ?>
 <?= $krux ?>
+<?= $netzathleten ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
-<?= $ivw2 ?>
+<?= $sourcePoint ?>
+<?= $gfc ?>
+
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
@@ -102,6 +105,7 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+<?= $recoveryBottomBodyBootstrapCode ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

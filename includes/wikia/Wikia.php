@@ -20,7 +20,6 @@ $wgHooks['UserRights']               [] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
-$wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -87,13 +86,21 @@ class Wikia {
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
+	const BOT_USER = 'FandomBot';
+
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
+	// one for the extension messages, one for the user messages
+	const GADGETS_INTERFACE_PREFIX = 'gadgets-';
+	const GADGET_INTERFACE_PREFIX = 'gadget-';
 
-	private static $vars = array();
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+
+	private static $vars = [];
 	private static $cachedLinker;
 
 	public static function setVar($key, $value) {
@@ -146,26 +153,46 @@ class Wikia {
 			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
-				$faviconFilename = 'Favicon.ico';
+				$faviconFilename = ThemeSettings::FaviconImageName;
+				$localFavicon = wfFindFile( $faviconFilename );
 
-				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-
-				#FIXME: Checking existance of Title in order to use File. #VID-1744
-				if ( $localFaviconTitle->exists() ) {
-					$localFavicon = wfFindFile( $faviconFilename );
-
-					if ( $localFavicon ) {
-						return $localFavicon->getURL();
-					}
+				if ( $localFavicon ) {
+					return $localFavicon->getUrl();
 				}
 
-				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+				// SUS-214: fallback to image in repo instead of Community Central
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
 			}
 		);
 	}
 
 	public static function invalidateFavicon() {
 		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return mixed an array containing "url" and "size" keys
+	 */
+	public static function getWikiLogoMetadata() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ( $localWikiLogo->exists() ) {
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
+		}
+		else {
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
+		}
 	}
 
 	/**
@@ -298,6 +325,8 @@ class Wikia {
      * @return string fixed domain name
      */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
+		global $wgWikiaBaseDomain;
+
 		if (empty( $name )) {
 			return $name;
 		}
@@ -313,15 +342,15 @@ class Wikia {
 					case "answers":
 						$domains = self::getAnswersDomains();
 						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
 							$allowLang = false;
 						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
 						}
 						break;
 
 					default:
-						$name = $name.".wikia.com";
+						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
 				}
 				if ( $language && $language != "en" && $allowLang ) {
 					$name = $language.".".$name;
@@ -554,54 +583,23 @@ class Wikia {
 	 * @access public
 	 * @static
 	 *
-	 * @param String $lang  -- language code
+	 * @param String $langCode  -- language code
 	 *
 	 * @return User -- instance of user object
 	 */
 	static public function staffForLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
+		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
-
-		$staffUser = false;
-		if( !empty( $staffSigs ) ) {
-			$lines = explode("\n", $staffSigs);
-
-			$data = array();
-			$sectLangCode = '';
-			foreach ( $lines as $line ) {
-				if( strpos( $line, '* ' ) === 0 ) {
-					//language line
-					$sectLangCode = trim( $line, '* ' );
-					continue;
-				}
-				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
-					//user line
-					$user = trim( $line, '** ' );
-					$data[$sectLangCode][] = $user;
-				}
-			}
-
-			//did we get any names for our target language?
-			if( !empty( $data[$langCode] ) ) {
-				//pick one
-				$key = array_rand($data[$langCode]);
-
-				//use it
-				$staffUser = User::newFromName( $data[$langCode][$key] );
-				$staffUser->load();
-			}
+		if ( !empty( $staffMap[$langCode] ) && is_array( $staffMap[$langCode] ) ) {
+			$key = array_rand( $staffMap[$langCode] );
+			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
+		} else {
+			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
+			$staffUser = User::newFromName( 'Fandom' );
 		}
 
-		/**
-		 * fallback to Wikia
-		 */
-		if( ! $staffUser ) {
-			$staffUser = User::newFromName( 'Wikia' );
-			$staffUser->load();
-		}
+		$staffUser->load();
 
-		wfProfileOut( __METHOD__ );
 		return $staffUser;
 	}
 
@@ -1116,13 +1114,10 @@ class Wikia {
 	/**
 	 * get properties for page
 	 * FIXME: maybe it should be cached?
-	 * @static
-	 * @access public
-	 * @param page_id
-	 * @param oneProp if you just want one property, this will return the value only, not an array
-	 * @return Array
+	 * @param $page_id int
+	 * @param $oneProp string if you just want one property, this will return the value only, not an array
+	 * @return mixed
 	 */
-
 	static public function getProps( $page_id, $oneProp = null ) {
 		wfProfileIn( __METHOD__ );
 		$return = array();
@@ -1145,7 +1140,7 @@ class Wikia {
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$return[ $row->pp_propname ] = $row->pp_value;
-			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
+			wfDebug( __METHOD__ . " id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}\n" );
 		}
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
@@ -1192,26 +1187,6 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * ignoreUser
-	 * @author tor
-	 *
-	 * marks a user as ignored for the purposes of stats counting, used to ignore test accounts
-	 * hooked up to AddNewAccount
-	 */
-	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgExternalDatawareDB;
-
-		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-
-				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
-			}
-		}
-
-		return true;
-	}
 	/**
 	 * build user authentication key
 	 * @static
@@ -1336,15 +1311,6 @@ class Wikia {
 
 		wfProfileOut( __METHOD__ );
 		return $params;
-	}
-
-	static public function getAllHeaders() {
-		if ( function_exists( 'getallheaders' ) ) {
-			$headers = getallheaders();
-		} else {
-			$headers = $_SERVER;
-		}
-		return $headers;
 	}
 
 	static public function isUnsubscribed( $to, $body, $subject ) {
@@ -2403,6 +2369,8 @@ class Wikia {
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGETS_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGET_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed( 'editinterface' );
 		}
@@ -2528,6 +2496,10 @@ class Wikia {
 
 		if ( !empty( $wgWikiDirectedAtChildrenByFounder ) ) {
 			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
+		}
+
+		if ( self::isUsingSafeJs() ) {
+			$vars['wgUseSiteJs'] = true;
 		}
 
 		return true;

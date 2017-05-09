@@ -1458,10 +1458,11 @@ class WikiPage extends Page implements IDBAccessObject {
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
 
 				// wikia changes begin
-				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
-				// wikia changes end
+				if ( !Hooks::run( 'ArticleDoEdit', [ $dbw, $this->mTitle, $revision ] ) ) {
+					$status->fatal( 'unknownerror' );
 
-				if ( !$ok ) {
+					$dbw->rollback( __METHOD__ );
+				} elseif ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
 
@@ -2850,15 +2851,28 @@ class WikiPage extends Page implements IDBAccessObject {
 			return;
 		}
 
-		$insertRows = array();
-
+		// Wikia change - begin - @author: wladek
+		// PLATFORM-410: Attempt to lower the chance of deadlocks
+		sort( $insertCats );
+		$missingCats = [];
 		foreach ( $insertCats as $cat ) {
+			if ( !$dbw->selectRow( 'category', 'cat_id', [ 'cat_title' => $cat ], __METHOD__, [ 'FOR UPDATE' ] ) ) {
+				$missingCats[] = $cat;
+			}
+		}
+
+		$insertRows = array();
+		foreach ( $missingCats as $cat ) {
 			$insertRows[] = array(
 				'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
 				'cat_title' => $cat
 			);
 		}
-		$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
+
+		if ( !empty( $insertRows ) ) {
+			$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
+		}
+		// Wikia change - end
 
 		$addFields    = array( 'cat_pages = cat_pages + 1' );
 		$removeFields = array( 'cat_pages = cat_pages - 1' );

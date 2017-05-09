@@ -1768,7 +1768,8 @@ class OutputPage extends ContextSource {
 				array(
 					"{$wgCookiePrefix}Token",
 					"{$wgCookiePrefix}LoggedOut",
-					session_name()
+					session_name(),
+					'access_token',
 				),
 				$wgCacheVaryCookies
 			);
@@ -3129,6 +3130,7 @@ $templates
 	public function userCanPreview() {
 		if ( $this->getRequest()->getVal( 'action' ) != 'submit'
 			|| !$this->getRequest()->wasPosted()
+			|| !$this->getUser()->isLoggedIn()
 			|| !$this->getUser()->matchEditToken(
 				$this->getRequest()->getVal( 'wpEditToken' ) )
 		) {
@@ -3257,10 +3259,10 @@ $templates
 		# apple-touch-icon is specified first to avoid this.
 		if ( $wgAppleTouchIcon !== false ) {
 			// Wikia change begin - @author: macbre
-			$appleTouchIcon = wfReplaceImageServer($wgAppleTouchIcon, SassUtil::getCacheBuster());
-			// Wikia change end
+			$appleTouchIcon = Wikia::getWikiLogoMetadata();
 
-			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
+			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon['url'], 'sizes' => $appleTouchIcon['size'] ) );
+			// Wikia change end
 		}
 
 		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFaviconFullUrl() ) );

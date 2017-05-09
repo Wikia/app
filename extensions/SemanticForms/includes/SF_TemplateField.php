@@ -27,7 +27,6 @@ class SFTemplateField {
 	private $mIsList;
 	private $mDelimiter;
 	private $mDisplay;
-	private $mInputType;
 	private $mNamespace;
 
 	static function create( $name, $label, $semanticProperty = null, $isList = null, $delimiter = null, $display = null ) {
@@ -43,32 +42,6 @@ class SFTemplateField {
 			$f->mDelimiter = ',';
 		}
 		return $f;
-	}
-
-	/**
-	 * Create an SFTemplateField object based on the corresponding field
-	 * in the template definition (which we first have to find)
-	 */
-	static function createFromList( $field_name, $all_fields, $strict_parsing ) {
-		// See if this field matches one of the fields defined for
-		// the template it's part of - if it is, use all available
-		// information about that field; if it's not, either create
-		// an object for it or not, depending on whether the
-		// template has a 'strict' setting in the form definition.
-		$the_field = null;
-		foreach ( $all_fields as $cur_field ) {
-			if ( $field_name == $cur_field->mFieldName ) {
-				$the_field = $cur_field;
-				break;
-			}
-		}
-		if ( $the_field == null ) {
-			if ( $strict_parsing ) {
-				return null;
-			}
-			$the_field = new SFTemplateField();
-		}
-		return $the_field;
 	}
 
 	function setTypeAndPossibleValues() {
@@ -90,8 +63,8 @@ class SFTemplateField {
 
 		$store = SFUtils::getSMWStore();
 		// this returns an array of objects
-		$allowed_values = SFUtils::getSMWPropertyValues( $store, $proptitle, "Allows value" );
-		$label_formats = SFUtils::getSMWPropertyValues( $store, $proptitle, "Has field label format" );
+		$allowed_values = SFValuesUtils::getSMWPropertyValues( $store, $proptitle, "Allows value" );
+		$label_formats = SFValuesUtils::getSMWPropertyValues( $store, $proptitle, "Has field label format" );
 		$propValue = SMWDIProperty::newFromUserLabel( $this->mSemanticProperty );
 		$this->mPropertyType = $propValue->findPropertyTypeID();
 
@@ -134,7 +107,11 @@ class SFTemplateField {
 		$this->mCargoField = $fieldName;
 
 		if ( is_null( $fieldDescription ) ) {
-			$tableSchemas = CargoUtils::getTableSchemas( array( $tableName ) );
+			try {
+				$tableSchemas = CargoUtils::getTableSchemas( array( $tableName ) );
+			} catch ( MWException $e ) {
+				return;
+			}
 			if ( count( $tableSchemas ) == 0 ) {
 				return;
 			}
@@ -151,13 +128,18 @@ class SFTemplateField {
 		// form input.
 		if ( $fieldDescription->mAllowedValues != null ) {
 			$this->mFieldType = 'Enumeration';
-		} elseif ( $fieldDescription->mType == 'Text' && $fieldDescription->mSize <= 100 ) {
+		} elseif ( $fieldDescription->mType == 'Text' && $fieldDescription->mSize != '' && $fieldDescription->mSize <= 100 ) {
 			$this->mFieldType = 'String';
 		} else {
 			$this->mFieldType = $fieldDescription->mType;
 		}
 		$this->mIsList = $fieldDescription->mIsList;
-		$this->mDelimiter = $fieldDescription->mDelimiter;
+		if ( method_exists( $fieldDescription, 'getDelimiter' ) ) {
+			// Cargo 0.11+
+			$this->mDelimiter = $fieldDescription->getDelimiter();
+		} else {
+			$this->mDelimiter = $fieldDescription->mDelimiter;
+		}
 		$this->mPossibleValues = $fieldDescription->mAllowedValues;
 	}
 
@@ -208,10 +190,6 @@ class SFTemplateField {
 		return $this->mDisplay;
 	}
 
-	function getInputType() {
-		return $this->mInputType;
-	}
-
 	function getNamespace() {
 		return $this->mNamespace;
 	}
@@ -222,10 +200,6 @@ class SFTemplateField {
 
 	function setLabel( $label ) {
 		$this->mLabel = $label;
-	}
-
-	function setInputType( $inputType ) {
-		$this->mInputType = $inputType;
 	}
 
 	function setNamespace( $namespace ) {

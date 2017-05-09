@@ -23,6 +23,7 @@
 	</testsuite>
 	<testsuite name="Wikia Extensions Test Suite">
 		<directory>../extensions/wikia/</directory>
+		<exclude>../extensions/wikia/SemanticMediaWiki/</exclude>
 	</testsuite>
 	<testsuite name="Wikia Maintenance Test Suite">
 		<directory>../maintenance/wikia/tests/</directory>

@@ -7,7 +7,9 @@
 			"Glanthor Reviol",
 			"TK-999",
 			"Tgr",
-			"Csega"
+			"Csega",
+			"Máté",
+			"Wolf Rex"
 		]
 	},
 	"semanticforms-desc": "Űrlapok szemantikus adatok hozzáadásához és szerkesztéséhez",
@@ -46,6 +48,7 @@
 	"sf_forminputs_preload": "Egy lap a wikin, amelynek tartalma ezen bemenet alapértéke lesz",
 	"sf_forminputs_property": "Egy szemantikai tulajdonság, amelynek ez a mező megfelel",
 	"sf_forminputs_size": "Ezen szövegbeviteli mező mérete karakterekben",
+	"sf_forminputs_checkboxes_select_all": "Összes kijelölése",
 	"createform": "Űrlap létrehozása",
 	"sf_createform_nameinput": "Űrlap neve",
 	"sf_createform_nameinputdesc": "(az űrlapot szokás szerint a fő sablon után nevezzük el):",
@@ -65,7 +68,9 @@
 	"sf_createform_atend": "A végén",
 	"sf_createform_add": "Hozzáadás",
 	"sf_createform_choosefield": "Válaszd ki azt a mezőt, amelyiket hozzá szeretnéd adni",
+	"sf_createform_addsection": "Szakasz hozzáadása",
 	"sf_createform_before": "Sablon elé:",
+	"sf_createform_sectionname": "Szakasznév",
 	"sf_createform_additembeforesave": "Legalább egy sablont hozzá kell rendelned az űrlaphoz a mentés előtt.",
 	"createcategory": "Kategória létrehozása",
 	"sf_createcategory_name": "Kategórianév:",
@@ -99,6 +104,7 @@
 	"sf_formedit_remove": "Eltávolítás",
 	"sf_formedit_addanother": "Másik hozzáadása",
 	"sf_formedit_none": "Nincs",
+	"sf_formedit_saveandcontinueediting": "Mentés és folytatás",
 	"runquery": "Lekérdezés futtatása",
 	"sf_runquery_badurl": "Meg kell adnod egy űrlap nevét az URL-ben;\naz URL-nek így kell kinéznie: 'Special:RunQuery/<űrlap neve>'.",
 	"sf_runquery_title": "Lekérdezés futtatása: $1",
@@ -121,8 +127,13 @@
 	"sf_category_hasdefaultform": "Ez a kategória a(z) „$1” űrlapot használja.",
 	"sf_category_desc": "Ez a(z) $1 kategória.",
 	"sf_blank_namespace": "Fő",
-	"right-viewedittab": "Nézd a „Szerkesztés” fület azokhoz a lapokhoz, melyek űrlappal szerkeszthetőek",
+	"right-viewedittab": "a „{{int:edit}}” fül megjelenítése űrlappal szerkeszthető lapokon",
 	"right-editrestrictedfields": "korlátozott űrlap-mezők szerkesztése",
 	"sf-select2-no-matches": "Nincs találat",
-	"sf-select2-searching": "Keresés..."
+	"sf-select2-searching": "Keresés...",
+	"sf-datepicker-close": "Bezárás",
+	"sf-datepicker-prev": "Előző",
+	"sf-datepicker-next": "Következő",
+	"sf-datepicker-today": "Ma",
+	"sf-regexp-wrongformat": "Hibás formátum."
 }

@@ -54,6 +54,10 @@ class InsightsPageViews {
 			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
 			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
 
+			$randValue = mt_rand();
+			$sortingData['random'][ $articleId ] = $randValue;
+			$articlesData[ $articleId ]['metadata']['random'] = $randValue;
+
 		}
 
 		( new InsightsSorting( $this->config ) )->createSortingArrays( $sortingData );
@@ -95,7 +99,7 @@ class InsightsPageViews {
 	 * @return array An array with dates of the last four Sundays
 	 */
 	private function getLastFourTimeIds() {
-		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
+		$lastTimeId = new DateTime( DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY ) );
 		$format = 'Y-m-d H:i:s';
 		return [
 			$lastTimeId->modify( '-1 week' )->format( $format ),

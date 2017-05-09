@@ -390,9 +390,10 @@ abstract class BaseTask {
 	 * queue a set of BaseTask objects
 	 *
 	 * @param BaseTask[] $tasks
+	 * @param string $priority which queue to add this task list to
 	 * @return array task ids
 	 */
-	public static function batch( array $tasks ) {
+	public static function batch( array $tasks, $priority = null ) {
 		if ( count( $tasks ) === 0 ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'BaseTask::batch', [
 				'exception' => new \Exception('Tasks list is empty')
@@ -413,7 +414,7 @@ abstract class BaseTask {
 			'backtrace' => new \Exception()
 		] );
 
-		return AsyncTaskList::batch( $taskLists );
+		return AsyncTaskList::batch( $taskLists, $priority );
 	}
 
 }

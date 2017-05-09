@@ -6,13 +6,14 @@ class ChatHooks {
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
 	public static function onGetRailModuleList( &$modules ) {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
-		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
-
-		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[$pos] = [ 'ChatRail', 'placeholder', null ];
+		if ( $wgUser->isLoggedIn() ) {
+			// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
+			// Above spotlights, below everything else. BugzId: 4597.
+			$modules[1286] = [ 'ChatRail', 'placeholder', null ];
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -58,13 +59,15 @@ class ChatHooks {
 	}
 
 	/**
-	 * add resources needed by chat
-	 * as chat entry points or links can appear on any page,
-	 * we really need them everywhere
+	 * Hook: BeforePageDisplay
+	 * Add resources needed by the chat ban modal to pages where it can appear
+	 * (Special:Contributions, Special:Log, and Special:RecentChanges)
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return true to continue hook processing
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgTitle;
-
 		wfProfileIn( __METHOD__ );
 
 		$specialPages = [
@@ -74,22 +77,14 @@ class ChatHooks {
 		];
 
 		foreach ( $specialPages as $value ) {
-			if ( $wgTitle->isSpecial( $value ) ) {
-				// For Chat2 (doesn't exist in Chat(1))
-				$scriptUrls = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
-
-				foreach ( $scriptUrls as $scriptUrl ) {
-					$out->addScript( '<script src="' . $scriptUrl . '"></script>' );
-				}
-				JSMessages::enqueuePackage( 'ChatBanModal', JSMessages::EXTERNAL );
+			if ( $out->getTitle()->isSpecial( $value ) ) {
+				$out->addModules( 'ext.Chat2.ChatBanModal' );
 				$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Chat2/css/ChatModal.scss' ) );
 				break;
 			}
 		}
-		JSMessages::enqueuePackage( 'ChatWidget', JSMessages::INLINE );
 
 		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
@@ -142,7 +137,7 @@ class ChatHooks {
 				}
 			}
 		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
-			$ipLinks = [ ];
+			$ipLinks = [];
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
 				// Need to make the link manually for this as Linker's normaliseSpecialPage

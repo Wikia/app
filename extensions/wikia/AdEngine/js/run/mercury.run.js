@@ -1,27 +1,33 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adInfoTracker',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
-	'ext.wikia.adEngine.lookup.rubiconFastlane',
+	'ext.wikia.adEngine.lookup.prebid',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.adEngine.slot.service.actionHandler',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
 	adContext,
+	adInfoTracker,
+	slotStateMonitor,
 	amazon,
 	oxBidder,
+	prebid,
 	rubiconFastlane,
+	rubiconVulcan,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	scrollHandler,
-	yavliTag,
+	actionHandler,
 	geo,
 	instantGlobals,
 	win
@@ -29,7 +35,6 @@ require([
 	'use strict';
 
 	messageListener.init();
-	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
@@ -43,12 +48,35 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
 			oxBidder.call();
 		}
 
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
 		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
+			rubiconVulcan.call();
+		}
+
+		adInfoTracker.run();
+		slotStateMonitor.run();
+		actionHandler.registerMessageListener();
 	});
+
+	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		mercuryListener.onEveryPageChange(function () {
+			prebid.call();
+		});
+	}
+
+	if (
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
+	) {
+		mercuryListener.onEveryPageChange(function () {
+			rubiconFastlane.call();
+		});
+	}
 });

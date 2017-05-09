@@ -14,23 +14,6 @@ class RecirculationController extends WikiaController {
 		}
 	}
 
-	public function index() {
-		$dataService = new ParselyDataService();
-
-		$posts = $dataService->getPosts( $this->type );
-
-		if ( count( $posts ) > 0 ) {
-			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-			$this->response->setData( [
-				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
-				'posts' => $posts,
-			] );
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function discussions() {
 		$cityId = $this->request->getVal( 'cityId', null );
 
@@ -38,19 +21,25 @@ class RecirculationController extends WikiaController {
 			throw new InvalidParameterApiException( 'cityId' );
 		}
 
-		if ( RecirculationHooks::canShowDiscussions() ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$posts = $discussionsDataService->getPosts();
+			$posts = $discussionsDataService->getData( 'posts' )['posts'];
 
 			if ( count( $posts ) > 0 ) {
-				$discussionsUrl = "/d/f/$cityId/trending";
+				$discussionsUrl = "$discussionsDataService->server/d/f";
+
+				$postObjects = [];
+
+				foreach ( $posts as $post ) {
+					$postObjects[] = $post->jsonSerialize();
+				}
 
 				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 				$this->response->setData( [
 					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
 					'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
 					'discussionsUrl' => $discussionsUrl,
-					'posts' => $posts,
+					'posts' => $postObjects,
 				] );
 				return true;
 			}
@@ -60,7 +49,7 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function container( $params ) {
-		$containerId = $this->request->getVal('containerId');
-		$this->response->setVal('containerId', $containerId);
+		$containerId = $this->request->getVal( 'containerId' );
+		$this->response->setVal( 'containerId', $containerId );
 	}
 }

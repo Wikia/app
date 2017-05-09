@@ -226,7 +226,8 @@
 					method: 'axSave',
 					rs: 'ArticleCommentsAjax',
 					title: wgPageName,
-					wpArticleComment: content
+					wpArticleComment: content,
+					token: window.mw.user.tokens.get('editToken')
 
 				}, function (json) {
 					$throbber.css('visibility', 'hidden');

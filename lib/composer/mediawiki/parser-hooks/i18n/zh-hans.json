@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yfdyh000"
+		]
+	},
+	"parserhooks-desc": "用以在面向对象的编程和声明的方式下创建MediaWiki解析器钩"
+}

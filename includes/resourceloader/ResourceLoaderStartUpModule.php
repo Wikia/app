@@ -38,7 +38,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgVariantArticlePath, $wgActionPaths, $wgUseAjax, $wgVersion,
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
-			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength;
+			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgCommunityPageDisableTopContributors;
 
 		$mainPage = Title::newMainPage();
 

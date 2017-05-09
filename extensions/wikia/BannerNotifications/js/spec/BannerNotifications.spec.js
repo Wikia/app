@@ -2,6 +2,7 @@
 describe('Banner Notification', function () {
 	'use strict';
 	function noop () {}
+	mw.config = new mw.Map();
 
 	it('should have a constructor defined', function () {
 		expect(typeof BannerNotification).toBe('function');

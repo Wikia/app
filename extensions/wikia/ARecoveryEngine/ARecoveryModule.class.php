@@ -1,21 +1,33 @@
 <?php
 
 class ARecoveryModule {
-	const ASSET_GROUP_ARECOVERY_LOCK = 'arecovery_lock_scss';
-
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether PageFair recovery is enabled (on current wiki)
+	 *
+	 * $wgAdDriverEnablePageFairRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnablePageFairRecovery === true; // enabled on wiki
 	 *
 	 * @return bool
 	 */
-	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+	public function isPageFairRecoveryEnabled() {
+		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		return !empty( $wgEnableUsingSourcePointProxyForCSS );
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnablePageFairRecovery === true;
 	}
 
-	public static function isLockEnabled() {
-		$user = F::app()->wg->User;
-		return self::isEnabled() && ( $user && !$user->isLoggedIn() );
+	/**
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+	 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+	 *
+	 * @return bool
+	 */
+	public function isSourcePointRecoveryEnabled() {
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery, $wgAdDriverEnableSourcePointMMS;
+
+		return $wgUser->isAnon() && (
+			$wgAdDriverEnableSourcePointRecovery === true || $wgAdDriverEnableSourcePointMMS === true
+		);
 	}
 }

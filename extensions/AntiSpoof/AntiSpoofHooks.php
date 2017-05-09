@@ -123,4 +123,21 @@ class AntiSpoofHooks {
 		$spoof->update( $oldName );
 		return true;
 	}
+
+	/**
+	 * Wikia Addition
+	 * (After a successful user rename using Wikia Tool)
+	 *
+	 * @param $dbw DatabaseBase
+	 * @param $uid
+	 * @param $oldusername string
+	 * @param $newusername string
+	 * @param $process
+	 * @param $tasks
+	 */
+	public static function asAfterWikiaRenameUserHook( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
+		$spoof = static::makeSpoofUser( $newusername );
+		$spoof->record();
+		return true;
+	}
 }

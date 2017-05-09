@@ -5,7 +5,7 @@
 describe('ext.wikia.adEngine.adEngine', function () {
 	'use strict';
 
-	var eventDispatcher = { trigger: function () { return true; }},
+	var eventDispatcher = { dispatch: function () { return true; }},
 		noop = function () { return; },
 		originalLazyQueue = modules['wikia.lazyqueue'](),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
@@ -13,6 +13,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			create: function (slotName, slotElement, callbacks) {
 				return {
 					name: slotName,
+					container: {
+						setAttribute: noop
+					},
 					success: callbacks.success || noop,
 					hop: callbacks.hop || noop,
 					post: noop
@@ -20,8 +23,16 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			}
 		},
 		hooksMock = noop,
+		slotRegistryMock = {
+			add: noop,
+			reset: noop
+		},
 		slotTrackerMock = function () { return { track: noop }; },
-		slotTweakerMock = { show: noop, hide: noop },
+		slotTweakerMock = {
+			show: noop,
+			hide: noop,
+			isTopLeaderboard: noop
+		},
 		docMock = {
 			getElementById: function () {
 				return {
@@ -59,6 +70,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
 			adSlotMock,
+			slotRegistryMock,
 			slotTrackerMock,
 			slotTweakerMock,
 			hooksMock,

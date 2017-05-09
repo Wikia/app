@@ -45,7 +45,10 @@ class ChatAjax {
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
+		if ( empty( $user ) ||
+			 !$user->isLoggedIn() ||
+			 $user->getName() != $wgRequest->getVal( 'name', '' )
+			) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
@@ -63,6 +66,7 @@ class ChatAjax {
 			'avatarSrc' => AvatarService::getAvatarUrl( $user->getName(), self::CHAT_AVATAR_DIMENSION ),
 			'editCount' => "",
 			'since' => '',
+			'groups' => $user->getGroups(),
 
 			// Extra wg variables that we need.
 			'wgCityId' => $wgCityId,
@@ -82,7 +86,8 @@ class ChatAjax {
 		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			if ( $wgCityId !== $cityIdFromRoom ) {
+			$cityIdHash = md5($wgCityId.$wgServer);
+			if ( $cityIdHash !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
 				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();
 			}
@@ -190,12 +195,12 @@ class ChatAjax {
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
 		if ( empty( $subjectUserName ) ) {
-			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text;
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text();
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;
 			if ( $mode == 'private' ) {
-				$result = Chat::blockPrivate( $subjectUserName, $dir, $adminUser );
+				$result = Chat::blockPrivate( $subjectUserName, $adminUser, $dir );
 			} else if ( $mode == 'global' ) {
 				$time = (int)$wgRequest->getVal( 'time', 0 );
 				$result = Chat::banUser( $subjectUserName, $adminUser, $time, $wgRequest->getVal( 'reason' ) );
@@ -272,7 +277,13 @@ class ChatAjax {
 	}
 
 
-	function BanModal() {
+	/**
+	 * Generates the HTML form used in the chat ban modal interface
+	 * Used via AjaxDispatcher by JS
+	 *
+	 * @return array array containing the form HTML and whether we are changing an existing ban
+	 */
+	public static function BanModal() {
 		global $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );

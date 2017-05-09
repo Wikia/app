@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Siebrand"
+		]
+	},
+	"maps-error-no-layertype": "Je moet het laagtype opgeven. Alleen {{PLURAL:$2|dit type wordt|deze typen worden}} ondersteund: $1",
+	"maps-geocoder-not-available": "Geocoderen via Maps is niet beschikbaar. Het geocoderen van je locatie is niet mogelijk.",
+	"maps-par-width": "Maakt het mogelijk om de breedte van de kaart in te stellen. Standaard worden pixels als eenheid gebruikt, maar je kunt expliciet een van deze eenheden opgeven: px, ex, em, %.",
+	"maps-par-height": "Maakt het mogelijk om de hoogte van de kaart in te stellen. Standaard worden pixels als eenheid gebruikt, maar je kunt expliciet een van deze eenheden aangeven: px, ex, em, %.",
+	"maps-googlemaps3-incompatbrowser": "Je browser kan niet werken met Google Maps v3."
+}

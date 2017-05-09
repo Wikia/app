@@ -91,7 +91,7 @@ function renderFlickr($input) {
 
         $rsp = Http::get( $url );
 
-        $rsp_obj = Wikia\Util\Serialize::safeUnserialize($rsp);
+        $rsp_obj = unserialize( $rsp, [ 'allowed_classes' => false ] );
         # display the formated HTML and photo link or return an error
         if ($rsp_obj['stat'] != 'ok'){
 	        $photoid = $params['photo_id'];
@@ -122,7 +122,7 @@ function renderFlickr($input) {
 	# Call API
 	$url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
 	$rsp = Http::get( $url );
-	$rsp_obj = Wikia\Util\Serialize::safeUnserialize($rsp);
+	$rsp_obj = unserialize( $rsp, [ 'allowed_classes' => false ] );
 	# display the formated HTML and photo link or return an error
 	if ($rsp_obj['stat'] == 'ok'){
         	$title = $rsp_obj['photo']['title']['_content'];

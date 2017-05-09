@@ -1,8 +1,11 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaViewTest extends PHPUnit_Framework_TestCase {
+class WikiaViewTest extends TestCase {
 
 	/**
 	 * WikiaView object
@@ -18,7 +21,6 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		return array(
 			array( 'Test', 'Foo', array(), 'html' ),
 			array( 'Test', 'Bar', array( 'foo1' => 1, 'foo2' => 2 ), 'json' ),
-			array( 'Test', 'Foo', array( 'bar' => 'zzz' ), 'raw' ),
 		);
 	}
 
@@ -50,7 +52,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		if ($classExists) {
 			$this->mockAutoloadedController($controllerName);
 		} else {
-			$this->setExpectedException( 'WikiaException' );
+			$this->expectException( WikiaException::class );
 		}
 
 		$this->object->setTemplate( $controllerName, 'hello' );
@@ -81,25 +83,26 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 
 	public function testRenderingForUnknownFormat() {
 		$response = new WikiaResponse( 'unknownFormat' );
-		$expectedResult = json_encode(array ('exception' => array ('message' => 'Invalid Format, defaulting to JSON', 'code' => 501 )));
+		$response->setVal( 'secret', 'data' );
+		$this->object->setResponse( $response );
+		$expectedResult = json_encode(array ('exception' => array ('message' => 'Invalid Response Format', 'code' => 400 )));
 		$this->object->setResponse( $response );
 		$result = $this->object->render();
 		$this->assertEquals($result, $expectedResult);
 	}
 
-	public function testRenderingFormatsDataProvider() {
+	public function renderingFormatsDataProvider() {
 		$responseValueName = 'result';
 		$responseValueData = array( 1, 2, 3 );
 
 		return array(
-			array( WikiaResponse::FORMAT_RAW, $responseValueName, $responseValueData, '<pre>' . var_export( array( $responseValueName => $responseValueData ), true ) .'</pre>' ),
 			array( WikiaResponse::FORMAT_JSON, $responseValueName, $responseValueData, json_encode( array( $responseValueName => $responseValueData ) ) ),
 			array( WikiaResponse::FORMAT_HTML, $responseValueName, $responseValueData, implode( '-', $responseValueData ) ),
 		);
 	}
 
 	/**
-	 * @dataProvider testRenderingFormatsDataProvider
+	 * @dataProvider renderingFormatsDataProvider
 	 */
 	public function testRenderingFormats($format, $responseValueName, $responseValueData,$expectedResult) {
 		$response = new WikiaResponse( $format );

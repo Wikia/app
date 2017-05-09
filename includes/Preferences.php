@@ -168,7 +168,7 @@ class Preferences {
 		global $wgAuth, $wgContLang, $wgParser, $wgCookieExpiration, $wgLanguageCode,
 			   $wgDisableTitleConversion, $wgDisableLangConversion, $wgMaxSigChars,
 			   $wgEnableEmail, $wgEmailConfirmToEdit, $wgEnableUserEmail, $wgEmailAuthentication,
-			   $wgEnotifWatchlist, $wgEnotifUserTalk, $wgEnotifRevealEditorAddress;
+			   $wgEnotifWatchlist, $wgEnotifDiscussions, $wgEnotifUserTalk, $wgEnotifRevealEditorAddress;
 
 		## User info #####################################
 		// Information panel
@@ -472,6 +472,20 @@ class Preferences {
 					'label-message' => 'tog-enotifusertalkpages',
 					'disabled' => $disableEmailPrefs,
 				);
+			}
+			if ( $wgEnotifDiscussions ) {
+				$defaultPreferences['enotifdiscussionsvotes'] = [
+					'type' => 'toggle',
+					'section' => 'personal/email',
+					'label-message' => 'tog-enotifdiscussions-votes',
+					'disabled' => $disableEmailPrefs,
+				];
+				$defaultPreferences['enotifdiscussionsfollows'] = [
+					'type' => 'toggle',
+					'section' => 'personal/email',
+					'label-message' => 'tog-enotifdiscussions-follows',
+					'disabled' => $disableEmailPrefs,
+				];
 			}
 			if ( $wgEnotifUserTalk || $wgEnotifWatchlist ) {
 				$defaultPreferences['enotifminoredits'] = array(

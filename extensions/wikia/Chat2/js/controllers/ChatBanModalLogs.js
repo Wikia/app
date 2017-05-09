@@ -1,6 +1,6 @@
 var ChatBanLogController = function () {
 	$('.chat-change-ban').click(function (event) {
-		var title = $.msg('chat-ban-modal-change-ban-heading'),
+		var title = mw.message('chat-ban-modal-change-ban-heading').escaped(),
 			userId = $(this).data('user-id'),
 			okCallback = function (expires, reason) {
 				$.post(wgScript + '?action=ajax&rs=ChatAjax&method=blockOrBanChat', {
