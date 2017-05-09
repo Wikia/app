@@ -1,18 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
-	'ext.wikia.aRecoveryEngine.sourcePoint.slotFinder',
 	'jquery',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
 ], function (
 	adContext,
-	adBlockDetection,
-	adBlockRecovery,
-	slotFinder,
 	$,
 	log,
 	throttle,
@@ -52,14 +46,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			}
 
 			return stopPoint - globalNavigationHeight - 2 * margin - ad.height();
-		}
-
-		function replaceAdSlot() {
-			var recoveredElement = slotFinder.getRecoveredSlot(slotName);
-
-			if (recoveredElement) {
-				$adSlot = $(recoveredElement.parentNode.parentNode);
-			}
 		}
 
 		function update() {
@@ -117,10 +103,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					win.adslots2.push({
 						slotName: slotName,
 						onSuccess: function () {
-							if (adBlockRecovery.isSourcePointEnabled()) {
-								adBlockDetection.addOnBlockingCallback(replaceAdSlot);
-							}
-
 							win.addEventListener('scroll', update);
 							win.addEventListener('resize', update);
 

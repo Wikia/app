@@ -9,7 +9,7 @@ class ARecoveryModule {
 	public static function isPageFairRecoveryEnabled() {
 		global $wgUser, $wgAdDriverEnablePageFairRecovery;
 
-		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnablePageFairRecovery === true;
+		return static::isRecoverablePage() && $wgAdDriverEnablePageFairRecovery === true;
 	}
 
 	/**
@@ -20,7 +20,7 @@ class ARecoveryModule {
 	public static function isSourcePointRecoveryEnabled() {
 		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
 
-		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnableSourcePointRecovery;
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
 	}
 
 	/**
@@ -29,9 +29,9 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isSourcePointMessagingEnabled() {
-		global $wgUser, $wgAdDriverEnableSourcePointMMS;
+		global $wgUser, $wgAdDriverEnableSourcePointMMS, $wgAdDriverEnableSourcePointRecovery;
 
-		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] ) && $wgAdDriverEnableSourcePointMMS;
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointMMS && !$wgAdDriverEnableSourcePointRecovery;
 	}
 
 	/**
@@ -41,5 +41,11 @@ class ARecoveryModule {
 	 */
 	public static function shouldLoadSourcePointBootstrap() {
 		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
+	}
+
+	public static function isRecoverablePage() {
+		global $wgUser;
+
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] );
 	}
 }

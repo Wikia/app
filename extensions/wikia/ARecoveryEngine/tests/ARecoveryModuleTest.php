@@ -47,6 +47,7 @@ class ARecoveryModuleTest extends WikiaBaseTest {
 	 * @param $expected boolean - is SourcePoint messaging enabled
 	 */
 	public function testSourcePointMessagingDisabled( $isAnon, $wgAdDriverEnableSourcePointMMS, $expected ) {
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', false );
 		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isAnon ) );
 		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
 		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', true );
