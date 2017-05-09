@@ -159,6 +159,15 @@ require([
 			}
 		}
 
+		function initAttributionTracking() {
+			$('.attribution-container a').click(function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'attribution'
+				});
+			});
+		}
+
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
@@ -263,6 +272,8 @@ require([
 		$closeBtn.click(closeButtonClicked);
 
 		onScroll.bind(toggleCollapse);
+
+		initAttributionTracking();
 	});
 
 });
