@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
-			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
+			prebid.src = '//acdn.adnxs.com/prebid/not-for-prod/prebid.js' || adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
 			node.parentNode.insertBefore(prebid, node);
 		}
 

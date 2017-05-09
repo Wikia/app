@@ -22,7 +22,7 @@ class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
 
 		$called = true;
 
-		if ( static::isEnabled() ) {
+		if ( false && static::isEnabled() ) {
 			return \MustacheService::getInstance()->render(
 				static::TEMPLATE,
 				[
