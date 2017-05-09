@@ -28,7 +28,6 @@ class WikiService extends WikiaModel {
 	const WIKIAGLOBAL_CITY_ID = 80433;
 
 	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 
 	static $botGroups = [ 'bot', 'bot-global' ];
