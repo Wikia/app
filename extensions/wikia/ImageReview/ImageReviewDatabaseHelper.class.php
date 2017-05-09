@@ -11,6 +11,9 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * Query selecting images populating a list
+	 *
+	 * Called by ImageReviewHelper::getImageList only (wiki_id, page_id, state, priority, flags fields are used)
+	 *
 	 * @param  integer       $iState  A state to select
 	 * @param  string        $sOrder  Sorting order
 	 * @param  integer       $iLimit  SQL limit of queried images
@@ -20,22 +23,25 @@ class ImageReviewDatabaseHelper {
 		$iLimit = ImageReviewHelper::LIMIT_IMAGES_FROM_DB,
 		$iState = ImageReviewStatuses::STATE_UNREVIEWED
 	) {
-		$oDB = $this->getDatawareDB( DB_SLAVE );
-
-		$oResults = $oDB->query('
-			SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-				FROM `image_review`
-				WHERE state = ' . $iState . ' AND top_200 = 0
-				ORDER BY ' . $sOrder . '
-				LIMIT ' . $iLimit . '
-			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)',
-			__METHOD__
+		return $this->getDatawareDB( DB_SLAVE )->select(
+			'image_review',
+			[
+				'wiki_id',
+				'page_id',
+				'state',
+				'priority',
+				'flags'
+			],
+			[
+				'state' => $iState,
+				'top_200' => 0
+			],
+			__METHOD__,
+			[
+				'ORDER BY' => $sOrder,
+				'LIMIT' => $iLimit,
+			]
 		);
-
-		return $oResults;
 	}
 
 	/**
