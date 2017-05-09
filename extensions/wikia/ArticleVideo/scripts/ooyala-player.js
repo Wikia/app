@@ -17,6 +17,10 @@ define('ooyala-player', function () {
 		this.params.skin = {
 			config: baseJSONSkinUrl
 		};
+		this.params.initialBitrate = {
+			level: 1,
+			duration: 30
+		};
 
 		this.containerId = container.id;
 		this.player = null;

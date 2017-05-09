@@ -41,6 +41,11 @@
     }
   }
 
+  svg {
+    fill: $white;
+    margin-top: 10px;
+  }
+
   .oo-social-action-text {
     font-family: $font-family-roboto-condensed;
     font-size: em(20px);
@@ -62,23 +67,18 @@
 
   .oo-facebook {
     @extend .oo-social-icon;
-    background-image: url("//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/social-facebook.svg");
   }
 
   .oo-twitter {
     @extend .oo-social-icon;
-    background-image: url("//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/social-twitter.svg");
   }
 
   .oo-google-plus {
     @extend .oo-social-icon;
-    background-image: url("//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/social-google.svg");
   }
 
   .oo-email-share {
     @extend .oo-social-icon;
-    background-image: url("//player.ooyala.com/static/v4/stable/4.10.6/skin-plugin/assets/images/social-email.svg");
-    background-size: cover;
   }
 
   .oo-embed-form {
