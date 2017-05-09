@@ -88,8 +88,9 @@ $wgHooks['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
-$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
+	true );
 
 JSMessages::registerPackage( 'Forum', [
 	'back',

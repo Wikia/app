@@ -53,13 +53,15 @@
 			<? endforeach; ?>
 		</ul>
 	</li>
-	<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-discuss pph-local-nav-link">
-		<a href="<?= $discuss['href'] ?>" data-tracking="discuss">
-			<?= DesignSystemHelper::renderSvg(
-				'wds-icons-reply',
-				'wds-icon wds-icon-small'
-			) ?>
-			<span class="pph-local-nav-discuss-text"><?= $discuss['text'] ?></span>
-		</a>
-	</li>
+	<? if ( !empty( $discuss ) ): ?>
+		<li class="pph-local-nav-tracking pph-local-nav-item-l1 pph-local-nav-discuss pph-local-nav-link">
+			<a href="<?= $discuss['href'] ?>" data-tracking="discuss">
+				<?= DesignSystemHelper::renderSvg(
+					'wds-icons-reply',
+					'wds-icon wds-icon-small'
+				) ?>
+				<span class="pph-local-nav-discuss-text"><?= $discuss['text'] ?></span>
+			</a>
+		</li>
+	<? endif; ?>
 </ul>

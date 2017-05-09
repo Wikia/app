@@ -1,10 +1,12 @@
 /*global define, require*/
 define('ext.wikia.adEngine.slot.adSlot', [
+	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.adBlockDetection')
-], function (doc, log, win, adBlockDetection) {
+], function (adUnitBuilder, megaAdUnitBuilder, doc, log, win, adBlockDetection) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
@@ -32,7 +34,11 @@ define('ext.wikia.adEngine.slot.adSlot', [
 	}
 
 	function getShortSlotName(slotName) {
-		return slotName.replace(/^.*\/([^\/]*)$/, '$1');
+		if (megaAdUnitBuilder.isValid(slotName)) {
+			return megaAdUnitBuilder.getShortSlotName(slotName);
+		}
+
+		return adUnitBuilder.getShortSlotName(slotName);
 	}
 
 	function getRecoveredIframe(slotName) {

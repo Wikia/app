@@ -13,6 +13,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			create: function (slotName, slotElement, callbacks) {
 				return {
 					name: slotName,
+					container: {
+						setAttribute: noop
+					},
 					success: callbacks.success || noop,
 					hop: callbacks.hop || noop,
 					post: noop

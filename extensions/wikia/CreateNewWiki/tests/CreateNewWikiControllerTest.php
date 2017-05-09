@@ -59,7 +59,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgUser', $wgUser );
 
-		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo', 'getCityId', 'getSiteName'), array(), '', false);
+		$createWiki = $this->getMockBuilder(CreateWiki::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'create', 'getWikiInfo', 'getCityId', 'getSiteName' ] )
+			->getMock();
 		$createWiki->expects($this->any())
 			->method('create');
 		$createWiki->expects($this->any())
@@ -70,6 +73,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->expects($this->any())
 			->method('getCityId')
 			->willReturn(99);
+
+		$createWiki->expects( $this->any() )
+			->method( 'getSiteName' )
+			->willReturn( $siteName );
 
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
 		$mainPageTitle->expects($this->any())
@@ -101,7 +108,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->assertEquals( $testData['status'], $response->getVal( 'status' ), $testCase );
 
-		if ( $userLoggedIn && $userEmailConfirmed ) {
+		if ( $testData['userLogged'] && $testData['userEmailConfirmed'] ) {
 			$this->assertEquals($siteName, $response->getVal('siteName'));
 			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 		}
