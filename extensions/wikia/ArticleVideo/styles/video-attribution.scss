@@ -25,7 +25,7 @@
 	margin-left: 6px;
 }
 
-.featured-video-wrapper .collapsed {
+.featured-video-wrapper .is-collapsed {
 	.featured-video__attribution-container {
 		@include justify-content(flex-start);
 		border-bottom: 0;
