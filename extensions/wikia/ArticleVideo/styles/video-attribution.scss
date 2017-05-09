@@ -1,0 +1,42 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
+
+.attribution-container {
+	@include align-items(center);
+	@include flexbox();
+	@include justify-content(center);
+	border-bottom: 1px solid rgba($color-text, .5);
+	padding: 6px;
+
+	.attribution-avatar {
+		height: 20px;
+		margin-right: 6px;
+		width: 20px;
+	}
+
+	.attribution-username, .attribution-icon {
+		color: rgba($color-text, .75);
+	}
+
+	.attribution-icon {
+		line-height: 0;
+		margin-left: 6px;
+	}
+}
+
+.collapsed {
+	.attribution-container {
+		@include justify-content(flex-start);
+		border-bottom: 0;
+		padding: 2px 0 0;
+	}
+
+	.attribution-avatar {
+		display: none;
+	}
+
+	.attribution-username, .attribution-icon {
+		color: $wds-color-light-gray;
+	}
+}
