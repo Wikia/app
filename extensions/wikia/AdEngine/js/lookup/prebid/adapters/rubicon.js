@@ -16,10 +16,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					],
 					siteId: 55412,
 					zoneId: 519058,
-					accountId: '7450',
+					accountId: 7450,
 					name: 'outstream-desktop',
 					video: {
-						playerHeight: 360,
+						playerHeight: 480,
 						playerWidth: 640,
 						size_id: 203,
 						position: 'atf'
@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					name: 'outstream-desktop',
 					video: {
 						language: 'en',
-						playerHeight: 360,
+						playerHeight: 480,
 						playerWidth: 640,
 						size_id: 203,
 						position: 'atf'
