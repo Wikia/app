@@ -166,56 +166,50 @@ class OoyalaConfigController extends WikiaController {
 		],
 		'buttons' => [
 			'desktopContent' => [
-				0 => [
+				[
 					'name' => 'playPause',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
-				1 => [
+				[
 					'name' => 'volume',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 240,
 				],
-				2 => [
+				[
 					'name' => 'live',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
 				],
-				3 => [
+				[
 					'name' => 'timeDuration',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'drop',
 					'minWidth' => 145,
 				],
-				4 => [
+				[
 					'name' => 'flexibleSpace',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 1,
 				],
-				5 => [
+				[
 					'name' => 'share',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'moveToMoreOptions',
 					'minWidth' => 45,
 				],
-				6 => [
-					'name' => 'logo',
+				[
+					'name' => 'quality',
 					'location' => 'controlBar',
-					'whenDoesNotFit' => 'keep',
-					'minWidth' => 125,
-				],
-				7 => [
-					'name' => 'fullscreen',
-					'location' => 'controlBar',
-					'whenDoesNotFit' => 'keep',
+					'whenDoesNotFit' => 'drop',
 					'minWidth' => 45,
 				],
-				8 => [
-					'name' => 'quality',
+				[
+					'name' => 'fullscreen',
 					'location' => 'controlBar',
 					'whenDoesNotFit' => 'keep',
 					'minWidth' => 45,
@@ -257,10 +251,7 @@ class OoyalaConfigController extends WikiaController {
 				'fontString' => 'l',
 				'fontStyleClass' => 'oo-icon oo-icon-discovery-binoculars',
 			],
-			'quality' => [
-				'fontFamilyName' => 'ooyala-slick-type',
-				'fontString' => 'm',
-				'fontStyleClass' => 'oo-icon oo-icon-bitrate',
+			'quality' => [// svg set in skin()
 			],
 			'setting' => [
 				'fontFamilyName' => 'ooyala-slick-type',
@@ -317,16 +308,26 @@ class OoyalaConfigController extends WikiaController {
 
 	public function skin() {
 		$config = self::CONFIG;
-		$config['icons']['play']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
+		$config['icons']['play']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-play-triangle-small' );
 		$config['icons']['pause']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-pause-small' );
-		$config['icons']['volume']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-volume-small' );
-		$config['icons']['volumeOff']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-volume-off-small' );
-		$config['icons']['expand']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
-		$config['icons']['compress']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
+		$config['icons']['volume']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-volume-small' );
+		$config['icons']['volumeOff']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-volume-off-small' );
+		$config['icons']['expand']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-small' );
+		$config['icons']['compress']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-fullscreen-off-small' );
 		$config['icons']['share']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-share-small' );
-		$config['icons']['shareTwitter']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-twitter' );
-		$config['icons']['shareFacebook']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
-		$config['icons']['shareGoogle']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
+		$config['icons']['quality']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-gear-small' );
+		$config['icons']['shareTwitter']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-twitter' );
+		$config['icons']['shareFacebook']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-facebook' );
+		$config['icons']['shareGoogle']['svg'] =
+			DesignSystemHelper::renderSvg( 'wds-icons-googleplus' );
 		$config['icons']['shareMail']['svg'] = DesignSystemHelper::renderSvg( 'wds-icons-mail' );
 
 		if ( $this->getVal( 'isMobile' ) ) {
