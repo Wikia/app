@@ -96,15 +96,16 @@ gulp.task('build:all', ['build:vendor', 'build'], function () {
   gulp.src(['build/core.js', 'build/main_html5.js', 'build/youtube.js', 'build/html5-skin.min.js']).pipe(concat('all-with-youtube.js')).pipe(gulp.dest('build'));
   gulp.src([
     'build/core.js',
-    'build/bit_wrapper.min.js',
+    'build/bit_wrapper.js',
     'build/main_html5.js',
     'build/html5-skin.min.js',
-    'build/google_ima.min.js'
+    'build/google_ima.js'
   ]).pipe(concat('all-with-bitmovin.js')).pipe(gulp.dest('build'));
 });
 
 gulp.task('build:vendor', function () {
   gulp.src('vendor/*.js').pipe(uglify()).pipe(gulp.dest('build'));
+	gulp.src(['vendor/*.css', 'vendor/*.swf']).pipe(gulp.dest('build'));
 });
 
 // Build All
