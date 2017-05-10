@@ -3182,7 +3182,7 @@ $config['ooyala_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/ooyala/html5-skin.scss',
+		'//extensions/wikia/ArticleVideo/bower_components/html5-skin/scss/html5-skin.scss',
 		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
 	],
 ];
