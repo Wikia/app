@@ -9,7 +9,9 @@ class ArticleVideoHooks {
 		$isRelatedVideoEmbedded = ArticleVideoContext::isRelatedVideoEmbedded( $title );
 
 		if ( $isFeaturedVideoEmbedded || $isRelatedVideoEmbedded ) {
-			$out->addScriptFile( '/extensions/wikia/ArticleVideo/scripts/ooyala/all-with-bitmovin.js' );
+			$out->addScriptFile(
+				'/extensions/wikia/ArticleVideo/bower_components/html5-skin/build/all-with-bitmovin.js'
+			);
 
 			\Wikia::addAssetsToOutput( 'ooyala_scss' );
 			\Wikia::addAssetsToOutput( 'ooyala_js' );
