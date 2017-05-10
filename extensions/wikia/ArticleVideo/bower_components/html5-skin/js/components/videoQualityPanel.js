@@ -27,26 +27,6 @@ var VideoQualityPanel = React.createClass({
     this.props.togglePopoverAction();
   },
 
-  addAutoButton: function(bitrateButtons) {
-    var autoQualityBtn = ClassNames({
-      'oo-quality-auto-btn': true,
-      'oo-selected': this.state.selected == 'auto'
-    });
-    var selectedBitrateStyle = {color: (this.props.skinConfig.general.accentColor && this.state.selected == 'auto') ? this.props.skinConfig.general.accentColor : null};
-
-    //add auto btn to beginning of array
-    bitrateButtons.unshift(
-      <li className="oo-auto-li" key='auto-li'>
-        <a className={autoQualityBtn} key='auto' onClick={this.handleVideoQualityClick.bind(this, 'auto')}>
-          <div className="oo-quality-auto-icon" style={selectedBitrateStyle}>
-            <Icon {...this.props} icon="auto" />
-          </div>
-          <div className="oo-quality-auto-label" style={selectedBitrateStyle}>Auto</div>
-        </a>
-      </li>
-    );
-  },
-
   render: function() {
     var availableBitrates  = this.props.videoQualityOptions.availableBitrates;
     var bitrateButtons = [];
@@ -60,18 +40,15 @@ var VideoQualityPanel = React.createClass({
       });
       var selectedBitrateStyle = {color: (this.props.skinConfig.general.accentColor && this.state.selected == availableBitrates[i].id) ? this.props.skinConfig.general.accentColor : null};
 
-      if (availableBitrates[i].id == 'auto') {
-        this.addAutoButton(bitrateButtons);
-      }
-      else {
-        if (typeof availableBitrates[i].bitrate === "number") {
-          label = Math.round(availableBitrates[i].bitrate/1000) + ' kbps';
-        } 
-        else {
-          label = availableBitrates[i].bitrate;
-        }
-        bitrateButtons.push(<li key={i}><a className={qualityBtn} style={selectedBitrateStyle} key={i} onClick={this.handleVideoQualityClick.bind(this, availableBitrates[i].id)}>{label}</a></li>);
-      }
+      if (availableBitrates[i].id === 'auto') {
+        label = 'Auto';
+      } else if (typeof availableBitrates[i].height === "number") {
+				label = Math.round(availableBitrates[i].height) + 'p';
+			}
+			else {
+				label = availableBitrates[i].bitrate;
+			}
+			bitrateButtons.push(<li key={i}><a className={qualityBtn} style={selectedBitrateStyle} key={i} onClick={this.handleVideoQualityClick.bind(this, availableBitrates[i].id)}>{label}</a></li>);
     }
 
     var qualityScreenClass = ClassNames({

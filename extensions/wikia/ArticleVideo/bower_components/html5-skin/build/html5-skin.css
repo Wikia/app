@@ -535,7 +535,7 @@
 .oo-player-container .oo-popover {
   position: absolute;
   background-color: rgba(26, 26, 26, 0.8);
-  bottom: 80px;
+  bottom: 50px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
   border: 0;
   border-radius: 4px;
@@ -1172,7 +1172,7 @@
   margin: 10px 0; }
 
 .oo-player-container .oo-popover .oo-quality-screen-content {
-  max-height: 150px;
+  max-height: 340px;
   width: 80px;
   text-align: center; }
   .oo-player-container .oo-popover .oo-quality-screen-content ul {
