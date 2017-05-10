@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					video: {
 						playerHeight: 360,
 						playerWidth: 640,
-						size_id: 201
+						size_id: 203
 					}
 				}
 			},
@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 						language: 'en',
 						playerHeight: 360,
 						playerWidth: 640,
-						size_id: 201
+						size_id: 203
 					}
 				}
 			}
