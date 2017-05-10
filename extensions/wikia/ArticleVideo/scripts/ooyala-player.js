@@ -18,8 +18,8 @@ define('ooyala-player', function () {
 			config: baseJSONSkinUrl
 		};
 		this.params.initialBitrate = {
-			level: 1,
-			duration: 30
+			level: 0.8,
+			duration: 2
 		};
 
 		this.containerId = container.id;
