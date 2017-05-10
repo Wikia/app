@@ -14,14 +14,15 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					sizes: [
 						[640, 360]
 					],
-					siteId: '55412',
-					zoneId: '519058',
+					siteId: 55412,
+					zoneId: 519058,
 					accountId: '7450',
 					name: 'outstream-desktop',
 					video: {
 						playerHeight: 360,
 						playerWidth: 640,
-						size_id: 203
+						size_id: 203,
+						position: 'atf'
 					}
 				}
 			},
@@ -38,7 +39,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 						language: 'en',
 						playerHeight: 360,
 						playerWidth: 640,
-						size_id: 203
+						size_id: 203,
+						position: 'atf'
 					}
 				}
 			}
@@ -61,6 +63,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 						siteId: config.siteId,
 						zoneId: config.zoneId,
 						name: config.name,
+						position: 'atf',
 						video: config.video
 					}
 				}
