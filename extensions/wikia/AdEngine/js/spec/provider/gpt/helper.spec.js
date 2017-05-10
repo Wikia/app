@@ -8,10 +8,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	var AdElement,
 		callbacks = {},
 		mocks = {
-			log: noop,
 			context: {
 				opts: {},
 				targeting: {
+					hasFeaturedVideo: false,
 					skin: 'oasis'
 				}
 			},
@@ -75,14 +75,18 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				addSlot: noop,
 				flush: noop,
 				setPageLevelParams: noop
-			}
+			},
+			geo: {
+				isProperGeo: noop
+			},
+			instantGlobals: {},
+			log: noop
 		};
 
 	mocks.log.levels = {};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
-			mocks.log,
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.uapContext,
@@ -94,6 +98,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
+			mocks.geo,
+			mocks.instantGlobals,
+			mocks.log,
 			mocks.sraHelper,
 			mocks.pageFair
 		);
@@ -328,5 +335,52 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
+	});
+
+	it('Set src=premium if article hasFeaturedVideo and in good geo', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		spyOn(mocks.geo, 'isProperGeo');
+		mocks.context.targeting.hasFeaturedVideo = true;
+		mocks.geo.isProperGeo.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('premium');
+	});
+
+	it('Don\'t set src-premium if article hasFeaturedVideo and in invalid geo', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+
+		spyOn(mocks.geo, 'isProperGeo');
+		mocks.context.targeting.hasFeaturedVideo = true;
+		mocks.geo.isProperGeo.and.returnValue(false);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).not.toBe('premium');
+	});
+
+	it('Don\'t change src to rec if on the page is premium video - we don\'t want to recover ads in that case', function () {
+		var pushAd = function () {
+			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
+				isSourcePointRecoverable: true
+			});
+		};
+
+		spyOn(mocks, 'slotTargetingData');
+		spyOn(mocks.adBlockDetection, 'isBlocking');
+		spyOn(mocks.adBlockRecovery, 'isEnabled');
+		spyOn(mocks.geo, 'isProperGeo');
+
+		mocks.context.targeting.hasFeaturedVideo = true;
+		mocks.geo.isProperGeo.and.returnValue(true);
+		mocks.adBlockDetection.isBlocking.and.returnValue(true);
+		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
+
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('premium');
 	});
 });

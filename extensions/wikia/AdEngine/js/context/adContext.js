@@ -42,13 +42,6 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
-	function isRecoveryModuleEnabled(wgCountries, contextVariable) {
-		var isGeoSupported = geo.isProperGeo(wgCountries),
-			isNotDisabledOnWiki = contextVariable !== false;
-
-		return !!(isNotDisabledOnWiki && isGeoSupported);
-	}
-
 	function setContext(newContext) {
 		var i,
 			len,
@@ -87,23 +80,20 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = noExternals ?
-			false :
-			isRecoveryModuleEnabled(instantGlobals.wgAdDriverPageFairRecoveryCountries, context.opts.pageFairRecovery);
+		context.opts.pageFairRecovery = !noExternals &&
+			context.opts.pageFairRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
 
 		// SourcePoint recovery
-		context.opts.sourcePointRecovery = noExternals ?
-			false :
-			isRecoveryModuleEnabled(instantGlobals.wgAdDriverSourcePointRecoveryCountries, context.opts.sourcePointRecovery);
+		context.opts.sourcePointRecovery = !noExternals &&
+			context.opts.sourcePointRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 
 		// SourcePoint MMS
-		if (noExternals && context.opts.sourcePointMMS === true) {
-			context.opts.sourcePointMMS = false;
-		}
+		context.opts.sourcePointMMS = !noExternals &&
+			context.opts.sourcePointMMS;
 
-		if (context.opts.sourcePointMMS || context.opts.sourcePointRecovery) {
-			context.opts.sourcePointBootstrap = true;
-		}
+		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {

@@ -130,7 +130,7 @@
 
 				</div>
 
-				<? if ( (new ARecoveryModule)->isSourcePointRecoveryEnabled() ) : ?>
+				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
 					<!--googleoff: all-->
 					<div id="WikiaArticleMsg">
 						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>

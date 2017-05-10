@@ -116,7 +116,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'soapfailures',
 		'moderatesotd',
 		'hiderevision',
-		'oversight',
 		'abusefilter-modify',
 		'abusefilter-log-detail',
 		'abusefilter-view',

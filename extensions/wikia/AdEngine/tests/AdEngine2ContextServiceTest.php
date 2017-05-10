@@ -347,11 +347,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointRecovery' => false,
-				'sourcePointMMS' => false,
 				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
-				// if skin name different than oasis, disable PF recovery
-				'pageFairRecovery' => false
+				'sourcePointRecovery' => true,
+				'pageFairRecovery' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
