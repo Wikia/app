@@ -17,10 +17,13 @@
 	}
 }
 
+.featured-video-wrapper {
+	margin-bottom: 11px;
+}
+
 .article-video {
 	background-position: center;
 	background-size: cover;
-	margin-bottom: 11px;
 	padding-top: 56.25%; // we want to have 16:9 ratio div size
 	position: relative;
 	width: 100%;
@@ -128,7 +131,7 @@
 		}
 	}
 
-	&.collapsed-ready {
+	&.is-collapsed-ready {
 		.video-container {
 			left: auto;
 			position: fixed;
@@ -140,7 +143,7 @@
 		}
 	}
 
-	&.collapsed {
+	&.is-collapsed {
 		.video-container {
 			bottom: 45px !important;
 			left: auto;

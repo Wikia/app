@@ -1,8 +1,8 @@
 {
-  "name": "design-system",
-  "private": true,
+    "name": "design-system",
+    "private": true,
 
-  "dependencies": {
-    "design-system": "Wikia/design-system#5.15.1"
-  }
+    "dependencies": {
+        "design-system": "Wikia/design-system#5.15.1"
+    }
 }
