@@ -57,7 +57,7 @@ class CheckArchiveFiles extends Maintenance {
 
 			if ( !$file->exists() ) {
 				$filesToRemove++;
-				$this->output( sprintf( "%s - file is missing: %s / year %d\n", $wgDBname, $file->getArchiveName(), substr($file->getArchiveTimestamp(), 0, 4) ) );
+				$this->output( sprintf( "%s - archived version of a file is missing: %s (%s) / year %d\n", $wgDBname, $file->getName(), $file->getTimestamp(), substr($file->getTimestamp(), 0, 4) ) );
 
 				if ( $this->hasOption( 'do-the-stuff' ) ) {
 					// TODO: delete an entry from oldimage table
