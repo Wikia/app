@@ -17,10 +17,6 @@ define('ooyala-player', function () {
 		this.params.skin = {
 			config: baseJSONSkinUrl
 		};
-		this.params.initialBitrate = {
-			level: 0.8,
-			duration: 2
-		};
 
 		this.containerId = container.id;
 		this.player = null;
@@ -120,8 +116,7 @@ define('ooyala-player', function () {
 				videoId: videoId,
 				autoplay: autoplay,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
-				platform: 'html5'
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId
 			},
 			html5Player;
 

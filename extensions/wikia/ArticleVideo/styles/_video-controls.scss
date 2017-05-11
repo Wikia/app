@@ -11,9 +11,7 @@
  *
  */
 
-// Use div to prevent Ooyala from overriding these styles
-// We can't easily change the order of loading files, see ArticleVideoHooks::onBeforePageDisplay
-div.oo-player-container {
+.oo-player-container {
 	.oo-scrubber-bar-container {
 		// Adjustment for smaller height on controlbar
 		height: 5px;
