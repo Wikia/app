@@ -1,27 +1,27 @@
 {
-  "name": "design-system",
-  "description": "Design System developed for Wikia",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Wikia/design-system.git"
-  },
-  "ignore": [
-    "/*",
-    "!/dist"
-  ],
-  "devDependencies": {
-    "ember": "2.8.2",
-    "ember-cli-shims": "0.1.1"
-  },
-  "homepage": "https://github.com/Wikia/design-system",
-  "version": "5.15.0",
-  "_release": "5.15.0",
-  "_resolution": {
-    "type": "version",
-    "tag": "5.15.0",
-    "commit": "26a5bcbc61ce79d79e907d0affc7e4462fd5a3a9"
-  },
-  "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "5.15.0",
-  "_originalSource": "Wikia/design-system"
+	"name": "design-system",
+	"description": "Design System developed for Wikia",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Wikia/design-system.git"
+	},
+	"ignore": [
+		"/*",
+		"!/dist"
+	],
+	"devDependencies": {
+		"ember": "2.8.2",
+		"ember-cli-shims": "0.1.1"
+	},
+	"homepage": "https://github.com/Wikia/design-system",
+	"version": "5.15.1",
+	"_release": "5.15.1",
+	"_resolution": {
+		"type": "version",
+		"tag": "5.15.1",
+		"commit": "bb5396b1d77c82667d113c80d20e3ece1797f816"
+	},
+	"_source": "git://github.com/Wikia/design-system.git",
+	"_target": "5.15.1",
+	"_originalSource": "Wikia/design-system"
 }

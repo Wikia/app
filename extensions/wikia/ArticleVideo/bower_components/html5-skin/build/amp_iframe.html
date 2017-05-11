@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html style="padding:0; margin:0; width:100%; height:100%; overflow:hidden">
+<head>
+  <meta charset="utf-8">
+  <script src="//player.ooyala.com/static/v4/stable/latest/core.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/latest/video-plugin/main_html5.min.js"></script>
+  <script src="//player.ooyala.com/static/v4/stable/latest/skin-plugin/html5-skin.min.js"></script>
+  <link rel="stylesheet" href="//player.ooyala.com/static/v4/stable/latest/skin-plugin/html5-skin.min.css"/>
+</head>
+
+<body style="padding:0; margin:0; width:100%; height:100%; overflow:hidden">
+  <div id='container' style='width:100%; height:100%;'></div>
+  <script>
+    var queryParams = window.location.href;
+    var playerParam = {
+      "pcode": queryParams.match(/pcode=([^&]*)/)[1],
+      "playerBrandingId": queryParams.match(/pbid=([^&]*)/)[1],
+      "skin": {
+        "config": "",
+        "inline": {"shareScreen": {"embed": {"source": "<iframe width='640' height='480' frameborder='0' allowfullscreen src='//player.ooyala.com/static/v4/stable/latest/skin-plugin/iframe.html?ec=<ASSET_ID>&pbid=<PLAYER_ID>&pcode=<PUBLISHER_ID>'></iframe>"}}}
+      }
+    };
+
+    // Parse docUrl
+    var docUrl = undefined;
+    if (!!queryParams.match(/docUrl=([^&]*)/)) {
+      playerParam["docUrl"] = decodeURIComponent(queryParams.match(/docUrl=([^&]*)/)[1]);
+    }
+
+    // Parse standard Ooyala player runtime options
+    var queryTokens = queryParams.split(/[\?\&]/);
+    for (var i=0; i<queryTokens.length; i++) {
+      try {
+        var match = queryTokens[i].match(/^options\[([^\]]+)\]=(.+)/);
+        if (match) {
+          var currentLevel = playerParam;
+          var keySplits = match[1].split(".");
+          while (keySplits.length > 1) {
+            var key = keySplits.shift();
+            if (currentLevel[key] === undefined)
+              currentLevel[key] = {};
+            currentLevel = currentLevel[key];
+          }
+          if (typeof currentLevel !== 'object')
+            throw("Exception: Invalid query parameter");
+
+          var paramValue = decodeURIComponent(match[2]);
+          if (paramValue.toLowerCase() === "true")
+            currentLevel[keySplits[0]] = true;
+          else if (paramValue.toLowerCase() === "false")
+            currentLevel[keySplits[0]] = false;
+          else if (paramValue[0] === "[" &&
+            paramValue[paramValue.length -1] === "]")
+            currentLevel[keySplits[0]] = JSON.parse(decodeURIComponent(match[2]));
+          else
+            currentLevel[keySplits[0]] = decodeURIComponent(match[2]);
+        }
+      }
+      catch (e) {
+        throw("Exception: Invalid query parameter");
+      }
+    }
+
+    OO.ready(function() {
+      window.pp = OO.Player.create('container', queryParams.match(/ec=([^&]*)/)[1], playerParam);
+
+      //Enable cross-iframe control
+      window.addEventListener("message", function(evt){
+        switch (evt.data) {
+          case "play":
+            pp.play();
+            break;
+          case "pause":
+            pp.pause();
+            break;
+          case "mute":
+            pp.setVolume(0);
+            break;
+          case "unmute":
+            pp.setVolume(1);
+            break;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
