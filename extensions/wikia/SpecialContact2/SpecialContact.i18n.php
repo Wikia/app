@@ -701,7 +701,7 @@ Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar c
 	'specialcontact-ccheader' => 'Esta es una copia del mensaje que enviaste al Staff de Fandom',
 	'specialcontact-submitcomplete' => 'Muchas gracias por contactarse con Fandom. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
 
-Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Índice|foro]] o en nuestras [[w:c:comunidad:Ayuda:Contenido|páginas de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [[[w:c:comunidad:Blog:Noticias_de_Fandom|blog de noticias]]. ¡Diviértete!',
+Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Índice|foro]] o en nuestras [[w:c:comunidad:Ayuda:Contenido|páginas de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [[w:c:comunidad:Blog:Noticias_de_Fandom|blog de noticias]]. ¡Diviértete!',
 	'specialcontact-seclink-security' => 'Creo que he encontrado un problema de seguridad',
 	'specialcontact-seclink-dmca-request' => 'Tengo una queja sobre derechos de autor',
 	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
