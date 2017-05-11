@@ -58,6 +58,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_6': slotPrices.aol || '',
 			'bidder_7': slotPrices.audienceNetwork || '',
 			'bidder_8': slotPrices.veles || '',
+			'bidder_9': slotPrices.openx || '',
 			'product_chosen': '',
 			'product_lineitem_id': slotFirstChildData.gptLineItemId || '',
 			'product_label': ''

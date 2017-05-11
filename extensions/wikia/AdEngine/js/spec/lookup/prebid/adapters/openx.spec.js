@@ -1,10 +1,10 @@
 /*global describe, expect, it, jasmine, modules*/
-describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () {
+describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 	'use strict';
 
 	var mocks = {
 		instantGlobals: {
-			wgAdDriverIndexExchangeBidderCountries: ['PL']
+			wgAdDriverOpenXPrebidBidderCountries: ['PL']
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
@@ -16,8 +16,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 		}
 	};
 
-	function getIndexExchange() {
-		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
+	function getOpenx() {
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.openx'](
 			mocks.slotsContext,
 			mocks.geo,
 			mocks.instantGlobals
@@ -25,29 +25,28 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 	}
 
 	it('isEnabled checks the countries instant global', function () {
-		var indexExchange = getIndexExchange();
-		indexExchange.isEnabled();
+		var openx = getOpenx();
+		openx.isEnabled();
 		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
-		var indexExchange = getIndexExchange();
-		expect(indexExchange.prepareAdUnit('TOP_LEADERBOARD', {
+		var openx = getOpenx();
+		expect(openx.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [
 				[728, 90],
 				[970, 250]
 			],
-			id: '1',
-			siteID: 183423
+			unit: 123
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
 			sizes: [[728, 90], [970, 250]],
 			bids: [
 				{
-					bidder: 'indexExchange',
+					bidder: 'openx',
 					params: {
-						id: '1',
-						siteID: 183423
+						unit: 123,
+						delDomain: 'ox-d.wikia.servedbyopenx.com'
 					}
 				}
 			]

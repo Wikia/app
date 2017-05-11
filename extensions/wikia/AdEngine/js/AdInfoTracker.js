@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adInfoTrackerHelper,adTracker, adContext, log, win, mercuryListener) {
+], function (adInfoTrackerHelper, adTracker, adContext, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
