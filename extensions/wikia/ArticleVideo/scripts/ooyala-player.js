@@ -120,7 +120,8 @@ define('ooyala-player', function () {
 				videoId: videoId,
 				autoplay: autoplay,
 				pcode: playerParams.ooyalaPCode,
-				playerBrandingId: playerParams.ooyalaPlayerBrandingId
+				playerBrandingId: playerParams.ooyalaPlayerBrandingId,
+				platform: 'html5'
 			},
 			html5Player;
 
