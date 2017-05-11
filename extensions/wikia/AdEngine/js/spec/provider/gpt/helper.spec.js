@@ -9,7 +9,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		callbacks = {},
 		mocks = {
 			context: {
-				opts: {},
+				opts: {
+					premiumOnly: false
+				},
 				targeting: {
 					hasFeaturedVideo: false,
 					skin: 'oasis'
@@ -76,10 +78,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				flush: noop,
 				setPageLevelParams: noop
 			},
-			geo: {
-				isProperGeo: noop
-			},
-			instantGlobals: {},
 			log: noop
 		};
 
@@ -98,8 +96,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.log,
 			mocks.sraHelper,
 			mocks.pageFair
@@ -337,27 +333,23 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(mocks.slotTargetingData.src).not.toBe('rec');
 	});
 
-	it('Set src=premium if article hasFeaturedVideo and in good geo', function () {
+	it('Set src=premium if article is premium only', function () {
 		var pushAd = function () {
 			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
 		};
 
-		spyOn(mocks.geo, 'isProperGeo');
-		mocks.context.targeting.hasFeaturedVideo = true;
-		mocks.geo.isProperGeo.and.returnValue(true);
+		mocks.context.opts.premiumOnly = true;
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('premium');
 	});
 
-	it('Don\'t set src-premium if article hasFeaturedVideo and in invalid geo', function () {
+	it('Don\'t set src-premium if article isn\'t premium', function () {
 		var pushAd = function () {
 			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
 		};
 
-		spyOn(mocks.geo, 'isProperGeo');
-		mocks.context.targeting.hasFeaturedVideo = true;
-		mocks.geo.isProperGeo.and.returnValue(false);
+		mocks.context.opts.premiumOnly = false;
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).not.toBe('premium');
@@ -373,10 +365,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks, 'slotTargetingData');
 		spyOn(mocks.adBlockDetection, 'isBlocking');
 		spyOn(mocks.adBlockRecovery, 'isEnabled');
-		spyOn(mocks.geo, 'isProperGeo');
 
-		mocks.context.targeting.hasFeaturedVideo = true;
-		mocks.geo.isProperGeo.and.returnValue(true);
+		mocks.context.opts.premiumOnly = true;
 		mocks.adBlockDetection.isBlocking.and.returnValue(true);
 		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
 
