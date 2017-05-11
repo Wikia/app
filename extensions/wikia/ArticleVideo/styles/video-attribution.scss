@@ -6,7 +6,7 @@
 	@include align-items(center);
 	@include flexbox();
 	@include justify-content(center);
-	border-bottom: 1px solid $color-page-border;
+	border-bottom: 1px solid rgba($color-text, .5);
 	padding: 6px;
 }
 
