@@ -86,7 +86,7 @@ class UpdateIpblocksSchema extends Maintenance {
 	 */
 	private function deleteDuplicateBlocks( array $blockIds, int $count ) {
 		$dbw = $this->getDB( DB_MASTER );
-		$dbw->delete( [ 'ipblocks' ], [ 'ipb_id' => $blockIds ], __METHOD__ );
+		$dbw->delete( 'ipblocks', [ 'ipb_id' => $blockIds ], __METHOD__ );
 
 		$this->output( "Received {$count} IDs to delete, deleted {$dbw->affectedRows()} rows.\n" );
 
