@@ -61,7 +61,7 @@ require([
 
 			collapsingDisabled = false;
 			videoCollapsed = true;
-			$video.addClass('collapsed-ready');
+			$video.addClass('is-collapsed-ready');
 			if (ooyalaVideoController) {
 				updatePlayerControls(true);
 			}
@@ -74,7 +74,7 @@ require([
 			$ooyalaVideo.css('height', videoHeight);
 			setTimeout(function () {
 				if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
-					$video.addClass('collapsed');
+					$video.addClass('is-collapsed');
 				}
 			}, 0);
 		}
@@ -91,7 +91,7 @@ require([
 			});
 			$videoThumbnail.css('height', '');
 			$ooyalaVideo.css('height', '');
-			$video.removeClass('collapsed collapsed-ready');
+			$video.removeClass('is-collapsed is-collapsed-ready');
 			if (ooyalaVideoController) {
 				updatePlayerControls(false);
 			}
@@ -157,6 +157,15 @@ require([
 					uncollapseVideo();
 				}
 			}
+		}
+
+		function initAttributionTracking() {
+			$('.featured-video__attribution-container a').click(function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'attribution'
+				});
+			});
 		}
 
 		initVideo(function (player) {
@@ -263,6 +272,8 @@ require([
 		$closeBtn.click(closeButtonClicked);
 
 		onScroll.bind(toggleCollapse);
+
+		initAttributionTracking();
 	});
 
 });
