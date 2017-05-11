@@ -76,6 +76,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderEvolve2);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
+
+			if (context.opts.premiumOnly) {
+				return providerList;
+			}
 		}
 
 		// Second provider: Remnant GPT
