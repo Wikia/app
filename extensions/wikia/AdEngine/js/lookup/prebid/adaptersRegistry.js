@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 	'wikia.window'
-], function(aol, appnexus, audienceNetwork, indexExchange, openX, wikia, veles, win) {
+], function(aol, appnexus, audienceNetwork, indexExchange, openx, wikia, veles, win) {
 	'use strict';
 
 	var adapters = [
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			audienceNetwork,
 			indexExchange,
 			aol,
-			openX
+			openx
 		],
 		customAdapters = [
 			wikia,
