@@ -1266,12 +1266,6 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
- * @name $wgAdDriverEnableRubiconVulcan
- * Enables Rubicon Vulcan
- */
-$wgAdDriverEnableRubiconVulcan = true;
-
-/**
  * @name $wgAdDriverRubiconVulcanCountries
  * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

@@ -34,6 +34,7 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 
 	function prepareData(data, playerParams) {
 		return [
+			// TODO pass proper advertiser ID
 			'advertiser_id=' + data['vulcan_advertiser'] || '',
 			'network_id=' + data['vulcan_network'] || '',
 			'event_name=' + data['event_name'] || '',

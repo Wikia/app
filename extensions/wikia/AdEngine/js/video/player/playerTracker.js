@@ -8,9 +8,8 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan, floater) {
+], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, floater) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -48,17 +47,17 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
-			},
-			vulcanResponse;
+			};
 
-		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
-			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vast_id'] = [
-				vulcanResponse.network || emptyValue.string,
-				vulcanResponse.advertiser || emptyValue.string
-			].join(':');
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
-		}
+		// TODO fix me
+		//if (vulcan && params.slotName && params.adProduct === 'vulcan') {
+		//	vulcanResponse = vulcan.getSingleResponse(params.slotName);
+		//	trackingData['vast_id'] = [
+		//		vulcanResponse.network || emptyValue.string,
+		//		vulcanResponse.advertiser || emptyValue.string
+		//	].join(':');
+		//	trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+		//}
 
 		if (params.adProduct === 'veles') {
 			trackingData['vast_id'] = (params.bid && params.bid.vastId) || emptyValue.string;

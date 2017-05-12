@@ -55,8 +55,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderPrebid();
 			case 'RubiconFastlane':
 				return new AnalyticsProviderRubiconFastlane();
-			case 'RubiconVulcan':
-				return new AnalyticsProviderRubiconVulcan();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW3':
