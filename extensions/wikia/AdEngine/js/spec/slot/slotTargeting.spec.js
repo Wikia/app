@@ -88,6 +88,12 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			{
 				env: {
+					src: 'premium'
+				},
+				wsi: 'xxx4'
+			},
+			{
+				env: {
 					src: 'undefined'
 				},
 				wsi: 'xxxx'
