@@ -35,7 +35,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					src: 'rec',
 					slotName: 'TOP_LEADERBOARD'
 				},
-				wsi: 'ola3'
+				wsi: 'olar'
 			},
 			{
 				env: {
@@ -44,7 +44,7 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 					src: 'premium',
 					slotName: 'INCONTENT_PLAYER'
 				},
-				wsi: 'oia4'
+				wsi: 'oiap'
 			},
 			{
 				env: {},
@@ -102,13 +102,13 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 				env: {
 					src: 'rec'
 				},
-				wsi: 'xxx3'
+				wsi: 'xxxr'
 			},
 			{
 				env: {
 					src: 'premium'
 				},
-				wsi: 'xxx4'
+				wsi: 'xxxp'
 			},
 			{
 				env: {
