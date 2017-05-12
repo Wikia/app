@@ -50,7 +50,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			expectedSlotTargeting = {
 				a: 'b',
 				amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5'],
-				bid: 'xxAx'
+				bid: 'xxAxx'
 			};
 
 		spyOn(mocks.amazon, 'trackState');
@@ -72,7 +72,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			expectedSlotTargeting = {
 				a: 'b',
 				oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5'],
-				bid: 'xOxx'
+				bid: 'xOxxx'
 			};
 
 		spyOn(mocks.oxBidder, 'trackState');
@@ -94,7 +94,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			expectedSlotTargeting = {
 				a: 'b',
 				flslots: ['fa1s', 'fa2s', 'fa3s'],
-				bid: 'Rxxx'
+				bid: 'Rxxxx'
 			};
 
 		spyOn(mocks.fastlane, 'trackState');
@@ -116,7 +116,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			expectedSlotTargeting = {
 				a: 'b',
 				prebidslots: ['pa1s', 'pa2s', 'pa3s'],
-				bid: 'xxxP'
+				bid: 'xxxxP'
 			};
 
 		spyOn(mocks.prebid, 'trackState');
@@ -140,7 +140,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			expectedSlotTargeting = {
 				a: 'b',
 				slots: ['va1s', 'va2s', 'va3s'],
-				bid: 'ROAP'
+				bid: 'ROAxP'
 			},
 			testedProviders = [mocks.amazon, mocks.prebid, mocks.oxBidder, mocks.fastlane];
 

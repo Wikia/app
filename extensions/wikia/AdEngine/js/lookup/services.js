@@ -38,11 +38,11 @@ define('ext.wikia.adEngine.lookup.services', [
 				char: 'A'
 			},
 			prebid: {
-				pos: 3,
+				pos: 4,
 				char: 'P'
 			}
 		},
-		bidMarker = ['x', 'x', 'x', 'x'];
+		bidMarker = ['x', 'x', 'x', 'x', 'x'];
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
