@@ -66,6 +66,7 @@ class CheckArchiveFiles extends Maintenance {
 					$dbw->delete(
 						'oldimage',
 						[
+							'oi_name' => $row->oi_name,
 							'oi_sha1' => $row->oi_sha1,
 							'oi_timestamp' => $row->oi_timestamp
 						],
