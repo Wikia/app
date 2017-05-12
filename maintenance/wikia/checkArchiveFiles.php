@@ -28,8 +28,8 @@ class CheckArchiveFiles extends Maintenance {
 	public function execute() {
 		global $wgDBname;
 
-		$dbr = $this->getDB( DB_SLAVE );
-		$dbw = $this->getDB( DB_MASTER );
+		$dbr = wfGetDB( DB_SLAVE );
+		$dbw = wfGetDB( DB_MASTER );
 
 		// get archived versions of images
 		$rows = $dbr->select(
@@ -66,12 +66,13 @@ class CheckArchiveFiles extends Maintenance {
 					$dbw->delete(
 						'oldimage',
 						[
-							'oi_sha1' => $file->getSha1()
+							'oi_sha1' => $row->oi_sha1,
+							'oi_timestamp' => $row->oi_timestamp
 						],
 						__METHOD__
 					);
 
-					$this->output( sprintf( "%s - deleted oldimage entry for a missing file: %s (%s) %d\n", $wgDBname, $file->getName(), $file->getSha1() ) );
+					$this->output( sprintf( "%s - deleted oldimage entry for a missing file: %s (%s)\n", $wgDBname, $file->getName(), $row->oi_sha1 ) );
 				}
 			}
 		}
