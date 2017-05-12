@@ -42,6 +42,7 @@ $wgAutoloadClasses['ArticleCommentsController'] = __DIR__ . '/modules/ArticleCom
 $wgExtensionMessagesFiles['ArticleComments'] = __DIR__ . '/ArticleComments.i18n.php';
 
 if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
+	require_once __DIR__ . '/src/autoload.php';
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
@@ -68,7 +69,16 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	// blogs
 	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
 	// prevent editing not own comments
-	$wgHooks['userCan'][] = 'ArticleComment::userCan';
+	$wgHooks['userCan'][] = function ( Title $title, User $user, string $action, &$result ): bool {
+		static $userCan;
+
+		if ( !isset( $userCan ) ) {
+			$factory = new \Extensions\Wikia\ArticleComments\Hooks\UserCan\DependencyFactory();
+			$userCan = new \Extensions\Wikia\ArticleComments\Hooks\UserCan( $factory );
+		}
+
+		return $userCan->process( $title, $user, $action, $result );
+	};
 	// HAWelcome
 	$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
 
