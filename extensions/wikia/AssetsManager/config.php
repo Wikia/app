@@ -314,6 +314,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/veles.js',
 
