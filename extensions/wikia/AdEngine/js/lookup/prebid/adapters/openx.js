@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	'use strict';
 
 	var bidderName = 'openx',
-		delDomain = 'ox-d.wikia.servedbyopenx.com',
+		delDomain = 'wikia-d.openx.net',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -15,14 +15,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[728, 90],
 						[970, 250]
 					],
-					unit: 538229265
+					unit: 538735690
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
 					],
-					unit: 538229265
+					unit: 538735691
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [
@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 600],
 						[300, 250]
 					],
-					unit: 538229265
+					unit: 538735695
 				},
 				LEFT_SKYSCRAPER_3: {
 					sizes: [
@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 600],
 						[300, 250]
 					],
-					unit: 538229265
+					unit: 538735696
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
@@ -46,25 +46,25 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 600],
 						[160, 600]
 					],
-					unit: 538229265
+					unit: 538735697
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					unit: 538229265
+					unit: 538735692
 				},
 				PREFOOTER_MIDDLE_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					unit: 538229265
+					unit: 538735693
 				},
 				PREFOOTER_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					unit: 538229265
+					unit: 538735694
 				}
 			},
 			mercury: {
@@ -73,20 +73,20 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[300, 250],
 						[320, 480]
 					],
-					unit: 538229265
+					unit: 538735699
 				},
 				MOBILE_PREFOOTER: {
 					sizes: [
 						[300, 250],
 						[320, 50]
 					],
-					unit: 538229265
+					unit: 538735700
 				},
 				MOBILE_TOP_LEADERBOARD: {
 					sizes: [
 						[320, 50]
 					],
-					unit: 538229265
+					unit: 538735698
 				}
 			}
 		};
@@ -107,7 +107,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 				{
 					bidder: bidderName,
 					params: {
-						unit: config.unit, // TODO add real unit ids to slots
+						unit: config.unit,
 						delDomain: delDomain
 					}
 				}

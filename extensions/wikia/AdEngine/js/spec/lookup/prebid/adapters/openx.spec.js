@@ -49,7 +49,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 					bidder: 'openx',
 					params: {
 						unit: 123,
-						delDomain: 'ox-d.wikia.servedbyopenx.com'
+						delDomain: 'wikia-d.openx.net'
 					}
 				}
 			]
