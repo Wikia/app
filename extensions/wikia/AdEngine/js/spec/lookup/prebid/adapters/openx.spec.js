@@ -7,7 +7,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			wgAdDriverOpenXPrebidBidderCountries: ['PL']
 		},
 		geo: {
-			isProperGeo: jasmine.createSpy('isProperGeo')
+			isProperGeo: function() {
+			}
 		},
 		slotsContext: {
 			filterSlotMap: function (map) {
@@ -25,9 +26,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 	}
 
 	it('isEnabled checks the countries instant global', function () {
-		var openx = getOpenx();
+		var openx = getOpenx(),
+			isProperGeoSpy = spyOn(mocks.geo, 'isProperGeo');
+
 		openx.isEnabled();
-		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
+		expect(isProperGeoSpy).toHaveBeenCalledWith(['PL']);
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
