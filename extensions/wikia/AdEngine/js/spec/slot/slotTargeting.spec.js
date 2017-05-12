@@ -29,6 +29,24 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 				wsi: 'oma2'
 			},
 			{
+				env: {
+					pageType: 'article',
+					skin: 'oasis',
+					src: 'rec',
+					slotName: 'TOP_LEADERBOARD'
+				},
+				wsi: 'ola3'
+			},
+			{
+				env: {
+					pageType: 'article',
+					skin: 'oasis',
+					src: 'premium',
+					slotName: 'INCONTENT_PLAYER'
+				},
+				wsi: 'oia4'
+			},
+			{
 				env: {},
 				wsi: 'xxxx'
 			},
