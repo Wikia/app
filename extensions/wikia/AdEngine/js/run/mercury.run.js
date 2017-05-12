@@ -48,6 +48,7 @@ require([
 			rubiconFastlane.call();
 		}
 
+		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
 		if (
 			geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries) &&
 			!geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries)

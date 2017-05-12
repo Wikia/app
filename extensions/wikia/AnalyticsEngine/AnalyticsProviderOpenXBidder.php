@@ -13,6 +13,7 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 		$moduleName = json_encode( 'ext.wikia.adEngine.lookup.' . $moduleName );
 		$instantGlobalName = json_encode( $instantGlobalName );
 
+		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
 		$code = <<< CODE
 	require([
 		"wikia.geo",
