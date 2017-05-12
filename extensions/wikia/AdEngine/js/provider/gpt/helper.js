@@ -12,8 +12,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
@@ -29,8 +27,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
-	geo,
-	instantGlobals,
 	log,
 	sraHelper,
 	pageFair
@@ -100,7 +96,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function shouldSetSrcPremium() {
-			return adContext.getContext().targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
+			return adContext.getContext().opts.premiumOnly;
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
