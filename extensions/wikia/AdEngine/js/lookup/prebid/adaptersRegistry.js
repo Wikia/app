@@ -6,11 +6,13 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
+	'ext.wikia.adEngine.lookup.prebid.adapters.vulcan',
 	'wikia.window'
-], function(aol, appnexus, audienceNetwork, indexExchange, wikia, veles, win) {
+], function(aol, appnexus, audienceNetwork, indexExchange, wikia, veles, vulcan, win) {
 	'use strict';
 
 	var adapters = [
+			vulcan,
 			appnexus,
 			audienceNetwork,
 			indexExchange,
