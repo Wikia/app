@@ -28,8 +28,10 @@ class CheckArchiveFiles extends Maintenance {
 	public function execute() {
 		global $wgDBname;
 
-		// get archived versions of images
 		$dbr = $this->getDB( DB_SLAVE );
+		$dbw = $this->getDB( DB_MASTER );
+
+		// get archived versions of images
 		$rows = $dbr->select(
 			'oldimage',
 			OldLocalFile::selectFields(),
@@ -60,7 +62,16 @@ class CheckArchiveFiles extends Maintenance {
 				$this->output( sprintf( "%s - archived version of a file is missing: %s (%s) / year %d\n", $wgDBname, $file->getName(), $file->getTimestamp(), substr($file->getTimestamp(), 0, 4) ) );
 
 				if ( $this->hasOption( 'do-the-stuff' ) ) {
-					// TODO: delete an entry from oldimage table
+					// delete an entry from oldimage table
+					$dbw->delete(
+						'oldimage',
+						[
+							'oi_sha1' => $file->getSha1()
+						],
+						__METHOD__
+					);
+
+					$this->output( sprintf( "%s - deleted oldimage entry for a missing file: %s (%s) %d\n", $wgDBname, $file->getName(), $file->getSha1() ) );
 				}
 			}
 		}
