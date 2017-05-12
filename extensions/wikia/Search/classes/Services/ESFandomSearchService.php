@@ -2,8 +2,8 @@
 
 namespace Wikia\Search\Services;
 
-use \Wikia\Logger\WikiaLogger;
-use \Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Gateway\ConsulUrlProvider;
 
 class ESFandomSearchService extends AbstractSearchService {
 
@@ -17,6 +17,7 @@ class ESFandomSearchService extends AbstractSearchService {
 	const STORIES_IMAGE_URL_KEY = 'image';
 	const STORIES_URL_KEY = 'url';
 	const STORIES_COUNT_MAX = 6;
+	const STORIES_SEARCH_TEMPLATE = 'fandom_stories';
 
 	const MATCHES_ITEM_KEY = '_source';
 	const MATCHES_TITLE_KEY = 'title';
@@ -45,7 +46,7 @@ class ESFandomSearchService extends AbstractSearchService {
 			"http://$consulUrl/fandom/search",
 			[
 				'noProxy' => true,
-				'postData' => "queryTerms=$query",
+				'postData' => "queryTerms=$query&template=" . ESFandomSearchService::STORIES_SEARCH_TEMPLATE,
 				'headers' => [
 					'Content-Type' => 'application/x-www-form-urlencoded',
 				],
