@@ -3,11 +3,20 @@ $(function () {
 
 	var $searchInput = $('#searchInput'),
 		$searchButton = $('.wds-global-navigation__search-submit'),
+		$searchInputWrapper = $('#searchInputWrapper'),
 		searchSuggestionsUrl = $searchInput.data('suggestions-url'),
+		searchSuggestContainerClass = '.wds-global-navigation__search-suggestions',
 		initialized = false;
 
 	function initSuggestions() {
 		if (initialized == false) {
+			var uid = new Date().getTime();
+			var mainContainerId = "AutocompleteContainer_" + uid;
+			$searchInputWrapper.append(
+				'<div id="' + mainContainerId +
+				'" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
+				'</div>');
+
 			initialized = true;
 			window.Wikia.Tracker.track({
 				action: Wikia.Tracker.ACTIONS.CLICK,
@@ -61,19 +70,26 @@ $(function () {
 							}
 						});
 					},
-					search: function () {
+				  	position: { my: "left bottom", at: "left top", of: searchSuggestContainerClass, collision: "flip" },
+					open: function(event, ui) {
 						// Track when the search suggest dropdown appears
 						if (showedSuggestion == false) {
 							showedSuggestion = true;
 							window.Wikia.Tracker.track({
-								action: Wikia.Tracker.ACTIONS.ENABLE,
-								category: 'search',
-								trackingMethod: 'analytics',
-								label: 'search-suggest-enable'
-							});
+														   action: Wikia.Tracker.ACTIONS.ENABLE,
+														   category: 'search',
+														   trackingMethod: 'analytics',
+														   label: 'search-suggest-enable'
+													   });
 						}
+
+						$searchInputWrapper.addClass('wds-is-active');
+					},
+					close: function(event, ui) {
+						$searchInputWrapper.removeClass('wds-is-active');
 					},
 					focus: function (event, ui) {
+						console.log(ui);
 						$searchInput.val(ui.item.label);
 						return false;
 					},
@@ -121,17 +137,22 @@ $(function () {
 						return false;
 					},
 					minLength: 3,
-					appendTo: '.wds-global-navigation__search-input-wrapper'
+					appendTo: searchSuggestContainerClass
 				})
 				.data("autocomplete")._renderItem = function (ul, item) {
-				var currentValue = $searchInput.val();
-				var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
-				return $("<li></li>")
-					.data("item.autocomplete", item)
-					.append('<a class="x">' + item.label.replace(new RegExp(pattern, 'gi'),
-																 '<strong>$1<\/strong>') + '</a>')
-					.appendTo(ul);
-			};
+					var uid = new Date().getTime();
+					ul.attr('id', 'Autocomplete_' + uid);
+					ul.addClass('wds-list wds-has-ellipsis wds-is-linked');
+					var currentValue = $searchInput.val();
+					var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
+					return $("<li></li>")
+						.data("item.autocomplete", item)
+						.append(
+							'<a class="wds-global-navigation__dropdown-link">' + item.label.replace(
+								new RegExp(pattern, 'gi'),
+								'<strong>$1<\/strong>') + '</a>')
+						.appendTo(ul);
+				};
 		});
 	}
 

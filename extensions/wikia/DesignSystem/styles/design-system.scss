@@ -73,16 +73,36 @@ $global-navigation-z-index: 5000101;
 		}
 
 		a {
-			cursor: pointer;
+		  	cursor: pointer;
 		}
 
-		a:hover {
-			color: $wds-color-dark-blue-gray;
+		.ui-autocomplete {
+		  background: $wds-color-white;
+		  border-radius: 0px;
 		}
 
-		.wds-is-selected a {
-			color: $wds-color-link;
+		.ui-menu .ui-menu-item a {
+		  font-size: 14px;
+		  border-radius: 0px;
 		}
+		.ui-menu .ui-menu-item a:hover {
+		  background: $wds-color-white;
+		  color: $wds-color-link;
+		}
+		.ui-menu .ui-menu-item a:active {
+		  border: none;
+		  box-shadow: 0 0 0px $wds-color-white;
+		}
+
+		.wds-list {
+		  list-style-type: none;
+		  margin: 0;
+		  padding: 7px 18px;
+		}
+    }
+
+	.ui-autocomplete {
+	  position: absolute;
 	}
 }
 
