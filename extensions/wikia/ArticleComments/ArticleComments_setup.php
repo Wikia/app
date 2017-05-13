@@ -46,7 +46,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
-	$wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
 	$wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 	// recentchanges
 	$wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
@@ -68,6 +67,7 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
 	// blogs
 	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
+	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComments';
 	// prevent editing not own comments
 	$wgHooks['userCan'][] = function ( Title $title, User $user, string $action, &$result ): bool {
 		static $userCan;

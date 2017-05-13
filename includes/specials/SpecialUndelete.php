@@ -328,10 +328,15 @@ class PageArchive {
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
 
+		// Wikia change - tell hooks this title is coming from undelete
+		$this->title->setUndeleting( true );
+
 		$permErrors = $this->title->getUserPermissionsErrors( 'undelete', $wgUser );
 		if ( count( $permErrors ) ) {
 			throw new PermissionsError( 'undelete', $permErrors );
 		}
+
+		$this->title->setUndeleting( false );
 
 		// If both the set of text revisions and file revisions are empty,
 		// restore everything. Otherwise, just restore the requested items.

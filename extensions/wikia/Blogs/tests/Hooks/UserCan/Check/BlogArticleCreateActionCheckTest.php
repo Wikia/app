@@ -40,6 +40,10 @@ class BlogArticleCreateActionCheckTest extends \WikiaBaseTest {
 	public function testIsDisallowedIfUserIsNotLoggedInAndIsTheAuthor() {
 		$owner = '8.8.8.8';
 
+		$this->title->expects( $this->once() )
+			->method( 'isUndeleting' )
+			->willReturn( false );
+
 		$this->user->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( false );
@@ -61,6 +65,10 @@ class BlogArticleCreateActionCheckTest extends \WikiaBaseTest {
 		$owner = 'Grzegorz Brzęczyszczykiewicz';
 		$user = '8.8.8.8';
 
+		$this->title->expects( $this->once() )
+			->method( 'isUndeleting' )
+			->willReturn( false );
+
 		$this->user->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( false );
@@ -80,6 +88,10 @@ class BlogArticleCreateActionCheckTest extends \WikiaBaseTest {
 
 	public function testIsAllowedIfUserIsLoggedInAndIsTheAuthor() {
 		$owner = 'Grzegorz Brzęczyszczykiewicz';
+
+		$this->title->expects( $this->once() )
+			->method( 'isUndeleting' )
+			->willReturn( false );
 
 		$this->user->expects( $this->once() )
 			->method( 'isLoggedIn' )
@@ -102,6 +114,10 @@ class BlogArticleCreateActionCheckTest extends \WikiaBaseTest {
 		$owner = 'Grzegorz Brzęczyszczykiewicz';
 		$user = 'Franciszek Dolas';
 
+		$this->title->expects( $this->once() )
+			->method( 'isUndeleting' )
+			->willReturn( false );
+
 		$this->user->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
@@ -117,5 +133,29 @@ class BlogArticleCreateActionCheckTest extends \WikiaBaseTest {
 		$result = $this->blogArticleCreateActionCheck->process( $this->title, $this->user );
 
 		$this->assertFalse( $result );
+	}
+
+	public function testIsAllowedIfThisIsAnUndelete() {
+		$owner = 'Grzegorz Brzęczyszczykiewicz';
+
+		$this->title->expects( $this->once() )
+			->method( 'isUndeleting' )
+			->willReturn( true );
+
+		$this->user->expects( $this->any() )
+			->method( 'isLoggedIn' )
+			->willReturn( true );
+
+		$this->blogArticle->expects( $this->any() )
+			->method( 'getBlogOwner' )
+			->willReturn( $owner );
+
+		$this->user->expects( $this->any() )
+			->method( 'getName' )
+			->willReturn( $owner );
+
+		$result = $this->blogArticleCreateActionCheck->process( $this->title, $this->user );
+
+		$this->assertTrue( $result );
 	}
 }
