@@ -1,63 +1,37 @@
 <?php
 
 class ArticleCommentTest extends WikiaBaseTest {
+	protected function setUp() {
+		parent::setUp();
+		require_once __DIR__ . '/../classes/ArticleComment.class.php';
+	}
+
 	/**
-	 * SUS-1557: Verify ArticleComment::getTransformedParsedText goes through both pre-save processing and wikitext parse
-	 * when text is not fetched from DB
-	 *
-	 * @see ArticleComment::getTransformedParsedText()
+	 * @dataProvider provideCommentTitlesAndExpectedArticleTitles
+	 * @param Title $commentTitle
+	 * @param Title $expectedArticleTitle
 	 */
-	public function testGetTransformedParsedText() {
-		$title = Title::makeTitle( NS_TALK, 'Piła tango' );
-		$user = new User;
-		$text = 'Grzesiek Kubiak, czyli Kuba rządził naszą podstawówką; Po lekcjach na boisku ganiał za mną z cegłówką.';
+	public function testGetArticleTitle( Title $commentTitle, Title $expectedArticleTitle ) {
+		$articleComment = new ArticleComment( $commentTitle );
 
-		$parserMock = $this->getMock( Parser::class, [ 'parse', 'preSaveTransform' ] );
-		$parserOptionsMock = $this->getMockBuilder( ParserOptions::class )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getUser', 'setEditSection', 'optionsHash' ] )
-			->getMock();
-		$parserOutputMock = $this->getMock( ParserOutput::class, [ 'getText', 'getHeadItems' ] );
+		$actualArticleTitle = $articleComment->getArticleTitle();
 
-		// ensure parser options do not allow "Section edit" links
-		$parserOptionsMock->expects( $this->at( 0 ) )
-			->method( 'setEditSection' )
-			->with( false );
+		$this->assertEquals(
+			$expectedArticleTitle->getPrefixedText(),
+			$actualArticleTitle->getPrefixedText()
+		);
+	}
 
-		$parserOptionsMock->expects( $this->at( 1 ) )
-			->method( 'getUser' )
-			->willReturn( $user );
+	public function provideCommentTitlesAndExpectedArticleTitles() {
+		$map = [
+			'Talk:Foo/@comment-TK-test-20170513135129' => 'Foo',
+			'Talk:Bar/@comment-TK-test-20140211143144' => 'Bar',
+			'Talk:Foo/Bar/@comment-TK-test-20170513135129' => 'Foo/Bar',
+			'Talk:Foo/Bar/Baz/@comment-TK-test-20170513135129' => 'Foo/Bar/Baz',
+		];
 
-		$parserMock->expects( $this->at( 0 ) )
-			->method( 'preSaveTransform' )
-			->with( $text, $title, $user, $parserOptionsMock )
-			->willReturnArgument( 0 );
-
-		// ensure options hash is used for memc key
-		$parserOptionsMock->expects( $this->at( 2 ) )
-			->method( 'optionsHash' )
-			->with( ParserOptions::legacyOptions() )
-			->willReturn( (string)mt_rand( 0, 65535 ) );
-
-		$parserMock->expects( $this->at( 1 ) )
-			->method( 'parse' )
-			->with( $text, $title, $parserOptionsMock )
-			->willReturn( $parserOutputMock );
-
-		$parserOutputMock->expects( $this->at( 0 ) )
-			->method( 'getText' )
-			->willReturn( $text );
-
-		$parserOutputMock->expects( $this->at( 1 ) )
-			->method( 'getHeadItems' )
-			->willReturn( [] );
-
-		$this->mockClass( ParserOptions::class, $parserOptionsMock, 'newFromContext' );
-		$this->mockStaticMethod( ParserPool::class, 'get', $parserMock );
-		$this->mockStaticMethod( ParserPool::class, 'release', true );
-
-		$articleComment = new ArticleComment( $title );
-		$articleComment->setRawText( $text );
-		$returnText = $articleComment->getTransformedParsedText();
+		foreach ( $map as $commentTitleText => $expectedArticleTitleText ) {
+			yield [ Title::newFromText( $commentTitleText ), Title::newFromText( $expectedArticleTitleText ) ];
+		}
 	}
 }
