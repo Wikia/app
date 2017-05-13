@@ -5,7 +5,7 @@ use Extensions\Wikia\ArticleComments\Hooks\UserCan\Right;
 
 class CreateActionCheck extends Check {
 	public function process( \Title $title, \User $user ) {
-		$parentPage = $title->getSubjectPage();
+		$parentPage = $this->dependencyFactory->newArticleComment( $title )->getArticleTitle();
 
 		if ( !$parentPage->exists() || $parentPage->isMainPage() ) {
 			return false;

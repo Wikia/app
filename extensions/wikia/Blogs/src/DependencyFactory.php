@@ -9,6 +9,10 @@ class DependencyFactory {
 		return new \BlogArticle( $title );
 	}
 
+	public function newArticleComment( \Title $title ): \ArticleComment {
+		return new \ArticleComment( $title );
+	}
+
 	public function newBlogArticleCheckFactory() {
 		return new BlogArticleCheckFactory( $this );
 	}

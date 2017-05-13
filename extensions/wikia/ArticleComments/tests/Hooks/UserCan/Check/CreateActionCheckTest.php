@@ -25,11 +25,21 @@ class CreateActionCheckTest extends \WikiaBaseTest {
 		$this->title = $this->createMock( \Title::class );
 		$this->user = $this->createMock( \User::class );
 
-		$this->title->expects( $this->once() )
-			->method( 'getSubjectPage' )
+		$articleComment = $this->createMock( \ArticleComment::class );
+
+		$articleComment->expects( $this->once() )
+			->method( 'getArticleTitle' )
 			->willReturn( $this->parentPage );
 
-		$this->createActionCheck = new CreateActionCheck( new DependencyFactory() );
+		/** @var DependencyFactory|\PHPUnit_Framework_MockObject_MockObject $dependencyFactory */
+		$dependencyFactory = $this->createMock( DependencyFactory::class );
+
+		$dependencyFactory->expects( $this->once() )
+			->method( 'newArticleComment' )
+			->with( $this->title )
+			->willReturn( $articleComment );
+
+		$this->createActionCheck = new CreateActionCheck( $dependencyFactory );
 	}
 
 	public function testNonExistingTitleIsNotAllowed() {

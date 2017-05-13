@@ -26,6 +26,17 @@ class DependencyFactoryTest extends \WikiaBaseTest {
 		$this->assertNotSame( $blogArticleOne, $blogArticleTwo );
 	}
 
+	public function testNewArticleComment() {
+		$title = new \Title();
+
+		$articleCommentOne = $this->dependencyFactory->newArticleComment( $title );
+		$articleCommentTwo = $this->dependencyFactory->newArticleComment( $title );
+
+		$this->assertInstanceOf( \ArticleComment::class, $articleCommentOne );
+		$this->assertInstanceOf( \ArticleComment::class, $articleCommentTwo );
+		$this->assertNotSame( $articleCommentOne, $articleCommentTwo);
+	}
+
 	public function testNewBlogArticleCheckFactory() {
 		$checkFactoryOne = $this->dependencyFactory->newBlogArticleCheckFactory();
 		$checkFactoryTwo = $this->dependencyFactory->newBlogArticleCheckFactory();

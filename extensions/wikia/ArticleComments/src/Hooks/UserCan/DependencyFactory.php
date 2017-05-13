@@ -6,7 +6,7 @@ use Extensions\Wikia\ArticleComments\Hooks\UserCan\Check\CheckFactory;
 class DependencyFactory {
 	public function getCommentsNamespaces(): array {
 		global $wgArticleCommentsNamespaces;
-		return $wgArticleCommentsNamespaces;
+		return array_map( 'MWNamespace::getTalk', $wgArticleCommentsNamespaces );
 	}
 
 	public function newCheckFactory(): CheckFactory {

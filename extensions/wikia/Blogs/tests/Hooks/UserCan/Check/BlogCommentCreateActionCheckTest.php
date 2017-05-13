@@ -27,12 +27,19 @@ class BlogCommentCreateActionCheckTest extends \WikiaBaseTest {
 		$this->user = $this->createMock( \User::class );
 		$parentPage = $this->createMock( \Title::class );
 
-		$this->title->expects( $this->once() )
-			->method( 'getSubjectPage' )
-			->willReturn( $parentPage );
-
 		$this->blogArticle = $this->createMock( \BlogArticle::class );
 		$this->dependencyFactory = $this->createMock( DependencyFactory::class );
+
+		$articleComment = $this->createMock( \ArticleComment::class );
+
+		$articleComment->expects( $this->once() )
+			->method( 'getArticleTitle' )
+			->willReturn( $parentPage );
+
+		$this->dependencyFactory->expects( $this->once() )
+			->method( 'newArticleComment' )
+			->with( $this->title )
+			->willReturn( $articleComment );
 
 		$this->dependencyFactory->expects( $this->once() )
 			->method( 'newBlogArticle' )
