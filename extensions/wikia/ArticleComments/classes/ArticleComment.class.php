@@ -16,9 +16,6 @@ class ArticleComment {
 
 	const LOG_ACTION_COMMENT = 'article_comment';
 
-	/** @var Bool (for blogs only) */
-	private $mProps;
-
 	public $mLastRevId;
 	public $mFirstRevId;
 	public $mNamespace;
@@ -60,7 +57,6 @@ class ArticleComment {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
 		$this->mNamespaceTalk = MWNamespace::getTalk( $this->mNamespace );
-		$this->mProps = false;
 	}
 
 	/**
@@ -1488,33 +1484,6 @@ class ArticleComment {
 		}
 
 		return true;
-	}
-
-	// Blog post only functions
-
-	/**
-	 * setProps -- change props for comment article
-	 *
-	 * @param $props
-	 * @param bool $update
-	 */
-	public function setProps( $props, $update = false ) {
-
-		if ( $update && class_exists( 'BlogArticle' ) ) {
-			BlogArticle::setProps( $this->mTitle->getArticleID(), $props );
-		}
-		$this->mProps = $props;
-	}
-
-	/**
-	 * getProps -- get props for comment article
-	 *
-	 */
-	public function getProps() {
-		if ( ( !$this->mProps || !is_array( $this->mProps ) ) && class_exists( 'BlogArticle' ) ) {
-			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
-		}
-		return $this->mProps;
 	}
 
 	// Voting functions
