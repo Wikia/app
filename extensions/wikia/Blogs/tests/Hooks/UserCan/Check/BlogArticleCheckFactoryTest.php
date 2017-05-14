@@ -20,7 +20,9 @@ class BlogArticleCheckFactoryTest extends \WikiaBaseTest {
 	 * @param string $action
 	 * @param string $expectedCheckClass
 	 */
-	public function testNewActionCheck( string $action, string $expectedCheckClass ) {
+	public function testNewActionCheckReturnsCorrectCheckForSupportedActions(
+		string $action, string $expectedCheckClass
+	) {
 		$check = $this->blogArticleCheckFactory->newActionCheck( $action );
 
 		$this->assertInstanceOf( $expectedCheckClass, $check );
@@ -29,10 +31,28 @@ class BlogArticleCheckFactoryTest extends \WikiaBaseTest {
 	public function provideActionsAndExpectedCheckClasses(): array {
 		return [
 			[ Action::CREATE, BlogArticleCreateActionCheck::class ],
-		    [ Action::EDIT, BlogArticleEditActionCheck::class ],
-		    [ Action::MOVE, BlogArticleMoveActionCheck::class ],
-		    [ Action::MOVE_TARGET, BlogArticleMoveActionCheck::class ],
-		    [ Action::PROTECT, BlogArticleProtectActionCheck::class ]
+			[ Action::EDIT, BlogArticleEditActionCheck::class ],
+			[ Action::MOVE, BlogArticleMoveActionCheck::class ],
+			[ Action::MOVE_TARGET, BlogArticleMoveActionCheck::class ],
+			[ Action::PROTECT, BlogArticleProtectActionCheck::class ],
+		];
+	}
+
+	/**
+	 * @dataProvider provideUnsupportedActions
+	 * @param string $action
+	 */
+	public function testNewActionCheckReturnsNullForUnsupportedActions( string $action ) {
+		$check = $this->blogArticleCheckFactory->newActionCheck( $action );
+
+		$this->assertNull( $check );
+	}
+
+	public function provideUnsupportedActions(): array {
+		return [
+			[ 'karamba' ],
+			[ 'alamakota' ],
+			[ 'chryzantemy złociste' ],
 		];
 	}
 }

@@ -20,7 +20,9 @@ class BlogCommentCheckFactoryTest extends \WikiaBaseTest {
 	 * @param string $action
 	 * @param string $expectedCheckClass
 	 */
-	public function testNewActionCheck( string $action, string $expectedCheckClass ) {
+	public function testNewActionCheckReturnsCorrectCheckForSupportedActions(
+		string $action, string $expectedCheckClass
+	) {
 		$check = $this->blogCommentCheckFactory->newActionCheck( $action );
 
 		$this->assertInstanceOf( $expectedCheckClass, $check );
@@ -29,6 +31,24 @@ class BlogCommentCheckFactoryTest extends \WikiaBaseTest {
 	public function provideActionsAndExpectedCheckClasses(): array {
 		return [
 			[ Action::CREATE, BlogCommentCreateActionCheck::class ]
+		];
+	}
+
+	/**
+	 * @dataProvider provideUnsupportedActions
+	 * @param string $action
+	 */
+	public function testNewActionCheckReturnsNullForUnsupportedActions( string $action ) {
+		$check = $this->blogCommentCheckFactory->newActionCheck( $action );
+
+		$this->assertNull( $check );
+	}
+
+	public function provideUnsupportedActions(): array {
+		return [
+			[ 'karamba' ],
+			[ 'alamakota' ],
+			[ 'chryzantemy złociste' ],
 		];
 	}
 }

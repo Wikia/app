@@ -13,11 +13,11 @@ class DependencyFactory {
 		return new \ArticleComment( $title );
 	}
 
-	public function newBlogArticleCheckFactory() {
+	public function newBlogArticleCheckFactory(): BlogArticleCheckFactory {
 		return new BlogArticleCheckFactory( $this );
 	}
 
-	public function newBlogCommentCheckFactory() {
+	public function newBlogCommentCheckFactory(): BlogCommentCheckFactory {
 		return new BlogCommentCheckFactory( $this );
 	}
 }

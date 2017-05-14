@@ -37,11 +37,11 @@ class CheckFactoryTest extends \WikiaBaseTest {
 	public function provideActionsAndExpectedCheckClasses(): array {
 		return [
 			[ Action::CREATE, CreateActionCheck::class ],
-		    [ Action::EDIT, EditActionCheck::class ],
-		    [ Action::DELETE, DeleteActionCheck::class ],
-		    [ Action::UNDELETE, DeleteActionCheck::class ],
-		    [ Action::MOVE, MoveActionCheck::class ],
-		    [ Action::MOVE_TARGET, MoveActionCheck::class ]
+			[ Action::EDIT, EditActionCheck::class ],
+			[ Action::DELETE, DeleteActionCheck::class ],
+			[ Action::UNDELETE, DeleteActionCheck::class ],
+			[ Action::MOVE, MoveActionCheck::class ],
+			[ Action::MOVE_TARGET, MoveActionCheck::class ],
 		];
 	}
 
