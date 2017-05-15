@@ -21,7 +21,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					name: 'outstream-desktop',
 					position: 'atf',
 					video: {
-						language: 'en',
 						playerHeight: 480,
 						playerWidth: 640,
 						size_id: 203
@@ -37,7 +36,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					name: 'outstream-desktop',
 					position: 'atf',
 					video: {
-						language: 'en',
 						playerHeight: 480,
 						playerWidth: 640,
 						size_id: 203
@@ -55,7 +53,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 					name: 'outstream-mobile',
 					position: 'atf',
 					video: {
-						language: 'en',
 						playerHeight: 480,
 						playerWidth: 640,
 						size_id: 203
