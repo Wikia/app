@@ -100,12 +100,27 @@ describe('AdContext', function () {
 		};
 	}
 
+	function enablePageFairDetection() {
+		mocks.instantGlobals.wgAdDriverPageFairDetectionCountries = ['CURRENT_COUNTRY'];
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+	}
+
 	function enablePageFairRecovery(context) {
 		mocks.instantGlobals = mocks.instantGlobals || {};
 		mocks.instantGlobals.wgAdDriverPageFairRecoveryCountries = ['CURRENT_COUNTRY'];
 
 		context.opts = context.opts || {};
 		context.opts.pageFairRecovery = true;
+	}
+
+	function enableSourcePointDetection(context) {
+		context.opts = context.opts || {};
+		context.targeting = context.targeting || {};
+
+		context.opts.sourcePointDetectionUrl = 'url';
+		context.targeting.skin = 'oasis';
+
+		mocks.instantGlobals.wgAdDriverSourcePointDetectionCountries = ['CURRENT_COUNTRY'];
 	}
 
 	function enableSourcePointRecovery(context) {
@@ -117,6 +132,7 @@ describe('AdContext', function () {
 	}
 
 	function enableGCS(context) {
+		enableSourcePointDetection(context);
 		context.opts = context.opts || {};
 		context.opts.sourcePointDetection = true;
 		context.opts.showAds = true;
@@ -480,6 +496,28 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
+	it('Should allow to enable PageFair recovery with detection', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		enablePageFairDetection();
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.pageFairDetection).toBeTruthy();
+	});
+
+	it('Should allow to enable SourcePoint recovery with detection', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		enableSourcePointDetection(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+		expect(context.opts.sourcePointDetection).toBeTruthy();
+	});
+
 	it('Should disable PageFair recovery if there is no correct geo', function () {
 		var context = {
 			opt: {
@@ -668,7 +706,7 @@ describe('AdContext', function () {
 	it('Should enable Taboola', function () {
 		var context = {};
 
-		enableTaboola(context);
+		enableTaboola();
 		getModule().setContext(context);
 
 		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
@@ -720,7 +758,7 @@ describe('AdContext', function () {
 		var context = {};
 
 		enableSourcePointMMS(context);
-		enableTaboola(context);
+		enableTaboola();
 		getModule().setContext(context);
 
 		expect(context.opts.sourcePointMMS).toBeTruthy();
@@ -731,7 +769,7 @@ describe('AdContext', function () {
 		var context = {};
 
 		enablePageFairRecovery(context);
-		enableTaboola(context);
+		enableTaboola();
 		getModule().setContext(context);
 
 		expect(context.opts.pageFairRecovery).toBeTruthy();
@@ -741,7 +779,7 @@ describe('AdContext', function () {
 	it('Should disable GCS if Taboola is enabled', function () {
 		var context = {};
 
-		enableTaboola(context);
+		enableTaboola();
 		enableGCS(context);
 		getModule().setContext(context);
 

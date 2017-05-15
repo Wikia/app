@@ -52,17 +52,27 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
 	}
 
+	function isSourcePointDetectionDesktopEnabled(context) {
+		return context.opts.sourcePointDetectionUrl && (context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+	}
+
+	function isSourcePointDetectionMobile(context) {
+		return context.opts.sourcePointDetectionUrl && (context.targeting.skin === 'mercury' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+	}
+
 	function updateRecoveryServicesAdContext(context, noExternals) {
 		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
 			isRecoveryServiceEnabled = false;
-
-		// PageFair detection
-		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = !noExternals && !isRecoveryServiceEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
 		isRecoveryServiceEnabled = context.opts.pageFairRecovery;
+
+		// PageFair detection
+		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
 		// SourcePoint recovery
 		context.opts.sourcePointRecovery = !noExternals && !isRecoveryServiceEnabled &&
@@ -76,13 +86,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
 		// SourcePoint detection integration
-		if (!noExternals && context.opts.sourcePointDetectionUrl) {
-			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
-
-			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
-		}
+		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
+		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobile(context);
 
 		// Taboola
 		context.opts.loadTaboolaLibrary = !noExternals && !isRecoveryServiceEnabled &&
