@@ -86,6 +86,47 @@ describe('AdContext', function () {
 		}
 	});
 
+	function enableSourcePointMMS(context) {
+		context.opts = context.opts || {};
+		context.opts.sourcePointMMS = true;
+	}
+
+	function enableTaboola() {
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
+			SLOT: {
+				recovery: ['CURRENT_COUNTRY']
+			}
+		};
+	}
+
+	function enablePageFairRecovery(context) {
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverPageFairRecoveryCountries = ['CURRENT_COUNTRY'];
+
+		context.opts = context.opts || {};
+		context.opts.pageFairRecovery = true;
+	}
+
+	function enableSourcePointRecovery(context) {
+		context.opts = context.opts || {};
+		context.opts.sourcePointRecovery = true;
+
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverSourcePointRecoveryCountries = ['CURRENT_COUNTRY'];
+	}
+
+	function enableGCS(context) {
+		context.opts = context.opts || {};
+		context.opts.sourcePointDetection = true;
+		context.opts.showAds = true;
+
+		spyOn(mocks.abTesting, 'getGroup').and.returnValue('GROUP_5');
+
+		mocks.instantGlobals = mocks.instantGlobals || {};
+		mocks.instantGlobals.wgAdDriverGoogleConsumerSurveysCountries = ['CURRENT_COUNTRY'];
+	}
+
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
 		'even for empty (or missing) ads.context',
@@ -595,6 +636,128 @@ describe('AdContext', function () {
 
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('Should enable PageFair Recovery', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should enable SourcePoint Recovery', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+	});
+
+	it('Should enable SourcePoint MMS', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointMMS).toBeTruthy();
+	});
+
+	it('Should enable Taboola', function () {
+		var context = {};
+
+		enableTaboola(context);
+		getModule().setContext(context);
+
+		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
+	});
+
+	it('Should enable GCS', function () {
+		var context = {};
+
+		enableGCS(context);
+		getModule().setContext(context);
+
+		expect(context.opts.googleConsumerSurveys).toBeTruthy();
+	});
+
+	it('Should disable SourcePoint Recovery when PageFair recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointRecovery(context);
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeFalsy();
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should disable SourcePoint MMS when SourcePoint Recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		enableSourcePointRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointRecovery).toBeTruthy();
+		expect(context.opts.sourcePointMMS).toBeFalsy();
+	});
+
+	it('Should disable SourcePoint MMS when PageFair Recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		enablePageFairRecovery(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.sourcePointMMS).toBeFalsy();
+	});
+
+	it('Should disable Taboola if SourcePoint Recovery is enabled', function () {
+		var context = {};
+
+		enableSourcePointMMS(context);
+		enableTaboola(context);
+		getModule().setContext(context);
+
+		expect(context.opts.sourcePointMMS).toBeTruthy();
+		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
+	});
+
+	it('Should disable Taboola if PageFair Recovery is enabled', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		enableTaboola(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.loadTaboolaLibrary).toBeFalsy();
+	});
+
+	it('Should disable GCS if Taboola is enabled', function () {
+		var context = {};
+
+		enableTaboola(context);
+		enableGCS(context);
+		getModule().setContext(context);
+
+		expect(context.opts.loadTaboolaLibrary).toBeTruthy();
+		expect(context.opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('Should disable GCS if PageFair is enabled', function () {
+		var context = {};
+
+		enablePageFairRecovery(context);
+		enableGCS(context);
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+		expect(context.opts.googleConsumerSurveys).toBeFalsy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {

@@ -47,24 +47,31 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
+	function isGSCEnabled() {
+		return abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
+	}
+
 	function updateRecoveryServicesAdContext(context, noExternals) {
-		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
+		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
+			isRecoveryServiceEnabled = false;
 
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = !noExternals &&
-			context.opts.pageFairRecovery &&
-			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+		context.opts.pageFairRecovery = !noExternals && !isRecoveryServiceEnabled &&
+			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+		isRecoveryServiceEnabled = context.opts.pageFairRecovery;
 
 		// SourcePoint recovery
-		context.opts.sourcePointRecovery = !noExternals &&
-			context.opts.sourcePointRecovery &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
+		context.opts.sourcePointRecovery = !noExternals && !isRecoveryServiceEnabled &&
+			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
+		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.sourcePointRecovery;
 
 		// SourcePoint MMS
-		context.opts.sourcePointMMS = !noExternals && context.opts.sourcePointMMS;
+		context.opts.sourcePointMMS = !noExternals && !isRecoveryServiceEnabled && context.opts.sourcePointMMS;
+		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
@@ -78,13 +85,13 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Taboola
-		context.opts.loadTaboolaLibrary = !noExternals && shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
+		context.opts.loadTaboolaLibrary = !noExternals && !isRecoveryServiceEnabled &&
+			shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
+		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
-		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
-		}
+		context.opts.googleConsumerSurveys = context.opts.sourcePointDetection &&
+			!isRecoveryServiceEnabled && context.opts.showAds && isGSCEnabled();
 	}
 
 	function setContext(newContext) {
