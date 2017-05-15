@@ -16,7 +16,9 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			gpt: '1',
 			mobile: '1',
 			remnant: '2',
-			mobile_remnant: '2'
+			mobile_remnant: '2',
+			rec: 'r',
+			premium: 'p'
 		},
 		wsiSlots = {
 			TOP_LEADERBOARD: 'l',
