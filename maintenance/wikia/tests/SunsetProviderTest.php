@@ -38,11 +38,13 @@ class SunsetProviderTest extends WikiaBaseTest {
 		$this->setupMocks( $isDryRun, $providerName, $providerVideos, $articleData );
 
 		$sunsetProvider = new SunsetProvider();
-		$sunsetProvider->loadParamsAndArgs( SunsetProvider::class, [ 'provider' => $providerName, 'dry-run' => $isDryRun ] );
+		$sunsetProvider->loadParamsAndArgs( SunsetProvider::class, [
+			'provider' => $providerName,
+			'dry-run' => $isDryRun,
+			'quiet' => true,
+		] );
 
-		ob_start();
 		$sunsetProvider->execute();
-		ob_get_clean();
 	}
 
 	/**

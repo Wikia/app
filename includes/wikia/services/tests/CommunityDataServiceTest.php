@@ -24,8 +24,17 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityImageId( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['image_id'], ( new CommunityDataService( 1 ) )->getCommunityImageId(),
-			'can not get community image id correctly' );
+
+		$actualImageId = ( new CommunityDataService( 1 ) )->getCommunityImageId();
+
+		if ( isset( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['image_id'] ) ) {
+			$this->assertEquals(
+				$expected[CommunityDataService::COMMUNITY_DATA_SECTION]['image_id'],
+				$actualImageId
+			);
+		} else {
+			$this->assertEquals( 0, $actualImageId );
+		}
 	}
 
 	/**
@@ -33,8 +42,18 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityDescription( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['description'], ( new CommunityDataService( 1 ) )->getCommunityDescription(),
-			'can not get community description correctly' );
+
+		$actualCommunityDescription = ( new CommunityDataService( 1 ) )->getCommunityDescription();
+
+		if ( isset( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['description'] ) ) {
+			$this->assertEquals(
+				$expected[CommunityDataService::COMMUNITY_DATA_SECTION]['description'],
+				$actualCommunityDescription,
+				'can not get community description correctly'
+			);
+		} else {
+			$this->assertEmpty( $actualCommunityDescription );
+		}
 	}
 
 	/**
