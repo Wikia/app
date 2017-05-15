@@ -439,6 +439,70 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
+	it('Should disable PageFair recovery if there is no correct geo', function () {
+		var context = {
+			opt: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
+	it('Should enable PageFair recovery if there is proper geo', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeTruthy();
+	});
+
+	it('Should disable PageFair recovery if there is proper geo but is disabled by backend (wgVariable)', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: false
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
+	it('Should disable PageFair recovery if there is no proper geo but its enabled by backend (wgVariable)', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
+		};
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
+	});
+
 	it('enables detection when url param pagefairdetection is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'pagefairdetection' ?  '1' : '0';

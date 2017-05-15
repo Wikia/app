@@ -42,11 +42,55 @@ define('ext.wikia.adEngine.adContext', [
 		return context.targeting.pageType === pageType;
 	}
 
+	function isPageFairDetectionEnabled() {
+		var isSupportedGeo = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries);
+		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
+	}
+
+	function updateRecoveryServicesAdContext(context, noExternals) {
+		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
+
+		// PageFair detection
+		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
+
+		// PageFair recovery
+		context.opts.pageFairRecovery = !noExternals &&
+			context.opts.pageFairRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+
+		// SourcePoint recovery
+		context.opts.sourcePointRecovery = !noExternals &&
+			context.opts.sourcePointRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
+
+		// SourcePoint MMS
+		context.opts.sourcePointMMS = !noExternals && context.opts.sourcePointMMS;
+
+		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
+
+		// SourcePoint detection integration
+		if (!noExternals && context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+
+			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+		}
+
+		// Taboola
+		context.opts.loadTaboolaLibrary = !noExternals && shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
+
+		// Google Consumer Surveys
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
+		}
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
-			taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -68,57 +112,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		// PageFair detection
-		if (!noExternals) {
-			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
-				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
-				canBeSampled = sampler.sample('pageFairDetection',  1, 10);
-
-			if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
-				context.opts.pageFairDetection = true;
-			}
-		}
-
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
-		// PageFair recovery
-		context.opts.pageFairRecovery = !noExternals &&
-			context.opts.pageFairRecovery &&
-			geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
-
-		// SourcePoint recovery
-		context.opts.sourcePointRecovery = !noExternals &&
-			context.opts.sourcePointRecovery &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-
-		// SourcePoint MMS
-		context.opts.sourcePointMMS = !noExternals &&
-			context.opts.sourcePointMMS;
-
-		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
-
-		// SourcePoint detection integration
-		if (!noExternals && context.opts.sourcePointDetectionUrl) {
-			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
-
-			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
-		}
-
-		// Taboola
-		if (!noExternals) {
-			if (shouldLoadTaboolaOnBlockingTraffic(taboolaConfig)) {
-				context.opts.loadTaboolaLibrary = true;
-			}
-		}
-
-		// Google Consumer Surveys
-		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
-		}
+		updateRecoveryServicesAdContext(context, noExternals);
 
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
