@@ -40,6 +40,28 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			log: noop,
+			priceGranularityHelper: {
+				transformPriceFromCpm: function () {
+					return '1.20';
+				}
+			},
+			prebid: {
+				getBidByAdId: function (id) {
+					if (id === 'veles123') {
+						return {
+							vastId: 'GDFP:123'
+						};
+					}
+
+					if (id === 'vulcan456') {
+						return {
+							vulcanAdId: '56bar',
+							vulcanAdvertiserId: 'foo89',
+							cpm: 123
+						};
+					}
+				}
+			},
 			slotTargeting: {
 				getWikiaSlotId: function (slotName, src) {
 					return slotName + '-' + src;
@@ -56,7 +78,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adTracker,
+			mocks.priceGranularityHelper,
 			mocks.slotTargeting,
+			mocks.prebid,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
@@ -130,10 +154,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('country')).toEqual('XY');
 		expect(getTrackedValue('skin')).toEqual('oasis');
 		expect(getTrackedValue('ad_error_code')).toBeFalsy();
-		// TODO add assertions
-		//expect(getTrackedValue('vulcan_network')).toBeFalsy();
-		//expect(getTrackedValue('vulcan_advertiser')).toBeFalsy();
-		//expect(getTrackedValue('vulcan_price')).toEqual(-1);
+		expect(getTrackedValue('vulcan_network')).toBeFalsy();
+		expect(getTrackedValue('vulcan_advertiser')).toBeFalsy();
+		expect(getTrackedValue('vulcan_price')).toEqual(-1);
 		expect(getTrackedValue('wsi')).toEqual('(none)');
 		expect(getTrackedValue('browser')).toEqual('Fake Foo 9');
 	});
@@ -166,16 +189,16 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('creative_id')).toEqual(92);
 	});
 
-	// TODO fix tracking
-	//it('Track data with vulcan data for vulcan ad product', function () {
-	//	tracker.track({
-	//		adProduct: 'vulcan',
-	//		slotName: 'TOP_LEADERBOARD'
-	//	}, 'fooPlayer', 'barEvent');
-	//
-	//	expect(getTrackedValue('vast_id')).toEqual('7872:5381');
-	//	expect(getTrackedValue('vulcan_price')).toEqual('0.90');
-	//});
+	it('Track data with vulcan data for vulcan ad product', function () {
+		tracker.track({
+			adProduct: 'vulcan',
+			slotName: 'TOP_LEADERBOARD',
+			hbAdId: 'vulcan456'
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
+		expect(getTrackedValue('vulcan_price')).toEqual('1.20');
+	});
 
 	it('Track data with wsi when src is available', function () {
 		tracker.track({
@@ -201,9 +224,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		tracker.track({
 			adProduct: 'veles',
 			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				vastId: 'GDFP:123'
-			}
+			hbAdId: 'veles123'
 		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
 
 		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');

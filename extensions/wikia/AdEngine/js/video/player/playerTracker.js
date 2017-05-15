@@ -3,13 +3,27 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, floater) {
+], function (
+	adContext,
+	pageLevel,
+	adTracker,
+	granularity,
+	slotTargeting,
+	prebid,
+	browserDetect,
+	geo,
+	log,
+	win,
+	floater
+) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -47,20 +61,23 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
-			};
+			},
+			bid;
 
-		// TODO fix me
-		//if (vulcan && params.slotName && params.adProduct === 'vulcan') {
-		//	vulcanResponse = vulcan.getSingleResponse(params.slotName);
-		//	trackingData['vast_id'] = [
-		//		vulcanResponse.network || emptyValue.string,
-		//		vulcanResponse.advertiser || emptyValue.string
-		//	].join(':');
-		//	trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
-		//}
+		if (params.hbAdId) {
+			bid = prebid.getBidByAdId(params.hbAdId) || {};
+		}
 
-		if (params.adProduct === 'veles') {
-			trackingData['vast_id'] = (params.bid && params.bid.vastId) || emptyValue.string;
+		if (bid && params.adProduct === 'vulcan') {
+			trackingData['vast_id'] = [
+				bid.vulcanAdvertiserId || emptyValue.string,
+				bid.vulcanAdId || emptyValue.string
+			].join(':');
+			trackingData['vulcan_price'] = granularity.transformPriceFromCpm(bid.cpm);
+		}
+
+		if (bid && params.adProduct === 'veles') {
+			trackingData['vast_id'] = bid.vastId || emptyValue.string;
 		}
 
 		return trackingData;

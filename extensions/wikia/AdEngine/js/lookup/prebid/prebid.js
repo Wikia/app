@@ -47,7 +47,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
-					win.pbjs.aliasBidder('rubicon', 'vulcan');
 					win.pbjs.bidderSettings = settings.create();
 					win.pbjs.addAdUnits(adUnits);
 				});
