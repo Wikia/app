@@ -9,54 +9,24 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 
 	var bidderName = 'rubicon',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
+		outstreamSizeId = 203,
+		rubiconAccountId = 7450,
+		rubiconSiteId = 55412,
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
-					sizes: [
-						[640, 480]
-					],
-					siteId: 55412,
 					zoneId: 519058,
-					accountId: 7450,
-					name: 'outstream-desktop',
-					position: 'atf',
-					video: {
-						playerHeight: 480,
-						playerWidth: 640,
-						size_id: 203
-					}
+					position: 'atf'
 				},
 				INCONTENT_PLAYER: {
-					sizes: [
-						[640, 480]
-					],
-					siteId: 55412,
-					zoneId: 519058,
-					accountId: 7450,
-					name: 'outstream-desktop',
-					position: 'atf',
-					video: {
-						playerHeight: 480,
-						playerWidth: 640,
-						size_id: 203
-					}
+					zoneId: 260296,
+					position: 'btf'
 				}
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					sizes: [
-						[640, 480]
-					],
-					siteId: 55412,
 					zoneId: 563110,
-					accountId: 5441,
-					name: 'outstream-mobile',
-					position: 'atf',
-					video: {
-						playerHeight: 480,
-						playerWidth: 640,
-						size_id: 203
-					}
+					position: 'btf'
 				}
 			}
 		};
@@ -68,18 +38,24 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	function prepareAdUnit(slotName, config) {
 		var adUnit = {
 			code: slotName,
-			sizes: config.sizes,
+			sizes: [
+				[640, 480]
+			],
 			mediaType: 'video',
 			bids: [
 				{
 					bidder: bidderName,
 					params: {
-						accountId: config.accountId,
-						siteId: config.siteId,
+						accountId: rubiconAccountId,
+						siteId: rubiconSiteId,
 						zoneId: config.zoneId,
-						name: config.name,
+						name: slotName,
 						position: config.position,
-						video: config.video
+						video: {
+							playerHeight: 480,
+							playerWidth: 640,
+							size_id: outstreamSizeId
+						}
 					}
 				}
 			]

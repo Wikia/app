@@ -37,15 +37,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	it('prepareAdUnit returns data in correct shape', function () {
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
-			sizes: [
-				[640, 480]
-			],
-			siteId: 55412,
 			zoneId: 519058,
-			accountId: 7450,
-			name: 'outstream-desktop',
-			position: 'atf',
-			video: 'foo'
+			position: 'atf'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
 			sizes: [
@@ -59,9 +52,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 						accountId: 7450,
 						siteId: 55412,
 						zoneId: 519058,
-						name: 'outstream-desktop',
+						name: 'TOP_LEADERBOARD',
 						position: 'atf',
-						video: 'foo'
+						video: {
+							playerHeight: 480,
+							playerWidth: 640,
+							size_id: 203
+						}
 					}
 				}
 			]
