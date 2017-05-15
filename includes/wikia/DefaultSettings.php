@@ -1308,6 +1308,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverIndexExchangeBidderCountries = null;
 
 /**
+ * @name $wgAdDriverOpenXPrebidBidderCountries
+ * List of countries where OpenX prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXPrebidBidderCountries = null;
+
+/**
  * @name $wgAdDriverOverridePrefootersCountries
  * Enables overriding prefooters sizes on Oasis in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

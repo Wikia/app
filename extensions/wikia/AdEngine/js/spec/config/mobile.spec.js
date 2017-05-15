@@ -75,6 +75,13 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
+	it('getProviderList returns DirectGPT on premium-only page', function () {
+		context.opts.premiumOnly = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock]);
+	});
+
 	it('getProviderLists returns [] when showAds is false', function () {
 		context.opts.showAds = false;
 		var adConfigMobile = getConfig();

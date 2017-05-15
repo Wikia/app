@@ -79,6 +79,9 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
+		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
+
 		// PageFair recovery
 		context.opts.pageFairRecovery = !noExternals &&
 			context.opts.pageFairRecovery &&
