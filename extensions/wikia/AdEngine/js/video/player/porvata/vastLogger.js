@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 
 	var config = instantGlobals.wgPorvataVastLoggerConfig || [],
 		trackEndpoint = '/wikia.php?controller=AdEngine2Api&method=postPorvataInfo',
-		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcanTracking';
+		logGroup = 'ext.wikia.adEngine.video.player.porvata.vastLogger';
 
 	function createConfigKey(advertiserId, eventName) {
 		return [ advertiserId, eventName ].join('_');
