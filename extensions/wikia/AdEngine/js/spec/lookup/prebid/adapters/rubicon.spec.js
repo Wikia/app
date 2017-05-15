@@ -1,10 +1,10 @@
 /*global describe, expect, it, jasmine, modules*/
-describe('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', function () {
+describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	'use strict';
 
 	var mocks = {
 		instantGlobals: {
-			wgAdDriverRubiconVulcanCountries: ['PL']
+			wgAdDriverRubiconPrebidCountries: ['PL']
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', function () {
 	mocks.log.levels = {};
 
 	function getBidder() {
-		return modules['ext.wikia.adEngine.lookup.prebid.adapters.vulcan'](
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
 			mocks.slotsContext,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -29,8 +29,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', function () {
 	}
 
 	it('isEnabled checks the countries instant global', function () {
-		var indexExchange = getBidder();
-		indexExchange.isEnabled();
+		var bidder = getBidder();
+		bidder.isEnabled();
 		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
 	});
 

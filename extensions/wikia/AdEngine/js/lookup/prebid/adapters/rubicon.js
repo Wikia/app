@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
+define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.geo',
 	'wikia.instantGlobals',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
 	'use strict';
 
 	var bidderName = 'rubicon',
-		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.vulcan',
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries);
 	}
 
 	function prepareAdUnit(slotName, config) {
