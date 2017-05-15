@@ -10,38 +10,18 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 		trackEndpoint = '/wikia.php?controller=AdEngine2Api&method=postPorvataInfo',
 		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcanTracking';
 
-	function createConfigKey(data) {
-		var eventName = data['event_name'] || '',
-			vulcanAdvertiser = data['vulcan_advertiser'] || '',
-			vulcanNetwork = data['vulcan_network'] || '';
-
-		return [ vulcanNetwork, vulcanAdvertiser, eventName ].join('_');
-	}
-
-	function getNestedVastUrl(vastResponse) {
-		var parser = new win.DOMParser(),
-			vast = parser.parseFromString(vastResponse || '', 'text/xml'),
-			nestedVastTag;
-
-		nestedVastTag = vast.querySelector('VASTAdTagURI');
-
-		if (nestedVastTag && nestedVastTag.childNodes.length) {
-			return encodeURIComponent(nestedVastTag.childNodes[0].nodeValue);
-		}
-
-		return '';
+	function createConfigKey(advertiserId, eventName) {
+		return [ advertiserId, eventName ].join('_');
 	}
 
 	function prepareData(data, playerParams) {
 		return [
-			// TODO pass proper advertiser ID
-			'advertiser_id=' + data['vulcan_advertiser'] || '',
-			'network_id=' + data['vulcan_network'] || '',
+			'advertiser_id=' + playerParams.bid.vulcanAdvertiserId || '',
 			'event_name=' + data['event_name'] || '',
 			'ad_error_code=' + data['ad_error_code'] || '',
 			'position=' + data['position'] || '',
 			'browser=' + data['browser'] || '',
-			'vast_url=' + getNestedVastUrl(playerParams.vastResponse) || ''
+			'vast_url=' + encodeURIComponent(playerParams.vastUrl || '')
 		];
 	}
 
@@ -65,7 +45,7 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 	}
 
 	function logVast(player, params, data) {
-		var configKey = createConfigKey(data),
+		var configKey = createConfigKey(params.bid.vulcanAdvertiserId, data['event_name']),
 			postData;
 
 		if (config.indexOf(configKey) === -1) {

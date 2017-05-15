@@ -45,23 +45,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return '1.20';
 				}
 			},
-			prebid: {
-				getBidByAdId: function (id) {
-					if (id === 'veles123') {
-						return {
-							vastId: 'GDFP:123'
-						};
-					}
-
-					if (id === 'vulcan456') {
-						return {
-							vulcanAdId: '56bar',
-							vulcanAdvertiserId: 'foo89',
-							cpm: 123
-						};
-					}
-				}
-			},
 			slotTargeting: {
 				getWikiaSlotId: function (slotName, src) {
 					return slotName + '-' + src;
@@ -80,7 +63,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.adTracker,
 			mocks.priceGranularityHelper,
 			mocks.slotTargeting,
-			mocks.prebid,
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
@@ -193,7 +175,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		tracker.track({
 			adProduct: 'vulcan',
 			slotName: 'TOP_LEADERBOARD',
-			hbAdId: 'vulcan456'
+			bid: {
+				vulcanAdId: '56bar',
+				vulcanAdvertiserId: 'foo89',
+				cpm: 123
+			}
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
@@ -224,7 +210,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		tracker.track({
 			adProduct: 'veles',
 			slotName: 'TOP_LEADERBOARD',
-			hbAdId: 'veles123'
+			bid: {
+				vastId: 'GDFP:123'
+			}
 		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
 
 		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');

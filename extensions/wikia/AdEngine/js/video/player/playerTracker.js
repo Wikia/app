@@ -5,7 +5,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
@@ -17,7 +16,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	adTracker,
 	granularity,
 	slotTargeting,
-	prebid,
 	browserDetect,
 	geo,
 	log,
@@ -61,23 +59,18 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
-			},
-			bid;
+			};
 
-		if (params.hbAdId) {
-			bid = prebid.getBidByAdId(params.hbAdId) || {};
-		}
-
-		if (bid && params.adProduct === 'vulcan') {
+		if (params.bid && params.adProduct === 'vulcan') {
 			trackingData['vast_id'] = [
-				bid.vulcanAdvertiserId || emptyValue.string,
-				bid.vulcanAdId || emptyValue.string
+				params.bid.vulcanAdvertiserId || emptyValue.string,
+				params.bid.vulcanAdId || emptyValue.string
 			].join(':');
-			trackingData['vulcan_price'] = granularity.transformPriceFromCpm(bid.cpm);
+			trackingData['vulcan_price'] = granularity.transformPriceFromCpm(params.bid.cpm);
 		}
 
-		if (bid && params.adProduct === 'veles') {
-			trackingData['vast_id'] = bid.vastId || emptyValue.string;
+		if (params.bid && params.adProduct === 'veles') {
+			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
 		}
 
 		return trackingData;

@@ -28,13 +28,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	var logGroup = 'ext.wikia.adEngine.template.porvata';
 
 	function loadVeles(params) {
-		var bid = prebid.getBidByAdId(params.hbAdId);
-
-		if (bid) {
-			params.bid = bid;
-			params.vastResponse = params.vastResponse || bid.ad;
-			veles.markBidsAsUsed(params.hbAdId);
-		}
+		params.vastResponse = params.vastResponse || params.bid.ad;
+		veles.markBidsAsUsed(params.hbAdId);
 	}
 
 	function createInteractiveArea() {
@@ -96,7 +91,11 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.container = getVideoContainer(params.slotName);
 		}
 
-		if (params.adProduct === 'veles') {
+		if (params.hbAdId) {
+			params.bid = prebid.getBidByAdId(params.hbAdId);
+		}
+
+		if (params.bid && params.adProduct === 'veles') {
 			loadVeles(params);
 		}
 
