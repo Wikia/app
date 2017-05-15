@@ -53,20 +53,18 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'content_type': contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
-				'vulcan_network': emptyValue.int,
-				'vulcan_advertiser': emptyValue.int,
-				'vulcan_price': emptyValue.price,
+				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
 			};
 
-		if (params.bid && params.adProduct === 'vulcan') {
+		if (params.bid && params.adProduct === 'rubicon') {
 			trackingData['vast_id'] = [
-				params.bid.vulcanAdvertiserId || emptyValue.string,
-				params.bid.vulcanAdId || emptyValue.string
+				params.bid.rubiconAdvertiserId || emptyValue.string,
+				params.bid.rubiconAdId || emptyValue.string
 			].join(':');
-			trackingData['vulcan_price'] = granularity.transformPriceFromCpm(params.bid.cpm);
+			trackingData['price'] = granularity.transformPriceFromCpm(params.bid.cpm);
 		}
 
 		if (params.bid && params.adProduct === 'veles') {

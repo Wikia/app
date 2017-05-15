@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 		var contentType = getContentType(player),
 			data = playerTracker.track(params, playerName, eventName, errorCode, contentType);
 
-		if (data && params.adProduct === 'vulcan') {
+		if (data && params.adProduct === 'rubicon') {
 			logger.logVast(player, params, data);
 		}
 	}

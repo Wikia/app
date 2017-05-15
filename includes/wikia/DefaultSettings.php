@@ -1266,11 +1266,11 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
- * @name $wgAdDriverRubiconVulcanCountries
- * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * @name $wgAdDriverRubiconPrebidCountries
+ * Enables Rubicon (Prebid) in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconVulcanCountries = null;
+$wgAdDriverRubiconPrebidCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries

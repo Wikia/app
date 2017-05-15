@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_1': slotPrices.indexExchange || '',
 			'bidder_2': slotPrices.appnexus || '',
 			'bidder_3': slotPrices.fastlane || '',
-			'bidder_4': slotPrices.rubicon || '', // rubicon video (vulcan) for now
+			'bidder_4': slotPrices.rubicon || '', // rubicon video for now
 			'bidder_5': slotPrices.fastlane_private || '',
 			'bidder_6': slotPrices.aol || '',
 			'bidder_7': slotPrices.audienceNetwork || '',

@@ -72,7 +72,7 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 
 		logger.logVast(null, {
 			bid: {
-				vulcanAdvertiserId: '5'
+				rubiconAdvertiserId: '5'
 			}
 		}, {
 			'event_name': 'error',
@@ -89,7 +89,7 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 
 		logger.logVast(null, {
 			bid: {
-				vulcanAdvertiserId: '2'
+				rubiconAdvertiserId: '2'
 			}
 		}, {
 			'event_name': 'ready',
@@ -107,7 +107,7 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 
 		logger.logVast(null, {
 			bid: {
-				vulcanAdvertiserId: '2'
+				rubiconAdvertiserId: '2'
 			}
 		}, {
 			'event_name': 'error',
@@ -131,7 +131,7 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 		logger.logVast(null, {
 			vastUrl: '//foo.example',
 			bid: {
-				vulcanAdvertiserId: '34'
+				rubiconAdvertiserId: '34'
 			}
 		}, {
 			'event_name': 'init'
@@ -148,7 +148,7 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 		logger.logVast(getMockPlayerWithAd(), {
 			vastUrl: '//foo.example',
 			bid: {
-				vulcanAdvertiserId: '34'
+				rubiconAdvertiserId: '34'
 			}
 		}, {
 			'event_name': 'init'

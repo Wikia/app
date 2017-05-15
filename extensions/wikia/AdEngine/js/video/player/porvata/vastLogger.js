@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 
 	function prepareData(data, playerParams) {
 		return [
-			'advertiser_id=' + playerParams.bid.vulcanAdvertiserId || '',
+			'advertiser_id=' + playerParams.bid.rubiconAdvertiserId || '',
 			'event_name=' + data['event_name'] || '',
 			'ad_error_code=' + data['ad_error_code'] || '',
 			'position=' + data['position'] || '',
@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 	}
 
 	function logVast(player, params, data) {
-		var configKey = createConfigKey(params.bid.vulcanAdvertiserId, data['event_name']),
+		var configKey = createConfigKey(params.bid.rubiconAdvertiserId, data['event_name']),
 			postData;
 
 		if (config.indexOf(configKey) === -1) {
