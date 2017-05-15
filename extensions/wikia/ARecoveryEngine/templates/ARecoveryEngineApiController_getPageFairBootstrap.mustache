@@ -1,8 +1,9 @@
 <!-- Begin PageFair recovery -->
 <script type="text/javascript">
 	require([
-		"ext.wikia.adEngine.adContext"
-	], function (adContext) {
+		'ext.wikia.adEngine.adContext',
+		'wikia.instantGlobals' //used inside loader.js injected below
+	], function (adContext, instantGlobals) {
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
