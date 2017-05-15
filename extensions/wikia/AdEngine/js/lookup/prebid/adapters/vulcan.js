@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [
-						[640, 360]
+						[640, 480]
 					],
 					siteId: 55412,
 					zoneId: 519058,
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
 				},
 				INCONTENT_PLAYER: {
 					sizes: [
-						[640, 360]
+						[640, 480]
 					],
 					siteId: 55412,
 					zoneId: 519058,
@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.vulcan', [
 			mercury: {
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[640, 360]
+						[640, 480]
 					],
 					siteId: 55412,
 					zoneId: 563110,
