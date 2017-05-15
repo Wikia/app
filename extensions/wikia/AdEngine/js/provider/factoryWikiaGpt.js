@@ -27,10 +27,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
-
-		if (!!slotMap.INCONTENT_LEADERBOARD && context.opts.incontentLeaderboardAsOutOfPage) {
-			delete slotMap.INCONTENT_LEADERBOARD.size;
-		}
 	}
 
 	/**
