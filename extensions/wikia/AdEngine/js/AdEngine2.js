@@ -128,16 +128,18 @@ define('ext.wikia.adEngine.adEngine', [
 							adInfo: adInfo
 						});
 						tracker.track('success', adInfo);
+						slot.container.setAttribute('data-slot-result', 'success');
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
 						slotTweaker.hide(slotName);
 						eventDispatcher.dispatch('adengine.slot.status', {
-							slot: slot, 
-							status: 'collapse', 
+							slot: slot,
+							status: 'collapse',
 							adInfo: adInfo
 						});
 						tracker.track('collapse', adInfo);
+						slot.container.setAttribute('data-slot-result', 'collapse');
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
@@ -148,13 +150,16 @@ define('ext.wikia.adEngine.adEngine', [
 							adInfo: adInfo
 						});
 						tracker.track('hop', adInfo);
+						slot.container.setAttribute('data-slot-result', 'hop');
 						nextProvider();
 					},
 					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], 'debug', logGroup);
+						slot.container.setAttribute('data-slot-result', 'loading');
 					},
 					viewed: function () {
 						log(['viewed', provider.name, slotName], 'debug', logGroup);
+						slot.container.setAttribute('data-slot-viewed', 'true');
 					}
 				});
 

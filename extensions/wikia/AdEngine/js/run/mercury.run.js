@@ -12,7 +12,6 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
@@ -29,7 +28,6 @@ require([
 	messageListener,
 	mercuryListener,
 	actionHandler,
-	yavliTag,
 	geo,
 	instantGlobals,
 	win
@@ -50,7 +48,11 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
+		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries)
+		) {
 			oxBidder.call();
 		}
 
@@ -60,10 +62,6 @@ require([
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
 			rubiconVulcan.call();
-		}
-
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
 		}
 
 		adInfoTracker.run();

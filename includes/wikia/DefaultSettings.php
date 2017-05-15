@@ -736,7 +736,6 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
-$wgFlagsDB = 'portable_flags';
 $wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
@@ -1315,18 +1314,18 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverIndexExchangeBidderCountries = null;
 
 /**
+ * @name $wgAdDriverOpenXPrebidBidderCountries
+ * List of countries where OpenX prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXPrebidBidderCountries = null;
+
+/**
  * @name $wgAdDriverOverridePrefootersCountries
  * Enables overriding prefooters sizes on Oasis in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOverridePrefootersCountries = null;
-
-/**
- * @name $wgAdDriverYavliCountries
- * Enables Yavli in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverYavliCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1390,19 +1389,6 @@ $wgAdDriverEvolve2Countries = null;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = true;
-
-/**
- * @name $wgAdDriverUseRevcontent
- * Whether to enable Revcontent or not
- */
-$wgAdDriverUseRevcontent = true;
-
-/**
- * @name $wgAdDriverRevcontentCountries
- * List of countries with enabled Revcontent.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRevcontentCountries = null;
 
 /**
  * @name $wgAdDriverTaboolaConfig
@@ -1483,6 +1469,14 @@ $wgSitewideDisableKrux = false;
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgAdDriverKikimoraTrackingCountries
  */
 $wgAdDriverKikimoraTrackingCountries = [];
+
+/**
+ * @name $wgAdDriverSrcPremiumCountries
+ * Enables setting src=premium param for all ad slots on page, when premium video
+ * is present on that page.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSrcPremiumCountries = [];
 
 /**
  * @name $wgAdDriverMEGACountries

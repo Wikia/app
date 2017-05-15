@@ -146,15 +146,18 @@ class WikiaMapsPoiCategoryController extends WikiaMapsBaseController {
 	/**
 	 * Validates POI categories data
 	 *
-	 * @param array $poiCategories
+	 * @param array|null $poiCategories
 	 * @return bool
 	 */
 	public function validatePoiCategories( $poiCategories ) {
-		foreach ( $poiCategories as $poiCategory ) {
-			if ( empty( $poiCategory[ 'name' ] ) ) {
-				return false;
+		if ( is_array( $poiCategories ) ) {
+			foreach ( $poiCategories as $poiCategory ) {
+				if ( empty( $poiCategory['name'] ) ) {
+					return false;
+				}
 			}
 		}
+
 		return true;
 	}
 

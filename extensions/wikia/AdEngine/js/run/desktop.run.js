@@ -12,12 +12,11 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.recovery.gcs'),
 	require.optional('ext.wikia.adEngine.template.floatingRail')
@@ -33,20 +32,18 @@ require([
 	messageListener,
 	pageFairDetection,
 	taboolaHelper,
-	sourcePoint,
 	actionHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
-	yavliTag,
+	adBlockDetection,
 	win,
 	gcs,
 	floatingRail
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		skin = 'oasis';
+	var context = adContext.getContext();
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -83,22 +80,18 @@ require([
 			pageFairDetection.initDetection(context);
 		}
 
-		// Recovery
-		sourcePoint.initEventQueues();
+		// Recovery & detection
+		adBlockDetection.initEventQueues();
 
 		// Taboola
 		if (context.opts.loadTaboolaLibrary) {
-			sourcePoint.addOnBlockingCallback(function() {
+			adBlockDetection.addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
 			});
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
-		}
-
-		if (context.opts.yavli) {
-			yavliTag.add();
 		}
 	});
 });
@@ -113,9 +106,7 @@ require([
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
+	'wikia.window'
 ], function (
 	adContext,
 	slotsContext,
@@ -125,9 +116,7 @@ require([
 	skyScraper3,
 	slotTweaker,
 	doc,
-	win,
-	exitstitial,
-	revcontentSlots
+	win
 ) {
 	'use strict';
 
@@ -140,10 +129,6 @@ require([
 		highImpact.init();
 		skyScraper3.init();
 
-		if (revcontentSlots && context.providers.revcontent) {
-			revcontentSlots.init();
-		}
-
 		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
 			inContent.init(incontentPlayerSlotName);
 		}
@@ -154,10 +139,6 @@ require([
 					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
 				}
 			});
-		}
-
-		if (exitstitial) {
-			exitstitial.init();
 		}
 	}
 

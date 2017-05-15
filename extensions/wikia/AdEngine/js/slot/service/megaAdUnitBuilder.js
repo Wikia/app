@@ -23,11 +23,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
-		}, result;
+		};
 
-		result = findSlotGroup(map, slotName);
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD', 'EXIT_STITIAL_BOXAD_1'
-		return result ? result : 'OTHER';
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD'
+		return findSlotGroup(map, slotName) || 'OTHER';
 	}
 
 	function getDevice(params) {
@@ -52,10 +51,19 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			device = getDevice(params),
 			skin = params.skin,
 			pageType = params.s2,
+			provider = src.indexOf('remnant') === -1 ? 'wka1' : 'wka2',
 			wikiName = params.s1,
-			vertical = params.s0v;
+			vertical = params.s0;
 
-		adUnitElements = ['', dfpId, src + '.' + getGroup(slotName), slotName, device, skin + '-' + pageType, wikiName + '-' + vertical];
+		adUnitElements = [
+			'',
+			dfpId,
+			provider + '.' + getGroup(slotName),
+			slotName.toLowerCase(),
+			device,
+			skin + '-' + pageType,
+			wikiName + '-' + vertical
+		];
 
 		if (passback) {
 			adUnitElements.push(passback);
@@ -64,7 +72,21 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return adUnitElements.join('/');
 	}
 
+	function isValid(adUnit) {
+		return adUnit.indexOf('wka1.') !== -1 || adUnit.indexOf('wka2.') !== -1;
+	}
+
+	function getShortSlotName(adUnit) {
+		return adUnit.replace(/^.*\/(wka1|wka2)\.[\w]+\/([^\/]*)\/.*$/, function () {
+			if (arguments[2]) {
+				return arguments[2].toUpperCase();
+			}
+		});
+	}
+
 	return {
-		build: build
+		build: build,
+		getShortSlotName: getShortSlotName,
+		isValid: isValid
 	};
 });
