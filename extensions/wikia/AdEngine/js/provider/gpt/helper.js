@@ -82,12 +82,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
-		// add adonis marker needed for PF recovery
-		// basing on extra.isPageFairRecoverable param set in factoryWikiaGpt
-		if (isRecoveryEnabled && isBlocking && extra.isPageFairRecoverable) {
-			pageFair.addMarker(element.node);
-		}
-
 		function queueAd() {
 			log(['queueAd', slotName, element], log.levels.debug, logGroup);
 			slot.container.appendChild(element.getNode());
@@ -104,14 +98,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
-
-				if (sourcePoint.isEnabled()) {
-					slotTargetingData.provider = 'sp';
-				}
-
-				if (pageFair && pageFair.isEnabled()) {
-					slotTargetingData.provider = 'pf';
-				}
 			}
 
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);

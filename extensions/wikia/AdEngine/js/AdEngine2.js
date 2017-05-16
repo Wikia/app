@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
-	'wikia.log'
+	'wikia.log',
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adDecoratorLegacyParamFormat,
 	eventDispatcher,
@@ -20,7 +21,8 @@ define('ext.wikia.adEngine.adEngine', [
 	registerHooks,
 	doc,
 	lazyQueue,
-	log
+	log,
+	pageFair
 ) {
 	'use strict';
 
@@ -103,6 +105,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 	function createSlot(queuedSlot, container, callbacks) {
 		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
+
 		registerHooks(slot, ['success', 'collapse', 'hop', 'renderEnded', 'viewed']);
 		slot.post('success', queuedSlot.onSuccess);
 
@@ -184,6 +187,10 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
+
+			if (pageFair.isSlotRecoverable(slotName)) {
+				pageFair.addMarker(doc.getElementById(slotName));
+			}
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 
