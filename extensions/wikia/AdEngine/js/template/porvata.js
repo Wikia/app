@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.player.porvata',
 	'ext.wikia.adEngine.video.player.uiTemplate',
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
@@ -13,6 +14,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
+	slotTweaker,
 	porvata,
 	uiTemplate,
 	videoInterface,
@@ -69,6 +71,61 @@ define('ext.wikia.adEngine.template.porvata', [
 		return contentType.indexOf('application/') === 0;
 	}
 
+	function onReady(video, params) {
+		var slot = document.getElementById(params.slotName),
+			slotExpanded = false;
+
+		video.addEventListener('loaded', function () {
+			var adsManager = video.ima.getAdsManager(),
+				videoContainer = video.container || video.ima.container;
+
+			setTimeout(function () {
+				adsManager.setVolume(0);
+			});
+			videoContainer.classList.remove('hidden');
+
+			if (!params.hasUiControls) {
+				params.container.addEventListener('mouseenter', function () {
+					adsManager.setVolume(1);
+				});
+				params.container.addEventListener('mouseleave', function () {
+					adsManager.setVolume(0);
+				});
+			}
+		});
+
+		video.addEventListener('start', function () {
+			setTimeout(function () {
+				video.ima.getAdsManager().setVolume(0);
+			});
+
+			if (params.isDynamic && !slotExpanded) {
+				slotTweaker.expand(params.slotName);
+				slotExpanded = true;
+				video.ima.dispatchEvent('wikiaSlotExpanded');
+			}
+
+			if (params.isDynamic) {
+				video.resize(slot.scrollWidth, slot.scrollHeight);
+			}
+		});
+
+		video.addEventListener('allAdsCompleted', function () {
+			video.ima.getAdsManager().pause();
+			if (params.isDynamic) {
+				slotTweaker.collapse(params.slotName);
+			}
+		});
+
+		if (params.isDynamic) {
+			win.addEventListener('resize', function () {
+				if (!(video.isFloating && video.isFloating())) {
+					video.resize(slot.clientWidth, slot.clientHeight);
+				}
+			});
+		}
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
@@ -79,6 +136,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.onReady] - Callback executed once player is ready
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
+	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
 	 */
 	function show(params) {
 		var settings = videoSettings.create(params),
@@ -99,7 +157,20 @@ define('ext.wikia.adEngine.template.porvata', [
 			loadVeles(params);
 		}
 
+		if (params.isDynamic) {
+			slotTweaker.collapse(params.slotName);
+			slotTweaker.makeResponsive(params.slotName, 1.77777777778);
+		}
+
 		porvata.inject(settings).then(function (video) {
+			if (typeof params.onReady === 'function') {
+				params.onReady(video);
+			} else {
+				onReady(video, params);
+			}
+
+			return video;
+		}).then(function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
 				videoPlayer;
 
