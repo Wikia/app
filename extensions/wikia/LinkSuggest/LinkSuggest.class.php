@@ -191,7 +191,7 @@ class LinkSuggest {
 				}
 			} else if( mb_strlen($queryLower) >= 1 ) {
 				if ( LinkSuggest::containsMultibyteCharacters( $firstChar ) ) {
-					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('" . $firstChar . "'% ) AND ";
+					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary convert('" . $firstChar . "%' using latin1) using utf8) ) AND ";
 				} else {
 					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper( $firstChar ) , $db->anyString() ) . " ) AND ";
 				}
