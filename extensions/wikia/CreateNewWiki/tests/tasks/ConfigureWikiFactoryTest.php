@@ -7,22 +7,11 @@ namespace Wikia\CreateNewWiki\Tasks;
  */
 class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
-	private $taskContextMock;
-
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock(
-			'\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'getLanguage', 'getWikiName' ]
-		);
-		$this->mockClass( 'TaskContext', $this->taskContextMock );
-
 		$this->mockGlobalVariable( 'wgCreateDatabaseActiveCluster', 'c7' );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
 	}
 
 	/**
@@ -64,19 +53,14 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @dataProvider prepareDataProvider
 	 */
 	public function testPrepare( $wikiName, $varId, $language, $taskResult, $expectedImagesURL, $expectedImagesDir ) {
-		$this->taskContextMock
-			->expects( $this->any() )
-			->method( 'getWikiName' )
-			->willReturn( $wikiName );
-
-		$this->taskContextMock
-			->expects( $this->any() )
-			->method( 'getLanguage' )
-			->willReturn( $language );
+		$taskContext = new TaskContext( [
+			'wikiName' => $wikiName,
+		    'language' => $language
+		] );
 
 		$configureWFTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureWikiFactory' )
 			->enableOriginalConstructor()
-			->setConstructorArgs( [ $this->taskContextMock ] )
+			->setConstructorArgs( [ $taskContext ] )
 			->setMethods( [ 'prepareDirValue', 'getWgUploadDirectoryVarId' ] )
 			->getMock();
 
@@ -116,7 +100,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @dataProvider getStaticWikiFactoryVariablesDataProvider
 	 */
 	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $expected ) {
-		$configureWFTask = new ConfigureWikiFactory( $this->taskContextMock );
+		$configureWFTask = new ConfigureWikiFactory( new TaskContext( [] ) );
 
 		$result = $configureWFTask->getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url );
 		$this->assertEquals( $result, $expected );
@@ -186,7 +170,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @dataProvider getVariablesFromDBDataProvider
 	 */
 	public function testGetVariablesFromDB( $staticVariables, $expected ) {
-		$configureWFTask = new ConfigureWikiFactory( $this->taskContextMock );
+		$configureWFTask = new ConfigureWikiFactory( new TaskContext( [] ) );
 
 		$sharedDBWMock = $this->getMock( '\DatabaseMysqli', [ 'select', 'fetchObject', 'freeResult' ] );
 

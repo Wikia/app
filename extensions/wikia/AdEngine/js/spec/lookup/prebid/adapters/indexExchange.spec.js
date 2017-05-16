@@ -31,8 +31,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
-		var appNexus = getIndexExchange();
-		expect(appNexus.prepareAdUnit('TOP_LEADERBOARD', {
+		var indexExchange = getIndexExchange();
+		expect(indexExchange.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [
 				[728, 90],
 				[970, 250]

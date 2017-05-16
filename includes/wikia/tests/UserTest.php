@@ -186,6 +186,11 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId() )
 			->willReturn( $preferences );
 
+		$this->userAttributesMock->expects( $this->once() )
+			->method( 'getAttributes' )
+			->with( $this->testUser->getId() )
+			->willReturn( [] );
+
 		$options = $this->testUser->getOptions();
 
 		$this->assertEquals( "pl", $options[ "language" ] );

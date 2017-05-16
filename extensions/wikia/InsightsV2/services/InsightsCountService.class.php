@@ -36,15 +36,15 @@ class InsightsCountService extends WikiaService {
 	 * @return int|bool Returns false if a given class does not exist or the count otherwise.
 	 */
 	private function calculateCount( $type ) {
-		$className = InsightsHelper::getInsightsPages()[$type];
-		if ( !class_exists( $className ) ) {
+		$insightsClasses = InsightsHelper::getInsightsPages();
+		if ( !array_key_exists( $type, $insightsClasses ) || !class_exists( $insightsClasses[$type] ) ) {
 			return false;
 		}
 
 		/**
 		 * Use a regular fetchArticleData method from a given class
 		 */
-		$subpageModel = new $className;
+		$subpageModel = new $insightsClasses[$type];
 		return count( ( new InsightsContext( $subpageModel ) )->fetchData() );
 	}
 }

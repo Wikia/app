@@ -168,6 +168,11 @@ class RTE {
 			// get edgecase type and add it to JS variables
 			$edgeCaseType = Xml::encodeJsVar(self::getEdgeCaseType());
 			$out->addInlineScript("var RTEEdgeCase = {$edgeCaseType}");
+
+			// SUS-1909: Log the type of edge case that was found
+			\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.01, 'SUS-1909: RTE edge case', [
+				'edgeCaseType' => static::getEdgeCaseType()
+			] );
 		}
 
 		// parse wikitext using RTEParser (only for wysiwyg mode)
@@ -684,10 +689,13 @@ HTML
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
 		// do not continue if user didn't turn on wysiwyg in preferences
-		if ( ( $options['editor'] === '1' && empty( $useEditor ) )
-				|| ( $useEditor === 'source' || $useEditor === 'mediawiki' )
-		) {
+		if ( ( isset( $options['editor'] ) && $options['editor'] === '1' && empty( $useEditor ) ) ) {
 			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		if ( $useEditor === 'source' || $useEditor === 'mediawiki' ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 

@@ -193,11 +193,10 @@ class BaseRssModelTest extends WikiaBaseTest
 		};
 	}
 
-	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../../';
-		$this->setupFile = $dir . 'HubRssFeed.setup.php';
-
+	protected function setUp() {
 		parent::setUp();
+
+		require_once __DIR__ . '/../../models/BaseRssModel.class.php';
 	}
 
 	/**

@@ -6,9 +6,15 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
-		googleIma: {
-			vpaidMode: {
-				ENABLED: 1
+		win: {
+			google: {
+				ima: {
+					ImaSdkSettings: {
+						VpaidMode: {
+							ENABLED: 1
+						}
+					}
+				}
 			}
 		}
 	};
@@ -17,14 +23,14 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
 			mocks.resolvedState,
-			mocks.googleIma
+			mocks.win
 		).create(params);
 	}
 
 	it('Should be not auto play without autoplay parameter', function () {
 		var videoSettings = getSettings();
 
-		expect(videoSettings.isAutoPlay()).toBeFalsy()
+		expect(videoSettings.isAutoPlay()).toBeFalsy();
 	});
 
 	it('Should be auto play for default state with parameter', function () {
@@ -32,7 +38,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			autoPlay: true
 		});
 
-		expect(videoSettings.isAutoPlay()).toBeTruthy()
+		expect(videoSettings.isAutoPlay()).toBeTruthy();
 	});
 
 	it('Should not be auto play for default state with incorrect parameter', function () {
@@ -40,7 +46,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			autoPlay: false
 		});
 
-		expect(videoSettings.isAutoPlay()).toBeFalsy()
+		expect(videoSettings.isAutoPlay()).toBeFalsy();
 	});
 
 	it('Should be auto play for resolved state with autoplay parameter', function () {
@@ -52,7 +58,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			resolvedStateAutoPlay: true
 		});
 
-		expect(videoSettings.isAutoPlay()).toBeTruthy()
+		expect(videoSettings.isAutoPlay()).toBeTruthy();
 	});
 
 	it('Should not be auto play for resolved state without autoplay parameter', function () {
@@ -64,7 +70,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			resolvedAutoPlay: false
 		});
 
-		expect(videoSettings.isAutoPlay()).toBeFalsy()
+		expect(videoSettings.isAutoPlay()).toBeFalsy();
 	});
 
 	it('Should be split layout for correct parameter', function () {
@@ -72,7 +78,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			splitLayoutVideoPosition: 'right'
 		});
 
-		expect(true).toMatch(videoSettings.isSplitLayout());
+		expect(videoSettings.isSplitLayout()).toBeTruthy();
 	});
 
 	it('Should be split layout for incorrect parameter', function () {
@@ -80,7 +86,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			splitLayoutVideoPosition: ''
 		});
 
-		expect(false).toMatch(videoSettings.isSplitLayout());
+		expect(videoSettings.isSplitLayout()).toBeFalsy();
 	});
 
 	it('Should enable vpaid ads by default', function () {
@@ -95,6 +101,20 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 
 		expect(videoSettings.getVpaidMode()).toEqual(0);
+	});
+
+	it('Should not show ui controls by default', function () {
+		var videoSettings = getSettings({});
+
+		expect(videoSettings.hasUiControls()).toBeFalsy();
+	});
+
+	it('Should not ui controls when configured in params', function () {
+		var videoSettings = getSettings({
+			hasUiControls: true
+		});
+
+		expect(videoSettings.hasUiControls()).toBeTruthy();
 	});
 });
 

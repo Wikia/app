@@ -20,9 +20,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function createCloseButton() {
-			var a = doc.createElement('a');
+			var a = doc.createElement('a'),
+				img = doc.createElement('img');
 
 			a.classList.add('floating-close-button');
+			img.src = '/extensions/wikia/ArticleVideo/images/close.svg';
+			a.appendChild(img);
 
 			return a;
 		}
@@ -40,9 +43,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				elements.video.addEventListener('start', listeners.start);
 			}
 
-			if (elements.video.isPlaying()) {
-				elements.video.resize(width, height);
-			}
+			elements.video.resize(width, height);
 		}
 
 		function deleteCloseButton(floatingContext) {
@@ -54,15 +55,18 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		}
 
 		function endFloating(floatingContext) {
-			var elements = floatingContext.elements,
+			var video = floatingContext.elements.video,
 				listeners = floatingContext.listeners;
 
 			win.removeEventListener('scroll', listeners.scroll);
 			if (listeners.start) {
-				elements.video.removeEventListener('start', listeners.start);
+				video.removeEventListener('start', listeners.start);
+			}
+			if (listeners.adResumed) {
+				video.removeEventListener('resume', listeners.adResumed);
 			}
 			if (listeners.adCompleted) {
-				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
+				video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
 			}
 			floatingContext.stop();
 		}
@@ -70,7 +74,12 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 		function createOnCloseListener(floatingContext) {
 			return function () {
 				disableFloating(floatingContext);
-				endFloating(floatingContext);
+
+				if (floatingContext.pauseOnClose) {
+					floatingContext.stop();
+				} else {
+					endFloating(floatingContext);
+				}
 			};
 		}
 
@@ -155,6 +164,15 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
 			};
 			elements.video.addEventListener('wikiaAdCompleted', listeners.adCompleted);
+
+			if (floatingContext.pauseOnClose) {
+				listeners.adResumed = function () {
+					if (floatingContext.isStopped()) {
+						floatingContext.pause();
+					}
+				};
+				elements.video.addEventListener('resume', listeners.adResumed);
+			}
 
 			return floatingContext;
 		}

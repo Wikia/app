@@ -1,5 +1,4 @@
 <?php
-
 class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 
 	public static function isEnabled() {
@@ -14,6 +13,7 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 		$moduleName = json_encode( 'ext.wikia.adEngine.lookup.' . $moduleName );
 		$instantGlobalName = json_encode( $instantGlobalName );
 
+		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
 		$code = <<< CODE
 	require([
 		"wikia.geo",
@@ -22,9 +22,10 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 		require.optional($moduleName)
 	], function (geo, Querystring, globals, oxBidder) {
 		var ac = globals[$instantGlobalName],
+			dc = globals.wgAdDriverOpenXPrebidBidderCountries,
 			qs = new Querystring();
 
-		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
+		if ((geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') && !geo.isProperGeo(dc)) {
 			oxBidder.call();
 		};
 	});

@@ -12,7 +12,6 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
 		DOMElementTweaker.hide(videoAdContainer);
 		videoAdContainer.classList.add(videoPlayerClassName);
-		videoAdContainer.style.position = 'relative';
 
 		if (videoSettings.isAutoPlay()) {
 			videoAdContainer.classList.add(autoPlayClassName);
@@ -56,6 +55,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			},
 			getRemainingTime: function () {
 				return ima.getAdsManager().getRemainingTime();
+			},
+			getVolume: function() {
+				return ima.getAdsManager().getVolume();
 			},
 			isFloating: function () {
 				return Boolean(params.floatingContext && params.floatingContext.isFloating());
@@ -124,10 +126,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 				ima.getAdsManager().setVolume(volume);
 
 				// This is hack for Safari, because it can't dispatch original IMA event (volumeChange)
-				ima.getAdsManager().dispatchEvent('wikiaVolumeChange');
+				ima.dispatchEvent('wikiaVolumeChange');
 			},
 			stop: function () {
-				ima.getAdsManager().dispatchEvent('wikiaAdStop');
+				ima.dispatchEvent('wikiaAdStop');
 				ima.getAdsManager().stop();
 			},
 			updateVideoDOMElement: function (volume) {

@@ -114,7 +114,11 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	 * @dataProvider checkWriteRequestProvider
 	 */
 	public function testCheckWriteRequest( $params, $wasPosted, $isInternal, $token, $exceptionExpected ) {
-		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted', 'isInternal' ], [ $params ] );
+		$requestMock = $this->getMockBuilder( WikiaRequest::class )
+			->setMethods( [ 'wasPosted', 'isInternal' ] )
+			->setConstructorArgs( [ $params ] )
+			->getMock();
+
 		$requestMock->expects( !$isInternal ? $this->once() : $this->never() )
 			->method( 'wasPosted' )
 			->will( $this->returnValue( $wasPosted ) );
@@ -123,7 +127,10 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			->method( 'isInternal' )
 			->will( $this->returnValue( $isInternal ) );
 
-		$userMock = $this->getMock( 'User', [ 'getEditToken' ] );
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getEditToken' ] )
+			->getMock();
+
 		$userMock->expects( $this->any() )
 			->method( 'getEditToken' )
 			->will( $this->returnValue( $token ) );
@@ -132,8 +139,11 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMockForAbstractClass();
 
+		$app = new WikiaApp( new WikiaLocalRegistry() );
+		$app->wg->User = $userMock;
+
 		$dispatchableObjectMock->setRequest( $requestMock );
-		$dispatchableObjectMock->wg->User = $userMock;
+		$dispatchableObjectMock->setApp( $app );
 
 		if ( $exceptionExpected ) {
 			$this->expectException( BadRequestException::class );

@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.player.ui.progressBar', [
 
 	var logGroup = 'ext.wikia.adEngine.video.player.ui.progressBar';
 
-	function add(video) {
+	function add(video, params) {
 		var progressBar = doc.createElement('div'),
 			currentTime = doc.createElement('div');
 
@@ -46,7 +46,11 @@ define('ext.wikia.adEngine.video.player.ui.progressBar', [
 		video.addEventListener('wikiaAdCompleted', progressBar.reset);
 		video.addEventListener('wikiaAdPause', progressBar.pause);
 
-		video.container.appendChild(progressBar);
+		if (params.controlBar) {
+			params.controlBar.insertBefore(progressBar, params.controlBar.firstChild);
+		} else {
+			video.container.appendChild(progressBar);
+		}
 	}
 
 	return {

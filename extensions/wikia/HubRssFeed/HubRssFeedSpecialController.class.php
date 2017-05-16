@@ -11,11 +11,6 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	protected $model;
 
 	/**
-	 * @var Title
-	 */
-	protected $currentTitle;
-
-	/**
 	 * @param \HubRssFeedModel $model
 	 */
 	public function setModel( $model ) {
@@ -32,16 +27,14 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( self::SPECIAL_NAME, self::SPECIAL_NAME, false );
-		$this->currentTitle = SpecialPage::getTitleFor( self::SPECIAL_NAME );
 	}
 
 
 	public function notfound() {
-		global $wgHubRssFeeds;
-		$url = $this->currentTitle->getFullUrl();
+		$url = $this->getContext()->getTitle()->getFullUrl();
 		$links = [ ];
 
-		foreach ( $wgHubRssFeeds as  $feedName ) {
+		foreach ( $this->wg->HubRssFeeds as  $feedName ) {
 			$links[ ] = $url . '/'. $feedName;
 		}
 
