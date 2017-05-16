@@ -45,6 +45,10 @@ define('ext.wikia.adEngine.video.player.porvata.vastLogger', [
 	}
 
 	function logVast(player, params, data) {
+		if (!params.bid) {
+			return;
+		}
+
 		var configKey = createConfigKey(params.bid.rubiconAdvertiserId, data['event_name']),
 			postData;
 
