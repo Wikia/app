@@ -38,7 +38,7 @@ class RailController extends WikiaController {
 	 * Get lazy right rail modules
 	 */
 	protected function getLazyRail() {
-		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle, $wgAllInOne;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle, $wgAllInOne, $wgUser;
 		$title = Title::newFromText(
 			$this->request->getVal( 'articleTitle', null ),
 			$this->request->getInt( 'namespace', null )
@@ -59,7 +59,25 @@ class RailController extends WikiaController {
 			self::FILTER_LAZY_MODULES
 		);
 		$this->railLazyContent = '';
+
 		krsort( $railModules );
+
+		// TODO XW-2760 remove after experiment is done
+		$isAdMixExperimentEnabled = $this->request->getVal( 'isAdMixExperimentEnabled', false );
+
+		if ( $isAdMixExperimentEnabled ) {
+			// ad slot NATIVE_TABOOLA_RAIL
+			unset( $railModules[1435] );
+			// ad slot LEFT_SKYSCRAPER_2
+			unset( $railModules[1100] );
+
+			// copied from RecirculationHooks::onGetRailModuleList
+			$recirculationModulePosition = $wgUser->isAnon() ? 1305 : 1285;
+			unset( $railModules[$recirculationModulePosition] );
+
+			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder' ] );
+		}
+
 		foreach ( $railModules as $railModule ) {
 			$this->railLazyContent .= $this->app->renderView(
 				$railModule[0], /* Controller */
@@ -68,7 +86,10 @@ class RailController extends WikiaController {
 			);
 		}
 
-		$this->railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
+		if ( !$isAdMixExperimentEnabled ) {
+			$this->railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+		}
 
 		$this->css = $sassFiles = [];
 		foreach ( array_keys( $this->app->wg->Out->styles ) as $style ) {
