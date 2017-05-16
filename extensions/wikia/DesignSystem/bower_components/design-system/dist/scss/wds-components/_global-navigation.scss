@@ -151,6 +151,8 @@
 			padding: 1px 0;
 			margin: 0 1px 3px 11px;
 			width: 98px;
+			// hack fix for Safari 9
+			zoom: 1.0000001;
 		}
 
 		&.wds-is-wds-company-logo-wikia-org {
