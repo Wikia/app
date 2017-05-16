@@ -6,14 +6,14 @@
 	], function (adContext, instantGlobals) {
 		var context = adContext.getContext();
 
-		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
+		if (context.opts.pageFairRecovery === true) {
 			var adonis = adonis || {};
 
 			adonis.ENABLE_SLOT_CACHE = true;
-			if (instantGlobals.wgAdDriverPageFairConditionalAdRendering) {
+			if (instantGlobals.wgAdDriverPageFairConditionalAdRendering === true) {
 				adonis.conditionalAdRendering = true;
 			}
-			if (instantGlobals.wgAdDriverPageFairConditionalIframeRendering) {
+			if (instantGlobals.wgAdDriverPageFairConditionalIframeRendering === true) {
 				adonis.conditionalIframeRendering = true;
 			}
 
