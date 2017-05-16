@@ -44,71 +44,73 @@ class RailController extends WikiaController {
 			$this->request->getInt( 'namespace', null )
 		);
 
-		if ( $title instanceof Title ) {
-			// override original wgTitle from title given in parameters
-			// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
-			// https://wikia-inc.atlassian.net/browse/BAC-906
-			$oldWgTitle = $wgTitle;
-			$wgTitle = $title;
-			$assetManager = AssetsManager::getInstance();
-			$railModules = $this->filterModules(
-				( new BodyController )->getRailModuleList(),
-				self::FILTER_LAZY_MODULES
+		if ( !( $title instanceof Title ) ) {
+			return;
+		}
+
+		// override original wgTitle from title given in parameters
+		// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
+		// https://wikia-inc.atlassian.net/browse/BAC-906
+		$oldWgTitle = $wgTitle;
+		$wgTitle = $title;
+		$assetManager = AssetsManager::getInstance();
+		$railModules = $this->filterModules(
+			( new BodyController )->getRailModuleList(),
+			self::FILTER_LAZY_MODULES
+		);
+		$this->railLazyContent = '';
+		krsort( $railModules );
+		foreach ( $railModules as $railModule ) {
+			$this->railLazyContent .= $this->app->renderView(
+				$railModule[0], /* Controller */
+				$railModule[1], /* Method */
+				$railModule[2] /* array of params */
 			);
-			$this->railLazyContent = '';
-			krsort( $railModules );
-			foreach ( $railModules as $railModule ) {
-				$this->railLazyContent .= $this->app->renderView(
-					$railModule[0], /* Controller */
-					$railModule[1], /* Method */
-					$railModule[2] /* array of params */
+		}
+
+		$this->railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
+
+		$this->css = $sassFiles = [];
+		foreach ( array_keys( $this->app->wg->Out->styles ) as $style ) {
+			if ( $wgAllInOne && $assetManager->isSassUrl( $style ) ) {
+				$sassFiles[] = $style;
+			} else {
+				$this->css[] = $style;
+			}
+		}
+
+		if ( !empty( $sassFiles ) ) {
+			$excludeScss = (array) $this->getRequest()->getVal( 'excludeScss', [] );
+			$sassFilePath = (array) $assetManager->getSassFilePath( $sassFiles );
+			$includeScss = array_diff( $sassFilePath, $excludeScss );
+
+			// SUS-771: Log any duplicate CSS that rail modules try to load but are already loaded by Oasis skin
+			$duplicateScss = array_intersect( $sassFilePath, $excludeScss );
+			if ( count( $duplicateScss ) ) {
+				Wikia\Logger\WikiaLogger::instance()->info(
+					'SUS-771',
+					[
+						'styles' => json_encode( $duplicateScss )
+					]
 				);
 			}
 
-			$this->railLazyContent .= Html::element( 'div', [ 'id' => 'WikiaAdInContentPlaceHolder' ] );
-
-			$this->css = $sassFiles = [];
-			foreach ( array_keys( $this->app->wg->Out->styles ) as $style ) {
-				if ( $wgAllInOne && $assetManager->isSassUrl( $style ) ) {
-					$sassFiles[] = $style;
-				} else {
-					$this->css[] = $style;
-				}
+			if ( !empty( $includeScss ) ) {
+				$this->css[] = $assetManager->getSassesUrl( $includeScss );
 			}
-
-			if ( !empty( $sassFiles ) ) {
-				$excludeScss = (array) $this->getRequest()->getVal( 'excludeScss', [] );
-				$sassFilePath = (array) $assetManager->getSassFilePath( $sassFiles );
-				$includeScss = array_diff( $sassFilePath, $excludeScss );
-
-				// SUS-771: Log any duplicate CSS that rail modules try to load but are already loaded by Oasis skin
-				$duplicateScss = array_intersect( $sassFilePath, $excludeScss );
-				if ( count( $duplicateScss ) ) {
-					Wikia\Logger\WikiaLogger::instance()->info(
-						'SUS-771',
-						[
-							'styles' => json_encode( $duplicateScss )
-						]
-					);
-				}
-
-				if ( !empty( $includeScss ) ) {
-					$this->css[] = $assetManager->getSassesUrl( $includeScss );
-				}
-			}
-
-			// Do not load user and site jses as they are already loaded and can break page
-			$oldWgUseSiteJs = $wgUseSiteJs;
-			$oldWgAllowUserJs = $wgAllowUserJs;
-			$wgUseSiteJs = false;
-			$wgAllowUserJs = false;
-
-			$this->js = $this->app->wg->Out->getBottomScripts();
-
-			$wgUseSiteJs = $oldWgUseSiteJs;
-			$wgAllowUserJs = $oldWgAllowUserJs;
-			$wgTitle = $oldWgTitle;
 		}
+
+		// Do not load user and site jses as they are already loaded and can break page
+		$oldWgUseSiteJs = $wgUseSiteJs;
+		$oldWgAllowUserJs = $wgAllowUserJs;
+		$wgUseSiteJs = false;
+		$wgAllowUserJs = false;
+
+		$this->js = $this->app->wg->Out->getBottomScripts();
+
+		$wgUseSiteJs = $oldWgUseSiteJs;
+		$wgAllowUserJs = $oldWgAllowUserJs;
+		$wgTitle = $oldWgTitle;
 	}
 
 	/**
