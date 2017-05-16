@@ -62,7 +62,7 @@ class RailController extends WikiaController {
 
 		$assetManager = AssetsManager::getInstance();
 
-		$railModuleListRaw = $wrapper->wrap( function () use ( $context ) {
+		$railModuleListRaw = $wrapper->wrap( function () {
 			return ( new BodyController )->getRailModuleList();
 		} );
 
@@ -99,7 +99,7 @@ class RailController extends WikiaController {
 		}
 
 		$this->css = $sassFiles = [];
-		foreach ( array_keys( $this->app->wg->Out->styles ) as $style ) {
+		foreach ( array_keys( $context->getOutput()->styles ) as $style ) {
 			if ( $wgAllInOne && $assetManager->isSassUrl( $style ) ) {
 				$sassFiles[] = $style;
 			} else {
