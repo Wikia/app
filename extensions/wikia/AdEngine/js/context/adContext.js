@@ -62,41 +62,48 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 	}
 
-	function updateRecoveryServicesAdContext(context, noExternals) {
-		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
-			isRecoveryServiceAlreadyEnabled = false;
-
-		// PageFair recovery
-		context.opts.pageFairRecovery = !noExternals && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled = context.opts.pageFairRecovery;
-
-		// PageFair detection
-		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
-
-		// SourcePoint recovery
-		context.opts.sourcePointRecovery = !noExternals && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointRecovery;
-
-		// SourcePoint MMS
-		context.opts.sourcePointMMS = !noExternals && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointMMS;
-
-		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
-
+	function updateDetectionServicesAdContext(context, noExternals) {
 		// SourcePoint detection integration
 		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
 		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobileEnabled(context);
 
+		// PageFair detection
+		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
+	}
+
+	function updateRecoveryServicesAdContext(context, noExternals) {
+		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
+			isRecoveryServiceAlreadyEnabled = false,
+			serviceCanBeEnabled = !noExternals && context.opts.showAds;
+
+		// PageFair recovery
+		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled = context.opts.pageFairRecovery;
+
+		// SourcePoint recovery
+		context.opts.sourcePointRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
+		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointRecovery;
+
+		// SourcePoint MMS
+		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
+		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointMMS;
+
+		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
+
 		// Taboola
-		context.opts.loadTaboolaLibrary = !noExternals && !isRecoveryServiceAlreadyEnabled &&
+		context.opts.loadTaboolaLibrary = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
 		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
-		context.opts.googleConsumerSurveys = context.opts.sourcePointDetection &&
-			!isRecoveryServiceAlreadyEnabled && context.opts.showAds && isGSCEnabled();
+		context.opts.googleConsumerSurveys = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
+			context.opts.sourcePointDetection && isGSCEnabled();
+	}
+
+	function referrerIsSonySite() {
+		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
 
 	function setContext(newContext) {
@@ -116,9 +123,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.noExternals = noExternals;
 
 		// Don't show ads when Sony requests the page
-		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
-			context.opts.showAds = false;
-		}
+		context.opts.showAds = !referrerIsSonySite();
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
@@ -127,6 +132,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
+		updateDetectionServicesAdContext(context, noExternals);
 		updateRecoveryServicesAdContext(context, noExternals);
 
 		// showcase.*
