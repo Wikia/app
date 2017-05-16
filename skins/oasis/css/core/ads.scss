@@ -120,7 +120,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 .wikia-ad {
 	&.slot-animation {
-		@include transition(max-height, 0.8s, ease, 0);
+		@include transition(max-height, 1.6s, ease, 0);
 		overflow: hidden;
 	}
 
