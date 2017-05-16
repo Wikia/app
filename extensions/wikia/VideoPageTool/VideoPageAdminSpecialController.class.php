@@ -14,7 +14,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		'getCalendarInfo',
 		'getVideosByCategory',
 		'getFeaturedVideoData',
-	    'getImageData'
+		'getImageData'
 	];
 
 	public function __construct() {
