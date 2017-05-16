@@ -151,6 +151,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
+			params.vastUrl = params.bid.vastUrl;
 		}
 
 		if (params.bid && params.adProduct === 'veles') {
