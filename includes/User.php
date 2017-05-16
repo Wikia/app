@@ -2007,45 +2007,17 @@ class User implements JsonSerializable {
 
 	/**
 	 * Immediately touch the user data cache for this account.
-	 * Updates user_touched field, and removes account data from memcached
-	 * for reload on the next hit.
+	 *
+	 * Calls touch() and removes account data from memcached
+	 *
+	 * @see SUS-1620
 	 */
 	public function invalidateCache() {
-		if( wfReadOnly() ) {
-			return;
-		}
-		$this->load();
-		if ( wfReadOnly() ) {
-			return;
-		}
-		if( $this->mId ) {
-			$this->mTouched = self::newTouchedTimestamp();
+		$this->touch();
+		$this->clearSharedCache();
 
-			#<Wikia>
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
-			#</Wikia>
-
-			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField(
-				'`user`', '1',
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
-				__METHOD__ );
-
-			if ( $needsPurge ) {
-				$dbw->update( '`user`',
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
-					__METHOD__ );
-			}
-			self::permissionsService()->invalidateCache( $this );
-
-			$this->clearSharedCache();
-		}
+		// Wikia change
+		self::permissionsService()->invalidateCache( $this );
 	}
 
 	/**
