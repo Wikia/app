@@ -57,46 +57,46 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 	}
 
-	function isSourcePointDetectionMobile(context) {
+	function isSourcePointDetectionMobileEnabled(context) {
 		return context.opts.sourcePointDetectionUrl && (context.targeting.skin === 'mercury' &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 	}
 
 	function updateRecoveryServicesAdContext(context, noExternals) {
 		var taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {},
-			isRecoveryServiceEnabled = false;
+			isRecoveryServiceAlreadyEnabled = false;
 
 		// PageFair recovery
-		context.opts.pageFairRecovery = !noExternals && !isRecoveryServiceEnabled &&
+		context.opts.pageFairRecovery = !noExternals && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
-		isRecoveryServiceEnabled = context.opts.pageFairRecovery;
+		isRecoveryServiceAlreadyEnabled = context.opts.pageFairRecovery;
 
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
 		// SourcePoint recovery
-		context.opts.sourcePointRecovery = !noExternals && !isRecoveryServiceEnabled &&
+		context.opts.sourcePointRecovery = !noExternals && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.sourcePointRecovery;
+		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointRecovery;
 
 		// SourcePoint MMS
-		context.opts.sourcePointMMS = !noExternals && !isRecoveryServiceEnabled && context.opts.sourcePointMMS;
-		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.sourcePointMMS;
+		context.opts.sourcePointMMS = !noExternals && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
+		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.sourcePointMMS;
 
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 
 		// SourcePoint detection integration
 		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
-		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobile(context);
+		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobileEnabled(context);
 
 		// Taboola
-		context.opts.loadTaboolaLibrary = !noExternals && !isRecoveryServiceEnabled &&
+		context.opts.loadTaboolaLibrary = !noExternals && !isRecoveryServiceAlreadyEnabled &&
 			shouldLoadTaboolaOnBlockingTraffic(taboolaConfig);
-		isRecoveryServiceEnabled = isRecoveryServiceEnabled || context.opts.loadTaboolaLibrary;
+		isRecoveryServiceAlreadyEnabled = isRecoveryServiceAlreadyEnabled || context.opts.loadTaboolaLibrary;
 
 		// Google Consumer Surveys
 		context.opts.googleConsumerSurveys = context.opts.sourcePointDetection &&
-			!isRecoveryServiceEnabled && context.opts.showAds && isGSCEnabled();
+			!isRecoveryServiceAlreadyEnabled && context.opts.showAds && isGSCEnabled();
 	}
 
 	function setContext(newContext) {
