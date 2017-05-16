@@ -130,11 +130,17 @@ class User implements JsonSerializable {
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName,
-		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
+		$mEmail, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
+
+	/** @var string TS_MW timestamp from the DB */
+	public $mTouched;
+
+	/** @var string TS_MW timestamp from cache */
+	protected $mQuickTouched;
 
 	/**
 	 * Bool Whether the cache variables have been loaded.
@@ -2043,6 +2049,32 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Update the "touched" timestamp for the user
+	 *
+	 * This is useful on various login/logout events when making sure that
+	 * a browser or proxy that has multiple tenants does not suffer cache
+	 * pollution where the new user sees the old users content. The value
+	 * of getTouched() is checked when determining 304 vs 200 responses.
+	 * Unlike invalidateCache(), this preserves the User object cache and
+	 * avoids database writes.
+	 *
+	 * @@see SUS-1620
+	 * @since 1.25
+	 */
+	public function touch() {
+		global $wgMemc;
+
+		$this->load();
+
+		if ( $this->mId ) {
+			$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+			$timestamp = self::newTouchedTimestamp();
+			$wgMemc->set( $key, $timestamp );
+			$this->mQuickTouched = $timestamp;
+		}
+	}
+
+	/**
 	 * Validate the cache for this account.
 	 * @param $timestamp String A timestamp in TS_MW format
 	 *
@@ -2055,10 +2087,26 @@ class User implements JsonSerializable {
 
 	/**
 	 * Get the user touched timestamp
-	 * @return String timestamp
+	 * @return string TS_MW Timestamp
 	 */
 	public function getTouched() {
+		global $wgMemc;
+
 		$this->load();
+
+		if ( $this->mId ) {
+			if ( $this->mQuickTouched === null ) {
+				$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+				$timestamp = $wgMemc->get( $key );
+				if ( !$timestamp ) {
+					# Set the timestamp to get HTTP 304 cache hits
+					$this->touch();
+				}
+			}
+
+			return max( $this->mTouched, $this->mQuickTouched );
+		}
+
 		return $this->mTouched;
 	}
 
