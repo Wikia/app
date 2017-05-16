@@ -515,22 +515,6 @@ body > a > img[src$="noad.gif"] {
 	z-index: 0;
 }
 
-/** Exitstitial ad */
-#ExitstitialInfobox {
-	p {
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 5px;
-	}
-	.close-exitstitial-ad {
-		font-size: 120%;
-		text-align: center;
-	}
-	.ad-centered-wrapper {
-		height: 400px;
-		margin-bottom: 20px;
-	}
-}
-
 .ad-centered-wrapper {
 	display: table;
 	margin-left: auto;
