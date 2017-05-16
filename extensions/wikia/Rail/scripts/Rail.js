@@ -37,6 +37,17 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
+		if (
+			window.Wikia &&
+			window.Wikia.AbTest &&
+			true
+			// FIXME uncomment and adjust after AB test is set up
+			// window.Wikia.AbTest.isExperimentActive('AD_MIX') &&
+			// !window.Wikia.AbTest.inGroup('CONTROL')
+		) {
+			params.isAdMixExperimentEnabled = true;
+		}
+
 		$.extend(params, getParamsFromUrl());
 
 		$.nirvana.sendRequest({
