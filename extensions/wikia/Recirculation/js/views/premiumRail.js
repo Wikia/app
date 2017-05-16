@@ -17,12 +17,15 @@ define('ext.wikia.recirculation.views.premiumRail', [
 			.then(renderTemplate('client/premiumRail.mustache'))
 			.then(utils.waitForRail)
 			.then(function ($html) {
+				var $recirculationRail = $('#recirculation-rail');
 				if (options.before) {
 					$html = options.before($html);
 				}
 
-				$('#recirculation-rail').html($html);
+				$recirculationRail.html($html);
 				curated.setupTracking($html);
+
+				$recirculationRail.trigger('premiumRecirculationRail.ready');
 
 				return $html;
 			});
