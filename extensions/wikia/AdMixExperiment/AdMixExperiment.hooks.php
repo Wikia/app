@@ -1,7 +1,7 @@
 <?php
 
 class AdMixExperimentHooks {
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay() {
 		\Wikia::addAssetsToOutput( 'ad_mix_experiment_js' );
 		\Wikia::addAssetsToOutput( 'ad_mix_experiment_scss' );
 
