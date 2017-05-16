@@ -3260,3 +3260,11 @@ $config['premium_page_header_curated_content_js'] = [
 		'//extensions/wikia/PremiumPageHeader/scripts/curated-content-edit-hack.js',
 	]
 ];
+
+$config['ad_mix_experiment'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AdMixExperiment/scripts/noVideo1.js',
+	]
+];
