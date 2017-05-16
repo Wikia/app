@@ -8,10 +8,9 @@ class RailController extends WikiaController {
 	const FILTER_LAZY_MODULES = true;
 	const FILTER_NON_LAZY_MODULES = false;
 
-	public function executeIndex( $params ) {
-		$railModules = isset( $params['railModuleList'] ) ? $params['railModuleList'] : [];
-
-		$this->isEditPage = isset( $params['isEditPage'] ) ? $params['isEditPage'] : false;
+	public function index() {
+		$railModules = $this->request->getArray( 'railModuleList' );
+		$this->isEditPage = $this->request->getBool( 'isEditPage' );
 		$this->railModuleList = $this->filterModules( $railModules, self::FILTER_NON_LAZY_MODULES );
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
 		$this->isAside = $this->wg->RailInAside;
@@ -38,7 +37,10 @@ class RailController extends WikiaController {
 	 * Get lazy right rail modules
 	 */
 	protected function getLazyRail() {
-		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle, $wgAllInOne, $wgUser;
+		global $wgAllInOne;
+
+		$context = RequestContext::getMain();
+
 		$title = Title::newFromText(
 			$this->request->getVal( 'articleTitle', null ),
 			$this->request->getInt( 'namespace', null )
@@ -48,14 +50,24 @@ class RailController extends WikiaController {
 			return;
 		}
 
-		// override original wgTitle from title given in parameters
-		// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
-		// https://wikia-inc.atlassian.net/browse/BAC-906
-		$oldWgTitle = $wgTitle;
-		$wgTitle = $title;
+		$wrapper = new Wikia\Util\GlobalStateWrapper( [
+			// Do not load user and site jses as they are already loaded and can break page
+			'wgAllowUserJs' => false,
+			'wgUseSiteJs' => false,
+			// override original wgTitle from title given in parameters
+			// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
+			// https://wikia-inc.atlassian.net/browse/BAC-906
+			'wgTitle' => $title
+		] );
+
 		$assetManager = AssetsManager::getInstance();
+
+		$railModuleListRaw = $wrapper->wrap( function () use ( $context ) {
+			return ( new BodyController )->getRailModuleList();
+		} );
+
 		$railModules = $this->filterModules(
-			( new BodyController )->getRailModuleList(),
+			$railModuleListRaw,
 			self::FILTER_LAZY_MODULES
 		);
 		$this->railLazyContent = '';
@@ -72,7 +84,7 @@ class RailController extends WikiaController {
 			unset( $railModules[1100] );
 
 			// copied from RecirculationHooks::onGetRailModuleList
-			$recirculationModulePosition = $wgUser->isAnon() ? 1305 : 1285;
+			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
 
 			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder' ] );
@@ -121,17 +133,9 @@ class RailController extends WikiaController {
 			}
 		}
 
-		// Do not load user and site jses as they are already loaded and can break page
-		$oldWgUseSiteJs = $wgUseSiteJs;
-		$oldWgAllowUserJs = $wgAllowUserJs;
-		$wgUseSiteJs = false;
-		$wgAllowUserJs = false;
-
-		$this->js = $this->app->wg->Out->getBottomScripts();
-
-		$wgUseSiteJs = $oldWgUseSiteJs;
-		$wgAllowUserJs = $oldWgAllowUserJs;
-		$wgTitle = $oldWgTitle;
+		$this->js = $wrapper->wrap( function () use ( $context ) {
+			return $context->getOutput()->getBottomScripts();
+		} );
 	}
 
 	/**
