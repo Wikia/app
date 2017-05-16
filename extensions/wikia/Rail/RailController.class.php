@@ -78,11 +78,6 @@ class RailController extends WikiaController {
 		$isAdMixExperimentEnabled = $this->request->getVal( 'isAdMixExperimentEnabled', false );
 
 		if ( $isAdMixExperimentEnabled ) {
-			// ad slot NATIVE_TABOOLA_RAIL
-			unset( $railModules[1435] );
-			// ad slot LEFT_SKYSCRAPER_2
-			unset( $railModules[1100] );
-
 			// copied from RecirculationHooks::onGetRailModuleList
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
