@@ -14,7 +14,7 @@
  */
 global $wgQueryPages; // not redundant
 $wgQueryPages = array(
-//         QueryPage subclass           Special page name         Limit (false for none, none for the default)
+//         QueryPage subclass           Special page name         Limit (false for none, none for the default - $wgQueryCacheLimit)
 // ----------------------------------------------------------------------------
 	[ 'AncientPagesPage',              'Ancientpages'                  ],
 	[ 'BrokenRedirectsPage',           'BrokenRedirects'               ],
@@ -23,7 +23,7 @@ $wgQueryPages = array(
 	[ 'DoubleRedirectsPage',           'DoubleRedirects'               ],
 	[ 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ],
 	[ 'LinkSearchPage',                'LinkSearch'                    ],
-	[ 'ListredirectsPage',             'Listredirects'                 ],
+	[ 'ListredirectsPage',             'Listredirects',                5000 /* SUS-1675 */ ],
 	[ 'LonelyPagesPage',               'Lonelypages'                   ],
 	[ 'LongPagesPage',                 'Longpages'                     ],
 	[ 'MIMEsearchPage',                'MIMEsearch'                    ],
@@ -31,7 +31,7 @@ $wgQueryPages = array(
 	[ 'MostimagesPage',                'Mostimages'                    ],
 	[ 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ],
 	[ 'MostlinkedTemplatesPage',       'Mostlinkedtemplates'           ],
-	[ 'MostlinkedPage',                'Mostlinked'                    ],
+	[ 'MostlinkedPage',                'Mostlinked',                   5000 /* SUS-1675 */ ],
 	[ 'MostrevisionsPage',             'Mostrevisions'                 ],
 	[ 'FewestrevisionsPage',           'Fewestrevisions'               ],
 	[ 'ShortPagesPage',                'Shortpages'                    ],
