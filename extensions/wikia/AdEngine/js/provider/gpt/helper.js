@@ -13,8 +13,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
 ], function (
 	adContext,
 	adLogicPageParams,
@@ -28,8 +27,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockRecovery,
 	slotTweaker,
 	log,
-	sraHelper,
-	pageFair
+	sraHelper
 ) {
 	'use strict';
 
