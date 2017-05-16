@@ -87,7 +87,7 @@ class RailController extends WikiaController {
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );
 
-			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder' ] );
+			array_push( $railModules, [ 'AdMixExperiment', 'recirculationAndAdPlaceholder', [] ] );
 		}
 
 		foreach ( $railModules as $railModule ) {
