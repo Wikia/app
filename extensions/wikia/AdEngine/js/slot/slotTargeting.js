@@ -24,7 +24,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			TOP_LEADERBOARD: 'l',
 			TOP_RIGHT_BOXAD: 'm',
 			INCONTENT_PLAYER: 'i',
-			INCONTENT_LEADERBOARD: 'i',
 			INCONTENT_BOXAD_1: 'f',
 			BOTTOM_LEADERBOARD: 'b',
 

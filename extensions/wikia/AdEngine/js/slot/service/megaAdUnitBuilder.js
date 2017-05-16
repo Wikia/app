@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
 		};
 
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_LEADERBOARD'
+		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'
 		return findSlotGroup(map, slotName) || 'OTHER';
 	}
 
