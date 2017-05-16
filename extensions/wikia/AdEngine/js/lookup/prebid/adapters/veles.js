@@ -136,7 +136,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
 				pos: Object.keys(slots[skin]),
-				src: 'gpt',
+				src: skin === 'oasis' ? 'gpt' : 'mobile',
 				passback: bidderName
 			});
 
