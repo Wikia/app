@@ -37,6 +37,7 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
+		// TODO XW-2760 remove after experiment is done
 		if (
 			window.Wikia &&
 			window.Wikia.AbTest &&
