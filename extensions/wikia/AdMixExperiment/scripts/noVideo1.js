@@ -2,6 +2,8 @@ require(['wikia.throttle'], function (throttle) {
 	$(function () {
 
 		var $adAndRecircWrapper;
+		var $topRightAd = $('#TOP_RIGHT_BOXAD');
+		var $topRightAdWrapper = $('#top-right-boxad-wrapper');
 		var $footer = $('#WikiaFooter');
 		var $rail = $('#WikiaRail');
 		var $recirc;
@@ -14,13 +16,17 @@ require(['wikia.throttle'], function (throttle) {
 		var breakpointSmall = 1023;
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
 		var gapSize = 200;
-		var noRecircAdBottomPosition = 5;
 		var recircEnabled = true;
+		var topRightAdHeight = 250;
+		var noRecircAdBottomPosition = 5;
 		var viewportHeight = $(window).height();
 		var viewportWidth = $(window).width();
 		var visibleElementBeforeWrapperHeight;
 
-		function getStartPosition() {
+		// TODO that should be set to true for ad mix variant XW-3156
+		var topRightAdFixed = false;
+
+		function getAdAndRecircWrapperTopPosition() {
 			var visibleElementBeforeWrapperBottom = parseInt($visibleElementBeforeWrapper.offset().top, 10) +
 				visibleElementBeforeWrapperHeight;
 
@@ -32,6 +38,18 @@ require(['wikia.throttle'], function (throttle) {
 			}
 		}
 
+		function getAdAndRecircWrapperBottomPosition(startPosition) {
+			return startPosition + gapSize;
+		}
+
+		function getFirstAdTopPosition() {
+			return $rail.offset().top - globalNavigationHeight;
+		}
+
+		function getFirstAdBottomPosition() {
+			return getFirstAdTopPosition() + gapSize;
+		}
+
 		function getStopPosition() {
 			var stopPoint = parseInt($footer.offset().top, 10);
 			adMixRecircWrapperHeight = $adAndRecircWrapper.outerHeight(true);
@@ -39,11 +57,7 @@ require(['wikia.throttle'], function (throttle) {
 			return stopPoint - globalNavigationHeight - adMixRecircWrapperHeight - bottomMargin;
 		}
 
-		function getMidPosition(startPosition) {
-			return startPosition + gapSize;
-		}
-
-		function reset() {
+		function resetRecircStyles() {
 			if (recircEnabled) {
 				$recircWrapper.css('margin-bottom', gapSize + 'px');
 
@@ -62,11 +76,24 @@ require(['wikia.throttle'], function (throttle) {
 			});
 		}
 
-		function scrollBeforeMid() {
+		function reset() {
+			if (topRightAdFixed) {
+				resetTopAd();
+				resetTopAdPaddings();
+			}
+			resetRecircStyles();
+		}
+
+		function scrollAfterAdAndRecircWrapperTopPosition() {
 			var adAndRecircWrapperStyles = {
 				position: '',
 				width: ''
 			};
+
+			if (topRightAdFixed) {
+				resetTopAd();
+				resetTopAdPaddings();
+			}
 
 			if (recircEnabled) {
 				$recircWrapper.css('margin-bottom', gapSize + 'px');
@@ -85,11 +112,16 @@ require(['wikia.throttle'], function (throttle) {
 			$adAndRecircWrapper.css(adAndRecircWrapperStyles);
 		}
 
-		function scrollAfterMid() {
+		function scrollAfterAdAndRecircWrapperBottomPosition() {
 			var adAndRecircWrapperStyles = {
 				position: 'fixed',
 				width: '300px'
 			};
+
+			if (topRightAdFixed) {
+				resetTopAd();
+				resetTopAdPaddings();
+			}
 
 			if (recircEnabled) {
 				$recircWrapper.css('margin-bottom', '0');
@@ -109,6 +141,11 @@ require(['wikia.throttle'], function (throttle) {
 		}
 
 		function scrollAtBottom(stopPosition) {
+			if (topRightAdFixed) {
+				resetTopAd();
+				resetTopAdPaddings();
+			}
+
 			// FIXME cache it? at least the element
 			var topAdHeight = $('#WikiaTopAds').outerHeight(true);
 			var adAndRecircWrapperStyles = {
@@ -134,18 +171,58 @@ require(['wikia.throttle'], function (throttle) {
 			$adAndRecircWrapper.css(adAndRecircWrapperStyles);
 		}
 
+		function resetTopAd() {
+			$topRightAd.css({
+				position: '',
+				top: '',
+				width: ''
+			});
+		}
+
+		function resetTopAdPaddings() {
+			$topRightAdWrapper.css({
+				'padding-top': '',
+				'padding-bottom': gapSize + 'px'
+			});
+		}
+
+		function scrollAfterFirstAdTopPosition() {
+			resetRecircStyles();
+			resetTopAdPaddings();
+			$topRightAd.css({
+				position: 'fixed',
+				top: globalNavigationHeight + 'px',
+				width: '300px'
+			});
+		}
+
+		function scrollAfterFirstAdBottomPosition() {
+			resetRecircStyles();
+			resetTopAd();
+			$topRightAdWrapper.css({
+				'padding-bottom': '',
+				'padding-top': gapSize + 'px'
+			});
+		}
+
 		function update() {
 			var scrollTop = $window.scrollTop();
-			var startPosition = getStartPosition();
-			var midPosition = getMidPosition(startPosition);
+			var firstAdTopPosition = getFirstAdTopPosition();
+			var firstAdBottomPosition = getFirstAdBottomPosition();
 			var stopPosition = getStopPosition();
+			var adAndRecircWrapperTopPosition = getAdAndRecircWrapperTopPosition();
+			var adAndRecircWrapperBottomPosition = getAdAndRecircWrapperBottomPosition(adAndRecircWrapperTopPosition);
 
-			if (scrollTop < startPosition || viewportWidth <= breakpointSmall) {
+			if (scrollTop < firstAdTopPosition || (!topRightAdFixed && scrollTop < adAndRecircWrapperTopPosition) || viewportWidth <= breakpointSmall) {
 				reset();
-			} else if (scrollTop > startPosition && scrollTop < midPosition) {
-				scrollBeforeMid();
-			} else if (scrollTop >= midPosition && scrollTop < stopPosition) {
-				scrollAfterMid();
+			} else if (scrollTop > firstAdTopPosition && scrollTop < firstAdBottomPosition) {
+				scrollAfterFirstAdTopPosition();
+			} else if (scrollTop >= firstAdBottomPosition && scrollTop < adAndRecircWrapperTopPosition) {
+				scrollAfterFirstAdBottomPosition();
+			} else if (scrollTop >= adAndRecircWrapperTopPosition && scrollTop < adAndRecircWrapperBottomPosition) {
+				scrollAfterAdAndRecircWrapperTopPosition();
+			} else if (scrollTop >= adAndRecircWrapperBottomPosition && scrollTop < stopPosition) {
+				scrollAfterAdAndRecircWrapperBottomPosition();
 			} else if (scrollTop > stopPosition) {
 				scrollAtBottom(stopPosition);
 			}
@@ -181,8 +258,12 @@ require(['wikia.throttle'], function (throttle) {
 				viewportWidth = $(window).width();
 				update();
 			}, 100));
+			update();
 		}
 
 		$rail.one('afterLoad.rail', onRightRailReady);
+		if (topRightAdFixed) {
+			$topRightAdWrapper.css({'padding-bottom': gapSize + 'px', 'height': topRightAdHeight + 'px'});
+		}
 	});
 });
