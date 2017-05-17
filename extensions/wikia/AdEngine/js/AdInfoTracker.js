@@ -19,7 +19,6 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 			LEFT_SKYSCRAPER_2: true,
 			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
-			INCONTENT_LEADERBOARD: true,
 			INCONTENT_PLAYER: true,
 			BOTTOM_LEADERBOARD: true,
 			MOBILE_TOP_LEADERBOARD: true,

@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		hiddenSlots = [
-			'INCONTENT_LEADERBOARD'
+			'INCONTENT_PLAYER'
 		];
 
 	function isHiddenOnStart(slotName) {
