@@ -484,20 +484,6 @@ $messages['pt'] = [
 	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
 ];
 
-$messages['pt-br'] = [
-	'category-exhibition-desc' => 'Novo visual na página de categoria',
-	'category-exhibition-sorttype' => 'Tipo de ordenação:',
-	'category-exhibition-alphabetical' => 'Alfabética',
-	'category-exhibition-mostvisited' => 'Mais visitas',
-	'category-exhibition-recentedits' => 'Editadas recentemente',
-	'category-exhibition-page-header' => 'Páginas na categoria "$1"',
-	'category-exhibition-subcategories-header' => 'Subcategorias',
-	'category-exhibition-media-header' => 'Multimídia na categoria "$1"',
-	'category-exhibition-blogs-header' => 'Posts em blogues',
-	'category-exhibition-display-old' => 'Vista de Lista de Categorias',
-	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
-];
-
 $messages['ro'] = [
 	'category-exhibition-sorttype' => 'Tipul de sortare:',
 	'category-exhibition-alphabetical' => 'Alfabetic',
@@ -651,23 +637,3 @@ $messages['zh-hant'] = [
 	'category-exhibition-page-header' => '分類"$1"中的頁面',
 	'category-exhibition-subcategories-header' => '子分類',
 ];
-
-$messages['zh-hk'] = [
-	'category-exhibition-blogs-header' => '網誌文章',
-	'category-exhibition-desc' => '為分類頁面提供嶄新面貌',
-	'category-exhibition-display-old' => '列表顯示分類',
-	'category-exhibition-media-header' => '分類"$1"中的媒體文件',
-	'category-exhibition-mostvisited' => '最多訪問',
-	'category-exhibition-page-header' => '分類"$1"中的頁面',
-	'category-exhibition-subcategories-header' => '子分類',
-];
-
-$messages['zh-tw'] = [
-	'category-exhibition-desc' => '為分類頁面提供嶄新面貌',
-	'category-exhibition-display-old' => '列表顯示分類',
-	'category-exhibition-media-header' => '分類"$1"中的媒體文件',
-	'category-exhibition-mostvisited' => '最多訪問',
-	'category-exhibition-page-header' => '分類"$1"中的頁面',
-	'category-exhibition-subcategories-header' => '子分類',
-];
-
