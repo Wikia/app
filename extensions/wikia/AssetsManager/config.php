@@ -3265,7 +3265,7 @@ $config['ad_mix_experiment_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/AdMixExperiment/scripts/noVideo1.js',
+		'//extensions/wikia/AdMixExperiment/scripts/AdMixExperiment.js',
 	]
 ];
 
