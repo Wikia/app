@@ -443,11 +443,44 @@ abstract class QueryPage extends SpecialPage {
 	}
 
 	/**
+	 * Get max number of results we can return.
+	 *
+	 * Most QueryPage subclasses use $wgQueryCacheLimit as a default value, but this can be customized.
+	 *
+	 * @author macbre
+	 * @see SUS-1675
+	 *
+	 * @return int
+	 */
+	protected function getMaxResults() {
+		global $wgQueryCacheLimit, $wgQueryPages;
+
+		// that's our default return value
+		$limit = $wgQueryCacheLimit;
+
+		// get the $wgQueryPages entry for the current QueryPage class
+		$currentQueryPage = get_class( $this );
+		$entries = array_values( array_filter(
+			$wgQueryPages,
+			function( array $item ) use ( $currentQueryPage ) {
+				// class name should match
+				return $item[0] === $currentQueryPage;
+			}
+		) );
+
+		if ( is_array( $entries ) && !empty( $entries[0][2] ) ) {
+			$limit = $entries[0][2];
+		}
+
+		return $limit;
+	}
+
+	/**
 	 * This is the actual workhorse. It does everything needed to make a
 	 * real, honest-to-gosh query page.
 	 */
 	function execute( $par ) {
-		global $wgQueryCacheLimit, $wgDisableQueryPageUpdate;
+		global $wgDisableQueryPageUpdate;
 
 		$user = $this->getUser();
 		if ( !$this->userCanExecute( $user ) ) {
@@ -482,7 +515,7 @@ abstract class QueryPage extends SpecialPage {
 				# Fetch the timestamp of this update
 				$ts = $this->getCachedTimestamp();
 				$lang = $this->getLanguage();
-				$maxResults = $lang->formatNum( $wgQueryCacheLimit );
+				$maxResults = $lang->formatNum( $this->getMaxResults() );
 
 				if ( $ts ) {
 					$updated = $lang->userTimeAndDate( $ts, $user );
