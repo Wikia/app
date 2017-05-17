@@ -78,12 +78,6 @@ class RailController extends WikiaController {
 		$isAdMixExperimentEnabled = $this->request->getVal( 'isAdMixExperimentEnabled', false );
 
 		if ( $isAdMixExperimentEnabled ) {
-			// We should display only TOP_RIGHT_BOXAD & INCONTENT_BOXAD_1 in the experiment's right rail
-			// Some user scripts depend on NATIVE_TABOOLA_RAIL to be there, though (e.g. Discord)
-			// We remove LEFT_SKYSCRAPER_2 because it's often displayed and disturbs the testing
-			// FIXME for AdEng - decide if this is fine, if yes then remove this comment line
-			unset( $railModules[1100] );
-
 			// copied from RecirculationHooks::onGetRailModuleList
 			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
 			unset( $railModules[$recirculationModulePosition] );

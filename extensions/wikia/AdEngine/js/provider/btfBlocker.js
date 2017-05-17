@@ -12,8 +12,12 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 	win.ads = win.ads || {};
 	win.ads.runtime = win.ads.runtime || {};
-	win.ads.runtime.disableBtf = false;
-	win.ads.runtime.unblockHighlyViewableSlots = false;
+	// FIXME AdEng to decide how to disable these slots properly
+	// We should display only TOP_RIGHT_BOXAD & INCONTENT_BOXAD_1 in the experiment's right rail
+	// Some user scripts depend on NATIVE_TABOOLA_RAIL to be there, though
+	// (e.g. http://dev.wikia.com/wiki/DiscordIntegrator/code.js)
+	win.ads.runtime.disableBtf = true;
+	win.ads.runtime.unblockHighlyViewableSlots = true;
 
 	function unblock(slotName) {
 		unblockedSlots.push(slotName);

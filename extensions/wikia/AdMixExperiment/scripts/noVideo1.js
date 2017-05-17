@@ -58,8 +58,8 @@ require(['wikia.throttle'], function (throttle) {
 		}
 
 		function onRecircReady() {
-			$adMixRecircWrapper = $('#AdMixExperimentRecirculationAndAdPlaceholderWrapper');
-			$moduleBeforeRecirc = $adMixRecircWrapper.prev();
+			$adMixRecircWrapper = $('#WikiaAdInContentPlaceHolder');
+			$moduleBeforeRecirc = $adMixRecircWrapper.prevAll(':visible').eq(0);
 			moduleBeforeRecircHeight = $moduleBeforeRecirc.outerHeight(true);
 			$window.scroll(throttle(udpate, 100));
 			$window.resize(throttle(function () {
