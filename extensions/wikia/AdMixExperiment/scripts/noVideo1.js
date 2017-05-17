@@ -8,8 +8,11 @@ require(['wikia.throttle'], function (throttle) {
 		var $recircWrapper;
 		var $window = $(window);
 		var adMixRecircWrapperHeight;
+		var bottomMargin = 20;
+		var breakpointSmall = 1023;
 		var globalNavigationHeight = $('#globalNavigation').outerHeight(true);
 		var moduleBeforeRecircHeight;
+		var viewportWidth = $(window).width();
 
 		function getStartPosition() {
 			var recircOffsetTop = parseInt($moduleBeforeRecirc.offset().top, 10) + moduleBeforeRecircHeight;
@@ -18,15 +21,16 @@ require(['wikia.throttle'], function (throttle) {
 
 		function getStopPosition() {
 			var stopPoint = parseInt($footer.offset().top, 10);
-			return stopPoint - globalNavigationHeight - adMixRecircWrapperHeight;
+			adMixRecircWrapperHeight = $adMixRecircWrapper.outerHeight(true);
+			return stopPoint - globalNavigationHeight - adMixRecircWrapperHeight - bottomMargin;
 		}
 
-		function onScroll() {
+		function udpate() {
 			var scrollTop = $window.scrollTop();
 			var stopPosition = getStopPosition();
 			var startPosition = getStartPosition();
 
-			if(scrollTop < startPosition) {
+			if(scrollTop < startPosition || viewportWidth <= breakpointSmall) {
 				$adMixRecircWrapper.css({
 					position: '',
 					top: '',
@@ -55,10 +59,13 @@ require(['wikia.throttle'], function (throttle) {
 
 		function onRecircReady() {
 			$adMixRecircWrapper = $('#AdMixExperimentRecirculationAndAdPlaceholderWrapper');
-			adMixRecircWrapperHeight = $adMixRecircWrapper.outerHeight(true);
 			$moduleBeforeRecirc = $adMixRecircWrapper.prev();
 			moduleBeforeRecircHeight = $moduleBeforeRecirc.outerHeight(true);
-			$window.scroll(throttle(onScroll));
+			$window.scroll(throttle(udpate, 100));
+			$window.resize(throttle(function () {
+				viewportWidth = $(window).width();
+				update();
+			}, 100));
 		}
 
 		$rail.one('afterLoad.rail', onRightRailReady);
